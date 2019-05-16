@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import * as serviceWorker from 'config/serviceWorker';
 import store from 'config/store';
-import Pages from 'pages';
+import Pages from 'components/layout';
 
 const App = () => (
   <Provider store={store}>
