@@ -1,11 +1,13 @@
+import { NOT_FOUND } from 'redux-first-router';
+
 export const PAGES = [
   {
     name: 'HOME',
-    route: '/'
+    path: '/'
   },
   {
-    name: 'NOT_FOUND',
-    route: '/404'
+    name: NOT_FOUND,
+    path: '/404'
   }
 ];
 
