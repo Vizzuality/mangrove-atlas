@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import Layout from 'pages/layout';
+import Layout from './component';
 
 export default connect(
     state => ({
-          page: state.page
+          page: state.page.current
         })
 )(Layout);
