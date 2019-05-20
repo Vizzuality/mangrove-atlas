@@ -1,11 +1,11 @@
 import React from 'react';
 
-import MapPanel from 'components/map-panel';
+import Map from 'components/map';
 
 const Main = () => (
   <main>
     <div>Widgets area</div>
-    <MapPanel />
+    <Map />
     </main>
 );
 

@@ -6,6 +6,8 @@ export const setMapStyle = createAction('MAP/setMapStyle');
 export const setMapLabels = createAction('MAP/setMapLabels');
 export const setMapRoads = createAction('MAP/setMapRoads');
 export const setMapViewport = createAction('MAP/setMapViewport');
+export const setMapLoaded = createAction('MAP/setMapLoaded');
+export const setMapFlying = createAction('MAP/setMapFlying');
 
 export default {
   setMap,
@@ -13,5 +15,7 @@ export default {
   setMapStyle,
   setMapLabels,
   setMapRoads,
-  setMapViewport
+  setMapViewport,
+  setMapLoaded,
+  setMapFlying
 };
