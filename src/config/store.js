@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { handleModule } from 'vizzuality-redux-tools';
 
 import { PAGES } from 'modules/pages/constants';
+import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
 import { queryState } from 'modules/query-state';
@@ -13,6 +14,7 @@ queryState.config({
 });
 
 const modules = [
+  { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map }
 ];
