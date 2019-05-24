@@ -32,7 +32,10 @@ const {
 
 const reducers = combineReducers({
   router: routerReducer,
-  ...modules.reduce((acc, module) => ({...acc, [module.namespace]: handleModule(module.components)}), {})
+  ...modules.reduce(
+    (acc, module) => ({ ...acc, [module.namespace]: handleModule(module.components) }),
+    {}
+  )
 });
 
 const middleware = applyMiddleware(

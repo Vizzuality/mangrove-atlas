@@ -1,7 +1,8 @@
-import { Registry } from './registry';
+import Registry from './registry';
 
 class QueryStateManager {
-  registry =  new Registry()
+  registry = new Registry()
+
   routerActions = [];
 
   config({ routerActions }) {
@@ -10,34 +11,32 @@ class QueryStateManager {
     }
   }
 
-  hasQuery(state, namespace) {
-    return Boolean(state[namespace].query);
-  }
+  hasQuery = (state, namespace) => Boolean(state[namespace].query);
 
   isRouterAction(actionType) {
     // pageActions could be here but there is no need to repeat each time this is run
     return this.routerActions.includes(actionType);
   }
 
-  middleware = store => next => action => {
+  middleware = store => next => (action) => {
     const state = store.getState();
     const { modules } = this.registry;
     const routerNamespace = 'router';
 
-    Array.from(modules).forEach( ([namespace, module]) => {
+    Array.from(modules).forEach(([namespace, module]) => {
       const { query: currentQuery } = state[routerNamespace];
       const namespaceState = state[namespace];
 
       // On changes encode the state as url
-      if (module.actions.map(action => action.toString()).includes(action.type)) {
+      if (module.actions.map(moduleAction => moduleAction.toString()).includes(action.type)) {
         const namespaceQuery = module.encodeMap(namespaceState);
 
-        const query = currentQuery ?
-          {
+        const query = currentQuery
+          ? {
             ...currentQuery,
-            [namespace]: {...namespaceQuery}
-          } :
-          {
+            [namespace]: { ...namespaceQuery }
+          }
+          : {
             [namespace]: namespaceQuery
           };
 
