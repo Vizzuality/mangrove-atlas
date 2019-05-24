@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 
-
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 class Map extends Component {
@@ -32,7 +31,8 @@ class Map extends Component {
     dragRotate: true,
     onViewportChange: () => {},
     onLoad: () => {},
-    onStyleLoad: () => {}
+    onStyleLoad: () => {},
+    setMapViewport: () => {}
   }
 
   componentDidMount() {
@@ -60,10 +60,10 @@ class Map extends Component {
 
     onLoad({
       map: this.map
-    })
+    });
   }
 
-  onResize = resizeViewport => {
+  onResize = (resizeViewport) => {
     const { viewport } = this.props;
     this.onViewportChange({
       ...viewport,
@@ -94,7 +94,7 @@ class Map extends Component {
     }
   }
 
-  onViewportChange = viewport => {
+  onViewportChange = (viewport) => {
     const { setMapViewport, onViewportChange } = this.props;
 
     setMapViewport(viewport);
@@ -137,7 +137,7 @@ class Map extends Component {
     };
 
     return (
-      <ReactMapGL ref={map => { this.map = map && map.getMap(); }} {...mapProps}>
+      <ReactMapGL ref={(map) => { this.map = map && map.getMap(); }} {...mapProps}>
         {isLoaded && !!this.map && typeof children === 'function' && children(this.map)}
       </ReactMapGL>
     );

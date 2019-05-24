@@ -1,9 +1,9 @@
 import queryString from 'query-string';
 
-export const decodeUrlForState = url => {
+export const decodeUrlForState = (url) => {
   const paramsParsed = {};
   const params = queryString.parse(url);
-  Object.keys(params).forEach(key => {
+  Object.keys(params).forEach((key) => {
     try {
       paramsParsed[key] = JSON.parse(atob(params[key]));
     } catch (err) {
@@ -14,9 +14,9 @@ export const decodeUrlForState = url => {
   return paramsParsed;
 };
 
-export const encodeStateForUrl = params => {
+export const encodeStateForUrl = (params) => {
   const paramsParsed = {};
-  Object.keys(params).forEach(key => {
+  Object.keys(params).forEach((key) => {
     if (typeof params[key] === 'object') {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
     } else {

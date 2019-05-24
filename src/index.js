@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 
 import * as serviceWorker from 'config/serviceWorker';
 import store from 'config/store';

@@ -6,7 +6,7 @@ const Main = () => (
   <main>
     <div>Widgets area</div>
     <Map />
-    </main>
+  </main>
 );
 
 export default Main;

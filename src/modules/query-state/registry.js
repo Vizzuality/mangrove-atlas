@@ -1,5 +1,6 @@
-export class Registry {
+class Registry {
   modules = new Map()
+
   triggers = new Set()
 
   add(name, options) {
@@ -7,7 +8,9 @@ export class Registry {
     const actionStrings = actions.map(action => action.toString());
 
     // We only need strings to match
-    this.triggers = new Set([...this.triggers, ...actionStrings]); 
+    this.triggers = new Set([...this.triggers, ...actionStrings]);
     this.modules.set(name, options);
   }
 }
+
+export default Registry;

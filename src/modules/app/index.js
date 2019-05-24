@@ -16,4 +16,3 @@ queryState.registry.add('app', {
 });
 
 export { actions, initialState, reducers };
-
