@@ -6,19 +6,23 @@ import HomePage from 'pages/home';
 import NotFoundPage from 'pages/not-found';
 
 const pageMap = new Map([
-  ['HOME', HomePage]
+  ['HOME', HomePage],
+  ['LOCATION', HomePage]
 ]);
 
 
 // prompts or error logging should be handled here
-const Layout = ({ page }) => {
-  const Page = pageMap.has(page) ? pageMap.get(page) : NotFoundPage;
+const Layout = ({ page: { current, payload } }) => {
+  const Page = pageMap.has(current) ? pageMap.get(current) : NotFoundPage;
 
-  return <Page />;
+  return <Page {...payload} />;
 };
 
 Layout.propTypes = {
-  page: PropTypes.node.isRequired
+  page: PropTypes.shape({
+    current: PropTypes.string.isRequired,
+    payload: PropTypes.shape({}).isRequired
+  }).isRequired
 };
 
 export default Layout;
