@@ -52,6 +52,10 @@ class Map extends Component {
     }
   }
 
+  setElement = (map) => {
+    this.map = map && map.getMap();
+  }
+
   onLoad = () => {
     const { onLoad, setMapLoaded, onStyleLoad } = this.props;
     setMapLoaded(true);
@@ -122,12 +126,23 @@ class Map extends Component {
   };
 
   render() {
-    const { children, dragPan, dragRotate, ...mapboxProps } = this.props;
-    const { viewport, settings: { isFlying, isLoaded } } = this.props;
+    const {
+      className,
+      width,
+      height,
+      viewport,
+      settings: { isFlying, isLoaded },
+      children,
+      dragPan,
+      dragRotate,
+      ...mapboxProps
+    } = this.props;
 
     const mapProps = {
       ...mapboxProps,
       ...viewport,
+      height: height || viewport.height,
+      width: width || viewport.width,
       dragPan: dragPan && !isFlying,
       dragRotate: dragRotate && !isFlying,
       transitionInterpolator: new FlyToInterpolator(),
@@ -137,7 +152,7 @@ class Map extends Component {
     };
 
     return (
-      <ReactMapGL ref={(map) => { this.map = map && map.getMap(); }} {...mapProps}>
+      <ReactMapGL className={className} ref={this.setElement} {...mapProps}>
         {isLoaded && !!this.map && typeof children === 'function' && children(this.map)}
       </ReactMapGL>
     );

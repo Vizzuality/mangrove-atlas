@@ -3,7 +3,13 @@ import { connectRoutes } from 'redux-first-router';
 import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
 import { PAGES } from 'modules/pages/constants';
 
-const routes = PAGES.reduce((acc, page) => ({ ...acc, [page.name]: page.path }), {});
+const routes = PAGES.reduce((acc, page) => ({
+  ...acc,
+  [page.name]: {
+    path: page.path,
+    ...{ thunk: page.thunk }
+  }
+}), {});
 
 const options = {
   basename: process.env.REACT_APP_BASE_URL,
