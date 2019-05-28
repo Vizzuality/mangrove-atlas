@@ -6,7 +6,7 @@ import './style.scss';
 import Dashboard from 'components/dashboard';
 import Map from 'components/map';
 
-const Main = ({ type = 'global', id }) => (
+const Main = ({ type, id }) => (
   <main>
     <Dashboard type={type} id={id} />
     <div className="map-wrapper">
@@ -20,8 +20,13 @@ const Main = ({ type = 'global', id }) => (
 );
 
 Main.propTypes = {
-  type: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  type: PropTypes.string,
+  id: PropTypes.string
+};
+
+Main.defaultProps = {
+  type: 'global',
+  id: null
 };
 
 export default Main;

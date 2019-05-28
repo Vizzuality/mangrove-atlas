@@ -6,7 +6,7 @@ import {
 } from 'modules/app/actions';
 
 import Dashboard from './component';
-import { TITLES } from './constants';
+import { TITLES, WIDGETS } from './constants';
 
 // todo: widgets are processed here so content can get customized
 const mapStateToProps = (state, { type, id }) => {
@@ -27,8 +27,11 @@ const mapStateToProps = (state, { type, id }) => {
     throw new Error('Not a valid title.');
   }
 
+  const widgets = WIDGETS[type];
+
   return ({
     title,
+    widgets,
     ...state.app
   });
 };
