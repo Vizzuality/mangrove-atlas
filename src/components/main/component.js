@@ -3,23 +3,28 @@ import PropTypes from 'prop-types';
 
 import './style.scss';
 
-import Dashboard from 'components/dashboard';
+import RegularDashboard from 'components/dashboard';
+import SearchDashboard from 'components/search-dashboard';
 import Map from 'components/map';
 
-const Main = ({ type, id }) => (
-  <main>
-    <Dashboard type={type} id={id} />
-    <div className="map-wrapper">
-      <Map
-        className="mangrove-map-component"
-        height="100vh"
-        width="100%"
-      />
-    </div>
-  </main>
-);
+const Main = ({ type, id, isSearchActive }) => {
+  const Dashboard = !isSearchActive ? RegularDashboard : SearchDashboard;
+  return (
+    <main>
+      <Dashboard type={type} id={id} />
+      <div className="map-wrapper">
+        <Map
+          className="mangrove-map-component"
+          height="100vh"
+          width="100%"
+        />
+      </div>
+    </main>
+  );
+};
 
 Main.propTypes = {
+  isSearchActive: PropTypes.bool.isRequired,
   type: PropTypes.string,
   id: PropTypes.string
 };
