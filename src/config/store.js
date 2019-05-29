@@ -8,6 +8,7 @@ import { PAGES } from 'modules/pages/constants';
 import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
+import * as dashboard from 'modules/dashboard';
 import { queryState } from 'modules/query-state';
 import router from './router';
 
@@ -18,7 +19,8 @@ queryState.config({
 const modules = [
   { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
-  { namespace: 'map', components: map }
+  { namespace: 'map', components: map },
+  { namespace: 'dashboard', components: dashboard }
 ];
 
 const {
