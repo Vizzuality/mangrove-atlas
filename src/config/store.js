@@ -1,6 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
 import { handleModule } from 'vizzuality-redux-tools';
+import { all, fork } from 'redux-saga/effects';
 
 import { PAGES } from 'modules/pages/constants';
 import * as app from 'modules/app';
@@ -30,6 +32,8 @@ const {
   middleware: queryStateMiddleware
 } = queryState;
 
+const sagaMiddleware = createSagaMiddleware();
+
 const reducers = combineReducers({
   router: routerReducer,
   ...modules.reduce(
@@ -40,6 +44,7 @@ const reducers = combineReducers({
 
 const middleware = applyMiddleware(
   routerMiddleware,
+  sagaMiddleware,
   queryStateMiddleware
 );
 
@@ -47,6 +52,12 @@ const enhancers = composeWithDevTools(routerEnhancer, middleware);
 
 const store = createStore(reducers, enhancers);
 
+// todo: add a register for this
+sagaMiddleware.run(function* root() {
+  yield all([
+    fork(app.sagas)
+  ]);
+});
 initialDispatch();
 
 export default store;
