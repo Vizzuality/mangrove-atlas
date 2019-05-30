@@ -9,6 +9,7 @@ import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
 import * as dashboard from 'modules/dashboard';
+import * as search from 'modules/search';
 import { queryState } from 'modules/query-state';
 import router from './router';
 
@@ -20,7 +21,8 @@ const modules = [
   { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
-  { namespace: 'dashboard', components: dashboard }
+  { namespace: 'dashboard', components: dashboard },
+  { namespace: 'search', components: search }
 ];
 
 const {
