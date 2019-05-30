@@ -1,5 +1,5 @@
 export default {
-  title: null,
+  location: null,
   widgets: [],
   activeLayers: []
 };

@@ -2,6 +2,7 @@ import * as actions from './actions';
 
 const {
   setDashboard,
+  setLocation,
   setWidgets,
   addWidget,
   removeWidget,
@@ -16,6 +17,7 @@ function removeById(arr, id) {
 
 export default {
   [setDashboard]: (state, { payload }) => ({ ...state, ...payload }),
+  [setLocation]: (state, { payload }) => ({ ...state, location: payload }),
   [setWidgets]: (state, { payload }) => ({ ...state, widgets: payload }),
   [addWidget]: (state, { payload }) => ({ ...state, widgets: [...state.widgets, payload] }),
   [removeWidget]: (state, { payload }) => ({
