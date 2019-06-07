@@ -10,6 +10,6 @@ function* location() {
   }
 }
 
-export default function* app() {
+export default function* pages() {
   yield takeLatest('LOCATION', location);
 }
