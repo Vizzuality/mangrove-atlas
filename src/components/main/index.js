@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 
+import { getActiveLayers } from 'modules/layers/selectors';
 import Main from './component';
 
 const mapStateToProps = state => ({
-  isSearchActive: state.app.isSearchActive
+  isSearchActive: state.app.isSearchActive,
+  layers: getActiveLayers(state)
 });
 
 const mapDispatchToProps = {};
