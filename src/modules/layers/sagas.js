@@ -22,13 +22,13 @@ function* getLayers() {
   try {
     const layers = yield call(datasetService.fetchDatasetsLayers, datasets);
     yield put(setList(layers));
-  } catch(err) {
+  } catch (err) {
     yield put(setError(err));
   } finally {
     yield put(setLoading(false));
   }
 }
 
-export default function* layers() {
+export default function* layersSagas() {
   yield takeLatest('LAYERS/getLayers', getLayers);
 }

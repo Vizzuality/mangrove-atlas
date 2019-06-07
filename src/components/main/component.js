@@ -22,8 +22,8 @@ const Main = ({ type, id, isSearchActive, layers }) => {
         >
           {map => (
             <LayerManager map={map} plugin={PluginMapboxGl}>
-              {layers.map((layer, index) => (
-                <Layer key={index} {...layer} />
+              {layers.map(layer => (
+                <Layer key={layer.id} {...layer} />
               ))}
             </LayerManager>
           )}

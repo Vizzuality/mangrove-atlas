@@ -25,7 +25,7 @@ function viewportChanged(currentViewport, newViewport) {
   const propsToCompare = ['zoom', 'latitude', 'longitude'];
   let result = false;
 
-  propsToCompare.forEach(prop => {
+  propsToCompare.forEach((prop) => {
     const currentProp = currentViewport[prop];
     const newProp = newViewport[prop];
 
@@ -41,7 +41,7 @@ function viewportChanged(currentViewport, newViewport) {
   return result;
 }
 
-function* setLocation({ payload: {type, id}}) {
+function* setLocation({ payload: { type, id } }) {
   const state = yield select();
   const { viewport: currentViewport } = state.map;
   let newViewport = {
@@ -52,10 +52,10 @@ function* setLocation({ payload: {type, id}}) {
 
   if (type === 'aoi') {
     const viewport = viewports[id];
-    
+
     if (viewport) {
       newViewport = viewport;
-    } 
+    }
   }
 
   if (viewportChanged(currentViewport, newViewport)) {
