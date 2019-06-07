@@ -13,4 +13,5 @@ export default {
   },
   bounds: {},
   mapStyle: 'mapbox://styles/mapbox/streets-v11'
+  // mapStyle: 'mapbox://styles/mangrove-atlas/cjw92q19n05701cqqol3rgm1w'
 };
