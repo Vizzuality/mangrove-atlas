@@ -5,12 +5,16 @@ import { handleModule } from 'vizzuality-redux-tools';
 import { all, fork } from 'redux-saga/effects';
 
 import { PAGES } from 'modules/pages/constants';
+
 import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
 import * as dashboard from 'modules/dashboard';
 import * as search from 'modules/search';
+import * as layers from 'modules/layers';
+// Not actually a module, more like middleware
 import { queryState } from 'modules/query-state';
+
 import router from './router';
 
 queryState.config({
@@ -22,7 +26,8 @@ const modules = [
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
   { namespace: 'dashboard', components: dashboard },
-  { namespace: 'search', components: search }
+  { namespace: 'search', components: search },
+  { namespace: 'layers', components: layers }
 ];
 
 const {
@@ -59,7 +64,10 @@ const store = createStore(reducers, enhancers);
 // todo: add a register for this
 sagaMiddleware.run(function* root() {
   yield all([
-    fork(app.sagas)
+    fork(app.sagas),
+    fork(pages.sagas),
+    fork(map.sagas),
+    fork(layers.sagas)
   ]);
 });
 initialDispatch();
