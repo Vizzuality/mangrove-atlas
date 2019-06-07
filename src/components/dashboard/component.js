@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Header from 'components/header';
-import Widgets from 'components/widgets';
+import WidgetList from 'components/widget-list';
 import Footer from 'components/footer';
 
 import './style.scss';
@@ -10,7 +10,7 @@ import './style.scss';
 const Dashboard = ({ title, widgets }) => (
   <div className="dashboard">
     <Header title={title} />
-    <Widgets list={widgets} />
+    <WidgetList list={widgets} />
     <Footer />
   </div>
 );
