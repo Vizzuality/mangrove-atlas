@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@loaders.gl/core": "0.6.2",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
+    "deck.gl": "^7.1.0",
+    "layer-manager": "^1.16.9-mapbox",
     "lodash": "^4.17.11",
+    "luma.gl": "^7.1.0",
     "mapbox-gl": "^1.0.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
@@ -19,6 +23,7 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-first-router": "^2.1.1",
     "redux-saga": "^1.0.2",
+    "reselect": "^4.0.0",
     "vizzuality-redux-tools": "^4.0.2"
   },
   "scripts": {
