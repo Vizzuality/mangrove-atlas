@@ -10,30 +10,26 @@ class WRIService {
     });
   }
 
-  fetchLayersFromDataset = (id, params = {}) => {
-    return this.client.get(`/dataset/${id}/layer`, { params })
-      .then(response => {
-        const { status, statusText, data } = response;
-        if (status >= 400) throw new Error(statusText);
-        return serializer(data);
-      });
-  }
+  fetchLayersFromDataset = (id, params = {}) => this.client.get(`/dataset/${id}/layer`, { params })
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return serializer(data);
+    })
 
-  fetchDatasetsLayers = datasets => {
+  fetchDatasetsLayers = (datasets) => {
     // We are unzipping here, you can check https://lodash.com/docs/4.17.11#unzip
     // It is better this way because Object entries, values and keys can be order inconsistent
-    const [ datasetNames, datasetPromises ] = Object.entries(datasets).reduce((acc, item) => [
+    const [datasetNames, datasetPromises] = Object.entries(datasets).reduce((acc, item) => [
       [...acc[0], item[0]],
       [...acc[1], this.fetchLayersFromDataset(item[1])]
     ], [[], []]);
 
     return axios.all(datasetPromises)
-      .then(response => {
-        return datasetNames.reduce((acc, name, index) => ({
-          ...acc,
-          [name]: response[index]
-        }), {});
-      });
+      .then(response => datasetNames.reduce((acc, name, index) => ({
+        ...acc,
+        [name]: response[index]
+      }), {}));
   }
 }
 

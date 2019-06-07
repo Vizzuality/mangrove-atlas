@@ -11,7 +11,7 @@ export default {
     viewport: {
       ...state.viewport,
       ...payload
-    } 
+    }
   }),
   [actions.setMapLoaded]: (state, { payload }) => ({ ...state, settings: { isLoaded: payload } }),
   [actions.setMapFlying]: (state, { payload }) => ({ ...state, settings: { isFlying: payload } })

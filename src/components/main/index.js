@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
-import Main from './component';
 import { getActiveLayers } from 'modules/layers/selectors';
+import Main from './component';
 
 const mapStateToProps = state => ({
   isSearchActive: state.app.isSearchActive,

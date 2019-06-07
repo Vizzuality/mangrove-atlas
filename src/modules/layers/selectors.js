@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 const layers = state => state.layers.list;
 
@@ -7,3 +7,5 @@ export const getActiveLayers = createSelector(
     .reduce((acc, l) => [...acc, ...l], [])
     .filter(l => !l.layerConfig.params_config)
 );
+
+export default getActiveLayers;

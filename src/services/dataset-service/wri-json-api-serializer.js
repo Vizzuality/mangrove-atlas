@@ -13,8 +13,8 @@ const itemSerializer = ({ id, type, attributes }, options = {}) => {
     }
   }
   if (Object.prototype.hasOwnProperty.call(d, 'vocabulary')) d.vocabulary = d.vocabulary.map(serialize);
-  if (Object.prototype.hasOwnProperty.call(d, 'legendConfig') &&
-    Object.prototype.hasOwnProperty.call(d.legendConfig, 'items')) {
+  if (Object.prototype.hasOwnProperty.call(d, 'legendConfig')
+    && Object.prototype.hasOwnProperty.call(d.legendConfig, 'items')) {
     d.legendConfig.items = d.legendConfig.items.map((item, index) => {
       const i = Object.assign({}, item);
       i.id = i.id || index;
