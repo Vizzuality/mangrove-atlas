@@ -66,6 +66,7 @@ sagaMiddleware.run(function* root() {
   yield all([
     fork(app.sagas),
     fork(pages.sagas),
+    fork(map.sagas),
     fork(layers.sagas)
   ]);
 });

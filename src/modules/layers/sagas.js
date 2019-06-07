@@ -29,6 +29,6 @@ function* getLayers() {
   }
 }
 
-export default function* app() {
+export default function* layers() {
   yield takeLatest('LAYERS/getLayers', getLayers);
 }
