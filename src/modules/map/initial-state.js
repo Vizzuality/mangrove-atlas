@@ -12,6 +12,6 @@ export default {
     longitude: 0,
   },
   bounds: {},
-  mapStyle: 'mapbox://styles/mapbox/streets-v11'
-  // mapStyle: 'mapbox://styles/mangrove-atlas/cjw92q19n05701cqqol3rgm1w'
+  // mapStyle: 'mapbox://styles/mapbox/streets-v11'
+  mapStyle: 'mapbox://styles/mangrove-atlas/cjw92q19n05701cqqol3rgm1w'
 };
