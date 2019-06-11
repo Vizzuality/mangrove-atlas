@@ -1,0 +1,17 @@
+.c-widget {
+  border: 1px solid black;
+  border-radius: 0.8rem;
+  margin: 1.25rem;
+
+  .widget--header {
+    > * {
+      display: inline-block;
+    }
+  }
+
+  .widget--body {
+    &.-collapsed {
+      display: none;
+    }
+  }
+}
