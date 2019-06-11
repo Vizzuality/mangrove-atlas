@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './style.scss';
+
 const Widget = ({
   id,
   title,
@@ -14,14 +16,16 @@ const Widget = ({
   };
 
   const collapseToggleHandler = () => {
-    onCollapseToggle(!isCollapsed);
+    onCollapseToggle(id, !isCollapsed);
   };
 
   return (
     <div className="c-widget">
-      <button type="button" onClick={collapseToggleHandler}>Expand/Collapse</button>
-      <h3>{title}</h3>
-      <button type="button" onClick={mapActionHandler}>Show on Map</button>
+      <div className="widget--header">
+        <button type="button" onClick={collapseToggleHandler}>Expand/Collapse</button>
+        <h3>{title}</h3>
+        <button type="button" onClick={mapActionHandler}>Show on Map</button>
+      </div>
       <div className="widget--body">
         <Chart />
       </div>
