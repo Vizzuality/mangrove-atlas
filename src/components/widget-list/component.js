@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Widget from 'components/widget';
 
+// todo: move this to widget selectors
+// it make sense to have the chart type as part of configuration
 const MockedChart = () => (
   <div>
     <h3>Just a mocked chart!</h3>
@@ -11,11 +13,10 @@ const MockedChart = () => (
 
 const WidgetList = ({ list }) => (
   <div>
-    { list.map(({ id, title }) => (
+    { list.map(widget => (
       <Widget
-        key={id}
-        id={id}
-        title={title}
+        key={widget.id}
+        {...widget}
         chart={MockedChart}
       />
     )) }
