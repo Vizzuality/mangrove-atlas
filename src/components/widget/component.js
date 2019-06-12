@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import './style.scss';
 
@@ -16,7 +17,7 @@ const Widget = ({
   };
 
   const collapseToggleHandler = () => {
-    onCollapseToggle(id, !isCollapsed);
+    onCollapseToggle({ id, isCollapsed: !isCollapsed });
   };
 
   return (
@@ -26,7 +27,7 @@ const Widget = ({
         <h3>{title}</h3>
         <button type="button" onClick={mapActionHandler}>Show on Map</button>
       </div>
-      <div className="widget--body">
+      <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
         <Chart />
       </div>
     </div>
