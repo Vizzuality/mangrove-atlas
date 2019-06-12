@@ -15,10 +15,31 @@ If you need more information about env variables you can follow [https://faceboo
 
 Install node dependencies:
 
-`yarn install`
+```
+yarn install
+```
 
 Init server for development:
 
-`yarn start`
+```
+yarn start
+```
 
 It will open automatically the browser [http://localhost:3000](http://localhost:3000).
+
+# Deploy to staging
+
+Put all your code in `develop` branch.
+
+Add heroku site:
+
+```
+heroku git:remote -a mangroves-atlas
+```
+
+And deploy:
+
+```
+git push heroku develop:master
+```
+
