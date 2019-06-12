@@ -8,7 +8,8 @@ const {
   removeWidget,
   setActiveLayers,
   addActiveLayer,
-  removeActiveLayer
+  removeActiveLayer,
+  setWidgetCollapsed
 } = actions;
 
 function removeById(arr, id) {
@@ -32,5 +33,11 @@ export default {
   [removeActiveLayer]: (state, { payload }) => ({
     ...state,
     activeLayers: removeById(state.activeLayers, payload)
+  }),
+  [setWidgetCollapsed]: (state, { payload: { id, isCollapsed } }) => ({
+    ...state,
+    widgets: state.widgets.map(widget => ((widget.id !== id)
+      ? widget
+      : { ...widget, isCollapsed }))
   })
 };

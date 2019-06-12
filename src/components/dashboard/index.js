@@ -4,9 +4,10 @@ import {
   setSearchActive,
   setDashboardCollapsed
 } from 'modules/app/actions';
+import { getDashboardWidgets } from 'modules/widgets/selectors';
 
 import Dashboard from './component';
-import { TITLES, WIDGETS } from './constants';
+import { TITLES } from './constants';
 
 // todo: widgets are processed here so content can get customized
 const mapStateToProps = (state, { type, id }) => {
@@ -27,11 +28,9 @@ const mapStateToProps = (state, { type, id }) => {
     throw new Error('Not a valid title.');
   }
 
-  const widgets = WIDGETS[type];
-
   return ({
     title,
-    widgets,
+    widgets: getDashboardWidgets(state),
     ...state.app
   });
 };

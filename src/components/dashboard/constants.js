@@ -1,4 +1,4 @@
-const widgets = {
+export const widgets = {
   widget_1: {
     id: 'widget_1',
     title: 'Widget 1'
@@ -54,27 +54,4 @@ export const TITLES = {
   }
 };
 
-export const WIDGETS = {
-  global: [
-    widgets.widget_1,
-    widgets.widget_2,
-    widgets.widget_5
-  ],
-  country: [
-    widgets.widget_1,
-    widgets.widget_2,
-    widgets.widget_3,
-    widgets.widget_4,
-    widgets.widget_5
-  ],
-  protected_area: [
-    widgets.widget_1
-  ],
-  aoi: [
-    widgets.widget_4,
-    widgets.widget_3,
-    widgets.widget_1
-  ]
-};
-
-export default { TITLES, WIDGETS };
+export default { TITLES };
