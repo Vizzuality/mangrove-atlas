@@ -55,6 +55,6 @@
     "eslint-plugin-react": "7.11.0"
   },
   "engines": {
-    "node": "10.5.3"
+    "node": "10.x"
   }
 }
