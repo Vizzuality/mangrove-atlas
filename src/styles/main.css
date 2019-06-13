@@ -1,0 +1,5 @@
+body {
+  /* Don't remove this in order to avoid scroll default behaviour */
+  overflow: hidden;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
