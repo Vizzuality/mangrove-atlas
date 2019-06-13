@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
-import './style.scss';
+import Button from 'components/button';
+import styles from './style.module.css';
 
 const Widget = ({
   id,
@@ -21,11 +21,16 @@ const Widget = ({
   };
 
   return (
-    <div className="c-widget">
-      <div className="widget--header">
-        <button type="button" onClick={collapseToggleHandler}>Expand/Collapse</button>
-        <h3>{title}</h3>
-        <button type="button" onClick={mapActionHandler}>Show on Map</button>
+    <div className={styles.widget_wrapper}>
+      <div className={styles.widget_header}>
+        <button
+          type="button"
+          className={styles.widget_title}
+          onClick={collapseToggleHandler}
+        >
+          {title}
+        </button>
+        <Button onClick={mapActionHandler}>Show on Map</Button>
       </div>
       <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
         <Chart />
