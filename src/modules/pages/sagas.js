@@ -3,7 +3,7 @@ import { getLayers } from 'modules/layers/actions';
 import { setWidgets } from 'modules/dashboard/actions';
 
 function* location() {
-  const { page, layers } = yield select();
+  const { page, layers, widgets: { list: allWidgets } } = yield select();
   const { payload: { type } } = page;
   const { list, isLoading } = layers;
 
@@ -42,7 +42,12 @@ function* location() {
   const widgets = DASHBOARD_WIDGETS[type || 'global'].map(widget => ({
     id: widget,
     isCollapsed: true,
-    config: {}
+    isDisplayedOnMap: false,
+    config: {
+      layers: [
+        ...(allWidgets[widget].layers || [])
+      ]
+    }
   }));
   yield put(setWidgets(widgets));
 }
