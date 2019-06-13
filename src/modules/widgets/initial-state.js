@@ -1,4 +1,6 @@
-import { widgets } from 'components/dashboard/constants';
+import { widgets } from './constants';
+
+// todo: widgets should come from a service
 
 export default {
   list: { ...widgets },

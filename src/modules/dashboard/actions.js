@@ -10,6 +10,7 @@ export const addActiveLayer = createAction('DASHBOARD/addActiveLayer');
 export const removeActiveLayer = createAction('DASHBOARD/removeActiveLayer');
 export const setWidgetCollapsed = createAction('DASHBOARD/setWidgetCollapsed');
 export const triggerWidgetMapAction = createAction('DASHBOARD/triggerWidgetMapAction');
+export const toggleWidgetLayers = createAction('DASHBOARD/toggleLayers');
 
 export default {
   setDashboard,
@@ -21,5 +22,6 @@ export default {
   addActiveLayer,
   removeActiveLayer,
   setWidgetCollapsed,
-  triggerWidgetMapAction
+  triggerWidgetMapAction,
+  toggleWidgetLayers
 };
