@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { LayerManager, Layer } from 'layer-manager/dist/components';
 import { PluginMapboxGl } from 'layer-manager';
 
-import './style.scss';
-
 import RegularDashboard from 'components/dashboard';
 import SearchDashboard from 'components/search-dashboard';
 import Map from 'components/map';
 
+import styles from './style.module.css';
+
 const Main = ({ type, id, isSearchActive, layers }) => {
   const Dashboard = !isSearchActive ? RegularDashboard : SearchDashboard;
   return (
-    <main>
-      <Dashboard type={type} id={id} />
-      <div className="map-wrapper">
+    <div className={styles.container}>
+      <div className={styles.dashboard}>
+        <Dashboard type={type} id={id} />
+      </div>
+      <div className={styles.map}>
         <Map
           className="mangrove-map-component"
           height="100vh"
@@ -29,7 +31,7 @@ const Main = ({ type, id, isSearchActive, layers }) => {
           )}
         </Map>
       </div>
-    </main>
+    </div>
   );
 };
 

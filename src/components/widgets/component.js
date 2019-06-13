@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import styles from './style.module.css';
 
 const Widgets = ({ list }) => (
-  <div>
+  <Fragment>
     { list.map(widget => (
-      <h2 key={widget.id}>{widget.title}</h2>
+      <div className={styles.widget_wrapper}>
+        <h2 key={widget.id} className={styles.widget_title}>{widget.title}</h2>
+      </div>
     )) }
-  </div>
+  </Fragment>
 );
 
 Widgets.propTypes = {
