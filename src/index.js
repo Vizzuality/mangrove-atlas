@@ -6,6 +6,8 @@ import * as serviceWorker from 'config/serviceWorker';
 import store from 'config/store';
 import Pages from 'components/layout';
 
+import 'styles/main.css';
+
 const App = () => (
   <Provider store={store}>
     <Pages />

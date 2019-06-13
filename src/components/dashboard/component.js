@@ -1,18 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from 'components/header';
 import Widgets from 'components/widgets';
 import Footer from 'components/footer';
 
-import './style.scss';
-
 const Dashboard = ({ title, widgets }) => (
-  <div className="dashboard">
+  <Fragment>
     <Header title={title} />
     <Widgets list={widgets} />
     <Footer />
-  </div>
+  </Fragment>
 );
 
 Dashboard.propTypes = {

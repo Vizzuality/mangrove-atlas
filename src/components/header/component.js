@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './style.module.css';
 
 const Header = ({ title, setSearchActive }) => {
   function clickHandler() {
@@ -7,11 +8,10 @@ const Header = ({ title, setSearchActive }) => {
   }
 
   return (
-    <header>
-      <h1>{title}</h1>
+    <div className={styles.location_wrapper}>
+      <input className={styles.location_title} type="search" placeholder={title} />
       <button type="button" onClick={clickHandler}>Find a location</button>
-      <h2>LOGO</h2>
-    </header>
+    </div>
   );
 };
 
