@@ -13,7 +13,7 @@ const Widget = ({
   onCollapseToggle
 }) => {
   const mapActionHandler = () => {
-    onMapAction(id);
+    onMapAction({ id });
   };
 
   const collapseToggleHandler = () => {
