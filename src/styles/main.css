@@ -3,3 +3,7 @@ body {
   overflow: hidden;
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
+
+button:focus {
+  outline: 0;
+}
