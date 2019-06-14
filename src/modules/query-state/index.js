@@ -1,4 +1,5 @@
 import Registry from './registry';
+import mask from './mask';
 
 class QueryStateManager {
   registry = new Registry()
@@ -72,5 +73,6 @@ const queryState = new QueryStateManager();
 
 export {
   QueryStateManager,
-  queryState
+  queryState,
+  mask
 };
