@@ -1,4 +1,4 @@
-import { queryState } from 'modules/query-state';
+import { queryState, mask } from 'modules/query-state';
 
 import * as actions from './actions';
 import * as reducers from './reducers';
@@ -10,7 +10,14 @@ queryState.registry.add('map', {
   actions: [actions.setMapViewport],
   // input: appState, output: queryState
   encodeMap: state => ({
-    ...state.viewport
+    ...mask(state.viewport, [
+      'zoom',
+      'latitude',
+      'longitude',
+      'bearing',
+      'pitch',
+      'altitude'
+    ])
   }),
   decodeMap: urlState => ({
     viewport: { ...urlState }
