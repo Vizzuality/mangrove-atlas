@@ -30,7 +30,7 @@ const Widget = ({
         >
           {title}
         </button>
-        <Button onClick={mapActionHandler}>Show on Map</Button>
+        <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
       <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
         <Chart />
