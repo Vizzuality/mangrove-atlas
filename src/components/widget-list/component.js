@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import Widget from 'components/widget';
 
 // todo: move this to widget selectors
@@ -12,7 +11,7 @@ const MockedChart = () => (
 );
 
 const WidgetList = ({ list }) => (
-  <div>
+  <Fragment>
     { list.map(widget => (
       <Widget
         key={widget.id}
@@ -20,7 +19,7 @@ const WidgetList = ({ list }) => (
         chart={MockedChart}
       />
     )) }
-  </div>
+  </Fragment>
 );
 
 WidgetList.propTypes = {
