@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Button from 'components/button';
-import styles from './style.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import styles from './style.module.scss';
 
 const Widget = ({
   id,
@@ -21,18 +23,21 @@ const Widget = ({
   };
 
   return (
-    <div className={styles.widget_wrapper}>
-      <div className={styles.widget_header}>
+    <div className={styles.widget}>
+      <div className={styles.header}>
         <button
           type="button"
-          className={styles.widget_title}
+          className={styles.title}
           onClick={collapseToggleHandler}
         >
+          {isCollapsed
+            ? <FontAwesomeIcon icon={faChevronDown} />
+            : <FontAwesomeIcon icon={faChevronUp} />}
           {title}
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
-      <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
+      <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
         <Chart />
       </div>
     </div>

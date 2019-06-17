@@ -1,0 +1,50 @@
+@import '../../styles/vars';
+
+.widget {
+  $padding: 15px;
+  $border-radius: 20px;
+
+  margin: 10px 0;
+  padding: $padding;
+  border-radius: $border-radius;
+  background: white;
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    flex: 1;
+
+    position: relative;
+    background: transparent;
+    border: 0;
+    padding: 5px 0;
+    margin: 0 20px 0 0;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 24px;
+    text-align: left;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    & svg {
+      margin-right: 15px;
+    }
+  }
+
+  .content {
+    transition: max-height .25s ease-in-out;
+
+    &.collapsed {
+      max-height: 0px;
+      overflow: hidden;
+    }
+  }
+}
