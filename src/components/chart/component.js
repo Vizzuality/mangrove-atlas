@@ -57,7 +57,6 @@ class Chart extends PureComponent {
 
   render() {
     const {
-      className,
       data,
       config,
       handleMouseMove,
@@ -192,16 +191,6 @@ class Chart extends PureComponent {
               <Area key={key} dataKey={key} dot={false} {...areas[key]} />
             ))}
 
-            {lines && Object.keys(lines).map(key => (
-              <Line
-                key={key}
-                dataKey={key}
-                dot={false}
-                strokeWidth={2}
-                {...lines[key]}
-              />
-            ))}
-
             {bars && Object.keys(bars).map(key => (
               <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
                 {!!bars[key].label && <Label {...bars[key].label} />}
@@ -215,6 +204,15 @@ class Chart extends PureComponent {
               </Bar>
             ))}
 
+            {lines && Object.keys(lines).map(key => (
+              <Line
+                key={key}
+                dataKey={key}
+                dot={false}
+                strokeWidth={2}
+                {...lines[key]}
+              />
+            ))}
 
             {pies && (
               Object.keys(pies).map(key => (
@@ -244,6 +242,7 @@ class Chart extends PureComponent {
               />
             )}
 
+
             {tooltip && (
               <Tooltip
                 isAnimationActive={false}
@@ -258,6 +257,7 @@ class Chart extends PureComponent {
                 data={data}
               />
             )}
+
           </CHART>
         </ResponsiveContainer>
       </div>

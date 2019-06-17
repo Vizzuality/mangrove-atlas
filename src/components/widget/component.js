@@ -28,7 +28,7 @@ const Widget = ({
   // TODO: Fetch widget data and pass to parse
   // For now, fake mangroves coverate
   let widgetData;
-  if (slug === 'mangrove_coverage') {
+  if (slug === 'mangrove_coverage' || slug === 'mangrove_net_change') {
     widgetData = widgetConfig.parse({ rows: [1, 2] });
   } else {
     widgetData = widgetConfig.parse({ rows: [] });
