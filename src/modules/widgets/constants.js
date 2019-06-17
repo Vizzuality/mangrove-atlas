@@ -9,8 +9,9 @@ export const widgets = {
   },
   widget_2: {
     id: 'widget_2',
-    slug: 'default',
-    title: 'Widget 2'
+    title: 'Mangrove Net Change',
+    slug: 'mangrove_net_change',
+    layers: []
   },
   widget_3: {
     id: 'widget_3',

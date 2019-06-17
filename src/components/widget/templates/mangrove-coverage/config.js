@@ -22,12 +22,12 @@ export const CONFIG = {
       {
         label: 'Mangroves',
         percentage: 30,
-        color: 'green'
+        color: '#BED246'
       },
       {
         label: 'Non Mangroves',
         percentage: 100 - 30,
-        color: 'gray'
+        color: '#ECECEF'
       }
     ];
 
@@ -41,7 +41,7 @@ export const CONFIG = {
           y: 100
         }
       )),
-      template: 'Im a sentence sent from backend!',
+      template: 'Mangrove forest cover 55 % of the world’s 230 km coastline.',
       chartConfig: {
         type: 'pie',
         layout: 'centric',
@@ -56,7 +56,7 @@ export const CONFIG = {
               dataKey: 'percentage',
               nameKey: 'x',
               innerRadius: '60%',
-              outerRadius: '80%'
+              outerRadius: '80%',
             }
           }
         },
