@@ -134,18 +134,17 @@ class Chart extends PureComponent {
                     key={`pattern_${key}`}
                     {...patterns[key].attributes}
                   >
-                    {patterns[key].children &&
-                      Object.keys(patterns[key].children).map((iKey) => {
-                        const { tag } = patterns[key].children[iKey];
+                    {patterns[key].children && Object.keys(patterns[key].children).map((iKey) => {
+                      const { tag } = patterns[key].children[iKey];
 
-                        return React.createElement(
-                          tag,
-                          {
-                            key: iKey,
-                            ...patterns[key].children[iKey]
-                          }
-                        );
-                      })
+                      return React.createElement(
+                        tag,
+                        {
+                          key: iKey,
+                          ...patterns[key].children[iKey]
+                        }
+                      );
+                    })
                     }
                   </pattern>
                 ))
@@ -208,13 +207,12 @@ class Chart extends PureComponent {
               <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
                 {!!bars[key].label && <Label {...bars[key].label} />}
 
-                {bars[key].itemColor &&
-                  data.map(item => (
-                    <Cell
-                      key={`c_${item.color}`}
-                      fill={item.color}
-                    />
-                  ))}
+                {bars[key].itemColor && data.map(item => (
+                  <Cell
+                    key={`c_${item.color}`}
+                    fill={item.color}
+                  />
+                ))}
               </Bar>
             ))}
 

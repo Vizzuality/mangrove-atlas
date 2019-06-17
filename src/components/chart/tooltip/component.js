@@ -21,7 +21,7 @@ class Tooltip extends PureComponent {
     let val = value;
 
     if (format && typeof format === 'function') {
-      val = format(val)
+      val = format(val);
     }
 
     return `${preffix}${val}${suffix}`;
