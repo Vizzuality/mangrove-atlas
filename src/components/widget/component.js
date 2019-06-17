@@ -50,7 +50,7 @@ const Widget = ({
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
 
-      <div className={classnames(styles.widget_content, { [styles.collapsed]: isCollapsed })}>
+      <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
         {children({
           id,
           title,

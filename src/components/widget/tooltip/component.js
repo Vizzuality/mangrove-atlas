@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import styles from './style.module.css';
+import styles from './style.module.scss';
 
 class Tooltip extends PureComponent {
   static propTypes = {
