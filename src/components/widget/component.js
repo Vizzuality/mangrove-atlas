@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Button from 'components/button';
 import styles from './style.module.css';
 
 const Widget = ({
   id,
   title,
+  slug,
   isCollapsed,
-  chart: Chart,
+  children,
   onMapAction,
-  onCollapseToggle
+  onCollapseToggle,
+  widgetConfig,
+  ...props
 }) => {
   const mapActionHandler = () => {
     onMapAction({ id });
@@ -19,6 +21,15 @@ const Widget = ({
   const collapseToggleHandler = () => {
     onCollapseToggle({ id, isCollapsed: !isCollapsed });
   };
+
+  // TODO: Fetch widget data and pass to parse
+  // For now, fake mangroves coverate
+  let widgetData;
+  if (slug === 'mangrove_coverage') {
+    widgetData = widgetConfig.parse({ rows: [1, 2] });
+  } else {
+    widgetData = widgetConfig.parse({ rows: [] });
+  }
 
   return (
     <div className={styles.widget_wrapper}>
@@ -32,27 +43,51 @@ const Widget = ({
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
-      <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
-        <Chart />
+      <div className="widget--content">
+        {children({
+          id,
+          title,
+          slug,
+          isCollapsed,
+          data: widgetData,
+          ...props
+        })}
       </div>
     </div>
   );
+
+  // return (
+  //   <div className={styles.widget_wrapper}>
+  //     <div className={styles.widget_header}>
+  //       <button
+  //         type="button"
+  //         className={styles.widget_title}
+  //         onClick={collapseToggleHandler}
+  //       >
+  //         {title}
+  //       </button>
+  //       <Button onClick={mapActionHandler}>Show layer</Button>
+  //     </div>
+  //     <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
+  //       <Chart />
+  //     </div>
+  //   </div>
+  // );
 };
 
 Widget.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  widgetConfig: PropTypes.shape({}).isRequired,
   isCollapsed: PropTypes.bool,
-  chart: PropTypes.func, // It is actually a function stateless component
+  children: PropTypes.func.isRequired,
   onMapAction: PropTypes.func,
   onCollapseToggle: PropTypes.func
 };
 
 Widget.defaultProps = {
   isCollapsed: false,
-  chart: (
-    <h1>Just a placeholder.</h1>
-  ),
   onMapAction: () => {},
   onCollapseToggle: () => {}
 };

@@ -2,13 +2,13 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from 'components/header';
-import WidgetList from 'components/widget-list';
+import Widgets from 'components/widgets';
 import Footer from 'components/footer';
 
 const Dashboard = ({ title, widgets }) => (
   <Fragment>
     <Header title={title} />
-    <WidgetList list={widgets} />
+    <Widgets list={widgets} />
     <Footer />
   </Fragment>
 );

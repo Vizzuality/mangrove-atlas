@@ -9,7 +9,7 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget/tooltip';
 
 export const CONFIG = {
-  parse: ({ rows }, params = null) => {
+  parse: ({ rows }) => {
     if (!rows.length) {
       return {
         chart: [],
@@ -41,7 +41,7 @@ export const CONFIG = {
         }
       )),
       template: 'Im a sentence sent from backend!',
-      config: {
+      chartConfig: {
         type: 'pie',
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: 'percentage',
@@ -101,14 +101,14 @@ export const CONFIG = {
               }}
               settings={[
                 { key: 'x' },
-                { key: 'percentage', format: value => `Percentage: ${format('.1%')(value/100)}` }
+                { key: 'percentage', format: value => `Percentage: ${format('.1%')(value / 100)}` }
               ]}
             />
           )
         }
       }
-    }
+    };
   }
-}
+};
 
 export default CONFIG;
