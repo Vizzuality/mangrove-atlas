@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './style.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import styles from './style.module.scss';
 
 const Header = ({ title, setSearchActive }) => {
   function clickHandler() {
@@ -8,9 +10,11 @@ const Header = ({ title, setSearchActive }) => {
   }
 
   return (
-    <div className={styles.location_wrapper}>
-      <input className={styles.location_title} type="search" placeholder={title} />
-      <button type="button" onClick={clickHandler}>Find a location</button>
+    <div className={styles.location}>
+      <input className={styles.title} type="search" placeholder={title} />
+      <button type="button" onClick={clickHandler} className={styles.searchButton}>
+        <FontAwesomeIcon icon={faSearch} size="lg" />
+      </button>
     </div>
   );
 };

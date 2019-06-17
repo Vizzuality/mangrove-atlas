@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
-import styles from './style.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
+import styles from './style.module.scss';
 
 const Widget = ({
   id,
@@ -32,18 +35,22 @@ const Widget = ({
   }
 
   return (
-    <div className={styles.widget_wrapper}>
-      <div className={styles.widget_header}>
+    <div className={styles.widget}>
+      <div className={styles.header}>
         <button
           type="button"
-          className={styles.widget_title}
+          className={styles.title}
           onClick={collapseToggleHandler}
         >
+          {isCollapsed
+            ? <FontAwesomeIcon icon={faChevronDown} />
+            : <FontAwesomeIcon icon={faChevronUp} />}
           {title}
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
-      <div className={styles.widget_content}>
+
+      <div className={classnames(styles.widget_content, { [styles.collapsed]: isCollapsed })}>
         {children({
           id,
           title,
