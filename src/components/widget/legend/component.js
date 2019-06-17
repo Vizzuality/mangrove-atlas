@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './style.module.css';
+import styles from './style.module.scss';
 
 const Legend = ({ groups }) => (
   <div className={styles.widget_legend}>

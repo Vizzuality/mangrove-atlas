@@ -8,25 +8,11 @@ class MangroveCoverage extends React.PureComponent {
     template: PropTypes.string.isRequired,
     chart: PropTypes.arrayOf(PropTypes.object).isRequired,
     chartConfig: PropTypes.shape({}).isRequired,
-    collapsed: PropTypes.bool
   };
 
-  static defaultProps = {
-    collapsed: false
-  };
-
-  collapsed() {
-    const { template } = this.props;
-
-    return (
-      <div className="widget_template">
-        {template}
-      </div>
-    );
-  }
-
-  expanded() {
+  render() {
     const { chart, template, chartConfig } = this.props;
+
     return (
       <Fragment>
         <div className="widget_template">
@@ -42,14 +28,6 @@ class MangroveCoverage extends React.PureComponent {
         )}
       </Fragment>
     );
-  }
-
-  render() {
-    const { collapsed } = this.props;
-
-    const content = (collapsed) ? this.collapsed() : this.expanded();
-
-    return content;
   }
 }
 

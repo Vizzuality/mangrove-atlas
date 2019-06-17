@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
@@ -22,7 +21,7 @@ import {
   Label
 } from 'recharts';
 
-import styles from './style.module.css';
+import styles from './style.module.scss';
 
 import ChartTick from './tick';
 
