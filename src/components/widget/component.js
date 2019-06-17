@@ -43,7 +43,7 @@ const Widget = ({
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
-      <div className="widget--content">
+      <div className={styles.widget_content}>
         {children({
           id,
           title,
@@ -55,24 +55,6 @@ const Widget = ({
       </div>
     </div>
   );
-
-  // return (
-  //   <div className={styles.widget_wrapper}>
-  //     <div className={styles.widget_header}>
-  //       <button
-  //         type="button"
-  //         className={styles.widget_title}
-  //         onClick={collapseToggleHandler}
-  //       >
-  //         {title}
-  //       </button>
-  //       <Button onClick={mapActionHandler}>Show layer</Button>
-  //     </div>
-  //     <div className={classnames('widget--body', { '-collapsed': isCollapsed })}>
-  //       <Chart />
-  //     </div>
-  //   </div>
-  // );
 };
 
 Widget.propTypes = {

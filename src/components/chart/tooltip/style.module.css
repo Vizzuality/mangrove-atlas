@@ -3,19 +3,18 @@
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
   background-color: #FFF;
   color: gray;
-  border-radius: 12px;
-  font-size: 12;
-  font-weight: 500;
+  border-radius: 2px;
+  font-size: 14px;
 }
 
-.data-line {
+.data_line {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.data-line.right {
+.data_line.right {
   justify-content: flex-end;
   text-align: right;
 }

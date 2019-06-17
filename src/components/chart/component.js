@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
-import merge from 'lodash/merge';
 
 import {
   Line,
@@ -22,9 +22,9 @@ import {
   Label
 } from 'recharts';
 
-import ChartTick from './tick';
+import styles from './style.module.css';
 
-import './styles.scss';
+import ChartTick from './tick';
 
 class Chart extends PureComponent {
   static propTypes = {
@@ -98,7 +98,10 @@ class Chart extends PureComponent {
     }
 
     return (
-      <div className={`c-chart ${className}`} style={{ height }}>
+      <div
+        className={styles.chart}
+        style={{ height }}
+      >
         <ResponsiveContainer>
           <CHART
             height={height}
@@ -110,44 +113,41 @@ class Chart extends PureComponent {
             onMouseLeave={handleMouseLeave}
           >
             <defs>
-              {gradients &&
-                Object.keys(gradients).map(key => (
-                  <linearGradient
-                    key={`lg_${key}`}
-                    {...gradients[key].attributes}
-                  >
-                    {gradients[key].stops &&
-                      Object.keys(gradients[key].stops).map(sKey => (
-                        <stop
-                          key={`st_${sKey}`}
-                          {...gradients[key].stops[sKey]}
-                        />
-                      ))
-                    }
-                  </linearGradient>
-                ))
+              {gradients && Object.keys(gradients).map(key => (
+                <linearGradient
+                  key={`lg_${key}`}
+                  {...gradients[key].attributes}
+                >
+                  {gradients[key].stops && Object.keys(gradients[key].stops).map(sKey => (
+                    <stop
+                      key={`st_${sKey}`}
+                      {...gradients[key].stops[sKey]}
+                    />
+                  ))
+                  }
+                </linearGradient>
+              ))
               }
 
-              {patterns &&
-                Object.keys(patterns).map(key => (
-                  <pattern
-                    key={`pattern_${key}`}
-                    {...patterns[key].attributes}
-                  >
-                    {patterns[key].children && Object.keys(patterns[key].children).map((iKey) => {
-                      const { tag } = patterns[key].children[iKey];
+              {patterns && Object.keys(patterns).map(key => (
+                <pattern
+                  key={`pattern_${key}`}
+                  {...patterns[key].attributes}
+                >
+                  {patterns[key].children && Object.keys(patterns[key].children).map((iKey) => {
+                    const { tag } = patterns[key].children[iKey];
 
-                      return React.createElement(
-                        tag,
-                        {
-                          key: iKey,
-                          ...patterns[key].children[iKey]
-                        }
-                      );
-                    })
-                    }
-                  </pattern>
-                ))
+                    return React.createElement(
+                      tag,
+                      {
+                        key: iKey,
+                        ...patterns[key].children[iKey]
+                      }
+                    );
+                  })
+                  }
+                </pattern>
+              ))
               }
             </defs>
 
@@ -254,6 +254,7 @@ class Chart extends PureComponent {
 
             {legend && (
               <Legend
+                className={styles.chart_legend}
                 {...legend}
                 data={data}
               />

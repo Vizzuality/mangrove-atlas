@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 // Styles
-import './styles.scss';
+import styles from './style.module.css';
 
 class Tooltip extends PureComponent {
   static propTypes = {
@@ -33,7 +33,7 @@ class Tooltip extends PureComponent {
     return (
       <div>
         {settings && settings.length && (
-          <div className="c-chart-tooltip">
+          <div className={styles.chart_tooltip}>
             {settings.map(
               d => (hideZeros && !values[d.key] ? null : (
                 <div
@@ -42,16 +42,16 @@ class Tooltip extends PureComponent {
                 >
                   {/* LABEL */}
                   {(d.label || d.labelKey) && (
-                    <div className="data-label">
+                    <div className={styles.data_label}>
                       {d.color && (
                         <div
-                          className="data-color"
+                          className={styles.data_color}
                           style={{ backgroundColor: d.color }}
                         />
                       )}
 
                       {d.key === 'break' ? (
-                        <span className="break-label">{d.label}</span>
+                        <span className={styles.break_label}>{d.label}</span>
                       ) : (
                         <span>{d.label || values[d.labelKey]}</span>
                       )}
@@ -59,7 +59,7 @@ class Tooltip extends PureComponent {
                   )}
 
                   {/* UNIT */}
-                  <div className="data-value">
+                  <div className={styles.data_value}>
                     {this.getValue(d, values[d.key])}
                   </div>
                 </div>
