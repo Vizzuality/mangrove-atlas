@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from './style.module.css';
+import classnames from 'classnames';
+import styles from './style.module.scss';
 
 export default (props) => {
   const { children, isEnabled } = props;
@@ -7,7 +8,7 @@ export default (props) => {
   return (
     <button
       type="button"
-      className={isEnabled ? styles.button_is_enabled : styles.button}
+      className={classnames(styles.button, isEnabled && styles.enabled)}
       {...props}
     >
       {children}

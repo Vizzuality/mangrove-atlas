@@ -7,12 +7,12 @@ import RegularDashboard from 'components/dashboard';
 import SearchDashboard from 'components/search-dashboard';
 import Map from 'components/map';
 
-import styles from './style.module.css';
+import styles from './style.module.scss';
 
 const Main = ({ type, id, isSearchActive, layers }) => {
   const Dashboard = !isSearchActive ? RegularDashboard : SearchDashboard;
   return (
-    <div className={styles.container}>
+    <div className={styles.main}>
       <div className={styles.dashboard}>
         <Dashboard type={type} id={id} />
       </div>
