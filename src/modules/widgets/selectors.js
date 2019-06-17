@@ -7,7 +7,8 @@ export const getDashboardWidgets = createSelector(
   [allWidgets, dashboardWidgets], (_allWidgets, _dashboardWidgets) => _dashboardWidgets.map(
     widget => ({
       ...widget,
-      title: _allWidgets[widget.id].title
+      title: _allWidgets[widget.id].title,
+      slug: _allWidgets[widget.id].slug
     })
   )
 );

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { Chart } from '@earth-pulse/components';
+import Chart from 'components/chart';
 
-class HumanImpact extends React.PureComponent {
+class MangroveCoverage extends React.PureComponent {
   static propTypes = {
     template: PropTypes.string.isRequired,
-    chart: PropTypes.shape(PropTypes.object).isRequired,
-    config: PropTypes.shape({}).isRequired,
+    chart: PropTypes.arrayOf(PropTypes.object).isRequired,
+    chartConfig: PropTypes.shape({}).isRequired,
     collapsed: PropTypes.bool
   };
 
@@ -26,8 +26,7 @@ class HumanImpact extends React.PureComponent {
   }
 
   expanded() {
-    const { chart, template, config } = this.props;
-
+    const { chart, template, chartConfig } = this.props;
     return (
       <Fragment>
         <div className="widget--template">
@@ -38,7 +37,7 @@ class HumanImpact extends React.PureComponent {
         {!!chart.length && (
           <Chart
             data={chart}
-            config={config}
+            config={chartConfig}
           />
         )}
       </Fragment>
@@ -54,4 +53,4 @@ class HumanImpact extends React.PureComponent {
   }
 }
 
-export default HumanImpact;
+export default MangroveCoverage;
