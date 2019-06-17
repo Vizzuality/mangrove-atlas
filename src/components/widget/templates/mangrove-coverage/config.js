@@ -7,6 +7,7 @@ import groupBy from 'lodash/groupBy';
 
 // Components
 import WidgetTooltip from 'components/widget/tooltip';
+import WidgetLegend from 'components/widget/legend';
 
 export const CONFIG = {
   parse: ({ rows }) => {
@@ -43,6 +44,8 @@ export const CONFIG = {
       template: 'Im a sentence sent from backend!',
       chartConfig: {
         type: 'pie',
+        layout: 'centric',
+        height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: 'percentage',
         yKeys: {
@@ -64,31 +67,7 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.category);
-
-            return (
-              <div className="widget--legend">
-                {Object.keys(groups).map(g => (
-                  <div key={g} className="widget--legend-group">
-                    <ul className="widget--legend-list">
-                      {groups[g].map(item => (
-                        <li
-                          key={`item-${item.color}`}
-                          className="widget--legend-list-item"
-                        >
-                          <svg height="12" width="12">
-                            <rect width="13" height="13" fill={item.color} />
-                          </svg>
-
-                          <span>
-                            {item.value}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            );
+            return <WidgetLegend groups={groups} />;
           }
         },
         tooltip: {

@@ -19,7 +19,7 @@ class MangroveCoverage extends React.PureComponent {
     const { template } = this.props;
 
     return (
-      <div className="widget--template">
+      <div className="widget_template">
         {template}
       </div>
     );
@@ -29,7 +29,7 @@ class MangroveCoverage extends React.PureComponent {
     const { chart, template, chartConfig } = this.props;
     return (
       <Fragment>
-        <div className="widget--template">
+        <div className="widget_template">
           {template}
         </div>
 
