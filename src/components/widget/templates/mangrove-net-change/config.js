@@ -1,9 +1,12 @@
+import React from 'react';
 // Utils
 import { format } from 'd3-format';
 // import { replace } from 'layer-manager';
+import groupBy from 'lodash/groupBy';
 
 // Components
-import WidgetTooltip from 'components/widget/tooltip';
+// import WidgetTooltip from 'components/widget/tooltip';
+import WidgetLegend from 'components/widget/legend';
 
 export const CONFIG = {
   parse: ({ rows }) => {
@@ -89,6 +92,17 @@ export const CONFIG = {
         cartesianGrid: {
           vertical: false,
           strokeDasharray: '6 6'
+        },
+        legend: {
+          align: 'top',
+          verticalAlign: 'top',
+          layout: 'horizontal',
+          height: 50,
+          content: (properties) => {
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.payload.category);
+            return <WidgetLegend direction="vertical" groups={groups} />;
+          }
         },
         // tooltip: {
         //   cursor: false,

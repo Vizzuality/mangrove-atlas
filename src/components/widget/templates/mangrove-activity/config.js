@@ -1,9 +1,12 @@
+import React from 'react';
 // Utils
-import { format } from 'd3-format';
+// import { format } from 'd3-format';
 // import { replace } from 'layer-manager';
+import groupBy from 'lodash/groupBy';
 
 // Components
-import WidgetTooltip from 'components/widget/tooltip';
+// import WidgetTooltip from 'components/widget/tooltip';
+import WidgetLegend from 'components/widget/legend';
 
 export const CONFIG = {
   parse: ({ rows }) => {
@@ -62,16 +65,27 @@ export const CONFIG = {
           bars: {
             gain: {
               barSize: 10,
-              transform: `translate(0, ${(4 + 10) / 2})`,
+              transform: `translate(0, ${10 / 2})`,
               fill: '#077FAC',
               radius: [0, 10, 10, 0],
             },
             loss: {
               barSize: 10,
-              transform: `translate(0, -${(4 + 10) / 2})`,
+              transform: `translate(0, -${10 / 2})`,
               fill: '#EB6240',
               radius: [0, 10, 10, 0],
             }
+          }
+        },
+        legend: {
+          align: 'top',
+          verticalAlign: 'top',
+          layout: 'horizontal',
+          height: 50,
+          content: (properties) => {
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.payload.category);
+            return <WidgetLegend direction="vertical" groups={groups} />;
           }
         },
         xAxis: {
