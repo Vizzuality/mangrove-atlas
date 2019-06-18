@@ -12,14 +12,14 @@ const Widget = ({
   isCollapsed,
   chart: Chart,
   onMapAction,
-  onCollapseToggle
+  toggleCollapse
 }) => {
   const mapActionHandler = () => {
     onMapAction({ id });
   };
 
   const collapseToggleHandler = () => {
-    onCollapseToggle({ id, isCollapsed: !isCollapsed });
+    toggleCollapse({ id, isCollapsed: !isCollapsed });
   };
 
   return (
@@ -50,7 +50,7 @@ Widget.propTypes = {
   isCollapsed: PropTypes.bool,
   chart: PropTypes.func, // It is actually a function stateless component
   onMapAction: PropTypes.func,
-  onCollapseToggle: PropTypes.func
+  toggleCollapse: PropTypes.func
 };
 
 Widget.defaultProps = {
@@ -59,7 +59,7 @@ Widget.defaultProps = {
     <h1>Just a placeholder.</h1>
   ),
   onMapAction: () => {},
-  onCollapseToggle: () => {}
+  toggleCollapse: () => {}
 };
 
 export default Widget;

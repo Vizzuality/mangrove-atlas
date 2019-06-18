@@ -6,4 +6,7 @@ export const fetchFailed = createAction('WIDGETS/FETCH_FAILED');
 export const setCurrent = createAction('WIDGETS/SET_CURRENT');
 export const fetchWidgets = createAction('WIDGETS/FETCH_ALL');
 
+export const toggleCollapse = createAction('WIDGET/TOGGLE_COLLAPSE');
+export const collapseAll = createAction('WIDGETS/COLLAPSE_ALL');
+export const expandAll = createAction('WIDGETS/EXPAND_ALL');
 export const triggerMapAction = createAction('WIDGETS/triggerMapAction');
