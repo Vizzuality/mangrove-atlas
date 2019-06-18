@@ -1,26 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Button from 'components/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
 import styles from './style.module.scss';
 
 const Widget = ({
   id,
-  title,
+  name,
+  slug,
   isCollapsed,
-  chart: Chart,
+  children,
   onMapAction,
-  onCollapseToggle
+  toggleCollapse,
+  widgetConfig,
+  ...props
 }) => {
   const mapActionHandler = () => {
     onMapAction({ id });
   };
 
   const collapseToggleHandler = () => {
-    onCollapseToggle({ id, isCollapsed: !isCollapsed });
+    toggleCollapse({ id, isCollapsed: !isCollapsed });
   };
+
+  // TODO: Fetch widget data and pass to parse
+  // For now, fake mangroves coverate
+  let widgetData;
+  if (slug) {
+    widgetData = widgetConfig.parse({ rows: [1, 2] });
+  } else {
+    widgetData = widgetConfig.parse({ rows: [] });
+  }
 
   return (
     <div className={styles.widget}>
@@ -33,12 +45,20 @@ const Widget = ({
           {isCollapsed
             ? <FontAwesomeIcon icon={faChevronDown} />
             : <FontAwesomeIcon icon={faChevronUp} />}
-          {title}
+          {name}
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
+
       <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
-        <Chart />
+        {children({
+          id,
+          name,
+          slug,
+          isCollapsed,
+          data: widgetData,
+          ...props
+        })}
       </div>
     </div>
   );
@@ -46,20 +66,19 @@ const Widget = ({
 
 Widget.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  widgetConfig: PropTypes.shape({}).isRequired,
   isCollapsed: PropTypes.bool,
-  chart: PropTypes.func, // It is actually a function stateless component
+  children: PropTypes.func.isRequired,
   onMapAction: PropTypes.func,
-  onCollapseToggle: PropTypes.func
+  toggleCollapse: PropTypes.func
 };
 
 Widget.defaultProps = {
   isCollapsed: false,
-  chart: (
-    <h1>Just a placeholder.</h1>
-  ),
   onMapAction: () => {},
-  onCollapseToggle: () => {}
+  toggleCollapse: () => {}
 };
 
 export default Widget;
