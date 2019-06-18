@@ -1,13 +1,6 @@
 import { createAction } from 'vizzuality-redux-tools';
 
-export const setList = createAction('LAYERS/setList');
-export const setLoading = createAction('LAYERS/setLoading');
-export const setError = createAction('LAYERS/setError');
-export const getLayers = createAction('LAYERS/getLayers');
-
-export default {
-  setList,
-  setLoading,
-  setError,
-  getLayers
-};
+export const fetchRequested = createAction('LAYERS/FETCH_REQUESTED');
+export const fetchSucceeded = createAction('LAYERS/FETCH_SUCCEDED');
+export const fetchFailed = createAction('LAYERS/FETCH_FAILED');
+export const fetchLayers = createAction('LAYERS/FETCH_ALL');

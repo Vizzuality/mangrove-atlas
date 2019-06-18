@@ -31,15 +31,15 @@ export default {
   }),
   [toggleCollapse]: (state, { payload }) => {
     const list = state.list.map((item) => {
-      if (item.id !== payload.id) return item;
+      if (item.id !== payload.id) return ({ ...item });
       return ({ ...item, isCollapsed: !item.isCollapsed });
     });
-    const noCollapsed = list.find(item => !item.isCollapsed);
+    const noCollapsed = list.find(item => item.isCollapsed === false);
 
     return {
       ...state,
       list,
-      isCollapsed: !!noCollapsed
+      isCollapsed: !noCollapsed
     };
   }
 };

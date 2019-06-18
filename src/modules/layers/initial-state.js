@@ -1,5 +1,5 @@
 export default {
-  list: {},
+  list: [],
   isLoading: false,
   error: null
 };

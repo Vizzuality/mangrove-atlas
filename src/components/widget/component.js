@@ -35,7 +35,7 @@ const Widget = ({
   }
 
   return (
-    <div className={styles.widget}>
+    <div className={classnames(styles.widget, { [styles.collapsed]: isCollapsed })}>
       <div className={styles.header}>
         <button
           type="button"
@@ -50,7 +50,7 @@ const Widget = ({
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
 
-      <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
+      <div className={classnames(styles.content)}>
         {children({
           id,
           name,
