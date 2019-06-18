@@ -6,22 +6,21 @@ import AppPage from 'pages/app';
 import NotFoundPage from 'pages/not-found';
 
 const pageMap = new Map([
-  ['LOCATION', AppPage]
+  ['APP', AppPage]
 ]);
 
-
 // prompts or error logging should be handled here
-const Layout = ({ page: { current, payload } }) => {
+const Pages = ({ page: { current, payload } }) => {
   const Page = pageMap.has(current) ? pageMap.get(current) : NotFoundPage;
 
   return <Page {...payload} />;
 };
 
-Layout.propTypes = {
+Pages.propTypes = {
   page: PropTypes.shape({
     current: PropTypes.string.isRequired,
     payload: PropTypes.shape({}).isRequired
   }).isRequired
 };
 
-export default Layout;
+export default Pages;

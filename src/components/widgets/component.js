@@ -4,6 +4,7 @@ import Widget from 'components/widget';
 import Button from 'components/button';
 import TEMPLATES from 'components/widget/templates';
 import CONFIGS from 'components/widget/templates/configs';
+import styles from './style.module.scss';
 
 class WidgetList extends PureComponent {
   static propTypes = {
@@ -14,35 +15,34 @@ class WidgetList extends PureComponent {
       })
     ),
     collapseAll: PropTypes.func,
-    expandAll: PropTypes.func,
-    fetchDashboards: PropTypes.func,
-    fetchWidgets: PropTypes.func
+    expandAll: PropTypes.func
   }
 
   static defaultProps = {
     widgets: [],
     collapseAll: () => null,
-    expandAll: () => null,
-    fetchDashboards: () => null,
-    fetchWidgets: () => null
+    expandAll: () => null
   }
 
-  componentDidMount() {
-    const { fetchDashboards, fetchWidgets } = this.props;
+  onClickCollapseAll = () => {
+    const { collapseAll } = this.props;
+    collapseAll();
+  }
 
-    fetchDashboards();
-    fetchWidgets();
+  onClickExpandAll = () => {
+    const { expandAll } = this.props;
+    expandAll();
   }
 
   render() {
-    const { collapseAll, expandAll, isCollapsed, widgets } = this.props;
+    const { isCollapsed, widgets } = this.props;
 
     return (
-      <div>
+      <div className={styles.widgets}>
         {
           isCollapsed
-            ? <Button onClick={expandAll}>Expand all</Button>
-            : <Button onClick={collapseAll}>Collapse all</Button>
+            ? <Button onClick={this.onClickExpandAll}>Expand all</Button>
+            : <Button onClick={this.onClickCollapseAll}>Collapse all</Button>
         }
         {widgets.map(widget => (
           <Widget

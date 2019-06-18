@@ -9,19 +9,11 @@ class LocationSelector extends PureComponent {
     location: PropTypes.shape({
       name: PropTypes.string
     }),
-    setSearchActive: PropTypes.func.isRequired,
-    fetchLocations: PropTypes.func
+    setSearchActive: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    location: { name: 'Location name' },
-    fetchLocations: () => null
-  }
-
-  componentDidMount() {
-    const { fetchLocations } = this.props;
-
-    fetchLocations();
+    location: { name: 'Location name' }
   }
 
   clickHandler = () => {
