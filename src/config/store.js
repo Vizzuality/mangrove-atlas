@@ -60,7 +60,7 @@ const reducers = combineReducers({
 const middleware = applyMiddleware(
   routerMiddleware,
   sagaMiddleware,
-  queryStateMiddleware
+  // queryStateMiddleware
 );
 
 const enhancers = composeWithDevTools(routerEnhancer, middleware);
@@ -72,7 +72,7 @@ sagaMiddleware.run(function* root() {
   yield all([
     fork(app.sagas),
     fork(pages.sagas),
-    fork(map.sagas),
+    // fork(map.sagas),
     fork(layers.sagas),
     fork(widgets.sagas),
     fork(layers.sagas),
