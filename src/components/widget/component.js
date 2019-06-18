@@ -53,7 +53,7 @@ const Widget = ({
       <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
         {children({
           id,
-          title,
+          name,
           slug,
           isCollapsed,
           data: widgetData,
