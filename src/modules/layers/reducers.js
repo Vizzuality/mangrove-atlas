@@ -1,19 +1,19 @@
-import * as actions from './actions';
-
-const {
-  setList,
-  setLoading,
-  setError,
-} = actions;
+import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
 
 export default {
-  [setList]: (state, { payload }) => ({
-    ...state, list: payload
+  [fetchRequested]: state => ({
+    ...state,
+    isLoading: true,
+    error: null
   }),
-  [setLoading]: (state, { payload }) => ({
-    ...state, isLoading: Boolean(payload)
+  [fetchSucceeded]: (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    list: payload
   }),
-  [setError]: (state, { payload }) => ({
-    ...state, error: payload
+  [fetchFailed]: (state, { payload }) => ({
+    ...state,
+    isLoading: false,
+    error: payload
   })
 };
