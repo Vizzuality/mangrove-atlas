@@ -1,38 +1,69 @@
-import React, { Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Widget from 'components/widget';
+import Button from 'components/button';
 import TEMPLATES from 'components/widget/templates';
 import CONFIGS from 'components/widget/templates/configs';
 
-const Widgets = ({ list }) => (
-  <Fragment>
-    { list.map(widget => (
-      <Widget
-        key={widget.id}
-        widgetConfig={CONFIGS[widget.slug]}
-        {...widget}
-      >
-        {({ slug, data, ...props }) => (
-          <Fragment>
-            {/* Template */}
-            {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
-              ...data,
-              ...props
-            })}
-          </Fragment>
-        )}
-      </Widget>
-    )) }
-  </Fragment>
-);
+class WidgetList extends PureComponent {
+  static propTypes = {
+    widgets: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string
+      })
+    ),
+    collapseAll: PropTypes.func,
+    expandAll: PropTypes.func,
+    fetchDashboards: PropTypes.func,
+    fetchWidgets: PropTypes.func
+  }
 
-Widgets.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired
-    })
-  ).isRequired
-};
+  static defaultProps = {
+    widgets: [],
+    collapseAll: () => null,
+    expandAll: () => null,
+    fetchDashboards: () => null,
+    fetchWidgets: () => null
+  }
 
-export default Widgets;
+  componentDidMount() {
+    const { fetchDashboards, fetchWidgets } = this.props;
+
+    fetchDashboards();
+    fetchWidgets();
+  }
+
+  render() {
+    const { collapseAll, expandAll, isCollapsed, widgets } = this.props;
+
+    return (
+      <div>
+        {
+          isCollapsed
+            ? <Button onClick={expandAll}>Expand all</Button>
+            : <Button onClick={collapseAll}>Collapse all</Button>
+        }
+        {widgets.map(widget => (
+          <Widget
+            key={widget.id}
+            {...widget}
+            widgetConfig={CONFIGS[widget.slug]}
+          >
+            {({ slug, data, ...props }) => (
+              <Fragment>
+                {/* Template */}
+                {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
+                  ...data,
+                  ...props
+                })}
+              </Fragment>
+            )}
+          </Widget>
+        ))}
+      </div>
+    );
+  }
+}
+
+export default WidgetList;

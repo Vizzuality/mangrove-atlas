@@ -45,7 +45,7 @@ function* location() {
     isDisplayedOnMap: false,
     config: {
       layers: [
-        ...(allWidgets[widget].layers || [])
+        // ...(allWidgets[widget].layers || [])
       ]
     }
   }));
