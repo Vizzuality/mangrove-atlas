@@ -1,6 +1,8 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import { setList, setLoading, setError } from 'modules/layers/actions';
-import datasetService from 'services/dataset-service';
+import DatasetService from 'services/dataset-service';
+
+const service = new DatasetService({ entityName: 'layers' });
 
 function* getLayers() {
   yield put(setLoading(true));
@@ -20,7 +22,7 @@ function* getLayers() {
   };
 
   try {
-    const layers = yield call(datasetService.fetchDatasetsLayers, datasets);
+    const layers = yield call(service.fetch, datasets);
     yield put(setList(layers));
   } catch (err) {
     yield put(setError(err));

@@ -1,17 +1,17 @@
 import { createSelector } from 'reselect';
+import { currentDashboard } from 'modules/dashboards/selectors';
 
-const allWidgets = state => state.widgets.list;
-const dashboardWidgets = state => state.dashboard.widgets;
+const widgets = state => state.widgets.list;
 
-export const getDashboardWidgets = createSelector(
-  [allWidgets, dashboardWidgets], (_allWidgets, _dashboardWidgets) => _dashboardWidgets.map(
-    widget => ({
-      ...widget,
-      title: _allWidgets[widget.id].title
-    })
-  )
+export const dashboardWidgets = createSelector(
+  [widgets, currentDashboard],
+  (_widgets, _currentDashboard) => {
+    if (!_currentDashboard) return [];
+    const widgetIds = _currentDashboard.widget_ids;
+    return _widgets.filter(widget => widgetIds.includes(widget.id));
+  }
 );
 
 export default {
-  getDashboardWidgets
+  dashboardWidgets
 };
