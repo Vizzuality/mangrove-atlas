@@ -3,20 +3,16 @@ import { setMapViewport, setMapBounds, setMapLoaded, setMapFlying } from 'module
 
 import Map from './component';
 
-const envVars = {
-  mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_TOKEN
-};
-
 const mapStateToProps = state => ({
   ...state.map,
-  ...envVars
+  mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_TOKEN
 });
 
 const mapDispatchToProps = {
   setMapViewport,
-  setMapBounds,
-  setMapLoaded,
-  setMapFlying
+  // setMapBounds,
+  // setMapLoaded,
+  // setMapFlying
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Map);

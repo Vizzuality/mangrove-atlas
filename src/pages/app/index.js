@@ -1,7 +1,7 @@
 import React from 'react';
 import LocationSelector from 'components/location-selector';
 import Widgets from 'components/widgets';
-// import Map from 'components/map';
+import Map from 'components/map';
 
 import styles from './style.module.scss';
 
@@ -11,8 +11,8 @@ const AppPage = () => (
       <LocationSelector />
       <Widgets />
     </div>
-    <div className={styles.map}>
-      Map
+    <div className={styles.vis}>
+      <Map />
     </div>
   </div>
 );
