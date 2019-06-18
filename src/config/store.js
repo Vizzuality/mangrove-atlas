@@ -9,7 +9,6 @@ import { PAGES } from 'modules/pages/constants';
 import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
-import * as dashboard from 'modules/dashboard';
 import * as search from 'modules/search';
 import * as layers from 'modules/layers';
 import * as widgets from 'modules/widgets';
@@ -28,7 +27,6 @@ const modules = [
   { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
-  { namespace: 'dashboard', components: dashboard },
   { namespace: 'search', components: search },
   { namespace: 'layers', components: layers },
   { namespace: 'widgets', components: widgets },
