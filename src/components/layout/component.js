@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // todo: add Universal component or loadable
-import HomePage from 'pages/home';
+import AppPage from 'pages/app';
 import NotFoundPage from 'pages/not-found';
 
 const pageMap = new Map([
-  ['HOME', HomePage],
-  ['LOCATION', HomePage]
+  ['LOCATION', AppPage]
 ]);
 
 
