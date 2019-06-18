@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Widget from 'components/widget';
 
@@ -10,25 +10,46 @@ const MockedChart = () => (
   </div>
 );
 
-const WidgetList = ({ list }) => (
-  <Fragment>
-    { list.map(widget => (
-      <Widget
-        key={widget.id}
-        {...widget}
-        chart={MockedChart}
-      />
-    )) }
-  </Fragment>
-);
+class WidgetList extends PureComponent {
+  static propTypes = {
+    widgets: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        title: PropTypes.string
+      })
+    ),
+    fetchDashboards: PropTypes.func,
+    fetchWidgets: PropTypes.func
+  }
 
-WidgetList.propTypes = {
-  list: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired
-    })
-  ).isRequired
-};
+  static defaultProps = {
+    widgets: [],
+    fetchDashboards: () => null,
+    fetchWidgets: () => null
+  }
+
+  componentDidMount() {
+    const { fetchDashboards, fetchWidgets } = this.props;
+
+    fetchDashboards();
+    fetchWidgets();
+  }
+
+  render() {
+    const { widgets } = this.props;
+
+    return (
+      <div>
+        {widgets.map(widget => (
+          <Widget
+            key={widget.id}
+            {...widget}
+            chart={MockedChart}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default WidgetList;

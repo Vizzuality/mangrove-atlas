@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 
 const Widget = ({
   id,
-  title,
+  name,
   isCollapsed,
   chart: Chart,
   onMapAction,
@@ -33,7 +33,7 @@ const Widget = ({
           {isCollapsed
             ? <FontAwesomeIcon icon={faChevronDown} />
             : <FontAwesomeIcon icon={faChevronUp} />}
-          {title}
+          {name}
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
@@ -46,7 +46,7 @@ const Widget = ({
 
 Widget.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   isCollapsed: PropTypes.bool,
   chart: PropTypes.func, // It is actually a function stateless component
   onMapAction: PropTypes.func,
