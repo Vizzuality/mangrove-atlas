@@ -5,8 +5,6 @@ import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import styles from './style.module.scss';
 
-import 'mapbox-gl/dist/mapbox-gl.css';
-
 class Map extends Component {
   static propTypes = {
     viewport: PropTypes.shape({}),
@@ -26,12 +24,6 @@ class Map extends Component {
     },
     setMapViewport: () => {}
   }
-
-  // constructor(props) {
-  //   super(props);
-  //   const { viewport } = props;
-  //   this.state = { viewport };
-  // }
 
   componentDidMount() {
     window.addEventListener('resize', this.resize);
