@@ -5,5 +5,5 @@ import MangroveActivity from './mangrove-activity';
 export default {
   'mangrove-coverage': MangroveCoverage,
   'mangrove-net-change': MangroveNetChange,
-  mangrove_activity: MangroveActivity
+  'mangrove-activity': MangroveActivity
 };
