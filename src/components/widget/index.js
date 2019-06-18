@@ -1,14 +1,13 @@
 import { connect } from 'react-redux';
 
-import { setWidgetCollapsed } from 'modules/dashboard/actions';
-import { triggerMapAction } from 'modules/widgets/actions';
+import { toggleCollapse, triggerMapAction } from 'modules/widgets/actions';
 import Widget from './component';
 
 const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = {
-  onCollapseToggle: setWidgetCollapsed,
+  toggleCollapse,
   onMapAction: triggerMapAction
 };
 

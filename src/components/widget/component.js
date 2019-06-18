@@ -8,12 +8,12 @@ import styles from './style.module.scss';
 
 const Widget = ({
   id,
-  title,
+  name,
   slug,
   isCollapsed,
   children,
   onMapAction,
-  onCollapseToggle,
+  toggleCollapse,
   widgetConfig,
   ...props
 }) => {
@@ -22,7 +22,7 @@ const Widget = ({
   };
 
   const collapseToggleHandler = () => {
-    onCollapseToggle({ id, isCollapsed: !isCollapsed });
+    toggleCollapse({ id, isCollapsed: !isCollapsed });
   };
 
   // TODO: Fetch widget data and pass to parse
@@ -45,7 +45,7 @@ const Widget = ({
           {isCollapsed
             ? <FontAwesomeIcon icon={faChevronDown} />
             : <FontAwesomeIcon icon={faChevronUp} />}
-          {title}
+          {name}
         </button>
         <Button onClick={mapActionHandler}>Show layer</Button>
       </div>
@@ -53,7 +53,7 @@ const Widget = ({
       <div className={classnames(styles.content, { [styles.collapsed]: isCollapsed })}>
         {children({
           id,
-          title,
+          name,
           slug,
           isCollapsed,
           data: widgetData,
@@ -66,19 +66,19 @@ const Widget = ({
 
 Widget.propTypes = {
   id: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   widgetConfig: PropTypes.shape({}).isRequired,
   isCollapsed: PropTypes.bool,
   children: PropTypes.func.isRequired,
   onMapAction: PropTypes.func,
-  onCollapseToggle: PropTypes.func
+  toggleCollapse: PropTypes.func
 };
 
 Widget.defaultProps = {
   isCollapsed: false,
   onMapAction: () => {},
-  onCollapseToggle: () => {}
+  toggleCollapse: () => {}
 };
 
 export default Widget;
