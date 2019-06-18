@@ -41,7 +41,6 @@ export const CONFIG = {
           y: 100
         }
       )),
-      template: 'Mangrove forest cover 55 % of the world’s 230 km coastline.',
       chartConfig: {
         type: 'pie',
         layout: 'centric',

@@ -1,11 +1,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './style.module.scss';
 
-const Legend = ({ groups }) => (
-  <div className={styles.widget_legend}>
+const Legend = ({ groups, direction }) => (
+  <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
         <ul className={styles.widget_legend_list}>
@@ -30,7 +31,12 @@ const Legend = ({ groups }) => (
 );
 
 Legend.propTypes = {
+  direction: PropTypes.string,
   groups: PropTypes.arrayOf({}).isRequired
+};
+
+Legend.defaultProps = {
+  direction: 'horizontal'
 };
 
 export default Legend;
