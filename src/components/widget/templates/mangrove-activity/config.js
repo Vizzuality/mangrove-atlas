@@ -53,58 +53,37 @@ export const CONFIG = {
         }
       )),
       chartConfig: {
-        stackOffset: 'sign',
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        layout: 'vertical',
         referenceLines: [
-          { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
+          { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
         ],
-        xKey: 'x',
+        margin: { top: 20, right: 0, left: 0, bottom: 20 },
         yKeys: {
-          lines: {
-            median: {
-              stroke: 'rgba(0,0,0,0.7)'
-            }
-          },
           bars: {
             gain: {
               barSize: 10,
-              transform: `translate(${(4 + 10) / 2}, 0)`,
+              transform: `translate(0, ${(4 + 10) / 2})`,
               fill: '#077FAC',
-              radius: [10, 10, 0, 0]
+              radius: [0, 10, 10, 0],
             },
             loss: {
               barSize: 10,
-              transform: `translate(-${(4 + 10) / 2}, 0)`,
+              transform: `translate(0, -${(4 + 10) / 2})`,
               fill: '#EB6240',
-              radius: [10, 10, 0, 0]
+              radius: [0, 10, 10, 0],
             }
           }
         },
         xAxis: {
-          tick: { fontSize: 12, fill: '#AAA' }
-        },
-        yAxis: {
-          domain: [-300, 300]
+          type: 'number',
+          tick: false,
         },
         cartesianGrid: {
-          vertical: false,
-          strokeDasharray: '6 6'
-        },
-        // tooltip: {
-        //   cursor: false,
-        //   content: (
-        //     <WidgetTooltip
-        //       style={{
-        //         color: '#FFFFFF',
-        //         backgroundColor: '#383838'
-        //       }}
-        //       settings={[
-        //         { key: 'x' },
-        //         { key: 'y', format: value => `${format('.2r')(value)}` }
-        //       ]}
-        //     />
-        //   )
-        // }
+          vertical: true,
+          horizontal: false,
+          verticalPoints: [0, 100, 200, 300, 400, 500],
+          strokeDasharray: '5 20'
+        }
       }
     };
   }
