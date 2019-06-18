@@ -10,7 +10,7 @@ const datasetIds = {
   locations: 'cjwum1jj60mh22no5cj1q67dk',
   dashboards: 'cjwum0ds523ag2in6jigine6x',
   widgets: 'cjwum0t940jf62town9y45ev0',
-  layers: 'cjwum16ja0j2y2plplw2ktpqy'
+  layers: 'cjx1q0hbn0e282imghtsuiacg'
 };
 
 class DatasetService {

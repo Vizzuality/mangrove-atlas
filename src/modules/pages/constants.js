@@ -1,16 +1,10 @@
-import { NOT_FOUND, redirect } from 'redux-first-router';
+import { NOT_FOUND } from 'redux-first-router';
 
 export const PAGES = [
   {
-    name: 'HOME',
+    name: 'APP',
     path: '/',
-    page: 'home',
-    thunk: dispatch => dispatch(redirect({ type: 'LOCATION' }))
-  },
-  {
-    name: 'LOCATION',
-    path: '/location/:type?/:id?',
-    page: 'location'
+    page: 'app',
   },
   {
     name: NOT_FOUND,

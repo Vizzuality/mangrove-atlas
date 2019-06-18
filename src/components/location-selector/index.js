@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { fetchLocations } from 'modules/locations/actions';
 import { currentLocation } from 'modules/locations/selectors';
 import { setSearchActive } from 'modules/app/actions';
 import Header from './component';
@@ -9,8 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setSearchActive,
-  fetchLocations
+  setSearchActive
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

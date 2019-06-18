@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchDashboards } from 'modules/dashboards/actions';
-import { fetchWidgets, expandAll, collapseAll } from 'modules/widgets/actions';
+import { expandAll, collapseAll } from 'modules/widgets/actions';
 import { dashboardWidgets } from 'modules/widgets/selectors';
 
 import Component from './component';
@@ -12,8 +11,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchDashboards,
-  fetchWidgets,
   collapseAll,
   expandAll
 };

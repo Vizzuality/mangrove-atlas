@@ -1,3 +1,3 @@
 export default {
-  current: 'PAGES/HOME'
+  current: 'PAGES/APP'
 };

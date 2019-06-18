@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Layout from './component';
+import Component from './component';
 
 export default connect(
   ({ page }) => ({ page })
-)(Layout);
+)(Component);
