@@ -3,8 +3,8 @@ import MangroveNetChange from './mangrove-net-change/config';
 import MangroveActivity from './mangrove-activity/config';
 
 export default {
-  mangrove_coverage: MangroveCoverage,
-  mangrove_net_change: MangroveNetChange,
+  'mangrove-coverage': MangroveCoverage,
+  'mangrove-net-change': MangroveNetChange,
   mangrove_activity: MangroveActivity,
   default: {
     parse: () => ({
