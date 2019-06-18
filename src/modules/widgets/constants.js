@@ -15,18 +15,18 @@ export const widgets = {
   },
   widget_3: {
     id: 'widget_3',
-    slug: 'default',
+    slug: null,
     title: 'Widget 3'
   },
   widget_4: {
     id: 'widget_4',
-    slug: 'default',
+    slug: null,
     title: 'Widget 4'
   },
   widget_5: {
     id: 'widget_5',
-    slug: 'default',
-    title: 'Widget 5',
+    slug: 'mangrove_activity',
+    title: 'Mangrove Activity',
     layers: [
       '728cda48-5164-4c1f-a626-12e527db5874'
     ]

@@ -6,7 +6,7 @@ class Tick extends PureComponent {
     x: PropTypes.number,
     y: PropTypes.number,
     payload: PropTypes.shape({}),
-    dataMax: PropTypes.number.isRequired,
+    dataMax: PropTypes.number,
     unit: PropTypes.string.isRequired,
     unitFormat: PropTypes.func.isRequired,
     fill: PropTypes.string.isRequired,
@@ -16,6 +16,7 @@ class Tick extends PureComponent {
   static defaultProps = {
     x: 0,
     y: 0,
+    dataMax: Infinity,
     payload: {},
     backgroundColor: ''
   }

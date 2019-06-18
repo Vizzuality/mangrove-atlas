@@ -18,7 +18,8 @@ import {
   ResponsiveContainer,
   ComposedChart,
   PieChart,
-  Label
+  Label,
+  ReferenceLine
 } from 'recharts';
 
 import styles from './style.module.scss';
@@ -79,7 +80,8 @@ class Chart extends PureComponent {
       layout,
       legend,
       unit,
-      unitFormat
+      unitFormat,
+      referenceLines
     } = config;
 
     const { lines, bars, areas, pies } = yKeys;
@@ -186,6 +188,13 @@ class Chart extends PureComponent {
                 {...yAxis}
               />
             )}
+
+            {referenceLines && referenceLines.map(ref => (
+              <ReferenceLine
+                key={new Date()}
+                {...ref}
+              />
+            ))}
 
             {areas && Object.keys(areas).map(key => (
               <Area key={key} dataKey={key} dot={false} {...areas[key]} />
