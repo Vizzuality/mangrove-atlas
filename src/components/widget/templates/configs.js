@@ -5,7 +5,7 @@ import MangroveActivity from './mangrove-activity/config';
 export default {
   'mangrove-coverage': MangroveCoverage,
   'mangrove-net-change': MangroveNetChange,
-  mangrove_activity: MangroveActivity,
+  'mangrove-activity': MangroveActivity,
   default: {
     parse: () => ({
       template: 'Template not defined',
