@@ -26,7 +26,7 @@ const Widget = ({
   };
 
   // TODO: Fetch widget data and pass to parse
-  // For now, fake mangroves coverate
+  // If slug we just send fake data, otherwise nothing
   let widgetData;
   if (slug) {
     widgetData = widgetConfig.parse({ rows: [1, 2] });
