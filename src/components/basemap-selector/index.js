@@ -1,17 +1,14 @@
 import { connect } from 'react-redux';
-import { setViewport } from 'modules/map/actions';
-import { mapStyle } from 'modules/map/selectors';
+import { setBasemap } from 'modules/map/actions';
 
 import Component from './component';
 
 const mapStateToProps = state => ({
-  ...state.map,
-  mapStyle: mapStyle(state),
-  mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_TOKEN
+  basemapName: state.map.basemap
 });
 
 const mapDispatchToProps = {
-  setViewport
+  setBasemap
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

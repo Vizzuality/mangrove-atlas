@@ -1,8 +1,5 @@
 export default {
-  settings: {
-    isFlying: false,
-    isLoaded: false
-  },
+  basemap: 'light',
   viewport: {
     width: '100%',
     height: '100%',
@@ -10,8 +7,5 @@ export default {
     minZoom: 2,
     latitude: 20,
     longitude: 0,
-  },
-  bounds: {},
-  mapStyle: 'mapbox://styles/mapbox/streets-v11'
-  // mapStyle: 'mapbox://styles/mangrove-atlas/cjw92q19n05701cqqol3rgm1w'
+  }
 };
