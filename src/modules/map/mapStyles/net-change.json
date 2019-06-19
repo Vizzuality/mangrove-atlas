@@ -1,0 +1,47 @@
+[
+  {
+    "id": "gmw-2015-v2",
+    "type": "fill",
+    "metadata": {
+      "mapbox:group": "1b3e3d787a86283867a1cf948a3ed5b4"
+    },
+    "source": "composite",
+    "source-layer": "GMW_2015_v2",
+    "layout": {
+      "visibility": "none"
+    },
+    "paint": {
+      "fill-color": "#00c5bd",
+      "fill-opacity": 1
+    }
+  },
+  {
+    "id": "gmw-2015-v2 copy 1",
+    "type": "circle",
+    "metadata": {
+      "mapbox:group": "1b3e3d787a86283867a1cf948a3ed5b4"
+    },
+    "source": "composite",
+    "source-layer": "GMW_2015_v2",
+    "layout": {
+      "visibility": "none"
+    },
+    "paint": {
+      "circle-color": "#00c5bd",
+      "circle-stroke-color": "#00c5bd",
+      "circle-radius": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        4,
+        3,
+        7,
+        1
+      ]
+    }
+  }
+]

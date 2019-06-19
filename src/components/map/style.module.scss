@@ -1,7 +1,17 @@
+$space-around-map: 30px;
+
 .map {
-  // position: fixed;
-  // width: 100%;
-  // height: 100vh;
-  // top: 0;
-  // left: 0;
+  background: white;
+}
+
+.navigation {
+  position: absolute;
+  right: $space-around-map;
+  top: $space-around-map;
+}
+
+.legend {
+  position: absolute;
+  right: $space-around-map;
+  bottom: $space-around-map;
 }

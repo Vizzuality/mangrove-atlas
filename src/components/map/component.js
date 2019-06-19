@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import MapGL, { FlyToInterpolator } from 'react-map-gl';
+import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash/isEqual';
-import isEmpty from 'lodash/isEmpty';
+import BasemapSelector from 'components/basemap-selector';
 import styles from './style.module.scss';
 
 class Map extends Component {
   static propTypes = {
+    basemap: PropTypes.string,
     viewport: PropTypes.shape({}),
-    setMapViewport: PropTypes.func
+    setViewport: PropTypes.func
   }
 
   static defaultProps = {
+    basemap: 'light',
     viewport: {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -22,7 +23,7 @@ class Map extends Component {
       bearing: 0,
       pitch: 0
     },
-    setMapViewport: () => {}
+    setViewport: () => {}
   }
 
   componentDidMount() {
@@ -30,10 +31,14 @@ class Map extends Component {
     this.resize();
   }
 
-  onViewportChange = (nextViewport) => {
-    const { viewport, setMapViewport } = this.props;
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
+  }
 
-    setMapViewport({ ...viewport, ...nextViewport });
+  onViewportChange = (nextViewport) => {
+    const { viewport, setViewport } = this.props;
+
+    setViewport({ ...viewport, ...nextViewport });
   }
 
   resize = () => {
@@ -45,8 +50,8 @@ class Map extends Component {
 
   render() {
     const {
-      mapStyle,
       mapboxApiAccessToken,
+      mapStyle,
       viewport
     } = this.props;
 
@@ -61,7 +66,12 @@ class Map extends Component {
         mapboxApiAccessToken={mapboxApiAccessToken}
         onViewportChange={this.onViewportChange}
       >
-        {/* {isLoaded && !!this.map && typeof children === 'function' && children(this.map)} */}
+        <div className={styles.navigation}>
+          <NavigationControl />
+        </div>
+        <div className={styles.legend}>
+          <BasemapSelector />
+        </div>
       </MapGL>
     );
   }

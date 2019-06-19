@@ -1,0 +1,41 @@
+[
+  {
+    "id": "selected-eez-land-v2-201410 copy",
+    "type": "line",
+    "metadata": {
+      "mapbox:group": "c8ed86ce2aa267b2ff4ffd4a98a3b79c"
+    },
+    "source": "composite",
+    "source-layer": "selected_EEZ_land_v2_201410",
+    "layout": {},
+    "paint": {
+      "line-color": "hsl(177, 29%, 76%)"
+    }
+  },
+  {
+    "id": "selected-eez-land-v2-201410",
+    "type": "fill",
+    "metadata": {
+      "mapbox:group": "c8ed86ce2aa267b2ff4ffd4a98a3b79c"
+    },
+    "source": "composite",
+    "source-layer": "selected_EEZ_land_v2_201410",
+    "layout": {},
+    "paint": {
+      "fill-color": "hsla(177, 53%, 50%, 0.1)",
+      "fill-opacity": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        0,
+        1,
+        8,
+        0
+      ]
+    }
+  }
+]
