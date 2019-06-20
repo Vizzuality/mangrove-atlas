@@ -1,30 +1,26 @@
 import axios from 'axios';
-import serializer from 'utils/geoJsonToJson';
 
 const account = process.env.REACT_APP_MAPBOX_ACCOUNT;
 /**
- * Datasets ID shouldn't change.
+ * Style ID shouldn't change.
  * In case you need to update them:
  * https://api.mapbox.com/styles/v1/{account}
  */
-const datasetIds = {
-  locations: 'cjwum1jj60mh22no5cj1q67dk',
-  dashboards: 'cjwum0ds523ag2in6jigine6x',
-  widgets: 'cjwum0t940jf62town9y45ev0',
-  layers: 'cjx1q0hbn0e282imghtsuiacg'
+const styleIds = {
+  layers: 'cjx4ikse805an1co712z98lel'
 };
 
-class DatasetService {
+class StyleService {
   constructor({ entityName }) {
     this.entityName = entityName;
     this.client = axios.create({
-      baseURL: `https://api.mapbox.com/datasets/v1/${account}/${datasetIds[entityName]}`,
+      baseURL: `https://api.mapbox.com/styles/v1/${account}/${styleIds[entityName]}`,
       headers: { 'Content-Type': 'application/json' }
     });
   }
 
   fetch = (params = {}) => this.client
-    .get('/features', {
+    .get('/', {
       params: {
         ...params,
         access_token: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
@@ -33,8 +29,8 @@ class DatasetService {
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
-      return serializer(data);
+      return data;
     });
 }
 
-export default DatasetService;
+export default StyleService;

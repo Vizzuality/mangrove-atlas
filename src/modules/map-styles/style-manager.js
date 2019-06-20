@@ -1,5 +1,5 @@
 import flatten from 'lodash/flatten';
-import mapStyles from './mapStyles';
+import mapStyles from './templates';
 
 class StyleManager {
   default = {
@@ -29,7 +29,7 @@ class StyleManager {
     result.layers = flatten([
       ...basemapSpec,
       ...contextualsSpec,
-      ...layersSpec
+      layersSpec
     ]);
 
     return result;
@@ -46,10 +46,11 @@ class StyleManager {
   /**
    * This method will and and remove layers depending on layersIds
    */
-  set layers(layerIds) {
-    const styles = mapStyles.layers.filter(layerStyle => layerIds.includes(layerStyle.id));
-    if (styles.length === 0) this.settings.layers = [];
-    if (styles && styles.length) this.settings.layers = styles.map(s => s.mapStyle);
+  set layers(layerStyles) {
+    this.settings.layers = layerStyles;
+    // const styles = mapStyles.layers.filter(layerStyle => layerIds.includes(layerStyle.id));
+    // if (styles.length === 0) this.settings.layers = [];
+    // if (styles && styles.length) this.settings.layers = styles.map(s => s.mapStyle);
   }
 }
 
