@@ -12,6 +12,11 @@ export const dashboardWidgets = createSelector(
   }
 );
 
+export const activeWidgets = createSelector(
+  [dashboardWidgets],
+  _widgets => _widgets.filter(widget => widget.isActive)
+);
+
 export default {
   dashboardWidgets
 };

@@ -1,5 +1,29 @@
 [
   {
+    "id": "gmw-2015-v2 copy",
+    "type": "line",
+    "source": "composite",
+    "source-layer": "GMW_2015_v2",
+    "layout": {
+    },
+    "paint": {
+      "line-width": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        4,
+        4,
+        7,
+        0
+      ],
+      "line-color": "hsla(0, 0%, 0%, 0.75)"
+    }
+  },
+  {
     "id": "gmw-2015-v2",
     "type": "fill",
     "metadata": {
@@ -8,7 +32,6 @@
     "source": "composite",
     "source-layer": "GMW_2015_v2",
     "layout": {
-      "visibility": "none"
     },
     "paint": {
       "fill-color": "#00c5bd",
@@ -24,7 +47,6 @@
     "source": "composite",
     "source-layer": "GMW_2015_v2",
     "layout": {
-      "visibility": "none"
     },
     "paint": {
       "circle-color": "#00c5bd",

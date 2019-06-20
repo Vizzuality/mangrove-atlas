@@ -1,11 +1,31 @@
 $body-color: rgba(0,0,0,0.85);
+$body-font-size: 14px;
+$body-line-height: 1.4;
 
 /* Theme */
-$primary: #077FAC;
+$primary: #00857F;
 
+/* Fonts */
+$font-size-small: 12px;
+$font-size-medium: 19px;
+
+@mixin medium-text {
+  font-size: $font-size-medium;
+  font-weight: 300;
+  line-height: 30px;
+}
+
+@mixin upper-text {
+  font-size: $font-size-small;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 24px;
+}
+
+// To remove
 $font-size-extra-small: 9px;
 $font-size-small: 12px;
 $font-size-default: 16px;
-$font-size-medium: 18px;
 $font-size-big: 22px;
 $font-size-huge: 120px;

@@ -9,16 +9,23 @@
   border: 2px solid rgba($primary, 0.2);
 
   color: primary;
-  font-size: 14px;
+  font-size: $body-font-size;
   font-weight: 600;
 
+  transition: all 0.25s ease;
+
   &:hover {
-    border-color: $primary;
+    border-color: rgba($primary, 0.4);
     cursor: pointer;
   }
 
-  &.enabled {
-    background-color: primary;
+  &:focus {
+    border-color: $primary;
+  }
+
+  &.active {
+    border-color: $primary;
+    background-color: $primary;
     color: white;
   }
 }
