@@ -14,10 +14,10 @@ export default {
     dark,
     satellite
   },
-  contextuals: {
-    wdpa,
-    countries
-  },
+  contextuals: [
+    { id: 'wpa', mapStyle: wdpa },
+    { id: 'countries', mapStyle: countries }
+  ],
   layers: [
     {
       id: '187deb54ab1c40c1d4476f8ba3a01ba0',
