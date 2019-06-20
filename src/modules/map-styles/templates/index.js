@@ -4,7 +4,6 @@ import dark from './basemaps/dark.json';
 import satellite from './basemaps/satellite.json';
 import wdpa from './contextuals/wdpa.json';
 import countries from './contextuals/countries.json';
-import mangrovesExtent2015 from './layers/mangroves-extent-2015.json';
 
 export default {
   template,
@@ -16,11 +15,5 @@ export default {
   contextuals: [
     { id: 'wpa', mapStyle: wdpa },
     { id: 'countries', mapStyle: countries }
-  ],
-  layers: [
-    {
-      id: '187deb54ab1c40c1d4476f8ba3a01ba0',
-      mapStyle: mangrovesExtent2015
-    }
   ]
 };

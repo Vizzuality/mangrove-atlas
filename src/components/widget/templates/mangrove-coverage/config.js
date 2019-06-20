@@ -21,7 +21,9 @@ export const CONFIG = {
     const fakeData = [
       {
         label: 'Mangroves',
+        value: 1388272.6370640127,
         percentage: 30,
+        year: 1996,
         color: '#BED246'
       },
       {

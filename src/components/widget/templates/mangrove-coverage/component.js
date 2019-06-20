@@ -54,7 +54,8 @@ class MangroveCoverage extends React.PureComponent {
       <Fragment>
         <div className={styles.widget_template}>
           <p className={styles.sentence}>
-            Mangrove forest cover 55 % of the world’s 230
+            Mangrove forest cover 55 % <br />
+            of the world’s 230
             {' '}
             <Select
               value={unit}
@@ -62,22 +63,14 @@ class MangroveCoverage extends React.PureComponent {
               onChange={value => this.changeUnit(value)}
             />
             {' '}
-            coastline between
+            in
             {' '}
             <Select
               value={yearStart}
               options={optionsYearStart}
               onChange={value => this.changeYear('start', value)}
             />
-            {' '}
-            to
-            {' '}
-            <Select
-              value={yearEnd}
-              options={optionsYearEnd}
-              onChange={value => this.changeYear('end', value)}
-            />
-            .
+            {'.'}
           </p>
         </div>
 
