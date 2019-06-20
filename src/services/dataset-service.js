@@ -8,7 +8,7 @@ const account = process.env.REACT_APP_MAPBOX_ACCOUNT;
  * https://api.mapbox.com/styles/v1/{account}
  */
 const datasetIds = {
-  locations: 'cjwum1jj60mh22no5cj1q67dk',
+  locations: 'cjx4u57890d7u2upl2dqs559w',
   dashboards: 'cjwum0ds523ag2in6jigine6x',
   widgets: 'cjwum0t940jf62town9y45ev0',
   layers: 'cjx1q0hbn0e282imghtsuiacg'
