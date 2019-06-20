@@ -1,15 +1,5 @@
 import flatten from 'lodash/flatten';
-import template from './mapStyles/template.json';
-import light from './mapStyles/basemaps/light.json';
-import dark from './mapStyles/basemaps/dark.json';
-import satellite from './mapStyles/basemaps/satellite.json';
-import wdpa from './mapStyles/contextuals/wdpa.json';
-import countries from './mapStyles/contextuals/countries.json';
 import mapStyles from './mapStyles';
-
-
-const BASEMAPS = { light, dark, satellite };
-const CONTEXTUALS = { wdpa, countries };
 
 class StyleManager {
   default = {
@@ -26,9 +16,9 @@ class StyleManager {
 
   composeLayers() {
     const { basemap, layers: layersSpec } = this.settings;
-    const basemapSpec = BASEMAPS[basemap];
-    const contextualsSpec = [...CONTEXTUALS.wdpa, ...CONTEXTUALS.countries];
-    const result = { ...template };
+    const basemapSpec = mapStyles.basemaps[basemap];
+    const contextualsSpec = mapStyles.contextuals.map(contextual => contextual.mapStyle);
+    const result = { ...mapStyles.template };
 
     /**
      * Add layers in the next order:
@@ -53,6 +43,9 @@ class StyleManager {
     this.settings.basemap = basemapSlug;
   }
 
+  /**
+   * This method will and and remove layers depending on layersIds
+   */
   set layers(layerIds) {
     const styles = mapStyles.layers.filter(layerStyle => layerIds.includes(layerStyle.id));
     if (styles.length === 0) this.settings.layers = [];
