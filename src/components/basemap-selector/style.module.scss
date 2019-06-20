@@ -16,10 +16,7 @@
     h3 {
       margin: 0;
 
-      font-size: 12px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      @include upper-text;
     }
 
     > div {

@@ -10,19 +10,21 @@ const Widget = ({
   id,
   name,
   slug,
+  layerId,
+  isActive,
   isCollapsed,
   children,
-  onMapAction,
+  toggleActive,
   toggleCollapse,
   widgetConfig,
   ...props
 }) => {
-  const mapActionHandler = () => {
-    onMapAction({ id });
+  const activeToggleHandler = () => {
+    toggleActive({ id });
   };
 
   const collapseToggleHandler = () => {
-    toggleCollapse({ id, isCollapsed: !isCollapsed });
+    toggleCollapse({ id });
   };
 
   // TODO: Fetch widget data and pass to parse
@@ -47,7 +49,9 @@ const Widget = ({
             : <FontAwesomeIcon icon={faChevronUp} />}
           {name}
         </button>
-        <Button onClick={mapActionHandler}>Show layer</Button>
+        {isActive
+          ? <Button isActive onClick={activeToggleHandler}>Hide layer</Button>
+          : <Button onClick={activeToggleHandler}>Show layer</Button>}
       </div>
 
       <div className={classnames(styles.content)}>
@@ -68,16 +72,19 @@ Widget.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
+  layerId: PropTypes.string.isRequired,
   widgetConfig: PropTypes.shape({}).isRequired,
+  isActive: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   children: PropTypes.func.isRequired,
-  onMapAction: PropTypes.func,
+  toggleActive: PropTypes.func,
   toggleCollapse: PropTypes.func
 };
 
 Widget.defaultProps = {
+  isActive: false,
   isCollapsed: false,
-  onMapAction: () => {},
+  toggleActive: () => {},
   toggleCollapse: () => {}
 };
 

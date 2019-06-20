@@ -1,6 +1,7 @@
 import {
   fetchRequested, fetchSucceeded, fetchFailed,
-  collapseAll, expandAll, toggleCollapse
+  collapseAll, expandAll, toggleCollapse,
+  toggleActive
 } from './actions';
 
 export default {
@@ -31,7 +32,7 @@ export default {
   }),
   [toggleCollapse]: (state, { payload }) => {
     const list = state.list.map((item) => {
-      if (item.id !== payload.id) return ({ ...item });
+      if (item.id !== payload.id) return item;
       return ({ ...item, isCollapsed: !item.isCollapsed });
     });
     const noCollapsed = list.find(item => item.isCollapsed === false);
@@ -41,5 +42,12 @@ export default {
       list,
       isCollapsed: !noCollapsed
     };
-  }
+  },
+  [toggleActive]: (state, { payload }) => ({
+    ...state,
+    list: state.list.map((item) => {
+      if (item.id !== payload.id) return item;
+      return ({ ...item, isActive: !item.isActive });
+    })
+  })
 };
