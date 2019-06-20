@@ -9,4 +9,5 @@ export const fetchWidgets = createAction('WIDGETS/FETCH_ALL');
 export const toggleCollapse = createAction('WIDGET/TOGGLE_COLLAPSE');
 export const collapseAll = createAction('WIDGETS/COLLAPSE_ALL');
 export const expandAll = createAction('WIDGETS/EXPAND_ALL');
-export const triggerMapAction = createAction('WIDGETS/triggerMapAction');
+
+export const toggleActive = createAction('WIDGET/TOGGLE_ENABLE');

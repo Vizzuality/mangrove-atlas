@@ -39,11 +39,13 @@ class WidgetList extends PureComponent {
 
     return (
       <div className={styles.widgets}>
-        {
-          isCollapsed
-            ? <Button onClick={this.onClickExpandAll}>Expand all</Button>
-            : <Button onClick={this.onClickCollapseAll}>Collapse all</Button>
-        }
+        <div className={styles.actionBar}>
+          {
+            isCollapsed
+              ? <Button onClick={this.onClickExpandAll}>Expand all</Button>
+              : <Button onClick={this.onClickCollapseAll}>Collapse all</Button>
+          }
+        </div>
         {widgets.map(widget => (
           <Widget
             key={widget.id}
