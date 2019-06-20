@@ -1,7 +1,7 @@
 import {
   fetchRequested, fetchSucceeded, fetchFailed,
   collapseAll, expandAll, toggleCollapse,
-  toggleActive
+  toggleActive, toggleActiveByLayerId
 } from './actions';
 
 export default {
@@ -47,7 +47,14 @@ export default {
     ...state,
     list: state.list.map((item) => {
       if (item.id !== payload.id) return item;
-      return ({ ...item, isActive: !item.isActive });
+      return ({ ...item, isActive: payload.isActive });
+    })
+  }),
+  [toggleActiveByLayerId]: (state, { payload }) => ({
+    ...state,
+    list: state.list.map((item) => {
+      if (item.layerId !== payload.layerId) return item;
+      return ({ ...item, isActive: payload.isActive });
     })
   })
 };

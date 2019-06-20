@@ -1,8 +1,12 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import { fetchRequested, fetchSucceeded, fetchFailed } from 'modules/layers/actions';
 import DatasetService from 'services/dataset-service';
+import { fetchRequested, fetchSucceeded, fetchFailed, toggleActive } from './actions';
 
 const service = new DatasetService({ entityName: 'layers' });
+
+export function* toggleActiveLayer({ payload }) {
+  yield put(toggleActive({ id: payload.layerId, isActive: payload.isActive }));
+}
 
 function* getLayers() {
   yield put(fetchRequested());
@@ -15,5 +19,6 @@ function* getLayers() {
 }
 
 export default function* layersSagas() {
+  yield takeLatest('WIDGET/TOGGLE_ACTIVE', toggleActiveLayer);
   yield takeLatest('LAYERS/FETCH_ALL', getLayers);
 }

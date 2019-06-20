@@ -8,7 +8,7 @@ import { PAGES } from 'modules/pages/constants';
 
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
-// import * as search from 'modules/search';
+import * as mapStyles from 'modules/map-styles';
 import * as layers from 'modules/layers';
 import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
@@ -25,11 +25,11 @@ queryState.config({
 const modules = [
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
-  // { namespace: 'search', components: search },
   { namespace: 'layers', components: layers },
   { namespace: 'widgets', components: widgets },
   { namespace: 'locations', components: locations },
-  { namespace: 'dashboards', components: dashboards }
+  { namespace: 'dashboards', components: dashboards },
+  { namespace: 'mapStyles', components: mapStyles }
 ];
 
 const {
@@ -39,9 +39,9 @@ const {
   enhancer: routerEnhancer
 } = router;
 
-const {
-  middleware: queryStateMiddleware
-} = queryState;
+// const {
+//   middleware: queryStateMiddleware
+// } = queryState;
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -67,7 +67,7 @@ const store = createStore(reducers, enhancers);
 sagaMiddleware.run(function* root() {
   yield all([
     fork(pages.sagas),
-    // fork(map.sagas),
+    fork(mapStyles.sagas),
     fork(layers.sagas),
     fork(widgets.sagas),
     fork(locations.sagas),

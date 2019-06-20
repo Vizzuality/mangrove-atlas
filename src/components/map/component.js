@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
 import BasemapSelector from 'components/basemap-selector';
+import Legend from 'components/map-legend';
 import styles from './style.module.scss';
 
 class Map extends Component {
@@ -70,6 +71,7 @@ class Map extends Component {
           <NavigationControl />
         </div>
         <div className={styles.legend}>
+          <Legend />
           <BasemapSelector />
         </div>
       </MapGL>

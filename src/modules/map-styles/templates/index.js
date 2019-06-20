@@ -4,8 +4,7 @@ import dark from './basemaps/dark.json';
 import satellite from './basemaps/satellite.json';
 import wdpa from './contextuals/wdpa.json';
 import countries from './contextuals/countries.json';
-// import mangrovesExtend1996 from './layers/mangroves-extend-1996.json';
-import mangrovesExtend2015 from './layers/mangroves-extend-2015.json';
+import mangrovesExtent2015 from './layers/mangroves-extent-2015.json';
 
 export default {
   template,
@@ -21,7 +20,7 @@ export default {
   layers: [
     {
       id: '187deb54ab1c40c1d4476f8ba3a01ba0',
-      mapStyle: mangrovesExtend2015
+      mapStyle: mangrovesExtent2015
     }
   ]
 };
