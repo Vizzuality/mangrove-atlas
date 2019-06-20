@@ -7,9 +7,7 @@
     },
     "source": "composite",
     "source-layer": "GMW_1996_v2",
-    "layout": {
-      "visibility": "none"
-    },
+    "layout": {},
     "paint": {
       "fill-color": "hsl(12, 81%, 59%)",
       "fill-outline-color": "hsla(0, 0%, 0%, 0)",
@@ -24,9 +22,7 @@
     },
     "source": "composite",
     "source-layer": "GMW_1996_v2",
-    "layout": {
-      "visibility": "none"
-    },
+    "layout": {},
     "paint": {
       "circle-color": "#eb6240",
       "circle-stroke-color": "hsla(0, 0%, 0%, 0)",

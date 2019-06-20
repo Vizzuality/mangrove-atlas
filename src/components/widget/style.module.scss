@@ -23,6 +23,8 @@
   }
 
   .title {
+    @include upper-text;
+
     flex: 1;
 
     position: relative;
@@ -31,12 +33,7 @@
     padding: 5px 0;
     margin: 0 20px 0 0;
 
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    line-height: 24px;
     text-align: left;
-    text-transform: uppercase;
 
     cursor: pointer;
 
@@ -64,9 +61,8 @@
 
 .widget_template {
   .sentence {
-    color: rgba(0,0,0,0.85);
-    font-size: $font-size-medium;
-    line-height: 30px;
+    @include medium-text;
+
     select {
       outline: none;
       border:none;
