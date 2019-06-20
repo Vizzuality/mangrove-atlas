@@ -1,20 +1,46 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import styles from 'components/widget/style.module.scss';
-
 import Chart from 'components/chart';
 import Select from 'components/select';
+import styles from 'components/widget/style.module.scss';
 
 class MangroveCoverage extends React.PureComponent {
   static propTypes = {
+    data: PropTypes.shape({}),
     chart: PropTypes.arrayOf(PropTypes.object).isRequired,
     chartConfig: PropTypes.shape({}).isRequired,
   };
 
+  static defaultProps = {
+    data: null
+  }
+
   state = {
-    unit: 'km',
-    yearStart: '2009',
-    yearEnd: '2019'
+    yearStart: '2009'
+  }
+
+  getData() {
+    const { data: { widgetData, metadata } } = this.props;
+    const { yearStart } = this.state;
+    const currentYearData = widgetData.find(d => d.x.toString() === yearStart.toString());
+    const nonMangrove = metadata.total - currentYearData.x;
+
+    const result = [
+      {
+        ...currentYearData
+      },
+      {
+        x: 'Non mangroves',
+        y: nonMangrove,
+        color: '#ECECEF',
+        percentage: nonMangrove / metadata.total * 100,
+        unit: '%',
+        value: nonMangrove,
+        label: 'Non mangroves'
+      }
+    ];
+
+    return result;
   }
 
   changeYear = (type, value) => {
@@ -25,49 +51,29 @@ class MangroveCoverage extends React.PureComponent {
     }
   }
 
-  changeUnit = (unit) => {
-    this.setState({ unit });
-  }
-
   render() {
-    const { chart, chartConfig } = this.props;
-    const { yearStart, yearEnd, unit } = this.state;
-
-    // XXX: these options should come from an api ?
-    const optionsYearStart = [
-      { value: '2009', label: '2009' },
-      { value: '2010', label: '2010' }
-    ];
-
-    const optionsYearEnd = [
-      { value: '2018', label: '2018' },
-      { value: '2019', label: '2019' }
-    ];
-
-    const optionsUnit = [
-      { value: 'ha', label: 'Ha' },
-      { value: 'km', label: 'Km' }
-    ];
-
+    const { data: { metadata }, chart, chartConfig } = this.props;
+    const { yearStart } = this.state;
+    const optionsYears = metadata.years.map(year => ({
+      label: year,
+      value: year
+    }));
+    const widgetData = this.getData();
 
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <p className={styles.sentence}>
-            Mangrove forest cover 55 % <br />
-            of the world’s 230
+            Mangrove forest cover <span style={{ fontWeight: 'bold' }}>{widgetData[0].percentage} {widgetData[0].unit}</span><br />
+            of
             {' '}
-            <Select
-              value={unit}
-              options={optionsUnit}
-              onChange={value => this.changeUnit(value)}
-            />
+            <span style={{ fontWeight: 'bold' }}>the world’s {metadata.total / 1000} km</span>
             {' '}
-            in
+            coastline in
             {' '}
             <Select
               value={yearStart}
-              options={optionsYearStart}
+              options={optionsYears}
               onChange={value => this.changeYear('start', value)}
             />
             {'.'}
@@ -77,7 +83,7 @@ class MangroveCoverage extends React.PureComponent {
         {/* Chart */}
         {!!chart.length && (
           <Chart
-            data={chart}
+            data={widgetData}
             config={chartConfig}
           />
         )}
