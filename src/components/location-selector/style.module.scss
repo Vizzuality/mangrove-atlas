@@ -9,8 +9,9 @@
   width: 100%;
   top: 50px;
   left: 50px;
+  bottom: 50px;
 
-  .title {
+  .searchInput {
     flex: 1;
 
     width: 100%;
@@ -19,8 +20,9 @@
     border: 0;
     background: transparent;
 
+    caret-color: $primary;
     color: $body-color;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 300;
     line-height: 50px;
 
@@ -36,9 +38,12 @@
   .content {
     position: absolute;
     padding: $padding;
+    width: 100%;
+    box-sizing: border-box;
     border-radius: $border-radius;
     background: white;
     box-shadow: $box-shadow;
+    overflow: auto;
     z-index: 1;
   }
 
@@ -53,5 +58,22 @@
     background: white;
 
     cursor: pointer;
+  }
+
+  .list {
+    margin: 30px 0 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .listItem {
+    @include medium-text;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0 -20px;
+
+    &:hover {
+      background-color: rgba(#00C5BD, .1);
+    }
   }
 }
