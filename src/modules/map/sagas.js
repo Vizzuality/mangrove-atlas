@@ -1,24 +1,34 @@
-// import { takeLatest, put } from 'redux-saga/effects';
-// import { FlyToInterpolator } from 'react-map-gl';
-// import bbox from '@turf/bbox';
-// import { setViewport } from './actions';
+import { takeLatest, put, select } from 'redux-saga/effects';
+import { FlyToInterpolator } from 'react-map-gl';
+import WebMercatorViewport from 'viewport-mercator-project';
+import bbox from '@turf/bbox';
+import { currentLocation } from 'modules/locations/selectors';
+import { easeCubic } from 'd3-ease';
+import { setViewport } from './actions';
 
-// console.log(bbox)
+function* flyToCurrentLocation() {
+  const state = yield select();
+  const location = currentLocation(state);
 
-// function* flyToCurrentLocation() {
-//   const {  }
+  if (location) {
+    const bounds = bbox(location.geometry);
+    const { longitude, latitude, zoom } = new WebMercatorViewport(state.map.viewport)
+      .fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]]);
 
-//   yield put(setViewport({
-//     // longitude: -74.1,
-//     // latitude: 40.7,
-//     // zoom: 14,
-//     transitionInterpolator: new FlyToInterpolator()
-//   }));
-// }
+    const viewport = {
+      ...state.map.viewport,
+      longitude,
+      latitude,
+      zoom,
+      transitionDuration: 3000,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionEasing: easeCubic
+    };
+    yield put(setViewport(viewport));
+  }
+}
 
 export default function* pages() {
-  // yield takeLatest('PAGE/APP', flyToCurrentLocation);
-  // yield takeLatest('PAGE/COUNTRY', flyToCurrentLocation);
-  // yield takeLatest('PAGE/AOI', flyToCurrentLocation);
-  // yield takeLatest('PAGE/WDPA', flyToCurrentLocation);
+  yield takeLatest('LOCATIONS/FETCH_SUCCEDED', flyToCurrentLocation);
+  yield takeLatest('LOCATIONS/SET_CURRENT', flyToCurrentLocation);
 }
