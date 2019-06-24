@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { defaultDashboards } from 'modules/dashboards/constants';
 import sumBy from 'lodash/sumBy';
 
 const locations = state => state.locations.list;
@@ -7,13 +8,15 @@ const currentLocationId = state => state.locations.current;
 export const currentLocation = createSelector(
   [locations, currentLocationId],
   (_locations, _currentId) => {
+    if (!_currentId) return null;
+
     const countries = _locations.filter(location => location.type === 'admin0-eez');
 
-    if (_currentId === 'global') {
+    if (_currentId.id === 'global') {
       const globalData = {
         type: 'global',
         name: 'Worldwide',
-        dashboardId: '61382203bcbaa30bcf9644ed96b56441',
+        dashboardId: defaultDashboards.global,
         length_coast_m: 1634701000,
         length_mangrove_m: {
           1996: sumBy(countries, c => c.length_mangrove_m['1996']),
@@ -28,7 +31,12 @@ export const currentLocation = createSelector(
       return globalData;
     }
 
-    return _locations.find(location => location.id === _currentId);
+    const result = _locations
+      .find(location => (location.iso === _currentId.iso || location.id === _currentId.id));
+
+    if (!result) return null;
+
+    return { ...result, dashboardId: result.dashboardId || defaultDashboards[result.type] };
   }
 );
 

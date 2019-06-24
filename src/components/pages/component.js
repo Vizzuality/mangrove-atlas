@@ -6,10 +6,10 @@ import AppPage from 'pages/app';
 import NotFoundPage from 'pages/not-found';
 
 const pageMap = new Map([
-  ['APP', AppPage],
-  ['COUNTRY', AppPage],
-  ['AOI', AppPage],
-  ['WDPA', AppPage]
+  ['PAGE/APP', AppPage],
+  ['PAGE/COUNTRY', AppPage],
+  ['PAGE/AOI', AppPage],
+  ['PAGE/WDPA', AppPage]
 ]);
 
 // prompts or error logging should be handled here

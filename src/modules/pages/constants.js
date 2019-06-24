@@ -2,22 +2,22 @@ import { NOT_FOUND } from 'redux-first-router';
 
 export const PAGES = [
   {
-    name: 'APP',
+    name: 'PAGE/APP',
     path: '/',
     page: 'app',
   },
   {
-    name: 'COUNTRY',
+    name: 'PAGE/COUNTRY',
     path: '/country/:iso',
     page: 'app',
   },
   {
-    name: 'AOI',
+    name: 'PAGE/AOI',
     path: '/area-of-interest/:id',
     page: 'app',
   },
   {
-    name: 'WDPA',
+    name: 'PAGE/WDPA',
     path: '/protected-area/:id',
     page: 'app',
   },

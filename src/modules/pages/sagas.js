@@ -1,11 +1,11 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import { fetchLocations, closeSearchPanel } from 'modules/locations/actions';
+import { fetchLocations, closeSearchPanel, setCurrent } from 'modules/locations/actions';
 import { fetchDashboards } from 'modules/dashboards/actions';
 import { fetchWidgets } from 'modules/widgets/actions';
 import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
 
-function* loadInitialData() {
+function* loadInitialData({ payload }) {
   const { locations, dashboards, widgets, layers, mapStyles } = yield select();
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.list.length) yield put(fetchDashboards());
@@ -13,11 +13,20 @@ function* loadInitialData() {
   if (!layers.list.length) yield put(fetchLayers());
   if (!mapStyles.layers) yield put(fetchMapStyles());
   yield put(closeSearchPanel());
+
+  /**
+   * Set current location
+   */
+  if (payload.id || payload.iso) {
+    yield put(setCurrent({ ...payload }));
+  } else {
+    yield put(setCurrent({ id: 'global' }));
+  }
 }
 
 export default function* pages() {
-  yield takeLatest('APP', loadInitialData);
-  yield takeLatest('COUNTRY', loadInitialData);
-  yield takeLatest('AOI', loadInitialData);
-  yield takeLatest('WDPA', loadInitialData);
+  yield takeLatest('PAGE/APP', loadInitialData);
+  yield takeLatest('PAGE/COUNTRY', loadInitialData);
+  yield takeLatest('PAGE/AOI', loadInitialData);
+  yield takeLatest('PAGE/WDPA', loadInitialData);
 }

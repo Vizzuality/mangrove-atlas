@@ -1,6 +1,6 @@
 export default {
   isOpened: false,
-  current: 'global',
+  current: null,
   list: [],
   isLoading: false,
   error: null
