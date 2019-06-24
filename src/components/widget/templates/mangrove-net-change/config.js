@@ -1,6 +1,6 @@
 import React from 'react';
 // Utils
-import { format } from 'd3-format';
+// import { format } from 'd3-format';
 // import { replace } from 'layer-manager';
 import groupBy from 'lodash/groupBy';
 

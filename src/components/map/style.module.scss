@@ -15,3 +15,12 @@ $space-around-map: 30px;
   right: $space-around-map;
   bottom: $space-around-map;
 }
+
+// Mapbox override
+:global(.mapboxgl-ctrl-group:not(:empty)) {
+  box-shadow: 0 4px 12px 0 rgba(168, 168, 168, 0.25);
+}
+
+:global(.mapboxgl-ctrl-group > button) {
+  background: white;
+}
