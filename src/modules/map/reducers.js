@@ -3,10 +3,7 @@ import * as actions from './actions';
 export default {
   [actions.setViewport]: (state, { payload }) => ({
     ...state,
-    viewport: {
-      ...state.viewport,
-      ...payload
-    }
+    viewport: payload
   }),
   [actions.setBasemap]: (state, { payload }) => ({
     ...state,
