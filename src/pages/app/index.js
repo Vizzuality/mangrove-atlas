@@ -1,7 +1,8 @@
 import React from 'react';
-import LocationSelector from 'components/location-selector';
+import Header from 'components/header';
 import Widgets from 'components/widgets';
 import Map from 'components/map';
+import LocationSelector from 'components/location-selector';
 import background from './bg-shape.svg';
 import styles from './style.module.scss';
 
@@ -13,11 +14,14 @@ const AppPage = () => (
       alt="Background"
     />
     <div className={styles.dashboard}>
-      <LocationSelector />
+      <Header />
       <Widgets />
     </div>
     <div className={styles.vis}>
       <Map />
+    </div>
+    <div className={styles.overlay}>
+      <LocationSelector />
     </div>
   </div>
 );
