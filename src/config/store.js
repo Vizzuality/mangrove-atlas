@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import { handleModule } from 'vizzuality-redux-tools';
 import { all, fork } from 'redux-saga/effects';
 
-import { PAGES } from 'modules/pages/constants';
+// import { PAGES } from 'modules/pages/constants';
 
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
@@ -14,13 +14,13 @@ import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
 // Not actually a module, more like middleware
-import { queryState } from 'modules/query-state';
+// import { queryState } from 'modules/query-state';
 
 import router from './router';
 
-queryState.config({
-  routerActions: PAGES.map(p => p.name)
-});
+// queryState.config({
+//   routerActions: PAGES.map(p => p.name)
+// });
 
 const modules = [
   { namespace: 'page', components: pages },

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -62,7 +63,14 @@ class LocationSelector extends PureComponent {
           </div>
           <ul className={styles.list}>
             {locationsData.map(location => (
-              <li key={location.id} className={styles.listItem}>{location.name}</li>
+              <li key={location.id} className={styles.listItem}>
+                {location.type === 'aoi'
+                  && <Link to={{ type: 'AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                {location.type === 'country'
+                  && <Link to={{ type: 'COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                {location.type === 'wdpa'
+                  && <Link to={{ type: 'WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+              </li>
             ))}
           </ul>
         </div>

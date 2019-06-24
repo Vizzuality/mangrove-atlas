@@ -6,4 +6,5 @@ export const pageActions = pages.reduce(
   (acc, page) => ({ ...acc, [page.name]: createAction(`${page.name}`) }),
   {}
 );
-export const setPage = createAction('PAGES/SET');
+
+export default { pageActions };
