@@ -67,13 +67,20 @@
   }
 
   .listItem {
-    @include medium-text;
-    border-radius: 10px;
-    padding: 10px 20px;
     margin: 0 -20px;
 
-    &:hover {
-      background-color: rgba(#00C5BD, .1);
+    a {
+      display: block;
+      border-radius: 10px;
+      padding: 10px 20px;
+
+      color: $body-color;
+      @include medium-text;
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgba(#00C5BD, .1);
+      }
     }
   }
 }
