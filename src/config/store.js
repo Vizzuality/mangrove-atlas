@@ -71,7 +71,8 @@ sagaMiddleware.run(function* root() {
     fork(layers.sagas),
     fork(widgets.sagas),
     fork(locations.sagas),
-    fork(dashboards.sagas)
+    fork(dashboards.sagas),
+    fork(map.sagas)
   ]);
 });
 initialDispatch();

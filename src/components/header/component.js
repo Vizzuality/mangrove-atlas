@@ -28,7 +28,7 @@ class Header extends PureComponent {
 
     return (
       <div className={styles.header}>
-        <h1 className={styles.title}>{location.name}</h1>
+        {location && <h1 className={styles.title}>{location.name}</h1>}
         <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
           <FontAwesomeIcon icon={faSearch} size="lg" />
         </button>

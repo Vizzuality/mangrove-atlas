@@ -53,7 +53,7 @@ class LocationSelector extends PureComponent {
     return (
       <div className={styles.location}>
         <div className={styles.content}>
-          <div>
+          <div className={styles.search}>
             <input
               type="search"
               className={styles.searchInput}
@@ -62,14 +62,17 @@ class LocationSelector extends PureComponent {
             />
           </div>
           <ul className={styles.list}>
+            <li className={styles.listItem}>
+              <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
+            </li>
             {locationsData.map(location => (
               <li key={location.id} className={styles.listItem}>
                 {location.type === 'aoi'
-                  && <Link to={{ type: 'AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                {location.type === 'country'
-                  && <Link to={{ type: 'COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                  && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                {(location.type === 'country' || location.type === 'admin0-eez')
+                  && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
                 {location.type === 'wdpa'
-                  && <Link to={{ type: 'WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+                  && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
               </li>
             ))}
           </ul>
