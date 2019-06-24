@@ -9,7 +9,7 @@ const Legend = ({ layers }) => (
 );
 
 Legend.propTypes = {
-  layers: PropTypes.shape({})
+  layers: PropTypes.arrayOf(PropTypes.shape({}))
 };
 
 Legend.defaultProps = {
