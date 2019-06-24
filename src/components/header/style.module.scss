@@ -1,0 +1,38 @@
+@import '../../styles/vars';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 80px;
+  margin-bottom: 50px;
+
+  .title {
+    flex: 1;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+
+    color: $body-color;
+    font-size: 60px;
+    font-weight: 300;
+    line-height: 50px;
+  }
+
+  .searchButton {
+    width: 60px;
+    height: 60px;;
+    border: 0;
+    border-radius: 100%;
+    background: white;
+    cursor: pointer;
+    box-shadow: $box-shadow;
+
+    :global(.svg-inline--fa path) {
+      fill: $primary;
+    }
+  }
+}

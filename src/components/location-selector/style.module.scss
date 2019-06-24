@@ -1,12 +1,14 @@
 @import '../../styles/vars';
 
 .location {
-  display: flex;
-  justify-content: space-between;
+  $padding: 30px;
+  $border-radius: 20px;
 
-  margin-top: 80px;
-  margin-bottom: 50px;
-  border-bottom: 1px solid rgba($body-color, 0.2);
+  position: absolute;
+  max-width: 540px;
+  width: 100%;
+  top: 50px;
+  left: 50px;
 
   .title {
     flex: 1;
@@ -31,9 +33,25 @@
     }
   }
 
+  .content {
+    position: absolute;
+    padding: $padding;
+    border-radius: $border-radius;
+    background: white;
+    box-shadow: $box-shadow;
+    z-index: 1;
+  }
+
   .searchButton {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 30px;
+    left: 100%;
     border: 0;
-    background: transparent;
+    border-radius: 0 10px 10px 0;
+    background: white;
+
     cursor: pointer;
   }
 }

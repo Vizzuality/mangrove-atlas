@@ -1,4 +1,7 @@
-import { fetchRequested, fetchSucceeded, fetchFailed, setCurrent } from './actions';
+import {
+  fetchRequested, fetchSucceeded, fetchFailed,
+  setCurrent, openSearchPanel, closeSearchPanel
+} from './actions';
 
 export default {
   [fetchRequested]: state => ({
@@ -19,5 +22,7 @@ export default {
   [setCurrent]: (state, { payload }) => ({
     ...state,
     current: payload
-  })
+  }),
+  [openSearchPanel]: state => ({ ...state, isOpened: true }),
+  [closeSearchPanel]: state => ({ ...state, isOpened: false }),
 };
