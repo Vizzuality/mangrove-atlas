@@ -55,16 +55,16 @@ class LocationSelector extends PureComponent {
           <div>
             <input
               type="search"
-              className={styles.title}
+              className={styles.searchInput}
               placeholder={currentLocation.name}
               onChange={this.updateSearchTerm}
             />
           </div>
-          <div>
+          <ul className={styles.list}>
             {locationsData.map(location => (
-              <li key={location.id}>{location.name}</li>
+              <li key={location.id} className={styles.listItem}>{location.name}</li>
             ))}
-          </div>
+          </ul>
         </div>
         <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
