@@ -43,6 +43,12 @@
 
     overflow: hidden;
 
+    transition: all 0.5 ease;
+
+    &:hover {
+      box-shadow: 0 2px 5px 0 rgba(7, 127, 172, 0.43);
+    }
+
     &.selected {
       border: 2px solid $primary;
       box-shadow: 0 2px 5px 0 rgba(7, 127, 172, 0.43);

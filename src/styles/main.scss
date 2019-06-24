@@ -7,8 +7,14 @@ body {
   line-height: $body-line-height;
 
   overflow: hidden; /* Don't remove this in order to avoid scroll default behaviour */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-button:focus {
-  outline: 0;
+button {
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
 }

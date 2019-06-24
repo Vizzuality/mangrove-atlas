@@ -37,7 +37,14 @@ const Widget = ({
   }
 
   return (
-    <div className={classnames(styles.widget, { [styles.collapsed]: isCollapsed })}>
+    <div
+      className={
+        classnames(styles.widget, {
+          [styles.collapsed]: isCollapsed,
+          [styles.layerActive]: isActive
+        })
+      }
+    >
       <div className={styles.header}>
         <button
           type="button"

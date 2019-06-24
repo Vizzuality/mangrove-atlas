@@ -36,7 +36,7 @@ class BasemapSelector extends PureComponent {
     const currentBasemap = basemaps.find(b => b.id === basemapName);
 
     return (
-      <div className={styles.basemap}>
+      <div className={classnames('mapboxgl-ctrl', styles.basemap)}>
         <div className={styles.current}>
           <h3>Map style</h3>
           <div>{currentBasemap.name}</div>
