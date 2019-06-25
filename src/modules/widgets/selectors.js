@@ -25,13 +25,13 @@ export const coverageWidget = createSelector(
     const total = _currentLocation.length_coast_m;
 
     const widgetData = years.map(year => ({
-      x: year,
+      x: Number(year),
       y: 100,
       color: '#00857F',
       percentage: _currentLocation.length_mangrove_m[year] / total * 100,
       unit: '%',
       value: _currentLocation.length_mangrove_m[year],
-      label: year
+      label: `Mangroves in ${year}`
     }));
 
     return {

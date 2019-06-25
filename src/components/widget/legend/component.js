@@ -32,7 +32,7 @@ const Legend = ({ groups, direction }) => (
 
 Legend.propTypes = {
   direction: PropTypes.string,
-  groups: PropTypes.arrayOf({}).isRequired
+  groups: PropTypes.shape({}).isRequired
 };
 
 Legend.defaultProps = {

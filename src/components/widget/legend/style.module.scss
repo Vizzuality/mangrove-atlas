@@ -3,7 +3,7 @@
   display: block;
 
   &.vertical {
-    ul {
+    .widget_legend_list {
       display: flex;
       margin: 0;
       padding: 0;
@@ -19,12 +19,18 @@
 
   .widget_legend_group:first-child { margin: 0; }
 
+  .widget_legend_list {
+    display: flex;
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+  }
+
   .widget_legend_list_item {
-    font-size: 11px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 10px 0 0;
+    list-style: none;
   }
 
   .widget_legend_list-item._flex-column {
@@ -44,17 +50,17 @@
   }
 
   .widget_legend-number {
-    font-size: 29px;
+    // font-size: 29px;
     font-weight: 600;
     padding: 0 0 10px 0;
   }
 
   .widget_legend_number .unit {
-    font-size: 12px;
+    // font-size: 12px;
   }
 
   .widget_legend_number .unit sup {
-    font-size: 8px;
+    // font-size: 8px;
     vertical-align: super;
   }
 

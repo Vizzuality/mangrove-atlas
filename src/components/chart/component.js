@@ -169,7 +169,6 @@ class Chart extends PureComponent {
               />
             )}
 
-
             {yAxis && (
               <YAxis
                 axisLine={false}

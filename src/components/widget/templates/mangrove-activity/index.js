@@ -1,3 +1,11 @@
-import MangroveActivityComponent from './component';
+import { connect } from 'react-redux';
+import { coverageWidget } from 'modules/widgets/selectors';
+import { currentLocation } from 'modules/locations/selectors';
+import Component from './component';
 
-export default MangroveActivityComponent;
+const mapStateToProps = state => ({
+  data: coverageWidget(state),
+  location: currentLocation(state)
+});
+
+export default connect(mapStateToProps)(Component);

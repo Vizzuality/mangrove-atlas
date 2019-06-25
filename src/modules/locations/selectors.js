@@ -26,8 +26,7 @@ export const currentLocation = createSelector(
           2010: sumBy(countries, c => c.length_mangrove_m['2010']),
           2015: sumBy(countries, c => c.length_mangrove_m['2015']),
           2016: sumBy(countries, c => c.length_mangrove_m['2016'])
-        },
-        bounds: [[-180, -90], [180, 90]]
+        }
       };
       return globalData;
     }
