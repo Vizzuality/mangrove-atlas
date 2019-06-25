@@ -80,5 +80,7 @@
 }
 
 .widget_template {
-
+  .sentence {
+    @include medium-text;
+  }
 }

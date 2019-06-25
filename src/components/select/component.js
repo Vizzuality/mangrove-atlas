@@ -1,6 +1,3 @@
-/* eslint jsx-a11y/click-events-have-key-events: 0 */
-/* eslint jsx-a11y/no-static-element-interactions: 0 */
-/* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,8 +14,8 @@ const Select = ({ value: defaultValue, options, onChange }) => {
   return (
     <select
       value={selected.value}
-      onChange={e => setSelectedValue(e)}
-      className={styles.c_select}
+      onChange={setSelectedValue}
+      className={styles.select}
     >
       {options.map(o => (<option key={o.value} value={o.value}>{o.label}</option>))}
     </select>
