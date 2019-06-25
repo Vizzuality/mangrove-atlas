@@ -12,9 +12,38 @@
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
   background: linear-gradient(180deg, white, #d6d6d6);
   background-color: white;
-  background-size: 0 200%;
+  background-repeat: no-repeat;
+  background-position: 0 700px;
 
-  transition: all .7s ease;
+  transition: all .5s ease;
+  will-change: margin-bottom;
+
+  &.collapsed {
+    margin-bottom: -45px;
+    background-position: 0;
+
+    .content {
+      max-height: 0px;
+    }
+  }
+
+  &.collapsed:last-child {
+    background-position: 0 700px;
+  }
+
+  &.layerActive::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+
+    border: 2px solid rgba($primary, 0.35);
+    border-radius: $border-radius;
+
+    pointer-events: none;
+  }
 
   .header {
     display: flex;
@@ -48,46 +77,8 @@
     will-change: max-height;
     max-height: 700px;
   }
-
-  &.collapsed {
-    margin-bottom: -45px;
-    background-size: 100% 100%;
-
-    .content {
-      max-height: 0px;
-    }
-  }
-
-  &.layerActive::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-
-    border: 2px solid rgba($primary, 0.35);
-    border-radius: $border-radius;
-
-    pointer-events: none;
-  }
 }
 
 .widget_template {
-  .sentence {
-    @include medium-text;
 
-    select {
-      outline: none;
-      border:none;
-      border-bottom: 2px solid $primary;
-      border-radius: 0;
-      background: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      -ms-appearance: none; /* get rid of default appearance for IE8, 9 and 10*/
-      font-weight: 600;
-    }
-  }
 }
