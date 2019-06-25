@@ -70,7 +70,7 @@
   .list {
     flex: 1;
 
-    margin: 30px 0 0 0;
+    margin: 30px -20px 0 -20px;
     padding: 0;
     list-style: none;
 
@@ -81,7 +81,7 @@
     a {
       display: block;
       border-radius: 10px;
-      margin: 0 -20px;
+      // margin: 0 -20px;
       padding: 10px 20px;
 
       color: $body-color;
