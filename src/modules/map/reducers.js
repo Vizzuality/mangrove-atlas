@@ -1,12 +1,16 @@
 import * as actions from './actions';
 import initialState from './initial-state';
 
+const { viewport } = initialState;
+
 export default {
   [actions.resetViewport]: state => ({
     ...state,
     viewport: {
       ...state.viewport,
-      ...initialState.viewport
+      longitude: viewport.longitude,
+      latitude: viewport.latitude,
+      zoom: viewport.zoom
     }
   }),
   [actions.setViewport]: (state, { payload }) => ({
