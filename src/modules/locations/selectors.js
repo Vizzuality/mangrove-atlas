@@ -10,9 +10,8 @@ export const currentLocation = createSelector(
   (_locations, _currentId) => {
     if (!_currentId) return null;
 
-    const countries = _locations.filter(location => location.type === 'admin0-eez');
-
     if (_currentId.id === 'global') {
+      const countries = _locations.filter(location => location.type === 'admin0-eez');
       const globalData = {
         type: 'global',
         name: 'Worldwide',
@@ -35,6 +34,8 @@ export const currentLocation = createSelector(
       .find(location => (location.iso === _currentId.iso || location.id === _currentId.id));
 
     if (!result) return null;
+
+    console.log(result);
 
     return { ...result, dashboardId: result.dashboardId || defaultDashboards[result.type] };
   }
