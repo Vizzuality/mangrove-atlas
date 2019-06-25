@@ -1,36 +1,39 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
 import styles from 'components/widget/style.module.scss';
 
+const numberFormat = format(',.2r');
+
 class MangroveCoverage extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    chart: PropTypes.arrayOf(PropTypes.object).isRequired,
     chartConfig: PropTypes.shape({}).isRequired,
+    location: PropTypes.shape({})
   };
 
   static defaultProps = {
-    data: null
+    data: null,
+    location: null
   }
 
   state = {
-    yearStart: '2009'
+    currentYear: '1996'
   }
 
   getData() {
     const { data: { widgetData, metadata } } = this.props;
-    const { yearStart } = this.state;
-    const currentYearData = widgetData.find(d => d.x.toString() === yearStart.toString());
-    const nonMangrove = metadata.total - currentYearData.x;
-
-    const result = [
+    const { currentYear } = this.state;
+    const currentYearData = widgetData.find(d => d.x.toString() === currentYear.toString());
+    const nonMangrove = metadata.total - currentYearData.value;
+    return [
       {
         ...currentYearData
       },
       {
-        x: 'Non mangroves',
+        x: 0,
         y: nonMangrove,
         color: '#ECECEF',
         percentage: nonMangrove / metadata.total * 100,
@@ -39,49 +42,43 @@ class MangroveCoverage extends React.PureComponent {
         label: 'Non mangroves'
       }
     ];
-
-    return result;
   }
 
-  changeYear = (type, value) => {
-    if (type === 'start') {
-      this.setState({ yearStart: value });
-    } else {
-      this.setState({ yearEnd: value });
-    }
+  changeYear = (value) => {
+    this.setState({ currentYear: value });
   }
 
   render() {
-    const { data: { metadata }, chart, chartConfig } = this.props;
-    const { yearStart } = this.state;
+    const { data: { metadata }, chartConfig, location } = this.props;
+    const { currentYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year,
       value: year
     }));
     const widgetData = this.getData();
+    const { percentage, unit } = widgetData[0];
 
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <p className={styles.sentence}>
-            Mangrove forest cover <span style={{ fontWeight: 'bold' }}>{widgetData[0].percentage} {widgetData[0].unit}</span><br />
-            of
+            Mangrove forest cover <strong>{numberFormat(percentage)} {unit}</strong><br />
+            of <strong>{location.type === 'global' ? 'the world’s' : location.name}</strong>
             {' '}
-            <span style={{ fontWeight: 'bold' }}>the world’s {metadata.total / 1000} km</span>
-            {' '}
-            coastline in
+            <strong>{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
+            in
             {' '}
             <Select
-              value={yearStart}
+              value={currentYear}
               options={optionsYears}
-              onChange={value => this.changeYear('start', value)}
+              onChange={this.changeYear}
             />
             {'.'}
           </p>
         </div>
 
         {/* Chart */}
-        {!!chart.length && (
+        {!!widgetData.length && (
           <Chart
             data={widgetData}
             config={chartConfig}

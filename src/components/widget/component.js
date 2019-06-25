@@ -27,14 +27,7 @@ const Widget = ({
     toggleCollapse({ id });
   };
 
-  // TODO: Fetch widget data and pass to parse
-  // If slug we just send fake data, otherwise nothing
-  let widgetData;
-  if (slug) {
-    widgetData = widgetConfig.parse({ rows: [1, 2] });
-  } else {
-    widgetData = widgetConfig.parse({ rows: [] });
-  }
+  const widgetData = widgetConfig.parse({ });
 
   return (
     <div

@@ -9,14 +9,7 @@ import groupBy from 'lodash/groupBy';
 import WidgetLegend from 'components/widget/legend';
 
 export const CONFIG = {
-  parse: ({ rows }) => {
-    if (!rows.length) {
-      return {
-        chart: [],
-        template: ''
-      };
-    }
-
+  parse: () => {
     const fakeData = [
       {
         label: '1996',
@@ -94,7 +87,7 @@ export const CONFIG = {
           strokeDasharray: '6 6'
         },
         legend: {
-          align: 'top',
+          align: 'center',
           verticalAlign: 'top',
           layout: 'horizontal',
           height: 50,
