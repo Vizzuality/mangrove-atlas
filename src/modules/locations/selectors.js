@@ -35,8 +35,6 @@ export const currentLocation = createSelector(
 
     if (!result) return null;
 
-    console.log(result);
-
     return { ...result, dashboardId: result.dashboardId || defaultDashboards[result.type] };
   }
 );
