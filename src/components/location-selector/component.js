@@ -26,15 +26,22 @@ class LocationSelector extends PureComponent {
     searchTerm: null
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isOpened) this.resetTerm();
+  }
+
   clickHandler = () => {
     const { closeSearchPanel } = this.props;
 
     closeSearchPanel();
+    this.resetTerm();
   }
+
+  resetTerm = () => this.setState({ searchTerm: null })
 
   updateSearchTerm = (e) => {
     if (e.currentTarget.value === '') {
-      this.setState({ searchTerm: null });
+      this.resetTerm();
     } else {
       this.setState({ searchTerm: e.currentTarget.value });
     }
@@ -55,7 +62,7 @@ class LocationSelector extends PureComponent {
         <div className={styles.content}>
           <div className={styles.search}>
             <input
-              type="search"
+              type="text"
               className={styles.searchInput}
               placeholder={currentLocation.name}
               onChange={this.updateSearchTerm}
