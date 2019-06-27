@@ -56,6 +56,7 @@ class WidgetList extends PureComponent {
               <Fragment>
                 {/* Template */}
                 {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
+                  slug,
                   ...data,
                   ...props
                 })}
