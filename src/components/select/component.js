@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './style.module.scss';
 
-const Select = ({ value: defaultValue, options, onChange }) => {
+const Select = ({ value: defaultValue, options, onChange, prefix }) => {
   const [selected, selectValue] = useState(defaultValue);
 
   const setSelectedValue = (e) => {
@@ -17,18 +17,20 @@ const Select = ({ value: defaultValue, options, onChange }) => {
       onChange={setSelectedValue}
       className={styles.select}
     >
-      {options.map(o => (<option key={o.value} value={o.value}>{o.label}</option>))}
+      {options.map(o => (<option key={`${prefix}-${o.value}`} value={o.value}>{o.label}</option>))}
     </select>
   );
 };
 
 Select.propTypes = {
-  value: PropTypes.string.isRequired,
+  prefix: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onChange: PropTypes.func
 };
 
 Select.defaultProps = {
+  prefix: '',
   onChange: () => {}
 };
 

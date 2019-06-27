@@ -15,7 +15,7 @@ class MangroveCoverage extends React.PureComponent {
     chartConfig: PropTypes.shape({}).isRequired,
     location: PropTypes.shape({}),
     slug: PropTypes.string
-  };
+  }
 
   static defaultProps = {
     data: null,
@@ -68,12 +68,13 @@ class MangroveCoverage extends React.PureComponent {
         <div className={styles.widget_template}>
           <p className={styles.sentence}>
             Mangrove forest cover <strong>{numberFormat(percentage)} {unit}</strong><br />
-            of <strong>{location.type === 'global' ? 'the world’s' : location.name}</strong>
+            of <strong>{location.type === 'global' ? 'the world’s' : `${location.name}'s`}</strong>
             {' '}
             <strong>{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
             in
             {' '}
             <Select
+              prefix="coverage-start-year"
               value={currentYear}
               options={optionsYears}
               onChange={this.changeYear}

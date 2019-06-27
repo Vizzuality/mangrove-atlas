@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Chart from 'components/chart';
@@ -6,41 +6,61 @@ import Select from 'components/select';
 
 import styles from 'components/widget/style.module.scss';
 
-class MangroveNetChange extends React.PureComponent {
+class MangroveNetChange extends PureComponent {
   static propTypes = {
     chart: PropTypes.arrayOf(PropTypes.object).isRequired,
     chartConfig: PropTypes.shape({}).isRequired,
-  };
-
-  state = {
-    unit: 'ha'
+    location: PropTypes.shape({})
   }
 
-  changeUnit = (unit) => {
-    this.setState({ unit });
+  static defaultProps = {
+    location: null
+  }
+
+  state = {
+    startYear: '1996',
+    endYear: '2016'
+  }
+
+  changeStartYear = (year) => {
+    this.setState({ startYear: year });
+  }
+
+  changeEndYear = (year) => {
+    this.setState({ endYear: year });
   }
 
   render() {
-    const { chart, chartConfig } = this.props;
-    const { unit } = this.state;
+    const { chart, chartConfig, location } = this.props;
+    const { startYear, endYear } = this.state;
 
-    // XXX: these options should come from an api ?
-    const selectOptions = [
-      { value: 'ha', label: 'Ha' },
-      { value: 'km', label: 'Km' }
-    ];
+    const optionsYears = chart.map(d => ({
+      label: d.year.toString(),
+      value: d.year.toString()
+    }));
 
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <p className={styles.sentence}>
-            Over the past 20 years, mangroves in the world have decreased by x
+            Mangroves in <strong>{location.type === 'global' ? 'the world' : location.name}</strong>
+            {' '}have <strong>decreased</strong> by <strong>X</strong>{' '}<br />
+            between
             {' '}
             <Select
-              value={unit}
-              options={selectOptions}
-              onChange={value => this.changeUnit(value)}
+              prefix="start-year"
+              value={startYear}
+              options={optionsYears}
+              onChange={this.changeStartYear}
             />
+            {' and '}
+            <Select
+              prefix="end-year"
+              value={endYear}
+              options={optionsYears}
+              onChange={this.changeEndYear}
+            />
+            {'.'}
           </p>
         </div>
 

@@ -20,7 +20,7 @@ const ConservationHotspots = ({ data, currentLocation }) => {
           className={classnames(styles.card, { [styles.active]: d.id === currentLocation.id })}
         >
           <h3>{d.name}</h3>
-          <p>{numberFormat(d.length_coast_m)} km coastline</p>
+          <p>{numberFormat(d.length_coast_m / 1000)} km coastline</p>
           {d.id !== currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>View place</Link>}
         </div>
       ))}
