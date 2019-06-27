@@ -1,5 +1,5 @@
 import axios from 'axios';
-import serializer from 'utils/geoJsonToJson';
+import { geoJsonToJson } from 'utils/jsonParsers';
 
 const account = process.env.REACT_APP_MAPBOX_ACCOUNT;
 /**
@@ -33,7 +33,7 @@ class DatasetService {
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
-      return serializer(data);
+      return geoJsonToJson(data);
     });
 }
 

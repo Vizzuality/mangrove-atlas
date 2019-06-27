@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
+import { jsonToCSV } from 'utils/jsonParsers';
+import { CSVLink } from 'react-csv';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2r');
@@ -11,12 +13,14 @@ class MangroveCoverage extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
     chartConfig: PropTypes.shape({}).isRequired,
-    location: PropTypes.shape({})
+    location: PropTypes.shape({}),
+    slug: PropTypes.string
   };
 
   static defaultProps = {
     data: null,
-    location: null
+    location: null,
+    slug: null
   }
 
   state = {
@@ -49,7 +53,7 @@ class MangroveCoverage extends React.PureComponent {
   }
 
   render() {
-    const { data: { metadata }, chartConfig, location } = this.props;
+    const { data: { metadata }, chartConfig, location, slug } = this.props;
     const { currentYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year,
@@ -57,6 +61,7 @@ class MangroveCoverage extends React.PureComponent {
     }));
     const widgetData = this.getData();
     const { percentage, unit } = widgetData[0];
+    const csvData = jsonToCSV(widgetData);
 
     return (
       <Fragment>
@@ -84,6 +89,8 @@ class MangroveCoverage extends React.PureComponent {
             config={chartConfig}
           />
         )}
+
+        <CSVLink data={csvData} filename={`${slug}-${Date.now()}}.csv`}>Download raw data</CSVLink>
       </Fragment>
     );
   }
