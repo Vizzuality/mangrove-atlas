@@ -90,7 +90,13 @@ class MangroveCoverage extends React.PureComponent {
           />
         )}
 
-        <CSVLink data={csvData} filename={`${slug}-${Date.now()}}.csv`}>Download raw data</CSVLink>
+        <CSVLink
+          className={styles.downloadButton}
+          data={csvData}
+          filename={`${slug}-${Date.now()}}.csv`}
+        >
+          Download raw data
+        </CSVLink>
       </Fragment>
     );
   }
