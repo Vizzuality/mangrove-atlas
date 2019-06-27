@@ -4,6 +4,7 @@ import Button from 'components/button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
+import { CSVLink } from 'react-csv';
 import styles from './style.module.scss';
 
 const Widget = ({
@@ -28,6 +29,8 @@ const Widget = ({
   };
 
   const widgetData = widgetConfig.parse({ });
+  console.log(widgetData)
+  // const csvData = [''];
 
   return (
     <div
@@ -66,6 +69,8 @@ const Widget = ({
           ...props
         })}
       </div>
+
+      {/* <CSVLink data={csvData}>Download raw data</CSVLink> */}
     </div>
   );
 };
