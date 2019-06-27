@@ -7,5 +7,5 @@ export default {
   'mangrove-coverage': MangroveCoverage,
   'mangrove-net-change': MangroveNetChange,
   'mangrove-activity': MangroveActivity,
-  'conservation-hotspots': ConservationHotspots
+  'highlighted-areas': ConservationHotspots
 };

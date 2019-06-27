@@ -1,11 +1,4 @@
 import React from 'react';
-// Utils
-// import { format } from 'd3-format';
-// import { replace } from 'layer-manager';
-import groupBy from 'lodash/groupBy';
-
-// Components
-// import WidgetTooltip from 'components/widget/tooltip';
 import WidgetLegend from 'components/widget/legend';
 
 export const CONFIG = {
@@ -13,26 +6,30 @@ export const CONFIG = {
     const fakeData = [
       {
         label: '1996',
+        year: 1996,
         gain: 122,
-        median: 40,
+        netChange: 40,
         loss: -120
       },
       {
         label: '2002',
+        year: 2002,
         gain: 155,
-        median: 30,
+        netChange: 30,
         loss: -40
       },
       {
         label: '2009',
+        year: 2009,
         gain: 194,
-        median: 72,
+        netChange: 72,
         loss: -182
       },
       {
         label: '2016',
+        year: 2016,
         gain: 135,
-        median: 110,
+        netChange: 110,
         loss: -194
       }
     ];
@@ -41,11 +38,12 @@ export const CONFIG = {
       chart: fakeData.map(l => (
         {
           x: l.label,
-          median: l.median,
-          gain: l.gain,
-          loss: l.loss,
+          'Net change': l.netChange,
+          Gain: l.gain,
+          Loss: l.loss,
           color: l.color,
-          name: l.label
+          name: l.label,
+          year: l.year
         }
       )),
       chartConfig: {
@@ -57,18 +55,18 @@ export const CONFIG = {
         xKey: 'x',
         yKeys: {
           lines: {
-            median: {
+            'Net change': {
               stroke: 'rgba(0,0,0,0.7)'
             }
           },
           bars: {
-            gain: {
+            Gain: {
               barSize: 10,
               transform: `translate(${(4 + 10) / 2}, 0)`,
               fill: '#077FAC',
               radius: [10, 10, 0, 0]
             },
-            loss: {
+            Loss: {
               barSize: 10,
               transform: `translate(-${(4 + 10) / 2}, 0)`,
               fill: '#EB6240',
@@ -93,25 +91,10 @@ export const CONFIG = {
           height: 50,
           content: (properties) => {
             const { payload } = properties;
-            const groups = groupBy(payload, p => p.payload.category);
+            const groups = { groups: payload };
             return <WidgetLegend direction="vertical" groups={groups} />;
           }
-        },
-        // tooltip: {
-        //   cursor: false,
-        //   content: (
-        //     <WidgetTooltip
-        //       style={{
-        //         color: '#FFFFFF',
-        //         backgroundColor: '#383838'
-        //       }}
-        //       settings={[
-        //         { key: 'x' },
-        //         { key: 'y', format: value => `${format('.2r')(value)}` }
-        //       ]}
-        //     />
-        //   )
-        // }
+        }
       }
     };
   }

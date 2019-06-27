@@ -7,7 +7,7 @@ export default {
   'mangrove-coverage': MangroveCoverage,
   'mangrove-net-change': MangroveNetChange,
   'mangrove-activity': MangroveActivity,
-  'conservation-hotspots': ConservationHotspots,
+  'highlighted-areas': ConservationHotspots,
   default: {
     parse: () => ({
       template: 'Template not defined',

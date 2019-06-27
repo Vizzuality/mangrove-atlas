@@ -15,9 +15,9 @@ export function* getWidgets() {
 
     // adding temporal widget for demo
     widgets.unshift({
-      id: 'conservation-hotspots',
-      slug: 'conservation-hotspots',
-      name: 'Conservation Hotspots',
+      id: 'highlighted-areas',
+      slug: 'highlighted-areas',
+      name: 'Highlighted Areas',
       contextualLayerIds: [],
       layerId: null
     });

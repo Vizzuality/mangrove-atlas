@@ -65,6 +65,7 @@ class MangroveActivity extends React.PureComponent {
             between
             {' '}
             <Select
+              prefix="activity-start-year"
               value={yearStart}
               options={optionsYearStart}
               onChange={value => this.changeYear('start', value)}
@@ -73,6 +74,7 @@ class MangroveActivity extends React.PureComponent {
             to
             {' '}
             <Select
+              prefix="activity-end-year"
               value={yearEnd}
               options={optionsYearEnd}
               onChange={value => this.changeYear('end', value)}
