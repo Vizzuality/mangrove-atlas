@@ -11,8 +11,18 @@ export function* toggleWidgetActive({ payload }) {
 export function* getWidgets() {
   yield put(fetchRequested());
   try {
-    const layers = yield call(service.fetch, []);
-    yield put(fetchSucceeded(layers));
+    const widgets = yield call(service.fetch, []);
+
+    // adding temporal widget for demo
+    widgets.unshift({
+      id: 'conservation-hotspots',
+      slug: 'conservation-hotspots',
+      name: 'Conservation Hotspots',
+      contextualLayerIds: [],
+      layerId: null
+    });
+
+    yield put(fetchSucceeded(widgets));
   } catch (err) {
     yield put(fetchFailed(err));
   }

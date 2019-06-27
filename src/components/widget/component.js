@@ -49,9 +49,11 @@ const Widget = ({
             : <FontAwesomeIcon icon={faChevronUp} />}
           {name}
         </button>
-        {isActive
-          ? <Button isActive onClick={activeToggleHandler}>Hide layer</Button>
-          : <Button onClick={activeToggleHandler}>Show layer</Button>}
+        {
+          isActive
+            ? <Button isActive onClick={activeToggleHandler}>Hide layer</Button>
+            : <Button disabled={!layerId} onClick={activeToggleHandler}>Show layer</Button>
+        }
       </div>
 
       <div className={classnames(styles.content)}>

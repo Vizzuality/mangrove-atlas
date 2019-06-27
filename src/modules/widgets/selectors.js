@@ -3,19 +3,34 @@ import { currentDashboard } from 'modules/dashboards/selectors';
 import { currentLocation } from 'modules/locations/selectors';
 
 const widgets = state => state.widgets.list;
+const locations = state => state.locations.list;
 
 export const dashboardWidgets = createSelector(
   [widgets, currentDashboard],
   (_widgets, _currentDashboard) => {
     if (!_currentDashboard) return [];
-    const widgetIds = _currentDashboard.widget_ids;
-    return _widgets.filter(widget => widgetIds.includes(widget.id));
+    const fixedWidgets = ['conservation-hotspots'];
+    const widgetIds = [...fixedWidgets, ..._currentDashboard.widget_ids];
+    const result = _widgets.filter(widget => widgetIds.includes(widget.id));
+
+    return result;
   }
 );
 
 export const activeWidgets = createSelector(
   [dashboardWidgets],
   _widgets => _widgets.filter(widget => widget.isActive)
+);
+
+export const conservationHotspots = createSelector(
+  [locations],
+  (_locations) => {
+    // Saloum and Rufiji
+    const ids = ['92e1a180761ed6d197da45a583a64304', 'be4b37e0e1613d1e768be9865d02cb5e'];
+    const widgetData = _locations.filter(location => ids.includes(location.id));
+
+    return { widgetData };
+  }
 );
 
 export const coverageWidget = createSelector(

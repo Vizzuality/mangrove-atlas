@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import styles from './style.module.scss';
 
 export default (props) => {
-  const { children, isActive, ...domProps } = props;
+  const { children, isActive, isDisabled, ...domProps } = props;
 
   return (
     <button
