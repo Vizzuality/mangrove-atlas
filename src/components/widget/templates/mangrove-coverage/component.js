@@ -66,7 +66,7 @@ class MangroveCoverage extends React.PureComponent {
     return (
       <Fragment>
         <div className={styles.widget_template}>
-          <p className={styles.sentence}>
+          <div className={styles.sentence}>
             Mangrove forest cover <strong>{numberFormat(percentage)} {unit}</strong><br />
             of <strong>{location.type === 'global' ? 'the world’s' : `${location.name}'s`}</strong>
             {' '}
@@ -74,13 +74,13 @@ class MangroveCoverage extends React.PureComponent {
             in
             {' '}
             <Select
-              prefix="coverage-start-year"
+              width="auto"
               value={currentYear}
               options={optionsYears}
               onChange={this.changeYear}
             />
             {'.'}
-          </p>
+          </div>
         </div>
 
         {/* Chart */}

@@ -52,7 +52,7 @@ export const CONFIG = {
         referenceLines: [
           { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
         ],
-        xKey: 'x',
+        xKey: 'year',
         yKeys: {
           lines: {
             'Net change': {

@@ -1,16 +1,6 @@
 @import '../../styles/vars';
 
 .select {
-  display: inline-block;
-
-  outline: none;
-  border:none;
   border-bottom: 2px solid $primary;
-  border-radius: 0;
-  background: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  -ms-appearance: none; /* get rid of default appearance for IE8, 9 and 10*/
   font-weight: bold;
 }
