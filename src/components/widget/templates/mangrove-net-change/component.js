@@ -1,19 +1,22 @@
 import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
+import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-
+import sumBy from 'lodash/sumBy';
 import styles from 'components/widget/style.module.scss';
+
+const numberFormat = format(',.3r');
 
 class MangroveNetChange extends PureComponent {
   static propTypes = {
-    chart: PropTypes.arrayOf(PropTypes.object).isRequired,
+    data: PropTypes.shape({}),
     chartConfig: PropTypes.shape({}).isRequired,
     location: PropTypes.shape({})
   }
 
   static defaultProps = {
+    data: null,
     location: null
   }
 
@@ -22,29 +25,40 @@ class MangroveNetChange extends PureComponent {
     endYear: '2016'
   }
 
-  changeStartYear = (year) => {
-    this.setState({ startYear: year });
+  getData() {
+    const { data: { widgetData } } = this.props;
+    const { startYear, endYear } = this.state;
+    const y0 = parseInt(startYear, 0);
+    const y1 = parseInt(endYear, 0);
+    const result = widgetData.filter((d) => {
+      const y = parseInt(d.year, 0);
+      return y >= y0 && y <= y1;
+    });
+    return result;
   }
 
-  changeEndYear = (year) => {
-    this.setState({ endYear: year });
-  }
+  changeStartYear = startYear => this.setState({ startYear })
+
+  changeEndYear = endYear => this.setState({ endYear })
 
   render() {
-    const { chart, chartConfig, location } = this.props;
+    const { data: { metadata }, chartConfig, location } = this.props;
     const { startYear, endYear } = this.state;
-
-    const optionsYears = chart.map(d => ({
-      label: d.year.toString(),
-      value: d.year.toString()
+    const optionsYears = metadata.years.map(year => ({
+      label: year,
+      value: year
     }));
+    const widgetData = this.getData();
+    const totalLoss = widgetData && widgetData.length
+      ? Math.abs(sumBy(widgetData, 'Loss'))
+      : 0;
 
     return (
       <Fragment>
         <div className={styles.widget_template}>
-          <p className={styles.sentence}>
+          <div className={styles.sentence}>
             Mangroves in <strong>{location.type === 'global' ? 'the world' : location.name}</strong>
-            {' '}have <strong>decreased</strong> by <strong>X</strong>{' '}<br />
+            {' '}have <strong>decreased</strong> by <strong>{numberFormat(totalLoss / 100000)} km<sup>2</sup></strong>{' '}<br />
             between
             {' '}
             <Select
@@ -61,13 +75,13 @@ class MangroveNetChange extends PureComponent {
               onChange={this.changeEndYear}
             />
             {'.'}
-          </p>
+          </div>
         </div>
 
         {/* Chart */}
-        {!!chart.length && (
+        {!!widgetData.length && (
           <Chart
-            data={chart}
+            data={widgetData}
             config={chartConfig}
           />
         )}

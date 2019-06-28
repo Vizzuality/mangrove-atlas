@@ -56,6 +56,30 @@ export const coverageWidget = createSelector(
   }
 );
 
-export default {
-  dashboardWidgets
-};
+
+export const netChangeWidget = createSelector(
+  [currentLocation],
+  (_currentLocation) => {
+    if (_currentLocation.type === 'country' || _currentLocation.type === 'admin0-eez') {
+      const gain = _currentLocation.mangrove_gain_m2;
+      const loss = _currentLocation.mangrove_loss_m2;
+      const years = Object.keys(loss);
+      const totalLoss = years
+        .reduce((year, nextYear) => parseFloat(loss[year] || 0) + parseFloat(loss[nextYear] || 0));
+
+      const widgetData = years.map(year => ({
+        Gain: parseFloat(gain[year]),
+        Loss: -parseFloat(loss[year]),
+        'Net change': parseFloat(gain[year]) - parseFloat(loss[year]),
+        year
+      }));
+
+      return {
+        metadata: { totalLoss, years },
+        widgetData
+      };
+    }
+
+    return { metadata: {}, widgetData: [] };
+  }
+);

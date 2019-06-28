@@ -87,5 +87,6 @@
 .widget_template {
   .sentence {
     @include medium-text;
+    margin: 1rem 0;
   }
 }

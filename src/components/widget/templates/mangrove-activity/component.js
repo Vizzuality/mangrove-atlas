@@ -53,7 +53,7 @@ class MangroveActivity extends React.PureComponent {
     return (
       <Fragment>
         <div className={styles.widget_template}>
-          <p className={styles.sentence}>
+          <div className={styles.sentence}>
             Regions of interest within location showed relative changes of x
             {' '}
             <Select
@@ -65,7 +65,6 @@ class MangroveActivity extends React.PureComponent {
             between
             {' '}
             <Select
-              prefix="activity-start-year"
               value={yearStart}
               options={optionsYearStart}
               onChange={value => this.changeYear('start', value)}
@@ -74,13 +73,12 @@ class MangroveActivity extends React.PureComponent {
             to
             {' '}
             <Select
-              prefix="activity-end-year"
               value={yearEnd}
               options={optionsYearEnd}
               onChange={value => this.changeYear('end', value)}
             />
             .
-          </p>
+          </div>
         </div>
 
         {/* Chart */}
