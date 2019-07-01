@@ -26,7 +26,7 @@ export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {
     // Saloum and Rufiji
-    const ids = ['92e1a180761ed6d197da45a583a64304', 'be4b37e0e1613d1e768be9865d02cb5e'];
+    const ids = ['094e62605d725612c642cb1eb5451ded', '4d4f31ae3061763b34c9c10da11082b0'];
     const widgetData = _locations.filter(location => ids.includes(location.id));
 
     return { widgetData };
@@ -60,7 +60,7 @@ export const coverageWidget = createSelector(
 export const netChangeWidget = createSelector(
   [currentLocation],
   (_currentLocation) => {
-    if (_currentLocation.type === 'country' || _currentLocation.type === 'admin0-eez') {
+    if (_currentLocation.mangrove_loss_m2 && _currentLocation.mangrove_loss_m2) {
       const gain = _currentLocation.mangrove_gain_m2;
       const loss = _currentLocation.mangrove_loss_m2;
       const years = Object.keys(loss);
@@ -80,6 +80,6 @@ export const netChangeWidget = createSelector(
       };
     }
 
-    return { metadata: {}, widgetData: [] };
+    return { metadata: { years: [] }, widgetData: [] };
   }
 );
