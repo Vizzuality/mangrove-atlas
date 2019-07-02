@@ -4,6 +4,9 @@ import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
 import sumBy from 'lodash/sumBy';
+import { jsonToCSV } from 'utils/jsonParsers';
+import { CSVLink } from 'react-csv';
+
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.3r');
@@ -12,12 +15,14 @@ class MangroveNetChange extends PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
     chartConfig: PropTypes.shape({}).isRequired,
-    location: PropTypes.shape({})
+    location: PropTypes.shape({}),
+    slug: PropTypes.string
   }
 
   static defaultProps = {
     data: null,
-    location: null
+    location: null,
+    slug: null
   }
 
   state = {
@@ -42,7 +47,7 @@ class MangroveNetChange extends PureComponent {
   changeEndYear = endYear => this.setState({ endYear })
 
   render() {
-    const { data: { metadata }, chartConfig, location } = this.props;
+    const { data: { metadata }, chartConfig, location, slug } = this.props;
     const { startYear, endYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year,
@@ -52,6 +57,8 @@ class MangroveNetChange extends PureComponent {
     const totalLoss = widgetData && widgetData.length
       ? Math.abs(sumBy(widgetData, 'Loss'))
       : 0;
+    const csvData = jsonToCSV(widgetData);
+    console.log(csvData)
 
     return (
       <Fragment>
@@ -85,6 +92,14 @@ class MangroveNetChange extends PureComponent {
             config={chartConfig}
           />
         )}
+
+        <CSVLink
+          className={styles.downloadButton}
+          data={csvData}
+          filename={`${slug}-${Date.now()}}.csv`}
+        >
+          Download raw data
+        </CSVLink>
       </Fragment>
     );
   }
