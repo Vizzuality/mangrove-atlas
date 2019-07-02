@@ -52,7 +52,7 @@ export const CONFIG = {
       )),
       chartConfig: {
         stackOffset: 'sign',
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        margin: { top: 20, right: 0, left: 40, bottom: 0 },
         referenceLines: [
           { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
         ],
@@ -82,6 +82,12 @@ export const CONFIG = {
           tick: { fontSize: 12, fill: '#AAA' }
         },
         yAxis: {
+          tick: { fontSize: 12, fill: '#AAA' },
+          tickFormatter: (v) => {
+            const result = v / 1000000;
+            return numberFormat(result);
+          },
+          tickMargin: 15,
           domain: [-300, 300]
         },
         cartesianGrid: {
@@ -109,9 +115,9 @@ export const CONFIG = {
               }}
               settings={[
                 { key: 'year' },
-                { key: 'Gain', format: value => `Gain: ${numberFormat(value / 1000000)}` },
-                { key: 'Loss', format: value => `Loss: ${numberFormat(value / 1000000)}` },
-                { key: 'Net change', format: value => `Net change: ${numberFormat(value / 1000000)}` }
+                { key: 'Gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
+                { key: 'Loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
+                { key: 'Net change', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
               ]}
             />
           )
