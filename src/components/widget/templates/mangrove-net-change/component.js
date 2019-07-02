@@ -58,7 +58,6 @@ class MangroveNetChange extends PureComponent {
       ? Math.abs(sumBy(widgetData, 'Loss'))
       : 0;
     const csvData = jsonToCSV(widgetData);
-    console.log(csvData)
 
     return (
       <Fragment>

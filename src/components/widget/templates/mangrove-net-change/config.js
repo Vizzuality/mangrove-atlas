@@ -1,5 +1,9 @@
 import React from 'react';
+import { format } from 'd3-format';
 import WidgetLegend from 'components/widget/legend';
+import WidgetTooltip from 'components/widget/tooltip';
+
+const numberFormat = format(',.3r');
 
 export const CONFIG = {
   parse: () => {
@@ -94,6 +98,23 @@ export const CONFIG = {
             const groups = { groups: payload };
             return <WidgetLegend direction="vertical" groups={groups} />;
           }
+        },
+        tooltip: {
+          cursor: false,
+          content: (
+            <WidgetTooltip
+              style={{
+                color: '#FFFFFF',
+                backgroundColor: '#383838'
+              }}
+              settings={[
+                { key: 'year' },
+                { key: 'Gain', format: value => `Gain: ${numberFormat(value / 1000000)}` },
+                { key: 'Loss', format: value => `Loss: ${numberFormat(value / 1000000)}` },
+                { key: 'Net change', format: value => `Net change: ${numberFormat(value / 1000000)}` }
+              ]}
+            />
+          )
         }
       }
     };
