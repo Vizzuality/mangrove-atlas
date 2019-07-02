@@ -11,6 +11,7 @@ const Widget = ({
   name,
   slug,
   layerId,
+  layersIds,
   isActive,
   isCollapsed,
   children,
@@ -20,7 +21,11 @@ const Widget = ({
   ...props
 }) => {
   const activeToggleHandler = () => {
-    toggleActive({ id, layerId, isActive: !isActive });
+    if (layersIds) {
+      layersIds.forEach(lId => toggleActive({ id, layerId: lId, isActive: !isActive }));
+    } else {
+      toggleActive({ id, layerId, isActive: !isActive });
+    }
   };
 
   const collapseToggleHandler = () => {
@@ -76,6 +81,7 @@ Widget.propTypes = {
   slug: PropTypes.string.isRequired,
   widgetConfig: PropTypes.shape({}).isRequired,
   layerId: PropTypes.string,
+  layersIds: PropTypes.arrayOf(PropTypes.string),
   isActive: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   children: PropTypes.func.isRequired,
@@ -87,6 +93,7 @@ Widget.defaultProps = {
   isActive: false,
   isCollapsed: false,
   layerId: null,
+  layersIds: null,
   toggleActive: () => {},
   toggleCollapse: () => {}
 };
