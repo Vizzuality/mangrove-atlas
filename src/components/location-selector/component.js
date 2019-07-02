@@ -62,6 +62,8 @@ class LocationSelector extends PureComponent {
         <div className={styles.content}>
           <div className={styles.search}>
             <input
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus="true"
               type="text"
               className={styles.searchInput}
               placeholder={currentLocation.name}
