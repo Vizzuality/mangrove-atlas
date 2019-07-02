@@ -48,9 +48,6 @@ class StyleManager {
    */
   set layers(layerStyles) {
     this.settings.layers = layerStyles;
-    // const styles = mapStyles.layers.filter(layerStyle => layerIds.includes(layerStyle.id));
-    // if (styles.length === 0) this.settings.layers = [];
-    // if (styles && styles.length) this.settings.layers = styles.map(s => s.mapStyle);
   }
 }
 
