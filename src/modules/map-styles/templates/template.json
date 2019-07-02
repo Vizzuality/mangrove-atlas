@@ -5,26 +5,17 @@
     "mapbox:autocomposite": true,
     "mapbox:type": "template",
     "mapbox:sdk-support": {
-      "js": "0.50.0",
-      "android": "6.7.0",
-      "ios": "4.6.0"
+        "js": "0.50.0",
+        "android": "6.7.0",
+        "ios": "4.6.0"
     },
     "mapbox:trackposition": true,
     "mapbox:groups": {
-      "dd32c6316827bba06b7fa40b8cc299bd": {
-        "name": "Labels",
-        "collapsed": false
-      },
-      "c8ed86ce2aa267b2ff4ffd4a98a3b79c": {
-        "name": "Countries",
-        "collapsed": false
-      },
-      "1b3e3d787a86283867a1cf948a3ed5b4": {
-        "name": "Extent-2015"
-      },
-      "8bd57452b5662e5fad59894acdd1458c": {
-        "name": "Extent-1996"
-      }
+        "ddb057e964a581d45d89735ba23f5ba6": {"name": "gain"},
+        "07c14de52165978354b99fda5fbcdadb": {"name": "extent"},
+        "8d19b1e5fb62fe54f39837b411e782c1": {"name": "wdpa"},
+        "a21f3561678fd383069b2a49d076387d": {"name": "countries"},
+        "84284e0aab770699fa0ac998b822aa4f": {"name": "loss"}
     }
   },
   "center": [
@@ -45,12 +36,16 @@
       "type": "raster-dem",
       "tileSize": 256
     },
+    "streets": {
+      "url": "mapbox://mapbox.mapbox-streets-v8",
+      "type": "vector"
+    },
     "composite": {
-      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mapbox.mapbox-streets-v8,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.GMW_2015_v2,mangrove-atlas.GMW_1996_v2",
+      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.GMW_1996_v2,mangrove-atlas.ch30nit0,mangrove-atlas.69m84vyg,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.2u7mh73o,mangrove-atlas.c93ps33f,mangrove-atlas.8le67zrt,mangrove-atlas.GMW_2015_v2,mangrove-atlas.df6mdkbu,mangrove-atlas.2dnas3nh,mangrove-atlas.0fgxl2g8,mangrove-atlas.b6vq2fz4,mangrove-atlas.8x8jvu3a,mangrove-atlas.3hofvcl5",
       "type": "vector"
     }
   },
-  "sprite": "mapbox://sprites/mangrove-atlas/cjx31p0n50nv51cnj5538pyyt/95q41f91c3ead18lh93952y85",
+  "sprite": "mapbox://sprites/mangrove-atlas/cjx4ikse805an1co712z98lel/95q41f91c3ead18lh93952y85",
   "glyphs": "mapbox://fonts/mangrove-atlas/{fontstack}/{range}.pbf",
   "layers": [],
   "created": "2019-06-19T09:39:40.309Z",

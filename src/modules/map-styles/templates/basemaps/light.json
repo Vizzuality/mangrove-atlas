@@ -18,7 +18,7 @@
   {
     "id": "water copy",
     "type": "fill",
-    "source": "composite",
+    "source": "streets",
     "source-layer": "water",
     "layout": {},
     "paint": {
@@ -44,7 +44,7 @@
   {
     "id": "water copy 1",
     "type": "fill",
-    "source": "composite",
+    "source": "streets",
     "source-layer": "water",
     "layout": {},
     "paint": {
@@ -92,7 +92,7 @@
   {
     "id": "water",
     "type": "line",
-    "source": "composite",
+    "source": "streets",
     "source-layer": "water",
     "layout": {},
     "paint": {
@@ -114,7 +114,7 @@
   {
     "id": "building",
     "type": "fill",
-    "source": "composite",
+    "source": "streets",
     "source-layer": "building",
     "layout": {},
     "paint": {
@@ -127,7 +127,7 @@
     "metadata": {
       "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
     },
-    "source": "composite",
+    "source": "streets",
     "source-layer": "place_label",
     "maxzoom": 7,
     "filter": [
@@ -195,7 +195,7 @@
     "metadata": {
       "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
     },
-    "source": "composite",
+    "source": "streets",
     "source-layer": "place_label",
     "minzoom": 4,
     "maxzoom": 8,
@@ -240,7 +240,7 @@
     "metadata": {
       "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
     },
-    "source": "composite",
+    "source": "streets",
     "source-layer": "place_label",
     "minzoom": 6,
     "filter": [
