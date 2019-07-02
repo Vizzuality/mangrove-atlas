@@ -48,8 +48,13 @@ export const currentLocation = createSelector(
       return globalData;
     }
 
-    const result = _locations
-      .find(location => (location.iso === _currentId.iso || location.id === _currentId.id));
+    let result;
+
+    if (_currentId.iso) {
+      result = _locations.find(location => location.iso === _currentId.iso && location.type === 'country');
+    } else if (_currentId.id) {
+      result = _locations.find(location => location.id === _currentId.id);
+    }
 
     if (!result) return null;
 

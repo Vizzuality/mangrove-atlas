@@ -9,7 +9,7 @@ const LegendItem = ({ id, name, toggleActive }) => {
 
   return (
     <div className={styles.legendItem}>
-      {name}
+      <h3>{name}</h3>
       <button className={styles.removeButton} type="button" onClick={onClickHandler}>
         <FontAwesomeIcon icon={faTimes} />
       </button>

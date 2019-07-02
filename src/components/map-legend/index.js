@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { activeLayers } from 'modules/layers/selectors';
+import { activeLayersForLegend } from 'modules/layers/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  layers: activeLayers(state)
+  layers: activeLayersForLegend(state)
 });
 
 const mapDispatchToProps = {
