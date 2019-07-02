@@ -8,9 +8,7 @@
   margin-bottom: 50px;
 
   .title {
-    flex: 1;
-
-    width: 100%;
+    width: 80%;
     padding: 0;
     margin: 0;
     border: 0;
@@ -19,7 +17,7 @@
     color: $body-color;
     font-size: 60px;
     font-weight: 300;
-    line-height: 50px;
+    line-height: 0.85;
   }
 
   .searchButton {
