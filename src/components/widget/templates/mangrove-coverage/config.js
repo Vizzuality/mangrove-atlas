@@ -4,6 +4,8 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget/tooltip';
 import WidgetLegend from 'components/widget/legend';
 
+const numberFormat = format('.1%');
+
 export const CONFIG = {
   parse: () => ({
     chart: [],
@@ -45,7 +47,7 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { key: 'percentage', format: value => `Percentage: ${format('.1%')(value / 100)}` }
+              { key: 'percentage', format: value => `Percentage: ${numberFormat(value / 100)}` }
             ]}
           />
         )
