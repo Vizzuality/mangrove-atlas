@@ -63,9 +63,9 @@ class MangroveNetChange extends PureComponent {
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            Mangroves in <strong>{location.type === 'global' ? 'the world' : <span className="notranslate">{location.name}</span>}</strong>
-            {' '}have <strong>decreased</strong> by <strong className="notranslate">{numberFormat(totalLoss / 100000)} km<sup>2</sup></strong>{' '}<br />
-            between
+            <span>Mangroves in</span> <strong>{location.type === 'global' ? 'the world' : <span className="notranslate">{location.name}</span>}</strong>
+            {' '}<span>have</span> <strong>decreased</strong> by <strong className="notranslate">{numberFormat(totalLoss / 100000)} km<sup>2</sup></strong>{' '}<br />
+            <span>between</span>
             {' '}
             <Select
               className="notranslate"
@@ -74,7 +74,7 @@ class MangroveNetChange extends PureComponent {
               options={optionsYears}
               onChange={this.changeStartYear}
             />
-            {' and '}
+            {' '}<span>and</span>{' '}
             <Select
               className="notranslate"
               prefix="end-year"
