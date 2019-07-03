@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
+import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -65,17 +66,17 @@ class LocationSelector extends PureComponent {
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               type="text"
-              className={styles.searchInput}
+              className={classnames(styles.searchInput, 'notranslate')}
               placeholder={currentLocation.name}
               onChange={this.updateSearchTerm}
             />
           </div>
           <ul className={styles.list}>
-            <li className={styles.listItem}>
+            <li className={classnames(styles.listItem, 'notranslate')}>
               <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
             </li>
             {locationsData.map(location => (
-              <li key={location.id} className={styles.listItem}>
+              <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
                 {location.type === 'aoi'
                   && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
                 {(location.type === 'country' || location.type === 'admin0-eez')

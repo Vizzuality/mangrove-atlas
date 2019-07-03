@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -33,7 +34,7 @@ class Header extends PureComponent {
 
     return (
       <div className={styles.header}>
-        {location && <h1 className={styles.title} style={stylesOverride}>{location.name}</h1>}
+        {location && <h1 className={classnames(styles.title, 'notranslate')} style={stylesOverride}>{location.name}</h1>}
         <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
           <FontAwesomeIcon icon={faSearch} size="lg" />
         </button>
