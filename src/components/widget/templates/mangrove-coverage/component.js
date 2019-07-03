@@ -67,13 +67,14 @@ class MangroveCoverage extends React.PureComponent {
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            Mangrove forest cover <strong>{numberFormat(percentage)} {unit}</strong><br />
-            of <strong>{location.type === 'global' ? 'the world’s' : `${location.name}'s`}</strong>
+            Mangrove forest cover <strong className="notranslate">{numberFormat(percentage)} {unit}</strong><br />
+            of <strong>{location.type === 'global' ? 'the world’s' : <span className="notranslate">{`${location.name}'s`}</span>}</strong>
             {' '}
-            <strong>{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
+            <strong className="notranslate">{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
             in
             {' '}
             <Select
+              className="notranslate"
               width="auto"
               value={currentYear}
               options={optionsYears}
