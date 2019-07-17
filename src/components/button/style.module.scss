@@ -8,7 +8,7 @@
   border-radius: 15px;
   border: 2px solid rgba($primary, 0.2);
 
-  color: primary;
+  color: $primary;
   font-size: $body-font-size;
   font-weight: 600;
 
@@ -27,10 +27,59 @@
     border-color: $primary;
     background-color: $primary;
     color: white;
+    &:focus {
+      height: 26px;
+      width: 124.8px;
+      border: 2px solid #FFFFFF;
+      opacity: 0.4;
+      border-radius: 15px;
+    }
   }
 
   &[disabled] {
     cursor: default;
     pointer-events: none;
+    color: $primary;
+  }
+
+  &.primary {
+    border-color: $primary;
+    background-color: $primary;
+    color: white;
+    &:focus {
+      height: 26px;
+      width: 124.8px;
+      opacity: 0.4;
+    }
+  }
+
+  &.secondary {
+    border-color: $primary;
+    background-color: transparent;
+    opacity: 0.2;
+    color: $primary;
+    &:focus {
+      opacity: 0.4;
+      border: 2px solid #00857F;
+    }
+  }
+
+  &.contrast {
+    border-color: rgba(0,0,0,0.2);
+    color: $body-color;
+    &:hover {
+        border-color: rgba(0,0,0,0.4);
+    }
+    &:focus {
+      border-color: $body-color;
+    }
+  }
+
+
+
+  &[disabled] {
+    cursor: default;
+    pointer-events: none;
+    background-color: $primary;
   }
 }
