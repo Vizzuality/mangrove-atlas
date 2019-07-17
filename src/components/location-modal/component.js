@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
+import Modal from 'components/modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -31,7 +32,7 @@ class LocationSelector extends PureComponent {
     if (nextProps.isOpened) this.resetTerm();
   }
 
-  clickHandler = () => {
+  closeModal = () => {
     const { closeSearchPanel } = this.props;
 
     closeSearchPanel();
@@ -51,7 +52,7 @@ class LocationSelector extends PureComponent {
   render() {
     const { isOpened, currentLocation, locations } = this.props;
 
-    if (!isOpened) return null;
+    if (!currentLocation) return null;
 
     const { searchTerm } = this.state;
     const locationsData = searchTerm
@@ -59,7 +60,11 @@ class LocationSelector extends PureComponent {
       : locations;
 
     return (
-      <div className={styles.location}>
+      <Modal
+        className={styles.location}
+        isOpen={isOpened}
+        onRequestClose={this.closeModal}
+      >
         <div className={styles.content}>
           <div className={styles.search}>
             <input
@@ -87,10 +92,10 @@ class LocationSelector extends PureComponent {
             ))}
           </ul>
         </div>
-        <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+        <button type="button" onClick={this.closeModal} className={styles.searchButton}>
           <FontAwesomeIcon icon={faTimes} size="lg" />
         </button>
-      </div>
+      </Modal>
     );
   }
 }

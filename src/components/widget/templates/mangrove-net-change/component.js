@@ -9,7 +9,7 @@ import { CSVLink } from 'react-csv';
 
 import styles from 'components/widget/style.module.scss';
 
-const numberFormat = format(',.3r');
+const numberFormat = format(',.2f');
 
 class MangroveNetChange extends PureComponent {
   static propTypes = {

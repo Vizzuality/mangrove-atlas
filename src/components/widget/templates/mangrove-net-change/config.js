@@ -3,7 +3,7 @@ import { format } from 'd3-format';
 import WidgetLegend from 'components/widget/legend';
 import WidgetTooltip from 'components/widget/tooltip';
 
-const numberFormat = format(',.3r');
+const numberFormat = format(',.2f');
 
 export const CONFIG = {
   parse: () => {
