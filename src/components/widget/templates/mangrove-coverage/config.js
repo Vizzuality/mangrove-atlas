@@ -4,7 +4,7 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget/tooltip';
 import WidgetLegend from 'components/widget/legend';
 
-const numberFormat = format('.1%');
+const numberFormat = format(',.2%');
 
 export const CONFIG = {
   parse: () => ({
