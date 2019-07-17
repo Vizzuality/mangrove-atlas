@@ -45,7 +45,7 @@ class Select extends PureComponent {
 
     return (
       <ReactSelect
-        // className={stylesCSS.select}
+        className={styles.select}
         {...this.options}
         {...props}
         options={options}

@@ -70,4 +70,5 @@ export const styles = {
     ...provided,
     padding: 0
   })
+
 };
