@@ -1,5 +1,6 @@
 import { configure } from "@storybook/react";
 import '@storybook/addon-knobs/register';
+import '@storybook/addon-cssresources/register';
 
 
 function requireAll(requireContext) {
