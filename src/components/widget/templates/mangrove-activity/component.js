@@ -49,7 +49,6 @@ class MangroveActivity extends React.PureComponent {
       { value: 'ha', label: 'Ha' },
       { value: 'km', label: 'Km' }
     ];
-
     return (
       <Fragment>
         <div className={styles.widget_template}>
