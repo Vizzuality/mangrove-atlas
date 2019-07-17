@@ -22,6 +22,7 @@
     "react-csv": "^1.1.1",
     "react-dom": "^16.8.6",
     "react-map-gl": "^5.0.3",
+    "react-modal": "^3.9.1",
     "react-redux": "^7.0.3",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
