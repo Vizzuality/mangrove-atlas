@@ -7,7 +7,7 @@ import { jsonToCSV } from 'utils/jsonParsers';
 import { CSVLink } from 'react-csv';
 import styles from 'components/widget/style.module.scss';
 
-const numberFormat = format(',.2r');
+const numberFormat = format(',.2f');
 
 class MangroveCoverage extends React.PureComponent {
   static propTypes = {
@@ -32,6 +32,7 @@ class MangroveCoverage extends React.PureComponent {
     const { currentYear } = this.state;
     const currentYearData = widgetData.find(d => d.x.toString() === currentYear.toString());
     const nonMangrove = metadata.total - currentYearData.value;
+
     return [
       {
         ...currentYearData
