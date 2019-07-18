@@ -36,7 +36,6 @@ class Tick extends PureComponent {
     const tickValue = payload && payload.value;
     const formattedTick = tickValue ? unitFormat(tickValue) : 0;
     const tick = tickValue >= dataMax ? `${formattedTick}${unit}` : formattedTick;
-
     return (
       <g transform={`translate(${x},${y})`}>
         <defs>

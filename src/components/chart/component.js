@@ -83,7 +83,6 @@ class Chart extends PureComponent {
       unitFormat,
       referenceLines
     } = config;
-
     const { lines, bars, areas, pies } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 

@@ -1,0 +1,20 @@
+@import '../../styles/vars';
+
+.container {
+  display: inline-flex;
+  border: 2px solid rgba(0,0,0,0.2);
+  height: 30px;
+  border-radius: 15px;
+
+  * {
+    border: none;
+    color: $body-color;
+
+    &:focus {
+      border-radius: 15px;
+      background-color: $white;
+      color: $primary;
+    }
+
+  }
+}
