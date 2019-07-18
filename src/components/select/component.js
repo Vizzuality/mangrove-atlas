@@ -1,17 +1,28 @@
 import React, { PureComponent } from 'react';
 import ReactSelect from 'react-select';
+import PropTypes from 'prop-types';
+
 import { styles, theme } from './style';
 
+
 class Select extends PureComponent {
+  static propTypes = {
+    options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    defaultValue: PropTypes.shape({}).isRequired,
+    onChange: PropTypes.func
+  };
+
+  static defaultProps = {
+    onChange: () => null
+  }
+
   state = { selectedOption: null }
 
   options = {
     isSearchable: false,
     theme,
     styles,
-    components: {
-      DropdownIndicator: null
-    }
+
   }
 
   constructor(props) {
@@ -32,7 +43,7 @@ class Select extends PureComponent {
 
     return (
       <ReactSelect
-        // className={stylesCSS.select}
+        className={styles.select}
         {...this.options}
         {...props}
         options={options}

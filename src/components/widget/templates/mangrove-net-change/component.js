@@ -68,7 +68,7 @@ class MangroveNetChange extends PureComponent {
             <span>between</span>
             {' '}
             <Select
-              className="notranslate"
+              className="notranslate netChange"
               prefix="start-year"
               value={startYear}
               options={optionsYears}

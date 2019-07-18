@@ -8,7 +8,7 @@
   border-radius: 15px;
   border: 2px solid rgba($primary, 0.2);
 
-  color: primary;
+  color: $primary;
   font-size: $body-font-size;
   font-weight: 600;
 
@@ -23,14 +23,52 @@
     border-color: $primary;
   }
 
-  &.active {
-    border-color: $primary;
+
+  &.background {
     background-color: $primary;
-    color: white;
+    color:$white;
+    &:focus {
+      height: 26px;
+      width: 124.8px;
+      border: 2px solid $white;
+      opacity: 0.4;
+      border-radius: 15px;
+    }
+    &.contrast {
+      background-color: $white;
+      color: $primary;
+      border-color: $white;
+    }
   }
 
-  &[disabled] {
+  &.transparent {
+    border-color: rgba(0, 133, 127, 0.2);
+    background-color: transparent;
+    color: $primary;
+    &:hover {
+      border: 2px solid rgba(0, 133, 127, 0.4);
+    }
+    &:focus {
+      border-color: $primary;
+    }
+    &.contrast {
+      color: $white;
+    }
+    &.grey {
+      border-color: rgba(0,0,0,0.2);
+      color: $body-color;
+      &:hover {
+        border-color: rgba(0,0,0,0.4);
+      }
+      &:focus {
+        border-color: $body-color;
+      }
+    }
+  }
+
+  &.disabled {
     cursor: default;
     pointer-events: none;
+    opacity: 0.2;
   }
 }
