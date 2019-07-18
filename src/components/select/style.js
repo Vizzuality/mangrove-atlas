@@ -1,3 +1,5 @@
+import { red } from "ansi-colors";
+
 export const theme = defaultTheme => ({
   ...defaultTheme,
   borderRadius: 0,
@@ -69,6 +71,10 @@ export const styles = {
   valueContainer: provided => ({
     ...provided,
     padding: 0
+  }),
+  DropdownIndicator: provided => ({
+    ...provided,
+    color: red
   })
 
 };

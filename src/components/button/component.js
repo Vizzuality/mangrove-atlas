@@ -4,7 +4,6 @@ import styles from './style.module.scss';
 
 export default (props) => {
   const { children,
-    isActive,
     isDisabled,
     hasBackground,
     isTransparent,

@@ -22,9 +22,7 @@ class Select extends PureComponent {
     isSearchable: false,
     theme,
     styles,
-    components: {
-      DropdownIndicator: null
-    }
+
   }
 
   constructor(props) {
