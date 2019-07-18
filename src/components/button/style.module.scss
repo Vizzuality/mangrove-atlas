@@ -23,63 +23,52 @@
     border-color: $primary;
   }
 
-  &.active {
-    border-color: $primary;
+
+  &.background {
     background-color: $primary;
-    color: white;
+    color:$white;
     &:focus {
       height: 26px;
       width: 124.8px;
-      border: 2px solid #FFFFFF;
+      border: 2px solid $white;
       opacity: 0.4;
       border-radius: 15px;
     }
-  }
-
-  &[disabled] {
-    cursor: default;
-    pointer-events: none;
-    color: $primary;
-  }
-
-  &.primary {
-    border-color: $primary;
-    background-color: $primary;
-    color: white;
-    &:focus {
-      height: 26px;
-      width: 124.8px;
-      opacity: 0.4;
+    &.contrast {
+      background-color: $white;
+      color: $primary;
+      border-color: $white;
     }
   }
 
-  &.secondary {
-    border-color: $primary;
+  &.transparent {
+    border-color: rgba(0, 133, 127, 0.2);
     background-color: transparent;
-    opacity: 0.2;
     color: $primary;
-    &:focus {
-      opacity: 0.4;
-      border: 2px solid #00857F;
-    }
-  }
-
-  &.contrast {
-    border-color: rgba(0,0,0,0.2);
-    color: $body-color;
     &:hover {
-        border-color: rgba(0,0,0,0.4);
+      border: 2px solid rgba(0, 133, 127, 0.4);
     }
     &:focus {
-      border-color: $body-color;
+      border-color: $primary;
+    }
+    &.contrast {
+      color: $white;
+    }
+    &.grey {
+      border-color: rgba(0,0,0,0.2);
+      color: $body-color;
+      &:hover {
+        border-color: rgba(0,0,0,0.4);
+      }
+      &:focus {
+        border-color: $body-color;
+      }
     }
   }
 
-
-
-  &[disabled] {
+  &.disabled {
     cursor: default;
     pointer-events: none;
-    background-color: $primary;
+    opacity: 0.2;
   }
 }
