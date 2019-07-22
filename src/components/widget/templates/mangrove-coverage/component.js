@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import { jsonToCSV } from 'utils/jsonParsers';
-import { CSVLink } from 'react-csv';
+import DownloadLink from 'components/link';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
@@ -62,7 +61,6 @@ class MangroveCoverage extends React.PureComponent {
     }));
     const widgetData = this.getData();
     const { percentage, unit } = widgetData[0];
-    const csvData = jsonToCSV(widgetData);
 
     return (
       <Fragment>
@@ -93,13 +91,10 @@ class MangroveCoverage extends React.PureComponent {
           />
         )}
 
-        <CSVLink
-          className={styles.downloadButton}
-          data={csvData}
-          filename={`${slug}-${Date.now()}}.csv`}
-        >
-          Download raw data
-        </CSVLink>
+        <DownloadLink
+          data={widgetData}
+          filename={slug}
+        />
       </Fragment>
     );
   }
