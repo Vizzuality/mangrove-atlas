@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
+import DownloadLink from 'components/link';
 import sumBy from 'lodash/sumBy';
-import { jsonToCSV } from 'utils/jsonParsers';
-import { CSVLink } from 'react-csv';
 
 import styles from 'components/widget/style.module.scss';
 
@@ -57,7 +56,6 @@ class MangroveNetChange extends PureComponent {
     const totalLoss = widgetData && widgetData.length
       ? Math.abs(sumBy(widgetData, 'Loss'))
       : 0;
-    const csvData = jsonToCSV(widgetData);
 
     return (
       <Fragment>
@@ -94,13 +92,10 @@ class MangroveNetChange extends PureComponent {
           />
         )}
 
-        <CSVLink
-          className={styles.downloadButton}
-          data={csvData}
-          filename={`${slug}-${Date.now()}}.csv`}
-        >
-          Download raw data
-        </CSVLink>
+        <DownloadLink
+          data={widgetData}
+          filename={slug}
+        />
       </Fragment>
     );
   }

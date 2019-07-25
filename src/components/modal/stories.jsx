@@ -1,12 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withProvider } from 'utils/storybookProvider';
-import Map from './component';
+import Modal from './component';
 
-storiesOf('Map', module)
+storiesOf('Modal', module)
   .addDecorator(withProvider)
-  .add('map', () => (
-    <div style={{ width: '400px', height: '300px' }}>
-      <Map />
-    </div>
+  .add('Open', () => (
+    <Modal />
   ));
