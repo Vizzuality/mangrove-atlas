@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { withProvider } from 'utils/storybookProvider';
 import LegendComponent from './legend/component';
 import ConservationHotspots from './templates/conservation-hotspots/component';
 import MangroveActivity from './templates/mangrove-activity/component';
@@ -30,6 +31,7 @@ storiesOf('Widget/Legend', module)
   ));
 
 storiesOf('Widget/Templates', module)
+  .addDecorator(withProvider)
   .add('Conservation hotspots', () => (
     <ConservationHotspots
       data={widgetData}
