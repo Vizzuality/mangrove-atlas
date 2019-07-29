@@ -74,7 +74,23 @@ export const styles = {
   }),
   DropdownIndicator: provided => ({
     ...provided,
-    color: red
+    color: '#00857F',
+    position: 'absolute',
+  }),
+  indicatorsContainer: provided => ({
+    ...provided,
+    color: '#00857F',
+    position: 'absolute',
+    bottom: '-50%',
+    left: '25%',
+    '&:before': {
+      content: '▾',
+      color: '#00857F',
+      position: 'absolute'
+    }
+  }),
+  menuPlacer: provided => ({
+    ...provided,
+    backgroundColor: 'red'
   })
-
 };
