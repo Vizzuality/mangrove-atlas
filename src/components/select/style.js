@@ -1,4 +1,3 @@
-import { red } from "ansi-colors";
 
 export const theme = defaultTheme => ({
   ...defaultTheme,
@@ -18,7 +17,16 @@ export const styles = {
     display: 'inline-block',
     border: 0,
     borderBottom: '2px solid #00857F',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    '&:before': {
+      content: '"▾"',
+      color: '#00857F',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, 10%)',
+      cursor: 'pointer'
+    }
   }),
   control: provided => ({
     ...provided,
@@ -48,7 +56,11 @@ export const styles = {
     paddingtop: 10,
     paddingBottom: 10,
     transform: 'translateX(-50%)',
-    left: '50%'
+    left: '50%',
+    '&:before': {
+      content: '',
+      cursor: 'pointer'
+    }
   }),
   option: (provided, state) => ({
     ...provided,
@@ -72,23 +84,7 @@ export const styles = {
     ...provided,
     padding: 0
   }),
-  DropdownIndicator: provided => ({
-    ...provided,
-    color: '#00857F',
-    position: 'absolute',
-  }),
-  indicatorsContainer: provided => ({
-    ...provided,
-    color: '#00857F',
-    position: 'absolute',
-    bottom: '-50%',
-    left: '25%',
-    '&:before': {
-      content: '▾',
-      color: '#00857F',
-      position: 'absolute'
-    }
-  }),
+
   menuPlacer: provided => ({
     ...provided,
     backgroundColor: 'red'
