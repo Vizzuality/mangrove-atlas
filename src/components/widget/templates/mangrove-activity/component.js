@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Select from 'components/select';
 
@@ -81,12 +82,12 @@ class MangroveActivity extends React.PureComponent {
         </div>
 
         {/* Chart */}
-        {!!chart.length && (
-          <Chart
-            data={chart}
-            config={chartConfig}
-          />
-        )}
+        {chart.length && <Spinner />}
+        <Chart
+          data={chart}
+          config={chartConfig}
+        />
+
       </Fragment>
     );
   }
