@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withProvider } from 'utils/storybookProvider';
 import LegendComponent from './legend/component';
@@ -6,6 +6,13 @@ import ConservationHotspots from './templates/conservation-hotspots/component';
 import MangroveActivity from './templates/mangrove-activity/component';
 import MangroveCoverage from './templates/mangrove-coverage/component';
 import MangroveNetChange from './templates/mangrove-net-change/component';
+
+import Widget from './component';
+
+import { toggleCollapse } from 'modules/widgets/actions';
+
+import TEMPLATES from './templates';
+import CONSERVATION_HOTSPOTS_CONFIG from './templates/conservation-hotspots/config';
 
 // ** Widget Data ** //
 //  <-- Legend  --> //
@@ -16,9 +23,13 @@ const widgetData = JSON.parse('{"widgetData":[{"length_mangrove_m":{"1996":"6516
 const location = JSON.parse('{"length_mangrove_m":{"1996":"65167.28","2007":"64694.98","2008":"64148.45","2009":"63901.10","2010":"64280.28","2015":"65776.31","2016":"65467.70"},"VERIF":"State Verified","SUB_LOC":"Not Reported","REP_M_AREA":0,"MARINE":"1","NO_TAKE":"Not Reported","iso":"TZA","STATUS_YR":2004,"DESIG_TYPE":"International","ORIG_NAME":"Rufiji-Mafia-Kilwa","INT_CRIT":"(i) (ii) (iii) (iv) (v) (vi) (vii) (viii)","METADATAID":845,"WDPA_PID":"902412","hmax_mangrove_m":{"2000":"19.92"},"GOV_TYPE":"Not Reported","length_coast_m":"299550.49","NAME":"Rufiji-Mafia-Kilwa","name":"Rufiji","GIS_M_AREA":3775.294242,"ISO3":"TZA","IUCN_CAT":"Not Reported","DESIG_ENG":"Ramsar Site, Wetland of International Importance","dashboardId":"4357e92064c36bda3310b8160eee630a","REP_AREA":5969.08,"DESIG":"Ramsar Site, Wetland of International Importance","PARENT_ISO":"TZA","STATUS":"Designated","OWN_TYPE":"Not Reported","PA_DEF":"1","NO_TK_AREA":0,"area_mangrove_m2":{"1996":"507526714.59","2007":"499472322.07","2008":"500133963.16","2009":"499028037.34","2010":"497595539.59","2015":"499397495.31","2016":"498772150.91"},"WDPAID":902412,"MANG_AUTH":"Not Reported","agb_mangrove_mgha-1":{"2000":"260.21"},"type":"aoi","GIS_AREA":5191.75974325,"MANG_PLAN":"Not Reported","mangrove_loss_m2":{"1996":0,"2007":"14044759.27","2008":"4469148.10","2009":"4309604.71","2010":"5751923.47","2015":"11323918.22","2016":"11044400.42"},"mangrove_gain_m2":{"1996":0,"2007":"5985084.87","2008":"5131843.71","2009":"3208664.06","2010":"4316179.84","2015":"13130376.17","2016":"10411299.78"},"hba_mangrove_m":{"2000":"12.62"},"id":"094e62605d725612c642cb1eb5451ded","geometry":{"coordinates":[[[39.17952,-8.161711],[39.263721,-8.41979],[39.256091,-8.549413],[39.34855,-8.598605],[39.432168,-8.647169],[39.551064,-8.628228],[39.59689,-8.603857],[39.60645,-8.55453],[39.607168,-8.366648],[39.635759,-8.257043],[39.669107,-8.160679],[39.791728,-8.046451],[39.826288,-7.975042],[39.856899,-7.899189],[39.870768,-7.860634],[39.881495,-7.834108],[39.895364,-7.804351],[39.901513,-7.778184],[39.924134,-7.642008],[39.92162,-7.603229],[39.883021,-7.603318],[39.831719,-7.653588],[39.783514,-7.699952],[39.745005,-7.648695],[39.693119,-7.578229],[39.643613,-7.577466],[39.61583,-7.749189],[39.539933,-7.784467],[39.475211,-7.777241],[39.305014,-7.65067],[39.275121,-7.650715],[39.188811,-7.861891],[39.288227,-7.94874],[39.329924,-7.947573],[39.329161,-8.034871],[39.22741,-8.124862],[39.17952,-8.161711]],[[39.677365,-7.970509],[39.72382,-7.961083],[39.734906,-7.96032],[39.735669,-7.952196],[39.714439,-7.948022],[39.7218,-7.923516],[39.728712,-7.906685],[39.743299,-7.900356],[39.763272,-7.886981],[39.772877,-7.876882],[39.782886,-7.882492],[39.787823,-7.869431],[39.803173,-7.866738],[39.819062,-7.898471],[39.842042,-7.854575],[39.83154,-7.8355],[39.853084,-7.825311],[39.890741,-7.724324],[39.900211,-7.646317],[39.897069,-7.628812],[39.87961,-7.659692],[39.861701,-7.67181],[39.843299,-7.713238],[39.85636,-7.720194],[39.833829,-7.779081],[39.790651,-7.792771],[39.783155,-7.79129],[39.733335,-7.808749],[39.733155,-7.841559],[39.709592,-7.855832],[39.684906,-7.866604],[39.643164,-7.907762],[39.635714,-7.922843],[39.61978,-7.924144],[39.607258,-7.940392],[39.614798,-7.951209],[39.607168,-7.961263],[39.621845,-7.974907],[39.677365,-7.970509]]],"type":"Polygon"}}');
 //  <-- Mangrove Activity/Coverge/Net  --> //
 const chart = '';
-const charConfig = '';
+const chartConfig = '';
+const widgetConfig = {
+  chart,
+  chartConfig
+};
 
-storiesOf('Widget/Legend', module)
+storiesOf('Widget components/Legend', module)
   .add('Vertical legend', () => (
     <LegendComponent
       groups={groupsVertical}
@@ -30,7 +41,7 @@ storiesOf('Widget/Legend', module)
     />
   ));
 
-storiesOf('Widget/Templates', module)
+storiesOf('Widget components/Templates', module)
   .addDecorator(withProvider)
   .add('Conservation hotspots', () => (
     <ConservationHotspots
@@ -41,12 +52,62 @@ storiesOf('Widget/Templates', module)
   .add('Mangrove activity', () => (
     <MangroveActivity
       chart={chart}
-      charConfig={charConfig}
+      charConfig={chartConfig}
     />
   ))
   .add('Mangrove coverage', () => (
-    <MangroveCoverage charConfig={charConfig} />
+    <MangroveCoverage charConfig={chartConfig} />
   ))
   .add('Mangrove net change', () => (
-    <MangroveNetChange charConfig={charConfig} />
+    <MangroveNetChange charConfig={chartConfig} />
   ));
+
+storiesOf('Widget', module)
+  .addDecorator(withProvider)
+  .add('Active', () => (
+    <Widget
+      id={'b106888c6fba8011d889ceb85a09a64d '}
+      name={'Conservation hotspots'}
+      slug={'highlighted-areas'}
+      widgetConfig={CONSERVATION_HOTSPOTS_CONFIG}
+      layerId={'96a44216d358984de1428ff77ead270b'}
+      layersIds={["96a44216d358984de1428ff77ead270b", "f4fe8d1517f4c66a497beccc3407715b"]}
+      isActive
+    >
+      {({ slug, data, ...props }) => console.log(TEMPLATES) || (
+        <Fragment>
+          {/* Template */}
+          {!!TEMPLATES['highlighted-areas'] && React.createElement(TEMPLATES['highlighted-areas'], {
+            slug,
+            data: widgetData,
+            currentLocation: location,
+            ...props
+          })}
+        </Fragment>
+      )}
+
+    </Widget>
+  ))
+  // .add('No Active', () => (
+  //   <Widget
+  //     id={'b106888c6fba8011d889ceb85a09a64d '}
+  //     name={'Mangrove net chage'}
+  //     slug={'Mangrove net chage'}
+  //     layerId={'96a44216d358984de1428ff77ead270b'}
+  //     layersIds={["96a44216d358984de1428ff77ead270b", "f4fe8d1517f4c66a497beccc3407715b"]}
+  //   />
+  // ))
+  // .add('Collapsed', () => (
+  //   <Widget
+  //     id={'b106888c6fba8011d889ceb85a09a64d '}
+  //     name={'Mangrove net chage'}
+  //     slug={'Mangrove net chage'}
+  //     layerId={'96a44216d358984de1428ff77ead270b'}
+  //     layersIds={["96a44216d358984de1428ff77ead270b", "f4fe8d1517f4c66a497beccc3407715b"]}
+  //     isCollapsed
+  //     children
+  //   />
+  // ))
+  // .add('Colapsed', () => (
+  //   <Widgets />
+  // ));
