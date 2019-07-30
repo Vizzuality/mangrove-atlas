@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Widget from 'components/widget';
 import Button from 'components/button';
+import ButtonGroup from 'components/buttonGroup';
 import TEMPLATES from 'components/widget/templates';
 import CONFIGS from 'components/widget/templates/configs';
 import styles from './style.module.scss';
@@ -45,6 +46,11 @@ class WidgetList extends PureComponent {
               ? <Button onClick={this.onClickExpandAll}>Expand all widgets</Button>
               : <Button onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
           }
+          <ButtonGroup onClick={this.onClickExpandAll}>
+            <Button>Français</Button>
+            <Button>English</Button>
+          </ButtonGroup>
+
         </div>
         {widgets.map(widget => (
           <Widget
