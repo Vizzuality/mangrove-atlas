@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Spinner from 'components/spinner';
 import { format } from 'd3-format';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
@@ -12,7 +11,6 @@ const ConservationHotspots = ({ data, currentLocation }) => {
   const { widgetData } = data;
   return (
     <div className={styles.hotspotsList}>
-      {widgetData.length === 0 && <Spinner />}
       {widgetData.map(d => (
         <div
           key={d.id}

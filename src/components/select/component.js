@@ -21,10 +21,7 @@ class Select extends PureComponent {
   options = {
     isSearchable: false,
     theme,
-    styles,
-    components: {
-      DropdownIndicator: null
-    }
+    styles
   }
 
   constructor(props) {

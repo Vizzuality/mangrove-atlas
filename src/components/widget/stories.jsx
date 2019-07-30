@@ -87,7 +87,7 @@ storiesOf('Widget', module)
       )}
 
     </Widget>
-  ))
+  ));
   // .add('No Active', () => (
   //   <Widget
   //     id={'b106888c6fba8011d889ceb85a09a64d '}
