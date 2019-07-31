@@ -50,24 +50,32 @@ export const styles = {
     paddingBottom: 10,
     transform: 'translateX(-50%)',
     left: '50%',
-    '&:before': {
+    '&:after': {
       content: '" "',
+      display: 'block',
       position: 'absolute',
       width: '0',
       height: '0',
-      borderLeft: '10px solid transparent',
-      borderRight: '10px solid transparent',
-      borderBottom: '10px solid white',
-      boxShadow: '1px 4px 12px 0 rgba(0, 0, 0, 0.08)',
-      top: -15,
       left: '50%',
-      transform: 'translate(-50%, 50%)',
-    }
-  }),
-  menuOuterTop: provided => ({
-    ...provided,
-    backgroundColor: 'red',
-    color: 'green'
+      borderStyle: 'solid',
+      bottom: '99%',
+      borderColor: 'transparent transparent white transparent',
+      borderWidth: '12px',
+      transform: 'translateX(-12px)'
+    },
+    '&:before': {
+      content: '" "',
+      display: 'block',
+      position: 'absolute',
+      left: '50%',
+      width: '0',
+      height: '0',
+      borderStyle: 'solid',
+      bottom: '100%',
+      borderColor: 'transparent transparent rgba(0, 0, 0, 0.1) transparent',
+      borderWidth: '12px',
+      transform: 'translateX(-12px)'
+    },
   }),
   option: (provided, state) => ({
     ...provided,
@@ -100,7 +108,7 @@ export const styles = {
     borderRight: '6px solid transparent',
     borderTop: '6px solid #00857F',
     position: 'absolute',
-    bottom: '-5px',
+    bottom: '-7px',
     left: '50%',
     transform: 'translate(-50%, 50%)',
     cursor: 'pointer',
