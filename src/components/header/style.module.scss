@@ -3,7 +3,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-
+  flex-direction: row-reverse;
   margin-top: 80px;
   margin-bottom: 50px;
 
