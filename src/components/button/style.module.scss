@@ -14,42 +14,48 @@
 
   transition: all 0.25s ease;
 
-  &:hover {
-    border-color: rgba($primary, 0.4);
-    cursor: pointer;
-  }
+  // &:hover {
+  //   border-color: rgba($primary, 0.4);
+  //   cursor: pointer;
+  // }
 
-  &:focus {
-    border-color: $primary;
-  }
+  // &:focus {
+  //   border-color: $primary;
+  // }
 
   &.background {
     background-color: $primary;
     color:$white;
-    &:focus {
-      height: 26px;
-      width: 124.8px;
-      border: 2px solid $white;
-      opacity: 0.4;
-      border-radius: 15px;
-    }
+    // height: 26px;
+    // width: 124.8px;
+    // border: 2px solid $white;
+    //
+    // border-radius: 15px;
     &.contrast {
       background-color: $white;
       color: $primary;
       border-color: $white;
     }
+    // &:focus {
+    //   height: 26px;
+    //   width: 124.8px;
+    //   border: 2px solid $white;
+    //   opacity: 0.4;
+    //   border-radius: 15px;
+    // }
   }
 
   &.transparent {
-    border-color: rgba(0, 133, 127, 0.2);
+    border-color: rgba(0, 133, 127, 0.4);
     background-color: transparent;
     color: $primary;
+
     &:hover {
       border: 2px solid rgba(0, 133, 127, 0.4);
     }
-    &:focus {
-      border-color: $primary;
-    }
+    // &:focus {
+    //   border-color: $primary;
+    // }
     &.contrast {
       color: $white;
     }
@@ -59,9 +65,9 @@
       &:hover {
         border-color: rgba(0,0,0,0.4);
       }
-      &:focus {
-        border-color: $body-color;
-      }
+      // &:focus {
+      //   border-color: $body-color;
+      // }
     }
   }
 
