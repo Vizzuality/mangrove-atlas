@@ -60,8 +60,8 @@ export const styles = {
       borderStyle: 'solid',
       bottom: '99%',
       borderColor: 'transparent transparent white transparent',
-      borderWidth: '12px',
-      transform: 'translateX(-12px)'
+      borderWidth: '13px',
+      transform: 'translateX(-13px)'
     },
     '&:before': {
       content: '" "',
