@@ -54,7 +54,12 @@ const Widget = ({
           {name}
         </button>
         {layerId && (
-          <Button isActive={isActive} onClick={activeToggleHandler}>
+          <Button
+            hasBackground={isActive}
+            hasContrast={!isActive}
+            isActive={isActive}
+            onClick={activeToggleHandler}
+          >
             {isActive ? 'Hide layer' : 'Show layer'}
           </Button>
         )}
