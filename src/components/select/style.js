@@ -85,7 +85,8 @@ export const styles = {
     position: 'relative',
     transform: 'none',
     maxWidth: '100%',
-    margin: 0
+    margin: 0,
+    cursor: 'pointer'
   }),
   valueContainer: provided => ({
     ...provided,
