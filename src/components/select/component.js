@@ -46,6 +46,7 @@ class Select extends PureComponent {
         {...this.options}
         {...props}
         options={options}
+        menuIsOpen
         onChange={this.handleChange}
         value={selectedValue}
       />
