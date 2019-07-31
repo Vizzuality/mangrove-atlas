@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
+import Spinner from 'components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
@@ -31,9 +32,7 @@ const Widget = ({
   const collapseToggleHandler = () => {
     toggleCollapse({ id });
   };
-
   const widgetData = widgetConfig.parse({ });
-
   return (
     <div
       className={
@@ -60,7 +59,6 @@ const Widget = ({
           </Button>
         )}
       </div>
-
       <div className={classnames(styles.content)}>
         {children({
           id,
