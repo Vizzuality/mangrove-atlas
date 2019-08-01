@@ -88,11 +88,11 @@ class LocationSelector extends PureComponent {
             </li>
             {locationsData.map(location => (
               <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                {location.type === 'aoi'
+                {location.location_type === 'aoi'
                   && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                {(location.type === 'country' || location.type === 'admin0-eez')
+                {(location.location_type === 'country' || location.type === 'admin0-eez')
                   && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
-                {location.type === 'wdpa'
+                {location.location_type === 'wdpa'
                   && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
               </li>
             ))}
