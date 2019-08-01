@@ -1,14 +1,14 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
-import DatasetService from 'services/dataset-service';
+import APIService from 'services/api-service';
 import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
 
-const service = new DatasetService({ entityName: 'locations' });
+const service = new APIService();
 
 function* getLocations() {
   yield put(fetchRequested());
   try {
-    const layers = yield call(service.fetch, []);
-    yield put(fetchSucceeded(layers));
+    const locations = yield call(service.fetchLocations);
+    yield put(fetchSucceeded(locations));
   } catch (err) {
     yield put(fetchFailed(err));
   }
