@@ -23,14 +23,14 @@ class Widget extends PureComponent {
     toggleCollapse: PropTypes.func
   };
 
-static defaultProps = {
-  isActive: false,
-  isCollapsed: false,
-  layerId: null,
-  layersIds: null,
-  toggleActive: () => { },
-  toggleCollapse: () => { }
-};
+  static defaultProps = {
+    isActive: false,
+    isCollapsed: false,
+    layerId: null,
+    layersIds: null,
+    toggleActive: () => { },
+    toggleCollapse: () => { }
+  };
 
 
   activeToggleHandler = () => {
@@ -49,7 +49,7 @@ static defaultProps = {
 
   render() {
     const { isLoading } = this.props;
-    const { name, widgetConfig, isCollapsed, isActive, layerId, children, id, slug } = this.props;
+    const { name, widgetConfig, isCollapsed, isActive, layerId, children, id, slug, ...props } = this.props;
 
     const widgetData = widgetConfig.parse({});
 
@@ -74,14 +74,17 @@ static defaultProps = {
             {name}
           </button>
           {layerId && (
-            <Button isActive={isActive} onClick={this.activeToggleHandler}>
+            <Button
+              hasBackground={isActive}
+              hasContrast={!isActive}
+              isActive={isActive}
+              onClick={this.activeToggleHandler}
+            >
               {isActive ? 'Hide layer' : 'Show layer'}
             </Button>
           )}
         </div>
-
         {isLoading && <Spinner isLoading />}
-
         <div className={classnames(styles.content)}>
           {children({
             id,
@@ -89,11 +92,11 @@ static defaultProps = {
             slug,
             isCollapsed,
             data: widgetData,
+            ...props
           })}
         </div>
       </div>
     );
   }
 }
-
 export default Widget;
