@@ -8,3 +8,5 @@ export const pageActions = pages.reduce(
 );
 
 export default { pageActions };
+
+export const setHeader = createAction('PAGE/HEADER');
