@@ -34,6 +34,9 @@ class Header extends PureComponent {
 
     return (
       <div className={styles.header}>
+        <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+          <FontAwesomeIcon icon={faSearch} size="lg" />
+        </button>
         {location && (
           <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
             <h1
@@ -44,9 +47,6 @@ class Header extends PureComponent {
             </h1>
           </button>
         )}
-        <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
-          <FontAwesomeIcon icon={faSearch} size="lg" />
-        </button>
       </div>
     );
   }

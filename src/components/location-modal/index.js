@@ -7,7 +7,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   isOpened: state.locations.isOpened,
   currentLocation: currentLocation(state),
-  data: conservationHotspots(state),
+  conservationHotspots: conservationHotspots(state),
   locations: state.locations.list
 });
 

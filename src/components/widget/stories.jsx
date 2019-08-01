@@ -45,7 +45,7 @@ storiesOf('Widget components/Templates', module)
   .addDecorator(withProvider)
   .add('Conservation hotspots', () => (
     <ConservationHotspots
-      data={widgetData}
+      conservationHotspots={widgetData}
       currentLocation={location}
     />
   ))
