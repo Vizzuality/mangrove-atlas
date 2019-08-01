@@ -2,8 +2,6 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
-
   margin-top: 80px;
   margin-bottom: 50px;
 
@@ -28,7 +26,8 @@
 
   .searchButton {
     width: 60px;
-    height: 60px;;
+    height: 60px;
+    margin-right: 20px;
     border: 0;
     border-radius: 100%;
     background: white;
