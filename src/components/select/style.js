@@ -18,15 +18,7 @@ export const styles = {
     border: 0,
     borderBottom: '2px solid #00857F',
     fontWeight: 'bold',
-    '&:before': {
-      content: '"▾"',
-      color: '#00857F',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, 10%)',
-      cursor: 'pointer'
-    }
+    position: 'relative'
   }),
   control: provided => ({
     ...provided,
@@ -49,18 +41,41 @@ export const styles = {
     borderStyle: 'solid',
     borderColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 10,
-    boxShadow: '0 4px 12px 0 rgba(0, 0, 0, 0.08)',
+    boxShadow: '1px 4px 12px 0 rgba(0, 0, 0, 0.08)',
     boxSizing: 'content-box',
+    marginTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
     paddingtop: 10,
     paddingBottom: 10,
     transform: 'translateX(-50%)',
     left: '50%',
+    '&:after': {
+      content: '" "',
+      display: 'block',
+      position: 'absolute',
+      width: 0,
+      height: 0,
+      left: '50%',
+      borderStyle: 'solid',
+      bottom: '99%',
+      borderColor: 'transparent transparent white transparent',
+      borderWidth: '13px',
+      transform: 'translateX(-13px)'
+    },
     '&:before': {
-      content: '',
-      cursor: 'pointer'
-    }
+      content: '" "',
+      display: 'block',
+      position: 'absolute',
+      left: '50%',
+      width: 0,
+      height: 0,
+      borderStyle: 'solid',
+      bottom: '100%',
+      borderColor: 'transparent transparent rgba(0, 0, 0, 0.1) transparent',
+      borderWidth: '12px',
+      transform: 'translateX(-12px)'
+    },
   }),
   option: (provided, state) => ({
     ...provided,
@@ -78,15 +93,24 @@ export const styles = {
     position: 'relative',
     transform: 'none',
     maxWidth: '100%',
-    margin: 0
+    margin: 0,
+    cursor: 'pointer'
   }),
   valueContainer: provided => ({
     ...provided,
     padding: 0
   }),
-
-  menuPlacer: provided => ({
+  dropdownIndicator: provided => ({
     ...provided,
-    backgroundColor: 'red'
+    width: 0,
+    height: 0,
+    borderLeft: '6px solid transparent',
+    borderRight: '6px solid transparent',
+    borderTop: '6px solid #00857F',
+    position: 'absolute',
+    bottom: '-7px',
+    left: '50%',
+    transform: 'translate(-50%, 50%)',
+    cursor: 'pointer',
   })
 };
