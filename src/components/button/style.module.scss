@@ -14,35 +14,20 @@
 
   transition: all 0.25s ease;
 
-  // &:hover {
-  //   border-color: rgba($primary, 0.4);
-  //   cursor: pointer;
-  // }
-
-  // &:focus {
-  //   border-color: $primary;
-  // }
+  &:hover {
+    border-color: rgba($primary, 0.4);
+    cursor: pointer;
+  }
 
   &.background {
     background-color: $primary;
     color:$white;
-    // height: 26px;
-    // width: 124.8px;
-    // border: 2px solid $white;
-    //
-    // border-radius: 15px;
+
     &.contrast {
       background-color: $white;
       color: $primary;
       border-color: $white;
     }
-    // &:focus {
-    //   height: 26px;
-    //   width: 124.8px;
-    //   border: 2px solid $white;
-    //   opacity: 0.4;
-    //   border-radius: 15px;
-    // }
   }
 
   &.transparent {
@@ -53,9 +38,7 @@
     &:hover {
       border: 2px solid rgba(0, 133, 127, 0.4);
     }
-    // &:focus {
-    //   border-color: $primary;
-    // }
+
     &.contrast {
       color: $white;
     }
@@ -65,9 +48,6 @@
       &:hover {
         border-color: rgba(0,0,0,0.4);
       }
-      // &:focus {
-      //   border-color: $body-color;
-      // }
     }
   }
 
