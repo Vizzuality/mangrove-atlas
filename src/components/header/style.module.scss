@@ -3,9 +3,31 @@
 .header {
   display: flex;
   justify-content: space-between;
-
-  margin-top: 80px;
   margin-bottom: 50px;
+
+  .bg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: -9;
+  }
+
+  .searchBar {
+    margin-top: 80px;
+    z-index: 300;
+    left: 30;
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    &.fixed {
+      margin-top: 10px;
+      z-index: 400px;
+    }
+  }
 
   .titleBtn {
     border: 0;
@@ -19,7 +41,6 @@
     margin: 0;
     border: 0;
     background: transparent;
-
     color: $body-color;
     font-size: 60px;
     font-weight: 300;
@@ -38,5 +59,11 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
+  }
+  .visible {
+    display: block;
+  }
+  .invisible {
+    display: none;
   }
 }
