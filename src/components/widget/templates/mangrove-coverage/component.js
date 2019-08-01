@@ -52,6 +52,7 @@ class MangroveCoverage extends React.PureComponent {
     this.setState({ currentYear: value });
   }
 
+
   render() {
     const { data: { metadata }, chartConfig, location, slug } = this.props;
     const { currentYear } = this.state;
@@ -82,6 +83,7 @@ class MangroveCoverage extends React.PureComponent {
             {'.'}
           </div>
         </div>
+
 
         {/* Chart */}
         {!!widgetData.length && (

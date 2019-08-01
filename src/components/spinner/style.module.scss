@@ -3,13 +3,13 @@
 .loader {
   position: relative;
   margin: auto;
-  border: 16px solid rgba(0, 133, 127, .1);
-  border-top: 16px solid $primary;
+  border: 8px solid rgba(0, 133, 127, .1);
+  border-top: 8px solid $primary;
   opacity: 0.4;
   border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  animation: loading 3s linear infinite;
+  width: 40px;
+  height: 40px;
+  animation: loading 2s linear infinite;
 
   @keyframes loading {
     0% { transform: rotate(0deg); }
