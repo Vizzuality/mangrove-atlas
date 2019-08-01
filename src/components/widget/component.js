@@ -84,17 +84,21 @@ class Widget extends PureComponent {
             </Button>
           )}
         </div>
-        {isLoading && <Spinner isLoading />}
-        <div className={classnames(styles.content)}>
-          {children({
-            id,
-            name,
-            slug,
-            isCollapsed,
-            data: widgetData,
-            ...props
-          })}
-        </div>
+        {isLoading
+          ? <Spinner isLoading />
+          : (
+            <div className={classnames(styles.content)}>
+              {children({
+                id,
+                name,
+                slug,
+                isCollapsed,
+                data: widgetData,
+                ...props
+              })}
+            </div>
+          )
+        }
       </div>
     );
   }
