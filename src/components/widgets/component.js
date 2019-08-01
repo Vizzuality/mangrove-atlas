@@ -42,9 +42,10 @@ class WidgetList extends PureComponent {
         <div className={styles.actionBar}>
           {
             isCollapsed
-              ? <Button isTransparent isGrey onClick={this.onClickExpandAll}>Expand all widgets</Button>
+              ? <Button hasBackground hasContrast onClick={this.onClickExpandAll}>Expand all widgets</Button>
               : <Button isTransparent isGrey onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
           }
+
         </div>
         {widgets.map(widget => (
           <Widget
