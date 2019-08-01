@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { toggleCollapse, toggleActive } from 'modules/widgets/actions';
 import Widget from './component';
 
-const mapStateToProps = () => ({
+const mapStateToProps = state => ({
+  isLoading: state.dashboards.isLoading || state.locations.isLoading
 });
 
 const mapDispatchToProps = {

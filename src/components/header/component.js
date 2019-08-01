@@ -43,7 +43,6 @@ class Header extends PureComponent {
     if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };
 
     return (
-      // <StickyBox offsetTop={20} offsetBottom={20}>
       <OnScroll
         triggers={[
           { top: -40, callback: visible => this.setSticky(visible) },
@@ -67,6 +66,9 @@ class Header extends PureComponent {
           <div className={classnames(styles.searchBar,
             { [styles.fixed]: isFixed })}
           >
+            <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+              <FontAwesomeIcon icon={faSearch} size="lg" />
+            </button>
             {location && (
               <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
                 <h1
@@ -77,13 +79,9 @@ class Header extends PureComponent {
                 </h1>
               </button>
             )}
-            <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </button>
           </div>
         </div>
       </OnScroll>
-      // </StickyBox>
     );
   }
 }
