@@ -54,8 +54,8 @@ export const styles = {
       content: '" "',
       display: 'block',
       position: 'absolute',
-      width: '0',
-      height: '0',
+      width: 0,
+      height: 0,
       left: '50%',
       borderStyle: 'solid',
       bottom: '99%',
@@ -68,8 +68,8 @@ export const styles = {
       display: 'block',
       position: 'absolute',
       left: '50%',
-      width: '0',
-      height: '0',
+      width: 0,
+      height: 0,
       borderStyle: 'solid',
       bottom: '100%',
       borderColor: 'transparent transparent rgba(0, 0, 0, 0.1) transparent',
@@ -98,12 +98,12 @@ export const styles = {
   }),
   valueContainer: provided => ({
     ...provided,
-    padding: '0'
+    padding: 0
   }),
   dropdownIndicator: provided => ({
     ...provided,
-    width: '0',
-    height: '0',
+    width: 0,
+    height: 0,
     borderLeft: '6px solid transparent',
     borderRight: '6px solid transparent',
     borderTop: '6px solid #00857F',

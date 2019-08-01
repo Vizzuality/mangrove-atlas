@@ -15,7 +15,7 @@ class LocationSelector extends PureComponent {
       name: PropTypes.string
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
-    data: PropTypes.shape({}),
+    conservationHotspots: PropTypes.shape({}),
     closeSearchPanel: PropTypes.func
   }
 
@@ -23,7 +23,7 @@ class LocationSelector extends PureComponent {
     isOpened: false,
     currentLocation: { name: 'Location name' },
     locations: [],
-    data: {},
+    conservationHotspots: {},
     closeSearchPanel: () => null
   }
 
@@ -53,7 +53,7 @@ class LocationSelector extends PureComponent {
   }
 
   render() {
-    const { isOpened, currentLocation, locations, data } = this.props;
+    const { isOpened, currentLocation, locations, conservationHotspots } = this.props;
     if (!currentLocation) return null;
 
     const { searchTerm } = this.state;
@@ -79,7 +79,7 @@ class LocationSelector extends PureComponent {
             />
           </div>
           <ConservationHotspots
-            data={data}
+            conservationHotspots={conservationHotspots}
             currentLocation={currentLocation}
           />
           <ul className={styles.list}>

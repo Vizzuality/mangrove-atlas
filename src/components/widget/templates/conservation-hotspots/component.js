@@ -7,8 +7,8 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.3r');
 
-const ConservationHotspots = ({ data, currentLocation }) => {
-  const { widgetData } = data;
+const ConservationHotspots = ({ conservationHotspots, currentLocation }) => {
+  const { widgetData } = conservationHotspots;
   return (
     <div className={styles.hotspotsList}>
       {widgetData.map(d => (
@@ -26,14 +26,14 @@ const ConservationHotspots = ({ data, currentLocation }) => {
 };
 
 ConservationHotspots.propTypes = {
-  data: PropTypes.shape({
+  conservationHotspots: PropTypes.shape({
     widgetData: PropTypes.arrayOf(PropTypes.shape({}))
   }),
   currentLocation: PropTypes.shape({})
 };
 
 ConservationHotspots.defaultProps = {
-  data: null,
+  conservationHotspots: null,
   currentLocation: null
 };
 
