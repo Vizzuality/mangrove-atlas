@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import Modal from 'components/modal';
+import sortBy from 'lodash/sortBy';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -58,6 +59,15 @@ class LocationSelector extends PureComponent {
     const locationsData = searchTerm
       ? locations.filter(l => new RegExp(searchTerm, 'i').test(l.name))
       : locations;
+    const locationsDataOrdered = sortBy(
+      locationsData.map(location => ({
+        id: location.id,
+        iso: location.iso,
+        name: location.name,
+        type: location.type,
+      })),
+      ['name'],
+    );
 
     return (
       <Modal
@@ -80,7 +90,8 @@ class LocationSelector extends PureComponent {
             <li className={classnames(styles.listItem, 'notranslate')}>
               <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
             </li>
-            {locationsData.map(location => (
+
+            {locationsDataOrdered.map(location => (
               <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
                 {location.type === 'aoi'
                   && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
