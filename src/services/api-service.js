@@ -15,6 +15,14 @@ class APIService {
       if (status >= 400) throw new Error(statusText);
       return data;
     });
+
+  fetchWidgetData = (params = {}) => this.client
+    .get(`/widget_data/${params.slug}`)
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
 }
 
 export default APIService;

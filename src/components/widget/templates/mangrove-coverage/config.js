@@ -7,8 +7,13 @@ import WidgetLegend from 'components/widget/legend';
 const numberFormat = format(',.2%');
 
 export const CONFIG = {
-  parse: () => ({
-    chart: [],
+  parse: data => ({
+    chart: {
+      widgetData: data,
+      metadata: {
+        years: data
+      }
+    },
     chartConfig: {
       type: 'pie',
       layout: 'centric',

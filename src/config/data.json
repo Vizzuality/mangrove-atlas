@@ -12,7 +12,8 @@
       {
         "location_type": "country",
         "widgetsSlugs": [
-          "highlighted_places"
+          "highlighted_places",
+          "mangrove_coverage"
         ]
       },
       {

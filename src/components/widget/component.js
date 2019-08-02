@@ -5,11 +5,13 @@ import Spinner from 'components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
+import APIService from 'services/api-service';
 import styles from './style.module.scss';
+
+const service = new APIService();
 
 class Widget extends PureComponent {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     widgetConfig: PropTypes.shape({}).isRequired,
@@ -17,6 +19,7 @@ class Widget extends PureComponent {
     layersIds: PropTypes.arrayOf(PropTypes.string),
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
+    isLoading: PropTypes.bool,
     children: PropTypes.func.isRequired,
     toggleActive: PropTypes.func,
     toggleCollapse: PropTypes.func
@@ -25,12 +28,22 @@ class Widget extends PureComponent {
   static defaultProps = {
     isActive: false,
     isCollapsed: false,
+    isLoading: false,
     layerId: null,
     layersIds: null,
     toggleActive: () => { },
     toggleCollapse: () => { }
   };
 
+  state = {
+    loading: false,
+    error: null,
+    data: null
+  }
+
+  componentDidMount() {
+    this.fetchWidget();
+  }
 
   activeToggleHandler = () => {
     const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
@@ -46,14 +59,25 @@ class Widget extends PureComponent {
     toggleCollapse({ slug });
   };
 
+  fetchWidget() {
+    const { slug } = this.props;
+    this.setState({ loading: true });
+
+    if (slug && slug !== 'highlighted_places') {
+      service.fetchWidgetData({ slug })
+        .then(data => this.setState({ data, loading: false }));
+    }
+  }
+
   render() {
-    const { isLoading } = this.props;
+    const { loading, error, data } = this.state;
     const {
-      name, widgetConfig, isCollapsed, isActive, layerId,
+      name, widgetConfig, isCollapsed, isActive, isLoading, layerId,
       children, slug, ...props
     } = this.props;
 
-    const widgetData = widgetConfig.parse({});
+    const widgetData = widgetConfig.parse(data);
+    console.log(widgetData);
 
     return (
       <div
