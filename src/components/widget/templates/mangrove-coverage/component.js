@@ -10,7 +10,8 @@ const numberFormat = format(',.2f');
 
 class MangroveCoverage extends React.PureComponent {
   static propTypes = {
-    data: PropTypes.shape({}),
+    data: PropTypes.arrayOf(PropTypes.shape({})),
+    metadata: PropTypes.shape({}),
     chartConfig: PropTypes.shape({}).isRequired,
     location: PropTypes.shape({}),
     slug: PropTypes.string
@@ -18,6 +19,7 @@ class MangroveCoverage extends React.PureComponent {
 
   static defaultProps = {
     data: null,
+    metadata: null,
     location: null,
     slug: null
   }
@@ -27,9 +29,9 @@ class MangroveCoverage extends React.PureComponent {
   }
 
   getData() {
-    const { data: { widgetData, metadata } } = this.props;
+    const { data, metadata } = this.props;
     const { currentYear } = this.state;
-    const currentYearData = widgetData.find(d => d.x.toString() === currentYear.toString());
+    const currentYearData = data.find(d => d.x.toString() === currentYear.toString());
     const nonMangrove = metadata.total - currentYearData.value;
 
     return [
@@ -54,9 +56,7 @@ class MangroveCoverage extends React.PureComponent {
 
 
   render() {
-    const { data: { metadata }, chartConfig, location, slug } = this.props;
-    console.log(this.props);
-    return null;
+    const { metadata, chartConfig, location, slug } = this.props;
     const { currentYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year,
@@ -85,7 +85,6 @@ class MangroveCoverage extends React.PureComponent {
             {'.'}
           </div>
         </div>
-
 
         {/* Chart */}
         {!!widgetData.length && (

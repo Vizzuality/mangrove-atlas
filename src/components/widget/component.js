@@ -17,6 +17,7 @@ class Widget extends PureComponent {
     widgetConfig: PropTypes.shape({}).isRequired,
     layerId: PropTypes.string,
     layersIds: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.shape({}),
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
     children: PropTypes.func.isRequired,
@@ -29,12 +30,13 @@ class Widget extends PureComponent {
     isCollapsed: false,
     layerId: null,
     layersIds: null,
+    location: null,
     toggleActive: () => { },
     toggleCollapse: () => { }
   };
 
   state = {
-    loading: false,
+    loading: true,
     data: null
   }
 
@@ -64,18 +66,24 @@ class Widget extends PureComponent {
 
       service.fetchWidgetData({ slug })
         .then(data => this.setState({ data, loading: false }));
+    } else {
+      this.setState({ loading: false });
     }
   }
 
   render() {
     const { loading, data } = this.state;
     const {
-      name, widgetConfig, isCollapsed, isActive, layerId,
-      children, slug, ...props
+      name,
+      widgetConfig,
+      isCollapsed,
+      isActive,
+      layerId,
+      children,
+      location,
+      slug,
+      ...props
     } = this.props;
-
-
-    const widgetData = widgetConfig.parse(data);
 
     return (
       <div
@@ -116,7 +124,8 @@ class Widget extends PureComponent {
                 name,
                 slug,
                 isCollapsed,
-                data: widgetData,
+                location,
+                data: widgetConfig.parse(data, location),
                 ...props
               })}
             </div>

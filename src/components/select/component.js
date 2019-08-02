@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 
 import { styles, theme } from './style';
 
-
 class Select extends PureComponent {
   static propTypes = {
     options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    defaultValue: PropTypes.shape({}).isRequired,
+    value: PropTypes.shape({}),
     onChange: PropTypes.func
   };
 
   static defaultProps = {
+    value: null,
     onChange: () => null
   }
 
@@ -38,7 +38,9 @@ class Select extends PureComponent {
   render() {
     const { value: defaultValue, options, onChange, ...props } = this.props;
     const { selectedOption } = this.state;
-    const selectedValue = options.find(opt => opt.value === selectedOption);
+    const selectedValue = options.find(opt => opt.defaultValue === selectedOption);
+
+    console.log(options)
 
     return (
       <ReactSelect

@@ -6,13 +6,30 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2%');
 
+const widgetData = (data, currentLocation) => {
+  const total = currentLocation.coast_length_m;
+
+  return data.map((d) => {
+    const year = new Date(d.date).getFullYear();
+
+    return ({
+      x: Number(year),
+      y: 100,
+      color: '#00857F',
+      percentage: d.value / total * 100,
+      unit: '%',
+      value: d.value,
+      label: `Mangroves in ${year}`
+    });
+  });
+};
+
 export const CONFIG = {
-  parse: data => ({
-    data: {
-      widgetData: data,
-      metadata: {
-        years: data
-      }
+  parse: (data, currentLocation) => ({
+    data: widgetData(data, currentLocation),
+    metadata: {
+      years: data.map(d => new Date(d.date).getFullYear()),
+      total: currentLocation.coast_length_m
     },
     chartConfig: {
       type: 'pie',
