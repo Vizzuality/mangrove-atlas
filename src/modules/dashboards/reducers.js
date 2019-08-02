@@ -8,12 +8,12 @@ export default {
   }),
   [fetchSucceeded]: (state, { payload }) => ({
     ...state,
-    isLoading: false,
-    list: payload
+    ...payload,
+    isLoading: false
   }),
   [fetchFailed]: (state, { payload }) => ({
     ...state,
     isLoading: false,
     error: payload
-  })
+  }),
 };

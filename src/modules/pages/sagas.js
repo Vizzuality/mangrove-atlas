@@ -8,7 +8,7 @@ import { fetchMapStyles } from 'modules/map-styles/actions';
 function* loadInitialData({ payload }) {
   const { locations, dashboards, widgets, layers, mapStyles } = yield select();
   if (!locations.list.length) yield put(fetchLocations());
-  if (!dashboards.list.length) yield put(fetchDashboards());
+  if (!dashboards.defaults.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());
   if (!layers.list.length) yield put(fetchLayers());
   if (!mapStyles.layers) yield put(fetchMapStyles());
