@@ -5,7 +5,7 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   currentLocation: currentLocation(state),
-  data: conservationHotspots(state)
+  conservationHotspots: conservationHotspots(state)
 });
 
 export default connect(mapStateToProps)(Component);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import Modal from 'components/modal';
+import ConservationHotspots from 'components/widget/templates/conservation-hotspots/component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -14,6 +15,7 @@ class LocationSelector extends PureComponent {
       name: PropTypes.string
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
+    conservationHotspots: PropTypes.shape({}),
     closeSearchPanel: PropTypes.func
   }
 
@@ -21,6 +23,7 @@ class LocationSelector extends PureComponent {
     isOpened: false,
     currentLocation: { name: 'Location name' },
     locations: [],
+    conservationHotspots: {},
     closeSearchPanel: () => null
   }
 
@@ -50,8 +53,7 @@ class LocationSelector extends PureComponent {
   }
 
   render() {
-    const { isOpened, currentLocation, locations } = this.props;
-
+    const { isOpened, currentLocation, locations, conservationHotspots } = this.props;
     if (!currentLocation) return null;
 
     const { searchTerm } = this.state;
@@ -76,6 +78,10 @@ class LocationSelector extends PureComponent {
               onChange={this.updateSearchTerm}
             />
           </div>
+          <ConservationHotspots
+            conservationHotspots={conservationHotspots}
+            currentLocation={currentLocation}
+          />
           <ul className={styles.list}>
             <li className={classnames(styles.listItem, 'notranslate')}>
               <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>

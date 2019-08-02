@@ -70,6 +70,7 @@ class MangroveNetChange extends PureComponent {
               prefix="start-year"
               value={startYear}
               options={optionsYears}
+              isOptionDisabled={option => parseInt(option.value) > parseInt(endYear) || option.value === startYear}
               onChange={this.changeStartYear}
             />
             {' '}<span>and</span>{' '}
@@ -78,6 +79,7 @@ class MangroveNetChange extends PureComponent {
               prefix="end-year"
               value={endYear}
               options={optionsYears}
+              isOptionDisabled={option => parseInt(option.value) < parseInt(startYear) || option.value === endYear}
               onChange={this.changeEndYear}
             />
             {'.'}
