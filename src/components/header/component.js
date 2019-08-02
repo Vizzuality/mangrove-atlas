@@ -33,45 +33,21 @@ class Header extends PureComponent {
     if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };
 
     return (
-      <OnScroll
-        triggers={[
-          { top: -40, callback: visible => this.setSticky(visible) },
-        ]}
-      >
-        <div className={styles.header}>
-          <img
-            className={classnames(styles.bg,
-              { [styles.visible]: !isFixed },
-              { [styles.invisible]: isFixed })}
-            src={background}
-            alt="Background"
-          />
-          {/* <img
-            className={classnames(styles.bg,
-              { [styles.visible]: isFixed },
-              { [styles.invisible]: !isFixed })}
-            src={fixedBackground}
-            alt="Background"
-          /> */}
-          <div className={classnames(styles.searchBar,
-            { [styles.fixed]: isFixed })}
-          >
-            <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </button>
-            {location && (
-              <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
-                <h1
-                  className={classnames(styles.title, 'notranslate')}
-                  style={stylesOverride}
-                >
-                  {location.name}
-                </h1>
-              </button>
-            )}
-          </div>
-        </div>
-      </OnScroll>
+      <div className={styles.header}>
+        <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+          <FontAwesomeIcon icon={faSearch} size="lg" />
+        </button>
+        {location && (
+          <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
+            <h1
+              className={classnames(styles.title, 'notranslate')}
+              style={stylesOverride}
+            >
+              {location.name}
+            </h1>
+          </button>
+        )}
+      </div>
     );
   }
 }

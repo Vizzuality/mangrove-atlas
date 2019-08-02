@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 
 class DownloadLink extends PureComponent {
   static propTypes = {
-    data: PropTypes.shape({}),
+    data: PropTypes.arrayOf(PropTypes.shape({})),
     slug: PropTypes.string
   }
 
