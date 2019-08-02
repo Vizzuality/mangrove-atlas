@@ -42,20 +42,27 @@ class WidgetList extends PureComponent {
         <div className={styles.actionBar}>
           {
             isCollapsed
-              ? <Button hasBackground hasContrast onClick={this.onClickExpandAll}>Expand all widgets</Button>
-              : <Button isTransparent isGrey onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
+              ? (
+                <Button hasBackground hasContrast onClick={this.onClickExpandAll}>
+                  Expand all widgets
+                </Button>
+              )
+              : (
+                <Button isTransparent isGrey onClick={this.onClickCollapseAll}>
+                  Collapse all widgets
+                </Button>
+              )
           }
 
         </div>
         {widgets.map(widget => (
           <Widget
-            key={widget.id}
+            key={widget.slug}
             {...widget}
             widgetConfig={CONFIGS[widget.slug]}
           >
             {({ slug, data, ...props }) => (
               <Fragment>
-                {/* Template */}
                 {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
                   slug,
                   ...data,

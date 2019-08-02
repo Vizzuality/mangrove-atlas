@@ -4,7 +4,8 @@ import { currentLocation } from 'modules/locations/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  data: coverageWidget(state),
+  // data: coverageWidget(state),
+  data: {},
   location: currentLocation(state)
 });
 

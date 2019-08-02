@@ -10,7 +10,6 @@ import styles from './style.module.scss';
 class Widget extends PureComponent {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     widgetConfig: PropTypes.shape({}).isRequired,
@@ -34,22 +33,25 @@ class Widget extends PureComponent {
 
 
   activeToggleHandler = () => {
-    const { layersIds, toggleActive, id, isActive, layerId } = this.props;
+    const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
     if (layersIds) {
-      layersIds.forEach(lId => toggleActive({ id, layerId: lId, isActive: !isActive }));
+      layersIds.forEach(lId => toggleActive({ slug, layerId: lId, isActive: !isActive }));
     } else {
-      toggleActive({ id, layerId, isActive: !isActive });
+      toggleActive({ slug, layerId, isActive: !isActive });
     }
   };
 
   collapseToggleHandler = () => {
-    const { toggleCollapse, id } = this.props;
-    toggleCollapse({ id });
+    const { toggleCollapse, slug } = this.props;
+    toggleCollapse({ slug });
   };
 
   render() {
     const { isLoading } = this.props;
-    const { name, widgetConfig, isCollapsed, isActive, layerId, children, id, slug, ...props } = this.props;
+    const {
+      name, widgetConfig, isCollapsed, isActive, layerId,
+      children, slug, ...props
+    } = this.props;
 
     const widgetData = widgetConfig.parse({});
 
@@ -87,7 +89,6 @@ class Widget extends PureComponent {
         {isLoading && <Spinner isLoading />}
         <div className={classnames(styles.content)}>
           {children({
-            id,
             name,
             slug,
             isCollapsed,

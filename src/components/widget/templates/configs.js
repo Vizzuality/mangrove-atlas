@@ -4,10 +4,10 @@ import MangroveActivity from './mangrove-activity/config';
 import ConservationHotspots from './conservation-hotspots/config';
 
 export default {
-  'mangrove-coverage': MangroveCoverage,
-  'mangrove-net-change': MangroveNetChange,
-  'mangrove-activity': MangroveActivity,
-  'highlighted-areas': ConservationHotspots,
+  mangrove_coverage: MangroveCoverage,
+  mangrove_net_change: MangroveNetChange,
+  mangrove_activity: MangroveActivity,
+  highlighted_places: ConservationHotspots,
   default: {
     parse: () => ({
       template: 'Template not defined',

@@ -4,7 +4,8 @@ import { currentLocation } from 'modules/locations/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  data: netChangeWidget(state),
+  // data: netChangeWidget(state),
+  data: {},
   location: currentLocation(state)
 });
 

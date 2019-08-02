@@ -9,10 +9,8 @@ export const dashboardWidgets = createSelector(
   [widgets, currentDashboard],
   (_widgets, _currentDashboard) => {
     if (!_currentDashboard) return [];
-    const fixedWidgets = ['highlighted-areas'];
-    const widgetIds = [...fixedWidgets, ..._currentDashboard.widget_ids];
-    const result = _widgets.filter(widget => widgetIds.includes(widget.id));
-
+    const { widgetsSlugs } = _currentDashboard;
+    const result = _widgets.filter(widget => widgetsSlugs.includes(widget.slug));
     return result;
   }
 );

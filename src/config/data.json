@@ -12,9 +12,7 @@
       {
         "location_type": "country",
         "widgetsSlugs": [
-          "highlighted_places",
-          "mangrove_coverage",
-          "mangrove_net_change"
+          "highlighted_places"
         ]
       },
       {
@@ -47,21 +45,21 @@
   },
   "widgets": [
     {
-      "title": "Highlighted places",
+      "name": "Highlighted places",
       "slug": "highlighted_places",
       "layersIds": [
         "187deb54ab1c40c1d4476f8ba3a01ba0"
       ]
     },
     {
-      "title": "Mangrove coverage",
+      "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
       "layersIds": [
         "187deb54ab1c40c1d4476f8ba3a01ba0"
       ]
     },
     {
-      "title": "Mangrove net change",
+      "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "layersIds": [
         "96a44216d358984de1428ff77ead270b",
@@ -69,7 +67,7 @@
       ]
     },
     {
-      "title": "Mangrove activies",
+      "name": "Mangrove activies",
       "slug": "mangrove_activities",
       "layersIds": []
     }

@@ -10,7 +10,7 @@ export const currentDashboard = createSelector(
     const { defaults, custom } = _dashboards;
     const customDashboard = custom.find(d => d.location_id === _currentLocation.id);
     if (customDashboard) return customDashboard;
-    return defaults.find(d => d.location_id === _currentLocation.id);
+    return defaults.find(d => d.location_type === _currentLocation.location_type);
   }
 );
 
