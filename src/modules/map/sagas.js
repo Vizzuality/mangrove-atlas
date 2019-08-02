@@ -14,7 +14,7 @@ function* flyToCurrentLocation() {
     if (location.type === 'global') {
       yield put(resetViewport());
     } else {
-      const bounds = bbox(location.geometry);
+      const bounds = bbox(JSON.parse(location.geometry));
       const { longitude, latitude, zoom } = new WebMercatorViewport(state.map.viewport)
         .fitBounds([[bounds[0], bounds[1]], [bounds[2], bounds[3]]], {
           padding: { top: 50, bottom: 50, right: 20, left: 620 }

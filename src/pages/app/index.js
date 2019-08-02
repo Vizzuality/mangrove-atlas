@@ -15,7 +15,7 @@ const AppPage = () => (
     />
     <div className={styles.dashboard}>
       <Header />
-      <Widgets />
+      {/*<Widgets />*/}
     </div>
     <div className={styles.vis}>
       <Map />

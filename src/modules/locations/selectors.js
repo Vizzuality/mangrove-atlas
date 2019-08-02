@@ -11,9 +11,9 @@ export const currentLocation = createSelector(
     if (!_currentId) return null;
 
     if (_currentId.id === 'global') {
-      const countries = _locations.filter(location => location.type === 'country');
+      const countries = _locations.filter(location => location.location_type === 'country');
       const globalData = {
-        type: 'global',
+        location_type: 'global',
         name: 'Worldwide',
         dashboardId: defaultDashboards.global,
         length_coast_m: 1634701000,
@@ -51,14 +51,14 @@ export const currentLocation = createSelector(
     let result;
 
     if (_currentId.iso) {
-      result = _locations.find(location => location.iso === _currentId.iso && location.type === 'country');
+      result = _locations.find(location => location.iso === _currentId.iso && location.location_type === 'country');
     } else if (_currentId.id) {
-      result = _locations.find(location => location.id === _currentId.id);
+      result = _locations.find(location => location.id === Number(_currentId.id));
     }
 
     if (!result) return null;
 
-    return { ...result, dashboardId: result.dashboardId || defaultDashboards[result.type] };
+    return { ...result, dashboardId: result.dashboardId || defaultDashboards[result.location_type] };
   }
 );
 
