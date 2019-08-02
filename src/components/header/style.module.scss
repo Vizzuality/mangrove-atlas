@@ -39,4 +39,10 @@
       fill: $primary;
     }
   }
+  .invisible {
+    display: block;
+  }
+  .visible {
+    display: none;
+  }
 }
