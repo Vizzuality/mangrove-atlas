@@ -8,7 +8,7 @@ const numberFormat = format(',.2%');
 
 export const CONFIG = {
   parse: data => ({
-    chart: {
+    data: {
       widgetData: data,
       metadata: {
         years: data

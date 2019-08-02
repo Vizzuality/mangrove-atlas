@@ -19,7 +19,6 @@ class Widget extends PureComponent {
     layersIds: PropTypes.arrayOf(PropTypes.string),
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
-    isLoading: PropTypes.bool,
     children: PropTypes.func.isRequired,
     toggleActive: PropTypes.func,
     toggleCollapse: PropTypes.func
@@ -28,7 +27,6 @@ class Widget extends PureComponent {
   static defaultProps = {
     isActive: false,
     isCollapsed: false,
-    isLoading: false,
     layerId: null,
     layersIds: null,
     toggleActive: () => { },
@@ -37,7 +35,6 @@ class Widget extends PureComponent {
 
   state = {
     loading: false,
-    error: null,
     data: null
   }
 
@@ -61,23 +58,24 @@ class Widget extends PureComponent {
 
   fetchWidget() {
     const { slug } = this.props;
-    this.setState({ loading: true });
 
     if (slug && slug !== 'highlighted_places') {
+      this.setState({ loading: true });
+
       service.fetchWidgetData({ slug })
         .then(data => this.setState({ data, loading: false }));
     }
   }
 
   render() {
-    const { loading, error, data } = this.state;
+    const { loading, data } = this.state;
     const {
-      name, widgetConfig, isCollapsed, isActive, isLoading, layerId,
+      name, widgetConfig, isCollapsed, isActive, layerId,
       children, slug, ...props
     } = this.props;
 
+
     const widgetData = widgetConfig.parse(data);
-    console.log(widgetData);
 
     return (
       <div
@@ -110,16 +108,20 @@ class Widget extends PureComponent {
             </Button>
           )}
         </div>
-        {isLoading && <Spinner isLoading />}
-        <div className={classnames(styles.content)}>
-          {children({
-            name,
-            slug,
-            isCollapsed,
-            data: widgetData,
-            ...props
-          })}
-        </div>
+        {loading
+          ? <Spinner isLoading />
+          : (
+            <div className={classnames(styles.content)}>
+              {children({
+                name,
+                slug,
+                isCollapsed,
+                data: widgetData,
+                ...props
+              })}
+            </div>
+          )
+        }
       </div>
     );
   }

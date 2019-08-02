@@ -55,6 +55,8 @@ class MangroveCoverage extends React.PureComponent {
 
   render() {
     const { data: { metadata }, chartConfig, location, slug } = this.props;
+    console.log(this.props);
+    return null;
     const { currentYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year,

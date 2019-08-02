@@ -1,5 +1,5 @@
 export const CONFIG = {
-  parse: () => null
+  parse: () => {}
 };
 
 export default CONFIG;
