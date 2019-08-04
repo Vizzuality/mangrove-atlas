@@ -1,7 +1,12 @@
 import {
-  fetchRequested, fetchSucceeded, fetchFailed,
-  collapseAll, expandAll, toggleCollapse,
-  toggleActive, toggleActiveByLayerId
+  fetchRequested,
+  fetchSucceeded,
+  fetchFailed,
+  collapseAll,
+  expandAll,
+  toggleCollapse,
+  toggleActive,
+  toggleActiveByLayerId
 } from './actions';
 
 export default {
