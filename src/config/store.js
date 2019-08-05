@@ -7,13 +7,13 @@ import { all, fork } from 'redux-saga/effects';
 // import { PAGES } from 'modules/pages/constants';
 
 import * as pages from 'modules/pages';
-import * as languages from 'modules/transifex';
 import * as map from 'modules/map';
 import * as mapStyles from 'modules/map-styles';
 import * as layers from 'modules/layers';
 import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
+import * as languages from 'modules/languages';
 // Not actually a module, more like middleware
 // import { queryState } from 'modules/query-state';
 
@@ -30,7 +30,8 @@ const modules = [
   { namespace: 'widgets', components: widgets },
   { namespace: 'locations', components: locations },
   { namespace: 'dashboards', components: dashboards },
-  { namespace: 'mapStyles', components: mapStyles }
+  { namespace: 'mapStyles', components: mapStyles },
+  { namespace: 'languages', components: languages }
 ];
 
 const {
