@@ -2,10 +2,10 @@
 
 .header {
   display: flex;
-  margin-top: 80px;
   margin-bottom: 50px;
 
-  .bg {
+  .bg,
+  .bgFixed {
     display: block;
     position: absolute;
     top: 0;
@@ -13,18 +13,25 @@
     pointer-events: none;
     overflow: visible;
     z-index: -9;
+    &.isHidden {
+      display: none;
+    }
+  }
+
+  .bgFixed {
+    position: fixed;
+    z-index: 100;
   }
 
   .searchBar {
     margin-top: 80px;
     z-index: 300;
     left: 30;
-    padding: 0 20px;
     width: 100%;
     display: flex;
     &.fixed {
-      margin-top: 10px;
-      z-index: 400px;
+      position: fixed;
+      top: -65px;
     }
   }
 
@@ -59,11 +66,5 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
-  }
-  .visible {
-    display: block;
-  }
-  .invisible {
-    display: none;
   }
 }
