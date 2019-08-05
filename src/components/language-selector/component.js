@@ -18,26 +18,24 @@ class LanguageSelect extends PureComponent {
     data: null,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchLanguages, setLanguage } = this.props;
-//     if (typeof window !== 'undefined') {
-//       fetchLanguages();
-// debugger
-//       Transifex.live.onReady(() => {
-//         const { code } = Transifex.live.getSourceLanguage();
-//         const langCode = Transifex.live.detectLanguage();
+    if (typeof window !== 'undefined') {
+      fetchLanguages();
+      Transifex.live.onReady(() => {
+        const { code } = Transifex.live.getSourceLanguage();
+        const langCode = Transifex.live.detectLanguage();
 
-//         // For any reason we have to translate at first to source code.
-//         Transifex.live.translateTo(code);
-//         Transifex.live.translateTo(langCode);
-//         setLanguage(langCode);
-//       });
-//     }
+        Transifex.live.translateTo(code);
+        Transifex.live.translateTo(langCode);
+        setLanguage(langCode);
+      });
+    }
   }
 
   handleChange({ langCode }) {
     const { setLanguage } = this.props;
-  //  Transifex.live.translateTo(langCode);
+    Transifex.live.translateTo(langCode);
     setLanguage(langCode);
   }
 
