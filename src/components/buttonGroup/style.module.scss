@@ -14,7 +14,6 @@
     border: none;
     text-align: center;
     color: $body-color;
-
     &:focus {
       text-align: center;
       border: 2px solid white;
@@ -22,7 +21,7 @@
       height: 30px;
       background-color: $white;
       color: $primary;
-      border-bottom: 3px solid white;
+      border-bottom: 3px solid white;;
     }
   }
 }
