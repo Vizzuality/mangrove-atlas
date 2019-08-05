@@ -9,34 +9,27 @@ import styles from './style.module.scss';
 
 class Header extends PureComponent {
   static propTypes = {
+    sticky: PropTypes.bool,
     location: PropTypes.shape({
       name: PropTypes.string
     }),
     openSearchPanel: PropTypes.func
   }
 
-  state = {
-    isFixed: false
-  };
-
   static defaultProps = {
+    sticky: false,
     location: { name: 'Location name' },
     openSearchPanel: () => null
   }
 
   clickHandler = () => {
     const { openSearchPanel } = this.props;
-
     openSearchPanel();
   }
 
-  setSticky = isFixed => this.setState({ isFixed });
 
   render() {
     const { location, sticky } = this.props;
-
-    console.log(sticky)
-
     let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
 
     if (location && location.name.length > 10) stylesOverride = { fontSize: 45, lineHeight: 1 };
@@ -46,14 +39,13 @@ class Header extends PureComponent {
       <div className={styles.header}>
         <img
           className={classnames(styles.bg,
-            { [styles.isVisible]: sticky }
+            { [styles.isHidden]: sticky })}
           src={background}
           alt="Background"
         />
         <img
-          className={classnames(styles.bg,
-            { [styles.visible]: sticky },
-            { [styles.invisible]: !sticky })}
+          className={classnames(styles.bgFixed,
+            { [styles.isHidden]: !sticky })}
           src={fixedBackground}
           alt="Background"
         />

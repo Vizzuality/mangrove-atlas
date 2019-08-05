@@ -15,7 +15,7 @@ class Dashboard extends Component {
 
   state = { sticky: false }
 
-  setSticky = sticky => console.log(sticky) || this.setState({ sticky })
+  setSticky = sticky => this.setState({ sticky })
 
   render() {
     const { children } = this.props;
@@ -25,10 +25,10 @@ class Dashboard extends Component {
       <OnScroll
         className={styles.sidebar}
         triggers={[
-          { top: -40, callback: sticky => this.setSticky(sticky) },
+          { top: -65, callback: sticky => this.setSticky(!sticky) },
         ]}
       >
-        <Header sticky />
+        <Header sticky={sticky} />
         {children}
       </OnScroll>
     );
