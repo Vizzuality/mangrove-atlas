@@ -8,7 +8,7 @@ const getAllLanguages = () => {
     Transifex.live.onError(err => reject(err));
     Transifex.live.onFetchLanguages(languages => resolve(languages));
     Transifex.live.getAllLanguages();
-  })
+  });
 };
 
 function* getLanguages() {

@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ButtonGroup from 'components/buttonGroup';
+import Button from 'components/button';
 
 class LanguageSelect extends PureComponent {
   static propTypes = {
@@ -23,7 +25,6 @@ class LanguageSelect extends PureComponent {
 
     if (typeof window !== 'undefined') {
       fetchLanguages();
-
       if (Transifex && typeof Transifex !== 'undefined') {
         Transifex.live.onReady(() => {
           const { code } = Transifex.live.getSourceLanguage();
@@ -33,6 +34,8 @@ class LanguageSelect extends PureComponent {
           Transifex.live.translateTo(langCode);
 
           setCurrentLanguage(langCode);
+          console.log(code)
+          debugger;
         });
       }
     }
@@ -57,22 +60,16 @@ class LanguageSelect extends PureComponent {
 
     return (
 
-      <ul className="nav flex-column">
+      <ButtonGroup>
         {options.map(o => (
-          <li className="nav-item" key={`lang-${o.value}`}>
-            <a
-              href={`#${o.value}`}
-              className="nav-link notranslate"
-              onClick={(e) => {
-                e.preventDefault();
-                this.handleChange({ langCode: o.value });
-              }}
-            >
-              {o.label}
-            </a>
-          </li>
+          <Button
+            key={`lang-${o.value}`}
+            onClick={this.handleChange({ langCode: o.value })}
+          >
+            {o.label}
+          </Button>
         ))}
-      </ul>
+      </ButtonGroup>
     );
   }
 }

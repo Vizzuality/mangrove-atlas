@@ -6,8 +6,7 @@
     "es6": true
   },
   "globals": {
-    "Transifex": true,
-    "t": true
+    "Transifex": true
   },
   "rules": {
     "import/no-extraneous-dependencies": [

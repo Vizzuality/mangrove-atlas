@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Widget from 'components/widget';
 import Button from 'components/button';
-import ButtonGroup from 'components/buttonGroup';
 import LanguageSelect from 'components/language-selector';
 import TEMPLATES from 'components/widget/templates';
 import CONFIGS from 'components/widget/templates/configs';
@@ -48,11 +47,6 @@ class WidgetList extends PureComponent {
               : <Button isTransparent isGrey onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
           }
           <LanguageSelect />
-          {/* <ButtonGroup onClick={this.onClickExpandAll}>
-            <Button onClick={this.onClickExpandAll}>Français</Button>
-            <Button onClick={this.onClickExpandAll}>English</Button>
-          </ButtonGroup> */}
-
         </div>
         {widgets.map(widget => (
           <Widget
