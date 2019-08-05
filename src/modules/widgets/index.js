@@ -1,6 +1,6 @@
 import * as actions from './actions';
 import * as reducers from './reducers';
-import sagas, { restoreState } from './sagas';
+import sagas, { restoreWidgetsState } from './sagas';
 import initialState from './initial-state';
 
 import queryState from 'utils/query-state';
@@ -48,7 +48,7 @@ queryState.add({
     after: [
       actions.fetchSucceeded
     ],
-    trigger: restoreState
+    trigger: restoreWidgetsState
   }
 });
 
