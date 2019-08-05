@@ -1,6 +1,5 @@
 export default {
-  current: 'APP',
   data: [],
-  language: 'en',
+  current: 'en',
   isLoading: false,
 };

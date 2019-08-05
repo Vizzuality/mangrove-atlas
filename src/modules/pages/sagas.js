@@ -4,6 +4,7 @@ import { fetchDashboards } from 'modules/dashboards/actions';
 import { fetchWidgets } from 'modules/widgets/actions';
 import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
+import { fetchLanguages } from 'modules/transifex/actions';
 
 function* loadInitialData({ payload }) {
   const { locations, dashboards, widgets, layers, mapStyles } = yield select();
@@ -12,6 +13,7 @@ function* loadInitialData({ payload }) {
   if (!widgets.list.length) yield put(fetchWidgets());
   if (!layers.list.length) yield put(fetchLayers());
   if (!mapStyles.layers) yield put(fetchMapStyles());
+  yield put(fetchLanguages());
   yield put(closeSearchPanel());
 
   /**
