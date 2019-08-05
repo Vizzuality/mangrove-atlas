@@ -30,36 +30,40 @@ export function* getWidgets() {
 
 // Part of query state, not normal flow.
 // View ./index.js queryState.add for more info.
-export function * restoreState() {
+export function * restoreWidgetsState() {
   /**
    * A regular selector, it could be on a selectors file with reselect
    * or better yet, be created automatically by the package based on registered namespace info.
   */
   function * handler () {
     const widgetsSelector = state => ({
-      urlWidgets: state.router.query.widgets,
+      urlWidgets: (state.router.query && state.router.query.widgets) || null,
       stateWidgets: state.widgets.list
     });
+
     const {urlWidgets, stateWidgets} = yield select(widgetsSelector);
-    const updatedWidgets = stateWidgets.map(widget => {
-      const updatedWidget = Object.assign({}, widget);
 
-      if (urlWidgets[widget.slug]) {
-        const update = urlWidgets[widget.slug];
-
-        if (update.isActive) {
-          updatedWidget.isActive = true;
+    if(urlWidgets) {
+      const updatedWidgets = stateWidgets.map(widget => {
+        const updatedWidget = Object.assign({}, widget);
+  
+        if (urlWidgets[widget.slug]) {
+          const update = urlWidgets[widget.slug];
+  
+          if (update.isActive) {
+            updatedWidget.isActive = true;
+          }
+  
+          if (update.isCollapsed) {
+            updatedWidget.isCollapsed = true;
+          }
         }
-
-        if (update.isCollapsed) {
-          updatedWidget.isCollapsed = true;
-        }
-      }
-
-      return updatedWidget;
-    });
-
-    yield put(fetchSucceeded(updatedWidgets));
+  
+        return updatedWidget;
+      });
+  
+      yield put(fetchSucceeded(updatedWidgets));
+    }
   }
 
   yield takeLeading(fetchSucceeded().type, handler);
