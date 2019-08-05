@@ -1,5 +1,4 @@
 import React from 'react';
-import Header from 'components/header';
 import Widgets from 'components/widgets';
 import Map from 'components/map';
 import LocationModal from 'components/location-modal';
