@@ -1,13 +1,6 @@
 export default {
-  data: [
-    {
-      name: 'English',
-      code: 'en',
-      source: false
-    }
-  ],
-  current: 'en',
-  status: null,
-  errors: null,
+  list: [],
+  current: 'en_US',
+  error: null,
   isLoading: false,
 };

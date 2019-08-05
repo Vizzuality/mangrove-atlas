@@ -7,8 +7,8 @@ const service = new DatasetService({ entityName: 'dashboards' });
 function* getDashboards() {
   yield put(fetchRequested());
   try {
-    const layers = yield call(service.fetch, []);
-    yield put(fetchSucceeded(layers));
+    const dashboards = yield call(service.fetch, []);
+    yield put(fetchSucceeded(dashboards));
   } catch (err) {
     yield put(fetchFailed(err));
   }
