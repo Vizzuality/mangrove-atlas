@@ -1,33 +1,30 @@
 .app {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+  // position: fixed;
+  // left: 0;
+  // top: 0;
+  // width: 100%;
+  // height: 100%;
+  // overflow: hidden;
 
-
-
-  .sidebar {
-    position: absolute;
-    top: 0;
-    max-width: 650px;
-    padding: 0 20px;
-    width: 100%;
-    height: 100%;
-    overflow-x: visible;
-    overflow-y: auto;
-    z-index: 101;
-    -webkit-overflow-scrolling: touch;
-  }
-  .dashboard {
-    max-width: 580px;
-    padding: 0 20px;
-
-  }
+  // .sidebar {
+  //   position: absolute;
+  //   top: 0;
+  //   max-width: 650px;
+  //   padding: 0 20px;
+  //   width: 100%;
+  //   height: 100%;
+  //   overflow-x: visible;
+  //   overflow-y: auto;
+  //   z-index: 101;
+  //   -webkit-overflow-scrolling: touch;
+  // }
+  // .dashboard {
+  //   max-width: 580px;
+  //   padding: 0 20px;
+  // }
 
   .vis {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
