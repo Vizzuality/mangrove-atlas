@@ -10,4 +10,3 @@ export const fetchLanguages = createActionThunk(
 );
 
 export const setCurrentLanguage = createAction('SET_CURRENT_LANGUAGE');
-export const toggleOpenLanguage = createAction('TOGGLE_IS_OPEN_LANGUAGE');

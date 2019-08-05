@@ -1,21 +1,20 @@
-
 import { connect } from 'react-redux';
-import * as actions from 'modules/transifex/actions';
-import { fetchLanguages, setCurrentLanguage } from 'modules/transifex/actions';
-import * as reducers from 'modules/transifex/reducers';
-import initialState from 'modules/transifex/initial-state';
+import * as actions from 'modules/languages/actions';
+
+import * as reducers from 'modules/languages/reducers';
+import initialState from 'modules/languages/initial-state';
 import Component from './component';
 
 export { actions, reducers, initialState };
 
 const mapStateToProps = state => ({
-  language: state.page.language,
-  data: state.page.data,
+  current: state.languages.current,
+  data: state.languages.data,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLanguages,
-  setLanguage: language => dispatch(setCurrentLanguage(language)),
+  fetchLanguages: () => dispatch(actions.fetchLanguages()),
+  setLanguage: language => dispatch(actions.setCurrentLanguage(language)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
