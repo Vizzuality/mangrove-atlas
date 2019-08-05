@@ -25,7 +25,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" />
     <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css" />
     <!-- Transifex Live -->
-    <script type="text/javascript">window.liveSettings = { api_key: "4de8143614ca4c0e94c872e31e771e37" }</script>
+    <script type="text/javascript">window.liveSettings = {
+      api_key: "%REACT_APP_TRANSIFEX_API_KEY%",
+      detectlang: true,
+      autocollect: true,
+      dynamic: true,
+      picker: '#transifexSelectorHidden',
+      ignore_class: ['leaflet-control-zoom-in', 'leaflet-control-zoom-out', 'svg-inline--fa']
+    }
+    </script>
     <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
   </head>
   <body>
