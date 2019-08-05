@@ -2,8 +2,38 @@
 
 .header {
   display: flex;
-  margin-top: 80px;
   margin-bottom: 50px;
+
+  .bg,
+  .bgFixed {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: -9;
+    &.isHidden {
+      display: none;
+    }
+  }
+
+  .bgFixed {
+    position: fixed;
+    z-index: 100;
+  }
+
+  .searchBar {
+    margin-top: 80px;
+    z-index: 300;
+    left: 30;
+    width: 100%;
+    display: flex;
+    &.fixed {
+      position: fixed;
+      top: -65px;
+    }
+  }
 
   .titleBtn {
     border: 0;
@@ -17,7 +47,6 @@
     margin: 0;
     border: 0;
     background: transparent;
-
     color: $body-color;
     font-size: 60px;
     font-weight: 300;
