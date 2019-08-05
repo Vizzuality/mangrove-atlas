@@ -1,4 +1,4 @@
-import { pageActions, setHeader } from './actions';
+import { pageActions } from './actions';
 
 const setPageReducer = key => (state, { payload }) => ({ ...state, current: key, payload });
 
