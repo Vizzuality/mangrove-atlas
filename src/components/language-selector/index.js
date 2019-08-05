@@ -1,20 +1,15 @@
 import { connect } from 'react-redux';
-import * as actions from 'modules/languages/actions';
-
-import * as reducers from 'modules/languages/reducers';
-import initialState from 'modules/languages/initial-state';
+import { fetchLanguages, setCurrentLanguage } from 'modules/languages/actions';
 import Component from './component';
 
-export { actions, reducers, initialState };
-
 const mapStateToProps = state => ({
-  current: state.languages.current,
-  data: state.languages.data,
+  language: state.languages.current,
+  data: state.languages.list,
 });
 
-const mapDispatchToProps = dispatch => ({
-  fetchLanguages: () => dispatch(actions.fetchLanguages()),
-  setLanguage: language => dispatch(actions.setCurrentLanguage(language)),
-});
+const mapDispatchToProps = {
+  fetchLanguages,
+  setCurrentLanguage
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

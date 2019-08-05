@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-
 class LanguageSelect extends PureComponent {
   static propTypes = {
     language: PropTypes.string,
@@ -10,7 +9,7 @@ class LanguageSelect extends PureComponent {
       code: PropTypes.string,
     })),
     fetchLanguages: PropTypes.func.isRequired,
-    setLanguage: PropTypes.func.isRequired,
+    setCurrentLanguage: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -18,25 +17,32 @@ class LanguageSelect extends PureComponent {
     data: null,
   }
 
-  componentWillMount() {
-    const { fetchLanguages, setLanguage } = this.props;
+  componentDidMount() {
+    const { fetchLanguages, setCurrentLanguage } = this.props;
+    const { Transifex } = window;
+
     if (typeof window !== 'undefined') {
       fetchLanguages();
-      Transifex.live.onReady(() => {
-        const { code } = Transifex.live.getSourceLanguage();
-        const langCode = Transifex.live.detectLanguage();
 
-        Transifex.live.translateTo(code);
-        Transifex.live.translateTo(langCode);
-        setLanguage(langCode);
-      });
+      if (Transifex && typeof Transifex !== 'undefined') {
+        Transifex.live.onReady(() => {
+          const { code } = Transifex.live.getSourceLanguage();
+          const langCode = Transifex.live.detectLanguage();
+
+          Transifex.live.translateTo(code);
+          Transifex.live.translateTo(langCode);
+
+          setCurrentLanguage(langCode);
+        });
+      }
     }
   }
 
   handleChange({ langCode }) {
-    const { setLanguage } = this.props;
+    const { Transifex } = window;
+    const { setCurrentLanguage } = this.props;
     Transifex.live.translateTo(langCode);
-    setLanguage(langCode);
+    setCurrentLanguage(langCode);
   }
 
   render() {

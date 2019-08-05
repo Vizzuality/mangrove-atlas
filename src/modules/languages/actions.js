@@ -1,12 +1,8 @@
-import { createAction, createActionThunk } from 'vizzuality-redux-tools';
+import { createAction } from 'vizzuality-redux-tools';
 
-export const fetchLanguages = createActionThunk(
-  'FETCH_LANGUAGES',
-  () => new Promise((resolve, reject) => {
-    Transifex.live.onError(err => reject(err));
-    Transifex.live.onFetchLanguages(languages => resolve(languages));
-    Transifex.live.getAllLanguages();
-  })
-);
+export const fetchRequested = createAction('LANGUAGES/FETCH_REQUESTED');
+export const fetchSucceeded = createAction('LANGUAGES/FETCH_SUCCEDED');
+export const fetchFailed = createAction('LANGUAGES/FETCH_FAILED');
+export const fetchLanguages = createAction('LANGUAGES/GET_ALL');
 
-export const setCurrentLanguage = createAction('SET_CURRENT_LANGUAGE');
+export const setCurrentLanguage = createAction('LANGUAGES/SET_CURRENT');
