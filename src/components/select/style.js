@@ -81,6 +81,7 @@ export const styles = {
     ...provided,
     fontSize: 14,
     textAlign: 'center',
+    opacity: state.isDisabled && !state.isSelected ? 0.4 : 1,
     color: state.isSelected ? '#00857F' : provided.color,
     backgroundColor: 'none',
     '&:hover': {
