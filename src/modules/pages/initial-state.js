@@ -1,3 +1,4 @@
 export default {
-  current: 'APP'
+  current: 'APP',
+  headerFixed: 'false'
 };
