@@ -7,6 +7,7 @@ import { all, fork } from 'redux-saga/effects';
 // import { PAGES } from 'modules/pages/constants';
 
 import * as pages from 'modules/pages';
+import * as languages from 'modules/transifex';
 import * as map from 'modules/map';
 import * as mapStyles from 'modules/map-styles';
 import * as layers from 'modules/layers';
