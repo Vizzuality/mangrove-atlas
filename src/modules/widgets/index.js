@@ -3,6 +3,7 @@ import * as reducers from './reducers';
 import sagas, { restoreWidgetsState } from './sagas';
 import initialState from './initial-state';
 
+import { fetchSucceeded } from 'modules/layers/actions';
 import queryState from 'utils/query-state';
 
 /** 
@@ -25,7 +26,7 @@ queryState.add({
       actions.expandAll,
       actions.collapseAll,
       actions.toggleCollapse,
-      actions.toggleActive
+      // actions.toggleActive
     ],
     selector: state => {
       const { widgets: { list } } = state;
@@ -46,7 +47,7 @@ queryState.add({
   },
   decode: {
     after: [
-      actions.fetchSucceeded
+      fetchSucceeded
     ],
     trigger: restoreWidgetsState
   }
