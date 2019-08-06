@@ -5,6 +5,9 @@
     "node": true,
     "es6": true
   },
+  "globals": {
+    "Transifex": true
+  },
   "rules": {
     "import/no-extraneous-dependencies": [
         "error",

@@ -74,7 +74,7 @@ storiesOf('Widget', module)
       layersIds={["96a44216d358984de1428ff77ead270b", "f4fe8d1517f4c66a497beccc3407715b"]}
       isActive
     >
-      {({ slug, data, ...props }) => console.log(TEMPLATES) || (
+      {({ slug, data, ...props }) => (
         <Fragment>
           {/* Template */}
           {!!TEMPLATES['highlighted-areas'] && React.createElement(TEMPLATES['highlighted-areas'], {
