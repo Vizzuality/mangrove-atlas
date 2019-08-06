@@ -1,4 +1,7 @@
+@import '../../../../styles/vars';
+
 .app {
+
   .vis {
     position: fixed;
     top: 0;
@@ -35,5 +38,9 @@
     .dashboard {
       left: 30px;
     }
+  }
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    max-width: 100%;
+    background-color: $header;
   }
 }

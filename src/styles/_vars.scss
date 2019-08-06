@@ -4,6 +4,7 @@ $body-line-height: 1.4;
 
 /* Theme */
 $primary: #00857F;
+$header: #00C5BD;
 $black: #000000;
 $white: #FFFFFF;
 
@@ -25,6 +26,20 @@ $font-size-medium: 19px;
   letter-spacing: 1px;
   line-height: 24px;
 }
+
+// Breakpoints
+$sm: 384px;
+$md: 768px;
+$lg: 992px;
+$xlg: 1280px;
+
+$screen-max-width: 1024px;
+$breakpoints: (
+  sm: $sm,
+  md: $md,
+  lg: $lg,
+  xlg: $xlg
+);
 
 // To remove
 $font-size-extra-small: 9px;
