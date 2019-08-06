@@ -20,5 +20,9 @@ export default {
   [actions.setBasemap]: (state, { payload }) => ({
     ...state,
     basemap: payload
+  }),
+  [actions.setMapView]: (state, { payload }) => ({
+    ...state,
+    display: payload
   })
 };

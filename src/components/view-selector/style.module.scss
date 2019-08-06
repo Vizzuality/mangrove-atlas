@@ -1,0 +1,12 @@
+@import '../../styles/vars';
+
+.container {
+  position: fixed;
+  z-index: 300;
+  bottom: 5vh;
+  right: 20px;
+  left: 20px;
+  * {
+    width: 100%;
+  }
+}

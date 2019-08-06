@@ -7,5 +7,6 @@ export default {
     minZoom: 2,
     latitude: 20,
     longitude: 0,
-  }
+  },
+  display: true
 };
