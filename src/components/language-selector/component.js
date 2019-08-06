@@ -34,14 +34,12 @@ class LanguageSelect extends PureComponent {
           Transifex.live.translateTo(langCode);
 
           setCurrentLanguage(langCode);
-          console.log(code)
-          debugger;
         });
       }
     }
   }
 
-  handleChange({ langCode }) {
+  handleChange = ({ langCode }) => {
     const { Transifex } = window;
     const { setCurrentLanguage } = this.props;
     Transifex.live.translateTo(langCode);
@@ -50,21 +48,22 @@ class LanguageSelect extends PureComponent {
 
   render() {
     const { language, data } = this.props;
-    const options = data.filter(l => !l.source).map(lang => ({
+
+    const options = data.map(lang => ({
       label: lang.name,
       value: lang.code
     }));
     const currentValue = options.find(o => o.value === language);
-
     if (!data || !currentValue) return null;
 
     return (
 
-      <ButtonGroup>
+      <ButtonGroup id="tx-live-lang-picker">
         {options.map(o => (
           <Button
+            type="button"
             key={`lang-${o.value}`}
-            onClick={this.handleChange({ langCode: o.value })}
+            onClick={() => this.handleChange({ langCode: o.value })}
           >
             {o.label}
           </Button>
