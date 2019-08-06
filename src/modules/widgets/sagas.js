@@ -1,8 +1,12 @@
-import { takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
+import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
 import DatasetService from 'services/dataset-service';
-import { fetchRequested, fetchSucceeded, fetchFailed, toggleActiveByLayerId } from './actions';
+import { fetchRequested, fetchSucceeded, fetchFailed, toggleActive, toggleActiveByLayerId } from './actions';
 
 const service = new DatasetService({ entityName: 'widgets' });
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(() => resolve(true), ms))
+}
 
 export function* toggleWidgetActive({ payload }) {
   yield put(toggleActiveByLayerId({ layerId: payload.id, isActive: payload.isActive }));
@@ -44,6 +48,7 @@ export function * restoreWidgetsState() {
     const {urlWidgets, stateWidgets} = yield select(widgetsSelector);
 
     if(urlWidgets) {
+      const toDispatch = []; 
       const updatedWidgets = stateWidgets.map(widget => {
         const updatedWidget = Object.assign({}, widget);
   
@@ -52,6 +57,11 @@ export function * restoreWidgetsState() {
   
           if (update.isActive) {
             updatedWidget.isActive = true;
+            toDispatch.push(put(toggleActive({
+              id: widget.id,
+              layerId: widget.layerId,
+              isActive: true
+            })));
           }
   
           if (update.isCollapsed) {
@@ -61,8 +71,10 @@ export function * restoreWidgetsState() {
   
         return updatedWidget;
       });
-  
-      yield put(fetchSucceeded(updatedWidgets));
+
+        yield put(fetchSucceeded(updatedWidgets));
+        yield call(delay, 1500);
+        yield all(toDispatch);
     }
   }
 
