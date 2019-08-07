@@ -18,14 +18,21 @@
 
   transition: all .5s ease;
   will-change: margin-bottom;
+  overflow: hidden;
 
   @media screen and (max-width: map-get($breakpoints, md)) {
+    display: flex;
+    flex-direction: column;
     padding: $paddingMobile;
+    margin-bottom: 0;
   }
 
   &.collapsed {
     margin-bottom: -45px;
     background-position: 0;
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      margin-bottom: -37px;
+    }
 
     .content {
       max-height: 0px;
@@ -77,10 +84,14 @@
   }
 
   .content {
-    overflow: hidden;
     transition: max-height .5s ease-in-out;
     will-change: max-height;
     max-height: 700px;
+    overflow: hidden;
+
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      overflow: visible;
+    }
   }
 }
 

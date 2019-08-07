@@ -1,8 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Widget from 'components/widget';
-import Button from 'components/button';
-import LanguageSelect from 'components/language-selector';
 import TEMPLATES from 'components/widget/templates';
 import CONFIGS from 'components/widget/templates/configs';
 import styles from './style.module.scss';
@@ -15,52 +13,17 @@ class WidgetList extends PureComponent {
         title: PropTypes.string
       })
     ),
-    collapseAll: PropTypes.func,
-    expandAll: PropTypes.func
   }
 
   static defaultProps = {
-    widgets: [],
-    collapseAll: () => null,
-    expandAll: () => null
-  }
-
-  onClickCollapseAll = () => {
-    const { collapseAll } = this.props;
-    collapseAll();
-  }
-
-  onClickExpandAll = () => {
-    const { expandAll } = this.props;
-    expandAll();
+    widgets: []
   }
 
   render() {
-    const { isCollapsed, widgets } = this.props;
+    const { widgets } = this.props;
 
     return (
       <div className={styles.widgets}>
-        <div className={styles.actionBar}>
-          {isCollapsed && (
-            <Button
-              hasBackground
-              hasContrast
-              onClick={this.onClickExpandAll}
-            >
-              Expand all widgets
-            </Button>
-          )}
-          {!isCollapsed && (
-            <Button
-              isTransparent
-              isGrey
-              onClick={this.onClickCollapseAll}
-            >
-              Collapse all widgets
-            </Button>
-          )}
-          <LanguageSelect />
-        </div>
         {widgets.map(widget => (
           <Widget
             key={widget.id}
