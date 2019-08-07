@@ -4,40 +4,60 @@
   display: flex;
   align-items: stretch;
   margin-top: 30px;
+  justify-content: space-between;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, sm)) {
     flex-direction: column;
     justify-content: space-around;
+    margin: 20px -10px -10px -10px;
+    div:not(:last-child) {
+        margin-bottom: 10px;
+    }
   }
 
   .card {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 1;
     width: 50%;
     padding: 20px 30px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
-        flex-direction: column;
-        justify-content: space-between;
+    width: auto;
+
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      flex-direction: row;
+      vertical-align: bottom;
+      align-items: flex-end;
 
     }
+
     .cardInfo {
       display: inline;
+      @media screen and (max-width: map-get($breakpoints, sm)) {
+        p {
+          margin-bottom: 0;
+        }
+      }
     }
+
+
     h3 {
       margin-top: 0;
+      font-size: 19px;
     }
 
     &:first-child {
       margin-right: 10px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
+      @media screen and (max-width: map-get($breakpoints, sm)) {
         margin-right: 0;
       }
     }
 
     &:last-child {
       margin-left: 10px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
+      @media screen and (max-width: map-get($breakpoints, sm)) {
         margin-left: 0;
       }
     }
