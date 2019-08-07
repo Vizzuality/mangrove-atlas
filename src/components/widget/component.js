@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
+import MediaQuery from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
@@ -68,9 +69,11 @@ class Widget extends PureComponent {
             className={styles.title}
             onClick={this.collapseToggleHandler}
           >
+          <MediaQuery minWidth={384}>
             {isCollapsed
-              ? <FontAwesomeIcon icon={faChevronDown} />
-              : <FontAwesomeIcon icon={faChevronUp} />}
+                ? <FontAwesomeIcon icon={faChevronDown} />
+                : <FontAwesomeIcon icon={faChevronUp} />}
+          </MediaQuery>
             {name}
           </button>
           {layerId && (

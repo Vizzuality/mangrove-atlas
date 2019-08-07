@@ -2,7 +2,7 @@
 
 .hotspotsList {
   display: flex;
-  margin-top: 30px;
+  margin: 20px -10px -10px -10px;
 
   @media screen and (max-width: map-get($breakpoints, sm)) {
     flex-direction: column;
