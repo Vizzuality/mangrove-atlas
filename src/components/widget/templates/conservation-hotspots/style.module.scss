@@ -5,28 +5,48 @@
   align-items: stretch;
   margin-top: 30px;
 
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
   .card {
     flex: 1;
-
     width: 50%;
     padding: 20px 30px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
+      @media screen and (max-width: map-get($breakpoints, md)) {
+        flex-direction: column;
+        justify-content: space-between;
 
+    }
+    .cardInfo {
+      display: inline;
+    }
     h3 {
       margin-top: 0;
     }
 
     &:first-child {
       margin-right: 10px;
+      @media screen and (max-width: map-get($breakpoints, md)) {
+        margin-right: 0;
+      }
     }
 
     &:last-child {
       margin-left: 10px;
+      @media screen and (max-width: map-get($breakpoints, md)) {
+        margin-left: 0;
+      }
     }
 
     &.active {
       border-color: $primary;
+    }
+    @media screen and (max-width: map-get($breakpoints, md)) {
+      margin: 0;
     }
   }
 }
