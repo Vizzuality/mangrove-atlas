@@ -13,6 +13,7 @@ import * as layers from 'modules/layers';
 import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
+import * as languages from 'modules/languages';
 // Not actually a module, more like middleware
 // import { queryState } from 'modules/query-state';
 
@@ -29,7 +30,8 @@ const modules = [
   { namespace: 'widgets', components: widgets },
   { namespace: 'locations', components: locations },
   { namespace: 'dashboards', components: dashboards },
-  { namespace: 'mapStyles', components: mapStyles }
+  { namespace: 'mapStyles', components: mapStyles },
+  { namespace: 'languages', components: languages }
 ];
 
 const {
@@ -72,7 +74,8 @@ sagaMiddleware.run(function* root() {
     fork(widgets.sagas),
     fork(locations.sagas),
     fork(dashboards.sagas),
-    fork(map.sagas)
+    fork(map.sagas),
+    fork(languages.sagas),
   ]);
 });
 initialDispatch();
