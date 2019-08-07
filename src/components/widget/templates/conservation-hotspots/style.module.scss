@@ -2,7 +2,6 @@
 
 .hotspotsList {
   display: flex;
-  align-items: stretch;
   margin-top: 30px;
 
   @media screen and (max-width: map-get($breakpoints, sm)) {
@@ -16,20 +15,27 @@
   .card {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     justify-content: space-between;
     padding: 20px 30px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     width: auto;
     margin-bottom: 50px;
-      @media screen and (max-width: map-get($breakpoints, sm)) {
-        flex-direction: row;
-        vertical-align: bottom;
 
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      flex-direction: row;
+      vertical-align: bottom;
     }
+
     .cardInfo {
       display: inline;
+      p {
+        margin-bottom: 0;
+      }
     }
+
+
     h3 {
       margin-top: 0;
     }
