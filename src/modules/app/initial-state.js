@@ -1,3 +1,3 @@
 export default {
-  isMobile: true
+  isMobile: false
 };

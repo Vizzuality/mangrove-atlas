@@ -69,11 +69,11 @@ class Widget extends PureComponent {
             className={styles.title}
             onClick={this.collapseToggleHandler}
           >
-          <MediaQuery minWidth={384}>
-            {isCollapsed
+            <MediaQuery minWidth={384}>
+              {isCollapsed
                 ? <FontAwesomeIcon icon={faChevronDown} />
                 : <FontAwesomeIcon icon={faChevronUp} />}
-          </MediaQuery>
+            </MediaQuery>
             {name}
           </button>
           {layerId && (

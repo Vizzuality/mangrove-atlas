@@ -87,6 +87,11 @@
     transition: max-height .5s ease-in-out;
     will-change: max-height;
     max-height: 700px;
+    overflow: hidden;
+
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      overflow: visible;
+    }
   }
 }
 
