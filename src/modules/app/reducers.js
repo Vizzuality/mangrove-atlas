@@ -1,6 +1,6 @@
 import { pageActions } from './actions';
 
-const setPageReducer = key => (state, { payload }) => ({ ...state, current: key, payload });
+const setHeader = (state, { payload }) => ({ ...state, header: key, payload });
 
 const reducerMap = Object.keys(pageActions).reduce(
   (acc, key) => ({ ...acc, [key]: setPageReducer(key) }),
