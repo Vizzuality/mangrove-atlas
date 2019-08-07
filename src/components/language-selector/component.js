@@ -5,6 +5,7 @@ import Button from 'components/button';
 
 class LanguageSelect extends PureComponent {
   static propTypes = {
+    isMobile: PropTypes.bool.isRequired,
     language: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -47,11 +48,12 @@ class LanguageSelect extends PureComponent {
   }
 
   render() {
-    const { language, data } = this.props;
+    const { language, data, isMobile } = this.props;
 
     const options = data.map(lang => ({
       label: lang.name,
-      value: lang.code
+      value: lang.code,
+      code: (lang.code.split('_')[0]).toUpperCase()
     }));
     const currentValue = options.find(o => o.value === language);
     if (!data || !currentValue) return null;
@@ -67,7 +69,7 @@ class LanguageSelect extends PureComponent {
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
-            {o.label}
+            {isMobile ? o.code : o.label }
           </Button>
         ))}
       </ButtonGroup>

@@ -7,7 +7,6 @@
   background-color: transparent;
   border-radius: 15px;
   border: 2px solid rgba($primary, 0.2);
-
   color: $primary;
   font-size: $body-font-size;
   font-weight: 600;
@@ -55,5 +54,8 @@
     cursor: default;
     pointer-events: none;
     opacity: 0.2;
+  }
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    min-width: 0;
   }
 }

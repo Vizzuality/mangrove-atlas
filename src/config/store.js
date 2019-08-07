@@ -6,6 +6,7 @@ import { all, fork } from 'redux-saga/effects';
 
 // import { PAGES } from 'modules/pages/constants';
 
+import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
 import * as mapStyles from 'modules/map-styles';
@@ -24,6 +25,7 @@ import router from './router';
 // });
 
 const modules = [
+  { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
   { namespace: 'layers', components: layers },

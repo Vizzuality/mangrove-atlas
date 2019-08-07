@@ -1,10 +1,8 @@
-import { pageActions } from './actions';
+import setScreen from './actions';
 
-const setHeader = (state, { payload }) => ({ ...state, header: key, payload });
-
-const reducerMap = Object.keys(pageActions).reduce(
-  (acc, key) => ({ ...acc, [key]: setPageReducer(key) }),
-  {}
-);
-
-export default reducerMap;
+export default {
+  [setScreen]: (state, { payload }) => ({
+    ...state,
+    isMobile: payload,
+  })
+};

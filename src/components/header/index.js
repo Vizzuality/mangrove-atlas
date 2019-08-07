@@ -5,6 +5,7 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   location: currentLocation(state),
+  isMobile: state.app.isMobile
 });
 
 const mapDispatchToProps = {

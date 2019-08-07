@@ -9,6 +9,7 @@ import styles from './style.module.scss';
 
 class Header extends PureComponent {
   static propTypes = {
+    isMobile: PropTypes.bool.isRequired,
     sticky: PropTypes.bool,
     location: PropTypes.shape({
       name: PropTypes.string
@@ -29,8 +30,11 @@ class Header extends PureComponent {
 
 
   render() {
-    const { location, sticky } = this.props;
+    const { location, sticky, isMobile } = this.props;
     let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
+
+    if (isMobile) stylesOverride = { fontSize: 35, lineHeight: 0.85 };
+
 
     if (location && location.name.length > 10) stylesOverride = { fontSize: 45, lineHeight: 1 };
     if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };

@@ -5,6 +5,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   language: state.languages.current,
   data: state.languages.list,
+  isMobile: state.app.isMobile
 });
 
 const mapDispatchToProps = {

@@ -1,3 +1,3 @@
 export default {
-  headerFixed: 'false'
+  isMobile: true
 };
