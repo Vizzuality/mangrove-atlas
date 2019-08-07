@@ -41,11 +41,24 @@ class WidgetList extends PureComponent {
     return (
       <div className={styles.widgets}>
         <div className={styles.actionBar}>
-          {
-            isCollapsed
-              ? <Button hasBackground hasContrast onClick={this.onClickExpandAll}>Expand all widgets</Button>
-              : <Button isTransparent isGrey onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
-          }
+          {isCollapsed && (
+            <Button
+              hasBackground
+              hasContrast
+              onClick={this.onClickExpandAll}
+            >
+              Expand all widgets
+            </Button>
+          )}
+          {!isCollapsed && (
+            <Button
+              isTransparent
+              isGrey
+              onClick={this.onClickCollapseAll}
+            >
+              Collapse all widgets
+            </Button>
+          )}
           <LanguageSelect />
         </div>
         {widgets.map(widget => (
