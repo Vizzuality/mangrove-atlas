@@ -2,7 +2,7 @@
 
 .widget {
   $padding: 30px;
-  $paddingMobile: 20px;
+  $paddingMobile: 10px;
   $border-radius: 20px;
 
   position: relative;
@@ -20,7 +20,10 @@
   will-change: margin-bottom;
 
   @media screen and (max-width: map-get($breakpoints, md)) {
+    display: flex;
+    flex-direction: column;
     padding: $paddingMobile;
+    margin-bottom: 0;
   }
 
   &.collapsed {
