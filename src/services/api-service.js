@@ -16,13 +16,20 @@ class APIService {
       return data;
     });
 
-  fetchWidgetData = (params = {}) => this.client
-    .get(`/widget_data/${params.slug}`)
-    .then((response) => {
-      const { status, statusText, data } = response;
-      if (status >= 400) throw new Error(statusText);
-      return data;
-    });
+  fetchMangroveData = (params = {}) => {
+    const locationId = params.id === 'global' ? 'worldwide' : params.id;
+    const { iso } = params;
+    const locationParam = locationId ||  iso || 'worldwide';
+    console.log(locationParam)
+
+    return this.client
+      .get(`/locations/${locationParam}/mangrove_data`)
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      });
+  }
 }
 
 export default APIService;

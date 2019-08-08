@@ -7,7 +7,7 @@ const service = new StyleService({ entityName: 'layers' });
 function* getMapStyles() {
   yield put(fetchRequested());
   try {
-    const mapStyles = yield call(service.fetch, []);
+    const mapStyles = yield call(service.fetch);
     yield put(fetchSucceeded(mapStyles));
   } catch (err) {
     yield put(fetchFailed(err));

@@ -14,6 +14,7 @@ import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
+import * as mangroveData from 'modules/mangrove-data';
 // Not actually a module, more like middleware
 // import { queryState } from 'modules/query-state';
 
@@ -31,7 +32,8 @@ const modules = [
   { namespace: 'locations', components: locations },
   { namespace: 'dashboards', components: dashboards },
   { namespace: 'mapStyles', components: mapStyles },
-  { namespace: 'languages', components: languages }
+  { namespace: 'languages', components: languages },
+  { namespace: 'mangroveData', components: mangroveData }
 ];
 
 const {
@@ -76,6 +78,7 @@ sagaMiddleware.run(function* root() {
     fork(dashboards.sagas),
     fork(map.sagas),
     fork(languages.sagas),
+    fork(mangroveData.sagas),
   ]);
 });
 initialDispatch();

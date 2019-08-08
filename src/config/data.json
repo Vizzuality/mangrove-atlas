@@ -4,16 +4,13 @@
       {
         "location_type": "global",
         "widgetsSlugs": [
-          "highlighted_places",
-          "mangrove_coverage",
-          "mangrove_net_change"
+          "highlighted_places"
         ]
       },
       {
         "location_type": "country",
         "widgetsSlugs": [
-          "highlighted_places",
-          "mangrove_coverage"
+          "highlighted_places"
         ]
       },
       {
@@ -27,9 +24,7 @@
       {
         "location_type": "aoi",
         "widgetsSlugs": [
-          "highlighted_places",
-          "mangrove_coverage",
-          "mangrove_net_change"
+          "highlighted_places"
         ]
       }
     ],
