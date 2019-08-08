@@ -1,4 +1,4 @@
-import setMobileView from './actions';
+import { setMobileView } from './actions';
 
 export default {
   [setMobileView]: (state, { payload }) => ({

@@ -69,7 +69,7 @@ class LanguageSelect extends PureComponent {
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
-            <MediaQuery minWidth={breakpoints.md - 1}>
+            <MediaQuery maxWidth={breakpoints.md - 1}>
               { o.code }
             </MediaQuery>
             <MediaQuery minWidth={breakpoints.md}>

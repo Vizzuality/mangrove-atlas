@@ -30,7 +30,7 @@
   &.collapsed {
     margin-bottom: -45px;
     background-position: 0;
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       margin-bottom: -37px;
     }
 
@@ -89,7 +89,7 @@
     max-height: 700px;
     overflow: hidden;
 
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       overflow: visible;
     }
   }

@@ -1,5 +1,5 @@
 export default {
   mobile: {
-    mapView: true
+    mapView: false
   }
 };

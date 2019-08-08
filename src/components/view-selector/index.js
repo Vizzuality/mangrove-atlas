@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setMobileView } from 'modules/map/actions';
+import { setMobileView } from 'modules/app/actions';
 import { activeLayers } from 'modules/widgets/selectors';
 import Component from './component';
 
