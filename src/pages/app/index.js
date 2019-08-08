@@ -3,6 +3,7 @@ import Widgets from 'components/widgets';
 import Map from 'components/map';
 import LocationModal from 'components/location-modal';
 import Sidebar from 'components/sidebar';
+import ViewSelector from 'components/view-selector';
 import MediaQuery from 'react-responsive';
 import styles from './style.module.scss';
 
@@ -13,6 +14,7 @@ const AppPage = () => (
       <Sidebar>
         <Widgets />
       </Sidebar>
+      <ViewSelector />
     </MediaQuery>
     <MediaQuery minWidth={384}>
       <Sidebar>
