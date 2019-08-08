@@ -17,9 +17,8 @@ class APIService {
     });
 
   fetchMangroveData = (params = {}) => {
-    const locationId = params.id === 'global' ? 'worldwide' : params.id;
-    const { iso } = params;
-    const locationParam = locationId || iso || 'worldwide';
+    const { id, iso } = params;
+    const locationParam = id || iso || 'worldwide';
 
     return this.client
       .get(`/locations/${locationParam}/mangrove_data`)

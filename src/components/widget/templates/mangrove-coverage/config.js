@@ -6,32 +6,46 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2%');
 
-const widgetData = (data, currentLocation) => {
-  const total = currentLocation.coast_length_m;
+const widgetData = ({ list, metadata }) => {
+  if (list && list.length) {
+    const { location_coast_length_m: total } = metadata;
 
-  return data.map((d) => {
-    const year = new Date(d.date).getFullYear();
+    return list.filter(d => d.length_m).map((d) => {
+      const year = new Date(d.date).getFullYear();
 
-    return ({
-      x: Number(year),
-      y: 100,
-      color: '#00857F',
-      percentage: d.value / total * 100,
-      unit: '%',
-      value: d.value,
-      label: `Mangroves in ${year}`
+      return ({
+        x: Number(year),
+        y: d.length_m,
+        color: '#00857F',
+        percentage: d.length_m / total * 100,
+        unit: '%',
+        value: d.length_m,
+        label: `Mangroves in ${year}`
+      });
     });
-  });
+  }
+
+  return [];
+};
+
+const widgetMeta = ({ list, metadata }) => {
+  if (list && list.length && metadata) {
+    return {
+      years: list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear()),
+      total: metadata.location_coast_length_m
+    };
+  }
+
+  return {
+    years: [],
+    total: null
+  };
 };
 
 export const CONFIG = {
-  parse: (data, currentLocation) => ({
-    // data: widgetData(data, currentLocation),
-    data: () => console.log(data) || data.list,
-    // metadata: {
-    //   years: data.map(d => new Date(d.date).getFullYear()),
-    //   total: currentLocation.coast_length_m
-    // },
+  parse: data => ({
+    chartData: widgetData(data),
+    metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',
       layout: 'centric',

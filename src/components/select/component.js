@@ -7,7 +7,7 @@ import { styles, theme } from './style';
 class Select extends PureComponent {
   static propTypes = {
     options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    value: PropTypes.shape({}),
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func
   };
 
@@ -38,9 +38,7 @@ class Select extends PureComponent {
   render() {
     const { value: defaultValue, options, onChange, ...props } = this.props;
     const { selectedOption } = this.state;
-    const selectedValue = options.find(opt => opt.defaultValue === selectedOption);
-
-    console.log(options)
+    const selectedValue = options.find(opt => opt.value === selectedOption);
 
     return (
       <ReactSelect
