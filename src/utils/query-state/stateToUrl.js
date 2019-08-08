@@ -24,5 +24,5 @@ export const encodeStateForUrl = (params) => {
     }
   });
 
-  return queryString.stringify(paramsParsed);
+  return queryString.stringify(paramsParsed).trim();
 };
