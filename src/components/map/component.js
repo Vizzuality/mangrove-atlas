@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
 import styles from './style.module.scss';
@@ -54,8 +55,7 @@ class Map extends PureComponent {
     const {
       mapboxApiAccessToken,
       mapStyle,
-      viewport,
-      isMobile
+      viewport
     } = this.props;
 
     return (
@@ -70,7 +70,9 @@ class Map extends PureComponent {
         onViewportChange={this.onViewportChange}
       >
         <div className={styles.navigation}>
-          {!isMobile && <NavigationControl />}
+          <MediaQuery minWidth={384}>
+            <NavigationControl />
+          </MediaQuery>
         </div>
         <div className={styles.legend}>
           <Legend />

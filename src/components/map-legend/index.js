@@ -5,8 +5,7 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   layers: activeLayersForLegend(state),
-  isCollapsed: state.layers.isCollapsed,
-  isMobile: state.app.mobile.active
+  isCollapsed: state.layers.isCollapsed
 });
 
 const mapDispatchToProps = {

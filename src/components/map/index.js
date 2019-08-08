@@ -7,8 +7,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   ...state.map,
   mapStyle: mapStyle(state),
-  mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
-  isMobile: state.app
+  mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
 });
 
 const mapDispatchToProps = {

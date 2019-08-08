@@ -1,19 +1,20 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import MediaQuery from 'react-responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import LegendItem from './legend-item';
 import styles from './style.module.scss';
 
-const Legend = ({ layers, isCollapsed, toggleCollapse, isMobile }) => {
+const Legend = ({ layers, isCollapsed, toggleCollapse }) => {
   const onToggleCollapsed = () => {
     toggleCollapse(!isCollapsed);
   };
 
   return (
     <Fragment>
-      {isMobile && (
+      <MediaQuery maxWidth={384}>
         <div className={styles.layersCollapse}>
           <div className={classnames(styles.title,
             { [styles.collapse]: !isCollapsed })}
@@ -31,7 +32,8 @@ const Legend = ({ layers, isCollapsed, toggleCollapse, isMobile }) => {
             }
           </button>
         </div>
-      )}
+      </MediaQuery>
+
       {layers.map(layer => <LegendItem key={layer.id} {...layer} />)}
     </Fragment>
   );
@@ -40,8 +42,7 @@ const Legend = ({ layers, isCollapsed, toggleCollapse, isMobile }) => {
 Legend.propTypes = {
   layers: PropTypes.arrayOf(PropTypes.shape({})),
   isCollapsed: PropTypes.bool.isRequired,
-  toggleCollapse: PropTypes.func.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  toggleCollapse: PropTypes.func.isRequired
 };
 
 Legend.defaultProps = {
