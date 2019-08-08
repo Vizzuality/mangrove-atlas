@@ -10628,11 +10628,6 @@ react-dev-utils@^9.0.0, react-dev-utils@^9.0.1:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-device-detect@^1.7.5:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.7.5.tgz#04c8a6475d67b5ac4f984c8d912ec11134f5b893"
-  integrity sha512-ccgJuTHVCI3yfqvgU56gQDvjueFyaHVAXsa5rJuzWRasvsd0IalzfyccSECIlygjv3E+DmAGcwNYWUarUA82Fw==
-
 react-docgen@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-docgen/-/react-docgen-4.1.1.tgz#8fef0212dbf14733e09edecef1de6b224d87219e"
