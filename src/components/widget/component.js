@@ -5,13 +5,12 @@ import Spinner from 'components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
-import APIService from 'services/api-service';
 import styles from './style.module.scss';
-
-const service = new APIService();
 
 class Widget extends PureComponent {
   static propTypes = {
+    data: PropTypes.shape({}),
+    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
     name: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     widgetConfig: PropTypes.shape({}).isRequired,
@@ -20,14 +19,18 @@ class Widget extends PureComponent {
     location: PropTypes.shape({}),
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
+    isLoading: PropTypes.bool,
     children: PropTypes.func.isRequired,
     toggleActive: PropTypes.func,
     toggleCollapse: PropTypes.func
   };
 
   static defaultProps = {
+    data: null,
+    highlightedPlaces: null,
     isActive: false,
     isCollapsed: false,
+    isLoading: false,
     layerId: null,
     layersIds: null,
     location: null,
@@ -35,14 +38,19 @@ class Widget extends PureComponent {
     toggleCollapse: () => { }
   };
 
-  state = {
-    loading: true,
-    data: null
+  getDataBySlug() {
+    const { data, highlightedPlaces, slug, widgetConfig } = this.props;
+
+    if (slug === 'highlighted_places') return widgetConfig.parse(highlightedPlaces);
+
+    return widgetConfig.parse(data);
   }
 
-  componentDidMount() {
-    this.fetchWidget();
-  }
+  collapseToggleHandler = () => {
+    const { toggleCollapse, slug } = this.props;
+
+    toggleCollapse({ slug });
+  };
 
   activeToggleHandler = () => {
     const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
@@ -53,37 +61,20 @@ class Widget extends PureComponent {
     }
   };
 
-  collapseToggleHandler = () => {
-    const { toggleCollapse, slug } = this.props;
-    toggleCollapse({ slug });
-  };
-
-  fetchWidget() {
-    const { slug } = this.props;
-
-    if (slug && slug !== 'highlighted_places') {
-      this.setState({ loading: true });
-
-      service.fetchWidgetData({ slug })
-        .then(data => this.setState({ data, loading: false }));
-    } else {
-      this.setState({ loading: false });
-    }
-  }
-
   render() {
-    const { loading, data } = this.state;
     const {
-      name,
-      widgetConfig,
+      children,
+      data,
       isCollapsed,
       isActive,
-      layerId,
-      children,
-      location,
+      isLoading,
+      name,
+      layersIds,
       slug,
       ...props
     } = this.props;
+
+    const haveLayers = !!(layersIds && layersIds.length);
 
     return (
       <div
@@ -105,7 +96,7 @@ class Widget extends PureComponent {
               : <FontAwesomeIcon icon={faChevronUp} />}
             {name}
           </button>
-          {layerId && (
+          {haveLayers && (
             <Button
               hasBackground={isActive}
               hasContrast={!isActive}
@@ -116,17 +107,19 @@ class Widget extends PureComponent {
             </Button>
           )}
         </div>
-        {loading
+        {isLoading
           ? <Spinner isLoading />
           : (
             <div className={classnames(styles.content)}>
               {children({
                 name,
-                slug,
+                isActive,
                 isCollapsed,
-                location,
-                data: widgetConfig.parse(data, location),
-                ...props
+                isLoading,
+                layersIds,
+                slug,
+                data: this.getDataBySlug(slug),
+                ...props,
               })}
             </div>
           )

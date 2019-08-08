@@ -2,7 +2,7 @@
   "dashboards": {
     "defaults": [
       {
-        "location_type": "global",
+        "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places"
         ]
@@ -43,9 +43,7 @@
     {
       "name": "Highlighted places",
       "slug": "highlighted_places",
-      "layersIds": [
-        "187deb54ab1c40c1d4476f8ba3a01ba0"
-      ]
+      "layersIds": []
     },
     {
       "name": "Mangrove coverage",

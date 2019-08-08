@@ -4,9 +4,13 @@ import { createSelector } from 'reselect';
 const locations = state => state.locations.list;
 const currentLocationId = state => state.locations.current;
 
-export const highlightedAreas = createSelector(
+const RUFIJI_ID = 1;
+const SALOUM_ID = 2;
+const PLACES = [RUFIJI_ID, SALOUM_ID];
+
+export const highlightedPlaces = createSelector(
   [locations],
-  (_locations) => _locations.find(location => location.location_type === 'worldwide')
+  (_locations) =>  _locations.filter(location => PLACES.includes(location.id))
 );
 
 export const currentLocation = createSelector(
@@ -16,11 +20,9 @@ export const currentLocation = createSelector(
 
     let result;
 
-    if (_currentId.id === 'global') {
+    if (_currentId.id === 'worldwide') {
       result = _locations.find(location => location.location_type === 'worldwide');
-    }
-
-    if (_currentId.iso) {
+    } else if (_currentId.iso) {
       result = _locations.find(location => location.iso === _currentId.iso && location.location_type === 'country');
     } else if (_currentId.id) {
       result = _locations.find(location => location.id === Number(_currentId.id));
@@ -31,5 +33,3 @@ export const currentLocation = createSelector(
     return { ...result };
   }
 );
-
-export default { currentLocation };

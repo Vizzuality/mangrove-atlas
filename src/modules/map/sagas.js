@@ -11,7 +11,7 @@ function* flyToCurrentLocation() {
   const location = currentLocation(state);
 
   if (location) {
-    if (location.location_type === 'global') {
+    if (location.location_type === 'worldwide') {
       yield put(resetViewport());
     } else {
       const bounds = bbox(location.bounds);

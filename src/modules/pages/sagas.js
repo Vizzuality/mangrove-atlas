@@ -8,7 +8,10 @@ import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
 
 function* loadInitialData({ payload }) {
-  const { locations, dashboards, widgets, layers, mapStyles, languages, mangroveData } = yield select();
+  const {
+    locations, dashboards, widgets, layers,
+    mapStyles, languages, mangroveData
+  } = yield select();
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.defaults.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());
@@ -24,7 +27,7 @@ function* loadInitialData({ payload }) {
   if (payload.id || payload.iso) {
     yield put(setCurrent({ ...payload }));
   } else {
-    yield put(setCurrent({ id: 'global' }));
+    yield put(setCurrent({ id: 'worldwide' }));
   }
 }
 

@@ -20,7 +20,6 @@ class APIService {
     const locationId = params.id === 'global' ? 'worldwide' : params.id;
     const { iso } = params;
     const locationParam = locationId ||  iso || 'worldwide';
-    console.log(locationParam)
 
     return this.client
       .get(`/locations/${locationParam}/mangrove_data`)

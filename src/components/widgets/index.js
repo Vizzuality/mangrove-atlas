@@ -1,16 +1,23 @@
 import { connect } from 'react-redux';
-import { expandAll, collapseAll } from 'modules/widgets/actions';
+import { expandAll, collapseAll, toggleCollapse, toggleActive } from 'modules/widgets/actions';
 import { dashboardWidgets } from 'modules/widgets/selectors';
+import { currentLocation, highlightedPlaces } from 'modules/locations/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
+  currentLocation: currentLocation(state),
   isCollapsed: state.widgets.isCollapsed,
-  widgets: dashboardWidgets(state)
+  isLoading: false,
+  highlightedPlaces: highlightedPlaces(state),
+  widgets: dashboardWidgets(state),
+  widgetData: state.mangroveData,
 });
 
 const mapDispatchToProps = {
   collapseAll,
-  expandAll
+  expandAll,
+  toggleCollapse,
+  toggleActive,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

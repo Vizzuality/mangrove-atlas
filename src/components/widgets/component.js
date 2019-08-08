@@ -36,7 +36,7 @@ class WidgetList extends PureComponent {
   }
 
   render() {
-    const { isCollapsed, widgets } = this.props;
+    const { currentLocation, highlightedPlaces, isCollapsed, widgets, widgetData } = this.props;
 
     return (
       <div className={styles.widgets}>
@@ -60,13 +60,15 @@ class WidgetList extends PureComponent {
           <Widget
             key={widget.slug}
             {...widget}
+            data={widgetData}
+            currentLocation={currentLocation}
+            highlightedPlaces={highlightedPlaces}
             widgetConfig={CONFIGS[widget.slug]}
           >
-            {({ slug, data, ...props }) => (
+            {({ slug, ...props }) => (
               <Fragment>
                 {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
                   slug,
-                  ...data,
                   ...props
                 })}
               </Fragment>

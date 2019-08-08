@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import Modal from 'components/modal';
-import ConservationHotspots from 'components/widget/templates/conservation-hotspots/component';
+import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
+import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -15,7 +16,7 @@ class LocationSelector extends PureComponent {
       name: PropTypes.string
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
-    conservationHotspots: PropTypes.shape({}),
+    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
     closeSearchPanel: PropTypes.func
   }
 
@@ -23,7 +24,7 @@ class LocationSelector extends PureComponent {
     isOpened: false,
     currentLocation: { name: 'Location name' },
     locations: [],
-    conservationHotspots: {},
+    highlightedPlaces: null,
     closeSearchPanel: () => null
   }
 
@@ -53,7 +54,7 @@ class LocationSelector extends PureComponent {
   }
 
   render() {
-    const { isOpened, currentLocation, locations, conservationHotspots } = this.props;
+    const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
     if (!currentLocation) return null;
 
     const { searchTerm } = this.state;
@@ -78,19 +79,21 @@ class LocationSelector extends PureComponent {
               onChange={this.updateSearchTerm}
             />
           </div>
-          <ConservationHotspots
-            conservationHotspots={conservationHotspots}
-            currentLocation={currentLocation}
-          />
+          {highlightedPlaces && (
+            <HighlightedPlaces
+              data={highlightedPlacesConfig.parse(highlightedPlaces)}
+              currentLocation={currentLocation}
+            />
+          )}
           <ul className={styles.list}>
             <li className={classnames(styles.listItem, 'notranslate')}>
-              <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
+              <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
             </li>
             {locationsData.map(location => (
               <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
                 {location.location_type === 'aoi'
                   && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                {(location.location_type === 'country' || location.type === 'admin0-eez')
+                {location.location_type === 'country'
                   && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
                 {location.location_type === 'wdpa'
                   && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
