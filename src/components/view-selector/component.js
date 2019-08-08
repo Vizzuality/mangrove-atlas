@@ -7,19 +7,19 @@ import styles from './style.module.scss';
 class ViewSelector extends PureComponent {
   static propTypes = {
     mapView: PropTypes.bool,
-    setMapView: PropTypes.func,
+    setMobileView: PropTypes.func,
     activeLayers: PropTypes.number
   };
 
   static defaultProps = {
     mapView: true,
-    setMapView: () => null,
+    setMobileView: () => null,
     activeLayers: null
   };
 
-  onChangeView = (mapView) => {
-    const { setMapView } = this.props;
-    setMapView(!mapView);
+  onChangeView = () => {
+    const { setMobileView, mapView } = this.props;
+    setMobileView(!mapView);
   }
 
   render() {
@@ -29,7 +29,7 @@ class ViewSelector extends PureComponent {
         <Button
           hasBackground
           hasContrast
-          onClick={() => this.onChangeView(mapView)}
+          onClick={this.onChangeView}
         >
           <div className={styles.btnTitle}>{mapView ? 'Map View' : 'Whatever view'}</div>
           <span className={styles.btnInfo}>{activeLayers}</span>

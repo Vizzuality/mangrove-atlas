@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import MediaQuery from 'react-responsive';
+import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import background from './bg-shape.svg';
@@ -58,7 +59,7 @@ class Header extends PureComponent {
           </button>
           {location && (
             <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
-              <MediaQuery minWidth={384}>
+              <MediaQuery minWidth={breakpoints.md}>
                 <h1
                   className={classnames(styles.title, 'notranslate')}
                   style={stylesOverride}
@@ -66,7 +67,7 @@ class Header extends PureComponent {
                   {location.name}
                 </h1>
               </MediaQuery>
-              <MediaQuery maxWidth={384}>
+              <MediaQuery maxWidth={breakpoints.md - 1}>
                 <h1
                   className={classnames(styles.title, 'notranslate')}
                   style={{ fontSize: 35, lineHeight: 0.85 }}

@@ -21,7 +21,7 @@ export default {
     ...state,
     basemap: payload
   }),
-  [actions.setMapView]: (state, { payload }) => ({
+  [actions.setMobileView]: (state, { payload }) => ({
     ...state,
     display: payload
   })
