@@ -1,6 +1,6 @@
 import { connectRoutes } from 'redux-first-router';
 
-import { decodeUrlForState, encodeStateForUrl } from 'utils/stateToUrl';
+import queryState from 'utils/query-state';
 import { PAGES } from 'modules/pages/constants';
 
 const routes = PAGES.reduce((acc, page) => ({
@@ -16,9 +16,10 @@ const options = {
   location: 'router',
   notFoundPath: `${process.env.REACT_APP_BASE_URL}404`,
   querySerializer: {
-    parse: decodeUrlForState,
-    stringify: encodeStateForUrl
+    parse: queryState.decode,
+    stringify: queryState.encode
   },
+  onAfterChange: queryState.inspector,
   initialDispatch: false
 };
 

@@ -4,7 +4,7 @@ import WebMercatorViewport from 'viewport-mercator-project';
 import bbox from '@turf/bbox';
 import { currentLocation } from 'modules/locations/selectors';
 import { easeCubic } from 'd3-ease';
-import { resetViewport, setViewport } from './actions';
+import { resetViewport, setViewport, setBasemap } from './actions';
 
 function* flyToCurrentLocation() {
   const state = yield select();
@@ -31,6 +31,22 @@ function* flyToCurrentLocation() {
       };
       yield put(setViewport(viewport));
     }
+  }
+}
+
+// Part of query state, not normal flow.
+// View ./index.js queryState.add for more info.
+export function * restoreMapState() {
+  /**
+   * A regular selector, it could be on a selectors file with reselect
+   * or better yet, be created automatically by the package based on registered namespace info.
+  */
+  const basemapSelector = state => (state.router.query
+    && state.router.query.map
+    && state.router.query.map.basemap) || null;
+  const basemap = yield select(basemapSelector);
+  if (basemap) {
+    yield(put(setBasemap(basemap)));
   }
 }
 
