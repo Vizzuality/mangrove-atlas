@@ -1,3 +1,7 @@
 export default {
-  isMobile: true
+  isMobile: false,
+  mobile: {
+    active: true,
+    map: true
+  }
 };

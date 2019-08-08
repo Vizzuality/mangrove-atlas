@@ -1,6 +1,6 @@
 import React from 'react';
 import Widgets from 'components/widgets';
-import Map from 'components/map';
+import DesktopLayout from 'components/layout/desktop';
 import LocationModal from 'components/location-modal';
 import Sidebar from 'components/sidebar';
 import ViewSelector from 'components/view-selector';
@@ -17,13 +17,7 @@ const AppPage = () => (
       <ViewSelector />
     </MediaQuery>
     <MediaQuery minWidth={384}>
-      <Sidebar>
-        <Widgets />
-      </Sidebar>
-      <div className={styles.vis}>
-        <Map />
-      </div>
-
+      <DesktopLayout />
     </MediaQuery>
     {/* Modals */}
     <LocationModal />
