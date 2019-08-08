@@ -10,7 +10,6 @@ const AppPage = () => (
     <Sidebar>
       <Widgets />
     </Sidebar>
-    
     <div className={styles.vis}>
       <Map />
     </div>

@@ -10,6 +10,7 @@ import * as layers from 'modules/layers';
 import * as widgets from 'modules/widgets';
 import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
+import * as languages from 'modules/languages';
 
 import router from './router';
 import sagas from './sagas';
@@ -21,7 +22,8 @@ const modules = [
   { namespace: 'widgets', components: widgets },
   { namespace: 'locations', components: locations },
   { namespace: 'dashboards', components: dashboards },
-  { namespace: 'mapStyles', components: mapStyles }
+  { namespace: 'mapStyles', components: mapStyles },
+  { namespace: 'languages', components: languages }
 ];
 
 const {

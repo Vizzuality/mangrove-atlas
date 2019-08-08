@@ -2,23 +2,25 @@ import { all, fork } from 'redux-saga/effects';
 
 import queryState from 'utils/query-state';
 
-import * as pages from 'modules/pages';
-import * as map from 'modules/map';
-import * as mapStyles from 'modules/map-styles';
-import * as layers from 'modules/layers';
-import * as widgets from 'modules/widgets';
-import * as locations from 'modules/locations';
-import * as dashboards from 'modules/dashboards';
+import pagesSagas from 'modules/pages/sagas';
+import mapSagas from 'modules/map/sagas';
+import mapStylesSagas from 'modules/map-styles/sagas';
+import layersSagas from 'modules/layers/sagas';
+import widgetsSagas from 'modules/widgets/sagas';
+import locationsSagas from 'modules/locations/sagas';
+import dashboardsSagas from 'modules/dashboards/sagas';
+import languagesSagas from 'modules/languages/sagas';
 
 export default function* root() {
   yield all([
     fork(queryState.sagas.bind(queryState)),
-    fork(pages.sagas),
-    fork(map.sagas),
-    fork(mapStyles.sagas),
-    fork(layers.sagas),
-    fork(widgets.sagas),
-    fork(locations.sagas),
-    fork(dashboards.sagas)
+    fork(pagesSagas),
+    fork(mapSagas),
+    fork(mapStylesSagas),
+    fork(layersSagas),
+    fork(widgetsSagas),
+    fork(locationsSagas),
+    fork(dashboardsSagas),
+    fork(languagesSagas),
   ]);
 };
