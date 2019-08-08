@@ -43,6 +43,8 @@ class Widget extends PureComponent {
 
     if (slug === 'highlighted_places') return widgetConfig.parse(highlightedPlaces);
 
+    console.log(data)
+
     return widgetConfig.parse(data);
   }
 

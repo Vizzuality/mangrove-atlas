@@ -26,11 +26,12 @@ const widgetData = (data, currentLocation) => {
 
 export const CONFIG = {
   parse: (data, currentLocation) => ({
-    data: widgetData(data, currentLocation),
-    metadata: {
-      years: data.map(d => new Date(d.date).getFullYear()),
-      total: currentLocation.coast_length_m
-    },
+    // data: widgetData(data, currentLocation),
+    data: () => console.log(data) || data.list,
+    // metadata: {
+    //   years: data.map(d => new Date(d.date).getFullYear()),
+    //   total: currentLocation.coast_length_m
+    // },
     chartConfig: {
       type: 'pie',
       layout: 'centric',

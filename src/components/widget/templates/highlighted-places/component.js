@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { format } from 'd3-format';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
 
-const numberFormat = format(',.3r');
-
-const HighlightedPlaces = ({ data, currentLocation, ...props }) => (
+const HighlightedPlaces = ({ data, currentLocation }) => (
   <div className={styles.hotspotsList}>
     {data.map(d => (
       <div

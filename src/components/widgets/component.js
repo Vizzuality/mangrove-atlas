@@ -36,7 +36,12 @@ class WidgetList extends PureComponent {
   }
 
   render() {
-    const { currentLocation, highlightedPlaces, isCollapsed, widgets, widgetData } = this.props;
+    const {
+      isCollapsed,
+      widgets,
+      widgetData,
+      ...parentProps
+    } = this.props;
 
     return (
       <div className={styles.widgets}>
@@ -60,9 +65,8 @@ class WidgetList extends PureComponent {
           <Widget
             key={widget.slug}
             {...widget}
+            {...parentProps}
             data={widgetData}
-            currentLocation={currentLocation}
-            highlightedPlaces={highlightedPlaces}
             widgetConfig={CONFIGS[widget.slug]}
           >
             {({ slug, ...props }) => (

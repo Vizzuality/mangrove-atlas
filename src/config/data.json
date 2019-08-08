@@ -4,7 +4,8 @@
       {
         "location_type": "worldwide",
         "widgetsSlugs": [
-          "highlighted_places"
+          "highlighted_places",
+          "mangrove_coverage"
         ]
       },
       {
@@ -30,7 +31,7 @@
     ],
     "custom": [
       {
-        "location_id": 4,
+        "location_id": 1000000,
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
