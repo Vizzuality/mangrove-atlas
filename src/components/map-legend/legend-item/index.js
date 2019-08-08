@@ -2,8 +2,12 @@ import { connect } from 'react-redux';
 import { toggleActive } from 'modules/layers/actions';
 import Component from './component';
 
+const mapStateToProps = state => ({
+  isCollapsed: state.layers.isCollapsed
+});
+
 const mapDispatchToProps = {
   toggleActive
 };
 
-export default connect(null, mapDispatchToProps)(Component);
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

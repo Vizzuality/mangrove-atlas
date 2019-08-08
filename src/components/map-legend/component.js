@@ -1,15 +1,47 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import LegendItem from './legend-item';
+import styles from './style.module.scss';
 
-const Legend = ({ layers }) => (
-  <Fragment>
-    {layers.map(layer => <LegendItem key={layer.id} {...layer} />)}
-  </Fragment>
-);
+const Legend = ({ layers, isCollapsed, toggleCollapse, isMobile }) => {
+  const onToggleCollapsed = () => {
+    toggleCollapse(!isCollapsed);
+  };
+
+  return (
+    <Fragment>
+      {isMobile && (
+        <div className={styles.layersCollapse}>
+          <div className={classnames(styles.title,
+            { [styles.collapse]: !isCollapsed })}
+          >
+            <span>Layers</span>
+          </div>
+          <button
+            type="button"
+            className={styles.layersBtn}
+            onClick={onToggleCollapsed}
+          >
+            {isCollapsed
+              ? <FontAwesomeIcon icon={faChevronDown} />
+              : <FontAwesomeIcon icon={faChevronUp} />
+            }
+          </button>
+        </div>
+      )}
+      {layers.map(layer => <LegendItem key={layer.id} {...layer} />)}
+    </Fragment>
+  );
+};
 
 Legend.propTypes = {
-  layers: PropTypes.arrayOf(PropTypes.shape({}))
+  layers: PropTypes.arrayOf(PropTypes.shape({})),
+  isCollapsed: PropTypes.bool.isRequired,
+  toggleCollapse: PropTypes.func.isRequired,
+  isMobile: PropTypes.bool.isRequired
 };
 
 Legend.defaultProps = {

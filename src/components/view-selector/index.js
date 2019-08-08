@@ -4,7 +4,7 @@ import { activeLayers } from 'modules/widgets/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  mapView: state.map.display,
+  mapView: state.app.mobile.map,
   activeLayers: activeLayers(state)
 });
 

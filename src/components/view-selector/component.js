@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Button from 'components/button';
 import styles from './style.module.scss';
 
@@ -18,8 +17,8 @@ class ViewSelector extends PureComponent {
     activeLayers: null
   };
 
-  onChangeView = () => {
-    const { mapView, setMapView } = this.props;
+  onChangeView = (mapView) => {
+    const { setMapView } = this.props;
     setMapView(!mapView);
   }
 
@@ -30,7 +29,7 @@ class ViewSelector extends PureComponent {
         <Button
           hasBackground
           hasContrast
-          onClick={this.onChangeView}
+          onClick={() => this.onChangeView(mapView)}
         >
           <div className={styles.btnTitle}>{mapView ? 'Map View' : 'Whatever view'}</div>
           <span className={styles.btnInfo}>{activeLayers}</span>

@@ -16,7 +16,8 @@ const thumbs = {
 class BasemapSelector extends PureComponent {
   static propTypes = {
     basemapName: PropTypes.string,
-    setBasemap: PropTypes.func
+    setBasemap: PropTypes.func,
+    isCollapsed: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
@@ -32,11 +33,16 @@ class BasemapSelector extends PureComponent {
   }
 
   render() {
-    const { basemapName } = this.props;
+    const { basemapName, isCollapsed } = this.props;
     const currentBasemap = basemaps.find(b => b.id === basemapName);
 
     return (
-      <div className={classnames('mapboxgl-ctrl', styles.basemap)}>
+      <div className={classnames(
+        'mapboxgl-ctrl',
+        styles.basemap,
+        { [styles.collapse]: isCollapsed }
+      )}
+      >
         <div className={styles.current}>
           <h3>Map style</h3>
           <div>{currentBasemap.name}</div>

@@ -1,7 +1,6 @@
 @import '../../../styles/vars';
 
 .legendItem {
-  display: flex;
   align-items: center;
   justify-content: space-between;
 
@@ -11,6 +10,9 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px 0 rgba(168,168,168,0.25);
 
+  &.collapse {
+    display: none;
+  }
   > h3 {
     @include upper-text;
   }

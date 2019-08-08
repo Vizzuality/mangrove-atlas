@@ -54,7 +54,8 @@ class Map extends PureComponent {
     const {
       mapboxApiAccessToken,
       mapStyle,
-      viewport
+      viewport,
+      isMobile
     } = this.props;
 
     return (
@@ -69,7 +70,7 @@ class Map extends PureComponent {
         onViewportChange={this.onViewportChange}
       >
         <div className={styles.navigation}>
-          <NavigationControl />
+          {!isMobile && <NavigationControl />}
         </div>
         <div className={styles.legend}>
           <Legend />

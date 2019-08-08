@@ -1,4 +1,8 @@
+@import '../../../styles/vars';
+
 $space-around-map: 30px;
+$space-top-map-mobile: 5px;
+$space-left-map-mobile: 20px;
 
 .map {
   background: white;
@@ -14,6 +18,10 @@ $space-around-map: 30px;
   position: absolute;
   right: $space-around-map;
   bottom: $space-around-map;
+  @media screen and (max-width: map-get($breakpoints, sm)) {
+    top: $space-top-map-mobile;
+    left: $space-left-map-mobile;
+  }
 }
 
 // Mapbox override
