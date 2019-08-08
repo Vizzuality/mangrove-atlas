@@ -2,11 +2,10 @@
 
 ## 2019-08-09
 
-### Added
-
 ### Changed
 
-### Fixed
+- Header layour changed.
+- Header is fixed when user scrolls.
 
 ## 2019-08-02
 
