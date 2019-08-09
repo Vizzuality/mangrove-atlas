@@ -3,6 +3,10 @@
 .layersCollapse {
   display: flex;
   justify-content: flex-end;
+  &.collapse {
+    width: 100%;
+  }
+
   > * {
     padding: 0 20px 5px 20px;
     margin-bottom: 5px;
@@ -20,16 +24,16 @@
     font-weight: bold;
     letter-spacing: 1px;
     line-height: 15px;
-    display: flex;
-    margin-right: 5px;
+    display: none;
 
     &.collapse {
-      display: none;
+      display: flex;
     }
   }
   .layersBtn {
     width: 15px;
     height: 45px;
     box-sizing: content-box;
+    margin-right: 5px;
   }
 }

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Button from 'components/button';
 import styles from './style.module.scss';
 
-
 class ViewSelector extends PureComponent {
   static propTypes = {
     mapView: PropTypes.bool,
@@ -31,7 +30,7 @@ class ViewSelector extends PureComponent {
           hasContrast
           onClick={this.onChangeView}
         >
-          <div className={styles.btnTitle}>{mapView ? 'Map View' : 'Whatever view'}</div>
+          <div className={styles.btnTitle}>{mapView ? 'Dashboard View' : 'Map View'}</div>
           <span className={styles.btnInfo}>{activeLayers}</span>
         </Button>
       </div>

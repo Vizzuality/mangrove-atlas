@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
+import classnames from 'classnames';
 import { breakpoints } from 'utils/responsive';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
@@ -11,7 +12,8 @@ class Map extends PureComponent {
   static propTypes = {
     basemap: PropTypes.string,
     viewport: PropTypes.shape({}),
-    setViewport: PropTypes.func
+    setViewport: PropTypes.func,
+    isCollapse: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
@@ -26,7 +28,7 @@ class Map extends PureComponent {
       bearing: 0,
       pitch: 0
     },
-    setViewport: () => {}
+    setViewport: () => { }
   }
 
   componentDidMount() {
@@ -56,7 +58,8 @@ class Map extends PureComponent {
     const {
       mapboxApiAccessToken,
       mapStyle,
-      viewport
+      viewport,
+      isCollapse
     } = this.props;
 
     return (
@@ -75,7 +78,9 @@ class Map extends PureComponent {
             <NavigationControl />
           </MediaQuery>
         </div>
-        <div className={styles.legend}>
+        <div className={classnames(styles.legend,
+          { [styles.expanded]: !isCollapse })}
+        >
           <Legend />
           <BasemapSelector />
         </div>
