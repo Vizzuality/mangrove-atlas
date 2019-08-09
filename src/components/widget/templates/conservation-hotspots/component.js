@@ -19,6 +19,7 @@ const ConservationHotspots = ({ conservationHotspots, currentLocation }) => {
           <h3 className="notranslate">{d.name}</h3>
           <p><span className="notranslate">{numberFormat(d.length_coast_m / 1000)}</span> <span>km coastline</span></p>
           {d.id !== currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>View place</Link>}
+          {d.id === currentLocation.id && <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Back to Worldwide</Link>}
         </div>
       ))}
     </div>
