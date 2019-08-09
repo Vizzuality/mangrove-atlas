@@ -9,9 +9,9 @@ export const dashboardWidgets = createSelector(
   [widgets, currentDashboard],
   (_widgets, _currentDashboard) => {
     if (!_currentDashboard) return [];
+
     const { widgetsSlugs } = _currentDashboard;
-    const result = _widgets.filter(widget => widgetsSlugs.includes(widget.slug));
-    return result;
+    return _widgets.filter(widget => widgetsSlugs.includes(widget.slug));
   }
 );
 

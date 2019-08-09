@@ -5,7 +5,8 @@
         "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage"
+          "mangrove_coverage",
+          "mangrove_alerts"
         ]
       },
       {
@@ -66,6 +67,11 @@
     {
       "name": "Mangrove activies",
       "slug": "mangrove_activities",
+      "layersIds": []
+    },
+    {
+      "name": "Mangrove alerts",
+      "slug": "mangrove_alerts",
       "layersIds": []
     }
   ],

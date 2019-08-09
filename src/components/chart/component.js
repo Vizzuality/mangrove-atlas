@@ -13,13 +13,15 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  CartesianAxis,
   Tooltip,
   Legend,
   ResponsiveContainer,
   ComposedChart,
   PieChart,
   Label,
-  ReferenceLine
+  ReferenceLine,
+  ReferenceArea
 } from 'recharts';
 
 import styles from './style.module.scss';
@@ -68,31 +70,37 @@ class Chart extends PureComponent {
       margin = { top: 20, right: 0, left: 50, bottom: 0 },
       padding = { top: 0, right: 0, left: 0, bottom: 0 },
       type,
+      gradients,
+      patterns,
+      ...content
+    } = config;
+
+    const {
       xKey,
       yKeys,
       xAxis,
       yAxis,
       cartesianGrid,
-      gradients,
+      cartesianAxis,
       height,
-      patterns,
       tooltip,
       layout,
       legend,
       unit,
       unitFormat,
-      referenceLines
+      referenceLines,
+      referenceAreas
     } = config;
     const { lines, bars, areas, pies } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
-    let CHART;
+    let RechartChart;
     switch (type) {
       case 'pie':
-        CHART = PieChart;
+        RechartChart = PieChart;
         break;
       default: {
-        CHART = ComposedChart;
+        RechartChart = ComposedChart;
       }
     }
 
@@ -102,7 +110,7 @@ class Chart extends PureComponent {
         style={{ height }}
       >
         <ResponsiveContainer>
-          <CHART
+          <RechartChart
             height={height}
             data={data}
             layout={layout || 'horizontal'}
@@ -158,6 +166,12 @@ class Chart extends PureComponent {
               />
             )}
 
+            {cartesianAxis && (
+              <CartesianAxis
+                {...cartesianAxis}
+              />
+            )}
+
             {xAxis && (
               <XAxis
                 dataKey={xKey || ''}
@@ -187,11 +201,18 @@ class Chart extends PureComponent {
               />
             )}
 
-            {referenceLines && referenceLines.map(ref => (
-              <ReferenceLine
-                key={new Date()}
+            {referenceAreas && referenceAreas.map(ref => (
+              <ReferenceArea
+                key={Math.random()}
                 {...ref}
               />
+            ))}
+
+            {referenceLines && referenceLines.map(ref => (
+                <ReferenceLine
+                  key={Math.random()}
+                  {...ref}
+                />
             ))}
 
             {areas && Object.keys(areas).map(key => (
@@ -265,7 +286,7 @@ class Chart extends PureComponent {
               />
             )}
 
-          </CHART>
+          </RechartChart>
         </ResponsiveContainer>
       </div>
     );

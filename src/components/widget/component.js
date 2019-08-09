@@ -71,6 +71,7 @@ class Widget extends PureComponent {
       name,
       layersIds,
       slug,
+      widgetConfig,
       ...props
     } = this.props;
 
@@ -119,6 +120,7 @@ class Widget extends PureComponent {
                 layersIds,
                 slug,
                 data: this.getDataBySlug(slug),
+                widgetConfig,
                 ...props,
               })}
             </div>

@@ -43,6 +43,9 @@ class WidgetList extends PureComponent {
       ...parentProps
     } = this.props;
 
+    // We use a function component here? Why? One good reason, PLEASE!
+    // chart and chartConfig are expanded here, it makes no sense!
+    // It was, removed data between slug and props in the template
     return (
       <div className={styles.widgets}>
         <div className={styles.actionBar}>
