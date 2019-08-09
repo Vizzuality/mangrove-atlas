@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
-import { breakpoints } from 'utils/responsive';import ButtonGroup from 'components/buttonGroup';
+import { breakpoints } from 'utils/responsive';
+import ButtonGroup from 'components/buttonGroup';
 import Button from 'components/button';
 
 class LanguageSelect extends PureComponent {
