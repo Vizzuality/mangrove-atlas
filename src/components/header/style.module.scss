@@ -3,7 +3,7 @@
 .header {
   display: flex;
   margin-bottom: 50px;
-  @media screen and (max-width: map-get($breakpoints, sm)) {
+  @media screen and (max-width: map-get($breakpoints, md)) {
     margin-bottom: 25px;
   }
 
@@ -19,7 +19,7 @@
     &.isHidden {
       display: none;
     }
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       display: none;
     }
   }
@@ -27,7 +27,7 @@
   .bgFixed {
     position: fixed;
     z-index: 100;
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       display: none;
     }
   }
@@ -41,7 +41,7 @@
       position: fixed;
       top: -65px;
     }
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       margin-top: 20px;
       font-size: 35px;
     }
@@ -64,7 +64,7 @@
     font-weight: 300;
     line-height: 0.85;
 
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       font-size: 35px;
     }
   }
@@ -82,12 +82,12 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       height: 50px;
       width: 50px;
     }
     svg {
-      @media screen and (max-width: map-get($breakpoints, sm)) {
+      @media screen and (max-width: map-get($breakpoints, md)) {
         height: 30px;
         width: 30px;
         vertical-align: 0;

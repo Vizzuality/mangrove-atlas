@@ -1,5 +1,7 @@
 import { createAction } from 'vizzuality-redux-tools';
 
-const setView = createAction('APP/MOBILE');
+export const setMobileView = createAction('APP/MOBILE');
 
-export default setView;
+export default {
+  setMobileView
+};

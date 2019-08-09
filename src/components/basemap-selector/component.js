@@ -17,7 +17,8 @@ class BasemapSelector extends PureComponent {
   static propTypes = {
     basemapName: PropTypes.string,
     setBasemap: PropTypes.func,
-    isCollapsed: PropTypes.bool.isRequired
+    isCollapsed: PropTypes.bool.isRequired,
+    mapView: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
@@ -33,14 +34,14 @@ class BasemapSelector extends PureComponent {
   }
 
   render() {
-    const { basemapName, isCollapsed } = this.props;
+    const { basemapName, isCollapsed, mapView } = this.props;
     const currentBasemap = basemaps.find(b => b.id === basemapName);
 
     return (
       <div className={classnames(
         'mapboxgl-ctrl',
         styles.basemap,
-        { [styles.collapse]: isCollapsed }
+        { [styles.collapse]: isCollapsed && mapView }
       )}
       >
         <div className={styles.current}>

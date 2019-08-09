@@ -1,9 +1,10 @@
-import setView from './actions';
+import { setMobileView } from './actions';
 
 export default {
-  [setView]: (state, { payload }) => ({
+  [setMobileView]: (state, { payload }) => ({
     ...state,
     mobile: {
+      ...state.mobile,
       mapView: payload
     }
   })

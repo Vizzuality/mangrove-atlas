@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
 import MediaQuery from 'react-responsive';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { breakpoints } from 'utils/responsive';import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import styles from './style.module.scss';
@@ -69,7 +69,7 @@ class Widget extends PureComponent {
             className={styles.title}
             onClick={this.collapseToggleHandler}
           >
-            <MediaQuery minWidth={384}>
+            <MediaQuery minWidth={breakpoints.md}>
               {isCollapsed
                 ? <FontAwesomeIcon icon={faChevronDown} />
                 : <FontAwesomeIcon icon={faChevronUp} />}

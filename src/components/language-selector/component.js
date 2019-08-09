@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
-import ButtonGroup from 'components/buttonGroup';
+import { breakpoints } from 'utils/responsive';import ButtonGroup from 'components/buttonGroup';
 import Button from 'components/button';
 
 class LanguageSelect extends PureComponent {
@@ -69,10 +69,10 @@ class LanguageSelect extends PureComponent {
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
-            <MediaQuery maxWidth={384}>
+            <MediaQuery maxWidth={breakpoints.md - 1}>
               { o.code }
             </MediaQuery>
-            <MediaQuery minWidth={384}>
+            <MediaQuery minWidth={breakpoints.md}>
               { o.label}
             </MediaQuery>
 

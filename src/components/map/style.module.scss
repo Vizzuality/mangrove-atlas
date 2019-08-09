@@ -18,9 +18,15 @@ $space-left-map-mobile: 20px;
   position: absolute;
   right: $space-around-map;
   bottom: $space-around-map;
-  @media screen and (max-width: map-get($breakpoints, sm)) {
+  @media screen and (max-width: map-get($breakpoints, md)) {
     top: $space-top-map-mobile;
     left: $space-left-map-mobile;
+    &.expanded {
+      display: flex;
+      flex-direction: row-reverse;
+      bottom: inherit;
+      right: 25px;
+    }
   }
 }
 
