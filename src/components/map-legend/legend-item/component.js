@@ -5,12 +5,12 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import styles from './style.module.scss';
 
-const LegendItem = ({ id, name, toggleActive, isCollapsed }) => {
+const LegendItem = ({ id, name, toggleActive, isCollapsed, mapView }) => {
   const onClickHandler = () => toggleActive({ id, isActive: false });
 
   return (
     <div className={classnames(styles.legendItem,
-      { [styles.collapse]: isCollapsed })}
+      { [styles.collapse]: (isCollapsed && mapView) })}
     >
       <h3>{name}</h3>
       <button className={styles.removeButton} type="button" onClick={onClickHandler}>
@@ -24,7 +24,8 @@ LegendItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   toggleActive: PropTypes.func,
-  isCollapsed: PropTypes.bool.isRequired
+  isCollapsed: PropTypes.bool.isRequired,
+  mapView: PropTypes.bool.isRequired
 };
 
 LegendItem.defaultProps = {
