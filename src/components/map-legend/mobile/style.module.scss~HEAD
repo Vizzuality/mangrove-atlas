@@ -34,6 +34,6 @@
     width: 15px;
     height: 45px;
     box-sizing: content-box;
-    margin-left: 5px;
+    margin-right: 5px;
   }
 }
