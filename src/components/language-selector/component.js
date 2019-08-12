@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import { breakpoints } from 'utils/responsive';
 import ButtonGroup from 'components/buttonGroup';
 import Button from 'components/button';
 
@@ -51,7 +53,8 @@ class LanguageSelect extends PureComponent {
 
     const options = data.map(lang => ({
       label: lang.name,
-      value: lang.code
+      value: lang.code,
+      code: (lang.code.split('_')[0]).toUpperCase()
     }));
     const currentValue = options.find(o => o.value === language);
     if (!data || !currentValue) return null;
@@ -67,7 +70,13 @@ class LanguageSelect extends PureComponent {
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
-            {o.label}
+            <MediaQuery maxWidth={breakpoints.md - 1}>
+              { o.code }
+            </MediaQuery>
+            <MediaQuery minWidth={breakpoints.md}>
+              { o.label}
+            </MediaQuery>
+
           </Button>
         ))}
       </ButtonGroup>

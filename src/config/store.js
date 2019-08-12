@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import createSagaMiddleware from 'redux-saga';
 import { handleModule } from 'vizzuality-redux-tools';
 
+import * as app from 'modules/app';
 import * as pages from 'modules/pages';
 import * as map from 'modules/map';
 import * as mapStyles from 'modules/map-styles';
@@ -17,6 +18,7 @@ import router from './router';
 import sagas from './sagas';
 
 const modules = [
+  { namespace: 'app', components: app },
   { namespace: 'page', components: pages },
   { namespace: 'map', components: map },
   { namespace: 'layers', components: layers },

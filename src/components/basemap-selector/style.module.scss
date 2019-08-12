@@ -1,4 +1,4 @@
-@import '../../styles/vars';
+@import 'styles/vars';
 
 .basemap {
   display: flex;
@@ -10,6 +10,9 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px 0 rgba(168,168,168,0.25);
 
+  &.collapse {
+    display: none;
+  }
   .current {
     margin-right: 30px;
 

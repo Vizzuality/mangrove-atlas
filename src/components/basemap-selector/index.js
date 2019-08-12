@@ -4,7 +4,9 @@ import { setBasemap } from 'modules/map/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  basemapName: state.map.basemap
+  basemapName: state.map.basemap,
+  isCollapsed: state.layers.isCollapsed,
+  mapView: state.app.mobile.mapView
 });
 
 const mapDispatchToProps = {

@@ -1,0 +1,39 @@
+@import 'styles/vars';
+
+.layersCollapse {
+  display: flex;
+  justify-content: flex-end;
+  &.collapse {
+    width: 100%;
+  }
+
+  > * {
+    padding: 0 20px 5px 20px;
+    margin-bottom: 5px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px 0 rgba(168,168,168,0.25);
+    align-items: center;
+  }
+  > div {
+    width: 100%;
+  }
+  .title {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 15px;
+    display: none;
+
+    &.collapse {
+      display: flex;
+    }
+  }
+  .layersBtn {
+    width: 15px;
+    height: 45px;
+    box-sizing: content-box;
+    margin-right: 5px;
+  }
+}

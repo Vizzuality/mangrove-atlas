@@ -1,0 +1,42 @@
+@import 'styles/vars';
+
+.container {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  z-index: 301;
+  background-color: $white;
+  bottom: 10px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px 0 rgba(0,0,0,0.08);
+  min-height: 50px;
+
+  > button {
+    display: flex;
+    border-radius: 25px;
+    margin: auto;
+    height: 50px;
+  }
+  .btnTitle {
+    display: flex;
+    justify-content: center;
+    float: left;
+    min-width: 150px;
+    margin: 5px;
+    color: $black;
+
+  }
+
+  .btnInfo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: 200;
+    color: $primary;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 133, 127, 0.2);
+    border-radius: 50%;
+  }
+}

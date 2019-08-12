@@ -1,4 +1,8 @@
-import { fetchRequested, fetchSucceeded, fetchFailed, toggleActive } from './actions';
+import { fetchRequested,
+  fetchSucceeded,
+  fetchFailed,
+  toggleActive,
+  toggleCollapse } from './actions';
 
 export default {
   [fetchRequested]: state => ({
@@ -15,6 +19,10 @@ export default {
     ...state,
     isLoading: false,
     error: payload
+  }),
+  [toggleCollapse]: (state, { payload }) => ({
+    ...state,
+    isCollapsed: payload,
   }),
   [toggleActive]: (state, { payload }) => ({
     ...state,
