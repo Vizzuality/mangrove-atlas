@@ -61,8 +61,6 @@ class Widget extends PureComponent {
     } else {
       toggleActive({ slug, layerId, isActive: !isActive });
     }
-    console.log(toggleActive)
-    console.log(isActive, 'dentro active...')
   };
 
   render() {
@@ -109,7 +107,6 @@ class Widget extends PureComponent {
               isActive={isActive}
               onClick={this.activeToggleHandler}
             >
-            {console.log(isActive)}
               {isActive ? 'Hide layer' : 'Show layer'}
             </Button>
           )}

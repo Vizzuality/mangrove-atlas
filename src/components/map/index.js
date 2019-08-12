@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
   ...state.map,
   mapStyle: mapStyle(state),
   mapboxApiAccessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
-  isCollapse: state.layers.isCollapse
+  isCollapse: state.layers.isCollapsed
 });
 
 const mapDispatchToProps = {
