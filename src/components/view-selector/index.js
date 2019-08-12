@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
-import { setMapView } from 'modules/map/actions';
+import { setMobileView } from 'modules/app/actions';
+import { activeLayers } from 'modules/widgets/selectors';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  mapView: state.map.display
+  mapView: state.app.mobile.mapView,
+  activeLayers: activeLayers(state)
 });
 
 const mapDispatchToProps = {
-  setMapView
+  setMobileView
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

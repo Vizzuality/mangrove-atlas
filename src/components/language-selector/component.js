@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import { breakpoints } from 'utils/responsive';
 import ButtonGroup from 'components/buttonGroup';
 import Button from 'components/button';
 
 class LanguageSelect extends PureComponent {
   static propTypes = {
-    isMobile: PropTypes.bool.isRequired,
     language: PropTypes.string,
     data: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
@@ -48,7 +49,7 @@ class LanguageSelect extends PureComponent {
   }
 
   render() {
-    const { language, data, isMobile } = this.props;
+    const { language, data } = this.props;
 
     const options = data.map(lang => ({
       label: lang.name,
@@ -69,7 +70,13 @@ class LanguageSelect extends PureComponent {
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
-            {isMobile ? o.code : o.label }
+            <MediaQuery maxWidth={breakpoints.md - 1}>
+              { o.code }
+            </MediaQuery>
+            <MediaQuery minWidth={breakpoints.md}>
+              { o.label}
+            </MediaQuery>
+
           </Button>
         ))}
       </ButtonGroup>
