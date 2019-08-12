@@ -11,25 +11,27 @@ const numberFormat = format(',.2f');
 class MangroveCoverage extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    chartConfig: PropTypes.shape({}).isRequired,
-    location: PropTypes.shape({}),
+    metadata: PropTypes.shape({}),
+    currentLocation: PropTypes.shape({}),
     slug: PropTypes.string
   }
 
   static defaultProps = {
     data: null,
-    location: null,
+    metadata: null,
+    currentLocation: null,
     slug: null
   }
 
   state = {
-    currentYear: '1996'
+    currentYear: 1996
   }
 
   getData() {
-    const { data: { widgetData, metadata } } = this.props;
+    const { data } = this.props;
+    const { chartData, metadata } = data;
     const { currentYear } = this.state;
-    const currentYearData = widgetData.find(d => d.x.toString() === currentYear.toString());
+    const currentYearData = chartData.find(d => d.x === currentYear);
     const nonMangrove = metadata.total - currentYearData.value;
 
     return [
@@ -52,12 +54,12 @@ class MangroveCoverage extends React.PureComponent {
     this.setState({ currentYear: value });
   }
 
-
   render() {
-    const { data: { metadata }, chartConfig, location, slug } = this.props;
+    const { data, currentLocation, slug } = this.props;
+    const { chartConfig, metadata } = data;
     const { currentYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
-      label: year,
+      label: year.toString(),
       value: year
     }));
     const widgetData = this.getData();
@@ -68,7 +70,7 @@ class MangroveCoverage extends React.PureComponent {
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             <span>Mangrove forest cover</span> <strong className="notranslate">{numberFormat(percentage)} {unit}</strong><br />
-            <span>of</span> <strong>{location.type === 'global' ? 'the world’s' : <span className="notranslate">{`${location.name}'s`}</span>}</strong>
+            <span>of</span> <strong>{currentLocation.type === 'worldwide' ? 'the world’s' : <span className="notranslate">{`${currentLocation.name}'s`}</span>}</strong>
             {' '}
             <strong className="notranslate">{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
             <span>in</span>
@@ -83,7 +85,6 @@ class MangroveCoverage extends React.PureComponent {
             {'.'}
           </div>
         </div>
-
 
         {/* Chart */}
         {!!widgetData.length && (

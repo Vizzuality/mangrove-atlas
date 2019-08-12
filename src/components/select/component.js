@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 
 import { styles, theme } from './style';
 
-
 class Select extends PureComponent {
   static propTypes = {
     options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    defaultValue: PropTypes.shape({}).isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func
   };
 
   static defaultProps = {
+    value: null,
     onChange: () => null
   }
 

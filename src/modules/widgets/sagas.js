@@ -1,8 +1,6 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
-import DatasetService from 'services/dataset-service';
-import { fetchRequested, fetchSucceeded, fetchFailed, toggleActive, toggleActiveByLayerId } from './actions';
-
-const service = new DatasetService({ entityName: 'widgets' });
+import DATA from 'config/data.json';
+import { fetchSucceeded, toggleActive, toggleActiveByLayerId } from './actions';
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms))
@@ -13,23 +11,9 @@ export function* toggleWidgetActive({ payload }) {
 }
 
 export function* getWidgets() {
-  yield put(fetchRequested());
-  try {
-    const widgets = yield call(service.fetch, []);
+  const { widgets } = DATA;
 
-    // adding temporal widget for demo
-    widgets.unshift({
-      id: 'highlighted-areas',
-      slug: 'highlighted-areas',
-      name: 'Highlighted Areas',
-      contextualLayerIds: [],
-      layerId: null
-    });
-
-    yield put(fetchSucceeded(widgets));
-  } catch (err) {
-    yield put(fetchFailed(err));
-  }
+  yield put(fetchSucceeded(widgets));
 }
 
 // Part of query state, not normal flow.
@@ -48,13 +32,13 @@ export function * restoreWidgetsState() {
     const {urlWidgets, stateWidgets} = yield select(widgetsSelector);
 
     if(urlWidgets) {
-      const toDispatch = []; 
+      const toDispatch = [];
       const updatedWidgets = stateWidgets.map(widget => {
         const updatedWidget = Object.assign({}, widget);
-  
+
         if (urlWidgets[widget.slug]) {
           const update = urlWidgets[widget.slug];
-  
+
           if (update.isActive) {
             updatedWidget.isActive = true;
             toDispatch.push(put(toggleActive({
@@ -63,12 +47,12 @@ export function * restoreWidgetsState() {
               isActive: true
             })));
           }
-  
+
           if (update.isCollapsed) {
             updatedWidget.isCollapsed = true;
           }
         }
-  
+
         return updatedWidget;
       });
 

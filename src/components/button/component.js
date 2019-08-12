@@ -9,6 +9,7 @@ export default (props) => {
     isTransparent,
     isGrey,
     hasContrast,
+    isActive,
     ...domProps } = props;
 
   return (
