@@ -1,13 +1,16 @@
 import { createSelector } from 'reselect';
 import { currentLocation } from 'modules/locations/selectors';
 
-const dashboards = state => state.dashboards.list;
+const dashboards = state => state.dashboards;
 
 export const currentDashboard = createSelector(
   [dashboards, currentLocation],
   (_dashboards, _currentLocation) => {
     if (!_currentLocation) return null;
-    return _dashboards.find(location => location.id === _currentLocation.dashboardId);
+    const { defaults, custom } = _dashboards;
+    const customDashboard = custom.find(d => d.location_id === _currentLocation.id);
+    if (customDashboard) return customDashboard;
+    return defaults.find(d => d.location_type === _currentLocation.location_type);
   }
 );
 

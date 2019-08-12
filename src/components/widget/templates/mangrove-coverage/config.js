@@ -6,9 +6,46 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2%');
 
+const widgetData = ({ list, metadata }) => {
+  if (list && list.length) {
+    const { location_coast_length_m: total } = metadata;
+
+    return list.filter(d => d.length_m).map((d) => {
+      const year = new Date(d.date).getFullYear();
+
+      return ({
+        x: Number(year),
+        y: d.length_m,
+        color: '#00857F',
+        percentage: d.length_m / total * 100,
+        unit: '%',
+        value: d.length_m,
+        label: `Mangroves in ${year}`
+      });
+    });
+  }
+
+  return [];
+};
+
+const widgetMeta = ({ list, metadata }) => {
+  if (list && list.length && metadata) {
+    return {
+      years: list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear()),
+      total: metadata.location_coast_length_m
+    };
+  }
+
+  return {
+    years: [],
+    total: null
+  };
+};
+
 export const CONFIG = {
-  parse: () => ({
-    chart: [],
+  parse: data => ({
+    chartData: widgetData(data),
+    metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',
       layout: 'centric',

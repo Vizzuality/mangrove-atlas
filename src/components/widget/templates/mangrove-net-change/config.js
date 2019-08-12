@@ -39,7 +39,7 @@ export const CONFIG = {
     ];
 
     return {
-      chart: fakeData.map(l => (
+      chartData: fakeData.map(l => (
         {
           x: l.label,
           'Net change': l.netChange,
