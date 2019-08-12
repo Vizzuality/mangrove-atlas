@@ -1,3 +1,5 @@
 export default {
-  isMobile: false
+  mobile: {
+    mapView: false
+  }
 };

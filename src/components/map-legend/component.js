@@ -8,6 +8,7 @@ const Legend = ({ layers }) => (
   </Fragment>
 );
 
+
 Legend.propTypes = {
   layers: PropTypes.arrayOf(PropTypes.shape({}))
 };

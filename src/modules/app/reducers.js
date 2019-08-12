@@ -1,8 +1,11 @@
-import setScreen from './actions';
+import { setMobileView } from './actions';
 
 export default {
-  [setScreen]: (state, { payload }) => ({
+  [setMobileView]: (state, { payload }) => ({
     ...state,
-    isMobile: payload,
+    mobile: {
+      ...state.mobile,
+      mapView: payload
+    }
   })
 };

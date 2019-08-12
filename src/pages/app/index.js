@@ -1,27 +1,18 @@
 import React from 'react';
-import Widgets from 'components/widgets';
-import Map from 'components/map';
+import DesktopLayout from 'components/layout/desktop';
+import MobileLayout from 'components/layout/mobile';
 import LocationModal from 'components/location-modal';
-import Sidebar from 'components/sidebar';
 import MediaQuery from 'react-responsive';
-import styles from './style.module.scss';
+import { breakpoints } from 'utils/responsive';import styles from './style.module.scss';
 
 
 const AppPage = () => (
   <div className={styles.app}>
-    <MediaQuery maxWidth={384}>
-      <Sidebar>
-        <Widgets />
-      </Sidebar>
+    <MediaQuery maxWidth={breakpoints.md - 1}>
+      <MobileLayout />
     </MediaQuery>
-    <MediaQuery minWidth={384}>
-      <Sidebar>
-        <Widgets />
-      </Sidebar>
-      <div className={styles.vis}>
-        <Map />
-      </div>
-
+    <MediaQuery minWidth={breakpoints.md}>
+      <DesktopLayout />
     </MediaQuery>
     {/* Modals */}
     <LocationModal />

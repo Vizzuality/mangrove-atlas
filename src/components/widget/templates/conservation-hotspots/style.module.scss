@@ -1,4 +1,4 @@
-@import '../../../../styles/vars';
+@import 'styles/vars';
 
 .hotspotsList {
   display: flex;
@@ -6,7 +6,7 @@
   margin-top: 30px;
   justify-content: space-between;
 
-  @media screen and (max-width: map-get($breakpoints, sm)) {
+  @media screen and (max-width: map-get($breakpoints, md)) {
     flex-direction: column;
     justify-content: space-around;
     margin: 20px -10px -10px -10px;
@@ -26,7 +26,7 @@
     border-radius: 20px;
     width: auto;
 
-    @media screen and (max-width: map-get($breakpoints, sm)) {
+    @media screen and (max-width: map-get($breakpoints, md)) {
       flex-direction: row;
       vertical-align: bottom;
       align-items: flex-end;
@@ -35,7 +35,7 @@
 
     .cardInfo {
       display: inline;
-      @media screen and (max-width: map-get($breakpoints, sm)) {
+      @media screen and (max-width: map-get($breakpoints, md)) {
         p {
           margin-bottom: 0;
         }
@@ -50,14 +50,14 @@
 
     &:first-child {
       margin-right: 10px;
-      @media screen and (max-width: map-get($breakpoints, sm)) {
+      @media screen and (max-width: map-get($breakpoints, md)) {
         margin-right: 0;
       }
     }
 
     &:last-child {
       margin-left: 10px;
-      @media screen and (max-width: map-get($breakpoints, sm)) {
+      @media screen and (max-width: map-get($breakpoints, md)) {
         margin-left: 0;
       }
     }
