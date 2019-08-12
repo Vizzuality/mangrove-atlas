@@ -11,49 +11,74 @@ import styles from './style.module.scss';
 
 class Widget extends PureComponent {
   static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
+    data: PropTypes.shape({}),
+    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
     name: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
     widgetConfig: PropTypes.shape({}).isRequired,
     layerId: PropTypes.string,
     layersIds: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.shape({}),
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
+    isLoading: PropTypes.bool,
     children: PropTypes.func.isRequired,
     toggleActive: PropTypes.func,
     toggleCollapse: PropTypes.func
   };
 
   static defaultProps = {
+    data: null,
+    highlightedPlaces: null,
     isActive: false,
     isCollapsed: false,
+    isLoading: false,
     layerId: null,
     layersIds: null,
+    location: null,
     toggleActive: () => { },
     toggleCollapse: () => { }
   };
 
+  getDataBySlug() {
+    const { data, highlightedPlaces, slug, widgetConfig } = this.props;
 
-  activeToggleHandler = () => {
-    const { layersIds, toggleActive, id, isActive, layerId } = this.props;
-    if (layersIds) {
-      layersIds.forEach(lId => toggleActive({ id, layerId: lId, isActive: !isActive }));
-    } else {
-      toggleActive({ id, layerId, isActive: !isActive });
-    }
-  };
+    if (slug === 'highlighted_places') return widgetConfig.parse(highlightedPlaces);
+
+    return widgetConfig.parse(data);
+  }
 
   collapseToggleHandler = () => {
-    const { toggleCollapse, id } = this.props;
-    toggleCollapse({ id });
+    const { toggleCollapse, slug } = this.props;
+
+    toggleCollapse({ slug });
+  };
+
+  activeToggleHandler = () => {
+    const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
+    if (layersIds) {
+      layersIds.forEach(lId => toggleActive({ slug, layerId: lId, isActive: !isActive }));
+    } else {
+      toggleActive({ slug, layerId, isActive: !isActive });
+    }
+    console.log(toggleActive)
+    console.log(isActive, 'dentro active...')
   };
 
   render() {
-    const { isLoading } = this.props;
-    const { name, widgetConfig, isCollapsed, isActive, layerId, children, id, slug, ...props } = this.props;
+    const {
+      children,
+      data,
+      isCollapsed,
+      isActive,
+      isLoading,
+      name,
+      layersIds,
+      slug,
+      ...props
+    } = this.props;
 
-    const widgetData = widgetConfig.parse({});
+    const haveLayers = !!(layersIds && layersIds.length);
 
     return (
       <div
@@ -77,13 +102,14 @@ class Widget extends PureComponent {
             </MediaQuery>
             {name}
           </button>
-          {layerId && (
+          {haveLayers && (
             <Button
               hasBackground={isActive}
               hasContrast={!isActive}
               isActive={isActive}
               onClick={this.activeToggleHandler}
             >
+            {console.log(isActive)}
               {isActive ? 'Hide layer' : 'Show layer'}
             </Button>
           )}
@@ -93,12 +119,14 @@ class Widget extends PureComponent {
           : (
             <div className={classnames(styles.content)}>
               {children({
-                id,
                 name,
-                slug,
+                isActive,
                 isCollapsed,
-                data: widgetData,
-                ...props
+                isLoading,
+                layersIds,
+                slug,
+                data: this.getDataBySlug(slug),
+                ...props,
               })}
             </div>
           )

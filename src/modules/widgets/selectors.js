@@ -9,10 +9,8 @@ export const dashboardWidgets = createSelector(
   [widgets, currentDashboard],
   (_widgets, _currentDashboard) => {
     if (!_currentDashboard) return [];
-    const fixedWidgets = ['highlighted-areas'];
-    const widgetIds = [...fixedWidgets, ..._currentDashboard.widget_ids];
-    const result = _widgets.filter(widget => widgetIds.includes(widget.id));
-
+    const { widgetsSlugs } = _currentDashboard;
+    const result = _widgets.filter(widget => widgetsSlugs.includes(widget.slug));
     return result;
   }
 );
@@ -32,7 +30,7 @@ export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {
     // Saloum and Rufiji
-    const ids = ['094e62605d725612c642cb1eb5451ded', '4d4f31ae3061763b34c9c10da11082b0'];
+    const ids = [4, 40];
     const widgetData = _locations.filter(location => ids.includes(location.id));
 
     return { widgetData };

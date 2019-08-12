@@ -1,11 +1,11 @@
 import MangroveCoverage from './mangrove-coverage';
 import MangroveNetChange from './mangrove-net-change';
 import MangroveActivity from './mangrove-activity';
-import ConservationHotspots from './conservation-hotspots';
+import HighlightedPlaces from './highlighted-places';
 
 export default {
-  'mangrove-coverage': MangroveCoverage,
-  'mangrove-net-change': MangroveNetChange,
-  'mangrove-activity': MangroveActivity,
-  'highlighted-areas': ConservationHotspots
+  mangrove_coverage: MangroveCoverage,
+  mangrove_net_change: MangroveNetChange,
+  mangrove_activity: MangroveActivity,
+  highlighted_places: HighlightedPlaces,
 };

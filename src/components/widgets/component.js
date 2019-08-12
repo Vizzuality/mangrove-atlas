@@ -20,22 +20,27 @@ class WidgetList extends PureComponent {
   }
 
   render() {
-    const { widgets } = this.props;
+    const {
+      isCollapsed,
+      widgets,
+      widgetData,
+      ...parentProps
+    } = this.props;
 
     return (
       <div className={styles.widgets}>
         {widgets.map(widget => (
           <Widget
-            key={widget.id}
+            key={widget.slug}
             {...widget}
+            {...parentProps}
+            data={widgetData}
             widgetConfig={CONFIGS[widget.slug]}
           >
-            {({ slug, data, ...props }) => (
+            {({ slug, ...props }) => (
               <Fragment>
-                {/* Template */}
                 {!!TEMPLATES[widget.slug] && React.createElement(TEMPLATES[widget.slug], {
                   slug,
-                  ...data,
                   ...props
                 })}
               </Fragment>

@@ -5,7 +5,8 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import ConservationHotspots from 'components/widget/templates/conservation-hotspots/component';
+import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
+import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -17,7 +18,7 @@ class LocationSelector extends PureComponent {
       name: PropTypes.string
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
-    conservationHotspots: PropTypes.shape({}),
+    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
     closeSearchPanel: PropTypes.func
   }
 
@@ -25,7 +26,7 @@ class LocationSelector extends PureComponent {
     isOpened: false,
     currentLocation: { name: 'Location name' },
     locations: [],
-    conservationHotspots: {},
+    highlightedPlaces: null,
     closeSearchPanel: () => null
   }
 
@@ -55,7 +56,7 @@ class LocationSelector extends PureComponent {
   }
 
   render() {
-    const { isOpened, currentLocation, locations, conservationHotspots } = this.props;
+    const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
     if (!currentLocation) return null;
 
     const { searchTerm } = this.state;
@@ -66,49 +67,6 @@ class LocationSelector extends PureComponent {
     return (
       <Fragment>
         <MediaQuery maxWidth={breakpoints.md - 1}>
-          <Modal
-            className={classnames(styles.location, styles.mobile)}
-            isOpen={isOpened}
-            onRequestClose={this.closeModal}
-          >
-            <div className={styles.content}>
-              <div className={styles.search}>
-                <input
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                  type="text"
-                  className={classnames(styles.searchInput, 'notranslate')}
-                  placeholder={currentLocation.name}
-                  onChange={this.updateSearchTerm}
-                />
-              </div>
-              <ConservationHotspots
-                conservationHotspots={conservationHotspots}
-                currentLocation={currentLocation}
-              />
-              <ul className={styles.list}>
-                <li className={classnames(styles.listItem, 'notranslate')}>
-                  <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
-                </li>
-                {locationsData.map(location => (
-                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                    {location.type === 'aoi'
-                      && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                    {(location.type === 'country' || location.type === 'admin0-eez')
-                      && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
-                    {location.type === 'wdpa'
-                      && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
-                  </li>
-                ))}
-              </ul>
-              <button type="button" onClick={this.closeModal} className={classnames(styles.searchButton, styles.mobile)}>
-                <FontAwesomeIcon icon={faTimes} size="lg" />
-              </button>
-            </div>
-          </Modal>
-        </MediaQuery>
-        <MediaQuery minWidth={breakpoints.md}>
-
           <Modal
             className={styles.location}
             isOpen={isOpened}
@@ -125,21 +83,67 @@ class LocationSelector extends PureComponent {
                   onChange={this.updateSearchTerm}
                 />
               </div>
-              <ConservationHotspots
-                conservationHotspots={conservationHotspots}
-                currentLocation={currentLocation}
-              />
+              {highlightedPlaces && (
+                <HighlightedPlaces
+                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
+                  currentLocation={currentLocation}
+                />
+              )}
               <ul className={styles.list}>
                 <li className={classnames(styles.listItem, 'notranslate')}>
-                  <Link to={{ type: 'PAGE/APP', payload: { id: 'global' } }}>Worldwide</Link>
+                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
                 </li>
                 {locationsData.map(location => (
                   <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                    {location.type === 'aoi'
+                    {location.location_type === 'aoi'
                       && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                    {(location.type === 'country' || location.type === 'admin0-eez')
+                    {location.location_type === 'country'
                       && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
-                    {location.type === 'wdpa'
+                    {location.location_type === 'wdpa'
+                      && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
+              <FontAwesomeIcon icon={faTimes} size="lg" />
+            </button>
+          </Modal>
+        </MediaQuery>
+        <MediaQuery minWidth={breakpoints.md}>
+          <Modal
+            className={styles.location}
+            isOpen={isOpened}
+            onRequestClose={this.closeModal}
+          >
+            <div className={styles.content}>
+              <div className={styles.search}>
+                <input
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                  type="text"
+                  className={classnames(styles.searchInput, 'notranslate')}
+                  placeholder={currentLocation.name}
+                  onChange={this.updateSearchTerm}
+                />
+              </div>
+              {highlightedPlaces && (
+                <HighlightedPlaces
+                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
+                  currentLocation={currentLocation}
+                />
+              )}
+              <ul className={styles.list}>
+                <li className={classnames(styles.listItem, 'notranslate')}>
+                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
+                </li>
+                {locationsData.map(location => (
+                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
+                    {location.location_type === 'aoi'
+                      && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                    {location.location_type === 'country'
+                      && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                    {location.location_type === 'wdpa'
                       && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
                   </li>
                 ))}

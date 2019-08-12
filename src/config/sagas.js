@@ -10,6 +10,7 @@ import widgetsSagas from 'modules/widgets/sagas';
 import locationsSagas from 'modules/locations/sagas';
 import dashboardsSagas from 'modules/dashboards/sagas';
 import languagesSagas from 'modules/languages/sagas';
+import mangroveDataSagas from 'modules/mangrove-data/sagas';
 
 export default function* root() {
   yield all([
@@ -22,5 +23,6 @@ export default function* root() {
     fork(locationsSagas),
     fork(dashboardsSagas),
     fork(languagesSagas),
+    fork(mangroveDataSagas),
   ]);
 };

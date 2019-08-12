@@ -1,19 +1,12 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
-import DatasetService from 'services/dataset-service';
-import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
-
-const service = new DatasetService({ entityName: 'dashboards' });
+import { takeLatest, put } from 'redux-saga/effects';
+import DATA from 'config/data.json';
+import { fetchSucceeded } from './actions';
 
 function* getDashboards() {
-  yield put(fetchRequested());
-  try {
-    const dashboards = yield call(service.fetch, []);
-    yield put(fetchSucceeded(dashboards));
-  } catch (err) {
-    yield put(fetchFailed(err));
-  }
+  const { dashboards } = DATA;
+  yield put(fetchSucceeded(dashboards));
 }
 
 export default function* dashboardsSagas() {
-  yield takeLatest('DASHBOARDS/GET_ALL', getDashboards);
+  yield takeLatest('DASHBOARDS/FETCH_ALL', getDashboards);
 }
