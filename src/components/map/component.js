@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react';
 import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
+import MediaQuery from 'react-responsive';
+import LegendMobileControl from 'components/map-legend/mobile';
+import classnames from 'classnames';
+import { breakpoints } from 'utils/responsive';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
 import styles from './style.module.scss';
@@ -9,7 +13,8 @@ class Map extends PureComponent {
   static propTypes = {
     basemap: PropTypes.string,
     viewport: PropTypes.shape({}),
-    setViewport: PropTypes.func
+    setViewport: PropTypes.func,
+    isCollapse: PropTypes.bool.isRequired
   }
 
   static defaultProps = {
@@ -24,7 +29,7 @@ class Map extends PureComponent {
       bearing: 0,
       pitch: 0
     },
-    setViewport: () => {}
+    setViewport: () => { }
   }
 
   componentDidMount() {
@@ -54,7 +59,8 @@ class Map extends PureComponent {
     const {
       mapboxApiAccessToken,
       mapStyle,
-      viewport
+      viewport,
+      isCollapse
     } = this.props;
 
     return (
@@ -69,11 +75,20 @@ class Map extends PureComponent {
         onViewportChange={this.onViewportChange}
       >
         <div className={styles.navigation}>
-          <NavigationControl />
+          <MediaQuery minWidth={breakpoints.md}>
+            <NavigationControl />
+          </MediaQuery>
         </div>
-        <div className={styles.legend}>
-          <Legend />
-          <BasemapSelector />
+        <div className={classnames(styles.legend,
+          { [styles.expanded]: !isCollapse })}
+        >
+          <MediaQuery maxWidth={breakpoints.md - 1}>
+            <LegendMobileControl />
+          </MediaQuery>
+          <div className={styles.tooltip}>
+            <Legend />
+            <BasemapSelector />
+          </div>
         </div>
       </MapGL>
     );

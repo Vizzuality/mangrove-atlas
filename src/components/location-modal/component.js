@@ -1,8 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import Modal from 'components/modal';
+import MediaQuery from 'react-responsive';
+import { breakpoints } from 'utils/responsive';
 import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
 import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -63,48 +65,96 @@ class LocationSelector extends PureComponent {
       : locations;
 
     return (
-      <Modal
-        className={styles.location}
-        isOpen={isOpened}
-        onRequestClose={this.closeModal}
-      >
-        <div className={styles.content}>
-          <div className={styles.search}>
-            <input
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
-              type="text"
-              className={classnames(styles.searchInput, 'notranslate')}
-              placeholder={currentLocation.name}
-              onChange={this.updateSearchTerm}
-            />
-          </div>
-          {highlightedPlaces && (
-            <HighlightedPlaces
-              data={highlightedPlacesConfig.parse(highlightedPlaces)}
-              currentLocation={currentLocation}
-            />
-          )}
-          <ul className={styles.list}>
-            <li className={classnames(styles.listItem, 'notranslate')}>
-              <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
-            </li>
-            {locationsData.map(location => (
-              <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                {location.location_type === 'aoi'
-                  && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
-                {location.location_type === 'country'
-                  && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
-                {location.location_type === 'wdpa'
-                  && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <button type="button" onClick={this.closeModal} className={styles.searchButton}>
-          <FontAwesomeIcon icon={faTimes} size="lg" />
-        </button>
-      </Modal>
+      <Fragment>
+        <MediaQuery maxWidth={breakpoints.md - 1}>
+          <Modal
+            className={styles.location}
+            isOpen={isOpened}
+            onRequestClose={this.closeModal}
+          >
+            <div className={styles.content}>
+              <div className={styles.search}>
+                <input
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                  type="text"
+                  className={classnames(styles.searchInput, 'notranslate')}
+                  placeholder={currentLocation.name}
+                  onChange={this.updateSearchTerm}
+                />
+              </div>
+              {highlightedPlaces && (
+                <HighlightedPlaces
+                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
+                  currentLocation={currentLocation}
+                />
+              )}
+              <ul className={styles.list}>
+                <li className={classnames(styles.listItem, 'notranslate')}>
+                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
+                </li>
+                {locationsData.map(location => (
+                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
+                    {location.location_type === 'aoi'
+                      && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                    {location.location_type === 'country'
+                      && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                    {location.location_type === 'wdpa'
+                      && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
+              <FontAwesomeIcon icon={faTimes} size="lg" />
+            </button>
+          </Modal>
+        </MediaQuery>
+        <MediaQuery minWidth={breakpoints.md}>
+          <Modal
+            className={styles.location}
+            isOpen={isOpened}
+            onRequestClose={this.closeModal}
+          >
+            <div className={styles.content}>
+              <div className={styles.search}>
+                <input
+                  // eslint-disable-next-line jsx-a11y/no-autofocus
+                  autoFocus
+                  type="text"
+                  className={classnames(styles.searchInput, 'notranslate')}
+                  placeholder={currentLocation.name}
+                  onChange={this.updateSearchTerm}
+                />
+              </div>
+              {highlightedPlaces && (
+                <HighlightedPlaces
+                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
+                  currentLocation={currentLocation}
+                />
+              )}
+              <ul className={styles.list}>
+                <li className={classnames(styles.listItem, 'notranslate')}>
+                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
+                </li>
+                {locationsData.map(location => (
+                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
+                    {location.location_type === 'aoi'
+                      && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                    {location.location_type === 'country'
+                      && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                    {location.location_type === 'wdpa'
+                      && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
+              <FontAwesomeIcon icon={faTimes} size="lg" />
+            </button>
+          </Modal>
+        </MediaQuery>
+      </Fragment>
     );
   }
 }

@@ -4,7 +4,7 @@ import { openSearchPanel } from 'modules/locations/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  location: currentLocation(state),
+  location: currentLocation(state)
 });
 
 const mapDispatchToProps = {
