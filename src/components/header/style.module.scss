@@ -83,6 +83,10 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
+    @media screen and (max-width: map-get($breakpoints, md)) {
+      height: 50px;
+      width: 50px;
+    }
     svg {
       @media screen and (max-width: map-get($breakpoints, md)) {
         height: 30px;
