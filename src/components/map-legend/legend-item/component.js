@@ -2,13 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
 import styles from './style.module.scss';
 
-const LegendItem = ({ id, name, toggleActive }) => {
+const LegendItem = ({ id, name, toggleActive, isCollapsed, mapView }) => {
   const onClickHandler = () => toggleActive({ id, isActive: false });
 
   return (
-    <div className={styles.legendItem}>
+    <div className={classnames(styles.legendItem,
+      { [styles.collapse]: (isCollapsed && mapView) })}
+    >
       <h3>{name}</h3>
       <button className={styles.removeButton} type="button" onClick={onClickHandler}>
         <FontAwesomeIcon icon={faTimes} />
@@ -20,7 +23,9 @@ const LegendItem = ({ id, name, toggleActive }) => {
 LegendItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  toggleActive: PropTypes.func
+  toggleActive: PropTypes.func,
+  isCollapsed: PropTypes.bool.isRequired,
+  mapView: PropTypes.bool.isRequired
 };
 
 LegendItem.defaultProps = {

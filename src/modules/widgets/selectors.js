@@ -20,6 +20,12 @@ export const activeWidgets = createSelector(
   _widgets => _widgets.filter(widget => widget.isActive)
 );
 
+export const activeLayers = createSelector(
+  [activeWidgets],
+  _activeWidgets => _activeWidgets.length
+);
+
+
 export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {

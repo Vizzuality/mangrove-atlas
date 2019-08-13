@@ -18,20 +18,20 @@ export function* getWidgets() {
 
 // Part of query state, not normal flow.
 // View ./index.js queryState.add for more info.
-export function * restoreWidgetsState() {
+export function* restoreWidgetsState() {
   /**
    * A regular selector, it could be on a selectors file with reselect
    * or better yet, be created automatically by the package based on registered namespace info.
   */
-  function * handler () {
+  function* handler() {
     const widgetsSelector = state => ({
       urlWidgets: (state.router.query && state.router.query.widgets) || null,
       stateWidgets: state.widgets.list
     });
 
-    const {urlWidgets, stateWidgets} = yield select(widgetsSelector);
+    const { urlWidgets, stateWidgets } = yield select(widgetsSelector);
 
-    if(urlWidgets) {
+    if (urlWidgets) {
       const toDispatch = [];
       const updatedWidgets = stateWidgets.map(widget => {
         const updatedWidget = Object.assign({}, widget);
@@ -42,8 +42,6 @@ export function * restoreWidgetsState() {
           if (update.isActive) {
             updatedWidget.isActive = true;
             toDispatch.push(put(toggleActive({
-              id: widget.id,
-              layerId: widget.layerId,
               isActive: true
             })));
           }
@@ -56,9 +54,9 @@ export function * restoreWidgetsState() {
         return updatedWidget;
       });
 
-        yield put(fetchSucceeded(updatedWidgets));
-        yield call(delay, 1500);
-        yield all(toDispatch);
+      yield put(fetchSucceeded(updatedWidgets));
+      yield call(delay, 1500);
+      yield all(toDispatch);
     }
   }
 

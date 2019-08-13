@@ -14,10 +14,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  collapseAll,
   expandAll,
+  collapseAll,
   toggleCollapse,
-  toggleActive,
+  toggleActive
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
