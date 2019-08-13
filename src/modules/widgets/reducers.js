@@ -35,11 +35,12 @@ export default {
     isCollapsed: false,
     list: state.list.map(item => ({ ...item, isCollapsed: false }))
   }),
-  [toggleCollapse]: (state, { payload }) => {
+  [toggleCollapse]: (state, { payload: { id } }) => {
     const list = state.list.map((item) => {
-      if (item.id !== payload.id) return item;
+      if (item.slug !== id) return item;
       return ({ ...item, isCollapsed: !item.isCollapsed });
     });
+
     const noCollapsed = list.find(item => item.isCollapsed === false);
 
     return {
@@ -51,7 +52,7 @@ export default {
   [toggleActive]: (state, { payload }) => ({
     ...state,
     list: state.list.map((item) => {
-      if (item.id !== payload.id) return item;
+      if (item.slug !== payload.id) return item;
       return ({ ...item, isActive: payload.isActive });
     })
   }),

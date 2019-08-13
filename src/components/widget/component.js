@@ -10,36 +10,6 @@ import classnames from 'classnames';
 import styles from './style.module.scss';
 
 class Widget extends PureComponent {
-  static propTypes = {
-    data: PropTypes.shape({}),
-    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
-    name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    widgetConfig: PropTypes.shape({}).isRequired,
-    layerId: PropTypes.string,
-    layersIds: PropTypes.arrayOf(PropTypes.string),
-    location: PropTypes.shape({}),
-    isActive: PropTypes.bool,
-    isCollapsed: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    children: PropTypes.func.isRequired,
-    toggleActive: PropTypes.func,
-    toggleCollapse: PropTypes.func
-  };
-
-  static defaultProps = {
-    data: null,
-    highlightedPlaces: null,
-    isActive: false,
-    isCollapsed: false,
-    isLoading: false,
-    layerId: null,
-    layersIds: null,
-    location: null,
-    toggleActive: () => { },
-    toggleCollapse: () => { }
-  };
-
   getDataBySlug() {
     const { data, highlightedPlaces, slug, widgetConfig } = this.props;
 
@@ -50,16 +20,15 @@ class Widget extends PureComponent {
 
   collapseToggleHandler = () => {
     const { toggleCollapse, slug } = this.props;
-
-    toggleCollapse({ slug });
+    toggleCollapse({ id: slug });
   };
 
   activeToggleHandler = () => {
     const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
     if (layersIds) {
-      layersIds.forEach(lId => toggleActive({ slug, layerId: lId, isActive: !isActive }));
+      layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive: !isActive }));
     } else {
-      toggleActive({ slug, layerId, isActive: !isActive });
+      toggleActive({ id: slug, layerId, isActive: !isActive });
     }
   };
 
@@ -136,4 +105,35 @@ class Widget extends PureComponent {
     );
   }
 }
+
+Widget.propTypes = {
+  data: PropTypes.shape({}),
+  highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  widgetConfig: PropTypes.shape({}).isRequired,
+  layerId: PropTypes.string,
+  layersIds: PropTypes.arrayOf(PropTypes.string),
+  location: PropTypes.shape({}),
+  isActive: PropTypes.bool,
+  isCollapsed: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  toggleActive: PropTypes.func,
+  toggleCollapse: PropTypes.func,
+  template: PropTypes.func.isRequired
+};
+
+Widget.defaultProps = {
+  data: null,
+  highlightedPlaces: null,
+  isActive: false,
+  isCollapsed: false,
+  isLoading: false,
+  layerId: null,
+  layersIds: null,
+  location: null,
+  toggleActive: () => { },
+  toggleCollapse: () => { }
+};
+
 export default Widget;
