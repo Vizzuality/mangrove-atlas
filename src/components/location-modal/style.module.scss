@@ -82,8 +82,8 @@
     &.mobile {
       top: 20px;
       right: 20px;
-      left: inherit;
-
+      z-index: 2;
+      left: initial;
     }
   }
 
