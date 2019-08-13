@@ -68,7 +68,7 @@ class LocationSelector extends PureComponent {
       <Fragment>
         <MediaQuery maxWidth={breakpoints.md - 1}>
           <Modal
-            className={styles.location}
+            className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >
@@ -105,7 +105,7 @@ class LocationSelector extends PureComponent {
                 ))}
               </ul>
             </div>
-            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
+            <button type="button" onClick={this.closeModal} className={classnames(styles.searchButton, styles.mobile)}>
               <FontAwesomeIcon icon={faTimes} size="lg" />
             </button>
           </Modal>
