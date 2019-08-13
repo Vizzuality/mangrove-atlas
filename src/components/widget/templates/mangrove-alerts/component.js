@@ -64,7 +64,6 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
       </div>
 
       {/* Chart */}
-      {/* {chart.length && <Spinner />} */}
       <Chart
         data={chartData}
         config={chartConfig}

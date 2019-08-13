@@ -10,6 +10,36 @@ import classnames from 'classnames';
 import styles from './style.module.scss';
 
 class Widget extends PureComponent {
+  static propTypes = {
+    data: PropTypes.shape({}),
+    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
+    name: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
+    widgetConfig: PropTypes.shape({}).isRequired,
+    layerId: PropTypes.string,
+    layersIds: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.shape({}),
+    isActive: PropTypes.bool,
+    isCollapsed: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    toggleActive: PropTypes.func,
+    toggleCollapse: PropTypes.func,
+    template: PropTypes.func.isRequired
+  };
+  
+  static defaultProps = {
+    data: null,
+    highlightedPlaces: null,
+    isActive: false,
+    isCollapsed: false,
+    isLoading: false,
+    layerId: null,
+    layersIds: null,
+    location: null,
+    toggleActive: () => { },
+    toggleCollapse: () => { }
+  };
+
   getDataBySlug() {
     const { data, highlightedPlaces, slug, widgetConfig } = this.props;
 
@@ -105,35 +135,5 @@ class Widget extends PureComponent {
     );
   }
 }
-
-Widget.propTypes = {
-  data: PropTypes.shape({}),
-  highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  widgetConfig: PropTypes.shape({}).isRequired,
-  layerId: PropTypes.string,
-  layersIds: PropTypes.arrayOf(PropTypes.string),
-  location: PropTypes.shape({}),
-  isActive: PropTypes.bool,
-  isCollapsed: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  toggleActive: PropTypes.func,
-  toggleCollapse: PropTypes.func,
-  template: PropTypes.func.isRequired
-};
-
-Widget.defaultProps = {
-  data: null,
-  highlightedPlaces: null,
-  isActive: false,
-  isCollapsed: false,
-  isLoading: false,
-  layerId: null,
-  layersIds: null,
-  location: null,
-  toggleActive: () => { },
-  toggleCollapse: () => { }
-};
 
 export default Widget;
