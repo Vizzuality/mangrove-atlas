@@ -22,11 +22,11 @@ class Widget extends PureComponent {
     isActive: PropTypes.bool,
     isCollapsed: PropTypes.bool,
     isLoading: PropTypes.bool,
-    children: PropTypes.func.isRequired,
     toggleActive: PropTypes.func,
-    toggleCollapse: PropTypes.func
+    toggleCollapse: PropTypes.func,
+    template: PropTypes.func.isRequired
   };
-
+  
   static defaultProps = {
     data: null,
     highlightedPlaces: null,
@@ -50,22 +50,21 @@ class Widget extends PureComponent {
 
   collapseToggleHandler = () => {
     const { toggleCollapse, slug } = this.props;
-
-    toggleCollapse({ slug });
+    toggleCollapse({ id: slug });
   };
 
   activeToggleHandler = () => {
     const { layersIds, toggleActive, slug, isActive, layerId } = this.props;
     if (layersIds) {
-      layersIds.forEach(lId => toggleActive({ slug, layerId: lId, isActive: !isActive }));
+      layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive: !isActive }));
     } else {
-      toggleActive({ slug, layerId, isActive: !isActive });
+      toggleActive({ id: slug, layerId, isActive: !isActive });
     }
   };
 
   render() {
     const {
-      children,
+      template: Template,
       data,
       isCollapsed,
       isActive,
@@ -73,10 +72,23 @@ class Widget extends PureComponent {
       name,
       layersIds,
       slug,
+      widgetConfig,
       ...props
     } = this.props;
 
     const haveLayers = !!(layersIds && layersIds.length);
+
+    const templateProps = {
+      name,
+      isActive,
+      isCollapsed,
+      isLoading,
+      layersIds,
+      slug,
+      data: this.getDataBySlug(slug),
+      widgetConfig,
+      ...props,
+    };
 
     return (
       <div
@@ -115,16 +127,7 @@ class Widget extends PureComponent {
           ? <Spinner isLoading />
           : (
             <div className={classnames(styles.content)}>
-              {children({
-                name,
-                isActive,
-                isCollapsed,
-                isLoading,
-                layersIds,
-                slug,
-                data: this.getDataBySlug(slug),
-                ...props,
-              })}
+              <Template {...templateProps} />
             </div>
           )
         }
@@ -132,4 +135,5 @@ class Widget extends PureComponent {
     );
   }
 }
+
 export default Widget;

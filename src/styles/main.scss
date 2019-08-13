@@ -1,8 +1,9 @@
 @import './vars';
+@import './lib/react-datepicker';
 
 body {
   color: $body-color;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: $font-family;
   font-size: $body-font-size;
   line-height: $body-line-height;
 
