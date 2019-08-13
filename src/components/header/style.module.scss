@@ -54,7 +54,6 @@
   }
 
   .title {
-    width: 80%;
     padding: 0;
     margin: 0;
     border: 0;
@@ -63,6 +62,7 @@
     font-size: 60px;
     font-weight: 300;
     line-height: 0.85;
+    text-align: left;
 
     @media screen and (max-width: map-get($breakpoints, md)) {
       font-size: 35px;
@@ -76,6 +76,7 @@
     border: 0;
     border-radius: 100%;
     background: white;
+    text-align: center;
     cursor: pointer;
     box-shadow: $box-shadow;
 
@@ -93,11 +94,5 @@
         vertical-align: 0;
       }
     }
-  }
-  .invisible {
-    display: block;
-  }
-  .visible {
-    display: none;
   }
 }

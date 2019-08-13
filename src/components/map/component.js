@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
-import LegendMobileControl from 'components/map-legend/mobile';
+import MobileLegendControl from 'components/map-legend/mobile';
 import classnames from 'classnames';
 import { breakpoints } from 'utils/responsive';
 import BasemapSelector from 'components/basemap-selector';
@@ -83,7 +83,7 @@ class Map extends PureComponent {
           { [styles.expanded]: !isCollapse })}
         >
           <MediaQuery maxWidth={breakpoints.md - 1}>
-            <LegendMobileControl />
+            <MobileLegendControl />
           </MediaQuery>
           <div className={styles.tooltip}>
             <Legend />
