@@ -1,9 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
-
 import {
   Line,
   Bar,
@@ -19,14 +17,22 @@ import {
   ResponsiveContainer,
   ComposedChart,
   PieChart,
-  Label,
-  ReferenceLine,
-  ReferenceArea
+  Label
 } from 'recharts';
+
+import { stack, clearStack, addComponent } from './rechart-components';
+import ChartTick from './tick';
+import {
+  allowedKeys,
+  defaults
+} from './constants';
 
 import styles from './style.module.scss';
 
-import ChartTick from './tick';
+const rechartCharts = new Map([
+  ['pie', PieChart],
+  ['composed', ComposedChart]
+]);
 
 class Chart extends PureComponent {
   static propTypes = {
@@ -69,7 +75,9 @@ class Chart extends PureComponent {
     const {
       margin = { top: 20, right: 0, left: 50, bottom: 0 },
       padding = { top: 0, right: 0, left: 0, bottom: 0 },
-      type,
+      type = 'composed',
+      height,
+      layout = 'horizontal',
       gradients,
       patterns,
       ...content
@@ -82,38 +90,33 @@ class Chart extends PureComponent {
       yAxis,
       cartesianGrid,
       cartesianAxis,
-      height,
       tooltip,
-      layout,
       legend,
       unit,
-      unitFormat,
-      referenceLines,
-      referenceAreas
-    } = config;
+      unitFormat
+    } = content;
+
+    clearStack();
+
     const { lines, bars, areas, pies } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
-    let RechartChart;
-    switch (type) {
-      case 'pie':
-        RechartChart = PieChart;
-        break;
-      default: {
-        RechartChart = ComposedChart;
+    const RechartChart = rechartCharts.get(type);
+
+    Object.entries(content).forEach(entry => {
+      const [key, definition] = entry;
+      if (allowedKeys.includes(key)) {
+        addComponent(key, definition);
       }
-    }
+    });
 
     return (
-      <div
-        className={styles.chart}
-        style={{ height }}
-      >
+      <div className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
             height={height}
             data={data}
-            layout={layout || 'horizontal'}
+            layout={layout}
             margin={margin}
             padding={padding}
             onMouseMove={handleMouseMove}
@@ -157,11 +160,11 @@ class Chart extends PureComponent {
               ))
               }
             </defs>
+            { stack }
 
             {cartesianGrid && (
               <CartesianGrid
-                strokeDasharray="4 4"
-                stroke="#d6d6d9"
+                {...defaults['cartesianGrid']}
                 {...cartesianGrid}
               />
             )}
@@ -200,20 +203,6 @@ class Chart extends PureComponent {
                 {...yAxis}
               />
             )}
-
-            {referenceAreas && referenceAreas.map(ref => (
-              <ReferenceArea
-                key={Math.random()}
-                {...ref}
-              />
-            ))}
-
-            {referenceLines && referenceLines.map(ref => (
-                <ReferenceLine
-                  key={Math.random()}
-                  {...ref}
-                />
-            ))}
 
             {areas && Object.keys(areas).map(key => (
               <Area key={key} dataKey={key} dot={false} {...areas[key]} />
@@ -270,7 +259,6 @@ class Chart extends PureComponent {
               />
             )}
 
-
             {tooltip && (
               <Tooltip
                 isAnimationActive={false}
@@ -285,7 +273,6 @@ class Chart extends PureComponent {
                 data={data}
               />
             )}
-
           </RechartChart>
         </ResponsiveContainer>
       </div>

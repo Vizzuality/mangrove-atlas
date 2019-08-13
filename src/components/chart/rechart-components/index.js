@@ -8,58 +8,31 @@ import {
   Line
 } from 'recharts';
 
-const componentMap = new Map([
+const rechartsComponentsMap = new Map([
   ['referenceAreas', ReferenceArea],
   ['referenceLines', ReferenceLine],
   ['cartesianGrid', CartesianGrid],
   ['cartesianAxis', CartesianAxis]
 ]);
 
-export default function getComponent(type, options, indexIt) {
-  if (!componentMap.has(type)) {
+export let stack = [];
+
+export function clearStack() {
+  stack = [];
+}
+
+export function addComponent(type, options) {
+  if (!rechartsComponentsMap.has(type)) {
     return null;
   }
 
-  const Component = componentMap.get(type);
+  const Component = rechartsComponentsMap.get(type);
 
   if (isArray(options)) {
-    return (
-      <>
-        { options.map((itemOptions, index) => (
-          <Component key={`${type}-${index}`} {...itemOptions} />
-        )) }
-      </>
-    );
-  }
-
-  if (isObject(options)) {
-    console.log(options)
-    return (<Component key={`${type}-${indexIt}`} {...options}></Component>);
+    options.forEach((itemOptions, index) => stack.push(<Component key={`${type}-${index}`} {...itemOptions} />))
+  } else if (isObject(options)) {
+    stack.push(<Component key={`${type}`} {...options}></Component>);
   }
   
   return null;
 };
-
-/*
-{cartesianGrid && (
-  <CartesianGrid
-    strokeDasharray="4 4"
-    stroke="#d6d6d9"
-    {...cartesianGrid}
-  />
-)}
-
-{cartesianAxis && (
-  <CartesianAxis
-    {...cartesianAxis}
-  />
-)}
-
-{referenceLines && referenceLines.map(ref => (
-  <ReferenceLine
-    key={new Date()}
-    {...ref}
-  />
-))}
-
-*/
