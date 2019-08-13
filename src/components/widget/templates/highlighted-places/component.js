@@ -11,10 +11,12 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
         key={d.id}
         className={classnames(styles.card, { [styles.active]: d.id === currentLocation.id })}
       >
-        <h3 className="notranslate">{d.name}</h3>
-        <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
-        {d.id !== currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>View place</Link>}
-        {d.id === currentLocation.id && <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Back to Worldwide</Link>}
+        <span className={styles.cardInfo}>
+          <h3 className="notranslate">{d.name}</h3>
+          <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
+        </span>
+        {d.id !== currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}><span className={styles.link}>View place</span></Link>}
+        {d.id === currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: 'worldwide' } }}><span className={styles.link}>Back to Worldwide</span></Link>}
       </div>
     ))}
   </div>
