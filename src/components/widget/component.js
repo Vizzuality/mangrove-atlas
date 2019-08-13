@@ -65,7 +65,7 @@ class Widget extends PureComponent {
 
   render() {
     const {
-      children,
+      template: Template,
       data,
       isCollapsed,
       isActive,
@@ -78,6 +78,18 @@ class Widget extends PureComponent {
     } = this.props;
 
     const haveLayers = !!(layersIds && layersIds.length);
+
+    const templateProps = {
+      name,
+      isActive,
+      isCollapsed,
+      isLoading,
+      layersIds,
+      slug,
+      data: this.getDataBySlug(slug),
+      widgetConfig,
+      ...props,
+    };
 
     return (
       <div
@@ -116,17 +128,7 @@ class Widget extends PureComponent {
           ? <Spinner isLoading />
           : (
             <div className={classnames(styles.content)}>
-              {children({
-                name,
-                isActive,
-                isCollapsed,
-                isLoading,
-                layersIds,
-                slug,
-                data: this.getDataBySlug(slug),
-                widgetConfig,
-                ...props,
-              })}
+              <Template {...templateProps} />
             </div>
           )
         }
