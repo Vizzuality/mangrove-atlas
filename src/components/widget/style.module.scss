@@ -99,5 +99,10 @@
   .sentence {
     @include medium-text;
     margin: 1rem 0;
+    position: relative;
+  }
+
+  .bold {
+    font-weight: bold;
   }
 }
