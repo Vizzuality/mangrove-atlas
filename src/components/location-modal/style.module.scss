@@ -38,10 +38,6 @@
 
     overflow: auto;
     z-index: 1;
-    &.mobile {
-      position: absolute;
-      right: 20px;
-    }
   }
 
   .searchInput {
