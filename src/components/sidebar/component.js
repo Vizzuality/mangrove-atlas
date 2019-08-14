@@ -22,6 +22,7 @@ class Dashboard extends Component {
 
   state = {
     sticky: false,
+    securityMargin: false
   }
 
   setSticky = sticky => (
@@ -38,18 +39,24 @@ class Dashboard extends Component {
     expandAll();
   }
 
+  setMargin = securityMargin => (
+    this.setState({ securityMargin })
+  )
+
 
   render() {
     const { children, isCollapsed } = this.props;
-    const { sticky } = this.state;
+    const { sticky, securityMargin } = this.state;
 
     return (
       <OnScroll
         className={classnames(styles.sidebar, {
-          [styles.securityMargin]: sticky
+          [styles.securityMargin]: securityMargin
         })}
         triggers={[
-          { top: -65, callback: sticky => this.setSticky(!sticky) },
+          { top: -65, callback: _sticky => this.setSticky(!_sticky) },
+          { top: -10, callback: securityMargin => this.setMargin(!securityMargin) },
+
         ]}
       >
         <div className={styles.header}>
