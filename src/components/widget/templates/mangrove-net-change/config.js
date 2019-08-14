@@ -2,56 +2,42 @@ import React from 'react';
 import { format } from 'd3-format';
 import WidgetLegend from 'components/widget/legend';
 import WidgetTooltip from 'components/widget/tooltip';
+import moment from 'moment';
+import orderBy from 'lodash/orderBy';
+
 
 const numberFormat = format(',.2f');
 
-const widgetData = () => {
-  return [
+const widgetData = ({ list }) => {
+  const data = list.map(l => (
     {
-      label: '1996',
-      year: 1996,
-      gain: 122,
-      netChange: 40,
-      loss: -120
-    },
-    {
-      label: '2002',
-      year: 2002,
-      gain: 155,
-      netChange: 30,
-      loss: -40
-    },
-    {
-      label: '2009',
-      year: 2009,
-      gain: 194,
-      netChange: 72,
-      loss: -182
-    },
-    {
-      label: '2016',
-      year: 2016,
-      gain: 135,
-      netChange: 110,
-      loss: -194
-    }
-  ];
+      label: JSON.stringify(moment(l.date).year()),
+      year: moment(l.date).year(),
+      gain: l.gain_m2,
+      netChange: l.gain_m2 - l.loss_m2,
+      loss: -l.loss_m2
+    })).filter(l => l.netChange !== 0);
+  return orderBy(data, l => l.year);
 };
 
+const widgetMetadata = ({ list }) => ({
+  years: list.filter(l => (l.gain_m2 !== null && l.loss_m2 !== null)).map(l => (
+    moment(l.date).year()
+  )).sort((a, b) => a - b)
+});
 
 const CONFIG = {
   parse: data => ({
-    chartData: widgetData().map(l => (
+    chartData: widgetData(data).map(l => (
       {
         x: l.label,
         'Net change': l.netChange,
         Gain: l.gain,
         Loss: l.loss,
-        color: l.color,
         name: l.label,
         year: l.year
       })),
-    metadata: { years: [1996, 2007, 2008, 2009, 2010, 2015, 2016] },
+    metadata: widgetMetadata(data),
     chartConfig: {
       stackOffset: 'sign',
       margin: { top: 20, right: 0, left: 40, bottom: 0 },

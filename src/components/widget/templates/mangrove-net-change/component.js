@@ -12,7 +12,6 @@ const numberFormat = format(',.2f');
 class MangroveNetChange extends PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    chartConfig: PropTypes.shape({}).isRequired,
     currentLocation: PropTypes.shape({}),
     slug: PropTypes.string
   }
@@ -47,17 +46,14 @@ class MangroveNetChange extends PureComponent {
   render() {
     const { data: { metadata, chartConfig }, currentLocation, slug } = this.props;
     const { startYear, endYear } = this.state;
-const{ data} = this.props;
-console.log(data)
     const optionsYears = metadata.years.map(year => ({
-      label: year,
-      value: year
+      label: year.toString(),
+      value: year.toString()
     }));
     const widgetData = this.getData();
     const totalLoss = widgetData && widgetData.length
       ? Math.abs(sumBy(widgetData, 'Loss'))
       : 0;
-
     return (
       <Fragment>
         <div className={styles.widget_template}>
