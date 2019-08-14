@@ -5,14 +5,16 @@
         "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage"
+          "mangrove_coverage",
+          "mangrove_net_change"
         ]
       },
       {
         "location_type": "country",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage"
+          "mangrove_coverage",
+          "mangrove_net_change"
         ]
       },
       {
