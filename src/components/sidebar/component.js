@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import OnScroll from 'react-on-scroll';
 import Header from 'components/header';
 import Button from 'components/button';
@@ -19,9 +20,13 @@ class Dashboard extends Component {
     expandAll: () => null
   }
 
-  state = { sticky: false }
+  state = {
+    sticky: false,
+  }
 
-  setSticky = sticky => this.setState({ sticky })
+  setSticky = sticky => (
+    this.setState({ sticky })
+  )
 
   onClickCollapseAll = () => {
     const { collapseAll } = this.props;
@@ -40,7 +45,9 @@ class Dashboard extends Component {
 
     return (
       <OnScroll
-        className={styles.sidebar}
+        className={classnames(styles.sidebar, {
+          [styles.securityMargin]: sticky
+        })}
         triggers={[
           { top: -65, callback: sticky => this.setSticky(!sticky) },
         ]}
