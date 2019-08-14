@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import OnScroll from 'react-on-scroll';
 import Header from 'components/header';
 import Button from 'components/button';
@@ -19,9 +20,14 @@ class Dashboard extends Component {
     expandAll: () => null
   }
 
-  state = { sticky: false }
+  state = {
+    sticky: false,
+    securityMargin: false
+  }
 
-  setSticky = sticky => this.setState({ sticky })
+  setSticky = sticky => (
+    this.setState({ sticky })
+  )
 
   onClickCollapseAll = () => {
     const { collapseAll } = this.props;
@@ -33,16 +39,24 @@ class Dashboard extends Component {
     expandAll();
   }
 
+  setMargin = securityMargin => (
+    this.setState({ securityMargin })
+  )
+
 
   render() {
     const { children, isCollapsed } = this.props;
-    const { sticky } = this.state;
+    const { sticky, securityMargin } = this.state;
 
     return (
       <OnScroll
-        className={styles.sidebar}
+        className={classnames(styles.sidebar, {
+          [styles.securityMargin]: securityMargin
+        })}
         triggers={[
-          { top: -65, callback: sticky => this.setSticky(!sticky) },
+          { top: -65, callback: _sticky => this.setSticky(!_sticky) },
+          { top: -10, callback: securityMargin => this.setMargin(!securityMargin) },
+
         ]}
       >
         <div className={styles.header}>
