@@ -1,0 +1,17 @@
+@import 'styles/vars';
+
+.hotspotsList {
+  display: flex;
+  align-items: stretch;
+  margin-top: 30px;
+  justify-content: space-between;
+
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 20px -10px -10px -10px;
+    div:not(:last-child) {
+        margin-bottom: 10px;
+    }
+  }
+};

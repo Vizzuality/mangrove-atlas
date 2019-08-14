@@ -42,11 +42,11 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
-}
+};
 
 WidgetList.defaultProps = {
   widgets: []
-}
+};
 
 
 export default WidgetList;

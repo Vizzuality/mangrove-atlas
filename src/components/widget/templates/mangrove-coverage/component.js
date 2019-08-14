@@ -64,7 +64,6 @@ class MangroveCoverage extends React.PureComponent {
     }));
     const widgetData = this.getData();
     const { percentage, unit } = widgetData[0];
-
     return (
       <Fragment>
         <div className={styles.widget_template}>
