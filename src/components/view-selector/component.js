@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import Button from 'components/button';
 import styles from './style.module.scss';
 
@@ -24,16 +25,21 @@ class ViewSelector extends PureComponent {
   render() {
     const { mapView, activeLayers } = this.props;
     return (
-      <div className={styles.container}>
-        <Button
-          hasBackground
-          hasContrast
-          onClick={this.onChangeView}
+      <Button
+        hasBackground
+        hasContrast={activeLayers === 0}
+        onClick={this.onChangeView}
+        className={styles.container}
+      >
+        <div className={styles.btnTitle}>
+          {mapView ? 'Dashboard View' : 'Map View'}
+        </div>
+        <span className={classnames(styles.btnInfo,
+          { [styles.activeLayers]: activeLayers !== 0 })}
         >
-          <div className={styles.btnTitle}>{mapView ? 'Dashboard View' : 'Map View'}</div>
-          <span className={styles.btnInfo}>{activeLayers}</span>
-        </Button>
-      </div>
+          {activeLayers}
+        </span>
+      </Button>
     );
   }
 }

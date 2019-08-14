@@ -10,18 +10,21 @@ export default (props) => {
     isGrey,
     hasContrast,
     isActive,
+    className,
     ...domProps } = props;
 
   return (
     <button
       type="button"
-      className={classnames(styles.button,
-        { [styles.background]: hasBackground },
-        { [styles.transparent]: isTransparent },
-        { [styles.grey]: isGrey },
-        { [styles.contrast]: hasContrast },
-        { [styles.disabled]: isDisabled })
-      }
+      className={classnames({
+        [styles.button]: true,
+        [styles.background]: hasBackground,
+        [styles.transparent]: isTransparent,
+        [styles.grey]: isGrey,
+        [styles.contrast]: hasContrast,
+        [styles.disabled]: isDisabled,
+        [className]: className
+      })}
       {...domProps}
     >
       {children}
