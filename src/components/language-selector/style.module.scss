@@ -1,0 +1,26 @@
+@import 'styles/vars';
+
+.container {
+  border: 2px solid rgba(0,0,0,0.2);
+  display: inline-flex;
+  position: relative;
+  border-radius: 15px;
+
+  button {
+    display: block;
+    position: relative;
+    margin: -2px;
+    border: none;
+    text-align: center;
+    color: $body-color;
+
+    &:focus {
+      text-align: center;
+      border: 2px solid white;
+      margin: -2px;
+      background-color: $white;
+      color: $primary;
+      border-bottom: 3px solid white;
+    }
+  }
+}

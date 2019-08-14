@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="696px" height="114px" viewBox="0 0 696 114" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>bg-fixed</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="700" height="120"></rect>
+    </defs>
+    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Worldwide-fixed">
+            <g id="bg-fixed">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Rectangle" fill="#D8D8D8" opacity="0" xlink:href="#path-1"></use>
+                <g id="Group-14" mask="url(#mask-2)" fill="#00C5BD">
+                    <g transform="translate(-60.000000, -15.505840)" id="Rectangle-6">
+                        <path d="M1.33194312,4.20835059 L924,4.00584041 C819.666667,-7.66082625 747.224678,6.1561317 706.674033,45.4567143 C645.848066,104.407588 514.994475,128.354712 342.944751,107.947091 C253.793766,97.3724762 139.478849,108.887387 0,142.491822 L1.33194312,4.20835059 Z" opacity="0.200000003"></path>
+                        <path d="M49.1104837,4.00584041 L745,4.00584041 C707.666667,2.33917375 671.725599,14.1725071 637.176796,39.5058404 C585.353591,77.5058404 477.367403,113.50584 333.924033,95.5058404 C259.595999,86.1787826 164.287988,96.3352033 48,125.975103 L49.1104837,4.00584041 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

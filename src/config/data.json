@@ -1,0 +1,96 @@
+{
+  "dashboards": {
+    "defaults": [
+      {
+        "location_type": "worldwide",
+        "widgetsSlugs": [
+          "highlighted_places",
+          "mangrove_coverage",
+          "mangrove_net_change"
+        ]
+      },
+      {
+        "location_type": "country",
+        "widgetsSlugs": [
+          "highlighted_places",
+          "mangrove_coverage",
+          "mangrove_net_change"
+        ]
+      },
+      {
+        "location_type": "wdpa",
+        "widgetsSlugs": [
+          "highlighted_places",
+          "mangrove_coverage",
+          "mangrove_net_change"
+        ]
+      },
+      {
+        "location_type": "aoi",
+        "widgetsSlugs": [
+          "highlighted_places",
+          "mangrove_coverage"
+        ]
+      }
+    ],
+    "custom": [
+      {
+        "location_id": 1000000,
+        "widgetsSlugs": [
+          "highlighted_places",
+          "mangrove_coverage",
+          "mangrove_net_change"
+        ]
+      }
+    ]
+  },
+  "widgets": [
+    {
+      "name": "Highlighted places",
+      "slug": "highlighted_places",
+      "layersIds": []
+    },
+    {
+      "name": "Mangrove coverage",
+      "slug": "mangrove_coverage",
+      "layersIds": [
+        "mangrove_extent"
+      ]
+    },
+    {
+      "name": "Mangrove net change",
+      "slug": "mangrove_net_change",
+      "layersIds": [
+        "mangrove_gain",
+        "mangrove_loss"
+      ]
+    },
+    {
+      "name": "Mangrove activies",
+      "slug": "mangrove_activities",
+      "layersIds": []
+    },
+    {
+      "name": "Mangrove alerts",
+      "slug": "mangrove_alerts",
+      "layersIds": []
+    }
+  ],
+  "layers": [
+    {
+      "name": "Mangrove extent",
+      "id": "mangrove_extent",
+      "mapboxGroup": "07c14de52165978354b99fda5fbcdadb"
+    },
+    {
+      "name": "Mangrove gain",
+      "id": "mangrove_gain",
+      "mapboxGroup": "ddb057e964a581d45d89735ba23f5ba6"
+    },
+    {
+      "name": "Mangrove loss",
+      "id": "mangrove_loss",
+      "mapboxGroup": "84284e0aab770699fa0ac998b822aa4f"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+@import 'styles/vars';
+
+$space-around-map: 30px;
+$space-top-map-mobile: 5px;
+$space-left-map-mobile: 20px;
+
+.map {
+  background: white;
+}
+
+.navigation {
+  position: absolute;
+  right: $space-around-map;
+  top: $space-around-map;
+}
+
+.legend {
+  position: absolute;
+  right: $space-around-map;
+  bottom: $space-around-map;
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    top: $space-top-map-mobile;
+    left: $space-left-map-mobile;
+    &.expanded {
+      display: flex;
+      flex-direction: row-reverse;
+      bottom: inherit;
+      right: 25px;
+    }
+  }
+  .tooltip {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Mapbox override
+:global(.mapboxgl-ctrl-group:not(:empty)) {
+  box-shadow: 0 4px 12px 0 rgba(168, 168, 168, 0.25);
+}
+
+:global(.mapboxgl-ctrl-group > button) {
+  background: white;
+}

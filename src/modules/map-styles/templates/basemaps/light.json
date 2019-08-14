@@ -1,0 +1,281 @@
+[
+  {
+    "id": "background",
+    "type": "background",
+    "paint": {
+      "background-color": "hsl(0, 0%, 100%)"
+    }
+  },
+  {
+    "id": "mapbox-terrain-rgb",
+    "type": "hillshade",
+    "source": "mapbox://mapbox.terrain-rgb",
+    "layout": {},
+    "paint": {
+      "hillshade-exaggeration": 0.15
+    }
+  },
+  {
+    "id": "water copy",
+    "type": "fill",
+    "source": "streets",
+    "source-layer": "water",
+    "layout": {},
+    "paint": {
+      "fill-translate": [
+        0,
+        -1
+      ],
+      "fill-opacity": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        8,
+        0.1,
+        10,
+        0
+      ]
+    }
+  },
+  {
+    "id": "water copy 1",
+    "type": "fill",
+    "source": "streets",
+    "source-layer": "water",
+    "layout": {},
+    "paint": {
+      "fill-color": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        8,
+        "hsl(0, 0%, 98%)",
+        13,
+        "#b3dcea"
+      ],
+      "fill-outline-color": "hsl(0, 0%, 100%)",
+      "fill-translate": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        8,
+        [
+          "literal",
+          [
+            0,
+            1
+          ]
+        ],
+        10,
+        [
+          "literal",
+          [
+            0,
+            0
+          ]
+        ]
+      ]
+    }
+  },
+  {
+    "id": "water",
+    "type": "line",
+    "source": "streets",
+    "source-layer": "water",
+    "layout": {},
+    "paint": {
+      "line-opacity": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        8,
+        0.1,
+        13,
+        0
+      ]
+    }
+  },
+  {
+    "id": "building",
+    "type": "fill",
+    "source": "streets",
+    "source-layer": "building",
+    "layout": {},
+    "paint": {
+      "fill-color": "hsla(0, 0%, 0%, 0.1)"
+    }
+  },
+  {
+    "id": "Country",
+    "type": "symbol",
+    "metadata": {
+      "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
+    },
+    "source": "streets",
+    "source-layer": "place_label",
+    "maxzoom": 7,
+    "filter": [
+      "match",
+      [
+        "get",
+        "class"
+      ],
+      [
+        "country"
+      ],
+      true,
+      false
+    ],
+    "layout": {
+      "text-field": [
+        "to-string",
+        [
+          "get",
+          "name_en"
+        ]
+      ],
+      "text-font": [
+        "Roboto Regular",
+        "Arial Unicode MS Regular"
+      ],
+      "text-size": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        3,
+        10,
+        7,
+        25
+      ],
+      "text-letter-spacing": 0.1,
+      "text-line-height": 1,
+      "text-max-width": 5,
+      "text-transform": "uppercase"
+    },
+    "paint": {
+      "text-opacity": [
+        "interpolate",
+        [
+          "linear"
+        ],
+        [
+          "zoom"
+        ],
+        4,
+        0.5,
+        8,
+        0
+      ],
+      "text-halo-width": 0.5
+    }
+  },
+  {
+    "id": "State",
+    "type": "symbol",
+    "metadata": {
+      "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
+    },
+    "source": "streets",
+    "source-layer": "place_label",
+    "minzoom": 4,
+    "maxzoom": 8,
+    "filter": [
+      "match",
+      [
+        "get",
+        "class"
+      ],
+      [
+        "state"
+      ],
+      true,
+      false
+    ],
+    "layout": {
+      "text-field": [
+        "to-string",
+        [
+          "get",
+          "name_en"
+        ]
+      ],
+      "text-font": [
+        "Roboto Regular",
+        "Arial Unicode MS Regular"
+      ],
+      "text-size": 10,
+      "text-letter-spacing": 0.1,
+      "text-line-height": 1,
+      "text-max-width": 5,
+      "text-transform": "uppercase"
+    },
+    "paint": {
+      "text-opacity": 0.5,
+      "text-halo-width": 0.5
+    }
+  },
+  {
+    "id": "Settlement",
+    "type": "symbol",
+    "metadata": {
+      "mapbox:group": "dd32c6316827bba06b7fa40b8cc299bd"
+    },
+    "source": "streets",
+    "source-layer": "place_label",
+    "minzoom": 6,
+    "filter": [
+      "match",
+      [
+        "get",
+        "class"
+      ],
+      [
+        "settlement"
+      ],
+      true,
+      false
+    ],
+    "layout": {
+      "text-field": [
+        "to-string",
+        [
+          "get",
+          "name_en"
+        ]
+      ],
+      "text-font": [
+        "Roboto Regular",
+        "Arial Unicode MS Regular"
+      ],
+      "text-size": 10,
+      "text-letter-spacing": 0.1,
+      "text-line-height": 1,
+      "text-max-width": 5,
+      "text-transform": "uppercase"
+    },
+    "paint": {
+      "text-opacity": 0.5,
+      "text-halo-width": 0.5
+    }
+  }
+]
