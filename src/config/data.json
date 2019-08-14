@@ -6,7 +6,8 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_alerts"
         ]
       },
       {
