@@ -19,7 +19,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Mangrove Atlas</title>
+    <!-- CDN for global styles-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" />
+    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css" />
+    <!-- Transifex Live -->
+    <script type="text/javascript">window.liveSettings = {
+      api_key: "%REACT_APP_TRANSIFEX_API_KEY%",
+      detectlang: true,
+      autocollect: true,
+      dynamic: true,
+      picker: '#transifexSelectorHidden',
+      ignore_class: ['svg-inline--fa']
+    }
+    </script>
+    <script type="text/javascript" src="//cdn.transifex.com/live.js"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

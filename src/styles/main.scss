@@ -1,0 +1,41 @@
+@import './vars';
+@import './lib/react-datepicker';
+
+body {
+  color: $body-color;
+  font-family: $font-family;
+  font-size: $body-font-size;
+  line-height: $body-line-height;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    background-color: $background-mobile
+  }
+
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+
+a {
+  color: $primary;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
