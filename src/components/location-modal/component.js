@@ -55,6 +55,11 @@ class LocationSelector extends PureComponent {
     }
   }
 
+  formatName = (string) => {
+    const tag = string.charAt(0).toUpperCase() + string.slice(1);
+    return tag.replace('Aoi', 'Area of interest');
+  }
+
   render() {
     const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
     if (!currentLocation) return null;
@@ -103,7 +108,7 @@ class LocationSelector extends PureComponent {
                               {location.name}
                             </span>
                             <span className={styles.tag}>
-                              {location.location_type}
+                              {this.formatName(location.location_type)}
                             </span>
                           </div>
                         </Link>
@@ -116,7 +121,7 @@ class LocationSelector extends PureComponent {
                               {location.name}
                             </span>
                             <span className={styles.tag}>
-                              {location.location_type}
+                              {this.formatName(location.location_type)}
                             </span>
                           </div>
                         </Link>
@@ -129,7 +134,7 @@ class LocationSelector extends PureComponent {
                               {location.name}
                             </span>
                             <span className={styles.tag}>
-                              {location.location_type }
+                              {this.formatName(location.location_type)}
                             </span>
                           </div>
                         </Link>
