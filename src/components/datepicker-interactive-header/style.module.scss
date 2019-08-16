@@ -1,0 +1,25 @@
+@import 'styles/vars';
+
+@mixin button {
+  color: $black;
+  min-width: unset;
+  width: 50px;
+  text-align: center;
+  padding: 0;
+  height: 14px;
+  line-height: 14px;
+}
+
+.DatepickerInteractiveHeader {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  .prevButton {
+    @include button;
+  }
+
+  .nextButton {
+    @include button;
+  }
+}
