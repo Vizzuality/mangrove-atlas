@@ -96,11 +96,44 @@ class LocationSelector extends PureComponent {
                 {locationsData.map(location => (
                   <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
                     {location.location_type === 'aoi'
-                      && <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>{location.name}</Link>}
+                      && (
+                        <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>
+                          <div className={styles.items}>
+                            <span>
+                              {location.name}
+                            </span>
+                            <span className={styles.tag}>
+                              {location.location_type}
+                            </span>
+                          </div>
+                        </Link>
+                      )}
                     {location.location_type === 'country'
-                      && <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>{location.name}</Link>}
+                      && (
+                        <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>
+                          <div className={styles.items}>
+                            <span>
+                              {location.name}
+                            </span>
+                            <span className={styles.tag}>
+                              {location.location_type}
+                            </span>
+                          </div>
+                        </Link>
+                      )}
                     {location.location_type === 'wdpa'
-                      && <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>{location.name}</Link>}
+                      && (
+                        <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>
+                          <div className={styles.items}>
+                            <span>
+                              {location.name}
+                            </span>
+                            <span className={styles.tag}>
+                              {location.location_type }
+                            </span>
+                          </div>
+                        </Link>
+                      )}
                   </li>
                 ))}
               </ul>

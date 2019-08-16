@@ -112,6 +112,15 @@
         background-color: rgba(#00C5BD, .1);
       }
     }
+    .items {
+      display: flex;
+      justify-content: space-between;
+    }
+    .tag {
+      color: rgba(0,0,0,0.54);
+      font-size: 12px;
+      text-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    }
   }
 }
 
