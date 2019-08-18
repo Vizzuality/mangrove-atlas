@@ -16,7 +16,7 @@ export const dashboardWidgets = createSelector(
 );
 
 export const activeWidgets = createSelector(
-  [dashboardWidgets],
+  [widgets],
   _widgets => _widgets.filter(widget => widget.isActive)
 );
 

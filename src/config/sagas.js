@@ -2,27 +2,29 @@ import { all, fork } from 'redux-saga/effects';
 
 import queryState from 'utils/query-state';
 
-import pagesSagas from 'modules/pages/sagas';
-import mapSagas from 'modules/map/sagas';
-import mapStylesSagas from 'modules/map-styles/sagas';
-import layersSagas from 'modules/layers/sagas';
-import widgetsSagas from 'modules/widgets/sagas';
-import locationsSagas from 'modules/locations/sagas';
-import dashboardsSagas from 'modules/dashboards/sagas';
-import languagesSagas from 'modules/languages/sagas';
-import mangroveDataSagas from 'modules/mangrove-data/sagas';
+import app from 'modules/app/sagas';
+import pages from 'modules/pages/sagas';
+import map from 'modules/map/sagas';
+import mapStyles from 'modules/map-styles/sagas';
+import layers from 'modules/layers/sagas';
+import widgets from 'modules/widgets/sagas';
+import locations from 'modules/locations/sagas';
+import dashboards from 'modules/dashboards/sagas';
+import languages from 'modules/languages/sagas';
+import mangroveData from 'modules/mangrove-data/sagas';
 
 export default function* root() {
   yield all([
     fork(queryState.sagas.bind(queryState)),
-    fork(pagesSagas),
-    fork(mapSagas),
-    fork(mapStylesSagas),
-    fork(layersSagas),
-    fork(widgetsSagas),
-    fork(locationsSagas),
-    fork(dashboardsSagas),
-    fork(languagesSagas),
-    fork(mangroveDataSagas),
+    fork(app),
+    fork(pages),
+    fork(map),
+    fork(mapStyles),
+    fork(layers),
+    fork(widgets),
+    fork(locations),
+    fork(dashboards),
+    fork(languages),
+    fork(mangroveData),
   ]);
 };
