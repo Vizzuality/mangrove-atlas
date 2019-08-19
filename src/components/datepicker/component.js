@@ -1,63 +1,67 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
 import ReactDatePicker, { CalendarContainer } from 'react-datepicker';
 import classnames from 'classnames';
 
-import DatepickerInput from './input';
+import DatepickerInteractiveHeader from 'components/datepicker-interactive-header';
+import DatepickerInput from 'components/datepicker-input';
 
 import styles from './style.module.scss';
 
-class Datepicker extends PureComponent {
-  renderCalendarContainer = ({ children }) => {
-    return createPortal(
-      <CalendarContainer>
-        {children}
-      </CalendarContainer>
-    , document.body);
+function OurCalendarContainer({ children }) {
+  return createPortal(
+    <CalendarContainer>
+      {children}
+    </CalendarContainer>
+  , document.body);
+}
+
+function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, theme, date, inline }) {
+  const classes = [styles.Datepicker, theme, className].join(' ');
+  const popperConfig = {
+    flip: {
+      enabled: false
+    },
+    offset: {
+      enabled: true,
+      offset: '0px, -15px'
+    },
+    preventOverflow: {
+      enabled: true,
+      escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
+      boundariesElement: 'viewport'
+    }
   };
 
-  render() {
-    const { className, onDateChange, settings, theme, date, inline } = this.props;
-    const { minDate, maxDate } = settings;
+  const WrappedHeader = (customHeaderProps) => (
+    <DatepickerInteractiveHeader 
+      minDate={minDate}
+      maxDate={maxDate}
+      {...customHeaderProps}
+    />
+  ); 
 
-    return (
-      <div
-        ref={ref => { this.ref = ref; }}
-        className={classnames(styles.Datepicker, theme, className, { [styles._inline]: inline})}
-      >
-        <ReactDatePicker
-          selected={date.toDate()}
-          minDate={new Date(minDate)}
-          maxDate={new Date(maxDate)}
-          dateFormat="dd-MM-yyyy"
-          // Custom components
-          customInput={<DatepickerInput />}
-          // Popper
-          popperContainer={this.renderCalendarContainer}
-          popperPlacement="bottom-start"
-          popperClassName={styles.DatepickerPopper}
-          popperModifiers={{
-            flip: {
-              enabled: false
-            },
-            offset: {
-              enabled: true,
-              offset: '0px, -15px'
-            },
-            preventOverflow: {
-              enabled: true,
-              escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
-              boundariesElement: 'viewport'
-            }
-          }}
-          // Func
-          onSelect={onDateChange}
-          // renderCustomHeader={this.renderCalendarHeader}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={classnames(classes, { [styles._inline]: inline})}>
+      <ReactDatePicker
+        selected={date.toDate()}
+        minDate={new Date(minDate)}
+        maxDate={new Date(maxDate)}
+        dateFormat="dd-MM-yyyy"
+        // Custom components
+        customInput={<DatepickerInput />}
+        renderCustomHeader={WrappedHeader}
+        // Popper
+        popperContainer={OurCalendarContainer}
+        popperPlacement="bottom-start"
+        popperClassName={styles.DatepickerPopper}
+        popperModifiers={popperConfig}
+        // Func
+        onSelect={onDateChange}
+      />
+    </div>
+  );
 }
 
 Datepicker.propTypes = {

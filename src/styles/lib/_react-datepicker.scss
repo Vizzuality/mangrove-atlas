@@ -75,8 +75,9 @@ $container-padding: 4px;
 
 
   .react-datepicker__header {
-    padding-top: 12;
+    padding-top: 0;
     background: $primary;
+    color: $black;
 
     .react-datepicker__current-month {
       font-size: $font-size-small;
@@ -98,7 +99,6 @@ $container-padding: 4px;
   // Week days
   .react-datepicker__day-names {
     .react-datepicker__day-name {
-      color: #757575;
       text-transform: uppercase;
     }
   }
