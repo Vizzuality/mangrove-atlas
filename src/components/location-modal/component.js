@@ -1,12 +1,12 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
 import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
+import LocationsList from 'components/locations-list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
@@ -55,11 +55,6 @@ class LocationSelector extends PureComponent {
     }
   }
 
-  formatName = (string) => {
-    const tag = string.charAt(0).toUpperCase() + string.slice(1);
-    return tag.replace('Aoi', 'Area of interest');
-  }
-
   render() {
     const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
     if (!currentLocation) return null;
@@ -94,54 +89,7 @@ class LocationSelector extends PureComponent {
                   currentLocation={currentLocation}
                 />
               )}
-              <ul className={styles.list}>
-                <li className={classnames(styles.listItem, 'notranslate')}>
-                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
-                </li>
-                {locationsData.map(location => (
-                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                    {location.location_type === 'aoi'
-                      && (
-                        <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                    {location.location_type === 'country'
-                      && (
-                        <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                    {location.location_type === 'wdpa'
-                      && (
-                        <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                  </li>
-                ))}
-              </ul>
+              <LocationsList locationsData={locationsData} />
             </div>
             <button type="button" onClick={this.closeModal} className={classnames(styles.searchButton, styles.mobile)}>
               <FontAwesomeIcon icon={faTimes} size="lg" />
@@ -171,54 +119,7 @@ class LocationSelector extends PureComponent {
                   currentLocation={currentLocation}
                 />
               )}
-              <ul className={styles.list}>
-                <li className={classnames(styles.listItem, 'notranslate')}>
-                  <Link to={{ type: 'PAGE/APP', payload: { id: 'worldwide' } }}>Worldwide</Link>
-                </li>
-                {locationsData.map(location => (
-                  <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-                    {location.location_type === 'aoi'
-                      && (
-                        <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                    {location.location_type === 'country'
-                      && (
-                        <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                    {location.location_type === 'wdpa'
-                      && (
-                        <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>
-                          <div className={styles.items}>
-                            <span>
-                              {location.name}
-                            </span>
-                            <span className={styles.tag}>
-                              {this.formatName(location.location_type)}
-                            </span>
-                          </div>
-                        </Link>
-                      )}
-                  </li>
-                ))}
-              </ul>
+              <LocationsList locationsData={locationsData} />
             </div>
             <button type="button" onClick={this.closeModal} className={styles.searchButton}>
               <FontAwesomeIcon icon={faTimes} size="lg" />

@@ -1,44 +1,34 @@
 import React, { PureComponent } from 'react';
-import ReactSelect from 'react-select';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
+import classnames from 'classnames';
+import styles from './style.module.scss';
 
-import { styles, theme } from './style';
-
-class Select extends PureComponent {
+class LocationsList extends PureComponent {
   static propTypes = {
-    options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    onChange: PropTypes.func
+    locationsData: PropTypes.arrayOf(PropTypes.shape({})).isRequired
   };
 
-  static defaultProps = {
-    value: null,
-    onChange: () => null
+  getType = (location) => {
+    if (location.location_type === 'aoi') return 'PAGE/AOI';
+    if (location.location_type === 'country') return 'PAGE/COUNTRY';
+    if (location.location_type === 'wdpa') return 'PAGE/WDPA';
+    return null;
   }
 
-  state = { selectedOption: null }
+  getPayload = location => (
+    (location.location_type === 'aoi' || location.location_type === 'wdpa')
+      ? { id: location.id }
+      : { iso: location.iso }
+  );
 
-  options = {
-    isSearchable: false,
-    theme,
-    styles
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { selectedOption: props.value };
-  }
-
-  handleChange = (selectedOption) => {
-    const { onChange } = this.props;
-    this.setState({ selectedOption });
-    onChange(selectedOption.value);
+  formatName = (string) => {
+    const tag = string.charAt(0).toUpperCase() + string.slice(1);
+    return tag.replace('Aoi', 'Area of interest');
   }
 
   render() {
-    const { value: defaultValue, options, onChange, ...props } = this.props;
-    const { selectedOption } = this.state;
-    const selectedValue = options.find(opt => opt.value === selectedOption);
+    const { locationsData } = this.props;
 
     return (
       <ul className={styles.list}>
@@ -47,47 +37,16 @@ class Select extends PureComponent {
         </li>
         {locationsData.map(location => (
           <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
-            {location.location_type === 'aoi'
-              && (
-                <Link to={{ type: 'PAGE/AOI', payload: { id: location.id } }}>
-                  <div className={styles.items}>
-                    <span>
-                      {location.name}
-                      {location.name}
-                      {location.location_type}
-                    </span>
-                    <span className={styles.tag}>
-                      {location.location_type}
-                    </span>
-                  </div>
-                </Link>
-              )}
-            {location.location_type === 'country'
-              && (
-                <Link to={{ type: 'PAGE/COUNTRY', payload: { iso: location.iso } }}>
-                  <div className={styles.items}>
-                    <span>
-                      {location.name}
-                    </span>
-                    <span className={styles.tag}>
-                      {location.location_type}
-                    </span>
-                  </div>
-                </Link>
-              )}
-            {location.location_type === 'wdpa'
-              && (
-                <Link to={{ type: 'PAGE/WDPA', payload: { id: location.id } }}>
-                  <div className={styles.items}>
-                    <span>
-                      {location.name}
-                    </span>
-                    <span className={styles.tag}>
-                      {location.location_type}
-                    </span>
-                  </div>
-                </Link>
-              )}
+            <Link to={{ type: this.getType(location), payload: this.getPayload(location) }}>
+              <div className={styles.items}>
+                <span>
+                  {location.name}
+                </span>
+                <span className={styles.tag}>
+                  {this.formatName(location.location_type)}
+                </span>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
@@ -95,4 +54,4 @@ class Select extends PureComponent {
   }
 }
 
-export default Select;
+export default LocationsList;

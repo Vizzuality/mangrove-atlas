@@ -1,3 +1,3 @@
-import SelectComponent from './component';
+import LocationsList from './component';
 
-export default SelectComponent;
+export default LocationsList;
