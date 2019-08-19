@@ -9,8 +9,7 @@ import styles from 'components/widget/style.module.scss';
 
 class MangroveActivity extends React.PureComponent {
   static propTypes = {
-    chart: PropTypes.arrayOf(PropTypes.object).isRequired,
-    chartConfig: PropTypes.shape({}).isRequired,
+    data: PropTypes.shape({}).isRequired
   };
 
   state = {
@@ -32,7 +31,7 @@ class MangroveActivity extends React.PureComponent {
   }
 
   render() {
-    const { chart, chartConfig } = this.props;
+    const { data: { chartData, chartConfig }} = this.props;
     const { yearStart, yearEnd, unit } = this.state;
 
     // XXX: these options should come from an api ?
@@ -82,9 +81,9 @@ class MangroveActivity extends React.PureComponent {
         </div>
 
         {/* Chart */}
-        {chart.length && <Spinner />}
+        {!chartData.length && <Spinner />}
         <Chart
-          data={chart}
+          data={chartData}
           config={chartConfig}
         />
 

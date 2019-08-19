@@ -13,14 +13,22 @@ const Legend = ({ groups, direction }) => (
           {groups[g].map(item => (
             <li
               key={`item-${item.color}`}
-              className={styles.widget_legend_list_item}
+              className={classnames(
+                styles.widget_legend_list_item,
+                { [styles.net]: true }
+              )}
             >
               <svg height="12" width="12">
-                <rect width="13" height="13" fill={item.color} />
+                <rect
+                  width={(item.value).toLowerCase() === 'net result' ? '3' : '13'}
+                  borderRadius={(item.value).toLowerCase() === 'net result' ? '0' : '10'}
+                  height="13"
+                  fill={item.color}
+                />
               </svg>
 
               <span>
-                {item.value}
+                {(item.value).charAt(0).toUpperCase() + (item.value).slice(1)}
               </span>
             </li>
           ))}

@@ -49,6 +49,12 @@
     width: 6px;
   }
 
+  .widget_legend_list_item {
+    &.net svg{
+      border-radius: 4px;
+    }
+  }
+
   .widget_legend-number {
     // font-size: 29px;
     font-weight: 600;

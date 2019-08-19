@@ -180,7 +180,7 @@ class Chart extends PureComponent {
                 dataKey={xKey || ''}
                 axisLine={false}
                 tickLine={false}
-                tick={{ dy: 8, fontSize: '12px', fill: '#AAA' }}
+                tick={{ dy: 8, fontSize: '12px', fill: 'green' }}
                 {...xAxis}
               />
             )}

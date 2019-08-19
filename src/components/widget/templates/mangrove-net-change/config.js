@@ -46,11 +46,11 @@ const CONFIG = {
       ],
       xKey: 'year',
       yKeys: {
-        lines: {
-          'Net change': {
-            stroke: 'rgba(0,0,0,0.7)'
-          }
-        },
+        // lines: {
+        //   'Net result': {
+        //     stroke: 'rgba(0,0,0,0.7)'
+        //   }
+        // },
         bars: {
           Gain: {
             barSize: 10,
@@ -62,6 +62,12 @@ const CONFIG = {
             barSize: 10,
             transform: `translate(-${(4 + 10) / 2}, 0)`,
             fill: '#EB6240',
+            radius: [10, 10, 0, 0]
+          },
+          'Net result': {
+            barSize: 10,
+            transform: `translate(-${(4 + 10) / 2}, 0)`,
+            fill: 'rgba(0, 0, 0, 0.7)',
             radius: [10, 10, 0, 0]
           }
         }
@@ -105,7 +111,7 @@ const CONFIG = {
               { key: 'year' },
               { key: 'Gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
               { key: 'Loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'Net change', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
+              { key: 'Net result', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
             ]}
           />
         )
