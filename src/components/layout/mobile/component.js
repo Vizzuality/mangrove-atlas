@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Widgets from 'components/widgets';
 import Sidebar from 'components/sidebar';
-import Map from 'components/map';
+import Map from 'components/map-container';
 import ViewSelector from 'components/view-selector';
 import styles from '../style.module.scss';
 
