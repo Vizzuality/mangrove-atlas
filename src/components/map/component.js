@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
-import MapGL, { NavigationControl } from 'react-map-gl';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import MobileLegendControl from 'components/map-legend/mobile';
 import classnames from 'classnames';
 import { breakpoints } from 'utils/responsive';
+
+import MapGl from 'components/map-2';
+import { NavigationControl } from 'react-map-gl';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
 import styles from './style.module.scss';
@@ -60,25 +62,34 @@ class Map extends PureComponent {
       mapboxApiAccessToken,
       mapStyle,
       viewport,
+      bounds,
       isCollapse
     } = this.props;
 
     return (
-      <MapGL
-        className={styles.map}
-        ref={this.setElement}
-        {...viewport}
-        mapStyle={mapStyle}
-        width="100%"
-        height="100%"
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={this.onViewportChange}
-      >
-        <div className={styles.navigation}>
-          <MediaQuery minWidth={breakpoints.md}>
-            <NavigationControl />
-          </MediaQuery>
-        </div>
+      <div className={styles.map}>
+        <MapGl
+          viewport={viewport}
+          bounds={bounds}
+          mapStyle={mapStyle}
+
+          // width="100%"
+          // height="100%"
+          mapboxApiAccessToken={mapboxApiAccessToken}
+          onViewportChange={this.onViewportChange}
+        >
+          {() => {
+            return (
+              <div className={styles.navigation}>
+                <MediaQuery minWidth={breakpoints.md}>
+                  <NavigationControl />
+                </MediaQuery>
+              </div>
+            )
+          }}
+        </MapGl>
+
+
         <div className={classnames(styles.legend,
           { [styles.expanded]: !isCollapse })}
         >
@@ -90,7 +101,18 @@ class Map extends PureComponent {
             <BasemapSelector />
           </div>
         </div>
-      </MapGL>
+      </div>
+      // <MapGL
+      //   className={styles.map}
+      //   ref={this.setElement}
+      //   {...viewport}
+      //   mapStyle={mapStyle}
+      //   width="100%"
+      //   height="100%"
+      //   mapboxApiAccessToken={mapboxApiAccessToken}
+      //   onViewportChange={this.onViewportChange}
+      // >
+
     );
   }
 }

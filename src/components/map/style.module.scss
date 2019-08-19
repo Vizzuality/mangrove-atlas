@@ -5,7 +5,9 @@ $space-top-map-mobile: 5px;
 $space-left-map-mobile: 20px;
 
 .map {
-  background: white;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .navigation {
@@ -18,6 +20,8 @@ $space-left-map-mobile: 20px;
   position: absolute;
   right: $space-around-map;
   bottom: $space-around-map;
+  z-index: 1;
+
   @media screen and (max-width: map-get($breakpoints, md)) {
     top: $space-top-map-mobile;
     left: $space-left-map-mobile;
@@ -28,6 +32,7 @@ $space-left-map-mobile: 20px;
       right: 25px;
     }
   }
+
   .tooltip {
     display: flex;
     flex-direction: column;
