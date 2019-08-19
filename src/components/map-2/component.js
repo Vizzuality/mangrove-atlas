@@ -117,7 +117,7 @@ class Map extends Component {
       });
     }
 
-    if (!isEmpty(bounds) && !isEqual(bounds, prevBounds)) {
+    if (!isEmpty(bounds) && !!bounds.bbox && !isEqual(bounds, prevBounds)) {
       this.fitBounds();
     }
   }
@@ -182,9 +182,9 @@ class Map extends Component {
     const { bbox, options } = bounds;
 
     const v = {
+      ...viewport,
       width: this.mapContainer.offsetWidth,
-      height: this.mapContainer.offsetHeight,
-      ...viewport
+      height: this.mapContainer.offsetHeight
     };
 
     const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
