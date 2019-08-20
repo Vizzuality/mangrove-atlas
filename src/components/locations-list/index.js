@@ -1,3 +1,1 @@
-import LocationsList from './component';
-
-export default LocationsList;
+export { default } from './component';
