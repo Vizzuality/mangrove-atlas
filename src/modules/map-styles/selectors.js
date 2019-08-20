@@ -7,10 +7,23 @@ const styleManager = new StyleManager();
 const mapStyles = state => state.mapStyles;
 const basemap = state => state.map.basemap;
 
+function sortLayers(layers) {
+  const order = {
+    'selected-wdpa-polygons copy 1': 10
+  };
+
+  return layers.sort((a, b) => {
+    const aOrder = order[a.id] || 0;
+    const bOrder = order[b.id] || 0;
+
+    return aOrder - bOrder;
+  });
+}
+
 export const layerStyles = createSelector(
   [mapStyles, activeLayers],
   (_mapStyles, _activeLayers) => {
-    if (!_mapStyles.layers.mapStyle) return [];
+    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) return [];
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const result = [];
     _activeLayers.forEach((activeLayer) => {
@@ -27,7 +40,7 @@ export const mapStyle = createSelector(
   (_basemap, _layerStyles) => {
     styleManager.basemap = _basemap;
     styleManager.layers = _layerStyles;
-    return styleManager.mapStyle;
+    return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
   }
 );
 

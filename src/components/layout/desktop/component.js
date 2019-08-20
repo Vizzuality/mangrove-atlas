@@ -1,6 +1,6 @@
 import React from 'react';
 import Widgets from 'components/widgets';
-import Map from 'components/map';
+import Map from 'components/map-container';
 import Sidebar from 'components/sidebar';
 import styles from '../style.module.scss';
 

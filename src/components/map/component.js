@@ -1,96 +1,256 @@
-import React, { PureComponent } from 'react';
-import MapGL, { NavigationControl } from 'react-map-gl';
-import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
-import MobileLegendControl from 'components/map-legend/mobile';
+import React, { Component } from 'react';
 import classnames from 'classnames';
-import { breakpoints } from 'utils/responsive';
-import BasemapSelector from 'components/basemap-selector';
-import Legend from 'components/map-legend';
+import PropTypes from 'prop-types';
+
+import isEqual from 'lodash/isEqual';
+import isEmpty from 'lodash/isEmpty';
+
+import ReactMapGL, { FlyToInterpolator, TRANSITION_EVENTS } from 'react-map-gl';
+import WebMercatorViewport from 'viewport-mercator-project';
+
+import { easeCubic } from 'd3-ease';
+
 import styles from './style.module.scss';
 
-class Map extends PureComponent {
+const DEFAULT_VIEWPORT = {
+  zoom: 2,
+  lat: 0,
+  lng: 0
+};
+
+class Map extends Component {
+  events = {}
+
   static propTypes = {
-    basemap: PropTypes.string,
-    viewport: PropTypes.shape({}),
-    setViewport: PropTypes.func,
-    isCollapse: PropTypes.bool.isRequired
+    /** A function that returns the map instance */
+    children: PropTypes.func,
+
+    /** Custom css class for styling */
+    customClass: PropTypes.string,
+
+    /** An object that defines the viewport
+     * @see https://uber.github.io/react-map-gl/#/Documentation/api-reference/interactive-map?section=initialization
+    */
+    viewport: PropTypes.shape({
+
+    }),
+
+    /** An object that defines the bounds */
+    bounds: PropTypes.shape({
+      bbox: PropTypes.array,
+      options: PropTypes.shape({})
+    }),
+
+    /** A boolean that allows panning */
+    dragPan: PropTypes.bool,
+    /** A boolean that allows rotating */
+    dragRotate: PropTypes.bool,
+    /** A boolean that allows zooming */
+    scrollZoom: PropTypes.bool,
+    /** A boolean that allows zooming */
+    touchZoom: PropTypes.bool,
+    /** A boolean that allows touch rotating */
+    touchRotate: PropTypes.bool,
+    /** A boolean that allows double click zooming */
+    doubleClickZoom: PropTypes.bool,
+    /** A function that exposes when the map is loaded. It returns and object with the `this.map` and `this.mapContainer` reference. */
+    onLoad: PropTypes.func,
+
+    /** A function that exposes the viewport */
+    onViewportChange: PropTypes.func,
+
+    /** A function that exposes the viewport */
+    getCursor: PropTypes.func
   }
 
   static defaultProps = {
-    basemap: 'light',
+    children: null,
+    customClass: null,
+    viewport: DEFAULT_VIEWPORT,
+    bounds: {},
+    dragPan: true,
+    dragRotate: true,
+    scrollZoom: true,
+    touchZoom: true,
+    touchRotate: true,
+    doubleClickZoom: true,
+    onViewportChange: () => {},
+    onLoad: () => {},
+    getCursor: ({ isHovering, isDragging }) => {
+      if (isHovering) return 'pointer';
+      if (isDragging) return 'grabbing';
+      return 'grab';
+    }
+  }
+
+  state = {
     viewport: {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      longitude: 0,
-      latitude: 0,
-      zoom: 2,
-      maxZoom: 16,
-      bearing: 0,
-      pitch: 0
+      ...DEFAULT_VIEWPORT,
+      ...this.props.viewport // eslint-disable-line
     },
-    setViewport: () => { }
+    flying: false,
+    loaded: false
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resize);
-    this.resize();
+    const { bounds } = this.props;
+
+    if (!isEmpty(bounds) && !!bounds.bbox) {
+      this.fitBounds();
+    }
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+  componentDidUpdate(prevProps) {
+    const { viewport: prevViewport, bounds: prevBounds } = prevProps;
+    const { viewport, bounds } = this.props;
+    const { viewport: stateViewport } = this.state;
+
+    if (!isEqual(viewport, prevViewport)) {
+      this.setState({ // eslint-disable-line
+        viewport: {
+          ...stateViewport,
+          ...viewport
+        }
+      });
+    }
+
+    if (!isEmpty(bounds) && !!bounds.bbox && !isEqual(bounds, prevBounds)) {
+      this.fitBounds();
+    }
   }
 
-  onViewportChange = (viewport) => {
-    const { setViewport } = this.props;
-    setViewport(viewport);
-  }
+  onLoad = () => {
+    const { onLoad } = this.props;
+    this.setState({ loaded: true });
 
-  resize = () => {
-    const { viewport } = this.props;
-    this.onViewportChange({
-      ...viewport,
-      width: window.innerWidth,
-      height: window.innerHeight
+    onLoad({
+      map: this.map,
+      mapContainer: this.mapContainer
     });
   }
 
+  onViewportChange = (v) => {
+    const { onViewportChange } = this.props;
+
+    this.setState({ viewport: v });
+    onViewportChange(v);
+  }
+
+  onResize = (v) => {
+    const { onViewportChange } = this.props;
+    const { viewport } = this.state;
+    const newViewport = {
+      ...viewport,
+      ...v
+    };
+
+    this.setState({ viewport: newViewport });
+    onViewportChange(newViewport);
+  }
+
+  onMoveEnd = () => {
+    const { onViewportChange } = this.props;
+    const { viewport } = this.state;
+
+    if (this.map) {
+      const bearing = this.map.getBearing();
+      const pitch = this.map.getPitch();
+      const zoom = this.map.getZoom();
+      const { lng, lat } = this.map.getCenter();
+
+      const newViewport = {
+        ...viewport,
+        bearing,
+        pitch,
+        zoom,
+        latitude: lat,
+        longitude: lng
+      };
+
+      // Publish new viewport and save it into the state
+      this.setState({ viewport: newViewport });
+      onViewportChange(newViewport);
+    }
+  }
+
+  fitBounds = () => {
+    const { viewport } = this.state;
+    const { bounds, onViewportChange } = this.props;
+    const { bbox, options } = bounds;
+
+    const v = {
+      ...viewport,
+      width: this.mapContainer.offsetWidth,
+      height: this.mapContainer.offsetHeight
+    };
+
+    const { longitude, latitude, zoom } = new WebMercatorViewport(v).fitBounds(
+      [[bbox[0], bbox[1]], [bbox[2], bbox[3]]],
+      options
+    );
+
+    const newViewport = {
+      ...viewport,
+      longitude,
+      latitude,
+      zoom,
+      transitionDuration: 2500,
+      transitionInterruption: TRANSITION_EVENTS.UPDATE
+    };
+
+    this.setState({
+      flying: true,
+      viewport: newViewport
+    });
+    onViewportChange(newViewport);
+
+    setTimeout(() => {
+      this.setState({ flying: false });
+    }, 2500);
+  };
+
   render() {
-    const {
-      mapboxApiAccessToken,
-      mapStyle,
-      viewport,
-      isCollapse
-    } = this.props;
+    const { customClass, children, getCursor, dragPan, dragRotate, scrollZoom, touchZoom, touchRotate, doubleClickZoom, ...mapboxProps } = this.props;
+    const { viewport, loaded, flying } = this.state;
 
     return (
-      <MapGL
-        className={styles.map}
-        ref={this.setElement}
-        {...viewport}
-        mapStyle={mapStyle}
-        width="100%"
-        height="100%"
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={this.onViewportChange}
+      <div
+        ref={(r) => { this.mapContainer = r; }}
+        className={classnames({
+          [styles.map]: true,
+          [customClass]: !!customClass
+        })}
       >
-        <div className={styles.navigation}>
-          <MediaQuery minWidth={breakpoints.md}>
-            <NavigationControl />
-          </MediaQuery>
-        </div>
-        <div className={classnames(styles.legend,
-          { [styles.expanded]: !isCollapse })}
+        <ReactMapGL
+          ref={(map) => { this.map = map && map.getMap(); }}
+
+          // CUSTOM PROPS FROM REACT MAPBOX API
+          {...mapboxProps}
+
+          // VIEWPORT
+          {...viewport}
+          width="100%"
+          height="100%"
+
+          // INTERACTIVE
+          dragPan={!flying && dragPan}
+          dragRotate={!flying && dragRotate}
+          scrollZoom={!flying && scrollZoom}
+          touchZoom={!flying && touchZoom}
+          touchRotate={!flying && touchRotate}
+          doubleClickZoom={!flying && doubleClickZoom}
+
+          // DEFAULT FUNC IMPLEMENTATIONS
+          onViewportChange={this.onViewportChange}
+          onResize={this.onResize}
+          onLoad={this.onLoad}
+
+          transitionInterpolator={new FlyToInterpolator()}
+          transitionEasing={easeCubic}
         >
-          <MediaQuery maxWidth={breakpoints.md - 1}>
-            <MobileLegendControl />
-          </MediaQuery>
-          <div className={styles.tooltip}>
-            <Legend />
-            <BasemapSelector />
-          </div>
-        </div>
-      </MapGL>
+          {loaded && !!this.map && typeof children === 'function' && children(this.map)}
+        </ReactMapGL>
+      </div>
     );
   }
 }
