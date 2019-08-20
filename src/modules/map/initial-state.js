@@ -8,5 +8,6 @@ export default {
     latitude: 20,
     longitude: 0,
   },
+  bounds: {},
   display: true
 };
