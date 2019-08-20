@@ -23,7 +23,7 @@ function sortLayers(layers) {
 export const layerStyles = createSelector(
   [mapStyles, activeLayers],
   (_mapStyles, _activeLayers) => {
-    if (!_mapStyles.layers.mapStyle) return [];
+    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) return [];
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const result = [];
     _activeLayers.forEach((activeLayer) => {
