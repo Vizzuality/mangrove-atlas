@@ -3,13 +3,15 @@ import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 // Utils
-// import { format } from 'd3-format';
+import { format } from 'd3-format';
 // import { replace } from 'layer-manager';
 import groupBy from 'lodash/groupBy';
 
 // Components
-// import WidgetTooltip from 'components/widget/tooltip';
+import WidgetTooltip from 'components/widget/tooltip';
 import WidgetLegend from 'components/widget/legend';
+
+const numberFormat = format(',.2f');
 
 const widgetData = ({ list, metadata }) => {
   const data = list.map(l => (
@@ -100,7 +102,7 @@ const fakeData = {
     },
     {
       name: 'country',
-      label: '2009',
+      label: '2015',
       gain: 194,
       median: 72,
       loss: -182
@@ -126,7 +128,7 @@ export const CONFIG = {
         gain: l.gain,
         loss: l.loss,
         color: l.color,
-        name: l.label
+        name: l.name
       }
     )),
     chartConfig: {
@@ -177,6 +179,23 @@ export const CONFIG = {
         horizontal: false,
         verticalPoints: [0, 100, 200, 300, 400, 500],
         strokeDasharray: '5 20'
+      },
+      tooltip: {
+        cursor: false,
+        content: (
+          <WidgetTooltip
+            style={{
+              color: '#FFFFFF',
+              backgroundColor: '#383838'
+            }}
+            settings={[
+              { key: 'name' },
+              { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
+              { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
+              { key: 'median', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
+            ]}
+          />
+        )
       }
     }
   })

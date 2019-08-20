@@ -5,7 +5,6 @@ import {
   CartesianAxis,
   ReferenceLine,
   ReferenceArea,
-  Line
 } from 'recharts';
 
 const rechartsComponentsMap = new Map([
@@ -33,6 +32,6 @@ export function addComponent(type, options) {
   } else if (isObject(options)) {
     stack.push(<Component key={`${type}`} {...options}></Component>);
   }
-  
+
   return null;
 };
