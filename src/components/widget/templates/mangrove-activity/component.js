@@ -15,7 +15,8 @@ class MangroveActivity extends React.PureComponent {
   state = {
     unit: 'ha',
     yearStart: '2009',
-    yearEnd: '2019'
+    yearEnd: '2019',
+    filter: 'gainRanking'
   }
 
   changeYear = (type, value) => {
@@ -30,11 +31,20 @@ class MangroveActivity extends React.PureComponent {
     this.setState({ unit });
   }
 
-  render() {
-    const { data: { chartData, chartConfig }} = this.props;
-    const { yearStart, yearEnd, unit } = this.state;
+  changeFilter = (filter) => {
+    this.setState({ filter });
+  }
 
+  render() {
+    const { data: { chartData, chartConfig, fakeData } } = this.props;
+    const { yearStart, yearEnd, unit, filter } = this.state;
     // XXX: these options should come from an api ?
+    const optionsFilter = [
+      { value: 'gainRanking', label: 'Gain' },
+      { value: 'lossRanking', label: 'Loss' },
+      { value: 'netRanking', label: 'Net' }
+    ];
+
     const optionsYearStart = [
       { value: '2009', label: '2009' },
       { value: '2010', label: '2010' }
@@ -49,11 +59,20 @@ class MangroveActivity extends React.PureComponent {
       { value: 'ha', label: 'Ha' },
       { value: 'km', label: 'Km' }
     ];
+
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            Regions of interest within location showed relative changes of x
+            Regions of interest within location showed relative
+            {' '}
+            <Select
+              value={filter}
+              options={optionsFilter}
+              onChange={value => this.changeFilter(value)}
+            />
+            {' '}
+            of x
             {' '}
             <Select
               value={unit}
@@ -83,7 +102,7 @@ class MangroveActivity extends React.PureComponent {
         {/* Chart */}
         {!chartData.length && <Spinner />}
         <Chart
-          data={chartData}
+          data={fakeData[filter]}
           config={chartConfig}
         />
 

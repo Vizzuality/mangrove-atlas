@@ -1,0 +1,53 @@
+@import 'styles/vars';
+
+.list {
+  flex: 1;
+
+  margin: 30px -20px 0 -20px;
+  padding: 0;
+  list-style: none;
+
+  overflow: auto;
+
+  .listItem {
+    a {
+      display: block;
+      border-radius: 10px;
+      // margin: 0 -20px;
+      padding: 10px 20px;
+
+      color: $body-color;
+      @include medium-text;
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgba(#00C5BD, .1);
+      }
+    }
+    .items {
+      display: flex;
+      justify-content: space-between;
+    }
+    .tag {
+      color: rgba(0,0,0,0.54);
+      font-size: 12px;
+      text-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5);
+    }
+  }
+
+  .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.7);
+
+  transform: scale(1);
+  transition:
+    transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946),
+    opacity 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  z-index: 150;
+  }
+}

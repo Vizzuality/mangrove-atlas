@@ -22,36 +22,103 @@ const widgetData = ({ list, metadata }) => {
     })).filter(l => l.netChange !== 0);
   return orderBy(data, l => l.year);
 };
-//   return [
-//     {
-//       label: '1996',
-//       gain: 122,
-//       median: 40,
-//       loss: -120
-//     },
-//     {
-//       label: '2002',
-//       gain: 155,
-//       median: 30,
-//       loss: -40
-//     },
-//     {
-//       label: '2009',
-//       gain: 194,
-//       median: 72,
-//       loss: -182
-//     },
-//     {
-//       label: '2016',
-//       gain: 135,
-//       median: 110,
-//       loss: -194
-//     }
-//   ];
-// };
+const fakeData = {
+  gainRanking: [
+    {
+      name: 'country',
+      label: '1996',
+      gain: 12,
+      median: 40,
+      loss: -120
+    },
+    {
+      name: 'country',
+      label: '2002',
+      gain: 15,
+      median: 30,
+      loss: -40
+    },
+    {
+      name: 'country',
+      label: '2009',
+      gain: 19,
+      median: 72,
+      loss: -182
+    },
+    {
+      name: 'country',
+      label: '2016',
+      gain: 13,
+      median: 110,
+      loss: -194
+    }
+  ],
+  lossRanking: [
+    {
+      name: 'country',
+      label: '1996',
+      gain: 122,
+      median: 40,
+      loss: -12
+    },
+    {
+      name: 'country',
+      label: '2002',
+      gain: 155,
+      median: 30,
+      loss: -4
+    },
+    {
+      name: 'country',
+      label: '2009',
+      gain: 194,
+      median: 72,
+      loss: -18
+    },
+    {
+      name: 'country',
+      label: '2016',
+      gain: 135,
+      median: 110,
+      loss: -19
+    }
+  ],
+  netRanking: [
+    {
+      name: 'country',
+      label: '1996',
+      gain: 122,
+      median: 40,
+      loss: -120
+    },
+    {
+      name: 'country',
+      label: '2002',
+      gain: 155,
+      median: 30,
+      loss: -40
+    },
+    {
+      name: 'country',
+      label: '2009',
+      gain: 194,
+      median: 72,
+      loss: -182
+    },
+    {
+      name: 'country',
+      label: '2016',
+      gain: 135,
+      median: 110,
+      loss: -194
+    }
+  ]
+};
+
 
 export const CONFIG = {
   parse: data => ({
+    fakeData,
     chartData: widgetData(data).map(l => (
       {
         label: l.label,
