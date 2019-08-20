@@ -55,8 +55,7 @@
       "slug": "mangrove_coverage",
       "layersIds": [
         "mangrove_extent"
-      ],
-      "isActive": true
+      ]
     },
     {
       "name": "Mangrove net change",

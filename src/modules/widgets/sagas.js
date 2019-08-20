@@ -2,6 +2,8 @@ import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effe
 import DATA from 'config/data.json';
 import { fetchSucceeded, toggleActive, toggleActiveByLayerId } from './actions';
 
+import { breakpoints } from 'utils/responsive';
+
 function delay(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms))
 }
@@ -11,7 +13,16 @@ export function* toggleWidgetActive({ payload }) {
 }
 
 export function* getWidgets() {
+  const isDesktop = window.matchMedia(`(min-width: ${breakpoints.md}px)`).matches;
   const { widgets } = DATA;
+
+  if (isDesktop) {
+    widgets.forEach(layer => {
+      if (layer.slug === 'mangrove_coverage') {
+        layer.isActive = true;
+     }
+    });
+  }
 
   yield put(fetchSucceeded(widgets));
 }
