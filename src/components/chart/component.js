@@ -187,6 +187,7 @@ class Chart extends PureComponent {
 
             {yAxis && (
               <YAxis
+                label={{ value: 'country', position: 'top', textAnchor: 'middle' }}
                 axisLine={false}
                 tickSize={-50}
                 mirror
