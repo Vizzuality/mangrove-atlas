@@ -16,7 +16,7 @@ const ReactSelectStyles = {
     border: 0,
     fontWeight: 'bold',
     position: 'relative',
-    paddingTop: 4 
+    paddingTop: 4
   }),
   control: provided => ({
     ...provided,

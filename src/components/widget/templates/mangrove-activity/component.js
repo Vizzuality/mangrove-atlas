@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import orderBy from 'lodash/orderBy';
 
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
@@ -13,10 +14,10 @@ class MangroveActivity extends React.PureComponent {
   };
 
   state = {
-    unit: 'ha',
+    unit: '100',
     yearStart: '2009',
     yearEnd: '2019',
-    filter: 'gainRanking'
+    filter: 'gain'
   }
 
   changeYear = (type, value) => {
@@ -35,14 +36,17 @@ class MangroveActivity extends React.PureComponent {
     this.setState({ filter });
   }
 
+  getRanking = (fakeData, filter) => orderBy(fakeData[filter], d => Math.abs(d[filter])).reverse().map((f, index) => ({ ...f, x: index }));
+
   render() {
-    const { data: { chartData, chartConfig, fakeData } } = this.props;
+    const { data: { chartData, chartConfig, metadata, fakeData } } = this.props;
     const { yearStart, yearEnd, unit, filter } = this.state;
+
     // XXX: these options should come from an api ?
     const optionsFilter = [
-      { value: 'gainRanking', label: 'Gain' },
-      { value: 'lossRanking', label: 'Loss' },
-      { value: 'netRanking', label: 'Net' }
+      { value: 'gain', label: 'Gain' },
+      { value: 'loss', label: 'Loss' },
+      { value: 'net', label: 'Net' }
     ];
 
     const optionsYearStart = [
@@ -56,8 +60,8 @@ class MangroveActivity extends React.PureComponent {
     ];
 
     const optionsUnit = [
-      { value: 'ha', label: 'Ha' },
-      { value: 'km', label: 'Km' }
+      { value: '100', label: 'Ha' },
+      { value: '1', label: 'Km' }
     ];
 
     return (
@@ -72,7 +76,7 @@ class MangroveActivity extends React.PureComponent {
               onChange={value => this.changeFilter(value)}
             />
             {' '}
-            of x
+            of {metadata * unit}
             {' '}
             <Select
               value={unit}
@@ -102,10 +106,9 @@ class MangroveActivity extends React.PureComponent {
         {/* Chart */}
         {!chartData.length && <Spinner />}
         <Chart
-          data={fakeData[filter]}
+          data={this.getRanking(fakeData, filter)}
           config={chartConfig}
         />
-
       </Fragment>
     );
   }
