@@ -24,7 +24,8 @@ class MangroveCoverage extends React.PureComponent {
   }
 
   state = {
-    currentYear: 1996
+    currentYear: 1996,
+    unit: '%'
   }
 
   getData() {
@@ -54,24 +55,42 @@ class MangroveCoverage extends React.PureComponent {
     this.setState({ currentYear: value });
   }
 
+  changeUnit = (unit) => {
+    this.setState({ unit });
+  }
+
   render() {
     const { data, currentLocation, slug } = this.props;
     const { chartConfig, metadata } = data;
-    const { currentYear } = this.state;
+    const { currentYear, unit } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
       value: year
     }));
     const widgetData = this.getData();
-    const { percentage, unit } = widgetData[0];
+    const { percentage } = widgetData[0];
+    const unitOptions = [
+      { value: '%', label: '%' },
+      { value: 'km', label: 'Km' }
+    ];
+    const totalCoverage = metadata.total / 1000;
+    const coverage = (percentage * totalCoverage) / 100;
+
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            <span>Mangrove forest cover</span> <strong className="notranslate">{numberFormat(percentage)} {unit}</strong><br />
+            <span>Mangrove forest cover </span>
+            <strong className="notranslate">{unit === '%' ? numberFormat(percentage) : numberFormat(coverage)}
+              <Select
+                value={unit}
+                options={unitOptions}
+                onChange={value => this.changeUnit(value)}
+              />
+            </strong><br />
             <span>of</span> <strong>{currentLocation.type === 'worldwide' ? 'the world’s' : <span className="notranslate">{`${currentLocation.name}'s`}</span>}</strong>
             {' '}
-            <strong className="notranslate">{numberFormat(metadata.total / 1000)} km</strong> coastline<br />
+            <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> coastline<br />
             <span>in</span>
             {' '}
             <Select
