@@ -164,8 +164,7 @@ export const CONFIG = {
           verticalAlign: 'bottom',
           layout: 'horizontal',
           height: 50,
-          content: (properties) => {
-            const { payload } = properties;
+          content: ({ payload }) => {
             const labels = payload.map(({color, value, payload}) => ({
               color,
               value: payload.title || value

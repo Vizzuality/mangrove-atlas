@@ -49,7 +49,7 @@ const CONFIG = {
         lines: {
           netChange: {
             stroke: 'rgba(0,0,0,0.7)',
-            legend: 'Net Change'
+            legend: 'Net Result'
           }
         },
         bars: {
@@ -111,7 +111,7 @@ const CONFIG = {
               { key: 'year' },
               { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
               { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'netChange', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
+              { key: 'netChange', format: value => `Net result: ${numberFormat(value / 1000000)} km2` }
             ]}
           />
         )
