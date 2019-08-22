@@ -38,7 +38,21 @@ class MangroveNetChange extends PureComponent {
       label: year.toString(),
       value: year.toString()
     }));
-    const widgetData = chartData.filter(
+
+    // TODO: This must be done in the API
+    const editedChartData = [
+      {
+        x: '1996',
+        netChange: 0,
+        gain: 0,
+        loss: 0,
+        name: '1996',
+        year: 1996
+      },
+      ...chartData
+    ];
+
+    const widgetData = editedChartData.filter(
       ({year: y}) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
     );
 
@@ -47,6 +61,14 @@ class MangroveNetChange extends PureComponent {
     // We consider startYear as 0
     // Therefore we substract that from the accumulated change of all following years.
     const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
+
+    // Normalize startData
+    widgetData[0] = {
+      ...widgetData[0],
+      gain: 0,
+      loss: 0,
+      netChange: 0
+    };
 
     const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>; 
     const direction = (change > 0) ? 'increased' : 'decreased';

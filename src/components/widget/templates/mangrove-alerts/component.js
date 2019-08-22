@@ -7,7 +7,7 @@ import Chart from 'components/chart';
 import Datepicker from 'components/datepicker';
 
 import styles from 'components/widget/style.module.scss';
-window.m = moment;
+
 function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31'}) {
   const [state, setState] = useState({
     startDate: moment(minDate).add(4, 'y'),

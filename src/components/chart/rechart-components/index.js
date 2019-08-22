@@ -5,7 +5,6 @@ import {
   CartesianAxis,
   ReferenceLine,
   ReferenceArea,
-  Line
 } from 'recharts';
 
 const rechartsComponentsMap = new Map([
