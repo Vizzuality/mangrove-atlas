@@ -2,6 +2,7 @@ import { takeLatest, put, select } from 'redux-saga/effects';
 import bboxTurf from '@turf/bbox';
 import { currentLocation } from 'modules/locations/selectors';
 import { resetViewport, setBounds, setBasemap } from './actions';
+import countriesDictionary from './constants';
 
 function* flyToCurrentLocation() {
   const state = yield select();
@@ -12,7 +13,8 @@ function* flyToCurrentLocation() {
     if (location.location_type === 'worldwide') {
       yield put(resetViewport());
     } else {
-      const bbox = (location.iso === 'USA') ? [231.679687, 23.885838, 293.027344, 49.610710] : bboxTurf(location.bounds);
+      const locationException = countriesDictionary[location.iso];
+      const bbox = locationException ? locationException.bounds : bboxTurf(location.bounds);
 
       yield put(setBounds({
         bbox,
