@@ -40,13 +40,20 @@ class Chart extends PureComponent {
     config: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     handleMouseMove: PropTypes.func,
-    handleMouseLeave: PropTypes.func
+    handleMouseLeave: PropTypes.func,
+    onReady: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
     handleMouseMove: null,
     handleMouseLeave: null
+  }
+
+  componentDidMount() {
+    const { onReady } = this.props;
+
+    if (!!onReady) onReady(this.chart);
   }
 
   findMaxValue = (data, config) => {
@@ -111,7 +118,7 @@ class Chart extends PureComponent {
     });
 
     return (
-      <div className={styles.chart} style={{ height }}>
+      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
             height={height}
@@ -187,7 +194,6 @@ class Chart extends PureComponent {
 
             {yAxis && (
               <YAxis
-                label={{ value: 'country', position: 'top', textAnchor: 'middle' }}
                 axisLine={false}
                 tickSize={-50}
                 mirror

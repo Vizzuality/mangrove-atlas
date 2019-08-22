@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import flatten from 'lodash/flatten';
 
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
@@ -37,6 +38,89 @@ class MangroveActivity extends React.PureComponent {
   }
 
   getRanking = (fakeData, filter) => orderBy(fakeData[filter], d => Math.abs(d[filter])).reverse().map((f, index) => ({ ...f, x: index }));
+
+  getConfig = () => {
+    const { data: { chartConfig, fakeData } } = this.props;
+    const { filter } = this.state;
+
+    const dataRanked = this.getRanking(fakeData, filter);
+
+    const max = Math.max(...flatten(fakeData[filter].map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+
+    return {
+      ...chartConfig,
+      xAxis: {
+        type: 'number',
+        tick: true,
+        tickSize: 0,
+        domain: [-max + (-max * 0.05), max + (max * 0.05)]
+      },
+      yKeys: {
+        lines: {
+          net: {
+            fill: 'rgba(0, 0, 0, 0.7)',
+            strokeWidth: 10,
+            isAnimationActive: false,
+            dot: {
+              stroke: 'rgba(0, 0, 0, 0.7)',
+              strokeWidth: 5,
+              strokeHeight: 10,
+              fill: 'red'
+            },
+          }
+        },
+        bars: {
+          gain: {
+            barSize: 10,
+            transform: `translate(0, ${10 / 2})`,
+            fill: '#077FAC',
+            radius: [0, 10, 10, 0],
+            legend: 'Gain',
+            label: {
+              content: (prs) => {
+                const w = this.chart.offsetWidth;
+
+                const { index, y } = prs;
+                const { name } = dataRanked[index];
+
+                return (
+                  <g>
+                    <text x={w / 2} y={y} textAnchor="middle" fill="#000">
+                      {name}
+                    </text>
+                  </g>
+                );
+              }
+            }
+          },
+          loss: {
+            barSize: 10,
+            transform: `translate(0, -${10 / 2})`,
+            fill: '#EB6240',
+            radius: [0, 10, 10, 0],
+            legend: 'Loss',
+            label: {
+              content: (prs) => {
+                const w = this.chart.offsetWidth;
+
+                const { index, y } = prs;
+                const { loss, gain } = fakeData[filter][index];
+                const net = loss + gain;
+
+                console.log(net);
+
+                return (
+                  <g>
+                    <rect x={(w / 2) + net} y={y} width={2} height={20} fill="#000" />
+                  </g>
+                );
+              }
+            }
+          }
+        },
+      }
+    };
+  }
 
   render() {
     const { data: { chartData, chartConfig, metadata, fakeData } } = this.props;
@@ -106,8 +190,9 @@ class MangroveActivity extends React.PureComponent {
         {/* Chart */}
         {!chartData.length && <Spinner />}
         <Chart
+          onReady={(r) => { this.chart = r; }}
           data={this.getRanking(fakeData, filter)}
-          config={chartConfig}
+          config={this.getConfig()}
         />
       </Fragment>
     );

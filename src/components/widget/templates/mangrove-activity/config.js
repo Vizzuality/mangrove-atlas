@@ -27,29 +27,26 @@ const widgetData = ({ list }) => {
 const fakeData = {
   gain: [
     {
-      name: 'country',
+      name: 'country 1',
       label: '1996',
       gain: 13,
-      net: 40,
       loss: -120
     },
     {
-      name: 'country',
+      name: 'country 2',
       label: '2002',
       gain: 15,
-      net: 30,
       loss: -40
     },
     {
-      name: 'country',
+      name: 'country 3',
       label: '2009',
       gain: 19,
-      net: 72,
       loss: -18
     },
     {
       x: 3,
-      name: 'country',
+      name: 'country 4',
       label: '2016',
       gain: 20,
       net: 110,
@@ -154,37 +151,6 @@ export const CONFIG = {
         { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
       ],
       margin: { top: 20, right: 0, left: 0, bottom: 20 },
-      yKeys: {
-        lines: {
-          net: {
-            fill: 'rgba(0, 0, 0, 0.7)',
-            strokeWidth: 10,
-            isAnimationActive: false,
-            dot: {
-              stroke: 'rgba(0, 0, 0, 0.7)',
-              strokeWidth: 5,
-              strokeHeight: 10,
-              fill: 'red'
-            },
-          }
-        },
-        bars: {
-          gain: {
-            barSize: 10,
-            transform: `translate(0, ${10 / 2})`,
-            fill: '#077FAC',
-            radius: [0, 10, 10, 0],
-            legend: 'Gain'
-          },
-          loss: {
-            barSize: 10,
-            transform: `translate(0, -${10 / 2})`,
-            fill: '#EB6240',
-            radius: [0, 10, 10, 0],
-            legend: 'Loss'
-          }
-        },
-      },
       legend: {
         align: 'center',
         verticalAlign: 'top',
