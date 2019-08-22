@@ -12,7 +12,7 @@ function* flyToCurrentLocation() {
     if (location.location_type === 'worldwide') {
       yield put(resetViewport());
     } else {
-      const bbox = bboxTurf(location.bounds);
+      const bbox = (location.iso === 'USA') ? [231.679687, 23.885838, 293.027344, 49.610710] : bboxTurf(location.bounds);
 
       yield put(setBounds({
         bbox,
