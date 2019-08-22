@@ -6,7 +6,7 @@ import { NavigationControl } from 'react-map-gl';
 import classnames from 'classnames';
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
-import MapGl from 'components/map';
+import Map from 'components/map';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
 
@@ -19,7 +19,8 @@ class MapContainer extends PureComponent {
     isCollapse: PropTypes.bool.isRequired,
     mapboxApiAccessToken: PropTypes.string.isRequired,
     mapStyle: PropTypes.shape({}).isRequired,
-    bounds: PropTypes.shape({}).isRequired
+    bounds: PropTypes.shape({}).isRequired,
+    goToCountry: PropTypes.func
   }
 
   static defaultProps = {
@@ -33,7 +34,8 @@ class MapContainer extends PureComponent {
       bearing: 0,
       pitch: 0
     },
-    setViewport: () => { }
+    setViewport: () => { },
+    goToCountry: () => { }
   }
 
   componentDidMount() {
@@ -65,17 +67,29 @@ class MapContainer extends PureComponent {
       mapStyle,
       viewport,
       bounds,
-      isCollapse
+      isCollapse,
+      goToCountry
     } = this.props;
+
+    const clickHandler = ({ event }) => {
+      const { features } = event;
+      const country = features.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
+
+      if (country) {
+        const { properties: { ISO_3digit: countryId } } = country;
+        goToCountry({ iso: countryId });
+      }
+    };
 
     return (
       <div className={styles.map}>
-        <MapGl
+        <Map
           viewport={viewport}
           bounds={bounds}
           mapStyle={mapStyle}
           mapboxApiAccessToken={mapboxApiAccessToken}
           onViewportChange={this.onViewportChange}
+          onClick={clickHandler}
         >
           {() => (
             <div className={styles.navigation}>
@@ -85,7 +99,7 @@ class MapContainer extends PureComponent {
             </div>
           )
           }
-        </MapGl>
+        </Map>
 
         <div className={classnames(styles.legend,
           { [styles.expanded]: !isCollapse })}
