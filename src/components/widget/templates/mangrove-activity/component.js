@@ -7,6 +7,8 @@ import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Select from 'components/select';
 
+import { scaleLinear } from 'd3-scale';
+
 import styles from 'components/widget/style.module.scss';
 
 class MangroveActivity extends React.PureComponent {
@@ -46,6 +48,7 @@ class MangroveActivity extends React.PureComponent {
     const dataRanked = this.getRanking(fakeData, filter);
 
     const max = Math.max(...flatten(fakeData[filter].map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+    const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
 
     return {
       ...chartConfig,
@@ -53,29 +56,17 @@ class MangroveActivity extends React.PureComponent {
         type: 'number',
         tick: true,
         tickSize: 0,
-        domain: [-max + (-max * 0.05), max + (max * 0.05)]
+        domain: domainX
       },
       yKeys: {
-        lines: {
-          net: {
-            fill: 'rgba(0, 0, 0, 0.7)',
-            strokeWidth: 10,
-            isAnimationActive: false,
-            dot: {
-              stroke: 'rgba(0, 0, 0, 0.7)',
-              strokeWidth: 5,
-              strokeHeight: 10,
-              fill: 'red'
-            },
-          }
-        },
         bars: {
           gain: {
             barSize: 10,
-            transform: `translate(0, ${10 / 2})`,
+            // transform: `translate(0, ${10 / 2})`,
             fill: '#077FAC',
             radius: [0, 10, 10, 0],
             legend: 'Gain',
+            // stackId: 'stacked',
             label: {
               content: (prs) => {
                 const w = this.chart.offsetWidth;
@@ -95,23 +86,28 @@ class MangroveActivity extends React.PureComponent {
           },
           loss: {
             barSize: 10,
-            transform: `translate(0, -${10 / 2})`,
+            // transform: `translate(0, -${10})`,
             fill: '#EB6240',
             radius: [0, 10, 10, 0],
             legend: 'Loss',
+            // stackId: 'stacked',
             label: {
               content: (prs) => {
                 const w = this.chart.offsetWidth;
 
                 const { index, y } = prs;
-                const { loss, gain } = fakeData[filter][index];
+                const { loss, gain } = dataRanked[index];
                 const net = loss + gain;
 
-                console.log(net);
+                const scale = scaleLinear()
+                  .domain(domainX)
+                  .range([0, w]);
+
+                const x = scale((net));
 
                 return (
                   <g>
-                    <rect x={(w / 2) + net} y={y} width={2} height={20} fill="#000" />
+                    <rect x={x} y={y - 5} width={2} height={20} fill="#000" />
                   </g>
                 );
               }

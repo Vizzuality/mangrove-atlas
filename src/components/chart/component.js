@@ -53,7 +53,7 @@ class Chart extends PureComponent {
   componentDidMount() {
     const { onReady } = this.props;
 
-    if (!!onReady) onReady(this.chart);
+    if (onReady) onReady(this.chart);
   }
 
   findMaxValue = (data, config) => {
