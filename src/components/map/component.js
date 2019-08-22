@@ -129,7 +129,7 @@ class Map extends Component {
     });
   }
 
-  onClick = e => {
+  onClick = (e) => {
     const { onClick } = this.props;
 
     onClick({

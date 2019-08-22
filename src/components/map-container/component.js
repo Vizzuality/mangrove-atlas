@@ -19,7 +19,8 @@ class MapContainer extends PureComponent {
     isCollapse: PropTypes.bool.isRequired,
     mapboxApiAccessToken: PropTypes.string.isRequired,
     mapStyle: PropTypes.shape({}).isRequired,
-    bounds: PropTypes.shape({}).isRequired
+    bounds: PropTypes.shape({}).isRequired,
+    goToCountry: PropTypes.func
   }
 
   static defaultProps = {
@@ -33,7 +34,8 @@ class MapContainer extends PureComponent {
       bearing: 0,
       pitch: 0
     },
-    setViewport: () => { }
+    setViewport: () => { },
+    goToCountry: () => { }
   }
 
   componentDidMount() {
@@ -69,7 +71,7 @@ class MapContainer extends PureComponent {
       goToCountry
     } = this.props;
 
-    const clickHandler = ({event, map}) => {
+    const clickHandler = ({ event }) => {
       const { features } = event;
       const country = features.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
 
