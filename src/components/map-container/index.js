@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { setViewport } from 'modules/map/actions';
 import { mapStyle } from 'modules/map-styles/selectors';
+import { pageActions } from 'modules/pages/actions';
 
 import Component from './component';
 
@@ -12,7 +13,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setViewport
+  setViewport,
+  goToCountry: pageActions['PAGE/COUNTRY']
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -129,6 +129,16 @@ class Map extends Component {
     });
   }
 
+  onClick = e => {
+    const { onClick } = this.props;
+
+    onClick({
+      event: e,
+      map: this.map,
+      mapContainer: this.mapContainer
+    });
+  }
+
   onViewportChange = (v) => {
     const { onViewportChange } = this.props;
 
@@ -244,6 +254,7 @@ class Map extends Component {
           onViewportChange={this.onViewportChange}
           onResize={this.onResize}
           onLoad={this.onLoad}
+          onClick={this.onClick}
 
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
