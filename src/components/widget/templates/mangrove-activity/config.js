@@ -150,6 +150,8 @@ export const CONFIG = {
       referenceLines: [
         { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
       ],
+      height: 400,
+      stackOffset: 'sign',
       margin: { top: 20, right: 0, left: 0, bottom: 20 },
       legend: {
         align: 'center',

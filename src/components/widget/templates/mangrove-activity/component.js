@@ -54,9 +54,11 @@ class MangroveActivity extends React.PureComponent {
       ...chartConfig,
       xAxis: {
         type: 'number',
-        tick: true,
-        tickSize: 0,
-        domain: domainX
+        domain: domainX,
+        interval: 0
+        // tick: true,
+        // tickSize: 5,
+        // minTickGap: 0,
       },
       yKeys: {
         bars: {
@@ -66,7 +68,7 @@ class MangroveActivity extends React.PureComponent {
             fill: '#077FAC',
             radius: [0, 10, 10, 0],
             legend: 'Gain',
-            // stackId: 'stacked',
+            stackId: 'stacked',
             label: {
               content: (prs) => {
                 const w = this.chart.offsetWidth;
@@ -90,7 +92,7 @@ class MangroveActivity extends React.PureComponent {
             fill: '#EB6240',
             radius: [0, 10, 10, 0],
             legend: 'Loss',
-            // stackId: 'stacked',
+            stackId: 'stacked',
             label: {
               content: (prs) => {
                 const w = this.chart.offsetWidth;

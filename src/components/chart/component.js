@@ -87,6 +87,7 @@ class Chart extends PureComponent {
       layout = 'horizontal',
       gradients,
       patterns,
+      stackOffset,
       ...content
     } = config;
 
@@ -121,6 +122,7 @@ class Chart extends PureComponent {
       <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
+            stackOffset={stackOffset}
             height={height}
             data={data}
             layout={layout}
