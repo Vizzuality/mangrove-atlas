@@ -149,7 +149,8 @@ export const CONFIG = {
         yKeys: {
           lines: {
             signal: {
-              strokeWidth: 0,
+              stroke: 'red',
+              strokeWidth: 1,
               isAnimationActive: false,
               dot: {
                 stroke: 'red',
@@ -169,7 +170,7 @@ export const CONFIG = {
               color,
               value: payload.title || value
             }));
-            return <WidgetLegend direction="vertical" groups={{labels}} />;
+            return <WidgetLegend direction="vertical" groups={{labels}} variant="circle" />;
           }
         },
         cartesianAxis: {
