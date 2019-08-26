@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import DownloadLink from 'components/link';
+import WidgetInfo from 'components/widget-info';
 import sumBy from 'lodash/sumBy';
 import styles from 'components/widget/style.module.scss';
 
@@ -70,7 +70,7 @@ class MangroveNetChange extends PureComponent {
       netChange: 0
     };
 
-    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>; 
+    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
     const direction = (change > 0) ? 'increased' : 'decreased';
     const quantity = numberFormat(change / 1000000);
     const startSelector = (<Select
@@ -107,7 +107,7 @@ class MangroveNetChange extends PureComponent {
           />
         )}
 
-        <DownloadLink
+        <WidgetInfo
           data={widgetData}
           filename={slug}
         />

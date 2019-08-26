@@ -26,7 +26,7 @@ class Widget extends PureComponent {
     toggleCollapse: PropTypes.func,
     template: PropTypes.func.isRequired
   };
-  
+
   static defaultProps = {
     data: null,
     highlightedPlaces: null,

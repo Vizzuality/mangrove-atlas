@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import DownloadLink from 'components/link';
+import WidgetInfo from 'components/widget-info';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
@@ -111,8 +111,7 @@ class MangroveCoverage extends React.PureComponent {
             config={chartConfig}
           />
         )}
-
-        <DownloadLink
+        <WidgetInfo
           data={widgetData}
           filename={slug}
         />

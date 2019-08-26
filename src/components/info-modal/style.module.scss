@@ -1,0 +1,89 @@
+@import 'styles/vars';
+
+.location {
+  $padding: 30px;
+  $border-radius: 20px;
+
+  position: absolute;
+  max-width: 540px;
+  width: 100%;
+  top: 50px;
+  left: 50px;
+  bottom: 50px;
+
+  z-index: 100;
+
+  &.mobile {
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: inherit;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    padding: $padding;
+    width: 100%;
+    height: 100%;
+
+    border-radius: $border-radius;
+    background: white;
+
+    box-shadow: $box-shadow;
+    box-sizing: border-box;
+
+    overflow: auto;
+    z-index: 1;
+    &.mobile {
+      position: absolute;
+      right: 20px;
+    }
+  }
+
+  .searchInput {
+    flex: 1;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: transparent;
+
+    caret-color: $primary;
+    color: $body-color;
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 50px;
+
+    &:focus {
+      outline: 0;
+    }
+
+    &::placeholder {
+      color: $body-color;
+    }
+  }
+
+  .searchButton {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 30px;
+    left: 100%;
+    border: 0;
+    border-radius: 0 10px 10px 0;
+    background: white;
+
+    cursor: pointer;
+    &.mobile {
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      left: initial;
+    }
+  }
+}
