@@ -4,8 +4,6 @@ import orderBy from 'lodash/orderBy';
 
 // Utils
 import { format } from 'd3-format';
-// import { replace } from 'layer-manager';
-import groupBy from 'lodash/groupBy';
 
 // Components
 import WidgetTooltip from 'components/widget/tooltip';
@@ -27,26 +25,26 @@ const widgetData = ({ list }) => {
 const fakeData = {
   gain: [
     {
-      name: 'country 1',
+      name: 'place 1',
       label: '1996',
       gain: 13,
       loss: -120
     },
     {
-      name: 'country 2',
+      name: 'place 2',
       label: '2002',
       gain: 15,
       loss: -40
     },
     {
-      name: 'country 3',
+      name: 'place 3',
       label: '2009',
       gain: 19,
       loss: -18
     },
     {
       x: 3,
-      name: 'country 4',
+      name: 'place 4',
       label: '2016',
       gain: 20,
       net: 110,
@@ -55,28 +53,28 @@ const fakeData = {
   ],
   loss: [
     {
-      name: 'country',
+      name: 'place',
       label: '1996',
       gain: 122,
       net: 40,
       loss: -12
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2002',
       gain: 155,
       net: 30,
       loss: -4
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2009',
       gain: 194,
       net: 72,
       loss: -18
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2016',
       gain: 135,
       net: 110,
@@ -85,28 +83,28 @@ const fakeData = {
   ],
   net: [
     {
-      name: 'country',
+      name: 'place',
       label: '1996',
       gain: 122,
       net: 40,
       loss: -120
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2002',
       gain: 155,
       net: 30,
       loss: -40
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2015',
       gain: 194,
       net: 72,
       loss: -182
     },
     {
-      name: 'country',
+      name: 'place',
       label: '2016',
       gain: 135,
       net: 110,
@@ -117,24 +115,11 @@ const fakeData = {
 
 const widgetMetadata = ({ metadata: { location_coast_length_m } }) => Number(location_coast_length_m / 1000000).toFixed(2);
 
-// const widgetMetadata = (fakeData) => {
-
-//   const years = Object.keys(fakeData).reduce(function (acc, key) {
-//     return acc.push(fakeData[key].label);
-// }, []);
-
-// console.log(years)
-//   // years: fakeData.filter(l => (l.gain_m2 !== null && l.loss_m2 !== null)).map(l => (
-//   //   moment(l.date).year()
-//   // )).sort((a, b) => a - b)
-// };
-
 
 export const CONFIG = {
   parse: data => ({
     fakeData,
     metadata: widgetMetadata(data),
-    // metadata: widgetMetadata(fakeData),
     chartData: widgetData(data).map(l => (
       {
         label: l.label,
@@ -150,7 +135,7 @@ export const CONFIG = {
       referenceLines: [
         { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
       ],
-      height: 400,
+      height: 300,
       stackOffset: 'sign',
       margin: { top: 20, right: 0, left: 0, bottom: 20 },
       legend: {
@@ -158,11 +143,16 @@ export const CONFIG = {
         verticalAlign: 'top',
         layout: 'horizontal',
         height: 50,
-        content: (properties) => {
-          const { payload } = properties;
-          const groups = groupBy(payload, p => p.payload.category);
-          return <WidgetLegend direction="vertical" groups={groups} />;
+
+        content: ({ payload }) => {
+          const labels = payload.map(({ color, value }) => ({
+            color,
+            value: payload.legend || value
+          }));
+          return <WidgetLegend direction="vertical" groups={{ labels }} />;
         }
+
+
       },
       xAxis: {
         type: 'number',

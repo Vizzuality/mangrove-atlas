@@ -47,7 +47,8 @@ class Chart extends PureComponent {
   static defaultProps = {
     className: '',
     handleMouseMove: null,
-    handleMouseLeave: null
+    handleMouseLeave: null,
+    onReady: null
   }
 
   componentDidMount() {
@@ -189,7 +190,8 @@ class Chart extends PureComponent {
                 dataKey={xKey || ''}
                 axisLine={false}
                 tickLine={false}
-                tick={{ dy: 8, fontSize: '12px', fill: 'green' }}
+                tickCount={8}
+                tick={{ dy: 8, fontSize: '12px', fill: 'rgba(0,0,0,0.54)', textShadow: '0 2 4 0 rgba(0,0,0,0.5)' }}
                 {...xAxis}
               />
             )}

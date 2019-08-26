@@ -120,12 +120,12 @@ export const CONFIG = {
           type: 'number',
           domain: [1996, 2016],
           scale: 'linear',
-          ticks: range(1996,2017),
+          ticks: range(1996, 2017),
           tick: props => {
             const { payload: { value } } = props;
             const options = {...props};
             let show = false;
-          
+
             if (value === 1996) {
               show = true;
               options.textAnchor = 'start';

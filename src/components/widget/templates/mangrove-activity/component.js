@@ -56,15 +56,19 @@ class MangroveActivity extends React.PureComponent {
         type: 'number',
         domain: domainX,
         interval: 0
-        // tick: true,
-        // tickSize: 5,
-        // minTickGap: 0,
       },
       yKeys: {
+        lines: {
+          net: {
+            barSize: 10,
+            fill: 'rgba(0,0,0,0.7)',
+            radius: 4,
+            legend: 'Net result',
+          }
+        },
         bars: {
           gain: {
             barSize: 10,
-            // transform: `translate(0, ${10 / 2})`,
             fill: '#077FAC',
             radius: [0, 10, 10, 0],
             legend: 'Gain',
@@ -77,8 +81,8 @@ class MangroveActivity extends React.PureComponent {
                 const { name } = dataRanked[index];
 
                 return (
-                  <g>
-                    <text x={w / 2} y={y} textAnchor="middle" fill="#000">
+                  <g className={styles.activity_widget}>
+                    <text className={styles.label} x={w / 2} y={y - 15} textAnchor="middle" fill="#000">
                       {name}
                     </text>
                   </g>
@@ -88,11 +92,10 @@ class MangroveActivity extends React.PureComponent {
           },
           loss: {
             barSize: 10,
-            // transform: `translate(0, -${10})`,
             fill: '#EB6240',
             radius: [0, 10, 10, 0],
-            legend: 'Loss',
             stackId: 'stacked',
+            legend: 'Loss',
             label: {
               content: (prs) => {
                 const w = this.chart.offsetWidth;
@@ -121,7 +124,7 @@ class MangroveActivity extends React.PureComponent {
   }
 
   render() {
-    const { data: { chartData, chartConfig, metadata, fakeData } } = this.props;
+    const { data: { chartData, metadata, fakeData } } = this.props;
     const { yearStart, yearEnd, unit, filter } = this.state;
 
     // XXX: these options should come from an api ?
