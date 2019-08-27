@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
@@ -33,6 +33,11 @@ class MangroveCoverage extends React.PureComponent {
     const { chartData, metadata } = data;
     const { currentYear } = this.state;
     const currentYearData = chartData.find(d => d.x === currentYear);
+
+    if (!currentYearData) {
+      throw new Error('No data error.');
+    }
+
     const nonMangrove = metadata.total - currentYearData.value;
 
     return [
@@ -60,64 +65,68 @@ class MangroveCoverage extends React.PureComponent {
   }
 
   render() {
-    const { data, currentLocation, slug } = this.props;
-    const { chartConfig, metadata } = data;
+    const { data: { chartConfig, metadata }, currentLocation, slug } = this.props;
     const { currentYear, unit } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
       value: year
     }));
-    const widgetData = this.getData();
-    const { percentage } = widgetData[0];
-    const unitOptions = [
-      { value: '%', label: '%' },
-      { value: 'km', label: 'Km' }
-    ];
-    const totalCoverage = metadata.total / 1000;
-    const coverage = (percentage * totalCoverage) / 100;
+    let content = null;
 
-    return (
-      <Fragment>
-        <div className={styles.widget_template}>
+    try {
+      const widgetData = this.getData();
+      const { percentage } = widgetData[0];
+      const unitOptions = [
+        { value: '%', label: '%' },
+        { value: 'km', label: 'Km' }
+      ];
+      const totalCoverage = metadata.total / 1000;
+      const coverage = (percentage * totalCoverage) / 100;
+      const quantity = numberFormat((unit === '%') ? percentage : coverage);
+      const location = (currentLocation.type === 'worldwide')
+        ? 'the world’s'
+        : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
+      const unitSelector = (<Select
+        value={unit}
+        options={unitOptions}
+        onChange={value => this.changeUnit(value)}
+      />);
+      const yearSelector = (<Select
+        className="notranslate"
+        width="auto"
+        value={currentYear}
+        options={optionsYears}
+        onChange={this.changeYear}
+      />);
+
+      content = (
+        <>
           <div className={styles.sentence}>
             <span>Mangrove forest cover </span>
-            <strong className="notranslate">{unit === '%' ? numberFormat(percentage) : numberFormat(coverage)}
-              <Select
-                value={unit}
-                options={unitOptions}
-                onChange={value => this.changeUnit(value)}
-              />
-            </strong><br />
-            <span>of</span> <strong>{currentLocation.type === 'worldwide' ? 'the world’s' : <span className="notranslate">{`${currentLocation.name}'s`}</span>}</strong>
-            {' '}
-            <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> coastline<br />
-            <span>in</span>
-            {' '}
-            <Select
-              className="notranslate"
-              width="auto"
-              value={currentYear}
-              options={optionsYears}
-              onChange={this.changeYear}
-            />
-            {'.'}
+            <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
+            <span>of</span> <strong>{ location }</strong>
+            <strong className="notranslate">{ numberFormat(totalCoverage) } km</strong> coastline<br />
+            <span>in </span>{yearSelector}.
           </div>
-        </div>
-
-        {/* Chart */}
-        {!!widgetData.length && (
           <Chart
             data={widgetData}
             config={chartConfig}
           />
-        )}
+          <DownloadLink
+            data={widgetData}
+            filename={slug}
+          />
+        </>
+        );
+    } catch(e) {
+      content = (
+        <div className={styles.sentence}>
+          <span>No data for this widget.</span>
+        </div>
+        );
+    }
 
-        <DownloadLink
-          data={widgetData}
-          filename={slug}
-        />
-      </Fragment>
-    );
+    return <div className={styles.widget_template}>{content}</div>;
   }
 }
 

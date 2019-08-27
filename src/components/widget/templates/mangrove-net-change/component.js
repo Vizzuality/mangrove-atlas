@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
@@ -91,27 +91,22 @@ class MangroveNetChange extends PureComponent {
     />);
 
     return (
-      <Fragment>
+      <>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
             between {startSelector} and {endSelector}.
           </div>
-        </div>
-
-        {/* Chart */}
-        {!!widgetData.length && (
           <Chart
             data={widgetData}
             config={chartConfig}
           />
-        )}
-
-        <DownloadLink
-          data={widgetData}
-          filename={slug}
-        />
-      </Fragment>
+          <DownloadLink
+            data={widgetData}
+            filename={slug}
+          />
+        </div>
+      </>
     );
   }
 }
