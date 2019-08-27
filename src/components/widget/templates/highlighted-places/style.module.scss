@@ -18,19 +18,22 @@
   .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex: 1 1;
+    min-height: 200px;
     width: 50%;
     padding: 20px 30px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     width: auto;
+    color: $white;
+    font-size: $body-font-size;
+    font-weight: bold;
+    text-align: center;
 
     @media screen and (max-width: map-get($breakpoints, md)) {
       flex-direction: row;
       vertical-align: bottom;
       align-items: flex-end;
-
     }
 
     .cardInfo {

@@ -3,12 +3,21 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
+import Rufiji from './images/rufiji1.jpg';
+import Saloum from './images/saloum1.jpg';
+
 
 const HighlightedPlaces = ({ data, currentLocation }) => (
+
   <div className={styles.hotspotsList}>
     {data.map(d => (
       <div
         key={d.id}
+        style={{
+          backgroundImage: `url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
         className={classnames(styles.card, { [styles.active]: d.id === currentLocation.id })}
       >
         <span className={styles.cardInfo}>
