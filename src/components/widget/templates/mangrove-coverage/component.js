@@ -45,7 +45,7 @@ class MangroveCoverage extends React.PureComponent {
         color: '#ECECEF',
         percentage: nonMangrove / metadata.total * 100,
         unit: '%',
-        value: nonMangrove,
+        coverage: (nonMangrove / 1000).toFixed(2),
         label: 'Non mangroves'
       }
     ];
@@ -83,9 +83,10 @@ class MangroveCoverage extends React.PureComponent {
             <span>Mangrove forest cover </span>
             <strong className="notranslate">{unit === '%' ? numberFormat(percentage) : numberFormat(coverage)}
               <Select
+                className="notranslate"
                 value={unit}
                 options={unitOptions}
-                onChange={value => this.changeUnit(value)}
+                onChange={this.changeUnit}
               />
             </strong><br />
             <span>of</span> <strong>{currentLocation.type === 'worldwide' ? 'the world’s' : <span className="notranslate">{`${currentLocation.name}'s`}</span>}</strong>

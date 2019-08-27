@@ -44,9 +44,10 @@ export const styles = {
     boxShadow: '1px 4px 12px 0 rgba(0, 0, 0, 0.08)',
     boxSizing: 'content-box',
     marginTop: 20,
+    minWidth: 30,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingtop: 10,
+    paddingTop: 10,
     paddingBottom: 10,
     transform: 'translateX(-50%)',
     left: '50%',
@@ -95,7 +96,8 @@ export const styles = {
     transform: 'none',
     maxWidth: '100%',
     margin: 0,
-    cursor: 'pointer'
+    cursor: 'pointer',
+    marginBottom: -4
   }),
   valueContainer: provided => ({
     ...provided,
