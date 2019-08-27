@@ -1,3 +1,1 @@
-import SelectComponent from './component';
-
-export default SelectComponent;
+export { default } from './component';
