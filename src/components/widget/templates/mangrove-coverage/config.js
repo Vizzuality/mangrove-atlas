@@ -19,6 +19,7 @@ const widgetData = ({ list, metadata }) => {
         color: '#00857F',
         percentage: d.length_m / total * 100,
         unit: '%',
+        coverage: (d.length_m / 1000).toFixed(2),
         value: d.length_m,
         label: `Mangroves in ${year}`
       });
@@ -84,7 +85,9 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { key: 'percentage', format: value => `Percentage: ${numberFormat(value / 100)}` }
+              { key: 'percentage', format: percentage => `Percentage: ${numberFormat(percentage / 100)}` },
+              { key: 'coverage', format: coverage => `Coverage: ${(coverage)}km` }
+
             ]}
           />
         )
