@@ -15,13 +15,16 @@
     }
   }
 
+  a {
+    width: 50%;
+  }
+
   .card {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     flex: 1 1;
     min-height: 200px;
-    width: 50%;
     padding: 20px 30px;
     border-radius: 20px;
     width: auto;
