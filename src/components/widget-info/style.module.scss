@@ -17,8 +17,8 @@
     line-height: 20px;
     cursor: pointer;
     &:hover {
-      pointer-events: none;
       cursor: pointer;
+      border: none;
     }
     .icon {
       padding-right: 10px;

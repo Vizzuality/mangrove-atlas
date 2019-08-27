@@ -53,7 +53,7 @@ class MangroveNetChange extends PureComponent {
     ];
 
     const widgetData = editedChartData.filter(
-      ({year: y}) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
+      ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
     );
 
     // How this change is calculated?
@@ -73,22 +73,24 @@ class MangroveNetChange extends PureComponent {
     const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
     const direction = (change > 0) ? 'increased' : 'decreased';
     const quantity = numberFormat(change / 1000000);
-    const startSelector = (<Select
-      className="notranslate netChange"
-      prefix="start-year"
-      value={startYear}
-      options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
-      onChange={this.changeStartYear}
-    />);
-    const endSelector = (<Select
-      className="notranslate"
-      prefix="end-year"
-      value={endYear}
-      options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
-      onChange={this.changeEndYear}
-    />);
+    const startSelector = (
+      <Select
+        className="notranslate netChange"
+        prefix="start-year"
+        value={startYear}
+        options={optionsYears}
+        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
+        onChange={this.changeStartYear}
+      />);
+    const endSelector = (
+      <Select
+        className="notranslate"
+        prefix="end-year"
+        value={endYear}
+        options={optionsYears}
+        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
+        onChange={this.changeEndYear}
+      />);
 
     return (
       <Fragment>
