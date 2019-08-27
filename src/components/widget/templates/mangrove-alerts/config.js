@@ -1,38 +1,20 @@
 import React from 'react';
 import WidgetLegend from 'components/widget/legend';
+import WidgetTooltip from 'components/widget/tooltip';
 import { range } from 'lodash';
+
+import data from './alerts.json';
 
 import {
   Text
 } from 'recharts';
 
-const widgetData = () => [
-  {
-    label: '2001',
-    year: 2001,
-    signal: 0
-  },
-  {
-    label: '2005',
-    year: 2005,
-    signal: 0
-  },
-  {
-    label: '2007',
-    year: 2007,
-    signal: 0
-  }
-];
+const Months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
 export const CONFIG = {
-  parse: ({startYear, endYear}) => {
+  parse: ({startMark, endMark, series}) => {
     return {
-      chartData: widgetData().map(l => (
-        {
-          ...l,
-          x: l.label
-        }
-      )),
+      chartData: data,
       metadata: {},
       chartConfig: {
         patterns: {
@@ -68,7 +50,7 @@ export const CONFIG = {
         },
         referenceLines: [
           {
-            x: startYear,
+            x: startMark,
             stroke: 'rgb(0,0,0)',
             strokeWidth: 1,
             label: {
@@ -81,7 +63,7 @@ export const CONFIG = {
             }
           },
           {
-            x: endYear,
+            x: endMark,
             stroke: 'rgb(0,0,0)',
             strokeWidth: 1,
             label: {
@@ -96,15 +78,15 @@ export const CONFIG = {
         ],
         referenceAreas: [
           {
-            x1: 1996,
-            x2: 2016,
+            x1: 0,
+            x2: 11,
             y1: -100,
             y2: 90,
             fill: 'url(#diagonal-stripe-1) #000'
           },
           {
-            x1: startYear,
-            x2: endYear,
+            x1: startMark,
+            x2: endMark,
             y1: -100,
             y2: 100,
             fill: '#fff',
@@ -118,47 +100,36 @@ export const CONFIG = {
           minTickGap: 1,
           interval: 0,
           type: 'number',
-          domain: [1996, 2016],
+          domain: [0, 11],
           scale: 'linear',
-          ticks: range(1996,2017),
+          ticks: range(0,12),
           tick: props => {
             const { payload: { value } } = props;
             const options = {...props};
             let show = false;
+
+            options.y = options.y + 6;
           
-            if (value === 1996) {
+            if (value === 0) {
               show = true;
               options.textAnchor = 'start';
-              options.y = options.y + 6;
             }
 
-            if (value === 2016) {
+            if (value === 11) {
               show = true;
               options.textAnchor = 'end';
-              options.y = options.y + 6;
             }
 
-            return show ? <Text {...options}>{value}</Text> : null;
+            return <Text {...options}>{Months[value]}</Text>;
           }
         },
         yAxis: {
           tick: { fontSize: 12, fill: '#AAA' },
           domain: [-100, 100]
         },
-        xKey: 'year',
+        xKey: 'mark',
         yKeys: {
-          lines: {
-            signal: {
-              stroke: 'red',
-              strokeWidth: 1,
-              isAnimationActive: false,
-              dot: {
-                stroke: 'red',
-                strokeWidth: 5
-              },
-              title: 'Alerts'
-            }
-          }
+          lines: series
         },
         legend: {
           align: 'center',
@@ -169,9 +140,25 @@ export const CONFIG = {
             const labels = payload.map(({color, value, payload}) => ({
               color,
               value: payload.title || value
-            }));
+            })).slice(0, 1);
             return <WidgetLegend direction="vertical" groups={{labels}} variant="circle" />;
           }
+        },
+        tooltip: {
+          cursor: false,
+          content: (
+            <WidgetTooltip
+              style={{
+                color: '#FFFFFF',
+                backgroundColor: '#383838'
+              }}
+              settings={[
+                { key: 'id' },
+                { key: 'date', format: value => `Date: ${value}` },
+                { key: 'category', format: value => `Category: ${value}`}
+              ]}
+            />
+          )
         },
         cartesianAxis: {
           axisLine: true,

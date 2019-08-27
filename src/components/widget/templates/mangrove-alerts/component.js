@@ -1,14 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import moment from 'moment';
 
-import { year } from 'utils/nice-date';
+import { month } from 'utils/nice-date';
 // import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Datepicker from 'components/datepicker';
 
 import styles from 'components/widget/style.module.scss';
 
-function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31'}) {
+function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data}) {
   const [state, setState] = useState({
     startDate: moment(minDate).add(4, 'y'),
     endDate: moment(maxDate).subtract(4, 'y')
@@ -49,11 +49,57 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
     onChange={value => datepickerHandler({endDate: value})}
   />);
 
-  const startYear = year(state.startDate);
-  const endYear = year(state.endDate);
+  const startMark = month(state.startDate) + 2;
+  const endMark = month(state.endDate) - 2;
 
-  const { chartData, chartConfig } = widgetConfig.parse({ startYear, endYear });
-  const alerts = chartData.map(it => it.year).filter(y => y >= startYear && y <= endYear ).length;
+  const seriesLineDefinition = {
+    stroke: 'red',
+    strokeWidth: 1,
+    isAnimationActive: false,
+    dot: {
+      fill: 'red',
+      stroke: 'red',
+      strokeWidth: 2
+    },
+    title: 'Alerts'
+  };
+
+  // This is broken...
+  // We are using chartData from a previous parse to inject series and parse again...
+  const series = Object.fromEntries(data.chartData.map(({
+    attributes: {
+      date_first: start,
+      date_last: end,
+      loss: category
+    }
+  }, index) => {
+    const seriesName = `series_${index}`;
+    const data = [{
+      id: seriesName,
+      date: start,
+      category,
+      mark: moment(start).month(),
+      [seriesName]: -90 + index * 8
+    }];
+
+    if (start !== end) {
+      data.push({
+        id: seriesName,
+        date: end || 'Happening now.',
+        category,
+          mark: ( end && moment(end).month()) || month(new Date()),
+        [seriesName]: -90 + index * 8
+      });
+    }
+
+    return [seriesName, {
+      ...seriesLineDefinition,
+      data
+    }];
+  }));
+
+  const { chartData, chartConfig } = widgetConfig.parse({ startMark, endMark, series });
+  const alerts = chartData.map(it => it.year).filter(y => y >= startMark && y <= endMark ).length;
 
   return (
     <Fragment>
