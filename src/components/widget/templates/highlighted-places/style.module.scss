@@ -17,6 +17,9 @@
 
   a {
     width: 50%;
+    &:hover {
+      text-decoration: none;
+    }
   }
 
   .card {
@@ -29,9 +32,8 @@
     border-radius: 20px;
     width: auto;
     color: $white;
-    font-size: $body-font-size;
-    font-weight: bold;
     text-align: center;
+    line-height: 20px;
 
     @media screen and (max-width: map-get($breakpoints, md)) {
       flex-direction: row;
@@ -50,7 +52,8 @@
 
     h3 {
       margin-top: 0;
-      font-size: 19px;
+      font-weight: bold;
+      line-height: 19px;
     }
 
     &:first-child {
