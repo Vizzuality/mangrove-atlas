@@ -9,7 +9,7 @@ import ArrowRight from './arrow-right.svg';
 class WidgetInfo extends PureComponent {
   static propTypes = {
     openInfoPanel: PropTypes.func,
-    data: PropTypes.arrayOf(PropTypes.shape({})),
+    data: PropTypes.array || PropTypes.shape({}),
     filename: PropTypes.string
   }
 
@@ -25,12 +25,13 @@ class WidgetInfo extends PureComponent {
   }
 
   render() {
-    const { data, filename } = this.props;
+    const { data: { chartData }, filename } = this.props;
+
     return (
       <div className={styles.info}>
-        {filename && (
+        {filename !== 'highlighted_places' && (
           <DownloadLink
-            data={data}
+            data={chartData}
             filename={filename}
           />
         )}
@@ -40,7 +41,7 @@ class WidgetInfo extends PureComponent {
           className={styles.button}
         >
           <img
-            src={filename
+            src={filename !== 'highlighted_places'
               ? Info
               : ArrowRight
             }
@@ -48,7 +49,7 @@ class WidgetInfo extends PureComponent {
             alt="info-icon"
           />
           <span>
-            {filename
+            {filename !== 'highlighted_places'
               ? 'More Info'
               : 'Explore more places'
             }

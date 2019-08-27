@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import WidgetInfo from 'components/widget-info';
 import sumBy from 'lodash/sumBy';
 import styles from 'components/widget/style.module.scss';
 
@@ -12,14 +11,12 @@ const numberFormat = format(',.2f');
 class MangroveNetChange extends PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    currentLocation: PropTypes.shape({}),
-    slug: PropTypes.string
+    currentLocation: PropTypes.shape({})
   }
 
   static defaultProps = {
     data: null,
-    currentLocation: null,
-    slug: null
+    currentLocation: null
   }
 
   state = {
@@ -32,7 +29,7 @@ class MangroveNetChange extends PureComponent {
   changeEndYear = endYear => this.setState({ endYear })
 
   render() {
-    const { data: { metadata, chartData, chartConfig }, currentLocation, slug } = this.props;
+    const { data: { metadata, chartData, chartConfig }, currentLocation } = this.props;
     const { startYear, endYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
@@ -108,11 +105,6 @@ class MangroveNetChange extends PureComponent {
             config={chartConfig}
           />
         )}
-
-        <WidgetInfo
-          data={widgetData}
-          filename={slug}
-        />
       </Fragment>
     );
   }

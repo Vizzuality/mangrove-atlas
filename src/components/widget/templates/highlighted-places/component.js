@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import WidgetInfo from 'components/widget-info';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
 
@@ -22,7 +21,6 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
         </div>
       ))}
     </div>
-    <WidgetInfo />
   </Fragment>
 );
 

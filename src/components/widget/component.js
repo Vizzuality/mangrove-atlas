@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
+import WidgetInfo from 'components/widget-info';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -99,38 +100,46 @@ class Widget extends PureComponent {
           })
         }
       >
-        <div className={styles.header}>
-          <button
-            type="button"
-            className={styles.title}
-            onClick={this.collapseToggleHandler}
-          >
-            <MediaQuery minWidth={breakpoints.md}>
-              {isCollapsed
-                ? <FontAwesomeIcon icon={faChevronDown} />
-                : <FontAwesomeIcon icon={faChevronUp} />}
-            </MediaQuery>
-            {name}
-          </button>
-          {haveLayers && (
-            <Button
-              hasBackground={isActive}
-              hasContrast={!isActive}
-              isActive={isActive}
-              onClick={this.activeToggleHandler}
+        <div className={styles.wrapper}>
+          <div className={styles.header}>
+            <button
+              type="button"
+              className={styles.title}
+              onClick={this.collapseToggleHandler}
             >
-              {isActive ? 'Hide layer' : 'Show layer'}
-            </Button>
-          )}
+              <MediaQuery minWidth={breakpoints.md}>
+                {isCollapsed
+                  ? <FontAwesomeIcon icon={faChevronDown} />
+                  : <FontAwesomeIcon icon={faChevronUp} />}
+              </MediaQuery>
+              {name}
+            </button>
+            {haveLayers && (
+              <Button
+                hasBackground={isActive}
+                hasContrast={!isActive}
+                isActive={isActive}
+                onClick={this.activeToggleHandler}
+              >
+                {isActive ? 'Hide layer' : 'Show layer'}
+              </Button>
+            )}
+          </div>
+          {isLoading
+            ? <Spinner isLoading />
+            : (
+              <div className={classnames(styles.content)}>
+                <Template {...templateProps} />
+              </div>
+            )
+          }
         </div>
-        {isLoading
-          ? <Spinner isLoading />
-          : (
-            <div className={classnames(styles.content)}>
-              <Template {...templateProps} />
-            </div>
-          )
-        }
+
+        <WidgetInfo
+          data={templateProps.data}
+          filename={templateProps.slug}
+          {...templateProps}
+        />
       </div>
     );
   }
