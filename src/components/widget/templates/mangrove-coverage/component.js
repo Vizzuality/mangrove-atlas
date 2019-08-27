@@ -50,7 +50,7 @@ class MangroveCoverage extends React.PureComponent {
         color: '#ECECEF',
         percentage: nonMangrove / metadata.total * 100,
         unit: '%',
-        value: nonMangrove,
+        coverage: (nonMangrove / 1000).toFixed(2),
         label: 'Non mangroves'
       }
     ];
