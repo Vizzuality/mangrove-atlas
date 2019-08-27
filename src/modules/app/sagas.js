@@ -1,5 +1,4 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import { initializeApp } from './actions';
 import { fetchLocations } from 'modules/locations/actions';
 import { fetchDashboards } from 'modules/dashboards/actions';
 import { fetchWidgets } from 'modules/widgets/actions';
@@ -7,8 +6,9 @@ import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
+import { initializeApp } from './actions';
 
-function* loadInitialData({ payload }) {
+function* loadInitialData() {
   const {
     locations,
     dashboards,
