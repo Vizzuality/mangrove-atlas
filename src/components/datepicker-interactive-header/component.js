@@ -78,8 +78,9 @@ const ReactSelectStyles = {
     },
   }),
   menuList: provided => ({
-    // ...provided,
+    //...provided,
     overflowX: hidden
+
   }),
   option: (provided, state) => ({
     ...provided,
