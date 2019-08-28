@@ -1,18 +1,15 @@
 import React from 'react';
 import WidgetLegend from 'components/widget/legend';
 import WidgetTooltip from 'components/widget/tooltip';
+import { Text } from 'recharts';
 import { range } from 'lodash';
 
 import data from './alerts.json';
 
-import {
-  Text
-} from 'recharts';
-
 const Months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
 export const CONFIG = {
-  parse: ({startMark, endMark, series}) => {
+  parse: ({ startMark, endMark, series }) => {
     return {
       chartData: data,
       metadata: {},
@@ -55,7 +52,7 @@ export const CONFIG = {
             strokeWidth: 1,
             label: {
               value: 'v',
-              content: ({viewBox: o}) => (
+              content: ({ viewBox: o }) => (
                 <g transform={`translate(${o.x - 10}, ${o.y})`}>
                   <path d="m 0,0 h 1 v 1 z" transform="scale(10, 20)" fill="#000"></path>
                 </g>
@@ -68,7 +65,7 @@ export const CONFIG = {
             strokeWidth: 1,
             label: {
               value: 'v',
-              content: ({viewBox: o}) => (
+              content: ({ viewBox: o }) => (
                 <g transform={`translate(${o.x}, ${o.y})`}>
                   <path d="m 0,0 h 1 v 1 z" transform="translate(10, 0) scale(-10, 20)" fill="#000"></path>
                 </g>
@@ -102,14 +99,14 @@ export const CONFIG = {
           type: 'number',
           domain: [0, 11],
           scale: 'linear',
-          ticks: range(0,12),
+          ticks: range(0, 12),
           tick: props => {
             const { payload: { value } } = props;
-            const options = {...props};
+            const options = { ...props };
             let show = false;
 
             options.y = options.y + 6;
-          
+
             if (value === 0) {
               show = true;
               options.textAnchor = 'start';
@@ -137,11 +134,11 @@ export const CONFIG = {
           layout: 'horizontal',
           height: 50,
           content: ({ payload }) => {
-            const labels = payload.map(({color, value, payload}) => ({
+            const labels = payload.map(({ color, value, payload }) => ({
               color,
               value: payload.title || value
             })).slice(0, 1);
-            return <WidgetLegend direction="vertical" groups={{labels}} variant="circle" />;
+            return <WidgetLegend direction="vertical" groups={{ labels }} variant="circle" />;
           }
         },
         tooltip: {
@@ -155,7 +152,7 @@ export const CONFIG = {
               settings={[
                 { key: 'id' },
                 { key: 'date', format: value => `Date: ${value}` },
-                { key: 'category', format: value => `Category: ${value}`}
+                { key: 'category', format: value => `Category: ${value}` }
               ]}
             />
           )
