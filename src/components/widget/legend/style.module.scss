@@ -70,4 +70,16 @@
     vertical-align: super;
   }
 
+  svg {
+    .item {
+      width: 13px;
+      height: 13px;
+      border-radius: 10px;
+    }
+    .net {
+      width: 3px;
+      height: 13px;
+      border-radius: 0;
+    }
+  }
 }
