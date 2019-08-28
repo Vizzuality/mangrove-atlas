@@ -84,8 +84,9 @@
       fill: $primary;
     }
     @media screen and (max-width: map-get($breakpoints, md)) {
-      height: 50px;
-      width: 50px;
+      padding: 6px 12px;
+      height: auto;
+      width: auto;
     }
     svg {
       @media screen and (max-width: map-get($breakpoints, md)) {
