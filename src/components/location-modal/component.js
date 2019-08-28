@@ -58,7 +58,6 @@ class LocationSelector extends PureComponent {
   render() {
     const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
     if (!currentLocation) return null;
-
     const { searchTerm } = this.state;
     const locationsData = searchTerm
       ? locations.filter(l => new RegExp(searchTerm, 'i').test(l.name))

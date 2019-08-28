@@ -6,7 +6,9 @@ import {
   expandAll,
   toggleCollapse,
   toggleActive,
-  toggleActiveByLayerId
+  toggleActiveByLayerId,
+  openInfoPanel,
+  closeInfoPanel
 } from './actions';
 
 export default {
@@ -62,5 +64,11 @@ export default {
       if (item.layerId !== payload.layerId) return item;
       return ({ ...item, isActive: payload.isActive });
     })
-  })
+  }),
+  [openInfoPanel]: (state, { payload }) => ({
+    ...state,
+    isOpened: true,
+    type: payload
+  }),
+  [closeInfoPanel]: state => ({ ...state, isOpened: false }),
 };
