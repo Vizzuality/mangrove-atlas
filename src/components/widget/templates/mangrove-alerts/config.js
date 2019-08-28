@@ -125,7 +125,7 @@ export const CONFIG = {
             const { payload: { value } } = props;
             const options = {...props};
             let show = false;
-          
+
             if (value === 1996) {
               show = true;
               options.textAnchor = 'start';

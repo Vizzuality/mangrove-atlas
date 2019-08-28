@@ -19,7 +19,6 @@ const AppPage = () => (
     {/* Modals */}
     <LocationModal />
     <InfoModal />
-
   </div>
 );
 

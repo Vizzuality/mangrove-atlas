@@ -65,10 +65,22 @@
 
     &::placeholder {
       color: $body-color;
+      opacity: 0.5;
     }
   }
 
-  .searchButton {
+  h1 {
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 50px;
+    color: $body-color;
+  }
+
+  .info {
+    @include medium-text;
+  }
+
+  .closeButton {
     position: absolute;
     width: 45px;
     height: 45px;

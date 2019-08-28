@@ -4,64 +4,62 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
-import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
-import LocationsList from 'components/locations-list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LocationsList from 'components/locations-list';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
   static propTypes = {
     isOpened: PropTypes.bool,
+    widgetType: PropTypes.string,
     currentLocation: PropTypes.shape({
       name: PropTypes.string
     }),
     locations: PropTypes.arrayOf(PropTypes.shape({})),
-    highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
     closeInfoPanel: PropTypes.func
   }
 
   static defaultProps = {
     isOpened: false,
+    widgetType: null,
     currentLocation: { name: 'Location name' },
     locations: [],
-    highlightedPlaces: null,
     closeInfoPanel: () => null
   }
 
   state = {
-    searchTerm: null
+    search: null
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isOpened) this.resetTerm();
+    if (nextProps.isOpened) this.reset();
   }
 
   closeModal = () => {
     const { closeInfoPanel } = this.props;
 
     closeInfoPanel();
-    this.resetTerm();
+    this.reset();
   }
 
-  resetTerm = () => this.setState({ searchTerm: null })
+  reset = () => this.setState({ search: null })
 
-  updateSearchTerm = (e) => {
+  updateSearch = (e) => {
     if (e.currentTarget.value === '') {
-      this.resetTerm();
+      this.reset();
     } else {
-      this.setState({ searchTerm: e.currentTarget.value });
+      this.setState({ search: e.currentTarget.value });
     }
+    this.closeInfoPanel();
   }
 
   render() {
-    const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
+    const { isOpened, currentLocation, locations, widgetType } = this.props;
     if (!currentLocation) return null;
-
-    const { searchTerm } = this.state;
-    const locationsData = searchTerm
-      ? locations.filter(l => new RegExp(searchTerm, 'i').test(l.name))
+    const { search } = this.state;
+    const locationsData = search
+      ? locations.filter(l => new RegExp(search, 'i').test(l.name))
       : locations;
 
     return (
@@ -72,10 +70,33 @@ class InfoModal extends PureComponent {
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >
-            <div className={styles.content}>
-            Lorem ipsum
-            </div>
-            <button type="button" onClick={this.closeModal} className={classnames(styles.searchButton, styles.mobile)}>
+
+            {widgetType === 'highlighted_places' && (
+              <div className={styles.content}>
+                <div className={styles.search}>
+                  <input
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
+                    type="text"
+                    className={classnames(styles.searchInput, 'notranslate')}
+                    placeholder={currentLocation.name}
+                    onChange={() => this.updateSearch()}
+                  />
+                </div>
+                <LocationsList locationsData={locationsData} />
+              </div>)
+            }
+            {widgetType !== 'highlighted_places' && (
+              <div className={styles.content}>
+                <h1>
+                  {widgetType}
+                </h1>
+                <p className={styles.info}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
+                </p>
+              </div>
+            )}
+
+            <button type="button" onClick={this.closeModal} className={classnames(styles.closeButton, styles.mobile)}>
               <FontAwesomeIcon icon={faTimes} size="lg" />
             </button>
           </Modal>
@@ -86,20 +107,33 @@ class InfoModal extends PureComponent {
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >
-            <div className={styles.content}>
-              <span>
-                {highlightedPlaces}
-              </span>
-           desktop
-              {highlightedPlaces && (
-                <HighlightedPlaces
-                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
-                  currentLocation={currentLocation}
-                />
-              )}
-              <LocationsList locationsData={locationsData} />
-            </div>
-            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
+            {widgetType === 'highlighted_places' && (
+              <div className={styles.content}>
+                <div className={styles.search}>
+                  <input
+                    // eslint-disable-next-line jsx-a11y/no-autofocus
+                    autoFocus
+                    type="text"
+                    className={classnames(styles.searchInput, 'notranslate')}
+                    placeholder={currentLocation.name}
+                    onChange={this.updateSearch}
+                  />
+                </div>
+                <LocationsList locationsData={locationsData} />
+              </div>)
+            }
+            {widgetType !== 'highlighted_places' && (
+              <div className={styles.content}>
+                <h1>
+                  {widgetType}
+                </h1>
+                <span className={styles.info}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
+                </span>
+              </div>
+            )}
+
+            <button type="button" onClick={this.closeModal} className={styles.closeButton}>
               <FontAwesomeIcon icon={faTimes} size="lg" />
             </button>
           </Modal>

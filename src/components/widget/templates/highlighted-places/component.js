@@ -16,7 +16,6 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
             <h3 className="notranslate">{d.name}</h3>
             <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
           </span>
-          {d.id !== currentLocation.id && <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}><span className={styles.link}>View place</span></Link>}
           <Link to={{ type: 'PAGE/AOI', payload: { id: (d.id === currentLocation.id) ? 'worldwide' : d.id } }}><span className={styles.link}>{(d.id === currentLocation.id) ? 'Back to Worldwide' : 'View place' }</span></Link>
         </div>
       ))}

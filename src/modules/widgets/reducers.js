@@ -65,6 +65,10 @@ export default {
       return ({ ...item, isActive: payload.isActive });
     })
   }),
-  [openInfoPanel]: state => ({ ...state, isOpened: true }),
+  [openInfoPanel]: (state, { payload }) => ({
+    ...state,
+    isOpened: true,
+    type: payload
+  }),
   [closeInfoPanel]: state => ({ ...state, isOpened: false }),
 };

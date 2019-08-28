@@ -8,9 +8,9 @@ import ArrowRight from './arrow-right.svg';
 
 class WidgetInfo extends PureComponent {
   static propTypes = {
-    openInfoPanel: PropTypes.func,
     data: PropTypes.array || PropTypes.shape({}),
-    filename: PropTypes.string
+    filename: PropTypes.string,
+    openInfoPanel: PropTypes.func
   }
 
   static defaultProps = {
@@ -20,8 +20,8 @@ class WidgetInfo extends PureComponent {
   }
 
   clickHandler = () => {
-    const { openInfoPanel } = this.props;
-    openInfoPanel();
+    const { openInfoPanel, filename } = this.props;
+    openInfoPanel(filename);
   }
 
   render() {
