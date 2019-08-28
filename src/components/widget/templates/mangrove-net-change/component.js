@@ -91,22 +91,20 @@ class MangroveNetChange extends PureComponent {
     />);
 
     return (
-      <>
-        <div className={styles.widget_template}>
-          <div className={styles.sentence}>
-            Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
-            between {startSelector} and {endSelector}.
-          </div>
-          <Chart
-            data={widgetData}
-            config={chartConfig}
-          />
-          <DownloadLink
-            data={widgetData}
-            filename={slug}
-          />
+      <div className={styles.widget_template}>
+        <div className={styles.sentence}>
+          Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
+          between {startSelector} and {endSelector}.
         </div>
-      </>
+        <Chart
+          data={widgetData}
+          config={chartConfig}
+        />
+        <DownloadLink
+          data={widgetData}
+          filename={slug}
+        />
+      </div>
     );
   }
 }

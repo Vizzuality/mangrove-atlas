@@ -83,7 +83,7 @@ class MangroveCoverage extends React.PureComponent {
       const totalCoverage = metadata.total / 1000;
       const coverage = (percentage * totalCoverage) / 100;
       const quantity = numberFormat((unit === '%') ? percentage : coverage);
-      const location = (currentLocation.type === 'worldwide')
+      const location = (currentLocation.location_type === 'worldwide')
         ? 'the world’s'
         : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
       const unitSelector = (<Select
@@ -104,7 +104,7 @@ class MangroveCoverage extends React.PureComponent {
           <div className={styles.sentence}>
             <span>Mangrove forest cover </span>
             <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
-            <span>of</span> <strong>{ location }</strong>
+            <span>of </span> <strong>{ location } </strong>
             <strong className="notranslate">{ numberFormat(totalCoverage) } km</strong> coastline<br />
             <span>in </span>{yearSelector}.
           </div>
