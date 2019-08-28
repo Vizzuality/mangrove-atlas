@@ -53,12 +53,12 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
   const endMark = month(state.endDate) - 2;
 
   const seriesLineDefinition = {
-    stroke: 'red',
+    stroke: '#EB6240',
     strokeWidth: 1,
     isAnimationActive: false,
     dot: {
-      fill: 'red',
-      stroke: 'red',
+      fill: '#EB6240',
+      stroke: '#EB6240',
       strokeWidth: 2
     },
     title: 'Alerts'
