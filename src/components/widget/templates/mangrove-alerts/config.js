@@ -103,17 +103,14 @@ export const CONFIG = {
           tick: props => {
             const { payload: { value } } = props;
             const options = { ...props };
-            let show = false;
 
             options.y = options.y + 6;
 
             if (value === 0) {
-              show = true;
               options.textAnchor = 'start';
             }
 
             if (value === 11) {
-              show = true;
               options.textAnchor = 'end';
             }
 
