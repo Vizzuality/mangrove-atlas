@@ -8,15 +8,18 @@ import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
 
-class MangroveNetChange extends PureComponent {
+
+class MangroveHeight extends PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    currentLocation: PropTypes.shape({})
+    currentLocation: PropTypes.shape({}),
+    slug: PropTypes.string
   }
 
   static defaultProps = {
     data: null,
-    currentLocation: null
+    currentLocation: null,
+    slug: null
   }
 
   state = {
@@ -25,16 +28,38 @@ class MangroveNetChange extends PureComponent {
   }
 
   changeStartYear = startYear => this.setState({ startYear })
-
+  debugger;
   changeEndYear = endYear => this.setState({ endYear })
 
   render() {
-    const { data: { metadata, chartData, chartConfig }, currentLocation } = this.props;
+    const { data: { metadata, chartData, chartConfig }, currentLocation, slug } = this.props;
+    console.log(this.props)
     const { startYear, endYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
       value: year.toString()
     }));
+
+    const unit = '%';
+    const yearStart = '1996';
+    const yearEnd = '2019';
+
+
+    // XXX: these options should come from an api ?
+    const optionsYearStart = [
+      { value: '2009', label: '2009' },
+      { value: '2010', label: '2010' }
+    ];
+
+    const optionsYearEnd = [
+      { value: '2018', label: '2018' },
+      { value: '2019', label: '2019' }
+    ];
+
+    const optionsUnit = [
+      { value: 'ha', label: 'Ha' },
+      { value: 'km', label: 'Km' }
+    ];
 
     // TODO: This must be done in the API
     const editedChartData = [
@@ -53,23 +78,7 @@ class MangroveNetChange extends PureComponent {
       ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
     );
 
-    // How this change is calculated?
-    // Rows have year's 'gain', 'loss' and 'netChange'.
-    // We consider startYear as 0
-    // Therefore we substract that from the accumulated change of all following years.
-    const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
 
-    // Normalize startData
-    widgetData[0] = {
-      ...widgetData[0],
-      gain: 0,
-      loss: 0,
-      netChange: 0
-    };
-
-    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
-    const direction = (change > 0) ? 'increased' : 'decreased';
-    const quantity = numberFormat(change / 1000000);
     const startSelector = (
       <Select
         className="notranslate netChange"
@@ -93,21 +102,41 @@ class MangroveNetChange extends PureComponent {
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
-            between {startSelector} and {endSelector}.
+            Over the past 20 years, mangroves in the world have decreased by x ha
+            {' '}
+            <Select
+              value={unit}
+              options={optionsUnit}
+              onChange={value => this.changeUnit(value)}
+            />
+            {' '}
+            between
+            {' '}
+            <Select
+              value={yearStart}
+              options={optionsYearStart}
+              onChange={value => this.changeYear('start', value)}
+            />
+            {' '}
+            to
+            {' '}
+            <Select
+              value={yearEnd}
+              options={optionsYearEnd}
+              onChange={value => this.changeYear('end', value)}
+            />
           </div>
         </div>
 
         {/* Chart */}
-        {!!widgetData.length && (
-          <Chart
-            data={widgetData}
-            config={chartConfig}
-          />
-        )}
+        {/* <Chart
+          data={chartData}
+          config={chartConfig}
+        /> */}
+
       </Fragment>
     );
   }
 }
 
-export default MangroveNetChange;
+export default MangroveHeight;

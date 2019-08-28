@@ -1,5 +1,6 @@
 export default {
   list: [],
   isLoading: false,
-  error: null
+  error: null,
+  isOpened: false
 };
