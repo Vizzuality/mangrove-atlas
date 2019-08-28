@@ -1,9 +1,8 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import DownloadLink from 'components/link';
 import sumBy from 'lodash/sumBy';
 import styles from 'components/widget/style.module.scss';
 
@@ -12,14 +11,12 @@ const numberFormat = format(',.2f');
 class MangroveNetChange extends PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
-    currentLocation: PropTypes.shape({}),
-    slug: PropTypes.string
+    currentLocation: PropTypes.shape({})
   }
 
   static defaultProps = {
     data: null,
-    currentLocation: null,
-    slug: null
+    currentLocation: null
   }
 
   state = {
@@ -32,7 +29,7 @@ class MangroveNetChange extends PureComponent {
   changeEndYear = endYear => this.setState({ endYear })
 
   render() {
-    const { data: { metadata, chartData, chartConfig }, currentLocation, slug } = this.props;
+    const { data: { metadata, chartData, chartConfig }, currentLocation } = this.props;
     const { startYear, endYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
@@ -53,7 +50,7 @@ class MangroveNetChange extends PureComponent {
     ];
 
     const widgetData = editedChartData.filter(
-      ({year: y}) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
+      ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
     );
 
     // How this change is calculated?
@@ -70,48 +67,39 @@ class MangroveNetChange extends PureComponent {
       netChange: 0
     };
 
-    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>; 
+    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
     const direction = (change > 0) ? 'increased' : 'decreased';
     const quantity = numberFormat(change / 1000000);
-    const startSelector = (<Select
-      className="notranslate netChange"
-      prefix="start-year"
-      value={startYear}
-      options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
-      onChange={this.changeStartYear}
-    />);
-    const endSelector = (<Select
-      className="notranslate"
-      prefix="end-year"
-      value={endYear}
-      options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
-      onChange={this.changeEndYear}
-    />);
+    const startSelector = (
+      <Select
+        className="notranslate netChange"
+        prefix="start-year"
+        value={startYear}
+        options={optionsYears}
+        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
+        onChange={this.changeStartYear}
+      />);
+    const endSelector = (
+      <Select
+        className="notranslate"
+        prefix="end-year"
+        value={endYear}
+        options={optionsYears}
+        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
+        onChange={this.changeEndYear}
+      />);
 
     return (
-      <Fragment>
-        <div className={styles.widget_template}>
-          <div className={styles.sentence}>
-            Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
-            between {startSelector} and {endSelector}.
-          </div>
+      <div className={styles.widget_template}>
+        <div className={styles.sentence}>
+          Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
+          between {startSelector} and {endSelector}.
         </div>
-
-        {/* Chart */}
-        {!!widgetData.length && (
-          <Chart
-            data={widgetData}
-            config={chartConfig}
-          />
-        )}
-
-        <DownloadLink
+        <Chart
           data={widgetData}
-          filename={slug}
+          config={chartConfig}
         />
-      </Fragment>
+      </div>
     );
   }
 }

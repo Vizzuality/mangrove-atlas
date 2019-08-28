@@ -8,25 +8,26 @@ import Saloum from './images/saloum1.jpg';
 
 
 const HighlightedPlaces = ({ data, currentLocation }) => (
-
   <div className={styles.hotspotsList}>
     {data.map(d => (
-      <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
-        <div
-          key={d.id}
-          style={{
-            backgroundImage: `url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover'
-          }}
-          className={classnames(styles.card, { [styles.active]: d.id === currentLocation.id })}
-        >
-          <span className={styles.cardInfo}>
-            <h3 className="notranslate">{d.name}</h3>
-            <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
-          </span>
-        </div>
-      </Link>
+      <div
+        key={d.id}
+        style={{
+          backgroundImage: `url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
+        className={classnames(styles.card, { [styles.active]: d.id === currentLocation.id })}
+      >
+        <span className={styles.cardInfo}>
+          <h3 className="notranslate">{d.name}</h3>
+          <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
+        </span>
+
+        <Link to={{ type: 'PAGE/AOI', payload: { id: (d.id === currentLocation.id) ? 'worldwide' : d.id } }}>
+          <span className={styles.cardInfo}>{(d.id === currentLocation.id) ? 'Back to Worldwide' : 'View place'}</span>
+        </Link>
+      </div>
     ))}
   </div>
 );

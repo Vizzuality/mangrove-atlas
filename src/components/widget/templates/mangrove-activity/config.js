@@ -45,7 +45,7 @@ export const CONFIG = {
           gain: l.gain,
           loss: l.loss,
           color: l.color,
-          name: l.label
+          name: l.label,
         }
       )),
       chartConfig: {
