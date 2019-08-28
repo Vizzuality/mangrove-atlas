@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { jsonToCSV } from 'utils/jsonParsers';
 import { CSVLink } from 'react-csv';
-import styles from './style.module.scss';
-
+import ArrowDown from './arrow-down.svg';
+import styles from './styles.module.scss';
 
 class DownloadLink extends PureComponent {
   static propTypes = {
@@ -21,11 +21,12 @@ class DownloadLink extends PureComponent {
     const csvData = jsonToCSV(data);
     return (
       <CSVLink
-        className={styles.downloadButton}
+        className={styles.link}
         data={csvData}
         filename={`${slug}-${Date.now()}}.csv`}
       >
-        Download raw data
+        <img src={ArrowDown} className={styles.icon} alt="info-icon" />
+        Download data
       </CSVLink>
     );
   }

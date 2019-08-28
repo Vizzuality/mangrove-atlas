@@ -1,5 +1,6 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import { setCurrent, closeSearchPanel } from 'modules/locations/actions';
+import { closeInfoPanel } from 'modules/widgets/actions';
 
 function* setLocation({ payload }) {
   /**
@@ -12,6 +13,8 @@ function* setLocation({ payload }) {
   }
 
   yield put(closeSearchPanel());
+  // In case user sets location from widget modal
+  yield put(closeInfoPanel());
 }
 
 export default function* pages() {

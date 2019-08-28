@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
 import Select from 'components/select';
-import DownloadLink from 'components/link';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
@@ -12,15 +11,13 @@ class MangroveCoverage extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({}),
     metadata: PropTypes.shape({}),
-    currentLocation: PropTypes.shape({}),
-    slug: PropTypes.string
+    currentLocation: PropTypes.shape({})
   }
 
   static defaultProps = {
     data: null,
     metadata: null,
-    currentLocation: null,
-    slug: null
+    currentLocation: null
   }
 
   state = {
@@ -65,7 +62,7 @@ class MangroveCoverage extends React.PureComponent {
   }
 
   render() {
-    const { data: { chartConfig, metadata }, currentLocation, slug } = this.props;
+    const { data: { chartConfig, metadata }, currentLocation } = this.props;
     const { currentYear, unit } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),
@@ -111,10 +108,6 @@ class MangroveCoverage extends React.PureComponent {
           <Chart
             data={widgetData}
             config={chartConfig}
-          />
-          <DownloadLink
-            data={widgetData}
-            filename={slug}
           />
         </>
         );
