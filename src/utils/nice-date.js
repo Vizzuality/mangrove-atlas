@@ -10,4 +10,8 @@ export function year(date) {
   return moment(date).year();
 }
 
+export function month(date) {
+  return moment(date).month();
+}
+
 export default dmy;
