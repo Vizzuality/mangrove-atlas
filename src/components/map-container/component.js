@@ -81,6 +81,17 @@ class MapContainer extends PureComponent {
       }
     };
 
+    /**
+     * CHANGING CURSOR FOR INTERACTIVE LAYERS
+     * For changing the cursor of interactive layers you need to add
+     * interactive layer ids to this array and pass it as a property.
+     * It is part of react-map-gl and is documented here:
+     * https://uber.github.io/react-map-gl/#/Documentation/api-reference/interactive-map?section=interaction-options
+     * You can provide a custom getCursor function that will overwrite
+     * the one used by default, documentation is on the same page.
+    */
+    const interactiveLayerIds = ['selected-eez-land-v2-201410'];
+
     return (
       <div className={styles.map}>
         <Map
@@ -90,6 +101,7 @@ class MapContainer extends PureComponent {
           mapboxApiAccessToken={mapboxApiAccessToken}
           onViewportChange={this.onViewportChange}
           onClick={clickHandler}
+          interactiveLayerIds={interactiveLayerIds}
         >
           {() => (
             <div className={styles.navigation}>
