@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import styles from './style.module.scss';
 
-const Legend = ({ groups, direction }) => (
+const Legend = ({ groups, direction, variant = 'rect' }) => (
   <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
@@ -13,15 +13,15 @@ const Legend = ({ groups, direction }) => (
           {groups[g].map(item => (
             <li
               key={`item-${item.color}`}
-              className={styles.widget_legend_list_item}
+              className={classnames(styles.widget_legend_list_item, styles[`_${variant}`])}
             >
               <svg height="12" width="12">
-                <rect width="13" height="13" fill={item.color} />
+                <rect
+                  className={classnames(styles.item, { [styles.net]: (item.value).toLowerCase() === 'net result' })}
+                  fill={item.color}
+                />
               </svg>
-
-              <span>
-                {item.value}
-              </span>
+              <span>{item.value}</span>
             </li>
           ))}
         </ul>

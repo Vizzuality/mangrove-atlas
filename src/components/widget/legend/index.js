@@ -1,3 +1,1 @@
-import LegendComponent from './component';
-
-export default LegendComponent;
+export { default } from './component';

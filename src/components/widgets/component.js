@@ -13,7 +13,7 @@ function WidgetList({
 }) {
   return (
     <div className={styles.widgets}>
-      {widgets.map(widget => {
+      {widgets.map((widget) => {
         const template = TEMPLATES[widget.slug];
 
         if (!template) {

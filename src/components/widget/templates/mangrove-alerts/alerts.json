@@ -1,0 +1,377 @@
+[
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.25962381394388,
+        -7.839621364480198
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-01",
+      "date_last": "2019-06-10",
+      "loss": null
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.25910491439768,
+        -7.837117110148514
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26738474628712,
+        -7.838335396039604
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-03-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.266640238242566,
+        -7.834861025165016
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-21",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.251073251856425,
+        -7.841584158415843
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.252156172648505,
+        -7.845148772689771
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.265151222153456,
+        -7.852638974834985
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26937010107259,
+        -7.850647979837047
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26963519105815,
+        -7.850360329001651
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.269358820647675,
+        -7.850354688789192
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26961827042078,
+        -7.850625418987212
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26987207998142,
+        -7.850377249639028
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.269877720193875,
+        -7.850625418987212
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.269121931724406,
+        -7.849373291821371
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.268123614119204,
+        -7.848617503351899
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.268625593028034,
+        -7.848132445080447
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26837742367985,
+        -7.84663214856642
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.265861888923254,
+        -7.850354688789192
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.265861888923254,
+        -7.8506028581373775
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26585624871079,
+        -7.850129080290842
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": null,
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.264874851743,
+        -7.84388536509901
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26486357131808,
+        -7.844370423370463
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-05-30",
+      "date_last": "2019-06-10",
+      "loss": 3
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26286129589523,
+        -7.844635513356024
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-06-10",
+      "date_last": "2019-06-10",
+      "loss": null
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26537683065183,
+        -7.843123936417079
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-04-01",
+      "date_last": "2019-04-01",
+      "loss": 2
+    }
+  },
+  {
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        39.26561935978756,
+        -7.845882000309406
+      ]
+    },
+    "attributes": {
+      "id": null,
+      "date_first": "2019-04-01",
+      "date_last": "2019-04-01",
+      "loss": 2
+    }
+  }
+]

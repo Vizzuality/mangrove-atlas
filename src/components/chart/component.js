@@ -40,13 +40,21 @@ class Chart extends PureComponent {
     config: PropTypes.shape({}).isRequired,
     className: PropTypes.string,
     handleMouseMove: PropTypes.func,
-    handleMouseLeave: PropTypes.func
+    handleMouseLeave: PropTypes.func,
+    onReady: PropTypes.func
   };
 
   static defaultProps = {
     className: '',
     handleMouseMove: null,
-    handleMouseLeave: null
+    handleMouseLeave: null,
+    onReady: null
+  }
+
+  componentDidMount() {
+    const { onReady } = this.props;
+
+    if (onReady) onReady(this.chart);
   }
 
   findMaxValue = (data, config) => {
@@ -80,6 +88,7 @@ class Chart extends PureComponent {
       layout = 'horizontal',
       gradients,
       patterns,
+      stackOffset,
       ...content
     } = config;
 
@@ -111,9 +120,10 @@ class Chart extends PureComponent {
     });
 
     return (
-      <div className={styles.chart} style={{ height }}>
+      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
+            stackOffset={stackOffset}
             height={height}
             data={data}
             layout={layout}
@@ -180,7 +190,8 @@ class Chart extends PureComponent {
                 dataKey={xKey || ''}
                 axisLine={false}
                 tickLine={false}
-                tick={{ dy: 8, fontSize: '12px', fill: '#AAA' }}
+                tickCount={8}
+                tick={{ dy: 8, fontSize: '12px', fill: 'rgba(0,0,0,0.54)', textShadow: '0 2 4 0 rgba(0,0,0,0.5)' }}
                 {...xAxis}
               />
             )}

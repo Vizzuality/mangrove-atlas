@@ -1,6 +1,8 @@
-@import '~styles/vars';
+@import 'styles/vars';
 
 .Datepicker {
+  border-bottom: 2px solid $primary;
+
   &._inline {
     display: inline-block;
   }

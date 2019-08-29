@@ -31,9 +31,9 @@ const CONFIG = {
     chartData: widgetData(data).map(l => (
       {
         x: l.label,
-        'Net change': l.netChange,
-        Gain: l.gain,
-        Loss: l.loss,
+        netChange: l.netChange,
+        gain: l.gain,
+        loss: l.loss,
         name: l.label,
         year: l.year
       })),
@@ -47,22 +47,25 @@ const CONFIG = {
       xKey: 'year',
       yKeys: {
         lines: {
-          'Net change': {
-            stroke: 'rgba(0,0,0,0.7)'
+          netChange: {
+            stroke: 'rgba(0,0,0,0.7)',
+            legend: 'Net Result'
           }
         },
         bars: {
-          Gain: {
+          gain: {
             barSize: 10,
             transform: `translate(${(4 + 10) / 2}, 0)`,
             fill: '#077FAC',
-            radius: [10, 10, 0, 0]
+            radius: [10, 10, 0, 0],
+            legend: 'Gain'
           },
-          Loss: {
+          loss: {
             barSize: 10,
             transform: `translate(-${(4 + 10) / 2}, 0)`,
             fill: '#EB6240',
-            radius: [10, 10, 0, 0]
+            radius: [10, 10, 0, 0],
+            legend: 'Loss'
           }
         }
       },
@@ -87,10 +90,13 @@ const CONFIG = {
         verticalAlign: 'top',
         layout: 'horizontal',
         height: 50,
-        content: (properties) => {
-          const { payload } = properties;
-          const groups = { groups: payload };
-          return <WidgetLegend direction="vertical" groups={groups} />;
+        content: ({ payload }) => {
+          const labels = payload.map(({color, value, payload}) => ({
+            color,
+            value: payload.legend || value
+          }));
+
+          return <WidgetLegend direction="vertical" groups={{labels}} />;
         }
       },
       tooltip: {
@@ -103,9 +109,9 @@ const CONFIG = {
             }}
             settings={[
               { key: 'year' },
-              { key: 'Gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
-              { key: 'Loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'Net change', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
+              { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
+              { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
+              { key: 'netChange', format: value => `Net result: ${numberFormat(value / 1000000)} km2` }
             ]}
           />
         )

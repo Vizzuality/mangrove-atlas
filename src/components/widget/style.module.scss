@@ -1,13 +1,12 @@
 @import 'styles/vars';
 
 .widget {
-  $padding: 30px;
-  $paddingMobile: 20px;
+  $padding: 30px 40px 0 40px;
+  $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
 
   position: relative;
   margin: 10px 0;
-  padding: $padding;
   border-radius: $border-radius;
   background: white;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
@@ -23,7 +22,6 @@
   @media screen and (max-width: map-get($breakpoints, md)) {
     display: flex;
     flex-direction: column;
-    padding: $paddingMobile;
     margin-bottom: 0;
   }
 
@@ -50,11 +48,17 @@
     left: 5px;
     right: 5px;
     bottom: 5px;
-
     border: 2px solid rgba($primary, 0.35);
     border-radius: $border-radius;
 
     pointer-events: none;
+  }
+
+  .wrapper {
+    padding: $padding;
+    @media screen and (max-width: map-get($breakpoints, md)) {
+      padding: $paddingMobile;
+    }
   }
 
   .header {
@@ -104,5 +108,13 @@
 
   .bold {
     font-weight: bold;
+  }
+}
+
+//SPECIFIC TEMPLATES
+.activity_widget {
+  .label {
+    font-weight: bold;
+    padding-bottom: 10px;
   }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 // todo: add Universal component or loadable
@@ -13,10 +13,14 @@ const pageMap = new Map([
 ]);
 
 // prompts or error logging should be handled here
-const Pages = ({ page: { current, payload } }) => {
+const Pages = ({ page: { current }, initializeApp }) => {
   const Page = pageMap.has(current) ? pageMap.get(current) : NotFoundPage;
 
-  return <Page {...payload} />;
+  useEffect(() => {
+    initializeApp();
+  }, [initializeApp]);
+
+  return <Page page={current} />;
 };
 
 Pages.propTypes = {
