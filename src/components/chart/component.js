@@ -184,12 +184,12 @@ class Chart extends PureComponent {
                 {...xAxis}
               />
             )}
-
             {yAxis && (
               <YAxis
                 axisLine={false}
                 tickSize={-50}
                 mirror
+                orientation="left"
                 tickMargin={0}
                 tickLine={false}
                 tick={(

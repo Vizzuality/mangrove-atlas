@@ -134,12 +134,11 @@ class Widget extends PureComponent {
             )
           }
         </div>
-
-        {/* <WidgetInfo
+        <WidgetInfo
           data={templateProps.data}
           filename={templateProps.slug}
           {...templateProps}
-        /> */}
+        />
       </div>
     );
   }
