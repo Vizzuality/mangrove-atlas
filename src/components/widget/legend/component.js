@@ -16,7 +16,10 @@ const Legend = ({ groups, direction, variant = 'rect' }) => (
               className={classnames(styles.widget_legend_list_item, styles[`_${variant}`])}
             >
               <svg height="12" width="12">
-                <rect width="13" height="13" fill={item.color} />
+                <rect
+                  className={classnames(styles.item, { [styles.net]: (item.value).toLowerCase() === 'net result' })}
+                  fill={item.color}
+                />
               </svg>
               <span>{item.value}</span>
             </li>

@@ -7,6 +7,7 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_activity",
           "mangrove_alerts"
         ]
       },
@@ -67,8 +68,8 @@
       ]
     },
     {
-      "name": "Mangrove activies",
-      "slug": "mangrove_activities",
+      "name": "Mangrove activity",
+      "slug": "mangrove_activity",
       "layersIds": []
     },
     {

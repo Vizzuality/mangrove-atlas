@@ -59,6 +59,12 @@
     }
   }
 
+  .widget_legend_list_item {
+    &.net svg{
+      border-radius: 4px;
+    }
+  }
+
   .widget_legend-number {
     // font-size: 29px;
     font-weight: 600;
@@ -74,4 +80,16 @@
     vertical-align: super;
   }
 
+  svg {
+    .item {
+      width: 13px;
+      height: 13px;
+      border-radius: 10px;
+    }
+    .net {
+      width: 3px;
+      height: 13px;
+      border-radius: 0;
+    }
+  }
 }
