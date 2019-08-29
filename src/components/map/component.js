@@ -58,9 +58,6 @@ class Map extends Component {
 
     /** A function that exposes the viewport */
     onViewportChange: PropTypes.func,
-
-    /** A function that exposes the viewport */
-    getCursor: PropTypes.func
   }
 
   static defaultProps = {
@@ -75,12 +72,7 @@ class Map extends Component {
     touchRotate: true,
     doubleClickZoom: true,
     onViewportChange: () => {},
-    onLoad: () => {},
-    getCursor: ({ isHovering, isDragging }) => {
-      if (isHovering) return 'pointer';
-      if (isDragging) return 'grabbing';
-      return 'grab';
-    }
+    onLoad: () => {}
   }
 
   state = {
@@ -129,8 +121,12 @@ class Map extends Component {
     });
   }
 
-  onClick = (e) => {
+  onClick = e => {
     const { onClick } = this.props;
+
+    if (!onClick) {
+      return;
+    }
 
     onClick({
       event: e,
@@ -156,31 +152,6 @@ class Map extends Component {
 
     this.setState({ viewport: newViewport });
     onViewportChange(newViewport);
-  }
-
-  onMoveEnd = () => {
-    const { onViewportChange } = this.props;
-    const { viewport } = this.state;
-
-    if (this.map) {
-      const bearing = this.map.getBearing();
-      const pitch = this.map.getPitch();
-      const zoom = this.map.getZoom();
-      const { lng, lat } = this.map.getCenter();
-
-      const newViewport = {
-        ...viewport,
-        bearing,
-        pitch,
-        zoom,
-        latitude: lat,
-        longitude: lng
-      };
-
-      // Publish new viewport and save it into the state
-      this.setState({ viewport: newViewport });
-      onViewportChange(newViewport);
-    }
   }
 
   fitBounds = () => {
@@ -220,7 +191,7 @@ class Map extends Component {
   };
 
   render() {
-    const { customClass, children, getCursor, dragPan, dragRotate, scrollZoom, touchZoom, touchRotate, doubleClickZoom, ...mapboxProps } = this.props;
+    const { customClass, children, dragPan, dragRotate, scrollZoom, touchZoom, touchRotate, doubleClickZoom, ...mapboxProps } = this.props;
     const { viewport, loaded, flying } = this.state;
 
     return (
