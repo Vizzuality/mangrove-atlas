@@ -1,84 +1,15 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Select from 'components/select';
 import Chart from 'components/chart';
-import groupBy from 'lodash/groupBy';
-import WidgetLegend from 'components/widget/legend';
 import styles from 'components/widget/style.module.scss';
 
-const MangroveHeight = () => {
+const MangroveHeight = ({ widgetConfig }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
-  const metadata = [1996, 2007, 2008, 2009, 2010];
-  const data = [
-    { year: '1996', uv: 4000, '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
-    { year: '2007', uv: 3000, '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
-    { year: '2008', uv: 2000, '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
-    { year: '2009', uv: 2780, '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
-    { name: '2010', uv: 1890, '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
-  ];
+  const data = widgetConfig.parse();
+  const { chartConfig, metadata, chartData } = data;
 
-  const chartConfig = {
-    cartesianGrid: {
-      vertical: false,
-      horizontal: true,
-      strokeDasharray: '5 20'
-    },
-    xKey: 'years',
-    yKeys: {
-      bars:
-      {
-        '0-10m':
-        {
-          stackId: 'bar',
-          fill: '#9ADBD9',
-          stroke: '#9ADBD9'
-        },
-        '10-20m':
-        {
-          stackId: 'bar',
-          fill: '#5BC3BD',
-          stroke: '#5BC3BD'
-        },
-        '20-30m':
-        {
-          stackId: 'bar',
-          fill: '#249892',
-          stroke: '#249892'
-        },
-        '30-40m':
-        {
-          stackId: 'bar',
-          fill: '#00746F',
-          stroke: '#00746F'
-        },
-        '40-50m':
-        {
-          stackId: 'bar',
-          fill: '#004B47',
-          stroke: '#004B47'
-        }
-      }
-    },
-    xAxis: {
-      tick: { fontSize: 12, fill: 'rgba(0,0,0,0.54)' },
-      datakey: metadata
-    },
-    yAxis: {
-      tick: { fontSize: 12, fill: 'rgba(0,0,0,0.54)' },
-      orientation: 'right'
-    },
-    legend: {
-      align: 'left',
-      verticalAlign: 'top',
-      layout: 'horizontal',
-      height: 50,
-      content: (properties) => {
-        const { payload } = properties;
-        const groups = groupBy(payload, p => p.payload.category);
-        return <WidgetLegend direction="vertical" groups={groups} />;
-      }
-    }
-  };
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
@@ -103,12 +34,16 @@ const MangroveHeight = () => {
           onChange={value => setEndDate(value)}
         />.
         <Chart
-          data={data}
+          data={chartData}
           config={chartConfig}
         />
       </div>
     </div>
   );
+};
+
+MangroveHeight.propTypes = {
+  widgetConfig: PropTypes.shape({}).isRequired
 };
 
 export default MangroveHeight;

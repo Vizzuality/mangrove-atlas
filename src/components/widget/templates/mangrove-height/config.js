@@ -56,12 +56,28 @@ export const CONFIG = {
         }
       },
       xAxis: {
-        tick: { fontSize: 12, fill: 'rgba(0,0,0,0.54)' },
-        datakey: [1996, 2007, 2008, 2009, 2010]
+        tick: {
+          color: 'rgba(0,0,0,0.54)',
+          fontSize: 12,
+          lineHeight: 20,
+          fill: 'rgba(0,0,0,0.54)',
+          stroke: 'rgba(0,0,0,0.54)',
+          textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
+        },
+        //
+        domain: [1996, 2007, 2008, 2009, 2010]
+        // domain: [0, 20, 40, 60, 80, 100]
       },
       yAxis: {
-        tick: { fontSize: 12, fill: 'rgba(0,0,0,0.54)' },
-        orientation: 'right'
+        tick: {
+          fontSize: 12, fill: 'rgba(0,0,0,0.54)'
+        },
+        orientation: 'right',
+        unit: 'Mg Ha-1',
+        // domain: [1996, 2007, 2008, 2009, 2010],
+
+        // domain: [0, 20, 40, 60, 80, 100],
+        // type: 'number'
       },
       legend: {
         align: 'left',
@@ -71,7 +87,7 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload.category);
-          return <WidgetLegend direction="vertical" groups={groups} />;
+          return <WidgetLegend type="height" groups={groups} />;
         }
       }
     },
