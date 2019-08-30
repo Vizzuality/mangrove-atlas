@@ -113,8 +113,12 @@ const fakeData = {
   ]
 };
 
-const widgetMetadata = ({ metadata: { location_coast_length_m } }) => Number(location_coast_length_m / 1000000).toFixed(2);
-
+const widgetMetadata = ({ metadata }) => {
+  if (metadata) {
+    const { location_coast_length_m = 0 } = metadata;
+    return Number(location_coast_length_m / 1000000).toFixed(2);
+  }
+}
 
 export const CONFIG = {
   parse: data => ({
