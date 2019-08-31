@@ -20,7 +20,8 @@ class MapContainer extends PureComponent {
     mapboxApiAccessToken: PropTypes.string.isRequired,
     mapStyle: PropTypes.shape({}).isRequired,
     bounds: PropTypes.shape({}).isRequired,
-    goToCountry: PropTypes.func
+    goToCountry: PropTypes.func,
+    goToAOI: PropTypes.func
   }
 
   static defaultProps = {
@@ -35,7 +36,8 @@ class MapContainer extends PureComponent {
       pitch: 0
     },
     setViewport: () => { },
-    goToCountry: () => { }
+    goToCountry: () => { },
+    goToAOI: () => { }
   }
 
   componentDidMount() {
@@ -108,7 +110,6 @@ class MapContainer extends PureComponent {
         const { properties: { ISO_3digit: countryId } } = country;
         goToCountry({ iso: countryId });
       }
-
     };
 
     return (
@@ -124,7 +125,7 @@ class MapContainer extends PureComponent {
         >
           {() => (
             <div className={styles.navigation}>
-              <MediaQuery minWidth={breakpoints.md}>
+              <MediaQuery minWidth={breakpoints.sm}>
                 <NavigationControl />
               </MediaQuery>
             </div>
@@ -135,7 +136,7 @@ class MapContainer extends PureComponent {
         <div className={classnames(styles.legend,
           { [styles.expanded]: !isCollapse })}
         >
-          <MediaQuery maxWidth={breakpoints.md - 1}>
+          <MediaQuery maxWidth={breakpoints.sm - 1}>
             <MobileLegendControl />
           </MediaQuery>
           <div className={styles.tooltip}>

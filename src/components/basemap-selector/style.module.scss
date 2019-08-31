@@ -12,6 +12,10 @@
 
   &.collapse {
     display: none;
+    @media (min-width: map-get($breakpoints, sm)) and (max-width: map-get($breakpoints, md)) {
+      display: flex;
+      max-width: 270px;
+    }
   }
   .current {
     margin-right: 30px;
