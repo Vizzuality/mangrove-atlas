@@ -10,10 +10,10 @@ import styles from './style.module.scss';
 
 const AppPage = () => (
   <div className={styles.app}>
-    <MediaQuery maxWidth={breakpoints.md - 1}>
+    <MediaQuery maxWidth={breakpoints.md}>
       <MobileLayout />
     </MediaQuery>
-    <MediaQuery minWidth={breakpoints.md}>
+    <MediaQuery minWidth={breakpoints.md + 1}>
       <DesktopLayout />
     </MediaQuery>
     {/* Modals */}
