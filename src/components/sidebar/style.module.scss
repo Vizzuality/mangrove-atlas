@@ -10,6 +10,7 @@
   box-sizing: border-box;
   @media screen and (max-width: map-get($breakpoints, md)) {
     padding: 5px;
+    margin: auto;
   }
   .header {
     @media screen and (max-width: map-get($breakpoints, md)) {
