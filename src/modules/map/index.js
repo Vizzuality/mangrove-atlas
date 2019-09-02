@@ -1,3 +1,4 @@
+import pick from 'lodash/pick';
 import * as actions from './actions';
 import * as reducers from './reducers';
 import initialState from './initial-state';
@@ -23,8 +24,12 @@ queryState.add({
   encode: {
     after: [
       actions.setBasemap,
+      actions.setViewport
     ],
-    selector: state => ({ basemap: state.map.basemap })
+    selector: state => ({
+      basemap: state.map.basemap,
+      viewport: pick(state.map.viewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch'])
+    })
   },
   decode: {
     trigger: restoreMapState
