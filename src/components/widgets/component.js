@@ -12,10 +12,10 @@ function WidgetList({
   ...parentProps
 }) {
   return (
+
     <div className={styles.widgets}>
       {widgets.map((widget) => {
         const template = TEMPLATES[widget.slug];
-
         if (!template) {
           return null;
         }
@@ -30,7 +30,7 @@ function WidgetList({
             template={template}
           />
         );
-    })}
+      })}
     </div>
   );
 }
@@ -47,6 +47,5 @@ WidgetList.propTypes = {
 WidgetList.defaultProps = {
   widgets: []
 };
-
 
 export default WidgetList;
