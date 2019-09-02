@@ -5,8 +5,11 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import styles from './style.module.scss';
 
-const LegendItem = ({ id, name, toggleActive, isCollapsed, mapView }) => {
-  const onClickHandler = () => toggleActive({ id, isActive: false });
+const LegendItem = ({ id, name, toggleActive, toggleWidgetActive, isCollapsed, mapView }) => {
+  const onClickHandler = () => {
+    toggleActive({ id, isActive: false });
+    toggleWidgetActive({ id, isActive: false });
+  };
 
   return (
     <div className={classnames(styles.legendItem,
