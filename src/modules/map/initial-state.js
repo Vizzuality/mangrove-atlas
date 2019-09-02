@@ -9,5 +9,6 @@ export default {
     longitude: 0,
   },
   bounds: {},
-  display: true
+  display: true,
+  isViewportFixed: false
 };
