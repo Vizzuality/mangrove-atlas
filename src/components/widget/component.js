@@ -38,14 +38,10 @@ function Widget({
     isLoading,
     layersIds,
     slug,
-    data,
+    data: getDataBySlug(),
     widgetConfig,
     ...props,
   };
-
-  useEffect(() => {
-    templateProps.data = getDataBySlug();
-  }, [data, getDataBySlug, templateProps]);
 
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
