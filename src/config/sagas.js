@@ -27,4 +27,4 @@ export default function* root() {
     fork(languages),
     fork(mangroveData),
   ]);
-};
+}
