@@ -120,7 +120,7 @@ Widget.propTypes = {
   layerId: PropTypes.string,
   layersIds: PropTypes.arrayOf(PropTypes.string),
   location: PropTypes.shape({}),
-  isActive: PropTypes.bool,s
+  isActive: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
   toggleActive: PropTypes.func,
