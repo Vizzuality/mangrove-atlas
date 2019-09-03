@@ -1,3 +1,1 @@
-import DesktopLayout from './component';
-
-export default DesktopLayout;
+export { default } from './component';

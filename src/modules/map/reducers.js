@@ -25,6 +25,9 @@ export default {
   [actions.setBounds]: (state, { payload }) => ({
     ...state,
     bounds: payload
+  }),
+  [actions.setViewportFixed]: (state, { payload }) => ({
+    ...state,
+    isViewportFixed: payload.value
   })
-
 };
