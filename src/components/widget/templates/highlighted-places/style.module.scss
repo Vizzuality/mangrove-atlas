@@ -7,7 +7,7 @@
   justify-content: space-between;
 
   &.collapsed {
-    margin-top: 10px;
+    margin-top: 0;
     @media screen and (max-width: map-get($breakpoints, sm)) {
       margin-top: -10px;
     }
