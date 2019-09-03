@@ -6,11 +6,11 @@ import WidgetLegend from 'components/widget/legend';
 export const CONFIG = {
   parse: () => ({
     chartData: [
-      { year: '1996', '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
-      { year: '2007', '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
-      { year: '2008', '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
-      { year: '2009', '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
-      { name: '2010', '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
+      { year: 1996, '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
+      { year: 2007, '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
+      { year: 2008, '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
+      { year: 2009, '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
+      { year: 2010, '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
@@ -19,7 +19,10 @@ export const CONFIG = {
         horizontal: true,
         strokeDasharray: '5 20'
       },
-      xKey: 'years',
+      margin: { top: 5, right: 0, left: 0, bottom: 0 },
+      width: '550px',
+      viewBox: { x: 0, y: 20, width: 550, height: 170 },
+      xKey: 'year',
       yKeys: {
         bars:
         {
@@ -70,15 +73,15 @@ export const CONFIG = {
             color: 'red',
             stroke: 'solid'
           },
-          color: 'rgba(0,0,0,0.54)',
           fontSize: 12,
           lineHeight: 20,
-          fill: 'rgba(0,0,0,0.54)',
-          stroke: 'rgba(0,0,0,0.54)',
+          fill: 'rgba(0,0,0,0.2)',
+          stroke: 'rgba(0,0,0,0.2)',
           textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
         },
-        dataKey: [1996, 2007, 2008, 2009, 2010],
-        domain: [1996, 2010]
+        ticks: ['1996', '2007', '2008', '2009', '2010'],
+        domain: [1996, 2010],
+        interval: 0
       },
       yAxis: {
         tick: {
@@ -86,14 +89,15 @@ export const CONFIG = {
         },
         domain: [0, 400],
         interval: 0,
+        orientation: 'right',
         label: {
           content: () => (
             <g>
               <text
-                x={0}
-                y={40}
+                x={450}
+                y={60}
                 fontSize={12}
-                textAnchor="right"
+                textAnchor="insideRight"
                 fill="rgba(0,0,0,0.54)"
               >
               Mg Ha-1
@@ -115,7 +119,6 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload);
-          console.log(properties)
           return <WidgetLegend type="height" groups={groups} />;
         }
       }

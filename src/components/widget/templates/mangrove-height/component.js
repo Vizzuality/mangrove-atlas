@@ -18,16 +18,19 @@ const MangroveHeight = ({ widgetConfig }) => {
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Over the past 20 years, mangroves in the world have decreased by x
-        {' '}
-        {unit}
+        Over the past 20 years, mangroves in the world have decreased by
+        <strong>
+          {' '} x {' '} {unit}
+        </strong>
         {' '}
         between
+        {' '}
         <Select
           value={startDate}
           options={dateOptions}
           onChange={value => setStartDate(value)}
         /> and
+        {' '}
         <Select
           value={endDate}
           options={dateOptions}
