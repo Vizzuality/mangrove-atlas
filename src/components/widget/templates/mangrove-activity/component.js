@@ -17,7 +17,7 @@ class MangroveActivity extends React.PureComponent {
   };
 
   state = {
-    unit: '100',
+    unit: 'ha',
     yearStart: '2009',
     yearEnd: '2019',
     filter: 'gain'
@@ -144,11 +144,6 @@ class MangroveActivity extends React.PureComponent {
       { value: '2019', label: '2019' }
     ];
 
-    const optionsUnit = [
-      { value: '100', label: 'Ha' },
-      { value: '1', label: 'Km' }
-    ];
-
     return (
       <Fragment>
         <div className={styles.widget_template}>
@@ -161,13 +156,7 @@ class MangroveActivity extends React.PureComponent {
               onChange={value => this.changeFilter(value)}
             />
             {' '}
-            of {metadata * unit}
-            {' '}
-            <Select
-              value={unit}
-              options={optionsUnit}
-              onChange={value => this.changeUnit(value)}
-            />
+            of <strong>{metadata}{unit}</strong>
             {' '}
             between
             {' '}
