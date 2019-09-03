@@ -19,9 +19,7 @@ export const CONFIG = {
         horizontal: true,
         strokeDasharray: '5 20'
       },
-      margin: { top: 5, right: 0, left: 0, bottom: 0 },
-      width: '550px',
-      viewBox: { x: 0, y: 20, width: 550, height: 170 },
+      margin: { top: 0, right: 50, left: 0, bottom: 0 },
       xKey: 'year',
       yKeys: {
         bars:
@@ -91,13 +89,12 @@ export const CONFIG = {
         interval: 0,
         orientation: 'right',
         label: {
-          content: () => (
+          content: ({ viewBox }) => (
             <g>
               <text
-                x={450}
-                y={60}
+                x={365}
+                y={50}
                 fontSize={12}
-                textAnchor="insideRight"
                 fill="rgba(0,0,0,0.54)"
               >
               Mg Ha-1
@@ -112,7 +109,7 @@ export const CONFIG = {
         align: 'left',
         verticalAlign: 'top',
         layout: 'horizontal',
-        height: 50,
+        height: 80,
         top: 0,
         left: 0,
         position: 'relative',

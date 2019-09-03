@@ -14,11 +14,11 @@ const MangroveHeight = ({ widgetConfig }) => {
     label: year.toString(),
     value: year.toString()
   }));
-  const unit = 'km';
+  const unit = 'ha';
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Over the past 20 years, mangroves in the world have decreased by
+        Over the past 20 years, mangroves in the world have <strong>decreased</strong> by
         <strong>
           {' '} x {' '} {unit}
         </strong>
