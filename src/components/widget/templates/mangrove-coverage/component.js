@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
 import Chart from 'components/chart';
 import Select from 'components/select';
 import styles from 'components/widget/style.module.scss';
@@ -64,10 +65,10 @@ class MangroveCoverage extends React.PureComponent {
   render() {
     const { data: { chartConfig, metadata }, currentLocation } = this.props;
     const { currentYear, unit } = this.state;
-    const optionsYears = metadata.years.map(year => ({
+    const optionsYears = sortBy(metadata.years.map(year => ({
       label: year.toString(),
       value: year
-    }));
+    })), ['value']);
     let content = null;
 
     try {
