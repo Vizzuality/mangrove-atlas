@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { toggleActive } from 'modules/layers/actions';
+import { toggleActive as toggleWidgetActive } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
@@ -8,7 +9,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  toggleActive
+  toggleActive,
+  toggleWidgetActive
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
