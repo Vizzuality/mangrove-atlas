@@ -26,7 +26,7 @@
   }
 
   &.collapsed {
-    margin-bottom: -45px;
+    margin-bottom: -90px;
     background-position: 0;
     @media screen and (max-width: map-get($breakpoints, md)) {
       margin-bottom: -37px;
@@ -108,5 +108,13 @@
 
   .bold {
     font-weight: bold;
+  }
+}
+
+//SPECIFIC TEMPLATES
+.activity_widget {
+  .label {
+    font-weight: bold;
+    padding-bottom: 10px;
   }
 }

@@ -1,15 +1,17 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, select } from 'redux-saga/effects';
 import { setCurrent, closeSearchPanel } from 'modules/locations/actions';
 import { closeInfoPanel } from 'modules/widgets/actions';
 
-function* setLocation({ payload }) {
-  /**
-   * Set current location
-   */
-  if (payload.id || payload.iso) {
-    yield put(setCurrent({ ...payload }));
-  } else {
-    yield put(setCurrent({ id: 'worldwide' }));
+/**
+  * Set current location
+  */
+function* setLocation({ payload: { iso, id } }) {
+  const targetLocation = iso || id || 'worldwide';
+  const idKey = iso ? 'iso' : 'id';
+  const { locations: { current } } = yield select();
+
+  if (!current || current[idKey] !== targetLocation) {
+    yield put(setCurrent({ [idKey]: targetLocation }));
   }
 
   yield put(closeSearchPanel());

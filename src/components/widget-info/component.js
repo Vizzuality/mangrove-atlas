@@ -8,7 +8,10 @@ import ArrowRight from './arrow-right.svg';
 
 class WidgetInfo extends PureComponent {
   static propTypes = {
-    data: PropTypes.array || PropTypes.shape({}),
+    data: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.shape({})
+    ]),
     filename: PropTypes.string,
     openInfoPanel: PropTypes.func
   }

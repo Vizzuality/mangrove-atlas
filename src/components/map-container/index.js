@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setViewport,
-  goToCountry: pageActions['PAGE/COUNTRY']
+  goToCountry: pageActions['PAGE/COUNTRY'],
+  goToAOI: pageActions['PAGE/AOI']
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

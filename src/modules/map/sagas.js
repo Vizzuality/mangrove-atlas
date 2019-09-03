@@ -1,7 +1,7 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import bboxTurf from '@turf/bbox';
 import { currentLocation } from 'modules/locations/selectors';
-import { resetViewport, setBounds, setBasemap } from './actions';
+import { resetViewport, setBounds, setBasemap, setViewport, setViewportFixed } from './actions';
 import countriesDictionary from './constants';
 
 function* flyToCurrentLocation() {
@@ -11,18 +11,24 @@ function* flyToCurrentLocation() {
 
   if (location) {
     if (location.location_type === 'worldwide') {
-      yield put(resetViewport());
+      if (!state.map.isViewportFixed) {
+        yield put(resetViewport());
+      }
     } else {
       const locationException = countriesDictionary[location.iso];
       const bbox = locationException ? locationException.bounds : bboxTurf(location.bounds);
 
-      yield put(setBounds({
-        bbox,
-        options: {
-          padding: { top: 50, bottom: 50, right: 20, left: mapView ? 20 : 620 }
-        }
-      }));
+      if (!state.map.isViewportFixed) {
+        yield put(setBounds({
+          bbox,
+          options: {
+            padding: { top: 50, bottom: 50, right: 20, left: mapView ? 20 : 620 }
+          }
+        }));
+      }
     }
+
+    yield put(setViewportFixed({ value: false }));
   }
 }
 
@@ -36,9 +42,19 @@ export function* restoreMapState() {
   const basemapSelector = state => (state.router.query
     && state.router.query.map
     && state.router.query.map.basemap) || null;
+  const viewportSelector = state => (state.router.query
+    && state.router.query.map
+    && state.router.query.map.viewport) || null;
   const basemap = yield select(basemapSelector);
+  const viewport = yield select(viewportSelector);
+
   if (basemap) {
     yield put(setBasemap(basemap));
+  }
+
+  if (viewport) {
+    yield put(setViewportFixed({ value: true }));
+    yield put(setViewport(viewport));
   }
 }
 
