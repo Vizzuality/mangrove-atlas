@@ -6,13 +6,8 @@
   margin-top: 30px;
   justify-content: space-between;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
-    flex-direction: column;
-    justify-content: space-around;
-    margin: 20px -10px -10px -10px;
-    div:not(:last-child) {
-        margin-bottom: 10px;
-    }
+  div:not(:last-child) {
+    margin-bottom: 10px;
   }
 
   a {
@@ -35,19 +30,8 @@
     text-align: center;
     line-height: 20px;
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      flex-direction: row;
-      vertical-align: bottom;
-      align-items: flex-end;
-    }
-
     .cardInfo {
       display: inline;
-      @media screen and (max-width: map-get($breakpoints, md)) {
-        p {
-          margin-bottom: 0;
-        }
-      }
     }
 
     h3 {
@@ -58,23 +42,14 @@
 
     &:first-child {
       margin-right: 10px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
-        margin-right: 0;
-      }
     }
 
     &:last-child {
       margin-left: 10px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
-        margin-left: 0;
-      }
     }
 
     &.active {
       border-color: $primary;
-    }
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      margin: 0;
     }
   }
 }
