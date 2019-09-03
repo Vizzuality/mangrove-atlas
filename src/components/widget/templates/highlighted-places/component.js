@@ -4,9 +4,11 @@ import classnames from 'classnames';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
 
-const HighlightedPlaces = ({ data, currentLocation }) => (
+const HighlightedPlaces = ({ data, currentLocation, isCollapsed }) => (
   <Fragment>
-    <div className={styles.hotspotsList}>
+    <div className={classnames(styles.hotspotsList,
+      { [styles.collapsed]: isCollapsed })}
+    >
       {data.map(d => (
         <div
           key={d.id}

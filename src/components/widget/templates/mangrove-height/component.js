@@ -28,12 +28,10 @@ class MangroveHeight extends PureComponent {
   }
 
   changeStartYear = startYear => this.setState({ startYear })
-  debugger;
   changeEndYear = endYear => this.setState({ endYear })
 
   render() {
     const { data: { metadata, chartData, chartConfig }, currentLocation, slug } = this.props;
-    console.log(this.props)
     const { startYear, endYear } = this.state;
     const optionsYears = metadata.years.map(year => ({
       label: year.toString(),

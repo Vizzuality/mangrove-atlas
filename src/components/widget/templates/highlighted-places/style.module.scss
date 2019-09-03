@@ -6,6 +6,16 @@
   margin-top: 30px;
   justify-content: space-between;
 
+  &.collapsed {
+    margin-top: 10px;
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      margin-top: -10px;
+    }
+    .card {
+      margin-top: 10px;
+    }
+  }
+
   @media screen and (max-width: map-get($breakpoints, md)) {
     flex-direction: column;
     justify-content: space-around;
