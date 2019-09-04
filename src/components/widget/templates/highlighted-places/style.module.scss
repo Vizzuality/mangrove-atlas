@@ -29,15 +29,19 @@
     color: $white;
     text-align: center;
     line-height: 20px;
-
     .cardInfo {
       display: inline;
-    }
+      min-width: 120px;
 
-    h3 {
-      margin-top: 0;
-      font-weight: bold;
-      line-height: 19px;
+      h3 {
+        margin: 0;
+        font-weight: bold;
+      }
+
+      p {
+        font-weight: normal;
+        margin: 5px;
+      }
     }
 
     &:first-child {

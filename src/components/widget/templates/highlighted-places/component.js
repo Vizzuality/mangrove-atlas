@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
-import Rufiji from './images/rufiji1.jpg';
-import Saloum from './images/saloum1.jpg';
-import Worldwide from './images/worldwide.png';
+import Rufiji from './images/rufiji.jpg';
+import Saloum from './images/saloum.jpg';
+import Worldwide from './images/worldwide.jpg';
 
 
 const HighlightedPlaces = ({ data, currentLocation }) => (
@@ -17,7 +17,7 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
             <div
               key={d.id}
               style={{
-                backgroundImage: `url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
+                backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
                 backgroundPosition: 'center',
                 backgroundSize: 'cover'
               }}
@@ -25,9 +25,9 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
             >
               <span className={styles.cardInfo}>
                 <h3 className="notranslate">{d.name}</h3>
-                <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span> <span>coastline</span></p>
+                <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span></p>
               </span>
-              <span className={styles.cardInfo}>View place</span>
+              {/* <span className={styles.cardInfo}>View place</span> */}
             </div>
           )}
         </Link>
@@ -47,7 +47,7 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
           <span className={styles.cardInfo}>
             <h3 className="notranslate">Worlwide</h3>
           </span>
-          <span className={styles.cardInfo}>Back to Worldwide</span>
+          {/* <span className={styles.cardInfo}>Back to Worldwide</span> */}
         </div>
       </Link>
     )}
