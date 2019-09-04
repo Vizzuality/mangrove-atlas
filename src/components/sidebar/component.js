@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import OnScroll from 'react-on-scroll';
+import { breakpoints } from 'utils/responsive';
 import Header from 'components/header';
 import Button from 'components/button';
 import LanguageSelect from 'components/language-selector';
@@ -53,11 +54,12 @@ class Dashboard extends Component {
         className={classnames(styles.sidebar, {
           [styles.securityMargin]: securityMargin
         })}
-        triggers={[
-          { top: -65, callback: _sticky => this.setSticky(!_sticky) },
-          { top: -10, callback: securityMargin => this.setMargin(!securityMargin) },
-
-        ]}
+        triggers={window.innerWidth >= breakpoints.md
+          ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
+            { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
+          : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) },
+            { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
+        }
       >
         <div className={styles.header}>
           <Header sticky={sticky} />
