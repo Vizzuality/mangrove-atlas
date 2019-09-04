@@ -23,23 +23,38 @@ function sortLayers(layers) {
 export const layerStyles = createSelector(
   [mapStyles, activeLayers],
   (_mapStyles, _activeLayers) => {
-    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) return [];
+    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
+      return [];
+    }
+
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
-    const result = [];
-    _activeLayers.forEach((activeLayer) => {
-      layersStyles
-        .filter(style => style.metadata['mapbox:group'] === activeLayer.mapboxGroup)
-        .forEach(s => result.push(s));
-    });
-    return result;
+    const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
+
+    return layersStyles.filter(style => activeGroups.includes(style.metadata['mapbox:group']));
   }
 );
 
 export const mapStyle = createSelector(
   [basemap, layerStyles],
   (_basemap, _layerStyles) => {
+    const testFilter = [
+      "all",
+      [
+        "match",
+        ["get", "year"],
+        [1996],
+        true,
+        false
+      ]
+    ];
+
+    if (_layerStyles.length > 0) {
+      _layerStyles[0].filter = testFilter;
+    }
+
     styleManager.basemap = _basemap;
     styleManager.layers = _layerStyles;
+
     return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
   }
 );
