@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
-import Rufiji from './images/rufiji.jpg';
-import Saloum from './images/saloum.jpg';
+import Rufiji from './images/Rufiji.jpg';
+import Saloum from './images/Saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
 
 
@@ -27,7 +27,6 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
                 <h3 className="notranslate">{d.name}</h3>
                 <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span></p>
               </span>
-              {/* <span className={styles.cardInfo}>View place</span> */}
             </div>
           )}
         </Link>
@@ -42,12 +41,12 @@ const HighlightedPlaces = ({ data, currentLocation }) => (
             backgroundPosition: 'center',
             backgroundSize: 'cover'
           }}
-          className={styles.card}
+          className={classnames(styles.card,
+            { [styles.hidden]: currentLocation.location_type === 'worldwide' })}
         >
           <span className={styles.cardInfo}>
-            <h3 className="notranslate">Worlwide</h3>
+            <h3 className={classnames('notranslate', styles.title)}>Worlwide</h3>
           </span>
-          {/* <span className={styles.cardInfo}>Back to Worldwide</span> */}
         </div>
       </Link>
     )}
