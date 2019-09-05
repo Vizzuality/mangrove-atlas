@@ -28,6 +28,14 @@ class APIService {
         return data;
       });
   }
+
+  fetchRankingData = (params = 'gain') => this.client
+    .get(`/locations?rank_by=${params}_m2`)
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
 }
 
 export default APIService;

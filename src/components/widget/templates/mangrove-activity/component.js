@@ -13,7 +13,8 @@ import styles from 'components/widget/style.module.scss';
 
 class MangroveActivity extends React.PureComponent {
   static propTypes = {
-    data: PropTypes.shape({}).isRequired
+    data: PropTypes.shape({}).isRequired,
+    ranking: PropTypes.shape({}).isRequired
   };
 
   state = {
@@ -130,6 +131,7 @@ class MangroveActivity extends React.PureComponent {
     const { data: { chartData, metadata, fakeData } } = this.props;
     const { yearStart, yearEnd, unit, filter } = this.state;
 
+    console.log(fakeData)
     // XXX: these options should come from an api ?
     const optionsFilter = [
       { value: 'gain', label: 'Gain' },

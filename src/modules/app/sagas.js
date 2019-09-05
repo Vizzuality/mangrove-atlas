@@ -6,6 +6,7 @@ import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
+import { fetchRankingData } from 'modules/ranking/actions';
 import { initializeApp } from './actions';
 
 function* loadInitialData() {
@@ -25,6 +26,7 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
+  if (!mangroveData.list.length) yield put(fetchRankingData());
 }
 
 export default function* app() {

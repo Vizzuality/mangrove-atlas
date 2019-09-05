@@ -22,6 +22,7 @@ const widgetData = ({ list }) => {
     })).filter(l => l.netChange !== 0);
   return orderBy(data, l => l.year);
 };
+//const fakeData = getWidgetData(data)
 const fakeData = {
   gain: [
     {
@@ -122,6 +123,7 @@ const widgetMetadata = ({ metadata }) => {
 
 export const CONFIG = {
   parse: data => ({
+
     fakeData,
     metadata: widgetMetadata(data),
     chartData: widgetData(data).map(l => (
@@ -131,6 +133,7 @@ export const CONFIG = {
         gain: l.gain,
         loss: l.loss,
         color: l.color,
+
         name: l.name
       }
     )),

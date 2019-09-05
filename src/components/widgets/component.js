@@ -9,6 +9,7 @@ function WidgetList({
   isCollapsed,
   widgets,
   widgetData,
+  rankingData,
   ...parentProps
 }) {
   return (
@@ -27,6 +28,7 @@ function WidgetList({
             {...parentProps}
             data={widgetData}
             widgetConfig={CONFIGS[widget.slug]}
+            rankingData={rankingData}
             template={template}
           />
         );
@@ -42,10 +44,12 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
+  rankingData: PropTypes.shape({})
 };
 
 WidgetList.defaultProps = {
-  widgets: []
+  widgets: [],
+  rankingData: {}
 };
 
 export default WidgetList;
