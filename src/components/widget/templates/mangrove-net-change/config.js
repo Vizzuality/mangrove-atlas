@@ -96,7 +96,7 @@ const CONFIG = {
             value: payload.legend || value
           }));
 
-          return <WidgetLegend direction="vertical" groups={{labels}} />;
+          return <WidgetLegend type="net" direction="vertical" groups={{labels}} />;
         }
       },
       tooltip: {
