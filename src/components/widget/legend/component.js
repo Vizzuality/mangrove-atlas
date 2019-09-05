@@ -20,8 +20,7 @@ const Legend = ({ type, groups, direction, variant = 'rect' }) => (
             >
               <svg height="12" width="12">
                 <rect
-                  className={classnames(styles.item,
-                    { [styles.net]: (item.value).toLowerCase() === 'net result' })}
+                  className={classnames(styles.item, styles[`_${type}`])}
                   fill={item.color}
                 />
               </svg>
