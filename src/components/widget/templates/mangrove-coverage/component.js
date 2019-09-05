@@ -76,7 +76,7 @@ class MangroveCoverage extends React.PureComponent {
       const { percentage } = widgetData[0];
       const unitOptions = [
         { value: '%', label: '%' },
-        { value: 'km', label: 'Km' }
+        { value: 'km', label: 'km' }
       ];
       const totalCoverage = metadata.total / 1000;
       const coverage = (percentage * totalCoverage) / 100;
@@ -84,26 +84,28 @@ class MangroveCoverage extends React.PureComponent {
       const location = (currentLocation.location_type === 'worldwide')
         ? 'the world’s'
         : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
-      const unitSelector = (<Select
-        value={unit}
-        options={unitOptions}
-        onChange={value => this.changeUnit(value)}
-      />);
-      const yearSelector = (<Select
-        className="notranslate"
-        width="auto"
-        value={currentYear}
-        options={optionsYears}
-        onChange={this.changeYear}
-      />);
+      const unitSelector = (
+        <Select
+          value={unit}
+          options={unitOptions}
+          onChange={value => this.changeUnit(value)}
+        />);
+      const yearSelector = (
+        <Select
+          className="notranslate"
+          width="auto"
+          value={currentYear}
+          options={optionsYears}
+          onChange={this.changeYear}
+        />);
 
       content = (
         <>
           <div className={styles.sentence}>
             <span>Mangrove forest cover </span>
-            <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
-            <span>of </span> <strong>{ location } </strong>
-            <strong className="notranslate">{ numberFormat(totalCoverage) } km</strong> coastline<br />
+            <strong className="notranslate">{quantity} {unitSelector}</strong><br />
+            <span>of </span> <strong>{location} </strong>
+            <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> coastline<br />
             <span>in </span>{yearSelector}.
           </div>
           <Chart
@@ -111,13 +113,13 @@ class MangroveCoverage extends React.PureComponent {
             config={chartConfig}
           />
         </>
-        );
-    } catch(e) {
+      );
+    } catch (e) {
       content = (
         <div className={styles.sentence}>
           <span>No data for this widget.</span>
         </div>
-        );
+      );
     }
 
     return <div className={styles.widget_template}>{content}</div>;
