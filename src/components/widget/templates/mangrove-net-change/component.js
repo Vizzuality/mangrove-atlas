@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import Chart from 'components/chart';
@@ -8,100 +8,115 @@ import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
 
-class MangroveNetChange extends PureComponent {
-  static propTypes = {
-    data: PropTypes.shape({}),
-    currentLocation: PropTypes.shape({})
-  }
-
-  static defaultProps = {
-    data: null,
-    currentLocation: null
-  }
-
-  state = {
+function MangroveNetChange ({ data, currentLocation, addFilter }) {
+  const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
-  }
+  });
 
-  changeStartYear = startYear => this.setState({ startYear })
+  const { metadata, chartData, chartConfig } = data;
+  const { startYear, endYear } = netChangeState;
+  const optionsYears = metadata.years.map(year => ({
+    label: year.toString(),
+    value: year.toString()
+  }));
 
-  changeEndYear = endYear => this.setState({ endYear })
-
-  render() {
-    const { data: { metadata, chartData, chartConfig }, currentLocation } = this.props;
-    const { startYear, endYear } = this.state;
-    const optionsYears = metadata.years.map(year => ({
-      label: year.toString(),
-      value: year.toString()
-    }));
-
-    // TODO: This must be done in the API
-    const editedChartData = [
-      {
-        x: '1996',
-        netChange: 0,
-        gain: 0,
-        loss: 0,
-        name: '1996',
-        year: 1996
-      },
-      ...chartData
-    ];
-
-    const widgetData = editedChartData.filter(
-      ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
-    );
-
-    // How this change is calculated?
-    // Rows have year's 'gain', 'loss' and 'netChange'.
-    // We consider startYear as 0
-    // Therefore we substract that from the accumulated change of all following years.
-    const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
-
-    // Normalize startData
-    widgetData[0] = {
-      ...widgetData[0],
+  // TODO: This must be done in the API
+  const editedChartData = [
+    {
+      x: '1996',
+      netChange: 0,
       gain: 0,
       loss: 0,
-      netChange: 0
-    };
+      name: '1996',
+      year: 1996
+    },
+    ...chartData
+  ];
 
-    const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
-    const direction = (change > 0) ? 'increased' : 'decreased';
-    const quantity = numberFormat(change / 1000000);
-    const startSelector = (
-      <Select
-        className="notranslate netChange"
-        prefix="start-year"
-        value={startYear}
-        options={optionsYears}
-        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
-        onChange={this.changeStartYear}
-      />);
-    const endSelector = (
-      <Select
-        className="notranslate"
-        prefix="end-year"
-        value={endYear}
-        options={optionsYears}
-        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
-        onChange={this.changeEndYear}
-      />);
+  const changeStartYear = startYear => {
+    addFilter({
+      filter: {
+        id: 'net-change-1996-2016',
+        startYear,
+        endYear: netChangeState.endYear
+      }
+    });
+    setNetChangeState({ ...netChangeState, startYear });
+  };
+  const changeEndYear = endYear => {
+    addFilter({
+      filter: {
+        id: 'net-change-1996-2016',
+        startYear: netChangeState.startYear,
+        endYear
+      }
+    });
+    setNetChangeState({ ...netChangeState, endYear });
+  };
 
-    return (
-      <div className={styles.widget_template}>
-        <div className={styles.sentence}>
-          Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
-          between {startSelector} and {endSelector}.
-        </div>
-        <Chart
-          data={widgetData}
-          config={chartConfig}
-        />
+  const widgetData = editedChartData.filter(
+    ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
+  );
+
+  // How this change is calculated?
+  // Rows have year's 'gain', 'loss' and 'netChange'.
+  // We consider startYear as 0
+  // Therefore we substract that from the accumulated change of all following years.
+  const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
+
+  // Normalize startData
+  widgetData[0] = {
+    ...widgetData[0],
+    gain: 0,
+    loss: 0,
+    netChange: 0
+  };
+
+  const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
+  const direction = (change > 0) ? 'increased' : 'decreased';
+  const quantity = numberFormat(change / 1000000);
+  const startSelector = (
+    <Select
+      className="notranslate netChange"
+      prefix="start-year"
+      value={startYear}
+      options={optionsYears}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
+      onChange={changeStartYear}
+    />);
+  const endSelector = (
+    <Select
+      className="notranslate"
+      prefix="end-year"
+      value={endYear}
+      options={optionsYears}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
+      onChange={changeEndYear}
+    />);
+
+  return (
+    <div className={styles.widget_template}>
+      <div className={styles.sentence}>
+        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
+        between {startSelector} and {endSelector}.
       </div>
-    );
-  }
+      <Chart
+        data={widgetData}
+        config={chartConfig}
+      />
+    </div>
+  );
+}
+
+MangroveNetChange.propTypes = {
+  data: PropTypes.shape({}),
+  currentLocation: PropTypes.shape({})
+}
+
+MangroveNetChange.defaultProps = {
+  data: null,
+  currentLocation: null
 }
 
 export default MangroveNetChange;

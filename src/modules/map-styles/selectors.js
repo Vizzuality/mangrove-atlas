@@ -52,12 +52,43 @@ export const mapStyle = createSelector(
       ]
     ];
 
+    const netChangeFilter = ({ startYear, endYear }) => {
+      if (startYear === endYear) {
+        return ["boolean", false];
+      }
+
+      const availableYears = ['1996', '2007', '2008', '2009', '2010', '2015', '2016'];
+
+      const years = availableYears
+        .filter(y => parseInt(y) >= parseInt(startYear))
+        .filter(y => parseInt(y) < parseInt(endYear));
+
+      return [
+        "all",
+        [
+          "match",
+          ["get", "start_year"],
+          years,
+          true,
+          false
+        ]
+      ];
+    };
+
     const layersWithFilters = _layerStyles.map(layerStyle => {
+      let widgetFilter;
+
       switch(layerStyle.id) {
         case 'coverage-1996-2016':
-          const widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
+          widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
           if (widgetFilter) {
             layerStyle.filter = coverageFilter(widgetFilter);
+          }
+          break;
+        case 'net-change-1996-2016':
+          widgetFilter = _filters.find(f => f.id === 'net-change-1996-2016');
+          if (widgetFilter) {
+            layerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
         default:
