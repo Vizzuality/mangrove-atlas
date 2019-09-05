@@ -14,28 +14,30 @@ const MangroveHeight = ({ widgetConfig }) => {
     label: year.toString(),
     value: year.toString()
   }));
+
   const unit = 'ha';
+
+  const startDateSelector = (
+    <Select
+      value={startDate}
+      options={dateOptions}
+      onChange={value => setStartDate(value)}
+    />
+  );
+
+  const endDateSelector = (
+    <Select
+      value={endDate}
+      options={dateOptions}
+      onChange={value => setEndDate(value)}
+    />
+  );
+
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
         Over the past 20 years, mangroves in the world have <strong>decreased</strong> by
-        <strong>
-          {' '} x {' '} {unit}
-        </strong>
-        {' '}
-        between
-        {' '}
-        <Select
-          value={startDate}
-          options={dateOptions}
-          onChange={value => setStartDate(value)}
-        /> and
-        {' '}
-        <Select
-          value={endDate}
-          options={dateOptions}
-          onChange={value => setEndDate(value)}
-        />.
+        <strong> x {unit}</strong> between {startDateSelector} and {endDateSelector}.
         <Chart
           data={chartData}
           config={chartConfig}
