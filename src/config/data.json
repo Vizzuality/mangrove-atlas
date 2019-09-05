@@ -7,6 +7,8 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_alerts",
+          "mangrove_height",
           "mangrove_activity",
           "mangrove_alerts"
         ]
@@ -76,6 +78,11 @@
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "layersIds": []
+    },
+    {
+      "name": "Mangrove height",
+      "slug": "mangrove_height",
+      "layersIds": []
     }
   ],
   "layers": [
@@ -96,3 +103,4 @@
     }
   ]
 }
+

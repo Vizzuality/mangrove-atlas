@@ -1,192 +1,127 @@
+
 import React from 'react';
-import { format } from 'd3-format';
+import groupBy from 'lodash/groupBy';
 import WidgetLegend from 'components/widget/legend';
-import WidgetTooltip from 'components/widget/tooltip';
-import moment from 'moment';
-import orderBy from 'lodash/orderBy';
 
-
-const numberFormat = format(',.2f');
-
-const widgetData = ({ list }) => {
-  const data = list.map(l => (
-    {
-      label: JSON.stringify(moment(l.date).year()),
-      year: moment(l.date).year(),
-      gain: l.gain_m2,
-      netChange: l.gain_m2 - l.loss_m2,
-      loss: -l.loss_m2
-    })).filter(l => l.netChange !== 0);
-  return orderBy(data, l => l.year);
-};
-
-const data = [{
-  year: '1996',
-  uv: 4000,
-  '0-10m': 18,
-  '10-20m': 50,
-  '20-30m': 70,
-  '30-40m': 90,
-  '40-50m': 98},
-  {year: '2007',
-  uv: 3000,
-  '0-10m': 30,
-  '10-20m': 40,
-  '20-30m': 60,
-  '30-40m': 70,
-  '40-50m': 75},
-  {year: '2008',
-  uv: 2000,
-  '0-10m': 10,
-  '10-20m': 40,
-  '20-30m': 65,
-  '30-40m': 80,
-  '40-50m': 85},
-  {year: '2009',
-  uv: 2780,
-  '0-10m': 15,
-  '10-20m': 42,
-  '20-30m': 67,
-  '30-40m': 82,
-  '40-50m': 90},
-  {name: '2010',
-  uv: 1890,
-  '0-10m': 20,
-  '10-20m': 50,
-  '20-30m': 70,
-  '30-40m': 98,
-  '40-50m': 102},
-];
-  {
-    year: '1996',
-    height: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    year: '2007',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    year: '2008',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    year: '2009',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    year: '2010',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  }
-];
-
-const widgetMetadata = ({ list }) => ({
-  years: list.filter(l => (l.gain_m2 !== null && l.loss_m2 !== null)).map(l => (
-    moment(l.date).year()
-  )).sort((a, b) => a - b)
-});
-
-const CONFIG = {
-  parse: data => ({
-    chartData: widgetData(data).map(l => (
-      {
-        x: l.label,
-        netChange: l.netChange,
-        gain: l.gain,
-        loss: l.loss,
-        name: l.label,
-        year: l.year
-      })),
-    metadata: [1996],
+export const CONFIG = {
+  parse: () => ({
+    chartData: [
+      { year: 1996, '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
+      { year: 2007, '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
+      { year: 2008, '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
+      { year: 2009, '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
+      { year: 2010, '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
+    ],
+    metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
-      stackOffset: 'sign',
-      margin: { top: 20, right: 0, left: 40, bottom: 0 },
-      referenceLines: [
-        { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
-      ],
-      xKey: 'year',
-      yKeys: {
-        lines: {
-          netChange: {
-            stroke: 'rgba(0,0,0,0.7)',
-            legend: 'Net Result'
-          }
-        },
-        bars: {
-          gain: {
-            barSize: 10,
-            transform: `translate(${(4 + 10) / 2}, 0)`,
-            fill: '#077FAC',
-            radius: [10, 10, 0, 0],
-            legend: 'Gain'
-          },
-          loss: {
-            barSize: 10,
-            transform: `translate(-${(4 + 10) / 2}, 0)`,
-            fill: '#EB6240',
-            radius: [10, 10, 0, 0],
-            legend: 'Loss'
-          }
-        }
-      },
-      xAxis: {
-        tick: { fontSize: 12, fill: '#AAA' }
-      },
-      yAxis: {
-        tick: { fontSize: 12, fill: '#AAA' },
-        tickFormatter: (v) => {
-          const result = v / 1000000;
-          return numberFormat(result);
-        },
-        tickMargin: 15,
-        domain: [-300, 300]
-      },
       cartesianGrid: {
         vertical: false,
-        strokeDasharray: '6 6'
+        horizontal: true,
+        strokeDasharray: '5 20'
       },
-      legend: {
-        align: 'center',
-        verticalAlign: 'top',
-        layout: 'horizontal',
-        height: 50,
-        content: ({ payload }) => {
-          const labels = payload.map(({color, value, payload}) => ({
-            color,
-            value: payload.legend || value
-          }));
-
-          return <WidgetLegend direction="vertical" groups={{labels}} />;
+      margin: { top: 0, right: 50, left: 0, bottom: 0 },
+      xKey: 'year',
+      yKeys: {
+        bars:
+        {
+          '0-10m':
+          {
+            stackId: 'bar',
+            fill: 'rgba(154, 219, 217, 0.5)',
+            stroke: 'rgba(154, 219, 217, 0.5)'
+          },
+          '10-20m':
+          {
+            stackId: 'bar',
+            fill: '#5BC3BD',
+            stroke: '#5BC3BD'
+          },
+          '20-30m':
+          {
+            stackId: 'bar',
+            fill: '#249892',
+            stroke: '#249892'
+          },
+          '30-40m':
+          {
+            stackId: 'bar',
+            fill: '#00746F',
+            stroke: '#00746F'
+          },
+          '40-50m':
+          {
+            stackId: 'bar',
+            fill: '#004B47',
+            stroke: '#004B47'
+          }
         }
       },
-      tooltip: {
-        cursor: false,
-        content: (
-          <WidgetTooltip
-            style={{
-              color: '#FFFFFF',
-              backgroundColor: '#383838'
-            }}
-            settings={[
-              { key: 'year' },
-              { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
-              { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'netChange', format: value => `Net result: ${numberFormat(value / 1000000)} km2` }
-            ]}
-          />
-        )
+      referenceLines: [{
+        y: 0,
+        stroke: 'black',
+        strokeDasharray: 'solid',
+        fill: 'black',
+        opacity: '1',
+        label: null
+      }],
+      xAxis: {
+        tick: {
+          x: {
+            x: 0,
+            color: 'red',
+            stroke: 'solid'
+          },
+          fontSize: 12,
+          lineHeight: 20,
+          fill: 'rgba(0,0,0,0.2)',
+          stroke: 'rgba(0,0,0,0.2)',
+          textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
+        },
+        ticks: ['1996', '2007', '2008', '2009', '2010'],
+        domain: [1996, 2010],
+        interval: 0
+      },
+      yAxis: {
+        tick: {
+          fontSize: 12, fill: 'rgba(0,0,0,0.54)'
+        },
+        domain: [0, 400],
+        interval: 0,
+        orientation: 'right',
+        label: {
+          content: ({ viewBox }) => (
+            <g>
+              <text
+                x={365}
+                y={50}
+                fontSize={12}
+                fill="rgba(0,0,0,0.54)"
+              >
+              Mg Ha-1
+              </text>
+            </g>
+          )
+        },
+        type: 'number',
+        dataKey: [0, 20, 40, 60, 80, 100],
+      },
+      legend: {
+        align: 'left',
+        verticalAlign: 'top',
+        layout: 'horizontal',
+        height: 80,
+        top: 0,
+        left: 0,
+        position: 'relative',
+        content: (properties) => {
+          const { payload } = properties;
+          const groups = groupBy(payload, p => p.payload);
+          return <WidgetLegend type="height" groups={groups} />;
+        }
       }
-    }
+    },
   })
 };
+
 
 export default CONFIG;

@@ -24,6 +24,11 @@
     margin: 10px 0;
     padding: 0;
     list-style: none;
+    &._height {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
 
   .widget_legend_list_item {
@@ -46,22 +51,31 @@
     svg {
       margin-right: 10px;
       border-radius: 10px;
+      width: 550px;
     }
 
     &._rect svg {
       height: 12px;
-      width: 6px;  
+      width: 6px;
     }
 
     &._circle svg {
       height: 12px;
-      width: 12px;  
+      width: 12px;
     }
   }
 
   .widget_legend_list_item {
-    &.net svg{
+    &._net svg{
       border-radius: 4px;
+    }
+    &._height {
+
+      font-size: 14px;
+      svg {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
     }
   }
 
@@ -91,5 +105,6 @@
       height: 13px;
       border-radius: 0;
     }
+
   }
 }

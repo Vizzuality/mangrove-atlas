@@ -60,7 +60,7 @@
 
   .wrapper {
     padding: $padding;
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, sm)) {
       padding: $paddingMobile;
     }
   }

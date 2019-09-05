@@ -85,6 +85,8 @@ class Chart extends PureComponent {
       padding = { top: 0, right: 0, left: 0, bottom: 0 },
       type = 'composed',
       height,
+      width,
+      viewBox,
       layout = 'horizontal',
       gradients,
       patterns,
@@ -120,11 +122,13 @@ class Chart extends PureComponent {
     });
 
     return (
-      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
+      <div ref={(r) => { this.chart = r; }}  className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
             stackOffset={stackOffset}
             height={height}
+            width={width}
+            viewBox={viewBox}
             data={data}
             layout={layout}
             margin={margin}
@@ -195,12 +199,12 @@ class Chart extends PureComponent {
                 {...xAxis}
               />
             )}
-
             {yAxis && (
               <YAxis
                 axisLine={false}
                 tickSize={-50}
                 mirror
+                orientation="left"
                 tickMargin={0}
                 tickLine={false}
                 tick={(
