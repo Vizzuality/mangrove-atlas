@@ -54,22 +54,28 @@ class MangroveCoverage extends React.PureComponent {
     ];
   }
 
-  changeYear = (value) => {
-    this.setState({ currentYear: value });
-  }
-
-  changeUnit = (unit) => {
-    this.setState({ unit });
-  }
-
   render() {
-    const { data: { chartConfig, metadata }, currentLocation } = this.props;
+    const { data: { chartConfig, metadata }, currentLocation, addFilter } = this.props;
     const { currentYear, unit } = this.state;
     const optionsYears = sortBy(metadata.years.map(year => ({
       label: year.toString(),
       value: year
     })), ['value']);
     let content = null;
+
+    const changeYear = (value) => {
+      addFilter({
+        filter: {
+          id: 'coverage-1996-2016',
+          year: value
+        }
+      });
+      this.setState({ currentYear: value });
+    };
+
+    const changeUnit = (unit) => {
+      this.setState({ unit });
+    };
 
     try {
       const widgetData = this.getData();
@@ -87,14 +93,14 @@ class MangroveCoverage extends React.PureComponent {
       const unitSelector = (<Select
         value={unit}
         options={unitOptions}
-        onChange={value => this.changeUnit(value)}
+        onChange={changeUnit}
       />);
       const yearSelector = (<Select
         className="notranslate"
         width="auto"
         value={currentYear}
         options={optionsYears}
-        onChange={this.changeYear}
+        onChange={changeYear}
       />);
 
       content = (

@@ -5,6 +5,7 @@ import StyleManager from './style-manager';
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
+const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
 
 function sortLayers(layers) {
@@ -28,32 +29,45 @@ export const layerStyles = createSelector(
     }
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
+    const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
     const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-    return layersStyles.filter(style => activeGroups.includes(style.metadata['mapbox:group']));
+    return layersStyles
+      .filter(style => activeIds.includes(style.id))
+      .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
   }
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles],
-  (_basemap, _layerStyles) => {
-    const testFilter = [
+  [basemap, layerStyles, filters],
+  (_basemap, _layerStyles, _filters) => {
+    const coverageFilter = ({year}) => [
       "all",
       [
         "match",
         ["get", "year"],
-        [1996],
+        [year],
         true,
         false
       ]
     ];
 
-    if (_layerStyles.length > 0) {
-      _layerStyles[0].filter = testFilter;
-    }
+    const layersWithFilters = _layerStyles.map(layerStyle => {
+      switch(layerStyle.id) {
+        case 'coverage-1996-2016':
+          const widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
+          if (widgetFilter) {
+            layerStyle.filter = coverageFilter(widgetFilter);
+          }
+          break;
+        default:
+      }
+
+      return layerStyle;
+    });
 
     styleManager.basemap = _basemap;
-    styleManager.layers = _layerStyles;
+    styleManager.layers = layersWithFilters;
 
     return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
   }

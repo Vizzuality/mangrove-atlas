@@ -1,4 +1,4 @@
-import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
+import { fetchRequested, fetchSucceeded, fetchFailed, addFilter, removeFilter } from './actions';
 
 export default {
   [fetchRequested]: state => ({
@@ -23,5 +23,16 @@ export default {
       isLoading: false,
       error: payload
     }
+  }),
+  [addFilter]: (state, { payload: { filter } }) => ({
+    ...state,
+    filters: [
+      ...state.filters.filter(fltr => fltr.id !== filter.id),
+      filter
+    ]
+  }),
+  [removeFilter]: (state, { payload: { id } }) => ({
+    ...state,
+    filters: state.filters.filter(fltr => fltr.id !== id)
   })
 };
