@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
 import styles from './style.module.scss';
-import Rufiji from './images/Rufiji.jpg';
-import Saloum from './images/Saloum.jpg';
-import Worldwide from './images/Worldwide.jpg';
+import Rufiji from './images/rufiji.jpg';
+import Saloum from './images/saloum.jpg';
+import Worldwide from './images/worldwide.jpg';
 
 
 const HighlightedPlaces = ({ data, currentLocation }) => (
