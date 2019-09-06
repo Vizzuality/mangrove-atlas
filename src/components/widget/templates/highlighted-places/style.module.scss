@@ -29,13 +29,26 @@
     color: $white;
     text-align: center;
     line-height: 20px;
+
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      padding: 20px 15px;
+      min-height: 150px;
+    }
+
     .cardInfo {
       display: inline;
       min-width: 120px;
+      @media screen and (max-width: map-get($breakpoints, sm)) {
+        min-width: 100px;
+      }
 
       h3 {
         margin: 0;
         font-weight: bold;
+
+        &.title {
+          margin-bottom: 30px;
+        }
       }
 
       p {
@@ -48,12 +61,11 @@
       margin-right: 10px;
     }
 
-    &:last-child {
-      margin-left: 10px;
-    }
-
     &.active {
       border-color: $primary;
     }
+  }
+  .hidden {
+    display: none;
   }
 }
