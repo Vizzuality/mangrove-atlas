@@ -7,7 +7,7 @@ const account = process.env.REACT_APP_MAPBOX_ACCOUNT;
  * https://api.mapbox.com/styles/v1/{account}
  */
 const styleIds = {
-  layers: 'cjx4ikse805an1co712z98lel'
+  layers: 'ck03qgltm001w1dnvtz56yiz8'
 };
 
 class StyleService {
