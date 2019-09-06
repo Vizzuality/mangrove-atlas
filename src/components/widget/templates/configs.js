@@ -3,6 +3,7 @@ import MangroveCoverage from './mangrove-coverage/config';
 import MangroveNetChange from './mangrove-net-change/config';
 import MangroveActivity from './mangrove-activity/config';
 import MangroveAlerts from './mangrove-alerts/config';
+import MangroveHeight from './mangrove-height/config';
 
 export default {
   mangrove_coverage: MangroveCoverage,
@@ -10,6 +11,7 @@ export default {
   mangrove_activity: MangroveActivity,
   highlighted_places: HighlightedPlaces,
   mangrove_alerts: MangroveAlerts,
+  mangrove_height: MangroveHeight,
   default: {
     parse: () => ({
       template: 'Template not defined',

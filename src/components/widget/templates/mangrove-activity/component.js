@@ -39,7 +39,9 @@ class MangroveActivity extends React.PureComponent {
     this.setState({ filter });
   }
 
-  getRanking = (fakeData, filter) => orderBy(fakeData[filter], d => Math.abs(d[filter])).reverse().map((f, index) => ({ ...f, x: index }));
+  getRanking = (fakeData, filter) => orderBy(
+    fakeData[filter], d => Math.abs(d[filter])
+  ).reverse().map((f, index) => ({ ...f, x: index }));
 
   getConfig = () => {
     const { data: { chartConfig, fakeData } } = this.props;
@@ -47,7 +49,8 @@ class MangroveActivity extends React.PureComponent {
 
     const dataRanked = this.getRanking(fakeData, filter);
 
-    const max = Math.max(...flatten(fakeData[filter].map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+    const max = Math.max(...flatten(fakeData[filter]
+      .map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
 
     return {
@@ -144,36 +147,38 @@ class MangroveActivity extends React.PureComponent {
       { value: '2019', label: '2019' }
     ];
 
+    // Selectors
+
+    const filterSelector = (
+      <Select
+        value={filter}
+        options={optionsFilter}
+        onChange={value => this.changeFilter(value)}
+      />
+    );
+
+    const startYearSelector = (
+      <Select
+        value={yearStart}
+        options={optionsYearStart}
+        onChange={value => this.changeYear('start', value)}
+      />
+    );
+
+    const endYearSelector = (
+      <Select
+        value={yearEnd}
+        options={optionsYearEnd}
+        onChange={value => this.changeYear('end', value)}
+      />
+    );
+
     return (
       <Fragment>
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
-            Regions of interest within location showed relative
-            {' '}
-            <Select
-              value={filter}
-              options={optionsFilter}
-              onChange={value => this.changeFilter(value)}
-            />
-            {' '}
-            of <strong>{metadata}{unit}</strong>
-            {' '}
-            between
-            {' '}
-            <Select
-              value={yearStart}
-              options={optionsYearStart}
-              onChange={value => this.changeYear('start', value)}
-            />
-            {' '}
-            to
-            {' '}
-            <Select
-              value={yearEnd}
-              options={optionsYearEnd}
-              onChange={value => this.changeYear('end', value)}
-            />
-            .
+            {/* eslint-disable-next-line */}
+            Regions of interest within location showed relative {filterSelector} of <strong>{metadata}{unit}</strong> between {startYearSelector} to {endYearSelector}.
           </div>
         </div>
 

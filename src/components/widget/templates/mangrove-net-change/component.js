@@ -98,7 +98,7 @@ function MangroveNetChange ({ data, currentLocation, addFilter }) {
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong><br />
+        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup> </strong><br />
         between {startSelector} and {endSelector}.
       </div>
       <Chart
