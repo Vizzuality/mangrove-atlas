@@ -1,5 +1,19 @@
 # Changelog
 
+## 2019-09-06
+
+### Added
+
+- Images for highlighted places
+- First version of mangrove height widget
+- Widget layer interactivity for coverage and net change widgets
+
+### Changed
+
+- Ipad styles
+- Url fully parameterised
+- Widget years order and units 
+
 ## 2019-08-29
 
 ### Added
