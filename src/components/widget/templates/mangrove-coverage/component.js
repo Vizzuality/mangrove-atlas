@@ -90,7 +90,7 @@ function MangroveCoverage({ data, currentLocation, addFilter }) {
           <span>Mangrove forest cover </span>
           <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
           <span>of </span> <strong>{ location } </strong>
-          <strong className="notranslate">{ numberFormat(totalCoverage) } km</strong> coastline<br />
+          <strong className="notranslate">{ numberFormat(totalCoverage)}km</strong> coastline<br />
           <span>in </span>{yearSelector}.
         </div>
         <Chart
