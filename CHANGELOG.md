@@ -14,6 +14,7 @@
 - Ipad styles
 - Url fully parameterised
 - Widget years order and units 
+- Styles adjusted in Highlighted hotspots 
 
 ## 2019-08-29
 
