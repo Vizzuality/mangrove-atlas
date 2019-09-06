@@ -63,7 +63,7 @@ function MangroveCoverage({ data, currentLocation, addFilter }) {
     const { percentage } = widgetData[0];
     const unitOptions = [
       { value: '%', label: '%' },
-      { value: 'km', label: 'Km' }
+      { value: 'km', label: 'km' }
     ];
     const totalCoverage = metadata.total / 1000;
     const coverage = (percentage * totalCoverage) / 100;
