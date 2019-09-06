@@ -7,6 +7,7 @@
 - Images for highlighted places
 - First version of mangrove height widget
 - Widget layer interactivity for coverage and net change widgets
+- API end point for country ranking (activity widget).
 
 ### Changed
 
