@@ -5,6 +5,7 @@ import StyleManager from './style-manager';
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
+const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
 
 function sortLayers(layers) {
@@ -23,23 +24,82 @@ function sortLayers(layers) {
 export const layerStyles = createSelector(
   [mapStyles, activeLayers],
   (_mapStyles, _activeLayers) => {
-    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) return [];
+    if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
+      return [];
+    }
+
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
-    const result = [];
-    _activeLayers.forEach((activeLayer) => {
-      layersStyles
-        .filter(style => style.metadata['mapbox:group'] === activeLayer.mapboxGroup)
-        .forEach(s => result.push(s));
-    });
-    return result;
+    const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
+    const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
+
+    return layersStyles
+      .filter(style => activeIds.includes(style.id))
+      .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
   }
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles],
-  (_basemap, _layerStyles) => {
+  [basemap, layerStyles, filters],
+  (_basemap, _layerStyles, _filters) => {
+    const coverageFilter = ({year}) => [
+      "all",
+      [
+        "match",
+        ["get", "year"],
+        [year],
+        true,
+        false
+      ]
+    ];
+
+    const netChangeFilter = ({ startYear, endYear }) => {
+      if (startYear === endYear) {
+        return ["boolean", false];
+      }
+
+      const availableYears = ['1996', '2007', '2008', '2009', '2010', '2015', '2016'];
+
+      const years = availableYears
+        .filter(y => parseInt(y) >= parseInt(startYear))
+        .filter(y => parseInt(y) < parseInt(endYear));
+
+      return [
+        "all",
+        [
+          "match",
+          ["get", "start_year"],
+          years,
+          true,
+          false
+        ]
+      ];
+    };
+
+    const layersWithFilters = _layerStyles.map(layerStyle => {
+      let widgetFilter;
+
+      switch(layerStyle.id) {
+        case 'coverage-1996-2016':
+          widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
+          if (widgetFilter) {
+            layerStyle.filter = coverageFilter(widgetFilter);
+          }
+          break;
+        case 'net-change-1996-2016':
+          widgetFilter = _filters.find(f => f.id === 'net-change-1996-2016');
+          if (widgetFilter) {
+            layerStyle.filter = netChangeFilter(widgetFilter);
+          }
+          break;
+        default:
+      }
+
+      return layerStyle;
+    });
+
     styleManager.basemap = _basemap;
-    styleManager.layers = _layerStyles;
+    styleManager.layers = layersWithFilters;
+
     return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
   }
 );
