@@ -11,7 +11,6 @@ const HighlightedPlaces = ({ data, currentLocation, isCollapsed }) => (
   <div className={classnames(styles.hotspotsList,
     { [styles.collapsed]: isCollapsed })}
   >
-  {console.log(isCollapsed)}
     {data.map(d => (
       <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
         {d.id !== currentLocation.id && (
