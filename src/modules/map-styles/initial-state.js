@@ -1,3 +1,4 @@
 export default {
-  layers: null
+  layers: null,
+  filters: []
 };

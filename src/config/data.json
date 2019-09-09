@@ -58,15 +58,14 @@
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
       "layersIds": [
-        "mangrove_extent"
+        "coverage-1996-2016"
       ]
     },
     {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "layersIds": [
-        "mangrove_gain",
-        "mangrove_loss"
+        "net-change-1996-2016"
       ]
     },
     {
@@ -88,18 +87,13 @@
   "layers": [
     {
       "name": "Mangrove extent",
-      "id": "mangrove_extent",
-      "mapboxGroup": "07c14de52165978354b99fda5fbcdadb"
+      "id": "coverage-1996-2016",
+      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     },
     {
-      "name": "Mangrove gain",
-      "id": "mangrove_gain",
-      "mapboxGroup": "ddb057e964a581d45d89735ba23f5ba6"
-    },
-    {
-      "name": "Mangrove loss",
-      "id": "mangrove_loss",
-      "mapboxGroup": "84284e0aab770699fa0ac998b822aa4f"
+      "name": "Mangrove change",
+      "id": "net-change-1996-2016",
+      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     }
   ]
 }

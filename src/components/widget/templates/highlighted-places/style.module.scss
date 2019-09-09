@@ -17,6 +17,10 @@
     }
   }
 
+  &.collapsed {
+    margin-top: 0px;
+  }
+
   .card {
     display: flex;
     flex-direction: column;

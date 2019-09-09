@@ -1,5 +1,21 @@
 # Changelog
 
+## 2019-09-06
+
+### Added
+
+- Images for highlighted places
+- First version of mangrove height widget
+- Widget layer interactivity for coverage and net change widgets
+- API end point for country ranking (activity widget).
+
+### Changed
+
+- Ipad styles
+- Url fully parameterised
+- Widget years order and units 
+- Styles adjusted in Highlighted hotspots 
+
 ## 2019-08-29
 
 ### Added
