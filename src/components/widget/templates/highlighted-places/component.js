@@ -32,7 +32,7 @@ const HighlightedPlaces = ({ data, currentLocation, isCollapsed }) => (
       </Link>
     ))
     }
-    {currentLocation.location_type !== 'worldwide' && (
+    {currentLocation.location_type === 'aoi' && (
       <Link to={{ type: 'PAGE/APP' }}>
         <div
           key={currentLocation.id}
