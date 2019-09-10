@@ -61,7 +61,7 @@ export default {
   [toggleActiveByLayerId]: (state, { payload }) => ({
     ...state,
     list: state.list.map((item) => {
-      if (item.layerId !== payload.layerId) return item;
+      if (!item.layersIds.includes(payload.layerId)) return item;
       return ({ ...item, isActive: payload.isActive });
     })
   }),

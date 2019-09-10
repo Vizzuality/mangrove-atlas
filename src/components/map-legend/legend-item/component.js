@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 const LegendItem = ({ id, name, toggleActive, toggleWidgetActive, isCollapsed, mapView }) => {
   const onClickHandler = () => {
     toggleActive({ id, isActive: false });
-    toggleWidgetActive({ id, isActive: false });
+    toggleWidgetActive({ layerId: id, isActive: false });
   };
 
   return (
