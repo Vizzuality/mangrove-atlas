@@ -1,15 +1,11 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
 import DATA from 'config/data.json';
-import { fetchSucceeded, toggleActive, toggleActiveByLayerId } from './actions';
+import { fetchSucceeded, toggleActive } from './actions';
 
 import { breakpoints } from 'utils/responsive';
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms))
-}
-
-export function* toggleWidgetActive({ payload }) {
-  yield put(toggleActiveByLayerId({ layerId: payload.id, isActive: payload.isActive }));
 }
 
 export function* getWidgets() {
@@ -75,6 +71,5 @@ export function* restoreWidgetsState() {
 }
 
 export default function* widgetsSagas() {
-  yield takeLatest('LAYERS/TOGGLE_ACTIVE', toggleWidgetActive);
   yield takeLatest('WIDGETS/FETCH_ALL', getWidgets);
 }

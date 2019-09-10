@@ -12,10 +12,9 @@ const HighlightedPlaces = ({ data, currentLocation, isCollapsed }) => (
     { [styles.collapsed]: isCollapsed })}
   >
     {data.map(d => (
-      <Link to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
+      <Link key={d.id} to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
         {d.id !== currentLocation.id && (
           <div
-            key={d.id}
             style={{
               backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
               backgroundPosition: 'center',
