@@ -66,7 +66,6 @@ function Widget({
         })
       }
     >
-
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <button

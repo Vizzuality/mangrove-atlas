@@ -7,11 +7,10 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   currentLocation: currentLocation(state),
-  isCollapsed: state.widgets.isCollapsed,
   isLoading: state.mangroveData.isLoading,
   highlightedPlaces: highlightedPlaces(state),
   widgets: dashboardWidgets(state),
-  widgetData: state.mangroveData,
+  widgetData: state.mangroveData
 });
 
 const mapDispatchToProps = {
