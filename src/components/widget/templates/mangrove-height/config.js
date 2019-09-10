@@ -102,8 +102,7 @@ export const CONFIG = {
             </g>
           )
         },
-        type: 'number',
-        dataKey: [0, 20, 40, 60, 80, 100],
+        type: 'number'
       },
       legend: {
         align: 'left',
