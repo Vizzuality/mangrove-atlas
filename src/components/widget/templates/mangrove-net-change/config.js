@@ -96,7 +96,7 @@ const CONFIG = {
             value: payload.legend || value
           }));
 
-          return <WidgetLegend type="net" direction="vertical" groups={{labels}} />;
+          return <WidgetLegend type="net" direction="vertical" groups={{ labels }} />;
         }
       },
       tooltip: {
@@ -104,14 +104,16 @@ const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-              color: '#FFFFFF',
-              backgroundColor: '#383838'
+              color: 'black',
+              backgroundColor: 'white',
+              display: 'flex',
+              justifyContent: 'space-around',
+              marginLeft: '10px'
             }}
             settings={[
-              { key: 'year' },
-              { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
-              { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'netChange', format: value => `Net result: ${numberFormat(value / 1000000)} km2` }
+              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
           />
         )
