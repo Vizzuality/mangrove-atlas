@@ -20,7 +20,6 @@ function WidgetList({
         if (!template) {
           return null;
         }
-        console.log(widget.slug, 'widget')
         return (
           <Widget
             key={widget.slug}
