@@ -1,6 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
+import flatten from 'lodash/flatten';
+
+import { scaleLinear } from 'd3-scale';
+
+import styles from 'components/widget/style.module.scss';
 
 // Utils
 import { format } from 'd3-format';
@@ -11,132 +16,38 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2f');
 
-const widgetData = ({ list }) => {
-  const data = list.map(l => (
+const widgetData = (activityData) => {
+  const formattedData = activityData.map(p => (p.mangrove_datum.map(l => (
     {
-      label: JSON.stringify(moment(l.date).year()),
+      label: p.name,
       year: moment(l.date).year(),
       gain: l.gain_m2,
-      net: l.gain_m2 - l.loss_m2,
-      loss: -l.loss_m2
-    })).filter(l => l.netChange !== 0);
-  return orderBy(data, l => l.year);
-};
-//const fakeData = getWidgetData(data)
-const fakeData = {
-  gain: [
-    {
-      name: 'place 1',
-      label: '1996',
-      gain: 13,
-      loss: -120
-    },
-    {
-      name: 'place 2',
-      label: '2002',
-      gain: 15,
-      loss: -40
-    },
-    {
-      name: 'place 3',
-      label: '2009',
-      gain: 19,
-      loss: -18
-    },
-    {
-      x: 3,
-      name: 'place 4',
-      label: '2016',
-      gain: 20,
-      net: 110,
-      loss: -194
-    }
-  ],
-  loss: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -12
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -4
-    },
-    {
-      name: 'place',
-      label: '2009',
-      gain: 194,
-      net: 72,
-      loss: -18
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -19
-    }
-  ],
-  net: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -120
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -40
-    },
-    {
-      name: 'place',
-      label: '2015',
-      gain: 194,
-      net: 72,
-      loss: -182
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -194
-    }
-  ]
+      net: l.net_change_m2,
+      loss: l.loss_m2
+    })).filter(l => l.net !== 0)
+  ));
+  return orderBy(formattedData, l => l.year);
 };
 
-const widgetMetadata = ({ metadata }) => {
-  if (metadata) {
-    const { location_coast_length_m = 0 } = metadata;
-    return Number(location_coast_length_m / 1000000).toFixed(2);
-  }
+const widgetMetadata = (activityData) => {
+  const dates = activityData.map(p => (p.mangrove_datum.map(l => (
+    moment(l.date).year()
+  )).filter(l => l.netChange !== 0)
+  ));
+  return dates;
+};
+
+const getDomain = (activityData) => {
+  const data = widgetData(activityData);
+  const max = Math.max(...flatten(data
+    .map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+  return [-max + (-max * 0.05), max + (max * 0.05)];
 };
 
 export const CONFIG = {
   parse: data => ({
-
-    fakeData,
+    chartData: widgetData(data),
     metadata: widgetMetadata(data),
-    chartData: widgetData(data).map(l => (
-      {
-        label: l.label,
-        net: l.net,
-        gain: l.gain,
-        loss: l.loss,
-        color: l.color,
-
-        name: l.name
-      }
-    )),
     chartConfig: {
       layout: 'vertical',
       referenceLines: [
@@ -158,12 +69,75 @@ export const CONFIG = {
           }));
           return <WidgetLegend direction="vertical" groups={{ labels }} />;
         }
-
-
       },
       xAxis: {
         type: 'number',
+        domain: getDomain(),
+        interval: 0,
         tick: true,
+      },
+      yKeys: {
+        lines: {
+          net: {
+            barSize: 10,
+            fill: 'rgba(0,0,0,0.7)',
+            radius: 4,
+            legend: 'Net result',
+          }
+        },
+        bars: {
+          gain: {
+            barSize: 10,
+            fill: '#077FAC',
+            radius: [0, 10, 10, 0],
+            legend: 'Gain',
+            stackId: 'stacked',
+            label: {
+              content: (prs) => {
+                const w = this.chart.offsetWidth;
+
+                const { index, y } = prs;
+                const { name } = data[index];
+
+                return (
+                  <g className={styles.activity_widget}>
+                    <text className={styles.label} x={w / 2} y={y - 15} textAnchor="middle" fill="#000">
+                      {name}
+                    </text>
+                  </g>
+                );
+              }
+            }
+          },
+          loss: {
+            barSize: 10,
+            fill: '#EB6240',
+            radius: [0, 10, 10, 0],
+            stackId: 'stacked',
+            legend: 'Loss',
+            label: {
+              content: (prs) => {
+                const w = this.chart.offsetWidth;
+
+                const { index, y } = prs;
+                const { loss, gain } = data[index];
+                const net = loss + gain;
+
+                const scale = scaleLinear()
+                  .domain(getDomain(data))
+                  .range([0, w]);
+
+                const x = scale((net));
+
+                return (
+                  <g>
+                    <rect x={x} y={y - 5} width={2} height={20} fill="#000" />
+                  </g>
+                );
+              }
+            }
+          }
+        },
       },
       cartesianGrid: {
         vertical: true,

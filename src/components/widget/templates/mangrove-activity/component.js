@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import flatten from 'lodash/flatten';
 
+import moment from 'moment';
+
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Select from 'components/select';
@@ -13,8 +15,7 @@ import styles from 'components/widget/style.module.scss';
 
 class MangroveActivity extends React.PureComponent {
   static propTypes = {
-    data: PropTypes.shape({}).isRequired,
-    ranking: PropTypes.shape({}).isRequired
+    data: PropTypes.shape({}).isRequired
   };
 
   state = {
@@ -45,9 +46,15 @@ class MangroveActivity extends React.PureComponent {
   ).reverse().map((f, index) => ({ ...f, x: index }));
 
   getConfig = () => {
-    const { data: { chartConfig, fakeData } } = this.props;
+    const { data: { chartConfig, fakeData }, rankingData } = this.props;
     const { filter } = this.state;
 
+    console.log(rankingData, 'date')
+    const dates = rankingData.map(p => (p.mangrove_datum.map(l => (
+      moment(l.date).year()
+    )).filter(l => l.netChange !== 0)
+    ));
+    console.log(dates)
     const dataRanked = this.getRanking(fakeData, filter);
 
     const max = Math.max(...flatten(fakeData[filter]
@@ -131,12 +138,11 @@ class MangroveActivity extends React.PureComponent {
     const { data: { chartData, metadata, fakeData } } = this.props;
     const { yearStart, yearEnd, unit, filter } = this.state;
 
-    console.log(fakeData)
     // XXX: these options should come from an api ?
     const optionsFilter = [
-      { value: 'gain', label: 'Gain' },
-      { value: 'loss', label: 'Loss' },
-      { value: 'net', label: 'Net' }
+      { value: 'gain', label: 'gain' },
+      { value: 'loss', label: 'loss' },
+      { value: 'net', label: 'net' }
     ];
 
     const optionsYearStart = [

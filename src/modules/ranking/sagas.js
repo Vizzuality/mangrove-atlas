@@ -10,7 +10,6 @@ function* getRankingData({ payload }) {
     const rankingData = yield call(service.fetchRankingData, payload);
     yield put(fetchSucceeded(rankingData));
     const NetChangeData = rankingData.map(country => (service.fetchMangroveData, country.iso));
-    console.log(NetChangeData)
   } catch (err) {
     yield put(fetchFailed(err));
   }

@@ -20,13 +20,13 @@ function WidgetList({
         if (!template) {
           return null;
         }
-
+        console.log(widget.slug, 'widget')
         return (
           <Widget
             key={widget.slug}
             {...widget}
             {...parentProps}
-            data={widgetData}
+            data={widget.slug === 'mangrove_activity' ? rankingData : widgetData}
             widgetConfig={CONFIGS[widget.slug]}
             rankingData={rankingData}
             template={template}
