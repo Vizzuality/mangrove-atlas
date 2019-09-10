@@ -108,7 +108,7 @@ const CONFIG = {
               backgroundColor: 'white',
               display: 'flex',
               justifyContent: 'space-around',
-              marginLeft: '10px'
+              marginLeft: '30px'
             }}
             settings={[
               { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
