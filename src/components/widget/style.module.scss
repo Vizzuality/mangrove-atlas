@@ -29,11 +29,15 @@
     margin-bottom: -90px;
     background-position: 0;
     @media screen and (max-width: map-get($breakpoints, md)) {
-      margin-bottom: -37px;
+      margin-bottom: -85px;
     }
 
     .content {
       max-height: 0px;
+    }
+    .widget_template {
+      overflow: hidden;
+      padding-top: 50px;
     }
   }
 
@@ -91,11 +95,7 @@
     transition: max-height .5s ease-in-out;
     will-change: max-height;
     max-height: 700px;
-    overflow: hidden;
-
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      overflow: visible;
-    }
+    overflow: visible;
   }
 }
 

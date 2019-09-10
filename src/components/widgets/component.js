@@ -6,7 +6,6 @@ import CONFIGS from 'components/widget/templates/configs';
 import styles from './style.module.scss';
 
 function WidgetList({
-  isCollapsed,
   widgets,
   widgetData,
   ...parentProps
@@ -23,6 +22,7 @@ function WidgetList({
         return (
           <Widget
             key={widget.slug}
+            isCollapsed={widget.isCollpased}
             {...widget}
             {...parentProps}
             data={widgetData}
@@ -42,10 +42,12 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
+  widgetData: PropTypes.shape({})
 };
 
 WidgetList.defaultProps = {
-  widgets: []
+  widgets: [],
+  widgetData: {}
 };
 
 export default WidgetList;
