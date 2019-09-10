@@ -4,13 +4,7 @@
       {
         "location_type": "worldwide",
         "widgetsSlugs": [
-          "highlighted_places",
-          "mangrove_coverage",
-          "mangrove_net_change",
-          "mangrove_alerts",
-          "mangrove_height",
-          "mangrove_activity",
-          "mangrove_alerts"
+          "mangrove_activity"
         ]
       },
       {

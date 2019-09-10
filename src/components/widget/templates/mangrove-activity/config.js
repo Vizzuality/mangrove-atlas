@@ -17,6 +17,8 @@ import WidgetLegend from 'components/widget/legend';
 const numberFormat = format(',.2f');
 
 const widgetData = (activityData) => {
+  if (!activityData) return null;
+  console.log(activityData, 'activityData')
   const formattedData = activityData.map(p => (p.mangrove_datum.map(l => (
     {
       label: p.name,
@@ -39,6 +41,7 @@ const widgetMetadata = (activityData) => {
 
 const getDomain = (activityData) => {
   const data = widgetData(activityData);
+  if (!data) return [1996, 2005, 2007];
   const max = Math.max(...flatten(data
     .map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
   return [-max + (-max * 0.05), max + (max * 0.05)];
@@ -47,7 +50,8 @@ const getDomain = (activityData) => {
 export const CONFIG = {
   parse: data => ({
     chartData: widgetData(data),
-    metadata: widgetMetadata(data),
+    metadata: [ 1996, 2005, 2007],
+  //  metadata: widgetMetadata(data),
     chartConfig: {
       layout: 'vertical',
       referenceLines: [
@@ -94,7 +98,7 @@ export const CONFIG = {
             stackId: 'stacked',
             label: {
               content: (prs) => {
-                const w = this.chart.offsetWidth;
+                const w = 12;
 
                 const { index, y } = prs;
                 const { name } = data[index];
@@ -117,7 +121,7 @@ export const CONFIG = {
             legend: 'Loss',
             label: {
               content: (prs) => {
-                const w = this.chart.offsetWidth;
+                const w = 12  ;
 
                 const { index, y } = prs;
                 const { loss, gain } = data[index];
