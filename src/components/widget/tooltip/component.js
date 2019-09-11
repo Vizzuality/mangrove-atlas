@@ -41,7 +41,6 @@ class Tooltip extends PureComponent {
                 <div
                   key={d.key}
                   className={classNames(styles.data_line, {
-                    [styles.data_line]: true,
                     [d.position]: !!d.position
                   })
                 }
