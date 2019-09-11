@@ -80,8 +80,12 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-              color: '#FFFFFF',
-              backgroundColor: '#383838'
+              color: 'black',
+              backgroundColor: 'white',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+              marginLeft: '10px',
             }}
             settings={[
               { key: 'label' },

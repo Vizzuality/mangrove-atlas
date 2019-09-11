@@ -46,7 +46,9 @@ class Tooltip extends PureComponent {
                       {d.color && (
                         <div
                           className={styles.data_color}
-                          style={{ backgroundColor: d.color }}
+                          style={{
+                            backgroundColor: d.color
+                          }}
                         />
                       )}
 
