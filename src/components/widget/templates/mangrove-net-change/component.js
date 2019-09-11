@@ -75,7 +75,7 @@ function MangroveNetChange({ data, currentLocation, addFilter }) {
 
   const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
-  const quantity = numberFormat(change / 1000000);
+  const quantity = numberFormat(Math.abs(change / 1000000));
   const startSelector = (
     <Select
       className="notranslate netChange"
@@ -100,7 +100,7 @@ function MangroveNetChange({ data, currentLocation, addFilter }) {
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup> </strong><br />
+        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup> </strong>
         between {startSelector} and {endSelector}.
       </div>
       <Chart

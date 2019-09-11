@@ -6,7 +6,6 @@ import CONFIGS from 'components/widget/templates/configs';
 import styles from './style.module.scss';
 
 function WidgetList({
-  isCollapsed,
   widgets,
   widgetData,
   rankingData,
@@ -23,6 +22,7 @@ function WidgetList({
         return (
           <Widget
             key={widget.slug}
+            isCollapsed={widget.isCollpased}
             {...widget}
             {...parentProps}
             data={widget.slug === 'mangrove_activity' ? rankingData : widgetData}
@@ -43,12 +43,14 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
-  rankingData: PropTypes.shape({})
+  rankingData: PropTypes.shape({}),
+  widgetData: PropTypes.shape({})
 };
 
 WidgetList.defaultProps = {
   widgets: [],
-  rankingData: {}
+  rankingData: {},
+  widgetData: {}
 };
 
 export default WidgetList;
