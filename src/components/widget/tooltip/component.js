@@ -37,13 +37,13 @@ class Tooltip extends PureComponent {
         {settings && settings.length && (
           <div className={styles.chart_tooltip} style={style}>
             {settings.map(
-              d => (hideZeros && !values[d.key] ? null : (
+              d => (hideZeros && values[d.key] ? null : (
                 <div
                   key={d.key}
-                  className={classNames({
-                    [styles.data_line]: true,
+                  className={classNames(styles.data_line, {
                     [d.position]: !!d.position
-                  })}
+                  })
+                }
                 >
                   {/* LABEL */}
                   {(d.label || d.labelKey) && (
@@ -64,7 +64,10 @@ class Tooltip extends PureComponent {
                   )}
 
                   {/* UNIT */}
-                  <div className={styles.data_value}>
+                  <div
+                    className={styles.data_value}
+    //                style={{ color: (payload.length && d.key === 'label') ? payload[0].payload.color : ' ' }}
+                  >
                     {this.getValue(d, values[d.key])}
                   </div>
                 </div>
