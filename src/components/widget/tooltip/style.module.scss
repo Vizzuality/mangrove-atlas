@@ -20,6 +20,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+  margin-right: 20px;
 }
 
 .data_line.right {
@@ -33,11 +34,9 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-right: 20px;
-  font-weight: bold;
 }
 
 .break_label {
-  font-size: 14px;
   font-style: italic;
   flex-direction: row;
   padding-top: 5px;
@@ -45,12 +44,13 @@
 }
 
 .data_color {
-  width: 3px;
-  height: 13px;
-  border-radius: 10px;
+  width: 9px;
+  height: 18px;
+  border-radius: 22px;
+  margin-right: 10px;
 }
 
 .data_value {
-  margin-left: 14px; //data_color width + data_color margin
+  margin-left: 19px; //data_color width + data_color margin
   font-weight: bold;
 }

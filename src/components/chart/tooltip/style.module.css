@@ -25,6 +25,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-right: 20px;
+  font-weight: bold;
 }
 
 .break_label {
@@ -36,11 +37,7 @@
 }
 
 .data_color {
-  width: 12px;
-  height: 12px;
-  min-height: 12px;
-  min-width: 12px;
-  border-radius: 50%;
-  margin-right: 5px;
-  margin-top: 5px;
+  width: 3px;
+  height: 13px;
+  border-radius: 10px;
 }
