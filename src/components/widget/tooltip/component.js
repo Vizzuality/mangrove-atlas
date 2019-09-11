@@ -40,7 +40,7 @@ class Tooltip extends PureComponent {
               d => (hideZeros && values[d.key] ? null : (
                 <div
                   key={d.key}
-                  className={classNames({
+                  className={classNames(styles.data_line, {
                     [styles.data_line]: true,
                     [d.position]: !!d.position
                   })
