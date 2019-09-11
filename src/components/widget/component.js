@@ -12,6 +12,7 @@ import styles from './style.module.scss';
 
 function Widget({
   data,
+  meta,
   highlightedPlaces,
   slug,
   widgetConfig,
@@ -104,6 +105,7 @@ function Widget({
 
       <WidgetInfo
         data={templateProps.data}
+        meta={templateProps.meta}
         filename={templateProps.slug}
         {...templateProps}
       />

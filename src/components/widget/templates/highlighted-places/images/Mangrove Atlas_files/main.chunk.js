@@ -10635,7 +10635,7 @@ function* getLayers() {
   /**
    * Widgets load first and contain layers to be loaded
    * See 'modules/app/sagas.js'
-   * 
+   *
    * Since both are static (there is no request for now), it makes sense
    * to have this code here to get the list of active layers and activate them.
    * TODO: For async retrieval this would trigger some request and the
@@ -11554,15 +11554,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/** 
+/**
  * queryState.add register the namespace for url to state actions.
  * The name property will become the query param.
  * It is suppossed to be semantic:
- * 
+ *
  * For namespace 'map'
  * encode selector
  * after any of these actions are triggered.
- * 
+ *
  * For namespace 'map'
  * decode trigger
  * after all of these actions have happened.
@@ -12008,15 +12008,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/** 
+/**
  * queryState.add register the namespace for url to state actions.
  * The name property will become the query param.
  * It is suppossed to be semantic:
- * 
+ *
  * For namespace 'map'
  * encode selector
  * after any of these actions are triggered.
- * 
+ *
  * For namespace 'map'
  * decode trigger
  * after all of these actions have happened.
@@ -12824,7 +12824,7 @@ class QueryStateManager {
 
   /**
    * Add a namespace to the registry for act upon changes.
-   * @param {string} namespace 
+   * @param {string} namespace
    */
   add(namespace) {
     const name = namespace.name;

@@ -2,6 +2,7 @@ import React from 'react';
 
 // Utils
 import { format } from 'd3-format';
+import moment from 'moment';
 
 // Components
 import WidgetTooltip from 'components/widget/tooltip';
@@ -11,19 +12,22 @@ const numberFormat = format(',.2f');
 
 function processData(data) {
   return {
-    gain: data[0].gain_m2,
-    loss: - data[0].loss_m2,
-    net: data[0].net_change_m2
-  }
+    gain: data.map(d => d.gain_m2).reduce((previous, current) => current += previous),
+    loss: -data.map(d => d.loss_m2).reduce((previous, current) => current += previous),
+    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous)
+  };
 }
 const widgetData = data => data.map(location => ({
-    name: location.name,
-    ...processData(location.mangrove_datum)
+  name: location.name,
+  ...processData(location.mangrove_datum)
 }));
 
+const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
+
 export const CONFIG = {
-  parse: data => ({
-    chartData: widgetData(data),
+  parse: (data) => ({
+    chartData: widgetData(data.data),
+    metaData: widgetMeta(data.meta),
     chartConfig: {
       layout: 'vertical',
       referenceLines: [

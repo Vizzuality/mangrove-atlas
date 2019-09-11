@@ -30,14 +30,14 @@ class APIService {
   }
 
   fetchRankingData = (params = {}) => {
-    const {filter = 'gain', startDate = '1996', endDate = '2007'} = params;
+    const { filter = 'gain', startDate = '1996', endDate = '2007' } = params;
     return this.client
-    .get(`/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}`)
-    .then((response) => {
-      const { status, statusText, data } = response;
-      if (status >= 400) throw new Error(statusText);
-      return data;
-    });
+      .get(`/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}`)
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      });
   }
 }
 

@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   highlightedPlaces: highlightedPlaces(state),
   widgets: dashboardWidgets(state),
   widgetData: state.mangroveData,
-  rankingData: state.ranking.data
+  rankingData: state.ranking
 });
 
 const mapDispatchToProps = {

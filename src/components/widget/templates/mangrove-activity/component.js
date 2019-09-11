@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import flatten from 'lodash/flatten';
 
-import moment from 'moment';
-
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Select from 'components/select';
@@ -13,52 +11,27 @@ import { scaleLinear } from 'd3-scale';
 
 import styles from 'components/widget/style.module.scss';
 
+const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
+
 class MangroveActivity extends React.PureComponent {
   static propTypes = {
-    data: PropTypes.shape({}).isRequired
+    data: PropTypes.shape({}).isRequired,
+    fetchRankingData: PropTypes.func.isRequired
   };
 
   state = {
     unit: 'ha',
-    yearStart: '2009',
-    yearEnd: '2019',
-    filter: 'gain'
+    startDate: 1996,
+    endDate: 2016,
+    filter: 'gain',
+    isLoading: false
   }
 
-  changeYear = (type, value) => {
-    if (type === 'start') {
-      this.setState({ yearStart: value });
-    } else {
-      this.setState({ yearEnd: value });
-    }
-  }
-
-  changeUnit = (unit) => {
-    this.setState({ unit });
-  }
-
-  changeFilter = (filter) => {
-    this.setState({ filter });
-  }
-
-  getRanking = (fakeData, filter) => orderBy(
-    fakeData[filter], d => Math.abs(d[filter])
-  ).reverse().map((f, index) => ({ ...f, x: index }));
 
   getConfig = () => {
-    const { data: { chartConfig, fakeData }, rankingData } = this.props;
-    const { filter } = this.state;
-
-    console.log(rankingData, 'date')
-    const dates = rankingData.map(p => (p.mangrove_datum.map(l => (
-      moment(l.date).year()
-    )).filter(l => l.netChange !== 0)
-    ));
-    console.log(dates)
-    const dataRanked = this.getRanking(fakeData, filter);
-
-    const max = Math.max(...flatten(fakeData[filter]
-      .map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+    const { data: { chartConfig, chartData } } = this.props;
+    const dataRanked = sortRanking(chartData);
+    const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
 
     return {
@@ -135,49 +108,66 @@ class MangroveActivity extends React.PureComponent {
   }
 
   render() {
-    const { data: { chartData, metadata, fakeData } } = this.props;
-    const { yearStart, yearEnd, unit, filter } = this.state;
+    const { data: { chartData, metaData }, fetchRankingData } = this.props;
+    const { startDate, endDate, filter, isLoading } = this.state;
+
+    const changeYear = (type, value) => {
+      const prop = (type === 'start') ? 'startDate' : 'endDate';
+      this.setState({ [prop]: value });
+      fetchRankingData({
+        ...this.state,
+        [prop]: value
+      });
+    };
+
+    const changeFilter = (filter) => {
+      this.setState({ filter });
+      fetchRankingData({
+        ...this.state,
+        filter
+      });
+    };
 
     // XXX: these options should come from an api ?
     const optionsFilter = [
       { value: 'gain', label: 'gain' },
       { value: 'loss', label: 'loss' },
-      { value: 'net', label: 'net' }
+      { value: 'net_change', label: 'net' }
     ];
 
-    const optionsYearStart = [
-      { value: '2009', label: '2009' },
-      { value: '2010', label: '2010' }
-    ];
+    const optionsYear = metaData.map(year => ({
+      label: year,
+      value: year
+    }));
 
-    const optionsYearEnd = [
-      { value: '2018', label: '2018' },
-      { value: '2019', label: '2019' }
-    ];
+    const change = 5;
 
     // Selectors
-
     const filterSelector = (
       <Select
         value={filter}
         options={optionsFilter}
-        onChange={value => this.changeFilter(value)}
+        onChange={value => changeFilter(value)}
       />
     );
 
     const startYearSelector = (
       <Select
-        value={yearStart}
-        options={optionsYearStart}
-        onChange={value => this.changeYear('start', value)}
+        value={startDate}
+        options={optionsYear}
+        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
+          option.value === startDate}
+        onChange={value => changeYear('start', value)}
       />
     );
 
     const endYearSelector = (
       <Select
-        value={yearEnd}
-        options={optionsYearEnd}
-        onChange={value => this.changeYear('end', value)}
+        value={endDate}
+        options={optionsYear}
+        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10) ||
+          option.value === endDate}
+        onChange={value => changeYear('end', value)}
       />
     );
 
@@ -186,17 +176,17 @@ class MangroveActivity extends React.PureComponent {
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             {/* eslint-disable-next-line */}
-            Regions of interest within location showed relative {filterSelector} of <strong>{metadata}{unit}</strong> between {startYearSelector} to {endYearSelector}.
+            Regions of interest within location showed relative {filterSelector} of <strong>{change}km2</strong> between {startYearSelector} to {endYearSelector}.
           </div>
         </div>
 
         {/* Chart */}
-        {!chartData.length && <Spinner />}
-        <Chart
-          onReady={(r) => { this.chart = r; }}
-          data={this.getRanking(fakeData, filter)}
-          config={this.getConfig()}
-        />
+        {isLoading ? <Spinner /> : (
+          <Chart
+            onReady={(r) => { this.chart = r; }}
+            data={sortRanking(chartData)}
+            config={this.getConfig()}
+          />)}
       </Fragment>
     );
   }
