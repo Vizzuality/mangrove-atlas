@@ -1,6 +1,4 @@
 import React from 'react';
-import moment from 'moment';
-import orderBy from 'lodash/orderBy';
 
 // Utils
 import { format } from 'd3-format';
@@ -11,109 +9,17 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2f');
 
-const fakeData = {
-  gain: [
-    {
-      name: 'place 1',
-      label: '1996',
-      gain: 13,
-      loss: -120
-    },
-    {
-      name: 'place 2',
-      label: '2002',
-      gain: 15,
-      loss: -40
-    },
-    {
-      name: 'place 3',
-      label: '2009',
-      gain: 19,
-      loss: -18
-    },
-    {
-      x: 3,
-      name: 'place 4',
-      label: '2016',
-      gain: 20,
-      net: 110,
-      loss: -194
-    }
-  ],
-  loss: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -12
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -4
-    },
-    {
-      name: 'place',
-      label: '2009',
-      gain: 194,
-      net: 72,
-      loss: -18
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -19
-    }
-  ],
-  net: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -120
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -40
-    },
-    {
-      name: 'place',
-      label: '2015',
-      gain: 194,
-      net: 72,
-      loss: -182
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -194
-    }
-  ]
-};
-
-const widgetData = (data) => {
+function processData(data) {
   return {
-    gain: data.map(location => ({
-      name: location.name,
-      gain: location.mangrove_datum[0].gain_m2,
-      loss: - location.mangrove_datum[0].loss_m2,
-      net: location.mangrove_datum[0].gain_m2 - location.mangrove_datum[0].loss_m2
-    })),
-    loss: fakeData.loss,
-    net: fakeData.net
-  };
-};
+    gain: data[0].gain_m2,
+    loss: - data[0].loss_m2,
+    net: data[0].net_change_m2
+  }
+}
+const widgetData = data => data.map(location => ({
+    name: location.name,
+    ...processData(location.mangrove_datum)
+}));
 
 export const CONFIG = {
   parse: data => ({

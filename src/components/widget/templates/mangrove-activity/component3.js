@@ -11,6 +11,8 @@ import { scaleLinear } from 'd3-scale';
 
 import styles from 'components/widget/style.module.scss';
 
+const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
+
 class MangroveActivity extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({}).isRequired
@@ -18,39 +20,17 @@ class MangroveActivity extends React.PureComponent {
 
   state = {
     unit: 'ha',
-    yearStart: '2009',
-    yearEnd: '2019',
-    filter: 'gain'
+    startDate: '2009',
+    endDate: '2019',
+    filter: 'gain',
+    isLoading: false
   }
 
-  changeYear = (type, value) => {
-    if (type === 'start') {
-      this.setState({ yearStart: value });
-    } else {
-      this.setState({ yearEnd: value });
-    }
-  }
-
-  changeUnit = (unit) => {
-    this.setState({ unit });
-  }
-
-  changeFilter = (filter) => {
-    this.setState({ filter });
-  }
-
-  getRanking = (chartData, filter) => orderBy(
-    chartData[filter], d => Math.abs(d[filter])
-  ).reverse().map((f, index) => ({ ...f, x: index }));
 
   getConfig = () => {
-    const { data: { chartConfig, chartData } } = this.props;
-    const { filter } = this.state;
-
-    const dataRanked = this.getRanking(chartData, filter);
-
-    const max = Math.max(...flatten(chartData[filter]
-      .map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
+    const { data: { chartConfig, chartData } } = this.props;  
+    const dataRanked = sortRanking(chartData);
+    const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
 
     return {
@@ -127,14 +107,31 @@ class MangroveActivity extends React.PureComponent {
   }
 
   render() {
-    const { data: { chartData } } = this.props;
-    const { yearStart, yearEnd, unit, filter } = this.state;
+    const { data: { chartData }, fetchRankingData } = this.props;
+    const { startDate, endDate, filter, isLoading } = this.state;
+
+    const changeYear = (type, value) => {
+      const prop = (type === 'start') ? 'startDate' : 'endDate';
+      this.setState({ [prop]: value });
+      fetchRankingData({
+        ...this.state,
+        [prop]: value
+      });
+    }
+
+    const changeFilter = (filter) => {
+      this.setState({ filter });
+      fetchRankingData({
+        ...this.state,
+        filter
+      });
+    }
 
     // XXX: these options should come from an api ?
     const optionsFilter = [
       { value: 'gain', label: 'Gain' },
       { value: 'loss', label: 'Loss' },
-      { value: 'net', label: 'Net' }
+      { value: 'net_change', label: 'Net' }
     ];
 
     const optionsYearStart = [
@@ -154,23 +151,23 @@ class MangroveActivity extends React.PureComponent {
       <Select
         value={filter}
         options={optionsFilter}
-        onChange={value => this.changeFilter(value)}
+        onChange={value => changeFilter(value)}
       />
     );
 
     const startYearSelector = (
       <Select
-        value={yearStart}
+        value={startDate}
         options={optionsYearStart}
-        onChange={value => this.changeYear('start', value)}
+        onChange={value => changeYear('start', value)}
       />
     );
 
     const endYearSelector = (
       <Select
-        value={yearEnd}
+        value={endDate}
         options={optionsYearEnd}
-        onChange={value => this.changeYear('end', value)}
+        onChange={value => changeYear('end', value)}
       />
     );
 
@@ -179,17 +176,17 @@ class MangroveActivity extends React.PureComponent {
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             {/* eslint-disable-next-line */}
-            Regions of interest within location showed relative {filterSelector} of <strong>{change}{unit}</strong> between {startYearSelector} to {endYearSelector}.
+            Regions of interest within location showed relative {filterSelector} of <strong>{change}km2</strong> between {startYearSelector} to {endYearSelector}.
           </div>
         </div>
 
         {/* Chart */}
-        {!chartData && <Spinner />}
-        <Chart
+        {isLoading ? <Spinner /> :
+        (<Chart
           onReady={(r) => { this.chart = r; }}
-          data={this.getRanking(chartData, filter)}
+          data={sortRanking(chartData)}
           config={this.getConfig()}
-        />
+        />)}
       </Fragment>
     );
   }
