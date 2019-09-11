@@ -1,5 +1,17 @@
 # Changelog
 
+## 2019-09-13
+
+### Added
+
+- Activity widget connected to real data
+
+### Changed
+
+- Widgets legend
+- Widgets tooltip 
+
+
 ## 2019-09-06
 
 ### Added
