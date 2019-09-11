@@ -5,6 +5,7 @@
 ### Added
 
 - Activity widget connected to real data
+- Fullscreen control added to map
 
 ### Changed
 
