@@ -25,7 +25,7 @@ const widgetData = data => data.map(location => ({
 const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
 
 export const CONFIG = {
-  parse: (data) => ({
+  parse: data => ({
     chartData: widgetData(data.data),
     metaData: widgetMeta(data.meta),
     chartConfig: {
@@ -66,15 +66,11 @@ export const CONFIG = {
         cursor: false,
         content: (
           <WidgetTooltip
-            style={{
-              color: '#FFFFFF',
-              backgroundColor: '#383838'
-            }}
             settings={[
               { key: 'name' },
-              { key: 'gain', format: value => `Gain: ${numberFormat(value / 1000000)} km2` },
-              { key: 'loss', format: value => `Loss: ${numberFormat(value / 1000000)} km2` },
-              { key: 'net', format: value => `Net change: ${numberFormat(value / 1000000)} km2` }
+              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
           />
         )

@@ -155,8 +155,8 @@ class MangroveActivity extends React.PureComponent {
       <Select
         value={startDate}
         options={optionsYear}
-        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
-          option.value === startDate}
+        isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+          || option.value === startDate}
         onChange={value => changeYear('start', value)}
       />
     );
@@ -165,8 +165,8 @@ class MangroveActivity extends React.PureComponent {
       <Select
         value={endDate}
         options={optionsYear}
-        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10) ||
-          option.value === endDate}
+        isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+          || option.value === endDate}
         onChange={value => changeYear('end', value)}
       />
     );
@@ -176,7 +176,9 @@ class MangroveActivity extends React.PureComponent {
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             {/* eslint-disable-next-line */}
-            Regions of interest within location showed relative {filterSelector} of <strong>{change}km2</strong> between {startYearSelector} to {endYearSelector}.
+            Regions of interest within location showed relative {filterSelector}
+            {/* of <strong>{change}km<sup>2</sup></strong>  */}
+             between {startYearSelector} to {endYearSelector}.
           </div>
         </div>
 

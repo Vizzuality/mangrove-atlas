@@ -1,21 +1,28 @@
 .chart_tooltip {
+  display: flex;
+  justify-content: 'space-around';
+  color: rgba(0,0,0,0.85);
+  line-height: 19px;
   padding: 10px 20px;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
   background-color: #FFF;
-  color: gray;
   border-radius: 12px;
-  font-size: 12;
+  font-size: 14px;
   font-weight: 500;
 }
 
-.data-line {
+.data_title {
+  display: block;
+}
+
+.data_line {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-.data-line.right {
+.data_line.right {
   justify-content: flex-end;
   text-align: right;
 }
@@ -26,6 +33,7 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-right: 20px;
+  font-weight: bold;
 }
 
 .break_label {
@@ -37,11 +45,12 @@
 }
 
 .data_color {
-  width: 12px;
-  height: 12px;
-  min-height: 12px;
-  min-width: 12px;
-  border-radius: 50%;
-  margin-right: 5px;
-  margin-top: 5px;
+  width: 3px;
+  height: 13px;
+  border-radius: 10px;
+}
+
+.data_value {
+  margin-left: 14px; //data_color width + data_color margin
+  font-weight: bold;
 }
