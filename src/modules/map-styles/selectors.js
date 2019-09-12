@@ -30,11 +30,20 @@ export const layerStyles = createSelector(
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
-    const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
+    // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-    return layersStyles
-      .filter(style => activeIds.includes(style.id))
-      .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
+    const rasterLayer = {
+      "id": "biomass",
+      "type": "raster",
+      "source": "biomass-tiles",
+      "minzoom": 0,
+      "maxzoom": 13
+    };
+
+    const extendedLayers = [...layersStyles, rasterLayer];
+    return extendedLayers
+      .filter(style => activeIds.includes(style.id));
+      // .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
   }
 );
 
@@ -99,7 +108,6 @@ export const mapStyle = createSelector(
 
     styleManager.basemap = _basemap;
     styleManager.layers = layersWithFilters;
-
     return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
   }
 );
