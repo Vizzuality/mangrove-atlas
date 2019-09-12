@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 import flatten from 'lodash/flatten';
+import Link from 'redux-first-router-link';
 
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
@@ -39,7 +40,7 @@ class MangroveActivity extends React.PureComponent {
       xAxis: {
         type: 'number',
         domain: domainX,
-        interval: 0
+        interval: 'preserveStartEnd',
       },
       yKeys: {
         lines: {
@@ -62,13 +63,15 @@ class MangroveActivity extends React.PureComponent {
                 const w = this.chart.offsetWidth;
 
                 const { index, y } = prs;
-                const { name } = dataRanked[index];
+                const { name, iso } = dataRanked[index];
 
                 return (
                   <g className={styles.activity_widget}>
-                    <text className={styles.label} x={w / 2} y={y - 15} textAnchor="middle" fill="#000">
-                      {name}
-                    </text>
+                    <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso: iso } }}>
+                      <text className={styles.link} x={w / 2} y={y - 15} textAnchor="middle" fill="#000">
+                        {name}
+                      </text>
+                    </Link> 
                   </g>
                 );
               }
@@ -85,8 +88,7 @@ class MangroveActivity extends React.PureComponent {
                 const w = this.chart.offsetWidth;
 
                 const { index, y } = prs;
-                const { loss, gain } = dataRanked[index];
-                const net = loss + gain;
+                const { net } = dataRanked[index];
 
                 const scale = scaleLinear()
                   .domain(domainX)
@@ -176,9 +178,7 @@ class MangroveActivity extends React.PureComponent {
         <div className={styles.widget_template}>
           <div className={styles.sentence}>
             {/* eslint-disable-next-line */}
-            Regions of interest within location showed relative {filterSelector}
-            {/* of <strong>{change}km<sup>2</sup></strong>  */}
-             between {startYearSelector} to {endYearSelector}.
+            Worldwide the 5 countries with the largest {filterSelector} in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
           </div>
         </div>
 

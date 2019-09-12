@@ -283,7 +283,7 @@ class Chart extends PureComponent {
 
             {legend && (
               <Legend
-                className={styles.chart_legend}
+                wrapperStyle={{ pointerEvents: 'none' }}
                 {...legend}
                 data={data}
               />
