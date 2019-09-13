@@ -8,7 +8,7 @@ import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange ({ data, currentLocation, addFilter }) {
+function MangroveNetChange({ data, currentLocation, addFilter }) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
@@ -34,29 +34,30 @@ function MangroveNetChange ({ data, currentLocation, addFilter }) {
     ...chartData
   ];
 
-  const changeStartYear = startYear => {
+  const changeStartYear = (year) => {
     addFilter({
       filter: {
         id: 'net-change-1996-2016',
-        startYear,
+        startYear: year,
         endYear: netChangeState.endYear
       }
     });
     setNetChangeState({ ...netChangeState, startYear });
   };
-  const changeEndYear = endYear => {
+  const changeEndYear = (year) => {
     addFilter({
       filter: {
         id: 'net-change-1996-2016',
         startYear: netChangeState.startYear,
-        endYear
+        endYear: year
       }
     });
     setNetChangeState({ ...netChangeState, endYear });
   };
 
   const widgetData = editedChartData.filter(
-    ({ year: y }) => parseInt(y) >= parseInt(startYear) && parseInt(y) <= parseInt(endYear)
+    ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
+    && parseInt(y, 10) <= parseInt(endYear, 10)
   );
 
   // How this change is calculated?
@@ -82,7 +83,8 @@ function MangroveNetChange ({ data, currentLocation, addFilter }) {
       prefix="start-year"
       value={startYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) || option.value === startYear}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) ||
+        option.value === startYear}
       onChange={changeStartYear}
     />);
   const endSelector = (
@@ -91,14 +93,15 @@ function MangroveNetChange ({ data, currentLocation, addFilter }) {
       prefix="end-year"
       value={endYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) || option.value === endYear}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) ||
+        option.value === endYear}
       onChange={changeEndYear}
     />);
 
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup> </strong>
+        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup></strong>
         between {startSelector} and {endSelector}.
       </div>
       <Chart
@@ -111,12 +114,14 @@ function MangroveNetChange ({ data, currentLocation, addFilter }) {
 
 MangroveNetChange.propTypes = {
   data: PropTypes.shape({}),
-  currentLocation: PropTypes.shape({})
+  currentLocation: PropTypes.shape({}),
+  addFilter: PropTypes.func
 };
 
 MangroveNetChange.defaultProps = {
   data: null,
-  currentLocation: null
+  currentLocation: null,
+  addFilter: null
 };
 
 export default MangroveNetChange;
