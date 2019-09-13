@@ -1,11 +1,18 @@
 .chart_tooltip {
-  padding: 20px;
+  display: flex;
+  justify-content: 'space-around';
+  color: rgba(0,0,0,0.85);
+  line-height: 19px;
+  padding: 10px 20px;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
   background-color: #FFF;
-  color: gray;
   border-radius: 12px;
   font-size: 14px;
-  line-height: 19px;
+  font-weight: 500;
+}
+
+.data_title {
+  display: block;
 }
 
 .data_line {
@@ -27,7 +34,6 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-right: 20px;
-  margin-bottom: 10px;
 }
 
 .break_label {
@@ -45,6 +51,6 @@
 }
 
 .data_value {
-  margin-left: 14px; //data_color width + data_color margin
+  margin-left: 19px; //data_color width + data_color margin
   font-weight: bold;
 }

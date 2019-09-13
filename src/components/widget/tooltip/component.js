@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import styles from './style.module.scss';
 
 class Tooltip extends PureComponent {
@@ -40,13 +39,10 @@ class Tooltip extends PureComponent {
               d => (hideZeros && values[d.key] ? null : (
                 <div
                   key={d.key}
-                  className={classNames(styles.data_line, {
-                    [d.position]: !!d.position
-                  })
-                }
+                  className={`data_line ${d.position || ''}`}
                 >
                   {/* LABEL */}
-                  {(d.label || d.labelKey) && (
+                  {((d.label && d.labelKey) || d.key) && (
                     <div className={styles.data_label}>
                       {d.color && (
                         <div
