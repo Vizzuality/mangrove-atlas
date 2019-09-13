@@ -140,8 +140,6 @@ class MangroveActivity extends React.PureComponent {
       value: year
     }));
 
-    const change = 5;
-
     // Selectors
     const filterSelector = (
       <Select
