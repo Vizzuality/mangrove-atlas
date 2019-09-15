@@ -44,7 +44,6 @@ export const CONFIG = {
         height: 50,
 
         content: ({ payload }) => {
-          console.log(payload.legend, payload.value)
           const labels = payload.map(({ color, value }) => ({
             color,
             value: payload.legend || value

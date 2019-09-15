@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import styles from './style.module.scss';
 
 class Tooltip extends PureComponent {

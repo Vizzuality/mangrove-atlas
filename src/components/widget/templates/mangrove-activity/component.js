@@ -134,15 +134,13 @@ class MangroveActivity extends React.PureComponent {
     const optionsFilter = [
       { value: 'gain', label: 'gain' },
       { value: 'loss', label: 'loss' },
-      { value: 'net_change', label: 'net' }
+      { value: 'net', label: 'net' }
     ];
 
     const optionsYear = metaData.map(year => ({
       label: year,
       value: year
     }));
-
-    const change = 5;
 
     // Selectors
     const filterSelector = (
