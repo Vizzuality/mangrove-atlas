@@ -44,6 +44,7 @@ export const CONFIG = {
         height: 50,
 
         content: ({ payload }) => {
+          console.log(payload.legend, payload.value)
           const labels = payload.map(({ color, value }) => ({
             color,
             value: payload.legend || value
@@ -68,11 +69,18 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             settings={[
-             //{ key: 'name' },
+              { key: 'name' },
               { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
+            label={{ key: 'name'}}
+            payload={[
+              //{ key: 'name' },
+               { name: 'Gain', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
+               { name: 'Loss', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
+               { name: 'Net result', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
+             ]}
           />
         )
       }

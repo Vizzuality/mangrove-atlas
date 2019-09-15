@@ -276,6 +276,11 @@ class Chart extends PureComponent {
 
             {tooltip && (
               <Tooltip
+                wrapperStyle={{ 
+                  position: 'absolute',
+                  top: 0 }}
+                labelStyle={{ color: 'red' }}
+                label
                 isAnimationActive={false}
                 {...tooltip}
               />

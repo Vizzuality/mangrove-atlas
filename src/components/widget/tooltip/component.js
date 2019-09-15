@@ -63,7 +63,6 @@ class Tooltip extends PureComponent {
                   {/* UNIT */}
                   <div
                     className={styles.data_value}
-    //                style={{ color: (payload.length && d.key === 'label') ? payload[0].payload.color : ' ' }}
                   >
                     {this.getValue(d, values[d.key])}
                   </div>
