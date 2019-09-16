@@ -9,6 +9,7 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
+          "mangrove_biomass",
           "mangrove_activity",
           "mangrove_alerts"
         ]
@@ -18,7 +19,11 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_alerts",
+          "mangrove_height",
+          "mangrove_biomass",
+          "mangrove_alerts"
         ]
       },
       {
@@ -26,14 +31,23 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_alerts",
+          "mangrove_height",
+          "mangrove_biomass",
+          "mangrove_alerts"
         ]
       },
       {
         "location_type": "aoi",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage"
+          "mangrove_coverage",
+          "mangrove_net_change",
+          "mangrove_alerts",
+          "mangrove_height",
+          "mangrove_biomass",
+          "mangrove_alerts"
         ]
       }
     ],
@@ -82,6 +96,15 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
+        "height-basal",
+        "height-canopy"
+      ]
+    }
+    ,
+    {
+      "name": "Mangrove biomass",
+      "slug": "mangrove_biomass",
+      "layersIds": [
         "biomass"
       ]
     }
@@ -96,6 +119,14 @@
       "name": "Mangrove change",
       "id": "net-change-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
+      "name": "Height basal",
+      "id": "height-basal"
+    },
+    {
+      "name": "Height canopy",
+      "id": "height-canopy"
     },
     {
       "name": "Mangrove biomass",
