@@ -6,11 +6,11 @@ import WidgetLegend from 'components/widget/legend';
 export const CONFIG = {
   parse: () => ({
     chartData: [
-      { year: 1996, '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
-      { year: 2007, '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
-      { year: 2008, '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
-      { year: 2009, '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
-      { year: 2010, '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
+      { year: 1996, '0-50m': 18, '50-100m': 50, '100-150m': 70, '150-200m': 90, '200-250m': 98 },
+      { year: 2007, '0-50m': 30, '50-100m': 40, '100-150m': 60, '150-200m': 70, '200-250m': 75 },
+      { year: 2008, '0-50m': 10, '50-100m': 40, '100-150m': 65, '150-200m': 80, '200-250m': 85 },
+      { year: 2009, '0-50m': 15, '50-100m': 42, '100-150m': 67, '150-200m': 82, '200-250m': 90 },
+      { year: 2010, '0-50m': 20, '50-100m': 50, '100-150m': 70, '150-200m': 98, '200-250m': 102 },
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
@@ -24,31 +24,31 @@ export const CONFIG = {
       yKeys: {
         bars:
         {
-          '0-10m':
+          '0-50m':
           {
             stackId: 'bar',
             fill: '#4DB36D',
             stroke: '#4DB36D'
           },
-          '10-20m':
+          '50-100m':
           {
             stackId: 'bar',
             fill: '#178A6B',
             stroke: '#178A6B'
           },
-          '20-30m':
+          '100-150m':
           {
             stackId: 'bar',
             fill: '#189370',
             stroke: '#189370'
           },
-          '30-40m':
+          '150-200m':
           {
             stackId: 'bar',
             fill: '#178F6E',
             stroke: '#178F6E'
           },
-          '40-50m':
+          '200-250m':
           {
             stackId: 'bar',
             fill: '#168368',
@@ -93,8 +93,8 @@ export const CONFIG = {
             <g>
               <text
                 x={365}
-                y={50}
-                fontSize={12}
+                y={41}
+                fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
               Mg Ha-1
@@ -105,13 +105,10 @@ export const CONFIG = {
         type: 'number'
       },
       legend: {
-        align: 'left',
-        verticalAlign: 'top',
-        layout: 'horizontal',
-        height: 80,
-        top: 0,
-        left: 0,
         position: 'relative',
+        verticalAlign: 'top',
+        width: '100%',
+        top: 10,
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload);

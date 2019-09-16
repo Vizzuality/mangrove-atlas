@@ -1,6 +1,12 @@
 
 .widget_legend {
   display: block;
+  justify-content: flex-start;
+  height: 80;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: relative;
 
   &.vertical {
     .widget_legend_list {
