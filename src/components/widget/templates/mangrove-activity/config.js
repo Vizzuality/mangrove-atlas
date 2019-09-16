@@ -14,7 +14,7 @@ function processData(data) {
   return {
     gain: data.map(d => d.gain_m2).reduce((previous, current) => current += previous),
     loss: -data.map(d => d.loss_m2).reduce((previous, current) => current += previous),
-    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous)
+    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous),
   };
 }
 const widgetData = data => data.map(location => ({
@@ -43,9 +43,9 @@ export const CONFIG = {
         layout: 'horizontal',
         height: 50,
 
-        content: ({ payload }) => {
-          const labels = payload.map(({ color, value }) => ({
-            color,
+        content: ({ payload}) => {
+          const labels = payload.map(({color, value }) => ({
+            color: color == '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
             value: payload.legend || value
           }));
           return <WidgetLegend direction="vertical" groups={{ labels }} />;
@@ -69,8 +69,8 @@ export const CONFIG = {
           <WidgetTooltip
             settings={[
               { key: 'name' },
-              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
             label={{ key: 'name'}}
