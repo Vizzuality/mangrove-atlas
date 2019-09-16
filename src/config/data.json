@@ -92,9 +92,11 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
-        "height"
+        "height-basal",
+        "height-canopy"
       ]
-    },
+    }
+    ,
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
@@ -113,10 +115,6 @@
       "name": "Mangrove change",
       "id": "net-change-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
-    },
-    {
-      "name": "Mangrove height",
-      "id": "height"
     },
     {
       "name": "Height basal",
