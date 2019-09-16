@@ -103,6 +103,7 @@ const CONFIG = {
         cursor: false,
         content: (
           <WidgetTooltip
+            type='column'
             style={{
               color: 'black',
               backgroundColor: 'white',

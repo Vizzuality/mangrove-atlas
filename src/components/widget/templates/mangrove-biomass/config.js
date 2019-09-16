@@ -2,16 +2,29 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import WidgetLegend from 'components/widget/legend';
+import WidgetTooltip from 'components/widget/tooltip';
+
+// Utils
+import { format } from 'd3-format';
+
+const numberFormat = format(',.2f');
 
 export const CONFIG = {
-  parse: () => ({
+  parse: (data = [
+    { '0-50m': 18, '50-100m': 50, '100-150m': 70, '150-200m': 90, '200-250m': 98 },
+    { '0-50m': 30, '50-100m': 40, '100-150m': 60, '150-200m': 70, '200-250m': 75 },
+    { '0-50m': 10, '50-100m': 40, '100-150m': 65, '150-200m': 80, '200-250m': 85 },
+    { '0-50m': 15, '50-100m': 42, '100-150m': 67, '150-200m': 82, '200-250m': 90 },
+    { '0-50m': 20, '50-100m': 50, '100-150m': 70, '150-200m': 98, '200-250m': 102 },
+  ]) => ({
     chartData: [
-      { year: 1996, '0-50m': 18, '50-100m': 50, '100-150m': 70, '150-200m': 90, '200-250m': 98 },
-      { year: 2007, '0-50m': 30, '50-100m': 40, '100-150m': 60, '150-200m': 70, '200-250m': 75 },
-      { year: 2008, '0-50m': 10, '50-100m': 40, '100-150m': 65, '150-200m': 80, '200-250m': 85 },
-      { year: 2009, '0-50m': 15, '50-100m': 42, '100-150m': 67, '150-200m': 82, '200-250m': 90 },
-      { year: 2010, '0-50m': 20, '50-100m': 50, '100-150m': 70, '150-200m': 98, '200-250m': 102 },
+      { '0-50m': 18, '50-100m': 50, '100-150m': 70, '150-200m': 90, '200-250m': 98 },
+      { '0-50m': 30, '50-100m': 40, '100-150m': 60, '150-200m': 70, '200-250m': 75 },
+      { '0-50m': 10, '50-100m': 40, '100-150m': 65, '150-200m': 80, '200-250m': 85 },
+      { '0-50m': 15, '50-100m': 42, '100-150m': 67, '150-200m': 82, '200-250m': 90 },
+      { '0-50m': 20, '50-100m': 50, '100-150m': 70, '150-200m': 98, '200-250m': 102 },
     ],
+  //  chatData: widgetData(data),
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
       cartesianGrid: {
@@ -114,6 +127,32 @@ export const CONFIG = {
           const groups = groupBy(payload, p => p.payload);
           return <WidgetLegend type="height" groups={groups} />;
         }
+      },
+      tooltip: {
+        cursor: false,
+        content: (
+          <WidgetTooltip
+            type='column'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              flexDirection: 'column'
+            }}
+            settings={[
+              { label: '0-50', color: '#4DB36D', key: '0-50m' , format: value => `${numberFormat(value)}`},
+              { label: '50-100', color: '#178A6B', key: '50-100m', format: value => `${numberFormat(value)}`},
+              { label: '100-150', color: '#189370', key: '100-150m', format: value => `${numberFormat(value)}`},
+              { label: '150-200', color: '#178F6E', key: '150-200m', format: value => `${numberFormat(value)}`},
+              { label: '200-250', color: '#168368', key: '200-250m', format: value => `${numberFormat(value)}`},
+
+              // { key: 'name' },
+              // { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              // { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              // { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
+            ]}
+            label={{ key: 'name'}}
+          />
+        )
       }
     },
   })

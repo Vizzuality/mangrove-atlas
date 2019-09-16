@@ -28,22 +28,22 @@ class Tooltip extends PureComponent {
   }
 
   render() {
-    const { payload, settings, style, hideZeros } = this.props;
+    const { payload, settings, style, hideZeros, type } = this.props;
     const values = payload && payload.length > 0 && payload[0].payload;
-
     return (
       <div>
         {settings && settings.length && (
+          
           <div className={styles.chart_tooltip} style={style}>
             {settings.map(
               d => (hideZeros && values[d.key] ? null : (
                 <div
                   key={d.key}
-                  className={`data_line ${d.position || ''}`}
+                  className={`data_line _${type} ${d.position || ''}`}
                 >
                   {/* LABEL */}
                   {((d.label && d.labelKey) || d.key) && (
-                    <div className={styles.data_label}>
+                    <div className={`${styles.data_label}`}>
                       {d.color && (
                         <div
                           className={styles.data_color}
