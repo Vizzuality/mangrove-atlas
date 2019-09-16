@@ -37,7 +37,11 @@ class MangroveActivity extends React.PureComponent {
 
     return {
       ...chartConfig,
-
+      xAxis: {	
+        type: 'number',	
+        domain: domainX,	
+        interval: 'preserveStartEnd'
+      },
       yKeys: {
         lines: {
           net: {

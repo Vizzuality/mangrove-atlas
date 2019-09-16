@@ -37,11 +37,6 @@ export const CONFIG = {
       height: 300,
       stackOffset: 'sign',
       margin: { top: 20, right: 0, left: 0, bottom: 20 },
-      xAxis: {
-        type: 'number',
-        domain: widgetMeta(data.meta),
-        interval: 'preserveStartEnd',
-      },
       legend: {
         align: 'center',
         verticalAlign: 'top',
