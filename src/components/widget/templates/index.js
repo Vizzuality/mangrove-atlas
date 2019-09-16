@@ -5,7 +5,6 @@ import MangroveActivity from './mangrove-activity';
 import MangroveAlerts from './mangrove-alerts';
 import MangroveHeight from './mangrove-height';
 import MangroveBiomass from './mangrove-biomass';
-import ConservationHotspots from './conservation-hotspots';
 
 
 export default {
@@ -16,5 +15,4 @@ export default {
   mangrove_alerts: MangroveAlerts,
   mangrove_height: MangroveHeight,
   mangrove_biomass: MangroveBiomass,
-  conservation_hotspots: ConservationHotspots
 };

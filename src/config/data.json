@@ -10,8 +10,7 @@
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_activity",
-          "conservation_hotspots"
+          "mangrove_activity"
         ]
       },
       {
@@ -22,8 +21,7 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass"
         ]
       },
       {
@@ -34,8 +32,7 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass"
         ]
       },
       {
@@ -46,8 +43,7 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass"
         ]
       }
     ],
@@ -107,11 +103,6 @@
       "layersIds": [
         "biomass"
       ]
-    },
-    {
-      "name": "Conservation hotspots",
-      "slug": "conservation_hotspots",
-      "layersIds": []
     }
   ],
   "layers": [

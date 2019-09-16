@@ -5,7 +5,6 @@ import MangroveActivity from './mangrove-activity/config';
 import MangroveAlerts from './mangrove-alerts/config';
 import MangroveHeight from './mangrove-height/config';
 import MangroveBiomass from './mangrove-biomass/config';
-import MangroveHotspots from './conservation-hotspots/config';
 
 export default {
   mangrove_coverage: MangroveCoverage,
@@ -15,7 +14,6 @@ export default {
   mangrove_alerts: MangroveAlerts,
   mangrove_height: MangroveHeight,
   mangrove_biomass: MangroveBiomass,
-  conservation_hotspots: MangroveHotspots,
   default: {
     parse: () => ({
       template: 'Template not defined',
