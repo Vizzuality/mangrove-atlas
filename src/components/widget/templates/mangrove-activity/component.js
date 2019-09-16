@@ -54,7 +54,7 @@ class MangroveActivity extends React.PureComponent {
         bars: {
           gain: {
             barSize: 10,
-            fill: '#077FAC',
+            fill: '#A6CB10',
             radius: [0, 10, 10, 0],
             legend: 'Gain',
             stackId: 'stacked',
@@ -79,7 +79,7 @@ class MangroveActivity extends React.PureComponent {
           },
           loss: {
             barSize: 10,
-            fill: '#A6CB10',
+            fill: '#eb6240',
             radius: [0, 10, 10, 0],
             stackId: 'stacked',
             legend: 'Loss',
@@ -98,7 +98,7 @@ class MangroveActivity extends React.PureComponent {
 
                 return (
                   <g>
-                    <rect x={x} y={y - 5} width={2} height={20} fill="#000" />
+                    <rect x={x} y={y - 5} width={2} stroke="rgba(0, 0, 0, 0.7)" height={20} fill="#000" />
                   </g>
                 );
               }
