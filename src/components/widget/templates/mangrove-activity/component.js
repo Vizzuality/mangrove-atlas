@@ -8,8 +8,6 @@ import Spinner from 'components/spinner';
 import Chart from 'components/chart';
 import Select from 'components/select';
 
-import { scaleLinear } from 'd3-scale';
-
 import styles from 'components/widget/style.module.scss';
 
 const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
@@ -53,7 +51,17 @@ class MangroveActivity extends React.PureComponent {
             radius: 4,
             legend: 'Net result',
             strokeWidth: 0,
-            activeDot: false
+            activeDot: false,
+            dot: ({key, cx, cy}) => (
+              <rect
+                key={key}
+                x={cx - 1}
+                y={cy - 10}
+                width="2"
+                height="20"
+                fill="#000"
+              />
+            )
           }
         },
         bars: {
@@ -65,15 +73,13 @@ class MangroveActivity extends React.PureComponent {
             stackId: 'stacked',
             label: {
               content: (prs) => {
-                const w = this.chart.offsetWidth;
-
                 const { index, y } = prs;
                 const { name, iso } = dataRanked[index];
 
                 return (
                   <g className={styles.activity_widget}>
                     <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso: iso } }}>
-                      <text className={styles.link} x={w / 2} y={y - 15} textAnchor="middle" fill="#000">
+                      <text className={styles.link} x="50%" y={y - 15} textAnchor="middle" fill="#000">
                         {name}
                       </text>
                     </Link> 
@@ -87,27 +93,7 @@ class MangroveActivity extends React.PureComponent {
             fill: '#A6CB10',
             radius: [0, 10, 10, 0],
             stackId: 'stacked',
-            legend: 'Loss',
-            label: {
-              content: (prs) => {
-                const w = this.chart.offsetWidth;
-
-                const { index, y } = prs;
-                const { net } = dataRanked[index];
-
-                const scale = scaleLinear()
-                  .domain(domainX)
-                  .range([0, w]);
-
-                const x = scale((net));
-
-                return (
-                  <g>
-                    <rect x={x} y={y - 5} width={2} height={20} fill="#000" />
-                  </g>
-                );
-              }
-            }
+            legend: 'Loss'
           }
         },
       }
@@ -139,7 +125,7 @@ class MangroveActivity extends React.PureComponent {
     const optionsFilter = [
       { value: 'gain', label: 'gain' },
       { value: 'loss', label: 'loss' },
-      { value: 'net', label: 'net' }
+      { value: 'net_change', label: 'net' }
     ];
 
     const optionsYear = metaData.map(year => ({
@@ -188,7 +174,6 @@ class MangroveActivity extends React.PureComponent {
         {/* Chart */}
         {isLoading ? <Spinner /> : (
           <Chart
-            onReady={(r) => { this.chart = r; }}
             data={sortRanking(chartData)}
             config={this.getConfig()}
           />)}
