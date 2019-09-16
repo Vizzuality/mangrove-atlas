@@ -8,6 +8,7 @@ import styles from './style.module.scss';
 function WidgetList({
   widgets,
   widgetData,
+  rankingData,
   ...parentProps
 }) {
   return (
@@ -18,15 +19,15 @@ function WidgetList({
         if (!template) {
           return null;
         }
-
         return (
           <Widget
             key={widget.slug}
             isCollapsed={widget.isCollpased}
             {...widget}
             {...parentProps}
-            data={widgetData}
+            data={widget.slug === 'mangrove_activity' ? rankingData : widgetData}
             widgetConfig={CONFIGS[widget.slug]}
+            rankingData={rankingData}
             template={template}
           />
         );
@@ -42,11 +43,13 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
+  rankingData: PropTypes.shape({}),
   widgetData: PropTypes.shape({})
 };
 
 WidgetList.defaultProps = {
   widgets: [],
+  rankingData: {},
   widgetData: {}
 };
 

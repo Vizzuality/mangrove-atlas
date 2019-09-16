@@ -12,6 +12,7 @@ import locations from 'modules/locations/sagas';
 import dashboards from 'modules/dashboards/sagas';
 import languages from 'modules/languages/sagas';
 import mangroveData from 'modules/mangrove-data/sagas';
+import ranking from 'modules/ranking/sagas';
 
 export default function* root() {
   yield all([
@@ -26,5 +27,6 @@ export default function* root() {
     fork(dashboards),
     fork(languages),
     fork(mangroveData),
+    fork(ranking)
   ]);
 }

@@ -1,9 +1,8 @@
 import React from 'react';
-import moment from 'moment';
-import orderBy from 'lodash/orderBy';
 
 // Utils
 import { format } from 'd3-format';
+import moment from 'moment';
 
 // Components
 import WidgetTooltip from 'components/widget/tooltip';
@@ -11,129 +10,24 @@ import WidgetLegend from 'components/widget/legend';
 
 const numberFormat = format(',.2f');
 
-const widgetData = ({ list }) => {
-  const data = list.map(l => (
-    {
-      label: JSON.stringify(moment(l.date).year()),
-      year: moment(l.date).year(),
-      gain: l.gain_m2,
-      net: l.gain_m2 - l.loss_m2,
-      loss: -l.loss_m2
-    })).filter(l => l.netChange !== 0);
-  return orderBy(data, l => l.year);
-};
-const fakeData = {
-  gain: [
-    {
-      name: 'place 1',
-      label: '1996',
-      gain: 13,
-      loss: -120
-    },
-    {
-      name: 'place 2',
-      label: '2002',
-      gain: 15,
-      loss: -40
-    },
-    {
-      name: 'place 3',
-      label: '2009',
-      gain: 19,
-      loss: -18
-    },
-    {
-      x: 3,
-      name: 'place 4',
-      label: '2016',
-      gain: 20,
-      net: 110,
-      loss: -194
-    }
-  ],
-  loss: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -12
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -4
-    },
-    {
-      name: 'place',
-      label: '2009',
-      gain: 194,
-      net: 72,
-      loss: -18
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -19
-    }
-  ],
-  net: [
-    {
-      name: 'place',
-      label: '1996',
-      gain: 122,
-      net: 40,
-      loss: -120
-    },
-    {
-      name: 'place',
-      label: '2002',
-      gain: 155,
-      net: 30,
-      loss: -40
-    },
-    {
-      name: 'place',
-      label: '2015',
-      gain: 194,
-      net: 72,
-      loss: -182
-    },
-    {
-      name: 'place',
-      label: '2016',
-      gain: 135,
-      net: 110,
-      loss: -194
-    }
-  ]
-};
+function processData(data) {
+  return {
+    gain: data.map(d => d.gain_m2).reduce((previous, current) => current += previous),
+    loss: -data.map(d => d.loss_m2).reduce((previous, current) => current += previous),
+    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous)
+  };
+}
+const widgetData = data => data.map(location => ({
+  name: location.name,
+  ...processData(location.mangrove_datum)
+}));
 
-const widgetMetadata = ({ metadata }) => {
-  if (metadata) {
-    const { location_coast_length_m = 0 } = metadata;
-    return Number(location_coast_length_m / 1000000).toFixed(2);
-  }
-};
+const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
 
 export const CONFIG = {
   parse: data => ({
-    fakeData,
-    metadata: widgetMetadata(data),
-    chartData: widgetData(data).map(l => (
-      {
-        label: l.label,
-        net: l.net,
-        gain: l.gain,
-        loss: l.loss,
-        color: l.color,
-        name: l.name
-      }
-    )),
+    chartData: widgetData(data.data),
+    metaData: widgetMeta(data.meta),
     chartConfig: {
       layout: 'vertical',
       referenceLines: [
@@ -172,14 +66,11 @@ export const CONFIG = {
         cursor: false,
         content: (
           <WidgetTooltip
-            style={{
-              color: '#FFFFFF',
-              backgroundColor: '#383838'
-            }}
             settings={[
-              { key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { key: 'loss', format: value => `${numberFormat(value / 1000000)}km²` },
-              { key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
+            //  { key: 'name' },
+              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
           />
         )
