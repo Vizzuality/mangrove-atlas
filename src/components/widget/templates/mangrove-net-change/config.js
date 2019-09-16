@@ -56,14 +56,14 @@ const CONFIG = {
           gain: {
             barSize: 10,
             transform: `translate(${(4 + 10) / 2}, 0)`,
-            fill: '#077FAC',
+            fill: '#A6CB10',
             radius: [10, 10, 0, 0],
             legend: 'Gain'
           },
           loss: {
             barSize: 10,
             transform: `translate(-${(4 + 10) / 2}, 0)`,
-            fill: '#A6CB10',
+            fill: '#EB6240',
             radius: [10, 10, 0, 0],
             legend: 'Loss'
           }
@@ -95,7 +95,6 @@ const CONFIG = {
             color,
             value: payload.legend || value
           }));
-
           return <WidgetLegend type="net" direction="vertical" groups={{ labels }} />;
         }
       },
@@ -111,13 +110,13 @@ const CONFIG = {
               marginLeft: '30px'
             }}
             payload={[
-              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
             settings={[
-              { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
           />
