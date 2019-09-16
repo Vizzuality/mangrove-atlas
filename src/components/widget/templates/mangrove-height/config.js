@@ -1,7 +1,6 @@
-
 import React from 'react';
 import groupBy from 'lodash/groupBy';
-import WidgetLegend from 'components/widget/legend';
+import WidgetLegend from 'components/widget-legend';
 
 export const CONFIG = {
   parse: () => ({
