@@ -111,10 +111,9 @@
   }
 }
 
-//SPECIFIC TEMPLATES
-.activity_widget {
-  .label {
-    font-weight: bold;
-    padding-bottom: 10px;
-  }
+.link {
+  color: $body-color;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
+
