@@ -1,5 +1,18 @@
 # Changelog
 
+## 2019-09-13
+
+### Added
+
+- Activity widget connected to real data
+- Fullscreen control added to map
+
+### Changed
+
+- Widgets legend
+- Widgets tooltip 
+
+
 ## 2019-09-06
 
 ### Added
