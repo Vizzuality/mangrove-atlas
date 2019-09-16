@@ -6,7 +6,7 @@ import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 
-const numberFormat = format(',.2f');
+const numberFormat = format(',.3r');
 
 const widgetData = ({ list }) => {
   const data = list.map(l => (
@@ -40,7 +40,7 @@ const CONFIG = {
     metadata: widgetMetadata(data),
     chartConfig: {
       stackOffset: 'sign',
-      margin: { top: 20, right: 0, left: 40, bottom: 0 },
+      margin: { top: 20, right: 0, left: 0, bottom: 0 },
       referenceLines: [
         { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
       ],
