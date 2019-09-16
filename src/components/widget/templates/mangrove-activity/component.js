@@ -42,6 +42,9 @@ class MangroveActivity extends React.PureComponent {
         domain: domainX,	
         interval: 'preserveStartEnd'
       },
+      yAxis: {
+        type: 'category'
+      },
       yKeys: {
         lines: {
           net: {
@@ -49,6 +52,8 @@ class MangroveActivity extends React.PureComponent {
             fill: 'rgba(0,0,0,0.7)',
             radius: 4,
             legend: 'Net result',
+            strokeWidth: 0,
+            activeDot: false
           }
         },
         bars: {

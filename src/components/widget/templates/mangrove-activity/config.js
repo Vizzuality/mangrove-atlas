@@ -53,10 +53,6 @@ export const CONFIG = {
 
 
       },
-      xAxis: {
-        type: 'number',
-        tick: true,
-      },
       cartesianGrid: {
         vertical: true,
         horizontal: false,
