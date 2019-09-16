@@ -63,7 +63,7 @@ const CONFIG = {
           loss: {
             barSize: 10,
             transform: `translate(-${(4 + 10) / 2}, 0)`,
-            fill: '#eb6240',
+            fill: '#EB6240',
             radius: [10, 10, 0, 0],
             legend: 'Loss'
           }
@@ -111,12 +111,12 @@ const CONFIG = {
             }}
             payload={[
               { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#eb6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
             settings={[
               { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#eb6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
           />

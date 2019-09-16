@@ -70,7 +70,7 @@ export const CONFIG = {
             settings={[
               { key: 'name' },
               { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-              { label: 'Loss', color: '#eb6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
               { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
             ]}
             label={{ key: 'name'}}

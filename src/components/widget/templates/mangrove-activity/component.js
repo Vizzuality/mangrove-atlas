@@ -79,7 +79,7 @@ class MangroveActivity extends React.PureComponent {
           },
           loss: {
             barSize: 10,
-            fill: '#eb6240',
+            fill: '#EB6240',
             radius: [0, 10, 10, 0],
             stackId: 'stacked',
             legend: 'Loss',
