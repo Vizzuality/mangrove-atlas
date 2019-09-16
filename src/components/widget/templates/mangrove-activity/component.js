@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
-import flatten from 'lodash/flatten';
-import Link from 'redux-first-router-link';
 
 import Spinner from 'components/spinner';
 import Chart from 'components/chart';
@@ -26,82 +24,8 @@ class MangroveActivity extends React.PureComponent {
     isLoading: false
   }
 
-
-  getConfig = () => {
-    const { data: { chartConfig, chartData } } = this.props;
-    const dataRanked = sortRanking(chartData);
-    const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
-    const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
-
-    return {
-      ...chartConfig,
-      xAxis: {	
-        type: 'number',	
-        domain: domainX,	
-        interval: 'preserveStartEnd'
-      },
-      yAxis: {
-        type: 'category'
-      },
-      yKeys: {
-        lines: {
-          net: {
-            barSize: 10,
-            fill: 'rgba(0,0,0,0.7)',
-            radius: 4,
-            legend: 'Net result',
-            strokeWidth: 0,
-            activeDot: false,
-            dot: ({key, cx, cy}) => (
-              <rect
-                key={key}
-                x={cx - 1}
-                y={cy - 10}
-                width="2"
-                height="20"
-                fill="#000"
-              />
-            )
-          }
-        },
-        bars: {
-          gain: {
-            barSize: 10,
-            fill: '#077FAC',
-            radius: [0, 10, 10, 0],
-            legend: 'Gain',
-            stackId: 'stacked',
-            label: {
-              content: (prs) => {
-                const { index, y } = prs;
-                const { name, iso } = dataRanked[index];
-
-                return (
-                  <g className={styles.activity_widget}>
-                    <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso: iso } }}>
-                      <text className={styles.link} x="50%" y={y - 15} textAnchor="middle" fill="#000">
-                        {name}
-                      </text>
-                    </Link> 
-                  </g>
-                );
-              }
-            }
-          },
-          loss: {
-            barSize: 10,
-            fill: '#A6CB10',
-            radius: [0, 10, 10, 0],
-            stackId: 'stacked',
-            legend: 'Loss'
-          }
-        },
-      }
-    };
-  }
-
   render() {
-    const { data: { chartData, metaData }, fetchRankingData } = this.props;
+    const { data: { chartData, metaData, chartConfig }, fetchRankingData } = this.props;
     const { startDate, endDate, filter, isLoading } = this.state;
 
     const changeYear = (type, value) => {
@@ -175,7 +99,7 @@ class MangroveActivity extends React.PureComponent {
         {isLoading ? <Spinner /> : (
           <Chart
             data={sortRanking(chartData)}
-            config={this.getConfig()}
+            config={chartConfig}
           />)}
       </Fragment>
     );
