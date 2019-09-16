@@ -1,8 +1,8 @@
 import React from 'react';
 import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
-import WidgetTooltip from 'components/widget/tooltip';
-import WidgetLegend from 'components/widget/legend';
+import WidgetTooltip from 'components/widget-tooltip';
+import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2%');
 

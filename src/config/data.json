@@ -94,8 +94,7 @@
       "layersIds": [
         "height"
       ]
-    }
-    ,
+    },
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
@@ -133,4 +132,3 @@
     }
   ]
 }
-
