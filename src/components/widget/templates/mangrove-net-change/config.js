@@ -1,7 +1,7 @@
 import React from 'react';
 import { format } from 'd3-format';
-import WidgetLegend from 'components/widget/legend';
-import WidgetTooltip from 'components/widget/tooltip';
+import WidgetLegend from 'components/widget-legend';
+import WidgetTooltip from 'components/widget-tooltip';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 

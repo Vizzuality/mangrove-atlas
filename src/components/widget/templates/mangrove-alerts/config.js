@@ -1,6 +1,6 @@
 import React from 'react';
-import WidgetLegend from 'components/widget/legend';
-import WidgetTooltip from 'components/widget/tooltip';
+import WidgetLegend from 'components/widget-legend';
+import WidgetTooltip from 'components/widget-tooltip';
 import { Text } from 'recharts';
 import { range } from 'lodash';
 
