@@ -29,14 +29,11 @@
       "type": "raster-dem",
       "tileSize": 256
     },
-    "height-basal-tiles": {
-      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_basal-area_weighted_height_2000_v1-2_z0-13{z}/{x}/{y}.png"],
-      "type": "raster",
-      "tileSize": 256,
-      "maxzoom": 13
-    },
-    "height-canopy-tiles": {
-      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_max_canopy_height_2000_v1-2_z0-13/{z}/{x}/{y}.png"],
+    "mangrove-height": {
+      "tiles": [
+        "https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_max_canopy_height_2000_v1-2_z0-13/{z}/{x}/{y}.png",
+        "https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_basal-area_weighted_height_2000_v1-2_z0-13{z}/{x}/{y}.png"
+      ],
       "type": "raster",
       "tileSize": 256,
       "maxzoom": 13

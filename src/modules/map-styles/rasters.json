@@ -8,16 +8,9 @@
       "maxzoom": 13
     },
     {
-      "id": "height-basal",
+      "id": "height",
       "type": "raster",
-      "source": "height-basal-tiles",
-      "minzoom": 0,
-      "maxzoom": 13
-    },
-    {
-      "id": "height-canopy",
-      "type": "raster",
-      "source": "height-canopy-tiles",
+      "source": "mangrove-height",
       "minzoom": 0,
       "maxzoom": 13
     }
