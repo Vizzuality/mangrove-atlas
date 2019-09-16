@@ -20,7 +20,7 @@ function processData(data) {
   return {
     gain: data.map(d => d.gain_m2).reduce((previous, current) => current += previous),
     loss: -data.map(d => d.loss_m2).reduce((previous, current) => current += previous),
-    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous)
+    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous),
   };
 }
 const widgetData = data => data.map(location => ({
@@ -74,6 +74,7 @@ export const CONFIG = {
                   width="2"
                   height="20"
                   fill="#000"
+                  stroke="rgba(0, 0, 0, 0.7)"
                 />
               )
             }
@@ -81,7 +82,7 @@ export const CONFIG = {
           bars: {
             gain: {
               barSize: 10,
-              fill: '#077FAC',
+              fill: '#A6CB10',
               radius: [0, 10, 10, 0],
               legend: 'Gain',
               stackId: 'stacked',
@@ -104,7 +105,7 @@ export const CONFIG = {
             },
             loss: {
               barSize: 10,
-              fill: '#A6CB10',
+              fill: '#EB6240',
               radius: [0, 10, 10, 0],
               stackId: 'stacked',
               legend: 'Loss'
@@ -119,7 +120,7 @@ export const CONFIG = {
 
           content: ({ payload }) => {
             const labels = payload.map(({ color, value }) => ({
-              color,
+              color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
               value: payload.legend || value
             }));
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
@@ -139,8 +140,8 @@ export const CONFIG = {
             <WidgetTooltip
               settings={[
                 { key: 'name' },
-                { label: 'Gain', color: '#077FAC', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-                { label: 'Loss', color: '#A6CB10', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
+                { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
+                { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
                 { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
               ]}
               label={{ key: 'name'}}
