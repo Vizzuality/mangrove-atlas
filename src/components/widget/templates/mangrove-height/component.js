@@ -4,7 +4,7 @@ import Select from 'components/select';
 import Chart from 'components/chart';
 import styles from 'components/widget/style.module.scss';
 
-const MangroveHeight = ({ widgetConfig }) => {
+const MangroveHeight = ({ config: widgetConfig }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const data = widgetConfig.parse();
@@ -48,7 +48,7 @@ const MangroveHeight = ({ widgetConfig }) => {
 };
 
 MangroveHeight.propTypes = {
-  widgetConfig: PropTypes.shape({}).isRequired
+  config: PropTypes.shape({}).isRequired
 };
 
 export default MangroveHeight;

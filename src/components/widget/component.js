@@ -2,35 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/button';
 import Spinner from 'components/spinner';
-import WidgetInfo from 'components/widget-info';
+// import WidgetInfo from 'components/widget-info';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
+
+import TEMPLATES from 'components/widget/templates';
+
 import styles from './style.module.scss';
+
 
 function Widget({
   data,
   meta,
   highlightedPlaces,
   slug,
-  widgetConfig,
   toggleCollapse,
   toggleActive,
   layersIds,
   layerId,
   isActive,
-  template: Template,
   isCollapsed,
   isLoading,
   name,
   ...props
 }) {
-  const getDataBySlug = () => {
-    if (slug === 'highlighted_places') return widgetConfig.parse(highlightedPlaces);
-    return widgetConfig.parse(data);
-  };
+  const Template = TEMPLATES[slug];
+
+  if (!Template) {
+    return null;
+  }
 
   const templateProps = {
     name,
@@ -39,8 +42,6 @@ function Widget({
     isLoading,
     layersIds,
     slug,
-    data: getDataBySlug(),
-    widgetConfig,
     ...props,
   };
 
@@ -102,12 +103,12 @@ function Widget({
         }
       </div>
 
-      <WidgetInfo
+      {/* <WidgetInfo
         data={templateProps.data}
         meta={templateProps.meta}
         filename={templateProps.slug}
         {...templateProps}
-      />
+      /> */}
     </div>
   );
 }
@@ -117,7 +118,6 @@ Widget.propTypes = {
   highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  widgetConfig: PropTypes.shape({}).isRequired,
   layerId: PropTypes.string,
   layersIds: PropTypes.arrayOf(PropTypes.string),
   location: PropTypes.shape({}),
@@ -125,8 +125,7 @@ Widget.propTypes = {
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
   toggleActive: PropTypes.func,
-  toggleCollapse: PropTypes.func,
-  template: PropTypes.func.isRequired
+  toggleCollapse: PropTypes.func
 };
 
 Widget.defaultProps = {
