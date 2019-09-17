@@ -29,6 +29,12 @@
       "type": "raster-dem",
       "tileSize": 256
     },
+    "biomass-tiles": {
+      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_aboveground_biomass_2000_v1-2_z0-13/{z}/{x}/{y}.png"],
+      "type": "raster",
+      "tileSize": 256,
+      "maxzoom": 13
+    },
     "streets": {
       "url": "mapbox://mapbox.mapbox-streets-v8",
       "type": "vector"
