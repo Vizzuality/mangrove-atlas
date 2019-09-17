@@ -1,7 +1,7 @@
 
 import React from 'react';
 import groupBy from 'lodash/groupBy';
-import WidgetLegend from 'components/widget/legend';
+import WidgetLegend from 'components/widget-legend';
 
 export const CONFIG = {
   parse: () => ({
@@ -14,6 +14,7 @@ export const CONFIG = {
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
+      height: 350,
       cartesianGrid: {
         vertical: false,
         horizontal: true,
@@ -85,19 +86,19 @@ export const CONFIG = {
         tick: {
           fontSize: 12, fill: 'rgba(0,0,0,0.54)'
         },
-        domain: [0, 400],
+        ticks: [0, 100, 200, 300],
         interval: 0,
         orientation: 'right',
         label: {
           content: ({ viewBox }) => (
             <g>
               <text
-                x={365}
-                y={41}
+                x={370}
+                y={50}
                 fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
-              Mg Ha-1
+              mg ha-1
               </text>
             </g>
           )
