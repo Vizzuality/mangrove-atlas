@@ -4,18 +4,31 @@ import Select from 'components/select';
 import Chart from 'components/chart';
 import styles from 'components/widget/style.module.scss';
 
-const MangroveHeight = ({ widgetConfig }) => {
+const MangroveHeight = ({ widgetConfig, currentLocation }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
+  const [area, setAreaType] = useState('basal');
   const data = widgetConfig.parse();
   const { chartConfig, metadata, chartData } = data;
+  const location = currentLocation.name;
+
+  const areaOptions = [
+    { label: 'basal', value: 'basal' },
+    { label: 'canopy', value: 'canopy'}
+  ];
 
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
   }));
 
-  const unit = 'ha';
+  const areaSelector = (
+    <Select
+      value={area}
+      options={areaOptions}
+      onChange={value => setAreaType(value)}
+    />
+  );
 
   const startDateSelector = (
     <Select
@@ -36,8 +49,7 @@ const MangroveHeight = ({ widgetConfig }) => {
   return (
     <div className={styles.widget_template}>
       <div className={styles.sentence}>
-        Over the past 20 years, mangroves in the world have <strong>decreased</strong> by
-        <strong> x {unit}</strong> between {startDateSelector} and {endDateSelector}.
+        Mean mangrove {areaSelector} height (m) in {location} was ***average([hmax_mangrove_m] OR average([hba_mangrove_m] )*** between {startDateSelector} and {endDateSelector}.
         <Chart
           data={chartData}
           config={chartConfig}
