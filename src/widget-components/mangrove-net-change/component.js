@@ -101,7 +101,7 @@ function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug
   const sentence = (
     <>
       Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup></strong>
-      between {startSelector} and {endSelector}.
+      &nbsp;between {startSelector} and {endSelector}.
     </>
   );
 
