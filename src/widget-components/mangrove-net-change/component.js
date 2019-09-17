@@ -107,18 +107,20 @@ function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug
 
   const chartRData = {
     data: widgetData,
-    config: chartConfig  
+    config: chartConfig
   };
 
-  return <ChartWidget
-    name={name}
-    data={data}
-    slug={slug}
-    filename={slug}
-    isCollapsed={isCollapsed}
-    sentence={sentence}
-    chartData={chartRData}
-  />;
+  return (
+    <ChartWidget
+      name={name}
+      data={data}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+    />
+  );
 }
 
 MangroveNetChange.propTypes = {

@@ -1,14 +1,13 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 
 import { month } from 'utils/nice-date';
-// import Spinner from 'components/spinner';
-import Chart from 'components/chart';
 import Datepicker from 'components/datepicker';
+import ChartWidget from 'components/chart-widget';
 
 import styles from 'components/widget/style.module.scss';
 
-function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data}) {
+function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data, isCollapsed, slug, name}) {
   const [state, setState] = useState({
     startDate: moment(minDate).add(4, 'y'),
     endDate: moment(maxDate).subtract(4, 'y')
@@ -98,22 +97,27 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
 
   const { chartData, chartConfig } = widgetConfig.parse(data, { startMark, endMark, series });
   const alerts = chartData.map(it => it.year).filter(y => y >= startMark && y <= endMark ).length;
+  const sentence = (
+    <>
+      There were <span className={styles.bold}>{alerts}</span> loss alerts <br/>between {startDatepicker} and {endDatepicker}
+    </>
+  );
+
+  const chartRData = {
+    data: chartData,
+    config: chartConfig
+  };
 
   return (
-    <Fragment>
-      <div className={styles.widget_template}>
-        <div className={styles.sentence}>
-          There were <span className={styles.bold}>{alerts}</span> loss alerts <br/>between {startDatepicker} and {endDatepicker}
-        </div>
-      </div>
-
-      {/* Chart */}
-      <Chart
-        data={chartData}
-        config={chartConfig}
-      />
-
-    </Fragment>
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+    />
   );
 }
 

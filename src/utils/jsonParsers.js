@@ -1,5 +1,7 @@
 export const jsonToCSV = (json) => {
-  if (!json.length) return [];
+  if (!json || !json.length) {
+    return [];
+  }
   const result = [Object.keys(json[0])];
   json.forEach(element => result.push(Object.values(element)));
   return result;
