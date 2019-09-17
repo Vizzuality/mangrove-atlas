@@ -34,7 +34,7 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({ data, currentLocation, addFilter, isCollapsed, slug, name }) {
+function MangroveCoverage({ data, currentLocation, addFilter, slug, ...props }) {
   const { chartConfig, metadata } = data;
   const [coverageState, setCoverageState] = useState({ currentYear: 1996, unit: '%'});
   const { currentYear, unit } = coverageState;
@@ -103,13 +103,12 @@ function MangroveCoverage({ data, currentLocation, addFilter, isCollapsed, slug,
   }
 
   return <ChartWidget
-    name={name}
     data={data}
     slug={slug}
     filename={slug}
-    isCollapsed={isCollapsed}
     sentence={sentence}
     chartData={chartData}
+    {...props}
   />;
 }
 

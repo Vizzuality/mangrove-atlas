@@ -8,7 +8,7 @@ import Select from 'components/select';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug, name }) {
+function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
@@ -119,6 +119,7 @@ function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      {...props}
     />
   );
 }

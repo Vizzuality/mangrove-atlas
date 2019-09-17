@@ -7,7 +7,7 @@ import Select from 'components/select';
 
 const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
 
-function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRankingData, isCollapsed, slug, name }) {
+function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRankingData, isCollapsed, slug, name, ...props}) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
     unit: 'ha',
     startDate: 1996,
@@ -104,6 +104,7 @@ function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRan
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      {...props}
     />
   );
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
-const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name }) => {
+const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const data = widgetConfig.parse();
@@ -52,6 +52,7 @@ const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name }) => {
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      {...props}
     />
   );
 };
