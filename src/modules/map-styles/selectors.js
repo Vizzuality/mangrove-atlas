@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
+import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
 
 const styleManager = new StyleManager();
@@ -30,18 +31,27 @@ export const layerStyles = createSelector(
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
-    const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
+    // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-    return layersStyles
-      .filter(style => activeIds.includes(style.id))
-      .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
+    const rasterLayer = {
+      id: 'biomass',
+      type: 'raster',
+      source: 'biomass-tiles',
+      minzoom: 0,
+      maxzoom: 13
+    };
+
+    const extendedLayers = [...layersStyles, rasterLayer];
+    return extendedLayers
+      .filter(style => activeIds.includes(style.id));
+    // .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
   }
 );
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters],
   (_basemap, _layerStyles, _filters) => {
-    const coverageFilter = ({year}) => [
+    const coverageFilter = ({ year }) => [
       "all",
       [
         "match",
@@ -78,7 +88,7 @@ export const mapStyle = createSelector(
     const layersWithFilters = _layerStyles.map(layerStyle => {
       let widgetFilter;
 
-      switch(layerStyle.id) {
+      switch (layerStyle.id) {
         case 'coverage-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
           if (widgetFilter) {
@@ -99,8 +109,7 @@ export const mapStyle = createSelector(
 
     styleManager.basemap = _basemap;
     styleManager.layers = layersWithFilters;
-
-    return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
+    return { ...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers) };
   }
 );
 
