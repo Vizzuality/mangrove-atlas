@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { fetchRankingData } from 'modules/ranking/actions';
 
-import config from './config';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  data: config.parse(state.ranking)
+  data: state.ranking,
+  isLoading: state.ranking.isLoading
 });
 
 const mapDispatchToProps = {

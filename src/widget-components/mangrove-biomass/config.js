@@ -90,7 +90,7 @@ export const CONFIG = {
         interval: 0,
         orientation: 'right',
         label: {
-          content: ({ viewBox }) => (
+          content: () => (
             <g>
               <text
                 x={367}
@@ -98,7 +98,7 @@ export const CONFIG = {
                 fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
-                mg ha<tspan baseline-shift = "super">-1</tspan>
+                mg ha<tspan baselineShift="super">-1</tspan>
               </text>
             </g>
           )
