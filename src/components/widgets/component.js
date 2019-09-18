@@ -5,7 +5,7 @@ import styles from './style.module.scss';
 
 const WidgetList = ({ widgets, templates, ...parentProps }) => (
   <div className={styles.widgets}>
-    {widgets.map(widget => {
+    {widgets.map((widget) => {
       const Widget = templates.get(widget.slug).component;
 
       return (
@@ -25,11 +25,13 @@ WidgetList.propTypes = {
       id: PropTypes.string,
       title: PropTypes.string
     })
-  )
+  ),
+  templates: PropTypes.instanceOf(Map)
 };
 
 WidgetList.defaultProps = {
-  widgets: []
+  widgets: [],
+  templates: new Map()
 };
 
 export default WidgetList;

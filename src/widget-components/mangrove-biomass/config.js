@@ -90,7 +90,7 @@ export const CONFIG = {
         interval: 0,
         orientation: 'right',
         label: {
-          content: ({ viewBox }) => (
+          content: () => (
             <g>
               <text
                 x={367}
