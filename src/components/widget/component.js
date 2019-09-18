@@ -98,8 +98,11 @@ function Widget({
 }
 
 Widget.propTypes = {
-  data: PropTypes.shape({}).isRequired,
-  name: PropTypes.string.isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.shape({}),
+    PropTypes.array
+  ]).isRequired,
+  name: PropTypes.string,
   slug: PropTypes.string,
   filename: PropTypes.string,
   layerId: PropTypes.string,
@@ -113,6 +116,7 @@ Widget.propTypes = {
 };
 
 Widget.defaultProps = {
+  name: null,
   slug: null,
   filename: null,
   layerId: null,
