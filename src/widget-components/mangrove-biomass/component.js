@@ -36,7 +36,7 @@ const MangroveBiomass = ({ config: widgetConfig, currentLocation, isCollapsed, s
 
   const sentence = (
     <>
-      Mean mangrove above-ground biomass density (mg ha-1) in {location} was
+      Mean mangrove above-ground biomass density (mg ha-1) in <strong>{location}</strong> was
       ***average([agb_mangrove_mgha-1])*** between {startDateSelector} and {endDateSelector}.
     </>
   );
