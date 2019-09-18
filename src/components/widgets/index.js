@@ -17,32 +17,25 @@ import Component from './component';
 
 const templates = new Map([
   ['mangrove_coverage', {
-    component: MangroveCoverage,
-    data: null
+    component: MangroveCoverage
   }],
   ['mangrove_net_change', {
-    component: MangroveNetChange,
-    data: null
+    component: MangroveNetChange
   }],
   ['mangrove_activity', {
-    component: MangroveActivity,
-    data: null
+    component: MangroveActivity
   }],
   ['highlighted_places', {
-    component: HighlightedPlaces,
-    data: null
+    component: HighlightedPlaces
   }],
   ['mangrove_alerts', {
-    component: MangroveAlerts,
-    data: null
+    component: MangroveAlerts
   }],
   ['mangrove_height', {
-    component: MangroveHeight,
-    data: null
+    component: MangroveHeight
   }],
   ['mangrove_biomass', {
-    component: MangroveBiomass,
-    data: null
+    component: MangroveBiomass
   }]
 ]);
 

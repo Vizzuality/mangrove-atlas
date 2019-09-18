@@ -5,15 +5,21 @@ import sumBy from 'lodash/sumBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+import config from './config';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
+function MangroveNetChange({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
   });
 
+  if (!rawData) {
+    return null;
+  }
+
+  const data = config.parse(rawData); 
   const { metadata, chartData, chartConfig } = data;
   const { startYear, endYear } = netChangeState;
   const optionsYears = metadata.years.map(year => ({
