@@ -1,3 +1,4 @@
+
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import WidgetLegend from 'components/widget-legend';
@@ -5,14 +6,15 @@ import WidgetLegend from 'components/widget-legend';
 export const CONFIG = {
   parse: () => ({
     chartData: [
-      { year: 1996, '0-10m': 18, '10-20m': 50, '20-30m': 70, '30-40m': 90, '40-50m': 98 },
-      { year: 2007, '0-10m': 30, '10-20m': 40, '20-30m': 60, '30-40m': 70, '40-50m': 75 },
-      { year: 2008, '0-10m': 10, '10-20m': 40, '20-30m': 65, '30-40m': 80, '40-50m': 85 },
-      { year: 2009, '0-10m': 15, '10-20m': 42, '20-30m': 67, '30-40m': 82, '40-50m': 90 },
-      { year: 2010, '0-10m': 20, '10-20m': 50, '20-30m': 70, '30-40m': 98, '40-50m': 102 },
+      { year: 1996, '0 50': 18, '50 100': 50, '100 150': 70, '150 200': 90, '200 250': 98 },
+      { year: 2007, '0 50': 30, '50 100': 40, '100 150': 60, '150 200': 70, '200 250': 75 },
+      { year: 2008, '0 50': 10, '50 100': 40, '100 150': 65, '150 200': 80, '200 250': 85 },
+      { year: 2009, '0 50': 15, '50 100': 42, '100 150': 67, '150 200': 82, '200 250': 90 },
+      { year: 2010, '0 50': 20, '50 100': 50, '100 150': 70, '150 200': 98, '200 250': 102 },
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
+      height: 300,
       cartesianGrid: {
         vertical: false,
         horizontal: true,
@@ -23,35 +25,35 @@ export const CONFIG = {
       yKeys: {
         bars:
         {
-          '0-10m':
+          '0 50':
           {
             stackId: 'bar',
-            fill: 'rgba(154, 219, 217, 0.5)',
-            stroke: 'rgba(154, 219, 217, 0.5)'
+            fill: '#EAF19D',
+            stroke: '#EAF19D'
           },
-          '10-20m':
+          '50 100':
           {
             stackId: 'bar',
-            fill: '#5BC3BD',
-            stroke: '#5BC3BD'
+            fill: '#B8E98E',
+            stroke: '#B8E98E'
           },
-          '20-30m':
+          '100 150':
           {
             stackId: 'bar',
-            fill: '#249892',
-            stroke: '#249892'
+            fill: '#1B97C1',
+            stroke: '#1B97C1'
           },
-          '30-40m':
+          '150 200':
           {
             stackId: 'bar',
-            fill: '#00746F',
-            stroke: '#00746F'
+            fill: '#1C52A3',
+            stroke: '#1C52A3'
           },
-          '40-50m':
+          '200 250':
           {
             stackId: 'bar',
-            fill: '#004B47',
-            stroke: '#004B47'
+            fill: '#13267F',
+            stroke: '#13267F'
           }
         }
       },
@@ -84,19 +86,19 @@ export const CONFIG = {
         tick: {
           fontSize: 12, fill: 'rgba(0,0,0,0.54)'
         },
-        domain: [0, 400],
+        ticks: [0, 100, 200, 300],
         interval: 0,
         orientation: 'right',
         label: {
           content: ({ viewBox }) => (
             <g>
               <text
-                x={365}
-                y={50}
-                fontSize={12}
+                x={367}
+                y={45}
+                fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
-              Mg Ha-1
+                mg ha<tspan baseline-shift = "super">-1</tspan>
               </text>
             </g>
           )
@@ -104,13 +106,9 @@ export const CONFIG = {
         type: 'number'
       },
       legend: {
-        align: 'left',
-        verticalAlign: 'top',
-        layout: 'horizontal',
-        height: 80,
-        top: 0,
-        left: 0,
         position: 'relative',
+        verticalAlign: 'top',
+        top: 10,
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload);

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
-import Chart from 'components/chart';
-import styles from 'components/widget/style.module.scss';
+import ChartWidget from 'components/chart-widget';
 
-const MangroveBiomass = ({ widgetConfig, currentLocation }) => {
+const MangroveBiomass = ({ config: widgetConfig, currentLocation, isCollapsed, slug, name, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const data = widgetConfig.parse();
@@ -35,22 +34,33 @@ const MangroveBiomass = ({ widgetConfig, currentLocation }) => {
     />
   );
 
+  const sentence = (
+    <>
+      Mean mangrove above-ground biomass density (mg ha-1) in <strong>{location}</strong> was
+      ***average([agb_mangrove_mgha-1])*** between {startDateSelector} and {endDateSelector}.
+    </>
+  );
+  const chartRData = {
+    data: chartData,
+    config: chartConfig
+  };
+
   return (
-    <div className={styles.widget_template}>
-      <div className={styles.sentence}>
-        Mean mangrove above-ground biomass density (mg ha-1) in {location} was
-          ***average([agb_mangrove_mgha-1])*** between {startDateSelector} and {endDateSelector}.
-        <Chart
-          data={chartData}
-          config={chartConfig}
-        />
-      </div>
-    </div>
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 };
 
 MangroveBiomass.propTypes = {
-  widgetConfig: PropTypes.shape({}).isRequired,
+  config: PropTypes.shape({}).isRequired,
   currentLocation: PropTypes.shape({})
 };
 

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
-import Chart from 'components/chart';
-import Select from 'components/select';
 import sumBy from 'lodash/sumBy';
-import styles from 'components/widget/style.module.scss';
+
+import ChartWidget from 'components/chart-widget';
+import Select from 'components/select';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange({ data, currentLocation, addFilter }) {
+function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
@@ -98,28 +98,46 @@ function MangroveNetChange({ data, currentLocation, addFilter }) {
       onChange={changeEndYear}
     />);
 
+  const sentence = (
+    <>
+      Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup></strong>
+      &nbsp;between {startSelector} and {endSelector}.
+    </>
+  );
+
+  const chartRData = {
+    data: widgetData,
+    config: chartConfig
+  };
+
   return (
-    <div className={styles.widget_template}>
-      <div className={styles.sentence}>
-        Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity}km<sup>2</sup></strong>
-        between {startSelector} and {endSelector}.
-      </div>
-      <Chart
-        data={widgetData}
-        config={chartConfig}
-      />
-    </div>
+    <ChartWidget
+      name={name}
+      data={data}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 }
 
 MangroveNetChange.propTypes = {
+  name: PropTypes.string, 
   data: PropTypes.shape({}),
+  slug: PropTypes.string, 
+  filename: PropTypes.string, 
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func
 };
 
 MangroveNetChange.defaultProps = {
+  name: null,
   data: null,
+  slug: null,
+  filename: null,
   currentLocation: null,
   addFilter: null
 };

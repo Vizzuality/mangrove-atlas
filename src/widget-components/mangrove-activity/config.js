@@ -13,14 +13,14 @@ import WidgetLegend from 'components/widget-legend';
 
 import styles from 'components/widget/style.module.scss';
 
-const numberFormat = format(',.2f');
+const numberFormat = format(',.3r');
 const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
 
 function processData(data) {
   return {
-    gain: data.map(d => d.gain_m2).reduce((previous, current) => current += previous),
-    loss: -data.map(d => d.loss_m2).reduce((previous, current) => current += previous),
-    net: data.map(d => d.net_change_m2).reduce((previous, current) => current += previous),
+    gain: data.map(d => d.gain_m2/1000000).reduce((previous, current) => current += previous),
+    loss: -data.map(d => d.loss_m2/1000000).reduce((previous, current) => current += previous),
+    net: data.map(d => d.net_change_m2/1000000).reduce((previous, current) => current += previous),
   };
 }
 const widgetData = data => data.map(location => ({
@@ -36,23 +36,27 @@ export const CONFIG = {
     const chartData = widgetData(data.data);
     const dataRanked = sortRanking(chartData);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
-    const domainX = [-max + (-max * 0.05), max + (max * 0.05)];
+    const domainX = [(-max + (-max * 0.05)), (max + (max * 0.05))];
+    const startDomain = parseInt(domainX[0]);
+    const endDomain = parseInt(domainX[1]);
 
     return {
       chartData,
       metaData: widgetMeta(data.meta),
       chartConfig: {
         layout: 'vertical',
-        height: 300,
+        height: 400,
         stackOffset: 'sign',
-        margin: { top: 20, right: 0, left: 0, bottom: 20 },
+        margin: { top: 20, right: -30, left: 20, bottom: 20 },
+        viewBox: '0 0 360 400',
         referenceLines: [
           { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
         ],
         xAxis: {	
           type: 'number',	
-          domain: domainX,	
-          interval: 'preserveStartEnd'
+          allowDecimals: false,
+          interval: 'preserveStartEnd',
+          ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain]
         },
         yAxis: {
           type: 'category'
@@ -119,14 +123,12 @@ export const CONFIG = {
           height: 50,
 
           content: ({ payload }) => {
-            const labels = payload.map(({ color, value }) => ({
+            const labels = payload.map(({ color, payload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
-              value: payload.legend || value
-            }));
+              value: payload.legend
+              }))
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
           }
-
-
         },
         cartesianGrid: {
           vertical: true,
@@ -140,16 +142,16 @@ export const CONFIG = {
             <WidgetTooltip
               settings={[
                 { key: 'name' },
-                { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)}km²` },
-                { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))}km²` },
-                { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value / 1000000)}km²` }
+                { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value)}km²` },
+                { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))}km²` },
+                { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)}km²` }
               ]}
               label={{ key: 'name'}}
               payload={[
                 //{ key: 'name' },
-                { name: 'Gain', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
-                { name: 'Loss', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
-                { name: 'Net result', format: value => `${numberFormat(value / 1000000)}`, unit: 'km²' },
+                { name: 'Gain', format: value => `${numberFormat(value)}`, unit: 'km²' },
+                { name: 'Loss', format: value => `${numberFormat(value)}`, unit: 'km²' },
+                { name: 'Net result', format: value => `${numberFormat(value)}`, unit: 'km²' },
               ]}
             />
           )

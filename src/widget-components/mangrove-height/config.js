@@ -1,4 +1,3 @@
-
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import WidgetLegend from 'components/widget-legend';
@@ -6,11 +5,11 @@ import WidgetLegend from 'components/widget-legend';
 export const CONFIG = {
   parse: () => ({
     chartData: [
-      { year: 1996, '0-50m': 18, '50-100m': 50, '100-150m': 70, '150-200m': 90, '200-250m': 98 },
-      { year: 2007, '0-50m': 30, '50-100m': 40, '100-150m': 60, '150-200m': 70, '200-250m': 75 },
-      { year: 2008, '0-50m': 10, '50-100m': 40, '100-150m': 65, '150-200m': 80, '200-250m': 85 },
-      { year: 2009, '0-50m': 15, '50-100m': 42, '100-150m': 67, '150-200m': 82, '200-250m': 90 },
-      { year: 2010, '0-50m': 20, '50-100m': 50, '100-150m': 70, '150-200m': 98, '200-250m': 102 },
+      { year: 1996, '0 5': 18, '5 10': 50, '10 15': 70, '15 20': 90, '20 25': 98 },
+      { year: 2007, '0 5': 30, '5 10': 40, '10 15': 60, '15 20': 70, '20 25': 75 },
+      { year: 2008, '0 5': 10, '5 10': 40, '10 15': 65, '15 20': 80, '20 25': 85 },
+      { year: 2009, '0 5': 15, '5 10': 42, '10 15': 67, '15 20': 82, '20 25': 90 },
+      { year: 2010, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
@@ -24,35 +23,35 @@ export const CONFIG = {
       yKeys: {
         bars:
         {
-          '0-50m':
+          '0 5':
           {
             stackId: 'bar',
-            fill: '#4DB36D',
-            stroke: '#4DB36D'
+            fill: 'rgba(154, 219, 217, 0.5)',
+            stroke: 'rgba(154, 219, 217, 0.5)'
           },
-          '50-100m':
+          '5 10':
           {
             stackId: 'bar',
-            fill: '#178A6B',
-            stroke: '#178A6B'
+            fill: '#5BC3BD',
+            stroke: '#5BC3BD'
           },
-          '100-150m':
+          '10 15':
           {
             stackId: 'bar',
-            fill: '#189370',
-            stroke: '#189370'
+            fill: '#249892',
+            stroke: '#249892'
           },
-          '150-200m':
+          '15 20':
           {
             stackId: 'bar',
-            fill: '#178F6E',
-            stroke: '#178F6E'
+            fill: '#00746F',
+            stroke: '#00746F'
           },
-          '200-250m':
+          '20 25':
           {
             stackId: 'bar',
-            fill: '#168368',
-            stroke: '#168368'
+            fill: '#004B47',
+            stroke: '#004B47'
           }
         }
       },
@@ -93,11 +92,11 @@ export const CONFIG = {
             <g>
               <text
                 x={365}
-                y={41}
-                fontSize={11}
+                y={50}
+                fontSize={13}
                 fill="rgba(0,0,0,0.54)"
               >
-              Mg Ha-1
+                mg Ha<tspan baseline-shift = "super">-1</tspan>
               </text>
             </g>
           )
@@ -105,10 +104,13 @@ export const CONFIG = {
         type: 'number'
       },
       legend: {
-        position: 'relative',
+        align: 'left',
         verticalAlign: 'top',
-        width: '100%',
-        top: 10,
+        layout: 'horizontal',
+        height: 80,
+        top: 0,
+        left: 0,
+        position: 'relative',
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload);

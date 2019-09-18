@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
-import Spinner from 'components/spinner';
-import Chart from 'components/chart';
+import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
-
-import styles from 'components/widget/style.module.scss';
 
 const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
 
-function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRankingData }) {
+function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRankingData, isCollapsed, slug, name, ...props}) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
     unit: 'ha',
     startDate: 1996,
@@ -19,7 +16,7 @@ function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRan
     isLoading: false
   });
 
-  const { startDate, endDate, filter, isLoading } = mangroveActivityState;
+  const { startDate, endDate, filter} = mangroveActivityState;
 
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
@@ -85,22 +82,30 @@ function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRan
     />
   );
 
-  return (
+  const sentence = (
     <>
-      <div className={styles.widget_template}>
-        <div className={styles.sentence}>
-          {/* eslint-disable-next-line */}
-          Worldwide the 5 countries with the largest {filterSelector} in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
-        </div>
-      </div>
-
-      {/* Chart */}
-      {isLoading ? <Spinner /> : (
-        <Chart
-          data={sortRanking(chartData)}
-          config={chartConfig}
-        />)}
+      Worldwide the 5 countries with the largest {filterSelector} in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
+  );
+
+  const sortedData = sortRanking(chartData);
+
+  const chartRData = {
+    data: sortedData,
+    config: chartConfig
+  };
+
+  return (
+    <ChartWidget
+      name={name}
+      data={sortedData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 }
 

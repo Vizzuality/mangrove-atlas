@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
-import Chart from 'components/chart';
-import styles from 'components/widget/style.module.scss';
+import ChartWidget from 'components/chart-widget';
 
-const MangroveHeight = ({ widgetConfig, currentLocation }) => {
+const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name, currentLocation, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('basal');
@@ -34,6 +33,8 @@ const MangroveHeight = ({ widgetConfig, currentLocation }) => {
     <Select
       value={startDate}
       options={dateOptions}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
+        option.value === startDate}
       onChange={value => setStartDate(value)}
     />
   );
@@ -42,25 +43,38 @@ const MangroveHeight = ({ widgetConfig, currentLocation }) => {
     <Select
       value={endDate}
       options={dateOptions}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10) ||
+        option.value === endDate}
       onChange={value => setEndDate(value)}
     />
   );
 
+  const sentence = (
+    <>
+      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average([hmax_mangrove_m])</strong> between {startDateSelector} and {endDateSelector}.
+    </>
+  );
+  const chartRData = {
+    data: chartData,
+    config: chartConfig
+  };
+
   return (
-    <div className={styles.widget_template}>
-      <div className={styles.sentence}>
-        Mean mangrove {areaSelector} height (m) in {location} was ***average([hmax_mangrove_m] OR average([hba_mangrove_m] )*** between {startDateSelector} and {endDateSelector}.
-        <Chart
-          data={chartData}
-          config={chartConfig}
-        />
-      </div>
-    </div>
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 };
 
 MangroveHeight.propTypes = {
-  widgetConfig: PropTypes.shape({}).isRequired
+  config: PropTypes.shape({}).isRequired
 };
 
 export default MangroveHeight;
