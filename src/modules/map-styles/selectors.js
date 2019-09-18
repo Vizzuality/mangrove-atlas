@@ -33,46 +33,7 @@ export const layerStyles = createSelector(
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
     // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-    const rasterLayer = {
-      id: 'biomass',
-      type: 'raster',
-      source: 'biomass-tiles',
-      minzoom: 0,
-      maxzoom: 13
-    };
-
-    const rasterLayer2 = {
-      "id": "height-basal",
-      "type": "raster",
-      "source": "height-basal-tiles",
-      "minzoom": 0,
-      "maxzoom": 13
-    };
-
-    // const rasterLayers = [{
-    //   "id": "height-basal",
-    //   "type": "raster",
-    //   "source": "height-basal-tiles",
-    //   "minzoom": 0,
-    //   "maxzoom": 13
-    // },
-    // {
-    //   "id": "height-canopy",
-    //   "type": "raster",
-    //   "source": "height-height-tiles",
-    //   "minzoom": 0,
-    //   "maxzoom": 13
-    // },
-    // {
-    //   "id": "biomass",
-    //   "type": "raster",
-    //   "source": "biomass-tiles",
-    //   "minzoom": 0,
-    //   "maxzoom": 13
-    // }];
-
-
-    const extendedLayers = [...layersStyles, rasterLayer, rasterLayer2];
+    const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers
       .filter(style => activeIds.includes(style.id));
     // .filter(style => activeGroups.includes(style.metadata['mapbox:group']));

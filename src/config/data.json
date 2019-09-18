@@ -7,10 +7,10 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_activity",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "mangrove_activity"
+          "mangrove_biomass"
         ]
       },
       {
@@ -86,13 +86,12 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
-      "layersIds": []
+      "layersIds": ["alerts-mock"]
     },
     {
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
-        "height-basal",
         "height-canopy"
       ]
     }
@@ -127,7 +126,10 @@
     {
       "name": "Mangrove biomass",
       "id": "biomass"
+    },
+    {
+      "name": "Mangrove deforestation alerts",
+      "id": "alerts-mock"
     }
   ]
 }
-
