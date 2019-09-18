@@ -1,14 +1,13 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 
 import { month } from 'utils/nice-date';
-// import Spinner from 'components/spinner';
-import Chart from 'components/chart';
 import Datepicker from 'components/datepicker';
+import ChartWidget from 'components/chart-widget';
 
 import styles from 'components/widget/style.module.scss';
 
-function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data}) {
+function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data, isCollapsed, slug, name, ...props}) {
   const [state, setState] = useState({
     startDate: moment(minDate).add(4, 'y'),
     endDate: moment(maxDate).subtract(4, 'y')
@@ -64,9 +63,7 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
     title: 'Alerts'
   };
 
-  // This is broken...
-  // We are using chartData from a previous parse to inject series and parse again...
-  const series = Object.fromEntries(data.chartData.map(({
+  const series = Object.fromEntries(data.map(({
     attributes: {
       date_first: start,
       date_last: end,
@@ -74,7 +71,7 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
     }
   }, index) => {
     const seriesName = `series_${index}`;
-    const data = [{
+    const seriesData = [{
       id: seriesName,
       date: start,
       category,
@@ -83,7 +80,7 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
     }];
 
     if (start !== end) {
-      data.push({
+      seriesData.push({
         id: seriesName,
         date: end || 'Happening now.',
         category,
@@ -94,28 +91,34 @@ function MangroveAlerts({ widgetConfig, minDate = '1996-01-01', maxDate = '2016-
 
     return [seriesName, {
       ...seriesLineDefinition,
-      data
+      data: seriesData
     }];
   }));
 
-  const { chartData, chartConfig } = widgetConfig.parse({ startMark, endMark, series });
+  const { chartData, chartConfig } = widgetConfig.parse(data, { startMark, endMark, series });
   const alerts = chartData.map(it => it.year).filter(y => y >= startMark && y <= endMark ).length;
+  const sentence = (
+    <>
+      There were <span className={styles.bold}>{alerts}</span> loss alerts <br/>between {startDatepicker} and {endDatepicker}
+    </>
+  );
+
+  const chartRData = {
+    data: chartData,
+    config: chartConfig
+  };
 
   return (
-    <Fragment>
-      <div className={styles.widget_template}>
-        <div className={styles.sentence}>
-          There were <span className={styles.bold}>{alerts}</span> loss alerts <br/>between {startDatepicker} and {endDatepicker}
-        </div>
-      </div>
-
-      {/* Chart */}
-      <Chart
-        data={chartData}
-        config={chartConfig}
-      />
-
-    </Fragment>
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 }
 
