@@ -1,39 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Widget from 'components/widget';
-import TEMPLATES from 'components/widget/templates';
-import CONFIGS from 'components/widget/templates/configs';
+
 import styles from './style.module.scss';
 
-function WidgetList({
-  isCollapsed,
-  widgets,
-  widgetData,
-  ...parentProps
-}) {
-  return (
+const WidgetList = ({ widgets, templates, ...parentProps }) => (
+  <div className={styles.widgets}>
+    {widgets.map((widget) => {
+      const Widget = templates.get(widget.slug).component;
 
-    <div className={styles.widgets}>
-      {widgets.map((widget) => {
-        const template = TEMPLATES[widget.slug];
-        if (!template) {
-          return null;
-        }
-
-        return (
-          <Widget
-            key={widget.slug}
-            {...widget}
-            {...parentProps}
-            data={widgetData}
-            widgetConfig={CONFIGS[widget.slug]}
-            template={template}
-          />
-        );
-      })}
-    </div>
-  );
-}
+      return (
+        <Widget
+          key={widget.slug}
+          {...widget}
+          {...parentProps}
+        />
+      );
+    })}
+  </div>
+);
 
 WidgetList.propTypes = {
   widgets: PropTypes.arrayOf(
@@ -42,10 +26,12 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
+  templates: PropTypes.instanceOf(Map)
 };
 
 WidgetList.defaultProps = {
-  widgets: []
+  widgets: [],
+  templates: new Map()
 };
 
 export default WidgetList;

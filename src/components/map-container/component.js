@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import { NavigationControl } from 'react-map-gl';
+import { NavigationControl, FullscreenControl } from 'react-map-gl';
 import classnames from 'classnames';
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
@@ -126,6 +126,7 @@ class MapContainer extends PureComponent {
           {() => (
             <div className={styles.navigation}>
               <MediaQuery minWidth={breakpoints.sm}>
+                <FullscreenControl />
                 <NavigationControl />
               </MediaQuery>
             </div>

@@ -1,0 +1,25 @@
+{
+  "rasterLayers": [
+    {
+      "id": "biomass",
+      "type": "raster",
+      "source": "biomass-tiles",
+      "minzoom": 0,
+      "maxzoom": 13
+    },
+    {
+      "id": "height-basal",
+      "type": "raster",
+      "source": "height-basal-tiles",
+      "minzoom": 0,
+      "maxzoom": 13
+    },
+    {
+      "id": "height-canopy",
+      "type": "raster",
+      "source": "height-canopy-tiles",
+      "minzoom": 0,
+      "maxzoom": 13
+    }
+  ]
+}

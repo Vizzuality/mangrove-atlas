@@ -9,14 +9,7 @@
         "android": "6.7.0",
         "ios": "4.6.0"
     },
-    "mapbox:trackposition": true,
-    "mapbox:groups": {
-        "ddb057e964a581d45d89735ba23f5ba6": {"name": "gain"},
-        "07c14de52165978354b99fda5fbcdadb": {"name": "extent"},
-        "8d19b1e5fb62fe54f39837b411e782c1": {"name": "wdpa"},
-        "a21f3561678fd383069b2a49d076387d": {"name": "countries"},
-        "84284e0aab770699fa0ac998b822aa4f": {"name": "loss"}
-    }
+    "mapbox:trackposition": true
   },
   "center": [
     12.919984505377897,
@@ -36,12 +29,30 @@
       "type": "raster-dem",
       "tileSize": 256
     },
+    "height-basal-tiles": {
+      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_basal-area_weighted_height_2000_v1-2_z0-13{z}/{x}/{y}.png"],
+      "type": "raster",
+      "tileSize": 256,
+      "maxzoom": 13
+    },
+    "height-canopy-tiles": {
+      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_max_canopy_height_2000_v1-2_z0-13/{z}/{x}/{y}.png"],
+      "type": "raster",
+      "tileSize": 256,
+      "maxzoom": 13
+    },
+    "biomass-tiles": {
+      "tiles": ["https://mangrove_atlas.storage.googleapis.com/tilesets/mangrove_aboveground_biomass_2000_v1-2_z0-13/{z}/{x}/{y}.png"],
+      "type": "raster",
+      "tileSize": 256,
+      "maxzoom": 13
+    },
     "streets": {
       "url": "mapbox://mapbox.mapbox-streets-v8",
       "type": "vector"
     },
     "composite": {
-      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.GMW_1996_v2,mangrove-atlas.ch30nit0,mangrove-atlas.69m84vyg,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.2u7mh73o,mangrove-atlas.c93ps33f,mangrove-atlas.8le67zrt,mangrove-atlas.GMW_2015_v2,mangrove-atlas.df6mdkbu,mangrove-atlas.2dnas3nh,mangrove-atlas.0fgxl2g8,mangrove-atlas.b6vq2fz4,mangrove-atlas.8x8jvu3a,mangrove-atlas.3hofvcl5",
+      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.gmw_1996_2016,mangrove-atlas.gmw_change_1996_2016,mangrove-atlas.a5b63uqt",
       "type": "vector"
     }
   },

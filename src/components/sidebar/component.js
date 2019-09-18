@@ -12,11 +12,13 @@ class Dashboard extends Component {
   static propTypes = {
     children: PropTypes.node,
     collapseAll: PropTypes.func,
-    expandAll: PropTypes.func
+    expandAll: PropTypes.func,
+    isCollapsed: PropTypes.bool
   }
 
   static defaultProps = {
     children: null,
+    isCollapsed: false,
     collapseAll: () => null,
     expandAll: () => null
   }
@@ -44,7 +46,6 @@ class Dashboard extends Component {
     this.setState({ securityMargin })
   )
 
-
   render() {
     const { children, isCollapsed } = this.props;
     const { sticky, securityMargin } = this.state;
@@ -54,21 +55,36 @@ class Dashboard extends Component {
         className={classnames(styles.sidebar, {
           [styles.securityMargin]: securityMargin
         })}
-        triggers={window.innerWidth >= breakpoints.md
+        triggers={window.innerWidth > breakpoints.md + 1
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
             { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
-          : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) },
-            { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
-        }
+          : [{ top: -1 , callback: _sticky => this.setSticky(!_sticky) }]
+          }
       >
+
         <div className={styles.header}>
           <Header sticky={sticky} />
           <div className={styles.actionBar}>
             {
               isCollapsed
-                ? <Button hasBackground hasContrast onClick={this.onClickExpandAll}>Expand all widgets</Button>
-                : <Button isTransparent isGrey onClick={this.onClickCollapseAll}>Collapse all widgets</Button>
-            }
+                ? (
+                  <Button
+                    hasBackground
+                    hasContrast
+                    onClick={this.onClickExpandAll}
+                  >
+                    Expand all widgets
+                  </Button>
+                )
+                : (
+                  <Button
+                    isTransparent
+                    isGrey
+                    onClick={this.onClickCollapseAll}
+                  >
+                    Collapse all widgets
+                  </Button>
+                )}
             <LanguageSelect />
           </div>
         </div>

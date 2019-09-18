@@ -6,19 +6,6 @@
   @media screen and (max-width: map-get($breakpoints, md)) {
     margin-bottom: 25px;
   }
-  &.sticky {
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      background-color: #00C5BD;
-      margin-bottom: 25px;
-      margin-left: -11px; // To avoid parent
-      padding: 11px;      // container paddings
-      top: 0px;
-      position: fixed;
-      z-index: 336;
-      width: 100%;
-      height: 65px;
-    }
-  }
 
   .bg,
   .bgFixed {
@@ -33,7 +20,10 @@
       display: none;
     }
     @media screen and (max-width: map-get($breakpoints, md)) {
-      display: none;
+      width: 900px;
+    }
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      width: 600px;
     }
   }
 
