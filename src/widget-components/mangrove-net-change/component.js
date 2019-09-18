@@ -42,7 +42,7 @@ function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug
         endYear: netChangeState.endYear
       }
     });
-    setNetChangeState({ ...netChangeState, startYear });
+    setNetChangeState({ ...netChangeState, startYear: year });
   };
   const changeEndYear = (year) => {
     addFilter({
@@ -52,7 +52,7 @@ function MangroveNetChange({ data, currentLocation, addFilter, isCollapsed, slug
         endYear: year
       }
     });
-    setNetChangeState({ ...netChangeState, endYear });
+    setNetChangeState({ ...netChangeState, endYear: year });
   };
 
   const widgetData = editedChartData.filter(
