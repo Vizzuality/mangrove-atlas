@@ -13,17 +13,18 @@ import styles from './style.module.scss';
 
 function Widget({
   children,
+  data,
+  name,
   slug,
-  toggleCollapse,
-  toggleActive,
-  layersIds,
+  filename,
   layerId,
+  layersIds,
   isActive,
+  isLocationsModal,
   isCollapsed,
   isLoading,
-  name,
-  data,
-  filename
+  toggleActive,
+  toggleCollapse
 }) {
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
@@ -39,8 +40,9 @@ function Widget({
 
   const haveLayers = !!(layersIds && layersIds.length);
   const widgetConditionalStyles = {
-    [styles.collapsed]: isCollapsed,
-    [styles.layerActive]: isActive
+    [styles._modal]: isLocationsModal,
+    [styles._collapsed]: isCollapsed,
+    [styles._layerActive]: isActive
   };
 
   // These components are declared here not to clutter component's element
@@ -75,12 +77,16 @@ function Widget({
   );
 
   return (
-    <div className={ classnames(styles.widget, widgetConditionalStyles)}>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <CollapseButton />
-          <ToggleLayersButton />
-        </div>
+    <div className={classnames(styles.widget, widgetConditionalStyles)}>
+      <div className={classnames(styles.wrapper, {
+        [styles._modal]: isLocationsModal
+      })}>
+        {!isLocationsModal &&
+          <div className={styles.header}>
+            <CollapseButton />
+            <ToggleLayersButton />
+          </div>
+        }
         {isLoading
           ? <Spinner />
           : (
@@ -90,31 +96,42 @@ function Widget({
           )
         }
       </div>
-      <WidgetInfo data={data} filename={filename} />
+
+      {!isLocationsModal &&
+        <WidgetInfo data={data} filename={filename} />
+      }
     </div>
   );
 }
 
 Widget.propTypes = {
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.shape({}),
+    PropTypes.array
+  ]).isRequired,
+  name: PropTypes.string,
+  slug: PropTypes.string,
+  filename: PropTypes.string,
   layerId: PropTypes.string,
   layersIds: PropTypes.arrayOf(PropTypes.string),
-  location: PropTypes.shape({}),
   isActive: PropTypes.bool,
+  isLocationsModal: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
   toggleActive: PropTypes.func,
-  toggleCollapse: PropTypes.func
+  toggleCollapse: PropTypes.func,
 };
 
 Widget.defaultProps = {
-  isActive: false,
-  isCollapsed: false,
-  isLoading: false,
+  name: null,
+  slug: null,
+  filename: null,
   layerId: null,
   layersIds: null,
-  location: null,
+  isActive: false,
+  isLocationsModal: false,
+  isCollapsed: false,
+  isLoading: false,
   toggleActive: () => { },
   toggleCollapse: () => { }
 };
