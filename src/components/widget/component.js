@@ -82,7 +82,7 @@ function Widget({
           <ToggleLayersButton />
         </div>
         {isLoading
-          ? <Spinner isLoading />
+          ? <Spinner />
           : (
             <div className={classnames(styles.content)}>
               {children}
