@@ -14,7 +14,7 @@ export const CONFIG = {
     ],
     metadata: [1996, 2007, 2008, 2009, 2010],
     chartConfig: {
-      height: 350,
+      height: 300,
       cartesianGrid: {
         vertical: false,
         horizontal: true,
@@ -93,12 +93,12 @@ export const CONFIG = {
           content: ({ viewBox }) => (
             <g>
               <text
-                x={370}
-                y={50}
+                x={367}
+                y={45}
                 fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
-              mg ha-1
+                mg ha<tspan baseline-shift = "super">-1</tspan>
               </text>
             </g>
           )

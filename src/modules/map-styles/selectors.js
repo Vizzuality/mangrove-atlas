@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
-// import { rasterLayers } from './rasters';
+import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
 
 const styleManager = new StyleManager();
@@ -33,15 +33,8 @@ export const layerStyles = createSelector(
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
     // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-    const rasterLayer = {
-      id: 'biomass',
-      type: 'raster',
-      source: 'biomass-tiles',
-      minzoom: 0,
-      maxzoom: 13
-    };
 
-    const extendedLayers = [...layersStyles, rasterLayer];
+    const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers
       .filter(style => activeIds.includes(style.id));
     // .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
