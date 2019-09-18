@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
-import { rasterLayers } from './rasters';
+// import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
 
 const styleManager = new StyleManager();

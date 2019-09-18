@@ -108,7 +108,6 @@ export const CONFIG = {
       legend: {
         position: 'relative',
         verticalAlign: 'top',
-        width: '100%',
         top: 10,
         content: (properties) => {
           const { payload } = properties;

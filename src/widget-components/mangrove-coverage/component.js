@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
-import Chart from 'components/chart';
+
+import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
-import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.2f');
 
@@ -34,7 +34,7 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({ data, currentLocation, addFilter }) {
+function MangroveCoverage({ data, currentLocation, addFilter, slug, ...props }) {
   const { chartConfig, metadata } = data;
   const [coverageState, setCoverageState] = useState({ currentYear: 1996, unit: '%'});
   const { currentYear, unit } = coverageState;
@@ -42,7 +42,7 @@ function MangroveCoverage({ data, currentLocation, addFilter }) {
     label: year.toString(),
     value: year
   })), ['value']);
-  let content = null;
+  let sentence = null;
 
   const changeYear = (currentYear) => {
     addFilter({
@@ -58,8 +58,13 @@ function MangroveCoverage({ data, currentLocation, addFilter }) {
     setCoverageState({ ...coverageState, unit });
   };
 
+  const widgetData = processData(data, currentYear);
+  const chartData = {
+    data: widgetData,
+    config: chartConfig  
+  };
+
   try {
-    const widgetData = processData(data, currentYear);
     const { percentage } = widgetData[0];
     const unitOptions = [
       { value: '%', label: '%' },
@@ -84,30 +89,27 @@ function MangroveCoverage({ data, currentLocation, addFilter }) {
       onChange={changeYear}
     />);
 
-    content = (
+    sentence = (
       <>
-        <div className={styles.sentence}>
-          <span>Mangrove forest cover </span>
-          <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
-          <span>of </span> <strong>{ location } </strong>
-          <strong className="notranslate">{ numberFormat(totalCoverage)}km</strong> coastline<br />
-          <span>in </span>{yearSelector}.
-        </div>
-        <Chart
-          data={widgetData}
-          config={chartConfig}
-        />
+        <span>Mangrove forest cover </span>
+        <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
+        <span>of </span> <strong>{ location } </strong>
+        <strong className="notranslate">{ numberFormat(totalCoverage)}km</strong> coastline<br />
+        <span>in </span>{yearSelector}.
       </>
       );
   } catch(e) {
-    content = (
-      <div className={styles.sentence}>
-        <span>No data for this widget.</span>
-      </div>
-      );
+    sentence = <span>No data for this widget.</span>;
   }
 
-  return <div className={styles.widget_template}>{content}</div>;
+  return <ChartWidget
+    data={data}
+    slug={slug}
+    filename={slug}
+    sentence={sentence}
+    chartData={chartData}
+    {...props}
+  />;
 }
 
 MangroveCoverage.propTypes = {

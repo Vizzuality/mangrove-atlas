@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
-import Chart from 'components/chart';
-import styles from 'components/widget/style.module.scss';
+import ChartWidget from 'components/chart-widget';
 
-const MangroveHeight = ({ widgetConfig }) => {
+const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const data = widgetConfig.parse();
@@ -33,22 +32,33 @@ const MangroveHeight = ({ widgetConfig }) => {
     />
   );
 
+  const sentence = (
+    <>
+      Over the past 20 years, mangroves in the world have <strong>decreased</strong> by
+      <strong> x {unit}</strong> between {startDateSelector} and {endDateSelector}.
+    </>
+  );
+  const chartRData = {
+    data: chartData,
+    config: chartConfig
+  };
+
   return (
-    <div className={styles.widget_template}>
-      <div className={styles.sentence}>
-        Over the past 20 years, mangroves in the world have <strong>decreased</strong> by
-        <strong> x {unit}</strong> between {startDateSelector} and {endDateSelector}.
-        <Chart
-          data={chartData}
-          config={chartConfig}
-        />
-      </div>
-    </div>
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartRData}
+      {...props}
+    />
   );
 };
 
 MangroveHeight.propTypes = {
-  widgetConfig: PropTypes.shape({}).isRequired
+  config: PropTypes.shape({}).isRequired
 };
 
 export default MangroveHeight;
