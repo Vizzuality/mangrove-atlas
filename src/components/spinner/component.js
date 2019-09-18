@@ -17,7 +17,7 @@ Spinner.propTypes = {
 };
 
 Spinner.defaultProps = {
-  isLoading: 'true',
+  isLoading: true,
 };
 
 
