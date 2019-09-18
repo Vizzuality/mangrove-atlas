@@ -4,6 +4,8 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { NavigationControl, FullscreenControl } from 'react-map-gl';
 import classnames from 'classnames';
+import pick from 'lodash/pick';
+
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
 import MangroveMap from 'components/map';
@@ -51,7 +53,7 @@ class MapContainer extends PureComponent {
 
   onViewportChange = (viewport) => {
     const { setViewport } = this.props;
-    setViewport(viewport);
+    setViewport(pick(viewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   }
 
   resize = () => {
