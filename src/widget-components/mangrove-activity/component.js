@@ -5,9 +5,12 @@ import orderBy from 'lodash/orderBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
+import config from './config';
+
 const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
 
-function MangroveActivity({ data: { chartData, metaData, chartConfig }, fetchRankingData, isCollapsed, slug, name, ...props}) {
+function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props}) {
+  const { chartData, metaData, chartConfig } = config.parse(rawData);
   const [mangroveActivityState, setMangroveActivityState] = useState({
     unit: 'ha',
     startDate: 1996,
