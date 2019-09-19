@@ -34,8 +34,8 @@ class Header extends PureComponent {
     const { location, sticky } = this.props;
     let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
 
-    if (location && location.name.length > 10) stylesOverride = { fontSize: 45, lineHeight: 1 };
-    if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };
+    if (location && location.name.length > 30 || sticky) stylesOverride = { fontSize: 30, lineHeight: 1 };
+    if (location && location.name.length > 10 || sticky) stylesOverride = { fontSize: 45, lineHeight: 1 };
 
     return (
       <div className={classnames(styles.header,
@@ -63,7 +63,8 @@ class Header extends PureComponent {
             <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
               <MediaQuery minWidth={breakpoints.md}>
                 <h1
-                  className={classnames(styles.title, 'notranslate')}
+                  className={classnames(styles.title, 'notranslate',
+                    { [styles._fixed]: sticky })}
                   style={stylesOverride}
                 >
                   {location.name}
