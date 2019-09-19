@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import styles from './style.module.scss';
 
 function getValue(item, value) {
@@ -24,11 +25,11 @@ function Tooltip({ payload, settings, style, hideZeros }) {
             d => (hideZeros && values[d.key] ? null : (
               <div
                 key={d.key}
-                className={`data_line ${d.position || ''}`}
+                className={styles.data_line + ' ' + styles[`${d.position}`]}
               >
                 {/* LABEL */}
                 {((d.label && d.labelKey) || d.key) && (
-                  <div className={styles.data_label}>
+                  <div className={styles.data_label + ' ' + styles[`${d.position}`]}>
                     {d.color && (
                       <div
                         className={styles.data_color}
@@ -39,8 +40,8 @@ function Tooltip({ payload, settings, style, hideZeros }) {
                     {d.key === 'break' ? (
                       <span className={styles.break_label}>{d.label}</span>
                     ) : (
-                      <span>{d.label || values[d.labelKey]}</span>
-                    )}
+                        <span>{d.label || values[d.labelKey]}</span>
+                      )}
                   </div>
                 )}
 
@@ -50,7 +51,7 @@ function Tooltip({ payload, settings, style, hideZeros }) {
                 >
                   {getValue(d, values[d.key])}
                 </div>
-              </div>
+                </div>
             ))
           )}
         </div>
