@@ -1,8 +1,9 @@
-import { takeEvery, takeLatest, all, fork, put, select } from 'redux-saga/effects';
+import { takeEvery, takeLatest, all, fork, put, select, throttle } from 'redux-saga/effects';
 import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
 import get from 'lodash/get';
 import { redirect } from 'redux-first-router';
 
+import { setViewport } from 'modules/map/actions';
 import ACTIONS from './constants';
 
 class QueryStateManager {
@@ -83,14 +84,18 @@ class QueryStateManager {
           }}));
         };
 
-        yield takeLatest(action, actionListener.bind(this));
+        if (action === setViewport().type) {
+          yield throttle(1000, action, actionListener.bind(this));
+        } else {
+          yield takeLatest(action, actionListener.bind(this));
+        }
       };
 
       return fork(encodeRule.bind(this));
     });
 
     const decodeRule = function * decodeRule() {
-      function *sub() {
+      function* sub() {
         const names = Array.from(this.names);
         const triggers = names.map(name => {
           const { decode } = this.registry.get(name);

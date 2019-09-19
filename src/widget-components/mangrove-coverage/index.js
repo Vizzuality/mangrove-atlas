@@ -1,11 +1,10 @@
 import { connect } from 'react-redux';
 
-import config from './config';
 import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
-  data: config.parse(state.mangroveData)
+  data: state.mangroveData
 });
 
 const mapDispatchToProps = {};
