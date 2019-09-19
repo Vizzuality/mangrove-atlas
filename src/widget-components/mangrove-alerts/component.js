@@ -5,7 +5,9 @@ import { month } from 'utils/nice-date';
 import Datepicker from 'components/datepicker';
 import ChartWidget from 'components/chart-widget';
 
-function MangroveAlerts({ config: widgetConfig, minDate = '2019-01-01', maxDate = '2020-12-31', data, isCollapsed, slug, name, ...props }) {
+import config from './config';
+
+function MangroveAlerts({minDate = '2019-01-01', maxDate = '2020-12-31', data, isCollapsed, slug, name, ...props }) {
   const [mangroveAlertsState, setMangroveAlertsState] = useState({
     startDate: moment(minDate).add(0, 'y'),
     endDate: moment(maxDate).subtract(0, 'y')
@@ -98,7 +100,7 @@ function MangroveAlerts({ config: widgetConfig, minDate = '2019-01-01', maxDate 
     }];
   }));
 
-  const { chartData, chartConfig } = widgetConfig.parse(data, { startMark, endMark, series });
+  const { chartData, chartConfig } = config.parse(data, { startMark, endMark, series });
   const alerts = chartData.map(alert => ({
     start: alert.attributes.date_first,
     end: alert.attributes.date_last

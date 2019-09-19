@@ -38,7 +38,9 @@ class Header extends PureComponent {
     if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };
 
     return (
-      <div className={styles.header}>
+      <div className={classnames(styles.header,
+        { [styles.sticky]: sticky })}
+      >
         <img
           className={classnames(styles.bg,
             { [styles.isHidden]: sticky })}

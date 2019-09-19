@@ -10,40 +10,73 @@ $space-left-map-mobile: 20px;
   position: relative;
 }
 
-  .navigation {
-    position: absolute;
-    right: $space-around-map;
-    top: $space-around-map;
-  }
+.navigation {
+  position: absolute;
+  right: $space-around-map;
+  top: $space-around-map;
+}
 
-  .legend {
-    position: absolute;
-    right: $space-around-map;
-    bottom: $space-around-map;
-    z-index: 1;
+.legend {
+  position: absolute;
+  right: $space-around-map;
+  bottom: $space-around-map;
+  z-index: 1;
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      top: $space-top-map-mobile;
-      left: $space-left-map-mobile;
-      &.expanded {
-        display: flex;
-        flex-direction: row-reverse;
-        bottom: inherit;
-        right: 25px;
-      }
-    }
+  @media screen and (max-width: map-get($breakpoints, md)) {
+    top: $space-top-map-mobile;
+    left: $space-left-map-mobile;
+    bottom: auto;
 
-    .tooltip {
+    &.expanded {
       display: flex;
-      flex-direction: column;
+      flex-direction: row-reverse;
+      bottom: inherit;
+      right: 25px;
     }
   }
 
-  // Mapbox override
-  :global(.mapboxgl-ctrl-group:not(:empty)) {
-    box-shadow: 0 4px 12px 0 rgba(168, 168, 168, 0.25);
+  .tooltip {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// Mapbox override
+:global(.mapboxgl-ctrl-group:not(:empty)) {
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+  margin-bottom: 5px;
+
+}
+
+:global(.mapboxgl-ctrl-group > button) {
+  background: white;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover;
+  width: 25px;
+  height: 25px;
+  margin: 10px;
+}
+
+.zoomControls {
+  > button[title='Zoom In'] {
+    background-image: url('./icons/zoomin.svg') !important;
   }
 
-  :global(.mapboxgl-ctrl-group > button) {
-    background: white;
+  > button[title='Zoom Out'] {
+    border: none;
+    background-image: url('./icons/zoomout.svg') !important;
   }
+
+  > button[title='Reset North'] {
+    display: none;
+  }
+}
+
+.fullscreen {
+  > button[title='Toggle fullscreen'] {
+    background-image: url('./icons/fullscreen.svg') !important;
+  }
+}

@@ -6,6 +6,8 @@ import sortBy from 'lodash/sortBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
+import config from './config';
+
 const numberFormat = format(',.2f');
 
 function processData(data, currentYear) {
@@ -34,9 +36,14 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({ data, currentLocation, addFilter, slug, ...props }) {
-  const { chartConfig, metadata } = data;
+function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...props }) {
   const [coverageState, setCoverageState] = useState({ currentYear: 1996, unit: '%'});
+  if (!rawData) {
+    return null;
+  }
+
+  const data = config.parse(rawData); 
+  const { chartConfig, metadata } = data;
   const { currentYear, unit } = coverageState;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),

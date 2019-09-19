@@ -141,7 +141,7 @@ export const CONFIG = {
           content: (
             <WidgetTooltip
               settings={[
-                { key: 'name' },
+                { title: 'name', key: 'name' },
                 { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value)}km²` },
                 { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))}km²` },
                 { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)}km²` }
