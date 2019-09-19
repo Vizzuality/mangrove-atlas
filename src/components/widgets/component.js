@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, ...parentProps }) => console.log('Widgets') || (
+const WidgetList = ({ widgets, templates, ...parentProps }) => (
   <div className={styles.widgets}>
     {widgets.map((widget) => {
       const Widget = templates.get(widget.slug).component;
-      console.log('Wooble');
 
       return (
         <Widget

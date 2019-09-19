@@ -26,7 +26,6 @@ function Widget({
   toggleActive,
   toggleCollapse
 }) {
-  console.log('WidgetComponent')
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
   };
