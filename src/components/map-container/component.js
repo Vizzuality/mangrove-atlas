@@ -125,9 +125,11 @@ class MapContainer extends PureComponent {
         >
           {() => (
             <div className={styles.navigation}>
+              <MediaQuery minWidth={breakpoints.md + 1}>
+                <FullscreenControl className={styles.fullscreen}  />
+              </MediaQuery>
               <MediaQuery minWidth={breakpoints.sm}>
-                <FullscreenControl />
-                <NavigationControl />
+                <NavigationControl className={styles.zoomControls} />
               </MediaQuery>
             </div>
           )
