@@ -23,6 +23,7 @@
   margin-right: 20px;
   &._column {
     flex-direction: row;
+    padding: 5px;
   }
 }
 
@@ -37,6 +38,9 @@
   justify-content: flex-start;
   align-items: flex-start;
   margin-right: 20px;
+  &._column {
+    margin-right: 0;
+  }
 }
 
 .break_label {

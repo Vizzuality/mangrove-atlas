@@ -130,11 +130,11 @@ export const CONFIG = {
               flexDirection: 'column'
             }}
             settings={[
-              { label: '0 50', color: '#EAF19D', key: '0 50' , format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '50 100', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '100 150', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '150 200', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '200 250', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '0 50:', color: '#EAF19D', key: '0 50' , format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column'},
             ]}
             label={{ key: 'name'}}
           />

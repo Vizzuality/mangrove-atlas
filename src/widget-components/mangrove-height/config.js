@@ -1,6 +1,10 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
+import { format } from 'd3-format';
 import WidgetLegend from 'components/widget-legend';
+import WidgetTooltip from 'components/widget-tooltip';
+
+const numberFormat = format(',.3r');
 
 export const CONFIG = {
   parse: () => ({
@@ -65,11 +69,6 @@ export const CONFIG = {
       }],
       xAxis: {
         tick: {
-          x: {
-            x: 0,
-            color: 'red',
-            stroke: 'solid'
-          },
           fontSize: 12,
           lineHeight: 20,
           fill: 'rgba(0,0,0,0.2)',
@@ -116,7 +115,28 @@ export const CONFIG = {
           const groups = groupBy(payload, p => p.payload);
           return <WidgetLegend type="height" groups={groups} />;
         }
-      }
+      },
+      tooltip: {
+        cursor: false,
+        content: (
+          <WidgetTooltip
+            type='column'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              flexDirection: 'column'
+            }}
+            settings={[
+              { label: '0 5:', color: 'rgba(154, 219, 217, 0.5)', key: '0 5' , format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '5 10:', color: '#5BC3BD', key: '5 10', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '10 15:', color: '#249892', key: '10 15', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '15 20:', color: '#00746F', key: '15 20', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '20 25:', color: '#004B47', key: '20 25', format: value => `${numberFormat(value)}`, position: '_column'},
+            ]}
+            label={{ key: 'name'}}
+          />
+        )
+      } 
     },
   })
 };
