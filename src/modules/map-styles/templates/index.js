@@ -5,8 +5,22 @@ import satellite from './basemaps/satellite.json';
 import wdpa from './contextuals/wdpa.json';
 import countries from './contextuals/countries.json';
 
+import alerts from './alerts.geojson';
+
+const extendedTemplate = {
+  ...template,
+  sources: {
+    ...template.sources,
+    alerts: {
+      type: 'geojson',
+      data: alerts,
+      cluster: true
+    }
+  }
+}
+
 export default {
-  template,
+  template: extendedTemplate,
   basemaps: {
     light,
     dark,

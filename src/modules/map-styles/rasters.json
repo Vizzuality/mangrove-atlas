@@ -20,6 +20,32 @@
       "source": "height-canopy-tiles",
       "minzoom": 0,
       "maxzoom": 13
-    }
+    },
+    {
+      "id": "alerts-style-circle",
+      "type": "circle",
+      "source": "alerts",
+      "paint": {
+        "circle-color": "#EB6240",
+        "circle-radius": 12
+      },
+      "metadata": {
+        "mangroveGroup": "alerts-style"
+      }
+    },
+    {
+      "id": "alerts-style-count",
+      "type": "symbol",
+      "source": "alerts",
+      "filter": ["has", "point_count"],
+      "layout": {
+        "text-field": "{point_count_abbreviated}",
+        "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+        "text-size": 12
+        },
+        "metadata": {
+          "mangroveGroup": "alerts-style"
+        }
+      }
   ]
 }
