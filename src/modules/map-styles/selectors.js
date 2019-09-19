@@ -33,7 +33,6 @@ export const layerStyles = createSelector(
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
     // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
-
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers
       .filter(style => activeIds.includes(style.id));

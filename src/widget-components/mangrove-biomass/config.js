@@ -1,7 +1,11 @@
 
 import React from 'react';
 import groupBy from 'lodash/groupBy';
+import { format } from 'd3-format';
 import WidgetLegend from 'components/widget-legend';
+import WidgetTooltip from 'components/widget-tooltip';
+
+const numberFormat = format(',.3r');
 
 export const CONFIG = {
   parse: () => ({
@@ -114,7 +118,28 @@ export const CONFIG = {
           const groups = groupBy(payload, p => p.payload);
           return <WidgetLegend type="height" groups={groups} />;
         }
-      }
+      },
+      tooltip: {
+        cursor: false,
+        content: (
+          <WidgetTooltip
+            type='column'
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              flexDirection: 'column'
+            }}
+            settings={[
+              { label: '0 50:', color: '#EAF19D', key: '0 50' , format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column'},
+            ]}
+            label={{ key: 'name'}}
+          />
+        )
+      } 
     },
   })
 };
