@@ -7,7 +7,9 @@ import ChartWidget from 'components/chart-widget';
 
 import styles from 'components/widget/style.module.scss';
 
-function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data, isCollapsed, slug, name, ...props}) {
+import config from './config';
+
+function MangroveAlerts({minDate = '1996-01-01', maxDate = '2016-12-31', data, isCollapsed, slug, name, ...props}) {
   const [state, setState] = useState({
     startDate: moment(minDate).add(4, 'y'),
     endDate: moment(maxDate).subtract(4, 'y')
@@ -95,7 +97,7 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
     }];
   }));
 
-  const { chartData, chartConfig } = widgetConfig.parse(data, { startMark, endMark, series });
+  const { chartData, chartConfig } = config.parse(data, { startMark, endMark, series });
   const alerts = chartData.map(it => it.year).filter(y => y >= startMark && y <= endMark ).length;
   const sentence = (
     <>

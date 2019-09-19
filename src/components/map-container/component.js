@@ -4,7 +4,8 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { NavigationControl, FullscreenControl } from 'react-map-gl';
 import classnames from 'classnames';
-import Bowser from "bowser";
+import pick from 'lodash/pick';
+import Bowser from 'bowser';
 
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
@@ -34,7 +35,7 @@ export const MapContainer = ({
 
   const browser = (Bowser.getParser(window.navigator.userAgent)).parsedResult.browser;
   const onViewportChange = (viewport) => {
-    setViewport(viewport);
+    setViewport(pick(viewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']))
   }
 
   const resize = () => {

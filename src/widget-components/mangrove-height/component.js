@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
-const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name, currentLocation, ...props }) => {
+import config from './config';
+
+const MangroveHeight = ({ isCollapsed, slug, name, currentLocation, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('basal');
-  const data = widgetConfig.parse();
+
+  const data = config.parse();
   const { chartConfig, metadata, chartData } = data;
   const location = currentLocation.name;
 
@@ -71,10 +73,6 @@ const MangroveHeight = ({ config: widgetConfig, isCollapsed, slug, name, current
       {...props}
     />
   );
-};
-
-MangroveHeight.propTypes = {
-  config: PropTypes.shape({}).isRequired
 };
 
 export default MangroveHeight;

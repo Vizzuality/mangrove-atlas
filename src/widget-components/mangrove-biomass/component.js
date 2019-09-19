@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
-const MangroveBiomass = ({ config: widgetConfig, currentLocation, isCollapsed, slug, name, ...props }) => {
+import config from './config';
+
+const MangroveBiomass = ({ currentLocation, isCollapsed, slug, name, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
-  const data = widgetConfig.parse();
+
+  const data = config.parse();
   const { chartConfig, metadata, chartData } = data;
 
   const dateOptions = metadata.map(year => ({
@@ -60,7 +63,6 @@ const MangroveBiomass = ({ config: widgetConfig, currentLocation, isCollapsed, s
 };
 
 MangroveBiomass.propTypes = {
-  config: PropTypes.shape({}).isRequired,
   currentLocation: PropTypes.shape({})
 };
 
