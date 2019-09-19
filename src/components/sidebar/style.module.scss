@@ -8,6 +8,7 @@
   height: 100%;
   z-index: 2;
   box-sizing: border-box;
+
   @media screen and (max-width: map-get($breakpoints, md)) {
     padding: 5px;
     margin: auto;

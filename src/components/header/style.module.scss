@@ -19,6 +19,7 @@
     &.isHidden {
       display: none;
     }
+
     @media screen and (max-width: map-get($breakpoints, md)) {
       width: 900px;
     }
@@ -37,13 +38,16 @@
     z-index: 300;
     width: 100%;
     display: flex;
+
     &.fixed {
       position: fixed;
       top: -65px;
+      max-width: 600px;
       @media screen and (max-width: map-get($breakpoints, md)) {
         top: 0;
       }
     }
+
     @media screen and (max-width: map-get($breakpoints, md)) {
       margin-top: 20px;
       font-size: 35px;
