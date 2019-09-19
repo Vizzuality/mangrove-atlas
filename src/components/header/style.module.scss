@@ -20,16 +20,16 @@
       display: none;
     }
     @media screen and (max-width: map-get($breakpoints, md)) {
-      display: none;
+      width: 900px;
+    }
+    @media screen and (max-width: map-get($breakpoints, sm)) {
+      width: 600px;
     }
   }
 
   .bgFixed {
     position: fixed;
     z-index: 100;
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      display: none;
-    }
   }
 
   .searchBar {
@@ -40,6 +40,9 @@
     &.fixed {
       position: fixed;
       top: -65px;
+      @media screen and (max-width: map-get($breakpoints, md)) {
+        top: 0;
+      }
     }
     @media screen and (max-width: map-get($breakpoints, md)) {
       margin-top: 20px;
