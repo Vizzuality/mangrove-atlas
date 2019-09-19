@@ -71,6 +71,10 @@
     line-height: 0.85;
     text-align: left;
 
+    &._fixed {
+      font-size: 45px;
+    }
+
     @media screen and (max-width: map-get($breakpoints, md)) {
       font-size: 35px;
     }
