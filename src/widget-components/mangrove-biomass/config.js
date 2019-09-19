@@ -102,7 +102,7 @@ export const CONFIG = {
                 fontSize={11}
                 fill="rgba(0,0,0,0.54)"
               >
-                mg ha<tspan baselineShift="super">-1</tspan>
+                mg ha<tspan baselineShift = "super">-1</tspan>
               </text>
             </g>
           )

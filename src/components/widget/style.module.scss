@@ -19,13 +19,17 @@
   will-change: margin-bottom;
   overflow: hidden;
 
+    &._modal {
+      box-shadow: none;
+    }
+
   @media screen and (max-width: map-get($breakpoints, md)) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
   }
 
-  &.collapsed {
+  &._collapsed {
     margin-bottom: -90px;
     background-position: 0;
     @media screen and (max-width: map-get($breakpoints, md)) {
@@ -41,11 +45,11 @@
     }
   }
 
-  &.collapsed:last-child {
+  &._collapsed:last-child {
     background-position: 0 700px;
   }
 
-  &.layerActive::before {
+  &._layerActive::before {
     content: '';
     position: absolute;
     top: 5px;
@@ -61,6 +65,9 @@
   .wrapper {
     padding: $padding;
     @media screen and (max-width: map-get($breakpoints, sm)) {
+      padding: $paddingMobile;
+    }
+    &._modal {
       padding: $paddingMobile;
     }
   }
