@@ -5,15 +5,15 @@ import { month } from 'utils/nice-date';
 import Datepicker from 'components/datepicker';
 import ChartWidget from 'components/chart-widget';
 
-import styles from 'components/widget/style.module.scss';
-
-function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate = '2016-12-31', data, isCollapsed, slug, name, ...props}) {
-  const [state, setState] = useState({
-    startDate: moment(minDate).add(4, 'y'),
-    endDate: moment(maxDate).subtract(4, 'y')
+function MangroveAlerts({ config: widgetConfig, minDate = '2019-01-01', maxDate = '2020-12-31', data, isCollapsed, slug, name, ...props }) {
+  const [mangroveAlertsState, setMangroveAlertsState] = useState({
+    startDate: moment(minDate).add(0, 'y'),
+    endDate: moment(maxDate).subtract(0, 'y')
   });
 
-  const datepickerHandler = payload => setState(state => ({
+  const { startDate, endDate } = mangroveAlertsState;
+
+  const datepickerHandler = payload => setMangroveAlertsState(state => ({
     ...state,
     ...payload
   }));
@@ -27,8 +27,7 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
           numberOfMonths: 1,
           minDate,
           maxDate,
-          isOutsideRange: d =>
-            d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate)),
+          isOutsideRange: d => d.isAfter(moment(maxDate)) || d.isBefore(moment(minDate)),
           hideKeyboardShortcutsPanel: true,
           noBorder: true,
           readOnly: true
@@ -38,18 +37,22 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
     );
   }
 
-  const startDatepicker = (<DatePicker
-    date={moment(state.startDate)}
-    onChange={value => datepickerHandler({startDate: value})}
-  />);
+  const startDatepicker = (
+    <DatePicker
+      date={moment(startDate)}
+      onChange={value => datepickerHandler({startDate: value })}
+    />
+  );
 
-  const endDatepicker = (<DatePicker
-    date={moment(state.endDate)}
-    onChange={value => datepickerHandler({endDate: value})}
-  />);
+  const endDatepicker = (
+    <DatePicker
+      date={moment(endDate)}
+      onChange={value => datepickerHandler({endDate: value })}
+    />
+  );
 
-  const startMark = month(state.startDate) + 2;
-  const endMark = month(state.endDate) - 2;
+  const startMark = month(startDate) + 2;
+  const endMark = month(endDate) - 2;
 
   const seriesLineDefinition = {
     stroke: '#EB6240',
@@ -76,7 +79,7 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
       date: start,
       category,
       mark: moment(start).month(),
-      [seriesName]: -90 + index * 8
+      [seriesName]: -90 + (index * 25)
     }];
 
     if (start !== end) {
@@ -84,8 +87,8 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
         id: seriesName,
         date: end || 'Happening now.',
         category,
-          mark: ( end && moment(end).month()) || month(new Date()),
-        [seriesName]: -90 + index * 8
+        mark: ( end && moment(end).month()) || month(new Date()),
+        [seriesName]: -90 + (index * 25)
       });
     }
 
@@ -96,10 +99,17 @@ function MangroveAlerts({ config: widgetConfig, minDate = '1996-01-01', maxDate 
   }));
 
   const { chartData, chartConfig } = widgetConfig.parse(data, { startMark, endMark, series });
-  const alerts = chartData.map(it => it.year).filter(y => y >= startMark && y <= endMark ).length;
+  const alerts = chartData.map(alert => ({
+    start: alert.attributes.date_first,
+    end: alert.attributes.date_last
+  })).filter((alert) => {
+    const afterStart = moment(startDate).diff(alert.start) <= 0;
+    const beforeEnd = !alert.end || moment(endDate).diff(alert.end) >= 0;
+    return afterStart && beforeEnd;
+  }).length;
   const sentence = (
     <>
-      There were <span className={styles.bold}>{alerts}</span> loss alerts <br/>between {startDatepicker} and {endDatepicker}
+      There were <strong>{alerts}</strong> loss alerts <br />between {startDatepicker} and {endDatepicker}
     </>
   );
 

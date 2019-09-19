@@ -43,6 +43,7 @@ export const CONFIG = {
             }
           }
         },
+        height: 500,
         referenceLines: [
           {
             x: startMark,
@@ -52,7 +53,7 @@ export const CONFIG = {
               value: 'v',
               content: ({ viewBox: o }) => (
                 <g transform={`translate(${o.x - 10}, ${o.y})`}>
-                  <path d="m 0,0 h 1 v 1 z" transform="scale(10, 20)" fill="#000"></path>
+                  <path d="m 0,0 h 1 v 1 z" transform="scale(10, 20)" fill="#000" />
                 </g>
               )
             }
@@ -65,7 +66,7 @@ export const CONFIG = {
               value: 'v',
               content: ({ viewBox: o }) => (
                 <g transform={`translate(${o.x}, ${o.y})`}>
-                  <path d="m 0,0 h 1 v 1 z" transform="translate(10, 0) scale(-10, 20)" fill="#000"></path>
+                  <path d="m 0,0 h 1 v 1 z" transform="translate(10, 0) scale(-10, 20)" fill="#000" />
                 </g>
               )
             }
@@ -98,11 +99,11 @@ export const CONFIG = {
           domain: [0, 11],
           scale: 'linear',
           ticks: range(0, 12),
-          tick: props => {
+          tick: (props) => {
             const { payload: { value } } = props;
             const options = { ...props };
 
-            options.y = options.y + 6;
+            options.y += 6;
 
             if (value === 0) {
               options.textAnchor = 'start';
