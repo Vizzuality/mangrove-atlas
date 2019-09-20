@@ -45,7 +45,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   }
 
   const data = config.parse(rawData); 
-  const { metadata, chartData, chartConfig } = data;
+  const { metadata, chartConfig } = data;
 
   const { currentYear, unit } = coverageState;
   const optionsYears = sortBy(metadata.years.map(year => ({
@@ -68,8 +68,13 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
     setCoverageState({ ...coverageState, unit });
   };
 
+  const widgetData = processData(data, currentYear);
+  const chartData = {
+    data: widgetData,
+    config: chartConfig  
+  };
+
   try {
-    const widgetData = processData(data, currentYear);
     const unitOptions = [
       { value: '%', label: '%' },
       { value: 'km', label: 'km' }
@@ -102,12 +107,12 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   }
 
   return <ChartWidget
-  data={data}
-  slug={slug}
-  filename={slug}
-  sentence={sentence}
-  chartData={chartData}
-  {...props}
+    data={data}
+    slug={slug}
+    filename={slug}
+    sentence={sentence}
+    chartData={chartData}
+    {...props}
 />;
 }
 
