@@ -1,9 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { NavigationControl, FullscreenControl } from 'react-map-gl';
 import classnames from 'classnames';
+import pick from 'lodash/pick';
+import Bowser from 'bowser';
+
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
 import MangroveMap from 'components/map';
@@ -12,67 +15,36 @@ import Legend from 'components/map-legend';
 
 import styles from './style.module.scss';
 
-class MapContainer extends PureComponent {
-  static propTypes = {
-    viewport: PropTypes.shape({}),
-    setViewport: PropTypes.func,
-    isCollapse: PropTypes.bool.isRequired,
-    mapboxApiAccessToken: PropTypes.string.isRequired,
-    mapStyle: PropTypes.shape({}).isRequired,
-    bounds: PropTypes.shape({}).isRequired,
-    goToCountry: PropTypes.func,
-    goToAOI: PropTypes.func
+export const MapContainer = ({
+  viewport,
+  setViewport,
+  isCollapse,
+  mapboxApiAccessToken,
+  mapStyle,
+  bounds,
+  goToCountry,
+  goToAOI }) => {
+
+  useEffect(() => {
+    window.addEventListener('resize', resize);
+    resize();
+    return function cleanup() {
+      window.removeEventListener('resize', resize);
+    }
+  }, [window])
+
+  const browser = (Bowser.getParser(window.navigator.userAgent)).parsedResult.browser;
+  const onViewportChange = (viewport) => {
+    setViewport(pick(viewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']))
   }
 
-  static defaultProps = {
-    viewport: {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      longitude: 0,
-      latitude: 0,
-      zoom: 2,
-      maxZoom: 16,
-      bearing: 0,
-      pitch: 0
-    },
-    setViewport: () => { },
-    goToCountry: () => { },
-    goToAOI: () => { }
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.resize);
-    this.resize();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
-  }
-
-  onViewportChange = (viewport) => {
-    const { setViewport } = this.props;
-    setViewport(viewport);
-  }
-
-  resize = () => {
-    const { viewport } = this.props;
-    this.onViewportChange({
+  const resize = () => {
+    onViewportChange({
       ...viewport,
       width: window.innerWidth,
       height: window.innerHeight
     });
   }
-
-  render() {
-    const {
-      mapboxApiAccessToken,
-      mapStyle,
-      viewport,
-      bounds,
-      isCollapse,
-      goToCountry,
-      goToAOI
-    } = this.props;
 
     /**
      * CHANGING CURSOR FOR INTERACTIVE LAYERS
@@ -111,7 +83,6 @@ class MapContainer extends PureComponent {
         goToCountry({ iso: countryId });
       }
     };
-
     return (
       <div className={styles.map}>
         <MangroveMap
@@ -119,15 +90,19 @@ class MapContainer extends PureComponent {
           bounds={bounds}
           mapStyle={mapStyle}
           mapboxApiAccessToken={mapboxApiAccessToken}
-          onViewportChange={this.onViewportChange}
+          onViewportChange={onViewportChange}
           onClick={clickHandler}
           interactiveLayerIds={interactiveLayerIds}
         >
           {() => (
             <div className={styles.navigation}>
+              {browser.name !== 'Safari' &&
+                <MediaQuery minWidth={breakpoints.md + 1}>
+                  <FullscreenControl className={styles.fullscreen} />
+                </MediaQuery>
+              }
               <MediaQuery minWidth={breakpoints.sm}>
-                <FullscreenControl />
-                <NavigationControl />
+                <NavigationControl className={styles.zoomControls} />
               </MediaQuery>
             </div>
           )
@@ -148,6 +123,32 @@ class MapContainer extends PureComponent {
       </div>
     );
   }
+
+MapContainer.propTypes = {
+  viewport: PropTypes.shape({}),
+  setViewport: PropTypes.func,
+  isCollapse: PropTypes.bool.isRequired,
+  mapboxApiAccessToken: PropTypes.string.isRequired,
+  mapStyle: PropTypes.shape({}).isRequired,
+  bounds: PropTypes.shape({}).isRequired,
+  goToCountry: PropTypes.func,
+  goToAOI: PropTypes.func
+}
+
+MapContainer.defaultProps = {
+  viewport: {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    longitude: 0,
+    latitude: 0,
+    zoom: 2,
+    maxZoom: 16,
+    bearing: 0,
+    pitch: 0
+  },
+  setViewport: () => { },
+  goToCountry: () => { },
+  goToAOI: () => { }
 }
 
 export default MapContainer;

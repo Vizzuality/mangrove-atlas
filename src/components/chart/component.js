@@ -276,6 +276,11 @@ class Chart extends PureComponent {
 
             {tooltip && (
               <Tooltip
+                wrapperStyle={{ 
+                  position: 'absolute',
+                  visibility: 'visible',
+                  top: 0 }}
+                
                 isAnimationActive={false}
                 {...tooltip}
               />
@@ -283,7 +288,7 @@ class Chart extends PureComponent {
 
             {legend && (
               <Legend
-                className={styles.chart_legend}
+                wrapperStyle={{ pointerEvents: 'none' }}
                 {...legend}
                 data={data}
               />

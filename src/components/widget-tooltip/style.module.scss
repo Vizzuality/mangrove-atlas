@@ -1,0 +1,63 @@
+.chart_tooltip {
+  display: flex;
+  justify-content: 'space-around';
+  color: rgba(0,0,0,0.85);
+  line-height: 19px;
+  padding: 10px 20px;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
+  background-color: #FFF;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.data_title {
+  display: block;
+}
+
+.data_line {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-right: 20px;
+  &._column {
+    flex-direction: row;
+    padding: 5px;
+  }
+}
+
+.data_line.right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.data_label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-right: 20px;
+  &._column {
+    margin-right: 0;
+  }
+}
+
+.break_label {
+  font-style: italic;
+  flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.data_color {
+  width: 9px;
+  height: 18px;
+  border-radius: 22px;
+  margin-right: 10px;
+}
+
+.data_value {
+  margin-left: 19px; //data_color width + data_color margin
+  font-weight: bold;
+}
