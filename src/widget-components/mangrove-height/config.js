@@ -1,13 +1,24 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
 
 const numberFormat = format(',.3r');
 
+const widgetData = data => {
+  const dataFiltered = data.filter(d => d.hmax_m !== null);
+
+  return {
+    height: dataFiltered.map(d => d.hmax_m).reduce((previous, current) => current += previous),
+    year: dataFiltered.map(d => moment(d.date).year())
+  }
+}
+
 export const CONFIG = {
-  parse: () => ({
+  parse: (data) => ({
+    heightData: widgetData(data),
     chartData: [
       { year: 1996, '0 5': 18, '5 10': 50, '10 15': 70, '15 20': 90, '20 25': 98 },
       { year: 2007, '0 5': 30, '5 10': 40, '10 15': 60, '15 20': 70, '20 25': 75 },

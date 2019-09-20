@@ -11,7 +11,6 @@ const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({
 
 function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props}) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
-    unit: 'ha',
     startDate: 1996,
     endDate: 2016,
     filter: 'gain',

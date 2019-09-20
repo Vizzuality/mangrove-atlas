@@ -2,13 +2,25 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
 
 const numberFormat = format(',.3r');
 
+const sentenceData = data => {
+
+  const dataFiltered = data.filter(d => d.agb_mgha_1 !== null);
+
+  return {
+    data: dataFiltered.map(d => d.agb_mgha_1).reduce((previous, current) => current += previous),
+    year: dataFiltered.map(d => moment(d.date).year())
+  }
+}
+
 export const CONFIG = {
-  parse: () => ({
+  parse: (data) => ({
+    biomassData: sentenceData(data),
     chartData: [
       { year: 1996, '0 50': 18, '50 100': 50, '100 150': 70, '150 200': 90, '200 250': 98 },
       { year: 2007, '0 50': 30, '50 100': 40, '100 150': 60, '150 200': 70, '200 250': 75 },
