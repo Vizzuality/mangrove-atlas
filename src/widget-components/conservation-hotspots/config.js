@@ -6,27 +6,46 @@ import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2%');
 
-const widgetData = ({ list, metadata }) => {
-  if (list && list.length) {
-    const { location_coast_length_m: total } = metadata;
+const widgetData = ({ list }) => {
 
-    return list.filter(d => d.length_m).map((d) => {
-      const year = new Date(d.date).getFullYear();
-
-      return ({
-        x: Number(year),
-        y: d.length_m,
-        color: '#00857F',
-        percentage: d.length_m / total * 100,
-        unit: '%',
-        coverage: (d.length_m / 1000).toFixed(2),
-        value: d.length_m,
-        label: `Mangroves in ${year}`
-      });
-    });
+  const categoriesData = {
+    'Benefits From Conservation' : {
+      color: '#86CEE8',
+      label: 'Benefits From Conservation' 
+    },
+    'Requires Conservation' : {
+      color: '#ED896C',
+      label: 'Requires Conservation'
+    },
+    'Requires Monitoring' : { 
+      color: '#FDC067',
+      label: 'Requires Monitoring' 
+    },
+    'Stable Ecosystem' : {
+      color: '#0C3B6D',
+      label: 'Stable Ecosystem' 
+    },
+    'Monitoring Advised' : {
+      color: '#1B9ACC',
+      label: 'Monitoring Advised'
+    }
   }
 
-  return [];
+  return list.flatMap((d) => {
+    const year = new Date(d.date).getFullYear();
+    if (!d.con_hotspot_summary_km2) return null;
+    const total = Object.values(d.con_hotspot_summary_km2).reduce((previous, current) => current += previous);
+    return Object.entries(d.con_hotspot_summary_km2).map(([catKey, catValue]) => ({
+      x: Number(year),
+      y: catValue,
+      color: categoriesData[catKey].color || '',
+      label: categoriesData[catKey].label,
+      value: catValue,
+      percentage: (catValue / total) * 100,
+      unit: '%',
+      coverage: (catValue).toFixed(2)
+    }));    
+  });
 };
 
 const widgetMeta = ({ list, metadata }) => {
@@ -91,7 +110,6 @@ export const CONFIG = {
               { key: 'label' },
               { key: 'percentage', format: percentage => `Percentage: ${numberFormat(percentage / 100)}` },
               { key: 'coverage', format: coverage => `Coverage: ${(coverage)}km` }
-
             ]}
           />
         )

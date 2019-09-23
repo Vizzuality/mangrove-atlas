@@ -278,7 +278,6 @@ class Chart extends PureComponent {
               <Tooltip
                 wrapperStyle={{ 
                   position: 'absolute',
-                  visibility: 'visible',
                   top: 0 }}
                 
                 isAnimationActive={false}

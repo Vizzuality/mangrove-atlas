@@ -10,8 +10,7 @@
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_activity",
-          "conservation_hotspots"
+          "mangrove_activity"
         ]
       },
       {
