@@ -55,7 +55,7 @@ class Dashboard extends Component {
         className={classnames(styles.sidebar, {
           [styles.securityMargin]: securityMargin
         })}
-        triggers={window.innerWidth > breakpoints.md + 1
+        triggers={window.innerWidth > breakpoints.lg + 1
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
             { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
           : [{ top: -1 , callback: _sticky => this.setSticky(!_sticky) }]

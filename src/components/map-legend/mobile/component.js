@@ -14,7 +14,7 @@ const MobileLegendControl = ({ isCollapsed, toggleCollapse }) => {
 
   return (
     <Fragment>
-      <MediaQuery maxWidth={breakpoints.md - 1}>
+      <MediaQuery maxWidth={breakpoints.lg - 1}>
         <div className={classnames(styles.layersCollapse,
           { [styles.collapse]: isCollapsed })}
         >
