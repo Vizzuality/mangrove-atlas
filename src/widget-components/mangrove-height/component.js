@@ -21,7 +21,7 @@ const MangroveHeight = ({ isCollapsed, slug, name, currentLocation, ...props }) 
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
-  }));  
+  }));
 
   const areaSelector = (
     <Select
