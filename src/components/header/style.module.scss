@@ -104,3 +104,15 @@
     }
   }
 }
+
+@media print {
+  .header {
+    img {
+      display: none!important;
+    }
+
+    .searchButton {
+      display: none;
+    }
+  }
+}

@@ -80,3 +80,9 @@ $space-left-map-mobile: 20px;
     background-image: url('./icons/fullscreen.svg') !important;
   }
 }
+
+@media print {
+  .map {
+    display: none;
+  }
+}
