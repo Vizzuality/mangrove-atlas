@@ -96,7 +96,7 @@ export const mapStyle = createSelector(
         default:
       }
 
-      return layerStyle;
+      return newLayerStyle;
     });
 
     styleManager.basemap = _basemap;

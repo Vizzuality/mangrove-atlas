@@ -7,18 +7,28 @@ import ChartWidget from 'components/chart-widget';
 
 import config from './config';
 
-function MangroveAlerts({minDate = '2019-01-01', maxDate = '2020-12-31', data, isCollapsed, slug, name, ...props }) {
+function MangroveAlerts({minDate = '2019-01-01', maxDate = '2020-12-31', data, isCollapsed, slug, name, addFilter, ...props }) {
   const [mangroveAlertsState, setMangroveAlertsState] = useState({
-    startDate: moment(minDate).add(0, 'y'),
-    endDate: moment(maxDate).subtract(0, 'y')
+    startDate: moment(minDate).add(0, 'y').toISOString(),
+    endDate: moment(maxDate).subtract(0, 'y').toISOString()
   });
 
   const { startDate, endDate } = mangroveAlertsState;
 
-  const datepickerHandler = payload => setMangroveAlertsState(state => ({
-    ...state,
-    ...payload
-  }));
+  const datepickerHandler = (payload) => {
+    const complement = payload.endDate ? 'startDate' : 'endDate';
+    addFilter({
+      filter: {
+        id: 'alerts-style',
+        ...payload,
+        [complement]: mangroveAlertsState[complement]
+      }
+    });
+    setMangroveAlertsState(state => ({
+      ...state,
+      ...payload
+    }));
+  };
 
   function DatePicker({date, onChange}) {
     return (

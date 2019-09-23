@@ -5,7 +5,7 @@ import satellite from './basemaps/satellite.json';
 import wdpa from './contextuals/wdpa.json';
 import countries from './contextuals/countries.json';
 
-import alerts from './alerts.geojson';
+import alerts from './alerts.json';
 
 const extendedTemplate = {
   ...template,
