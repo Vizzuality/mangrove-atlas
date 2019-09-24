@@ -7,6 +7,4 @@ const mapStateToProps = state => ({
   data: state.mangroveData
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Component);
+export default connect(mapStateToProps)(Component);

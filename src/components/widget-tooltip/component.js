@@ -24,7 +24,7 @@ function Tooltip({ payload, settings, style, hideZeros }) {
             d => (hideZeros && values[d.key] ? null : (
               <div
                 key={d.key}
-                className={styles.data_line + ' ' + styles[`${d.position}`]}
+                className={styles.data_line + ' ' + styles[`${d.position}`] + ' ' + styles[`${d.type}`]}
               >
                 {/* LABEL */}
                 {((d.label && d.labelKey) || d.key) && (
