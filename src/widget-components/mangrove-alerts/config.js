@@ -4,10 +4,6 @@ import WidgetTooltip from 'components/widget-tooltip';
 import { Text } from 'recharts';
 import { range } from 'lodash';
 
-import { format } from 'd3-format';
-
-const numberFormat = format(',.2f');
-
 const Months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
 export const CONFIG = {
