@@ -32,6 +32,7 @@
   &._collapsed {
     margin-bottom: -90px;
     background-position: 0;
+    margin-top: -3px;
     @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-bottom: -85px;
     }
@@ -39,10 +40,12 @@
     .content {
       max-height: 0px;
     }
+
     .widget_template {
       overflow: hidden;
       padding-top: 50px;
     }
+
   }
 
   &._collapsed:last-child {
@@ -106,17 +109,7 @@
   }
 }
 
-.widget_template {
-  .sentence {
-    @include medium-text;
-    margin: 1rem 0;
-    position: relative;
-  }
 
-  .bold {
-    font-weight: bold;
-  }
-}
 
 .link {
   color: $body-color;
