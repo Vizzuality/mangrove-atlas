@@ -9,7 +9,7 @@ import config from './config';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
+function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
