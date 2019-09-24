@@ -95,7 +95,7 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
-        "height-basal"
+        "height-canopy"
       ]
     }
     ,
