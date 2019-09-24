@@ -65,7 +65,7 @@ class LocationSelector extends PureComponent {
 
     return (
       <Fragment>
-        <MediaQuery maxWidth={breakpoints.md - 1}>
+        <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
             className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
@@ -95,7 +95,7 @@ class LocationSelector extends PureComponent {
             </button>
           </Modal>
         </MediaQuery>
-        <MediaQuery minWidth={breakpoints.md}>
+        <MediaQuery minWidth={breakpoints.lg}>
           <Modal
             className={styles.location}
             isOpen={isOpened}
