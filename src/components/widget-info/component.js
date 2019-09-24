@@ -6,11 +6,11 @@ import styles from './style.module.scss';
 import Info from './info.svg';
 import ArrowRight from './arrow-right.svg';
 
-const WidgetInfo = ({ data: { chartData }, openInfoPanel, filename }) => (
+const WidgetInfo = ({ data: { chartData }, data, openInfoPanel, filename }) => (
   <div className={styles.info}>
     {filename !== 'highlighted_places' && (
       <DownloadLink
-        data={chartData}
+        data={chartData || data}
         filename={filename}
       />
     )}

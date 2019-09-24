@@ -43,7 +43,7 @@ const MangroveBiomass = ({ currentLocation, isCollapsed, slug, name, ...props })
       ***average([agb_mangrove_mgha-1])*** between {startDateSelector} and {endDateSelector}.
     </>
   );
-  const chartRData = {
+  const widgetData = {
     data: chartData,
     config: chartConfig
   };
@@ -56,7 +56,7 @@ const MangroveBiomass = ({ currentLocation, isCollapsed, slug, name, ...props })
       filename={slug}
       isCollapsed={isCollapsed}
       sentence={sentence}
-      chartData={chartRData}
+      chartData={widgetData}
       {...props}
     />
   );
