@@ -19,7 +19,7 @@
   will-change: margin-bottom;
   overflow: hidden;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
@@ -28,7 +28,7 @@
   &.collapsed {
     margin-bottom: -90px;
     background-position: 0;
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-bottom: -85px;
     }
 

@@ -54,7 +54,7 @@ function Widget({
       className={styles.title}
       onClick={collapseToggleHandler}
     >
-      <MediaQuery minWidth={breakpoints.md}>
+      <MediaQuery minWidth={breakpoints.lg}>
         {isCollapsed
           ? <FontAwesomeIcon icon={faChevronDown} />
           : <FontAwesomeIcon icon={faChevronUp} />}
