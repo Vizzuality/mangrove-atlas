@@ -80,6 +80,7 @@ class Header extends PureComponent {
             </button>
           )}
         </div>
+        <p className={styles.printOnly}>Powered by Mangrove atlas. https://mangrove-atlas.org</p>
       </div>
     );
   }
