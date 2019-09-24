@@ -227,10 +227,9 @@ class Map extends Component {
     }
 
     const MapFunctions = () => {
-      window.map = this.map;
       if (loaded && Boolean(this.map)) {
         if (typeof children === 'function') {
-          children(this.map);
+          return children(this.map);
         }
       }
 
