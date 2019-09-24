@@ -127,11 +127,11 @@ export const CONFIG = {
               flexDirection: 'column'
             }}
             settings={[
-              { label: '0 5:', color: 'rgba(154, 219, 217, 0.5)', key: '0 5' , format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '5 10:', color: '#5BC3BD', key: '5 10', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '10 15:', color: '#249892', key: '10 15', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '15 20:', color: '#00746F', key: '15 20', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '20 25:', color: '#004B47', key: '20 25', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '0 5:', color: 'rgba(154, 219, 217, 0.5)', key: '0 5' , format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '5 10:', color: '#5BC3BD', key: '5 10', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '10 15:', color: '#249892', key: '10 15', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '15 20:', color: '#00746F', key: '15 20', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '20 25:', color: '#004B47', key: '20 25', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
             ]}
             label={{ key: 'name'}}
           />
