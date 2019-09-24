@@ -55,7 +55,7 @@
     pointer-events: none;
     opacity: 0.2;
   }
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     min-width: 0;
   }
 }

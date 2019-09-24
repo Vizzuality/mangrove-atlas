@@ -80,6 +80,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
     sentence = <span>No data for this widget.</span>;
   }
   if (!widgetData) return null;
+
   return <ChartWidget
     data={data}
     slug={slug}

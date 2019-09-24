@@ -9,12 +9,12 @@
   z-index: 2;
   box-sizing: border-box;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     padding: 5px;
     margin: auto;
   }
   .header {
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       padding: 10px;
     }
   }
@@ -24,7 +24,7 @@
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-bottom: 0;
     }
   }

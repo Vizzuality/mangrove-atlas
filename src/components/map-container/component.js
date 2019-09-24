@@ -98,7 +98,7 @@ export const MapContainer = ({
         {() => (
           <div className={styles.navigation}>
             {browser.name !== 'Safari' && (
-              <MediaQuery minWidth={breakpoints.md + 1}>
+              <MediaQuery minWidth={breakpoints.lg + 1}>
                 <FullscreenControl className={styles.fullscreen} />
               </MediaQuery>
             )}
