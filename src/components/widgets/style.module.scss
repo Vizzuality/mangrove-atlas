@@ -3,3 +3,10 @@
   max-width: 540px;
   z-index: 300;
 }
+
+
+@media print {
+  .widgets {
+    max-width: 100%;
+  }
+}
