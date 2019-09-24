@@ -4,9 +4,14 @@ import WidgetTooltip from 'components/widget-tooltip';
 import { Text } from 'recharts';
 import { range } from 'lodash';
 
+import { format } from 'd3-format';
+
+const numberFormat = format(',.2f');
+
 const Months = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 
 export const CONFIG = {
+  
   parse: (data, { startMark, endMark, series }) => {
     return {
       chartData: data,
@@ -139,16 +144,11 @@ export const CONFIG = {
         },
         tooltip: {
           cursor: false,
-          content: (
+          content: (data,
             <WidgetTooltip
-              style={{
-                color: '#FFFFFF',
-                backgroundColor: '#383838'
-              }}
               settings={[
-                { key: 'id' },
-                { key: 'date', format: value => `Date: ${value}` },
-                { key: 'category', format: value => `Category: ${value}` }
+                { label: 'Date:', key: 'date', format: value => `${value}`, position: '_column' },
+                { label: 'Category:', key: 'category', format: value => `${value || '--'}`, position: '_column' }
               ]}
             />
           )
