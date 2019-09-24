@@ -12,6 +12,7 @@ import MangroveActivity from 'widget-components/mangrove-activity';
 import MangroveAlerts from 'widget-components/mangrove-alerts';
 import MangroveHeight from 'widget-components/mangrove-height';
 import MangroveBiomass from 'widget-components/mangrove-biomass';
+import ConservationHotspots from 'widget-components/conservation-hotspots';
 
 import Component from './component';
 
@@ -36,6 +37,9 @@ const templates = new Map([
   }],
   ['mangrove_biomass', {
     component: MangroveBiomass
+  }],
+  ['conservation_hotspots', {
+    component: ConservationHotspots
   }]
 ]);
 

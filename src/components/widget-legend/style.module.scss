@@ -40,7 +40,7 @@
   .widget_legend_list_item {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: baseline;
     list-style: none;
   }
 
@@ -112,5 +112,13 @@
       border-radius: 0;
     }
 
+  }
+  .itemWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .item {
+      font-weight: bold;
+    }
   }
 }

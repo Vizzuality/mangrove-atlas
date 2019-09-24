@@ -7,10 +7,10 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
-          "mangrove_activity",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass"
+          "mangrove_biomass",
+          "mangrove_activity"
         ]
       },
       {
@@ -21,7 +21,8 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass"
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       },
       {
@@ -32,7 +33,8 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass"
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       },
       {
@@ -43,7 +45,8 @@
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass"
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       }
     ],
@@ -92,7 +95,7 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
-        "height-canopy"
+        "height-basal"
       ]
     }
     ,
@@ -102,6 +105,11 @@
       "layersIds": [
         "biomass"
       ]
+    },
+    {
+      "name": "Conservation hotspots",
+      "slug": "conservation_hotspots",
+      "layersIds": []
     }
   ],
   "layers": [
