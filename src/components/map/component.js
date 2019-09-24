@@ -10,6 +10,7 @@ import WebMercatorViewport from 'viewport-mercator-project';
 
 import { easeCubic } from 'd3-ease';
 
+import alerts from 'modules/map-styles/templates/alerts.json';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -113,26 +114,23 @@ class Map extends Component {
 
   onLoad = () => {
     const { onLoad } = this.props;
-    this.setState({ loaded: true });
-
     onLoad({
       map: this.map,
       mapContainer: this.mapContainer
     });
+    this.setState({ loaded: true });
   }
 
-  onClick = e => {
+  onClick = (e) => {
     const { onClick } = this.props;
 
-    if (!onClick) {
-      return;
+    if (onClick) {
+      onClick({
+        event: e,
+        map: this.map,
+        mapContainer: this.mapContainer
+      });
     }
-
-    onClick({
-      event: e,
-      map: this.map,
-      mapContainer: this.mapContainer
-    });
   }
 
   onViewportChange = (v) => {
@@ -191,8 +189,55 @@ class Map extends Component {
   };
 
   render() {
-    const { customClass, children, dragPan, dragRotate, scrollZoom, touchZoom, touchRotate, doubleClickZoom, ...mapboxProps } = this.props;
+    const {
+      customClass,
+      children,
+      dragPan,
+      dragRotate,
+      scrollZoom,
+      touchZoom,
+      touchRotate,
+      doubleClickZoom,
+      filters,
+      mapStyle,
+      ...mapboxProps
+    } = this.props;
     const { viewport, loaded, flying } = this.state;
+    const ms = { ...mapStyle };
+
+    function applyFilters() {
+      const alertsFilter = filters.find(f => f.id === 'alerts-style');
+
+      if (alertsFilter) {
+        const startTimestamp = (new Date(alertsFilter.startDate)).valueOf();
+        const endTimestamp = (new Date(alertsFilter.endDate)).valueOf();
+        const filteredAlerts = {
+          ...alerts,
+          features: alerts.features.filter(feat => (
+            feat.properties.start_date >= startTimestamp
+            && feat.properties.end_date <= endTimestamp
+          ))
+        };
+        ms.sources.alerts = {
+          type: 'geojson',
+          data: filteredAlerts,
+          cluster: true
+        };
+      }
+    }
+
+    const MapFunctions = () => {
+      window.map = this.map;
+      if (loaded && Boolean(this.map)) {
+        if (typeof children === 'function') {
+          children(this.map);
+        }
+      }
+
+      return null;
+    };
+
+    applyFilters();
 
     return (
       <div
@@ -206,6 +251,7 @@ class Map extends Component {
           ref={(map) => { this.map = map && map.getMap(); }}
 
           // CUSTOM PROPS FROM REACT MAPBOX API
+          mapStyle={ms}
           {...mapboxProps}
 
           // VIEWPORT
@@ -230,7 +276,7 @@ class Map extends Component {
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >
-          {loaded && !!this.map && typeof children === 'function' && children(this.map)}
+          <MapFunctions />
         </ReactMapGL>
       </div>
     );

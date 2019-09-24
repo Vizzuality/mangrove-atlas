@@ -80,17 +80,15 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-              color: 'black',
-              backgroundColor: 'white',
-              display: 'flex',
+             
               flexDirection: 'column',
               justifyContent: 'space-around',
               marginLeft: '10px',
             }}
             settings={[
               { key: 'label' },
-              { key: 'percentage', format: percentage => `Percentage: ${numberFormat(percentage / 100)}` },
-              { key: 'coverage', format: coverage => `Coverage: ${(coverage)}km` }
+              { label: 'Percentage:', key: 'percentage', format: percentage => `${numberFormat(percentage / 100)}`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)}km`, position: '_column' }
 
             ]}
           />
