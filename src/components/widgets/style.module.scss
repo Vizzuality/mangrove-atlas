@@ -3,3 +3,14 @@
   max-width: 540px;
   z-index: 300;
 }
+
+
+@media print {
+  .widgets {
+    max-width: 1115px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 540px 540px;
+    grid-column-gap: 35px;
+  }
+}
