@@ -82,12 +82,12 @@ function Widget({
       <div className={classnames(styles.wrapper, {
         [styles._modal]: isLocationsModal
       })}>
-        {!isLocationsModal &&
+        {!isLocationsModal && (
           <div className={styles.header}>
             <CollapseButton />
             <ToggleLayersButton />
           </div>
-        }
+        )}
         {isLoading
           ? <Spinner />
           : (
