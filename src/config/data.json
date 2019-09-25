@@ -89,7 +89,7 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
-      "layersIds": ["alerts-mock"]
+      "layersIds": ["alerts-style"]
     },
     {
       "name": "Mangrove height",
@@ -137,7 +137,7 @@
     },
     {
       "name": "Mangrove deforestation alerts",
-      "id": "alerts-mock"
+      "id": "alerts-style"
     }
   ]
 }
