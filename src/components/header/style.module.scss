@@ -107,4 +107,42 @@
       }
     }
   }
+
+  .printOnly {
+    font-size: 19px;
+    line-height: 29px;
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+}
+
+@media print {
+  .header {
+    width: 100%;
+    margin-bottom: 0;
+    display: block;
+
+    img {
+      display: none!important;
+    }
+
+    .searchBar {
+      margin-top: 0;
+    }
+
+    .searchButton {
+      display: none;
+    }
+
+    .titleBtn {
+      margin: auto;
+    }
+
+    .printOnly {
+      display: block;
+    }
+  }
 }

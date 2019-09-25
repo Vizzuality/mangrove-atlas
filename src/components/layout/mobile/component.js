@@ -18,6 +18,7 @@ class MobileLayout extends PureComponent {
         {!mapView && (
           <Sidebar>
             <Widgets />
+            <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
           </Sidebar>
         )}
         {mapView && (

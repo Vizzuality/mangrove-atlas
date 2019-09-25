@@ -33,3 +33,18 @@
     height: initial;
   }
 }
+
+@media print {
+  .sidebar {
+    max-width: 100%;
+    padding: 90px 83px 60px 83px;
+
+    .actionBar {
+      display: none;
+    }
+
+    &.securityMargin {
+      margin-bottom: 0;
+    }
+  }
+}
