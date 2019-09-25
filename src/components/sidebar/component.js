@@ -10,7 +10,7 @@ import styles from './style.module.scss';
 
 class Dashboard extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.func,
     collapseAll: PropTypes.func,
     expandAll: PropTypes.func,
     isCollapsed: PropTypes.bool
