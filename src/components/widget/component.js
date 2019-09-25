@@ -66,6 +66,7 @@ function Widget({
     ? null
     : (
       <Button
+        className={styles.toogleButton}
         hasBackground={isActive}
         hasContrast={!isActive}
         isActive={isActive}

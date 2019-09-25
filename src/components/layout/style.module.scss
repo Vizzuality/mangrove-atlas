@@ -8,3 +8,19 @@
   height: 100vh;
   z-index: 1;
 }
+
+.printOnly {
+  font-size: 19px;
+  line-height: 29px;
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  margin-top: 60px;
+}
+
+@media print {
+  .printOnly {
+    display: block;
+  }
+}

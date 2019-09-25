@@ -32,6 +32,7 @@
   &._collapsed {
     margin-bottom: -90px;
     background-position: 0;
+    margin-top: -3px;
     @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-bottom: -85px;
     }
@@ -40,10 +41,12 @@
       max-height: 0px;
       opacity: 0.0;
     }
+
     .widget_template {
       overflow: hidden;
       padding-top: 50px;
     }
+
   }
 
   &._collapsed:last-child {
@@ -107,20 +110,29 @@
   }
 }
 
-.widget_template {
-  .sentence {
-    @include medium-text;
-    margin: 1rem 0;
-    position: relative;
-  }
 
-  .bold {
-    font-weight: bold;
-  }
-}
 
 .link {
   color: $body-color;
   font-weight: bold;
   padding-bottom: 10px;
+}
+
+@media print {
+  $border-radius: 20px;
+
+  .widget {
+    max-width: 540px;
+    box-shadow: none;
+    border: 2px solid rgba($primary, 0.35);
+    border-radius: $border-radius;
+
+    &._layerActive::before {
+      border: 0 solid rgba($primary, 0.35);
+    }
+  }
+
+  .toogleButton {
+    display: none;
+  }
 }
