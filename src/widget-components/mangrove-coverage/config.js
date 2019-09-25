@@ -61,7 +61,8 @@ export const CONFIG = {
             dataKey: 'percentage',
             nameKey: 'label',
             innerRadius: '60%',
-            outerRadius: '80%'
+            outerRadius: '80%',
+            isAnimationActive: false
           }
         }
       },

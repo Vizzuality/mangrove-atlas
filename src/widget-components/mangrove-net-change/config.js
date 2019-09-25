@@ -49,7 +49,8 @@ const CONFIG = {
         lines: {
           netChange: {
             stroke: 'rgba(0,0,0,0.7)',
-            legend: 'Net Result'
+            legend: 'Net Result',
+            isAnimationActive: false
           }
         },
         bars: {
@@ -58,14 +59,16 @@ const CONFIG = {
             transform: `translate(${(4 + 10) / 2}, 0)`,
             fill: '#A6CB10',
             radius: [10, 10, 0, 0],
-            legend: 'Gain'
+            legend: 'Gain',
+            isAnimationActive: false
           },
           loss: {
             barSize: 10,
             transform: `translate(-${(4 + 10) / 2}, 0)`,
             fill: '#EB6240',
             radius: [10, 10, 0, 0],
-            legend: 'Loss'
+            legend: 'Loss',
+            isAnimationActive: false
           }
         }
       },
