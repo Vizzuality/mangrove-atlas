@@ -1,34 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import OnScroll from 'react-on-scroll';
 import classnames from 'classnames';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, ...parentProps }) => {
-  const [securityMargin, setMargin] = useState(false);
+const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 
   return (
-    <OnScroll
-      triggers={[{ top: -65, callback: _securityMargin => setMargin(!_securityMargin) }]}
-    >
-      <div className={classnames(styles.widgets, {
-        [styles.securityMargin]: securityMargin
-      })}>
-        {widgets.map((widget) => {
-          const Widget = templates.get(widget.slug).component;
+    <div className={classnames(styles.widgets, { [styles.securityMargin]: isSticky })}>
+      {widgets.map((widget) => {
+        const Widget = templates.get(widget.slug).component;
 
-          return (
-            <Widget
-              key={widget.slug}
-              {...widget}
-              {...parentProps}
-            />
-          );
-        })}
-      </div>
-    </OnScroll>)
-};
+        return (
+          <Widget
+            key={widget.slug}
+            {...widget}
+            {...parentProps}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 WidgetList.propTypes = {
   widgets: PropTypes.arrayOf(
@@ -37,12 +30,14 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
-  templates: PropTypes.instanceOf(Map)
+  templates: PropTypes.instanceOf(Map),
+  isSticky: PropTypes.bool
 };
 
 WidgetList.defaultProps = {
   widgets: [],
-  templates: new Map()
+  templates: new Map(),
+  isSticky: false
 };
 
 export default WidgetList;

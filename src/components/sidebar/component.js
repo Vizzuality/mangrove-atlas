@@ -47,7 +47,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const { children, isCollapsed } = this.props;
+    const { children: Children, isCollapsed } = this.props;
     const { sticky, securityMargin } = this.state;
 
     return (
@@ -58,7 +58,7 @@ class Dashboard extends Component {
         triggers={window.innerWidth > breakpoints.lg + 1
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
             { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
-          : [{ top: -1 , callback: _sticky => this.setSticky(!_sticky) }]
+          : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
           }
       >
 
@@ -88,7 +88,7 @@ class Dashboard extends Component {
             <LanguageSelect />
           </div>
         </div>
-        {children}
+        <Children isSticky={sticky} />
       </OnScroll>
     );
   }

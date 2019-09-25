@@ -7,7 +7,7 @@ import styles from '../style.module.scss';
 const DesktopLayout = () => (
   <div>
     <Sidebar>
-      <Widgets />
+      {({ isSticky }) => <Widgets isSticky={isSticky} />}
     </Sidebar>
     <div className={styles.vis}>
       <Map />

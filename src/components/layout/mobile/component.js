@@ -17,7 +17,7 @@ class MobileLayout extends PureComponent {
       <div>
         {!mapView && (
           <Sidebar>
-            <Widgets />
+            {({ isSticky }) => <Widgets isSticky={isSticky} />}
           </Sidebar>
         )}
         {mapView && (
