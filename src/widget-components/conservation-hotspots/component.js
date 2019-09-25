@@ -70,11 +70,12 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
       return numberFormat(o.percentage);
     }));
 
-    const highestCategory = (chartData.data).find(data => numberFormat(data.percentage) === highestValue).label;
+    const highestCategory = (chartData.data).find(data => Number(numberFormat(data.percentage)) === highestValue).label;
 
     sentence = (
       <>
-        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue}%</strong> was <strong>{highestCategory}</strong> in <strong className="notranslate">{yearSelector}</strong>.</span>      </>
+        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue}%</strong> was <strong>{highestCategory}</strong> in <strong className="notranslate">{yearSelector}</strong>.</span>     
+      </>
     );
   } catch (e) {
     sentence = <span>No data for this widget.</span>;
@@ -82,9 +83,11 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   if (!widgetData) return null;
 
   return <ChartWidget
+    name={name}
     data={data}
     slug={slug}
     filename={slug}
+    isCollapsed={isCollapsed}
     sentence={sentence}
     chartData={chartData}
     {...props}

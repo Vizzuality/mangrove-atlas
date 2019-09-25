@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Chart from 'components/chart';
 import Widget from 'components/widget';
@@ -30,28 +30,9 @@ function ChartWidget({
   );
 }
 
-// Widget.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   slug: PropTypes.string.isRequired,
-//   layerId: PropTypes.string,
-//   layersIds: PropTypes.arrayOf(PropTypes.string),
-//   location: PropTypes.shape({}),
-//   isActive: PropTypes.bool,
-//   isCollapsed: PropTypes.bool,
-//   isLoading: PropTypes.bool,
-//   toggleActive: PropTypes.func,
-//   toggleCollapse: PropTypes.func
-// };
-
-// Widget.defaultProps = {
-//   isActive: false,
-//   isCollapsed: false,
-//   isLoading: false,
-//   layerId: null,
-//   layersIds: null,
-//   location: null,
-//   toggleActive: () => { },
-//   toggleCollapse: () => { }
-// };
+Widget.propTypes = {
+  sentence: PropTypes.string.isRequired,
+  chartData: PropTypes.shape({}).isRequired
+};
 
 export default ChartWidget;
