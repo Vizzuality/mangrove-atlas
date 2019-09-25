@@ -13,9 +13,9 @@ const Legend = ({ type, groups, direction, variant = 'rect' }) => (
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
         <ul className={classnames(styles.widget_legend_list, styles[`_${type}`])}>
-          {groups[g].map(item => (
+          {groups[g].map((item, i) => (
             <li
-              key={`item-${item.color}`}
+              key={`item-${i + 1}-${item.color}`}
               className={classnames(styles.widget_legend_list_item,
                 styles[`_${variant}`],
                 styles[`_${type}`])

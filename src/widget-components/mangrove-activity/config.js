@@ -129,7 +129,7 @@ export const CONFIG = {
             const labels = payload.map(({ color, payload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
               value: payload.legend
-            }))
+            }));
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
           }
         },

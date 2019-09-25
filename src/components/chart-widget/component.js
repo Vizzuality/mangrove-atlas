@@ -31,8 +31,13 @@ function ChartWidget({
 }
 
 Widget.propTypes = {
-  sentence: PropTypes.string.isRequired,
-  chartData: PropTypes.shape({}).isRequired
+  sentence: PropTypes.string,
+  chartData: PropTypes.shape({})
+};
+
+Widget.defaultProps = {
+  sentence: '',
+  chartData: {}
 };
 
 export default ChartWidget;
