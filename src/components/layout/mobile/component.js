@@ -17,8 +17,12 @@ class MobileLayout extends PureComponent {
       <div>
         {!mapView && (
           <Sidebar>
-            {({ isSticky }) => <Widgets isSticky={isSticky} />}
-            <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+            {({ isSticky }) => (
+              <>
+                <Widgets isSticky={isSticky} />
+                <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+              </>
+            )}
           </Sidebar>
         )}
         {mapView && (
