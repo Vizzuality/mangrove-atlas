@@ -31,31 +31,36 @@ export const CONFIG = {
           {
             stackId: 'bar',
             fill: '#C9BB42',
-            stroke: '#C9BB42'
+            stroke: '#C9BB42',
+            isAnimationActive: false
           },
           '5 10':
           {
             stackId: 'bar',
             fill: '#8BA205',
-            stroke: '#8BA205'
+            stroke: '#8BA205',
+            isAnimationActive: false
           },
           '10 15':
           {
             stackId: 'bar',
             fill: '#428710',
-            stroke: '#428710'
+            stroke: '#428710',
+            isAnimationActive: false
           },
           '15 20':
           {
             stackId: 'bar',
             fill: '#0A6624',
-            stroke: '#0A6624'
+            stroke: '#0A6624',
+            isAnimationActive: false
           },
           '20 25':
           {
             stackId: 'bar',
             fill: '#103C1F',
-            stroke: '#103C1F'
+            stroke: '#103C1F',
+            isAnimationActive: false
           }
         }
       },

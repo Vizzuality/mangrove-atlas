@@ -78,14 +78,14 @@ export const CONFIG = {
             x1: 0,
             x2: 11,
             y1: -100,
-            y2: 90,
+            y2: 480,
             fill: 'url(#diagonal-stripe-1) #000'
           },
           {
             x1: startMark,
             x2: endMark,
             y1: -100,
-            y2: 100,
+            y2: 480,
             fill: '#fff',
             fillOpacity: 1
           }
