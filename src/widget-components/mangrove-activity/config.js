@@ -32,7 +32,7 @@ const widgetData = data => data.map(location => ({
 const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
 
 export const CONFIG = {
-  parse: data => {
+  parse: (data) => {
     const chartData = widgetData(data.data);
     const dataRanked = sortRanking(chartData);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
@@ -81,7 +81,8 @@ export const CONFIG = {
                   stroke="rgba(0, 0, 0, 0.7)"
                 />
               )
-            }
+            },
+            isAnimationActive: false
           },
           bars: {
             gain: {
@@ -105,14 +106,16 @@ export const CONFIG = {
                     </g>
                   );
                 }
-              }
+              },
+              isAnimationActive: false
             },
             loss: {
               barSize: 10,
               fill: '#EB6240',
               radius: [0, 10, 10, 0],
               stackId: 'stacked',
-              legend: 'Loss'
+              legend: 'Loss',
+              isAnimationActive: false
             }
           },
         },
@@ -126,7 +129,7 @@ export const CONFIG = {
             const labels = payload.map(({ color, payload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
               value: payload.legend
-              }))
+            }))
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
           }
         },
@@ -148,7 +151,6 @@ export const CONFIG = {
               ]}
               label={{ key: 'name'}}
               payload={[
-                //{ key: 'name' },
                 { name: 'Gain', format: value => `${numberFormat(value)}`, unit: 'km²' },
                 { name: 'Loss', format: value => `${numberFormat(value)}`, unit: 'km²' },
                 { name: 'Net result', format: value => `${numberFormat(value)}`, unit: 'km²' },
