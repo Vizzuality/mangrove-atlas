@@ -7,7 +7,7 @@ import styles from '../style.module.scss';
 const DesktopLayout = () => (
   <div>
     <Sidebar>
-      <Widgets />
+      {({ isSticky }) => <Widgets isSticky={isSticky} />}
       <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
     </Sidebar>
     <div className={styles.vis}>
