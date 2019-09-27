@@ -1,0 +1,8 @@
+@media print {
+  [class$="-container"] {
+    border-bottom: none!important;
+  }
+  [class$="-IndicatorsContainer"] {
+    display: none!important;
+  }
+}
