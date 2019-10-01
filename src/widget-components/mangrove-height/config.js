@@ -4,13 +4,49 @@ import { format } from 'd3-format';
 import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
+import looseJsonParse from 'utils/loose-json-parse';
+
 
 const numberFormat = format(',.3r');
 
-const widgetData = data => {
-  const dataFiltered = data.filter(d => d.hmax_m !== null);
+const chunk = (array, size) =>{
+    const chunked_arr = [];
+    for (let i = 0; i < array.length; i++) {
+      const last = chunked_arr[chunked_arr.length - 1];
+      if (!last || last.length === size) {
+        chunked_arr.push([array[i]]);
+      } else {
+        last.push(array[i]);
+      }
+    }
+    return chunked_arr;
+}
 
-  console.log(dataFiltered)
+const getLegend = (legendValues) => {
+  return Object.keys(looseJsonParse(legendValues));
+}
+
+const getBars = (barValues) => {
+  return Object.values(looseJsonParse(barValues));
+}
+
+const histogramData = data => {
+  const dataFiltered = data.filter(d => d.hmax_hist_m !== null);
+
+  const histogramData = dataFiltered.map(d => ({
+    year: moment(d.date).year(),
+    legend: getLegend(d.hmax_hist_m),
+    bars: getBars(d.hmax_hist_m)
+  }))
+  return {dataFiltered};
+}
+const filterData = (data) => {
+  return data.filter(d => d.hmax_m !== null);
+}
+const widgetData = data => {
+  const dataFiltered = filterData(data);
+
+
 
   return {
     height: dataFiltered.map(d => d.hmax_m).reduce((previous, current) => current += previous),
@@ -18,17 +54,24 @@ const widgetData = data => {
   }
 }
 
+const metaData = data => {
+  const dataFiltered = filterData(data);
+  return dataFiltered.map(d => moment(d.date).year())
+}
+
 export const CONFIG = {
   parse: (data) => ({
+    histogram : histogramData(data),
     heightData: widgetData(data),
     chartData: [
       { year: 1996, '0 5': 18, '5 10': 50, '10 15': 70, '15 20': 90, '20 25': 98 },
       { year: 2007, '0 5': 30, '5 10': 40, '10 15': 60, '15 20': 70, '20 25': 75 },
       { year: 2008, '0 5': 10, '5 10': 40, '10 15': 65, '15 20': 80, '20 25': 85 },
-      { year: 2009, '0 5': 15, '5 10': 42, '10 15': 67, '15 20': 82, '20 25': 90 },
-      { year: 2010, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
+      { year: 2010, '0 5': 15, '5 10': 42, '10 15': 67, '15 20': 82, '20 25': 90 },
+      { year: 2015, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
+      { year: 2016, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
     ],
-    metadata: [1996, 2007, 2008, 2009, 2010],
+    metadata: metaData(data),
     chartConfig: {
       cartesianGrid: {
         vertical: false,
@@ -93,8 +136,8 @@ export const CONFIG = {
           stroke: 'rgba(0,0,0,0.2)',
           textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
         },
-        ticks: ['1996', '2007', '2008', '2009', '2010'],
-        domain: [1996, 2010],
+        ticks: metaData(data),
+        domain: [metaData(data).first, metaData(data).last],
         interval: 0
       },
       yAxis: {
