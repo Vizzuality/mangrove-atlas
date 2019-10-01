@@ -109,7 +109,9 @@
     {
       "name": "Conservation hotspots",
       "slug": "conservation_hotspots",
-      "layersIds": []
+      "layersIds": [
+        "cons-hotspots"
+      ]
     }
   ],
   "layers": [
@@ -122,6 +124,10 @@
       "name": "Mangrove change",
       "id": "net-change-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
+      "name": "Conservation hotspots",
+      "id": "cons-hotspots"
     },
     {
       "name": "Height basal",
