@@ -17,6 +17,9 @@ import ConservationHotspots from 'widget-components/conservation-hotspots';
 import Component from './component';
 
 const templates = new Map([
+  ['highlighted-places', {
+    component: HighlightedPlaces
+  }],
   ['mangrove_coverage', {
     component: MangroveCoverage
   }],

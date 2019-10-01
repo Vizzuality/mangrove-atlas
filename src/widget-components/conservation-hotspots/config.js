@@ -33,6 +33,7 @@ const widgetData = ({ list }) => {
 
   return list.flatMap((d) => {
     const year = new Date(d.date).getFullYear();
+    
     if (!d.con_hotspot_summary_km2) return null;
     const total = Object.values(d.con_hotspot_summary_km2).reduce((previous, current) => current += previous);
     return Object.entries(d.con_hotspot_summary_km2).map(([catKey, catValue]) => ({
