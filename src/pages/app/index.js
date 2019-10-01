@@ -11,7 +11,7 @@ import styles from './style.module.scss';
 
 const AppPage = () => (
   <div className={styles.app}>
-    <img className={styles.logo} src={logo} alt="logo" />
+    <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
     <MediaQuery maxWidth={breakpoints.lg}>
       <MobileLayout />
     </MediaQuery>
