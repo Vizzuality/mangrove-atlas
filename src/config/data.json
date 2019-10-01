@@ -110,7 +110,7 @@
       "name": "Conservation hotspots",
       "slug": "conservation_hotspots",
       "layersIds": [
-        "cons_hotspots"
+        "cons-hotspots"
       ]
     }
   ],
@@ -127,8 +127,7 @@
     },
     {
       "name": "Conservation hotspots",
-      "id": "cons_hotspots",
-      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+      "id": "cons-hotspots"
     },
     {
       "name": "Height basal",
