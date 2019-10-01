@@ -11,7 +11,8 @@ const basemap = state => state.map.basemap;
 
 function sortLayers(layers) {
   const order = {
-    'selected-wdpa-polygons copy 1': 10
+    'selected-wdpa-polygons copy 1': 10,
+    'alerts-style': 100
   };
 
   return layers.sort((a, b) => {
@@ -31,12 +32,10 @@ export const layerStyles = createSelector(
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
-    // const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
 
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers
-      .filter(style => activeIds.includes(style.id));
-    // .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
+      .filter(style => activeIds.includes(style.id) || (style.metadata && style.metadata.mangroveGroup && activeIds.includes(style.metadata.mangroveGroup)));
   }
 );
 
@@ -44,10 +43,10 @@ export const mapStyle = createSelector(
   [basemap, layerStyles, filters],
   (_basemap, _layerStyles, _filters) => {
     const coverageFilter = ({ year }) => [
-      "all",
+      'all',
       [
-        "match",
-        ["get", "year"],
+        'match',
+        ['get', 'year'],
         [year],
         true,
         false
@@ -56,7 +55,7 @@ export const mapStyle = createSelector(
 
     const netChangeFilter = ({ startYear, endYear }) => {
       if (startYear === endYear) {
-        return ["boolean", false];
+        return ['boolean', false];
       }
 
       const availableYears = ['1996', '2007', '2008', '2009', '2010', '2015', '2016'];
@@ -66,10 +65,10 @@ export const mapStyle = createSelector(
         .filter(y => parseInt(y) < parseInt(endYear));
 
       return [
-        "all",
+        'all',
         [
-          "match",
-          ["get", "start_year"],
+          'match',
+          ['get', 'start_year'],
           years,
           true,
           false
@@ -77,26 +76,27 @@ export const mapStyle = createSelector(
       ];
     };
 
-    const layersWithFilters = _layerStyles.map(layerStyle => {
+    const layersWithFilters = _layerStyles.map((layerStyle) => {
+      const newLayerStyle = { ...layerStyle };
       let widgetFilter;
 
       switch (layerStyle.id) {
         case 'coverage-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
           if (widgetFilter) {
-            layerStyle.filter = coverageFilter(widgetFilter);
+            newLayerStyle.filter = coverageFilter(widgetFilter);
           }
           break;
         case 'net-change-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'net-change-1996-2016');
           if (widgetFilter) {
-            layerStyle.filter = netChangeFilter(widgetFilter);
+            newLayerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
         default:
       }
 
-      return layerStyle;
+      return newLayerStyle;
     });
 
     styleManager.basemap = _basemap;

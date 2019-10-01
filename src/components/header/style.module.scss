@@ -3,7 +3,7 @@
 .header {
   display: flex;
   margin-bottom: 50px;
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     margin-bottom: 25px;
   }
 
@@ -20,7 +20,7 @@
       display: none;
     }
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       width: 900px;
     }
     @media screen and (max-width: map-get($breakpoints, sm)) {
@@ -43,12 +43,12 @@
       position: fixed;
       top: -65px;
       max-width: 600px;
-      @media screen and (max-width: map-get($breakpoints, md)) {
+      @media screen and (max-width: map-get($breakpoints, lg)) {
         top: 0;
       }
     }
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-top: 20px;
       font-size: 35px;
     }
@@ -75,7 +75,7 @@
       font-size: 45px;
     }
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       font-size: 35px;
     }
   }
@@ -94,17 +94,55 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       padding: 6px 12px;
       height: auto;
       width: auto;
     }
     svg {
-      @media screen and (max-width: map-get($breakpoints, md)) {
+      @media screen and (max-width: map-get($breakpoints, lg)) {
         height: 30px;
         width: 30px;
         vertical-align: 0;
       }
+    }
+  }
+
+  .printOnly {
+    font-size: 19px;
+    line-height: 29px;
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+}
+
+@media print {
+  .header {
+    width: 100%;
+    margin-bottom: 0;
+    display: block;
+
+    img {
+      display: none!important;
+    }
+
+    .searchBar {
+      margin-top: 0;
+    }
+
+    .searchButton {
+      display: none;
+    }
+
+    .titleBtn {
+      margin: auto;
+    }
+
+    .printOnly {
+      display: block;
     }
   }
 }

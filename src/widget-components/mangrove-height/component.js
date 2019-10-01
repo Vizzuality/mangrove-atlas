@@ -7,15 +7,13 @@ import config from './config';
 const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocation, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
-  const [area, setAreaType] = useState('basal');
-  
-  if (!rawData) { return null };
+  const [area, setAreaType] = useState('canopy');
 
   const { chartData, metadata, chartConfig, heightData } = config.parse(rawData);
   const location = currentLocation.name;
 
   const areaOptions = [
-    { label: 'basal', value: 'basal' },
+    //{ label: 'basal', value: 'basal' }, *TO-DO add opton when data is ready
     { label: 'canopy', value: 'canopy'}
   ];
 

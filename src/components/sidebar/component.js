@@ -10,7 +10,7 @@ import styles from './style.module.scss';
 
 class Dashboard extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.func,
     collapseAll: PropTypes.func,
     expandAll: PropTypes.func,
     isCollapsed: PropTypes.bool
@@ -47,7 +47,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const { children, isCollapsed } = this.props;
+    const { children: Children, isCollapsed } = this.props;
     const { sticky, securityMargin } = this.state;
 
     return (
@@ -55,10 +55,10 @@ class Dashboard extends Component {
         className={classnames(styles.sidebar, {
           [styles.securityMargin]: securityMargin
         })}
-        triggers={window.innerWidth > breakpoints.md + 1
+        triggers={window.innerWidth > breakpoints.lg + 1
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
             { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
-          : [{ top: -1 , callback: _sticky => this.setSticky(!_sticky) }]
+          : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
           }
       >
 
@@ -88,7 +88,7 @@ class Dashboard extends Component {
             <LanguageSelect />
           </div>
         </div>
-        {children}
+        <Children isSticky={sticky} />
       </OnScroll>
     );
   }

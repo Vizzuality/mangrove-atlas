@@ -2,17 +2,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { format } from 'd3-format';
 
 import styles from './style.module.scss';
+
+const numberFormat = format(',.2f');
 
 const Legend = ({ type, groups, direction, variant = 'rect' }) => (
   <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
         <ul className={classnames(styles.widget_legend_list, styles[`_${type}`])}>
-          {groups[g].map(item => (
+          {groups[g].map((item, i) => (
             <li
-              key={`item-${item.color}`}
+              key={`item-${i + 1}-${item.color}`}
               className={classnames(styles.widget_legend_list_item,
                 styles[`_${variant}`],
                 styles[`_${type}`])
@@ -24,7 +27,12 @@ const Legend = ({ type, groups, direction, variant = 'rect' }) => (
                   fill={item.color}
                 />
               </svg>
-              <span>{item.value}</span>
+              <div className={styles.itemWrapper}>
+                <span>{item.value}</span>
+                { item.payload && item.payload.y &&
+                  <span className={styles.item}>{numberFormat(item.payload.y)}</span>
+                }
+              </div>
             </li>
           ))}
         </ul>

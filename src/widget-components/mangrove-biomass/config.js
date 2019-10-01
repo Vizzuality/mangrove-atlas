@@ -45,31 +45,36 @@ export const CONFIG = {
           {
             stackId: 'bar',
             fill: '#EAF19D',
-            stroke: '#EAF19D'
+            stroke: '#EAF19D',
+            isAnimationActive: false
           },
           '50 100':
           {
             stackId: 'bar',
             fill: '#B8E98E',
-            stroke: '#B8E98E'
+            stroke: '#B8E98E',
+            isAnimationActive: false
           },
           '100 150':
           {
             stackId: 'bar',
             fill: '#1B97C1',
-            stroke: '#1B97C1'
+            stroke: '#1B97C1',
+            isAnimationActive: false
           },
           '150 200':
           {
             stackId: 'bar',
             fill: '#1C52A3',
-            stroke: '#1C52A3'
+            stroke: '#1C52A3',
+            isAnimationActive: false
           },
           '200 250':
           {
             stackId: 'bar',
             fill: '#13267F',
-            stroke: '#13267F'
+            stroke: '#13267F',
+            isAnimationActive: false
           }
         }
       },
@@ -142,11 +147,11 @@ export const CONFIG = {
               flexDirection: 'column'
             }}
             settings={[
-              { label: '0 50:', color: '#EAF19D', key: '0 50' , format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column'},
-              { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column'},
+              { label: '0 50:', color: '#EAF19D', key: '0 50' , format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
+              { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked'},
             ]}
             label={{ key: 'name'}}
           />

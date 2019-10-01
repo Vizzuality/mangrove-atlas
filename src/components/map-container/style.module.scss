@@ -22,7 +22,7 @@ $space-left-map-mobile: 20px;
   bottom: $space-around-map;
   z-index: 1;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     top: $space-top-map-mobile;
     left: $space-left-map-mobile;
     bottom: auto;
@@ -78,5 +78,11 @@ $space-left-map-mobile: 20px;
 .fullscreen {
   > button[title='Toggle fullscreen'] {
     background-image: url('./icons/fullscreen.svg') !important;
+  }
+}
+
+@media print {
+  .map {
+    display: none;
   }
 }

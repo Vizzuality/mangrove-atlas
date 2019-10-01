@@ -2,4 +2,18 @@
   margin-bottom: 50px;
   max-width: 540px;
   z-index: 300;
+  &.securityMargin {
+    margin-top: 140px;
+  }
+}
+
+
+@media print {
+  .widgets {
+    max-width: 1115px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 48% 48%;
+    grid-column-gap: 4%;
+  }
 }

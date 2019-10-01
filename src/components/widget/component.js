@@ -54,7 +54,7 @@ function Widget({
       className={styles.title}
       onClick={collapseToggleHandler}
     >
-      <MediaQuery minWidth={breakpoints.md}>
+      <MediaQuery minWidth={breakpoints.lg}>
         {isCollapsed
           ? <FontAwesomeIcon icon={faChevronDown} />
           : <FontAwesomeIcon icon={faChevronUp} />}
@@ -66,6 +66,7 @@ function Widget({
     ? null
     : (
       <Button
+        className={styles.toogleButton}
         hasBackground={isActive}
         hasContrast={!isActive}
         isActive={isActive}
@@ -81,12 +82,12 @@ function Widget({
       <div className={classnames(styles.wrapper, {
         [styles._modal]: isLocationsModal
       })}>
-        {!isLocationsModal &&
+        {!isLocationsModal && (
           <div className={styles.header}>
             <CollapseButton />
             <ToggleLayersButton />
           </div>
-        }
+        )}
         {isLoading
           ? <Spinner />
           : (

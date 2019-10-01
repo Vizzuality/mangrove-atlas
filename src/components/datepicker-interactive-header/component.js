@@ -77,8 +77,7 @@ const ReactSelectStyles = {
       transform: 'translateX(-12px)'
     },
   }),
-  menuList: provided => ({
-    //...provided,
+  menuList: () => ({
     overflowX: hidden
 
   }),
@@ -121,7 +120,7 @@ const ReactSelectStyles = {
     cursor: 'pointer',
     padding: 0
   }),
-  indicatorSeparator: provided => ({
+  indicatorSeparator: () => ({
     width: 0
   })
 };
@@ -148,7 +147,9 @@ function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
   const monthOptions = moment.months().filter((_, i) => {
     if (dateMoment.year() === minMoment.year()) {
       return i >= minMoment.month();
-    } else if (dateMoment.year() === maxMoment.year()) {
+    }
+
+    if (dateMoment.year() === maxMoment.year()) {
       return i <= maxMoment.month();
     }
 

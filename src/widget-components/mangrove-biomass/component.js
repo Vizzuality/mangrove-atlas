@@ -44,7 +44,7 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
       average({biomassData.data}) between {startDateSelector} and {endDateSelector}.
     </>
   );
-  const chartRData = {
+  const widgetData = {
     data: chartData,
     config: chartConfig
   };
@@ -57,7 +57,7 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
       filename={slug}
       isCollapsed={isCollapsed}
       sentence={sentence}
-      chartData={chartRData}
+      chartData={widgetData}
       {...props}
     />
   );

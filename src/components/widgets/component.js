@@ -1,23 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, ...parentProps }) => (
-  <div className={styles.widgets}>
-    {widgets.map((widget) => {
-      const Widget = templates.get(widget.slug).component;
+const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 
-      return (
-        <Widget
-          key={widget.slug}
-          {...widget}
-          {...parentProps}
-        />
-      );
-    })}
-  </div>
-);
+  return (
+    <div className={classnames(styles.widgets, { [styles.securityMargin]: isSticky })}>
+      {widgets.map((widget) => {
+        const Widget = templates.get(widget.slug).component;
+
+        return (
+          <Widget
+            key={widget.slug}
+            {...widget}
+            {...parentProps}
+          />
+        );
+      })}
+    </div>
+  );
+}
 
 WidgetList.propTypes = {
   widgets: PropTypes.arrayOf(
@@ -26,12 +30,14 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
-  templates: PropTypes.instanceOf(Map)
+  templates: PropTypes.instanceOf(Map),
+  isSticky: PropTypes.bool
 };
 
 WidgetList.defaultProps = {
   widgets: [],
-  templates: new Map()
+  templates: new Map(),
+  isSticky: false
 };
 
 export default WidgetList;

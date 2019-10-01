@@ -17,13 +17,13 @@ class DownloadLink extends PureComponent {
   }
 
   render() {
-    const { data, slug } = this.props;
+    const { data, filename } = this.props;
     const csvData = jsonToCSV(data);
     return (
       <CSVLink
         className={styles.link}
         data={csvData}
-        filename={`${slug}-${Date.now()}}.csv`}
+        filename={`${filename}-${Date.now()}}.csv`}
       >
         <img src={ArrowDown} className={styles.icon} alt="info-icon" />
         Download data
