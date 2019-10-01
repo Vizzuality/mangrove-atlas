@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import background from './bg-shape.svg';
 import fixedBackground from './bg-fixed.svg';
-import logo from './mangrove-logo.svg';
 import styles from './style.module.scss';
 
 class Header extends PureComponent {
@@ -54,7 +53,6 @@ class Header extends PureComponent {
           src={fixedBackground}
           alt="Background"
         />
-        <img className={styles.logo} src={logo} alt="Background" />
         <div className={classnames(styles.searchBar,
           { [styles.fixed]: sticky })}
         >
