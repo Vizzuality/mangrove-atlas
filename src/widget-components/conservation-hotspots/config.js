@@ -3,29 +3,29 @@ import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
+import looseJsonParse from 'utils/loose-json-parse';
 
 const numberFormat = format(',.2%');
 
 const widgetData = ({ list }) => {
-
   const categoriesData = {
-    'Benefits From Conservation' : {
+    'Benefits From Conservation': {
       color: '#86CEE8',
-      label: 'Benefits From Conservation' 
+      label: 'Benefits From Conservation'
     },
-    'Requires Conservation' : {
+    'Requires Conservation': {
       color: '#ED896C',
       label: 'Requires Conservation'
     },
-    'Requires Monitoring' : { 
+    'Requires Monitoring': { 
       color: '#FDC067',
-      label: 'Requires Monitoring' 
+      label: 'Requires Monitoring'
     },
-    'Stable Ecosystem' : {
+    'Stable Ecosystem': {
       color: '#0C3B6D',
-      label: 'Stable Ecosystem' 
+      label: 'Stable Ecosystem'
     },
-    'Monitoring Advised' : {
+    'Monitoring Advised': {
       color: '#1B9ACC',
       label: 'Monitoring Advised'
     }
@@ -34,8 +34,11 @@ const widgetData = ({ list }) => {
   return list.flatMap((d) => {
     const year = new Date(d.date).getFullYear();
     if (!d.con_hotspot_summary_km2) return null;
-    const total = Object.values(d.con_hotspot_summary_km2).reduce((previous, current) => current += previous);
-    return Object.entries(d.con_hotspot_summary_km2).map(([catKey, catValue]) => ({
+
+    const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string') ? looseJsonParse(d.con_hotspot_summary_km2) : d.con_hotspot_summary_km2;
+
+    const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
+    return Object.entries(hotSpotData).map(([catKey, catValue]) => ({
       x: Number(year),
       y: catValue,
       color: categoriesData[catKey].color || '',
