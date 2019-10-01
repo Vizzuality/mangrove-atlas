@@ -18,7 +18,7 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     isLoading: false
   });
 
-  if (!rawData) {
+  if (!rawData || !rawData.meta) {
     return null;
   }
 
