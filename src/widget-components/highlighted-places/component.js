@@ -35,7 +35,7 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
               {d.id !== currentLocation.id && (
                 <div
                   style={{
-                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${d.name === 'Rufiji' ? Rufiji : Saloum})`,
+                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${d.name === 'Rufiji Delta' ? Rufiji : Saloum})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'
                   }}

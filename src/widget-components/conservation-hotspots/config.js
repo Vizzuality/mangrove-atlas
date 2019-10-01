@@ -33,6 +33,7 @@ const widgetData = ({ list }) => {
 
   return list.flatMap((d) => {
     const year = new Date(d.date).getFullYear();
+    
     if (!d.con_hotspot_summary_km2) return null;
 
     const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string') ? looseJsonParse(d.con_hotspot_summary_km2) : d.con_hotspot_summary_km2;
