@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setViewport } from 'modules/map/actions';
+import { setViewport, setPopup, removePopup } from 'modules/map/actions';
 import { mapStyle } from 'modules/map-styles/selectors';
 import { pageActions } from 'modules/pages/actions';
 
@@ -14,6 +14,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setViewport,
+  setPopup,
+  removePopup,
   goToCountry: pageActions['PAGE/COUNTRY'],
   goToAOI: pageActions['PAGE/AOI']
 };

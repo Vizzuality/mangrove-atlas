@@ -1,0 +1,29 @@
+.mapPopupHotspots {
+  text-align: center;
+  padding: 6px;
+  padding-bottom: 0;
+
+  .title {
+    font-weight: bold;
+  }
+
+  .content {
+    ul {
+      list-style: none outside none;
+      padding: 0;
+    }
+
+    .feature {
+      display: flex;
+      justify-content: space-between;
+
+      .name {
+        display: inline-block;
+      }
+      .value {
+        display: inline-block;
+        font-weight: bold;
+      }
+    }
+  }
+}
