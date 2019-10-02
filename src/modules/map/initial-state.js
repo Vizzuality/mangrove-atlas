@@ -10,5 +10,6 @@ export default {
   },
   bounds: {},
   display: true,
-  isViewportFixed: false
+  isViewportFixed: false,
+  popup: null
 };

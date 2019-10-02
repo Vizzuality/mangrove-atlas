@@ -81,6 +81,18 @@ $space-left-map-mobile: 20px;
   }
 }
 
+// Map pop up
+
+:global(.mapboxgl-popup-content) {
+  border-radius: 12px;
+  padding: 5px;
+  max-width: 300px;
+  
+  > button {
+    padding: 10px;
+  }
+}
+
 @media print {
   .map {
     display: none;

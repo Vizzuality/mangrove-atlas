@@ -18,6 +18,8 @@ import styles from './style.module.scss';
 export const MapContainer = ({
   viewport,
   setViewport,
+  setPopup,
+  removePopup,
   isCollapse,
   mapboxApiAccessToken,
   mapStyle,
@@ -56,12 +58,30 @@ export const MapContainer = ({
    * You can provide a custom getCursor function that will overwrite
    * the one used by default, documentation is on the same page.
   */
-  const interactiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons'];
+  const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots'];
+  const currentLayers = mapStyle.layers.map(layer => layer.id);
+  const interactiveLayerIds = requestedInteractiveLayerIds.filter(id => currentLayers.includes(id));
+
+  function popupCloseHandler() {
+    removePopup();
+  }
 
   const clickHandler = ({ event }) => {
     const { features } = event;
     const country = features.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
     const wdpa = features.find(feat => feat.layer.id === 'selected-wdpa-polygons');
+    const hotspots = features.find(feat => feat.layer.id === 'cons-hotspots');
+
+    if (hotspots) {
+      setPopup({
+        type: 'hotspots',
+        coordinates: event.lngLat.slice(),
+        data: hotspots.properties
+      });
+      return;
+    }
+
+    popupCloseHandler();
 
     if (wdpa) {
       // todo: this should be done at api level
@@ -84,6 +104,7 @@ export const MapContainer = ({
       goToCountry({ iso: countryId });
     }
   };
+
   return (
     <div className={styles.map}>
       <MangroveMap
@@ -94,6 +115,7 @@ export const MapContainer = ({
         onViewportChange={onViewportChange}
         onClick={clickHandler}
         interactiveLayerIds={interactiveLayerIds}
+        onPopupClose={popupCloseHandler}
       >
         {() => (
           <div className={styles.navigation}>
