@@ -18,9 +18,9 @@ const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({
 
 function processData(data) {
   return {
-    gain: data.map(d => d.gain_m2/1000000).reduce((previous, current) => current += previous),
-    loss: -data.map(d => d.loss_m2/1000000).reduce((previous, current) => current += previous),
-    net: data.map(d => d.net_change_m2/1000000).reduce((previous, current) => current += previous),
+    gain: data.map(d => d.gain_m2/1000000).reduce((previous, current) => current + previous, 0),
+    loss: -data.map(d => d.loss_m2/1000000).reduce((previous, current) => current + previous, 0),
+    net: data.map(d => d.net_change_m2/1000000).reduce((previous, current) => current + previous, 0),
   };
 }
 const widgetData = data => data.map(location => ({

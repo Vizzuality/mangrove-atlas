@@ -13,7 +13,7 @@ const sentenceData = data => {
   const dataFiltered = data.filter(d => d.agb_mgha_1 !== null);
 
   return {
-    data: dataFiltered.map(d => d.agb_mgha_1).reduce((previous, current) => current += previous),
+    data: dataFiltered.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous),
     year: dataFiltered.map(d => moment(d.date).year())
   }
 }

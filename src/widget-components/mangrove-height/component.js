@@ -14,7 +14,9 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
 
   const { chartData, metadata, chartConfig, heightData } = config.parse(rawData);
 
-  if (!chartData) return null;
+  if (chartData.length <= 0) {
+    return null;
+  }
 
   const location = currentLocation.name;
   const areaOptions = [

@@ -28,15 +28,18 @@ const getBars = (barValues) => {
   const barsData = (Object.values(looseJsonParse(barValues)));
   const result = chunk(barsData, 5)
   const resultado = result.map(
-    r => numberFormat((r.reduce((previous, current) => current += previous) / 1000))
+    r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
   );
   maxValue = Math.max(...resultado)
   return resultado;
 }
 
 
-const histogramData = data => {
-  if (!data) return null;
+const histogramData = (data) => {
+  if (!data) {
+    return null;
+  }
+
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
@@ -50,19 +53,14 @@ const histogramData = data => {
   return histogram;
 }
 
-const filterData = (data) => data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null);
+const filterData = data => data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null);
 
-const sentenceData = data => {
-  return {
-    height: data.map(d => d.hmax_m).reduce((previous, current) => current += previous),
-    year: data.map(d => moment(d.date).year())
-  }
-}
+const sentenceData = data => ({
+  height: data.map(d => d.hmax_m).reduce((previous, current) => current + previous, 0),
+  year: data.map(d => moment(d.date).year())
+});
 
-const metaData = data => {
-  return data.map(d => moment(d.date).year())
-}
-
+const metaData = data => data.map(d => moment(d.date).year());
 
 export const CONFIG = {
   parse: (data) => {
