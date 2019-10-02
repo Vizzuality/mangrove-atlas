@@ -5,12 +5,13 @@ import ChartWidget from 'components/chart-widget';
 
 import config from './config';
 
-const MangroveBiomass = ({ currentLocation, isCollapsed, slug, name, ...props }) => {
+const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, name, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
 
-  const data = config.parse();
-  const { chartConfig, metadata, chartData } = data;
+  if (!rawData) { return null };
+
+  const { chartData, metadata, chartConfig, biomassData } = config.parse(rawData);
 
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
@@ -40,7 +41,7 @@ const MangroveBiomass = ({ currentLocation, isCollapsed, slug, name, ...props })
   const sentence = (
     <>
       Mean mangrove above-ground biomass density (mg ha-1) in <strong>{location}</strong> was
-      ***average([agb_mangrove_mgha-1])*** between {startDateSelector} and {endDateSelector}.
+      average({biomassData.data}) between {startDateSelector} and {endDateSelector}.
     </>
   );
   const widgetData = {

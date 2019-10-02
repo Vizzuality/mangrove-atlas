@@ -4,15 +4,19 @@ import ChartWidget from 'components/chart-widget';
 
 import config from './config';
 
-const MangroveHeight = ({ isCollapsed, slug, name, currentLocation, ...props }) => {
+const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocation, ...props }) => {
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('canopy');
+  if (!rawData) {
+    return null;
+  }
 
-  const data = config.parse();
-  const { chartConfig, metadata, chartData } = data;
+  const { chartData, metadata, chartConfig, heightData } = config.parse(rawData);
+
+  if (!chartData) return null;
+
   const location = currentLocation.name;
-
   const areaOptions = [
     //{ label: 'basal', value: 'basal' }, *TO-DO add opton when data is ready
     { label: 'canopy', value: 'canopy'}
@@ -53,7 +57,7 @@ const MangroveHeight = ({ isCollapsed, slug, name, currentLocation, ...props }) 
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average([hmax_mangrove_m])</strong> between {startDateSelector} and {endDateSelector}.
+      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average({heightData.height})</strong> between {startDateSelector} and {endDateSelector}.
     </>
   );
   const chartRData = {
