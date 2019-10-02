@@ -8,8 +8,14 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('canopy');
+  if (!rawData) {
+    return null;
+  }
 
   const { chartData, metadata, chartConfig, heightData } = config.parse(rawData);
+
+  if (!chartData) return null;
+
   const location = currentLocation.name;
   const areaOptions = [
     //{ label: 'basal', value: 'basal' }, *TO-DO add opton when data is ready
