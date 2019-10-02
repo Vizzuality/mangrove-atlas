@@ -22,31 +22,35 @@ const chunk = (array, size) =>{
     return chunked_arr;
 }
 
-const getLegend = (legendValues) => {
-  return Object.keys(looseJsonParse(legendValues));
-}
-
 const getBars = (barValues) => {
-  return Object.values(looseJsonParse(barValues));
+  const barsData = (Object.values(looseJsonParse(barValues)));
+  const result = chunk(barsData, 5)
+  
+  return result.map(
+    r => Number((r.reduce((previous, current) => current += previous)).toFixed(2))
+  );
 }
 
 const histogramData = data => {
-  const dataFiltered = data.filter(d => d.hmax_hist_m !== null);
-
-  const histogramData = dataFiltered.map(d => ({
-    year: moment(d.date).year(),
-    legend: getLegend(d.hmax_hist_m),
-    bars: getBars(d.hmax_hist_m)
-  }))
-  return {dataFiltered};
-}
-const filterData = (data) => {
-  return data.filter(d => d.hmax_m !== null);
-}
-const widgetData = data => {
   const dataFiltered = filterData(data);
+  const histogram = dataFiltered.map(d => (
+    {
+      year: moment(d.date).year(),
+      '0 5': getBars(d.hmax_hist_m)[0],
+      '5 10': getBars(d.hmax_hist_m)[1],
+      '10 15': getBars(d.hmax_hist_m)[2],
+      '15 20': getBars(d.hmax_hist_m)[3],
+      '20 25': getBars(d.hmax_hist_m)[4],
+    }  
+  ));
+  return histogram;
+}
 
 
+const filterData = (data) => data.filter(d => d.hmax_m !== null);
+
+const sentenceData = data => {
+  const dataFiltered = filterData(data);
 
   return {
     height: dataFiltered.map(d => d.hmax_m).reduce((previous, current) => current += previous),
@@ -61,16 +65,8 @@ const metaData = data => {
 
 export const CONFIG = {
   parse: (data) => ({
-    histogram : histogramData(data),
-    heightData: widgetData(data),
-    chartData: [
-      { year: 1996, '0 5': 18, '5 10': 50, '10 15': 70, '15 20': 90, '20 25': 98 },
-      { year: 2007, '0 5': 30, '5 10': 40, '10 15': 60, '15 20': 70, '20 25': 75 },
-      { year: 2008, '0 5': 10, '5 10': 40, '10 15': 65, '15 20': 80, '20 25': 85 },
-      { year: 2010, '0 5': 15, '5 10': 42, '10 15': 67, '15 20': 82, '20 25': 90 },
-      { year: 2015, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
-      { year: 2016, '0 5': 20, '5 10': 50, '10 15': 70, '15 20': 98, '20 25': 102 },
-    ],
+    chartData : histogramData(data),
+    heightData: sentenceData(data),
     metadata: metaData(data),
     chartConfig: {
       cartesianGrid: {
@@ -137,7 +133,7 @@ export const CONFIG = {
           textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
         },
         ticks: metaData(data),
-        domain: [metaData(data).first, metaData(data).last],
+        domain: [metaData(data)[0], metaData(data)[metaData(data).length - 1]],
         interval: 0
       },
       yAxis: {
