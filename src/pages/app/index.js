@@ -5,11 +5,13 @@ import LocationModal from 'components/location-modal';
 import InfoModal from 'components/info-modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
+import logo from './mangrove-logo.svg';
 import styles from './style.module.scss';
 
 
 const AppPage = () => (
   <div className={styles.app}>
+    <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
     <MediaQuery maxWidth={breakpoints.lg}>
       <MobileLayout />
     </MediaQuery>

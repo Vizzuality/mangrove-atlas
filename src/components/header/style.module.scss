@@ -3,9 +3,6 @@
 .header {
   display: flex;
   margin-bottom: 50px;
-  @media screen and (max-width: map-get($breakpoints, lg)) {
-    margin-bottom: 25px;
-  }
 
   .bg,
   .bgFixed {
@@ -19,13 +16,6 @@
     &.isHidden {
       display: none;
     }
-
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      width: 900px;
-    }
-    @media screen and (max-width: map-get($breakpoints, sm)) {
-      width: 600px;
-    }
   }
 
   .bgFixed {
@@ -33,24 +23,21 @@
     z-index: 100;
   }
 
+  .logo {
+    position: absolute;
+    transform: translateX(-50px);
+  }
+
   .searchBar {
-    margin-top: 80px;
+    margin-top: 120px;
     z-index: 300;
     width: 100%;
     display: flex;
 
     &.fixed {
       position: fixed;
-      top: -65px;
+      top: -110px;
       max-width: 600px;
-      @media screen and (max-width: map-get($breakpoints, lg)) {
-        top: 0;
-      }
-    }
-
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      margin-top: 20px;
-      font-size: 35px;
     }
   }
 
@@ -74,10 +61,6 @@
     &._fixed {
       font-size: 45px;
     }
-
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      font-size: 35px;
-    }
   }
 
   .searchButton {
@@ -94,18 +77,6 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      padding: 6px 12px;
-      height: auto;
-      width: auto;
-    }
-    svg {
-      @media screen and (max-width: map-get($breakpoints, lg)) {
-        height: 30px;
-        width: 30px;
-        vertical-align: 0;
-      }
-    }
   }
 
   .printOnly {
@@ -116,6 +87,57 @@
     text-align: center;
     margin-top: 30px;
     margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, lg)) {
+  .header {
+    margin-bottom: 25px;
+
+    .bg,
+    .bgFixed {
+      width: 900px;
+    }
+
+    .logo {
+      transform: translate(-15px, -15px);
+    }
+  
+    .searchBar {
+      margin-top: 98px;
+      font-size: 35px;
+
+      &.fixed {
+        top: 0;
+        margin-top: 20px;
+      }
+    }
+
+    .title {
+      font-size: 35px;
+    }
+
+    .searchButton {
+      padding: 6px 12px;
+      height: auto;
+      width: auto;
+
+      svg {
+        height: 30px;
+        width: 30px;
+        vertical-align: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, sm)) {
+  .header {
+  
+    .bg,
+    .bgFixed {
+      width: 600px;
+    }
   }
 }
 
