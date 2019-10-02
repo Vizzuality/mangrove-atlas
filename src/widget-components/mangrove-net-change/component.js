@@ -27,19 +27,6 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
     value: year.toString()
   }));
 
-  // TODO: This must be done in the API
-  const editedChartData = [
-    {
-      x: '1996',
-      netChange: 0,
-      gain: 0,
-      loss: 0,
-      name: '1996',
-      year: 1996
-    },
-    ...chartData
-  ];
-
   const changeStartYear = (year) => {
     addFilter({
       filter: {
@@ -61,7 +48,7 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
     setNetChangeState({ ...netChangeState, endYear: year });
   };
 
-  const widgetData = editedChartData.filter(
+  const widgetData = chartData.filter(
     ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
     && parseInt(y, 10) <= parseInt(endYear, 10)
   );
