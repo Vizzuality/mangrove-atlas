@@ -3,8 +3,18 @@ import initialState from './initial-state';
 
 const { viewport, bounds } = initialState;
 
+const {
+  resetViewport,
+  setViewport,
+  setBasemap,
+  setBounds,
+  setViewportFixed,
+  setPopup,
+  removePopup
+} = actions;
+
 export default {
-  [actions.resetViewport]: state => ({
+  [resetViewport]: state => ({
     ...state,
     viewport: {
       ...state.viewport,
@@ -14,20 +24,28 @@ export default {
     },
     bounds
   }),
-  [actions.setViewport]: (state, { payload }) => ({
+  [setViewport]: (state, { payload }) => ({
     ...state,
     viewport: payload
   }),
-  [actions.setBasemap]: (state, { payload }) => ({
+  [setBasemap]: (state, { payload }) => ({
     ...state,
     basemap: payload
   }),
-  [actions.setBounds]: (state, { payload }) => ({
+  [setBounds]: (state, { payload }) => ({
     ...state,
     bounds: payload
   }),
-  [actions.setViewportFixed]: (state, { payload }) => ({
+  [setViewportFixed]: (state, { payload }) => ({
     ...state,
     isViewportFixed: payload.value
+  }),
+  [setPopup]: (state, { payload }) => ({
+    ...state,
+    popup: payload
+  }),
+  [removePopup]: state => ({
+    ...state,
+    popup: null
   })
 };
