@@ -73,7 +73,6 @@ export const CONFIG = {
     chartConfig: {
       type: 'pie',
       layout: 'centric',
-      height: 250,
       margin: { top: 20, right: 0, left: 0, bottom: 0 },
       xKey: 'percentage',
       yKeys: {
