@@ -26,12 +26,12 @@ let maxValue = 0;
 const getBars = (barValues) => {
   if (!barValues) return null;
   const barsData = (Object.values(looseJsonParse(barValues)));
-  const result = chunk(barsData, 5)
-  const resultado = result.map(
+  const chnkedData = chunk(barsData, 5)
+  const formattedData = chnkedData.map(
     r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
   );
-  maxValue = Math.max(...resultado)
-  return resultado;
+  maxValue = Math.max(...formattedData)
+  return formattedData;
 }
 
 
