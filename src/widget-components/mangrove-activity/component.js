@@ -22,7 +22,7 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
   }
 
   const { chartData, metaData, chartConfig } = config.parse(rawData);
-  const { startDate, endDate, filter} = mangroveActivityState;
+  const { startDate, endDate, filter } = mangroveActivityState;
 
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
