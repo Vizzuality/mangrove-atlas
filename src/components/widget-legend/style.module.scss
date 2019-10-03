@@ -69,6 +69,12 @@
       height: 12px;
       width: 12px;
     }
+
+    &._bar svg {
+      border-radius: 0;
+      height: 12px;
+      width: 3px;
+    }
   }
 
   .widget_legend_list_item {

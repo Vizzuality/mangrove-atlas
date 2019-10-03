@@ -9,10 +9,16 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
 
-  if (!rawData) { return null };
+  if (!rawData) {
+    return null;
+  }
 
   const { chartData, metadata, chartConfig, biomassData } = config.parse(rawData);
-  
+
+  if (chartData.length <= 0) {
+    return null;
+  }
+
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
