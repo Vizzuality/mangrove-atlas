@@ -12,7 +12,7 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   if (!rawData) { return null };
 
   const { chartData, metadata, chartConfig, biomassData } = config.parse(rawData);
-
+  
   const dateOptions = metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
@@ -21,6 +21,8 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   const startDateSelector = (
     <Select
       value={startDate}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
+        option.value === startDate}      
       options={dateOptions}
       onChange={value => setStartDate(value)}
     />
@@ -33,6 +35,8 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   const endDateSelector = (
     <Select
       value={endDate}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(endDate, 10) ||
+        option.value === endDate}      
       options={dateOptions}
       onChange={value => setEndDate(value)}
     />
