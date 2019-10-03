@@ -29,11 +29,16 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   const data = config.parse(rawData);
   const { metadata, chartConfig } = data;
   const { currentYear } = coverageState;
+  const { years } = metadata;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),
     value: year
   })), ['value']);
   let sentence = null;
+
+
+  const endYear = Math.max(...years);
+  const startYear = Math.min(...years); 
 
   const changeYear = (currentYear) => {
     addFilter({
@@ -74,7 +79,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
 
     sentence = (
       <>
-        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue}%</strong> was <strong>{highestCategory}</strong> in <strong className="notranslate">{yearSelector}</strong>.</span>     
+        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue}%</strong> was <strong>{highestCategory}</strong> for the period <strong className="notranslate"> {startYear}-{endYear}</strong>.</span>     
       </>
     );
   } catch (e) {
