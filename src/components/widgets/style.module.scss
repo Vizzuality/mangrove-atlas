@@ -11,9 +11,11 @@
 @media print {
   .widgets {
     max-width: 1115px;
-    margin: auto;
+    width: 100%;
     display: grid;
-    grid-template-columns: 48% 48%;
-    grid-column-gap: 4%;
+    grid-template-columns: 49% 49%;
+    grid-column-gap: 2%;
+    grid-row-gap: 50px;
+    break-after: always;
   }
 }
