@@ -89,16 +89,17 @@ const CONFIG = {
         strokeDasharray: '6 6'
       },
       legend: {
-        align: 'center',
+        align: 'left',
         verticalAlign: 'top',
         layout: 'horizontal',
         height: 50,
         content: ({ payload }) => {
-          const labels = payload.map(({color, value, payload}) => ({
+          const labels = payload.map(({color, value, payload: labelPayload}) => ({
             color,
-            value: payload.legend || value
+            value: labelPayload.legend || value,
+            variant: (labelPayload.dataKey === 'netChange') ? 'bar' : 'rect'
           }));
-          return <WidgetLegend type="net" direction="vertical" groups={{ labels }} />;
+          return <WidgetLegend direction="vertical" groups={{ labels }} />;
         }
       },
       tooltip: {

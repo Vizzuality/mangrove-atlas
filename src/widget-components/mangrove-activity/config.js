@@ -80,9 +80,9 @@ export const CONFIG = {
                   fill="#000"
                   stroke="rgba(0, 0, 0, 0.7)"
                 />
-              )
+              ),
+              isAnimationActive: false
             },
-            isAnimationActive: false
           },
           bars: {
             gain: {
@@ -126,10 +126,12 @@ export const CONFIG = {
           height: 50,
 
           content: ({ payload }) => {
-            const labels = payload.map(({ color, payload }) => ({
+            const labels = payload.map(({ color, payload: labelPayload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
-              value: payload.legend
+              value: labelPayload.legend,
+              variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
             }));
+
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
           }
         },
