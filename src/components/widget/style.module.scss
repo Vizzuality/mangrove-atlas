@@ -122,10 +122,14 @@
   $border-radius: 20px;
 
   .widget {
-    max-width: 540px;
+    max-width: 600px;
     box-shadow: none;
+    margin: 250px 0;
     border: 2px solid rgba($primary, 0.35);
     border-radius: $border-radius;
+    break-after: always;
+
+
 
     &._layerActive::before {
       border: 0 solid rgba($primary, 0.35);
