@@ -9,6 +9,7 @@ import { easeCubic } from 'd3-ease';
 
 import MapPopupHotspots from 'components/map-popup-hotspots';
 import alerts from 'modules/map-styles/templates/alerts.json';
+import rasters from './constants';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -197,6 +198,12 @@ class Map extends Component {
     } = this.props;
     const { viewport, loaded, flying } = this.state;
     const ms = { ...mapStyle };
+
+    /**
+     * We are patching here but the object should already be complete by now
+     */
+    ms.sources = { ...ms.sources, ...rasters.sources };
+    ms.layers = [...ms.layers, ...rasters.layers];
 
     const onClickHandler = (e) => {
       onClick({
