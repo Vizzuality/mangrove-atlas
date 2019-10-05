@@ -2,6 +2,11 @@
   margin-bottom: 50px;
   max-width: 540px;
   z-index: 300;
+
+  &.spinner {
+    margin-top: 100px;
+  }
+  
   &.securityMargin {
     margin-top: 75px;
   }

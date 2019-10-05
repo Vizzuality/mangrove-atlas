@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Spinner from 'components/spinner';
 
 import styles from './style.module.scss';
 
 const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 
   return (
-    <div className={classnames(styles.widgets, { [styles.securityMargin]: isSticky })}>
-      {widgets.map((widget) => {
+    <div className={classnames(styles.widgets, { 
+      [styles.securityMargin]: isSticky,
+      [styles.spinner]: !widgets.length
+      })}>
+      
+      {!widgets.length 
+        ? <div className={styles.spinner}><Spinner /></div>
+        : widgets.length && widgets.map((widget) => {
         const Widget = templates.get(widget.slug).component;
 
         return (
