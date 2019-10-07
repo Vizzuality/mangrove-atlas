@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
+import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
@@ -12,7 +13,6 @@ const MangroveHeight = ({
   addFilter,
   ...props
 }) => {
-  const [startDate, setStartDate] = useState('1996');
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('canopy');
   useEffect(() => {
@@ -39,10 +39,10 @@ const MangroveHeight = ({
     { label: 'canopy', value: 'canopy' }
   ];
 
-  const dateOptions = metadata.map(year => ({
+  const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
-  }));
+  })), ['value']);
 
   const endDateHandler = (value) => {
     setEndDate(value);
@@ -62,28 +62,18 @@ const MangroveHeight = ({
     />
   );
 
-  const startDateSelector = (
-    <Select
-      value={startDate}
-      options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) !== 1996}
-      onChange={value => setStartDate(value)}
-    />
-  );
-
   const endDateSelector = (
     <Select
       value={endDate}
       options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10) ||
-        option.value === endDate}
+      isOptionDisabled={option => option.value === endDate}
       onChange={value => endDateHandler(value)}
     />
   );
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average({heightData.height})</strong> between {startDateSelector} and {endDateSelector}.
+      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average({heightData.height})</strong> between <strong>1996</strong> and {endDateSelector}.
     </>
   );
   const chartRData = {
