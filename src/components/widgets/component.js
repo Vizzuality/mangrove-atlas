@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import breakpoints from 'utils/responsive';
+import Spinner from 'components/spinner';
 
 import styles from './style.module.scss';
 
@@ -9,9 +10,13 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 
   return (
     <div className={classnames(styles.widgets, { 
-        [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
+      [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
+      [styles.spinner]: !widgets.length
       })}>
-      {widgets.map((widget) => {
+      
+      {!widgets.length 
+        ? <div className={styles.spinner}><Spinner /></div>
+        : widgets.length && widgets.map((widget) => {
         const Widget = templates.get(widget.slug).component;
 
         return (

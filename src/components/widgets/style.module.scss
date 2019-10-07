@@ -2,6 +2,11 @@
   margin-bottom: 50px;
   max-width: 540px;
   z-index: 300;
+
+  &.spinner {
+    margin-top: 100px;
+  }
+  
   &.securityMargin {
     margin-top: 75px;
   }
@@ -11,9 +16,11 @@
 @media print {
   .widgets {
     max-width: 1115px;
-    margin: auto;
+    width: 100%;
     display: grid;
-    grid-template-columns: 48% 48%;
-    grid-column-gap: 4%;
+    grid-template-columns: 49% 49%;
+    grid-column-gap: 2%;
+    grid-row-gap: 50px;
+    break-after: always;
   }
 }
