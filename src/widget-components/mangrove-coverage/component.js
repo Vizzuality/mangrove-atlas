@@ -15,7 +15,7 @@ function processData(data, currentYear) {
   const currentYearData = chartData.find(d => d.x === currentYear);
 
   if (!currentYearData) {
-    throw new Error('No data error.');
+    return null;
   }
 
   const nonMangrove = metadata.total - currentYearData.value;
@@ -66,6 +66,11 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
   };
 
   const widgetData = processData(data, currentYear);
+
+  if (widgetData === null) {
+    return null;
+  }
+
   const chartData = {
     data: widgetData,
     config: chartConfig  
