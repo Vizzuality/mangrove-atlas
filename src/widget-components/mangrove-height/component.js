@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
-const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocation, ...props }) => {
+const MangroveHeight = ({
+  data: rawData,
+  isCollapsed,
+  slug, name,
+  currentLocation,
+  addFilter,
+  ...props
+}) => {
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('canopy');
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'height',
+        year: '2010'
+      }
+    });
+  }, []);
+
   if (!rawData) {
     return null;
   }
@@ -20,13 +36,23 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
 
   const location = currentLocation.name;
   const areaOptions = [
-    { label: 'canopy', value: 'canopy'}
+    { label: 'canopy', value: 'canopy' }
   ];
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
   })), ['value']);
+
+  const endDateHandler = (value) => {
+    setEndDate(value);
+    addFilter({
+      filter: {
+        id: 'height',
+        year: value
+      }
+    });
+  };
 
   const areaSelector = (
     <Select
@@ -41,7 +67,7 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
       value={endDate}
       options={dateOptions}
       isOptionDisabled={option => option.value === endDate}
-      onChange={value => setEndDate(value)}
+      onChange={value => endDateHandler(value)}
     />
   );
 

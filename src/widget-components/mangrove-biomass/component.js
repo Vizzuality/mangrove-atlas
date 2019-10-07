@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
@@ -6,8 +6,25 @@ import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
-const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, name, ...props }) => {
+const MangroveBiomass = ({
+  data: rawData,
+  currentLocation,
+  isCollapsed,
+  slug,
+  name,
+  addFilter,
+  ...props
+}) => {
   const [endDate, setEndDate] = useState('2010');
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: '2010'
+      }
+    });
+  }, []);
+
 
   if (!rawData) {
     return null;
@@ -18,6 +35,16 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   if (chartData.length <= 0) {
     return null;
   }
+
+  const endDateHandler = (value) => {
+    setEndDate(value);
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: value
+      }
+    });
+  };
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
@@ -33,7 +60,7 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
       value={endDate}
       isOptionDisabled={option => option.value === endDate}
       options={dateOptions}
-      onChange={value => setEndDate(value)}
+      onChange={value => endDateHandler(value)}
     />
   );
 
