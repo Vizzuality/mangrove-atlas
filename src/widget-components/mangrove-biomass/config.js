@@ -10,9 +10,6 @@ import WidgetTooltip from 'components/widget-tooltip';
 import { format } from 'd3-format';
 import moment from 'moment';
 import looseJsonParse from 'utils/loose-json-parse';
-import sortBy from 'lodash/sortBy';
-
-
 
 const numberFormat = format(',.3r');
 
@@ -27,7 +24,7 @@ const chunk = (array, size) => {
     }
   }
   return chunked_arr;
-}
+};
 
 let maxValue = 0;
 
@@ -68,7 +65,9 @@ const sentenceData = data => ({
   year: data.map(d => moment(d.date).year())
 });
 
-const metaData = (data) => sortBy(data.map(d => moment(d.date).year()));
+const metaData = data => Array.from(new Set(
+  data.map(d => moment(d.date).year())
+));
 
 export const CONFIG = {
   parse: (data) => {

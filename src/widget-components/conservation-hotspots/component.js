@@ -14,7 +14,7 @@ function processData(data, currentYear) {
   if (!chartData[0]) return null;
   const currentYearData = chartData.filter(d => d.x === currentYear);
   if (!currentYearData) {
-    throw new Error('No data error.');
+    return null;
   }
   return currentYearData;
 }
@@ -50,6 +50,11 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   };
 
   const widgetData = processData(data, currentYear);
+
+  if (widgetData === null) {
+    return null;
+  }
+
   const chartData = {
     data: widgetData,
     config: chartConfig

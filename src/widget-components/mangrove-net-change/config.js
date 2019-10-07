@@ -21,9 +21,14 @@ const widgetData = ({ list }) => {
 };
 
 const widgetMetadata = ({ list }) => ({
-  years: list.filter(l => (l.gain_m2 !== null && l.loss_m2 !== null)).map(l => (
-    moment(l.date).year()
-  )).sort((a, b) => a - b)
+  years: Array.from(
+    new Set(
+      list
+        .filter(l => (l.gain_m2 !== null && l.loss_m2 !== null))
+        .map(l => (moment(l.date).year()))
+        .sort((a, b) => a - b)
+    )
+  )
 });
 
 const CONFIG = {
