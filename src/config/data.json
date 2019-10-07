@@ -95,10 +95,9 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "layersIds": [
-        "height-canopy"
+        "height"
       ]
-    }
-    ,
+    },
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
@@ -130,12 +129,8 @@
       "id": "cons-hotspots"
     },
     {
-      "name": "Height basal",
-      "id": "height-basal"
-    },
-    {
       "name": "Height canopy",
-      "id": "height-canopy"
+      "id": "height"
     },
     {
       "name": "Mangrove biomass",
