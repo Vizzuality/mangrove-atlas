@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import breakpoints from 'utils/responsive';
 import Spinner from 'components/spinner';
 
 import styles from './style.module.scss';
@@ -9,7 +10,7 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 
   return (
     <div className={classnames(styles.widgets, { 
-      [styles.securityMargin]: isSticky,
+      [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
       [styles.spinner]: !widgets.length
       })}>
       

@@ -49,12 +49,12 @@ class Header extends PureComponent {
         />
         <img
           className={classnames(styles.bgFixed,
-            { [styles.isHidden]: !sticky })}
+            { [styles.isHidden]: !sticky || window.innerWidth < breakpoints.lg + 1 })}
           src={fixedBackground}
           alt="Background"
         />
         <div className={classnames(styles.searchBar,
-          { [styles.fixed]: sticky })}
+          { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg  })}
         >
           <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
             <FontAwesomeIcon icon={faSearch} size="lg" />
