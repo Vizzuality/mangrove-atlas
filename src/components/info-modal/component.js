@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
+import DangerousHTML from 'react-dangerous-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
 import { widgetInfo } from './widgetInfo';
@@ -64,7 +65,7 @@ class InfoModal extends PureComponent {
       {attribute !== 'Title' ?
         attribute + ':'
         : ''}
-      </strong> {widgetSelected[attribute]}<br /><br /></div>)
+      </strong> <br /><DangerousHTML html={widgetSelected[attribute]} /><br /></div>)
   }
 
   render() {
@@ -104,10 +105,6 @@ class InfoModal extends PureComponent {
             }
             {widgetType !== 'highlighted_places' && widgetSelected && (
               <div className={styles.content}>
-
-                <h1 className="">
-                  {widgetSelected.title}
-                </h1>
                 <div className={styles.info}>
                   {info}
                 </div>
