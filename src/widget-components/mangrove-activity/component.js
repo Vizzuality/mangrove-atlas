@@ -7,7 +7,6 @@ import Select from 'components/select';
 
 import config from './config';
 
-const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
 
 function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props}) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
@@ -47,11 +46,16 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     });
   };
 
+  const sortRanking = (data) => {
+    const rankingType = mangroveActivityState.filter;
+    const dataRanked = orderBy(data, rankingType, d => Math.abs(d`${rankingType}`)).map((f, index) => ({ ...f, x: index })).reverse();
+    return ( rankingType === 'gain' ? dataRanked : dataRanked.reverse());
+  }
+
   // XXX: these options should come from an api ?
   const optionsFilter = [
     { value: 'gain', label: 'gain' },
-    { value: 'loss', label: 'loss' },
-    { value: 'net_change', label: 'net' }
+    { value: 'loss', label: 'loss' }
   ];
 
   const optionsYear = metaData.map(year => ({
