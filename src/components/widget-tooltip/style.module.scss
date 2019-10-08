@@ -66,6 +66,10 @@
   height: 18px;
   border-radius: 22px;
   margin-right: 10px;
+  &.bar {
+    border-radius: 0;
+    width: 4px;
+  }
 }
 
 .data_value {
