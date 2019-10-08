@@ -233,7 +233,7 @@ function MangroveAlerts({minDate = '2019-01-01', maxDate = '2019-12-31', data, i
   }).length;
   const sentence = (
     <>
-      There were <strong>{alerts}</strong> loss alerts <br />
+      There were <strong>{alerts}</strong> mangrove disturbance alerts <br />
       between {startDatepicker} and {endDatepicker}.
     </>
   );

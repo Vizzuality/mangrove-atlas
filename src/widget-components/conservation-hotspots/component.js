@@ -63,8 +63,8 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   try {
 
     const location = (currentLocation.location_type === 'worldwide')
-      ? 'the world’s'
-      : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
+      ? 'the world'
+      : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
     const yearSelector = (
       <Select
@@ -84,7 +84,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
 
     sentence = (
       <>
-        <span><strong className="notranslate">{highestValue} %</strong> of the mangrove habitat in <strong>{location}</strong> was classed as <strong>{highestCategory}</strong> for the period <strong className="notranslate"> {startYear}–{endYear}</strong>.</span>
+        <span>Mangrove habitat in <strong>{location}</strong> was <strong className="notranslate">{highestValue} %</strong> classified as <strong>{highestCategory}</strong> for the period <strong className="notranslate"> {startYear}–{endYear}</strong>.</span>
       </>
     );
   } catch (e) {
