@@ -147,15 +147,15 @@ export const CONFIG = {
             <WidgetTooltip
               settings={[
                 { title: 'name', key: 'name' },
-                { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value)}km²` },
-                { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))}km²` },
-                { label: 'Net result', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)}km²` }
+                { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value)} km²` },
+                { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))} km²` },
+                { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)} km²` }
               ]}
               label={{ key: 'name'}}
               payload={[
-                { name: 'Gain', format: value => `${numberFormat(value)}`, unit: 'km²' },
-                { name: 'Loss', format: value => `${numberFormat(value)}`, unit: 'km²' },
-                { name: 'Net result', format: value => `${numberFormat(value)}`, unit: 'km²' },
+                { name: 'Gain', format: value => `${numberFormat(value)}`, unit: ' km²' },
+                { name: 'Loss', format: value => `${numberFormat(value)}`, unit: ' km²' },
+                { name: 'Net', format: value => `${numberFormat(value)}`, unit: ' km²' },
               ]}
             />
           )
