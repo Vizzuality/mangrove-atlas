@@ -5,8 +5,6 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 import looseJsonParse from 'utils/loose-json-parse';
 
-const numberFormat = format(',.2%');
-
 const widgetData = ({ list }) => {
   const categoriesData = {
     'Benefits From Conservation': {
@@ -48,7 +46,7 @@ const widgetData = ({ list }) => {
       percentage: (catValue / total) * 100,
       unit: '%',
       coverage: (catValue).toFixed(2)
-    }));    
+    }));
   });
 };
 
@@ -96,7 +94,7 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload.label);
-          return <WidgetLegend groups={groups} />;
+          return <WidgetLegend groups={groups} unit="km²" />;
         }
       },
       tooltip: {
@@ -110,8 +108,8 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${numberFormat(percentage / 100)}`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)}km²`, position: '_column' }
+              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
             ]}
           />
         )
