@@ -93,7 +93,7 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
 
   const sentence = (
     <>
-      Mangroves in <strong>{location}</strong> have <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong>
+      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong>
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );
