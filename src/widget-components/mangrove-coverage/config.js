@@ -31,7 +31,11 @@ const widgetData = ({ list, metadata }) => {
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
     return {
-      years: list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear()),
+      years: Array.from(
+        new Set(
+          list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear())
+        )
+      ),
       total: metadata.location_coast_length_m
     };
   }

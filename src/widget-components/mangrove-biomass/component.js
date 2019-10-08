@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
+import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
-const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, name, ...props }) => {
-  const [startDate, setStartDate] = useState('1996');
+const MangroveBiomass = ({
+  data: rawData,
+  currentLocation,
+  isCollapsed,
+  slug,
+  name,
+  addFilter,
+  ...props
+}) => {
   const [endDate, setEndDate] = useState('2010');
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: '2010'
+      }
+    });
+  }, []);
+
 
   if (!rawData) {
     return null;
@@ -19,20 +36,20 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
     return null;
   }
 
-  const dateOptions = metadata.map(year => ({
+  const endDateHandler = (value) => {
+    setEndDate(value);
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: value
+      }
+    });
+  };
+
+  const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
-  }));
-
-  const startDateSelector = (
-    <Select
-      value={startDate}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
-        option.value === startDate}      
-      options={dateOptions}
-      onChange={value => setStartDate(value)}
-    />
-  );
+  })), ['value']);
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world’s'
@@ -41,17 +58,16 @@ const MangroveBiomass = ({ data: rawData, currentLocation, isCollapsed, slug, na
   const endDateSelector = (
     <Select
       value={endDate}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(endDate, 10) ||
-        option.value === endDate}      
+      isOptionDisabled={option => option.value === endDate}
       options={dateOptions}
-      onChange={value => setEndDate(value)}
+      onChange={value => endDateHandler(value)}
     />
   );
 
   const sentence = (
     <>
       Mean mangrove above-ground biomass density (mg ha-1) in <strong>{location}</strong> was
-      average ({biomassData.data}) between {startDateSelector} and {endDateSelector}.
+      average ({biomassData.data}) between <strong>1996</strong> and {endDateSelector}.
     </>
   );
   const widgetData = {

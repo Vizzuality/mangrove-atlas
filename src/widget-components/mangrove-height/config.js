@@ -60,7 +60,9 @@ const sentenceData = data => ({
   year: data.map(d => moment(d.date).year())
 });
 
-const metaData = data => data.map(d => moment(d.date).year());
+const metaData = data => Array.from(new Set(
+  data.map(d => moment(d.date).year())
+));
 
 export const CONFIG = {
   parse: (data) => {

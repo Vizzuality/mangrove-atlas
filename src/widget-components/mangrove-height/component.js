@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
+import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
-const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocation, ...props }) => {
-  const [startDate, setStartDate] = useState('1996');
+const MangroveHeight = ({
+  data: rawData,
+  isCollapsed,
+  slug, name,
+  currentLocation,
+  addFilter,
+  ...props
+}) => {
   const [endDate, setEndDate] = useState('2010');
   const [area, setAreaType] = useState('canopy');
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'height',
+        year: '2010'
+      }
+    });
+  }, []);
+
   if (!rawData) {
     return null;
   }
@@ -20,14 +36,23 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
 
   const location = currentLocation.name;
   const areaOptions = [
-    //{ label: 'basal', value: 'basal' }, *TO-DO add opton when data is ready
-    { label: 'canopy', value: 'canopy'}
+    { label: 'canopy', value: 'canopy' }
   ];
 
-  const dateOptions = metadata.map(year => ({
+  const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
     value: year.toString()
-  }));
+  })), ['value']);
+
+  const endDateHandler = (value) => {
+    setEndDate(value);
+    addFilter({
+      filter: {
+        id: 'height',
+        year: value
+      }
+    });
+  };
 
   const areaSelector = (
     <Select
@@ -37,29 +62,18 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
     />
   );
 
-  const startDateSelector = (
-    <Select
-      value={startDate}
-      options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10) ||
-        option.value === startDate}
-      onChange={value => setStartDate(value)}
-    />
-  );
-
   const endDateSelector = (
     <Select
       value={endDate}
       options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10) ||
-        option.value === endDate}
-      onChange={value => setEndDate(value)}
+      isOptionDisabled={option => option.value === endDate}
+      onChange={value => endDateHandler(value)}
     />
   );
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average ({heightData.height})</strong> between {startDateSelector} and {endDateSelector}.
+      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average ({heightData.height})</strong> between <strong>1996</strong> and {endDateSelector}.
     </>
   );
   const chartRData = {
