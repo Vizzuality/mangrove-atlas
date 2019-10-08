@@ -67,7 +67,7 @@ export const CONFIG = {
               barSize: 10,
               fill: 'rgba(0,0,0,0.7)',
               radius: 4,
-              legend: 'Net result',
+              legend: 'Net',
               strokeWidth: 0,
               activeDot: false,
               dot: ({key, cx, cy}) => (
