@@ -54,7 +54,7 @@ const CONFIG = {
         lines: {
           netChange: {
             stroke: 'rgba(0,0,0,0.7)',
-            legend: 'Net Result',
+            legend: 'Net',
             isAnimationActive: false
           }
         },
