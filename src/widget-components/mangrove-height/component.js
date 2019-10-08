@@ -59,7 +59,7 @@ const MangroveHeight = ({ data: rawData, isCollapsed, slug, name, currentLocatio
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average({heightData.height})</strong> between {startDateSelector} and {endDateSelector}.
+      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average ({heightData.height})</strong> between {startDateSelector} and {endDateSelector}.
     </>
   );
   const chartRData = {

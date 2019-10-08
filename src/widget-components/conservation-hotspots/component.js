@@ -74,7 +74,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
 
     sentence = (
       <>
-        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue}%</strong> was <strong>{highestCategory}</strong> in <strong className="notranslate">{yearSelector}</strong>.</span>     
+        <span>In <strong>{location}</strong>, <strong className="notranslate">{highestValue} %</strong> was <strong>{highestCategory}</strong> in <strong className="notranslate">{yearSelector}</strong>.</span>     
       </>
     );
   } catch (e) {

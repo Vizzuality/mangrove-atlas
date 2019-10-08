@@ -4,7 +4,6 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
-const numberFormat = format(',.2%');
 
 const widgetData = ({ list, metadata }) => {
   if (list && list.length) {
@@ -89,8 +88,8 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${numberFormat(percentage / 100)}`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)}km`, position: '_column' }
+              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km`, position: '_column' }
 
             ]}
           />
