@@ -8,7 +8,7 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ type, groups, direction, variant }) => (
+const Legend = ({ type, groups, direction, variant, unit }) => (
   <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
@@ -30,7 +30,7 @@ const Legend = ({ type, groups, direction, variant }) => (
               <div className={styles.itemWrapper}>
                 <span>{item.value}</span>
                 { item.payload && item.payload.y &&
-                  <span className={styles.item}>{numberFormat(item.payload.y)}</span>
+                  <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
                 }
               </div>
             </li>
@@ -45,13 +45,15 @@ Legend.propTypes = {
   direction: PropTypes.string,
   groups: PropTypes.shape({}).isRequired,
   type: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  unit: PropTypes.string
 };
 
 Legend.defaultProps = {
   direction: 'horizontal',
   type: '',
-  variant: 'rect'
+  variant: 'rect',
+  unit: ''
 };
 
 export default Legend;
