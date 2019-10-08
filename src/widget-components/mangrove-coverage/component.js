@@ -37,7 +37,7 @@ function processData(data, currentYear) {
 }
 
 function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 1996, unit: '%'});
+  const [coverageState, setCoverageState] = useState({ currentYear: 2016, unit: '%'});
   if (!rawData) {
     return null;
   }

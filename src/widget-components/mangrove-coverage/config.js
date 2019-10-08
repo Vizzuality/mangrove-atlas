@@ -1,8 +1,10 @@
 import React from 'react';
-import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
+
+import { format } from 'd3-format';
+
 
 const numberFormat = format(',.2f');
 
@@ -20,7 +22,7 @@ const widgetData = ({ list, metadata }) => {
         percentage: d.length_m / total * 100,
         unit: '%',
         coverage: (d.length_m / 1000).toFixed(2),
-        value: d.length_m,
+        value: (d.length_m).toFixed(2),
         label: `Mangroves in ${year}`
       });
     });
