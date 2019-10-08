@@ -13,6 +13,8 @@ import MangroveMap from 'components/map';
 import BasemapSelector from 'components/basemap-selector';
 import Legend from 'components/map-legend';
 
+import { WDPA } from 'modules/locations/constants';
+
 import styles from './style.module.scss';
 
 export const MapContainer = ({
@@ -89,9 +91,9 @@ export const MapContainer = ({
       // Use NAME instead of WDPA_PID because there can be different areas with the same name
       const { properties: { NAME: areaName } } = wdpa;
       const internalIdMap = new Map([
-        ['Delta du Saloum', '2'],
-        ['Rufiji-Mafia-Kilwa', '1'],
-        ['Mafia Island', '1']
+        [WDPA.DELTA_DU_SALOUM.areaName, WDPA.DELTA_DU_SALOUM.id],
+        [WDPA.RUFIKI_MAFIA_KILWA.areaName, WDPA.DELTA_DU_SALOUM.id],
+        [WDPA.MAFIA_ISLAND.areaName, WDPA.DELTA_DU_SALOUM.id]
       ]);
 
       const internalId = internalIdMap.get(areaName);
