@@ -36,7 +36,7 @@ const MangroveHeight = ({
 
   const location = currentLocation.name;
   const areaOptions = [
-    { label: 'canopy', value: 'canopy' }
+    { label: 'maximun', value: 'maximun' }
   ];
 
   const dateOptions = sortBy(metadata.map(year => ({
@@ -73,7 +73,7 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} height (m) in <strong>{location}</strong> was <strong>average ({heightData.height})</strong> between <strong>1996</strong> and {endDateSelector}.
+      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was <strong> {heightData.height} m</strong> in <strong>1996</strong>. {/*add year select*/}
     </>
   );
   const chartRData = {
