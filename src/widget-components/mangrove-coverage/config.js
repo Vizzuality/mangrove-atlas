@@ -3,6 +3,10 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
+import { format } from 'd3-format';
+
+
+const numberFormat = format(',.2f');
 
 const widgetData = ({ list, metadata }) => {
   if (list && list.length) {
@@ -13,7 +17,7 @@ const widgetData = ({ list, metadata }) => {
 
       return ({
         x: Number(year),
-        y: d.length_m / 1000,
+        y: d.length_m,
         color: '#00857F',
         percentage: d.length_m / total * 100,
         unit: '%',
@@ -57,7 +61,7 @@ export const CONFIG = {
       xKey: 'percentage',
       yKeys: {
         pies: {
-          y: {
+          coverage: {
             cx: '50%',
             cy: '50%',
             paddingAngle: 3,
@@ -75,7 +79,13 @@ export const CONFIG = {
         layout: 'vertical',
         content: (properties) => {
           const { payload } = properties;
-          const groups = groupBy(payload, p => p.payload.label);
+          const groups = groupBy(payload.map(item => ({
+            ...item,
+            payload: {
+              ...item.payload,
+              y: (item.payload.y / 1000).toFixed(2)
+            }
+          })), p => p.payload.label);
           return <WidgetLegend groups={groups} unit="km" />;
         }
       },
@@ -92,7 +102,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km`, position: '_column' }
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
 
             ]}
           />

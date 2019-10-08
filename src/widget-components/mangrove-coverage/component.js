@@ -26,7 +26,7 @@ function processData(data, currentYear) {
     },
     {
       x: 0,
-      y: nonMangrove / 1000,
+      y: nonMangrove,
       color: '#ECECEF',
       percentage: nonMangrove / metadata.total * 100,
       unit: '%',
