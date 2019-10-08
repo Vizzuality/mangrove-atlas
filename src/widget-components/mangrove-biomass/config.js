@@ -8,6 +8,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 
 // Utils
 import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import looseJsonParse from 'utils/loose-json-parse';
 
@@ -26,16 +27,17 @@ const chunk = (array, size) => {
   return chunked_arr;
 };
 
-let maxValue = 0;
 
 const getBars = (barValues) => {
   if (!barValues) return null;
   const barsData = (Object.values(looseJsonParse(barValues)));
+  const total = barsData.reduce((previous, current) => current + previous)
   const chunkedData = chunk(barsData, 5)
-  const formattedData = chunkedData.map(
-    r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
+  let formattedData = chunkedData.map(
+    r => (r.reduce((previous, current) => current + previous))
   );
-  maxValue = Math.max(...formattedData)
+
+  formattedData = formattedData.map(data => data / total)
   return formattedData;
 }
 
@@ -58,7 +60,7 @@ const histogramData = (data) => {
   return histogram;
 }
 
-const filterData = data => data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null);
+const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
 const sentenceData = data => ({
   height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
@@ -156,26 +158,26 @@ export const CONFIG = {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
-            domain: [0, maxValue + 50],
+            domain: [0, 1],
             interval: 0,
             orientation: 'right',
-            label: {
-              content: () => (
-                <g>
-                  <text
-                    x={415}
-                    y={25}
-                    style={
-                      { position: 'absolute' }
-                    }
-                    fontSize={11}
-                    fill="rgba(0,0,0,0.54)"
-                  >
-                    g ha<tspan baselineShift="super">-1</tspan>
-                  </text>
-                </g>
-              )
-            },
+            // label: {
+            //   content: () => (
+            //     <g>
+            //       <text
+            //         x={415}
+            //         y={25}
+            //         style={
+            //           { position: 'absolute' }
+            //         }
+            //         fontSize={11}
+            //         fill="rgba(0,0,0,0.54)"
+            //       >
+            //         g ha<tspan baselineShift="super">-1</tspan>
+            //       </text>
+            //     </g>
+            //   )
+            // }, // waiting to be confirmed by data
             type: 'number'
           },
           legend: {
