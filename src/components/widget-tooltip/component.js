@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+
 import styles from './style.module.scss';
 
 function getValue(item, value) {
@@ -24,23 +26,21 @@ function Tooltip({ payload, settings, style, hideZeros }) {
             d => (hideZeros && values[d.key] ? null : (
               <div
                 key={d.key}
-                className={styles.data_line + ' ' + styles[`${d.position}`] + ' ' + styles[`${d.type}`]}
+                className={classnames(styles.data_line, styles[d.position], styles[d.type])}
               >
                 {/* LABEL */}
                 {((d.label && d.labelKey) || d.key) && (
-                  <div className={styles.data_label + ' ' + styles[`${d.position}`]}>
+                  <div className={classnames(styles.data_label, styles[d.position])}>
                     {d.color && (
                       <div
-                        className={styles.data_color}
+                        className={classnames(styles.data_color, styles[d.bulletType])}
                         style={{ backgroundColor: d.color }}
                       />
                     )}
 
-                    {d.key === 'break' ? (
-                      <span className={styles.break_label}>{d.label}</span>
-                    ) : (
-                        <span>{d.label || values[d.labelKey]}</span>
-                      )}
+                    {d.key === 'break'
+                      ? <span className={styles.break_label}>{d.label}</span>
+                      : <span>{d.label || values[d.labelKey]}</span>}
                   </div>
                 )}
 
@@ -50,7 +50,7 @@ function Tooltip({ payload, settings, style, hideZeros }) {
                 >
                   {getValue(d, values[d.key])}
                 </div>
-                </div>
+              </div>
             ))
           )}
         </div>
