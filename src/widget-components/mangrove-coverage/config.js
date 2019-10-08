@@ -1,5 +1,4 @@
 import React from 'react';
-import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
@@ -14,12 +13,12 @@ const widgetData = ({ list, metadata }) => {
 
       return ({
         x: Number(year),
-        y: d.length_m,
+        y: d.length_m / 1000,
         color: '#00857F',
         percentage: d.length_m / total * 100,
         unit: '%',
         coverage: (d.length_m / 1000).toFixed(2),
-        value: d.length_m,
+        value: (d.length_m).toFixed(2),
         label: `Mangroves in ${year}`
       });
     });
@@ -77,7 +76,7 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload.label);
-          return <WidgetLegend groups={groups} />;
+          return <WidgetLegend groups={groups} unit="km" />;
         }
       },
       tooltip: {
