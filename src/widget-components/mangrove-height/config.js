@@ -1,6 +1,7 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
@@ -21,16 +22,17 @@ const chunk = (array, size) => {
   return chunked_arr;
 }
 
-let maxValue = 0;
 
 const getBars = (barValues) => {
   if (!barValues) return null;
   const barsData = (Object.values(looseJsonParse(barValues)));
   const chnkedData = chunk(barsData, 5)
-  const formattedData = chnkedData.map(
-    r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
+  let formattedData = chnkedData.map(
+    r => (r.reduce((previous, current) => current + previous))
   );
-  maxValue = Math.max(...formattedData)
+  const total = barsData.reduce((previous, current) => current + previous);
+  
+  formattedData = formattedData.map(data => data / total);
   return formattedData;
 }
 
@@ -39,7 +41,6 @@ const histogramData = (data) => {
   if (!data) {
     return null;
   }
-
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
@@ -53,7 +54,7 @@ const histogramData = (data) => {
   return histogram;
 }
 
-const filterData = data => data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null);
+const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
 
 const sentenceData = data => ({
   height: data.map(d => d.hmax_m).reduce((previous, current) => current + previous, 0),
@@ -139,31 +140,31 @@ export const CONFIG = {
               textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
             },
             ticks: metaData(data),
-            domain: [metaData(data)[0], metaData(data)[metaData(data).length - 1]],
+            domain: [0, 1],
             interval: 0
           },
           yAxis: {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
-            domain: [0, maxValue + 50],
+            domain: [0, 1],
             interval: 0,
             orientation: 'right',
-            label: {
-              content: () => (
-                <g>
-                  <text
-                    x='95%'
-                    y={50}
-                    style={{ marginRight: 30 }}
-                    fontSize={13}
-                    fill="rgba(0,0,0,0.54)"
-                  >
-                    km
-              </text>
-                </g>
-              )
-            },
+            // label: {
+            //   content: () => (
+            //     <g>
+            //       <text
+            //         x='95%'
+            //         y={50}
+            //         style={{ marginRight: 30 }}
+            //         fontSize={13}
+            //         fill="rgba(0,0,0,0.54)"
+            //       >
+            //         km
+            //   </text>
+            //     </g>
+            //   )
+            // },  waiting to be confirmed by data
             type: 'number'
           },
           legend: {
