@@ -95,7 +95,7 @@ export const mapStyle = createSelector(
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find(f => f.id === layerId);
 
-      if (layerFilter) {
+      if (layerFilter && layerMap) {
         return [
           ...acc,
           ...layerMap
