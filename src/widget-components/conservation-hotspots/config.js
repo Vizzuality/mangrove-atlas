@@ -48,7 +48,7 @@ const widgetData = ({ list }) => {
       percentage: (catValue / total) * 100,
       unit: '%',
       coverage: (catValue).toFixed(2)
-    }));    
+    }));
   });
 };
 
@@ -96,7 +96,7 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload, p => p.payload.label);
-          return <WidgetLegend groups={groups} />;
+          return <WidgetLegend groups={groups} unit="km²" />;
         }
       },
       tooltip: {

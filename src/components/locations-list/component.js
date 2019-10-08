@@ -4,6 +4,13 @@ import Link from 'redux-first-router-link';
 import classnames from 'classnames';
 import styles from './style.module.scss';
 
+const locationNames = {
+  worldwide: 'Worldwide',
+  aoi: 'Area of interest',
+  country: 'Country',
+  wdpa: 'WDPA'
+};
+
 function LocationsList({ locationsData }) {
   const getType = (location) => {
     if (location.location_type === 'worldwide') return 'PAGE/APP';
@@ -19,11 +26,6 @@ function LocationsList({ locationsData }) {
       : { id: location.id }
   );
 
-  const formatName = (string) => {
-    const tag = string.charAt(0).toUpperCase() + string.slice(1);
-    return tag.replace('Aoi', 'Area of interest');
-  };
-
   return (
     <ul className={styles.list}>
       {locationsData.map(location => (
@@ -34,7 +36,7 @@ function LocationsList({ locationsData }) {
                 {location.name}
               </span>
               <span className={styles.tag}>
-                {formatName(location.location_type)}
+                {locationNames[location.location_type]}
               </span>
             </div>
           </Link>
