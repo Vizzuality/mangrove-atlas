@@ -18,9 +18,10 @@ const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter])).m
 
 function processData(data) {
   return {
-    gain: data.map(d => d.gain_m2/1000000).reduce((previous, current) => current + previous, 0),
-    loss: -data.map(d => d.loss_m2/1000000).reduce((previous, current) => current + previous, 0),
-    net: data.map(d => d.net_change_m2/1000000).reduce((previous, current) => current + previous, 0),
+    gain: data.map(d => d.gain_m2 / 1000000).reduce((previous, current) => current + previous, 0),
+    loss: -data.map(d => d.loss_m2 / 1000000).reduce((previous, current) => current + previous, 0),
+    net: data.map(d => d.net_change_m2 / 1000000)
+      .reduce((previous, current) => current + previous, 0)
   };
 }
 const widgetData = data => data.map(location => ({
@@ -37,8 +38,8 @@ export const CONFIG = {
     const dataRanked = sortRanking(chartData, filter);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [(-max + (-max * 0.05)), (max + (max * 0.05))];
-    const startDomain = parseInt(domainX[0]);
-    const endDomain = parseInt(domainX[1]);
+    const startDomain = parseInt(domainX[0], 10);
+    const endDomain = parseInt(domainX[1], 10);
 
     return {
       chartData,
@@ -71,7 +72,8 @@ export const CONFIG = {
               legend: 'Net',
               strokeWidth: 0,
               activeDot: false,
-              dot: ({key, cx, cy}) => (
+              // eslint-disable-next-line react/prop-types
+              dot: ({ key, cx, cy }) => (
                 <rect
                   key={key}
                   x={cx - 1}
@@ -99,7 +101,7 @@ export const CONFIG = {
 
                   return (
                     <g className={styles.activity_widget}>
-                      <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso: iso } }}>
+                      <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso } }}>
                         <text className={styles.link} x="50%" y={y - 15} textAnchor="middle" fill="#000">
                           {name}
                         </text>
@@ -126,6 +128,7 @@ export const CONFIG = {
           layout: 'horizontal',
           height: 50,
 
+          // eslint-disable-next-line react/prop-types
           content: ({ payload }) => {
             const labels = payload.map(({ color, payload: labelPayload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
@@ -152,7 +155,7 @@ export const CONFIG = {
                 { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))} km²` },
                 { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)} km²` }
               ]}
-              label={{ key: 'name'}}
+              label={{ key: 'name' }}
               payload={[
                 { name: 'Gain', format: value => `${numberFormat(value)}`, unit: ' km²' },
                 { name: 'Loss', format: value => `${numberFormat(value)}`, unit: ' km²' },
@@ -162,9 +165,8 @@ export const CONFIG = {
           )
         }
       }
-    }
+    };
   }
 };
-
 
 export default CONFIG;
