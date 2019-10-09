@@ -14,7 +14,7 @@ import WidgetLegend from 'components/widget-legend';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.3r');
-const sortRanking = data => orderBy(data, d => Math.abs(d)).map((f, index) => ({ ...f, x: index }));
+const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter])).map((f, index) => ({ ...f, x: index }));
 
 function processData(data) {
   return {
@@ -32,9 +32,9 @@ const widgetData = data => data.map(location => ({
 const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
 
 export const CONFIG = {
-  parse: (data) => {
+  parse: (data, filter) => {
     const chartData = widgetData(data.data);
-    const dataRanked = sortRanking(chartData);
+    const dataRanked = sortRanking(chartData, filter);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [(-max + (-max * 0.05)), (max + (max * 0.05))];
     const startDomain = parseInt(domainX[0]);
@@ -42,6 +42,7 @@ export const CONFIG = {
 
     return {
       chartData,
+      dataRanked,
       metaData: widgetMeta(data.meta),
       chartConfig: {
         layout: 'vertical',
@@ -52,8 +53,8 @@ export const CONFIG = {
         referenceLines: [
           { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
         ],
-        xAxis: {	
-          type: 'number',	
+        xAxis: {
+          type: 'number',
           allowDecimals: false,
           interval: 'preserveStartEnd',
           ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain]
@@ -102,7 +103,7 @@ export const CONFIG = {
                         <text className={styles.link} x="50%" y={y - 15} textAnchor="middle" fill="#000">
                           {name}
                         </text>
-                      </Link> 
+                      </Link>
                     </g>
                   );
                 }
