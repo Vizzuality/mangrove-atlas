@@ -62,6 +62,8 @@ const histogramData = (data) => {
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
+const CustomLabel = ({ value, unit, indexedValue }) => <g>{value} {unit}<sup>{indexedValue}</sup></g>;
+
 const sentenceData = data => ({
   height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
   year: data.map(d => moment(d.date).year())
@@ -165,8 +167,8 @@ export const CONFIG = {
               content: () => (
                 <g>
                   <text
-                    x={415}
-                    y={25}
+                    x={425}
+                    y={50}
                     style={
                       { position: 'absolute' }
                     }
@@ -183,11 +185,13 @@ export const CONFIG = {
           legend: {
             position: 'relative',
             verticalAlign: 'top',
-            top: 10,
+            layout: 'horizontal',
+            height: 80,
+            top: 0,
             content: (properties) => {
               const { payload } = properties;
               const groups = groupBy(payload, p => p.payload);
-              return <WidgetLegend type="height" groups={groups} />;
+              return <WidgetLegend type="height" unit="Mg ha" indexValue="-1" label={<CustomLabel />} groups={groups} />;
             }
           },
           tooltip: {
@@ -201,13 +205,12 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
-                  { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
-                  { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
-                  { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
-                  { label: '0 50:', color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="200-250 Mg ha" indexedValue="-1" />, color: '#13267F', key: '200 250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="150-200 Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="100-150 Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="50-100 Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="0-50 Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
-                label={{ key: 'name' }}
               />
             )
           }
