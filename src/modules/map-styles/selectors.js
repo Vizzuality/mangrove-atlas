@@ -41,7 +41,6 @@ export const layerStyles = createSelector(
     }
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
-
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers.filter(
       style => _activeLayersIds.includes(style.id)

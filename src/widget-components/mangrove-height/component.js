@@ -21,11 +21,12 @@ const MangroveHeight = ({
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'maximun',
-        year: '2010'
+        id: 'height',
+        year: date,
+        area
       }
     });
-  }, []);
+  }, [date, area]);
 
   if (!rawData) {
     return null;
@@ -58,13 +59,23 @@ const MangroveHeight = ({
     });
   };
 
-  const areaSelector = (
-    <Select
-      value={area}
-      options={areaOptions}
-      onChange={value => setAreaType(value)}
-    />
-  );
+  const areaHandler = (value) => {
+    setAreaType(value);
+    addFilter({
+      filter: {
+        id: 'height',
+        area: value
+      }
+    });
+  };
+
+  // const areaSelector = (
+  //   <Select
+  //     value={area}
+  //     options={areaOptions}
+  //     onChange={value => areaHandler(value)}
+  //   />
+  // ); TO-DO - add back when date is ready, changing maximun for area selector
 
   const dateSelector = (
     <Select
@@ -76,7 +87,7 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was
+      Mean mangrove <strong>maximun</strong> canopy height in <strong>{location}</strong> was
       <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
