@@ -8,7 +8,7 @@ import DangerousHTML from 'react-dangerous-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { widgetInfo } from './widgetInfo';
+import widgetInfo from './widgetInfo';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
@@ -65,9 +65,9 @@ class InfoModal extends PureComponent {
       <div>
         <strong>
           {attribute !== 'Title'
-            ? attribute + ':'
+            ? `${attribute}:`
             : ''}
-        </strong> <br /><DangerousHTML html={widgetSelected[attribute]} /><br />
+        </strong><DangerousHTML html={widgetSelected[attribute]} />
       </div>
     ));
   }
