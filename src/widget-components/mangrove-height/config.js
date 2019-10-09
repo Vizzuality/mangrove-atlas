@@ -43,11 +43,11 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0 5': getBars(d.hmax_hist_m)[0],
-      '5 10': getBars(d.hmax_hist_m)[1],
-      '10 15': getBars(d.hmax_hist_m)[2],
-      '15 20': getBars(d.hmax_hist_m)[3],
-      '20 25': getBars(d.hmax_hist_m)[4],
+      '0–5': getBars(d.hmax_hist_m)[0] * 100,
+      '5–10': getBars(d.hmax_hist_m)[1] * 100,
+      '10–15': getBars(d.hmax_hist_m)[2] * 100,
+      '15–20': getBars(d.hmax_hist_m)[3] * 100,
+      '20–25': getBars(d.hmax_hist_m)[4] * 100,
     }
   ));
   return histogram;
@@ -85,35 +85,35 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0 5':
+              '0–5':
               {
                 stackId: 'bar',
                 fill: '#C9BB42',
                 stroke: '#C9BB42',
                 isAnimationActive: false
               },
-              '5 10':
+              '5–10':
               {
                 stackId: 'bar',
                 fill: '#8BA205',
                 stroke: '#8BA205',
                 isAnimationActive: false
               },
-              '10 15':
+              '10–15':
               {
                 stackId: 'bar',
                 fill: '#428710',
                 stroke: '#428710',
                 isAnimationActive: false
               },
-              '15 20':
+              '15–20':
               {
                 stackId: 'bar',
                 fill: '#0A6624',
                 stroke: '#0A6624',
                 isAnimationActive: false
               },
-              '20 25':
+              '20–25':
               {
                 stackId: 'bar',
                 fill: '#103C1F',
@@ -191,11 +191,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0 5:', color: '#C9BB42', key: '0 5', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
-                  { label: '5 10:', color: '#8BA205', key: '5 10', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
-                  { label: '10 15:', color: '#428710', key: '10 15', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
-                  { label: '15 20:', color: '#0A6624', key: '15 20', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
-                  { label: '20 25:', color: '#103C1F', key: '20 25', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
+                  { label: '0–5 m', color: '#C9BB42', key: '0–5', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '5–10 m', color: '#8BA205', key: '5–10', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '10–15 m', color: '#428710', key: '10–15', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '15–20 m', color: '#0A6624', key: '15–20', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '20–25 m', color: '#103C1F', key: '20–25', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
                 label={{ key: 'name' }}
               />

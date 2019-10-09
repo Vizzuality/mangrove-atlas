@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -8,7 +7,7 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ type, groups, direction, variant, unit, label, indexValue }) => (
+const Legend = ({ type, groups, direction, variant, unit }) => (
   <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
     {Object.keys(groups).map(g => (
       <div key={g} className={styles.widget_legend_group}>
@@ -46,7 +45,6 @@ Legend.propTypes = {
   direction: PropTypes.string,
   groups: PropTypes.shape({}).isRequired,
   type: PropTypes.string,
-  label: PropTypes.func,
   variant: PropTypes.string,
   unit: PropTypes.string
 };
@@ -54,7 +52,6 @@ Legend.propTypes = {
 Legend.defaultProps = {
   direction: 'horizontal',
   type: '',
-  label: null,
   variant: 'rect',
   unit: ''
 };
