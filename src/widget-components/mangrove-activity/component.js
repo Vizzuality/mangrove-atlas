@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
@@ -6,7 +6,6 @@ import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
 import config from './config';
-
 
 function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props}) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
@@ -16,12 +15,18 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     isLoading: false
   });
 
+  useEffect(() => {
+    fetchRankingData({
+      ...mangroveActivityState,
+    });
+  }, []);
+
   if (!rawData || !rawData.meta) {
     return null;
   }
 
-  const { chartData, metaData, chartConfig } = config.parse(rawData);
   const { startDate, endDate, filter } = mangroveActivityState;
+  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
 
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
