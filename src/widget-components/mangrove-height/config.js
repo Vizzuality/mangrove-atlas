@@ -139,14 +139,13 @@ export const CONFIG = {
               textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
             },
             ticks: metaData(data),
-            domain: [0, 1],
             interval: 0
           },
           yAxis: {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
-            domain: [0, 1],
+            domain: [0, 100],
             interval: 0,
             orientation: 'right',
             // label: {
