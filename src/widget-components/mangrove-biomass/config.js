@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import groupBy from 'lodash/groupBy';
 
 // Components
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
+import WidgetCustomLabel from 'components/widget-custom-label';
 
 // Utils
 import { format } from 'd3-format';
@@ -61,22 +61,6 @@ const histogramData = (data) => {
 };
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
-
-const CustomLabel = ({ value, unit, indexedValue }) => (
-  <span>{value} {unit}<sup>{indexedValue}</sup></span>
-);
-
-CustomLabel.propTypes = {
-  value: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
-  unit: PropTypes.string,
-  indexedValue: PropTypes.string,
-};
-
-CustomLabel.defaultProps = {
-  value: null,
-  unit: null,
-  indexedValue: null,
-};
 
 const sentenceData = data => ({
   height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
@@ -219,11 +203,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: <CustomLabel value="200–250" unit="Mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="150–200" unit="Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="100–150" unit="Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="50–100" unit="Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="0–50" unit="Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="200–250" unit="Mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="150–200" unit="Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="100–150" unit="Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="50–100" unit="Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="0–50" unit="Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
               />
             )
