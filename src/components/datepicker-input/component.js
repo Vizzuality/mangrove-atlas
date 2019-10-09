@@ -1,9 +1,21 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import styles from './style.module.scss';
 
 class DatepickerInput extends PureComponent {
+  static propTypes = {
+    onFocus: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
+    value: PropTypes.number,
+    onClick: PropTypes.func.isRequired
+  };
+
+  static defaultProps = {
+    value: ''
+  };
+
   state = {
     focus: false
   }
@@ -22,12 +34,13 @@ class DatepickerInput extends PureComponent {
     onBlur(e);
   }
 
-  render () {
+  render() {
     const { value, onClick } = this.props;
     const { focus } = this.state;
 
     return (
       <button
+        type="button"
         className={classnames(styles.DatepickerInput, { _focus: Boolean(focus) })}
         onClick={onClick}
         onFocus={this.onFocus}
@@ -35,7 +48,7 @@ class DatepickerInput extends PureComponent {
       >
         {value}
       </button>
-    )
+    );
   }
 }
 

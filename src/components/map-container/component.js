@@ -30,7 +30,7 @@ export const MapContainer = ({
   goToAOI
 }) => {
   const onViewportChange = (newViewport) => {
-    setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']))
+    setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   };
 
   const resize = () => {
@@ -39,14 +39,14 @@ export const MapContainer = ({
       width: window.innerWidth,
       height: window.innerHeight
     });
-  }
+  };
 
   useEffect(() => {
     window.addEventListener('resize', resize);
     resize();
     return function cleanup() {
       window.removeEventListener('resize', resize);
-    }
+    };
   }, []);
 
   const { parsedResult: browser } = (Bowser.getParser(window.navigator.userAgent));
@@ -147,7 +147,7 @@ export const MapContainer = ({
       </div>
     </div>
   );
-}
+};
 
 MapContainer.propTypes = {
   viewport: PropTypes.shape({}),
@@ -157,8 +157,10 @@ MapContainer.propTypes = {
   mapStyle: PropTypes.shape({}).isRequired,
   bounds: PropTypes.shape({}).isRequired,
   goToCountry: PropTypes.func,
-  goToAOI: PropTypes.func
-}
+  goToAOI: PropTypes.func,
+  setPopup: PropTypes.func,
+  removePopup: PropTypes.func
+};
 
 MapContainer.defaultProps = {
   viewport: {
@@ -171,9 +173,11 @@ MapContainer.defaultProps = {
     bearing: 0,
     pitch: 0
   },
+  setPopup: () => { },
+  removePopup: () => { },
   setViewport: () => { },
   goToCountry: () => { },
   goToAOI: () => { }
-}
+};
 
 export default MapContainer;
