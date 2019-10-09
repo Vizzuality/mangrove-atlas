@@ -158,6 +158,7 @@ export const CONFIG = {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
+            tickFormatter: value => Math.round(value),
             domain: [0, 100],
             interval: 0,
             orientation: 'right',
