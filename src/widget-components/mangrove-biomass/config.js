@@ -1,5 +1,5 @@
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import groupBy from 'lodash/groupBy';
 
 // Components
@@ -8,6 +8,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 
 // Utils
 import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import looseJsonParse from 'utils/loose-json-parse';
 
@@ -26,16 +27,17 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
-let maxValue = 0;
 
 const getBars = (barValues) => {
   if (!barValues) return null;
-  const barsData = (Object.values(looseJsonParse(barValues)));
+  const barsData = Object.values(looseJsonParse(barValues));
+  const total = barsData.reduce((previous, current) => current + previous);
   const chunkedData = chunk(barsData, 5);
-  const formattedData = chunkedData.map(
-    r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
+  let formattedData = chunkedData.map(
+    r => (r.reduce((previous, current) => current + previous))
   );
-  maxValue = Math.max(...formattedData);
+
+  formattedData = formattedData.map(data => data / total);
   return formattedData;
 };
 
@@ -48,17 +50,33 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0 50': getBars(d.agb_hist_mgha_1)[0],
-      '50 100': getBars(d.agb_hist_mgha_1)[1],
-      '100 150': getBars(d.agb_hist_mgha_1)[2],
-      '150 200': getBars(d.agb_hist_mgha_1)[3],
-      '200 250': getBars(d.agb_hist_mgha_1)[4],
+      '0–50': getBars(d.agb_hist_mgha_1)[0] * 100,
+      '50–100': getBars(d.agb_hist_mgha_1)[1] * 100,
+      '100–150': getBars(d.agb_hist_mgha_1)[2] * 100,
+      '150–200': getBars(d.agb_hist_mgha_1)[3] * 100,
+      '200–250': getBars(d.agb_hist_mgha_1)[4] * 100,
     }
   ));
   return histogram;
 };
 
-const filterData = data => data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null);
+const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
+
+const CustomLabel = ({ value, unit, indexedValue }) => (
+  <span>{value} {unit}<sup>{indexedValue}</sup></span>
+);
+
+CustomLabel.propTypes = {
+  value: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
+  unit: PropTypes.string,
+  indexedValue: PropTypes.string,
+};
+
+CustomLabel.defaultProps = {
+  value: null,
+  unit: null,
+  indexedValue: null,
+};
 
 const sentenceData = data => ({
   height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
@@ -91,35 +109,35 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0 50':
+              '0–50':
               {
                 stackId: 'bar',
                 fill: '#EAF19D',
                 stroke: '#EAF19D',
                 isAnimationActive: false
               },
-              '50 100':
+              '50–100':
               {
                 stackId: 'bar',
                 fill: '#B8E98E',
                 stroke: '#B8E98E',
                 isAnimationActive: false
               },
-              '100 150':
+              '100–150':
               {
                 stackId: 'bar',
                 fill: '#1B97C1',
                 stroke: '#1B97C1',
                 isAnimationActive: false
               },
-              '150 200':
+              '150–200':
               {
                 stackId: 'bar',
                 fill: '#1C52A3',
                 stroke: '#1C52A3',
                 isAnimationActive: false
               },
-              '200 250':
+              '200–250':
               {
                 stackId: 'bar',
                 fill: '#13267F',
@@ -149,29 +167,29 @@ export const CONFIG = {
               textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
             },
             ticks: metadata,
-            domain: [metadata[0], metadata[metadata.length - 1]],
+            domain: [1, 100],
             interval: 0
           },
           yAxis: {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
-            domain: [0, maxValue + 50],
+            domain: [0, 100],
             interval: 0,
             orientation: 'right',
             label: {
               content: () => (
                 <g>
                   <text
-                    x={415}
-                    y={25}
+                    x={425}
+                    y={50}
                     style={
                       { position: 'absolute' }
                     }
                     fontSize={11}
                     fill="rgba(0,0,0,0.54)"
                   >
-                    g ha<tspan baselineShift="super">-1</tspan>
+                    %
                   </text>
                 </g>
               )
@@ -181,7 +199,9 @@ export const CONFIG = {
           legend: {
             position: 'relative',
             verticalAlign: 'top',
-            top: 10,
+            layout: 'horizontal',
+            height: 80,
+            top: 0,
             content: (properties) => {
               const { payload } = properties;
               const groups = groupBy(payload, p => p.payload);
@@ -199,13 +219,12 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0 50:', color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="200–250" unit="Mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="150–200" unit="Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="100–150" unit="Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="50–100" unit="Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="0–50" unit="Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
-                label={{ key: 'name' }}
               />
             )
           }
