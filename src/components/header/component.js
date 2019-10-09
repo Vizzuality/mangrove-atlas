@@ -54,7 +54,7 @@ class Header extends PureComponent {
           alt="Background"
         />
         <div className={classnames(styles.searchBar,
-          { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg  })}
+          { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg })}
         >
           <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
             <FontAwesomeIcon icon={faSearch} size="lg" />
@@ -64,7 +64,7 @@ class Header extends PureComponent {
               <MediaQuery minWidth={breakpoints.lg}>
                 <h1
                   className={classnames(styles.title, 'notranslate',
-                    { [styles._fixed]: sticky })}
+                    { [styles.fixed]: sticky })}
                   style={stylesOverride}
                 >
                   {location.name}

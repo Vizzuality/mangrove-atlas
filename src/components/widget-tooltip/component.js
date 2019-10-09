@@ -70,6 +70,6 @@ Tooltip.defaultProps = {
   payload: [],
   style: {},
   hideZeros: false
-}
+};
 
 export default Tooltip;
