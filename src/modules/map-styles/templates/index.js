@@ -17,7 +17,7 @@ const extendedTemplate = {
       cluster: true
     }
   }
-}
+};
 
 export default {
   template: extendedTemplate,

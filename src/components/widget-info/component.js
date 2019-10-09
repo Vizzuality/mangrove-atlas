@@ -44,12 +44,12 @@ WidgetInfo.propTypes = {
   ]),
   filename: PropTypes.string,
   openInfoPanel: PropTypes.func
-}
+};
 
 WidgetInfo.defaultProps = {
   data: null,
   filename: null,
   openInfoPanel: () => null
-}
+};
 
 export default WidgetInfo;

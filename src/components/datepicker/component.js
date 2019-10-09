@@ -13,8 +13,9 @@ function OurCalendarContainer({ children }) {
   return createPortal(
     <CalendarContainer>
       {children}
-    </CalendarContainer>
-  , document.body);
+    </CalendarContainer>,
+    document.body
+  );
 }
 
 function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, theme, date, inline }) {
@@ -34,16 +35,16 @@ function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, t
     }
   };
 
-  const WrappedHeader = (customHeaderProps) => (
-    <DatepickerInteractiveHeader 
+  const WrappedHeader = customHeaderProps => (
+    <DatepickerInteractiveHeader
       minDate={minDate}
       maxDate={maxDate}
       {...customHeaderProps}
     />
-  ); 
+  );
 
   return (
-    <div className={classnames(classes, { [styles._inline]: inline})}>
+    <div className={classnames(classes, { [styles._inline]: inline })}>
       <ReactDatePicker
         selected={date.toDate()}
         minDate={new Date(minDate)}
