@@ -192,11 +192,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0 5:', color: '#C9BB42', key: '0 5', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '5 10:', color: '#8BA205', key: '5 10', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '10 15:', color: '#428710', key: '10 15', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '15 20:', color: '#0A6624', key: '15 20', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '20 25:', color: '#103C1F', key: '20 25', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
+                  { label: '0 5:', color: '#C9BB42', key: '0 5', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
+                  { label: '5 10:', color: '#8BA205', key: '5 10', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
+                  { label: '10 15:', color: '#428710', key: '10 15', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
+                  { label: '15 20:', color: '#0A6624', key: '15 20', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
+                  { label: '20 25:', color: '#103C1F', key: '20 25', format: value => `${numberFormat(value * 100)}`, position: '_column', type: '_stacked' },
                 ]}
                 label={{ key: 'name' }}
               />
