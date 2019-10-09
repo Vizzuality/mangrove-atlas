@@ -7,8 +7,8 @@ import { breakpoints } from 'utils/responsive';
 import DangerousHTML from 'react-dangerous-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
-import { widgetInfo } from './widgetInfo';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { widgetInfo } from './widgetInfo';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -27,10 +26,11 @@ const Legend = ({ type, groups, direction, variant, unit }) => (
                   fill={item.color}
                 />
               </svg>
+
               <div className={styles.itemWrapper}>
                 <span>{item.value}</span>
-                { item.payload && item.payload.y &&
-                  <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
+                {item.payload && item.payload.y
+                  && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
                 }
               </div>
             </li>
