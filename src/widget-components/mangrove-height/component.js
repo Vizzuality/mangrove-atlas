@@ -69,13 +69,13 @@ const MangroveHeight = ({
     });
   };
 
-  const areaSelector = (
-    <Select
-      value={area}
-      options={areaOptions}
-      onChange={value => areaHandler(value)}
-    />
-  );
+  // const areaSelector = (
+  //   <Select
+  //     value={area}
+  //     options={areaOptions}
+  //     onChange={value => areaHandler(value)}
+  //   />
+  // ); TO-DO - add back when date is ready, changing maximun for area selector
 
   const dateSelector = (
     <Select
@@ -87,7 +87,7 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was
+      Mean mangrove <strong>maximun</strong> canopy height in <strong>{location}</strong> was
       <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
