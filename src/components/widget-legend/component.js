@@ -28,16 +28,12 @@ const Legend = ({ type, groups, direction, variant, unit, label, indexValue }) =
                 />
               </svg>
 
-              {!label && (
-                <div className={styles.itemWrapper}>
-                  <span>{item.value}</span>
-                  {item.payload && item.payload.y
-                    && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
-                  }
-                </div>)
-              }
-
-              {label && React.cloneElement(label, { value: item.value, unit, indexValue })}
+              <div className={styles.itemWrapper}>
+                <span>{item.value}</span>
+                {item.payload && item.payload.y
+                  && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
+                }
+              </div>
             </li>
           ))}
         </ul>
