@@ -21,11 +21,12 @@ const MangroveHeight = ({
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'maximun',
-        year: '2010'
+        id: 'height',
+        year: date,
+        area
       }
     });
-  }, []);
+  }, [date, area]);
 
   if (!rawData) {
     return null;
@@ -58,11 +59,21 @@ const MangroveHeight = ({
     });
   };
 
+  const areaHandler = (value) => {
+    setAreaType(value);
+    addFilter({
+      filter: {
+        id: 'height',
+        area: value
+      }
+    });
+  };
+
   const areaSelector = (
     <Select
       value={area}
       options={areaOptions}
-      onChange={value => setAreaType(value)}
+      onChange={value => areaHandler(value)}
     />
   );
 
