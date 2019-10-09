@@ -61,11 +61,15 @@ class InfoModal extends PureComponent {
     const widgetSelected = widgetInfo[widgetType];
     if (!widgetSelected) return null;
     const attributes = Object.keys(widgetSelected);
-    return attributes.map(attribute => <div><strong>
-      {attribute !== 'Title' ?
-        attribute + ':'
-        : ''}
-      </strong> <br /><DangerousHTML html={widgetSelected[attribute]} /><br /></div>)
+    return attributes.map(attribute => (
+      <div>
+        <strong>
+          {attribute !== 'Title'
+            ? attribute + ':'
+            : ''}
+        </strong> <br /><DangerousHTML html={widgetSelected[attribute]} /><br />
+      </div>
+    ));
   }
 
   render() {
@@ -75,7 +79,7 @@ class InfoModal extends PureComponent {
     const locationsData = search
       ? locations.filter(l => new RegExp(search, 'i').test(l.name))
       : locations;
-    
+
     const widgetSelected = widgetInfo[widgetType];
     const info = this.info();
 
@@ -143,7 +147,7 @@ class InfoModal extends PureComponent {
                   {widgetType}
                 </h1>
                 <span className={styles.info}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
+                  {info}
                 </span>
               </div>
             )}
