@@ -3,9 +3,9 @@ export const allowedKeys = [
   'referenceLines'
 ];
 
-export const  defaults = {
+export const defaults = {
   cartesianGrid: {
     strokeDasharray: '4 4',
     stroke: '#d6d6d9'
   }
-}
+};

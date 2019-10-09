@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
@@ -8,7 +8,7 @@ import Select from 'components/select';
 import config from './config';
 
 
-function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props}) {
+function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props }) {
   const [mangroveActivityState, setMangroveActivityState] = useState({
     startDate: 1996,
     endDate: 2016,
@@ -16,12 +16,18 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     isLoading: false
   });
 
+  useEffect(() => {
+    fetchRankingData({
+      ...mangroveActivityState,
+    });
+  }, []);
+
   if (!rawData || !rawData.meta) {
     return null;
   }
 
-  const { chartData, metaData, chartConfig } = config.parse(rawData);
   const { startDate, endDate, filter } = mangroveActivityState;
+  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
 
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
@@ -35,22 +41,22 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     });
   };
 
-  const changeFilter = (filter) => {
+  const changeFilter = (filterState) => {
     setMangroveActivityState({
       ...mangroveActivityState,
-      filter
+      filter: filterState
     });
     fetchRankingData({
       ...mangroveActivityState,
-      filter
+      filter: filterState
     });
   };
 
   const sortRanking = (data) => {
     const rankingType = mangroveActivityState.filter;
     const dataRanked = orderBy(data, rankingType, d => Math.abs(d`${rankingType}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return ( rankingType === 'gain' ? dataRanked : dataRanked.reverse());
-  }
+    return (rankingType === 'gain' ? dataRanked : dataRanked.reverse());
+  };
 
   // XXX: these options should come from an api ?
   const optionsFilter = [
@@ -94,7 +100,8 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
 
   const sentence = (
     <>
-      Worldwide the 5 countries with the largest {filterSelector} in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+      Worldwide the 5 countries with the largest {filterSelector}
+       in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
   );
 
