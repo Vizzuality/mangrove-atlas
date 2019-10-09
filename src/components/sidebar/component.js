@@ -57,7 +57,7 @@ class Dashboard extends Component {
         })}
         triggers={window.innerWidth > breakpoints.lg
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
-            { top: -10, callback: securityMargin => this.setMargin(!securityMargin) }]
+            { top: -10, callback: margin => this.setMargin(!margin) }]
           : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
           }
       >

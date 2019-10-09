@@ -29,8 +29,8 @@ const Legend = ({ type, groups, direction, variant, unit }) => (
               </svg>
               <div className={styles.itemWrapper}>
                 <span>{item.value}</span>
-                { item.payload && item.payload.y &&
-                  <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
+                { item.payload && item.payload.y
+                  && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
                 }
               </div>
             </li>

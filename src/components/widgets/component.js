@@ -6,17 +6,16 @@ import Spinner from 'components/spinner';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
+const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => (
+  <div className={classnames(styles.widgets, {
+    [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
+    [styles.spinner]: !widgets.length
+  })}
+  >
 
-  return (
-    <div className={classnames(styles.widgets, { 
-      [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
-      [styles.spinner]: !widgets.length
-      })}>
-      
-      {!widgets.length 
-        ? <div className={styles.spinner}><Spinner /></div>
-        : widgets.length && widgets.map((widget) => {
+    {!widgets.length
+      ? <div className={styles.spinner}><Spinner /></div>
+      : widgets.length && widgets.map((widget) => {
         const Widget = templates.get(widget.slug).component;
 
         return (
@@ -27,9 +26,8 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
           />
         );
       })}
-    </div>
-  );
-}
+  </div>
+);
 
 WidgetList.propTypes = {
   widgets: PropTypes.arrayOf(

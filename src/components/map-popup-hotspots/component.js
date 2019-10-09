@@ -14,16 +14,15 @@ const propertiesNameMap = new Map([
 ]);
 
 export default ({
-  'Country': country,
-  'Precip_Cha': precipitationChange,
-  'Temp_Chang': temperatureChange,
-  'Storm_Freq': stormFrequency,
-  'Drought_Pr': droughtProbability,
-  'CorePer': mangroveCore,
-  'Final_Chan': finalChange,
-  'Mudflat_Av': mudflatAvailability
+  Country: country,
+  Precip_Cha: precipitationChange,
+  Temp_Chang: temperatureChange,
+  Storm_Freq: stormFrequency,
+  Drought_Pr: droughtProbability,
+  CorePer: mangroveCore,
+  Final_Chan: finalChange,
+  Mudflat_Av: mudflatAvailability
 }) => {
-
   const features = [
     { id: 'Precip_Cha', value: precipitationChange },
     { id: 'Temp_Chang', value: temperatureChange },
@@ -36,11 +35,11 @@ export default ({
   ].filter(feat => feat.value !== null);
 
   return (
-    <div className={ style.mapPopupHotspots }>
-      <div className={ style.title }>
+    <div className={style.mapPopupHotspots}>
+      <div className={style.title}>
         {`Mangrove Hotspots - ${country}`}
       </div>
-      <div className={ style.content }>
+      <div className={style.content}>
         <ul>
           { features.map(feature => (
             <li className={style.feature} key={feature.id}>

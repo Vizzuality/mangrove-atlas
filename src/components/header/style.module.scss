@@ -59,7 +59,7 @@
     line-height: 0.85;
     text-align: left;
 
-    &._fixed {
+    &.fixed {
       font-size: 45px;
     }
   }
@@ -104,7 +104,7 @@
     .logo {
       transform: translate(-15px, -15px);
     }
-  
+
     .searchBar {
       margin-top: 98px;
       font-size: 35px;
@@ -135,7 +135,7 @@
 
 @media screen and (max-width: map-get($breakpoints, sm)) {
   .header {
-  
+
     .bg,
     .bgFixed {
       width: 600px;
