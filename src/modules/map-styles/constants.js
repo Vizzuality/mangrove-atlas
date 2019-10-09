@@ -8,7 +8,7 @@ function toRasterSource({ filename, minzoom, maxzoom }) {
   };
 }
 
-function createLayer({name, minzoom, maxzoom }) {
+function createLayer({ name, minzoom, maxzoom }) {
   return {
     id: name,
     type: 'raster',

@@ -76,7 +76,8 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
+      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was
+      <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
   const chartRData = {

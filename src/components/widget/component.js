@@ -81,7 +81,8 @@ function Widget({
     <div className={classnames(styles.widget, widgetConditionalStyles)}>
       <div className={classnames(styles.wrapper, {
         [styles._modal]: isLocationsModal
-      })}>
+      })}
+      >
         {!isLocationsModal && (
           <div className={styles.header}>
             <CollapseButton />
@@ -98,8 +99,8 @@ function Widget({
         }
       </div>
 
-      {!isLocationsModal &&
-        <WidgetInfo data={data} filename={filename} />
+      {!isLocationsModal
+        && <WidgetInfo data={data} filename={filename} />
       }
     </div>
   );

@@ -94,7 +94,7 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-             
+
               flexDirection: 'column',
               justifyContent: 'space-around',
               marginLeft: '10px',
