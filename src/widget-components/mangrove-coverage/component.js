@@ -58,7 +58,7 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
         year: current
       }
     });
-    setCoverageState({ ...coverageState, currentYear });
+    setCoverageState({ ...coverageState, currentYear: current });
   };
 
   const changeUnit = (selectedUnit) => {
