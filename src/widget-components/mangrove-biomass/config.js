@@ -15,16 +15,16 @@ import looseJsonParse from 'utils/loose-json-parse';
 const numberFormat = format(',.3r');
 
 const chunk = (array, size) => {
-  const chunked_arr = [];
+  const chunkedArr = [];
   for (let i = 0; i < array.length; i++) {
-    const last = chunked_arr[chunked_arr.length - 1];
+    const last = chunkedArr[chunkedArr.length - 1];
     if (!last || last.length === size) {
-      chunked_arr.push([array[i]]);
+      chunkedArr.push([array[i]]);
     } else {
       last.push(array[i]);
     }
   }
-  return chunked_arr;
+  return chunkedArr;
 };
 
 
@@ -39,7 +39,7 @@ const getBars = (barValues) => {
 
   formattedData = formattedData.map(data => data / total)
   return formattedData;
-}
+};
 
 
 const histogramData = (data) => {
@@ -50,15 +50,15 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0 50': getBars(d.agb_hist_mgha_1)[0],
-      '50 100': getBars(d.agb_hist_mgha_1)[1],
-      '100 150': getBars(d.agb_hist_mgha_1)[2],
-      '150 200': getBars(d.agb_hist_mgha_1)[3],
-      '200 250': getBars(d.agb_hist_mgha_1)[4],
+      '0 50': getBars(d.agb_hist_mgha_1)[0] * 100,
+      '50 100': getBars(d.agb_hist_mgha_1)[1] * 100,
+      '100 150': getBars(d.agb_hist_mgha_1)[2] * 100,
+      '150 200': getBars(d.agb_hist_mgha_1)[3] * 100,
+      '200 250': getBars(d.agb_hist_mgha_1)[4] * 100,
     }
   ));
   return histogram;
-}
+};
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
@@ -75,7 +75,7 @@ export const CONFIG = {
   parse: (data) => {
     {
       const dataFiltered = filterData(data);
-      const metadata = metaData(dataFiltered)
+      const metadata = metaData(dataFiltered);
 
       return {
         biomassData: sentenceData(dataFiltered),
@@ -151,33 +151,33 @@ export const CONFIG = {
               textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
             },
             ticks: metadata,
-            domain: [metadata[0], metadata[metadata.length - 1]],
+            domain: [1, 100],
             interval: 0
           },
           yAxis: {
             tick: {
               fontSize: 12, fill: 'rgba(0,0,0,0.54)'
             },
-            domain: [0, 1],
+            domain: [0, 100],
             interval: 0,
             orientation: 'right',
-            // label: {
-            //   content: () => (
-            //     <g>
-            //       <text
-            //         x={415}
-            //         y={25}
-            //         style={
-            //           { position: 'absolute' }
-            //         }
-            //         fontSize={11}
-            //         fill="rgba(0,0,0,0.54)"
-            //       >
-            //         g ha<tspan baselineShift="super">-1</tspan>
-            //       </text>
-            //     </g>
-            //   )
-            // }, // waiting to be confirmed by data
+            label: {
+              content: () => (
+                <g>
+                  <text
+                    x={415}
+                    y={25}
+                    style={
+                      { position: 'absolute' }
+                    }
+                    fontSize={11}
+                    fill="rgba(0,0,0,0.54)"
+                  >
+                    %
+                  </text>
+                </g>
+              )
+            },
             type: 'number'
           },
           legend: {
@@ -194,28 +194,27 @@ export const CONFIG = {
             cursor: false,
             content: (
               <WidgetTooltip
-                type='column'
+                type="column"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-around',
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0 50:', color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
-                  { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value)}`, position: '_column', type: '_stacked' },
+                  { label: '200 250:', color: '#13267F', key: '200 250', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
+                  { label: '150 200:', color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
+                  { label: '100 150:', color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
+                  { label: '50 100:', color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
+                  { label: '0 50:', color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value) * 100} `, position: '_column', type: '_stacked' },
                 ]}
                 label={{ key: 'name' }}
               />
             )
           }
         },
-      }
+      };
     }
   }
 };
-
 
 export default CONFIG;

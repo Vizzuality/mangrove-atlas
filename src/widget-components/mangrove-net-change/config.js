@@ -98,8 +98,9 @@ const CONFIG = {
         verticalAlign: 'top',
         layout: 'horizontal',
         height: 50,
+        // eslint-disable-next-line react/prop-types
         content: ({ payload }) => {
-          const labels = payload.map(({color, value, payload: labelPayload}) => ({
+          const labels = payload.map(({ color, value, payload: labelPayload }) => ({
             color,
             value: labelPayload.legend || value,
             variant: (labelPayload.dataKey === 'netChange') ? 'bar' : 'rect'
@@ -111,7 +112,7 @@ const CONFIG = {
         cursor: false,
         content: (
           <WidgetTooltip
-            type='column'
+            type="column"
             style={{
               color: 'black',
               backgroundColor: 'white',

@@ -9,7 +9,16 @@ import config from './config';
 
 const numberFormat = format(',.2f');
 
-function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
+function MangroveNetChange({
+  data: rawData,
+  filename,
+  currentLocation,
+  addFilter,
+  isCollapsed,
+  slug,
+  name,
+  ...props
+}) {
   const [netChangeState, setNetChangeState] = useState({
     startYear: '1996',
     endYear: '2016'
@@ -19,7 +28,7 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
     return null;
   }
 
-  const data = config.parse(rawData); 
+  const data = config.parse(rawData);
   const { metadata, chartData, chartConfig } = data;
   const { startYear, endYear } = netChangeState;
   const optionsYears = metadata.years.map(year => ({
@@ -76,8 +85,8 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
       prefix="start-year"
       value={startYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10) ||
-        option.value === startYear}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10)
+        || option.value === startYear}
       onChange={changeStartYear}
     />);
   const endSelector = (
@@ -86,8 +95,8 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
       prefix="end-year"
       value={endYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10) ||
-        option.value === endYear}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10)
+        || option.value === endYear}
       onChange={changeEndYear}
     />);
 
@@ -118,10 +127,10 @@ function MangroveNetChange({ data: rawData, filename, currentLocation, addFilter
 }
 
 MangroveNetChange.propTypes = {
-  name: PropTypes.string, 
+  name: PropTypes.string,
   data: PropTypes.shape({}),
-  slug: PropTypes.string, 
-  filename: PropTypes.string, 
+  slug: PropTypes.string,
+  filename: PropTypes.string,
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func
 };

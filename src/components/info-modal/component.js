@@ -6,8 +6,8 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
-import { widgetInfo } from './widgetInfo';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { widgetInfo } from './widgetInfo';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
@@ -60,11 +60,15 @@ class InfoModal extends PureComponent {
     const widgetSelected = widgetInfo[widgetType];
     if (!widgetSelected) return null;
     const attributes = Object.keys(widgetSelected);
-    return attributes.map(attribute => <div><strong>
-      {attribute !== 'Title' ?
-        attribute + ':'
-        : ''}
-      </strong> {widgetSelected[attribute]}<br /><br /></div>)
+    return attributes.map(attribute => (
+      <div>
+        <strong>
+          {attribute !== 'Title'
+            ? `${attribute}:`
+            : ''}
+        </strong> {widgetSelected[attribute]}<br /><br />
+      </div>
+    ));
   }
 
   render() {
@@ -74,7 +78,7 @@ class InfoModal extends PureComponent {
     const locationsData = search
       ? locations.filter(l => new RegExp(search, 'i').test(l.name))
       : locations;
-    
+
     const widgetSelected = widgetInfo[widgetType];
     const info = this.info();
 

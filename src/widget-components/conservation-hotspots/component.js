@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+import { format } from 'd3-format';
 import config from './config';
 
-import { format } from 'd3-format';
 
 const numberFormat = format(',.2f');
 
@@ -38,7 +38,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
 
 
   const endYear = Math.max(...years);
-  const startYear = Math.min(...years); 
+  const startYear = Math.min(...years);
 
   const changeYear = (currentYear) => {
     addFilter({
@@ -61,7 +61,6 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   };
 
   try {
-
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
@@ -75,7 +74,7 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
         onChange={changeYear}
       />);
 
-    const highestValue = Math.max.apply(Math, chartData.data.map(function (o) {
+    const highestValue = Math.max.apply(Math, chartData.data.map((o) => {
       if (!o.percentage) return null;
       return numberFormat(o.percentage);
     }));
@@ -92,16 +91,18 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
   }
   if (!widgetData) return null;
 
-  return <ChartWidget
-    name={name}
-    data={data}
-    slug={slug}
-    filename={slug}
-    isCollapsed={isCollapsed}
-    sentence={sentence}
-    chartData={chartData}
-    {...props}
-  />;
+  return (
+    <ChartWidget
+      name={name}
+      data={data}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={chartData}
+      {...props}
+    />
+  );
 }
 
 ConservationHotspots.propTypes = {

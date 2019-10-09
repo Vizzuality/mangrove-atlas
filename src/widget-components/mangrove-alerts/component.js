@@ -123,7 +123,7 @@ const ReactSelectStyles = {
   })
 };
 
-function MangroveAlerts({minDate = '2019-01-01', maxDate = '2019-12-31', data, isCollapsed, slug, name, addFilter, ...props }) {
+function MangroveAlerts({ minDate = '2019-01-01', maxDate = '2019-12-31', data, isCollapsed, slug, name, addFilter, ...props }) {
   const [mangroveAlertsState, setMangroveAlertsState] = useState({
     startDate: moment(minDate).add(2, 'M').toISOString(),
     endDate: moment(maxDate).subtract(2, 'M').toISOString()
@@ -132,7 +132,7 @@ function MangroveAlerts({minDate = '2019-01-01', maxDate = '2019-12-31', data, i
   const { startDate, endDate } = mangroveAlertsState;
 
   const datepickerHandler = ({ isStart, value }) => {
-    const monthStart = `2019-${String(value + 1).padStart(2,0)}-01`;
+    const monthStart = `2019-${String(value + 1).padStart(2, 0)}-01`;
     const complement = isStart ? 'endDate' : 'startDate';
     const newState = isStart
       ? { startDate: monthStart }
@@ -211,7 +211,7 @@ function MangroveAlerts({minDate = '2019-01-01', maxDate = '2019-12-31', data, i
         id: seriesName,
         date: end || 'Happening now.',
         category,
-        mark: ( end && moment(end).month()) || month(new Date()),
+        mark: (end && moment(end).month()) || month(new Date()),
         [seriesName]: -90 + (index * 25)
       });
     }
