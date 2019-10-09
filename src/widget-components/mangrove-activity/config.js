@@ -14,7 +14,8 @@ import WidgetLegend from 'components/widget-legend';
 import styles from 'components/widget/style.module.scss';
 
 const numberFormat = format(',.3r');
-const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter])).map((f, index) => ({ ...f, x: index }));
+const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter]))
+  .map((f, index) => ({ ...f, x: index }));
 
 function processData(data) {
   return {
