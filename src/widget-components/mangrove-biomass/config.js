@@ -1,5 +1,5 @@
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import groupBy from 'lodash/groupBy';
 
 // Components
@@ -30,14 +30,14 @@ const chunk = (array, size) => {
 
 const getBars = (barValues) => {
   if (!barValues) return null;
-  const barsData = (Object.values(looseJsonParse(barValues)));
-  const total = barsData.reduce((previous, current) => current + previous)
-  const chunkedData = chunk(barsData, 5)
+  const barsData = Object.values(looseJsonParse(barValues));
+  const total = barsData.reduce((previous, current) => current + previous);
+  const chunkedData = chunk(barsData, 5);
   let formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
 
-  formattedData = formattedData.map(data => data / total)
+  formattedData = formattedData.map(data => data / total);
   return formattedData;
 };
 
@@ -50,11 +50,11 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0 50': getBars(d.agb_hist_mgha_1)[0] * 100,
-      '50 100': getBars(d.agb_hist_mgha_1)[1] * 100,
-      '100 150': getBars(d.agb_hist_mgha_1)[2] * 100,
-      '150 200': getBars(d.agb_hist_mgha_1)[3] * 100,
-      '200 250': getBars(d.agb_hist_mgha_1)[4] * 100,
+      '0–50': getBars(d.agb_hist_mgha_1)[0] * 100,
+      '50–100': getBars(d.agb_hist_mgha_1)[1] * 100,
+      '100–150': getBars(d.agb_hist_mgha_1)[2] * 100,
+      '150–200': getBars(d.agb_hist_mgha_1)[3] * 100,
+      '200–250': getBars(d.agb_hist_mgha_1)[4] * 100,
     }
   ));
   return histogram;
@@ -62,7 +62,21 @@ const histogramData = (data) => {
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
-const CustomLabel = ({ value, unit, indexedValue }) => <g>{value} {unit}<sup>{indexedValue}</sup></g>;
+const CustomLabel = ({ value, unit, indexedValue }) => (
+  <span>{value} {unit}<sup>{indexedValue}</sup></span>
+);
+
+CustomLabel.propTypes = {
+  value: PropTypes.oneOfType(PropTypes.number, PropTypes.string),
+  unit: PropTypes.string,
+  indexedValue: PropTypes.string,
+};
+
+CustomLabel.defaultProps = {
+  value: null,
+  unit: null,
+  indexedValue: null,
+};
 
 const sentenceData = data => ({
   height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
@@ -95,35 +109,35 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0 50':
+              '0–50':
               {
                 stackId: 'bar',
                 fill: '#EAF19D',
                 stroke: '#EAF19D',
                 isAnimationActive: false
               },
-              '50 100':
+              '50–100':
               {
                 stackId: 'bar',
                 fill: '#B8E98E',
                 stroke: '#B8E98E',
                 isAnimationActive: false
               },
-              '100 150':
+              '100–150':
               {
                 stackId: 'bar',
                 fill: '#1B97C1',
                 stroke: '#1B97C1',
                 isAnimationActive: false
               },
-              '150 200':
+              '150–200':
               {
                 stackId: 'bar',
                 fill: '#1C52A3',
                 stroke: '#1C52A3',
                 isAnimationActive: false
               },
-              '200 250':
+              '200–250':
               {
                 stackId: 'bar',
                 fill: '#13267F',
@@ -191,7 +205,7 @@ export const CONFIG = {
             content: (properties) => {
               const { payload } = properties;
               const groups = groupBy(payload, p => p.payload);
-              return <WidgetLegend type="height" unit="Mg ha" indexValue="-1" label={<CustomLabel />} groups={groups} />;
+              return <WidgetLegend type="height" groups={groups} />;
             }
           },
           tooltip: {
@@ -205,11 +219,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: <CustomLabel value="200-250 Mg ha" indexedValue="-1" />, color: '#13267F', key: '200 250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="150-200 Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150 200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="100-150 Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100 150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="50-100 Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50 100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <CustomLabel value="0-50 Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0 50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="200–250" unit="Mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="150–200" unit="Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="100–150" unit="Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="50–100" unit="Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <CustomLabel value="0–50" unit="Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
               />
             )
