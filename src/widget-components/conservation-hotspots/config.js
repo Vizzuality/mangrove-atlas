@@ -1,5 +1,4 @@
 import React from 'react';
-import { format } from 'd3-format';
 import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
@@ -15,7 +14,7 @@ const widgetData = ({ list }) => {
       color: '#ED896C',
       label: 'Requires Conservation'
     },
-    'Requires Monitoring': { 
+    'Requires Monitoring': {
       color: '#FDC067',
       label: 'Requires Monitoring'
     },
@@ -27,11 +26,11 @@ const widgetData = ({ list }) => {
       color: '#1B9ACC',
       label: 'Monitoring Advised'
     }
-  }
+  };
 
   return list.flatMap((d) => {
     const year = new Date(d.date).getFullYear();
-    
+
     if (!d.con_hotspot_summary_km2) return null;
 
     const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string') ? looseJsonParse(d.con_hotspot_summary_km2) : d.con_hotspot_summary_km2;

@@ -67,7 +67,7 @@ const MangroveBiomass = ({
   const sentence = (
     <>
       Mean mangrove above-ground biomass density in <strong>{location}</strong> was
-      average {biomassData.data} mg ha<sup>-1</sup> in {endDateSelector}.{/*year selector*/}
+      average {biomassData.data} mg ha<sup>-1</sup> in {endDateSelector}.
     </>
   );
   const widgetData = {

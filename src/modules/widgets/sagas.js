@@ -1,11 +1,11 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
 import DATA from 'config/data.json';
+import { breakpoints } from 'utils/responsive';
 import { fetchSucceeded, toggleActive } from './actions';
 
-import { breakpoints } from 'utils/responsive';
 
 function delay(ms) {
-  return new Promise(resolve => setTimeout(() => resolve(true), ms))
+  return new Promise(resolve => setTimeout(() => resolve(true), ms));
 }
 
 export function* getWidgets() {
@@ -13,10 +13,10 @@ export function* getWidgets() {
   const { widgets } = DATA;
 
   if (isDesktop) {
-    widgets.forEach(layer => {
+    widgets.forEach((layer) => {
       if (layer.slug === 'mangrove_coverage') {
         layer.isActive = true;
-     }
+      }
     });
   }
 
@@ -40,7 +40,7 @@ export function* restoreWidgetsState() {
 
     if (urlWidgets) {
       const toDispatch = [];
-      const updatedWidgets = stateWidgets.map(widget => {
+      const updatedWidgets = stateWidgets.map((widget) => {
         const updatedWidget = Object.assign({}, widget);
 
         if (urlWidgets[widget.slug]) {

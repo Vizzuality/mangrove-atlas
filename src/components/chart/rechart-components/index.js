@@ -14,6 +14,7 @@ const rechartsComponentsMap = new Map([
   ['cartesianAxis', CartesianAxis]
 ]);
 
+// eslint-disable-next-line import/no-mutable-exports
 export let stack = [];
 
 export function clearStack() {
@@ -28,10 +29,11 @@ export function addComponent(type, options) {
   const Component = rechartsComponentsMap.get(type);
 
   if (isArray(options)) {
-    options.forEach((itemOptions, index) => stack.push(<Component key={`${type}-${index}`} {...itemOptions} />))
+    // eslint-disable-next-line react/no-array-index-key
+    options.forEach((itemOptions, index) => stack.push(<Component key={`${type}-${index}`} {...itemOptions} />));
   } else if (isObject(options)) {
-    stack.push(<Component key={`${type}`} {...options}></Component>);
+    stack.push(<Component key={`${type}`} {...options} />);
   }
 
   return null;
-};
+}

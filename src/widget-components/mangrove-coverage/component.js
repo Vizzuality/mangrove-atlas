@@ -37,12 +37,12 @@ function processData(data, currentYear) {
 }
 
 function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 2016, unit: '%'});
+  const [coverageState, setCoverageState] = useState({ currentYear: 2016, unit: '%' });
   if (!rawData) {
     return null;
   }
 
-  const data = config.parse(rawData); 
+  const data = config.parse(rawData);
   const { chartConfig, metadata } = data;
   const { currentYear, unit } = coverageState;
   const optionsYears = sortBy(metadata.years.map(year => ({
@@ -51,18 +51,18 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
   })), ['value']);
   let sentence = null;
 
-  const changeYear = (currentYear) => {
+  const changeYear = (current) => {
     addFilter({
       filter: {
         id: 'coverage-1996-2016',
-        year: currentYear
+        year: current
       }
     });
     setCoverageState({ ...coverageState, currentYear });
   };
 
-  const changeUnit = (unit) => {
-    setCoverageState({ ...coverageState, unit });
+  const changeUnit = (selectedUnit) => {
+    setCoverageState({ ...coverageState, selectedUnit });
   };
 
   const widgetData = processData(data, currentYear);
@@ -73,7 +73,7 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
 
   const chartData = {
     data: widgetData,
-    config: chartConfig  
+    config: chartConfig
   };
 
   try {
@@ -88,18 +88,22 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world’s'
       : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
-    const unitSelector = (<Select
-      value={unit}
-      options={unitOptions}
-      onChange={changeUnit}
-    />);
-    const yearSelector = (<Select
-      className="notranslate"
-      width="auto"
-      value={currentYear}
-      options={optionsYears}
-      onChange={changeYear}
-    />);
+    const unitSelector = (
+      <Select
+        value={unit}
+        options={unitOptions}
+        onChange={changeUnit}
+      />
+    );
+    const yearSelector = (
+      <Select
+        className="notranslate"
+        width="auto"
+        value={currentYear}
+        options={optionsYears}
+        onChange={changeYear}
+      />
+    );
 
     sentence = (
       <>
@@ -109,31 +113,33 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
         <strong className="notranslate">{ numberFormat(totalCoverage)} km</strong> of coastline<br />
         <span>in </span>{yearSelector}.
       </>
-      );
-  } catch(e) {
+    );
+  } catch (e) {
     sentence = <span>No data for this widget.</span>;
   }
 
-  return <ChartWidget
-    data={data}
-    slug={slug}
-    filename={slug}
-    sentence={sentence}
-    chartData={chartData}
-    {...props}
-  />;
+  return (
+    <ChartWidget
+      data={data}
+      slug={slug}
+      filename={slug}
+      sentence={sentence}
+      chartData={chartData}
+      {...props}
+    />
+  );
 }
 
 MangroveCoverage.propTypes = {
   data: PropTypes.shape({}),
   metadata: PropTypes.shape({}),
   currentLocation: PropTypes.shape({})
-}
+};
 
 MangroveCoverage.defaultProps = {
   data: null,
   metadata: null,
   currentLocation: null
-}
+};
 
 export default MangroveCoverage;

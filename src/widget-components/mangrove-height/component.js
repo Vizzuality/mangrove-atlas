@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 import sortBy from 'lodash/sortBy';
+import { format } from 'd3-format';
 
 import config from './config';
+
+const numberFormat = format(',.2f');
 
 const MangroveHeight = ({
   data: rawData,
@@ -13,12 +16,12 @@ const MangroveHeight = ({
   addFilter,
   ...props
 }) => {
-  const [endDate, setEndDate] = useState('2010');
-  const [area, setAreaType] = useState('canopy');
+  const [date, setDate] = useState('2016');
+  const [area, setAreaType] = useState('maximun');
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'height',
+        id: 'maximun',
         year: '2010'
       }
     });
@@ -36,7 +39,8 @@ const MangroveHeight = ({
 
   const location = currentLocation.name;
   const areaOptions = [
-    { label: 'maximun', value: 'maximun' }
+    { label: 'maximun', value: 'maximun' },
+    { label: 'basal', value: 'basal' }
   ];
 
   const dateOptions = sortBy(metadata.map(year => ({
@@ -44,8 +48,8 @@ const MangroveHeight = ({
     value: year.toString()
   })), ['value']);
 
-  const endDateHandler = (value) => {
-    setEndDate(value);
+  const dateHandler = (value) => {
+    setDate(value);
     addFilter({
       filter: {
         id: 'height',
@@ -62,18 +66,18 @@ const MangroveHeight = ({
     />
   );
 
-  const endDateSelector = (
+  const dateSelector = (
     <Select
-      value={endDate}
+      value={date}
       options={dateOptions}
-      isOptionDisabled={option => option.value === endDate}
-      onChange={value => endDateHandler(value)}
+      onChange={value => dateHandler(value)}
     />
   );
 
   const sentence = (
     <>
-      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was <strong> {heightData.height} m</strong> in <strong>1996</strong>. {/*add year select*/}
+      Mean mangrove {areaSelector} canopy height in <strong>{location}</strong> was
+      <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
   const chartRData = {
