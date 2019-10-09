@@ -14,16 +14,16 @@ import looseJsonParse from 'utils/loose-json-parse';
 const numberFormat = format(',.3r');
 
 const chunk = (array, size) => {
-  const chunked_arr = [];
+  const chunkedArr = [];
   for (let i = 0; i < array.length; i++) {
-    const last = chunked_arr[chunked_arr.length - 1];
+    const last = chunkedArr[chunkedArr.length - 1];
     if (!last || last.length === size) {
-      chunked_arr.push([array[i]]);
+      chunkedArr.push([array[i]]);
     } else {
       last.push(array[i]);
     }
   }
-  return chunked_arr;
+  return chunkedArr;
 };
 
 let maxValue = 0;
@@ -31,13 +31,13 @@ let maxValue = 0;
 const getBars = (barValues) => {
   if (!barValues) return null;
   const barsData = (Object.values(looseJsonParse(barValues)));
-  const chunkedData = chunk(barsData, 5)
+  const chunkedData = chunk(barsData, 5);
   const formattedData = chunkedData.map(
     r => numberFormat((r.reduce((previous, current) => current + previous) / 1000))
   );
-  maxValue = Math.max(...formattedData)
+  maxValue = Math.max(...formattedData);
   return formattedData;
-}
+};
 
 
 const histogramData = (data) => {
@@ -56,7 +56,7 @@ const histogramData = (data) => {
     }
   ));
   return histogram;
-}
+};
 
 const filterData = data => data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null);
 
@@ -73,7 +73,7 @@ export const CONFIG = {
   parse: (data) => {
     {
       const dataFiltered = filterData(data);
-      const metadata = metaData(dataFiltered)
+      const metadata = metaData(dataFiltered);
 
       return {
         biomassData: sentenceData(dataFiltered),
@@ -192,7 +192,7 @@ export const CONFIG = {
             cursor: false,
             content: (
               <WidgetTooltip
-                type='column'
+                type="column"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-around',
@@ -210,10 +210,9 @@ export const CONFIG = {
             )
           }
         },
-      }
+      };
     }
   }
 };
-
 
 export default CONFIG;

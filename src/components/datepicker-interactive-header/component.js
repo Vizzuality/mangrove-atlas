@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import range from 'lodash/range';
 import Button from 'components/button';
 import Select from 'components/select';
@@ -7,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './style.module.scss';
-import { hidden } from 'ansi-colors';
 
 const ReactSelectStyles = {
   container: provided => ({
@@ -78,7 +78,7 @@ const ReactSelectStyles = {
     },
   }),
   menuList: () => ({
-    overflowX: hidden
+    overflowX: 'hidden'
 
   }),
   option: (provided, state) => ({
@@ -125,7 +125,7 @@ const ReactSelectStyles = {
   })
 };
 
-function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
+function DatepickerInteractiveHeader({ minDate, maxDate, ...customHeaderProps }) {
   // customHeaderProps are injected by 'react-datepicker'
   // we are using the renderCustomHeader hook
   const {
@@ -192,6 +192,15 @@ function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
       </Button>
     </div>
   );
+}
+
+DatepickerInteractiveHeader.propTypes = {
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string
 };
 
+DatepickerInteractiveHeader.defaultProps = {
+  minDate: '01-01-1996',
+  maxDate: '01-01-2016'
+};
 export default DatepickerInteractiveHeader;

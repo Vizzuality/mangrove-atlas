@@ -72,17 +72,21 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
       </Widget>
     </div>
   );
-}
+};
 
 HighlightedPlaces.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})),
   currentLocation: PropTypes.shape({}),
+  slug: PropTypes.string,
+  name: PropTypes.string,
   isCollapsed: PropTypes.bool
 };
 
 HighlightedPlaces.defaultProps = {
   data: null,
   currentLocation: null,
+  slug: null,
+  name: null,
   isCollapsed: false
 };
 

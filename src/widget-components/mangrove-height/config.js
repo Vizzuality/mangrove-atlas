@@ -10,31 +10,31 @@ import looseJsonParse from 'utils/loose-json-parse';
 const numberFormat = format(',.3r');
 
 const chunk = (array, size) => {
-  const chunked_arr = [];
+  const chunkedArr = [];
   for (let i = 0; i < array.length; i++) {
-    const last = chunked_arr[chunked_arr.length - 1];
+    const last = chunkedArr[chunkedArr.length - 1];
     if (!last || last.length === size) {
-      chunked_arr.push([array[i]]);
+      chunkedArr.push([array[i]]);
     } else {
       last.push(array[i]);
     }
   }
-  return chunked_arr;
-}
+  return chunkedArr;
+};
 
 
 const getBars = (barValues) => {
   if (!barValues) return null;
   const barsData = (Object.values(looseJsonParse(barValues)));
-  const chnkedData = chunk(barsData, 5)
+  const chnkedData = chunk(barsData, 5);
   let formattedData = chnkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
   const total = barsData.reduce((previous, current) => current + previous);
-  
+
   formattedData = formattedData.map(data => data / total);
   return formattedData;
-}
+};
 
 
 const histogramData = (data) => {
@@ -52,7 +52,7 @@ const histogramData = (data) => {
     }
   ));
   return histogram;
-}
+};
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
 
@@ -185,7 +185,7 @@ export const CONFIG = {
             cursor: false,
             content: (
               <WidgetTooltip
-                type='column'
+                type="column"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-around',
@@ -203,7 +203,7 @@ export const CONFIG = {
             )
           }
         },
-      }
+      };
     }
   }
 };
