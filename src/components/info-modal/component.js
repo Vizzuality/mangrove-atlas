@@ -4,10 +4,11 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
+import DangerousHTML from 'react-dangerous-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { widgetInfo } from './widgetInfo';
+import widgetInfo from './widgetInfo';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
@@ -66,7 +67,7 @@ class InfoModal extends PureComponent {
           {attribute !== 'Title'
             ? `${attribute}:`
             : ''}
-        </strong> {widgetSelected[attribute]}<br /><br />
+        </strong><DangerousHTML html={widgetSelected[attribute]} />
       </div>
     ));
   }
@@ -108,10 +109,6 @@ class InfoModal extends PureComponent {
             }
             {widgetType !== 'highlighted_places' && widgetSelected && (
               <div className={styles.content}>
-
-                <h1 className="">
-                  {widgetSelected.title}
-                </h1>
                 <div className={styles.info}>
                   {info}
                 </div>
@@ -150,7 +147,7 @@ class InfoModal extends PureComponent {
                   {widgetType}
                 </h1>
                 <span className={styles.info}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
+                  {info}
                 </span>
               </div>
             )}
