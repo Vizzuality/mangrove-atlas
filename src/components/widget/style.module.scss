@@ -30,12 +30,9 @@
   }
 
   &._collapsed {
-    margin-bottom: -90px;
+    margin-bottom: -95px;
     background-position: 0;
     margin-top: -3px;
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      margin-bottom: -85px;
-    }
 
     .content {
       max-height: 0px;
@@ -80,6 +77,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 15px;
   }
 
   .title {
