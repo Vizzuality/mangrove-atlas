@@ -2,9 +2,21 @@
 
 ## 2019-10-11
 
+### Added
+
+- Added biomass widget
+- Added height widget
+- Added layer for biomass and height widget
+- Added units in all the tooltips
+
+### Changed
+
+- Unified decimals in all the widgets
+
 ### Fixed
 
 - Fixed axis comma formatting for Activity widget
+- Fixed an error where biomass widget breaks the application
 
 ## 2019-09-13
 
