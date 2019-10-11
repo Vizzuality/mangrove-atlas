@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import sortBy from 'lodash/sortBy';
+// import sortBy from 'lodash/sortBy';
 import ChartWidget from 'components/chart-widget';
-import Select from 'components/select';
+// import Select from 'components/select';
 import { format } from 'd3-format';
 import config from './config';
 
@@ -19,35 +19,42 @@ function processData(data, currentYear) {
   return currentYearData;
 }
 
-function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 1996 });
+function ConservationHotspots({
+  data: rawData,
+  currentLocation,
+  addFilter,
+  isCollapsed,
+  slug,
+  name,
+  ...props
+}) {
+  // const [coverageState, setCoverageState] = useState({ currentYear: 1996 });
+  const [coverageState] = useState({ currentYear: 1996 });
 
   if (!rawData) {
     return null;
   }
 
+  let sentence = null;
+
   const data = config.parse(rawData);
   const { metadata, chartConfig } = data;
   const { currentYear } = coverageState;
   const { years } = metadata;
-  const optionsYears = sortBy(metadata.years.map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['value']);
-  let sentence = null;
-
-
+  // const optionsYears = sortBy(metadata.years.map(year => ({
+  //   label: year.toString(),
+  //   value: year
+  // })), ['value']);
   const endYear = Math.max(...years);
   const startYear = Math.min(...years);
-
-  const changeYear = (currentYear) => {
-    addFilter({
-      filter: {
-        year: currentYear
-      }
-    });
-    setCoverageState({ ...coverageState, currentYear });
-  };
+  // const changeYear = (currentYearFilter) => {
+  //   addFilter({
+  //     filter: {
+  //       year: currentYearFilter
+  //     }
+  //   });
+  //   setCoverageState({ ...coverageState, currentYear: currentYearFilter });
+  // };
 
   const widgetData = processData(data, currentYear);
 
@@ -65,21 +72,24 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const yearSelector = (
-      <Select
-        className="notranslate"
-        width="auto"
-        value={currentYear}
-        options={optionsYears}
-        onChange={changeYear}
-      />);
+    // const yearSelector = (
+    //   <Select
+    //     className="notranslate"
+    //     width="auto"
+    //     value={currentYear}
+    //     options={optionsYears}
+    //     onChange={changeYear}
+    //   />);
 
-    const highestValue = Math.max.apply(Math, chartData.data.map((o) => {
+    const formattedNumbers = chartData.data.map((o) => {
       if (!o.percentage) return null;
       return numberFormat(o.percentage);
-    }));
+    });
+    // eslint-disable-next-line prefer-spread
+    const highestValue = Math.max.apply(Math, formattedNumbers);
 
-    const highestCategory = (chartData.data).find(data => Number(numberFormat(data.percentage)) === highestValue).label;
+    const highestCategory = (chartData.data)
+      .find(d => Number(numberFormat(d.percentage)) === highestValue).label;
 
     sentence = (
       <>

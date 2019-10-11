@@ -33,10 +33,14 @@ class Header extends PureComponent {
 
   render() {
     const { location, sticky } = this.props;
-    let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
 
-    if ((location && location.name.length > 10)) stylesOverride = { fontSize: 45, lineHeight: 1 };
-    if ((location && location.name.length > 30) || sticky) stylesOverride = { fontSize: 30, lineHeight: 1 };
+    let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
+    if ((location && location.name.length > 10)) {
+      stylesOverride = { fontSize: 45, lineHeight: 1 };
+    }
+    if ((location && location.name.length > 30) || sticky) {
+      stylesOverride = { fontSize: 30, lineHeight: 1 };
+    }
 
     return (
       <div className={classnames(styles.header,

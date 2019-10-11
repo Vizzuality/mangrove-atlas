@@ -17,7 +17,9 @@ const MangroveHeight = ({
   ...props
 }) => {
   const [date, setDate] = useState('2016');
-  const [area, setAreaType] = useState('maximun');
+  // const [area, setAreaType] = useState('maximun');
+  const [area] = useState('maximun');
+
   useEffect(() => {
     addFilter({
       filter: {
@@ -39,10 +41,6 @@ const MangroveHeight = ({
   }
 
   const location = currentLocation.name;
-  const areaOptions = [
-    { label: 'maximun', value: 'maximun' },
-    { label: 'basal', value: 'basal' }
-  ];
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
@@ -59,15 +57,15 @@ const MangroveHeight = ({
     });
   };
 
-  const areaHandler = (value) => {
-    setAreaType(value);
-    addFilter({
-      filter: {
-        id: 'height',
-        area: value
-      }
-    });
-  };
+  // const areaHandler = (value) => {
+  //   setAreaType(value);
+  //   addFilter({
+  //     filter: {
+  //       id: 'height',
+  //       area: value
+  //     }
+  //   });
+  // };
 
   // const areaSelector = (
   //   <Select

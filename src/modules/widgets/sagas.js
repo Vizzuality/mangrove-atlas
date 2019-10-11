@@ -15,6 +15,7 @@ export function* getWidgets() {
   if (isDesktop) {
     widgets.forEach((layer) => {
       if (layer.slug === 'mangrove_coverage') {
+        // eslint-disable-next-line no-param-reassign
         layer.isActive = true;
       }
     });

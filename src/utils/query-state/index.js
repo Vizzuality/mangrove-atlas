@@ -4,7 +4,7 @@ import { redirect } from 'redux-first-router';
 
 import { setViewport } from 'modules/map/actions';
 import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
-import ACTIONS from './constants';
+import { ACTIONS } from './constants';
 
 class QueryStateManager {
   /**
@@ -72,8 +72,8 @@ class QueryStateManager {
     const rules = Array.from(this.triggers.entries());
 
     const encodeRules = rules.map(([action, name]) => {
-      const encodeRule = function* () {
-        const actionListener = function* () {
+      const encodeRule = function* encodeRule() {
+        const actionListener = function* actionListener() {
           const namespace = this.registry.get(name);
           const state = yield select();
           const { router } = state;
