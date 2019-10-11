@@ -42,7 +42,7 @@ class Header extends PureComponent {
       <div className={classnames(styles.header,
         { [styles.sticky]: sticky })}
       >
-        <LanguageSelect />
+        <div className={styles.toggle}><LanguageSelect /></div>
         <img
           className={classnames(styles.bg,
             { [styles.isHidden]: sticky })}

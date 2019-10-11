@@ -153,6 +153,10 @@
     top: 20px;
     align-items: center;
 
+    .toggle{
+      display: none;
+    }
+
     img {
       display: none!important;
     }

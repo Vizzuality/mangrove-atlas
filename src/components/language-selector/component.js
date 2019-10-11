@@ -49,7 +49,7 @@ class LanguageSelect extends PureComponent {
   }
 
   render() {
-    const { language, data, className } = this.props;
+    const { language, data } = this.props;
     const options = data.map(lang => ({
       label: lang.name,
       value: lang.code,
@@ -66,7 +66,6 @@ class LanguageSelect extends PureComponent {
             type="button"
             hasBackground={currentValue.value === o.value}
             hasContrast={currentValue.value === o.value}
-            className={className}
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
