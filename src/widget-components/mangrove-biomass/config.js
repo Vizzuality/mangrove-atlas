@@ -62,23 +62,21 @@ const histogramData = (data) => {
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
-const sentenceData = data => ({
-  height: data.map(d => d.agb_mgha_1).reduce((previous, current) => current + previous, 0),
-  year: data.map(d => moment(d.date).year())
-});
+const biomassCoverage = (data, yearSelected) => data.find(d => d.date
+  .includes(yearSelected)).agb_mgha_1.toFixed(2);
 
 const metaData = data => Array.from(new Set(
   data.map(d => moment(d.date).year())
 ));
 
 export const CONFIG = {
-  parse: (data) => {
+  parse: (data, yearSelected) => {
     {
       const dataFiltered = filterData(data);
       const metadata = metaData(dataFiltered);
 
       return {
-        biomassData: sentenceData(dataFiltered),
+        coverage: biomassCoverage(dataFiltered, yearSelected),
         metadata,
         chartData: histogramData(dataFiltered),
         chartConfig: {
