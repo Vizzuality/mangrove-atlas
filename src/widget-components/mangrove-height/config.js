@@ -76,12 +76,13 @@ export const CONFIG = {
         heightCoverage: heightCoverage(dataFiltered, date),
         metadata: metaData(dataFiltered),
         chartConfig: {
+          height: 360,
           cartesianGrid: {
             vertical: false,
             horizontal: true,
             strokeDasharray: '5 20'
           },
-          margin: { top: 10, right: 50, left: 0, bottom: 0 },
+          margin: { top: 20, right: 0, left: 0, bottom: 20 },
           xKey: 'year',
           yKeys: {
             bars:
@@ -135,36 +136,26 @@ export const CONFIG = {
             tick: {
               fontSize: 12,
               lineHeight: 20,
-              fill: 'rgba(0,0,0,0.2)',
-              stroke: 'rgba(0,0,0,0.2)',
-              textShadow: '0 2px 4px 0 rgba(0,0,0,0.5)'
+              fill: 'rgba(0, 0, 0, 0.54)'
             },
             ticks: metaData(data),
             interval: 0
           },
           yAxis: {
             tick: {
-              fontSize: 12, fill: 'rgba(0,0,0,0.54)'
+              fontSize: 12,
+              fill: 'rgba(0,0,0,0.54)'
             },
+            width: 40,
             tickFormatter: value => Math.round(value),
             domain: [0, 100],
             interval: 0,
             orientation: 'right',
-            // label: {
-            //   content: () => (
-            //     <g>
-            //       <text
-            //         x='95%'
-            //         y={50}
-            //         style={{ marginRight: 30 }}
-            //         fontSize={13}
-            //         fill="rgba(0,0,0,0.54)"
-            //       >
-            //         km
-            //   </text>
-            //     </g>
-            //   )
-            // },  waiting to be confirmed by data
+            label: {
+              value: '%',
+              position: 'top',
+              offset: 25
+            },
             type: 'number'
           },
           legend: {
