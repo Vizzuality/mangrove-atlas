@@ -6,6 +6,10 @@
   position: relative;
   border-radius: 15px;
 
+  @media print {
+    display: none;
+  }
+
   button {
     display: block;
     position: relative;
