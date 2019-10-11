@@ -28,7 +28,6 @@ import {
 } from './constants';
 
 import styles from './style.module.scss';
-import { noAuto } from '@fortawesome/fontawesome-svg-core';
 
 const rechartCharts = new Map([
   ['pie', PieChart],
@@ -124,11 +123,11 @@ class Chart extends PureComponent {
 
     return (
       <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={height}>
           <RechartChart
             stackOffset={stackOffset}
-            height={height}
-            width={width}
+            // height={height}
+            // width={width}
             viewBox={viewBox}
             data={data}
             layout={layout}
