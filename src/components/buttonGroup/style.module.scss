@@ -3,9 +3,17 @@
 .container {
   border: 2px solid rgba(0,0,0,0.2);
   display: inline-flex;
-  position: relative;
+  position: absolute;
+  margin-top: 30px;
+  right: 0;
   height: 26px;
   border-radius: 15px;
+  max-width: 250px;
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    right: 15px;
+  }
+
 
   button {
     display: block;
