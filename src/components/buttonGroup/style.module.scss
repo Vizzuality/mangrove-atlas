@@ -10,6 +10,10 @@
   border-radius: 15px;
   max-width: 250px;
 
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    right: 15px;
+  }
+
 
   button {
     display: block;
