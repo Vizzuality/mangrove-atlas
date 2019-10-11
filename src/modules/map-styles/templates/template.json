@@ -34,7 +34,7 @@
       "type": "vector"
     },
     "composite": {
-      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.gmw_1996_2016,mangrove-atlas.gmw_change_1996_2016",
+      "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.gmw_1996_2016,mangrove-atlas.gmw_change_1996_2016,mangrove-atlas.cons_hotspots",
       "type": "vector"
     }
   },

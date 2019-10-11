@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import range from 'lodash/range';
 import Button from 'components/button';
 import Select from 'components/select';
@@ -7,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './style.module.scss';
-import { hidden } from 'ansi-colors';
 
 const ReactSelectStyles = {
   container: provided => ({
@@ -77,9 +77,8 @@ const ReactSelectStyles = {
       transform: 'translateX(-12px)'
     },
   }),
-  menuList: provided => ({
-    //...provided,
-    overflowX: hidden
+  menuList: () => ({
+    overflowX: 'hidden'
 
   }),
   option: (provided, state) => ({
@@ -121,12 +120,12 @@ const ReactSelectStyles = {
     cursor: 'pointer',
     padding: 0
   }),
-  indicatorSeparator: provided => ({
+  indicatorSeparator: () => ({
     width: 0
   })
 };
 
-function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
+function DatepickerInteractiveHeader({ minDate, maxDate, ...customHeaderProps }) {
   // customHeaderProps are injected by 'react-datepicker'
   // we are using the renderCustomHeader hook
   const {
@@ -148,7 +147,9 @@ function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
   const monthOptions = moment.months().filter((_, i) => {
     if (dateMoment.year() === minMoment.year()) {
       return i >= minMoment.month();
-    } else if (dateMoment.year() === maxMoment.year()) {
+    }
+
+    if (dateMoment.year() === maxMoment.year()) {
       return i <= maxMoment.month();
     }
 
@@ -191,6 +192,15 @@ function DatepickerInteractiveHeader({minDate, maxDate, ...customHeaderProps}) {
       </Button>
     </div>
   );
+}
+
+DatepickerInteractiveHeader.propTypes = {
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string
 };
 
+DatepickerInteractiveHeader.defaultProps = {
+  minDate: '01-01-1996',
+  maxDate: '01-01-2016'
+};
 export default DatepickerInteractiveHeader;

@@ -114,7 +114,7 @@ class Chart extends PureComponent {
 
     const RechartChart = rechartCharts.get(type);
 
-    Object.entries(content).forEach(entry => {
+    Object.entries(content).forEach((entry) => {
       const [key, definition] = entry;
       if (allowedKeys.includes(key)) {
         addComponent(key, definition);
@@ -122,7 +122,7 @@ class Chart extends PureComponent {
     });
 
     return (
-      <div ref={(r) => { this.chart = r; }}  className={styles.chart} style={{ height }}>
+      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer>
           <RechartChart
             stackOffset={stackOffset}
@@ -178,7 +178,7 @@ class Chart extends PureComponent {
 
             {cartesianGrid && (
               <CartesianGrid
-                {...defaults['cartesianGrid']}
+                {...defaults.cartesianGrid}
                 {...cartesianGrid}
               />
             )}
@@ -276,6 +276,9 @@ class Chart extends PureComponent {
 
             {tooltip && (
               <Tooltip
+                wrapperStyle={{ position: 'absolute',
+                  top: 0 }}
+
                 isAnimationActive={false}
                 {...tooltip}
               />
@@ -283,7 +286,7 @@ class Chart extends PureComponent {
 
             {legend && (
               <Legend
-                className={styles.chart_legend}
+                wrapperStyle={{ pointerEvents: 'none' }}
                 {...legend}
                 data={data}
               />

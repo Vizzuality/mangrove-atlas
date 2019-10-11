@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-
+import { InteractiveMap as ReactMapGL, Popup, FlyToInterpolator, TRANSITION_EVENTS } from 'react-map-gl';
+import WebMercatorViewport from 'viewport-mercator-project';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-
-import ReactMapGL, { FlyToInterpolator, TRANSITION_EVENTS } from 'react-map-gl';
-import WebMercatorViewport from 'viewport-mercator-project';
-
 import { easeCubic } from 'd3-ease';
 
+import MapPopupHotspots from 'components/map-popup-hotspots';
+import alerts from 'modules/map-styles/templates/alerts.json';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -58,6 +57,7 @@ class Map extends Component {
 
     /** A function that exposes the viewport */
     onViewportChange: PropTypes.func,
+    onClick: PropTypes.func
   }
 
   static defaultProps = {
@@ -72,7 +72,8 @@ class Map extends Component {
     touchRotate: true,
     doubleClickZoom: true,
     onViewportChange: () => {},
-    onLoad: () => {}
+    onLoad: () => {},
+    onClick: () => {}
   }
 
   state = {
@@ -113,26 +114,11 @@ class Map extends Component {
 
   onLoad = () => {
     const { onLoad } = this.props;
-    this.setState({ loaded: true });
-
     onLoad({
       map: this.map,
       mapContainer: this.mapContainer
     });
-  }
-
-  onClick = e => {
-    const { onClick } = this.props;
-
-    if (!onClick) {
-      return;
-    }
-
-    onClick({
-      event: e,
-      map: this.map,
-      mapContainer: this.mapContainer
-    });
+    this.setState({ loaded: true });
   }
 
   onViewportChange = (v) => {
@@ -191,8 +177,78 @@ class Map extends Component {
   };
 
   render() {
-    const { customClass, children, dragPan, dragRotate, scrollZoom, touchZoom, touchRotate, doubleClickZoom, ...mapboxProps } = this.props;
+    const {
+      customClass,
+      children,
+      dragPan,
+      dragRotate,
+      scrollZoom,
+      touchZoom,
+      touchRotate,
+      doubleClickZoom,
+      filters,
+      mapStyle,
+      onClick,
+      onMouseEnter,
+      onMouseLeave,
+      popup,
+      onPopupClose,
+      ...mapboxProps
+    } = this.props;
     const { viewport, loaded, flying } = this.state;
+    const ms = { ...mapStyle };
+
+    const onClickHandler = (e) => {
+      onClick({
+        event: e,
+        map: this.map,
+        mapContainer: this.mapContainer
+      });
+    };
+
+    function applyFilters() {
+      const alertsFilter = filters.find(f => f.id === 'alerts-style');
+
+      if (alertsFilter) {
+        const startTimestamp = (new Date(alertsFilter.startDate)).valueOf();
+        const endTimestamp = (new Date(alertsFilter.endDate)).valueOf();
+        const filteredAlerts = {
+          ...alerts,
+          features: alerts.features.filter(feat => (
+            feat.properties.start_date >= startTimestamp
+            && feat.properties.end_date <= endTimestamp
+          ))
+        };
+        ms.sources.alerts = {
+          type: 'geojson',
+          data: filteredAlerts,
+          cluster: true
+        };
+      }
+    }
+
+    const MapFunctions = () => {
+      if (loaded && Boolean(this.map)) {
+        if (typeof children === 'function') {
+          return children(this.map);
+        }
+      }
+
+      return null;
+    };
+
+    const PopupManager = () => (popup
+      ? (
+        <Popup
+          longitude={popup.coordinates[0]}
+          latitude={popup.coordinates[1]}
+          onClose={onPopupClose}
+        >
+          <MapPopupHotspots {...popup.data} />
+        </Popup>
+      ) : null);
+
+    applyFilters();
 
     return (
       <div
@@ -206,6 +262,7 @@ class Map extends Component {
           ref={(map) => { this.map = map && map.getMap(); }}
 
           // CUSTOM PROPS FROM REACT MAPBOX API
+          mapStyle={ms}
           {...mapboxProps}
 
           // VIEWPORT
@@ -225,12 +282,14 @@ class Map extends Component {
           onViewportChange={this.onViewportChange}
           onResize={this.onResize}
           onLoad={this.onLoad}
-          onClick={this.onClick}
+          onClick={onClickHandler}
+          clickRadius={5}
 
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >
-          {loaded && !!this.map && typeof children === 'function' && children(this.map)}
+          <MapFunctions />
+          <PopupManager />
         </ReactMapGL>
       </div>
     );

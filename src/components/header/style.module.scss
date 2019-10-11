@@ -3,9 +3,6 @@
 .header {
   display: flex;
   margin-bottom: 50px;
-  @media screen and (max-width: map-get($breakpoints, md)) {
-    margin-bottom: 25px;
-  }
 
   .bg,
   .bgFixed {
@@ -19,31 +16,29 @@
     &.isHidden {
       display: none;
     }
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      display: none;
-    }
   }
 
   .bgFixed {
     position: fixed;
     z-index: 100;
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      display: none;
-    }
+    height: 140px;
+  }
+
+  .logo {
+    position: absolute;
+    transform: translateX(-50px);
   }
 
   .searchBar {
-    margin-top: 80px;
+    margin-top: 120px;
     z-index: 300;
     width: 100%;
     display: flex;
+
     &.fixed {
       position: fixed;
-      top: -65px;
-    }
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      margin-top: 20px;
-      font-size: 35px;
+      top: -110px;
+      max-width: 600px;
     }
   }
 
@@ -64,14 +59,15 @@
     line-height: 0.85;
     text-align: left;
 
-    @media screen and (max-width: map-get($breakpoints, md)) {
-      font-size: 35px;
+    &.fixed {
+      font-size: 45px;
     }
   }
 
   .searchButton {
     width: 60px;
     height: 60px;
+    flex-shrink: 0;
     margin-right: 20px;
     border: 0;
     border-radius: 100%;
@@ -83,17 +79,97 @@
     :global(.svg-inline--fa path) {
       fill: $primary;
     }
-    @media screen and (max-width: map-get($breakpoints, md)) {
+  }
+
+  .printOnly {
+    font-size: 19px;
+    line-height: 29px;
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, lg)) {
+  .header {
+    margin-bottom: 25px;
+
+    .bg,
+    .bgFixed {
+      width: 900px;
+    }
+
+    .logo {
+      transform: translate(-15px, -15px);
+    }
+
+    .searchBar {
+      margin-top: 98px;
+      font-size: 35px;
+
+      &.fixed {
+        top: 0;
+        margin-top: 20px;
+      }
+    }
+
+    .title {
+      font-size: 35px;
+    }
+
+    .searchButton {
       padding: 6px 12px;
       height: auto;
       width: auto;
-    }
-    svg {
-      @media screen and (max-width: map-get($breakpoints, md)) {
+
+      svg {
         height: 30px;
         width: 30px;
         vertical-align: 0;
       }
+    }
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, sm)) {
+  .header {
+
+    .bg,
+    .bgFixed {
+      width: 600px;
+    }
+  }
+}
+
+@media print {
+  .header {
+    width: 100%;
+    margin-bottom: 0;
+    display: block;
+    position: absolute;
+    top: 20px;
+    align-items: center;
+
+    img {
+      display: none!important;
+    }
+
+    .searchBar {
+      margin-top: 0;
+    }
+
+    .searchButton {
+      display: none;
+    }
+
+    .titleBtn {
+      margin: auto;
+    }
+
+    .printOnly {
+      display: block;
     }
   }
 }

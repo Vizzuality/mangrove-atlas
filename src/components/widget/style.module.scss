@@ -19,33 +19,41 @@
   will-change: margin-bottom;
   overflow: hidden;
 
-  @media screen and (max-width: map-get($breakpoints, md)) {
+    &._modal {
+      box-shadow: none;
+    }
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
   }
 
-  &.collapsed {
+  &._collapsed {
     margin-bottom: -90px;
     background-position: 0;
-    @media screen and (max-width: map-get($breakpoints, md)) {
+    margin-top: -3px;
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       margin-bottom: -85px;
     }
 
     .content {
       max-height: 0px;
+      opacity: 0.0;
     }
+
     .widget_template {
       overflow: hidden;
       padding-top: 50px;
     }
+
   }
 
-  &.collapsed:last-child {
+  &._collapsed:last-child {
     background-position: 0 700px;
   }
 
-  &.layerActive::before {
+  &._layerActive::before {
     content: '';
     position: absolute;
     top: 5px;
@@ -61,6 +69,9 @@
   .wrapper {
     padding: $padding;
     @media screen and (max-width: map-get($breakpoints, sm)) {
+      padding: $paddingMobile;
+    }
+    &._modal {
       padding: $paddingMobile;
     }
   }
@@ -99,22 +110,35 @@
   }
 }
 
-.widget_template {
-  .sentence {
-    @include medium-text;
-    margin: 1rem 0;
-    position: relative;
-  }
-
-  .bold {
-    font-weight: bold;
-  }
+.link {
+  color: $body-color;
+  font-weight: bold;
+  padding-bottom: 10px;
 }
 
-//SPECIFIC TEMPLATES
-.activity_widget {
-  .label {
-    font-weight: bold;
-    padding-bottom: 10px;
+@media print {
+  $border-radius: 20px;
+
+  .widget {
+    max-width: 600px;
+    box-shadow: none;
+    margin: 250px 0;
+    border: 2px solid rgba($primary, 0.35);
+    border-radius: $border-radius;
+    break-after: always;
+
+
+
+    &._layerActive::before {
+      border: 0 solid rgba($primary, 0.35);
+    }
+  }
+
+  .title svg {
+    display: none;
+  }
+
+  .toogleButton {
+    display: none;
   }
 }

@@ -1,5 +1,7 @@
 @import './vars';
 @import './lib/react-datepicker';
+@import './lib/react-select';
+@import './lib/recharts';
 
 body {
   color: $body-color;
@@ -9,7 +11,7 @@ body {
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  @media screen and (max-width: map-get($breakpoints, md)) {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     background-color: $background-mobile
   }
 

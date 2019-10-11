@@ -8,41 +8,24 @@ import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
+
 import styles from './style.module.scss';
 
 function Widget({
+  children,
   data,
-  highlightedPlaces,
+  name,
   slug,
-  widgetConfig,
-  toggleCollapse,
-  toggleActive,
-  layersIds,
+  filename,
   layerId,
+  layersIds,
   isActive,
-  template: Template,
+  isLocationsModal,
   isCollapsed,
   isLoading,
-  name,
-  ...props
+  toggleActive,
+  toggleCollapse
 }) {
-  const getDataBySlug = () => {
-    if (slug === 'highlighted_places') return widgetConfig.parse(highlightedPlaces);
-    return widgetConfig.parse(data);
-  };
-
-  const templateProps = {
-    name,
-    isActive,
-    isCollapsed,
-    isLoading,
-    layersIds,
-    slug,
-    data: getDataBySlug(),
-    widgetConfig,
-    ...props,
-  };
-
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
   };
@@ -56,86 +39,101 @@ function Widget({
   };
 
   const haveLayers = !!(layersIds && layersIds.length);
+  const widgetConditionalStyles = {
+    [styles._modal]: isLocationsModal,
+    [styles._collapsed]: isCollapsed,
+    [styles._layerActive]: isActive
+  };
+
+  // These components are declared here not to clutter component's element
+  // and make separation of concerns more easy to grasp, they use scope variables
+  // to move them away to their own file you should pass scope vars as properties.
+  const CollapseButton = () => (
+    <button
+      type="button"
+      className={styles.title}
+      onClick={collapseToggleHandler}
+    >
+      <MediaQuery minWidth={breakpoints.lg}>
+        {isCollapsed
+          ? <FontAwesomeIcon icon={faChevronDown} />
+          : <FontAwesomeIcon icon={faChevronUp} />}
+      </MediaQuery>
+      {name}
+    </button>
+  );
+  const ToggleLayersButton = () => (!haveLayers
+    ? null
+    : (
+      <Button
+        className={styles.toogleButton}
+        hasBackground={isActive}
+        hasContrast={!isActive}
+        isActive={isActive}
+        onClick={activeToggleHandler}
+      >
+        {isActive ? 'Hide layer' : 'Show layer'}
+      </Button>
+    )
+  );
 
   return (
-    <div
-      className={
-        classnames(styles.widget, {
-          [styles.collapsed]: isCollapsed,
-          [styles.layerActive]: isActive
-        })
-      }
-    >
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <button
-            type="button"
-            className={styles.title}
-            onClick={collapseToggleHandler}
-          >
-            <MediaQuery minWidth={breakpoints.md}>
-              {isCollapsed
-                ? <FontAwesomeIcon icon={faChevronDown} />
-                : <FontAwesomeIcon icon={faChevronUp} />}
-            </MediaQuery>
-            {name}
-          </button>
-          {haveLayers && (
-            <Button
-              hasBackground={isActive}
-              hasContrast={!isActive}
-              isActive={isActive}
-              onClick={activeToggleHandler}
-            >
-              {isActive ? 'Hide layer' : 'Show layer'}
-            </Button>
-          )}
-        </div>
+    <div className={classnames(styles.widget, widgetConditionalStyles)}>
+      <div className={classnames(styles.wrapper, {
+        [styles._modal]: isLocationsModal
+      })}
+      >
+        {!isLocationsModal && (
+          <div className={styles.header}>
+            <CollapseButton />
+            <ToggleLayersButton />
+          </div>
+        )}
         {isLoading
-          ? <Spinner isLoading />
+          ? <Spinner />
           : (
             <div className={classnames(styles.content)}>
-              <Template {...templateProps} />
+              {children}
             </div>
           )
         }
       </div>
 
-      <WidgetInfo
-        data={templateProps.data}
-        filename={templateProps.slug}
-        {...templateProps}
-      />
+      {!isLocationsModal
+        && <WidgetInfo data={data} filename={filename} />
+      }
     </div>
   );
 }
 
 Widget.propTypes = {
-  data: PropTypes.shape({}),
-  highlightedPlaces: PropTypes.arrayOf(PropTypes.shape({})),
-  name: PropTypes.string.isRequired,
-  slug: PropTypes.string.isRequired,
-  widgetConfig: PropTypes.shape({}).isRequired,
+  data: PropTypes.oneOfType([
+    PropTypes.shape({}),
+    PropTypes.array
+  ]).isRequired,
+  name: PropTypes.string,
+  slug: PropTypes.string,
+  filename: PropTypes.string,
   layerId: PropTypes.string,
   layersIds: PropTypes.arrayOf(PropTypes.string),
-  location: PropTypes.shape({}),
   isActive: PropTypes.bool,
+  isLocationsModal: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
   toggleActive: PropTypes.func,
   toggleCollapse: PropTypes.func,
-  template: PropTypes.func.isRequired
 };
 
 Widget.defaultProps = {
-  data: null,
-  highlightedPlaces: null,
-  isActive: false,
-  isCollapsed: false,
-  isLoading: false,
+  name: null,
+  slug: null,
+  filename: null,
   layerId: null,
   layersIds: null,
-  location: null,
+  isActive: false,
+  isLocationsModal: false,
+  isCollapsed: false,
+  isLoading: false,
   toggleActive: () => { },
   toggleCollapse: () => { }
 };

@@ -1,39 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Widget from 'components/widget';
-import TEMPLATES from 'components/widget/templates';
-import CONFIGS from 'components/widget/templates/configs';
+import classnames from 'classnames';
+import breakpoints from 'utils/responsive';
+import Spinner from 'components/spinner';
+
 import styles from './style.module.scss';
 
-function WidgetList({
-  widgets,
-  widgetData,
-  ...parentProps
-}) {
-  return (
+const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => (
+  <div className={classnames(styles.widgets, {
+    [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
+    [styles.spinner]: !widgets.length
+  })}
+  >
 
-    <div className={styles.widgets}>
-      {widgets.map((widget) => {
-        const template = TEMPLATES[widget.slug];
-        if (!template) {
-          return null;
-        }
+    {!widgets.length
+      ? <div className={styles.spinner}><Spinner /></div>
+      : widgets.length && widgets.map((widget) => {
+        const Widget = templates.get(widget.slug).component;
 
         return (
           <Widget
             key={widget.slug}
-            isCollapsed={widget.isCollpased}
             {...widget}
             {...parentProps}
-            data={widgetData}
-            widgetConfig={CONFIGS[widget.slug]}
-            template={template}
           />
         );
       })}
-    </div>
-  );
-}
+  </div>
+);
 
 WidgetList.propTypes = {
   widgets: PropTypes.arrayOf(
@@ -42,12 +36,14 @@ WidgetList.propTypes = {
       title: PropTypes.string
     })
   ),
-  widgetData: PropTypes.shape({})
+  templates: PropTypes.instanceOf(Map),
+  isSticky: PropTypes.bool
 };
 
 WidgetList.defaultProps = {
   widgets: [],
-  widgetData: {}
+  templates: new Map(),
+  isSticky: false
 };
 
 export default WidgetList;

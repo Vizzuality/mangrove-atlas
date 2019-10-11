@@ -4,13 +4,9 @@ import { createSelector } from 'reselect';
 const locations = state => state.locations.list;
 const currentLocationId = state => state.locations.current;
 
-const RUFIJI_ID = 1;
-const SALOUM_ID = 2;
-const PLACES = [RUFIJI_ID, SALOUM_ID];
-
 export const highlightedPlaces = createSelector(
   [locations],
-  (_locations) =>  _locations.filter(location => PLACES.includes(location.id))
+  _locations => _locations.filter(location => location.location_type === 'aoi')
 );
 
 export const currentLocation = createSelector(

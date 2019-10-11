@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import HighlightedPlaces from 'components/widget/templates/highlighted-places/component';
-import highlightedPlacesConfig from 'components/widget/templates/highlighted-places/config';
+import HighlightedPlaces from 'widget-components/highlighted-places/component';
+import highlightedPlacesConfig from 'widget-components/highlighted-places/config';
 import LocationsList from 'components/locations-list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -65,7 +65,7 @@ class LocationSelector extends PureComponent {
 
     return (
       <Fragment>
-        <MediaQuery maxWidth={breakpoints.md - 1}>
+        <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
             className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
@@ -95,7 +95,7 @@ class LocationSelector extends PureComponent {
             </button>
           </Modal>
         </MediaQuery>
-        <MediaQuery minWidth={breakpoints.md}>
+        <MediaQuery minWidth={breakpoints.lg}>
           <Modal
             className={styles.location}
             isOpen={isOpened}
