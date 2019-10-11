@@ -61,10 +61,6 @@ export const CONFIG = {
           interval: 'preserveStartEnd',
           ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain],
           tickFormatter: value => numberFormat(value),
-          label: {
-            value: 'km2',
-            content: <g>km<sup>2</sup></g>
-          }
         },
         yAxis: {
           type: 'category'
