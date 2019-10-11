@@ -50,8 +50,8 @@ export const CONFIG = {
         layout: 'vertical',
         height: 400,
         stackOffset: 'sign',
-        margin: { top: 20, right: -30, left: 20, bottom: 20 },
-        viewBox: '0 0 360 400',
+        margin: { top: 20, right: 0, left: 0, bottom: 20 },
+        // viewBox: '0 0 400 400',
         referenceLines: [
           { x: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }
         ],
@@ -61,9 +61,16 @@ export const CONFIG = {
           interval: 'preserveStartEnd',
           ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain],
           tickFormatter: value => numberFormat(value),
+          label: {
+            value: 'km²',
+            position: 'insideBottomRight',
+            offset: 5
+          }
         },
         yAxis: {
-          type: 'category'
+          type: 'category',
+          width: 0,
+          hide: true
         },
         yKeys: {
           lines: {
@@ -144,7 +151,6 @@ export const CONFIG = {
         cartesianGrid: {
           vertical: true,
           horizontal: false,
-          verticalPoints: [0, 100, 200, 300, 400, 500],
           strokeDasharray: '5 20'
         },
         tooltip: {
