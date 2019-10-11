@@ -8,15 +8,18 @@
 - Added height widget
 - Added layer for biomass and height widget
 - Added units in all the tooltips
+- Added button to show open a modal with a detailed info of the widget
 
 ### Changed
 
 - Unified decimals in all the widgets
+- Changed sentences in all the widgets
 
 ### Fixed
 
 - Fixed axis comma formatting for Activity widget
 - Fixed an error where biomass widget breaks the application
+- Fixed typo for the modal info in the widgets
 
 ## 2019-09-13
 
