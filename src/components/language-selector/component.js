@@ -50,7 +50,6 @@ class LanguageSelect extends PureComponent {
 
   render() {
     const { language, data } = this.props;
-
     const options = data.map(lang => ({
       label: lang.name,
       value: lang.code,

@@ -5,9 +5,7 @@ import sumBy from 'lodash/sumBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
-import config from './config';
-
-const numberFormat = format(',.2f');
+import config, { numberFormat } from './config';
 
 function MangroveNetChange({
   data: rawData,
