@@ -7,7 +7,9 @@ import styles from '../style.module.scss';
 
 const DesktopLayout = () => (
   <div>
-    <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+    <div className={styles.header}>
+      <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+    </div>
     <Sidebar>
       {({ isSticky }) => (
         <>

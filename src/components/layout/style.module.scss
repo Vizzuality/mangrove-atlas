@@ -9,6 +9,11 @@
   z-index: 1;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .printOnly {
   font-size: 19px;
   line-height: 29px;

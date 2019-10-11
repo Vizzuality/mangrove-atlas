@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import LanguageSelect from 'components/language-selector';
 import background from './bg-shape.svg';
 import fixedBackground from './bg-fixed.svg';
 import styles from './style.module.scss';
@@ -41,6 +42,7 @@ class Header extends PureComponent {
       <div className={classnames(styles.header,
         { [styles.sticky]: sticky })}
       >
+        <LanguageSelect />
         <img
           className={classnames(styles.bg,
             { [styles.isHidden]: sticky })}
@@ -53,35 +55,40 @@ class Header extends PureComponent {
           src={fixedBackground}
           alt="Background"
         />
-        <div className={classnames(styles.searchBar,
-          { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg })}
-        >
-          <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
-            <FontAwesomeIcon icon={faSearch} size="lg" />
-          </button>
-          {location && (
-            <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
-              <MediaQuery minWidth={breakpoints.lg}>
-                <h1
-                  className={classnames(styles.title, 'notranslate',
-                    { [styles.fixed]: sticky })}
-                  style={stylesOverride}
-                >
-                  {location.name}
-                </h1>
-              </MediaQuery>
-              <MediaQuery maxWidth={breakpoints.lg - 1}>
-                <h1
-                  className={classnames(styles.title, 'notranslate')}
-                  style={{ fontSize: 35, lineHeight: 0.85 }}
-                >
-                  {location.name}
-                </h1>
-              </MediaQuery>
+        <div>
+          <div className={classnames(styles.searchBar,
+            { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg })}
+          >
+            <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+              <FontAwesomeIcon icon={faSearch} size="lg" />
             </button>
-          )}
+            {location && (
+              <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
+                <MediaQuery minWidth={breakpoints.lg}>
+                  <h1
+                    className={classnames(styles.title, 'notranslate',
+                      { [styles.fixed]: sticky })}
+                    style={stylesOverride}
+                  >
+                    {location.name}
+                  </h1>
+                </MediaQuery>
+                <MediaQuery maxWidth={breakpoints.lg - 1}>
+                  <h1
+                    className={classnames(styles.title, 'notranslate')}
+                    style={{ fontSize: 35, lineHeight: 0.85 }}
+                  >
+                    {location.name}
+                  </h1>
+                </MediaQuery>
+              </button>
+            )}
+          </div>
+          <p className={styles.printOnly}>Powered by Mangrove atlas. https://mangrove-atlas.org</p>
+
         </div>
-        <p className={styles.printOnly}>Powered by Mangrove atlas. https://mangrove-atlas.org</p>
+
+
       </div>
     );
   }
