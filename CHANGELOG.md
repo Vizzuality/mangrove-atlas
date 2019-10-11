@@ -1,5 +1,11 @@
 # Changelog
 
+## 2019-10-11
+
+### Fixed
+
+- Fixed axis comma formatting for Activity widget
+
 ## 2019-09-13
 
 ### Added
