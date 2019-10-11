@@ -16,19 +16,6 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     isLoading: false
   });
 
-  useEffect(() => {
-    fetchRankingData({
-      ...mangroveActivityState,
-    });
-  }, []);
-
-  if (!rawData || !rawData.meta) {
-    return null;
-  }
-
-  const { startDate, endDate, filter } = mangroveActivityState;
-  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
-
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
     setMangroveActivityState({
@@ -51,6 +38,13 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
       filter: filterState
     });
   };
+
+  if (!rawData || !rawData.meta) {
+    return null;
+  }
+
+  const { startDate, endDate, filter } = mangroveActivityState;
+  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
 
   const sortRanking = (data) => {
     const rankingType = mangroveActivityState.filter;
