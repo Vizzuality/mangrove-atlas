@@ -123,11 +123,11 @@ class Chart extends PureComponent {
 
     return (
       <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
-        <ResponsiveContainer>
+        <ResponsiveContainer width="100%" height={height}>
           <RechartChart
             stackOffset={stackOffset}
-            height={height}
-            width={width}
+            // height={height}
+            // width={width}
             viewBox={viewBox}
             data={data}
             layout={layout}
