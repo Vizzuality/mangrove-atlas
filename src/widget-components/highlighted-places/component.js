@@ -43,7 +43,7 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
                 >
                   <span className={styles.cardInfo}>
                     <h3 className="notranslate">{d.name}</h3>
-                    <p><span className="notranslate">{d.coast_length_m}</span> <span className="notranslate">{d.unit}</span></p>
+                    <p><span className="notranslate">{Math.round(d.coast_length_m / 1000)}</span> <span className="notranslate">{d.unit}</span></p>
                   </span>
                 </div>
               )}
