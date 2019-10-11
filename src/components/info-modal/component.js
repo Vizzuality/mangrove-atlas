@@ -143,9 +143,6 @@ class InfoModal extends PureComponent {
             }
             {widgetType !== 'highlighted_places' && (
               <div className={styles.content}>
-                <h1>
-                  {widgetType}
-                </h1>
                 <span className={styles.info}>
                   {info}
                 </span>
