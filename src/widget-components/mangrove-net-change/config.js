@@ -5,8 +5,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
-
-const numberFormat = format(',.3r');
+export const numberFormat = format(',.2f');
 
 const widgetData = ({ list }) => {
   const data = list.map(l => (
@@ -14,7 +13,7 @@ const widgetData = ({ list }) => {
       label: JSON.stringify(moment(l.date).year()),
       year: moment(l.date).year(),
       gain: l.gain_m2,
-      netChange: l.gain_m2 - l.loss_m2,
+      netChange: l.net_change_m2,
       loss: -l.loss_m2
     })).filter(l => l.netChange !== 0);
   return orderBy(data, l => l.year);
@@ -45,7 +44,8 @@ const CONFIG = {
     metadata: widgetMetadata(data),
     chartConfig: {
       stackOffset: 'sign',
-      margin: { top: 20, right: 0, left: 0, bottom: 0 },
+      height: 360,
+      margin: { top: 20, right: 15, left: 0, bottom: 20 },
       referenceLines: [
         { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
       ],
@@ -78,20 +78,25 @@ const CONFIG = {
         }
       },
       xAxis: {
-        tick: { fontSize: 12, fill: '#AAA' }
+        tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' }
       },
       yAxis: {
-        tick: { fontSize: 12, fill: '#AAA' },
+        tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
         tickFormatter: (v) => {
           const result = v / 1000000;
           return numberFormat(result);
         },
         tickMargin: 15,
-        domain: [-300, 300]
+        orientation: 'right',
+        label: {
+          value: 'km²',
+          position: 'top',
+          offset: 35
+        }
       },
       cartesianGrid: {
         vertical: false,
-        strokeDasharray: '6 6'
+        strokeDasharray: '5 20'
       },
       legend: {
         align: 'left',
