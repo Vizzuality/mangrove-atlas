@@ -5,7 +5,6 @@ import OnScroll from 'react-on-scroll';
 import { breakpoints } from 'utils/responsive';
 import Header from 'components/header';
 import Button from 'components/button';
-import LanguageSelect from 'components/language-selector';
 import styles from './style.module.scss';
 
 class Dashboard extends Component {
@@ -42,6 +41,8 @@ class Dashboard extends Component {
     expandAll();
   }
 
+  onClickDownload = () => window.print();
+
   setMargin = securityMargin => (
     this.setState({ securityMargin })
   )
@@ -59,7 +60,7 @@ class Dashboard extends Component {
           ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
             { top: -10, callback: margin => this.setMargin(!margin) }]
           : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
-          }
+        }
       >
         <div className={styles.header}>
           <Header sticky={sticky} />
@@ -84,7 +85,13 @@ class Dashboard extends Component {
                     Collapse all widgets
                   </Button>
                 )}
-            <LanguageSelect />
+            <Button
+              isTransparent
+              isGrey
+              onClick={this.onClickDownload}
+            >
+              Download as PDF
+            </Button>
           </div>
         </div>
         <Children isSticky={sticky} />
