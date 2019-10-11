@@ -10619,6 +10619,11 @@ react-csv@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-1.1.1.tgz#718dadd2607a1795bfc8dbd32ca282a043739634"
   integrity sha512-eQSrkEfzPN+1IeXT58kJaDNmpFr3RhdjfE09jTrw+jdTEp0g0Ig9NOI+TpvMBbCukE1HQhOf4dyrLDRFKgZzbA==
 
+react-dangerous-html@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-dangerous-html/-/react-dangerous-html-1.0.0.tgz#24e443d156a4fc5e61467179cda319145aa3a7e1"
+  integrity sha512-OMi5HF1WN7nw/djRHepn9yIMYRafAg3FlBdXgh6bdvq/hnZ/p0fMHyL77o7uM9xctEu9t1p2qMSf2yOmPNrlVw==
+
 react-datepicker@^2.8.0:
   version "2.8.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-2.8.0.tgz#d93423a2abe9eeef8d3eaa7ff437f31be8a3a2f5"
