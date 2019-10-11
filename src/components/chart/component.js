@@ -28,6 +28,7 @@ import {
 } from './constants';
 
 import styles from './style.module.scss';
+import { noAuto } from '@fortawesome/fontawesome-svg-core';
 
 const rechartCharts = new Map([
   ['pie', PieChart],
