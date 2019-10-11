@@ -55,21 +55,24 @@ const histogramData = (data) => {
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
 
-const heightCoverage = (data, date) => data.find(d => d.date.includes(date)).hmax_m;
+const sentenceData = data => ({
+  height: data.map(d => d.hmax_m).reduce((previous, current) => current + previous, 0),
+  year: data.map(d => moment(d.date).year())
+});
 
 const metaData = data => Array.from(new Set(
   data.map(d => moment(d.date).year())
 ));
 
 export const CONFIG = {
-  parse: (data, date) => {
+  parse: (data) => {
     {
       const dataFiltered = filterData(data);
 
       return {
 
         chartData: histogramData(dataFiltered),
-        heightCoverage: heightCoverage(dataFiltered, date),
+        heightData: sentenceData(dataFiltered),
         metadata: metaData(dataFiltered),
         chartConfig: {
           cartesianGrid: {

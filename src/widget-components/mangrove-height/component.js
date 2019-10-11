@@ -32,7 +32,7 @@ const MangroveHeight = ({
     return null;
   }
 
-  const { chartData, metadata, chartConfig, heightCoverage } = config.parse(rawData, date);
+  const { chartData, metadata, chartConfig, heightData } = config.parse(rawData);
 
   if (chartData.length <= 0) {
     return null;
@@ -88,7 +88,7 @@ const MangroveHeight = ({
   const sentence = (
     <>
       Mean mangrove <strong>maximun</strong> canopy height in <strong>{location}</strong> was
-      <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateSelector}</strong>.
+      <strong> {numberFormat(heightData.height)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
   const chartRData = {

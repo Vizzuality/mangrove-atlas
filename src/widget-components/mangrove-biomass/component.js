@@ -15,12 +15,12 @@ const MangroveBiomass = ({
   addFilter,
   ...props
 }) => {
-  const [yearSelected, setEndDate] = useState('2016');
+  const [endDate, setEndDate] = useState('2010');
   useEffect(() => {
     addFilter({
       filter: {
         id: 'biomass',
-        year: '2016'
+        year: '2010'
       }
     });
   }, []);
@@ -30,13 +30,13 @@ const MangroveBiomass = ({
     return null;
   }
 
-  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData, yearSelected);
+  const { chartData, metadata, chartConfig, biomassData } = config.parse(rawData);
 
   if (chartData.length <= 0) {
     return null;
   }
 
-  const dateHandler = (value) => {
+  const endDateHandler = (value) => {
     setEndDate(value);
     addFilter({
       filter: {
@@ -55,19 +55,19 @@ const MangroveBiomass = ({
     ? 'the world’s'
     : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
 
-  const yearSelector = (
+  const endDateSelector = (
     <Select
-      value={yearSelected}
-      isOptionDisabled={option => option.value === yearSelected}
+      value={endDate}
+      isOptionDisabled={option => option.value === endDate}
       options={dateOptions}
-      onChange={value => dateHandler(value)}
+      onChange={value => endDateHandler(value)}
     />
   );
 
   const sentence = (
     <>
       Mean mangrove above-ground biomass density in <strong>{location}</strong> was
-      average {coverage} mg ha<sup>-1</sup> in {yearSelector}.
+      average {biomassData.data} mg ha<sup>-1</sup> in {endDateSelector}.
     </>
   );
   const widgetData = {
