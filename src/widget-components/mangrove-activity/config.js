@@ -59,7 +59,8 @@ export const CONFIG = {
           type: 'number',
           allowDecimals: false,
           interval: 'preserveStartEnd',
-          ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain]
+          ticks: [startDomain, startDomain / 2, 0, endDomain / 2, endDomain],
+          tickFormatter: value => numberFormat(value),
         },
         yAxis: {
           type: 'category'
