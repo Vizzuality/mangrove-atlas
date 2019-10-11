@@ -62,8 +62,12 @@ const histogramData = (data) => {
 
 const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
 
-const biomassCoverage = (data, yearSelected) => data.find(d => d.date
-  .includes(yearSelected)).agb_mgha_1.toFixed(2);
+const biomassCoverage = (data, yearSelected) => {
+  const yearData = data.find(d => d.date
+    .includes(yearSelected));
+  if (!yearData) return null;
+  return yearData.agb_mgha_1.toFixed(2);
+};
 
 const metaData = data => Array.from(new Set(
   data.map(d => moment(d.date).year())
