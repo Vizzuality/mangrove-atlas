@@ -34,11 +34,13 @@ class Header extends PureComponent {
     const { location, sticky } = this.props;
     let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
 
-    if (location && location.name.length > 10) stylesOverride = { fontSize: 45, lineHeight: 1 };
-    if (location && location.name.length > 30) stylesOverride = { fontSize: 30, lineHeight: 1 };
+    if ((location && location.name.length > 10)) stylesOverride = { fontSize: 45, lineHeight: 1 };
+    if ((location && location.name.length > 30) || sticky) stylesOverride = { fontSize: 30, lineHeight: 1 };
 
     return (
-      <div className={styles.header}>
+      <div className={classnames(styles.header,
+        { [styles.sticky]: sticky })}
+      >
         <img
           className={classnames(styles.bg,
             { [styles.isHidden]: sticky })}
@@ -47,27 +49,28 @@ class Header extends PureComponent {
         />
         <img
           className={classnames(styles.bgFixed,
-            { [styles.isHidden]: !sticky })}
+            { [styles.isHidden]: !sticky || window.innerWidth < breakpoints.lg + 1 })}
           src={fixedBackground}
           alt="Background"
         />
         <div className={classnames(styles.searchBar,
-          { [styles.fixed]: sticky })}
+          { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg })}
         >
           <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
             <FontAwesomeIcon icon={faSearch} size="lg" />
           </button>
           {location && (
             <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
-              <MediaQuery minWidth={breakpoints.md}>
+              <MediaQuery minWidth={breakpoints.lg}>
                 <h1
-                  className={classnames(styles.title, 'notranslate')}
+                  className={classnames(styles.title, 'notranslate',
+                    { [styles.fixed]: sticky })}
                   style={stylesOverride}
                 >
                   {location.name}
                 </h1>
               </MediaQuery>
-              <MediaQuery maxWidth={breakpoints.md - 1}>
+              <MediaQuery maxWidth={breakpoints.lg - 1}>
                 <h1
                   className={classnames(styles.title, 'notranslate')}
                   style={{ fontSize: 35, lineHeight: 0.85 }}
@@ -78,6 +81,7 @@ class Header extends PureComponent {
             </button>
           )}
         </div>
+        <p className={styles.printOnly}>Powered by Mangrove atlas. https://mangrove-atlas.org</p>
       </div>
     );
   }

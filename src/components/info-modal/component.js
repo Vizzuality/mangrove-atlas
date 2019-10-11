@@ -4,9 +4,11 @@ import classnames from 'classnames';
 import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
+import DangerousHTML from 'react-dangerous-html';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import widgetInfo from './widgetInfo';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
@@ -54,6 +56,22 @@ class InfoModal extends PureComponent {
     this.closeInfoPanel();
   }
 
+  info = () => {
+    const { widgetType } = this.props;
+    const widgetSelected = widgetInfo[widgetType];
+    if (!widgetSelected) return null;
+    const attributes = Object.keys(widgetSelected);
+    return attributes.map(attribute => (
+      <div>
+        <strong>
+          {attribute !== 'Title'
+            ? `${attribute}:`
+            : ''}
+        </strong><DangerousHTML html={widgetSelected[attribute]} />
+      </div>
+    ));
+  }
+
   render() {
     const { isOpened, currentLocation, locations, widgetType } = this.props;
     if (!currentLocation) return null;
@@ -62,9 +80,13 @@ class InfoModal extends PureComponent {
       ? locations.filter(l => new RegExp(search, 'i').test(l.name))
       : locations;
 
+    const widgetSelected = widgetInfo[widgetType];
+    const info = this.info();
+
+
     return (
       <Fragment>
-        <MediaQuery maxWidth={breakpoints.md - 1}>
+        <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
             className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
@@ -85,14 +107,11 @@ class InfoModal extends PureComponent {
                 <LocationsList locationsData={locationsData} />
               </div>)
             }
-            {widgetType !== 'highlighted_places' && (
+            {widgetType !== 'highlighted_places' && widgetSelected && (
               <div className={styles.content}>
-                <h1>
-                  {widgetType}
-                </h1>
-                <p className={styles.info}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
-                </p>
+                <div className={styles.info}>
+                  {info}
+                </div>
               </div>
             )}
 
@@ -101,7 +120,7 @@ class InfoModal extends PureComponent {
             </button>
           </Modal>
         </MediaQuery>
-        <MediaQuery minWidth={breakpoints.md}>
+        <MediaQuery minWidth={breakpoints.lg}>
           <Modal
             className={styles.location}
             isOpen={isOpened}
@@ -128,7 +147,7 @@ class InfoModal extends PureComponent {
                   {widgetType}
                 </h1>
                 <span className={styles.info}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas egestas, dolor non euismod porttitor, nisl est dapibus elit, ut fermentum turpis arcu ac mauris. Donec congue ante quis viverra molestie. Integer dictum tristique nunc, et elementum mi iaculis ac. Vestibulum facilisis vehicula feugiat. Integer tempor augue a pellentesque placerat. Etiam consectetur eget nibh ut tincidunt. Donec efficitur lobortis tortor, at porttitor mi vehicula vitae. Phasellus non justo id augue placerat vestibulum. Duis mattis sapien nisi, non eleifend diam feugiat at. Duis commodo diam ut ligula dictum ultrices. Nam id mi sed quam efficitur mollis id at elit. Nam et leo sagittis tortor gravida consequat. Vestibulum nec risus nibh. Donec dapibus enim eu arcu laoreet sollicitudin. Mauris ultricies sem quis nulla varius pretium. Aliquam sit amet mollis sem.
+                  {info}
                 </span>
               </div>
             )}

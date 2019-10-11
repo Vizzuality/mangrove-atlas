@@ -12,7 +12,7 @@
 
   &.collapse {
     display: none;
-    @media (min-width: map-get($breakpoints, sm)) and (max-width: map-get($breakpoints, md)) {
+    @media (min-width: map-get($breakpoints, sm)) and (max-width: map-get($breakpoints, lg)) {
       display: flex;
       max-width: 270px;
     }

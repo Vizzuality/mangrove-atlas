@@ -1,16 +1,29 @@
 import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
+import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
+import biomassAndHeight from './constants';
+import { coverageFilter, netChangeFilter } from './filters';
+
+const {
+  sources: bhSources,
+  layers: bhLayers,
+  layersMap
+} = biomassAndHeight;
 
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
 const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
+const activeLayersIds = createSelector(
+  [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
+);
 
 function sortLayers(layers) {
   const order = {
-    'selected-wdpa-polygons copy 1': 10
+    'selected-wdpa-polygons copy 1': 10,
+    'alerts-style': 100
   };
 
   return layers.sort((a, b) => {
@@ -22,85 +35,90 @@ function sortLayers(layers) {
 }
 
 export const layerStyles = createSelector(
-  [mapStyles, activeLayers],
-  (_mapStyles, _activeLayers) => {
+  [mapStyles, activeLayersIds], (_mapStyles, _activeLayersIds) => {
     if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
       return [];
     }
 
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
-    const activeIds = _activeLayers.map(activeLayer => activeLayer.id);
-    const activeGroups = _activeLayers.map(activeLayer => activeLayer.mapboxGroup);
-
-    return layersStyles
-      .filter(style => activeIds.includes(style.id))
-      .filter(style => activeGroups.includes(style.metadata['mapbox:group']));
+    const extendedLayers = [...layersStyles, ...rasterLayers];
+    return extendedLayers.filter(
+      style => _activeLayersIds.includes(style.id)
+      || (
+        style.metadata
+        && style.metadata.mangroveGroup
+        && _activeLayersIds.includes(style.metadata.mangroveGroup)
+      )
+    );
   }
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles, filters],
-  (_basemap, _layerStyles, _filters) => {
-    const coverageFilter = ({year}) => [
-      "all",
-      [
-        "match",
-        ["get", "year"],
-        [year],
-        true,
-        false
-      ]
-    ];
-
-    const netChangeFilter = ({ startYear, endYear }) => {
-      if (startYear === endYear) {
-        return ["boolean", false];
-      }
-
-      const availableYears = ['1996', '2007', '2008', '2009', '2010', '2015', '2016'];
-
-      const years = availableYears
-        .filter(y => parseInt(y) >= parseInt(startYear))
-        .filter(y => parseInt(y) < parseInt(endYear));
-
-      return [
-        "all",
-        [
-          "match",
-          ["get", "start_year"],
-          years,
-          true,
-          false
-        ]
-      ];
-    };
-
-    const layersWithFilters = _layerStyles.map(layerStyle => {
+  [basemap, layerStyles, filters, activeLayersIds],
+  (_basemap, _layerStyles, _filters, _activeLayersIds) => {
+    const layersWithFilters = _layerStyles.map((layerStyle) => {
+      const newLayerStyle = { ...layerStyle };
       let widgetFilter;
 
-      switch(layerStyle.id) {
+      switch (layerStyle.id) {
         case 'coverage-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
           if (widgetFilter) {
-            layerStyle.filter = coverageFilter(widgetFilter);
+            newLayerStyle.filter = coverageFilter(widgetFilter);
           }
           break;
         case 'net-change-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'net-change-1996-2016');
           if (widgetFilter) {
-            layerStyle.filter = netChangeFilter(widgetFilter);
+            newLayerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
         default:
       }
 
-      return layerStyle;
+      return newLayerStyle;
     });
 
     styleManager.basemap = _basemap;
     styleManager.layers = layersWithFilters;
+    const composedMapStyle = {
+      ...styleManager.mapStyle,
+      layers: sortLayers(styleManager.mapStyle.layers)
+    };
 
-    return {...styleManager.mapStyle, layers: sortLayers(styleManager.mapStyle.layers)};
+    /**
+     * We are patching here but the object should already be complete by now
+     * Selectors are for filtering, not composing
+     */
+    const visibleBHLayers = _activeLayersIds.reduce((acc, layerId) => {
+      const layerMap = layersMap[layerId];
+      const layerFilter = _filters.find(f => f.id === layerId);
+
+      if (layerFilter && layerMap) {
+        return [
+          ...acc,
+          ...layerMap
+            .filter(
+              layerMapItem => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
+            ).map(layerMapItem => layerMapItem.layerId)
+        ];
+      }
+
+      return acc;
+    }, []);
+
+    const bhLayersUpdated = bhLayers.map(layer => ({
+      ...layer,
+      layout: {
+        ...layer.layout,
+        visibility: visibleBHLayers.includes(layer.id) ? 'visible' : 'none'
+      }
+    }));
+
+    composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
+    composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
+
+    return composedMapStyle;
   }
 );
 

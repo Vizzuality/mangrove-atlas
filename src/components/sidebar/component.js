@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import OnScroll from 'react-on-scroll';
+import { breakpoints } from 'utils/responsive';
 import Header from 'components/header';
 import Button from 'components/button';
 import LanguageSelect from 'components/language-selector';
@@ -9,7 +10,7 @@ import styles from './style.module.scss';
 
 class Dashboard extends Component {
   static propTypes = {
-    children: PropTypes.node,
+    children: PropTypes.func,
     collapseAll: PropTypes.func,
     expandAll: PropTypes.func,
     isCollapsed: PropTypes.bool
@@ -46,7 +47,7 @@ class Dashboard extends Component {
   )
 
   render() {
-    const { children, isCollapsed } = this.props;
+    const { children: Children, isCollapsed } = this.props;
     const { sticky, securityMargin } = this.state;
 
     return (
@@ -54,10 +55,11 @@ class Dashboard extends Component {
         className={classnames(styles.sidebar, {
           [styles.securityMargin]: securityMargin
         })}
-        triggers={[
-          { top: -65, callback: _sticky => this.setSticky(!_sticky) },
-          { top: -10, callback: margin => this.setMargin(!margin) },
-        ]}
+        triggers={window.innerWidth > breakpoints.lg
+          ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
+            { top: -10, callback: margin => this.setMargin(!margin) }]
+          : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
+          }
       >
         <div className={styles.header}>
           <Header sticky={sticky} />
@@ -85,7 +87,7 @@ class Dashboard extends Component {
             <LanguageSelect />
           </div>
         </div>
-        {children}
+        <Children isSticky={sticky} />
       </OnScroll>
     );
   }

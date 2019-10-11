@@ -6,7 +6,11 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_alerts",
+          "mangrove_height",
+          "mangrove_biomass",
+          "mangrove_activity"
         ]
       },
       {
@@ -14,7 +18,10 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_height",
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       },
       {
@@ -22,14 +29,21 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
-          "mangrove_net_change"
+          "mangrove_net_change",
+          "mangrove_height",
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       },
       {
         "location_type": "aoi",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage"
+          "mangrove_coverage",
+          "mangrove_net_change",
+          "mangrove_height",
+          "mangrove_biomass",
+          "conservation_hotspots"
         ]
       }
     ],
@@ -72,12 +86,28 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
-      "layersIds": []
+      "layersIds": ["alerts-style"]
     },
     {
       "name": "Mangrove height",
       "slug": "mangrove_height",
-      "layersIds": []
+      "layersIds": [
+        "height"
+      ]
+    },
+    {
+      "name": "Mangrove biomass",
+      "slug": "mangrove_biomass",
+      "layersIds": [
+        "biomass"
+      ]
+    },
+    {
+      "name": "Conservation hotspots",
+      "slug": "conservation_hotspots",
+      "layersIds": [
+        "cons-hotspots"
+      ]
     }
   ],
   "layers": [
@@ -90,7 +120,22 @@
       "name": "Mangrove change",
       "id": "net-change-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
+      "name": "Conservation hotspots",
+      "id": "cons-hotspots"
+    },
+    {
+      "name": "Height canopy",
+      "id": "height"
+    },
+    {
+      "name": "Mangrove biomass",
+      "id": "biomass"
+    },
+    {
+      "name": "Mangrove deforestation alerts",
+      "id": "alerts-style"
     }
   ]
 }
-

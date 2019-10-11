@@ -1,5 +1,39 @@
 # Changelog
 
+## 2019-10-11
+
+### Added
+
+- Added biomass widget
+- Added height widget
+- Added layer for biomass and height widget
+- Added units in all the tooltips
+- Added button to show open a modal with a detailed info of the widget
+
+### Changed
+
+- Unified decimals in all the widgets
+- Changed sentences in all the widgets
+
+### Fixed
+
+- Fixed axis comma formatting for Activity widget
+- Fixed an error where biomass widget breaks the application
+- Fixed typo for the modal info in the widgets
+
+## 2019-09-13
+
+### Added
+
+- Activity widget connected to real data
+- Fullscreen control added to map
+
+### Changed
+
+- Widgets legend
+- Widgets tooltip 
+
+
 ## 2019-09-06
 
 ### Added
