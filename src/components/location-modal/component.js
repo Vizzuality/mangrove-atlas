@@ -62,7 +62,6 @@ class LocationSelector extends PureComponent {
     const locationsData = searchTerm
       ? locations.filter(l => new RegExp(searchTerm, 'i').test(l.name))
       : locations;
-
     return (
       <Fragment>
         <MediaQuery maxWidth={breakpoints.lg - 1}>
