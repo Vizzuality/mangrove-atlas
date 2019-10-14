@@ -17,7 +17,7 @@ const MangroveHeight = ({
   ...props
 }) => {
   const [date, setDate] = useState('2016');
-  const [area, setAreaType] = useState('maximun');
+  const [area, setAreaType] = useState('maximum');
   useEffect(() => {
     addFilter({
       filter: {
@@ -40,7 +40,7 @@ const MangroveHeight = ({
 
   const location = currentLocation.name;
   const areaOptions = [
-    { label: 'maximun', value: 'maximun' },
+    { label: 'maximum', value: 'maximum' },
     { label: 'basal', value: 'basal' }
   ];
 
@@ -75,7 +75,7 @@ const MangroveHeight = ({
   //     options={areaOptions}
   //     onChange={value => areaHandler(value)}
   //   />
-  // ); TO-DO - add back when date is ready, changing maximun for area selector
+  // ); TO-DO - add back when date is ready, changing maximum for area selector
 
   const dateSelector = (
     <Select
@@ -87,7 +87,7 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove <strong>maximun</strong> canopy height in <strong>{location}</strong> was
+      Mean mangrove <strong>maximum</strong> canopy height in <strong>{location}</strong> was
       <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
