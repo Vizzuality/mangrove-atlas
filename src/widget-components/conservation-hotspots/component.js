@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Select from 'components/select';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import { format } from 'd3-format';
@@ -26,7 +27,7 @@ function ConservationHotspots({
   name,
   ...props
 }) {
-  const [scopeState] = useState('short');
+  const [scopeState, setScopeState] = useState('short');
   if (!rawData) {
     return null;
   }
@@ -34,12 +35,8 @@ function ConservationHotspots({
   const data = config.parse(rawData, {
     scope: scopeState
   });
-  const { metadata, chartConfig } = data;
+  const { chartConfig } = data;
   const currentYear = 1996;
-  const { years } = metadata;
-
-  const endYear = Math.max(...years);
-  const startYear = Math.min(...years);
 
   const widgetData = processData(data, currentYear);
   let sentence = null;
@@ -66,9 +63,24 @@ function ConservationHotspots({
       findData => Number(numberFormat(findData.percentage)) === highestValue
     ).label;
 
+    const scopeOptions = [
+      { label: 'short–term', value: 'short' },
+      { label: 'medium–term', value: 'medium' },
+      { label: 'long–term', value: 'long' }
+    ];
+
+    const scopeSelector = (
+      <Select
+        value={scopeState}
+        options={scopeOptions}
+        isOptionDisabled={option => option.value === scopeState}
+        onChange={setScopeState}
+      />
+    );
+  
     sentence = (
       <>
-        <span>Mangrove habitat in <strong>{location}</strong> was <strong className="notranslate">{highestValue} %</strong> classified as <strong>{highestCategory}</strong> for the period <strong className="notranslate"> {startYear}–{endYear}</strong>.</span>
+        In the <span className="notranslate">{scopeSelector}</span> <strong className="notranslate">{highestValue} %</strong> of the mangrove habitat in <strong>{location}</strong> was classed as <strong>{highestCategory}</strong>.
       </>
     );
   } catch (e) {
