@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import { format } from 'd3-format';
@@ -17,13 +17,23 @@ function processData(data, currentYear) {
   return currentYearData;
 }
 
-function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
-
+function ConservationHotspots({
+  data: rawData,
+  currentLocation,
+  addFilter,
+  isCollapsed,
+  slug,
+  name,
+  ...props
+}) {
+  const [scopeState] = useState('short');
   if (!rawData) {
     return null;
   }
 
-  const data = config.parse(rawData);
+  const data = config.parse(rawData, {
+    scope: scopeState
+  });
   const { metadata, chartConfig } = data;
   const currentYear = 1996;
   const { years } = metadata;
@@ -48,13 +58,12 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const highestValue = Math.max.apply(Math, chartData.data.map((o) => {
-      if (!o.percentage) return null;
-      return numberFormat(o.percentage);
-    }));
+    const highestValue = Math.max(
+      ...chartData.data.map(o => (o.percentage ? numberFormat(o.percentage) : null))
+    );
 
     const highestCategory = (chartData.data).find(
-      data => Number(numberFormat(data.percentage)) === highestValue
+      findData => Number(numberFormat(findData.percentage)) === highestValue
     ).label;
 
     sentence = (

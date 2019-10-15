@@ -4,36 +4,44 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 import looseJsonParse from 'utils/loose-json-parse';
 
-const widgetData = ({ list }) => {
-  const categoriesData = {
-    'Benefits From Conservation': {
-      color: '#86CEE8',
-      label: 'Benefits From Conservation'
-    },
-    'Requires Conservation': {
-      color: '#ED896C',
-      label: 'Requires Conservation'
-    },
-    'Requires Monitoring': {
-      color: '#FDC067',
-      label: 'Requires Monitoring'
-    },
-    'Stable Ecosystem': {
-      color: '#0C3B6D',
-      label: 'Stable Ecosystem'
-    },
-    'Monitoring Advised': {
-      color: '#1B9ACC',
-      label: 'Monitoring Advised'
-    }
-  };
+const categoriesData = {
+  'Benefits From Conservation': {
+    color: '#86CEE8',
+    label: 'Benefits From Conservation'
+  },
+  'Requires Conservation': {
+    color: '#ED896C',
+    label: 'Requires Conservation'
+  },
+  'Requires Monitoring': {
+    color: '#FDC067',
+    label: 'Requires Monitoring'
+  },
+  'Stable Ecosystem': {
+    color: '#0C3B6D',
+    label: 'Stable Ecosystem'
+  },
+  'Monitoring Advised': {
+    color: '#1B9ACC',
+    label: 'Monitoring Advised'
+  }
+};
 
+const scopeKeyMap = new Map([
+  ['short', 'ST_advice'],
+  ['medium', 'MT_advice'],
+  ['long', 'LT_advice']
+]);
+
+const widgetData = ({ list }, { scope }) => {
   return list.flatMap((d) => {
     const year = new Date(d.date).getFullYear();
 
     if (!d.con_hotspot_summary_km2) return null;
 
-    const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string') ? looseJsonParse(d.con_hotspot_summary_km2) : d.con_hotspot_summary_km2;
+    const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
+      ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
+      : d.con_hotspot_summary_km2;
 
     const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
     return Object.entries(hotSpotData).map(([catKey, catValue]) => ({
@@ -64,8 +72,8 @@ const widgetMeta = ({ list, metadata }) => {
 };
 
 export const CONFIG = {
-  parse: data => ({
-    chartData: widgetData(data),
+  parse: (data, uiState) => ({
+    chartData: widgetData(data, uiState),
     metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',
