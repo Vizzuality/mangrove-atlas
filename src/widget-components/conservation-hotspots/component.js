@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import sortBy from 'lodash/sortBy';
 import ChartWidget from 'components/chart-widget';
-import Select from 'components/select';
 import { format } from 'd3-format';
 import config from './config';
 
@@ -20,7 +18,6 @@ function processData(data, currentYear) {
 }
 
 function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 1996 });
 
   if (!rawData) {
     return null;
@@ -28,28 +25,14 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
 
   const data = config.parse(rawData);
   const { metadata, chartConfig } = data;
-  const { currentYear } = coverageState;
+  const currentYear = 1996;
   const { years } = metadata;
-  const optionsYears = sortBy(metadata.years.map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['value']);
-  let sentence = null;
-
 
   const endYear = Math.max(...years);
   const startYear = Math.min(...years);
 
-  const changeYear = (currentYear) => {
-    addFilter({
-      filter: {
-        year: currentYear
-      }
-    });
-    setCoverageState({ ...coverageState, currentYear });
-  };
-
   const widgetData = processData(data, currentYear);
+  let sentence = null;
 
   if (widgetData === null) {
     return null;
@@ -65,21 +48,14 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const yearSelector = (
-      <Select
-        className="notranslate"
-        width="auto"
-        value={currentYear}
-        options={optionsYears}
-        onChange={changeYear}
-      />);
-
     const highestValue = Math.max.apply(Math, chartData.data.map((o) => {
       if (!o.percentage) return null;
       return numberFormat(o.percentage);
     }));
 
-    const highestCategory = (chartData.data).find(data => Number(numberFormat(data.percentage)) === highestValue).label;
+    const highestCategory = (chartData.data).find(
+      data => Number(numberFormat(data.percentage)) === highestValue
+    ).label;
 
     sentence = (
       <>

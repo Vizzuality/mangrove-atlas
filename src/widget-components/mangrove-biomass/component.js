@@ -23,7 +23,7 @@ const MangroveBiomass = ({
         year: '2016'
       }
     });
-  }, []);
+  }, [addFilter]);
 
 
   if (!rawData) {

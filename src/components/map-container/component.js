@@ -47,6 +47,7 @@ export const MapContainer = ({
     return function cleanup() {
       window.removeEventListener('resize', resize);
     };
+  // eslint-disable-next-line
   }, []);
 
   const { parsedResult: browser } = (Bowser.getParser(window.navigator.userAgent));
