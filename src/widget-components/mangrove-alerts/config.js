@@ -133,7 +133,7 @@ export const CONFIG = {
         height: 50,
         // eslint-disable-next-line react/prop-types
         content: ({ payload }) => {
-          const labels = payload.map(({ color, value, payloadChild }) => ({
+          const labels = payload.map(({ color, value, payload: payloadChild }) => ({
             color,
             value: payloadChild.title || value
           })).slice(0, 1);
