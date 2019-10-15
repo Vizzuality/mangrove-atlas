@@ -41,6 +41,10 @@ const MangroveHeight = ({
   }
 
   const location = currentLocation.name;
+  // const areaOptions = [
+  //   { label: 'maximum', value: 'maximum' },
+  //   { label: 'basal', value: 'basal' }
+  // ];
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
@@ -73,7 +77,7 @@ const MangroveHeight = ({
   //     options={areaOptions}
   //     onChange={value => areaHandler(value)}
   //   />
-  // ); TO-DO - add back when date is ready, changing maximun for area selector
+  // ); TO-DO - add back when date is ready, changing maximum for area selector
 
   const dateSelector = (
     <Select
@@ -85,7 +89,7 @@ const MangroveHeight = ({
 
   const sentence = (
     <>
-      Mean mangrove <strong>maximun</strong> canopy height in <strong>{location}</strong> was
+      Mean mangrove <strong>maximum</strong> canopy height in <strong>{location}</strong> was
       <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateSelector}</strong>.
     </>
   );
