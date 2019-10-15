@@ -52,8 +52,8 @@ const MangroveBiomass = ({
   })), ['value']);
 
   const location = (currentLocation.location_type === 'worldwide')
-    ? 'the world’s'
-    : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
+    ? 'the world'
+    : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
   const yearSelector = (
     <Select
@@ -66,8 +66,7 @@ const MangroveBiomass = ({
 
   const sentence = (
     <>
-      Mean mangrove above-ground biomass density in <strong>{location}</strong> was
-      average {coverage} mg ha<sup>-1</sup> in {yearSelector}.
+      Mean mangrove above-ground biomass density in <strong> {location}</strong> was {coverage} mg ha<sup>-1</sup> in {yearSelector}.
     </>
   );
   const widgetData = {
