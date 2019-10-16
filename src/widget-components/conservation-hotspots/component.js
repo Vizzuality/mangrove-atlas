@@ -55,12 +55,12 @@ function ConservationHotspots({
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const highestValue = Math.max(
-      ...chartData.data.map(o => (o.percentage ? numberFormat(o.percentage) : null))
-    );
+    const highestValue = numberFormat(Math.max(
+      ...chartData.data.map(o => (o.percentage ? o.percentage : null))
+    ));
 
     const highestCategory = (chartData.data).find(
-      findData => Number(numberFormat(findData.percentage)) === highestValue
+      findData => numberFormat(Number(findData.percentage)) === highestValue
     ).label;
 
     const scopeOptions = [
@@ -77,7 +77,7 @@ function ConservationHotspots({
         onChange={setScopeState}
       />
     );
-  
+
     sentence = (
       <>
         In the <span className="notranslate">{scopeSelector}</span> <strong className="notranslate">{highestValue} %</strong> of the mangrove habitat in <strong>{location}</strong> was classed as <strong>{highestCategory}</strong>.

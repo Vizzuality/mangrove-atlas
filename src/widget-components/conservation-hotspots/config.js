@@ -33,29 +33,27 @@ const scopeKeyMap = new Map([
   ['long', 'LT_advice']
 ]);
 
-const widgetData = ({ list }, { scope }) => {
-  return list.flatMap((d) => {
-    const year = new Date(d.date).getFullYear();
+const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
+  const year = new Date(d.date).getFullYear();
 
-    if (!d.con_hotspot_summary_km2) return null;
+  if (!d.con_hotspot_summary_km2) return null;
 
-    const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
-      ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
-      : d.con_hotspot_summary_km2;
+  const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
+    ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
+    : d.con_hotspot_summary_km2;
 
-    const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
-    return Object.entries(hotSpotData).map(([catKey, catValue]) => ({
-      x: Number(year),
-      y: catValue,
-      color: categoriesData[catKey].color || '',
-      label: categoriesData[catKey].label,
-      value: catValue,
-      percentage: (catValue / total) * 100,
-      unit: '%',
-      coverage: (catValue).toFixed(2)
-    }));
-  });
-};
+  const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
+  return Object.entries(hotSpotData).map(([catKey, catValue]) => ({
+    x: Number(year),
+    y: catValue,
+    color: categoriesData[catKey].color || '',
+    label: categoriesData[catKey].label,
+    value: catValue,
+    percentage: (catValue / total) * 100,
+    unit: '%',
+    coverage: (catValue).toFixed(2)
+  }));
+});
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
