@@ -43,16 +43,19 @@ const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
     : d.con_hotspot_summary_km2;
 
   const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
-  return Object.entries(hotSpotData).map(([catKey, catValue]) => ({
-    x: Number(year),
-    y: catValue,
-    color: categoriesData[catKey].color || '',
-    label: categoriesData[catKey].label,
-    value: catValue,
-    percentage: (catValue / total) * 100,
-    unit: '%',
-    coverage: (catValue).toFixed(2)
-  }));
+
+  return (typeof hotSpotData === 'string')
+    ? []
+    : Object.entries(hotSpotData).map(([catKey, catValue]) => ({
+      x: Number(year),
+      y: catValue,
+      color: categoriesData[catKey].color || '',
+      label: categoriesData[catKey].label,
+      value: catValue,
+      percentage: (catValue / total) * 100,
+      unit: '%',
+      coverage: (catValue).toFixed(2)
+    }));
 });
 
 const widgetMeta = ({ list, metadata }) => {
