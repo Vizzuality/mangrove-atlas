@@ -18,17 +18,16 @@ const MangroveHeight = ({
 }) => {
   const [date, setDate] = useState('2016');
   // const [area, setAreaType] = useState('maximun');
-  const [area] = useState('maximun');
 
   useEffect(() => {
     addFilter({
       filter: {
         id: 'height',
         year: date,
-        area
+        area: 'maximum'
       }
     });
-  }, [date, area]);
+  }, [date, addFilter]);
 
   if (!rawData) {
     return null;
