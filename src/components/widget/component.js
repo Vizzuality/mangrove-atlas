@@ -111,6 +111,7 @@ Widget.propTypes = {
     PropTypes.shape({}),
     PropTypes.array
   ]).isRequired,
+  children: PropTypes.node,
   name: PropTypes.string,
   slug: PropTypes.string,
   filename: PropTypes.string,
@@ -126,6 +127,7 @@ Widget.propTypes = {
 
 Widget.defaultProps = {
   name: null,
+  children: null,
   slug: null,
   filename: null,
   layerId: null,

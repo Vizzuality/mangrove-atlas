@@ -17,6 +17,8 @@ const MangroveHeight = ({
   ...props
 }) => {
   const [date, setDate] = useState('2016');
+  // const [area, setAreaType] = useState('maximun');
+
   useEffect(() => {
     addFilter({
       filter: {
@@ -38,6 +40,10 @@ const MangroveHeight = ({
   }
 
   const location = currentLocation.name;
+  // const areaOptions = [
+  //   { label: 'maximum', value: 'maximum' },
+  //   { label: 'basal', value: 'basal' }
+  // ];
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
@@ -53,6 +59,24 @@ const MangroveHeight = ({
       }
     });
   };
+
+  // const areaHandler = (value) => {
+  //   setAreaType(value);
+  //   addFilter({
+  //     filter: {
+  //       id: 'height',
+  //       area: value
+  //     }
+  //   });
+  // };
+
+  // const areaSelector = (
+  //   <Select
+  //     value={area}
+  //     options={areaOptions}
+  //     onChange={value => areaHandler(value)}
+  //   />
+  // ); TO-DO - add back when date is ready, changing maximum for area selector
 
   const dateSelector = (
     <Select
