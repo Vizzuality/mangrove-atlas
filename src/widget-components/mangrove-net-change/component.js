@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import sumBy from 'lodash/sumBy';
 
 import ChartWidget from 'components/chart-widget';
