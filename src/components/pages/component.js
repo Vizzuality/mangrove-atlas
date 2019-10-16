@@ -24,6 +24,7 @@ const Pages = ({ page: { current }, initializeApp }) => {
 };
 
 Pages.propTypes = {
+  initializeApp: PropTypes.func.isRequired,
   page: PropTypes.shape({
     current: PropTypes.string.isRequired,
     payload: PropTypes.shape({}).isRequired

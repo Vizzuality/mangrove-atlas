@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
 const propertiesNameMap = new Map([
@@ -13,7 +14,7 @@ const propertiesNameMap = new Map([
   ['Mudflat_Av', 'Mudflat availability']
 ]);
 
-export default ({
+const MapPopUpHotspots = ({
   Country: country,
   Precip_Cha: precipitationChange,
   Temp_Chang: temperatureChange,
@@ -52,3 +53,27 @@ export default ({
     </div>
   );
 };
+
+MapPopUpHotspots.propTypes = {
+  Country: PropTypes.shape({}),
+  Precip_Cha: PropTypes.shape({}),
+  Temp_Chang: PropTypes.shape({}),
+  Storm_Freq: PropTypes.shape({}),
+  Drought_Pr: PropTypes.shape({}),
+  CorePer: PropTypes.shape({}),
+  Final_Chan: PropTypes.shape({}),
+  Mudflat_Av: PropTypes.shape({})
+};
+
+MapPopUpHotspots.defaultProps = {
+  Country: null,
+  Precip_Cha: null,
+  Temp_Chang: null,
+  Storm_Freq: null,
+  Drought_Pr: null,
+  CorePer: null,
+  Final_Chan: null,
+  Mudflat_Av: null
+};
+
+export default MapPopUpHotspots;

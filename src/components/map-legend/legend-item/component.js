@@ -28,11 +28,13 @@ LegendItem.propTypes = {
   name: PropTypes.string.isRequired,
   toggleActive: PropTypes.func,
   isCollapsed: PropTypes.bool.isRequired,
-  mapView: PropTypes.bool.isRequired
+  mapView: PropTypes.bool.isRequired,
+  toggleWidgetActive: PropTypes.func,
 };
 
 LegendItem.defaultProps = {
-  toggleActive: () => null
+  toggleActive: () => null,
+  toggleWidgetActive: () => null,
 };
 
 export default LegendItem;

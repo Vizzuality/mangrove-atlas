@@ -133,9 +133,9 @@ export const CONFIG = {
         height: 50,
         // eslint-disable-next-line react/prop-types
         content: ({ payload }) => {
-          const labels = payload.map(({ color, value, payload }) => ({
+          const labels = payload.map(({ color, value, payload: payloadChild }) => ({
             color,
-            value: payload.title || value
+            value: payloadChild.title || value
           })).slice(0, 1);
           return <WidgetLegend direction="vertical" groups={{ labels }} variant="circle" />;
         }
