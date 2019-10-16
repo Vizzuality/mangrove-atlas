@@ -26,7 +26,7 @@ queryState.add({
       actions.expandAll,
       actions.collapseAll,
       actions.toggleCollapse,
-      // actions.toggleActive
+      actions.toggleActive
     ],
     selector: (state) => {
       const { widgets: { list } } = state;
