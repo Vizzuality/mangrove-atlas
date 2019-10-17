@@ -1,7 +1,7 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
 import DATA from 'config/data.json';
 import { breakpoints } from 'utils/responsive';
-import { toggleActive as toggleLayerActive } from 'modules/layers/actions';
+import { toggleActive as toggleLayerActive, fetchLayers } from 'modules/layers/actions';
 import { fetchSucceeded, toggleActive } from './actions';
 
 function delay(ms) {
@@ -48,12 +48,28 @@ export function* restoreWidgetsState() {
 
         if (urlWidgets[widget.slug]) {
           const update = urlWidgets[widget.slug];
+          const widgetLayers = updatedWidget.layersIds;
 
           if (update.isActive) {
+            const widgetActions = [];
+
+            // Activate the widget
             updatedWidget.isActive = true;
-            toDispatch.push(put(toggleActive({
+            widgetActions.push(put(toggleActive({
               isActive: true
             })));
+
+            // Activate associated layers
+            if (widgetLayers.length > 0) {
+              const layersActions = widgetLayers.map(layerId => put(toggleLayerActive({
+                id: layerId,
+                isActive: true
+              })));
+
+              widgetActions.push(...layersActions);
+            }
+
+            toDispatch.push(all(widgetActions));
           }
 
           if (update.isCollapsed) {
@@ -74,5 +90,5 @@ export function* restoreWidgetsState() {
 }
 
 export default function* widgetsSagas() {
-  yield takeLatest('LAYERS/FETCH_ALL', getWidgets);
+  yield takeLatest(fetchLayers().type, getWidgets);
 }
