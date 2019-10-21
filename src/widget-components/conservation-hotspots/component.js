@@ -71,6 +71,12 @@ function ConservationHotspots({
 
     const changeScopeHandler = (value) => {
       setUi({ id: 'conservation_hotspots', value });
+      addFilter({
+        filter: {
+          id: 'cons-hotspots',
+          scope: value
+        }
+      });
     };
 
     const scopeSelector = (
