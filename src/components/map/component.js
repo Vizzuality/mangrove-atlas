@@ -52,7 +52,9 @@ class Map extends Component {
     touchRotate: PropTypes.bool,
     /** A boolean that allows double click zooming */
     doubleClickZoom: PropTypes.bool,
-    /** A function that exposes when the map is loaded. It returns and object with the `this.map` and `this.mapContainer` reference. */
+    /** A function that exposes when the map is loaded.
+     * It returns and object with the `this.map`
+     * and `this.mapContainer`reference. */
     onLoad: PropTypes.func,
 
     /** A function that exposes the viewport */

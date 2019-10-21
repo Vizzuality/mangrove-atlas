@@ -23,7 +23,7 @@ const MangroveBiomass = ({
         year: '2016'
       }
     });
-  }, []);
+  }, [addFilter]);
 
 
   if (!rawData) {
@@ -66,7 +66,8 @@ const MangroveBiomass = ({
 
   const sentence = (
     <>
-      Mean mangrove above-ground biomass density in <strong> {location}</strong> was {coverage} mg ha<sup>-1</sup> in {yearSelector}.
+      Mean mangrove above-ground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in {yearSelector}.
     </>
   );
   const widgetData = {

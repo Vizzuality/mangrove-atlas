@@ -15,8 +15,8 @@ const widgetData = ({ list }) => {
       gain: l.gain_m2,
       netChange: l.net_change_m2,
       loss: -l.loss_m2
-    })).filter(l => l.netChange !== 0);
-  return orderBy(data, l => l.year);
+    }));
+  return orderBy(data, l => l.year).filter((l, i) => (i === 0 || l.netChange !== 0));
 };
 
 const widgetMetadata = ({ list }) => ({

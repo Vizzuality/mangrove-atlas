@@ -18,7 +18,14 @@ function OurCalendarContainer({ children }) {
   );
 }
 
-function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, theme, date, inline }) {
+function Datepicker({
+  className,
+  onDateChange,
+  settings: { minDate, maxDate },
+  theme,
+  date,
+  inline
+}) {
   const classes = [styles.Datepicker, theme, className].join(' ');
   const popperConfig = {
     flip: {
@@ -30,7 +37,8 @@ function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, t
     },
     preventOverflow: {
       enabled: true,
-      escapeWithReference: false, // force popper to stay in viewport (even when input is scrolled out of view)
+      // force popper to stay in viewport (even when input is scrolled out of view)
+      escapeWithReference: false,
       boundariesElement: 'viewport'
     }
   };
@@ -44,6 +52,7 @@ function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, t
   );
 
   return (
+    // eslint-disable-next-line no-underscore-dangle
     <div className={classnames(classes, { [styles._inline]: inline })}>
       <ReactDatePicker
         selected={date.toDate()}
@@ -67,10 +76,19 @@ function Datepicker({ className, onDateChange, settings: { minDate, maxDate }, t
 
 Datepicker.propTypes = {
   className: PropTypes.string,
+  inline: PropTypes.string,
   theme: PropTypes.string,
-  date: PropTypes.object,
+  date: PropTypes.shape({}),
   onDateChange: PropTypes.func.isRequired,
-  settings: PropTypes.object
+  settings: PropTypes.shape({})
+};
+
+Datepicker.defaultProps = {
+  className: null,
+  inline: null,
+  theme: null,
+  date: null,
+  settings: null
 };
 
 export default Datepicker;

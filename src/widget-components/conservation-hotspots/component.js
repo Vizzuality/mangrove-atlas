@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import sortBy from 'lodash/sortBy';
-import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+import PropTypes from 'prop-types';
+import ChartWidget from 'components/chart-widget';
 import { format } from 'd3-format';
 import config from './config';
 
@@ -19,37 +18,28 @@ function processData(data, currentYear) {
   return currentYearData;
 }
 
-function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCollapsed, slug, name, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 1996 });
-
+function ConservationHotspots({
+  data: rawData,
+  currentLocation,
+  addFilter,
+  isCollapsed,
+  slug,
+  name,
+  ...props
+}) {
+  const [scopeState, setScopeState] = useState('short');
   if (!rawData) {
     return null;
   }
 
-  const data = config.parse(rawData);
-  const { metadata, chartConfig } = data;
-  const { currentYear } = coverageState;
-  const { years } = metadata;
-  const optionsYears = sortBy(metadata.years.map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['value']);
-  let sentence = null;
-
-
-  const endYear = Math.max(...years);
-  const startYear = Math.min(...years);
-
-  const changeYear = (currentYear) => {
-    addFilter({
-      filter: {
-        year: currentYear
-      }
-    });
-    setCoverageState({ ...coverageState, currentYear });
-  };
+  const data = config.parse(rawData, {
+    scope: scopeState
+  });
+  const { chartConfig } = data;
+  const currentYear = 1996;
 
   const widgetData = processData(data, currentYear);
+  let sentence = null;
 
   if (widgetData === null) {
     return null;
@@ -65,25 +55,32 @@ function ConservationHotspots({ data: rawData, currentLocation, addFilter, isCol
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const yearSelector = (
+    const highestValue = numberFormat(Math.max(
+      ...chartData.data.map(o => (o.percentage ? o.percentage : null))
+    ));
+
+    const highestCategory = (chartData.data).find(
+      findData => numberFormat(Number(findData.percentage)) === highestValue
+    ).label;
+
+    const scopeOptions = [
+      { label: 'short–term', value: 'short' },
+      { label: 'medium–term', value: 'medium' },
+      { label: 'long–term', value: 'long' }
+    ];
+
+    const scopeSelector = (
       <Select
-        className="notranslate"
-        width="auto"
-        value={currentYear}
-        options={optionsYears}
-        onChange={changeYear}
-      />);
-
-    const highestValue = Math.max.apply(Math, chartData.data.map((o) => {
-      if (!o.percentage) return null;
-      return numberFormat(o.percentage);
-    }));
-
-    const highestCategory = (chartData.data).find(data => Number(numberFormat(data.percentage)) === highestValue).label;
+        value={scopeState}
+        options={scopeOptions}
+        isOptionDisabled={option => option.value === scopeState}
+        onChange={setScopeState}
+      />
+    );
 
     sentence = (
       <>
-        <span>Mangrove habitat in <strong>{location}</strong> was <strong className="notranslate">{highestValue} %</strong> classified as <strong>{highestCategory}</strong> for the period <strong className="notranslate"> {startYear}–{endYear}</strong>.</span>
+        In the <span className="notranslate">{scopeSelector}</span> <strong className="notranslate">{highestValue} %</strong> of the mangrove habitat in <strong>{location}</strong> was classed as <strong>{highestCategory}</strong>.
       </>
     );
   } catch (e) {

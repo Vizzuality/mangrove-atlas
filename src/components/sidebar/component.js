@@ -90,7 +90,7 @@ class Dashboard extends Component {
               isGrey
               onClick={this.onClickDownload}
             >
-              Download as PDF
+              Print Report
             </Button>
           </div>
         </div>
