@@ -189,11 +189,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: <WidgetCustomLabel value="200–250" unit="Mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="150–200" unit="Mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="100–150" unit="Mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="50–100" unit="Mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="0–50" unit="Mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="200–250" unit="mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="150–200" unit="mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="100–150" unit="mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="50–100" unit="mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: <WidgetCustomLabel value="0–50" unit="mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ]}
               />
             )
