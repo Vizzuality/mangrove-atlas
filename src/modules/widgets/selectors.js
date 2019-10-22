@@ -60,7 +60,6 @@ export const coverageWidget = createSelector(
   }
 );
 
-
 export const netChangeWidget = createSelector(
   [currentLocation],
   (_currentLocation) => {

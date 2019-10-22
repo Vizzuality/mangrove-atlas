@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
 import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
-import biomassAndHeight from './constants';
+import biomassAndHeight, { scopeFeature } from './constants';
 import { coverageFilter, netChangeFilter } from './filters';
 
 const {
@@ -74,6 +74,12 @@ export const mapStyle = createSelector(
           }
           break;
         default:
+        case 'cons-hotspots':
+          widgetFilter = _filters.find(f => f.id === 'cons-hotspots');
+          if (widgetFilter && scopeFeature.get(widgetFilter.scope)) {
+            newLayerStyle.paint['fill-color'][1][1] = scopeFeature.get(widgetFilter.scope);
+          }
+          break;
       }
 
       return newLayerStyle;

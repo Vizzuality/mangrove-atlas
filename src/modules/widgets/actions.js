@@ -15,3 +15,6 @@ export const toggleActiveByLayerId = createAction('WIDGET/TOGGLE_ACTIVE_BY_LAYER
 
 export const openInfoPanel = createAction('WIDGETS/OPEN_PANEL');
 export const closeInfoPanel = createAction('WIDGETS/CLOSE_PANEL');
+
+export const setUi = createAction('WIDGETS/SET_UI');
+export const resetUi = createAction('WIDGETS/RESET_UI');
