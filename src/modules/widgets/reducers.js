@@ -8,7 +8,9 @@ import {
   toggleActive,
   toggleActiveByLayerId,
   openInfoPanel,
-  closeInfoPanel
+  closeInfoPanel,
+  setUi,
+  resetUi
 } from './actions';
 
 export default {
@@ -71,4 +73,12 @@ export default {
     type: payload
   }),
   [closeInfoPanel]: state => ({ ...state, isOpened: false }),
+  [setUi]: (state, { payload }) => ({
+    ...state,
+    ui: {
+      ...state.ui,
+      [payload.id]: payload.value
+    }
+  }),
+  [resetUi]: state => ({ ...state, ui: {} })
 };

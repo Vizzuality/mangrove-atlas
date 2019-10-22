@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'components/select';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import { format } from 'd3-format';
 import config from './config';
 
+import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
@@ -25,16 +26,15 @@ function ConservationHotspots({
   isCollapsed,
   slug,
   name,
+  ui: scope,
+  setUi,
   ...props
 }) {
-  const [scopeState, setScopeState] = useState('short');
   if (!rawData) {
     return null;
   }
 
-  const data = config.parse(rawData, {
-    scope: scopeState
-  });
+  const data = config.parse(rawData, { scope });
   const { chartConfig } = data;
   const currentYear = 1996;
 
@@ -69,12 +69,23 @@ function ConservationHotspots({
       { label: 'long–term', value: 'long' }
     ];
 
+    const changeScopeHandler = (value) => {
+      setUi({ id: 'conservation_hotspots', value });
+      addFilter({
+        filter: {
+          id: 'cons-hotspots',
+          scope: value
+        }
+      });
+    };
+
     const scopeSelector = (
       <Select
-        value={scopeState}
+        className={styles.hotspotSelect}
+        value={scope}
         options={scopeOptions}
-        isOptionDisabled={option => option.value === scopeState}
-        onChange={setScopeState}
+        isOptionDisabled={option => option.value === scope}
+        onChange={changeScopeHandler}
       />
     );
 
@@ -110,6 +121,8 @@ ConservationHotspots.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
+  ui: PropTypes.string,
+  setUi: PropTypes.func
 };
 
 ConservationHotspots.defaultProps = {
@@ -120,6 +133,8 @@ ConservationHotspots.defaultProps = {
   slug: null,
   name: null,
   metadata: null,
+  ui: null,
+  setUi: () => {}
 };
 
 export default ConservationHotspots;

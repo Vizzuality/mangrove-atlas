@@ -4,11 +4,13 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GA_ID%"></script>
     <script>
-      if ('%NODE_ENV%' === 'production') {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+      var env = '%NODE_ENV%';
 
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      if (env === 'production') {
         gtag('config', '%REACT_APP_GA_ID%');
       }
     </script>
