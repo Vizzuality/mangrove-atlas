@@ -1,6 +1,6 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import { setCurrent, closeSearchPanel } from 'modules/locations/actions';
-import { closeInfoPanel } from 'modules/widgets/actions';
+import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 
 /**
   * Set current location
@@ -12,6 +12,7 @@ function* setLocation({ payload: { iso, id } }) {
 
   if (!current || current[idKey] !== targetLocation) {
     yield put(setCurrent({ [idKey]: targetLocation }));
+    yield put(resetUi());
   }
 
   yield put(closeSearchPanel());
