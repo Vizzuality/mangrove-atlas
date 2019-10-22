@@ -2,14 +2,13 @@ import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
 import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
-import biomassAndHeight from './constants';
+import biomassAndHeight, { scopeFeature } from './constants';
 import { coverageFilter, netChangeFilter } from './filters';
 
 const {
   sources: bhSources,
   layers: bhLayers,
-  layersMap,
-  scopeFeature,
+  layersMap
 } = biomassAndHeight;
 
 const styleManager = new StyleManager();

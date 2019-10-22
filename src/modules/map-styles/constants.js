@@ -349,14 +349,13 @@ const layersMap = {
 };
 
 export const scopeFeature = new Map([
-  [ 'short', 'ST_Advice'],
-  [ 'medium', 'MT_Advice'],
-  [ 'long', 'LT_Advice']
+  ['short', 'ST_Advice'],
+  ['medium', 'MT_Advice'],
+  ['long', 'LT_Advice']
 ]);
 
 
 export default {
   layersMap,
-  ...sourcesAndLayers,
-  scopeFeature
+  ...sourcesAndLayers
 };

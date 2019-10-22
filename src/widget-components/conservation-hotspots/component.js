@@ -121,6 +121,8 @@ ConservationHotspots.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
+  ui: PropTypes.string,
+  setUi: PropTypes.func
 };
 
 ConservationHotspots.defaultProps = {
@@ -131,6 +133,8 @@ ConservationHotspots.defaultProps = {
   slug: null,
   name: null,
   metadata: null,
+  ui: null,
+  setUi: () => {}
 };
 
 export default ConservationHotspots;
