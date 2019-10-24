@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
@@ -8,33 +8,41 @@ import Select from 'components/select';
 import config from './config';
 
 
-function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, name, ...props }) {
-  const [mangroveActivityState, setMangroveActivityState] = useState({
-    startDate: 1996,
-    endDate: 2016,
-    filter: 'gain',
-    isLoading: false
-  });
-
+function MangroveActivity({
+  data: rawData,
+  fetchRankingData,
+  isCollapsed,
+  slug,
+  name,
+  ui,
+  setUi,
+  ...props
+}) {
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
-    setMangroveActivityState({
-      ...mangroveActivityState,
-      [prop]: value
+    setUi({
+      id: 'activity',
+      value: {
+        ...ui,
+        [prop]: value
+      }
     });
     fetchRankingData({
-      ...mangroveActivityState,
+      ...ui,
       [prop]: value
     });
   };
 
   const changeFilter = (filterState) => {
-    setMangroveActivityState({
-      ...mangroveActivityState,
-      filter: filterState
+    setUi({
+      id: 'activity',
+      value: {
+        ...ui,
+        filter: filterState
+      }
     });
     fetchRankingData({
-      ...mangroveActivityState,
+      ...ui,
       filter: filterState
     });
   };
@@ -43,13 +51,12 @@ function MangroveActivity({ data: rawData, fetchRankingData, isCollapsed, slug, 
     return null;
   }
 
-  const { startDate, endDate, filter } = mangroveActivityState;
+  const { startDate, endDate, filter } = ui;
   const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
 
   const sortRanking = (data) => {
-    const rankingType = mangroveActivityState.filter;
-    const dataRanked = orderBy(data, rankingType, d => Math.abs(d`${rankingType}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return (rankingType === 'gain' ? dataRanked : dataRanked.reverse());
+    const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
+    return (filter === 'gain' ? dataRanked : dataRanked.reverse());
   };
 
   // XXX: these options should come from an api ?
