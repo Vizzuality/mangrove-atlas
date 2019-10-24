@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
@@ -36,15 +36,24 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...props }) {
-  const [coverageState, setCoverageState] = useState({ currentYear: 2016, unit: '%' });
+function MangroveCoverage({
+  data: rawData,
+  currentLocation,
+  addFilter,
+  slug,
+  ui: {
+    currentYear,
+    unit
+  },
+  setUi,
+  ...props
+}) {
   if (!rawData) {
     return null;
   }
 
   const data = config.parse(rawData);
   const { chartConfig, metadata } = data;
-  const { currentYear, unit } = coverageState;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),
     value: year
@@ -58,11 +67,11 @@ function MangroveCoverage({ data: rawData, currentLocation, addFilter, slug, ...
         year: current
       }
     });
-    setCoverageState({ ...coverageState, currentYear: current });
+    setUi({ id: 'coverage', value: { unit, currentYear: current } });
   };
 
   const changeUnit = (selectedUnit) => {
-    setCoverageState({ ...coverageState, selectedUnit });
+    setUi({ id: 'coverage', value: { currentYear, unit: selectedUnit } });
   };
 
   const widgetData = processData(data, currentYear);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 
 import { month } from 'utils/nice-date';
@@ -123,13 +123,17 @@ const ReactSelectStyles = {
   })
 };
 
-function MangroveAlerts({ minDate = '2019-01-01', maxDate = '2019-12-31', data, isCollapsed, slug, name, addFilter, ...props }) {
-  const [mangroveAlertsState, setMangroveAlertsState] = useState({
-    startDate: moment(minDate).add(2, 'M').toISOString(),
-    endDate: moment(maxDate).subtract(2, 'M').toISOString()
-  });
-
-  const { startDate, endDate } = mangroveAlertsState;
+function MangroveAlerts({
+  data,
+  isCollapsed,
+  slug,
+  name,
+  addFilter,
+  ui,
+  setUi,
+  ...props
+}) {
+  const { startDate, endDate } = ui;
 
   const datepickerHandler = ({ isStart, value }) => {
     const monthStart = `2019-${String(value + 1).padStart(2, 0)}-01`;
@@ -142,13 +146,10 @@ function MangroveAlerts({ minDate = '2019-01-01', maxDate = '2019-12-31', data, 
       filter: {
         id: 'alerts-style',
         ...newState,
-        [complement]: mangroveAlertsState[complement]
+        [complement]: ui[complement]
       }
     });
-    setMangroveAlertsState(state => ({
-      ...state,
-      ...newState
-    }));
+    setUi({ id: 'alerts', value: { ...ui, ...newState } });
   };
 
   const monthOptions = moment.months().map((m, i) => ({ value: i, label: m }));
