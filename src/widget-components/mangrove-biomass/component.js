@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
@@ -13,9 +13,10 @@ const MangroveBiomass = ({
   slug,
   name,
   addFilter,
+  ui: yearSelected,
+  setUi,
   ...props
 }) => {
-  const [yearSelected, setEndDate] = useState('2016');
   useEffect(() => {
     addFilter({
       filter: {
@@ -37,7 +38,7 @@ const MangroveBiomass = ({
   }
 
   const dateHandler = (value) => {
-    setEndDate(value);
+    setUi({ id: 'biomass', value });
     addFilter({
       filter: {
         id: 'biomass',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import sumBy from 'lodash/sumBy';
 
@@ -14,20 +14,19 @@ function MangroveNetChange({
   isCollapsed,
   slug,
   name,
+  ui: {
+    startYear,
+    endYear
+  },
+  setUi,
   ...props
 }) {
-  const [netChangeState, setNetChangeState] = useState({
-    startYear: '1996',
-    endYear: '2016'
-  });
-
   if (!rawData) {
     return null;
   }
 
   const data = config.parse(rawData);
   const { metadata, chartData, chartConfig } = data;
-  const { startYear, endYear } = netChangeState;
   const optionsYears = metadata.years.map(year => ({
     label: year.toString(),
     value: year.toString()
@@ -38,20 +37,20 @@ function MangroveNetChange({
       filter: {
         id: 'net-change-1996-2016',
         startYear: year,
-        endYear: netChangeState.endYear
+        endYear
       }
     });
-    setNetChangeState({ ...netChangeState, startYear: year });
+    setUi({ id: 'netChange', value: { endYear, startYear: year } });
   };
   const changeEndYear = (year) => {
     addFilter({
       filter: {
         id: 'net-change-1996-2016',
-        startYear: netChangeState.startYear,
+        startYear,
         endYear: year
       }
     });
-    setNetChangeState({ ...netChangeState, endYear: year });
+    setUi({ id: 'netChange', value: { startYear, endYear: year } });
   };
 
   const widgetData = chartData.filter(
