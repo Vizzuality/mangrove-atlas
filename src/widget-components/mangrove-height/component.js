@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 import sortBy from 'lodash/sortBy';
@@ -14,11 +14,10 @@ const MangroveHeight = ({
   slug, name,
   currentLocation,
   addFilter,
+  ui: date,
+  setUi,
   ...props
 }) => {
-  const [date, setDate] = useState('2016');
-  // const [area, setAreaType] = useState('maximun');
-
   useEffect(() => {
     addFilter({
       filter: {
@@ -40,10 +39,6 @@ const MangroveHeight = ({
   }
 
   const location = currentLocation.name;
-  // const areaOptions = [
-  //   { label: 'maximum', value: 'maximum' },
-  //   { label: 'basal', value: 'basal' }
-  // ];
 
   const dateOptions = sortBy(metadata.map(year => ({
     label: year.toString(),
@@ -51,7 +46,7 @@ const MangroveHeight = ({
   })), ['value']);
 
   const dateHandler = (value) => {
-    setDate(value);
+    setUi({ id: 'height', value });
     addFilter({
       filter: {
         id: 'height',
@@ -59,24 +54,6 @@ const MangroveHeight = ({
       }
     });
   };
-
-  // const areaHandler = (value) => {
-  //   setAreaType(value);
-  //   addFilter({
-  //     filter: {
-  //       id: 'height',
-  //       area: value
-  //     }
-  //   });
-  // };
-
-  // const areaSelector = (
-  //   <Select
-  //     value={area}
-  //     options={areaOptions}
-  //     onChange={value => areaHandler(value)}
-  //   />
-  // ); TO-DO - add back when date is ready, changing maximum for area selector
 
   const dateSelector = (
     <Select
