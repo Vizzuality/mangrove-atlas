@@ -39,6 +39,24 @@ $space-left-map-mobile: 20px;
     display: flex;
     flex-direction: column;
   }
+
+  @media print {
+    display: flex;
+  }
+}
+
+.mapFrame {
+  border: 100px solid red;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  @media print {
+    display: block;
+  }
 }
 
 // Mapbox override
@@ -53,7 +71,7 @@ $space-left-map-mobile: 20px;
   background: white;
   border: none;
   background-position: center;
-  background-repeat: no-repeat; 
+  background-repeat: no-repeat;
   background-size: cover;
   width: 25px;
   height: 25px;
@@ -73,11 +91,19 @@ $space-left-map-mobile: 20px;
   > button[title='Reset North'] {
     display: none;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .fullscreen {
   > button[title='Toggle fullscreen'] {
     background-image: url('./icons/fullscreen.svg') !important;
+  }
+
+  @media print {
+    display: none;
   }
 }
 
@@ -87,7 +113,7 @@ $space-left-map-mobile: 20px;
   border-radius: 12px;
   padding: 5px;
   max-width: 300px;
-  
+
   > button {
     padding: 10px;
   }
@@ -95,6 +121,6 @@ $space-left-map-mobile: 20px;
 
 @media print {
   .map {
-    display: none;
+    display: block;
   }
 }

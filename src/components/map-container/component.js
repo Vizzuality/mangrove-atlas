@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
@@ -33,6 +33,8 @@ export const MapContainer = ({
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   };
 
+  const [printMode, setPrintMode] = useState(false);
+
   const resize = () => {
     onViewportChange({
       ...viewport,
@@ -44,11 +46,14 @@ export const MapContainer = ({
   useEffect(() => {
     window.addEventListener('resize', resize);
     resize();
+    if (window.matchMedia('print')) setPrintMode(true);
+    window.onbeforeprint = setPrintMode(true);
+    window.onafterprint = setPrintMode(false);
     return function cleanup() {
       window.removeEventListener('resize', resize);
     };
-  // eslint-disable-next-line
-  }, []);
+    // eslint-disable-next-line
+  }, [printMode]);
 
   const { parsedResult: browser } = (Bowser.getParser(window.navigator.userAgent));
 
@@ -109,31 +114,33 @@ export const MapContainer = ({
   };
 
   return (
-    <div className={styles.map}>
-      <MangroveMap
-        viewport={viewport}
-        bounds={bounds}
-        mapStyle={mapStyle}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={onViewportChange}
-        onClick={clickHandler}
-        interactiveLayerIds={interactiveLayerIds}
-        onPopupClose={popupCloseHandler}
-      >
-        {() => (
-          <div className={styles.navigation}>
-            {browser.name !== 'Safari' && (
-              <MediaQuery minWidth={breakpoints.lg + 1}>
-                <FullscreenControl className={styles.fullscreen} />
+    <div className={classnames({ [styles.mapFrame]: printMode })}>
+      <div className={styles.map}>
+        <MangroveMap
+          viewport={viewport}
+          bounds={bounds}
+          mapStyle={mapStyle}
+          mapboxApiAccessToken={mapboxApiAccessToken}
+          onViewportChange={onViewportChange}
+          onClick={clickHandler}
+          interactiveLayerIds={interactiveLayerIds}
+          onPopupClose={popupCloseHandler}
+        >
+          {() => (
+            <div className={styles.navigation}>
+              {browser.name !== 'Safari' && (
+                <MediaQuery minWidth={breakpoints.lg + 1}>
+                  <FullscreenControl className={styles.fullscreen} />
+                </MediaQuery>
+              )}
+              <MediaQuery minWidth={breakpoints.sm}>
+                <NavigationControl className={styles.zoomControls} />
               </MediaQuery>
-            )}
-            <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl className={styles.zoomControls} />
-            </MediaQuery>
-          </div>
-        )
-        }
-      </MangroveMap>
+            </div>
+          )
+          }
+        </MangroveMap>
+      </div>
 
       <div className={classnames(styles.legend,
         { [styles.expanded]: !isCollapse })}
@@ -146,9 +153,10 @@ export const MapContainer = ({
           <BasemapSelector />
         </div>
       </div>
-    </div>
+    </div >
   );
 };
+
 
 MapContainer.propTypes = {
   viewport: PropTypes.shape({}),

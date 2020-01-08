@@ -38,7 +38,7 @@
   .sidebar {
     max-width: 100%;
     padding: 30px;
-    // padding: 90px 83px 60px 83px;
+    page-break-before: always;
 
     .actionBar {
       display: none;
