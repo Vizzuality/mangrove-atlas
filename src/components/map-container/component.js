@@ -114,33 +114,32 @@ export const MapContainer = ({
   };
 
   return (
-    <div className={classnames({ [styles.mapFrame]: printMode })}>
-      <div className={styles.map}>
-        <MangroveMap
-          viewport={viewport}
-          bounds={bounds}
-          mapStyle={mapStyle}
-          mapboxApiAccessToken={mapboxApiAccessToken}
-          onViewportChange={onViewportChange}
-          onClick={clickHandler}
-          interactiveLayerIds={interactiveLayerIds}
-          onPopupClose={popupCloseHandler}
-        >
-          {() => (
-            <div className={styles.navigation}>
-              {browser.name !== 'Safari' && (
-                <MediaQuery minWidth={breakpoints.lg + 1}>
-                  <FullscreenControl className={styles.fullscreen} />
-                </MediaQuery>
-              )}
-              <MediaQuery minWidth={breakpoints.sm}>
-                <NavigationControl className={styles.zoomControls} />
+    <div className={styles.map}>
+      <MangroveMap
+        viewport={viewport}
+        bounds={bounds}
+        mapStyle={mapStyle}
+        mapboxApiAccessToken={mapboxApiAccessToken}
+        onViewportChange={onViewportChange}
+        onClick={clickHandler}
+        interactiveLayerIds={interactiveLayerIds}
+        onPopupClose={popupCloseHandler}
+      >
+        {() => (
+          <div className={styles.navigation}>
+            {browser.name !== 'Safari' && (
+              <MediaQuery minWidth={breakpoints.lg + 1}>
+                <FullscreenControl className={styles.fullscreen} />
               </MediaQuery>
-            </div>
-          )
-          }
-        </MangroveMap>
-      </div>
+            )}
+            <MediaQuery minWidth={breakpoints.sm}>
+              <NavigationControl className={styles.zoomControls} />
+            </MediaQuery>
+          </div>
+        )
+        }
+      </MangroveMap>
+
 
       <div className={classnames(styles.legend,
         { [styles.expanded]: !isCollapse })}
@@ -153,7 +152,7 @@ export const MapContainer = ({
           <BasemapSelector />
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 

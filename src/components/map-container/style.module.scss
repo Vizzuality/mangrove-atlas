@@ -39,24 +39,6 @@ $space-left-map-mobile: 20px;
     display: flex;
     flex-direction: column;
   }
-
-  @media print {
-    display: flex;
-  }
-}
-
-.mapFrame {
-  border: 100px solid red;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  @media print {
-    display: block;
-  }
 }
 
 // Mapbox override
@@ -121,6 +103,6 @@ $space-left-map-mobile: 20px;
 
 @media print {
   .map {
-    display: block;
+    display: none;
   }
 }
