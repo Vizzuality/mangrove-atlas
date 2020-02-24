@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
@@ -33,8 +33,6 @@ export const MapContainer = ({
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   };
 
-  const [printMode, setPrintMode] = useState(false);
-
   const resize = () => {
     onViewportChange({
       ...viewport,
@@ -46,14 +44,11 @@ export const MapContainer = ({
   useEffect(() => {
     window.addEventListener('resize', resize);
     resize();
-    if (window.matchMedia('print')) setPrintMode(true);
-    window.onbeforeprint = setPrintMode(true);
-    window.onafterprint = setPrintMode(false);
     return function cleanup() {
       window.removeEventListener('resize', resize);
     };
     // eslint-disable-next-line
-  }, [printMode]);
+  }, []);
 
   const { parsedResult: browser } = (Bowser.getParser(window.navigator.userAgent));
 
