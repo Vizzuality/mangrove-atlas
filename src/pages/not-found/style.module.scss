@@ -13,7 +13,11 @@
     flex-direction: column;
     margin: auto;
     align-items: center;
-    background-color: $white;
+    font-family: $font-family;
+
+    @media screen and (min-width: map-get($breakpoints, lg + 1)) {
+      background-color: $white;
+    }
 
     a {
       width: 190px;
