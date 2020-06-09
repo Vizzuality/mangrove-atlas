@@ -134,6 +134,7 @@ export const MapContainer = ({
         )
         }
       </MangroveMap>
+      <div className="pagebreak" />
 
       <div className={classnames(styles.legend,
         { [styles.expanded]: !isCollapse })}

@@ -10,16 +10,18 @@ const DesktopLayout = () => (
     <div className={styles.header}>
       <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
     </div>
-    <Sidebar>
-      {({ isSticky }) => (
-        <>
-          <Widgets isSticky={isSticky} />
-          <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
-        </>
-      )}
-    </Sidebar>
-    <div className={styles.vis}>
-      <Map />
+    <div className={styles.printOnly_wrapper}>
+      <Sidebar>
+        {({ isSticky }) => (
+          <>
+            <Widgets isSticky={isSticky} />
+          </>
+        )}
+      </Sidebar>
+      <div className={styles.vis}>
+        <Map />
+        <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+      </div>
     </div>
   </div>
 );

@@ -16,7 +16,6 @@ const AppPage = () => (
     <MediaQuery minWidth={breakpoints.lg + 1}>
       <DesktopLayout />
     </MediaQuery>
-    {/* Modals */}
     <LocationModal />
     <InfoModal />
   </div>
