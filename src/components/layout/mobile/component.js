@@ -23,7 +23,6 @@ class MobileLayout extends PureComponent {
               {({ isSticky }) => (
                 <>
                   <Widgets isSticky={isSticky} />
-                  <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
                 </>
               )}
             </Sidebar>
@@ -32,6 +31,7 @@ class MobileLayout extends PureComponent {
         {mapView && (
           <div className={styles.vis}>
             <Map />
+            <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
           </div>)}
         <ViewSelector />
       </div>

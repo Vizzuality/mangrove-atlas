@@ -63,6 +63,10 @@
     @media screen and (max-width: map-get($breakpoints, sm)) {
       padding: $paddingMobile;
     }
+
+    @media print {
+      max-height: 500px;
+    }
   }
 
   .header {
