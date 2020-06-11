@@ -31,7 +31,11 @@ function processData(data, currentYear) {
       percentage: nonMangrove / metadata.total * 100,
       unit: '%',
       coverage: (nonMangrove / 1000).toFixed(2),
+<<<<<<< HEAD
       name: 'Soil'
+=======
+      label: 'Soil'
+>>>>>>> WIP: blue carbon widget
     }
   ];
 }
