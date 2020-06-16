@@ -22,7 +22,7 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
   const data = config.parse(rawData);
 
   return (
-    <div className={styles.widgetWrapper}>
+    <div className={styles.widget}>
       <Widget
         name={name}
         data={data}
