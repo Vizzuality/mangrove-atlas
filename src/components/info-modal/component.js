@@ -88,7 +88,6 @@ class InfoModal extends PureComponent {
       <Fragment>
         <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
-            className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >

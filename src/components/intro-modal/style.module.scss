@@ -1,0 +1,28 @@
+@import 'styles/vars';
+
+.introModal {
+
+  > button {
+    font-weight: bold;
+    font-size: 19px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.introModalContent {
+  font-size: 19px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 30px;
+
+  h3 {
+    @include medium-text;
+    font-size: 30px;
+  }
+
+  a {
+    color: $primary;
+    @include medium-text;
+  }
+}

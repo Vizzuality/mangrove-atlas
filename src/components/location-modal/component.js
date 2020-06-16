@@ -7,8 +7,7 @@ import { breakpoints } from 'utils/responsive';
 import HighlightedPlaces from 'widget-components/highlighted-places/component';
 import highlightedPlacesConfig from 'widget-components/highlighted-places/config';
 import LocationsList from 'components/locations-list';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import styles from './style.module.scss';
 
 class LocationSelector extends PureComponent {
@@ -67,32 +66,24 @@ class LocationSelector extends PureComponent {
       <Fragment>
         <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
-            className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >
-            <div className={styles.content}>
-              <div className={styles.search}>
-                <input
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
-                  autoFocus
-                  type="text"
-                  className={classnames(styles.searchInput, 'notranslate')}
-                  placeholder={currentLocation.name}
-                  onChange={this.updateSearchTerm}
-                />
-              </div>
-              {highlightedPlaces && (
-                <HighlightedPlaces
-                  data={highlightedPlacesConfig.parse(highlightedPlaces)}
-                  currentLocation={currentLocation}
-                />
-              )}
-              <LocationsList locationsData={locationsData} />
-            </div>
-            <button type="button" onClick={this.closeModal} className={classnames(styles.searchButton, styles.mobile)}>
-              <FontAwesomeIcon icon={faTimes} size="lg" />
-            </button>
+            <input
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
+              type="text"
+              className={classnames(styles.searchInput, 'notranslate')}
+              placeholder={currentLocation.name}
+              onChange={this.updateSearchTerm}
+            />
+            {highlightedPlaces && (
+              <HighlightedPlaces
+                data={highlightedPlacesConfig.parse(highlightedPlaces)}
+                currentLocation={currentLocation}
+              />
+            )}
+            <LocationsList locationsData={locationsData} />
           </Modal>
         </MediaQuery>
         <MediaQuery minWidth={breakpoints.lg}>
@@ -120,9 +111,6 @@ class LocationSelector extends PureComponent {
               )}
               <LocationsList locationsData={locationsData} />
             </div>
-            <button type="button" onClick={this.closeModal} className={styles.searchButton}>
-              <FontAwesomeIcon icon={faTimes} size="lg" />
-            </button>
           </Modal>
         </MediaQuery>
       </Fragment>
