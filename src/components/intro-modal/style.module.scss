@@ -8,6 +8,10 @@
     width: 45px;
     height: 45px;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .introModalContent {
