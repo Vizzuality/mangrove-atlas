@@ -254,6 +254,7 @@ class Chart extends PureComponent {
                   {...pies[key]}
                 >
                   {data.map(item => (
+
                     <Cell
                       key={`c_${item.color}`}
                       fill={item.color}

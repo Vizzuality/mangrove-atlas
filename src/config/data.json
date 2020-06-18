@@ -7,6 +7,7 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
@@ -19,6 +20,7 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
           "conservation_hotspots"
@@ -30,6 +32,7 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
           "conservation_hotspots"
@@ -41,6 +44,7 @@
           "highlighted_places",
           "mangrove_coverage",
           "mangrove_net_change",
+          "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
@@ -78,10 +82,18 @@
       ]
     },
     {
-      "name": "Mangrove net change",
-      "slug": "mangrove_net_change",
+      "name": "Mangrove blue carbon",
+      "slug": "mangrove_blue_carbon",
       "layersIds": [
         "net-change-1996-2016"
+      ]
+    },
+    {
+      "name": "Mangrove coverage",
+      "slug": "mangrove_coverage",
+      "isActive": true,
+      "layersIds": [
+        "coverage-1996-2016"
       ]
     },
     {
