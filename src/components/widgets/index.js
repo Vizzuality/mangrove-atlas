@@ -8,6 +8,7 @@ import { currentLocation } from 'modules/locations/selectors';
 import HighlightedPlaces from 'widget-components/highlighted-places';
 import MangroveCoverage from 'widget-components/mangrove-coverage';
 import MangroveNetChange from 'widget-components/mangrove-net-change';
+import MangroveBlueCarbon from 'widget-components/mangrove-blue-carbon';
 import MangroveActivity from 'widget-components/mangrove-activity';
 import MangroveAlerts from 'widget-components/mangrove-alerts';
 import MangroveHeight from 'widget-components/mangrove-height';
@@ -25,6 +26,9 @@ const templates = new Map([
   }],
   ['mangrove_net_change', {
     component: MangroveNetChange
+  }],
+  ['mangrove_blue_carbon', {
+    component: MangroveBlueCarbon
   }],
   ['mangrove_activity', {
     component: MangroveActivity
