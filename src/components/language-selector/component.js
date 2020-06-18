@@ -60,7 +60,7 @@ class LanguageSelect extends PureComponent {
 
     return (
 
-      <ButtonGroup id="tx-live-lang-picker">
+      <ButtonGroup id="tx-live-lang-picker" className="container">
         {options.map(o => (
           <Button
             type="button"

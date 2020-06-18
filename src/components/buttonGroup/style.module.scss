@@ -5,10 +5,9 @@
   display: inline-flex;
   position: absolute;
   margin-top: 30px;
-  right: 0;
+  left: 250px;
   height: 26px;
   border-radius: 15px;
-  max-width: 250px;
 
   @media screen and (max-width: map-get($breakpoints, lg)) {
     right: 15px;
@@ -19,9 +18,29 @@
     display: block;
     position: relative;
     margin: -2px;
+    border-left: none;
     border: none;
     text-align: center;
     color: $body-color;
+
+    &:first-of-type {
+      border-right: 2px solid rgba(0,0,0,0.2);
+      border-radius: 15px 0 0 15px;
+
+      &:focus {
+        border-radius: 15px;
+      }
+    }
+
+    &:last-of-type {
+      border-left: 2px solid rgba(0,0,0,0.2);
+      border-radius: 0 15px 15px 0;
+
+      &:focus {
+        border-radius: 15px;
+      }
+    }
+
     &:focus {
       text-align: center;
       border: 2px solid white;
@@ -29,7 +48,8 @@
       height: 30px;
       background-color: $white;
       color: $primary;
-      border-bottom: 3px solid white;;
+      border-bottom: 3px solid white;
+      border-radius: 15px;
     }
   }
 }
