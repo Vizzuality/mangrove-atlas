@@ -2,19 +2,20 @@
 
 .container {
   position: fixed;
-    left: 5%;
-    width: 90%;
-    z-index: 301;
-    bottom: 10px;
-    border-radius: 25px;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-    min-height: 50px;
-    display: flex;
-    border: none;
-    justify-content: center;
+  left: 5%;
+  width: 90%;
+  z-index: 301;
+  bottom: 10px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
+  min-height: 50px;
+  display: flex;
+  border: none;
+  justify-content: center;
 
   .btnTitle {
     color: $black;
+
     &.activeLayers {
       color: $white;
     }
