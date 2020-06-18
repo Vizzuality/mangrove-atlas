@@ -38,6 +38,20 @@
   z-index: 3;
 }
 
+.title {
+  position: absolute;
+  color: $black;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: none;
+
+  @media print {
+    display: block;
+  }
+}
+
 @media print {
   .printOnly {
     display: block;
