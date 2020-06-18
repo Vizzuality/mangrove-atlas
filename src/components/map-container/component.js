@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { NavigationControl, FullscreenControl } from 'react-map-gl';
+import IntroModal from 'components/intro-modal';
 import classnames from 'classnames';
 import pick from 'lodash/pick';
 import Bowser from 'bowser';
@@ -27,7 +28,8 @@ export const MapContainer = ({
   mapStyle,
   bounds,
   goToCountry,
-  goToAOI
+  goToAOI,
+  data
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
@@ -129,6 +131,9 @@ export const MapContainer = ({
             )}
             <MediaQuery minWidth={breakpoints.sm}>
               <NavigationControl className={styles.zoomControls} />
+            </MediaQuery>
+            <MediaQuery minWidth={breakpoints.sm}>
+              {data && <IntroModal data={data} className={styles.zoomControls} />}
             </MediaQuery>
           </div>
         )
