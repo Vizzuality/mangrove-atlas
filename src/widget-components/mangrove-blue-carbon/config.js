@@ -69,8 +69,21 @@ export const CONFIG = {
             nameKey: 'label',
             innerRadius: '60%',
             outerRadius: '80%',
-            isAnimationActive: false
-          }
+            isAnimationActive: false,
+            labelLine: false,
+            // label: {
+            //   value: '400',
+            //   position: 'center',
+            //   // eslint-disable-next-line react/prop-types
+            //   content: ({ cx, cy }) => (
+            //     <g>
+            //       <text cx={cx} cy={cy} fill="#000">
+            //         400
+            //       </text>
+            //     </g>
+            //   )
+            // }
+          },
         }
       },
       legend: {
@@ -85,8 +98,8 @@ export const CONFIG = {
               ...item.payload,
               y: (item.payload.y / 1000).toFixed(2)
             }
-          })), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km" />;
+          })), p => p.payload.name);
+          return <WidgetLegend groups={groups} unit="%" />;
         }
       },
       tooltip: {

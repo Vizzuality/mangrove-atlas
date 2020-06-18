@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
 import config from './config';
-
-const numberFormat = format(',.2f');
 
 function processData(data, currentYear) {
   const { chartData, metadata } = data;
@@ -31,11 +28,7 @@ function processData(data, currentYear) {
       percentage: nonMangrove / metadata.total * 100,
       unit: '%',
       coverage: (nonMangrove / 1000).toFixed(2),
-<<<<<<< HEAD
-      name: 'Soil'
-=======
       label: 'Soil'
->>>>>>> WIP: blue carbon widget
     }
   ];
 }
@@ -73,10 +66,6 @@ function MangroveBlueCarbon({
     setUi({ id: 'coverage', value: { unit, currentYear: current } });
   };
 
-  const changeUnit = (selectedUnit) => {
-    setUi({ id: 'coverage', value: { currentYear, unit: selectedUnit } });
-  };
-
   const widgetData = processData(data, currentYear);
 
   if (widgetData === null) {
@@ -89,11 +78,6 @@ function MangroveBlueCarbon({
   };
 
   try {
-    const { percentage } = widgetData[0];
-    const unitOptions = [
-      { value: '%', label: '%' },
-      { value: 'km', label: 'km' }
-    ];
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world’s'
       : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
