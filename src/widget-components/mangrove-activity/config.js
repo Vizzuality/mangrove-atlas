@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'redux-first-router-link';
+import { Rectangle } from 'recharts';
 
 // Utils
 import { format } from 'd3-format';
@@ -12,6 +13,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
 import styles from 'components/widget/style.module.scss';
+import { faAssistiveListeningSystems } from '@fortawesome/free-solid-svg-icons';
 
 const numberFormat = format(',.3r');
 const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter]))
@@ -73,36 +75,13 @@ export const CONFIG = {
           hide: true
         },
         yKeys: {
-          lines: {
-            net: {
-              barSize: 10,
-              fill: 'rgba(0,0,0,0.7)',
-              radius: 4,
-              legend: 'Net',
-              strokeWidth: 0,
-              activeDot: false,
-              // eslint-disable-next-line react/prop-types
-              dot: ({ key, cx, cy }) => (
-                <rect
-                  key={key}
-                  x={cx - 1}
-                  y={cy - 10}
-                  width="2"
-                  height="20"
-                  fill="#000"
-                  stroke="rgba(0, 0, 0, 0.7)"
-                />
-              ),
-              isAnimationActive: false
-            },
-          },
           bars: {
             gain: {
-              barSize: 10,
+              barSize: 2,
               fill: '#A6CB10',
-              radius: [0, 10, 10, 0],
               legend: 'Gain',
-              stackId: 'stacked',
+              radius: [0, 10, 10, 0],
+              stackId: '1',
               label: {
                 content: (prs) => {
                   const { index, y } = prs;
@@ -119,17 +98,76 @@ export const CONFIG = {
                   );
                 }
               },
-              isAnimationActive: false
+              isAnimationActive: false,
+              shape: ({ x, y, width, height, fill, ...props }) => {
+                const center = y + 3 + (height / 2);
+                return (
+                  <g>
+                    <rect
+                      x={x}
+                      y={center}
+                      width={width}
+                      height={height}
+                      fill={fill}
+                    />
+                    <line
+                      x1={x + width} y1={center - 4} x2={x + width} y2={center + 4}
+                      stroke="#A6CB10"
+                      strokeWidth={2}
+                    />
+                  </g>
+                );
+              }
             },
             loss: {
-              barSize: 10,
+              barSize: 20,
               fill: '#EB6240',
               radius: [0, 10, 10, 0],
-              stackId: 'stacked',
+              stackId: '1',
               legend: 'Loss',
-              isAnimationActive: false
+              isAnimationActive: faAssistiveListeningSystems,
+              shape: ({ x, y, width, height, fill, ...props }) => {
+                const center = y + 3 + (height / 2);
+                return (
+                  <g>
+                    <rect
+                      x={x - Math.abs(width)}
+                      y={y + 3 + (height / 2)}
+                      width={Math.abs(width)}
+                      height={height}
+                      fill={fill}
+                    />
+                    <line
+                      x1={x + width}
+                      y1={center - 4}
+                      x2={x + width}
+                      y2={center + 4}
+                      stroke="#EB6240"
+                      strokeWidth={2}
+                    />
+                  </g>
+                );
+              }
+            },
+            net: {
+              barSize: 10,
+              fill: '#000',
+              stackId: '2',
+              legend: 'Net',
+              shape: ({ x, y, width, height, fill, ...props }) => {
+                return (
+                  <Rectangle
+                    x={x}
+                    y={y + 3 - (height / 1.25)}
+                    width={width}
+                    height={height}
+                    fill={fill}
+                    radius={[0, 10, 10, 0]}
+                  />
+                );
+              }
             }
-          },
+          }
         },
         legend: {
           align: 'center',
@@ -137,12 +175,12 @@ export const CONFIG = {
           layout: 'horizontal',
           height: 50,
 
-          // eslint-disable-next-line react/prop-types
+          //eslint-disable-next-line react/prop-types
           content: ({ payload }) => {
             const labels = payload.map(({ color, payload: labelPayload }) => ({
               color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
               value: labelPayload.legend,
-              variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
+         //     variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
             }));
 
             return <WidgetLegend direction="vertical" groups={{ labels }} />;
@@ -178,3 +216,4 @@ export const CONFIG = {
 };
 
 export default CONFIG;
+

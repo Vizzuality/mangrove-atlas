@@ -16,6 +16,10 @@
 
   .printBtn {
     margin-top: 45px;
+
+    @media print {
+      display: none;
+    }
   }
 
   @media print {
