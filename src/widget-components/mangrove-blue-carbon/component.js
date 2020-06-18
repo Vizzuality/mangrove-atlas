@@ -31,7 +31,7 @@ function processData(data, currentYear) {
       percentage: nonMangrove / metadata.total * 100,
       unit: '%',
       coverage: (nonMangrove / 1000).toFixed(2),
-      label: 'Soil'
+      name: 'Soil'
     }
   ];
 }

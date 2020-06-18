@@ -17,13 +17,13 @@ const widgetData = ({ list, metadata }) => {
 
       return ({
         x: Number(year),
-        y: d.length_m,
+        y: d.length_m + 60,
         color: '#00857F',
-        percentage: d.length_m / total * 100,
+        percentage: d.length_m / total * 100 + 50,
         unit: '%',
-        coverage: (d.length_m / 1000).toFixed(2),
-        value: (d.length_m).toFixed(2),
-        label: 'Tree biomass'
+        coverage: (d.length_m).toFixed(2),
+        value: (d.length_m + 60).toFixed(2),
+        name: 'Tree biomass'
       });
     });
   }
@@ -69,8 +69,21 @@ export const CONFIG = {
             nameKey: 'label',
             innerRadius: '60%',
             outerRadius: '80%',
-            isAnimationActive: false
-          }
+            isAnimationActive: false,
+            labelLine: false,
+            // label: {
+            //   value: '400',
+            //   position: 'center',
+            //   // eslint-disable-next-line react/prop-types
+            //   content: ({ cx, cy }) => (
+            //     <g>
+            //       <text cx={cx} cy={cy} fill="#000">
+            //         400
+            //       </text>
+            //     </g>
+            //   )
+            // }
+          },
         }
       },
       legend: {
@@ -85,8 +98,8 @@ export const CONFIG = {
               ...item.payload,
               y: (item.payload.y / 1000).toFixed(2)
             }
-          })), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km" />;
+          })), p => p.payload.name);
+          return <WidgetLegend groups={groups} unit="%" />;
         }
       },
       tooltip: {
@@ -101,8 +114,8 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
+              { label: 'Tree biomass:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
+              { label: 'Soil:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
 
             ]}
           />
