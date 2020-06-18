@@ -6,7 +6,7 @@ import Modal from 'components/modal';
 import styles from './style.module.scss';
 
 const IntroModal = () => {
-  const [isOpen, toggleModal] = useState(true);
+  const [isOpen, toggleModal] = useState(false);
 
   const handleClick = () => {
     toggleModal(!isOpen);
