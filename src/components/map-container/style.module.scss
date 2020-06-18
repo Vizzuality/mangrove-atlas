@@ -12,6 +12,7 @@ $space-left-map-mobile: 20px;
   @media print {
     position: relative;
     margin: 10px 0;
+    max-width: 100vw;
     border-radius: 20px;
     background: white;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
@@ -19,6 +20,7 @@ $space-left-map-mobile: 20px;
     background-color: white;
     background-repeat: no-repeat;
     background-position: 0 700px;
+    border: 2px solid rgba($primary, 0.35);
     transition: all .5s ease;
     overflow: hidden;
   }

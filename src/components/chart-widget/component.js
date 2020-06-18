@@ -15,7 +15,7 @@ function ChartWidget({
   ...props
 }) {
   return (
-    <Widget {...props}>
+    <Widget className={styles.widget} {...props}>
       <div className={styles.widget_template}>
         <div className={styles.sentence}>
           {sentence}

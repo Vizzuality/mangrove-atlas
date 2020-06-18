@@ -40,8 +40,8 @@
     padding: 30px;
 
     .header {
-      position: fixed;
-      top: 120px;
+      position: absolute;
+      top: -950px;
       width: 100vw;
 
       .actionBar {
