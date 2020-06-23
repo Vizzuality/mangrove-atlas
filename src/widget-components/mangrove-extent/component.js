@@ -36,7 +36,7 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({
+function MangroveExtent({
   data: rawData,
   currentLocation,
   addFilter,
@@ -116,11 +116,9 @@ function MangroveCoverage({
 
     sentence = (
       <>
-        <span>Mangrove forests covered </span>
-        <strong className="notranslate">{quantity} {unitSelector}</strong><br />
-        <span>of </span> <strong>{location} </strong>
-        <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> of coastline<br />
-        <span>in </span>{yearSelector}.
+        <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
+        <span>was </span> <strong className="notranslate">{quantity} {unitSelector}</strong><span> in</span> <strong className="notranslate">{yearSelector}</strong>,<span> this represents a linear <br />coverage of </span>
+        <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
       </>
     );
   } catch (e) {
@@ -139,16 +137,16 @@ function MangroveCoverage({
   );
 }
 
-MangroveCoverage.propTypes = {
+MangroveExtent.propTypes = {
   data: PropTypes.shape({}),
   metadata: PropTypes.shape({}),
   currentLocation: PropTypes.shape({})
 };
 
-MangroveCoverage.defaultProps = {
+MangroveExtent.defaultProps = {
   data: null,
   metadata: null,
   currentLocation: null
 };
 
-export default MangroveCoverage;
+export default MangroveExtent;

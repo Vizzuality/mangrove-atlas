@@ -6,6 +6,7 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_alerts",
@@ -19,6 +20,7 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
@@ -31,6 +33,7 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
@@ -43,6 +46,7 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_alerts",
@@ -58,6 +62,7 @@
         "widgetsSlugs": [
           "highlighted_places",
           "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
@@ -82,8 +87,23 @@
       ]
     },
     {
+      "name": "Mangrove extent",
+      "slug": "mangrove_extent",
+      "isActive": true,
+      "layersIds": [
+        "coverage-1996-2016"
+      ]
+    },
+    {
       "name": "Mangrove blue carbon",
       "slug": "mangrove_blue_carbon",
+      "layersIds": [
+        "net-change-1996-2016"
+      ]
+    },
+    {
+      "name": "Mangrove net change",
+      "slug": "mangrove_net_change",
       "layersIds": [
         "net-change-1996-2016"
       ]

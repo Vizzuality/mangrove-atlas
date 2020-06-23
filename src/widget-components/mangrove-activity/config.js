@@ -183,7 +183,7 @@ export const CONFIG = {
          //     variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
             }));
 
-            return <WidgetLegend direction="vertical" groups={{ labels }} />;
+            return <WidgetLegend widgetSpecific="activity" direction="vertical" groups={{ labels }} position="left" />;
           }
         },
         cartesianGrid: {
