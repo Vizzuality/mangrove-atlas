@@ -175,7 +175,6 @@ class Chart extends PureComponent {
               }
             </defs>
             { stack }
-
             {cartesianGrid && (
               <CartesianGrid
                 {...defaults.cartesianGrid}
@@ -251,8 +250,17 @@ class Chart extends PureComponent {
                   key={key}
                   data={data}
                   dataKey={key}
+                  leb
                   {...pies[key]}
                 >
+
+                  {pies[key].customLabel && (
+                    <Label
+                      width={30}
+                      position="center"
+                      content={pies[key].customLabel}
+                    />)}
+
                   {data.map(item => (
 
                     <Cell

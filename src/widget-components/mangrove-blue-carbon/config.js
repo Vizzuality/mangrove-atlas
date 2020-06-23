@@ -5,7 +5,6 @@ import WidgetLegend from 'components/widget-legend';
 
 import { format } from 'd3-format';
 
-
 const numberFormat = format(',.2f');
 
 const widgetData = ({ list, metadata }) => {
@@ -30,6 +29,7 @@ const widgetData = ({ list, metadata }) => {
 
   return [];
 };
+
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
@@ -70,19 +70,22 @@ export const CONFIG = {
             innerRadius: '60%',
             outerRadius: '80%',
             isAnimationActive: false,
-            labelLine: false,
-            // label: {
-            //   value: '400',
-            //   position: 'center',
-            //   // eslint-disable-next-line react/prop-types
-            //   content: ({ cx, cy }) => (
-            //     <g>
-            //       <text cx={cx} cy={cy} fill="#000">
-            //         400
-            //       </text>
-            //     </g>
-            //   )
-            // }
+            customLabel: ({ viewBox }) => {
+              const { cx, cy } = viewBox;
+              return (
+                <g>
+                  <text x={cx} y={cy - 30} lineHeight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
+                  </text>
+                  <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineHeight="29" fontSize="40">355</tspan>
+                  </text>
+                  <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>
+                  </text>
+                </g>
+              );
+            }
           },
         }
       },
@@ -116,7 +119,6 @@ export const CONFIG = {
               { key: 'label' },
               { label: 'Tree biomass:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
               { label: 'Soil:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
-
             ]}
           />
         )
