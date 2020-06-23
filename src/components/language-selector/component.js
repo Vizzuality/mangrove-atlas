@@ -65,7 +65,6 @@ class LanguageSelect extends PureComponent {
           <Button
             type="button"
             hasBackground={currentValue.value === o.value}
-            hasContrast={currentValue.value === o.value}
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >
