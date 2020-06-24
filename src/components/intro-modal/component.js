@@ -1,24 +1,27 @@
 import React, { useState } from 'react';
-import Cookies from 'js-cookie';
 import HotspotsList from 'components/hotspots-list';
 import Modal from 'components/modal';
 
 import styles from './style.module.scss';
 
 const IntroModal = () => {
-  const [isOpen, toggleModal] = useState(false);
+  const myStorage = window.localStorage;
+  const modalStatus = myStorage.getItem('modal');
+  const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
+
+  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : true);
 
   const handleClick = () => {
+    myStorage.setItem('modal', false);
     toggleModal(!isOpen);
-    Cookies.set('name', { modal: false });
   };
 
   return (
     <div className={styles.introModal}>
       <button type="button" onClick={handleClick} className="mapboxgl-ctrl-group">?</button>
       <Modal
-        isOpen={isOpen}
-        onRequestClose={() => toggleModal(false)}
+        isOpen={isOpen || false}
+        onRequestClose={handleClick}
       >
         <div className={styles.introModalContent}>
           <h3>Welcome to Mangroves Atlas</h3>

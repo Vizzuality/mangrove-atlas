@@ -8,6 +8,7 @@ import {
   Cell,
   Area,
   Pie,
+  RadialBar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -17,6 +18,7 @@ import {
   ResponsiveContainer,
   ComposedChart,
   PieChart,
+  RadialBarChart,
   Label
 } from 'recharts';
 
@@ -31,6 +33,7 @@ import styles from './style.module.scss';
 
 const rechartCharts = new Map([
   ['pie', PieChart],
+  ['radial', RadialBarChart],
   ['composed', ComposedChart]
 ]);
 
@@ -109,7 +112,7 @@ class Chart extends PureComponent {
 
     clearStack();
 
-    const { lines, bars, areas, pies } = yKeys;
+    const { lines, bars, areas, pies, radial } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     const RechartChart = rechartCharts.get(type);
@@ -174,8 +177,7 @@ class Chart extends PureComponent {
               ))
               }
             </defs>
-            { stack }
-
+            {stack}
             {cartesianGrid && (
               <CartesianGrid
                 {...defaults.cartesianGrid}
@@ -251,8 +253,17 @@ class Chart extends PureComponent {
                   key={key}
                   data={data}
                   dataKey={key}
+                  leb
                   {...pies[key]}
                 >
+
+                  {pies[key].customLabel && (
+                    <Label
+                      width={30}
+                      position="center"
+                      content={pies[key].customLabel}
+                    />)}
+
                   {data.map(item => (
 
                     <Cell
@@ -276,8 +287,10 @@ class Chart extends PureComponent {
 
             {tooltip && (
               <Tooltip
-                wrapperStyle={{ position: 'absolute',
-                  top: 0 }}
+                wrapperStyle={{
+                  position: 'absolute',
+                  top: 0
+                }}
 
                 isAnimationActive={false}
                 {...tooltip}

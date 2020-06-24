@@ -1,0 +1,60 @@
+@import 'styles/vars';
+
+.navMenu {
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  z-index: 4;
+
+  > button {
+    background-image: url('./menu.svg');
+    height: 68px;
+    width: 72px;
+    cursor: pointer;
+  }
+
+  @media print {
+    display: none;
+  }
+}
+
+.introModalContent {
+  font-size: 19px;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 30px;
+
+  > h3 {
+    @include medium-text;
+    font-size: 30px;
+    margin: 10px 0;
+  }
+
+  > ul {
+    list-style: none;
+    padding: 0;
+
+    > li {
+      line-height: 30px;
+      font-size: 19px;
+      padding-bottom: 10px;
+    }
+  }
+
+  a {
+    color: $body-color;
+    @include medium-text;
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+
+    > a {
+      > img {
+        width: 130px;
+        padding-right: 20px;
+      }
+    }
+  }
+}

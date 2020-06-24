@@ -5,6 +5,7 @@ import WidgetLegend from 'components/widget-legend';
 
 import { format } from 'd3-format';
 
+
 const numberFormat = format(',.2f');
 
 const widgetData = ({ list, metadata }) => {
@@ -16,20 +17,19 @@ const widgetData = ({ list, metadata }) => {
 
       return ({
         x: Number(year),
-        y: d.length_m + 60,
-        color: '#00857F',
-        percentage: d.length_m / total * 100 + 50,
+        y: d.length_m,
+        color: '#06C4BD',
+        percentage: d.length_m / total * 100,
         unit: '%',
-        coverage: (d.length_m).toFixed(2),
-        value: (d.length_m + 60).toFixed(2),
-        name: 'Tree biomass'
+        coverage: (d.length_m / 1000).toFixed(2),
+        value: (d.length_m).toFixed(2),
+        label: `Mangroves in ${year}`
       });
     });
   }
 
   return [];
 };
-
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
@@ -67,26 +67,11 @@ export const CONFIG = {
             paddingAngle: 3,
             dataKey: 'percentage',
             nameKey: 'label',
-            innerRadius: '60%',
+            innerRadius: '55%',
             outerRadius: '80%',
-            isAnimationActive: false,
-            customLabel: ({ viewBox }) => {
-              const { cx, cy } = viewBox;
-              return (
-                <g>
-                  <text x={cx} y={cy - 30} lineHeight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
-                  </text>
-                  <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineHeight="29" fontSize="40">355</tspan>
-                  </text>
-                  <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>
-                  </text>
-                </g>
-              );
-            }
-          },
+            cornerRadius: 4,
+            isAnimationActive: false
+          }
         }
       },
       legend: {
@@ -101,8 +86,8 @@ export const CONFIG = {
               ...item.payload,
               y: (item.payload.y / 1000).toFixed(2)
             }
-          })), p => p.payload.name);
-          return <WidgetLegend groups={groups} unit="%" />;
+          })), p => p.payload.label);
+          return <WidgetLegend groups={groups} unit="km" />;
         }
       },
       tooltip: {
@@ -117,8 +102,9 @@ export const CONFIG = {
             }}
             settings={[
               { key: 'label' },
-              { label: 'Tree biomass:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Soil:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
+              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
+
             ]}
           />
         )

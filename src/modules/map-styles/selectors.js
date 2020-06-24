@@ -2,14 +2,14 @@ import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
 import { rasterLayers } from './rasters';
 import StyleManager from './style-manager';
-import biomassAndHeight, { scopeFeature } from './constants';
+import biomassHeightblueCarbon, { scopeFeature } from './constants';
 import { coverageFilter, netChangeFilter } from './filters';
 
 const {
   sources: bhSources,
   layers: bhLayers,
   layersMap
-} = biomassAndHeight;
+} = biomassHeightblueCarbon;
 
 const styleManager = new StyleManager();
 
@@ -96,7 +96,7 @@ export const mapStyle = createSelector(
      * We are patching here but the object should already be complete by now
      * Selectors are for filtering, not composing
      */
-    const visibleBHLayers = _activeLayersIds.reduce((acc, layerId) => {
+    const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find(f => f.id === layerId);
 
@@ -117,7 +117,7 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleBHLayers.includes(layer.id) ? 'visible' : 'none'
+        visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
 

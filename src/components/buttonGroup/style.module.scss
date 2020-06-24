@@ -1,11 +1,8 @@
 @import 'styles/vars';
 
 .container {
-  border: 2px solid rgba(0,0,0,0.2);
+  border: 2px solid rgba($primary,0.2);
   display: inline-flex;
-  position: absolute;
-  margin-top: 30px;
-  left: 250px;
   height: 26px;
   border-radius: 15px;
 
@@ -21,10 +18,11 @@
     border-left: none;
     border: none;
     text-align: center;
-    color: $body-color;
+    color: $primary;
+    padding: 0 10px;
 
     &:first-of-type {
-      border-right: 2px solid rgba(0,0,0,0.2);
+      border-right: 2px solid rgba($primary,0.2);
       border-radius: 15px 0 0 15px;
 
       &:focus {
@@ -33,7 +31,7 @@
     }
 
     &:last-of-type {
-      border-left: 2px solid rgba(0,0,0,0.2);
+      border-left: 2px solid rgba($primary, 0.2);
       border-radius: 0 15px 15px 0;
 
       &:focus {
@@ -43,13 +41,13 @@
 
     &:focus {
       text-align: center;
-      border: 2px solid white;
+      border: 2px solid $white;
       margin: -2px;
       height: 30px;
-      background-color: $white;
-      color: $primary;
-      border-bottom: 3px solid white;
+      background-color: $primary;
+      color: $white;
       border-radius: 15px;
+      padding: 0 5px;
     }
   }
 }

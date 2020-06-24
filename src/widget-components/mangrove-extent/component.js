@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
@@ -36,7 +36,7 @@ function processData(data, currentYear) {
   ];
 }
 
-function MangroveCoverage({
+function MangroveExtent({
   data: rawData,
   currentLocation,
   addFilter,
@@ -48,6 +48,15 @@ function MangroveCoverage({
   setUi,
   ...props
 }) {
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'extent',
+        year: '2016'
+      }
+    });
+  }, [addFilter]);
+
   if (!rawData) {
     return null;
   }
@@ -63,7 +72,7 @@ function MangroveCoverage({
   const changeYear = (current) => {
     addFilter({
       filter: {
-        id: 'coverage-1996-2016',
+        id: 'extent',
         year: current
       }
     });
@@ -116,11 +125,9 @@ function MangroveCoverage({
 
     sentence = (
       <>
-        <span>Mangrove forests covered </span>
-        <strong className="notranslate">{quantity} {unitSelector}</strong><br />
-        <span>of </span> <strong>{location} </strong>
-        <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> of coastline<br />
-        <span>in </span>{yearSelector}.
+        <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
+        <span>was </span> {quantity} {unitSelector}<span> in</span>{yearSelector},<span> this represents a linear <br />coverage of </span>
+        <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
       </>
     );
   } catch (e) {
@@ -139,16 +146,16 @@ function MangroveCoverage({
   );
 }
 
-MangroveCoverage.propTypes = {
+MangroveExtent.propTypes = {
   data: PropTypes.shape({}),
   metadata: PropTypes.shape({}),
   currentLocation: PropTypes.shape({})
 };
 
-MangroveCoverage.defaultProps = {
+MangroveExtent.defaultProps = {
   data: null,
   metadata: null,
   currentLocation: null
 };
 
-export default MangroveCoverage;
+export default MangroveExtent;
