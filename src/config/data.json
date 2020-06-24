@@ -91,14 +91,14 @@
       "slug": "mangrove_extent",
       "isActive": true,
       "layersIds": [
-        "coverage-1996-2016"
+        "extent"
       ]
     },
     {
       "name": "Mangrove blue carbon",
       "slug": "mangrove_blue_carbon",
       "layersIds": [
-        "net-change-1996-2016"
+        "blue_carbon"
       ]
     },
     {
@@ -150,9 +150,13 @@
   ],
   "layers": [
     {
-      "name": "Mangrove extent",
+      "name": "Mangrove coverage",
       "id": "coverage-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
+      "name": "Mangrove extent",
+      "id": "extent"
     },
     {
       "name": "Mangrove change",

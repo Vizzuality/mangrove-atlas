@@ -195,6 +195,48 @@ const rasters = [
     filename: 'mangrove_max_canopy_height_2016_v1-0_z0-15',
     minzoom: 0,
     maxzoom: 15
+  },
+  {
+    name: 'gmw1996v2_0_z0-12',
+    filename: 'gmw1996v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2007v2_0_z0-12',
+    filename: 'gmw2007v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2008v2_0_z0-12',
+    filename: 'gmw2008v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2009v2_0_z0-12',
+    filename: 'gmw2009v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2010v2_0_z0-12',
+    filename: 'gmw2010v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2015v2_0_z0-12',
+    filename: 'gmw2015v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
+  },
+  {
+    name: 'gmw2016v2_0_z0-12',
+    filename: 'gmw2016v2_0_z0-12',
+    minzoom: 0,
+    maxzoom: 12
   }
 ];
 
@@ -345,6 +387,50 @@ const layersMap = {
       minZoom: 0,
       maxZoom: 15
     }
+  ],
+  extent: [
+    {
+      layerId: 'gmw1996v2_0_z0-12',
+      year: 1996,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2007v2_0_z0-12',
+      year: 2007,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2008v2_0_z0-12',
+      year: 2008,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2009v2_0_z0-12',
+      year: 2009,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2010v2_0_z0-12',
+      year: 2010,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2015v2_0_z0-12',
+      year: 2015,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gmw2016v2_0_z0-12',
+      year: 2016,
+      minZoom: 0,
+      maxZoom: 12
+    },
   ]
 };
 

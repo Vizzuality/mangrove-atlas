@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
@@ -48,6 +48,15 @@ function MangroveExtent({
   setUi,
   ...props
 }) {
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'extent',
+        year: '2016'
+      }
+    });
+  }, [addFilter]);
+
   if (!rawData) {
     return null;
   }
@@ -63,7 +72,7 @@ function MangroveExtent({
   const changeYear = (current) => {
     addFilter({
       filter: {
-        id: 'coverage-1996-2016',
+        id: 'extent',
         year: current
       }
     });
