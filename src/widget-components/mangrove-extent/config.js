@@ -64,12 +64,12 @@ export const CONFIG = {
           coverage: {
             cx: '50%',
             cy: '50%',
-            paddingAngle: 7,
+            paddingAngle: 3,
             dataKey: 'percentage',
             nameKey: 'label',
-            innerRadius: '60%',
+            innerRadius: '55%',
             outerRadius: '80%',
-            cornerRadius: 40,
+            cornerRadius: 4,
             isAnimationActive: false
           }
         }
