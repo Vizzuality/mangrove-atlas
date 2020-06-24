@@ -4,7 +4,7 @@ import Widgets from 'components/widgets';
 import Sidebar from 'components/sidebar';
 import Map from 'components/map-container';
 import ViewSelector from 'components/view-selector';
-import logo from 'components/layout/mangrove-logo.svg';
+import logo from 'components/layout/logo-bg.svg';
 import styles from '../style.module.scss';
 
 class MobileLayout extends PureComponent {

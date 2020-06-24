@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="330px" height="130px" viewBox="0 0 330 130" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>logo-bg</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="330" height="130"></rect>
+        <filter x="-2.4%" y="-6.2%" width="104.8%" height="112.3%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.657070879   0 0 0 0 0.657070879   0 0 0 0 0.657070879  0 0 0 0.179496285 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo-bg">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" opacity="0">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                <rect stroke="#ECECEF" stroke-width="1" stroke-linejoin="square" fill="#F7F9F9" fill-rule="evenodd" x="0.5" y="0.5" width="329" height="129"></rect>
+            </g>
+            <path d="M-193.424821,-229 L-182.230049,-229 L248.266866,-174.346789 C307.451104,-149.361468 333.501519,-99.7458716 326.418111,-25.5 C315.792998,85.8688073 196.638558,95.1495413 138.707788,95.1495413 C-69.6524861,95.1495413 7.02883432,178.091029 -103.247278,244.317431 C-131.696199,261.402452 -162.095827,290.963308 -194.446161,333 L-193.424821,-229 Z" id="Rectangle-6" fill="#00857F" opacity="0.5" mask="url(#mask-2)"></path>
+            <g id="Group-44" mask="url(#mask-2)">
+                <g transform="translate(135.000000, 26.000000)">
+                    <text id="Global-Mangrove-Watc" font-family="OpenSans-Bold, Open Sans" font-size="13" font-weight="bold" line-spacing="11">
+                        <tspan x="45" y="20" fill="#FFFFFF">GLOBAL</tspan>
+                        <tspan x="45" y="31" fill="#FFFFFF">MANGROVE</tspan>
+                        <tspan x="45" y="42" fill="#FFFFFF">WATCH</tspan>
+                    </text>
+                    <g id="Group-43" stroke-width="1" fill-rule="evenodd">
+                        <circle id="Oval" fill="#FFFFFF" cx="18.1500004" cy="45.650001" r="2.75000006"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="18.1500004" cy="4.95000011" r="4.95000011"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="6.60000014" cy="12.0000002" r="4.4000001"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="3.85000008" cy="24.7500005" r="3.85000008"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="11.0000002" cy="36.3000008" r="3.30000007"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="26.4000006" cy="36.3000008" r="3.30000007"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="29.7000006" cy="12.0000002" r="4.4000001"></circle>
+                        <circle id="Oval" fill="#FFFFFF" cx="32.4500007" cy="24.7500005" r="3.85000008"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
