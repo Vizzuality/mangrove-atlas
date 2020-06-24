@@ -87,7 +87,7 @@
       ]
     },
     {
-      "name": "Mangrove extent",
+      "name": "Mangrove habitat extent",
       "slug": "mangrove_extent",
       "isActive": true,
       "layersIds": [
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "name": "Mangrove activity",
+      "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
       "layersIds": []
     },

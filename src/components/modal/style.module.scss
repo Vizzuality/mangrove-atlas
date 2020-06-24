@@ -14,7 +14,7 @@
 
   z-index: 100;
 
-  &.mobile {
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     top: 10px;
     bottom: 10px;
     left: 10px;
@@ -29,8 +29,6 @@
     position: absolute;
     padding: $padding;
     width: 100%;
-    height: 100%;
-
     border-radius: $border-radius;
     background: white;
 
@@ -39,35 +37,14 @@
 
     overflow: auto;
     z-index: 1;
-    &.mobile {
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
       position: absolute;
-      right: 20px;
+      left: 0;
+      right: -10px;
     }
   }
 }
-
-
-
-.ReactModal__Overlay {
-  z-index: 101;
-  background: rgba(0, 0, 0, 0.7);
-  transform: scale(1.15);
-  transition:
-    transform 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946),
-    opacity 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
-}
-
-.ReactModal__Overlay--after-open {
-  transform: scale(1);
-  transition:
-    transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946),
-    opacity 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
-}
-
-.ReactModal__Overlay--before-close {
-  transform: scale(1.15);
-}
-
 
 .closeButton {
   position: absolute;
@@ -80,7 +57,8 @@
   background: white;
 
   cursor: pointer;
-  &.mobile {
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
     top: 20px;
     right: 20px;
     z-index: 2;
