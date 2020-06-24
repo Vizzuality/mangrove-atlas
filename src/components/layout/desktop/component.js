@@ -2,7 +2,8 @@ import React from 'react';
 import Widgets from 'components/widgets';
 import Map from 'components/map-container';
 import Sidebar from 'components/sidebar';
-import logo from 'components/layout/mangrove-logo.svg';
+import NavMenu from 'components/nav-menu';
+import logo from 'components/layout/logo-bg.svg';
 import styles from '../style.module.scss';
 
 const DesktopLayout = ({ location }) => {
@@ -16,6 +17,7 @@ const DesktopLayout = ({ location }) => {
 
   return (<div>
     <div className={styles.header}>
+      <NavMenu />
       <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
       {location && (
         <h1

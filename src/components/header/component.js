@@ -5,7 +5,6 @@ import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import LanguageSelect from 'components/language-selector';
 import background from './bg-shape.svg';
 import fixedBackground from './bg-fixed.svg';
 import styles from './style.module.scss';
@@ -46,7 +45,6 @@ class Header extends PureComponent {
       <div className={classnames(styles.header,
         { [styles.sticky]: sticky })}
       >
-        <div className={styles.toggle}><LanguageSelect /></div>
         <img
           className={classnames(styles.bg,
             { [styles.isHidden]: sticky })}
