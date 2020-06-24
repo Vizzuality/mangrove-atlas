@@ -16,6 +16,10 @@
   @media print {
     display: none;
   }
+
+  @media screen and (max-width: map-get($breakpoints, sm)) {
+    left: -4px;
+  }
 }
 
 .introModalContent {

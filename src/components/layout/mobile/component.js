@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Widgets from 'components/widgets';
 import Sidebar from 'components/sidebar';
+import NavMenu from 'components/nav-menu';
 import Map from 'components/map-container';
 import ViewSelector from 'components/view-selector';
 import logo from 'components/layout/logo-bg.svg';
@@ -18,6 +19,7 @@ class MobileLayout extends PureComponent {
       <div>
         {!mapView && (
           <>
+            <NavMenu />
             <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
             <Sidebar>
               {({ isSticky }) => (
