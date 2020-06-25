@@ -1,23 +1,21 @@
-function toRasterSource({ filename, minzoom, maxzoom }) {
+function toRasterSource({ filename, source}) {
   return {
     tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
     type: 'raster',
     tileSize: 256,
-    minzoom,
-    maxzoom
+    ...source,
   };
 }
 
-function createLayer({ name, minzoom, maxzoom }) {
+function createLayer({ name, render }) {
   return {
     id: name,
     type: 'raster',
     source: `${name}-tiles`,
-    minzoom,
-    maxzoom,
     layout: {
       visibility: 'none'
-    }
+    },
+    ...render
   };
 }
 
@@ -25,219 +23,286 @@ const rasters = [
   {
     name: 'biomass_1996_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_1996_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_1996_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_1996_v1-0_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2000_v1-2_z0-12',
     filename: 'mangrove_aboveground_biomass_2000_v1-2_z0-12',
-    minzoom: 0,
-    maxzoom: 12
-  },
-  // Overlapping, not considered on map
-  {
-    name: 'biomass_2000_v1-2_z0-13',
-    filename: 'mangrove_aboveground_biomass_2000_v1-2_z0-13',
-    minzoom: 0,
-    maxzoom: 13
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_2000_v1-2_z13-15',
     filename: 'mangrove_aboveground_biomass_2000_v1-2_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2007_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2007_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_2007_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2007_v1-0_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2008_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2008_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_2008_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2008_v1-0_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2009_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2009_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_2009_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2009_v1-0_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2010_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2010_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+    render: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'biomass_2010_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2010_v1-0_z13-15',
-    minzoom: 13,
-    maxzoom: 15
+    source: {
+      minzoom: 13,
+      maxzoom: 15
+    },
+    render: {
+      minzoom: 13
+    }
   },
   {
     name: 'biomass_2015_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2015_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
   },
   {
     name: 'biomass_2016_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2016_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
   },
   // The only year with basal height, ignored for now
   {
     name: 'basal_height_2000_v1-2_z0-13',
     filename: 'mangrove_basal-area_weighted_height_2000_v1-2_z0-13',
-    minzoom: 0,
-    maxzoom: 13
+    source: {
+      minzoom: 0,
+      maxzoom: 13
+    }
   },
   {
     name: 'height_1996_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_1996_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
-  },
-  // Cover less years than next one, ignored for now
-  {
-    name: 'height_2000_v1-2_z0-12',
-    filename: 'mangrove_max_canopy_height_2000_v1-2_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
   },
   {
     name: 'height_2000_v1-2_z0-13',
     filename: 'mangrove_max_canopy_height_2000_v1-2_z0-13',
-    minzoom: 0,
-    maxzoom: 13
+    source: {
+      minzoom: 0,
+      maxzoom: 13
+    }
   },
   {
     name: 'height_2007_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2007_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'height_2008_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2008_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'height_2009_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2009_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
-  },
-  // Cover less years than next one, ignored for now
-  {
-    name: 'height_2010_v1-0_z0-12',
-    filename: 'mangrove_max_canopy_height_2010_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'height_2010_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2010_v1-0_z0-15',
-    minzoom: 0,
-    maxzoom: 15
-  },
-  // Cover less years than next one, ignored for now
-  {
-    name: 'height_2015_v1-0_z0-12',
-    filename: 'mangrove_max_canopy_height_2015_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 15
+    },
   },
   {
     name: 'height_2015_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2015_v1-0_z0-15',
-    minzoom: 0,
-    maxzoom: 15
-  },
-  // Cover less years than next one, ignored for now
-  {
-    name: 'height_2016_v1-0_z0-12',
-    filename: 'mangrove_max_canopy_height_2016_v1-0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 15
+    }
   },
   {
     name: 'height_2016_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2016_v1-0_z0-15',
-    minzoom: 0,
-    maxzoom: 15
+    source: {
+      minzoom: 0,
+      maxzoom: 15
+    }
   },
   {
     name: 'gmw1996v2_0_z0-12',
     filename: 'gmw1996v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2007v2_0_z0-12',
     filename: 'gmw2007v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2008v2_0_z0-12',
     filename: 'gmw2008v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2009v2_0_z0-12',
     filename: 'gmw2009v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2010v2_0_z0-12',
     filename: 'gmw2010v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2015v2_0_z0-12',
     filename: 'gmw2015v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   },
   {
     name: 'gmw2016v2_0_z0-12',
     filename: 'gmw2016v2_0_z0-12',
-    minzoom: 0,
-    maxzoom: 12
-  }
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
 ];
 
 const sourcesAndLayers = rasters.reduce((acc, item) => ({
