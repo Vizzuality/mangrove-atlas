@@ -111,7 +111,7 @@ export const CONFIG = {
                       fill={fill}
                     />
                     <line
-                      x1={x + width} y1={center - 4} x2={x + width} y2={center + 4}
+                      x1={x + width} y1={center - 4} x2={x + width} y2={center + 6}
                       stroke="#A6CB10"
                       strokeWidth={2}
                     />
@@ -141,7 +141,7 @@ export const CONFIG = {
                       x1={x + width}
                       y1={center - 4}
                       x2={x + width}
-                      y2={center + 4}
+                      y2={center + 6}
                       stroke="#EB6240"
                       strokeWidth={2}
                     />

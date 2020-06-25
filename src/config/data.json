@@ -109,14 +109,6 @@
       ]
     },
     {
-      "name": "Mangrove coverage",
-      "slug": "mangrove_coverage",
-      "isActive": true,
-      "layersIds": [
-        "coverage-1996-2016"
-      ]
-    },
-    {
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
       "layersIds": []
