@@ -20,6 +20,7 @@ export default (props) => {
     <Modal
       style={customStyles}
       {...domProps}
+      onRequestClose={onRequestClose}
       className={styles.modalWrapper}
     >
       <div className={styles.content}>
