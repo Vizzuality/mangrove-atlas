@@ -78,7 +78,7 @@ function Widget({
   );
 
   return (
-    <div className={classnames(styles.widget, widgetConditionalStyles)}>
+    <div className={classnames(styles.widget, widgetConditionalStyles, styles[`${slug}`])}>
       <div className={classnames(styles.wrapper, {
         [styles._modal]: isLocationsModal
       })}
