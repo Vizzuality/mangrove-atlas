@@ -130,7 +130,12 @@ export const MapContainer = ({
               </MediaQuery>
             )}
             <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl className={styles.zoomControls} />
+              <NavigationControl
+                captureClick
+                captureDoubleClick
+                zoomInLabel="hola"
+                className={styles.zoomControls}
+              />
             </MediaQuery>
             <MediaQuery minWidth={breakpoints.sm}>
               {data && <IntroModal data={data} className={styles.zoomControls} />}

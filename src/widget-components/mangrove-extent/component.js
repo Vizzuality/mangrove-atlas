@@ -98,14 +98,15 @@ function MangroveExtent({
     const { percentage } = widgetData[0];
     const unitOptions = [
       { value: '%', label: '%' },
-      { value: 'km', label: 'km' }
+      { value: 'km', label: 'km²' },
+      { value: 'ha', label: 'ha' }
     ];
     const totalCoverage = metadata.total / 1000;
     const coverage = (percentage * totalCoverage) / 100;
     const quantity = numberFormat((unit === '%') ? percentage : coverage);
     const location = (currentLocation.location_type === 'worldwide')
-      ? 'the world’s'
-      : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
+      ? 'the world'
+      : <span className="notranslate">{`${currentLocation.name}`}</span>;
     const unitSelector = (
       <Select
         value={unit}
@@ -126,7 +127,7 @@ function MangroveExtent({
     sentence = (
       <>
         <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
-        <span>was </span> {quantity} {unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
+        <span>was </span> {unit === 'ha' ? quantity / 100 : quantity} {unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
         <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
       </>
     );
