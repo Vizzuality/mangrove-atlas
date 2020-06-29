@@ -38,7 +38,6 @@ function ConservationHotspots({
   const data = config.parse(rawData, { scope });
   const { chartConfig } = data;
   const currentYear = 1996;
-console.log(data)
   const widgetData = processData(data, currentYear);
   let sentence = null;
 

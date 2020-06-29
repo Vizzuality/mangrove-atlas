@@ -69,7 +69,6 @@ export const CONFIG = {
             nameKey: 'label',
             innerRadius: '55%',
             outerRadius: '80%',
-            cornerRadius: 4,
             isAnimationActive: false
           }
         }
