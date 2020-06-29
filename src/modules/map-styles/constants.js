@@ -311,6 +311,54 @@ const rasters = [
       maxzoom: 12
     }
   },
+  {
+    name: 'gl_1996_2007_loss_z0-12',
+    filename: 'gl_1996_2007_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    },
+  },
+  {
+    name: 'gl_2007_1996_gain_z0-12',
+    filename: 'gl_2007_1996_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2007_2008_loss_z0-12',
+    filename: 'gl_2007_2008_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2008_2007_gain_z0-12',
+    filename: 'gl_2008_2007_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2008_2009_loss_z0-12',
+    filename: 'gl_2008_2009_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2009_2008_gain_z0-12',
+    filename: 'gl_2009_2008_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  }
 ];
 
 const sourcesAndLayers = rasters.reduce((acc, item) => ({
@@ -505,10 +553,10 @@ const layersMap = {
       maxZoom: 12
     },
   ],
-  blue_carbon: [
+  carbon: [
     {
       layerId: 'soc_co2e_2016_z0-12',
-      year: 1996,
+      year: 2016,
       minZoom: 0,
       maxZoom: 12
     }
@@ -526,3 +574,17 @@ export default {
   layersMap,
   ...sourcesAndLayers
 };
+
+
+
+// gl_2009_2010_loss_z0-12/	—	Folder	—	—
+// Subject to object ACLs	—	–	-
+//  gl_2010_2009_gain_z0-12/	—	Folder	—	—
+// Subject to object ACLs	—	–	-
+//  gl_2010_2015_loss_z0-12/	—	Folder	—	—
+// Subject to object ACLs	—	–	-
+//  gl_2015_2010_gain_z0-12/	—	Folder	—	—
+// Subject to object ACLs	—	–	-
+//  gl_2015_2016_loss_z0-12/	—	Folder	—	—
+// Subject to object ACLs	—	–	-
+//  gl_2016_2015_gain_z0-12/

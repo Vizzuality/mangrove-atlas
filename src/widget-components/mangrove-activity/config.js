@@ -177,11 +177,15 @@ export const CONFIG = {
 
           //eslint-disable-next-line react/prop-types
           content: ({ payload }) => {
-            const labels = payload.map(({ color, payload: labelPayload }) => ({
-              color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
-              value: labelPayload.legend,
-         //     variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
-            }));
+            // const labels = payload.map(({ color, payload: labelPayload }) => ({
+            //   color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
+            //   value: labelPayload.legend,
+            // }));
+            const labels = [
+              { color: '#000', value: 'Net' },
+              { color: '#EB6240', value: 'Loss' },
+              { color: '#A6CB10', value: 'Gain' }
+            ];
 
             return <WidgetLegend widgetSpecific="activity" direction="vertical" groups={{ labels }} position="left" />;
           }
