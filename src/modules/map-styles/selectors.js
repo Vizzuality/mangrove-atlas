@@ -11,7 +11,6 @@ const {
   layersMap
 } = biomassHeightblueCarbon;
 
-console.log(biomassHeightblueCarbon)
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
@@ -53,8 +52,6 @@ export const layerStyles = createSelector(
     );
   }
 );
-
-console.log(filters, '****************')
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters, activeLayersIds],
@@ -99,11 +96,9 @@ export const mapStyle = createSelector(
      * We are patching here but the object should already be complete by now
      * Selectors are for filtering, not composing
      */
-    console.log(_activeLayersIds)
     const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
-
-      const layerFilter = _filters.find(f => console.log(f.id, layerId)|| f.id === layerId);
+      const layerFilter = _filters.find(f => f.id === layerId);
 
       if (layerFilter && layerMap) {
         return [
@@ -115,9 +110,16 @@ export const mapStyle = createSelector(
         ];
       }
 
+      if (layerMap) {
+        return [
+          ...acc,
+          ...layerMap.map(layerMapItem => layerMapItem.layerId)
+        ];
+      }
+
       return acc;
     }, []);
-console.log(visibleRasterLayers, 'visibleRasterLayers')
+
     const bhLayersUpdated = bhLayers.map(layer => ({
       ...layer,
       layout: {
