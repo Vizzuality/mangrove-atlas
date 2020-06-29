@@ -5,7 +5,6 @@
         "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
@@ -20,7 +19,6 @@
         "location_type": "country",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
@@ -34,7 +32,6 @@
         "location_type": "wdpa",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
@@ -48,7 +45,6 @@
         "location_type": "aoi",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
@@ -65,7 +61,6 @@
         "location_id": "25",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
@@ -140,7 +135,7 @@
       ]
     },
     {
-      "name": "Mangrove biomass",
+      "name": "Mangrove biomass pie",
       "slug": "mangrove_biomass_pie",
       "layersIds": [
         "biomass"
