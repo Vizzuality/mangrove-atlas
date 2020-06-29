@@ -127,7 +127,8 @@ function MangroveExtent({
     sentence = (
       <>
         <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
-        <span>was </span> {unit === 'ha' ? quantity / 100 : quantity} {unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
+        <span>was </span>
+        <strong className="notranslate">{unit === 'ha' ? quantity / 100 : quantity} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
         <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
       </>
     );

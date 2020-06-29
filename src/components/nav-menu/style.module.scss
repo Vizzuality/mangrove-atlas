@@ -22,7 +22,7 @@
   }
 }
 
-.introModalContent {
+.modalContent {
   font-size: 19px;
   font-weight: 300;
   letter-spacing: 0;
@@ -38,15 +38,32 @@
     list-style: none;
     padding: 0;
 
+    * {
+      @include medium-text;
+    }
+
     > li {
       line-height: 30px;
       font-size: 19px;
       padding-bottom: 10px;
+
+      > button {
+        padding: 0;
+      }
     }
   }
 
-  a {
-    color: $body-color;
+  .menuItem {
+
+    > a {
+      color: $body-color;
+      text-decoration: none;
+    }
+  }
+
+  .welcomeLink {
+    color: $primary;
+    display: block;
     @include medium-text;
   }
 
@@ -55,11 +72,9 @@
     justify-content: space-between;
     align-items: center;
 
-    > a {
-      > img {
-        width: 130px;
-        padding-right: 20px;
-      }
+    .logo {
+      width: 130px;
+      padding-right: 20px;
     }
   }
 }

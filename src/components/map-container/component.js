@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { NavigationControl, FullscreenControl } from 'react-map-gl';
-import IntroModal from 'components/intro-modal';
 import classnames from 'classnames';
 import pick from 'lodash/pick';
 import Bowser from 'bowser';
@@ -136,9 +135,6 @@ export const MapContainer = ({
                 zoomInLabel="hola"
                 className={styles.zoomControls}
               />
-            </MediaQuery>
-            <MediaQuery minWidth={breakpoints.sm}>
-              {data && <IntroModal data={data} className={styles.zoomControls} />}
             </MediaQuery>
           </div>
         )
