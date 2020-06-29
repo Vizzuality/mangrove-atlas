@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
 import HotspotsList from 'components/hotspots-list';
@@ -10,13 +10,17 @@ const NavMenu = () => {
   const [isOpen, toggleModal] = useState(false);
   const [welcomeContent, toggleContent] = useState(false);
 
+  useEffect(() => {
+    toggleContent(false);
+  }, [isOpen]);
+
   const handleClick = () => {
     toggleModal(!isOpen);
   };
 
   const handleContent = () => {
     toggleContent(!welcomeContent);
-  }
+  };
 
   return (
     <div className={styles.navMenu}>
@@ -39,57 +43,39 @@ const NavMenu = () => {
           )
             : (
               <>
-                <ul>
-                  <li className={styles.menuItem}>
-                    About Mangrove Atlas
-                  </li>
-                  <li className={styles.menuItem}>
-                    <button type="button" onClick={handleContent}>
-                      Welcome to Global Mangrove Watch
-                    </button>
-                  </li>
-                  <li className={styles.menuItem}>
-                    <a href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                      Global Mangrove Alliance
-                    </a>
-                  </li>
-                  <li className={styles.menuItem}>
+                <section>
+                  <button className={styles.menuItem} type="button" onClick={handleContent}>
+                    About this tool
+                  </button>
+                  <nav>
+                    Global Mangrove Alliance
                     <a href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
                       About
                     </a>
-                  </li>
-                  <li className={styles.menuItem}>
                     <a href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
                       Mangroves
                     </a>
-                  </li>
-                  <li className={styles.menuItem}>
                     <a href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
                       Initiatives
                     </a>
-                  </li>
-                  <li className={styles.menuItem}>
                     <a href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
                       News
                     </a>
-                  </li>
-                  <li className={styles.menuItem}>
                     <a href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
                       Resources
                     </a>
-                  </li>
-                  <li className={styles.menuItem}>
                     <a href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
                       Contact
                     </a>
-                  </li>
-                </ul>
-                <aside className={styles.footer}>
-                  <a href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                    <img src={logo} className={styles.logo} alt="Global Mangrove Alliance" />
-                  </a>
-                  <LanguageSelect />
-                </aside>
+                  </nav>
+
+                  <aside className={styles.footer}>
+                    <a href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                      <img src={logo} className={styles.logo} alt="Global Mangrove Alliance" />
+                    </a>
+                    <LanguageSelect />
+                  </aside>
+                </section>
               </>)}
         </div>
       </Modal>

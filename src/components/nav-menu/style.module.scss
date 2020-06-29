@@ -23,10 +23,9 @@
 }
 
 .modalContent {
-  font-size: 19px;
-  font-weight: 300;
-  letter-spacing: 0;
-  line-height: 30px;
+  @include medium-text;
+  height: 100%;
+  position: relative;
 
   > h3 {
     @include medium-text;
@@ -34,30 +33,39 @@
     margin: 10px 0;
   }
 
-  > ul {
-    list-style: none;
-    padding: 0;
+  section {
+    margin-top: 20px;
 
-    * {
+    .menuItem {
+      padding: 0;
+      color: $body-color;
+      text-decoration: none;
       @include medium-text;
-    }
-
-    > li {
-      line-height: 30px;
-      font-size: 19px;
-      padding-bottom: 10px;
-
-      > button {
-        padding: 0;
-      }
+      line-height: 40px;
     }
   }
 
-  .menuItem {
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: 40px;
 
     > a {
+      margin-left: 30px;
       color: $body-color;
       text-decoration: none;
+      @include medium-text;
+      line-height: 40px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 45px;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba($black, 0.08);
     }
   }
 
@@ -71,6 +79,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
 
     .logo {
       width: 130px;

@@ -56,7 +56,13 @@ const widgetInfo = {
     Reference: '<p>Bunting P., Rosenqvist A., Lucas R., Rebelo L-M., Hilarides L., Thomas N., Hardy A., Itoh T., Shimada M. and Finlayson C.M. (2018). <a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank">The Global Mangrove Watch – a New 2010 Global Baseline of Mangrove Extent.</a> Remote Sensing, 2018, 10, 1669; doi:10.3390/rs10101669</p>',
     'Date of content': '<p>1996, 2007, 2008, 2009, 2010, 2015, 2016</p>',
     License: '<p><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">https://creativecommons.org/licenses/by/4.0/</a></p>',
-  }
+  },
+  mangrove_blue_carbon: {
+    Title: '<h1></h1>',
+    Overview: '<p></p>',
+    Reference: '<p></p>',
+    License: '<p></p>',
+  },
 };
 
 export default widgetInfo;

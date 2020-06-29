@@ -5,13 +5,13 @@
         "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
+          "mangrove_biomass_pie",
           "mangrove_activity"
         ]
       },
@@ -19,12 +19,12 @@
         "location_type": "country",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
+          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       },
@@ -32,12 +32,12 @@
         "location_type": "wdpa",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
+          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       },
@@ -45,13 +45,13 @@
         "location_type": "aoi",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
+          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       }
@@ -61,12 +61,12 @@
         "location_id": "25",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
+          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       }
@@ -130,6 +130,13 @@
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
+      "layersIds": [
+        "biomass"
+      ]
+    },
+    {
+      "name": "Mangrove biomass pie",
+      "slug": "mangrove_biomass_pie",
       "layersIds": [
         "biomass"
       ]
