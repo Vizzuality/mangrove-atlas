@@ -87,7 +87,7 @@ export const CONFIG = {
               y: (item.payload.y / 1000).toFixed(2)
             }
           })), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km" />;
+          return <WidgetLegend groups={groups} unit="km²" />;
         }
       },
       tooltip: {
@@ -103,7 +103,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km²`, position: '_column' }
 
             ]}
           />
