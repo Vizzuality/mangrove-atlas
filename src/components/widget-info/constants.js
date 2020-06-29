@@ -16,7 +16,7 @@ const widgetInfo = {
   mangrove_coverage: {
     Title: '<h1>Proportion of coastline covered by mangrove forest</h1>',
     Overview: '<p>This data set shows the proportional length of coastline occupied by mangrove habitat in a specific location at different times. The locations are defined geometries such as a countries, protected areas or areas-of-interest. This was calculated by intersecting a polygon of the areal extent of mangrove habitat (<a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank">Bunting et al. (2018)</a>) with a multi-line represention of the global coastline (<a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-coastline/">Natural Earth coastline version 4.1.0</a>) within each geometry. The percentage (%) covered was then calculated as the sum of the length of coastline occupied by mangrove habitat (km) divided by the total length of coastline (km) within the geometry multiplied by 100. Note this calculation is in development as the length of a fractal-like coastlines depend on the measurement scale, and defining when a 1D coast-line is occupied by 2D mangrove habitat vectors is open to interpretation.</p>',
-    Reference: '<p>Proportion of coastline covered by mangrove forest. Mangrove Atlas. Wetlands International and partners.</p>',
+    Reference: '<p>Proportion of coastline covered by mangrove forest. Global Mangrove Watch. Wetlands International and partners.</p>',
     'Date of content': '<p>1996, 2007, 2008, 2009, 2010, 2015, 2016</p>',
     License: '<p><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">https://creativecommons.org/licenses/by/4.0/</a></p>',
   },

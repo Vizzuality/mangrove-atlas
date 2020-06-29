@@ -82,6 +82,7 @@ $space-left-map-mobile: 20px;
 .zoomControls {
   > button[title='Zoom In'] {
     background-image: url('./icons/zoomin.svg') !important;
+    pointer-events: auto;
   }
 
   > button[title='Zoom Out'] {
