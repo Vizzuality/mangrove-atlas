@@ -4,12 +4,6 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 import looseJsonParse from 'utils/loose-json-parse';
 
-
-import { format } from 'd3-format';
-
-
-const numberFormat = format(',.2f');
-
 const categoriesData = {
   'Benefits From Conservation': {
     color: '#86CEE8',
@@ -79,18 +73,17 @@ const widgetMeta = ({ list, metadata }) => {
 };
 
 export const CONFIG = {
-  parse: data => ({
-    chartData: widgetData(data),
+  parse: (data, uiState) => ({
+    chartData: widgetData(data, uiState),
     metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',
       layout: 'centric',
-      height: 250,
       margin: { top: 20, right: 0, left: 0, bottom: 0 },
       xKey: 'percentage',
       yKeys: {
         pies: {
-          coverage: {
+          y: {
             cx: '50%',
             cy: '50%',
             paddingAngle: 3,
@@ -108,14 +101,8 @@ export const CONFIG = {
         layout: 'vertical',
         content: (properties) => {
           const { payload } = properties;
-          const groups = groupBy(payload.map(item => ({
-            ...item,
-            payload: {
-              ...item.payload,
-              y: (item.payload.y / 1000).toFixed(2)
-            }
-          })), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km" />;
+          const groups = groupBy(payload, p => p.payload.label);
+          return <WidgetLegend groups={groups} unit="km²" />;
         }
       },
       tooltip: {
@@ -123,16 +110,14 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-
               flexDirection: 'column',
-              justifyContent: 'space-around',
-              marginLeft: '10px',
+              marginTop: '10px',
+              marginLeft: '-50px'
             }}
             settings={[
               { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km`, position: '_column' }
-
+              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
             ]}
           />
         )

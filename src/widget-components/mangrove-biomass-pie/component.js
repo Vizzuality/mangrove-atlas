@@ -34,10 +34,10 @@ function MangroveBiomassPie({
     return null;
   }
 
+
   const data = config.parse(rawData, { scope });
   const { chartConfig } = data;
   const currentYear = 1996;
-
   const widgetData = processData(data, currentYear);
   let sentence = null;
 
