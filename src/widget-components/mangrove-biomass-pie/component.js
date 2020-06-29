@@ -19,7 +19,7 @@ function processData(data, currentYear) {
   return currentYearData;
 }
 
-function ConservationHotspots({
+function MangroveBiomassPie({
   data: rawData,
   currentLocation,
   addFilter,
@@ -113,7 +113,7 @@ function ConservationHotspots({
   );
 }
 
-ConservationHotspots.propTypes = {
+MangroveBiomassPie.propTypes = {
   data: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -125,7 +125,7 @@ ConservationHotspots.propTypes = {
   setUi: PropTypes.func
 };
 
-ConservationHotspots.defaultProps = {
+MangroveBiomassPie.defaultProps = {
   data: null,
   currentLocation: null,
   addFilter: () => {},
@@ -137,4 +137,4 @@ ConservationHotspots.defaultProps = {
   setUi: () => {}
 };
 
-export default ConservationHotspots;
+export default MangroveBiomassPie;

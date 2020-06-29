@@ -54,7 +54,6 @@ const histogramData = (data) => {
 };
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
-
 const heightCoverage = (data, date) => {
   const yearData = data.find(d => d.date.includes(date));
   if (!yearData) return null;
@@ -69,7 +68,6 @@ export const CONFIG = {
   parse: (data, date) => {
     {
       const dataFiltered = filterData(data);
-
       return {
 
         chartData: histogramData(dataFiltered),
