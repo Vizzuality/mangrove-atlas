@@ -303,6 +303,14 @@ const rasters = [
       maxzoom: 12
     }
   },
+  {
+    name: 'soc_co2e_2016_z0-12',
+    filename: 'soc_co2e_2016_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
 ];
 
 const sourcesAndLayers = rasters.reduce((acc, item) => ({
@@ -496,6 +504,14 @@ const layersMap = {
       minZoom: 0,
       maxZoom: 12
     },
+  ],
+  blue_carbon: [
+    {
+      layerId: 'soc_co2e_2016_z0-12',
+      year: 1996,
+      minZoom: 0,
+      maxZoom: 12
+    }
   ]
 };
 

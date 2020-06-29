@@ -111,7 +111,9 @@
     {
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
-      "layersIds": []
+      "layersIds": [
+        "soc_co2e_2016_z0-12"
+      ]
     },
     {
       "name": "Mangrove alerts",
