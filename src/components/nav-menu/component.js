@@ -49,28 +49,28 @@ const NavMenu = () => {
                   </button>
                   <nav>
                     Global Mangrove Alliance
-                    <a href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
                       About
                     </a>
-                    <a href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
                       Mangroves
                     </a>
-                    <a href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
                       Initiatives
                     </a>
-                    <a href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
                       News
                     </a>
-                    <a href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
                       Resources
                     </a>
-                    <a href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
                       Contact
                     </a>
                   </nav>
 
                   <aside className={styles.footer}>
-                    <a href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
                       <img src={logo} className={styles.logo} alt="Global Mangrove Alliance" />
                     </a>
                     <LanguageSelect />

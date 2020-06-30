@@ -10,7 +10,6 @@ const {
   layers: bhLayers,
   layersMap
 } = biomassHeightblueCarbon;
-
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
@@ -87,6 +86,7 @@ export const mapStyle = createSelector(
 
     styleManager.basemap = _basemap;
     styleManager.layers = layersWithFilters;
+
     const composedMapStyle = {
       ...styleManager.mapStyle,
       layers: sortLayers(styleManager.mapStyle.layers)
@@ -105,7 +105,10 @@ export const mapStyle = createSelector(
           ...acc,
           ...layerMap
             .filter(
-              layerMapItem => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
+              layerMapItem => (layerFilter && layerFilter.range)
+              ? (parseInt(layerFilter.range.startYear, 10) === parseInt(layerMapItem.year, 10)
+              || parseInt(layerFilter.range.endYear, 10) === parseInt(layerMapItem.year, 10))
+              : parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
             ).map(layerMapItem => layerMapItem.layerId)
         ];
       }
@@ -116,7 +119,6 @@ export const mapStyle = createSelector(
           ...layerMap.map(layerMapItem => layerMapItem.layerId)
         ];
       }
-
       return acc;
     }, []);
 

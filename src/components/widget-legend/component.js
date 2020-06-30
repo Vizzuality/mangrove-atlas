@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import { format } from 'd3-format';
 
 import styles from './style.module.scss';
-import widget from 'components/widget';
 
 const numberFormat = format(',.2f');
 

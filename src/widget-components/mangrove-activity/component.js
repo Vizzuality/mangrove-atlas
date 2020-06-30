@@ -92,6 +92,7 @@ function MangroveActivity({
     <Select
       value={filter}
       options={optionsFilter}
+      classNamePrefix="react-select"
       onChange={value => changeFilter(value)}
     />
   );
