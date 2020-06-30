@@ -5,6 +5,9 @@ import orderBy from 'lodash/orderBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
+import moreIcon from './icon-more.svg';
+import lessIcon from './icon-less.svg';
+
 import config from './config';
 
 function MangroveActivity({
@@ -69,7 +72,7 @@ function MangroveActivity({
 
   const sortRanking = (data) => {
     const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return (filter === 'gain' ? dataRanked : dataRanked.reverse());
+    return (filter === 'loss' ? dataRanked.reverse() : dataRanked);
   };
 
   // XXX: these options should come from an api ?
@@ -113,23 +116,35 @@ function MangroveActivity({
     />
   );
 
-  const increaseLimit = (
-    <button type="button" onClick={value => changeLimit(limit === 5 ? limit + 5 : limit - 5, value)}>{limit === 5 ? 'more' : 'less'}</button>
-  );
-
-  const buttonStyles = {
+  const customStyles = {
     display: 'flex',
-    justifyContent: 'flex-end',
-    fontSize: '14px'
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    fontSize: '14px',
+    color: '#00857F',
+    fontWeight: 600
   };
 
   const sentence = (
     <>
       Worldwide the 5 countries with the largest {filterSelector}
-       in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
-      <div style={buttonStyles}>{increaseLimit}</div>
+      in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
   );
+
+  const countriesLimit = (
+    <>
+      <button
+        style={customStyles}
+        type="button"
+        onClick={value => changeLimit(limit === 5 ? limit + 5 : limit - 5, value)}
+      >
+        {limit === 5 ? 'Show 10' : 'Show 5'}
+        <img alt={limit === 5 ? 'Show more results' : 'Show less results'} src={limit === 5 ? moreIcon : lessIcon} />
+      </button>
+    </>
+  )
 
   const sortedData = sortRanking(chartData);
 
@@ -139,6 +154,7 @@ function MangroveActivity({
   };
 
   return (
+
     <ChartWidget
       name={name}
       data={sortedData}
@@ -147,6 +163,7 @@ function MangroveActivity({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      component={countriesLimit}
       {...props}
     />
   );
