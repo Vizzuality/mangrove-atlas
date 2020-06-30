@@ -6,9 +6,10 @@ import Component from './component';
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
   data: state.mangroveData,
-  ui: state.widgets.ui.netChange || {
-    startYear: '1996',
-    endYear: '2016'
+  ui: state.widgets.ui.net || {
+    range: { startYear: '2007', endYear: '2016' },
+    currentYear: '2016',
+    unit: 'km'
   }
 });
 
