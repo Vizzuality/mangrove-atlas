@@ -11,7 +11,6 @@
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_biomass_pie",
           "mangrove_activity"
         ]
       },
@@ -24,7 +23,6 @@
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       },
@@ -37,7 +35,6 @@
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       },
@@ -51,7 +48,6 @@
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       }
@@ -66,7 +62,6 @@
           "mangrove_alerts",
           "mangrove_height",
           "mangrove_biomass",
-          "mangrove_biomass_pie",
           "conservation_hotspots"
         ]
       }
@@ -162,8 +157,7 @@
     },
     {
       "name": "Mangrove change",
-      "id": "net-change-1996-2016",
-      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+      "id": "net"
     },
     {
       "name": "Conservation hotspots",

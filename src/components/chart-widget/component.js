@@ -8,6 +8,7 @@ import styles from './style.module.scss';
 
 function ChartWidget({
   sentence,
+  component,
   chartData: {
     data,
     config
@@ -24,6 +25,7 @@ function ChartWidget({
           data={data}
           config={config}
         />
+        {component}
       </div>
     </Widget>
   );

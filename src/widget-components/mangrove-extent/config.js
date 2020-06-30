@@ -50,7 +50,7 @@ const widgetMeta = ({ list, metadata }) => {
 };
 
 export const CONFIG = {
-  parse: data => ({
+  parse: (data, unit) => ({
     chartData: widgetData(data),
     metadata: widgetMeta(data),
     chartConfig: {
@@ -86,7 +86,7 @@ export const CONFIG = {
               y: (item.payload.y / 1000).toFixed(2)
             }
           })), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km²" />;
+          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km²' : unit} />;
         }
       },
       tooltip: {
@@ -102,8 +102,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(numberFormat(coverage))} km²`, position: '_column' }
-
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage / 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km²'}`, position: '_column' },
             ]}
           />
         )
