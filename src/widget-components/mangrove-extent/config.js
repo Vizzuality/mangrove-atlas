@@ -8,7 +8,8 @@ import { format } from 'd3-format';
 
 const numberFormat = format(',.2f');
 
-const widgetData = ({ list, metadata }) => {
+const widgetData = (data, unit) => {
+  const { list, metadata } = data;
   if (list && list.length) {
     const { location_coast_length_m: total } = metadata;
 
@@ -20,7 +21,7 @@ const widgetData = ({ list, metadata }) => {
         y: d.length_m,
         color: '#06C4BD',
         percentage: d.length_m / total * 100,
-        unit: '%',
+        unit,
         coverage: (d.length_m / 1000).toFixed(2),
         value: (d.length_m).toFixed(2),
         label: `Mangroves in ${year}`
@@ -51,7 +52,7 @@ const widgetMeta = ({ list, metadata }) => {
 
 export const CONFIG = {
   parse: (data, unit) => ({
-    chartData: widgetData(data),
+    chartData: widgetData(data, unit),
     metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',
@@ -79,13 +80,19 @@ export const CONFIG = {
         layout: 'vertical',
         content: (properties) => {
           const { payload } = properties;
-          const groups = groupBy(payload.map(item => ({
-            ...item,
-            payload: {
-              ...item.payload,
-              y: (item.payload.y / 1000).toFixed(2)
-            }
-          })), p => p.payload.label);
+          const groups = groupBy(payload.map((item) => {
+            const value = (item.payload.unit === 'ha' && item.payload.coverage / 100)
+              || (item.payload.unit === '%' && item.payload.percentage)
+              || (item.payload.coverage);
+            return {
+              ...item,
+              payload: {
+                ...item.payload,
+                y: value
+              }
+            };
+          }), p => p.payload.label);
+
           return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km²' : unit} />;
         }
       },

@@ -55,7 +55,7 @@ function MangroveExtent({
         year: '2016'
       }
     });
-  }, [addFilter]);
+  }, [addFilter, unit]);
 
   if (!rawData) {
     return null;
