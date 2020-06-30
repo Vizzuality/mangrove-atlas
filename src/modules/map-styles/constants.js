@@ -358,6 +358,54 @@ const rasters = [
       minzoom: 0,
       maxzoom: 12
     }
+  },
+  {
+    name: 'gl_2009_2010_loss_z0-12',
+    filename: 'gl_2009_2010_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2010_2009_gain_z0-12',
+    filename: 'gl_2010_2009_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2010_2015_loss_z0-12',
+    filename: 'gl_2010_2015_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2015_2010_gain_z0-12',
+    filename: 'gl_2015_2010_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2015_2016_loss_z0-12',
+    filename: 'gl_2015_2016_loss_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gl_2016_2015_gain_z0-12',
+    filename: 'gl_2016_2015_gain_z0-12',
+    source: {
+      minzoom: 0,
+      maxzoom: 12
+    }
   }
 ];
 
@@ -560,6 +608,80 @@ const layersMap = {
       minZoom: 0,
       maxZoom: 12
     }
+  ],
+  net: [
+    {
+      layerId: 'gl_1996_2007_loss_z0-12',
+      year: 2007,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2007_1996_gain_z0-12',
+      year: 2007,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2007_2008_loss_z0-12',
+      year: 2008,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2008_2007_gain_z0-12',
+      year: 2008,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2008_2009_loss_z0-12',
+      year: 2009,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2009_2008_gain_z0-12',
+      year: 2009,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2009_2010_loss_z0-12',
+      year: 2010,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2010_2009_gain_z0-12',
+      year: 2010,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2010_2015_loss_z0-12',
+      year: 2015,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2015_2010_gain_z0-12',
+      year: 2015,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2015_2016_loss_z0-12',
+      year: 2016,
+      minZoom: 0,
+      maxZoom: 12
+    },
+    {
+      layerId: 'gl_2016_2015_gain_z0-12',
+      year: 2016,
+      minZoom: 0,
+      maxZoom: 12
+    },
   ]
 };
 
@@ -574,17 +696,3 @@ export default {
   layersMap,
   ...sourcesAndLayers
 };
-
-
-
-// gl_2009_2010_loss_z0-12/	—	Folder	—	—
-// Subject to object ACLs	—	–	-
-//  gl_2010_2009_gain_z0-12/	—	Folder	—	—
-// Subject to object ACLs	—	–	-
-//  gl_2010_2015_loss_z0-12/	—	Folder	—	—
-// Subject to object ACLs	—	–	-
-//  gl_2015_2010_gain_z0-12/	—	Folder	—	—
-// Subject to object ACLs	—	–	-
-//  gl_2015_2016_loss_z0-12/	—	Folder	—	—
-// Subject to object ACLs	—	–	-
-//  gl_2016_2015_gain_z0-12/
