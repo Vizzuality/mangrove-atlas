@@ -23,7 +23,7 @@ function processData(data) {
   return {
     gain: data.map(d => d.gain_m2 / 1000000).reduce((previous, current) => current + previous, 0),
     loss: -data.map(d => d.loss_m2 / 1000000).reduce((previous, current) => current + previous, 0),
-    net: data.map(d => d.net_change_m2 / 1000000)
+    net_change: data.map(d => d.net_change_m2 / 1000000)
       .reduce((previous, current) => current + previous, 0)
   };
 }
@@ -50,7 +50,7 @@ export const CONFIG = {
       metaData: widgetMeta(data.meta),
       chartConfig: {
         layout: 'vertical',
-        height: limit === 5 ? 400 : limit / 5 * 100 + 400,
+        height: limit === 5 ? 400 : limit / 5 * 100 + 350,
         stackOffset: 'sign',
         margin: { top: 20, right: 0, left: 0, bottom: 20 },
         // viewBox: '0 0 400 400',
@@ -149,7 +149,7 @@ export const CONFIG = {
                 );
               }
             },
-            net: {
+            net_change: {
               barSize: 10,
               fill: '#000',
               stackId: '2',
@@ -203,7 +203,7 @@ export const CONFIG = {
                 { title: 'name', key: 'name' },
                 { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value)} km²` },
                 { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value))} km²` },
-                { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'net', format: value => `${numberFormat(value)} km²` }
+                { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'net_change', format: value => `${numberFormat(value)} km²` }
               ]}
               label={{ key: 'name' }}
               payload={[

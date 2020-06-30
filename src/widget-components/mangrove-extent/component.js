@@ -61,7 +61,7 @@ function MangroveExtent({
     return null;
   }
 
-  const data = config.parse(rawData);
+  const data = config.parse(rawData, unit);
   const { chartConfig, metadata } = data;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),
@@ -103,7 +103,11 @@ function MangroveExtent({
     ];
     const totalCoverage = metadata.total / 1000;
     const coverage = (percentage * totalCoverage) / 100;
-    const quantity = numberFormat((unit === '%') ? percentage : coverage);
+
+    const quantity = ((unit === '%') && numberFormat(percentage))
+      || ((unit === 'ha') && numberFormat(coverage / 100))
+      || numberFormat(coverage);
+
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world'
       : <span className="notranslate">{`${currentLocation.name}`}</span>;
@@ -128,7 +132,7 @@ function MangroveExtent({
       <>
         <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
         <span>was </span>
-        <strong className="notranslate">{unit === 'ha' ? quantity / 100 : quantity} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
+        <strong className="notranslate">{quantity} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
         <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
       </>
     );
