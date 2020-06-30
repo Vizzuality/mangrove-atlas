@@ -3,44 +3,37 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 import looseJsonParse from 'utils/loose-json-parse';
+import moment from 'moment';
 
 const categoriesData = {
-  'Benefits From Conservation': {
-    color: '#86CEE8',
-    label: 'Benefits From Conservation'
+  '0–50': {
+    color: '#EAF19D',
+    label: '0 – 50'
   },
-  'Requires Conservation': {
-    color: '#ED896C',
-    label: 'Requires Conservation'
+  '50–100': {
+    color: '#B8E98E',
+    label: '50 – 100'
   },
-  'Requires Monitoring': {
-    color: '#FDC067',
-    label: 'Requires Monitoring'
+  '100–150': {
+    color: '#1B97C1',
+    label: '100 – 150'
   },
-  'Stable Ecosystem': {
-    color: '#0C3B6D',
-    label: 'Stable Ecosystem'
+  '150–200': {
+    color: '#1C52A3',
+    label: '150 – 200'
   },
-  'Monitoring Advised': {
-    color: '#1B9ACC',
-    label: 'Monitoring Advised'
+  '200–250': {
+    color: '#13267F',
+    label: '200 – 250'
   }
 };
 
-const scopeKeyMap = new Map([
-  ['short', 'ST_advice'],
-  ['medium', 'MT_advice'],
-  ['long', 'LT_advice']
-]);
-
-const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
+const widgetData = ({ list }) => list.flatMap((d) => {
   const year = new Date(d.date).getFullYear();
 
   if (!d.con_hotspot_summary_km2) return null;
 
-  const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
-    ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
-    : d.con_hotspot_summary_km2;
+  const hotSpotData = d.con_hotspot_summary_km2;
 
   const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
 
@@ -72,9 +65,69 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
+const chunk = (array, size) => {
+  const chunkedArr = [];
+  for (let i = 0; i < array.length; i++) {
+    const last = chunkedArr[chunkedArr.length - 1];
+    if (!last || last.length === size) {
+      chunkedArr.push([array[i]]);
+    } else {
+      last.push(array[i]);
+    }
+  }
+  return chunkedArr;
+};
+
+const getBars = (barValues) => {
+  if (!barValues) return null;
+  const barsData = Object.values(looseJsonParse(barValues));
+  const total = barsData.reduce((previous, current) => current + previous);
+  const chunkedData = chunk(barsData, 5);
+  let formattedData = chunkedData.map(
+    r => (r.reduce((previous, current) => current + previous))
+  );
+
+  formattedData = formattedData.map(data => data / total);
+  return formattedData;
+};
+
+const histogramData = (data) => {
+  if (!data) {
+    return null;
+  }
+
+  console.log(data)
+
+  const histogram = data.list.map(d => (
+    {
+      year: moment(d.date).year(),
+      '0–50': getBars(d.agb_hist_mgha_1)[0] * 100,
+      '50–100': getBars(d.agb_hist_mgha_1)[1] * 100,
+      '100–150': getBars(d.agb_hist_mgha_1)[2] * 100,
+      '150–200': getBars(d.agb_hist_mgha_1)[3] * 100,
+      '200–250': getBars(d.agb_hist_mgha_1)[4] * 100,
+    }
+  ));
+  console.log(histogram, '************')
+  return histogram;
+};
+
+const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
+
+const biomassCoverage = (data, yearSelected) => {
+  const yearData = data.find(d => d.date
+    .includes(yearSelected));
+  if (!yearData) return null;
+  return yearData.agb_mgha_1.toFixed(2);
+};
+
+const metaData = data => Array.from(new Set(
+  data.map(d => moment(d.date).year())
+));
+
 export const CONFIG = {
-  parse: (data, uiState) => ({
-    chartData: widgetData(data, uiState),
+  parse: data => ({
+    chartData: histogramData(data),
     metadata: widgetMeta(data),
     chartConfig: {
       type: 'pie',

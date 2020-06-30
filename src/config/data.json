@@ -172,6 +172,10 @@
       "id": "biomass"
     },
     {
+      "name": "Mangrove biomass pie",
+      "id": "biomass"
+    },
+    {
       "name": "Mangrove deforestation alerts",
       "id": "alerts-style"
     }
