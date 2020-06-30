@@ -7,7 +7,6 @@ import Select from 'components/select';
 
 import config from './config';
 
-
 function MangroveActivity({
   data: rawData,
   fetchRankingData,
@@ -38,7 +37,7 @@ function MangroveActivity({
       id: 'activity',
       value: {
         ...ui,
-        filter: filterState
+        filter: filterState,
       }
     });
     fetchRankingData({
@@ -47,12 +46,26 @@ function MangroveActivity({
     });
   };
 
+  const changeLimit = (limitState) => {
+    setUi({
+      id: 'activity',
+      value: {
+        ...ui,
+        limit: limitState
+      }
+    });
+    fetchRankingData({
+      ...ui,
+      limit: limitState
+    });
+  };
+
   if (!rawData || !rawData.meta) {
     return null;
   }
 
-  const { startDate, endDate, filter } = ui;
-  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
+  const { startDate, endDate, filter, limit } = ui;
+  const { chartData, metaData, chartConfig } = config.parse(rawData, filter, limit);
 
   const sortRanking = (data) => {
     const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
@@ -62,7 +75,8 @@ function MangroveActivity({
   // XXX: these options should come from an api ?
   const optionsFilter = [
     { value: 'gain', label: 'gain' },
-    { value: 'loss', label: 'loss' }
+    { value: 'loss', label: 'loss' },
+    { value: 'net_change', label: 'net increase' },
   ];
 
   const optionsYear = metaData.map(year => ({
@@ -99,10 +113,21 @@ function MangroveActivity({
     />
   );
 
+  const increaseLimit = (
+    <button type="button" onClick={value => changeLimit(limit === 5 ? limit + 5 : limit - 5, value)}>{limit === 5 ? 'more' : 'less'}</button>
+  );
+
+  const buttonStyles = {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    fontSize: '14px'
+  };
+
   const sentence = (
     <>
       Worldwide the 5 countries with the largest {filterSelector}
        in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+      <div style={buttonStyles}>{increaseLimit}</div>
     </>
   );
 

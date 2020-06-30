@@ -81,7 +81,6 @@
     {
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
-      "isActive": true,
       "layersIds": [
         "coverage-1996-2016"
       ]
@@ -98,22 +97,20 @@
       "name": "Mangrove blue carbon",
       "slug": "mangrove_blue_carbon",
       "layersIds": [
-        "blue_carbon"
+        "carbon"
       ]
     },
     {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "layersIds": [
-        "net-change-1996-2016"
+        "net"
       ]
     },
     {
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
-      "layersIds": [
-        "soc_co2e_2016_z0-12"
-      ]
+      "layersIds": []
     },
     {
       "name": "Mangrove alerts",
@@ -158,6 +155,10 @@
     {
       "name": "Mangrove extent",
       "id": "extent"
+    },
+    {
+      "name": "Mangrove blue carbon",
+      "id": "carbon"
     },
     {
       "name": "Mangrove change",
