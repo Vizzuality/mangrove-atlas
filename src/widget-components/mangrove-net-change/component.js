@@ -15,8 +15,7 @@ function MangroveNetChange({
   slug,
   name,
   ui: {
-    startYear,
-    endYear,
+    range,
     unit,
     currentYear
   },
@@ -26,11 +25,15 @@ function MangroveNetChange({
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'extent',
-        year: '2016',
+        id: 'net',
+        range,
+        year: '2016'
       }
     });
   }, [addFilter, unit]);
+
+  const { startYear, endYear } = range;
+
   if (!rawData) {
     return null;
   }
@@ -46,26 +49,24 @@ function MangroveNetChange({
     addFilter({
       filter: {
         id: 'net',
-        startYear: year,
-        endYear
+        range: { startYear: year, endYear }
       }
     });
-    setUi({ id: 'net', value: { endYear, startYear: year, unit } });
+    setUi({ id: 'net', value: { range: { startYear: year, endYear }, year, unit } });
   };
   const changeEndYear = (year) => {
     addFilter({
       filter: {
         id: 'net',
-        startYear,
-        endYear: year
+        range: { startYear, endYear: year }
       }
     });
-    setUi({ id: 'net', value: { startYear, endYear: year, unit } });
+    setUi({ id: 'net', value: { range: { startYear, endYear: year }, year, unit } });
   };
 
   const widgetData = chartData.filter(
-    ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
-      && parseInt(y, 10) <= parseInt(endYear, 10)
+    ({ year: y }) => parseInt(y, 10) >= parseInt(range.startYear, 10)
+      && parseInt(y, 10) <= parseInt(range.endYear, 10)
   );
 
   // How this change is calculated?
@@ -85,27 +86,27 @@ function MangroveNetChange({
   const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
   const changeUnit = (selectedUnit) => {
-    setUi({ id: 'net', value: { startYear, endYear, unit: selectedUnit } });
+    setUi({ id: 'net', value: { unit: selectedUnit } });
   };
 
   const startSelector = (
     <Select
       className="notranslate netChange"
       prefix="start-year"
-      value={startYear}
+      value={range.startYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10)
-        || option.value === startYear}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(range.endYear, 10)
+        || option.value === range.startYear}
       onChange={changeStartYear}
     />);
   const endSelector = (
     <Select
       className="notranslate"
       prefix="end-year"
-      value={endYear}
+      value={currentYear}
       options={optionsYears}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10)
-        || option.value === endYear}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(range.startYear, 10)
+        || option.value === currentYear}
       onChange={changeEndYear}
     />);
   const quantity = unit === 'km' ? numberFormat(Math.abs(change / 1000000)) : numberFormat(Math.abs(change / 10000));
