@@ -51,20 +51,7 @@ function MangroveBlueCarbon({
 
   const data = config.parse(rawData);
   const { chartConfig, metadata } = data;
-  const optionsYears = sortBy(metadata.years.map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['value']);
   let sentence = null;
-  const changeYear = (current) => {
-    addFilter({
-      filter: {
-        id: 'coverage-1996-2016',
-        year: current
-      }
-    });
-    setUi({ id: 'coverage', value: { unit, currentYear: current } });
-  };
 
   const widgetData = processData(data, currentYear);
 
@@ -82,20 +69,11 @@ function MangroveBlueCarbon({
       ? 'the world’s'
       : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
 
-    const yearSelector = (
-      <Select
-        className="notranslate"
-        width="auto"
-        value={currentYear}
-        options={optionsYears}
-        onChange={changeYear}
-      />
-    );
 
     sentence = (
       <>
         <strong>TOTAL_CARBON</strong> kg C m-2 was estimated to be stored in mangrove habitat In
-        <strong> {location} </strong>during {yearSelector}; with
+        <strong> {location} </strong>during 2016; with
         <strong> IN_BIOMASS</strong> in tree biomass, and
         <strong> IN_SOIL</strong> in the upper 1m of soil.
       </>

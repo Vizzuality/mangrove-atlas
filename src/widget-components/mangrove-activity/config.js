@@ -36,7 +36,7 @@ const widgetData = data => data.map(location => ({
 const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
 
 export const CONFIG = {
-  parse: (data, filter) => {
+  parse: (data, filter, limit) => {
     const chartData = widgetData(data.data);
     const dataRanked = sortRanking(chartData, filter);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
@@ -50,7 +50,7 @@ export const CONFIG = {
       metaData: widgetMeta(data.meta),
       chartConfig: {
         layout: 'vertical',
-        height: 400,
+        height: limit === 5 ? 400 : limit / 5 * 100 + 400,
         stackOffset: 'sign',
         margin: { top: 20, right: 0, left: 0, bottom: 20 },
         // viewBox: '0 0 400 400',
@@ -90,7 +90,7 @@ export const CONFIG = {
                   return (
                     <g className={styles.activity_widget}>
                       <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso } }}>
-                        <text className={styles.link} x="50%" y={y - 15} textAnchor="middle" fill="#000">
+                        <text className={styles.link} x="50%" y={y - 10} textAnchor="middle" fill="#000">
                           {name}
                         </text>
                       </Link>
@@ -177,11 +177,15 @@ export const CONFIG = {
 
           //eslint-disable-next-line react/prop-types
           content: ({ payload }) => {
-            const labels = payload.map(({ color, payload: labelPayload }) => ({
-              color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
-              value: labelPayload.legend,
-         //     variant: (labelPayload.dataKey === 'net') ? 'bar' : 'rect'
-            }));
+            // const labels = payload.map(({ color, payload: labelPayload }) => ({
+            //   color: color === '#3182bd' ? color.replace('#3182bd', 'rgba(0, 0, 0, 0.7)') : color,
+            //   value: labelPayload.legend,
+            // }));
+            const labels = [
+              { color: '#000', value: 'Net' },
+              { color: '#EB6240', value: 'Loss' },
+              { color: '#A6CB10', value: 'Gain' }
+            ];
 
             return <WidgetLegend widgetSpecific="activity" direction="vertical" groups={{ labels }} position="left" />;
           }

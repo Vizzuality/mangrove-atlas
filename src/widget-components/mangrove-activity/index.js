@@ -10,7 +10,9 @@ const mapStateToProps = state => ({
   ui: state.widgets.ui.activity || {
     startDate: 1996,
     endDate: 2016,
-    filter: 'gain'
+    filter: 'gain',
+    order: 'desc',
+    limit: 5
   }
 });
 

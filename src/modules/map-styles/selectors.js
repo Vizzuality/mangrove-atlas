@@ -110,6 +110,13 @@ export const mapStyle = createSelector(
         ];
       }
 
+      if (layerMap) {
+        return [
+          ...acc,
+          ...layerMap.map(layerMapItem => layerMapItem.layerId)
+        ];
+      }
+
       return acc;
     }, []);
 
