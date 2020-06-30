@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import sumBy from 'lodash/sumBy';
 
@@ -16,16 +16,26 @@ function MangroveNetChange({
   name,
   ui: {
     startYear,
-    endYear
+    endYear,
+    unit,
+    currentYear
   },
   setUi,
   ...props
 }) {
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'extent',
+        year: '2016',
+      }
+    });
+  }, [addFilter, unit]);
   if (!rawData) {
     return null;
   }
 
-  const data = config.parse(rawData);
+  const data = config.parse(rawData, unit);
   const { metadata, chartData, chartConfig } = data;
   const optionsYears = metadata.years.map(year => ({
     label: year.toString(),
@@ -35,27 +45,27 @@ function MangroveNetChange({
   const changeStartYear = (year) => {
     addFilter({
       filter: {
-        id: 'net-change-1996-2016',
+        id: 'net',
         startYear: year,
         endYear
       }
     });
-    setUi({ id: 'netChange', value: { endYear, startYear: year } });
+    setUi({ id: 'net', value: { endYear, startYear: year, unit } });
   };
   const changeEndYear = (year) => {
     addFilter({
       filter: {
-        id: 'net-change-1996-2016',
+        id: 'net',
         startYear,
         endYear: year
       }
     });
-    setUi({ id: 'netChange', value: { startYear, endYear: year } });
+    setUi({ id: 'net', value: { startYear, endYear: year, unit } });
   };
 
   const widgetData = chartData.filter(
     ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
-    && parseInt(y, 10) <= parseInt(endYear, 10)
+      && parseInt(y, 10) <= parseInt(endYear, 10)
   );
 
   // How this change is calculated?
@@ -74,7 +84,9 @@ function MangroveNetChange({
 
   const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
-  const quantity = numberFormat(Math.abs(change / 1000000));
+  const changeUnit = (selectedUnit) => {
+    setUi({ id: 'net', value: { startYear, endYear, unit: selectedUnit } });
+  };
 
   const startSelector = (
     <Select
@@ -96,10 +108,24 @@ function MangroveNetChange({
         || option.value === endYear}
       onChange={changeEndYear}
     />);
+  const quantity = unit === 'km' ? numberFormat(Math.abs(change / 1000000)) : numberFormat(Math.abs(change / 10000));
+
+  const unitOptions = [
+    { value: 'km', label: 'km²' },
+    { value: 'ha', label: 'ha' }
+  ];
+
+  const unitSelector = (
+    <Select
+      value={unit}
+      options={unitOptions}
+      onChange={changeUnit}
+    />
+  );
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong className="notranslate">{quantity} km<sup>2</sup></strong>
+      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong className="notranslate">{quantity} {unitSelector}</strong>
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );

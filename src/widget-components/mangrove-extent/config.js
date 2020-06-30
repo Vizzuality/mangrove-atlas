@@ -81,7 +81,7 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload.map((item) => {
-            const value = (item.payload.unit === 'ha' && item.payload.coverage / 100)
+            const value = (item.payload.unit === 'ha' && item.payload.coverage * 100)
               || (item.payload.unit === '%' && item.payload.percentage)
               || (item.payload.coverage);
             return {
@@ -109,7 +109,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage / 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km²'}`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km²'}`, position: '_column' },
             ]}
           />
         )

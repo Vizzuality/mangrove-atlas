@@ -105,7 +105,7 @@ function MangroveExtent({
     const coverage = (percentage * totalCoverage) / 100;
 
     const quantity = ((unit === '%') && numberFormat(percentage))
-      || ((unit === 'ha') && numberFormat(coverage / 100))
+      || ((unit === 'ha') && numberFormat(coverage * 100))
       || numberFormat(coverage);
 
     const location = (currentLocation.location_type === 'worldwide')
@@ -130,7 +130,7 @@ function MangroveExtent({
 
     sentence = (
       <>
-        <span>The area of mangrove habitat in </span><strong>{location} </strong><br />
+        <span>The area of mangrove habitat in </span><strong>{location} </strong>
         <span>was </span>
         <strong className="notranslate">{quantity} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear <br />coverage of </span>
         <strong className="notranslate">{numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
