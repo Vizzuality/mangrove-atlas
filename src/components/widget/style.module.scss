@@ -47,6 +47,12 @@
         background-position: auto;
         opacity: 1;
       }
+
+      .title {
+        & svg {
+          display: none;
+        }
+      }
     }
 
     .widget_template {
