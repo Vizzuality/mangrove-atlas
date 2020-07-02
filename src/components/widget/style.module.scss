@@ -38,15 +38,21 @@
       opacity: 0.0;
     }
 
+    &:last-of-type:not(:last-child) {
+
+      background-position: 0 700px;
+
+      .content {
+        max-height: 400px;
+        background-position: auto;
+        opacity: 1;
+      }
+    }
+
     .widget_template {
       overflow: hidden;
       padding-top: 50px;
     }
-
-  }
-
-  &._collapsed:last-child {
-    background-position: 0 700px;
   }
 
   &._layerActive::before {
@@ -58,7 +64,6 @@
     bottom: 5px;
     border: 2px solid rgba($primary, 0.35);
     border-radius: $border-radius;
-
     pointer-events: none;
   }
 
