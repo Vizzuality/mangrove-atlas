@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640px" height="811px" viewBox="0 0 640 811" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>bg-waves</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="640" height="811"></rect>
+        <filter x="-1.2%" y="-1.0%" width="102.5%" height="102.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="6" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.657070879   0 0 0 0 0.657070879   0 0 0 0 0.657070879  0 0 0 0.179496285 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Assets" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="bg-waves">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" opacity="0">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                <rect stroke="#ECECEF" stroke-width="1" stroke-linejoin="square" fill="#F7F9F9" fill-rule="evenodd" x="0.5" y="0.5" width="639" height="810"></rect>
+            </g>
+            <g id="Group-19" mask="url(#mask-2)">
+                <g transform="translate(-195.000000, -244.000000)" id="Rectangle-6">
+                    <path d="M184.173604,0 L197.037329,0 L691.714084,94.3302752 C790.571361,185.610092 837,278.541667 831,373.125 C822,515 736.480923,599.662602 614.389543,564.201835 C378.992474,495.832057 414.511524,702.630424 287.795101,816.93578 C255.104925,846.424161 220.173225,897.445568 183,970 L184.173604,0 Z" fill="#00857F" opacity="0.25"></path>
+                    <path d="M184.153501,145 L196.796875,145 L683,211.25 C781.666667,243.75 827,305 819,395 C807,530 727,566.154791 607,541.25 C375.635195,493.232565 410.545818,638.47111 286,718.75 C253.869794,739.460268 219.536461,775.293601 183,826.25 L184.153501,145 Z" fill="#00C5BD"></path>
+                    <path d="M1.57517868,15 L12.7699514,15 L443.266866,69.653211 C502.451104,94.6385321 528.501519,144.254128 521.418111,218.5 C510.792998,329.868807 391.638558,339.149541 333.707788,339.149541 C125.347514,339.149541 202.028834,422.091029 91.7527224,488.317431 C63.3038013,505.402452 32.9041734,534.963308 0.55383886,577 L1.57517868,15 Z" fill="#00857F" opacity="0"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

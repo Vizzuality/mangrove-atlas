@@ -43,6 +43,12 @@
       position: fixed;
       top: -110px;
       max-width: 490px;
+
+      .buttonsWrapper {
+        display: flex;
+        justify-content: flex-end;
+      }
+
     }
   }
 
@@ -76,13 +82,6 @@
     box-sizing: border-box;
     height: 60px;
     width: 60px;
-    border: 2px solid rgba(0,0,0,0.85);
-    border-radius: 50%;
-    opacity: 0.2;
-
-    :global(.svg-inline--fa path) {
-      fill: $primary;
-    }
   }
 
   .printOnly {
@@ -102,7 +101,7 @@
 
     .bg,
     .bgFixed {
-      width: 900px;
+      display: none;
     }
 
     .logo {

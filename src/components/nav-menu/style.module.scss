@@ -1,14 +1,11 @@
 @import 'styles/vars';
 
-.navMenu {
-  position: absolute;
-  top: 7px;
-  left: 20px;
+.navMenu, .fixedNavMenu {
   z-index: 4;
 
   > button {
     background-image: url('./menu.svg');
-    height: 68px;
+    height: 72px;
     width: 72px;
     cursor: pointer;
   }
@@ -20,6 +17,16 @@
   @media screen and (max-width: map-get($breakpoints, sm)) {
     left: -4px;
   }
+}
+
+.navMenu {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}
+
+.fixefNavMenu {
+  position: relative;
 }
 
 .modalContent {
@@ -90,3 +97,4 @@
     }
   }
 }
+

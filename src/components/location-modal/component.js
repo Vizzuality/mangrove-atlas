@@ -74,15 +74,16 @@ class LocationSelector extends PureComponent {
               autoFocus
               type="text"
               className={classnames(styles.searchInput, 'notranslate')}
-              placeholder={currentLocation.name}
+              placeholder="Type name"
               onChange={this.updateSearchTerm}
             />
-            {highlightedPlaces && (
+            {highlightedPlaces && !searchTerm && (
               <HighlightedPlaces
                 data={highlightedPlacesConfig.parse(highlightedPlaces)}
                 currentLocation={currentLocation}
               />
             )}
+
             <LocationsList locationsData={locationsData} />
           </Modal>
         </MediaQuery>
@@ -99,7 +100,7 @@ class LocationSelector extends PureComponent {
                   autoFocus
                   type="text"
                   className={classnames(styles.searchInput, 'notranslate')}
-                  placeholder={currentLocation.name}
+                  placeholder="Type name"
                   onChange={this.updateSearchTerm}
                 />
               </div>
