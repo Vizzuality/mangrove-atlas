@@ -17,6 +17,7 @@ function MangroveNetChange({
   ui: {
     range,
     unit,
+    years,
     currentYear
   },
   setUi,
@@ -27,12 +28,12 @@ function MangroveNetChange({
       filter: {
         id: 'net',
         range,
+        years,
         year: '2016'
       }
     });
   }, [addFilter, unit]);
 
-  const { startYear, endYear } = range;
 
   if (!rawData) {
     return null;
@@ -40,6 +41,8 @@ function MangroveNetChange({
 
   const data = config.parse(rawData, unit);
   const { metadata, chartData, chartConfig } = data;
+  const { startYear, endYear } = range;
+
   const optionsYears = metadata.years.map(year => ({
     label: year.toString(),
     value: year.toString()
@@ -49,19 +52,36 @@ function MangroveNetChange({
     addFilter({
       filter: {
         id: 'net',
-        range: { startYear: year, endYear }
+        range: { startYear: year, endYear },
+        years: metadata.years.filter(i => i >= year && i <= endYear),
       }
     });
-    setUi({ id: 'net', value: { range: { startYear: year, endYear }, year, unit } });
+    setUi({
+      id: 'net',
+      value: {
+        range: { startYear: year, endYear },
+        year,
+        unit,
+      }
+    });
   };
   const changeEndYear = (year) => {
     addFilter({
       filter: {
         id: 'net',
-        range: { startYear, endYear: year }
+        range: { startYear, endYear: year },
+        years: metadata.years.filter(i => i >= year && i <= endYear),
       }
     });
-    setUi({ id: 'net', value: { range: { startYear, endYear: year }, year, unit } });
+    setUi({
+      id: 'net',
+      value: {
+        range: { startYear, endYear: year },
+        year,
+        years,
+        unit,
+      }
+    });
   };
 
   const widgetData = chartData.filter(
