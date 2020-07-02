@@ -10,7 +10,7 @@
           "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
+          "mangrove_biomass_pie",
           "mangrove_activity"
         ]
       },
@@ -22,8 +22,7 @@
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass_pie"
         ]
       },
       {
@@ -34,8 +33,7 @@
           "mangrove_net_change",
           "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass_pie"
         ]
       },
       {
@@ -47,8 +45,7 @@
           "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass_pie"
         ]
       }
     ],
@@ -59,10 +56,10 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
+          "mangrove_blue_carbon",
           "mangrove_alerts",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_biomass_pie"
         ]
       }
     ]
@@ -89,7 +86,7 @@
       ]
     },
     {
-      "name": "Mangrove blue carbon",
+      "name": "Mangrove blue carbon and biomass",
       "slug": "mangrove_blue_carbon",
       "layersIds": [
         "carbon"
@@ -127,7 +124,7 @@
       ]
     },
     {
-      "name": "Mangrove biomass pie",
+      "name": "Mangrove biomass",
       "slug": "mangrove_biomass_pie",
       "layersIds": [
         "biomass"

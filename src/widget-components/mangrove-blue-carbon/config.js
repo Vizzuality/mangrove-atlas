@@ -8,7 +8,6 @@ import { format } from 'd3-format';
 const numberFormat = format(',.2f');
 
 const widgetData = ({ list, metadata }) => {
-
   if (list && list.length) {
     const { location_coast_length_m: total } = metadata;
 
@@ -49,7 +48,6 @@ const widgetMeta = ({ list, metadata }) => {
     total: null
   };
 };
-
 export const CONFIG = {
   parse: data => ({
     chartData: widgetData(data),

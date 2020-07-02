@@ -31,12 +31,10 @@ function MangroveBiomassPie({
   if (!rawData) {
     return null;
   }
-
- // const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
-//console.log(charData, 'chart data')
-  // if (chartData.length <= 0) {
-  //   return null;
-  // }
+  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
+  if (!chartData || chartData.length <= 0) {
+    return null;
+  }
 
   const dateHandler = (value) => {
     setUi({ id: 'biomass', value });
@@ -48,11 +46,10 @@ function MangroveBiomassPie({
     });
   };
 
-  const dateOptions = [2000]
-  // metadata && sortBy(metadata.years.map(year => ({
-  //   label: year.toString(),
-  //   value: year.toString()
-  // })), ['value']);
+  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
+    label: year.toString(),
+    value: year.toString()
+  })), ['value']);
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
@@ -69,27 +66,27 @@ function MangroveBiomassPie({
 
   const sentence = (
     <>
-      Mean mangrove above-ground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{'coverage'} mg ha<sup>-1</sup></strong> in {yearSelector}.
+      Mean mangrove aboveground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in <strong>{2016 || yearSelector}</strong>.
     </>
   );
 
-  // const widgetData = {
-  //  // data: chartData,
-  //   config: chartConfig
-  // };
+  const widgetData = {
+    data: chartData,
+    config: chartConfig
+  };
 
-  return ('hola'
-    // <ChartWidget
-    //   name={name}
-    // //  data={chartData}
-    //   slug={slug}
-    //   filename={slug}
-    //   isCollapsed={isCollapsed}
-    //   sentence={sentence}
-    //   chartData={widgetData}
-    //   {...props}
-    // />
+  return (
+    <ChartWidget
+      name={name}
+      data={chartData}
+      slug={slug}
+      filename={slug}
+      isCollapsed={isCollapsed}
+      sentence={sentence}
+      chartData={widgetData}
+      {...props}
+    />
   );
 }
 

@@ -47,8 +47,6 @@ const histogramData = (data) => {
     return null;
   }
 
-  console.log(data)
-
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),

@@ -253,7 +253,6 @@ class Chart extends PureComponent {
                   key={key}
                   data={data}
                   dataKey={key}
-                  leb
                   {...pies[key]}
                 >
 

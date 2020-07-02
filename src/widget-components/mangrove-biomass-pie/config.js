@@ -1,9 +1,17 @@
 import React from 'react';
+
+// utils
 import groupBy from 'lodash/groupBy';
+import looseJsonParse from 'utils/loose-json-parse';
+import sortBy from 'lodash/sortBy';
+import { format } from 'd3-format';
+
+// components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
-import looseJsonParse from 'utils/loose-json-parse';
-import moment from 'moment';
+import WidgetCustomLabel from 'components/widget-custom-label';
+
+const numberFormat = format(',.3r');
 
 const categoriesData = {
   '0–50': {
@@ -78,105 +86,97 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
-const getBars = (barValues) => {
-  if (!barValues) return null;
-  const barsData = Object.values(looseJsonParse(barValues));
+const getData = (data, selectedYear) => {
+  if (!data || !data.length) return null;
+  const barsData = Object.values(looseJsonParse(data[0]));
   const total = barsData.reduce((previous, current) => current + previous);
   const chunkedData = chunk(barsData, 5);
   let formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
 
-  formattedData = formattedData.map(data => data / total);
-  return formattedData;
+  formattedData = formattedData.map(d => d / total);
+
+  return [
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+  ];
 };
 
-const histogramData = (data) => {
-  if (!data) {
-    return null;
-  }
-
-  console.log(data)
-
-  const histogram = data.list.map(d => (
-    {
-      year: moment(d.date).year(),
-      '0–50': getBars(d.agb_hist_mgha_1)[0] * 100,
-      '50–100': getBars(d.agb_hist_mgha_1)[1] * 100,
-      '100–150': getBars(d.agb_hist_mgha_1)[2] * 100,
-      '150–200': getBars(d.agb_hist_mgha_1)[3] * 100,
-      '200–250': getBars(d.agb_hist_mgha_1)[4] * 100,
-    }
-  ));
-  console.log(histogram, '************')
-  return histogram;
-};
-
-const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
-
-const biomassCoverage = (data, yearSelected) => {
-  const yearData = data.find(d => d.date
+const biomassCoverage = ({ list }, yearSelected) => {
+  const yearData = list.find(d => d.date
     .includes(yearSelected));
   if (!yearData) return null;
   return yearData.agb_mgha_1.toFixed(2);
 };
 
-const metaData = data => Array.from(new Set(
-  data.map(d => moment(d.date).year())
-));
+const filterData = ({ list }, yearSelected) => sortBy(
+  list
+    .filter(d => d.agb_mgha_1 !== null
+      && d.agb_hist_mgha_1 !== null
+      && d.date.includes(yearSelected)),
+  ['date']
+).map(i => i.agb_hist_mgha_1);
+
 
 export const CONFIG = {
-  parse: data => ({
-    chartData: histogramData(data),
-    metadata: widgetMeta(data),
-    chartConfig: {
-      type: 'pie',
-      layout: 'centric',
-      margin: { top: 20, right: 0, left: 0, bottom: 0 },
-      xKey: 'percentage',
-      yKeys: {
-        pies: {
-          y: {
-            cx: '50%',
-            cy: '50%',
-            paddingAngle: 3,
-            dataKey: 'percentage',
-            nameKey: 'label',
-            innerRadius: '60%',
-            outerRadius: '80%',
-            isAnimationActive: false
+  parse: (data, yearSelected = 2016) => {
+    const dataFiltered = filterData(data, yearSelected);
+    return {
+      chartData: getData(dataFiltered),
+      metadata: widgetMeta(filterData),
+      coverage: biomassCoverage(data, yearSelected),
+      chartConfig: {
+        type: 'pie',
+        layout: 'centric',
+        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        xKey: 'percentage',
+        yKeys: {
+          pies: {
+            y: {
+              cx: '50%',
+              cy: '50%',
+              dataKey: 'percentage',
+              nameKey: 'label',
+              innerRadius: '60%',
+              outerRadius: '80%',
+              isAnimationActive: false
+            }
           }
+        },
+        legend: {
+          align: 'left',
+          verticalAlign: 'middle',
+          layout: 'vertical',
+          content: (properties) => {
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.payload.label);
+            return <WidgetLegend groups={groups} unit="km²" />;
+          }
+        },
+        tooltip: {
+          cursor: false,
+          content: (
+            <WidgetTooltip
+              style={{
+                flexDirection: 'column',
+                marginTop: '10px',
+                marginLeft: '-50px'
+              }}
+              settings={[
+                { key: 'label' },
+                { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
+                { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
+              ]}
+            />
+          )
         }
-      },
-      legend: {
-        align: 'left',
-        verticalAlign: 'middle',
-        layout: 'vertical',
-        content: (properties) => {
-          const { payload } = properties;
-          const groups = groupBy(payload, p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km²" />;
-        }
-      },
-      tooltip: {
-        cursor: false,
-        content: (
-          <WidgetTooltip
-            style={{
-              flexDirection: 'column',
-              marginTop: '10px',
-              marginLeft: '-50px'
-            }}
-            settings={[
-              { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
-            ]}
-          />
-        )
       }
     }
-  })
+  }
 };
 
 export default CONFIG;
