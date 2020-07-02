@@ -1,113 +1,90 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from 'components/select';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
-import { format } from 'd3-format';
+import sortBy from 'lodash/sortBy';
+
 import config from './config';
 
-import styles from './style.module.scss';
-
-const numberFormat = format(',.2f');
-
-function processData(data, currentYear) {
-  const { chartData } = data;
-  if (!chartData[0]) return null;
-  const currentYearData = chartData.filter(d => d.x === currentYear);
-  if (!currentYearData) {
-    return null;
-  }
-  return currentYearData;
-}
 
 function MangroveBiomassPie({
   data: rawData,
   currentLocation,
-  addFilter,
   isCollapsed,
   slug,
   name,
-  ui: scope,
+  addFilter,
+  ui: yearSelected,
   setUi,
   ...props
 }) {
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: '2016'
+      }
+    });
+  }, [addFilter]);
+
+
   if (!rawData) {
     return null;
   }
-
-
-  const data = config.parse(rawData, { scope });
-  const { chartConfig } = data;
-  const currentYear = 1996;
-  const widgetData = processData(data, currentYear);
-  let sentence = null;
-
-  if (widgetData === null) {
+  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
+  if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const chartData = {
-    data: widgetData,
-    config: chartConfig
+  const dateHandler = (value) => {
+    setUi({ id: 'biomass', value });
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: value
+      }
+    });
   };
 
-  try {
-    const location = (currentLocation.location_type === 'worldwide')
-      ? 'the world'
-      : <span className="notranslate">{`${currentLocation.name}`}</span>;
+  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
+    label: year.toString(),
+    value: year.toString()
+  })), ['value']);
 
-    const highestValue = numberFormat(Math.max(
-      ...chartData.data.map(o => (o.percentage ? o.percentage : null))
-    ));
+  const location = (currentLocation.location_type === 'worldwide')
+    ? 'the world'
+    : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-    const highestCategory = (chartData.data).find(
-      findData => numberFormat(Number(findData.percentage)) === highestValue
-    ).label;
+  const yearSelector = (
+    <Select
+      value={yearSelected}
+      isOptionDisabled={option => option.value === yearSelected}
+      options={dateOptions}
+      onChange={value => dateHandler(value)}
+    />
+  );
 
-    const scopeOptions = [
-      { label: 'short–term', value: 'short' },
-      { label: 'medium–term', value: 'medium' },
-      { label: 'long–term', value: 'long' }
-    ];
+  const sentence = (
+    <>
+      Mean mangrove aboveground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in <strong>{2016 || yearSelector}</strong>.
+    </>
+  );
 
-    const changeScopeHandler = (value) => {
-      setUi({ id: 'conservation_hotspots', value });
-      addFilter({
-        filter: {
-          id: 'cons-hotspots',
-          scope: value
-        }
-      });
-    };
-
-    const scopeSelector = (
-      <Select
-        className={styles.hotspotSelect}
-        value={scope}
-        options={scopeOptions}
-        isOptionDisabled={option => option.value === scope}
-        onChange={changeScopeHandler}
-      />
-    );
-
-    sentence = (
-      <>
-        In the <span className="notranslate">{scopeSelector}</span> <strong className="notranslate">{highestValue} %</strong> of the mangrove habitat in <strong>{location}</strong> was classed as <strong>{highestCategory}</strong>.
-      </>
-    );
-  } catch (e) {
-    sentence = <span>No data for this widget.</span>;
-  }
-  if (!widgetData) return null;
+  const widgetData = {
+    data: chartData,
+    config: chartConfig
+  };
 
   return (
     <ChartWidget
       name={name}
-      data={data}
+      data={chartData}
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
       sentence={sentence}
-      chartData={chartData}
+      chartData={widgetData}
       {...props}
     />
   );
@@ -128,13 +105,13 @@ MangroveBiomassPie.propTypes = {
 MangroveBiomassPie.defaultProps = {
   data: null,
   currentLocation: null,
-  addFilter: () => {},
+  addFilter: () => { },
   isCollapsed: false,
   slug: null,
   name: null,
   metadata: null,
   ui: null,
-  setUi: () => {}
+  setUi: () => { }
 };
 
 export default MangroveBiomassPie;
