@@ -1,46 +1,47 @@
 import React from 'react';
+
+// utils
 import groupBy from 'lodash/groupBy';
+import looseJsonParse from 'utils/loose-json-parse';
+import sortBy from 'lodash/sortBy';
+import { format } from 'd3-format';
+
+// components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
-import looseJsonParse from 'utils/loose-json-parse';
+import WidgetCustomLabel from 'components/widget-custom-label';
+
+const numberFormat = format(',.3r');
 
 const categoriesData = {
-  'Benefits From Conservation': {
-    color: '#86CEE8',
-    label: 'Benefits From Conservation'
+  '0–50': {
+    color: '#EAF19D',
+    label: '0 – 50'
   },
-  'Requires Conservation': {
-    color: '#ED896C',
-    label: 'Requires Conservation'
+  '50–100': {
+    color: '#B8E98E',
+    label: '50 – 100'
   },
-  'Requires Monitoring': {
-    color: '#FDC067',
-    label: 'Requires Monitoring'
+  '100–150': {
+    color: '#1B97C1',
+    label: '100 – 150'
   },
-  'Stable Ecosystem': {
-    color: '#0C3B6D',
-    label: 'Stable Ecosystem'
+  '150–200': {
+    color: '#1C52A3',
+    label: '150 – 200'
   },
-  'Monitoring Advised': {
-    color: '#1B9ACC',
-    label: 'Monitoring Advised'
+  '200–250': {
+    color: '#13267F',
+    label: '200 – 250'
   }
 };
 
-const scopeKeyMap = new Map([
-  ['short', 'ST_advice'],
-  ['medium', 'MT_advice'],
-  ['long', 'LT_advice']
-]);
-
-const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
+const widgetData = ({ list }) => list.flatMap((d) => {
   const year = new Date(d.date).getFullYear();
 
   if (!d.con_hotspot_summary_km2) return null;
 
-  const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
-    ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
-    : d.con_hotspot_summary_km2;
+  const hotSpotData = d.con_hotspot_summary_km2;
 
   const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
 
@@ -72,58 +73,110 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
+const chunk = (array, size) => {
+  const chunkedArr = [];
+  for (let i = 0; i < array.length; i++) {
+    const last = chunkedArr[chunkedArr.length - 1];
+    if (!last || last.length === size) {
+      chunkedArr.push([array[i]]);
+    } else {
+      last.push(array[i]);
+    }
+  }
+  return chunkedArr;
+};
+
+const getData = (data, selectedYear) => {
+  if (!data || !data.length) return null;
+  const barsData = Object.values(looseJsonParse(data[0]));
+  const total = barsData.reduce((previous, current) => current + previous);
+  const chunkedData = chunk(barsData, 5);
+  let formattedData = chunkedData.map(
+    r => (r.reduce((previous, current) => current + previous))
+  );
+
+  formattedData = formattedData.map(d => d / total);
+
+  return [
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+  ];
+};
+
+const biomassCoverage = ({ list }, yearSelected) => {
+  const yearData = list.find(d => d.date
+    .includes(yearSelected));
+  if (!yearData) return null;
+  return yearData.agb_mgha_1.toFixed(2);
+};
+
+const filterData = ({ list }, yearSelected) => sortBy(
+  list
+    .filter(d => d.agb_mgha_1 !== null
+      && d.agb_hist_mgha_1 !== null
+      && d.date.includes(yearSelected)),
+  ['date']
+).map(i => i.agb_hist_mgha_1);
+
+
 export const CONFIG = {
-  parse: (data, uiState) => ({
-    chartData: widgetData(data, uiState),
-    metadata: widgetMeta(data),
-    chartConfig: {
-      type: 'pie',
-      layout: 'centric',
-      margin: { top: 20, right: 0, left: 0, bottom: 0 },
-      xKey: 'percentage',
-      yKeys: {
-        pies: {
-          y: {
-            cx: '50%',
-            cy: '50%',
-            paddingAngle: 3,
-            dataKey: 'percentage',
-            nameKey: 'label',
-            innerRadius: '60%',
-            outerRadius: '80%',
-            isAnimationActive: false
+  parse: (data, yearSelected = 2016) => {
+    const dataFiltered = filterData(data, yearSelected);
+    return {
+      chartData: getData(dataFiltered),
+      metadata: widgetMeta(filterData),
+      coverage: biomassCoverage(data, yearSelected),
+      chartConfig: {
+        type: 'pie',
+        layout: 'centric',
+        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        xKey: 'percentage',
+        yKeys: {
+          pies: {
+            y: {
+              cx: '50%',
+              cy: '50%',
+              dataKey: 'percentage',
+              nameKey: 'label',
+              innerRadius: '60%',
+              outerRadius: '80%',
+              isAnimationActive: false
+            }
           }
+        },
+        legend: {
+          align: 'left',
+          verticalAlign: 'middle',
+          layout: 'vertical',
+          content: (properties) => {
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.payload.label);
+            return <WidgetLegend groups={groups} unit="km²" />;
+          }
+        },
+        tooltip: {
+          cursor: false,
+          content: (
+            <WidgetTooltip
+              style={{
+                flexDirection: 'column',
+                marginTop: '10px',
+                marginLeft: '-50px'
+              }}
+              settings={[
+                { key: 'label' },
+                { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
+                { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
+              ]}
+            />
+          )
         }
-      },
-      legend: {
-        align: 'left',
-        verticalAlign: 'middle',
-        layout: 'vertical',
-        content: (properties) => {
-          const { payload } = properties;
-          const groups = groupBy(payload, p => p.payload.label);
-          return <WidgetLegend groups={groups} unit="km²" />;
-        }
-      },
-      tooltip: {
-        cursor: false,
-        content: (
-          <WidgetTooltip
-            style={{
-              flexDirection: 'column',
-              marginTop: '10px',
-              marginLeft: '-50px'
-            }}
-            settings={[
-              { key: 'label' },
-              { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
-            ]}
-          />
-        )
       }
     }
-  })
+  }
 };
 
 export default CONFIG;

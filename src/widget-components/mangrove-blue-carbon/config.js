@@ -48,7 +48,6 @@ const widgetMeta = ({ list, metadata }) => {
     total: null
   };
 };
-
 export const CONFIG = {
   parse: data => ({
     chartData: widgetData(data),
