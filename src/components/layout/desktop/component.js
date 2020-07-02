@@ -15,34 +15,35 @@ const DesktopLayout = ({ location }) => {
     stylesOverride = { fontSize: 30, lineHeight: 1 };
   }
 
-  return (<div>
-    <div className={styles.header}>
-      <NavMenu />
-      <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
-      {location && (
-        <h1
-          className={styles.title}
-          style={stylesOverride}
-        >
-          {location.name}
-        </h1>
+  return (
+    <div>
+      <div className={styles.header}>
+        <NavMenu />
+        <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+        {location && (
+          <h1
+            className={styles.title}
+            style={stylesOverride}
+          >
+            {location.name}
+          </h1>
 
-      )}
-    </div>
-    <div className={styles.printOnly_wrapper}>
-      <Sidebar>
-        {({ isSticky }) => (
-          <>
-            <Widgets isSticky={isSticky} />
-          </>
         )}
-      </Sidebar>
-      <div className={styles.vis}>
-        <Map />
-        <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+      </div>
+      <div className={styles.printOnly_wrapper}>
+        <Sidebar>
+          {({ isSticky }) => (
+            <>
+              <Widgets isSticky={isSticky} />
+            </>
+          )}
+        </Sidebar>
+        <div className={styles.vis}>
+          <Map />
+          <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+        </div>
       </div>
     </div>
-  </div>
   );
 };
 

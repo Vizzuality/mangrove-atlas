@@ -97,7 +97,7 @@ class InfoModal extends PureComponent {
                     // eslint-disable-next-line jsx-a11y/no-autofocus
                     type="text"
                     className={classnames(styles.searchInput, 'notranslate')}
-                    placeholder={currentLocation.name}
+                    placeholder="Type name"
                     onChange={() => this.updateSearch()}
                   />
                 </div>
@@ -127,7 +127,7 @@ class InfoModal extends PureComponent {
                     autoFocus
                     type="text"
                     className={classnames(styles.searchInput, 'notranslate')}
-                    placeholder={currentLocation.name}
+                    placeholder="Type name"
                     onChange={this.updateSearch}
                   />
                 </div>

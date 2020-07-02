@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import background from './bg-shape.svg';
+import NavMenu from 'components/nav-menu';
+import background from './bg-waves.svg';
 import fixedBackground from './bg-fixed.svg';
+import search from './Search.svg';
+import searchFixed from './Search-fixed.svg';
 import styles from './style.module.scss';
 
 class Header extends PureComponent {
@@ -61,9 +62,11 @@ class Header extends PureComponent {
           <div className={classnames(styles.searchBar,
             { [styles.fixed]: sticky && window.innerWidth > breakpoints.lg })}
           >
-            <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </button>
+            <div className={styles.buttonsWrapper}>{sticky && <NavMenu fixedHeader />}
+              <button type="button" onClick={this.clickHandler} className={styles.searchButton}>
+                <img src={sticky ? searchFixed : search} alt="Search" />
+              </button>
+            </div>
             {location && (
               <button type="button" className={styles.titleBtn} onClick={this.clickHandler}>
                 <MediaQuery minWidth={breakpoints.lg}>

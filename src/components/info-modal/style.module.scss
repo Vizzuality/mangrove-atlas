@@ -20,8 +20,7 @@
     }
 
     &::placeholder {
-      color: $body-color;
-      opacity: 0.5;
+      color: rgba($black, 0.4);
     }
   }
 

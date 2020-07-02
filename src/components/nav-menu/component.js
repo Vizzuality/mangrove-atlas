@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import classnames from 'classnames';
 import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
 import HotspotsList from 'components/hotspots-list';
@@ -6,7 +7,7 @@ import logo from './mangrove-alliance.png';
 
 import styles from './style.module.scss';
 
-const NavMenu = () => {
+const NavMenu = ({ fixedHeader }) => {
   const [isOpen, toggleModal] = useState(false);
   const [welcomeContent, toggleContent] = useState(false);
 
@@ -23,8 +24,10 @@ const NavMenu = () => {
   };
 
   return (
-    <div className={styles.navMenu}>
-      <button type="button" onClick={handleClick} className={styles.navMenu} />
+    <div className={classnames({ [styles.fixedNavMenu]: fixedHeader,
+      [styles.navMenu]: !fixedHeader })}
+    >
+      <button type="button" onClick={handleClick} />
       <Modal
         isOpen={isOpen}
         onRequestClose={() => toggleModal(false)}

@@ -43,11 +43,11 @@ export const layerStyles = createSelector(
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers.filter(
       style => _activeLayersIds.includes(style.id)
-      || (
-        style.metadata
-        && style.metadata.mangroveGroup
-        && _activeLayersIds.includes(style.metadata.mangroveGroup)
-      )
+        || (
+          style.metadata
+          && style.metadata.mangroveGroup
+          && _activeLayersIds.includes(style.metadata.mangroveGroup)
+        )
     );
   }
 );
@@ -101,14 +101,20 @@ export const mapStyle = createSelector(
       const layerFilter = _filters.find(f => f.id === layerId);
 
       if (layerFilter && layerMap) {
+        if (layerFilter && layerFilter.range && layerFilter.years) {
+          return [
+            ...acc,
+            ...layerMap
+              .filter(
+                layerMapItem => layerFilter.years.includes(parseInt(layerMapItem.year, 10))
+              ).map(layerMapItem => layerMapItem.layerId)
+          ];
+        }
         return [
           ...acc,
           ...layerMap
             .filter(
-              layerMapItem => (layerFilter && layerFilter.range)
-              ? (parseInt(layerFilter.range.startYear, 10) === parseInt(layerMapItem.year, 10)
-              || parseInt(layerFilter.range.endYear, 10) === parseInt(layerMapItem.year, 10))
-              : parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
+              layerMapItem => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
             ).map(layerMapItem => layerMapItem.layerId)
         ];
       }

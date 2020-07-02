@@ -132,7 +132,6 @@ export const MapContainer = ({
               <NavigationControl
                 captureClick
                 captureDoubleClick
-                zoomInLabel="hola"
                 className={styles.zoomControls}
               />
             </MediaQuery>

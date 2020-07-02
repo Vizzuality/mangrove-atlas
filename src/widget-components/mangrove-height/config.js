@@ -88,7 +88,7 @@ export const CONFIG = {
               '0–5':
               {
                 stackId: 'bar',
-                maxBarSize: '20px',
+                barSize: 60,
                 fill: '#C9BB42',
                 stroke: '#C9BB42',
                 isAnimationActive: false
@@ -96,7 +96,7 @@ export const CONFIG = {
               '5–10':
               {
                 stackId: 'bar',
-                maxBarSize: '20px',
+                barSize: 60,
                 fill: '#8BA205',
                 stroke: '#8BA205',
                 isAnimationActive: false
@@ -104,7 +104,7 @@ export const CONFIG = {
               '10–15':
               {
                 stackId: 'bar',
-                maxBarSize: '20px',
+                barSize: 60,
                 fill: '#428710',
                 stroke: '#428710',
                 isAnimationActive: false
@@ -112,7 +112,7 @@ export const CONFIG = {
               '15–20':
               {
                 stackId: 'bar',
-                maxBarSize: '20px',
+                barSize: 60,
                 fill: '#0A6624',
                 stroke: '#0A6624',
                 isAnimationActive: false
@@ -120,7 +120,7 @@ export const CONFIG = {
               '20–25':
               {
                 stackId: 'bar',
-                maxBarSize: '20px',
+                barSize: 60,
                 fill: '#103C1F',
                 stroke: '#103C1F',
                 isAnimationActive: false
