@@ -10,7 +10,7 @@ import config from './config';
 
 const numberFormat = format(',.2f');
 
-function processData(data, currentYear) {
+function processData(data, currentYear, unit) {
   const { chartData, metadata } = data;
   const currentYearData = chartData.find(d => d.x === currentYear);
 
@@ -29,7 +29,7 @@ function processData(data, currentYear) {
       y: nonMangrove,
       color: '#ECECEF',
       percentage: nonMangrove / metadata.total * 100,
-      unit: '%',
+      unit,
       coverage: (nonMangrove / 1000).toFixed(2),
       label: 'Non mangroves'
     }
@@ -83,7 +83,7 @@ function MangroveExtent({
     setUi({ id: 'coverage', value: { currentYear, unit: selectedUnit } });
   };
 
-  const widgetData = processData(data, currentYear);
+  const widgetData = processData(data, currentYear, unit);
 
   if (widgetData === null) {
     return null;

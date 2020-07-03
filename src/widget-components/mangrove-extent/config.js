@@ -81,18 +81,18 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload.map((item) => {
+
             const value = (item.payload.unit === 'ha' && item.payload.coverage * 100)
               || (item.payload.unit === '%' && item.payload.percentage)
-              || (item.payload.coverage);
+              || (item.payload.unit === 'km' && Number(item.payload.coverage));
             return {
               ...item,
               payload: {
                 ...item.payload,
-                y: value
+                y: value,
               }
             };
           }), p => p.payload.label);
-
           return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km²' : unit} />;
         }
       },
