@@ -81,7 +81,6 @@ export const CONFIG = {
         content: (properties) => {
           const { payload } = properties;
           const groups = groupBy(payload.map((item) => {
-
             const value = (item.payload.unit === 'ha' && item.payload.coverage * 100)
               || (item.payload.unit === '%' && item.payload.percentage)
               || (item.payload.unit === 'km' && Number(item.payload.coverage));
@@ -101,7 +100,6 @@ export const CONFIG = {
         content: (
           <WidgetTooltip
             style={{
-
               flexDirection: 'column',
               justifyContent: 'space-around',
               marginLeft: '10px',
