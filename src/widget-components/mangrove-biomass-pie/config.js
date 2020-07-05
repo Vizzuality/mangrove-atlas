@@ -36,29 +36,6 @@ const categoriesData = {
   }
 };
 
-const widgetData = ({ list }) => list.flatMap((d) => {
-  const year = new Date(d.date).getFullYear();
-
-  if (!d.con_hotspot_summary_km2) return null;
-
-  const hotSpotData = d.con_hotspot_summary_km2;
-
-  const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
-
-  return (typeof hotSpotData === 'string')
-    ? []
-    : Object.entries(hotSpotData).map(([catKey, catValue]) => ({
-      x: Number(year),
-      y: catValue,
-      color: categoriesData[catKey].color || '',
-      label: categoriesData[catKey].label,
-      value: catValue,
-      percentage: (catValue / total) * 100,
-      unit: '%',
-      coverage: (catValue).toFixed(2)
-    }));
-});
-
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
     return {
@@ -86,7 +63,7 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
-const getData = (data, selectedYear) => {
+const getData = (data) => {
   if (!data || !data.length) return null;
   const barsData = Object.values(looseJsonParse(data[0]));
   const total = barsData.reduce((previous, current) => current + previous);
@@ -98,11 +75,11 @@ const getData = (data, selectedYear) => {
   formattedData = formattedData.map(d => d / total);
 
   return [
-    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+    { x: '0-50', y: formattedData[0] * 100, label: '0-50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: '50-100', y: formattedData[1] * 100, label: '50-100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: '100-150', y: formattedData[2] * 100, label: '100-150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: '150-200', y: formattedData[3] * 100, label: '150-200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: '200-250', y: formattedData[4] * 100, label: '200-250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
   ];
 };
 
@@ -125,8 +102,9 @@ const filterData = ({ list }, yearSelected) => sortBy(
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
+    const chartData = getData(dataFiltered);
     return {
-      chartData: getData(dataFiltered),
+      chartData,
       metadata: widgetMeta(filterData),
       coverage: biomassCoverage(data, yearSelected),
       chartConfig: {
@@ -139,6 +117,7 @@ export const CONFIG = {
             y: {
               cx: '50%',
               cy: '50%',
+              paddingAngle: 2,
               dataKey: 'percentage',
               nameKey: 'label',
               innerRadius: '60%',
@@ -154,28 +133,31 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend groups={groups} unit="km²" />;
+            return <WidgetLegend groups={groups} unit="%" />;
           }
         },
         tooltip: {
           cursor: false,
-          content: (
-            <WidgetTooltip
-              style={{
-                flexDirection: 'column',
-                marginTop: '10px',
-                marginLeft: '-50px'
-              }}
-              settings={[
-                { key: 'label' },
-                { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
-                { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
-              ]}
-            />
-          )
+          content: ((properties) => {
+            const { payload } = properties;
+            if (!payload.length) return null;
+            const tooltipData = payload[0].payload;
+            return (
+              <WidgetTooltip
+                style={{
+                  flexDirection: 'column',
+                  marginTop: '10px',
+                  marginLeft: '-50px'
+                }}
+                settings={[
+                  { label: tooltipData.label, key: 'label', color: tooltipData.color, format: () => `${tooltipData.value ? (tooltipData.value).toFixed(2) : null} %`, position: '_column' },
+                ]}
+              />
+            );
+          })
         }
       }
-    }
+    };
   }
 };
 

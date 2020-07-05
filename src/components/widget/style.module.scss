@@ -141,13 +141,23 @@
     }
   }
 
-  &.mangrove_coverage, .mangrove_extent {
-    margin: 80px 0 0 0;
-    height: 450px;
+  &.mangrove_coverage,
+  .mangrove_extent,
+  .mangrove_net_change,
+  .mangrove_biomass_pie,
+  .mangrove_blue_carbon {
+    margin: 30px 0 0 0;
+    height: 90%;
   }
 
-  &.mangrove_alerts, .mangrove_activity {
-    height: 600px;
+  &.mangrove_coverage,
+  .mangrove_extent,
+  .mangrove_net_change {
+    margin: 50px 0 0 0;
+  }
+
+  &.mangrove_alerts, .mangrove_activity,{
+    height: 520px;
   }
 
   .title svg {
