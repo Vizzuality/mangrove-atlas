@@ -4,11 +4,9 @@ import { setUi } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  data: state.alerts,
-  isLoading: state.ranking.isLoading,
-  ui: state.widgets.ui.alerts || {
-    id: ''
-  }
+  isLoading: state.mangroveData.isLoading,
+  data: state.mangroveData.list,
+  ui: state.widgets.ui.height || '2016'
 });
 
 const mapDispatchToProps = { setUi, fetchAlerts };
