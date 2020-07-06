@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const CustomLabel = (props, { value, unit, indexedValue }) =>console.log(props) ||(
+const CustomLabel = (props, { value, unit, indexedValue }) => (
 
   <span>{value} {unit}<sup>{indexedValue}</sup></span>
 );
