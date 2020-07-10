@@ -29,7 +29,7 @@ function MangroveNetChange({
         id: 'net',
         range,
         years,
-        year: '2016'
+        year: '2016',
       }
     });
   }, [addFilter, unit]);
@@ -94,6 +94,7 @@ function MangroveNetChange({
   // We consider startYear as 0
   // Therefore we substract that from the accumulated change of all following years.
   const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
+  const quantity = unit === 'km' ? numberFormat(Math.abs(change / 1000000)) : numberFormat(Math.abs(change / 10000));
 
   // Normalize startData
   widgetData[0] = {
@@ -106,7 +107,7 @@ function MangroveNetChange({
   const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
   const changeUnit = (selectedUnit) => {
-    setUi({ id: 'net', value: { unit: selectedUnit } });
+    setUi({ id: 'net', value: { unit: selectedUnit, range } });
   };
 
   const startSelector = (
@@ -129,7 +130,7 @@ function MangroveNetChange({
         || option.value === currentYear}
       onChange={changeEndYear}
     />);
-  const quantity = unit === 'km' ? numberFormat(Math.abs(change / 1000000)) : numberFormat(Math.abs(change / 10000));
+
 
   const unitOptions = [
     { value: 'km', label: 'km²' },
@@ -146,7 +147,7 @@ function MangroveNetChange({
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong className="notranslate">{quantity} {unitSelector}</strong>
+      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by {quantity} {unitSelector}
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );

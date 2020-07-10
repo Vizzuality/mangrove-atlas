@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
   data: state.mangroveData,
   ui: state.widgets.ui.coverage || {
     currentYear: 2016,
-    unit: '%'
+    unit: 'km'
   }
 });
 const mapDispatchToProps = { setUi };

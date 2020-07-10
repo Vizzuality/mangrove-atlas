@@ -19,6 +19,14 @@ function createLayer({ name, render }) {
   };
 }
 
+const geojson = [
+  {
+    id: 'alerts',
+    type: 'geojson',
+    data: 'https://cors-anywhere.herokuapp.com/https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts?format=geojson'
+  }
+];
+
 const rasters = [
   {
     name: 'biomass_1996_v1-0_z0-12',
@@ -304,8 +312,8 @@ const rasters = [
     }
   },
   {
-    name: 'soc_co2e_2016_z0-12',
-    filename: 'soc_co2e_2016_z0-12',
+    name: 'toc_co2eha-1_2016_z0z12',
+    filename: 'toc_co2eha-1_2016_z0z12',
     source: {
       minzoom: 0,
       maxzoom: 12
@@ -603,7 +611,7 @@ const layersMap = {
   ],
   carbon: [
     {
-      layerId: 'soc_co2e_2016_z0-12',
+      layerId: 'toc_co2eha-1_2016_z0z12',
       year: 2016,
       minZoom: 0,
       maxZoom: 12

@@ -34,12 +34,12 @@ class Header extends PureComponent {
   render() {
     const { location, sticky } = this.props;
 
-    let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
+    let stylesOverride = { fontSize: 60, lineheight: 0.85 };
     if ((location && location.name.length > 10)) {
-      stylesOverride = { fontSize: 45, lineHeight: 1 };
+      stylesOverride = { fontSize: 45, lineheight: 1 };
     }
     if ((location && location.name.length > 30) || sticky) {
-      stylesOverride = { fontSize: 30, lineHeight: 1 };
+      stylesOverride = { fontSize: 30, lineheight: 1 };
     }
 
     return (
@@ -81,7 +81,7 @@ class Header extends PureComponent {
                 <MediaQuery maxWidth={breakpoints.lg - 1}>
                   <h1
                     className={classnames(styles.title, 'notranslate')}
-                    style={{ fontSize: 35, lineHeight: 0.85 }}
+                    style={{ fontSize: 35, lineheight: 0.85 }}
                   >
                     {location.name}
                   </h1>

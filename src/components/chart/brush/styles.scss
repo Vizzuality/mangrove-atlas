@@ -1,0 +1,20 @@
+.c-brush {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+
+  .brush--svg {
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    .handle {
+      fill: #fff;
+
+      circle {
+        pointer-events: none;
+      }
+    }
+  }
+}

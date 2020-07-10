@@ -1,32 +1,106 @@
-{
-"type": "FeatureCollection",
-"name": "alerts",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/01", "date_last": "2019\/06\/10", "loss": null, "start_date": 1556665200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.259623813943882, -7.839621364480198 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.259104914397682, -7.837117110148514 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/03\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1553904000000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.267384746287121, -7.838335396039604 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/21", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1558393200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.266640238242566, -7.834861025165016 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.251073251856425, -7.841584158415843 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.252156172648505, -7.845148772689771 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.265151222153456, -7.852638974834985 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269370101072589, -7.850647979837047 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.26963519105815, -7.850360329001651 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269358820647675, -7.850354688789192 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269618270420779, -7.850625418987212 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269872079981418, -7.850377249639028 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269877720193875, -7.850625418987212 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.269121931724406, -7.849373291821371 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.268123614119204, -7.848617503351899 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.268625593028034, -7.848132445080447 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": 2, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.268377423679851, -7.84663214856642 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.265861888923254, -7.850354688789192 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.265861888923254, -7.850602858137377 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": null, "loss": 2, "start_date": 1560121200000.0, "end_date": null }, "geometry": { "type": "Point", "coordinates": [ 39.26585624871079, -7.850129080290842 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.264874851743002, -7.84388536509901 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/05\/30", "date_last": "2019\/06\/10", "loss": 3, "start_date": 1559170800000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.264863571318081, -7.844370423370463 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/06\/10", "date_last": "2019\/06\/10", "loss": null, "start_date": 1560121200000.0, "end_date": 1560121200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.262861295895227, -7.844635513356024 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/04\/01", "date_last": "2019\/04\/01", "loss": 2, "start_date": 1554073200000.0, "end_date": 1554073200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.265376830651832, -7.843123936417079 ] } },
-{ "type": "Feature", "properties": { "id": null, "date_first": "2019\/04\/01", "date_last": "2019\/04\/01", "loss": 2, "start_date": 1554073200000.0, "end_date": 1554073200000.0 }, "geometry": { "type": "Point", "coordinates": [ 39.265619359787557, -7.845882000309406 ] } }
+[
+  {
+    "id": "alerts",
+    "type": "heatmap",
+    "source": "earthquakes",
+    "maxzoom": 12,
+    "paint": {
+      "heatmap-weight": [
+          "interpolate",
+          ["linear"],
+          ["get", "count"],
+          0,
+          0,
+          6,
+          1
+      ],
+      "heatmap-intensity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          1,
+          9,
+          3
+      ],
+      "heatmap-color": [
+          "interpolate",
+          ["linear"],
+          ["heatmap-density"],
+          0,
+          "rgba(255, 194, 0, 1)",
+          0.25,
+          "rgba(235, 68, 68, 1)",
+          0.50,
+          "rgba(199, 43, 214, 1)",
+          0.75,
+          "rgb(253,219,199)",
+          1,
+          "rgb(178,24,43)"
+      ],
+      "heatmap-radius": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          2,
+          9,
+          20
+      ],
+      "heatmap-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          7,
+          1,
+          9,
+          0
+      ]
+    }
+  },
+  {
+    "id": "earthquakes-point",
+    "type": "circle",
+    "source": "earthquakes",
+    "minzoom": 0,
+    "paint": {
+      "circle-radius": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        7,
+        ["interpolate", ["linear"], ["get", "count"], 1, 1, 6, 4],
+        16,
+        ["interpolate", ["linear"], ["get", "count"], 1, 5, 6, 50]
+      ],
+      "circle-color": [
+          "interpolate",
+          ["linear"],
+          ["get", "count"],
+          1,
+          "rgba(33,102,172,0)",
+          2,
+          "rgb(103,169,207)",
+          3,
+          "rgb(209,229,240)",
+          4,
+          "rgb(253,219,199)",
+          5,
+          "rgb(239,138,98)",
+          6,
+          "rgb(178,24,43)"
+      ],
+      "circle-stroke-color": "white",
+      "circle-stroke-width": 1,
+      "circle-opacity": [
+        "interpolate",
+        ["linear"],
+        ["zoom"],
+        7,
+        0,
+        8,
+        1
+      ]
+    }
+  }
 ]
-}

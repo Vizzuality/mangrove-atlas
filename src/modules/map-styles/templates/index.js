@@ -13,8 +13,7 @@ const extendedTemplate = {
     ...template.sources,
     alerts: {
       type: 'geojson',
-      data: alerts,
-      cluster: true
+      data: 'https://cors-anywhere.herokuapp.com/https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts?format=geojson',
     }
   }
 };

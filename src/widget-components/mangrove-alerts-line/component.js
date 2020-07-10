@@ -1,66 +1,76 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
-import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
+import realData from './constants';
 
 import config from './config';
 
 const MangroveAlertsLine = ({
-  data: rawData,
+  data,
   isCollapsed,
   slug, name,
   currentLocation,
   addFilter,
-  ui: date,
+  ui,
   setUi,
   ...props
 }) => {
-  useEffect(() => {
-    addFilter({
-      filter: {
-        id: 'height',
-        year: date,
-        area: 'maximum'
-      }
-    });
-  }, [date, addFilter]);
+  const [startMonth, setStartMonth] = useState(2);
+  const [endMonth, setEndMonth] = useState(11);
 
-  if (!rawData) {
+  if (!data || data.length <= 0) {
     return null;
   }
 
-  // for widget to show 2016 until client has better data for the rest of the years
-  const dataFiltered = rawData.filter(data => data.date.includes('2016'));
-  const { chartData, chartConfig } = config.parse(dataFiltered, date);
+  const { chartData, chartConfig, total } = config.parse(data, startMonth, endMonth);
 
   if (chartData.length <= 0) {
     return null;
   }
-  const location = currentLocation.name;
 
-  const dateHandler = (value) => {
-    setUi({ id: 'height', value });
-    addFilter({
-      filter: {
-        id: 'height',
-        year: value
-      }
-    });
+  const changeStartMonth = (value) => {
+    setStartMonth(value);
   };
 
-  // const dateSelector = (
-  //   <Select
-  //     value={date}
-  //     options={dateOptions}
-  //     onChange={value => dateHandler(value)}
-  //   />
-  // );
+  const changeEndMonth = (value) => {
+    setEndMonth(value);
+  };
+
+  const monthOptions = [
+    { label: 'January', value: 1 },
+    { label: 'February', value: 2 },
+    { label: 'March', value: 3 },
+    { label: 'April', value: 4 },
+    { label: 'May', value: 5 },
+    { label: 'June', value: 6 },
+    { label: 'July', value: 7 },
+    { label: 'August', value: 8 },
+    { label: 'September', value: 9 },
+    { label: 'October', value: 10 },
+    { label: 'November', value: 11 },
+    { label: 'December', value: 12 },
+  ];
+
+  const startMonthSelect = (
+    <Select
+      value={startMonth}
+      options={monthOptions}
+      onChange={value => changeStartMonth(value)}
+    />
+  );
+
+  const endMonthSelect = (
+    <Select
+      value={endMonth}
+      options={monthOptions}
+      onChange={value => changeEndMonth(value)}
+    />
+  );
 
   const sentence = (
     <>
-      Mean mangrove <strong>maximum</strong> canopy height in <strong>{location}</strong> was
-      in <strong>dateOptions</strong>.
+      There were <strong>{total}</strong> mangrove disturbance alerts between {startMonthSelect}
+      &nbsp;and {endMonthSelect}.
     </>
   );
   const chartRData = {

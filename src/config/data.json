@@ -96,18 +96,9 @@
       ]
     },
     {
-      "name": "Mangrove blue carbon and biomass",
-      "slug": "mangrove_blue_carbon",
-      "layersIds": [
-        "carbon"
-      ]
-    },
-    {
-      "name": "Mangrove biomass",
+      "name": "Blue carbon and biomass",
       "slug": "mangrove_biomass_pie",
-      "layersIds": [
-        "biomass"
-      ]
+      "layersIds": [ "carbon" ]
     },
     {
       "name": "Mangrove height",
@@ -157,7 +148,11 @@
       "id": "extent"
     },
     {
-      "name": "Mangrove blue carbon",
+      "name": "Mangrove biomass",
+      "id": "biomass"
+    },
+    {
+      "name": "Blue carbon and biomass",
       "id": "carbon"
     },
     {
