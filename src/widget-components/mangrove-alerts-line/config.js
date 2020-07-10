@@ -82,7 +82,7 @@ export const CONFIG = {
           vertical: false,
           horizontal: false,
         },
-        margin: { top: 20, right: 0, left: 0, bottom: 20 },
+        margin: { top: 20, right: 10, left: 10, bottom: 20 },
         gradients: {
           key: {
             attributes: {
@@ -208,8 +208,9 @@ export const CONFIG = {
           type: 'number'
         },
         brushes: {
-          startIndex: 0,
-          endIndex: dataFiltered.length - 1
+          margin: { top: 60, right: 65, left: 25, bottom: 20 },
+          // startIndex: 0,
+          // endIndex: dataFiltered.length - 1
         },
         legend: {
           align: 'left',

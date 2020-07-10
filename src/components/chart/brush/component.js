@@ -134,10 +134,11 @@ class SVGBrush extends PureComponent {
     return (
       <React.Fragment>
         {/* GRAY AREA */}
-        <rect
+        <motion.rect
           fill="#f5f5f5"
           fillOpacity="0.75"
           shapeRendering="crispEdges"
+          width={0}
           height={h - 2}
           animate={{
             width: x0 - ex0,
@@ -151,10 +152,11 @@ class SVGBrush extends PureComponent {
         />
 
         {/* GRAY AREA */}
-        <rect
+        <motion.rect
           fill="#f5f5f5"
           fillOpacity="0.75"
           shapeRendering="crispEdges"
+          width={0}
           height={h - 2}
           animate={{
             width: ex1 - x1,
@@ -168,7 +170,7 @@ class SVGBrush extends PureComponent {
         />
 
         {/* SELECTION */}
-        <rect
+        <motion.rect
           className="selection"
           cursor="move"
           fill="#777"
@@ -226,7 +228,7 @@ class SVGBrush extends PureComponent {
           onPointerUp={this._handleBrushEnd}
         />
 
-        <g
+        <motion.g
           animate={{
             x: x + w - hW / 2,
             y: y + 5,
@@ -310,9 +312,9 @@ class SVGBrush extends PureComponent {
             fill="#333"
             pointerEvents="none"
           />
-        </g>
+        </motion.g>
 
-        <g
+        <motion.g
           animate={{
             x: x - hW / 2,
             y: y + 5,
@@ -392,7 +394,7 @@ class SVGBrush extends PureComponent {
             fill="#333"
             pointerEvents="none"
           />
-        </g>
+        </motion.g>
       </React.Fragment>
     );
   }

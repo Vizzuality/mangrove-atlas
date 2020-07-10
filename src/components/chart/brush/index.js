@@ -47,7 +47,6 @@ export default class Brush extends PureComponent {
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
-    console.log(this.scale(start), this.scale(end))
 
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
@@ -70,8 +69,8 @@ export default class Brush extends PureComponent {
 
     if (
       startIndex !== prevStartIndex ||
-      endIndex !== prevEndIndex ||
-      (animate && animate !== prevAnimate)
+      endIndex !== prevEndIndex
+      // (animate && animate !== prevAnimate)
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
@@ -110,7 +109,6 @@ export default class Brush extends PureComponent {
       [0, 0],
       [0, 0],
     ];
-    console.log(brushSelection, 'brushSelection')
 
     return (
       <SVGBrush

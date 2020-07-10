@@ -87,6 +87,7 @@ const MangroveAlertsLine = ({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      // onBrushEnd={change startIndex && endIndex}
       {...props}
     />
   );
