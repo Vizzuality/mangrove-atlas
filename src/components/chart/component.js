@@ -310,14 +310,13 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
-
         {brushes && (
+
           <Brush
             data={data}
             width="100%"
-            height={height - 28}
+            height={height}
             margin={margin}
-            onBrushEnd={this.props.onBrushEnd}
             {...brushes}
           />
         )}
