@@ -8,7 +8,6 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
           "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie",
@@ -44,7 +43,6 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
           "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie"
@@ -59,7 +57,6 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
           "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie"
