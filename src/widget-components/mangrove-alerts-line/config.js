@@ -8,9 +8,6 @@ import realData from './constants';
 
 const numberFormat = format(',.3r');
 
-const startMark = 'J';
-const endMark = 'D';
-
 const months = [
   { label: 'January', value: 1 },
   { label: 'February', value: 2 },
@@ -126,36 +123,6 @@ export const CONFIG = {
             }
           }
         },
-        referenceLines: [
-          {
-            x: startMark,
-            stroke: 'rgb(0,0,0)',
-            strokeWidth: 1,
-            label: {
-              value: 'v',
-              // eslint-disable-next-line react/prop-types
-              content: ({ viewBox: o }) => (
-                <g transform={`translate(${o.x - 10}, ${o.y})`}>
-                  <path d="m 0,0 h 1 v 1 z" transform="scale(10, 20)" fill="#000" />
-                </g>
-              )
-            }
-          },
-          {
-            x: endMark,
-            stroke: 'rgb(0,0,0)',
-            strokeWidth: 1,
-            label: {
-              value: 'v',
-              // eslint-disable-next-line react/prop-types
-              content: ({ viewBox: o }) => (
-                <g transform={`translate(${o.x}, ${o.y})`}>
-                  <path d="m 0,0 h 1 v 1 z" transform="translate(10, 0) scale(-10, 20)" fill="#000" />
-                </g>
-              )
-            }
-          }
-        ],
         referenceAreas: [
           {
             x1: 0,
@@ -165,8 +132,8 @@ export const CONFIG = {
             fill: 'url(#diagonal-stripe-1) #000'
           },
           {
-            x1: startMark,
-            x2: endMark,
+            x1: startMonth,
+            x2: endMonth,
             y1: -100,
             y2: 480,
             fill: '#fff',
@@ -203,7 +170,8 @@ export const CONFIG = {
           label: {
             value: 'Sum of alerts',
             position: 'top',
-            offset: 25,
+            offset: 50,
+            fontSize: 9,
           },
           type: 'number'
         },

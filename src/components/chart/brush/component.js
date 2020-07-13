@@ -128,14 +128,14 @@ class SVGBrush extends PureComponent {
       return [y0 + dy, y1 + dy];
     };
 
-    const hW = 14;
+    const hW = 1;
     const hH = h - 10;
 
     return (
       <React.Fragment>
         {/* GRAY AREA */}
         <motion.rect
-          fill="#f5f5f5"
+          fill="url(#diagonal-stripe-1)"
           fillOpacity="0.75"
           shapeRendering="crispEdges"
           width={0}
@@ -153,7 +153,7 @@ class SVGBrush extends PureComponent {
 
         {/* GRAY AREA */}
         <motion.rect
-          fill="#f5f5f5"
+          fill="url(#diagonal-stripe-1)"
           fillOpacity="0.75"
           shapeRendering="crispEdges"
           width={0}
@@ -175,7 +175,6 @@ class SVGBrush extends PureComponent {
           cursor="move"
           fill="#777"
           fillOpacity="0"
-          stroke="#333"
           shapeRendering="crispEdges"
           width={w}
           height={h - 2}
@@ -244,7 +243,8 @@ class SVGBrush extends PureComponent {
             cursor="ew-resize"
             width={hW}
             height={hH}
-            fill="none"
+            fill="rgba(0, 0, 0, 0.85)"
+            stroke="rgba(0, 0, 0, 0.85)"
             filter="url(#shadow1)"
             pointerEvents="visible"
             onPointerDown={this._handleBrushStart}
@@ -301,16 +301,13 @@ class SVGBrush extends PureComponent {
             }}
             onPointerUp={this._handleBrushEnd}
           />
-          <circle
-            cx="7"
-            cy={(h - 10) / 2}
-            r="3"
-            fill="#333"
-            cx="7"
-            cy={(h - 10) / 2}
-            r="3"
-            fill="#333"
-            pointerEvents="none"
+          <polygon
+            points="0.5,0 0.5,8 5,0"
+            style={{
+              fill:'rgba(0,0,0,0.85)',
+              stroke: 'rgba(0,0,0,0.85)',
+              strokeWidth: 1
+            }}
           />
         </motion.g>
 
@@ -330,7 +327,8 @@ class SVGBrush extends PureComponent {
             cursor="ew-resize"
             width={hW}
             height={hH}
-            fill="none"
+            fill="rgba(0, 0, 0, 0.85)"
+            stroke="rgba(0, 0, 0, 0.85)"
             filter="url(#shadow1)"
             pointerEvents="visible"
             onPointerDown={this._handleBrushStart}
@@ -387,12 +385,13 @@ class SVGBrush extends PureComponent {
             }}
             onPointerUp={this._handleBrushEnd}
           />
-          <circle
-            cx="7"
-            cy={(h - 10) / 2}
-            r="3"
-            fill="#333"
-            pointerEvents="none"
+          <polygon
+            points="-5,-5 0.5,5 0.5,-5"
+            style={{
+              fill:'rgba(0,0,0,0.85)',
+              stroke: 'rgba(0,0,0,0.85)',
+              strokeWidth: 1
+            }}
           />
         </motion.g>
       </React.Fragment>
