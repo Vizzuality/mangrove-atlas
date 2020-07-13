@@ -7,12 +7,12 @@ import logo from 'components/layout/logo-bg.svg';
 import styles from '../style.module.scss';
 
 const DesktopLayout = ({ location }) => {
-  let stylesOverride = { fontSize: 60, lineHeight: 0.85 };
+  let stylesOverride = { fontSize: 60, lineheight: 0.85 };
   if ((location && location.name.length > 10)) {
-    stylesOverride = { fontSize: 45, lineHeight: 1 };
+    stylesOverride = { fontSize: 45, lineheight: 1 };
   }
   if ((location && location.name.length > 30)) {
-    stylesOverride = { fontSize: 30, lineHeight: 1 };
+    stylesOverride = { fontSize: 30, lineheight: 1 };
   }
 
   return (

@@ -1,8 +1,8 @@
 [
   {
-    "id": "alerts",
+    "id": "alerts-heat",
     "type": "heatmap",
-    "source": "earthquakes",
+    "source": "alerts",
     "maxzoom": 12,
     "paint": {
       "heatmap-weight": [
@@ -28,15 +28,13 @@
           ["linear"],
           ["heatmap-density"],
           0,
-          "rgba(255, 194, 0, 1)",
-          0.25,
-          "rgba(235, 68, 68, 1)",
-          0.50,
-          "rgba(199, 43, 214, 1)",
-          0.75,
-          "rgb(253,219,199)",
+          "rgba(232, 200, 105, 1)",
+          0.33,
+          "rgba(244, 127, 36, 1)",
+          0.66,
+          "rgba(236, 74, 64, 1)",
           1,
-          "rgb(178,24,43)"
+          "rgba(210, 50, 169, 1)"
       ],
       "heatmap-radius": [
           "interpolate",
@@ -59,9 +57,9 @@
     }
   },
   {
-    "id": "earthquakes-point",
+    "id": "alerts-point",
     "type": "circle",
-    "source": "earthquakes",
+    "source": "alerts",
     "minzoom": 0,
     "paint": {
       "circle-radius": [
@@ -77,17 +75,13 @@
           "interpolate",
           ["linear"],
           ["get", "count"],
+          0,
+          "rgba(255, 194, 0, 1)",
+          0.33,
+          "rgba(235, 68, 68, 1)",
+          0.66,
+          "rgba(199, 43, 214, 1)",
           1,
-          "rgba(33,102,172,0)",
-          2,
-          "rgb(103,169,207)",
-          3,
-          "rgb(209,229,240)",
-          4,
-          "rgb(253,219,199)",
-          5,
-          "rgb(239,138,98)",
-          6,
           "rgb(178,24,43)"
       ],
       "circle-stroke-color": "white",

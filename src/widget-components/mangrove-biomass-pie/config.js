@@ -15,23 +15,23 @@ const numberFormat = format(',.3r');
 
 const categoriesData = {
   '0–50': {
-    color: '#EAF19D',
+    color: '#5C4A3D',
     label: '0 – 50'
   },
   '50–100': {
-    color: '#B8E98E',
+    color: '#933A06',
     label: '50 – 100'
   },
   '100–150': {
-    color: '#1B97C1',
+    color: '#B84E17',
     label: '100 – 150'
   },
   '150–200': {
-    color: '#1C52A3',
+    color: '#E68518',
     label: '150 – 200'
   },
   '200–250': {
-    color: '#13267F',
+    color: '#EEB66B',
     label: '200 – 250'
   }
 };
@@ -75,11 +75,11 @@ const getData = (data) => {
   formattedData = formattedData.map(d => d / total);
 
   return [
-    { x: '0-50', y: formattedData[0] * 100, label: '0-50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
-    { x: '50-100', y: formattedData[1] * 100, label: '50-100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
-    { x: '100-150', y: formattedData[2] * 100, label: '100-150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
-    { x: '150-200', y: formattedData[3] * 100, label: '150-200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
-    { x: '200-250', y: formattedData[4] * 100, label: '200-250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+    { x: '400', y: formattedData[0] * 100, label: '400 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[0] / total * 100 },
+    { x: '800', y: formattedData[1] * 100, label: '800 t CO2e', value: formattedData[1] * 100, color: '#933A06', percentage: formattedData[1] / total * 100 },
+    { x: '1200', y: formattedData[2] * 100, label: '1200 t CO2e', value: formattedData[2] * 100, color: '#B84E17', percentage: formattedData[2] / total * 100 },
+    { x: '1600', y: formattedData[3] * 100, label: '1600 t CO2e', value: formattedData[3] * 100, color: '#E68518', percentage: formattedData[3] / total * 100 },
+    { x: '2000', y: formattedData[4] * 100, label: '2000 t CO2e', value: formattedData[4] * 100, color: '#EEB66B', percentage: formattedData[4] / total * 100 },
   ];
 };
 
@@ -122,7 +122,23 @@ export const CONFIG = {
               nameKey: 'label',
               innerRadius: '60%',
               outerRadius: '80%',
-              isAnimationActive: false
+              isAnimationActive: false,
+              customLabel: ({ viewBox }) => {
+                const { cx, cy } = viewBox;
+                return (
+                  <g>
+                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
+                    </text>
+                    <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">355</tspan>
+                    </text>
+                    <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>
+                    </text>
+                  </g>
+                );
+              }
             }
           }
         },

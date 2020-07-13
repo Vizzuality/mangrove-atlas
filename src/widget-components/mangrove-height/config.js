@@ -138,7 +138,7 @@ export const CONFIG = {
           xAxis: {
             tick: {
               fontSize: 12,
-              lineHeight: 20,
+              lineheight: 20,
               fill: 'rgba(0, 0, 0, 0.54)'
             },
             ticks: metaData(data),
