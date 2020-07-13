@@ -1,6 +1,7 @@
 .chart {
   width: 100%;
   height: 250px;
+  position: relative;
 
   text {
     fill: rgba(0, 0, 0, 0.54);
@@ -15,5 +16,4 @@
       width: calc(100%)!important;
     }
   }
-
 }

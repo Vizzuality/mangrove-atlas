@@ -12,6 +12,7 @@ import MangroveNetChange from 'widget-components/mangrove-net-change';
 import MangroveBlueCarbon from 'widget-components/mangrove-blue-carbon';
 import MangroveActivity from 'widget-components/mangrove-activity';
 import MangroveAlerts from 'widget-components/mangrove-alerts';
+import MangroveAlertsLine from 'widget-components/mangrove-alerts-line';
 import MangroveHeight from 'widget-components/mangrove-height';
 import MangroveBiomass from 'widget-components/mangrove-biomass';
 import MangroveBiomassPie from 'widget-components/mangrove-biomass-pie';
@@ -43,6 +44,9 @@ const templates = new Map([
   }],
   ['mangrove_alerts', {
     component: MangroveAlerts
+  }],
+  ['mangrove_alerts_line', {
+    component: MangroveAlertsLine
   }],
   ['mangrove_height', {
     component: MangroveHeight

@@ -22,6 +22,8 @@ import {
   Label
 } from 'recharts';
 
+import Brush from './brush';
+
 import { stack, clearStack, addComponent } from './rechart-components';
 import ChartTick from './tick';
 import {
@@ -102,6 +104,7 @@ class Chart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
+      brushes,
       cartesianGrid,
       cartesianAxis,
       tooltip,
@@ -178,6 +181,7 @@ class Chart extends PureComponent {
               }
             </defs>
             {stack}
+
             {cartesianGrid && (
               <CartesianGrid
                 {...defaults.cartesianGrid}
@@ -219,6 +223,7 @@ class Chart extends PureComponent {
                 )}
                 {...yAxis}
               />
+
             )}
 
             {areas && Object.keys(areas).map(key => (
@@ -305,6 +310,17 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
+
+        {brushes && (
+          <Brush
+            data={data}
+            width="100%"
+            height={height - 28}
+            margin={margin}
+            onBrushEnd={this.props.onBrushEnd}
+            {...brushes}
+          />
+        )}
       </div>
     );
   }

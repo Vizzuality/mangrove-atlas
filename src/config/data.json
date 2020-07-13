@@ -8,7 +8,7 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
+          "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie",
           "mangrove_activity"
@@ -43,7 +43,7 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
+          "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie"
         ]
@@ -57,7 +57,7 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts",
+          "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie"
         ]
@@ -93,18 +93,9 @@
       ]
     },
     {
-      "name": "Mangrove blue carbon and biomass",
-      "slug": "mangrove_blue_carbon",
-      "layersIds": [
-        "carbon"
-      ]
-    },
-    {
-      "name": "Mangrove biomass",
+      "name": "Blue carbon and biomass",
       "slug": "mangrove_biomass_pie",
-      "layersIds": [
-        "biomass"
-      ]
+      "layersIds": [ "carbon" ]
     },
     {
       "name": "Mangrove height",
@@ -116,6 +107,11 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
+      "layersIds": ["alerts-style"]
+    },
+    {
+      "name": "Mangrove alerts new",
+      "slug": "mangrove_alerts_line",
       "layersIds": ["alerts-style"]
     },
     {
@@ -149,7 +145,11 @@
       "id": "extent"
     },
     {
-      "name": "Mangrove blue carbon",
+      "name": "Mangrove biomass",
+      "id": "biomass"
+    },
+    {
+      "name": "Blue carbon and biomass",
       "id": "carbon"
     },
     {

@@ -73,11 +73,11 @@ export const CONFIG = {
               const { cx, cy } = viewBox;
               return (
                 <g>
-                  <text x={cx} y={cy - 30} lineHeight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                  <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
                     <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
                   </text>
                   <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineHeight="29" fontSize="40">355</tspan>
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">355</tspan>
                   </text>
                   <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
                     <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>

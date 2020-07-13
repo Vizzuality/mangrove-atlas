@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
+import { fetchAlerts } from 'modules/alerts/actions';
 import { setUi } from 'modules/widgets/actions';
-
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: 'km'
+  data: state.alerts,
+  isLoading: state.ranking.isLoading,
+  ui: state.widgets.ui.alerts || {
+    id: ''
   }
 });
-const mapDispatchToProps = { setUi };
+
+const mapDispatchToProps = { setUi, fetchAlerts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
