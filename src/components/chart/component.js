@@ -317,7 +317,7 @@ class Chart extends PureComponent {
             width="100%"
             height={height - 28}
             margin={margin}
-            // onBrushEnd={this.props.onBrushEnd}
+            onBrushEnd={this.props.onBrushEnd}
             {...brushes}
           />
         )}
