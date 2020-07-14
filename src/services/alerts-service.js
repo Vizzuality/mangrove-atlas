@@ -11,9 +11,9 @@ class AlertsService {
   }
 
   fetchAlerts = (params = {}) => {
-    const { id } = params;
+    const { id, year } = params;
     return this.client
-      .get(`/fetch-alerts`, { params })
+      .get(`/fetch-alerts?year=2019&location_id=1`, { params })
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);

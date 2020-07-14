@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ type, position, widgetSpecific, groups, direction, variant, unit }) => {
+const Legend = ({ type, size, position, widgetSpecific, groups, direction, variant, unit }) => {
 
   return (
     <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
@@ -34,12 +34,11 @@ const Legend = ({ type, position, widgetSpecific, groups, direction, variant, un
                 {widgetSpecific === 'activity' && (
                 <div
                   className={classnames(styles.item, styles[`_${type}`], styles[`_${item.value}`])}
-                  style={{
-                    backgroundColor: item.color }}
+                  style={{ backgroundColor: item.color }}
                 />)}
 
                 <div className={styles.itemWrapper}>
-                  <span>{item.value}</span>
+                  <span className={classnames(styles[`_${size}`])}>{item.value}</span>
                   {item.payload && item.payload.y
                     && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
                   }

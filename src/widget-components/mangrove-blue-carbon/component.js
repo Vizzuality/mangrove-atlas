@@ -49,7 +49,6 @@ function MangroveBlueCarbon({
     return null;
   }
 
-  console.log(rawData, '********')
   const data = config.parse(rawData);
   const { chartConfig } = data;
   let sentence = null;

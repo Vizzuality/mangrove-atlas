@@ -11,38 +11,38 @@ const MangroveAlertsLine = ({
   currentLocation,
   addFilter,
   ui,
+  ui: { year },
+  locationId,
   setUi,
+  fetchAlerts,
   ...props
 }) => {
-  // useEffect(() => {
-  //   addFilter({
-  //     filter: {
-  //       id: 'alerts',
-  //       ui,
-  //     }
-  //   });
-  // }, [addFilter, total]);
+  useEffect(() => {
+    fetchAlerts(locationId, year);
+  }, [year, locationId]);
 
   if (!data || data.length <= 0) {
     return null;
   }
 
   const { startDate, endDate } = ui;
-  const { chartData, chartConfig, total } = config.parse(data, startDate, endDate);
+  const { chartData, chartConfig, total } = config.parse(data, startDate, endDate, year);
 
   if (chartData.length <= 0) {
     return null;
   }
+  console.log(chartData, '*******')
 
   const changeDate = (type, value) => {
-    const prop = (type === 'start') ? 'startDate' : 'endDate';
     setUi({
       id: 'alerts',
       value: {
-        [prop]: value
+        ...ui,
+        [type]: value
       }
     });
   };
+  const yearOptions = [ {label: 2020, value: 2020}, {label: 2019, value: 2019}]
 
   const monthOptions = [
     { label: 'January', value: 1 },
@@ -65,7 +65,7 @@ const MangroveAlertsLine = ({
       options={monthOptions}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
         || option.value === startDate}
-      onChange={value => changeDate('start', value)}
+      onChange={value => changeDate('startDate', value)}
     />
   );
 
@@ -75,8 +75,23 @@ const MangroveAlertsLine = ({
       options={monthOptions}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
         || option.value === endDate}
-      onChange={value => changeDate('end', value)}
+      onChange={value => changeDate('endDate', value)}
     />
+  );
+
+  const yearSelect = (
+    <Select
+      value={year}
+      options={yearOptions}
+      onChange={value => changeDate('year', value)}
+    />
+  );
+
+  const sentence = (
+    <>
+      There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
+      &nbsp;and {endDateSelect} in {yearSelect}.
+    </>
   );
 
   const chartRData = {
@@ -91,17 +106,11 @@ const MangroveAlertsLine = ({
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
-      sentence={(
-        <div>
-          There were <strong>{total}</strong> mangrove disturbance alerts between {startDateSelect}
-          &nbsp;and {endDateSelect}.
-        </div>
-      )}
+      sentence={sentence}
       chartData={chartRData}
       onBrushEnd={({ startIndex, endIndex }) => {
-        console.log(new Date(chartData[startIndex].date.value).getMonth() + 1);
-        changeDate('start', new Date(chartData[startIndex].date.value).getMonth() + 1);
-        changeDate('end', new Date(chartData[endIndex].date.value).getMonth() + 1);
+        changeDate('startDate', new Date(chartData[startIndex].date.value).getMonth() + 1);
+        changeDate('endDate', new Date(chartData[endIndex].date.value).getMonth() + 1);
       }}
       {...props}
     />

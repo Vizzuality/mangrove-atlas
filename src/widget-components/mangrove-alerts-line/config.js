@@ -5,8 +5,6 @@ import sortBy from 'lodash/sortBy';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
 
-const numberFormat = format(',.3r');
-
 const months = [
   { label: 'January', value: 1 },
   { label: 'February', value: 2 },
@@ -36,12 +34,8 @@ const getStops = () => {
   return gradient;
 };
 
-const getData = data => sortBy(data
-  .filter((d) => {
-    const year = new Date(d.date.value).getFullYear();
-
-    return year === 2020;
-  })
+const getData = (data, year) => sortBy(data
+  .filter(d => new Date(d.date.value).getFullYear() === year)
   .map((d) => {
     const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
     const monthsConversion = {
@@ -70,20 +64,23 @@ const getData = data => sortBy(data
   }),
 ['month']);
 
+// const getYears = data => sortBy(new Date(d.date.value).getFullYear()
+//   ['year']);
 const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
 
 export const CONFIG = {
-  parse: ({ data }, startDate, endDate) => {
-    const chartData = getData(data);
-    const startIndex = chartData.findIndex(d => d.month === startDate);
+  parse: ({ data }, startDate, endDate, year) => {
+    const chartData = getData(data, year);
+    const startIndex = chartData.findIndex(d => console.log(d)||d.month === startDate);
     const endIndex = chartData.findIndex(d => d.month === endDate);
-
+console.log(data, startDate, endDate, startIndex, endIndex)
     const dataFiltered = data
       .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
 
     return {
       chartData,
       total: getTotal(dataFiltered),
+      //totalYears: getYears(data),
       chartConfig: {
         height: 250,
         cartesianGrid: {

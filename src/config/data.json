@@ -7,7 +7,6 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass_pie",
@@ -45,7 +44,6 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_blue_carbon",
-          "mangrove_alerts_line",
           "mangrove_alerts_line",
           "mangrove_height",
           "mangrove_biomass_pie"
@@ -173,11 +171,11 @@
     },
     {
       "name": "Mangrove deforestation alerts",
-      "id": ["alerts-heat"]
+      "id": "alerts-heat"
     },
     {
       "name": "Mangrove deforestation alerts",
-      "id": ["alerts-point"]
+      "id": "alerts-point"
     }
   ]
 }

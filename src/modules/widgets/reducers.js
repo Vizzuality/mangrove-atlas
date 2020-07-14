@@ -73,7 +73,7 @@ export default {
     type: payload
   }),
   [closeInfoPanel]: state => ({ ...state, isOpened: false }),
-  [setUi]: (state, { payload }) => ({
+  [setUi]: (state, { payload }) => console.log(payload, 'payload')||({
     ...state,
     ui: {
       ...state.ui,

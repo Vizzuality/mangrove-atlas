@@ -147,7 +147,7 @@ function MangroveNetChange({
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by {quantity} {unitSelector}
+      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong>{quantity}</strong> {unitSelector}
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );

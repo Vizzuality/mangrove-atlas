@@ -73,13 +73,13 @@ const getData = (data) => {
   );
 
   formattedData = formattedData.map(d => d / total);
-
   return [
-    { x: '400', y: formattedData[0] * 100, label: '400 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[0] / total * 100 },
-    { x: '800', y: formattedData[1] * 100, label: '800 t CO2e', value: formattedData[1] * 100, color: '#933A06', percentage: formattedData[1] / total * 100 },
-    { x: '1200', y: formattedData[2] * 100, label: '1200 t CO2e', value: formattedData[2] * 100, color: '#B84E17', percentage: formattedData[2] / total * 100 },
-    { x: '1600', y: formattedData[3] * 100, label: '1600 t CO2e', value: formattedData[3] * 100, color: '#E68518', percentage: formattedData[3] / total * 100 },
-    { x: '2000', y: formattedData[4] * 100, label: '2000 t CO2e', value: formattedData[4] * 100, color: '#EEB66B', percentage: formattedData[4] / total * 100 },
+    { x: '400-700', y: formattedData[0] * 100, label: '400-700 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[0] / total * 100 },
+    { x: '700-1000', y: formattedData[0] * 100, label: '700-1000 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[1] / total * 100 },
+    { x: '1000-1300', y: formattedData[1] * 100, label: '1000-1300 t CO2e', value: formattedData[1] * 100, color: '#933A06', percentage: formattedData[2] / total * 100 },
+    { x: '1300-1600', y: formattedData[2] * 100, label: '1300-1600 t CO2e', value: formattedData[2] * 100, color: '#B84E17', percentage: formattedData[3] / total * 100 },
+    { x: '1600-1900', y: formattedData[3] * 100, label: '1600-1900 t CO2e', value: formattedData[3] * 100, color: '#E68518', percentage: formattedData[4] / total * 100 },
+    { x: '1900-2200', y: formattedData[4] * 100, label: '1900-2200 t CO2e', value: formattedData[4] * 100, color: '#EEB66B', percentage: formattedData[5] / total * 100 },
   ];
 };
 
@@ -146,10 +146,11 @@ export const CONFIG = {
           align: 'left',
           verticalAlign: 'middle',
           layout: 'vertical',
+          fontSize: 10,
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend groups={groups} unit="%" />;
+            return <WidgetLegend size="_small" groups={groups} unit="%" />;
           }
         },
         tooltip: {

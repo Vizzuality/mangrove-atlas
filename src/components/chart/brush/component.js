@@ -304,7 +304,7 @@ class SVGBrush extends PureComponent {
             onPointerUp={this._handleBrushEnd}
           />
           <polygon
-            points="0.5,0 0.5,8 5,0"
+            points="0.5,-5 0.5,5 6,-5"
             style={{
               fill:'rgba(0,0,0,0.85)',
               stroke: 'rgba(0,0,0,0.85)',
