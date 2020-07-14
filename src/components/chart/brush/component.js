@@ -76,7 +76,7 @@ class SVGBrush extends PureComponent {
     return (
       <rect
         className="overlay"
-        pointerEvents="all"
+        pointerEvents="none"
         fill="none"
         x={x0}
         y={y0}
@@ -139,6 +139,7 @@ class SVGBrush extends PureComponent {
           fillOpacity="0.75"
           shapeRendering="crispEdges"
           width={0}
+          pointerEvents="all"
           height={h - 2}
           animate={{
             width: x0 - ex0,
@@ -157,6 +158,7 @@ class SVGBrush extends PureComponent {
           fillOpacity="0.75"
           shapeRendering="crispEdges"
           width={0}
+          pointerEvents="all"
           height={h - 2}
           animate={{
             width: ex1 - x1,

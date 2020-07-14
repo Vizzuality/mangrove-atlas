@@ -39,7 +39,6 @@ const MangroveAlertsLine = ({
     setUi({
       id: 'alerts',
       value: {
-        ...ui,
         [prop]: value
       }
     });
@@ -80,22 +79,6 @@ const MangroveAlertsLine = ({
     />
   );
 
-  const changeIndex = (type, value) => {
-    const prop = (type === 'start') ? 'startDate' : 'endDate';
-    setUi({
-      id: 'alerts',
-      value: {
-        ...ui,
-        [prop]: value
-      }
-    });
-  };
-  const sentence = (
-    <>
-      There were <strong>{total}</strong> mangrove disturbance alerts between {startDateSelect}
-      &nbsp;and {endDateSelect}.
-    </>
-  );
   const chartRData = {
     data: chartData,
     config: chartConfig
@@ -108,10 +91,18 @@ const MangroveAlertsLine = ({
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
-      sentence={sentence}
+      sentence={(
+        <div>
+          There were <strong>{total}</strong> mangrove disturbance alerts between {startDateSelect}
+          &nbsp;and {endDateSelect}.
+        </div>
+      )}
       chartData={chartRData}
-      onBrushStart={value => changeIndex('start', value)}
-      onBrushEnd={value => changeIndex('end', value)}
+      onBrushEnd={({ startIndex, endIndex }) => {
+        console.log(new Date(chartData[startIndex].date.value).getMonth() + 1);
+        changeDate('start', new Date(chartData[startIndex].date.value).getMonth() + 1);
+        changeDate('end', new Date(chartData[endIndex].date.value).getMonth() + 1);
+      }}
       {...props}
     />
   );

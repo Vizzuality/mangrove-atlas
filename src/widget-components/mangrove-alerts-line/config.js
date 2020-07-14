@@ -36,47 +36,51 @@ const getStops = () => {
   return gradient;
 };
 
-const getData = data => sortBy(data.map((d) => {
-  const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-  const monthsConversion = {
-    January: 'J',
-    February: 'F',
-    March: 'M',
-    April: 'A',
-    May: 'M',
-    June: 'J',
-    July: 'J',
-    August: 'A',
-    September: 'S',
-    October: 'O',
-    November: 'N',
-    December: 'D'
-  };
+const getData = data => sortBy(data
+  .filter((d) => {
+    const year = new Date(d.date.value).getFullYear();
 
+    return year === 2020;
+  })
+  .map((d) => {
+    const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
+    const monthsConversion = {
+      January: 'J',
+      February: 'F',
+      March: 'M',
+      April: 'A',
+      May: 'M',
+      June: 'J',
+      July: 'J',
+      August: 'A',
+      September: 'S',
+      October: 'O',
+      November: 'N',
+      December: 'D'
+    };
 
+    return (
+      {
+        ...d,
+        month: date.value,
+        name: monthsConversion[date.label],
+        alerts: d.count
+      }
+    );
+  }),
+['month']);
 
-  return (
-    {
-      month: date.value,
-      name: monthsConversion[date.label],
-      alerts: d.count
-    }
-  );
-}), ['month']);
-
-const getTotal = data => data.reduce((previous, current) => current.count + previous, 0)
+const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
 
 export const CONFIG = {
   parse: ({ data }, startDate, endDate) => {
     const chartData = getData(data);
+    const startIndex = chartData.findIndex(d => d.month === startDate);
+    const endIndex = chartData.findIndex(d => d.month === endDate);
 
-var alertsTotal = chartData.reduce(function(prev, cur) {
-  if (prev.value === cur.value)
-  return prev + cur.alerts;
-}, 0);
-console.log(alertsTotal)
     const dataFiltered = data
       .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
+
     return {
       chartData,
       total: getTotal(dataFiltered),
@@ -186,8 +190,8 @@ console.log(alertsTotal)
         },
         brushes: {
           margin: { top: 60, right: 65, left: 25, bottom: 20 },
-          startIndex: 0,
-          endIndex: data.length - 1
+          startIndex,
+          endIndex
         },
         legend: {
           align: 'left',
