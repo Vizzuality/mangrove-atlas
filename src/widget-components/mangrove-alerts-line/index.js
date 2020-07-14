@@ -7,7 +7,8 @@ const mapStateToProps = state => ({
   data: state.alerts,
   isLoading: state.ranking.isLoading,
   ui: state.widgets.ui.alerts || {
-    id: ''
+    startDate: 3,
+    endDate: 4
   }
 });
 

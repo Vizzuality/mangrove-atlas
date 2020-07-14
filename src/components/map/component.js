@@ -250,7 +250,7 @@ class Map extends Component {
         </Popup>
       ) : null);
 
-    applyFilters();
+   // applyFilters();
 
     return (
       <div

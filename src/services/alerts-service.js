@@ -15,9 +15,9 @@ class AlertsService {
     return this.client
       .get(`/fetch-alerts`, { params })
       .then((response) => {
-        const { status, statusText } = response;
+        const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);
-        return response;
+        return data;
       });
   }
 }

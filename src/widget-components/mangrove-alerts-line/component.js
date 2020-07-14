@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
-import realData from './constants';
 
 import config from './config';
 
@@ -15,25 +14,35 @@ const MangroveAlertsLine = ({
   setUi,
   ...props
 }) => {
-  const [startMonth, setStartMonth] = useState(2);
-  const [endMonth, setEndMonth] = useState(11);
+  // useEffect(() => {
+  //   addFilter({
+  //     filter: {
+  //       id: 'alerts',
+  //       ui,
+  //     }
+  //   });
+  // }, [addFilter, total]);
 
   if (!data || data.length <= 0) {
     return null;
   }
 
-  const { chartData, chartConfig, total } = config.parse(data, startMonth, endMonth);
+  const { startDate, endDate } = ui;
+  const { chartData, chartConfig, total } = config.parse(data, startDate, endDate);
 
   if (chartData.length <= 0) {
     return null;
   }
 
-  const changeStartMonth = (value) => {
-    setStartMonth(value);
-  };
-
-  const changeEndMonth = (value) => {
-    setEndMonth(value);
+  const changeDate = (type, value) => {
+    const prop = (type === 'start') ? 'startDate' : 'endDate';
+    setUi({
+      id: 'alerts',
+      value: {
+        ...ui,
+        [prop]: value
+      }
+    });
   };
 
   const monthOptions = [
@@ -51,26 +60,40 @@ const MangroveAlertsLine = ({
     { label: 'December', value: 12 },
   ];
 
-  const startMonthSelect = (
+  const startDateSelect = (
     <Select
-      value={startMonth}
+      value={startDate}
       options={monthOptions}
-      onChange={value => changeStartMonth(value)}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+        || option.value === startDate}
+      onChange={value => changeDate('start', value)}
     />
   );
 
-  const endMonthSelect = (
+  const endDateSelect = (
     <Select
-      value={endMonth}
+      value={endDate}
       options={monthOptions}
-      onChange={value => changeEndMonth(value)}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+        || option.value === endDate}
+      onChange={value => changeDate('end', value)}
     />
   );
 
+  const changeIndex = (type, value) => {
+    const prop = (type === 'start') ? 'startDate' : 'endDate';
+    setUi({
+      id: 'alerts',
+      value: {
+        ...ui,
+        [prop]: value
+      }
+    });
+  };
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts between {startMonthSelect}
-      &nbsp;and {endMonthSelect}.
+      There were <strong>{total}</strong> mangrove disturbance alerts between {startDateSelect}
+      &nbsp;and {endDateSelect}.
     </>
   );
   const chartRData = {
@@ -87,7 +110,8 @@ const MangroveAlertsLine = ({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
-      // onBrushEnd={change startIndex && endIndex}
+      onBrushStart={value => changeIndex('start', value)}
+      onBrushEnd={value => changeIndex('end', value)}
       {...props}
     />
   );

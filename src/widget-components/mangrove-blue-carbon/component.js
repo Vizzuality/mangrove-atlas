@@ -49,8 +49,9 @@ function MangroveBlueCarbon({
     return null;
   }
 
+  console.log(rawData, '********')
   const data = config.parse(rawData);
-  const { chartConfig, metadata } = data;
+  const { chartConfig } = data;
   let sentence = null;
 
   const widgetData = processData(data, currentYear);

@@ -20,6 +20,7 @@ const extendedTemplate = {
 
 export default {
   template: extendedTemplate,
+  alerts,
   basemaps: {
     light,
     dark,

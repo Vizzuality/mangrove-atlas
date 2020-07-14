@@ -27,7 +27,6 @@ function MangroveBiomassPie({
     });
   }, [addFilter]);
 
-
   if (!rawData) {
     return null;
   }
