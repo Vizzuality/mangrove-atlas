@@ -10,7 +10,6 @@ import WidgetCustomLabel from 'components/widget-custom-label';
 import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
-import looseJsonParse from 'utils/loose-json-parse';
 
 const numberFormat = format(',.3r');
 
@@ -30,11 +29,10 @@ const chunk = (array, size) => {
 
 const getBars = (barValues) => {
   if (!barValues) return null;
-  const barsData = Object.values(looseJsonParse(barValues));
-  const total = barsData.reduce((previous, current) => current + previous);
-  const chunkedData = chunk(barsData, 5);
+  const total = barValues.reduce((previous, current) => current[1] + previous[1]);
+  const chunkedData = chunk(barValues, 5);
   let formattedData = chunkedData.map(
-    r => (r.reduce((previous, current) => current + previous))
+    r => (r.reduce((previous, current) => current[1] + previous[1]))
   );
 
   formattedData = formattedData.map(data => data / total);

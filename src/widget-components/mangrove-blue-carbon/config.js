@@ -80,7 +80,7 @@ export const CONFIG = {
                     <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">355</tspan>
                   </text>
                   <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">t CO2e/ha</tspan>
                   </text>
                 </g>
               );

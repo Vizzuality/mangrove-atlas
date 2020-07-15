@@ -124,13 +124,12 @@ function MangroveNetChange({
     <Select
       className="notranslate"
       prefix="end-year"
-      value={currentYear}
+      value={range.endYear}
       options={optionsYears}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(range.startYear, 10)
-        || option.value === currentYear}
+        || option.value === range.endYear}
       onChange={changeEndYear}
     />);
-
 
   const unitOptions = [
     { value: 'km', label: 'km²' },

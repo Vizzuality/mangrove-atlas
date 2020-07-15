@@ -65,7 +65,7 @@ const chunk = (array, size) => {
 
 const getData = (data) => {
   if (!data || !data.length) return null;
-  const barsData = Object.values(looseJsonParse(data[0]));
+  const barsData = looseJsonParse(data).map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
   const chunkedData = chunk(barsData, 5);
   let formattedData = chunkedData.map(
@@ -74,12 +74,12 @@ const getData = (data) => {
 
   formattedData = formattedData.map(d => d / total);
   return [
-    { x: '400-700', y: formattedData[0] * 100, label: '400-700 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[0] / total * 100 },
-    { x: '700-1000', y: formattedData[0] * 100, label: '700-1000 t CO2e', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[1] / total * 100 },
-    { x: '1000-1300', y: formattedData[1] * 100, label: '1000-1300 t CO2e', value: formattedData[1] * 100, color: '#933A06', percentage: formattedData[2] / total * 100 },
-    { x: '1300-1600', y: formattedData[2] * 100, label: '1300-1600 t CO2e', value: formattedData[2] * 100, color: '#B84E17', percentage: formattedData[3] / total * 100 },
-    { x: '1600-1900', y: formattedData[3] * 100, label: '1600-1900 t CO2e', value: formattedData[3] * 100, color: '#E68518', percentage: formattedData[4] / total * 100 },
-    { x: '1900-2200', y: formattedData[4] * 100, label: '1900-2200 t CO2e', value: formattedData[4] * 100, color: '#EEB66B', percentage: formattedData[5] / total * 100 },
+    { x: '400-700', y: formattedData[0] * 100, label: '400-700 t CO2e/ha', value: formattedData[0] * 100, color: '#EEB66B', percentage: formattedData[0] / total * 100 },
+    { x: '700-1000', y: formattedData[0] * 100, label: '700-1000 t CO2e/ha', value: formattedData[0] * 100, color: '#E68518', percentage: formattedData[1] / total * 100 },
+    { x: '1000-1300', y: formattedData[1] * 100, label: '1000-1300 t CO2e/ha', value: formattedData[1] * 100, color: '#B84E17', percentage: formattedData[2] / total * 100 },
+    { x: '1300-1600', y: formattedData[2] * 100, label: '1300-1600 t CO2e/ha', value: formattedData[2] * 100, color: '#933A06', percentage: formattedData[3] / total * 100 },
+    { x: '1600-1900', y: formattedData[3] * 100, label: '1600-1900 t CO2e/ha', value: formattedData[3] * 100, color: '#5C4A3D', percentage: formattedData[4] / total * 100 },
+    { x: '1900-2200', y: formattedData[4] * 100, label: '1900-2200 t CO2e/ha', value: formattedData[4] * 100, color: '#5C4A3D', percentage: formattedData[5] / total * 100 },
   ];
 };
 
@@ -92,11 +92,16 @@ const biomassCoverage = ({ list }, yearSelected) => {
 
 const filterData = ({ list }, yearSelected) => sortBy(
   list
-    .filter(d => d.agb_mgha_1 !== null
-      && d.agb_hist_mgha_1 !== null
+    .filter(d => d.agb_mgha_1
+      && d.agb_hist_mgha_1
+      && d.total_carbon
       && d.date.includes(yearSelected)),
   ['date']
 ).map(i => i.agb_hist_mgha_1);
+
+const getTotals = ({ list }, yearSelected) => list
+  .filter(d => d.total_carbon && d.date.includes(yearSelected))
+  .map(i => i.total_carbon);
 
 
 export const CONFIG = {
@@ -105,8 +110,8 @@ export const CONFIG = {
     const chartData = getData(dataFiltered);
     return {
       chartData,
-      metadata: widgetMeta(filterData),
       coverage: biomassCoverage(data, yearSelected),
+      totalValues: (getTotals(data, yearSelected))[0],
       chartConfig: {
         type: 'pie',
         layout: 'centric',
@@ -134,7 +139,7 @@ export const CONFIG = {
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">355</tspan>
                     </text>
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">tCO2e</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">t CO2e/ha</tspan>
                     </text>
                   </g>
                 );

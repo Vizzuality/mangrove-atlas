@@ -31,8 +31,6 @@ const MangroveAlertsLine = ({
   if (chartData.length <= 0) {
     return null;
   }
-  console.log(chartData, '*******')
-
   const changeDate = (type, value) => {
     setUi({
       id: 'alerts',

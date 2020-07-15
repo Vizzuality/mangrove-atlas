@@ -71,16 +71,15 @@ const getTotal = data => data.reduce((previous, current) => current.count + prev
 export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
-    const startIndex = chartData.findIndex(d => console.log(d)||d.month === startDate);
+    const startIndex = chartData.findIndex(d => d.month === startDate);
     const endIndex = chartData.findIndex(d => d.month === endDate);
-console.log(data, startDate, endDate, startIndex, endIndex)
     const dataFiltered = data
       .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
 
     return {
       chartData,
       total: getTotal(dataFiltered),
-      //totalYears: getYears(data),
+      // totalYears: getYears(data),
       chartConfig: {
         height: 250,
         cartesianGrid: {

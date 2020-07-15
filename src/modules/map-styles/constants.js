@@ -4,7 +4,7 @@ function toRasterSource({ filename, source }) {
     type: 'raster',
     tileSize: 256,
     ...source,
-  }
+  };
 }
 
 function createRasterLayer({ name, render }) {
@@ -18,7 +18,7 @@ function createRasterLayer({ name, render }) {
       },
       ...render
     }
-  ]
+  ];
 }
 
 const geojsons = [
@@ -30,11 +30,11 @@ const geojsons = [
     },
     layers: [
       {
-        "id": "alerts-heat",
-        "type": "heatmap",
-        "source": "alerts",
-        "maxzoom": 12,
-        "paint": {
+        id: 'alerts-heat',
+        type: 'heatmap',
+        source: 'alerts',
+        maxzoom: 12,
+        paint: {
           "heatmap-weight": [
               "interpolate",
               ["linear"],
@@ -566,7 +566,6 @@ const rasters = [
 
 const sourcesAndLayers = [...rasters, ...geojsons].reduce((acc, item) => {
   const layers = (item.source.type === 'raster') ? createRasterLayer(item) : [];
-console.log(layers)
   return {
     sources: {
       ...acc.sources,

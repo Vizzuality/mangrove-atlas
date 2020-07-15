@@ -30,44 +30,21 @@ function MangroveBiomassPie({
   if (!rawData) {
     return null;
   }
-  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
+  const { chartData, totalValues, chartConfig } = config.parse(rawData);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const dateHandler = (value) => {
-    setUi({ id: 'biomass', value });
-    addFilter({
-      filter: {
-        id: 'biomass',
-        year: value
-      }
-    });
-  };
-
-  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
-    label: year.toString(),
-    value: year.toString()
-  })), ['value']);
-
+  const { bgb_co2e: totalBiomass, agb_co2e: aboveGroundBiomass, soc_co2e: totalSoil } = totalValues;
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-  const yearSelector = (
-    <Select
-      value={yearSelected}
-      isOptionDisabled={option => option.value === yearSelected}
-      options={dateOptions}
-      onChange={value => dateHandler(value)}
-    />
-  );
-
   const sentence = (
     <>
       Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-     "*Total Amount2*" Mt CO2e  with "*Biomass Amount>*" Mt CO2e stored in above-ground biomass and
-      "*Soil amount*"" Mt CO2e stored in the upper 1m of soil.
+      &nbsp;<strong>{totalBiomass}</strong> Mt CO2e  with <strong>{aboveGroundBiomass}</strong> Mt CO2e stored in above-ground biomass and
+      &nbsp;<strong>{totalSoil}</strong> Mt CO2e stored in the upper 1m of soil.
     </>
   );
 
