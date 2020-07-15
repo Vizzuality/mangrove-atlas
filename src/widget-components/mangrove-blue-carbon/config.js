@@ -74,12 +74,11 @@ const getData = (data) => {
 
   formattedData = formattedData.map(d => d / total);
   return [
-    { label: '400-700 t CO2e/ha', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[0] / total * 100 },
-    { label: '700-1000 t CO2e/ha', value: formattedData[0] * 100, color: '#5C4A3D', percentage: formattedData[1] / total * 100 },
-    { label: '1000-1300 t CO2e/ha', value: formattedData[1] * 100, color: '#933A06', percentage: formattedData[2] / total * 100 },
-    { label: '1300-1600 t CO2e/ha', value: formattedData[2] * 100, color: '#B84E17', percentage: formattedData[3] / total * 100 },
-    { label: '1600-1900 t CO2e/ha', value: formattedData[3] * 100, color: '#E68518', percentage: formattedData[4] / total * 100 },
-    { label: '1900-2200 t CO2e/ha', value: formattedData[4] * 100, color: '#EEB66B', percentage: formattedData[5] / total * 100 },
+    { label: '400-1000 t CO₂e/ha', value: (formattedData[0] + formattedData[1]) * 100, color: '#5C4A3D', percentage: (formattedData[0] + formattedData[1]) / total * 100 },
+    { label: '1000-1300 t CO₂e/ha', value: formattedData[2] * 100, color: '#933A06', percentage: formattedData[2] / total * 100 },
+    { label: '1300-1600 t CO₂e/ha', value: formattedData[3] * 100, color: '#B84E17', percentage: formattedData[3] / total * 100 },
+    { label: '1600-1900 t CO₂e/ha', value: formattedData[4] * 100, color: '#E68518', percentage: formattedData[4] / total * 100 },
+    { label: '1900-2200 t CO₂e/ha', value: formattedData[5] * 100, color: '#EEB66B', percentage: formattedData[5] / total * 100 },
   ];
 };
 
@@ -140,7 +139,7 @@ export const CONFIG = {
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">{numberFormat(totalValues.soc_co2e / 1000000)}</tspan>
                     </text>
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">t CO2e/ha</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e/ha</tspan>
                     </text>
                   </g>
                 );
