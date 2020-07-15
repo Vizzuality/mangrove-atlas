@@ -16,7 +16,7 @@ const MangroveAlertsLine = ({
   fetchAlerts,
   ...props
 }) => {
-  const { year = 2019, startDate = 2, endDate = 11 } = ui;
+  const { year = 2019, startDate = 2, endDate = 7 } = ui;
   useEffect(() => {
     if (locationId) {
       const currentLocation = locationsList.find(location => location.iso === locationId);
@@ -41,7 +41,11 @@ const MangroveAlertsLine = ({
       }
     });
   };
-  const yearOptions = [ {label: 2020, value: 2020}, {label: 2019, value: 2019}]
+
+  const yearOptions = [
+    { label: 2020, value: 2020 },
+    { label: 2019, value: 2019 }
+  ];
 
   const monthOptions = [
     { label: 'January', value: 1 },

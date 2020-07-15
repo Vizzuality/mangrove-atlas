@@ -64,8 +64,7 @@ const getData = (data, year) => sortBy(data
   }),
 ['month']);
 
-// const getYears = data => sortBy(new Date(d.date.value).getFullYear()
-//   ['year']);
+
 const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
 
 export const CONFIG = {
@@ -79,7 +78,6 @@ export const CONFIG = {
     return {
       chartData,
       total: getTotal(dataFiltered),
-      // totalYears: getYears(data),
       chartConfig: {
         height: 250,
         cartesianGrid: {
@@ -159,7 +157,6 @@ export const CONFIG = {
           },
         },
         xAxis: {
-         // domain: [months[0].value, months[11].value],
           tick: {
             strokeHeight: 5,
             strokeWidth: 1,

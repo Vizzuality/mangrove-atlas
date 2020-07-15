@@ -23,10 +23,10 @@ function createRasterLayer({ name, render }) {
 
 const geojsons = [
   {
+    id: 'alerts',
     source: {
-      name: 'alerts',
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?year=2020&location_id=1'
+      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap'
     },
     layers: [
       {
@@ -58,7 +58,7 @@ const geojsons = [
               ["linear"],
               ["heatmap-density"],
               0,
-              "rgba(255, 194, 0, 1)",
+              "rgba(255, 194, 0, 0)",
               0.33,
               "rgba(235, 68, 68, 1)",
               0.66,
@@ -90,7 +90,6 @@ const geojsons = [
         "id": "alerts-point",
         "type": "circle",
         "source": "alerts",
-        "minzoom": 0,
         "paint": {
           "circle-radius": [
             "interpolate",
@@ -101,21 +100,7 @@ const geojsons = [
             16,
             ["interpolate", ["linear"], ["get", "count"], 1, 5, 6, 50]
           ],
-          "circle-color": [
-              "interpolate",
-              ["linear"],
-              ["get", "count"],
-              0,
-              "rgba(255, 194, 0, 1)",
-              0.33,
-              "rgba(235, 68, 68, 1)",
-              0.66,
-              "rgba(199, 43, 214, 1)",
-              1,
-              "rgba(210, 50, 169, 1)"
-          ],
-          "circle-stroke-color": "white",
-          "circle-stroke-width": 0.5,
+          "circle-color": "rgba(210, 50, 169, 1)",
           "circle-opacity": [
             "interpolate",
             ["linear"],
@@ -570,7 +555,7 @@ const sourcesAndLayers = [...rasters, ...geojsons].reduce((acc, item) => {
     sources: {
       ...acc.sources,
       ...item.source.type === 'geojson' && {
-        [item.source.name]: item.source,
+        [item.id]: item.source
       },
       ...item.source.type === 'raster' && { [`${item.name}-tiles`]: toRasterSource(item) },
     },
@@ -843,6 +828,16 @@ const layersMap = {
       year: 2016,
       minZoom: 0,
       maxZoom: 12
+    },
+  ],
+  'alerts-heat': [
+    {
+      layerId: 'alerts-heat',
+    },
+  ],
+  'alerts-point': [
+    {
+      layerId: 'alerts-point',
     },
   ]
 };

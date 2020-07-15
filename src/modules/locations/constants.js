@@ -1,11 +1,11 @@
 export const WDPA = {
   DELTA_DU_SALOUM: {
     areaName: 'Delta du Saloum',
-    id: '483'
+    id: '512'
   },
   RUFIKI_MAFIA_KILWA: {
     areaName: 'Rufiji-Mafia-Kilwa',
-    id: '504'
+    id: '511'
   },
   MAFIA_ISLAND: {
     areaName: 'Mafia Island',
