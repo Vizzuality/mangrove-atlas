@@ -27,24 +27,47 @@ function MangroveBiomassPie({
     });
   }, [addFilter]);
 
+
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig } = config.parse(rawData);
+  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const { bgb_co2e: totalBiomass, agb_co2e: aboveGroundBiomass, soc_co2e: totalSoil } = totalValues;
+  const dateHandler = (value) => {
+    setUi({ id: 'biomass', value });
+    addFilter({
+      filter: {
+        id: 'biomass',
+        year: value
+      }
+    });
+  };
+
+  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
+    label: year.toString(),
+    value: year.toString()
+  })), ['value']);
+
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
+  const yearSelector = (
+    <Select
+      value={yearSelected}
+      isOptionDisabled={option => option.value === yearSelected}
+      options={dateOptions}
+      onChange={value => dateHandler(value)}
+    />
+  );
+
   const sentence = (
     <>
-      Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO2e  with <strong>{aboveGroundBiomass}</strong> Mt CO2e stored in above-ground biomass and
-      &nbsp;<strong>{totalSoil}</strong> Mt CO2e stored in the upper 1m of soil.
+      Mean mangrove aboveground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in <strong>{2016 || yearSelector}</strong>.
     </>
   );
 

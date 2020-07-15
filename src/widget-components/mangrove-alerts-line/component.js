@@ -13,12 +13,17 @@ const MangroveAlertsLine = ({
   ui,
   ui: { year },
   locationId,
+  locationsList,
   setUi,
   fetchAlerts,
   ...props
 }) => {
   useEffect(() => {
-    fetchAlerts(locationId, year);
+    if (locationId) {
+      const currentLocation = locationsList.find(location => location.iso === locationId)
+      fetchAlerts(currentLocation.id, year);
+    }
+    else { fetchAlerts(510, year) }
   }, [year, locationId]);
 
   if (!data || data.length <= 0) {

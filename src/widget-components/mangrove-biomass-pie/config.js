@@ -15,26 +15,49 @@ const numberFormat = format(',.3r');
 
 const categoriesData = {
   '0–50': {
-    color: '#5C4A3D',
+    color: '#EAF19D',
     label: '0 – 50'
   },
   '50–100': {
-    color: '#933A06',
+    color: '#B8E98E',
     label: '50 – 100'
   },
   '100–150': {
-    color: '#B84E17',
+    color: '#1B97C1',
     label: '100 – 150'
   },
   '150–200': {
-    color: '#E68518',
+    color: '#1C52A3',
     label: '150 – 200'
   },
   '200–250': {
-    color: '#EEB66B',
+    color: '#13267F',
     label: '200 – 250'
   }
 };
+
+const widgetData = ({ list }) => list.flatMap((d) => {
+  const year = new Date(d.date).getFullYear();
+
+  if (!d.con_hotspot_summary_km2) return null;
+
+  const hotSpotData = d.con_hotspot_summary_km2;
+
+  const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
+
+  return (typeof hotSpotData === 'string')
+    ? []
+    : Object.entries(hotSpotData).map(([catKey, catValue]) => ({
+      x: Number(year),
+      y: catValue,
+      color: categoriesData[catKey].color || '',
+      label: categoriesData[catKey].label,
+      value: catValue,
+      percentage: (catValue / total) * 100,
+      unit: '%',
+      coverage: (catValue).toFixed(2)
+    }));
+});
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
@@ -63,7 +86,7 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
-const getData = (data) => {
+const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
   const barsData = looseJsonParse(data).map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
@@ -73,13 +96,13 @@ const getData = (data) => {
   );
 
   formattedData = formattedData.map(d => d / total);
+
   return [
-    { x: '400-700', y: formattedData[0] * 100, label: '400-700 t CO2e/ha', value: formattedData[0] * 100, color: '#EEB66B', percentage: formattedData[0] / total * 100 },
-    { x: '700-1000', y: formattedData[0] * 100, label: '700-1000 t CO2e/ha', value: formattedData[0] * 100, color: '#E68518', percentage: formattedData[1] / total * 100 },
-    { x: '1000-1300', y: formattedData[1] * 100, label: '1000-1300 t CO2e/ha', value: formattedData[1] * 100, color: '#B84E17', percentage: formattedData[2] / total * 100 },
-    { x: '1300-1600', y: formattedData[2] * 100, label: '1300-1600 t CO2e/ha', value: formattedData[2] * 100, color: '#933A06', percentage: formattedData[3] / total * 100 },
-    { x: '1600-1900', y: formattedData[3] * 100, label: '1600-1900 t CO2e/ha', value: formattedData[3] * 100, color: '#5C4A3D', percentage: formattedData[4] / total * 100 },
-    { x: '1900-2200', y: formattedData[4] * 100, label: '1900-2200 t CO2e/ha', value: formattedData[4] * 100, color: '#5C4A3D', percentage: formattedData[5] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
   ];
 };
 
@@ -92,26 +115,20 @@ const biomassCoverage = ({ list }, yearSelected) => {
 
 const filterData = ({ list }, yearSelected) => sortBy(
   list
-    .filter(d => d.agb_mgha_1
-      && d.agb_hist_mgha_1
-      && d.total_carbon
+    .filter(d => d.agb_mgha_1 !== null
+      && d.agb_hist_mgha_1 !== null
       && d.date.includes(yearSelected)),
   ['date']
 ).map(i => i.agb_hist_mgha_1);
 
-const getTotals = ({ list }, yearSelected) => list
-  .filter(d => d.total_carbon && d.date.includes(yearSelected))
-  .map(i => i.total_carbon);
 
-
-export const CONFIG = {
+const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered);
     return {
-      chartData,
+      chartData: getData(dataFiltered),
+      metadata: widgetMeta(filterData),
       coverage: biomassCoverage(data, yearSelected),
-      totalValues: (getTotals(data, yearSelected))[0],
       chartConfig: {
         type: 'pie',
         layout: 'centric',
@@ -122,28 +139,12 @@ export const CONFIG = {
             y: {
               cx: '50%',
               cy: '50%',
-              paddingAngle: 2,
               dataKey: 'percentage',
               nameKey: 'label',
+              paddingAngle: 2,
               innerRadius: '60%',
               outerRadius: '80%',
-              isAnimationActive: false,
-              customLabel: ({ viewBox }) => {
-                const { cx, cy } = viewBox;
-                return (
-                  <g>
-                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
-                    </text>
-                    <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">355</tspan>
-                    </text>
-                    <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">t CO2e/ha</tspan>
-                    </text>
-                  </g>
-                );
-              }
+              isAnimationActive: false
             }
           }
         },
@@ -151,35 +152,31 @@ export const CONFIG = {
           align: 'left',
           verticalAlign: 'middle',
           layout: 'vertical',
-          fontSize: 10,
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend size="_small" groups={groups} unit="%" />;
+            return <WidgetLegend groups={groups} unit="km²" />;
           }
         },
         tooltip: {
           cursor: false,
-          content: ((properties) => {
-            const { payload } = properties;
-            if (!payload.length) return null;
-            const tooltipData = payload[0].payload;
-            return (
-              <WidgetTooltip
-                style={{
-                  flexDirection: 'column',
-                  marginTop: '10px',
-                  marginLeft: '-50px'
-                }}
-                settings={[
-                  { label: tooltipData.label, key: 'label', color: tooltipData.color, format: () => `${tooltipData.value ? (tooltipData.value).toFixed(2) : null} %`, position: '_column' },
-                ]}
-              />
-            );
-          })
+          content: (
+            <WidgetTooltip
+              style={{
+                flexDirection: 'column',
+                marginTop: '10px',
+                marginLeft: '-50px'
+              }}
+              settings={[
+                { key: 'label' },
+                { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
+                { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
+              ]}
+            />
+          )
         }
       }
-    };
+    }
   }
 };
 

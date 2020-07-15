@@ -7,7 +7,7 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ type, size, position, widgetSpecific, groups, direction, variant, unit }) => {
+const Legend = ({ type, position, widgetSpecific, groups, direction, variant, unit }) => {
 
   return (
     <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
@@ -38,7 +38,7 @@ const Legend = ({ type, size, position, widgetSpecific, groups, direction, varia
                 />)}
 
                 <div className={styles.itemWrapper}>
-                  <span className={classnames(styles[`_${size}`])}>{item.value}</span>
+                  <span>{item.value}</span>
                   {item.payload && item.payload.y
                     && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
                   }

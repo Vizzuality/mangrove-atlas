@@ -1,94 +1,71 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import sortBy from 'lodash/sortBy';
-
+import { format } from 'd3-format';
 import ChartWidget from 'components/chart-widget';
-import Select from 'components/select';
-
 import config from './config';
 
-function processData(data, currentYear) {
-  const { chartData, metadata } = data;
-  const currentYearData = chartData.find(d => d.x === currentYear);
-
-  if (!currentYearData) {
-    return null;
-  }
-
-  const nonMangrove = metadata.total - currentYearData.value;
-
-  return [
-    {
-      ...currentYearData
-    },
-    {
-      x: 0,
-      y: nonMangrove,
-      color: '#FDC067',
-      percentage: nonMangrove / metadata.total * 100,
-      unit: '%',
-      coverage: (nonMangrove / 1000).toFixed(2),
-      label: 'Soil'
-    }
-  ];
-}
+const numberFormat = format(',.2f');
 
 function MangroveBlueCarbon({
   data: rawData,
   currentLocation,
-  addFilter,
+  isCollapsed,
   slug,
-  ui: {
-    currentYear,
-    unit
-  },
+  name,
+  addFilter,
+  ui: yearSelected,
   setUi,
   ...props
 }) {
+  useEffect(() => {
+    addFilter({
+      filter: {
+        id: 'carbon',
+        year: '2016'
+      }
+    });
+  }, [addFilter]);
+
   if (!rawData) {
     return null;
   }
-
-  const data = config.parse(rawData);
-  const { chartConfig } = data;
-  let sentence = null;
-
-  const widgetData = processData(data, currentYear);
-
-  if (widgetData === null) {
+  const { chartData, totalValues, chartConfig } = config.parse(rawData);
+  if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const chartData = {
-    data: widgetData,
+  const { bgb_co2e, agb_co2e, soc_co2e } = totalValues;
+
+  const totalSoil = numberFormat(soc_co2e / 1000000);
+  const totalBiomass = numberFormat((bgb_co2e + totalSoil) / 1000000);
+  const aboveGroundBiomass = numberFormat(agb_co2e / 1000000);
+
+  const location = (currentLocation.location_type === 'worldwide')
+    ? 'the world'
+    : <span className="notranslate">{`${currentLocation.name}`}</span>;
+
+  const sentence = (
+    <>
+      Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
+      &nbsp;<strong>{totalBiomass}</strong> Mt CO2e  with <strong>{aboveGroundBiomass}</strong> Mt CO2e stored in above-ground biomass and
+      &nbsp;<strong>{totalSoil}</strong> Mt CO2e stored in the upper 1m of soil.
+    </>
+  );
+
+  const widgetData = {
+    data: chartData,
     config: chartConfig
   };
 
-  try {
-    const location = (currentLocation.location_type === 'worldwide')
-      ? 'the world’s'
-      : <span className="notranslate">{`${currentLocation.name}'s`}</span>;
-
-
-    sentence = (
-      <>
-        <strong>TOTAL_CARBON</strong> kg C m-2 was estimated to be stored in mangrove habitat In
-        <strong> {location} </strong>during 2016; with
-        <strong> IN_BIOMASS</strong> in tree biomass, and
-        <strong> IN_SOIL</strong> in the upper 1m of soil.
-      </>
-    );
-  } catch (e) {
-    sentence = <span>No data for this widget.</span>;
-  }
-
   return (
     <ChartWidget
-      data={data}
+      name={name}
+      data={chartData}
       slug={slug}
       filename={slug}
+      isCollapsed={isCollapsed}
       sentence={sentence}
-      chartData={chartData}
+      chartData={widgetData}
       {...props}
     />
   );
@@ -96,14 +73,26 @@ function MangroveBlueCarbon({
 
 MangroveBlueCarbon.propTypes = {
   data: PropTypes.shape({}),
+  currentLocation: PropTypes.shape({}),
+  addFilter: PropTypes.func,
+  isCollapsed: PropTypes.bool,
+  slug: PropTypes.string,
+  name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  currentLocation: PropTypes.shape({})
+  ui: PropTypes.string,
+  setUi: PropTypes.func
 };
 
 MangroveBlueCarbon.defaultProps = {
   data: null,
+  currentLocation: null,
+  addFilter: () => { },
+  isCollapsed: false,
+  slug: null,
+  name: null,
   metadata: null,
-  currentLocation: null
+  ui: null,
+  setUi: () => { }
 };
 
 export default MangroveBlueCarbon;
