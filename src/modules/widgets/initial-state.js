@@ -3,5 +3,11 @@ export default {
   isLoading: false,
   error: null,
   isOpened: false,
-  ui: {}
+  ui: {
+    alerts: {
+      startDate: 2,
+      endDate: 11,
+      year: 2019
+    }
+  }
 };

@@ -58,11 +58,11 @@ const getData = (data) => {
   const total = Object.values(histogram[0]).reduce((previous, current) => current + previous);
   const result = histogram[0];
   return [
-    { label: '400-1000 t CO₂e/ha', value: result[400], color: '#5C4A3D', percentage: result[400] / total * 100 },
-    { label: '1000-1300 t CO₂e/ha', value: result[400], color: '#933A06', percentage: result[400] / total * 100 },
-    { label: '1300-1600 t CO₂e/ha', value: result[400], color: '#B84E17', percentage: result[400] / total * 100 },
-    { label: '1600-1900 t CO₂e/ha', value: result[400], color: '#E68518', percentage: result[400] / total * 100 },
-    { label: '1900-2200 t CO₂e/ha', value: result[400], color: '#EEB66B', percentage: result[400] / total * 100 },
+    { label: '400-1000 t CO₂e/ha', value: result['400--700'] + result['700--1000'], color: '#5C4A3D', percentage: (result['400--700'] + result['700--1000']) / total * 100 },
+    { label: '1000-1300 t CO₂e/ha', value: result['1000--1300'], color: '#933A06', percentage: result['1000--1300'] / total * 100 },
+    { label: '1300-1600 t CO₂e/ha', value: result['1300--1600'], color: '#B84E17', percentage: result['1300--1600'] / total * 100 },
+    { label: '1600-1900 t CO₂e/ha', value: result['1600--1900'], color: '#E68518', percentage: result['1600--1900'] / total * 100 },
+    { label: '1900-2200 t CO₂e/ha', value: result['1900--2200'], color: '#EEB66B', percentage: result['1900--2200'] / total * 100 },
   ];
 };
 

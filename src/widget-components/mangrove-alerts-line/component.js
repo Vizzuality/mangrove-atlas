@@ -9,14 +9,14 @@ const MangroveAlertsLine = ({
   isCollapsed,
   slug, name,
   addFilter,
-  ui,
-  ui: { year },
+  ui = {},
   locationId,
   locationsList,
   setUi,
   fetchAlerts,
   ...props
 }) => {
+  const { year = 2019, startDate = 2, endDate = 11 } = ui;
   useEffect(() => {
     if (locationId) {
       const currentLocation = locationsList.find(location => location.iso === locationId);
@@ -28,7 +28,6 @@ const MangroveAlertsLine = ({
     return null;
   }
 
-  const { startDate, endDate } = ui;
   const { chartData, chartConfig, total } = config.parse(data, startDate, endDate, year);
 
   if (chartData.length <= 0) {
@@ -38,7 +37,6 @@ const MangroveAlertsLine = ({
     setUi({
       id: 'alerts',
       value: {
-        ...ui,
         [type]: value
       }
     });
@@ -75,7 +73,7 @@ const MangroveAlertsLine = ({
       value={endDate}
       options={monthOptions}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
-        || option.value === endDate || option.value}
+        || option.value === endDate}
       onChange={value => changeDate('endDate', value)}
     />
   );

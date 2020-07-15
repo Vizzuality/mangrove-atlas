@@ -206,10 +206,9 @@ export const CONFIG = {
         },
         tooltip: {
           cursor: false,
-          content: (properties) => {
+          content: (properties = {}) => {
             const { payload } = properties;
-            if (!payload) return null;
-            const data = payload[0];
+            if (!payload || payload.lenght) return null;
             return (
               <WidgetTooltip
                 style={{
@@ -217,8 +216,8 @@ export const CONFIG = {
                   justifyContent: 'space-around',
                   marginLeft: '10px',
                 }}
+                payload={payload}
                 settings={[
-                  // { key: 'name' },
                   { label: 'alerts', key: 'count', format: value => value, position: '_column' },
                 ]}
               />
