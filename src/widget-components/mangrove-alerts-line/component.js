@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
-import realData from './constants';
 
 import config from './config';
 
@@ -12,29 +11,41 @@ const MangroveAlertsLine = ({
   currentLocation,
   addFilter,
   ui,
+  ui: { year },
+  locationId,
+  locationsList,
   setUi,
+  fetchAlerts,
   ...props
 }) => {
-  const [startMonth, setStartMonth] = useState(2);
-  const [endMonth, setEndMonth] = useState(11);
+  useEffect(() => {
+    if (locationId) {
+      const currentLocation = locationsList.find(location => location.iso === locationId)
+      fetchAlerts(currentLocation.id, year);
+    }
+    else { fetchAlerts(510, year) }
+  }, [year, locationId]);
 
   if (!data || data.length <= 0) {
     return null;
   }
 
-  const { chartData, chartConfig, total } = config.parse(data, startMonth, endMonth);
+  const { startDate, endDate } = ui;
+  const { chartData, chartConfig, total } = config.parse(data, startDate, endDate, year);
 
   if (chartData.length <= 0) {
     return null;
   }
-
-  const changeStartMonth = (value) => {
-    setStartMonth(value);
+  const changeDate = (type, value) => {
+    setUi({
+      id: 'alerts',
+      value: {
+        ...ui,
+        [type]: value
+      }
+    });
   };
-
-  const changeEndMonth = (value) => {
-    setEndMonth(value);
-  };
+  const yearOptions = [ {label: 2020, value: 2020}, {label: 2019, value: 2019}]
 
   const monthOptions = [
     { label: 'January', value: 1 },
@@ -51,28 +62,41 @@ const MangroveAlertsLine = ({
     { label: 'December', value: 12 },
   ];
 
-  const startMonthSelect = (
+  const startDateSelect = (
     <Select
-      value={startMonth}
+      value={startDate}
       options={monthOptions}
-      onChange={value => changeStartMonth(value)}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+        || option.value === startDate}
+      onChange={value => changeDate('startDate', value)}
     />
   );
 
-  const endMonthSelect = (
+  const endDateSelect = (
     <Select
-      value={endMonth}
+      value={endDate}
       options={monthOptions}
-      onChange={value => changeEndMonth(value)}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+        || option.value === endDate}
+      onChange={value => changeDate('endDate', value)}
+    />
+  );
+
+  const yearSelect = (
+    <Select
+      value={year}
+      options={yearOptions}
+      onChange={value => changeDate('year', value)}
     />
   );
 
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts between {startMonthSelect}
-      &nbsp;and {endMonthSelect}.
+      There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
+      &nbsp;and {endDateSelect} in {yearSelect}.
     </>
   );
+
   const chartRData = {
     data: chartData,
     config: chartConfig
@@ -87,7 +111,10 @@ const MangroveAlertsLine = ({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
-      // onBrushEnd={change startIndex && endIndex}
+      onBrushEnd={({ startIndex, endIndex }) => {
+        changeDate('startDate', new Date(chartData[startIndex].date.value).getMonth() + 1);
+        changeDate('endDate', new Date(chartData[endIndex].date.value).getMonth() + 1);
+      }}
       {...props}
     />
   );

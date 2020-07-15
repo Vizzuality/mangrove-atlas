@@ -124,13 +124,12 @@ function MangroveNetChange({
     <Select
       className="notranslate"
       prefix="end-year"
-      value={currentYear}
+      value={range.endYear}
       options={optionsYears}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(range.startYear, 10)
-        || option.value === currentYear}
+        || option.value === range.endYear}
       onChange={changeEndYear}
     />);
-
 
   const unitOptions = [
     { value: 'km', label: 'km²' },
@@ -147,7 +146,7 @@ function MangroveNetChange({
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by {quantity} {unitSelector}
+      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong>{quantity}</strong> {unitSelector}
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );

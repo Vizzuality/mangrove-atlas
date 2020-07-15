@@ -21,7 +21,6 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
         ? <div className={styles.spinner}><Spinner /></div>
         : widgets.length && widgets.map((widget) => {
           const Widget = templates.get(widget.slug).component;
-
           return (
 
             <Widget

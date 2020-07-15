@@ -1,4 +1,4 @@
-function toRasterSource({ filename, source}) {
+function toRasterSource({ filename, source }) {
   return {
     tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
     type: 'raster',
@@ -7,23 +7,127 @@ function toRasterSource({ filename, source}) {
   };
 }
 
-function createLayer({ name, render }) {
-  return {
-    id: name,
-    type: 'raster',
-    source: `${name}-tiles`,
-    layout: {
-      visibility: 'none'
-    },
-    ...render
-  };
+function createRasterLayer({ name, render }) {
+  return [
+    {
+      id: name,
+      type: 'raster',
+      source: `${name}-tiles`,
+      layout: {
+        visibility: 'none'
+      },
+      ...render
+    }
+  ];
 }
 
-const geojson = [
+const geojsons = [
   {
-    id: 'alerts',
-    type: 'geojson',
-    data: 'https://cors-anywhere.herokuapp.com/https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts?format=geojson'
+    source: {
+      name: 'alerts',
+      type: 'geojson',
+      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?year=2020&location_id=1'
+    },
+    layers: [
+      {
+        id: 'alerts-heat',
+        type: 'heatmap',
+        source: 'alerts',
+        maxzoom: 12,
+        paint: {
+          "heatmap-weight": [
+              "interpolate",
+              ["linear"],
+              ["get", "count"],
+              0,
+              0,
+              6,
+              1
+          ],
+          "heatmap-intensity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              0,
+              1,
+              9,
+              3
+          ],
+          "heatmap-color": [
+              "interpolate",
+              ["linear"],
+              ["heatmap-density"],
+              0,
+              "rgba(255, 194, 0, 1)",
+              0.33,
+              "rgba(235, 68, 68, 1)",
+              0.66,
+              "rgba(199, 43, 214, 1)",
+              1,
+              "rgba(210, 50, 169, 1)"
+          ],
+          "heatmap-radius": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              0,
+              2,
+              9,
+              20
+          ],
+          "heatmap-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              3,
+              1,
+              7,
+              0
+          ]
+        }
+      },
+      {
+        "id": "alerts-point",
+        "type": "circle",
+        "source": "alerts",
+        "minzoom": 0,
+        "paint": {
+          "circle-radius": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            7,
+            ["interpolate", ["linear"], ["get", "count"], 1, 1, 6, 4],
+            16,
+            ["interpolate", ["linear"], ["get", "count"], 1, 5, 6, 50]
+          ],
+          "circle-color": [
+              "interpolate",
+              ["linear"],
+              ["get", "count"],
+              0,
+              "rgba(255, 194, 0, 1)",
+              0.33,
+              "rgba(235, 68, 68, 1)",
+              0.66,
+              "rgba(199, 43, 214, 1)",
+              1,
+              "rgba(210, 50, 169, 1)"
+          ],
+          "circle-stroke-color": "white",
+          "circle-stroke-width": 0.5,
+          "circle-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            7,
+            0,
+            8,
+            1
+          ]
+        }
+      }
+    ]
   }
 ];
 
@@ -32,6 +136,7 @@ const rasters = [
     name: 'biomass_1996_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_1996_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -44,6 +149,7 @@ const rasters = [
     name: 'biomass_1996_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_1996_v1-0_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -55,6 +161,7 @@ const rasters = [
     name: 'biomass_2000_v1-2_z0-12',
     filename: 'mangrove_aboveground_biomass_2000_v1-2_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -67,6 +174,7 @@ const rasters = [
     name: 'biomass_2000_v1-2_z13-15',
     filename: 'mangrove_aboveground_biomass_2000_v1-2_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -78,6 +186,7 @@ const rasters = [
     name: 'biomass_2007_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2007_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -90,6 +199,7 @@ const rasters = [
     name: 'biomass_2007_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2007_v1-0_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -101,6 +211,7 @@ const rasters = [
     name: 'biomass_2008_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2008_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -113,6 +224,7 @@ const rasters = [
     name: 'biomass_2008_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2008_v1-0_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -124,6 +236,7 @@ const rasters = [
     name: 'biomass_2009_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2009_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -136,6 +249,7 @@ const rasters = [
     name: 'biomass_2009_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2009_v1-0_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -147,6 +261,7 @@ const rasters = [
     name: 'biomass_2010_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2010_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -159,6 +274,7 @@ const rasters = [
     name: 'biomass_2010_v1-0_z13-15',
     filename: 'mangrove_aboveground_biomass_2010_v1-0_z13-15',
     source: {
+      type: 'raster',
       minzoom: 13,
       maxzoom: 15
     },
@@ -170,6 +286,7 @@ const rasters = [
     name: 'biomass_2015_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2015_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -178,6 +295,7 @@ const rasters = [
     name: 'biomass_2016_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_2016_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -187,6 +305,7 @@ const rasters = [
     name: 'basal_height_2000_v1-2_z0-13',
     filename: 'mangrove_basal-area_weighted_height_2000_v1-2_z0-13',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 13
     }
@@ -195,6 +314,7 @@ const rasters = [
     name: 'height_1996_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_1996_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -203,6 +323,7 @@ const rasters = [
     name: 'height_2000_v1-2_z0-13',
     filename: 'mangrove_max_canopy_height_2000_v1-2_z0-13',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 13
     }
@@ -211,6 +332,7 @@ const rasters = [
     name: 'height_2007_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2007_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -219,6 +341,7 @@ const rasters = [
     name: 'height_2008_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2008_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -227,6 +350,7 @@ const rasters = [
     name: 'height_2009_v1-0_z0-12',
     filename: 'mangrove_max_canopy_height_2009_v1-0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -235,6 +359,7 @@ const rasters = [
     name: 'height_2010_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2010_v1-0_z0-15',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 15
     },
@@ -243,6 +368,7 @@ const rasters = [
     name: 'height_2015_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2015_v1-0_z0-15',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 15
     }
@@ -251,6 +377,7 @@ const rasters = [
     name: 'height_2016_v1-0_z0-15',
     filename: 'mangrove_max_canopy_height_2016_v1-0_z0-15',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 15
     }
@@ -259,6 +386,7 @@ const rasters = [
     name: 'gmw1996v2_0_z0-12',
     filename: 'gmw1996v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -267,6 +395,7 @@ const rasters = [
     name: 'gmw2007v2_0_z0-12',
     filename: 'gmw2007v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -275,6 +404,7 @@ const rasters = [
     name: 'gmw2008v2_0_z0-12',
     filename: 'gmw2008v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -283,6 +413,7 @@ const rasters = [
     name: 'gmw2009v2_0_z0-12',
     filename: 'gmw2009v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -291,6 +422,7 @@ const rasters = [
     name: 'gmw2010v2_0_z0-12',
     filename: 'gmw2010v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -299,6 +431,7 @@ const rasters = [
     name: 'gmw2015v2_0_z0-12',
     filename: 'gmw2015v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -307,6 +440,7 @@ const rasters = [
     name: 'gmw2016v2_0_z0-12',
     filename: 'gmw2016v2_0_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -315,6 +449,7 @@ const rasters = [
     name: 'toc_co2eha-1_2016_z0z12',
     filename: 'toc_co2eha-1_2016_z0z12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -323,6 +458,7 @@ const rasters = [
     name: 'gl_1996_2007_loss_z0-12',
     filename: 'gl_1996_2007_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     },
@@ -331,6 +467,7 @@ const rasters = [
     name: 'gl_2007_1996_gain_z0-12',
     filename: 'gl_2007_1996_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -339,6 +476,7 @@ const rasters = [
     name: 'gl_2007_2008_loss_z0-12',
     filename: 'gl_2007_2008_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -347,6 +485,7 @@ const rasters = [
     name: 'gl_2008_2007_gain_z0-12',
     filename: 'gl_2008_2007_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -355,6 +494,7 @@ const rasters = [
     name: 'gl_2008_2009_loss_z0-12',
     filename: 'gl_2008_2009_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -363,6 +503,7 @@ const rasters = [
     name: 'gl_2009_2008_gain_z0-12',
     filename: 'gl_2009_2008_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -371,6 +512,7 @@ const rasters = [
     name: 'gl_2009_2010_loss_z0-12',
     filename: 'gl_2009_2010_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -379,6 +521,7 @@ const rasters = [
     name: 'gl_2010_2009_gain_z0-12',
     filename: 'gl_2010_2009_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -387,6 +530,7 @@ const rasters = [
     name: 'gl_2010_2015_loss_z0-12',
     filename: 'gl_2010_2015_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -395,6 +539,7 @@ const rasters = [
     name: 'gl_2015_2010_gain_z0-12',
     filename: 'gl_2015_2010_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -403,6 +548,7 @@ const rasters = [
     name: 'gl_2015_2016_loss_z0-12',
     filename: 'gl_2015_2016_loss_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
@@ -411,22 +557,30 @@ const rasters = [
     name: 'gl_2016_2015_gain_z0-12',
     filename: 'gl_2016_2015_gain_z0-12',
     source: {
+      type: 'raster',
       minzoom: 0,
       maxzoom: 12
     }
   }
 ];
 
-const sourcesAndLayers = rasters.reduce((acc, item) => ({
-  sources: {
-    ...acc.sources,
-    [`${item.name}-tiles`]: toRasterSource(item)
-  },
-  layers: [
-    ...acc.layers,
-    createLayer(item)
-  ]
-}), { sources: {}, layers: [] });
+const sourcesAndLayers = [...rasters, ...geojsons].reduce((acc, item) => {
+  const layers = (item.source.type === 'raster') ? createRasterLayer(item) : [];
+  return {
+    sources: {
+      ...acc.sources,
+      ...item.source.type === 'geojson' && {
+        [item.source.name]: item.source,
+      },
+      ...item.source.type === 'raster' && { [`${item.name}-tiles`]: toRasterSource(item) },
+    },
+    layers: [
+      ...acc.layers,
+      ...layers,
+      ...(item.source.type === 'geojson') ? item.layers : []
+    ]
+  };
+}, { sources: {}, layers: [] });
 
 const layersMap = {
   biomass: [
@@ -693,6 +847,7 @@ const layersMap = {
   ]
 };
 
+
 export const scopeFeature = new Map([
   ['short', 'ST_Advice'],
   ['medium', 'MT_Advice'],
@@ -702,5 +857,6 @@ export const scopeFeature = new Map([
 
 export default {
   layersMap,
+
   ...sourcesAndLayers
 };

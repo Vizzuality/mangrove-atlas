@@ -95,6 +95,7 @@ export default class Brush extends PureComponent {
           height={height - margin.bottom - margin.top}
           fill="#FFF"
           fillOpacity="0"
+          pointerEvents="none"
         />
       </React.Fragment>
     );

@@ -11,7 +11,7 @@ const numberFormat = format(',.2f');
 const widgetData = (data, unit) => {
   const { list, metadata } = data;
   if (list && list.length) {
-    const { location_coast_length_m: total } = metadata;
+      const { location_coast_length_m: total } = metadata;
 
     return list.filter(d => d.length_m).map((d) => {
       const year = new Date(d.date).getFullYear();
@@ -22,6 +22,7 @@ const widgetData = (data, unit) => {
         color: '#06C4BD',
         percentage: d.length_m / total * 100,
         unit,
+        area: d.area_m2,
         coverage: (d.length_m / 1000).toFixed(2),
         value: (d.length_m).toFixed(2),
         label: `Mangroves in ${year}`
@@ -65,7 +66,7 @@ export const CONFIG = {
           coverage: {
             cx: '50%',
             cy: '50%',
-            paddingAngle: 3,
+            paddingAngle: 2,
             dataKey: 'percentage',
             nameKey: 'label',
             innerRadius: '55%',

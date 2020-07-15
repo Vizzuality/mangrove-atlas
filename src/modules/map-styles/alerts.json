@@ -28,11 +28,11 @@
           ["linear"],
           ["heatmap-density"],
           0,
-          "rgba(232, 200, 105, 1)",
+          "rgba(255, 194, 0, 1)",
           0.33,
-          "rgba(244, 127, 36, 1)",
+          "rgba(235, 68, 68, 1)",
           0.66,
-          "rgba(236, 74, 64, 1)",
+          "rgba(199, 43, 214, 1)",
           1,
           "rgba(210, 50, 169, 1)"
       ],
@@ -49,9 +49,9 @@
           "interpolate",
           ["linear"],
           ["zoom"],
-          7,
+          3,
           1,
-          9,
+          7,
           0
       ]
     }
@@ -82,10 +82,10 @@
           0.66,
           "rgba(199, 43, 214, 1)",
           1,
-          "rgb(178,24,43)"
+          "rgba(210, 50, 169, 1)"
       ],
       "circle-stroke-color": "white",
-      "circle-stroke-width": 1,
+      "circle-stroke-width": 0.5,
       "circle-opacity": [
         "interpolate",
         ["linear"],

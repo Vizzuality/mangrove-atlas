@@ -4,9 +4,6 @@ import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
-import realData from './constants';
-
-const numberFormat = format(',.3r');
 
 const months = [
   { label: 'January', value: 1 },
@@ -37,42 +34,52 @@ const getStops = () => {
   return gradient;
 };
 
-const getData = data => sortBy(data.map((d) => {
-  const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-  const monthsConversion = {
-    January: 'J',
-    February: 'F',
-    March: 'M',
-    April: 'A',
-    May: 'M',
-    June: 'J',
-    July: 'J',
-    August: 'A',
-    September: 'S',
-    October: 'O',
-    November: 'N',
-    December: 'D'
-  };
+const getData = (data, year) => sortBy(data
+  .filter(d => new Date(d.date.value).getFullYear() === year)
+  .map((d) => {
+    const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
+    const monthsConversion = {
+      January: 'J',
+      February: 'F',
+      March: 'M',
+      April: 'A',
+      May: 'M',
+      June: 'J',
+      July: 'J',
+      August: 'A',
+      September: 'S',
+      October: 'O',
+      November: 'N',
+      December: 'D'
+    };
 
-  return (
-    {
-      month: date.value,
-      name: monthsConversion[date.label],
-      alerts: d.count
-    }
-  );
-}), ['month']);
+    return (
+      {
+        ...d,
+        month: date.value,
+        name: monthsConversion[date.label],
+        alerts: d.count
+      }
+    );
+  }),
+['month']);
 
-
-const getTotal = data => data.reduce((previous, current) => current.count + previous, 0)
+// const getYears = data => sortBy(new Date(d.date.value).getFullYear()
+//   ['year']);
+const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
 
 export const CONFIG = {
-  parse: (data, startMonth, endMonth) => {
-    const dataFiltered = realData
-      .filter(d => endMonth >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startMonth)
+  parse: ({ data }, startDate, endDate, year) => {
+    const chartData = getData(data, year);
+    const startIndex = chartData.findIndex(d => d.month === startDate);
+    const endIndex = chartData.findIndex(d => d.month === endDate);
+    const dataFiltered = data
+      .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
+
     return {
-      chartData: getData(dataFiltered),
+      chartData,
       total: getTotal(dataFiltered),
+      // totalYears: getYears(data),
       chartConfig: {
         height: 250,
         cartesianGrid: {
@@ -80,6 +87,7 @@ export const CONFIG = {
           horizontal: false,
         },
         margin: { top: 20, right: 10, left: 10, bottom: 20 },
+        label: 'alerts',
         gradients: {
           key: {
             attributes: {
@@ -89,7 +97,7 @@ export const CONFIG = {
               x2: 0,
               y2: 1,
             },
-            stops: getStops(dataFiltered),
+            stops: getStops(data),
           }
         },
         patterns: {
@@ -132,8 +140,8 @@ export const CONFIG = {
             fill: 'url(#diagonal-stripe-1) #000'
           },
           {
-            x1: startMonth,
-            x2: endMonth,
+            x1: startDate,
+            x2: endDate,
             y1: -100,
             y2: 480,
             fill: '#fff',
@@ -151,6 +159,7 @@ export const CONFIG = {
           },
         },
         xAxis: {
+         // domain: [months[0].value, months[11].value],
           tick: {
             strokeHeight: 5,
             strokeWidth: 1,
@@ -177,8 +186,8 @@ export const CONFIG = {
         },
         brushes: {
           margin: { top: 60, right: 65, left: 25, bottom: 20 },
-          // startIndex: 0,
-          // endIndex: dataFiltered.length - 1
+          startIndex,
+          endIndex
         },
         legend: {
           align: 'left',
@@ -196,27 +205,24 @@ export const CONFIG = {
         },
         tooltip: {
           cursor: false,
-          content: (
-            <WidgetTooltip
-              type="column"
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                flexDirection: 'column'
-              }}
-              settings={[
-                { label: '0–5 m', color: '#C9BB42', key: '0–5', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                { label: '5–10 m', color: '#8BA205', key: '5–10', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                { label: '10–15 m', color: '#428710', key: '10–15', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                { label: '15–20 m', color: '#0A6624', key: '15–20', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                { label: '20–25 m', color: '#103C1F', key: '20–25', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-              ].reverse()}
-              label={{ key: 'month' }}
-            />
-          )
+          content: (props) => {
+            return (
+              <WidgetTooltip
+                style={{
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  marginLeft: '10px',
+                }}
+                settings={[
+                  { key: 'name' },
+                  { label: 'alerts:', key: 'alerts', format: alerts => alerts, position: '_column' },
+                ]}
+              />
+            );
+          }
         }
       },
-    }
+    };
   },
 };
 

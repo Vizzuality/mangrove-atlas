@@ -66,9 +66,8 @@ function MangroveBiomassPie({
 
   const sentence = (
     <>
-      Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-     "*Total Amount2*" Mt CO2e  with "*Biomass Amount>*" Mt CO2e stored in above-ground biomass and
-      "*Soil amount*"" Mt CO2e stored in the upper 1m of soil.
+      Mean mangrove aboveground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in <strong>{2016 || yearSelector}</strong>.
     </>
   );
 

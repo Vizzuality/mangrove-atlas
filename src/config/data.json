@@ -7,8 +7,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_blue_carbon",
           "mangrove_alerts_line",
+          "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass_pie",
           "mangrove_activity"
@@ -20,6 +20,7 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
+          "mangrove_alerts_line",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass_pie"
@@ -31,6 +32,7 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
+          "mangrove_alerts_line",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_biomass_pie"
@@ -93,8 +95,8 @@
       ]
     },
     {
-      "name": "Blue carbon and biomass",
-      "slug": "mangrove_biomass_pie",
+      "name": "Mangrove Blue Carbon",
+      "slug": "mangrove_blue_carbon",
       "layersIds": [ "carbon" ]
     },
     {
@@ -112,7 +114,7 @@
     {
       "name": "Mangrove alerts new",
       "slug": "mangrove_alerts_line",
-      "layersIds": ["alerts-style"]
+      "layersIds": ["alerts-heat", "alerts-point"]
     },
     {
       "name": "Mangrove biomass",
@@ -149,7 +151,7 @@
       "id": "biomass"
     },
     {
-      "name": "Blue carbon and biomass",
+      "name": "Mangrove Blue Carbon",
       "id": "carbon"
     },
     {
@@ -170,7 +172,11 @@
     },
     {
       "name": "Mangrove deforestation alerts",
-      "id": "alerts-style"
+      "id": "alerts-heat"
+    },
+    {
+      "name": "Mangrove deforestation alerts",
+      "id": "alerts-point"
     }
   ]
 }
