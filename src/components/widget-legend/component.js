@@ -34,8 +34,7 @@ const Legend = ({ type, position, widgetSpecific, groups, direction, variant, un
                 {widgetSpecific === 'activity' && (
                 <div
                   className={classnames(styles.item, styles[`_${type}`], styles[`_${item.value}`])}
-                  style={{
-                    backgroundColor: item.color }}
+                  style={{ backgroundColor: item.color }}
                 />)}
 
                 <div className={styles.itemWrapper}>

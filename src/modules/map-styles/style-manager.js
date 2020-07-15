@@ -31,7 +31,6 @@ class StyleManager {
       ...contextualsSpec,
       layersSpec
     ]);
-
     return result;
   }
 
@@ -47,7 +46,6 @@ class StyleManager {
    * This method will and and remove layers depending on layersIds
    */
   set layers(layerStyles) {
-    this.settings.layers = layerStyles;
   }
 }
 

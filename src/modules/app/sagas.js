@@ -19,8 +19,7 @@ function* loadInitialData() {
     mapStyles,
     languages,
     mangroveData,
-    ranking,
-    alerts
+    ranking
   } = yield select();
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.defaults.length) yield put(fetchDashboards());
@@ -30,7 +29,6 @@ function* loadInitialData() {
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
   if (!ranking.data.length) yield put(fetchRankingData());
-  if (!alerts.length) yield put(fetchAlerts());
 }
 
 export default function* app() {

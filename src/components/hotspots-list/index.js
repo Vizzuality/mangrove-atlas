@@ -1,12 +1,12 @@
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
-import { highlightedPlaces, currentLocation } from 'modules/locations/selectors';
+// import { highlightedPlaces, currentLocation } from 'modules/locations/selectors';
 
-import Component from './component';
+// import Component from './component';
 
-const mapStateToProps = state => ({
-  data: highlightedPlaces(state),
-  currentLocation: currentLocation(state),
-});
+// const mapStateToProps = state => ({
+//   data: highlightedPlaces(state),
+//   currentLocation: currentLocation(state),
+// });
 
-export default connect(mapStateToProps)(Component);
+// export default connect(mapStateToProps)(Component);

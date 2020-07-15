@@ -23,7 +23,7 @@ const widgetMetadata = ({ list }) => ({
   years: Array.from(
     new Set(
       list
-        .filter(l => (l.gain_m2 !== null && l.loss_m2 !== null))
+        .filter(l => (l.net_change_m2 !== null))
         .map(l => (moment(l.date).year()))
         .sort((a, b) => a - b)
     )

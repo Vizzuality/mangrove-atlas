@@ -82,7 +82,8 @@ class Chart extends PureComponent {
       data,
       config,
       handleMouseMove,
-      handleMouseLeave
+      handleMouseLeave,
+      onBrushEnd
     } = this.props;
 
     const {
@@ -311,13 +312,14 @@ class Chart extends PureComponent {
           </RechartChart>
         </ResponsiveContainer>
 
+
         {brushes && (
           <Brush
             data={data}
             width="100%"
             height={height - 28}
             margin={margin}
-            onBrushEnd={this.props.onBrushEnd}
+            onBrushEnd={onBrushEnd}
             {...brushes}
           />
         )}

@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { setUi } from 'modules/widgets/actions';
 
 import Component from './component';
@@ -6,11 +7,11 @@ import Component from './component';
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
   data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: '%'
-  }
+  ui: state.widgets.ui.conservation_hotspots || 'short'
 });
-const mapDispatchToProps = { setUi };
+
+const mapDispatchToProps = {
+  setUi
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

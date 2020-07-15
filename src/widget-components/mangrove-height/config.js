@@ -25,7 +25,7 @@ const chunk = (array, size) => {
 
 const getBars = (barValues) => {
   if (!barValues) return null;
-  const barsData = (Object.values(looseJsonParse(barValues)));
+  const barsData = looseJsonParse(barValues).map(value => value[1]);
   const chnkedData = chunk(barsData, 5);
   let formattedData = chnkedData.map(
     r => (r.reduce((previous, current) => current + previous))

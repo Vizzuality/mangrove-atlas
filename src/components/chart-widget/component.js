@@ -18,10 +18,11 @@ function ChartWidget({
   return (
     <Widget className={styles.widget} {...props}>
       <div className={styles.widget_template}>
-        <div className={styles.sentence}>
+        <div className={styles.sentence} key={Date.now()}>
           {sentence}
         </div>
         <Chart
+          {...props}
           data={data}
           config={config}
         />
@@ -32,12 +33,12 @@ function ChartWidget({
 }
 
 Widget.propTypes = {
-  sentence: PropTypes.string,
+  sentence: PropTypes.node,
   chartData: PropTypes.shape({})
 };
 
 Widget.defaultProps = {
-  sentence: '',
+  sentence: null,
   chartData: {}
 };
 

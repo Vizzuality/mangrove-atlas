@@ -77,7 +77,10 @@ export default {
     ...state,
     ui: {
       ...state.ui,
-      [payload.id]: payload.value
+      [payload.id]: {
+        ...state.ui[payload.id],
+        ...payload.value
+      }
     }
   }),
   [resetUi]: state => ({ ...state, ui: {} })
