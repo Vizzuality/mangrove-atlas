@@ -50,35 +50,19 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
-const chunk = (array, size) => {
-  const chunkedArr = [];
-  for (let i = 0; i < array.length; i++) {
-    const last = chunkedArr[chunkedArr.length - 1];
-    if (!last || last.length === size) {
-      chunkedArr.push([array[i]]);
-    } else {
-      last.push(array[i]);
-    }
-  }
-  return chunkedArr;
-};
 
 const getData = (data) => {
   if (!data || !data.length) return null;
-  const barsData = looseJsonParse(data).map(value => value[1]);
-  const total = barsData.reduce((previous, current) => current + previous);
-  const chunkedData = chunk(barsData, 5);
-  let formattedData = chunkedData.map(
-    r => (r.reduce((previous, current) => current + previous))
-  );
 
-  formattedData = formattedData.map(d => d / total);
+  const histogram = data.map(d => d['toc_co2eha-1_hist']);
+  const total = Object.values(histogram[0]).reduce((previous, current) => current + previous);
+  const result = histogram[0];
   return [
-    { label: '400-1000 t CO₂e/ha', value: (formattedData[0] + formattedData[1]) * 100, color: '#5C4A3D', percentage: (formattedData[0] + formattedData[1]) / total * 100 },
-    { label: '1000-1300 t CO₂e/ha', value: formattedData[2] * 100, color: '#933A06', percentage: formattedData[2] / total * 100 },
-    { label: '1300-1600 t CO₂e/ha', value: formattedData[3] * 100, color: '#B84E17', percentage: formattedData[3] / total * 100 },
-    { label: '1600-1900 t CO₂e/ha', value: formattedData[4] * 100, color: '#E68518', percentage: formattedData[4] / total * 100 },
-    { label: '1900-2200 t CO₂e/ha', value: formattedData[5] * 100, color: '#EEB66B', percentage: formattedData[5] / total * 100 },
+    { label: '400-1000 t CO₂e/ha', value: result[400], color: '#5C4A3D', percentage: result[400] / total * 100 },
+    { label: '1000-1300 t CO₂e/ha', value: result[400], color: '#933A06', percentage: result[400] / total * 100 },
+    { label: '1300-1600 t CO₂e/ha', value: result[400], color: '#B84E17', percentage: result[400] / total * 100 },
+    { label: '1600-1900 t CO₂e/ha', value: result[400], color: '#E68518', percentage: result[400] / total * 100 },
+    { label: '1900-2200 t CO₂e/ha', value: result[400], color: '#EEB66B', percentage: result[400] / total * 100 },
   ];
 };
 
@@ -91,12 +75,10 @@ const biomassCoverage = ({ list }, yearSelected) => {
 
 const filterData = ({ list }, yearSelected) => sortBy(
   list
-    .filter(d => d.agb_mgha_1
-      && d.agb_hist_mgha_1
-      && d.total_carbon
+    .filter(d => d.total_carbon
       && d.date.includes(yearSelected)),
   ['date']
-).map(i => i.agb_hist_mgha_1);
+).map(i => i.total_carbon);
 
 const getTotals = ({ list }, yearSelected) => list
   .filter(d => d.total_carbon && d.date.includes(yearSelected))
@@ -105,6 +87,7 @@ const getTotals = ({ list }, yearSelected) => list
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
+
     const dataFiltered = filterData(data, yearSelected);
     const chartData = getData(dataFiltered);
     const totalValues = (getTotals(data, yearSelected))[0]

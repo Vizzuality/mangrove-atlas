@@ -8,7 +8,6 @@ const MangroveAlertsLine = ({
   data,
   isCollapsed,
   slug, name,
-  currentLocation,
   addFilter,
   ui,
   ui: { year },
@@ -20,10 +19,9 @@ const MangroveAlertsLine = ({
 }) => {
   useEffect(() => {
     if (locationId) {
-      const currentLocation = locationsList.find(location => location.iso === locationId)
+      const currentLocation = locationsList.find(location => location.iso === locationId);
       fetchAlerts(currentLocation.id, year);
-    }
-    else { fetchAlerts(510, year) }
+    } else { fetchAlerts({ year }); }
   }, [year, locationId]);
 
   if (!data || data.length <= 0) {
@@ -77,7 +75,7 @@ const MangroveAlertsLine = ({
       value={endDate}
       options={monthOptions}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
-        || option.value === endDate}
+        || option.value === endDate || option.value}
       onChange={value => changeDate('endDate', value)}
     />
   );

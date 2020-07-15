@@ -124,6 +124,13 @@
       ]
     },
     {
+      "name": "Mangrove biomass",
+      "slug": "mangrove_biomass_pie",
+      "layersIds": [
+        "biomass"
+      ]
+    },
+    {
       "name": "Conservation hotspots",
       "slug": "conservation_hotspots",
       "layersIds": [

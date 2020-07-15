@@ -176,8 +176,9 @@ export const CONFIG = {
           domain: [0, 100],
           interval: 0,
           orientation: 'right',
+          value: 'alerts',
           label: {
-            value: 'Sum of alerts',
+            value: 'Alerts',
             position: 'top',
             offset: 50,
             fontSize: 9,
@@ -196,7 +197,7 @@ export const CONFIG = {
           height: 80,
           top: 0,
           left: 0,
-          position: 'relative',
+          position: 'left',
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload);
@@ -205,7 +206,10 @@ export const CONFIG = {
         },
         tooltip: {
           cursor: false,
-          content: (props) => {
+          content: (properties) => {
+            const { payload } = properties;
+            if (!payload) return null;
+            const data = payload[0];
             return (
               <WidgetTooltip
                 style={{
@@ -214,8 +218,8 @@ export const CONFIG = {
                   marginLeft: '10px',
                 }}
                 settings={[
-                  { key: 'name' },
-                  { label: 'alerts:', key: 'alerts', format: alerts => alerts, position: '_column' },
+                  // { key: 'name' },
+                  { label: 'alerts', key: 'count', format: value => value, position: '_column' },
                 ]}
               />
             );
