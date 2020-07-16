@@ -4,6 +4,7 @@ import LegendItem from './legend-item';
 
 const Legend = ({ layers }) => (
   <Fragment>
+    {console.log(layers)}
     {layers.map(layer => <LegendItem key={layer.id} {...layer} />)}
   </Fragment>
 );

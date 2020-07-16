@@ -3,6 +3,9 @@ import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
+import { format } from 'd3-format';
+
+const numberFormat = format(',.3r');
 
 const months = [
   { label: 'January', value: 1 },
@@ -79,7 +82,7 @@ export const CONFIG = {
 
     return {
       chartData,
-      total: getTotal(dataFiltered),
+      total: numberFormat(getTotal(dataFiltered)),
       chartConfig: {
         height: 250,
         cartesianGrid: {
@@ -217,7 +220,7 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
-                  { label: 'alerts', key: 'count', format: value => value, position: '_column' },
+                  { label: 'alerts', key: 'count', format: value => numberFormat(value), position: '_column' },
                 ]}
               />
             );
