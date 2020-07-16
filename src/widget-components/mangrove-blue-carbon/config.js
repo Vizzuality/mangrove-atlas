@@ -97,7 +97,7 @@ const filterData = ({ list }, yearSelected) => sortBy(
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered[0].histogram);
+    const chartData = dataFiltered.length ? getData(dataFiltered[0].histogram) : '';
     return {
       chartData,
       coverage: biomassCoverage(data, yearSelected),
@@ -126,7 +126,7 @@ export const CONFIG = {
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
                     </text>
                     <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing}</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
                     </text>
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e/ha</tspan>
