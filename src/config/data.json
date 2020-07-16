@@ -21,6 +21,7 @@
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_alerts_line"
         ]
