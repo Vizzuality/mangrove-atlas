@@ -16,23 +16,23 @@ const numberFormat = format(',.3r');
 const categoriesData = {
   '0–50': {
     color: '#EAF19D',
-    label: '0 – 50'
+    label: '0 – 50 t ha-1'
   },
   '50–100': {
     color: '#B8E98E',
-    label: '50 – 100'
+    label: '50 – 100 t ha-1'
   },
   '100–150': {
     color: '#1B97C1',
-    label: '100 – 150'
+    label: '100 – 150 t ha-1'
   },
   '150–200': {
     color: '#1C52A3',
-    label: '150 – 200'
+    label: '150 – 200 t ha-1'
   },
   '200–250': {
     color: '#13267F',
-    label: '200 – 250'
+    label: '200 – 250 t ha-1'
   }
 };
 
@@ -98,11 +98,11 @@ const getData = (data, selectedYear) => {
   formattedData = formattedData.map(d => d / total);
 
   return [
-    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50 t ha-1', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100 t ha-1', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150 t ha-1', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200 t ha-1', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250 t ha-1', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
   ];
 };
 
@@ -155,7 +155,7 @@ const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend groups={groups} unit="km²" />;
+            return <WidgetLegend type="height" groups={groups} unit="mt ha-1" />;
           }
         },
         tooltip: {
@@ -170,7 +170,6 @@ const CONFIG = {
               settings={[
                 { key: 'label' },
                 { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
-                { label: 'Coverage:', key: 'coverage', format: coverage => `${(coverage)} km²`, position: '_column' }
               ]}
             />
           )

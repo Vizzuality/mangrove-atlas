@@ -25,7 +25,7 @@ const widgetData = (data, unit) => {
         area: d.area_m2,
         coverage: (d.length_m / 1000).toFixed(2),
         value: (d.length_m).toFixed(2),
-        label: `Mangroves in ${year}`
+        label: `Coastline coverage in ${year}`
       });
     });
   }
@@ -93,7 +93,7 @@ export const CONFIG = {
               }
             };
           }), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km²' : unit} />;
+          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} />;
         }
       },
       tooltip: {
@@ -108,7 +108,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km²'}`, position: '_column' },
+              { label: 'Coastline coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km'}`, position: '_column' },
             ]}
           />
         )

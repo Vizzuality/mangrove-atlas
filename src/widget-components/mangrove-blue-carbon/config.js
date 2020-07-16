@@ -129,7 +129,7 @@ export const CONFIG = {
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
                     </text>
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e/ha</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e</tspan>
                     </text>
                   </g>
                 );
@@ -153,7 +153,6 @@ export const CONFIG = {
           content: ((properties) => {
             const { payload } = properties;
             if (!payload.length) return null;
-            const tooltipData = payload[0].payload;
             return (
               <WidgetTooltip
                 style={{
@@ -161,8 +160,9 @@ export const CONFIG = {
                   marginTop: '10px',
                   marginLeft: '-50px'
                 }}
+                payload={payload}
                 settings={[
-                  { label: tooltipData.label, key: 'label', color: tooltipData.color, format: () => `${tooltipData.value ? (tooltipData.value).toFixed(2) : null} %`, position: '_column' },
+                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
                 ]}
               />
             );
