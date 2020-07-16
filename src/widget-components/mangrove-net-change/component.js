@@ -42,7 +42,12 @@ function MangroveNetChange({
   const { metadata, chartData, chartConfig } = data;
   const { startYear, endYear } = range;
 
-  const optionsYears = metadata.years.map(year => ({
+  const startYearOptions = metadata.years.map(year => ({
+    label: year.toString(),
+    value: year.toString()
+  }));
+
+  const endYearOptions = metadata.years.map(year => ({
     label: year.toString(),
     value: year.toString()
   }));
@@ -114,7 +119,7 @@ function MangroveNetChange({
       className="notranslate netChange"
       prefix="start-year"
       value={range.startYear}
-      options={optionsYears}
+      options={startYearOptions.splice(0, metadata.years.length - 1)}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(range.endYear, 10)
         || option.value === range.startYear}
       onChange={changeStartYear}
@@ -124,7 +129,7 @@ function MangroveNetChange({
       className="notranslate"
       prefix="end-year"
       value={range.endYear}
-      options={optionsYears}
+      options={endYearOptions.splice(1, metadata.years.length)}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(range.startYear, 10)
         || option.value === range.endYear}
       onChange={changeEndYear}

@@ -23,7 +23,7 @@ const widgetData = ({ list, metadata }) => {
         unit: '%',
         coverage: (d.length_m / 1000).toFixed(2),
         value: (d.length_m).toFixed(2),
-        label: `Mangroves in ${year}`
+        label: `Coastline coverage in ${year}`
       });
     });
   }
