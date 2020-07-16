@@ -34,11 +34,7 @@ function MangroveBlueCarbon({
     return null;
   }
 
-  const { bgb_co2e, agb_co2e, soc_co2e } = totalValues;
-
-  const totalSoil = numberFormat(soc_co2e / 1000000);
-  const totalBiomass = numberFormat((bgb_co2e + soc_co2e) / 1000000);
-  const aboveGroundBiomass = numberFormat(agb_co2e / 1000000);
+  const { avobeGround, soils, totalBiomass } = totalValues;
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
@@ -47,8 +43,8 @@ function MangroveBlueCarbon({
   const sentence = (
     <>
       Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e  with <strong>{aboveGroundBiomass}</strong> Mt CO₂e stored in above-ground biomass and
-      &nbsp;<strong>{totalSoil}</strong> Mt CO₂e stored in the upper 1m of soil.
+      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e  with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
+      &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );
 

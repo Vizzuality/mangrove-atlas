@@ -7,9 +7,10 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_height",
           "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
+          "mangrove_height",
+          "mangrove_alerts_line",
           "mangrove_activity"
         ]
       },
@@ -19,9 +20,9 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
+          "mangrove_biomass_pie",
           "mangrove_height",
-          "mangrove_biomass_pie"
+          "mangrove_alerts_line"
         ]
       },
       {
@@ -30,9 +31,10 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass_pie"
+          "mangrove_alerts_line"
         ]
       },
       {
@@ -41,9 +43,10 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass_pie"
+          "mangrove_alerts_line"
         ]
       }
     ],
@@ -54,9 +57,10 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass_pie"
+          "mangrove_alerts_line"
         ]
       }
     ]

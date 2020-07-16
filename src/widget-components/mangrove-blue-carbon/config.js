@@ -11,7 +11,8 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 import WidgetCustomLabel from 'components/widget-custom-label';
 
-const numberFormat = format(',.2r');
+const numberFormat = format(',.2f');
+const removeDecimals = format(',.0f');
 
 const categoriesData = {
   '0–50': {
@@ -53,16 +54,15 @@ const widgetMeta = ({ list, metadata }) => {
 
 const getData = (data) => {
   if (!data || !data.length) return null;
-
-  const histogram = data.map(d => d['toc_co2eha-1_hist']);
-  const total = Object.values(histogram[0]).reduce((previous, current) => current + previous);
-  const result = histogram[0];
+  const dataFormatted = looseJsonParse(data);
+  const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
+  const result = looseJsonParse(data);
   return [
-    { label: '400-1000 t CO₂e/ha', value: result['400--700'] + result['700--1000'], color: '#5C4A3D', percentage: (result['400--700'] + result['700--1000']) / total * 100 },
-    { label: '1000-1300 t CO₂e/ha', value: result['1000--1300'], color: '#933A06', percentage: result['1000--1300'] / total * 100 },
-    { label: '1300-1600 t CO₂e/ha', value: result['1300--1600'], color: '#B84E17', percentage: result['1300--1600'] / total * 100 },
-    { label: '1600-1900 t CO₂e/ha', value: result['1600--1900'], color: '#E68518', percentage: result['1600--1900'] / total * 100 },
-    { label: '1900-2200 t CO₂e/ha', value: result['1900--2200'], color: '#EEB66B', percentage: result['1900--2200'] / total * 100 },
+    { label: '400-1000 t CO₂e/ha', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#5C4A3D', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
+    { label: '1000-1300 t CO₂e/ha', value: dataFormatted['1000--1300'], color: '#933A06', percentage: dataFormatted['1000--1300'] / total * 100 },
+    { label: '1300-1600 t CO₂e/ha', value: dataFormatted['1300--1600'], color: '#B84E17', percentage: dataFormatted['1300--1600'] / total * 100 },
+    { label: '1600-1900 t CO₂e/ha', value: dataFormatted['1600--1900'], color: '#E68518', percentage: dataFormatted['1600--1900'] / total * 100 },
+    { label: '1900-2200 t CO₂e/ha', value: dataFormatted['1900--2200'], color: '#EEB66B', percentage: dataFormatted['1900--2200'] / total * 100 },
   ];
 };
 
@@ -75,26 +75,33 @@ const biomassCoverage = ({ list }, yearSelected) => {
 
 const filterData = ({ list }, yearSelected) => sortBy(
   list
-    .filter(d => d.total_carbon
+    .filter(d => d.toc_hist_tco2eha
+      && d.soc_tco2e
+      && d.toc_tco2e
+      && d.bgb_tco2e
+      && d.agb_tco2e
       && d.date.includes(yearSelected)),
   ['date']
-).map(i => i.total_carbon);
-
-const getTotals = ({ list }, yearSelected) => list
-  .filter(d => d.total_carbon && d.date.includes(yearSelected))
-  .map(i => i.total_carbon);
+).map((i) => {
+  return {
+    histogram: i.toc_hist_tco2eha,
+    soils: numberFormat(i.soc_tco2e / 1000000),
+    totalBiomass: numberFormat(i.toc_tco2e / 1000000),
+    totalRing: removeDecimals(i.toc_tco2e / 1000000),
+    biomass: numberFormat(i.bgb_tco2e / 1000000),
+    avobeGround: numberFormat(i.agb_tco2e / 1000000)
+  };
+});
 
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
-
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered);
-    const totalValues = (getTotals(data, yearSelected))[0]
+    const chartData = getData(dataFiltered[0].histogram);
     return {
       chartData,
       coverage: biomassCoverage(data, yearSelected),
-      totalValues,
+      totalValues: dataFiltered[0],
       chartConfig: {
         type: 'pie',
         layout: 'centric',
@@ -119,7 +126,7 @@ export const CONFIG = {
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
                     </text>
                     <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="40">{numberFormat(totalValues.soc_co2e / 1000000)}</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing}</tspan>
                     </text>
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e/ha</tspan>
