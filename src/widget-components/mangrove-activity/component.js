@@ -82,7 +82,12 @@ function MangroveActivity({
     { value: 'net_change', label: 'net increase' },
   ];
 
-  const optionsYear = metaData.map(year => ({
+  const startYearOptions = metaData.map(year => ({
+    label: year,
+    value: year
+  }));
+
+  const endYearOptions = metaData.map(year => ({
     label: year,
     value: year
   }));
@@ -100,7 +105,7 @@ function MangroveActivity({
   const startYearSelector = (
     <Select
       value={startDate}
-      options={optionsYear}
+      options={startYearOptions.splice(0, metaData.length - 1)}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
         || option.value === startDate}
       onChange={value => changeYear('start', value)}
@@ -110,7 +115,7 @@ function MangroveActivity({
   const endYearSelector = (
     <Select
       value={endDate}
-      options={optionsYear}
+      options={endYearOptions.splice(1, metaData.length)}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
         || option.value === endDate}
       onChange={value => changeYear('end', value)}

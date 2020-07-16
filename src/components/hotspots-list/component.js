@@ -24,7 +24,6 @@ const HotspotsList = ({ data }) => {
           >
             <span className={styles.cardInfo}>
               <h3 className="notranslate">{d.name}</h3>
-              <p><span className="notranslate">{numberFormat(d.coast_length_m / 1000)}</span> <span className="notranslate">km</span></p>
             </span>
           </div>
         </Link>
