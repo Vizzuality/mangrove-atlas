@@ -70,7 +70,6 @@ export default class Brush extends PureComponent {
     if (
       startIndex !== prevStartIndex ||
       endIndex !== prevEndIndex
-      // (animate && animate !== prevAnimate)
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({

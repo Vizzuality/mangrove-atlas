@@ -8,29 +8,26 @@ const MangroveAlertsLine = ({
   data,
   isCollapsed,
   slug, name,
-  currentLocation,
   addFilter,
-  ui,
-  ui: { year },
+  ui = {},
   locationId,
   locationsList,
   setUi,
   fetchAlerts,
   ...props
 }) => {
+  const { year = 2019, startDate = 2, endDate = 7 } = ui;
   useEffect(() => {
     if (locationId) {
-      const currentLocation = locationsList.find(location => location.iso === locationId)
+      const currentLocation = locationsList.find(location => location.iso === locationId);
       fetchAlerts(currentLocation.id, year);
-    }
-    else { fetchAlerts(510, year) }
+    } else { fetchAlerts({ year }); }
   }, [year, locationId]);
 
   if (!data || data.length <= 0) {
     return null;
   }
 
-  const { startDate, endDate } = ui;
   const { chartData, chartConfig, total } = config.parse(data, startDate, endDate, year);
 
   if (chartData.length <= 0) {
@@ -40,12 +37,15 @@ const MangroveAlertsLine = ({
     setUi({
       id: 'alerts',
       value: {
-        ...ui,
         [type]: value
       }
     });
   };
-  const yearOptions = [ {label: 2020, value: 2020}, {label: 2019, value: 2019}]
+
+  const yearOptions = [
+    { label: 2020, value: 2020 },
+    { label: 2019, value: 2019 }
+  ];
 
   const monthOptions = [
     { label: 'January', value: 1 },

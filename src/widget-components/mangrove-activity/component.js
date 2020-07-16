@@ -130,7 +130,7 @@ function MangroveActivity({
   const sentence = (
     <>
       Worldwide the 5 countries with the largest {filterSelector}
-      in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+      &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
   );
 
@@ -145,7 +145,7 @@ function MangroveActivity({
         <img alt={limit === 5 ? 'Show more results' : 'Show less results'} src={limit === 5 ? moreIcon : lessIcon} />
       </button>
     </>
-  )
+  );
 
   const sortedData = sortRanking(chartData);
 

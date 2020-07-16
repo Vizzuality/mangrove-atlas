@@ -135,7 +135,6 @@ export const mapStyle = createSelector(
         visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
-
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
 
