@@ -58,13 +58,13 @@ const geojsons = [
               ["linear"],
               ["heatmap-density"],
               0,
-              "rgba(255, 194, 0, 0)",
+              "rgba(210, 50, 169, 0)",
               0.33,
-              "rgba(235, 68, 68, 1)",
-              0.66,
               "rgba(199, 43, 214, 1)",
+              0.66,
+              "rgba(235, 68, 68, 1)",
               1,
-              "rgba(210, 50, 169, 1)"
+              "rgba(255, 194, 0, 0.5)"
           ],
           "heatmap-radius": [
               "interpolate",

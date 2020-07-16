@@ -30,7 +30,7 @@ class APIService {
   }
 
   fetchRankingData = (params = {}) => {
-    const { filter = 'gain', startDate = '1996', endDate = '2007', limit = 5 } = params;
+    const { filter = 'gain', startDate = '2007', endDate = '2016', limit = 5 } = params;
     return this.client
       .get(`/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`)
       .then((response) => {
