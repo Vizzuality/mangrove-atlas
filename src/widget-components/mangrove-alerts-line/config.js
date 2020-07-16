@@ -1,6 +1,5 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
-import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
@@ -21,8 +20,11 @@ const months = [
 ];
 
 const getStops = () => {
-  //const colorSchema = ['#E8C869', 'F47F24', 'EC4A40', '#D232A9'];
-  const colorSchema = ['FFC200', '#EB4444', '#C72BD6'];
+  const colorSchema = [
+    '#FFC200',
+    '#EB4444',
+    '#C72BD6'
+  ];
 
   const gradient = colorSchema.map((d, index) => (
     {
