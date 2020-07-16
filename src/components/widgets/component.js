@@ -16,7 +16,6 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
       [styles.spinner]: !widgets.length
     })}
     >
-
       {!widgets.length
         ? <div className={styles.spinner}><Spinner /></div>
         : widgets.length && widgets.map((widget) => {

@@ -34,7 +34,6 @@ function MangroveNetChange({
     });
   }, [addFilter, unit]);
 
-
   if (!rawData) {
     return null;
   }

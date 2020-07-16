@@ -8,7 +8,10 @@ import logo from './mangrove-alliance.png';
 import styles from './style.module.scss';
 
 const NavMenu = ({ fixedHeader }) => {
-  const [isOpen, toggleModal] = useState(false);
+  const myStorage = window.localStorage;
+  const modalStatus = myStorage.getItem('modal');
+  const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
+  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : false);
   const [welcomeContent, toggleContent] = useState(false);
 
   useEffect(() => {
