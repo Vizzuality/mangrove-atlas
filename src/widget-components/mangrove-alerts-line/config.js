@@ -6,6 +6,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 import { format } from 'd3-format';
 
 const numberFormat = format(',.3r');
+const formatAxis = format(',~s');
 
 const months = [
   { label: 'January', value: 1 },
@@ -174,13 +175,12 @@ export const CONFIG = {
             fill: 'rgba(0,0,0,0.54)'
           },
           width: 40,
-          tickFormatter: value => Math.round(value),
-          domain: [0, 100],
+          tickFormatter: value => formatAxis(Math.round(value)),
           interval: 0,
           orientation: 'right',
           value: 'alerts',
           label: {
-            value: 'Alerts',
+            value: 'Alerts 2020',
             position: 'top',
             offset: 50,
             fontSize: 9,
@@ -199,11 +199,11 @@ export const CONFIG = {
           height: 80,
           top: 0,
           left: 0,
-          position: 'left',
+          position: 'right',
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload);
-            return <WidgetLegend type="height" groups={groups} />;
+            return <WidgetLegend groups={groups} />;
           }
         },
         tooltip: {

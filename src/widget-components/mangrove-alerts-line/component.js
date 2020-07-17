@@ -10,19 +10,20 @@ const MangroveAlertsLine = ({
   slug, name,
   addFilter,
   ui = {},
-  locationId,
+  currentId,
   locationsList,
   setUi,
   fetchAlerts,
   ...props
 }) => {
-  const { year = 2019, startDate = 2, endDate = 7 } = ui;
+  const { year = 2020, startDate = 2, endDate = 7 } = ui;
   useEffect(() => {
-    if (locationId) {
-      const currentLocation = locationsList.find(location => location.iso === locationId);
-      fetchAlerts(currentLocation.id, year);
+    if (currentId) {
+      const currentLocation = locationsList.find(location => location.iso === currentId);
+      const { id: location_id } = currentLocation;
+      fetchAlerts({ location_id, year });
     } else { fetchAlerts({ year }); }
-  }, [year, locationId]);
+  }, [year, currentId]);
 
   if (!data || data.length <= 0) {
     return null;
@@ -42,10 +43,12 @@ const MangroveAlertsLine = ({
     });
   };
 
-  const yearOptions = [
-    { label: 2020, value: 2020 },
-    { label: 2019, value: 2019 }
-  ];
+  // Just showing 2020 for now (client's request)
+  const yearSelected = 2020;
+  // const yearOptions = [
+  //   { label: 2020, value: 2020 },
+  //   { label: 2019, value: 2019 }
+  // ];
 
   const monthOptions = [
     { label: 'January', value: 1 },
@@ -82,18 +85,18 @@ const MangroveAlertsLine = ({
     />
   );
 
-  const yearSelect = (
-    <Select
-      value={year}
-      options={yearOptions}
-      onChange={value => changeDate('year', value)}
-    />
-  );
+  // const yearSelect = (
+  //   <Select
+  //     value={year}
+  //     options={yearOptions}
+  //     onChange={value => changeDate('year', value)}
+  //   />
+  // );
 
   const sentence = (
     <>
       There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
-      &nbsp;and {endDateSelect} in {yearSelect}.
+      &nbsp;and {endDateSelect} in <strong>{yearSelected}</strong>.
     </>
   );
 

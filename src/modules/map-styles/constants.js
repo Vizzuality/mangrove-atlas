@@ -26,7 +26,7 @@ const geojsons = [
     id: 'alerts',
     source: {
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap'
+      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?year=2020'
     },
     layers: [
       {

@@ -160,22 +160,26 @@ const CONFIG = {
         },
         tooltip: {
           cursor: false,
-          content: (
-            <WidgetTooltip
-              style={{
-                flexDirection: 'column',
-                marginTop: '10px',
-                marginLeft: '-50px'
-              }}
-              settings={[
-                { key: 'label' },
-                { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? (percentage).toFixed(2) : null} %`, position: '_column' },
-              ]}
-            />
-          )
+          content: (properties) => {
+            const { payload } = properties;
+            return (
+              <WidgetTooltip
+                payload={payload}
+                style={{
+                  flexDirection: 'column',
+                  marginTop: '10px',
+                  marginLeft: '-50px'
+                }}
+                settings={[
+                  { key: 'label' },
+                  { label: 'Percentage:', key: 'value', format: value => `${value ? (value).toFixed(2) : null} %`, position: '_column' },
+                ]}
+              />
+            );
+          }
         }
       }
-    }
+    };
   }
 };
 
