@@ -10,15 +10,13 @@ class AlertsService {
     });
   }
 
-  fetchAlerts = (params = {}) => {
-    return this.client
-      .get('/fetch-alerts?', { params })
-      .then((response) => {
-        const { status, statusText, data } = response;
-        if (status >= 400) throw new Error(statusText);
-        return data;
-      });
-  }
+  fetchAlerts = (params = {}) => this.client
+    .get('/fetch-alerts', { params })
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
 }
 
 export default AlertsService;

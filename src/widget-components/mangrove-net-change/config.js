@@ -6,6 +6,7 @@ import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 export const numberFormat = format(',.2f');
+export const formatAxis = format(',.0d');
 
 const widgetData = ({ list }) => {
   const data = list.map(l => (
@@ -83,13 +84,13 @@ const CONFIG = {
       yAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
         tickFormatter: (v) => {
-          const result = v / 1000000;
-          return numberFormat(result);
+          const result = unit === 'ha' ? v / 10000 : v / 1000000;
+          return formatAxis(result);
         },
-        tickMargin: 15,
+        tickMargin: 10,
         orientation: 'right',
         label: {
-          value: 'km²',
+          value: unit === 'km' ? 'km²' : unit,
           position: 'top',
           offset: 35
         }
