@@ -54,9 +54,8 @@ const widgetMeta = ({ list, metadata }) => {
 
 const getData = (data) => {
   if (!data || !data.length) return null;
-  const dataFormatted = looseJsonParse(data);
+  const dataFormatted = data[0].histogram;
   const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
-  const result = looseJsonParse(data);
   return [
     { label: '400-1000 t CO₂e/ha', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#5C4A3D', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
     { label: '1000-1300 t CO₂e/ha', value: dataFormatted['1000--1300'], color: '#933A06', percentage: dataFormatted['1000--1300'] / total * 100 },
@@ -97,7 +96,8 @@ const filterData = ({ list }, yearSelected) => sortBy(
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = dataFiltered.length ? getData(dataFiltered[0].histogram) : '';
+    const chartData = dataFiltered.length ? getData(dataFiltered) : '';
+    console.log(chartData)
     return {
       chartData,
       coverage: biomassCoverage(data, yearSelected),

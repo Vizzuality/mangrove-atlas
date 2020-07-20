@@ -1,20 +1,22 @@
 import { createSelector } from 'reselect';
 import { activeLayers } from 'modules/layers/selectors';
+import template from 'lodash/template';
 import { rasterLayers } from './rasters.json';
 import StyleManager from './style-manager';
-import biomassHeightblueCarbon, { scopeFeature } from './constants';
+import Layers, { scopeFeature } from './constants';
 import { coverageFilter, netChangeFilter } from './filters';
 
 const {
   sources: bhSources,
   layers: bhLayers,
   layersMap
-} = biomassHeightblueCarbon;
+} = Layers;
 const styleManager = new StyleManager();
 
 const mapStyles = state => state.mapStyles;
 const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
+const locationId = state => state.locations.current.id;
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
 );
@@ -53,8 +55,8 @@ export const layerStyles = createSelector(
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles, filters, activeLayersIds],
-  (_basemap, _layerStyles, _filters, _activeLayersIds) => {
+  [basemap, layerStyles, filters, activeLayersIds, locationId],
+  (_basemap, _layerStyles, _filters, _activeLayersIds, _locationId) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -134,6 +136,14 @@ export const mapStyle = createSelector(
         visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
+    const url = template(bhSources.alerts.data, {
+      interpolate: /{{([\s\S]+?)}}/g,
+    });
+    if (_locationId && (_locationId !== 'worldwide')) {
+      bhSources.alerts.data = url({ locationId: `&location_id=${_locationId}` });
+    } else {
+      bhSources.alerts.data = url({ locationId: '' });
+    }
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
 
