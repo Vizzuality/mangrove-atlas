@@ -73,7 +73,7 @@ const geojsons = [
               0,
               2,
               9,
-              20
+              19
           ],
           "heatmap-opacity": [
               "interpolate",
@@ -82,7 +82,7 @@ const geojsons = [
               3,
               1,
               7,
-              0
+              1
           ]
         }
       },

@@ -58,7 +58,6 @@ export const mapStyle = createSelector(
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
-
       switch (layerStyle.id) {
         case 'coverage-1996-2016':
           widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
@@ -101,7 +100,7 @@ export const mapStyle = createSelector(
       const layerFilter = _filters.find(f => f.id === layerId);
 
       if (layerFilter && layerMap) {
-        if (layerFilter && layerFilter.range && layerFilter.years) {
+        if (layerFilter && layerFilter.id === 'net') {
           return [
             ...acc,
             ...layerMap
