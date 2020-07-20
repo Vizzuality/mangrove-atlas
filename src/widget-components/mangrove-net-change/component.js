@@ -15,7 +15,8 @@ function MangroveNetChange({
   slug,
   name,
   ui: {
-    range,
+    startYear,
+    endYear,
     unit,
     years,
     currentYear
@@ -27,7 +28,8 @@ function MangroveNetChange({
     addFilter({
       filter: {
         id: 'net',
-        range,
+        startYear,
+        endYear,
         years,
         year: '2016',
       }
@@ -40,7 +42,6 @@ function MangroveNetChange({
 
   const data = config.parse(rawData, unit);
   const { metadata, chartData, chartConfig } = data;
-  const { startYear, endYear } = range;
 
   const startYearOptions = metadata.years.map(year => ({
     label: year.toString(),
@@ -56,16 +57,29 @@ function MangroveNetChange({
     addFilter({
       filter: {
         id: 'net',
-        range: { startYear: year, endYear },
+        startYear: year,
+        endYear,
+        range: {
+          startYear: year,
+          endYear,
+        },
         years: metadata.years.filter(i => i >= year && i <= endYear),
+        year,
+        unit
       }
     });
     setUi({
       id: 'net',
       value: {
-        range: { startYear: year, endYear },
+        startYear: year,
+        endYear,
+        range: {
+          startYear,
+          endYear: year,
+        },
+        years,
         year,
-        unit,
+        unit
       }
     });
   };
@@ -73,24 +87,28 @@ function MangroveNetChange({
     addFilter({
       filter: {
         id: 'net',
-        range: { startYear, endYear: year },
+        startYear,
+        endYear,
         years: metadata.years.filter(i => i >= year && i <= endYear),
+        year,
+        unit
       }
     });
     setUi({
       id: 'net',
       value: {
-        range: { startYear, endYear: year },
-        year,
+        startYear,
+        endYear: year,
         years,
-        unit,
+        year,
+        unit
       }
     });
   };
 
   const widgetData = chartData.filter(
-    ({ year: y }) => parseInt(y, 10) >= parseInt(range.startYear, 10)
-      && parseInt(y, 10) <= parseInt(range.endYear, 10)
+    ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
+      && parseInt(y, 10) <= parseInt(endYear, 10)
   );
 
   // How this change is calculated?
@@ -111,27 +129,44 @@ function MangroveNetChange({
   const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
   const changeUnit = (selectedUnit) => {
-    setUi({ id: 'net', value: { unit: selectedUnit, range } });
+    addFilter({
+      filter: {
+        id: 'net',
+        startYear,
+        endYear,
+        years,
+        unit: selectedUnit
+      }
+    });
+    setUi({
+      id: 'net',
+      value: {
+        startYear,
+        endYear,
+        years,
+        unit: selectedUnit
+      }
+    });
   };
 
   const startSelector = (
     <Select
       className="notranslate netChange"
       prefix="start-year"
-      value={range.startYear}
+      value={startYear}
       options={startYearOptions.splice(0, metadata.years.length - 1)}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(range.endYear, 10)
-        || option.value === range.startYear}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10)
+        || option.value === startYear}
       onChange={changeStartYear}
     />);
   const endSelector = (
     <Select
       className="notranslate"
       prefix="end-year"
-      value={range.endYear}
+      value={endYear}
       options={endYearOptions.splice(1, metadata.years.length)}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(range.startYear, 10)
-        || option.value === range.endYear}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10)
+        || option.value === endYear}
       onChange={changeEndYear}
     />);
 

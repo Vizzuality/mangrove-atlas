@@ -114,7 +114,7 @@
     {
       "name": "Mangrove alerts new",
       "slug": "mangrove_alerts_line",
-      "layersIds": ["alerts-heat", "alerts-point"]
+      "layersIds": ["alerts-heat"]
     },
     {
       "name": "Mangrove biomass",

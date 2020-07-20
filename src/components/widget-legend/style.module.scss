@@ -184,9 +184,14 @@
   .itemWrapper {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
+
+    &._height {
+      display: contents;
+    }
 
     .item {
-      font-weight: bold;
+      font-weight: normal;
       font-size: 14px;
     }
   }

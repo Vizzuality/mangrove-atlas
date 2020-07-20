@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { format } from 'd3-format';
+import DangerousHTML from 'react-dangerous-html';
 
 import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ type, position, widgetSpecific, groups, direction, variant, unit }) => {
+const Legend = ({ sup, type, position, widgetSpecific, groups, direction, variant, unit }) => {
 
   return (
     <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
@@ -37,10 +38,12 @@ const Legend = ({ type, position, widgetSpecific, groups, direction, variant, un
                   style={{ backgroundColor: item.color }}
                 />)}
 
-                <div className={styles.itemWrapper}>
+                <div className={classnames(styles.itemWrapper, styles[`_${type}`])}>
                   <span>{item.value}</span>
-                  {item.payload && item.payload.y
-                    && <span className={styles.item}>{`${numberFormat(item.payload.y)} ${unit}`}</span>
+                  {sup && <DangerousHTML html={unit} />}
+                  {item.payload && item.payload.y && type !== 'height'
+                    && <span className={styles.item}>
+                      {`${numberFormat(item.payload.y)} ${unit}`}</span>
                   }
                 </div>
               </li>

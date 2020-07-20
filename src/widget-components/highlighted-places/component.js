@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
-import { format } from 'd3-format';
 
 import Widget from 'components/widget';
 
@@ -11,8 +10,6 @@ import styles from './style.module.scss';
 import Rufiji from './images/rufiji.jpg';
 import Saloum from './images/saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
-
-const numberFormat = format(',.0f');
 
 const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, name }) => {
   if (!rawData) {
