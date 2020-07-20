@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'redux-first-router-link';
 import Widgets from 'components/widgets';
 import Map from 'components/map-container';
 import Sidebar from 'components/sidebar';
@@ -19,7 +20,9 @@ const DesktopLayout = ({ location }) => {
     <div>
       <div className={styles.header}>
         <NavMenu />
-        <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+        <Link to={{ type: 'PAGE/APP' }}>
+         <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+        </Link>
         {location && (
           <h1
             className={styles.title}

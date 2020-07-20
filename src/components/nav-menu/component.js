@@ -30,7 +30,7 @@ const NavMenu = ({ fixedHeader }) => {
     >
       <button type="button" onClick={handleClick} />
       <Modal
-        isOpen={isOpen}
+        isOpen={false}
         onRequestClose={() => toggleModal(false)}
       >
         <div className={styles.modalContent}>

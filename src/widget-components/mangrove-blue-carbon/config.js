@@ -97,7 +97,6 @@ export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
     const chartData = dataFiltered.length ? getData(dataFiltered) : '';
-    console.log(chartData)
     return {
       chartData,
       coverage: biomassCoverage(data, yearSelected),
