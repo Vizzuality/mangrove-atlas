@@ -98,6 +98,8 @@ export const CONFIG = {
       },
       tooltip: {
         cursor: false,
+        coordinate: { x: -10, y: -10 },
+        active: true,
         content: (
           <WidgetTooltip
             style={{

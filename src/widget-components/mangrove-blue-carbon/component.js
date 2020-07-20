@@ -25,11 +25,11 @@ function MangroveBlueCarbon({
       }
     });
   }, [addFilter]);
-
   if (!rawData) {
     return null;
   }
   const { chartData, totalValues, chartConfig } = config.parse(rawData);
+
   if (!chartData || chartData.length <= 0) {
     return null;
   }

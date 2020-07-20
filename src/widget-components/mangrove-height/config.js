@@ -43,11 +43,11 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0–5': getBars(d.hmax_hist_m)[0] * 100,
-      '5–10': getBars(d.hmax_hist_m)[1] * 100,
-      '10–15': getBars(d.hmax_hist_m)[2] * 100,
-      '15–20': getBars(d.hmax_hist_m)[3] * 100,
-      '20–25': getBars(d.hmax_hist_m)[4] * 100,
+      '0–5 m': getBars(d.hmax_hist_m)[0] * 100,
+      '5–10 m': getBars(d.hmax_hist_m)[1] * 100,
+      '10–15 m': getBars(d.hmax_hist_m)[2] * 100,
+      '15–20 m': getBars(d.hmax_hist_m)[3] * 100,
+      '20–25 m': getBars(d.hmax_hist_m)[4] * 100,
     }
   ));
   return histogram;
@@ -85,7 +85,7 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0–5':
+              '0–5 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -93,7 +93,7 @@ export const CONFIG = {
                 stroke: '#C9BB42',
                 isAnimationActive: false
               },
-              '5–10':
+              '5–10 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -101,7 +101,7 @@ export const CONFIG = {
                 stroke: '#8BA205',
                 isAnimationActive: false
               },
-              '10–15':
+              '10–15 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -109,7 +109,7 @@ export const CONFIG = {
                 stroke: '#428710',
                 isAnimationActive: false
               },
-              '15–20':
+              '15–20 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -117,7 +117,7 @@ export const CONFIG = {
                 stroke: '#0A6624',
                 isAnimationActive: false
               },
-              '20–25':
+              '20–25 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -171,7 +171,7 @@ export const CONFIG = {
             position: 'relative',
             content: (properties) => {
               const { payload } = properties;
-              const groups = groupBy(payload, p => p.payload);
+              const groups = groupBy(payload, p => p.payload.label);
               return <WidgetLegend type="height" groups={groups} />;
             }
           },
@@ -186,11 +186,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0–5 m', color: '#C9BB42', key: '0–5', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '5–10 m', color: '#8BA205', key: '5–10', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '10–15 m', color: '#428710', key: '10–15', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '15–20 m', color: '#0A6624', key: '15–20', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '20–25 m', color: '#103C1F', key: '20–25', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '0–5 m', color: '#C9BB42', key: '0–5 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '5–10 m', color: '#8BA205', key: '5–10 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '10–15 m', color: '#428710', key: '10–15 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '15–20 m', color: '#0A6624', key: '15–20 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '20–25 m', color: '#103C1F', key: '20–25 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ].reverse()}
                 label={{ key: 'name' }}
               />

@@ -15,7 +15,7 @@ function getValue(item, value) {
   return `${preffix}${val}${suffix}`;
 }
 
-function Tooltip({ payload, settings, style, hideZeros }) {
+function Tooltip({ payload, settings, style, hideZeros, offset }) {
   const values = payload && payload.length > 0 && payload[0].payload;
 
   return (
