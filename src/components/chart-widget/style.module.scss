@@ -3,6 +3,7 @@
 .widget {
   width: 100%;
   $padding: 30px 40px 0 40px;
+  height: 100%;
   $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
 
@@ -45,7 +46,7 @@
   &.collapsed:last-child {
     background-position: 0 700px;
     .content {
-      max-height: 400px;
+      max-height: 700px;
     }
   }
 
