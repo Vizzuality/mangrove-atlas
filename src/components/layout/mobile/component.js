@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'redux-first-router-link';
 import Widgets from 'components/widgets';
 import Sidebar from 'components/sidebar';
 import NavMenu from 'components/nav-menu';
@@ -20,7 +21,9 @@ class MobileLayout extends PureComponent {
         {!mapView && (
           <>
             <NavMenu />
-            <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+            <Link to={{ type: 'PAGE/APP' }}>
+              <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+            </Link>
             <Sidebar>
               {({ isSticky }) => (
                 <>
