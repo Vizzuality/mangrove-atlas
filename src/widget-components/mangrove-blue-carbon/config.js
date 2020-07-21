@@ -2,7 +2,6 @@ import React from 'react';
 
 // utils
 import groupBy from 'lodash/groupBy';
-import looseJsonParse from 'utils/loose-json-parse';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
