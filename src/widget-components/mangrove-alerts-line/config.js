@@ -70,6 +70,35 @@ const getData = (data, year) => sortBy(data
   }),
 ['month']);
 
+const getMonths = (data, year) => sortBy(data
+  .filter(d => new Date(d.date.value).getFullYear() === year)
+  .map((d) => {
+    const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
+    console.log(date)
+    const monthsConversion = {
+      January: 'January',
+      February: 2,
+      March: 3,
+      April: 4,
+      May: 5,
+      June: 6,
+      July: 7,
+      August: 8,
+      September: 9,
+      October: 10,
+      November: 11,
+      December: 12
+    };
+
+    return (
+      {
+        value: date.value,
+        label: monthsConversion[date.value],
+      }
+    );
+  }),
+['month']);
+
 
 const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
 
@@ -78,11 +107,13 @@ export const CONFIG = {
     const chartData = getData(data, year);
     const startIndex = chartData.findIndex(d => d.month === startDate);
     const endIndex = chartData.findIndex(d => d.month === endDate);
+    const monthsOptions = getMonths(data, year);
     const dataFiltered = data
       .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
 
     return {
       chartData,
+      monthsOptions,
       total: numberFormat(getTotal(dataFiltered)),
       chartConfig: {
         height: 250,
@@ -171,7 +202,7 @@ export const CONFIG = {
         },
         yAxis: {
           tick: {
-            fontSize: 12,
+            fontSize: 10,
             fill: 'rgba(0,0,0,0.54)'
           },
           width: 40,
@@ -183,7 +214,7 @@ export const CONFIG = {
             value: 'Alerts 2020',
             position: 'top',
             offset: 50,
-            fontSize: 9,
+            fontSize: 7,
           },
           type: 'number'
         },

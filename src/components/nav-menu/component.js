@@ -13,7 +13,6 @@ const NavMenu = ({ fixedHeader }) => {
   const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
   const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : true);
   const [welcomeContent, toggleContent] = useState(modalStatus !== null ? modalStatusBoolean : true);
-
   const handleClick = () => {
     myStorage.setItem('modal', false);
     toggleContent(false);
