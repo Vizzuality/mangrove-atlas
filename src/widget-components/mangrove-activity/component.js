@@ -132,9 +132,10 @@ function MangroveActivity({
     fontWeight: 600
   };
 
+
   const sentence = (
     <>
-      Worldwide the 5 countries with the largest {filterSelector}
+      Worldwide the {limit} countries with the largest {filterSelector}
       &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
   );

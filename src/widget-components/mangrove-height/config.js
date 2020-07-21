@@ -5,7 +5,6 @@ import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
-import looseJsonParse from 'utils/loose-json-parse';
 
 const numberFormat = format(',.3r');
 
@@ -23,13 +22,14 @@ const chunk = (array, size) => {
 };
 
 
-const getBars = (barValues) => {
+const getData = (barValues) => {
   if (!barValues) return null;
-  const barsData = looseJsonParse(barValues).map(value => value[1]);
+  const barsData = barValues.map(value => value[1]);
   const chnkedData = chunk(barsData, 5);
   let formattedData = chnkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
+
   const total = barsData.reduce((previous, current) => current + previous);
   formattedData = formattedData.map(data => data / total);
   return formattedData;
@@ -43,11 +43,11 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0–5 m': getBars(d.hmax_hist_m)[0] * 100,
-      '5–10 m': getBars(d.hmax_hist_m)[1] * 100,
-      '10–15 m': getBars(d.hmax_hist_m)[2] * 100,
-      '15–20 m': getBars(d.hmax_hist_m)[3] * 100,
-      '20–25 m': getBars(d.hmax_hist_m)[4] * 100,
+      '0–5 m': getData(d.hmax_hist_m)[0] * 100,
+      '5–10 m': getData(d.hmax_hist_m)[1] * 100,
+      '10–15 m': getData(d.hmax_hist_m)[2] * 100,
+      '15–20 m': getData(d.hmax_hist_m)[3] * 100,
+      '20–25 m': getData(d.hmax_hist_m)[4] * 100,
     }
   ));
   return histogram;

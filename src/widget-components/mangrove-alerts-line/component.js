@@ -16,7 +16,7 @@ const MangroveAlertsLine = ({
   fetchAlerts,
   ...props
 }) => {
-  const { year = 2020, startDate = 2, endDate = 7 } = ui;
+  const { year = 2020, startDate = 2, endDate = 5 } = ui;
   useEffect(() => {
     if (currentId) {
       const currentLocation = locationsList.find(location => location.iso === currentId);

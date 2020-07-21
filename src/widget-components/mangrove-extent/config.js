@@ -110,7 +110,7 @@ export const CONFIG = {
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coastline coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km'}`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km'}`, position: '_column' },
             ]}
           />
         )

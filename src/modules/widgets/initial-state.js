@@ -6,7 +6,7 @@ export default {
   ui: {
     alerts: {
       startDate: 2,
-      endDate: 11,
+      endDate: 5,
       year: 2019
     }
   }
