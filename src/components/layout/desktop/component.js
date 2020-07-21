@@ -21,7 +21,7 @@ const DesktopLayout = ({ location }) => {
       <div className={styles.header}>
         <NavMenu />
         <Link to={{ type: 'PAGE/APP' }}>
-         <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
+          <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
         </Link>
         {location && (
           <h1
