@@ -29,7 +29,7 @@ const MangroveAlertsLine = ({
     return null;
   }
 
-  const { chartData, chartConfig, total } = config.parse(data, startDate, endDate, year);
+  const { chartData, chartConfig, total, monthsOptions } = config.parse(data, startDate, endDate, year);
 
   if (chartData.length <= 0) {
     return null;
@@ -42,7 +42,7 @@ const MangroveAlertsLine = ({
       }
     });
   };
-
+console.log(monthsOptions)
   // Just showing 2020 for now (client's request)
   const yearSelected = 2020;
   // const yearOptions = [
