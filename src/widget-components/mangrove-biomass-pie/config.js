@@ -66,8 +66,10 @@ const chunk = (array, size) => {
 
 const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
-  const barsData = looseJsonParse(data).map(value => value[1]);
+
+  const barsData = data[0].map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
+
   const chunkedData = chunk(barsData, 5);
   let formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
