@@ -49,9 +49,9 @@ const geojsons = [
               ["linear"],
               ["zoom"],
               0,
-              1,
+              2,
               9,
-              3
+              15
           ],
           "heatmap-color": [
               "interpolate",
@@ -80,9 +80,9 @@ const geojsons = [
               ["linear"],
               ["zoom"],
               3,
-              1,
-              7,
-              1
+              5,
+              6,
+              15
           ]
         }
       },
