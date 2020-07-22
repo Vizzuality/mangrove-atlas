@@ -7,6 +7,7 @@ import { format } from 'd3-format';
 
 
 const numberFormat = format(',.2f');
+const tooltipFormat = format(',~s');
 
 const widgetData = (data, unit) => {
   const { list, metadata } = data;
@@ -105,12 +106,12 @@ export const CONFIG = {
             style={{
               flexDirection: 'column',
               justifyContent: 'space-around',
-              marginLeft: '10px',
+              marginLeft: '5px',
             }}
             settings={[
               { key: 'label' },
               { label: 'Percentage:', key: 'percentage', format: percentage => `${percentage ? percentage.toFixed(2) : null} %`, position: '_column' },
-              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? numberFormat(coverage * 100) : numberFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km'}`, position: '_column' },
+              { label: 'Coverage:', key: 'coverage', format: coverage => `${unit === 'ha' ? tooltipFormat(coverage * 100) : tooltipFormat(coverage)} ${unit === 'ha' ? 'ha' : 'km'}`, position: '_column' },
             ]}
           />
         )
