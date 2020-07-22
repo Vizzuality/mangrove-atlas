@@ -23,7 +23,7 @@ class DownloadLink extends PureComponent {
       <CSVLink
         className={styles.link}
         data={csvData}
-        filename={`${filename}-${Date.now()}}.csv`}
+        filename={`${filename}-${Date.now()}.csv`}
       >
         <img src={ArrowDown} className={styles.icon} alt="info-icon" />
         Download data
