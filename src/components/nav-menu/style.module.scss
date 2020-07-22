@@ -54,6 +54,10 @@
     ul {
       list-style: none;
     }
+
+    button {
+      display: inline-block;
+    }
   }
 
   nav {
@@ -102,6 +106,3 @@
   }
 }
 
-button {
-  pointer-events: all;
-}

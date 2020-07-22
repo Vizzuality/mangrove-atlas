@@ -11,7 +11,7 @@ const NavMenu = ({ fixedHeader }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem('modal');
   const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
-  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : true);
+  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : false);
   const [welcomeContent, toggleMessage] = useState(modalStatus !== null ? modalStatusBoolean : true);
   const [aboutContent, toggleContent] = useState(false);
 
@@ -22,12 +22,8 @@ const NavMenu = ({ fixedHeader }) => {
   };
 
   const handleContent = () => {
-    toggleMessage(false);
     toggleContent(!aboutContent);
-    console.log(welcomeContent, aboutContent, 'inside toggle content')
   };
-
-  console.log(welcomeContent, aboutContent)
 
   return (
     <div className={classnames({
@@ -42,7 +38,7 @@ const NavMenu = ({ fixedHeader }) => {
       >
         <div className={styles.modalContent}>
 
-          {welcomeContent && (
+          {welcomeContent && isOpen && (
             <section className={styles.introModalContent}>
               <h3>Welcome to Global Mangrove Watch </h3>
               <h4>Monitoring to catalyse the action needed to protect and restore mangroves</h4>
@@ -51,7 +47,7 @@ const NavMenu = ({ fixedHeader }) => {
                 data and tools for monitoring mangroves necessary for this. It gives universal
                 access to near real-time information on where and what changes there are to mangroves across the world.</p>
 
-              <p>Close this message to continue or find out more about Global Mangrove Watch <button onClick={handleContent}>here.</button></p>
+              <p>Close this message to continue or find out more about Global Mangrove Watch</p> <button type="button" onClick={handleContent()}>here.</button>
               <a className={styles.welcomeLink} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Visit Global Mangrove Alliance website</a>
               <HotspotsList />
             </section>
@@ -63,7 +59,8 @@ const NavMenu = ({ fixedHeader }) => {
               <p>Thriving mangroves are key to the health of nature and effective climate action.
                 Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
                 data and tools for monitoring mangroves necessary for this. It gives universal
-                access to near real-time information on where and what changes there are to mangroves across the world.</p>
+                access to near real-time information on where and what changes there are to mangroves across the world.
+              </p>
 
               <p>With 3D, hi-res information on topography, soil conditions and hydrology, Global Mangrove Watch gives
                 coastal and park managers, conservationists, policymakers and practitioners the evidence
@@ -74,19 +71,19 @@ const NavMenu = ({ fixedHeader }) => {
               <h4>Global Mangrove Watch and the Global Mangrove Alliance</h4>
               <p>Coordinated effort across sectors and geographies will accomplish more, faster. Global Mangrove Watch is the
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
-  the world’s mangrove cover 20% by 2030.
-  <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-
-                   Learn more at MangroveAlliance.org.
-                  </a>
+                the world’s mangrove cover 20% by 2030.
+                <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                  Learn more at MangroveAlliance.org.
+                </a>
               </p>
 
-              <h4>Global Mangrove Watch Partners</h4 >
-              <p>With support from the Oak Foundation, DOB Ecology and the Dutch Postcode Lottery, The Nature Conservancy and Wetlands International have worked with Aberystwyth University, soloEO, NASA, JAXA, and a host of partners to develop Global Mangrove Watch, building on JAXA’s Kyoto and Carbon Initiative.</p>
-
+              <h4>Global Mangrove Watch Partners</h4>
+              <p>With support from the Oak Foundation, DOB Ecology and the Dutch Postcode Lottery,
+                The Nature Conservancy and Wetlands International have worked with Aberystwyth
+                University, soloEO, NASA, JAXA, and a host of partners to develop Global Mangrove Watch,
+                building on JAXA’s Kyoto and Carbon Initiative.
+              </p>
               <p>Convened by</p>
-
-
 
               <ul>
 
