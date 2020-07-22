@@ -26,7 +26,7 @@ const geojsons = [
     id: 'alerts',
     source: {
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?year=2020{{locationId}}'
+      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-01-01&end_date=2020-12-31{{locationId}}'
     },
     layers: [
       {
@@ -35,76 +35,76 @@ const geojsons = [
         source: 'alerts',
         maxzoom: 12,
         paint: {
-          "heatmap-weight": [
-              "interpolate",
-              ["linear"],
-              ["get", "count"],
-              0,
-              0,
-              6,
-              1
+          'heatmap-weight': [
+            'interpolate',
+            ['linear'],
+            ['get', 'count'],
+            0,
+            0,
+            6,
+            1
           ],
-          "heatmap-intensity": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              0,
-              2,
-              9,
-              15
+          'heatmap-intensity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0,
+            2,
+            9,
+            15
           ],
-          "heatmap-color": [
-              "interpolate",
-              ["linear"],
-              ["heatmap-density"],
-              0,
-              "rgba(210, 50, 169, 0)",
-              0.33,
-              "rgba(199, 43, 214, 1)",
-              0.66,
-              "rgba(235, 68, 68, 1)",
-              1,
-              "rgba(255, 194, 0, 0.5)"
+          'heatmap-color': [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0,
+            'rgba(210, 50, 169, 0)',
+            0.33,
+            'rgba(199, 43, 214, 1)',
+            0.66,
+            'rgba(235, 68, 68, 1)',
+            1,
+            'rgba(255, 194, 0, 0.5)'
           ],
-          "heatmap-radius": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              0,
-              2,
-              9,
-              19
+          'heatmap-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0,
+            2,
+            9,
+            19
           ],
-          "heatmap-opacity": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              3,
-              5,
-              6,
-              15
+          'heatmap-opacity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            3,
+            5,
+            6,
+            15
           ]
         }
       },
       {
-        "id": "alerts-point",
-        "type": "circle",
-        "source": "alerts",
-        "paint": {
-          "circle-radius": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
+        id: 'alerts-point',
+        type: 'circle',
+        source: 'alerts',
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
             7,
-            ["interpolate", ["linear"], ["get", "count"], 1, 1, 6, 4],
+            ['interpolate', ['linear'], ['get', 'count'], 1, 1, 6, 4],
             16,
-            ["interpolate", ["linear"], ["get", "count"], 1, 5, 6, 50]
+            ['interpolate', ['linear'], ['get', 'count'], 1, 5, 6, 50]
           ],
-          "circle-color": "rgba(210, 50, 169, 1)",
-          "circle-opacity": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
+          'circle-color': 'rgba(210, 50, 169, 1)',
+          'circle-opacity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
             7,
             0,
             8,
