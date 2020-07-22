@@ -8,7 +8,6 @@ import isEmpty from 'lodash/isEmpty';
 import { easeCubic } from 'd3-ease';
 
 import MapPopupHotspots from 'components/map-popup-hotspots';
-import alerts from 'modules/map-styles/templates/alerts.json';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -250,7 +249,7 @@ class Map extends Component {
         </Popup>
       ) : null);
 
-   // applyFilters();
+    // applyFilters();
     return (
       <div
         ref={(r) => { this.mapContainer = r; }}

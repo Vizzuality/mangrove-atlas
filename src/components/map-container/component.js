@@ -28,7 +28,6 @@ export const MapContainer = ({
   bounds,
   goToCountry,
   goToAOI,
-  data
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
