@@ -70,34 +70,31 @@ const getData = (data, year) => sortBy(data
   }),
 ['month']);
 
-const getMonths = (data, year) => sortBy(data
-  .filter(d => new Date(d.date.value).getFullYear() === year)
-  .map((d) => {
-    const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-    console.log(date)
+const getDates = data => sortBy(data
+  .map(d => {
     const monthsConversion = {
-      January: 'January',
-      February: 2,
-      March: 3,
-      April: 4,
-      May: 5,
-      June: 6,
-      July: 7,
-      August: 8,
-      September: 9,
-      October: 10,
-      November: 11,
-      December: 12
+      0: 'January',
+      1: 'February',
+      2: 'March',
+      3: 'April',
+      4: 'May',
+      5: 'June',
+      6: 'July',
+      8: 'August',
+      9: 'September',
+      10: 'October',
+      11: 'November',
+      12: 'December'
     };
+    const year = new Date(d.date.value).getFullYear();
+    const month = monthsConversion[new Date(d.date.value).getMonth()];
 
-    return (
-      {
-        value: date.value,
-        label: monthsConversion[date.value],
-      }
-    );
+    return {
+      label: `${month}, ${year}`,
+      value: d.date.value
+    }
   }),
-['month']);
+['date']);
 
 
 const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
@@ -105,15 +102,17 @@ const getTotal = data => data.reduce((previous, current) => current.count + prev
 export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
-    const startIndex = chartData.findIndex(d => d.month === startDate);
-    const endIndex = chartData.findIndex(d => d.month === endDate);
-    const monthsOptions = getMonths(data, year);
+    const startIndex = chartData.findIndex(d => d.date.value === startDate);
+    const endIndex = chartData.findIndex(d => d.date.value === endDate);
+    const monthsOptions = getDates(data, year);
+    const dateOptions = getDates(data);
     const dataFiltered = data
-      .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
+      .filter(d => endDate >= d.date.value && d.date.value >= startDate);
 
     return {
       chartData,
       monthsOptions,
+      dateOptions,
       total: numberFormat(getTotal(dataFiltered)),
       chartConfig: {
         height: 250,

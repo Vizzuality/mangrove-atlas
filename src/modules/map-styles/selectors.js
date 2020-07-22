@@ -17,11 +17,13 @@ const mapStyles = state => state.mapStyles;
 const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
 const locationId = state => state.locations.current.id || state.locations.current.iso;
+const startDateAlerts = state => state.widgets.ui.alerts.startDate;
+const endDateAlerts = state => state.widgets.ui.alerts.endDate;
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
 );
 
-const ALERTS_URL_TEMPLATE = 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date={{startDate}}&end_date={{endDate}}{{locationId}}';
+const ALERTS_URL_TEMPLATE = 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{startDate}}{{endDate}}{{locationId}}';
 const getAlertsUrl = template(ALERTS_URL_TEMPLATE, {
   interpolate: /{{([\s\S]+?)}}/g,
 });
@@ -60,8 +62,8 @@ export const layerStyles = createSelector(
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles, filters, activeLayersIds, locationId],
-  (_basemap, _layerStyles, _filters, _activeLayersIds, _locationId) => {
+  [basemap, layerStyles, filters, activeLayersIds, locationId, startDateAlerts, endDateAlerts],
+  (_basemap, _layerStyles, _filters, _activeLayersIds, _locationId, _startDateAlerts, _endDateAlerts) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -143,16 +145,16 @@ export const mapStyle = createSelector(
     }));
 
     // GEN ALERTS URL TEMPLATE
-    if (_locationId && (_locationId !== 'worldwide')) {
+    if (_locationId && (_locationId !== 'worldwide' && _locationId !== 1298)) {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: '2020-01-01',
-        endDate: '2020-12-31',
+        startDate: `start_date=${_startDateAlerts}`,
+        endDate: `&end_date=${_endDateAlerts}`,
         locationId: `&location_id=${_locationId}`,
       });
     } else {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: '2020-01-01',
-        endDate: '2020-12-31',
+        startDate: `start_date=${_startDateAlerts}`,
+        endDate: `&end_date=${_endDateAlerts}`,
         locationId: '',
       });
     }
