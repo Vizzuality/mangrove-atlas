@@ -8,6 +8,10 @@
     font-size: 12px;
     line-height: 20px;
     text-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+
+     tspan {
+       font-size: 11px;
+     }
   }
 
   :global(.recharts-wrapper),

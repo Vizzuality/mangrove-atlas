@@ -78,6 +78,7 @@ export const CONFIG = {
       },
       legend: {
         align: 'left',
+        maxWidth: 170,
         verticalAlign: 'middle',
         layout: 'vertical',
         content: (properties) => {
@@ -94,7 +95,7 @@ export const CONFIG = {
               }
             };
           }), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} />;
+          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} direction='vertical' />;
         }
       },
       tooltip: {

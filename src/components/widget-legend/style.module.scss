@@ -9,15 +9,22 @@
   position: relative;
 
   &.vertical {
+    max-width: 170px;
+
     .widget_legend_list {
       display: flex;
       margin: 0;
       padding: 0;
     }
     .widget_legend_list_item {
-      margin: 0 10px 0 0;
+      margin: 0 10px 10px 0;
 
+      .itemWrapper {
 
+        > span {
+          padding-bottom: 5px;
+        }
+      }
     }
   }
 
@@ -179,8 +186,8 @@
       height: 13px;
       border-radius: 0;
     }
-
   }
+
   .itemWrapper {
     display: flex;
     flex-direction: column;
