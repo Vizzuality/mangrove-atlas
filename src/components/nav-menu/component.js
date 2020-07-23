@@ -12,12 +12,13 @@ const NavMenu = ({ fixedHeader }) => {
   const modalStatus = myStorage.getItem('modal');
   const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
   const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : false);
-  const [welcomeContent, toggleMessage] = useState(modalStatus !== null ? modalStatusBoolean : true);
+  const [welcomeContent, toggleMessage] = useState(modalStatus !== null ? modalStatusBoolean : false);
   const [aboutContent, toggleContent] = useState(false);
 
   const handleClick = () => {
     myStorage.setItem('modal', false);
-    toggleContent(!aboutContent);
+    toggleMessage(false);
+    toggleContent(false);
     toggleModal(!isOpen);
   };
 

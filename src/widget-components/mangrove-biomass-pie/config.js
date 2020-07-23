@@ -134,7 +134,7 @@ const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend sup unit="t ha<sup>–1</sup>" groups={groups} type="height" />;
+            return <WidgetLegend sup unit="&nbsp;t ha<sup>–1</sup>" groups={groups} type="height" />;
           }
         },
         tooltip: {
