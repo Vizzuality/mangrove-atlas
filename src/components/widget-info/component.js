@@ -16,7 +16,7 @@ const WidgetInfo = ({
   locationsList
 }) => {
   const selectedLocation = locationsList
-    .filter(location => location.iso === current.toUpperCase() || location.id === current)
+    .filter(location => location.iso === current || location.id === current || location.iso === 'WORLDWIDE')
     .map((l) => {
       return [
         [`location - ${l.name}  `],
