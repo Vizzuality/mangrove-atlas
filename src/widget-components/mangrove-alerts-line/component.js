@@ -46,7 +46,7 @@ const MangroveAlertsLine = ({
     <Select
       value={startDate}
       options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+      isOptionDisabled={option => option.value > endDate
         || option.value === startDate}
       onChange={value => changeDate('startDate', value)}
     />
@@ -56,7 +56,7 @@ const MangroveAlertsLine = ({
     <Select
       value={endDate}
       options={dateOptions}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+      isOptionDisabled={option => option.value < startDate
         || option.value === endDate}
       onChange={value => changeDate('endDate', value)}
     />

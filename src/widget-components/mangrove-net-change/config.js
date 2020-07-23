@@ -13,9 +13,9 @@ const widgetData = ({ list }) => {
     {
       label: JSON.stringify(moment(l.date).year()),
       year: moment(l.date).year(),
-      loss: l.gain_m2,
+      gain: l.gain_m2,
       netChange: l.net_change_m2,
-      gain: -l.loss_m2
+      loss: -l.loss_m2
     }));
   return orderBy(data, l => l.year).filter((l, i) => (i === 0 || l.netChange !== 0));
 };
@@ -37,8 +37,8 @@ const CONFIG = {
       {
         x: l.label,
         netChange: l.netChange,
-        loss: l.gain,
-        gain: l.loss,
+        gain: l.gain,
+        loss: l.loss,
         name: l.label,
         year: l.year
       })),
