@@ -1,0 +1,14 @@
+.controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+
+  > * {
+    margin-top: 20px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

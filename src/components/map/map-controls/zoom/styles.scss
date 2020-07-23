@@ -1,0 +1,35 @@
+.c-zoom-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .zoom-control--btn {
+    cursor: pointer;
+    width: 50px;
+    height: 35px;
+    background: #FFF;
+    fill: black;
+    position: relative;
+    border-top: 1px solid black;
+    border-radius: 0px;
+    box-shadow: 0 0px 2px 0 rgba(0,0,0,0.5);
+
+    &:hover {
+      background: darken(#FFF, 2.5);
+    }
+
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+    }
+
+    &.-disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
