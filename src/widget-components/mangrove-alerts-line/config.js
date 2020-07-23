@@ -41,8 +41,22 @@ const monthsConversion = {
 const getStops = () => {
   const colorSchema = [
     '#FFC200',
-    '#EB4444',
-    '#C72BD6'
+    '#FFAE02',
+    '#FF9A04',
+    '#FF8606',
+    '#FF7208',
+    '#FF5F0A',
+    '#FF4B0C',
+    '#FF380E',
+    '#FF2510',
+    '#FF1212',
+    '#FF141E',
+    '#FF1633',
+    '#FF1849',
+    '#FF1A5E',
+    '#FF1C73',
+    '#FF1E88',
+    '#FF209D',
   ];
 
   const gradient = colorSchema.map((d, index) => (
