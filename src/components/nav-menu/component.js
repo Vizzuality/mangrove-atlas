@@ -72,7 +72,7 @@ const NavMenu = ({ fixedHeader }) => {
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
                 <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                  Learn more at MangroveAlliance.org.
+                &nbsp;Learn more at MangroveAlliance.org.
                 </a>
               </p>
 
