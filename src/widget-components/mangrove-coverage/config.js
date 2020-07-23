@@ -23,7 +23,7 @@ const widgetData = ({ list, metadata }) => {
         unit: '%',
         coverage: (d.length_m / 1000).toFixed(2),
         value: (d.length_m).toFixed(2),
-        label: `Mangroves in ${year}`
+        label: `Coastline coverage in ${year}`
       });
     });
   }
@@ -64,7 +64,7 @@ export const CONFIG = {
           coverage: {
             cx: '50%',
             cy: '50%',
-            paddingAngle: 3,
+            paddingAngle: 2,
             dataKey: 'percentage',
             nameKey: 'label',
             innerRadius: '60%',

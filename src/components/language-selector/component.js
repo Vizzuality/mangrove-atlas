@@ -60,12 +60,11 @@ class LanguageSelect extends PureComponent {
 
     return (
 
-      <ButtonGroup id="tx-live-lang-picker">
+      <ButtonGroup id="tx-live-lang-picker" className="container">
         {options.map(o => (
           <Button
             type="button"
             hasBackground={currentValue.value === o.value}
-            hasContrast={currentValue.value === o.value}
             key={`lang-${o.value}`}
             onClick={() => this.handleChange({ langCode: o.value })}
           >

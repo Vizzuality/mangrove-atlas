@@ -41,8 +41,6 @@ class Dashboard extends Component {
     expandAll();
   }
 
-  onClickDownload = () => window.print();
-
   setMargin = securityMargin => (
     this.setState({ securityMargin })
   )
@@ -57,8 +55,8 @@ class Dashboard extends Component {
           [styles.securityMargin]: securityMargin
         })}
         triggers={window.innerWidth > breakpoints.lg
-          ? [{ top: -65, callback: _sticky => this.setSticky(!_sticky) },
-            { top: -10, callback: margin => this.setMargin(!margin) }]
+          ? [{ top: -105, callback: _sticky => this.setSticky(!_sticky) },
+          { top: -10, callback: margin => this.setMargin(!margin) }]
           : [{ top: -1, callback: _sticky => this.setSticky(!_sticky) }]
         }
       >
@@ -85,13 +83,6 @@ class Dashboard extends Component {
                     Collapse all widgets
                   </Button>
                 )}
-            <Button
-              isTransparent
-              isGrey
-              onClick={this.onClickDownload}
-            >
-              Print Report
-            </Button>
           </div>
         </div>
         <Children isSticky={sticky} />

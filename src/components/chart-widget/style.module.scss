@@ -1,7 +1,9 @@
 @import 'styles/vars';
 
 .widget {
+  width: 100%;
   $padding: 30px 40px 0 40px;
+  height: 100%;
   $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
 
@@ -43,6 +45,9 @@
 
   &.collapsed:last-child {
     background-position: 0 700px;
+    .content {
+      max-height: 700px;
+    }
   }
 
   &.layerActive::before {
@@ -62,6 +67,10 @@
     padding: $padding;
     @media screen and (max-width: map-get($breakpoints, sm)) {
       padding: $paddingMobile;
+    }
+
+    @media print {
+      max-height: 300px;
     }
   }
 
@@ -104,6 +113,11 @@
     @include medium-text;
     margin: 1rem 0;
     position: relative;
+
+    @media print {
+      font-size: 14px;
+      line-height: 19px;
+    }
   }
 
   .bold {

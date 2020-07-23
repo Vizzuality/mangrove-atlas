@@ -1,10 +1,7 @@
 .chart {
   width: 100%;
   height: 250px;
-
-  @media print {
-    min-height: 400px;
-  }
+  position: relative;
 
   text {
     fill: rgba(0, 0, 0, 0.54);
@@ -12,6 +9,7 @@
     line-height: 20px;
     text-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
   }
+
 
   :global(.recharts-wrapper),
   :global(.recharts-surface) {

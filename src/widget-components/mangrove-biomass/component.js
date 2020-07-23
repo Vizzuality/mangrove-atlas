@@ -30,7 +30,6 @@ const MangroveBiomass = ({
   if (!rawData) {
     return null;
   }
-
   const { chartData, metadata, chartConfig, coverage } = config.parse(rawData, yearSelected);
 
   if (chartData.length <= 0) {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Search-fixed</title>
+    <defs>
+        <circle id="path-1" cx="40" cy="40" r="30"></circle>
+        <filter x="-28.3%" y="-21.7%" width="156.7%" height="156.7%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Search-fixed" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Oval">
+            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+        </g>
+        <g id="icon-search" transform="translate(30.000000, 29.000000)" stroke="#00857F" stroke-linecap="square" stroke-width="2">
+            <line x1="20.952381" y1="20.952381" x2="14.3062857" y2="14.3062857" id="Path"></line>
+            <circle id="Oval" cx="8.38095238" cy="8.38095238" r="8.38095238"></circle>
+        </g>
+    </g>
+</svg>

@@ -30,7 +30,7 @@ export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {
     // Saloum and Rufiji
-    const ids = [4, 40];
+    const ids = [1300, 1299];
     const widgetData = _locations.filter(location => ids.includes(location.id));
 
     return { widgetData };
@@ -50,7 +50,7 @@ export const coverageWidget = createSelector(
       percentage: _currentLocation.length_mangrove_m[year] / total * 100,
       unit: '%',
       value: _currentLocation.length_mangrove_m[year],
-      label: `Mangroves in ${year}`
+      label: `Coastline coverage in ${year}`
     }));
 
     return {

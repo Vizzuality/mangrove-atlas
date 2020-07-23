@@ -14,9 +14,9 @@ export function* getWidgets() {
 
   if (isDesktop) {
     for (let i = 0; i < widgets.length; i++) {
-      if (widgets[i].slug === 'mangrove_coverage') {
+      if (widgets[i].slug === 'mangrove_extent') {
         yield put(toggleLayerActive({
-          id: 'coverage-1996-2016',
+          id: 'extent',
           isActive: true
         }));
       }

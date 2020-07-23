@@ -14,6 +14,7 @@ import styles from './style.module.scss';
 function Widget({
   children,
   data,
+  downloadData,
   name,
   slug,
   filename,
@@ -78,7 +79,7 @@ function Widget({
   );
 
   return (
-    <div className={classnames(styles.widget, widgetConditionalStyles)}>
+    <div className={classnames(styles.widget, widgetConditionalStyles, styles[`${slug}`])}>
       <div className={classnames(styles.wrapper, {
         [styles._modal]: isLocationsModal
       })}
@@ -100,7 +101,7 @@ function Widget({
       </div>
 
       {!isLocationsModal
-        && <WidgetInfo data={data} filename={filename} />
+        && <WidgetInfo data={data} filename={filename} downloadData={downloadData} />
       }
     </div>
   );

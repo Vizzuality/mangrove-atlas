@@ -8,18 +8,19 @@ import { breakpoints } from 'utils/responsive';
 import styles from './style.module.scss';
 
 
-const AppPage = () => (
-  <div className={styles.app}>
-    <MediaQuery maxWidth={breakpoints.lg}>
-      <MobileLayout />
-    </MediaQuery>
-    <MediaQuery minWidth={breakpoints.lg + 1}>
-      <DesktopLayout />
-    </MediaQuery>
-    {/* Modals */}
-    <LocationModal />
-    <InfoModal />
-  </div>
-);
+const AppPage = () => {
+  return (
+    <div className={styles.app}>
+      <MediaQuery maxWidth={breakpoints.lg}>
+        <MobileLayout />
+      </MediaQuery>
+      <MediaQuery minWidth={breakpoints.lg + 1}>
+        <DesktopLayout />
+      </MediaQuery>
+      <LocationModal />
+      <InfoModal />
+    </div>
+  );
+};
 
 export default AppPage;

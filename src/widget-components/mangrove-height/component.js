@@ -32,7 +32,9 @@ const MangroveHeight = ({
     return null;
   }
 
-  const { chartData, metadata, chartConfig, heightCoverage } = config.parse(rawData, date);
+  // for widget to show 2016 until client has better data for the rest of the years
+  const dataFiltered = rawData.filter(data => data.date.includes('2016'));
+  const { chartData, metadata, chartConfig, heightCoverage } = config.parse(dataFiltered, date);
 
   if (chartData.length <= 0) {
     return null;
@@ -66,7 +68,7 @@ const MangroveHeight = ({
   const sentence = (
     <>
       Mean mangrove <strong>maximum</strong> canopy height in <strong>{location}</strong> was
-      <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateSelector}</strong>.
+      <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateOptions.length > 1 ? dateSelector : dateOptions[0].label}</strong>.
     </>
   );
   const chartRData = {

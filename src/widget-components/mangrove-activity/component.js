@@ -5,8 +5,10 @@ import orderBy from 'lodash/orderBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
-import config from './config';
+import moreIcon from './icon-more.svg';
+import lessIcon from './icon-less.svg';
 
+import config from './config';
 
 function MangroveActivity({
   data: rawData,
@@ -38,7 +40,7 @@ function MangroveActivity({
       id: 'activity',
       value: {
         ...ui,
-        filter: filterState
+        filter: filterState,
       }
     });
     fetchRankingData({
@@ -47,25 +49,45 @@ function MangroveActivity({
     });
   };
 
+  const changeLimit = (limitState) => {
+    setUi({
+      id: 'activity',
+      value: {
+        ...ui,
+        limit: limitState
+      }
+    });
+    fetchRankingData({
+      ...ui,
+      limit: limitState
+    });
+  };
+
   if (!rawData || !rawData.meta) {
     return null;
   }
 
-  const { startDate, endDate, filter } = ui;
-  const { chartData, metaData, chartConfig } = config.parse(rawData, filter);
+  const { startDate, endDate, filter, limit } = ui;
+  const { chartData, metaData, chartConfig } = config.parse(rawData, filter, limit);
 
   const sortRanking = (data) => {
     const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return (filter === 'gain' ? dataRanked : dataRanked.reverse());
+    return (filter === 'loss' ? dataRanked.reverse() : dataRanked);
   };
 
   // XXX: these options should come from an api ?
   const optionsFilter = [
     { value: 'gain', label: 'gain' },
-    { value: 'loss', label: 'loss' }
+    { value: 'loss', label: 'loss' },
+    { value: 'net_change', label: 'net increase' },
   ];
 
-  const optionsYear = metaData.map(year => ({
+  const startYearOptions = metaData.map(year => ({
+    label: year,
+    value: year
+  }));
+
+  const endYearOptions = metaData.map(year => ({
     label: year,
     value: year
   }));
@@ -75,6 +97,7 @@ function MangroveActivity({
     <Select
       value={filter}
       options={optionsFilter}
+      classNamePrefix="react-select"
       onChange={value => changeFilter(value)}
     />
   );
@@ -82,7 +105,7 @@ function MangroveActivity({
   const startYearSelector = (
     <Select
       value={startDate}
-      options={optionsYear}
+      options={startYearOptions.splice(0, metaData.length - 1)}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
         || option.value === startDate}
       onChange={value => changeYear('start', value)}
@@ -92,17 +115,41 @@ function MangroveActivity({
   const endYearSelector = (
     <Select
       value={endDate}
-      options={optionsYear}
+      options={endYearOptions.splice(1, metaData.length)}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
         || option.value === endDate}
       onChange={value => changeYear('end', value)}
     />
   );
 
+  const customStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    fontSize: '14px',
+    color: '#00857F',
+    fontWeight: 600
+  };
+
+
   const sentence = (
     <>
-      Worldwide the 5 countries with the largest {filterSelector}
-       in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+      Worldwide the {limit} countries with the largest {filterSelector}
+      &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+    </>
+  );
+
+  const countriesLimit = (
+    <>
+      <button
+        style={customStyles}
+        type="button"
+        onClick={value => changeLimit(limit === 5 ? limit + 5 : limit - 5, value)}
+      >
+        {limit === 5 ? 'Show 10' : 'Show 5'}
+        <img alt={limit === 5 ? 'Show more results' : 'Show less results'} src={limit === 5 ? moreIcon : lessIcon} />
+      </button>
     </>
   );
 
@@ -114,6 +161,7 @@ function MangroveActivity({
   };
 
   return (
+
     <ChartWidget
       name={name}
       data={sortedData}
@@ -122,6 +170,7 @@ function MangroveActivity({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
+      component={countriesLimit}
       {...props}
     />
   );

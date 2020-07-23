@@ -14,6 +14,7 @@ import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
 import * as ranking from 'modules/ranking';
+import * as alerts from 'modules/alerts';
 
 import router from './router';
 import sagas from './sagas';
@@ -29,7 +30,8 @@ const modules = [
   { namespace: 'mapStyles', components: mapStyles },
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
-  { namespace: 'ranking', components: ranking }
+  { namespace: 'ranking', components: ranking },
+  { namespace: 'alerts', components: alerts }
 ];
 
 const {

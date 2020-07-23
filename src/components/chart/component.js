@@ -8,6 +8,7 @@ import {
   Cell,
   Area,
   Pie,
+  RadialBar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -17,8 +18,11 @@ import {
   ResponsiveContainer,
   ComposedChart,
   PieChart,
+  RadialBarChart,
   Label
 } from 'recharts';
+
+import Brush from './brush';
 
 import { stack, clearStack, addComponent } from './rechart-components';
 import ChartTick from './tick';
@@ -31,6 +35,7 @@ import styles from './style.module.scss';
 
 const rechartCharts = new Map([
   ['pie', PieChart],
+  ['radial', RadialBarChart],
   ['composed', ComposedChart]
 ]);
 
@@ -77,7 +82,8 @@ class Chart extends PureComponent {
       data,
       config,
       handleMouseMove,
-      handleMouseLeave
+      handleMouseLeave,
+      onBrushEnd
     } = this.props;
 
     const {
@@ -99,6 +105,7 @@ class Chart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
+      brushes,
       cartesianGrid,
       cartesianAxis,
       tooltip,
@@ -109,7 +116,7 @@ class Chart extends PureComponent {
 
     clearStack();
 
-    const { lines, bars, areas, pies } = yKeys;
+    const { lines, bars, areas, pies, radial } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     const RechartChart = rechartCharts.get(type);
@@ -174,7 +181,7 @@ class Chart extends PureComponent {
               ))
               }
             </defs>
-            { stack }
+            {stack}
 
             {cartesianGrid && (
               <CartesianGrid
@@ -217,6 +224,7 @@ class Chart extends PureComponent {
                 )}
                 {...yAxis}
               />
+
             )}
 
             {areas && Object.keys(areas).map(key => (
@@ -226,7 +234,6 @@ class Chart extends PureComponent {
             {bars && Object.keys(bars).map(key => (
               <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
                 {!!bars[key].label && <Label {...bars[key].label} />}
-
                 {bars[key].itemColor && data.map(item => (
                   <Cell
                     key={`c_${item.color}`}
@@ -254,7 +261,16 @@ class Chart extends PureComponent {
                   dataKey={key}
                   {...pies[key]}
                 >
+
+                  {pies[key].customLabel && (
+                    <Label
+                      width={30}
+                      position="center"
+                      content={pies[key].customLabel}
+                    />)}
+
                   {data.map(item => (
+
                     <Cell
                       key={`c_${item.color}`}
                       fill={item.color}
@@ -276,9 +292,10 @@ class Chart extends PureComponent {
 
             {tooltip && (
               <Tooltip
-                wrapperStyle={{ position: 'absolute',
-                  top: 0 }}
-
+                wrapperStyle={{
+                  position: 'absolute',
+                  top: 0,
+                }}
                 isAnimationActive={false}
                 {...tooltip}
               />
@@ -293,6 +310,18 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
+
+
+        {brushes && (
+          <Brush
+            data={data}
+            width="100%"
+            height={height - 28}
+            margin={margin}
+            onBrushEnd={onBrushEnd}
+            {...brushes}
+          />
+        )}
       </div>
     );
   }

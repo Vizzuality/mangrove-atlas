@@ -9,13 +9,22 @@
   position: relative;
 
   &.vertical {
+    max-width: 170px;
+
     .widget_legend_list {
       display: flex;
       margin: 0;
       padding: 0;
     }
     .widget_legend_list_item {
-      margin: 0 10px 0 0;
+      margin: 0 10px 10px 0;
+
+      .itemWrapper {
+
+        > span {
+          padding-bottom: 5px;
+        }
+      }
     }
   }
 
@@ -30,10 +39,19 @@
     margin: 10px 0;
     padding: 0;
     list-style: none;
+
     &._height {
       display: flex;
       justify-content: space-between;
       width: 100%;
+    }
+
+    &._left {
+      justify-content: flex-end;
+
+      > li {
+        padding-left: 20px;
+      }
     }
   }
 
@@ -41,7 +59,8 @@
     display: flex;
     justify-content: flex-start;
     align-items: baseline;
-    list-style: none;
+    list-style: disc;
+    position: relative;
   }
 
   .widget_legend_list-item._flex-column {
@@ -78,9 +97,63 @@
   }
 
   .widget_legend_list_item {
+
+    &._activity {
+      display: flex;
+      align-items: center;
+
+      ._Gain {
+        position: relative;
+        width: 2px;
+        height: 10px;
+        margin-left: 15px;
+        margin-right: 5px;
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 5px;
+          height: 2px;
+          top: 50%;
+          transform: translateY(-50%);
+          left: -5px;
+          background-color: inherit;
+        }
+      }
+
+      ._Loss {
+        position: relative;
+        width: 2px;
+        height: 10px;
+        margin-left: 5px;
+        margin-right: 10px;
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 5px;
+          height: 2px;
+          top: 50%;
+          transform: translateY(-50%);
+          right: -5px;
+          background-color: inherit;
+        }
+      }
+
+      ._Net {
+        width: 15px;
+        height: 8px;
+        position: relative;
+        border-radius: 0 10px 10px 0;
+        margin-left: 5px;
+        margin-right: 10px;
+      }
+    }
+
     &._net svg{
       border-radius: 4px;
     }
+
     &._height {
 
       font-size: 14px;
@@ -89,6 +162,7 @@
         margin-left: 5px;
       }
     }
+
   }
 
   .widget_legend-number {
@@ -112,14 +186,20 @@
       height: 13px;
       border-radius: 0;
     }
-
   }
+
   .itemWrapper {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
+
+    &._height {
+      display: contents;
+    }
 
     .item {
-      font-weight: bold;
+      font-weight: normal;
+      font-size: 14px;
     }
   }
 }

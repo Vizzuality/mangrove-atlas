@@ -6,6 +6,7 @@ import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 export const numberFormat = format(',.2f');
+export const formatAxis = format(',.0d');
 
 const widgetData = ({ list }) => {
   const data = list.map(l => (
@@ -23,15 +24,15 @@ const widgetMetadata = ({ list }) => ({
   years: Array.from(
     new Set(
       list
-        .filter(l => (l.gain_m2 !== null && l.loss_m2 !== null))
-        .map(l => (moment(l.date).year()))
+        .filter(l => ((l.net_change_m2 !== null && l.net_change_m2 !== 0) || l.date.includes('1996')))
+        .map(r => (moment(r.date).year()))
         .sort((a, b) => a - b)
     )
   )
 });
 
 const CONFIG = {
-  parse: data => ({
+  parse: (data, unit) => ({
     chartData: widgetData(data).map(l => (
       {
         x: l.label,
@@ -83,13 +84,13 @@ const CONFIG = {
       yAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
         tickFormatter: (v) => {
-          const result = v / 1000000;
-          return numberFormat(result);
+          const result = unit === 'ha' ? v / 10000 : v / 1000000;
+          return formatAxis(result);
         },
-        tickMargin: 15,
+        tickMargin: 10,
         orientation: 'right',
         label: {
-          value: 'km²',
+          value: unit === 'km' ? 'km²' : unit,
           position: 'top',
           offset: 35
         }
@@ -126,18 +127,18 @@ const CONFIG = {
               marginLeft: '30px'
             }}
             payload={[
-              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)} km²` },
+              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
               { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
               { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)} km²` }
             ]}
             settings={[
-              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${numberFormat(value / 1000000)} km²` },
+              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
               { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
               {
                 label: 'Net result',
                 color: 'rgba(0,0,0,0.7)',
                 key: 'netChange',
-                format: value => `${numberFormat(value / 1000000)} km²`,
+                format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}`,
                 bulletType: 'bar'
               }
             ]}
