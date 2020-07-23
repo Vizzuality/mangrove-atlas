@@ -10,15 +10,13 @@ import styles from './style.module.scss';
 const NavMenu = ({ fixedHeader }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem('modal');
-  const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
-  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : false);
-  const [welcomeContent, toggleMessage] = useState(modalStatus !== null ? modalStatusBoolean : false);
+  const [isOpen, toggleModal] = useState(modalStatus === null);
+  const [welcomeContent, toggleMessage] = useState(modalStatus === null);
   const [aboutContent, toggleContent] = useState(false);
 
   const handleClick = () => {
     myStorage.setItem('modal', false);
     toggleMessage(false);
-    toggleContent(false);
     toggleModal(!isOpen);
   };
 
@@ -35,11 +33,11 @@ const NavMenu = ({ fixedHeader }) => {
       <button type="button" onClick={handleClick} />
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => toggleModal(false)}
+        onRequestClose={handleClick}
       >
         <div className={styles.modalContent}>
 
-          {welcomeContent && isOpen && (
+          {welcomeContent && (
             <section className={styles.introModalContent}>
               <h3>Welcome to Global Mangrove Watch </h3>
               <h4>Monitoring to catalyse the action needed to protect and restore mangroves</h4>
@@ -48,7 +46,7 @@ const NavMenu = ({ fixedHeader }) => {
                 data and tools for monitoring mangroves necessary for this. It gives universal
                 access to near real-time information on where and what changes there are to mangroves across the world.</p>
 
-              <p>Close this message to continue or find out more about Global Mangrove Watch</p> <button type="button" onClick={handleContent()}>here.</button>
+              <p>Close this message to continue or find out more about Global Mangrove Watch <button type="button" onClick={handleContent}>here.</button></p>
               <a className={styles.welcomeLink} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Visit Global Mangrove Alliance website</a>
               <HotspotsList />
             </section>

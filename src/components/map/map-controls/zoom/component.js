@@ -43,8 +43,8 @@ class ZoomControl extends PureComponent {
       [className]: !!className
     });
 
-    const zoomInClass = classnames('zoom-control--btn', { '-disabled': zoom >= maxZoom });
-    const zoomOutClass = classnames('zoom-control--btn', { '-disabled': zoom <= minZoom });
+    const zoomInClass = classnames('zoom-control--btn','zoom-in', { '-disabled': zoom >= maxZoom });
+    const zoomOutClass = classnames('zoom-control--btn', 'zoom-out', { '-disabled': zoom <= minZoom });
 
     return (
       <div className={classNames}>

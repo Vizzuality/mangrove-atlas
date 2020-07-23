@@ -283,12 +283,12 @@ class Map extends Component {
           <MapFunctions />
           <PopupManager />
         </ReactMapGL>
-        {/* <MapControls>
+        <MapControls>
           <ZoomControl
             viewport={viewport}
             onClick={onZoomChange}
           />
-        </MapControls> */}
+        </MapControls>
       </div>
     );
   }
