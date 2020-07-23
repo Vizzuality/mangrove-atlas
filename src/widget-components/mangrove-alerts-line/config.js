@@ -70,7 +70,7 @@ const getStops = () => {
 };
 
 const getData = (data, year) => sortBy(data
-  .filter(d => new Date(d.date.value).getFullYear() === year)
+  .filter(d => new Date(d.date.value).getFullYear() === year && d.date.value >= '2020-04-01')
   .map((d) => {
     const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
 
@@ -117,7 +117,8 @@ const getDates = data => sortBy(data
       label: `${month}, ${year}`,
       value: d.date.value
     }
-  }),
+  })
+  .filter(m => m > '2020-04-01' ),
 ['date']);
 
 

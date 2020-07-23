@@ -26,7 +26,7 @@ const geojsons = [
     id: 'alerts',
     source: {
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-01-01&end_date=2020-12-31{{locationId}}'
+      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
     },
     layers: [
       {
@@ -51,7 +51,7 @@ const geojsons = [
             0,
             2,
             9,
-            15
+            20
           ],
           'heatmap-color': [
             'interpolate',
@@ -101,7 +101,7 @@ const geojsons = [
             0,
             2,
             9,
-            19
+            20
           ],
           'heatmap-opacity': [
             'interpolate',
@@ -110,7 +110,7 @@ const geojsons = [
             3,
             5,
             6,
-            15
+            20
           ]
         }
       },
