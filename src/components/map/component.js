@@ -208,7 +208,7 @@ class Map extends Component {
       onPopupClose,
       ...mapboxProps
     } = this.props;
-    const { viewport, loaded, flying } = this.state;
+    const { loaded, flying, viewport } = this.state;
     const ms = { ...mapStyle };
 
     const onClickHandler = (e) => {
@@ -286,7 +286,7 @@ class Map extends Component {
         {/* <MapControls>
           <ZoomControl
             viewport={viewport}
-            onClick={onZoomChange}
+            onClick={this.onZoomChange}
           />
         </MapControls> */}
       </div>
