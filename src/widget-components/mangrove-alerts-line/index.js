@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
   locationsList: state.locations.list,
   ui: state.widgets.ui.alerts || {
     alerts: {
-      startDate: '2020-01-01',
-      endDate: '2020-02-01',
+      startDate: '2020-04-01',
+      endDate: '2020-05-01',
       year: 2020
     }
   }
