@@ -16,21 +16,20 @@ const MangroveAlertsLine = ({
   fetchAlerts,
   ...props
 }) => {
-  const { year = 2020, startDate = 2, endDate = 5 } = ui;
+  const { year = 2020, startDate = '2020-01-01', endDate = '2020-02-01' } = ui;
+
   useEffect(() => {
     if (currentId) {
       const currentLocation = locationsList.find(location => location.iso === currentId);
       const { id: location_id } = currentLocation;
-      fetchAlerts({ location_id, year });
-    } else { fetchAlerts({ year }); }
+      fetchAlerts({ location_id, start_date: startDate, end_date: endDate });
+    } else { fetchAlerts({ start_date: startDate, end_date: endDate }); }
   }, [year, currentId]);
 
   if (!data || data.length <= 0) {
     return null;
   }
-
-  const { chartData, chartConfig, total, monthsOptions } = config.parse(data, startDate, endDate, year);
-
+  const { chartData, chartConfig, total, dateOptions, downloadData } = config.parse(data, startDate, endDate, year);
   if (chartData.length <= 0) {
     return null;
   }
@@ -42,33 +41,11 @@ const MangroveAlertsLine = ({
       }
     });
   };
-console.log(monthsOptions)
-  // Just showing 2020 for now (client's request)
-  const yearSelected = 2020;
-  // const yearOptions = [
-  //   { label: 2020, value: 2020 },
-  //   { label: 2019, value: 2019 }
-  // ];
-
-  const monthOptions = [
-    { label: 'January', value: 1 },
-    { label: 'February', value: 2 },
-    { label: 'March', value: 3 },
-    { label: 'April', value: 4 },
-    { label: 'May', value: 5 },
-    { label: 'June', value: 6 },
-    { label: 'July', value: 7 },
-    { label: 'August', value: 8 },
-    { label: 'September', value: 9 },
-    { label: 'October', value: 10 },
-    { label: 'November', value: 11 },
-    { label: 'December', value: 12 },
-  ];
 
   const startDateSelect = (
     <Select
       value={startDate}
-      options={monthOptions}
+      options={dateOptions}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
         || option.value === startDate}
       onChange={value => changeDate('startDate', value)}
@@ -78,25 +55,16 @@ console.log(monthsOptions)
   const endDateSelect = (
     <Select
       value={endDate}
-      options={monthOptions}
+      options={dateOptions}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
         || option.value === endDate}
       onChange={value => changeDate('endDate', value)}
     />
   );
-
-  // const yearSelect = (
-  //   <Select
-  //     value={year}
-  //     options={yearOptions}
-  //     onChange={value => changeDate('year', value)}
-  //   />
-  // );
-
   const sentence = (
     <>
       There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
-      &nbsp;and {endDateSelect} in <strong>{yearSelected}</strong>.
+      &nbsp;and {endDateSelect}.
     </>
   );
 
@@ -108,6 +76,7 @@ console.log(monthsOptions)
   return (
     <ChartWidget
       name={name}
+      downloadData={downloadData}
       data={chartData}
       slug={slug}
       filename={slug}
@@ -115,8 +84,8 @@ console.log(monthsOptions)
       sentence={sentence}
       chartData={chartRData}
       onBrushEnd={({ startIndex, endIndex }) => {
-        changeDate('startDate', new Date(chartData[startIndex].date.value).getMonth() + 1);
-        changeDate('endDate', new Date(chartData[endIndex].date.value).getMonth() + 1);
+        changeDate('startDate', chartData[startIndex].date.value);
+        changeDate('endDate', chartData[endIndex].date.value);
       }}
       {...props}
     />

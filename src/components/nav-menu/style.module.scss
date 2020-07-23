@@ -25,7 +25,7 @@
   left: 20px;
 }
 
-.fixefNavMenu {
+.fixedNavMenu {
   position: relative;
 }
 
@@ -49,6 +49,14 @@
       text-decoration: none;
       @include medium-text;
       line-height: 40px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      display: inline-block;
     }
   }
 

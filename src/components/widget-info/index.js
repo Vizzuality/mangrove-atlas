@@ -5,6 +5,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isOpened: state.widgets.isOpened,
+  current: state.locations.current.iso || state.locations.current.id,
+  locationsList: state.locations.list
 });
 
 const mapDispatchToProps = {

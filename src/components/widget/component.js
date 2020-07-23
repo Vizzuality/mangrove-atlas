@@ -14,6 +14,7 @@ import styles from './style.module.scss';
 function Widget({
   children,
   data,
+  downloadData,
   name,
   slug,
   filename,
@@ -100,7 +101,7 @@ function Widget({
       </div>
 
       {!isLocationsModal
-        && <WidgetInfo data={data} filename={filename} />
+        && <WidgetInfo data={data} filename={filename} downloadData={downloadData} />
       }
     </div>
   );

@@ -187,7 +187,7 @@ export const CONFIG = {
               { color: '#A6CB10', value: 'Gain' }
             ];
 
-            return <WidgetLegend widgetSpecific="activity" direction="vertical" groups={{ labels }} position="left" />;
+            return <WidgetLegend widgetSpecific="activity" groups={{ labels }} position="left" />;
           }
         },
         cartesianGrid: {
