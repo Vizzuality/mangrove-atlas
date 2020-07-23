@@ -122,11 +122,11 @@ export const MapContainer = ({
       >
         {() => (
           <div className={styles.navigation}>
-            {browser.name !== 'Safari' && (
+            {/* {browser.name !== 'Safari' && (
               <MediaQuery minWidth={breakpoints.lg + 1}>
                 <FullscreenControl className={styles.fullscreen} />
               </MediaQuery>
-            )}
+            )} */}
             <MediaQuery minWidth={breakpoints.sm}>
               <NavigationControl
                 captureClick

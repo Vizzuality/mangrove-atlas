@@ -3,11 +3,14 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { InteractiveMap as ReactMapGL, Popup, FlyToInterpolator, TRANSITION_EVENTS } from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project';
+
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import { easeCubic } from 'd3-ease';
 
 import MapPopupHotspots from 'components/map-popup-hotspots';
+import MapControls from './map-controls';
+import ZoomControl from './map-controls/zoom';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -72,9 +75,9 @@ class Map extends Component {
     touchZoom: true,
     touchRotate: true,
     doubleClickZoom: true,
-    onViewportChange: () => {},
-    onLoad: () => {},
-    onClick: () => {}
+    onViewportChange: () => { },
+    onLoad: () => { },
+    onClick: () => { }
   }
 
   state = {
@@ -128,6 +131,13 @@ class Map extends Component {
     this.setState({ viewport: v });
     onViewportChange(v);
   }
+
+
+  onZoomChange = (newViewport) => {
+    const { onViewportChange } = this.props;
+    this.setState({ viewport: newViewport });
+    onViewportChange(newViewport);
+  };
 
   onResize = (v) => {
     const { onViewportChange } = this.props;
@@ -192,6 +202,8 @@ class Map extends Component {
       onClick,
       onMouseEnter,
       onMouseLeave,
+      onViewportChange,
+      onZoomChange,
       popup,
       onPopupClose,
       ...mapboxProps
@@ -207,26 +219,6 @@ class Map extends Component {
       });
     };
 
-    // function applyFilters() {
-    //   const alertsFilter = filters.find(f => f.id === 'alerts-style');
-
-    //   if (alertsFilter) {
-    //     const startTimestamp = (new Date(alertsFilter.startDate)).valueOf();
-    //     const endTimestamp = (new Date(alertsFilter.endDate)).valueOf();
-    //     const filteredAlerts = {
-    //       ...alerts,
-    //       features: alerts.features.filter(feat => (
-    //         feat.properties.start_date >= startTimestamp
-    //         && feat.properties.end_date <= endTimestamp
-    //       ))
-    //     };
-    //     ms.sources.alerts = {
-    //       type: 'geojson',
-    //       data: filteredAlerts,
-    //       cluster: true
-    //     };
-    //   }
-    // }
 
     const MapFunctions = () => {
       if (loaded && Boolean(this.map)) {
@@ -291,6 +283,12 @@ class Map extends Component {
           <MapFunctions />
           <PopupManager />
         </ReactMapGL>
+        {/* <MapControls>
+          <ZoomControl
+            viewport={viewport}
+            onClick={onZoomChange}
+          />
+        </MapControls> */}
       </div>
     );
   }

@@ -5,6 +5,7 @@ export default {
     height: '100%',
     zoom: 2,
     minZoom: 2,
+    maxZoom: 30,
     latitude: 20,
     longitude: 0,
   },
