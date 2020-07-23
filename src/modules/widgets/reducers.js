@@ -13,6 +13,8 @@ import {
   resetUi
 } from './actions';
 
+import initialState from './initial-state';
+
 export default {
   [fetchRequested]: state => ({
     ...state,
@@ -83,5 +85,5 @@ export default {
       }
     }
   }),
-  [resetUi]: state => ({ ...state, ui: {} })
+  [resetUi]: state => ({ ...state, ui: initialState.ui })
 };

@@ -23,6 +23,21 @@ const months = [
   { label: 'December', value: 12 },
 ];
 
+const monthsConversion = {
+  January: 'J',
+  February: 'F',
+  March: 'M',
+  April: 'A',
+  May: 'M',
+  June: 'J',
+  July: 'J',
+  August: 'A',
+  September: 'S',
+  October: 'O',
+  November: 'N',
+  December: 'D'
+};
+
 const getStops = () => {
   const colorSchema = [
     '#FFC200',
@@ -44,20 +59,6 @@ const getData = (data, year) => sortBy(data
   .filter(d => new Date(d.date.value).getFullYear() === year)
   .map((d) => {
     const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-    const monthsConversion = {
-      January: 'J',
-      February: 'F',
-      March: 'M',
-      April: 'A',
-      May: 'M',
-      June: 'J',
-      July: 'J',
-      August: 'A',
-      September: 'S',
-      October: 'O',
-      November: 'N',
-      December: 'D'
-    };
 
     return (
       {
@@ -70,34 +71,40 @@ const getData = (data, year) => sortBy(data
   }),
 ['month']);
 
-const getMonths = (data, year) => sortBy(data
-  .filter(d => new Date(d.date.value).getFullYear() === year)
+const getDownloadData = data => sortBy(data
   .map((d) => {
-    const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-    console.log(date)
-    const monthsConversion = {
-      January: 'January',
-      February: 2,
-      March: 3,
-      April: 4,
-      May: 5,
-      June: 6,
-      July: 7,
-      August: 8,
-      September: 9,
-      October: 10,
-      November: 11,
-      December: 12
-    };
-
-    return (
-      {
-        value: date.value,
-        label: monthsConversion[date.value],
-      }
-    );
+    return {
+      date: d.date.value,
+      alerts: d.count
+    }
   }),
-['month']);
+['date']);
+
+const getDates = data => sortBy(data
+  .map(d => {
+    const monthsConversion = {
+      0: 'January',
+      1: 'February',
+      2: 'March',
+      3: 'April',
+      4: 'May',
+      5: 'June',
+      6: 'July',
+      8: 'August',
+      9: 'September',
+      10: 'October',
+      11: 'November',
+      12: 'December'
+    };
+    const year = new Date(d.date.value).getFullYear();
+    const month = monthsConversion[new Date(d.date.value).getMonth()];
+
+    return {
+      label: `${month}, ${year}`,
+      value: d.date.value
+    }
+  }),
+['date']);
 
 
 const getTotal = data => data.reduce((previous, current) => current.count + previous, 0);
@@ -105,15 +112,19 @@ const getTotal = data => data.reduce((previous, current) => current.count + prev
 export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
-    const startIndex = chartData.findIndex(d => d.month === startDate);
-    const endIndex = chartData.findIndex(d => d.month === endDate);
-    const monthsOptions = getMonths(data, year);
+    const downloadData = getDownloadData(data, year);
+    const startIndex = chartData.findIndex(d => d.date.value === startDate);
+    const endIndex = chartData.findIndex(d => d.date.value === endDate);
+    const monthsOptions = getDates(data, year);
+    const dateOptions = getDates(data);
     const dataFiltered = data
-      .filter(d => endDate >= new Date(d.date.value).getMonth() + 1 && new Date(d.date.value).getMonth() + 1 >= startDate);
+      .filter(d => endDate >= d.date.value && d.date.value >= startDate);
 
     return {
       chartData,
       monthsOptions,
+      dateOptions,
+      downloadData,
       total: numberFormat(getTotal(dataFiltered)),
       chartConfig: {
         height: 250,
@@ -210,11 +221,18 @@ export const CONFIG = {
           interval: 0,
           orientation: 'right',
           value: 'alerts',
-          label: {
-            value: 'Alerts 2020',
-            position: 'top',
-            offset: 50,
-            fontSize: 7,
+          label: ({ viewBox }) => {
+            const { x, y } = viewBox;
+            return (
+              <g>
+                <text x={x + 20} y={y - 70} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
+                  <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="12">Alerts</tspan>
+                </text>
+                <text x={x + 20} y={y - 50} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
+                  <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="12">2020</tspan>
+                </text>
+              </g>
+            );
           },
           type: 'number'
         },

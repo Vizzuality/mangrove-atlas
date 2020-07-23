@@ -8,48 +8,9 @@ import { format } from 'd3-format';
 // components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
-import WidgetCustomLabel from 'components/widget-custom-label';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
-
-const categoriesData = {
-  '0–50': {
-    color: '#5C4A3D',
-    label: '0 – 50'
-  },
-  '50–100': {
-    color: '#933A06',
-    label: '50 – 100'
-  },
-  '100–150': {
-    color: '#B84E17',
-    label: '100 – 150'
-  },
-  '150–200': {
-    color: '#E68518',
-    label: '150 – 200'
-  },
-  '200–250': {
-    color: '#EEB66B',
-    label: '200 – 250'
-  }
-};
-
-const widgetMeta = ({ list, metadata }) => {
-  if (list && list.length && metadata) {
-    return {
-      years: list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear()),
-      total: metadata.location_coast_length_m
-    };
-  }
-
-  return {
-    years: [],
-    total: null
-  };
-};
-
 
 const getData = (data) => {
   if (!data || !data.length) return null;
@@ -120,13 +81,13 @@ export const CONFIG = {
                 const { cx, cy } = viewBox;
                 return (
                   <g>
-                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
                     </text>
-                    <text x={cx} y={cy} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
                     </text>
-                    <text x={cx} y={cy + 30} className="recharts-text recharts-label" textAnchor="middle" dominantBaseline="central">
+                    <text x={cx} y={cy + 30} className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e</tspan>
                     </text>
                   </g>
