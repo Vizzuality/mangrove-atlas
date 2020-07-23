@@ -8,22 +8,25 @@ import styles from './styles.module.scss';
 class DownloadLink extends PureComponent {
   static propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({})),
-    filename: PropTypes.string
+    filename: PropTypes.string,
+    headers: PropTypes.string,
   }
 
   static defaultProps = {
     data: null,
-    filename: null
+    filename: null,
+    headers: ''
   }
 
   render() {
-    const { data, filename } = this.props;
+    const { data, filename, headers } = this.props;
     const csvData = jsonToCSV(data);
     return (
       <CSVLink
         className={styles.link}
         data={csvData}
-        filename={`${filename}-${Date.now()}}.csv`}
+        headers={headers}
+        filename={`${filename}-${Date.now()}.csv`}
       >
         <img src={ArrowDown} className={styles.icon} alt="info-icon" />
         Download data

@@ -112,7 +112,7 @@
       "layersIds": ["alerts-style"]
     },
     {
-      "name": "Mangrove alerts new",
+      "name": "Mangrove alerts",
       "slug": "mangrove_alerts_line",
       "layersIds": ["alerts-heat"]
     },

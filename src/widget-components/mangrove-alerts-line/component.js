@@ -29,8 +29,7 @@ const MangroveAlertsLine = ({
   if (!data || data.length <= 0) {
     return null;
   }
-  const { chartData, chartConfig, total, dateOptions } = config.parse(data, startDate, endDate, year);
-
+  const { chartData, chartConfig, total, dateOptions, downloadData } = config.parse(data, startDate, endDate, year);
   if (chartData.length <= 0) {
     return null;
   }
@@ -77,6 +76,7 @@ const MangroveAlertsLine = ({
   return (
     <ChartWidget
       name={name}
+      downloadData={downloadData}
       data={chartData}
       slug={slug}
       filename={slug}

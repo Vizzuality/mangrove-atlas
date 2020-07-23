@@ -23,6 +23,21 @@ const months = [
   { label: 'December', value: 12 },
 ];
 
+const monthsConversion = {
+  January: 'J',
+  February: 'F',
+  March: 'M',
+  April: 'A',
+  May: 'M',
+  June: 'J',
+  July: 'J',
+  August: 'A',
+  September: 'S',
+  October: 'O',
+  November: 'N',
+  December: 'D'
+};
+
 const getStops = () => {
   const colorSchema = [
     '#FFC200',
@@ -44,20 +59,6 @@ const getData = (data, year) => sortBy(data
   .filter(d => new Date(d.date.value).getFullYear() === year)
   .map((d) => {
     const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-    const monthsConversion = {
-      January: 'J',
-      February: 'F',
-      March: 'M',
-      April: 'A',
-      May: 'M',
-      June: 'J',
-      July: 'J',
-      August: 'A',
-      September: 'S',
-      October: 'O',
-      November: 'N',
-      December: 'D'
-    };
 
     return (
       {
@@ -69,6 +70,15 @@ const getData = (data, year) => sortBy(data
     );
   }),
 ['month']);
+
+const getDownloadData = data => sortBy(data
+  .map((d) => {
+    return {
+      date: d.date.value,
+      alerts: d.count
+    }
+  }),
+['date']);
 
 const getDates = data => sortBy(data
   .map(d => {
@@ -102,6 +112,7 @@ const getTotal = data => data.reduce((previous, current) => current.count + prev
 export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
+    const downloadData = getDownloadData(data, year);
     const startIndex = chartData.findIndex(d => d.date.value === startDate);
     const endIndex = chartData.findIndex(d => d.date.value === endDate);
     const monthsOptions = getDates(data, year);
@@ -113,6 +124,7 @@ export const CONFIG = {
       chartData,
       monthsOptions,
       dateOptions,
+      downloadData,
       total: numberFormat(getTotal(dataFiltered)),
       chartConfig: {
         height: 250,
@@ -209,11 +221,18 @@ export const CONFIG = {
           interval: 0,
           orientation: 'right',
           value: 'alerts',
-          label: {
-            value: 'Alerts 2020',
-            position: 'top',
-            offset: 50,
-            fontSize: 7,
+          label: ({ viewBox }) => {
+            const { x, y } = viewBox;
+            return (
+              <g>
+                <text x={x + 20} y={y - 70} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
+                  <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="12">Alerts</tspan>
+                </text>
+                <text x={x + 20} y={y - 50} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
+                  <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="12">2020</tspan>
+                </text>
+              </g>
+            );
           },
           type: 'number'
         },

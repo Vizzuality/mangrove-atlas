@@ -66,7 +66,7 @@ function MangroveBiomassPie({
   const sentence = (
     <>
       Mean mangrove aboveground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{coverage} t ha<sup>-1</sup></strong> in <strong>{2016 || yearSelector}</strong>.
+      &nbsp;was <strong>{coverage} t ha</strong> in <strong>{2016 || yearSelector}</strong>.
     </>
   );
 
