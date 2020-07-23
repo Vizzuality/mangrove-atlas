@@ -32,7 +32,7 @@ const scopeKeyMap = new Map([
   ['long', 'LT_advice']
 ]);
 
-const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
+const widgetData = ({ list }, { scope }) => list.map((d) => {
   const year = new Date(d.date).getFullYear();
 
   if (!d.con_hotspot_summary_km2) return null;
