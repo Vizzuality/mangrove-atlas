@@ -16,7 +16,7 @@ const MangroveAlertsLine = ({
   fetchAlerts,
   ...props
 }) => {
-  const { year = 2020, startDate = '2020-01-01', endDate = '2020-02-01' } = ui;
+  const { year = 2020, startDate = '2020-04-01', endDate = '2020-05-01' } = ui;
 
   useEffect(() => {
     if (currentId) {

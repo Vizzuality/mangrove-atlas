@@ -5,11 +5,11 @@ export const WDPA = {
   },
   RUFIKI_MAFIA_KILWA: {
     areaName: 'Rufiji-Mafia-Kilwa',
-    id: '1036'
+    id: '1299'
   },
   MAFIA_ISLAND: {
     areaName: 'Mafia Island',
-    id: '1299'
+    id: '1285'
   }
 };
 
