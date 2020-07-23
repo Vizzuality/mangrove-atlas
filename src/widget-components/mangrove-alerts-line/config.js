@@ -118,7 +118,7 @@ const getDates = data => sortBy(data
       value: d.date.value
     }
   })
-  .filter(m => m > '2020-04-01' ),
+  .filter(m => m.value >= '2020-04-01'),
 ['date']);
 
 
