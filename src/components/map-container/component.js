@@ -127,13 +127,13 @@ export const MapContainer = ({
                 <FullscreenControl className={styles.fullscreen} />
               </MediaQuery>
             )} */}
-            {/* <MediaQuery minWidth={breakpoints.sm}>
+            <MediaQuery minWidth={breakpoints.sm}>
               <NavigationControl
                 captureClick
                 captureDoubleClick
                 className={styles.zoomControls}
               />
-            </MediaQuery> */}
+            </MediaQuery>
           </div>
         )
         }
