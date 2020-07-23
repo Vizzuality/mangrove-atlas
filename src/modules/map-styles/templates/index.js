@@ -14,13 +14,13 @@ const extendedTemplate = {
     alerts: {
       type: 'geojson',
       data: alerts,
-      cluster: true
     }
   }
 };
 
 export default {
   template: extendedTemplate,
+  alerts,
   basemaps: {
     light,
     dark,

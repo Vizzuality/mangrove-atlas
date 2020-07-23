@@ -5,7 +5,6 @@ import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
-import looseJsonParse from 'utils/loose-json-parse';
 
 const numberFormat = format(',.3r');
 
@@ -23,13 +22,14 @@ const chunk = (array, size) => {
 };
 
 
-const getBars = (barValues) => {
+const getData = (barValues) => {
   if (!barValues) return null;
-  const barsData = (Object.values(looseJsonParse(barValues)));
+  const barsData = barValues.map(value => value[1]);
   const chnkedData = chunk(barsData, 5);
   let formattedData = chnkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
+
   const total = barsData.reduce((previous, current) => current + previous);
   formattedData = formattedData.map(data => data / total);
   return formattedData;
@@ -43,18 +43,17 @@ const histogramData = (data) => {
   const histogram = data.map(d => (
     {
       year: moment(d.date).year(),
-      '0–5': getBars(d.hmax_hist_m)[0] * 100,
-      '5–10': getBars(d.hmax_hist_m)[1] * 100,
-      '10–15': getBars(d.hmax_hist_m)[2] * 100,
-      '15–20': getBars(d.hmax_hist_m)[3] * 100,
-      '20–25': getBars(d.hmax_hist_m)[4] * 100,
+      '0–5 m': getData(d.hmax_hist_m)[0] * 100,
+      '5–10 m': getData(d.hmax_hist_m)[1] * 100,
+      '10–15 m': getData(d.hmax_hist_m)[2] * 100,
+      '15–20 m': getData(d.hmax_hist_m)[3] * 100,
+      '20–25 m': getData(d.hmax_hist_m)[4] * 100,
     }
   ));
   return histogram;
 };
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
-
 const heightCoverage = (data, date) => {
   const yearData = data.find(d => d.date.includes(date));
   if (!yearData) return null;
@@ -69,7 +68,6 @@ export const CONFIG = {
   parse: (data, date) => {
     {
       const dataFiltered = filterData(data);
-
       return {
 
         chartData: histogramData(dataFiltered),
@@ -87,37 +85,42 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0–5':
+              '0–5 m':
               {
                 stackId: 'bar',
+                barSize: 60,
                 fill: '#C9BB42',
                 stroke: '#C9BB42',
                 isAnimationActive: false
               },
-              '5–10':
+              '5–10 m':
               {
                 stackId: 'bar',
+                barSize: 60,
                 fill: '#8BA205',
                 stroke: '#8BA205',
                 isAnimationActive: false
               },
-              '10–15':
+              '10–15 m':
               {
                 stackId: 'bar',
+                barSize: 60,
                 fill: '#428710',
                 stroke: '#428710',
                 isAnimationActive: false
               },
-              '15–20':
+              '15–20 m':
               {
                 stackId: 'bar',
+                barSize: 60,
                 fill: '#0A6624',
                 stroke: '#0A6624',
                 isAnimationActive: false
               },
-              '20–25':
+              '20–25 m':
               {
                 stackId: 'bar',
+                barSize: 60,
                 fill: '#103C1F',
                 stroke: '#103C1F',
                 isAnimationActive: false
@@ -135,7 +138,7 @@ export const CONFIG = {
           xAxis: {
             tick: {
               fontSize: 12,
-              lineHeight: 20,
+              lineheight: 20,
               fill: 'rgba(0, 0, 0, 0.54)'
             },
             ticks: metaData(data),
@@ -168,7 +171,7 @@ export const CONFIG = {
             position: 'relative',
             content: (properties) => {
               const { payload } = properties;
-              const groups = groupBy(payload, p => p.payload);
+              const groups = groupBy(payload, p => p.payload.label);
               return <WidgetLegend type="height" groups={groups} />;
             }
           },
@@ -183,11 +186,11 @@ export const CONFIG = {
                   flexDirection: 'column'
                 }}
                 settings={[
-                  { label: '0–5 m', color: '#C9BB42', key: '0–5', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '5–10 m', color: '#8BA205', key: '5–10', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '10–15 m', color: '#428710', key: '10–15', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '15–20 m', color: '#0A6624', key: '15–20', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '20–25 m', color: '#103C1F', key: '20–25', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '0–5 m', color: '#C9BB42', key: '0–5 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '5–10 m', color: '#8BA205', key: '5–10 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '10–15 m', color: '#428710', key: '10–15 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '15–20 m', color: '#0A6624', key: '15–20 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
+                  { label: '20–25 m', color: '#103C1F', key: '20–25 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
                 ].reverse()}
                 label={{ key: 'name' }}
               />

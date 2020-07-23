@@ -8,6 +8,7 @@ import styles from './style.module.scss';
 
 function ChartWidget({
   sentence,
+  component,
   chartData: {
     data,
     config
@@ -15,27 +16,29 @@ function ChartWidget({
   ...props
 }) {
   return (
-    <Widget {...props}>
+    <Widget className={styles.widget} {...props}>
       <div className={styles.widget_template}>
-        <div className={styles.sentence}>
+        <div className={styles.sentence} key={Date.now()}>
           {sentence}
         </div>
         <Chart
+          {...props}
           data={data}
           config={config}
         />
+        {component}
       </div>
     </Widget>
   );
 }
 
 Widget.propTypes = {
-  sentence: PropTypes.string,
+  sentence: PropTypes.node,
   chartData: PropTypes.shape({})
 };
 
 Widget.defaultProps = {
-  sentence: '',
+  sentence: null,
   chartData: {}
 };
 

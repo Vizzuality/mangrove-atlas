@@ -1,85 +1,90 @@
 @import 'styles/vars';
 
-.hotspotsList {
-  display: flex;
-  align-items: stretch;
-  margin-top: 30px;
-  justify-content: space-between;
+.widget {
+  width: 100%;
 
-  div:not(:last-child) {
-    margin-bottom: 10px;
-  }
-
-  a {
-    color: $white;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  &.collapsed {
-    margin-top: 0px;
-    @media screen and (max-width: map-get($breakpoints, sm)) {
-      margin-top: -20px;
-      padding-top: 40px;
-    }
-  }
-
-  .card {
+  .hotspotsList {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    flex: 1 1;
-    min-height: 200px;
-    padding: 20px 30px;
-    border-radius: 20px;
-    width: auto;
-    color: $white;
-    text-align: center;
-    line-height: 20px;
+    align-items: stretch;
+    margin-top: 30px;
+    justify-content: space-between;
 
-    @media screen and (max-width: map-get($breakpoints, sm)) {
-      padding: 20px 15px;
-      min-height: 150px;
+    div:not(:last-child) {
+      margin-bottom: 10px;
     }
 
-    .cardInfo {
-      display: inline;
-      min-width: 120px;
+    a {
+      color: $white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &.collapsed {
+      margin-top: 0px;
+
       @media screen and (max-width: map-get($breakpoints, sm)) {
-        min-width: 100px;
+        margin-top: -20px;
+        padding-top: 40px;
+      }
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex: 1 1;
+      min-height: 200px;
+      padding: 20px 30px;
+      border-radius: 20px;
+      width: auto;
+      color: $white;
+      text-align: center;
+      line-height: 20px;
+
+      @media screen and (max-width: map-get($breakpoints, sm)) {
+        padding: 20px 15px;
+        min-height: 150px;
       }
 
-      h3 {
-        margin: 0;
-        font-weight: bold;
+      .cardInfo {
+        display: inline;
+        min-width: 120px;
+        @media screen and (max-width: map-get($breakpoints, sm)) {
+          min-width: 100px;
+        }
 
-        &.title {
-          margin-bottom: 30px;
+        h3 {
+          margin: 0;
+          font-weight: bold;
+          padding-bottom: 10px;
+
+          &.title {
+            margin-bottom: 30px;
+          }
+        }
+
+        p {
+          font-weight: normal;
+          margin: 5px;
         }
       }
 
-      p {
-        font-weight: normal;
-        margin: 5px;
+      &:first-child {
+        margin-right: 10px;
+      }
+
+      &.active {
+        border-color: $primary;
       }
     }
-
-    &:first-child {
-      margin-right: 10px;
-    }
-
-    &.active {
-      border-color: $primary;
+    .hidden {
+      display: none;
     }
   }
-  .hidden {
+
+  @media print {
     display: none;
   }
 }
 
-@media print {
-  .widgetWrapper {
-    display: none;
-  }
-}

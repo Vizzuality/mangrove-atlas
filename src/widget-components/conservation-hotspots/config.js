@@ -2,7 +2,6 @@ import React from 'react';
 import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
-import looseJsonParse from 'utils/loose-json-parse';
 
 const categoriesData = {
   'Benefits From Conservation': {
@@ -39,7 +38,7 @@ const widgetData = ({ list }, { scope }) => list.flatMap((d) => {
   if (!d.con_hotspot_summary_km2) return null;
 
   const hotSpotData = (typeof d.con_hotspot_summary_km2 === 'string')
-    ? looseJsonParse(d.con_hotspot_summary_km2)[scopeKeyMap.get(scope)]
+    ? d.con_hotspot_summary_km2[scopeKeyMap.get(scope)]
     : d.con_hotspot_summary_km2;
 
   const total = Object.values(hotSpotData).reduce((previous, current) => current + previous);
@@ -86,7 +85,7 @@ export const CONFIG = {
           y: {
             cx: '50%',
             cy: '50%',
-            paddingAngle: 3,
+            paddingAngle: 2,
             dataKey: 'percentage',
             nameKey: 'label',
             innerRadius: '60%',

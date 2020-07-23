@@ -27,7 +27,7 @@ export const MapContainer = ({
   mapStyle,
   bounds,
   goToCountry,
-  goToAOI
+  goToAOI,
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
@@ -128,7 +128,11 @@ export const MapContainer = ({
               </MediaQuery>
             )}
             <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl className={styles.zoomControls} />
+              <NavigationControl
+                captureClick
+                captureDoubleClick
+                className={styles.zoomControls}
+              />
             </MediaQuery>
           </div>
         )

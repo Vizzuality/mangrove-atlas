@@ -38,14 +38,15 @@
   .sidebar {
     max-width: 100%;
     padding: 30px;
-    // padding: 90px 83px 60px 83px;
 
-    .actionBar {
-      display: none;
-    }
+    .header {
+      position: absolute;
+      top: 0px;
+      width: 100vw;
 
-    &.securityMargin {
-      margin-bottom: 0;
+      .actionBar {
+        display: none;
+      }
     }
   }
 }

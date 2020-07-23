@@ -5,11 +5,12 @@
         "location_type": "worldwide",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
+          "mangrove_alerts_line",
           "mangrove_activity"
         ]
       },
@@ -17,34 +18,36 @@
         "location_type": "country",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_alerts_line"
         ]
       },
       {
         "location_type": "wdpa",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_alerts_line"
         ]
       },
       {
         "location_type": "aoi",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_alerts_line"
         ]
       }
     ],
@@ -53,12 +56,12 @@
         "location_id": "25",
         "widgetsSlugs": [
           "highlighted_places",
-          "mangrove_coverage",
+          "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts",
+          "mangrove_biomass_pie",
+          "mangrove_blue_carbon",
           "mangrove_height",
-          "mangrove_biomass",
-          "conservation_hotspots"
+          "mangrove_alerts_line"
         ]
       }
     ]
@@ -72,27 +75,29 @@
     {
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
-      "isActive": true,
       "layersIds": [
         "coverage-1996-2016"
+      ]
+    },
+    {
+      "name": "Mangrove habitat extent",
+      "slug": "mangrove_extent",
+      "isActive": true,
+      "layersIds": [
+        "extent"
       ]
     },
     {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "layersIds": [
-        "net-change-1996-2016"
+        "net"
       ]
     },
     {
-      "name": "Mangrove activity",
-      "slug": "mangrove_activity",
-      "layersIds": []
-    },
-    {
-      "name": "Mangrove alerts",
-      "slug": "mangrove_alerts",
-      "layersIds": ["alerts-style"]
+      "name": "Mangrove Blue Carbon",
+      "slug": "mangrove_blue_carbon",
+      "layersIds": [ "carbon" ]
     },
     {
       "name": "Mangrove height",
@@ -102,8 +107,25 @@
       ]
     },
     {
+      "name": "Mangrove alerts",
+      "slug": "mangrove_alerts",
+      "layersIds": ["alerts-style"]
+    },
+    {
+      "name": "Mangrove deforestation alerts",
+      "slug": "mangrove_alerts_line",
+      "layersIds": ["alerts-heat"]
+    },
+    {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
+      "layersIds": [
+        "biomass"
+      ]
+    },
+    {
+      "name": "Mangrove biomass",
+      "slug": "mangrove_biomass_pie",
       "layersIds": [
         "biomass"
       ]
@@ -114,18 +136,30 @@
       "layersIds": [
         "cons-hotspots"
       ]
+    },
+    {
+      "name": "Mangrove habitat change",
+      "slug": "mangrove_activity",
+      "layersIds": []
     }
   ],
   "layers": [
     {
-      "name": "Mangrove extent",
+      "name": "Mangrove coverage",
       "id": "coverage-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     },
     {
+      "name": "Mangrove extent",
+      "id": "extent"
+    },
+    {
+      "name": "Mangrove Blue Carbon",
+      "id": "carbon"
+    },
+    {
       "name": "Mangrove change",
-      "id": "net-change-1996-2016",
-      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+      "id": "net"
     },
     {
       "name": "Conservation hotspots",
@@ -141,7 +175,11 @@
     },
     {
       "name": "Mangrove deforestation alerts",
-      "id": "alerts-style"
+      "id": "alerts-heat"
+    },
+    {
+      "name": "Mangrove deforestation alerts",
+      "id": "alerts-point"
     }
   ]
 }

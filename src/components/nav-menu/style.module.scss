@@ -1,0 +1,108 @@
+@import 'styles/vars';
+
+.navMenu, .fixedNavMenu {
+  z-index: 4;
+
+  > button {
+    background-image: url('./menu.svg');
+    height: 72px;
+    width: 72px;
+    cursor: pointer;
+  }
+
+  @media print {
+    display: none;
+  }
+
+  @media screen and (max-width: map-get($breakpoints, sm)) {
+    left: -4px;
+  }
+}
+
+.navMenu {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}
+
+.fixedNavMenu {
+  position: relative;
+}
+
+.modalContent {
+  @include medium-text;
+  height: 100%;
+  position: relative;
+
+  > h3 {
+    @include medium-text;
+    font-size: 30px;
+    margin: 10px 0;
+  }
+
+  section {
+    margin-top: 20px;
+
+    .menuItem {
+      padding: 0;
+      color: $body-color;
+      text-decoration: none;
+      @include medium-text;
+      line-height: 40px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      display: inline-block;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: 40px;
+
+    > a {
+      margin-left: 30px;
+      color: $body-color;
+      text-decoration: none;
+      @include medium-text;
+      line-height: 40px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 45px;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba($black, 0.08);
+    }
+  }
+
+  .welcomeLink {
+    color: $primary;
+    display: block;
+    @include medium-text;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+
+    .logo {
+      width: 130px;
+      padding-right: 20px;
+    }
+  }
+}
+

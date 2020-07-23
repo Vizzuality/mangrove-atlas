@@ -14,6 +14,7 @@
     pointer-events: none;
     overflow: visible;
     z-index: -9;
+
     &.isHidden {
       display: none;
     }
@@ -35,11 +36,22 @@
     z-index: 300;
     width: 100%;
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 
     &.fixed {
       position: fixed;
       top: -110px;
-      max-width: 600px;
+      max-width: 490px;
+
+      .buttonsWrapper {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .buttonsWrapper {
+      display: flex;
     }
   }
 
@@ -63,23 +75,16 @@
     &.fixed {
       font-size: 45px;
     }
+
+    @media print {
+      display: none;
+    }
   }
 
   .searchButton {
-    width: 60px;
+    box-sizing: border-box;
     height: 60px;
-    flex-shrink: 0;
-    margin-right: 20px;
-    border: 0;
-    border-radius: 100%;
-    background: white;
-    text-align: center;
-    cursor: pointer;
-    box-shadow: $box-shadow;
-
-    :global(.svg-inline--fa path) {
-      fill: $primary;
-    }
+    width: 60px;
   }
 
   .printOnly {
@@ -99,7 +104,7 @@
 
     .bg,
     .bgFixed {
-      width: 900px;
+      display: none;
     }
 
     .logo {

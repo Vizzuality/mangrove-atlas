@@ -117,9 +117,9 @@ function MangroveCoverage({
     sentence = (
       <>
         <span>Mangrove forests covered </span>
-        <strong className="notranslate">{ quantity } {unitSelector}</strong><br />
-        <span>of </span> <strong>{ location } </strong>
-        <strong className="notranslate">{ numberFormat(totalCoverage)} km</strong> of coastline<br />
+        <strong className="notranslate">{quantity} {unitSelector}</strong><br />
+        <span>of </span> <strong>{location} </strong>
+        <strong className="notranslate">{numberFormat(totalCoverage)} km</strong> of coastline<br />
         <span>in </span>{yearSelector}.
       </>
     );

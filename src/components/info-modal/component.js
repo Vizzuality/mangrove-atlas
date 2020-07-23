@@ -5,10 +5,8 @@ import Modal from 'components/modal';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import DangerousHTML from 'react-dangerous-html';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LocationsList from 'components/locations-list';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import widgetInfo from './widgetInfo';
+import widgetInfo from 'components/widget-info/constants';
 import styles from './style.module.scss';
 
 class InfoModal extends PureComponent {
@@ -88,7 +86,6 @@ class InfoModal extends PureComponent {
       <Fragment>
         <MediaQuery maxWidth={breakpoints.lg - 1}>
           <Modal
-            className={classnames(styles.location, styles.mobile)}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
           >
@@ -100,7 +97,7 @@ class InfoModal extends PureComponent {
                     // eslint-disable-next-line jsx-a11y/no-autofocus
                     type="text"
                     className={classnames(styles.searchInput, 'notranslate')}
-                    placeholder={currentLocation.name}
+                    placeholder="Type name"
                     onChange={() => this.updateSearch()}
                   />
                 </div>
@@ -114,10 +111,6 @@ class InfoModal extends PureComponent {
                 </div>
               </div>
             )}
-
-            <button type="button" onClick={this.closeModal} className={classnames(styles.closeButton, styles.mobile)}>
-              <FontAwesomeIcon icon={faTimes} size="lg" />
-            </button>
           </Modal>
         </MediaQuery>
         <MediaQuery minWidth={breakpoints.lg}>
@@ -134,7 +127,7 @@ class InfoModal extends PureComponent {
                     autoFocus
                     type="text"
                     className={classnames(styles.searchInput, 'notranslate')}
-                    placeholder={currentLocation.name}
+                    placeholder="Type name"
                     onChange={this.updateSearch}
                   />
                 </div>
@@ -148,10 +141,6 @@ class InfoModal extends PureComponent {
                 </span>
               </div>
             )}
-
-            <button type="button" onClick={this.closeModal} className={styles.closeButton}>
-              <FontAwesomeIcon icon={faTimes} size="lg" />
-            </button>
           </Modal>
         </MediaQuery>
       </Fragment>

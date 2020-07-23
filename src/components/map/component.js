@@ -8,7 +8,6 @@ import isEmpty from 'lodash/isEmpty';
 import { easeCubic } from 'd3-ease';
 
 import MapPopupHotspots from 'components/map-popup-hotspots';
-import alerts from 'modules/map-styles/templates/alerts.json';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -208,26 +207,26 @@ class Map extends Component {
       });
     };
 
-    function applyFilters() {
-      const alertsFilter = filters.find(f => f.id === 'alerts-style');
+    // function applyFilters() {
+    //   const alertsFilter = filters.find(f => f.id === 'alerts-style');
 
-      if (alertsFilter) {
-        const startTimestamp = (new Date(alertsFilter.startDate)).valueOf();
-        const endTimestamp = (new Date(alertsFilter.endDate)).valueOf();
-        const filteredAlerts = {
-          ...alerts,
-          features: alerts.features.filter(feat => (
-            feat.properties.start_date >= startTimestamp
-            && feat.properties.end_date <= endTimestamp
-          ))
-        };
-        ms.sources.alerts = {
-          type: 'geojson',
-          data: filteredAlerts,
-          cluster: true
-        };
-      }
-    }
+    //   if (alertsFilter) {
+    //     const startTimestamp = (new Date(alertsFilter.startDate)).valueOf();
+    //     const endTimestamp = (new Date(alertsFilter.endDate)).valueOf();
+    //     const filteredAlerts = {
+    //       ...alerts,
+    //       features: alerts.features.filter(feat => (
+    //         feat.properties.start_date >= startTimestamp
+    //         && feat.properties.end_date <= endTimestamp
+    //       ))
+    //     };
+    //     ms.sources.alerts = {
+    //       type: 'geojson',
+    //       data: filteredAlerts,
+    //       cluster: true
+    //     };
+    //   }
+    // }
 
     const MapFunctions = () => {
       if (loaded && Boolean(this.map)) {
@@ -250,8 +249,7 @@ class Map extends Component {
         </Popup>
       ) : null);
 
-    applyFilters();
-
+    // applyFilters();
     return (
       <div
         ref={(r) => { this.mapContainer = r; }}

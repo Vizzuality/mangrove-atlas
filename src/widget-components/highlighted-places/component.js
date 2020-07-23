@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Link from 'redux-first-router-link';
-import { format } from 'd3-format';
 
 import Widget from 'components/widget';
 
@@ -12,8 +11,6 @@ import Rufiji from './images/rufiji.jpg';
 import Saloum from './images/saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
 
-const numberFormat = format(',.0f');
-
 const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, name }) => {
   if (!rawData) {
     return null;
@@ -22,7 +19,7 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
   const data = config.parse(rawData);
 
   return (
-    <div className={styles.widgetWrapper}>
+    <div className={styles.widget}>
       <Widget
         name={name}
         data={data}
@@ -48,7 +45,6 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
                 >
                   <span className={styles.cardInfo}>
                     <h3 className="notranslate">{d.name}</h3>
-                    <p><span className="notranslate">{numberFormat(d.coast_length_m / 1000)}</span> <span className="notranslate">{d.unit}</span></p>
                   </span>
                 </div>
               )}
