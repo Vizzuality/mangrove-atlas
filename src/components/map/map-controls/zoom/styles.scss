@@ -5,14 +5,24 @@
 
   .zoom-control--btn {
     cursor: pointer;
-    width: 50px;
-    height: 35px;
-    background: #FFF;
-    fill: black;
-    position: relative;
-    border-top: 1px solid black;
-    border-radius: 0px;
-    box-shadow: 0 0px 2px 0 rgba(0,0,0,0.5);
+    background: white;
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+
+    &.zoom-in {
+      background-image: url('./icons/zoomin.svg') !important;
+      pointer-events: auto;
+    }
+
+    &.zoom-out {
+      border: none;
+      background-image: url('./icons/zoomout.svg') !important;
+    }
 
     &:hover {
       background: darken(#FFF, 2.5);
