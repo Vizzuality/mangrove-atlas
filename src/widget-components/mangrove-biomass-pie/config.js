@@ -77,11 +77,11 @@ const getData = (data, selectedYear) => {
   formattedData = formattedData.map(d => d / total);
 
   return [
-    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50 t /ha', value: formattedData[0] * 100, color: '#EAF19D', percentage: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100 t /ha', value: formattedData[1] * 100, color: '#B8E98E', percentage: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150 t /ha', value: formattedData[2] * 100, color: '#1B97C1', percentage: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200 t /ha', value: formattedData[3] * 100, color: '#1C52A3', percentage: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250 t /ha', value: formattedData[4] * 100, color: '#13267F', percentage: formattedData[4] / total * 100 },
   ];
 };
 
@@ -134,7 +134,7 @@ const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend sup unit="t ha<sup>–1</sup>" groups={groups} type="height" />;
+            return <WidgetLegend groups={groups} type="height" />;
           }
         },
         tooltip: {

@@ -43,7 +43,7 @@ const Legend = ({ sup, type, position, widgetSpecific, groups, direction, varian
                   {sup && <DangerousHTML html={unit} />}
                   {item.payload && item.payload.y && type !== 'height'
                     && <span className={styles.item}>
-                      {`${numberFormat(item.payload.y)} ${unit}`}</span>
+                      {`${numberFormat(item.payload.y)}  ${unit}`}</span>
                   }
                 </div>
               </li>
