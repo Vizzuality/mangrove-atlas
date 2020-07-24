@@ -37,17 +37,23 @@ const geojsons = [
         maxzoom: 15,
         paint: {
           // NOTE: By default mapbox calculates the heatmap radius and intensity
-          // 'heatmap-weight': createHeatmapWeight(800),
           'heatmap-weight': [
             'interpolate',
             ['linear'],
             ['get', 'intensity'],
             0,
             0,
-            0.5,
-            0.5,
             1,
             1
+          ],
+          'heatmap-intensity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0,
+            1,
+            9,
+            3
           ],
           'heatmap-color': [
             'interpolate',
@@ -56,13 +62,32 @@ const geojsons = [
             0,
             'rgba(255, 255, 255, 0)',
             0.1,
-            'rgba(255, 194, 0, 0.5)',
+            'rgba(255, 194, 0, 1)',
             0.5,
-            'rgba(235, 68, 68, 0.7)',
+            'rgba(235, 68, 68, 1)',
             1,
             'rgba(199, 43, 214, 1)',
           ],
-          'heatmap-opacity': 0.9
+          // Adjust the heatmap radius by zoom level
+          'heatmap-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            0,
+            5,
+            9,
+            10
+          ],
+          // Transition from heatmap to circle layer by zoom level
+          'heatmap-opacity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            7,
+            1,
+            9,
+            0.7
+          ]
         }
       },
       // Client doesn't want alerts point for now
