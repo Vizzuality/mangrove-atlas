@@ -63,7 +63,8 @@ export const layerStyles = createSelector(
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters, activeLayersIds, locationId, startDateAlerts, endDateAlerts],
-  (_basemap, _layerStyles, _filters, _activeLayersIds, _locationId, _startDateAlerts, _endDateAlerts) => {
+  (_basemap, _layerStyles, _filters, _activeLayersIds,
+    _locationId, _startDateAlerts, _endDateAlerts) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -143,7 +144,6 @@ export const mapStyle = createSelector(
         visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
-
     // GEN ALERTS URL TEMPLATE
     if (_locationId && (_locationId !== 'worldwide' && _locationId !== 1298)) {
       bhSources.alerts.data = getAlertsUrl({

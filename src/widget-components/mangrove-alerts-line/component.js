@@ -21,6 +21,7 @@ const MangroveAlertsLine = ({
   useEffect(() => {
     if (currentId) {
       const currentLocation = locationsList.find(location => location.iso === currentId);
+      // eslint-disable-next-line camelcase
       const { id: location_id } = currentLocation;
       fetchAlerts({ location_id, start_date: startDate, end_date: endDate });
     } else { fetchAlerts({ start_date: startDate, end_date: endDate }); }
@@ -29,7 +30,9 @@ const MangroveAlertsLine = ({
   if (!data || data.length <= 0) {
     return null;
   }
-  const { chartData, chartConfig, total, dateOptions, downloadData } = config.parse(data, startDate, endDate, year);
+  const {
+    chartData, chartConfig, total, dateOptions, downloadData
+  } = config.parse(data, startDate, endDate, year);
   if (chartData.length <= 0) {
     return null;
   }
@@ -63,7 +66,8 @@ const MangroveAlertsLine = ({
   );
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
+      There were <strong>{total}</strong> mangrove disturbance alerts<br />
+      between {startDateSelect}
       &nbsp;and {endDateSelect}.
     </>
   );
