@@ -251,7 +251,7 @@ export const CONFIG = {
           },
           type: 'number'
         },
-        brushes: {
+        brush: {
           margin: { top: 60, right: 65, left: 25, bottom: 20 },
           startIndex,
           endIndex

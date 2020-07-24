@@ -37,7 +37,7 @@ const NavMenu = ({ fixedHeader }) => {
       [styles.navMenu]: !fixedHeader
     })}
     >
-      <button type="button" onClick={handleOpen} />
+      <button type="button" className={styles.introModalBtn} onClick={handleOpen} />
       <Modal
         isOpen={isOpen}
         onRequestClose={handleClose}
