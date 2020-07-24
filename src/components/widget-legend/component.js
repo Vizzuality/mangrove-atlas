@@ -8,13 +8,21 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({ sup, type, position, widgetSpecific, groups, direction, variant, unit }) => {
-
+const Legend = ({
+  title,
+  sup,
+  type,
+  position,
+  widgetSpecific,
+  groups,
+  direction,
+  variant,
+  unit }) => {
   return (
     <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
+      {title && <DangerousHTML html={title} className={styles.widget_legend_title} />}
       {Object.keys(groups).map(g => (
         <div key={g} className={styles.widget_legend_group}>
-
           <ul className={classnames(styles.widget_legend_list, styles[`_${type}`], styles[`_${position}`])}>
             {groups[g].map((item, i) => (
               <li
@@ -42,8 +50,11 @@ const Legend = ({ sup, type, position, widgetSpecific, groups, direction, varian
                   <span>{item.value}</span>
                   {sup && <DangerousHTML html={unit} />}
                   {item.payload && item.payload.y && type !== 'height'
-                    && <span className={styles.item}>
-                      {`${numberFormat(item.payload.y)}  ${unit}`}</span>
+                    && (
+                    <span className={styles.item}>
+                      {`${numberFormat(item.payload.y)}  ${unit}`}
+                    </span>
+                    )
                   }
                 </div>
               </li>
@@ -56,7 +67,10 @@ const Legend = ({ sup, type, position, widgetSpecific, groups, direction, varian
 };
 
 Legend.propTypes = {
+  title: PropTypes.string,
   direction: PropTypes.string,
+  sup: PropTypes.bool,
+  position: PropTypes.string,
   groups: PropTypes.shape({}).isRequired,
   widgetSpecific: PropTypes.string,
   type: PropTypes.string,
@@ -65,7 +79,10 @@ Legend.propTypes = {
 };
 
 Legend.defaultProps = {
+  title: '',
   direction: 'horizontal',
+  sup: false,
+  position: '',
   widgetSpecific: '',
   type: '',
   variant: 'rect',

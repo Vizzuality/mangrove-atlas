@@ -45,9 +45,6 @@
 
   &.collapsed:last-child {
     background-position: 0 700px;
-    .content {
-      max-height: 700px;
-    }
   }
 
   &.layerActive::before {
