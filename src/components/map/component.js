@@ -9,8 +9,6 @@ import isEmpty from 'lodash/isEmpty';
 import { easeCubic } from 'd3-ease';
 
 import MapPopupHotspots from 'components/map-popup-hotspots';
-import MapControls from './map-controls';
-import ZoomControl from './map-controls/zoom';
 import styles from './style.module.scss';
 
 const DEFAULT_VIEWPORT = {
@@ -212,11 +210,14 @@ class Map extends Component {
     const ms = { ...mapStyle };
 
     const onClickHandler = (e) => {
-      onClick({
-        event: e,
-        map: this.map,
-        mapContainer: this.mapContainer
-      });
+      // This makes sure that if you click on controls, map events does not get triggered
+      if (e.target.className === 'overlays') {
+        onClick({
+          event: e,
+          map: this.map,
+          mapContainer: this.mapContainer
+        });
+      }
     };
 
 
