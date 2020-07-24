@@ -17,11 +17,11 @@ const getData = (data) => {
   const dataFormatted = data[0].histogram;
   const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
   return [
-    { label: '400-1000 t CO₂e/ha', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#5C4A3D', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
-    { label: '1000-1300 t CO₂e/ha', value: dataFormatted['1000--1300'], color: '#933A06', percentage: dataFormatted['1000--1300'] / total * 100 },
-    { label: '1300-1600 t CO₂e/ha', value: dataFormatted['1300--1600'], color: '#B84E17', percentage: dataFormatted['1300--1600'] / total * 100 },
-    { label: '1600-1900 t CO₂e/ha', value: dataFormatted['1600--1900'], color: '#E68518', percentage: dataFormatted['1600--1900'] / total * 100 },
-    { label: '1900-2200 t CO₂e/ha', value: dataFormatted['1900--2200'], color: '#EEB66B', percentage: dataFormatted['1900--2200'] / total * 100 },
+    { label: '400-1000', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#5C4A3D', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
+    { label: '1000-1300', value: dataFormatted['1000--1300'], color: '#933A06', percentage: dataFormatted['1000--1300'] / total * 100 },
+    { label: '1300-1600', value: dataFormatted['1300--1600'], color: '#B84E17', percentage: dataFormatted['1300--1600'] / total * 100 },
+    { label: '1600-1900', value: dataFormatted['1600--1900'], color: '#E68518', percentage: dataFormatted['1600--1900'] / total * 100 },
+    { label: '1900-2200', value: dataFormatted['1900--2200'], color: '#EEB66B', percentage: dataFormatted['1900--2200'] / total * 100 },
   ];
 };
 
@@ -100,11 +100,11 @@ export const CONFIG = {
           align: 'left',
           verticalAlign: 'middle',
           layout: 'vertical',
-          fontSize: 10,
+          fontSize: 9,
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend groups={groups} unit="%" />;
+            return <WidgetLegend title="Total carbon density (t CO2e ha<sup>-1</sup>)" groups={groups} />;
           }
         },
         tooltip: {

@@ -37,19 +37,24 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                         style={{ backgroundColor: d.color }}
                       />
                     )}
-
-                    {d.key === 'break'
-                      ? <span className={styles.break_label}>{d.label}</span>
-                      : <span>{d.label || values[d.labelKey]}</span>}
+                    {values && d.key && (
+                      <>
+                        {d.key === 'break'
+                          ? <span className={styles.break_label}>{d.label}</span>
+                          : <span>{d.label || values[d.labelKey]}</span>}
+                      </>
+                    )}
                   </div>
                 )}
 
                 {/* UNIT */}
-                <div
-                  className={styles.data_value}
-                >
-                  {getValue(d, values[d.key])}
-                </div>
+                {values && d.key && (
+                  <div
+                    className={styles.data_value}
+                  >
+                    {getValue(d, values[d.key])}
+                  </div>
+                )}
               </div>
             ))
           )}

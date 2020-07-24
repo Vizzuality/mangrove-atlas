@@ -89,6 +89,10 @@ function MangroveNetChange({
         id: 'net',
         startYear,
         endYear,
+        range: {
+          startYear,
+          endYear: year,
+        },
         years: metadata.years.filter(i => i >= year && i <= endYear),
         year,
         unit
@@ -99,6 +103,10 @@ function MangroveNetChange({
       value: {
         startYear,
         endYear: year,
+        range: {
+          startYear,
+          endYear: year,
+        },
         years,
         year,
         unit
@@ -134,6 +142,10 @@ function MangroveNetChange({
         id: 'net',
         startYear,
         endYear,
+        range: {
+          startYear,
+          endYear,
+        },
         years,
         unit: selectedUnit
       }
@@ -143,6 +155,10 @@ function MangroveNetChange({
       value: {
         startYear,
         endYear,
+        range: {
+          startYear,
+          endYear,
+        },
         years,
         unit: selectedUnit
       }

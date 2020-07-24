@@ -40,30 +40,15 @@ const monthsConversion = {
 
 const getStops = () => {
   const colorSchema = [
-    '#FFC200',
-    '#FFAE02',
-    '#FF9A04',
-    '#FF8606',
-    '#FF7208',
-    '#FF5F0A',
-    '#FF4B0C',
-    '#FF380E',
-    '#FF2510',
-    '#FF1212',
-    '#FF141E',
-    '#FF1633',
-    '#FF1849',
-    '#FF1A5E',
-    '#FF1C73',
-    '#FF1E88',
-    '#FF209D',
+    'rgba(199, 43, 214, 1)',
+    'rgba(235, 68, 68, 0.7)',
+    'rgba(255, 194, 0, 0.5)',
   ];
 
   const gradient = colorSchema.map((d, index) => (
     {
       offset: `${index / (colorSchema.length - 1) * 100}%`,
       stopColor: d,
-      //stopOpacity: 0.5
     }
   ));
   return gradient;
@@ -86,17 +71,15 @@ const getData = (data, year) => sortBy(data
 ['month']);
 
 const getDownloadData = data => sortBy(data
-  .map((d) => {
-    return {
-      date: d.date.value,
-      alerts: d.count
-    }
-  }),
+  .map(d => ({
+    date: d.date.value,
+    alerts: d.count
+  })),
 ['date']);
 
 const getDates = data => sortBy(data
-  .map(d => {
-    const monthsConversion = {
+  .map((d) => {
+    const monthsConversionAlt = {
       0: 'January',
       1: 'February',
       2: 'March',
@@ -111,14 +94,14 @@ const getDates = data => sortBy(data
       12: 'December'
     };
     const year = new Date(d.date.value).getFullYear();
-    const month = monthsConversion[new Date(d.date.value).getMonth()];
+    const month = monthsConversionAlt[new Date(d.date.value).getMonth()];
 
     return {
       label: `${month}, ${year}`,
       value: d.date.value
-    }
+    };
   })
-  .filter(m => m > '2020-04-01' ),
+  .filter(m => m.value >= '2020-04-01'),
 ['date']);
 
 
@@ -236,6 +219,7 @@ export const CONFIG = {
           interval: 0,
           orientation: 'right',
           value: 'alerts',
+          // eslint-disable-next-line react/prop-types
           label: ({ viewBox }) => {
             const { x, y } = viewBox;
             return (
@@ -251,7 +235,7 @@ export const CONFIG = {
           },
           type: 'number'
         },
-        brushes: {
+        brush: {
           margin: { top: 60, right: 65, left: 25, bottom: 20 },
           startIndex,
           endIndex
