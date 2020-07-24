@@ -15,9 +15,11 @@ function* setLocation({ payload: { iso, id } }) {
     yield put(resetUi());
   }
 
-  yield put(closeSearchPanel());
-  // In case user sets location from widget modal
-  yield put(closeInfoPanel());
+  // // In case user sets location from widget modal
+  if (current && current.id !== targetLocation) {
+    yield put(closeSearchPanel());
+    yield put(closeInfoPanel());
+  }
 }
 
 export default function* pages() {
