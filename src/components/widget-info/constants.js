@@ -22,7 +22,7 @@ const widgetInfo = {
   },
   mangrove_biomass: {
     Title: '<h1>Global mangrove aboveground biomass density for selected years between 1997 and 2016</h1>',
-    Overview: '<p>This data set shows the aboveground biomass (AGB) density (mg ha<sup>-1</sup>) of mangrove habitat  in a specific location at different times. It is based on the global extent of mangroves for select years from 1996 to 2016 (<a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank">Bunting et al. (2018)</a>) combined with the canopy height and allometric relationships of <a href= https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1665>Simard et al</a>. They measured AGB and canopy height at 331 plots between 26°S and 25°N. They used those measurements to create global and three regional allometric models relating AGB to basal area weighted height and maximum canopy height. To map AGB across the tropics, they applied the regional allometric models to a map of basal area weighted height. The map of basal area weighted height was derived from ground elevation from the Shuttle Radio Topography Mission (SRTM) (2000) and canopy elevation from ICESat/GLAS spaceborne lidar (2003–2009).</p>',
+    Overview: '<p>This data set shows the aboveground biomass (AGB) density (t ha<sup>-1</sup>) of mangrove habitat  in a specific location at different times. It is based on the global extent of mangroves for select years from 1996 to 2016 (<a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank">Bunting et al. (2018)</a>) combined with the canopy height and allometric relationships of <a href= https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1665>Simard et al</a>. They measured AGB and canopy height at 331 plots between 26°S and 25°N. They used those measurements to create global and three regional allometric models relating AGB to basal area weighted height and maximum canopy height. To map AGB across the tropics, they applied the regional allometric models to a map of basal area weighted height. The map of basal area weighted height was derived from ground elevation from the Shuttle Radio Topography Mission (SRTM) (2000) and canopy elevation from ICESat/GLAS spaceborne lidar (2003–2009).</p>',
     Reference: '<p>More info available soon</p>',
     'Date of content': '<p>1996, 2007, 2008, 2009, 2010, 2015, 2016</p>',
     License: '<p>More info available soon</p>',
@@ -35,12 +35,12 @@ const widgetInfo = {
     License: '<p>More info available soon</p>',
   },
   mangrove_alerts: {
-    Title: '<h1>Disturbance alerts for mangrove habitat in Rufiji Delta</h1>',
-    Overview: '<p>This is an experimental data set being developed by Aberystwyth University which aims to provide near real-time monitoring of change in mangrove extent, similar to the UMD-GLADS forest disturbance product. Note at present only a place-holder dataset is show for a small region.</p>',
+    Title: '<h1>Mangrove deforestation alerts</h1>',
+    Overview: '<p>This data set shows a heatmap representing points were there is high confidence of a change in mangrove forest cover. Note this is an experimental layer, presently only available for Africa, under going validation, and will be updated in the future. Changes in mangrove coverage were identified using a combination of USGS Landsat 8 (LS8), ESA Sentinel-1 (S1) and ESA Sentinel-2 (S2) data. For the optical S2 and LS8 sensors, only scenes where cloud cover is less than 20 % were used. In general scenes were avalaible about every 14-16 days. However, for the optical sensors, cloud cover can substantially reduce data availability in some regions. Potential change features were identified within pixels masked by the 2016 GMW mangrove extent layer; where NDVI values were < 0.2, and backscatering values were < -18 dB for the VV and < -23 dB for the VH polarisation channels, respectively. To combine the scene based potential change features and to filter false positives a scoring system was used where pixels were scored based on the number of times they have been identified as a change. Where S1 identifies a change 1 is added to the score, if LS8 or S2 identify a change then 2 is added to the score. Changes identified within the LS8 and S2 sensors were considered to be more reliable and less frequent (due to cloud cover). If no change was identified for a pixel, which was previously identified as a change, and has a score > 0, then 1 was removed from the score. If the score has a value of 5 or greater then the pixel was deemed to be a ‘True’ change.  The score cannot go below 0 or above 5. Processing was undertaken on a 20 m pixel grid, and then resampled to 60 m for presentation.</p>',
     DataLink: '<p>More info available soon</p>',
-    Reference: '<p>More info available soon</p>',
-    'Date of content': '<p>More info available soon</p>',
-    License: '<p>More info available soon</p>',
+    Reference: '<p>Bunting et al., (2020). In Prep. Code is available at https://github.com/globalmangrovewatch/gmw_monitoring_demo</p>',
+    'Date of content': '<p>January 2020 – present</p>',
+    License: '<p><a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a></p>',
   },
   conservation_hotspots: {
     Title: '<h1>Conservation status advice for mangrove habitat in Africa for 2010</h1>',
