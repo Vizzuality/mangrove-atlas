@@ -26,7 +26,8 @@ const geojsons = [
     id: 'alerts',
     source: {
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
+      // Provided in the mapStyle selector
+      // data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
     },
     layers: [
       {
@@ -35,77 +36,36 @@ const geojsons = [
         source: 'alerts',
         maxzoom: 15,
         paint: {
+          // NOTE: By default mapbox calculates the heatmap radius and intensity
+          // 'heatmap-weight': createHeatmapWeight(800),
           'heatmap-weight': [
             'interpolate',
             ['linear'],
-            ['get', 'count'],
+            ['get', 'intensity'],
             0,
-            2,
-            6,
-            5
-          ],
-          'heatmap-intensity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
             0,
-            2,
-            9,
-            20
+            0.5,
+            0.5,
+            1,
+            1
           ],
           'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(210, 50, 169, 0)',
-            0.05,
-            'rgba(212,58,159, 0.5)',
-            0.20,
-            'rgba(215,66,149, 0.8)',
-            0.30,
-            'rgba(217,75,139, 0.8)',
-            0.35,
-            'rgba(220,83,129, 0.3)',
-            0.40,
-            'rgba(223,92,119, 0.4)',
-            0.45,
-            'rgba(225,100,109, 0.4)',
+            'rgba(255, 255, 255, 0)',
+            0.1,
+            'rgba(255, 194, 0, 0.5)',
             0.5,
-            'rgba(228,109,99, 0.5)',
-            0.55,
-            'rgba(231,117,89, 0.5)',
-            0.60,
-            'rgba(233,126,79, 0.5)',
-            0.65,
-            'rgba(236,134,69, 0.6)',
-            0.70,
-            'rgba(239,143,59, 0.6)',
-            0.75,
-            'rgba(241,151,49, 0.6)',
-            0.80,
-            'rgba(244,160,39, 0.6)',
-            0.85,
-            'rgba(247,168,29, 0.6)',
-            0.90,
-            'rgba(249,177,19, 0.6)',
-            0.95,
-            'rgba(252,185,9, 0.7)',
+            'rgba(235, 68, 68, 0.7)',
             1,
-            'rgba(255, 194, 0, 1)',
-          ],
-          'heatmap-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            0,
-            5,
-            7,
-            10
+            'rgba(199, 43, 214, 1)',
           ],
           'heatmap-opacity': 0.9
         }
       },
+      // Client doesn't want alerts point for now
       {
         id: 'alerts-point',
         type: 'circle',

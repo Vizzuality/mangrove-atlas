@@ -40,30 +40,32 @@ const monthsConversion = {
 
 const getStops = () => {
   const colorSchema = [
-    '#FFC200',
-    '#FFAE02',
-    '#FF9A04',
-    '#FF8606',
-    '#FF7208',
-    '#FF5F0A',
-    '#FF4B0C',
-    '#FF380E',
-    '#FF2510',
-    '#FF1212',
-    '#FF141E',
-    '#FF1633',
-    '#FF1849',
-    '#FF1A5E',
-    '#FF1C73',
-    '#FF1E88',
-    '#FF209D',
+    // '#FFC200',
+    // '#FFAE02',
+    // '#FF9A04',
+    // '#FF8606',
+    // '#FF7208',
+    // '#FF5F0A',
+    // '#FF4B0C',
+    // '#FF380E',
+    // '#FF2510',
+    // '#FF1212',
+    // '#FF141E',
+    // '#FF1633',
+    // '#FF1849',
+    // '#FF1A5E',
+    // '#FF1C73',
+    // '#FF1E88',
+    // '#FF209D',
+    'rgba(199, 43, 214, 1)',
+    'rgba(235, 68, 68, 0.7)',
+    'rgba(255, 194, 0, 0.5)',
   ];
 
   const gradient = colorSchema.map((d, index) => (
     {
       offset: `${index / (colorSchema.length - 1) * 100}%`,
       stopColor: d,
-      //stopOpacity: 0.5
     }
   ));
   return gradient;
