@@ -20,7 +20,7 @@ const widgetInfo = {
     'Date of content': '<p>1996, 2007, 2008, 2009, 2010, 2015, 2016</p>',
     License: '<p><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">https://creativecommons.org/licenses/by/4.0/</a></p>',
   },
-  mangrove_biomass: {
+  mangrove_biomass_pie: {
     Title: '<h1>Global mangrove aboveground biomass density for selected years between 1997 and 2016</h1>',
     Overview: '<p>This data set shows the aboveground biomass (AGB) density (t ha<sup>-1</sup>) of mangrove habitat  in a specific location at different times. It is based on the global extent of mangroves for select years from 1996 to 2016 (<a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank">Bunting et al. (2018)</a>) combined with the canopy height and allometric relationships of <a href= https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1665>Simard et al</a>. They measured AGB and canopy height at 331 plots between 26°S and 25°N. They used those measurements to create global and three regional allometric models relating AGB to basal area weighted height and maximum canopy height. To map AGB across the tropics, they applied the regional allometric models to a map of basal area weighted height. The map of basal area weighted height was derived from ground elevation from the Shuttle Radio Topography Mission (SRTM) (2000) and canopy elevation from ICESat/GLAS spaceborne lidar (2003–2009).</p>',
     Reference: '<p>More info available soon</p>',
