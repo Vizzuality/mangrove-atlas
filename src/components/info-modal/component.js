@@ -72,6 +72,7 @@ class InfoModal extends PureComponent {
 
   render() {
     const { isOpened, currentLocation, locations, widgetType } = this.props;
+
     if (!currentLocation) return null;
     const { search } = this.state;
     const locationsData = search
@@ -80,7 +81,6 @@ class InfoModal extends PureComponent {
 
     const widgetSelected = widgetInfo[widgetType];
     const info = this.info();
-
 
     return (
       <Fragment>
