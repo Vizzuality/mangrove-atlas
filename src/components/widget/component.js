@@ -93,7 +93,12 @@ function Widget({
         {isLoading
           ? <Spinner />
           : (
-            <div className={classnames(styles.content)}>
+            <div className={classnames(
+              styles.content, {
+                [styles._large]: slug === 'mangrove_activity'
+              }
+            )}
+            >
               {children}
             </div>
           )

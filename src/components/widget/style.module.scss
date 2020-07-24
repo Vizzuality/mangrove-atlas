@@ -46,6 +46,10 @@
         max-height: 400px;
         background-position: auto;
         opacity: 1;
+
+        &._large {
+          max-height: 700px;
+        }
       }
 
       .title {

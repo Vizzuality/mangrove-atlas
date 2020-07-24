@@ -24,10 +24,6 @@
       background-image: url('./icons/zoomout.svg') !important;
     }
 
-    &:hover {
-      background: darken(#FFF, 2.5);
-    }
-
     &:first-child {
       border-radius: 20px 20px 0 0;
       border-top: none;

@@ -105,7 +105,7 @@ class Chart extends PureComponent {
       yKeys,
       xAxis,
       yAxis,
-      brushes,
+      brush,
       cartesianGrid,
       cartesianAxis,
       tooltip,
@@ -312,14 +312,14 @@ class Chart extends PureComponent {
         </ResponsiveContainer>
 
 
-        {brushes && (
+        {brush && (
           <Brush
             data={data}
             width="100%"
             height={height - 28}
             margin={margin}
             onBrushEnd={onBrushEnd}
-            {...brushes}
+            {...brush}
           />
         )}
       </div>
