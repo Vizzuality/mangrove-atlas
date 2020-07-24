@@ -17,14 +17,12 @@ const WidgetInfo = ({
 }) => {
   const selectedLocation = locationsList
     .filter(location => location.iso === current || location.id === current || location.iso === 'WORLDWIDE')
-    .map((l) => {
-      return [
-        [`location - ${l.name}  `],
-        [`location_type - ${l.location_type}  `],
-        [`location_id - ${l.location_id}  `],
-        [`iso - ${l.iso}  `]
-      ];
-    });
+    .map(l => [
+      [`location - ${l.name}  `],
+      [`location_type - ${l.location_type}  `],
+      [`location_id - ${l.location_id}  `],
+      [`iso - ${l.iso}  `]
+    ]);
   return (
     <div className={styles.info}>
       {filename !== 'highlighted_places' && (
