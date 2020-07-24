@@ -10,7 +10,7 @@ const MangroveAlertsLine = ({
   slug, name,
   addFilter,
   ui = {},
-  currentId,
+  currentLocation,
   locationsList,
   setUi,
   fetchAlerts,
@@ -19,17 +19,30 @@ const MangroveAlertsLine = ({
   const { year = 2020, startDate = '2020-04-01', endDate = '2020-05-01' } = ui;
 
   useEffect(() => {
-    if (currentId) {
-      const currentLocation = locationsList.find(location => location.iso === currentId);
-      const { id: location_id } = currentLocation;
-      fetchAlerts({ location_id, start_date: startDate, end_date: endDate });
+    if (currentLocation && (currentLocation.id || currentLocation.iso)) {
+      const location = locationsList.find((l) => {
+        if (currentLocation.id) {
+          return l.id === Number(currentLocation.id);
+        }
+        if (currentLocation.iso) {
+          return l.iso === currentLocation.iso && l.location_type === 'country';
+        }
+        return false;
+      });
+      if (location) {
+        // eslint-disable-next-line camelcase
+        const { id: location_id } = location;
+        fetchAlerts({ location_id, start_date: startDate, end_date: endDate });
+      }
     } else { fetchAlerts({ start_date: startDate, end_date: endDate }); }
-  }, [year, currentId]);
+  }, [year, currentLocation]);
 
   if (!data || data.length <= 0) {
     return null;
   }
-  const { chartData, chartConfig, total, dateOptions, downloadData } = config.parse(data, startDate, endDate, year);
+  const {
+    chartData, chartConfig, total, dateOptions, downloadData
+  } = config.parse(data, startDate, endDate, year);
   if (chartData.length <= 0) {
     return null;
   }
@@ -63,7 +76,8 @@ const MangroveAlertsLine = ({
   );
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts<br /> between {startDateSelect}
+      There were <strong>{total}</strong> mangrove disturbance alerts<br />
+      between {startDateSelect}
       &nbsp;and {endDateSelect}.
     </>
   );

@@ -6,7 +6,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   data: state.alerts,
   isLoading: state.ranking.isLoading,
-  currentId: state.locations.current.iso,
+  currentLocation: state.locations.current,
   locationsList: state.locations.list,
   ui: state.widgets.ui.alerts || {
     alerts: {

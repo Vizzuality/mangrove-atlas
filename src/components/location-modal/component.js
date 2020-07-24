@@ -39,7 +39,6 @@ class LocationSelector extends PureComponent {
 
   closeModal = () => {
     const { closeSearchPanel } = this.props;
-
     closeSearchPanel();
     this.resetTerm();
   }
@@ -56,6 +55,7 @@ class LocationSelector extends PureComponent {
 
   render() {
     const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
+
     if (!currentLocation) return null;
     const { searchTerm } = this.state;
     const locationsData = searchTerm
@@ -104,7 +104,7 @@ class LocationSelector extends PureComponent {
                   onChange={this.updateSearchTerm}
                 />
               </div>
-              {highlightedPlaces && (
+              {highlightedPlaces && !searchTerm && (
                 <HighlightedPlaces
                   data={highlightedPlacesConfig.parse(highlightedPlaces)}
                   currentLocation={currentLocation}

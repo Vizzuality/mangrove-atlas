@@ -1,0 +1,41 @@
+.c-zoom-control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .zoom-control--btn {
+    cursor: pointer;
+    background: white;
+    border: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    margin: 10px;
+
+    &.zoom-in {
+      background-image: url('./icons/zoomin.svg') !important;
+      pointer-events: auto;
+    }
+
+    &.zoom-out {
+      border: none;
+      background-image: url('./icons/zoomout.svg') !important;
+    }
+
+    &:first-child {
+      border-radius: 20px 20px 0 0;
+      border-top: none;
+    }
+
+    &:last-child {
+      border-radius: 0 0 20px 20px;
+    }
+
+    &.-disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}

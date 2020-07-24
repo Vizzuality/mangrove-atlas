@@ -26,7 +26,8 @@ const geojsons = [
     id: 'alerts',
     source: {
       type: 'geojson',
-      data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
+      // Provided in the mapStyle selector
+      // data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
     },
     layers: [
       {
@@ -35,13 +36,14 @@ const geojsons = [
         source: 'alerts',
         maxzoom: 15,
         paint: {
+          // NOTE: By default mapbox calculates the heatmap radius and intensity
           'heatmap-weight': [
             'interpolate',
             ['linear'],
-            ['get', 'count'],
+            ['get', 'intensity'],
             0,
             0,
-            6,
+            1,
             1
           ],
           'heatmap-intensity': [
@@ -49,71 +51,46 @@ const geojsons = [
             ['linear'],
             ['zoom'],
             0,
-            2,
+            1,
             9,
-            20
+            3
           ],
           'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(210, 50, 169, 0)',
-            0.05,
-            '#FFC200',
-            0.20,
-            '#FFAE02',
-            0.30,
-            '#FF9A04',
-            0.35,
-            '#FF8606',
-            0.40,
-            '#FF7208',
-            0.45,
-            '#FF5F0A',
+            'rgba(255, 255, 255, 0)',
+            0.1,
+            'rgba(255, 194, 0, 1)',
             0.5,
-            '#FF4B0C',
-            0.55,
-            '#FF380E',
-            0.60,
-            '#FF2510',
-            0.65,
-            '#FF1212',
-            0.70,
-            '#FF141E',
-            0.75,
-            '#FF1633',
-            0.80,
-            '#FF1849',
-            0.85,
-            '#FF1A5E',
-            0.90,
-            '#FF1C73',
-            0.95,
-            '#FF209D',
+            'rgba(235, 68, 68, 1)',
             1,
-            '#FF209D',
+            'rgba(199, 43, 214, 1)',
           ],
+          // Adjust the heatmap radius by zoom level
           'heatmap-radius': [
             'interpolate',
             ['linear'],
             ['zoom'],
             0,
-            2,
+            5,
             9,
-            20
+            10
           ],
+          // Transition from heatmap to circle layer by zoom level
           'heatmap-opacity': [
             'interpolate',
             ['linear'],
             ['zoom'],
-            3,
-            5,
-            6,
-            20
+            7,
+            1,
+            9,
+            0.7
           ]
         }
       },
+      // Client doesn't want alerts point for now
       {
         id: 'alerts-point',
         type: 'circle',

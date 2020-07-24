@@ -19,7 +19,7 @@ function* getLayers() {
    */
   const activeWidgets = yield select(_activeWidgets);
   const { layers } = DATA;
-  const activeLayers = activeWidgets.map(w => w.layersIds).flat();
+  const activeLayers = activeWidgets.map(w => w.layersIds);
   const updatedLayers = layers.map((l) => {
     const newLayer = Object.assign({}, l);
 

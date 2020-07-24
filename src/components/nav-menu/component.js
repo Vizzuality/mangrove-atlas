@@ -10,19 +10,25 @@ import styles from './style.module.scss';
 const NavMenu = ({ fixedHeader }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem('modal');
-  const modalStatusBoolean = modalStatus && modalStatus.toLowerCase() == 'true' && false;
-  const [isOpen, toggleModal] = useState(modalStatus !== null ? modalStatusBoolean : false);
-  const [welcomeContent, toggleMessage] = useState(modalStatus !== null ? modalStatusBoolean : true);
+  const [isOpen, toggleModal] = useState(modalStatus === null);
+  const [welcomeContent, toggleMessage] = useState(modalStatus === null);
   const [aboutContent, toggleContent] = useState(false);
 
-  const handleClick = () => {
-    myStorage.setItem('modal', false);
-    toggleContent(!aboutContent);
+  const handleOpen = () => {
     toggleModal(!isOpen);
+    toggleContent(false);
+  };
+
+  const handleClose = () => {
+    myStorage.setItem('modal', false);
+    toggleMessage(false);
+    toggleModal(!isOpen);
+    toggleContent(false);
   };
 
   const handleContent = () => {
-    toggleContent(!aboutContent);
+    toggleMessage(false);
+    toggleContent(true);
   };
 
   return (
@@ -31,14 +37,14 @@ const NavMenu = ({ fixedHeader }) => {
       [styles.navMenu]: !fixedHeader
     })}
     >
-      <button type="button" onClick={handleClick} />
+      <button type="button" className={styles.introModalBtn} onClick={handleOpen} />
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => toggleModal(false)}
+        onRequestClose={handleClose}
       >
         <div className={styles.modalContent}>
 
-          {welcomeContent && isOpen && (
+          {welcomeContent && (
             <section className={styles.introModalContent}>
               <h3>Welcome to Global Mangrove Watch </h3>
               <h4>Monitoring to catalyse the action needed to protect and restore mangroves</h4>
@@ -46,8 +52,7 @@ const NavMenu = ({ fixedHeader }) => {
                 Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
                 data and tools for monitoring mangroves necessary for this. It gives universal
                 access to near real-time information on where and what changes there are to mangroves across the world.</p>
-
-              <p>Close this message to continue or find out more about Global Mangrove Watch</p> <button type="button" onClick={handleContent()}>here.</button>
+              <p onClick={handleContent}>Close this message to continue or find out more about Global Mangrove Watch <span>here.</span></p>
               <a className={styles.welcomeLink} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Visit Global Mangrove Alliance website</a>
               <HotspotsList />
             </section>
@@ -72,8 +77,8 @@ const NavMenu = ({ fixedHeader }) => {
               <p>Coordinated effort across sectors and geographies will accomplish more, faster. Global Mangrove Watch is the
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                  Learn more at MangroveAlliance.org.
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                &nbsp;Learn more at MangroveAlliance.org.
                 </a>
               </p>
 
@@ -110,28 +115,28 @@ const NavMenu = ({ fixedHeader }) => {
                   </button>
               <nav>
                 Global Mangrove Alliance
-                    <a onClick={handleClick} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
+                    <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
                   About
                     </a>
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
                   Mangroves
                     </a>
-                <a onClick={handleClick} href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
                   Initiatives
                     </a>
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
                   News
                     </a>
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
                   Resources
                     </a>
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
                   Contact
                     </a>
               </nav>
 
               <aside className={styles.footer}>
-                <a onClick={handleClick} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
                   <img src={logo} className={styles.logo} alt="Global Mangrove Alliance" />
                 </a>
                 <LanguageSelect />
