@@ -104,7 +104,7 @@ class LocationSelector extends PureComponent {
                   onChange={this.updateSearchTerm}
                 />
               </div>
-              {highlightedPlaces && (
+              {highlightedPlaces && !searchTerm && (
                 <HighlightedPlaces
                   data={highlightedPlacesConfig.parse(highlightedPlaces)}
                   currentLocation={currentLocation}

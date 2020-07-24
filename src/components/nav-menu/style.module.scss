@@ -27,6 +27,13 @@
 
 .fixedNavMenu {
   position: relative;
+
+  .introModalBtn {
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      display: none;
+    }
+  }
 }
 
 .modalContent {
