@@ -32,6 +32,15 @@
     margin: 10 0 0;
   }
 
+  .widget_legend_title {
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 150px;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+  }
+
   .widget_legend_group:first-child { margin: 0; }
 
   .widget_legend_list {
@@ -147,6 +156,10 @@
         border-radius: 0 10px 10px 0;
         margin-left: 5px;
         margin-right: 10px;
+      }
+
+      @media print {
+        display: none;
       }
     }
 
