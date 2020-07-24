@@ -57,6 +57,20 @@
 
     button {
       display: inline-block;
+      z-index: 300;
+      pointer-events: all;
+    }
+
+    p {
+
+      span {
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+
+    a {
+      padding: 10px 0;
     }
   }
 
