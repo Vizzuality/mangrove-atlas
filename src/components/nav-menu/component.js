@@ -4,6 +4,22 @@ import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
 import HotspotsList from 'components/hotspots-list';
 import logo from './mangrove-alliance.png';
+import aberystwyth from './aberystwyth.png';
+import soloeo from './soloeo.png';
+import tnc from './tnc.png';
+import wetlands from './wetlands.png';
+import cambridge from './cambridge.png';
+import jaxa from './jaxa.png';
+import nasa from './nasa.png';
+import iucn from './iucn.png';
+import griffith from './griffith.png';
+import ci from './ci.png';
+import wwf from './wwf.png';
+import scripps from './scripps.png';
+import dob from './dob.png';
+import oak from './oak.png';
+import npl from './npl.png';
+import comon from './comon.png';
 
 import styles from './style.module.scss';
 
@@ -51,9 +67,9 @@ const NavMenu = ({ fixedHeader }) => {
               <p>Thriving mangroves are key to the health of nature and effective climate action.
                 Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
                 data and tools for monitoring mangroves necessary for this. It gives universal
-                access to near real-time information on where and what changes there are to mangroves across the world.</p>
+                access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.</p>
               <p onClick={handleContent}>Close this message to continue or find out more about Global Mangrove Watch <span>here.</span></p>
-              <a className={styles.welcomeLink} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Visit Global Mangrove Alliance website</a>
+                
               <HotspotsList />
             </section>
           )}
@@ -64,17 +80,18 @@ const NavMenu = ({ fixedHeader }) => {
               <p>Thriving mangroves are key to the health of nature and effective climate action.
                 Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
                 data and tools for monitoring mangroves necessary for this. It gives universal
-                access to near real-time information on where and what changes there are to mangroves across the world.
+                access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.
               </p>
 
-              <p>With 3D, hi-res information on topography, soil conditions and hydrology, Global Mangrove Watch gives
+              <p>With hi-res information on topography, soil conditions and hydrology, Global Mangrove Watch gives
                 coastal and park managers, conservationists, policymakers and practitioners the evidence
                 needed to respond to illegal logging, pinpoint the causes of local mangrove loss and track
-                conservation progress.
+                restoration progress. It is a tool that can help mangroves be central to climate mitigation,
+                adaptation and sustainable development plans and policies. 
               </p>
 
-              <h4>Global Mangrove Watch and the Global Mangrove Alliance</h4>
-              <p>Coordinated effort across sectors and geographies will accomplish more, faster. Global Mangrove Watch is the
+              <h4>GMW and the Global Mangrove Alliance</h4>
+              <p>A coordinated effort across sectors and geographies will accomplish more, faster. Global Mangrove Watch is the
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
@@ -85,26 +102,44 @@ const NavMenu = ({ fixedHeader }) => {
               <h4>Global Mangrove Watch Partners</h4>
               <p>With support from the Oak Foundation, DOB Ecology and the Dutch Postcode Lottery,
                 The Nature Conservancy and Wetlands International have worked with Aberystwyth
-                University, soloEO, NASA, JAXA, and a host of partners to develop Global Mangrove Watch,
-                building on JAXA’s Kyoto and Carbon Initiative.
+                University, soloEO, NASA, JAXA, UNEP-WCMC and a host of partners to develop Global Mangrove Watch.
               </p>
+              <p>Got a query? Contact <a href="mailto://contact@mangrovealliance.org">Mangrove Alliance</a></p>
               <p>Convened by</p>
 
               <ul>
-
-                <li>To ADD WWF</li>
-                <li>To ADD WWF</li>
-                <li>To ADD CI</li>
-                <li>To ADD CI</li>
+                <li><img src={aberystwyth} className={styles.logo} alt="Aberystwyth University" /></li>
+                <li><img src={soloeo} className={styles.logo} alt="soloEO" /></li>
+                <li><img src={tnc} className={styles.logo} alt="The Nature Conservancy" /></li>
+                <li><img src={wetlands} className={styles.logo} alt="Wetlands International" /></li>
               </ul>
+           
               <p>Supported by</p>
               <ul>
-                <li>To ADD DOB Ecology</li>
-                <li>To ADD DOB Ecology</li>
-                <li>To ADD NPL</li>
-                <li>To ADD NPL</li>
+                <li><img src={cambridge} className={styles.logo} alt="University of Cambridge" /></li>
+                <li><img src={jaxa} className={styles.logo} alt="JAXA" /></li>
+                <li><img src={nasa} className={styles.logo} alt="NASA" /></li>
+                <li><img src={iucn} className={styles.logo} alt="IUCN" /></li>
+                <li><img src={griffith} className={styles.logo} alt="Griffith University" /></li>
+                <li><img src={ci} className={styles.logo} alt="Conservation International" /></li>
+                <li><img src={wwf} className={styles.logo} alt="WWF" /></li>
+                <li><img src={scripps} className={styles.logo} alt="SCRIPPS" /></li>
               </ul>
-
+              <p>Donors</p>
+              <ul>
+                  <li><img src={dob} className={styles.logo} alt="DOB Ecology" /></li>
+                  <li><img src={oak} className={styles.logo} alt="Oak Foundation" /></li>
+                  <li><img src={npl} className={styles.logo} alt="Dutch Postcode Lottery" /></li>
+                  <li><img src={comon} className={styles.logo} alt="COmON Foundation" /></li>
+              </ul>
+              <h4>Disclaimer</h4>
+              <p>
+              THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
+              AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
+              WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
+              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION 
+              PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+              </p>
             </section>
           )}
           {(!welcomeContent && !aboutContent) && (
