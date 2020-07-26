@@ -4,22 +4,9 @@ import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
 import HotspotsList from 'components/hotspots-list';
 import logo from './mangrove-alliance.png';
-import aberystwyth from './aberystwyth.png';
-import soloeo from './soloeo.png';
-import tnc from './tnc.png';
-import wetlands from './wetlands.png';
-import cambridge from './cambridge.png';
-import jaxa from './jaxa.png';
-import nasa from './nasa.png';
-import iucn from './iucn.png';
-import griffith from './griffith.png';
-import ci from './ci.png';
-import wwf from './wwf.png';
-import scripps from './scripps.png';
-import dob from './dob.png';
-import oak from './oak.png';
-import npl from './npl.png';
-import comon from './comon.png';
+import convened from './convened.png';
+import supported from './supported.png';
+import donors from './donors.png';
 
 import styles from './style.module.scss';
 
@@ -106,32 +93,14 @@ const NavMenu = ({ fixedHeader }) => {
               </p>
               <p>Got a query? Contact <a href="mailto://contact@mangrovealliance.org">Mangrove Alliance</a></p>
               <p>Convened by</p>
+              <img src={convened} className={styles.logo} alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International" />
 
-              <ul>
-                <li><img src={aberystwyth} className={styles.logo} alt="Aberystwyth University" /></li>
-                <li><img src={soloeo} className={styles.logo} alt="soloEO" /></li>
-                <li><img src={tnc} className={styles.logo} alt="The Nature Conservancy" /></li>
-                <li><img src={wetlands} className={styles.logo} alt="Wetlands International" /></li>
-              </ul>
-           
               <p>Supported by</p>
-              <ul>
-                <li><img src={cambridge} className={styles.logo} alt="University of Cambridge" /></li>
-                <li><img src={jaxa} className={styles.logo} alt="JAXA" /></li>
-                <li><img src={nasa} className={styles.logo} alt="NASA" /></li>
-                <li><img src={iucn} className={styles.logo} alt="IUCN" /></li>
-                <li><img src={griffith} className={styles.logo} alt="Griffith University" /></li>
-                <li><img src={ci} className={styles.logo} alt="Conservation International" /></li>
-                <li><img src={wwf} className={styles.logo} alt="WWF" /></li>
-                <li><img src={scripps} className={styles.logo} alt="SCRIPPS" /></li>
-              </ul>
+              <img src={supported} className={styles.logo} alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography" />
+              
               <p>Donors</p>
-              <ul>
-                  <li><img src={dob} className={styles.logo} alt="DOB Ecology" /></li>
-                  <li><img src={oak} className={styles.logo} alt="Oak Foundation" /></li>
-                  <li><img src={npl} className={styles.logo} alt="Dutch Postcode Lottery" /></li>
-                  <li><img src={comon} className={styles.logo} alt="COmON Foundation" /></li>
-              </ul>
+              <img src={donors} className={styles.logo} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
+              
               <h4>Disclaimer</h4>
               <p>
               THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
