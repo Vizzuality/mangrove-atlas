@@ -20,21 +20,25 @@ const MangroveAlertsLine = ({
 
   useEffect(() => {
     if (currentLocation && (currentLocation.id || currentLocation.iso)) {
+
       const location = locationsList.find((l) => {
-        if (currentLocation.id) {
-          return l.id === Number(currentLocation.id);
-        }
         if (currentLocation.iso) {
           return l.iso === currentLocation.iso && l.location_type === 'country';
         }
+        if (currentLocation.id && currentLocation.id !== 'worldwdie') {
+          return l.id === Number(currentLocation.id);
+        }
         return false;
       });
+
       if (location) {
         // eslint-disable-next-line camelcase
         const { id: location_id } = location;
         fetchAlerts({ location_id, start_date: startDate, end_date: endDate });
+      } else if (location === undefined && currentLocation.id === 'worldwide') {
+        fetchAlerts({ start_date: startDate, end_date: endDate });
       }
-    } else { fetchAlerts({ start_date: startDate, end_date: endDate }); }
+    }
   }, [year, currentLocation]);
 
   if (!data || data.length <= 0) {
