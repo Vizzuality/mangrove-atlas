@@ -7,7 +7,6 @@ import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
 import { fetchRankingData } from 'modules/ranking/actions';
-import { fetchAlerts } from 'modules/alerts/actions';
 import { initializeApp } from './actions';
 
 function* loadInitialData() {

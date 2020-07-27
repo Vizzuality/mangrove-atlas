@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import classnames from 'classnames';
 import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
@@ -54,9 +54,14 @@ const NavMenu = ({ fixedHeader }) => {
               <p>Thriving mangroves are key to the health of nature and effective climate action.
                 Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
                 data and tools for monitoring mangroves necessary for this. It gives universal
-                access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.</p>
-              <p onClick={handleContent}>Close this message to continue or find out more about Global Mangrove Watch <span>here.</span></p>
-                
+                access to near real-time information on where and what changes there are
+                to mangroves across the world, and highlights why they are valuable.
+              </p>
+              <p onClick={handleContent}>
+                Close this message to continue or find out more about Global Mangrove Watch&nbsp;
+                <span>here.</span>
+              </p>
+
               <HotspotsList />
             </section>
           )}
@@ -74,7 +79,7 @@ const NavMenu = ({ fixedHeader }) => {
                 coastal and park managers, conservationists, policymakers and practitioners the evidence
                 needed to respond to illegal logging, pinpoint the causes of local mangrove loss and track
                 restoration progress. It is a tool that can help mangroves be central to climate mitigation,
-                adaptation and sustainable development plans and policies. 
+                adaptation and sustainable development plans and policies.
               </p>
 
               <h4>GMW and the Global Mangrove Alliance</h4>
@@ -97,16 +102,16 @@ const NavMenu = ({ fixedHeader }) => {
 
               <p>Supported by</p>
               <img src={supported} className={styles.logo} alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography" />
-              
+
               <p>Donors</p>
               <img src={donors} className={styles.logo} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
-              
+
               <h4>Disclaimer</h4>
               <p>
               THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
               AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
               WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
-              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION 
+              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
               PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
               </p>
             </section>
@@ -116,27 +121,27 @@ const NavMenu = ({ fixedHeader }) => {
               <h3>Welcome to Global Mangrove Watch </h3>
               <button className={styles.menuItem} type="button" onClick={handleContent}>
                 About this tool
-                  </button>
+              </button>
               <nav>
                 Global Mangrove Alliance
-                    <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
                   About
-                    </a>
+                </a>
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
                   Mangroves
-                    </a>
+                </a>
                 <a onClick={handleClose} href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
                   Initiatives
-                    </a>
+                </a>
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
                   News
-                    </a>
+                </a>
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
                   Resources
-                    </a>
+                </a>
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
                   Contact
-                    </a>
+                </a>
               </nav>
 
               <aside className={styles.footer}>
