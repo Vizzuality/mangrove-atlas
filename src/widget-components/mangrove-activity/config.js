@@ -47,7 +47,7 @@ export const CONFIG = {
     return {
       chartData,
       dataRanked,
-      metaData: widgetMeta(data.meta),
+      metaData: [1996, 2007, 2008, 2009, 2010, 2015, 2016],
       chartConfig: {
         layout: 'vertical',
         height: limit === 5 ? 400 : limit / 5 * 100 + 350,
