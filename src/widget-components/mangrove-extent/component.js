@@ -100,7 +100,6 @@ function MangroveExtent({
       { value: 'ha', label: 'ha' }
     ];
     const totalCoverage = metadata.total / 1000;
-    const coverage = (percentage * totalCoverage) / 100;
     const area = unit === 'ha'
       ? numberFormat(chartData.data[0].area / 10000)
       : numberFormat(chartData.data[0].area / 1000000);

@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import ChartWidget from 'components/chart-widget';
 import config from './config';
-
-const numberFormat = format(',.2f');
 
 function MangroveBlueCarbon({
   data: rawData,
@@ -42,8 +39,11 @@ function MangroveBlueCarbon({
 
   const sentence = (
     <>
-      Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e  with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
+      Total organic carbon stored in
+      <strong>{location}{"'"}s</strong>
+      mangroves is estimated at
+      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
+      with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
       &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );
