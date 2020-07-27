@@ -56,7 +56,7 @@ const NavMenu = ({ fixedHeader }) => {
                 data and tools for monitoring mangroves necessary for this. It gives universal
                 access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.</p>
               <p onClick={handleContent}>Close this message to continue or find out more about Global Mangrove Watch <span>here.</span></p>
-                
+
               <HotspotsList />
             </section>
           )}
@@ -74,7 +74,7 @@ const NavMenu = ({ fixedHeader }) => {
                 coastal and park managers, conservationists, policymakers and practitioners the evidence
                 needed to respond to illegal logging, pinpoint the causes of local mangrove loss and track
                 restoration progress. It is a tool that can help mangroves be central to climate mitigation,
-                adaptation and sustainable development plans and policies. 
+                adaptation and sustainable development plans and policies.
               </p>
 
               <h4>GMW and the Global Mangrove Alliance</h4>
@@ -82,7 +82,7 @@ const NavMenu = ({ fixedHeader }) => {
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                &nbsp;Learn more at MangroveAlliance.org.
+                  &nbsp;Learn more at MangroveAlliance.org.
                 </a>
               </p>
 
@@ -97,18 +97,20 @@ const NavMenu = ({ fixedHeader }) => {
 
               <p>Supported by</p>
               <img src={supported} className={styles.logo} alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography" />
-              
+
               <p>Donors</p>
               <img src={donors} className={styles.logo} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
-              
+
               <h4>Disclaimer</h4>
-              <p>
-              THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
-              AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
-              WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
-              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION 
-              PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+              <aside>
+                <p>
+                  THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
+                  AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
+                  WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
+                  FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
+                  PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
               </p>
+              </aside>
             </section>
           )}
           {(!welcomeContent && !aboutContent) && (

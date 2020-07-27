@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
+import hiddenCountries from 'modules/alerts/constants';
 import config from './config';
 
 const MangroveAlertsLine = ({
@@ -20,6 +21,10 @@ const MangroveAlertsLine = ({
 
   useEffect(() => {
     if (currentLocation && (currentLocation.id || currentLocation.iso)) {
+      const exceptions = hiddenCountries
+        .find(country => country === (currentLocation.id || currentLocation.iso))
+
+      if (exceptions) return null;
       const location = locationsList.find((l) => {
         if (currentLocation.id) {
           return l.id === Number(currentLocation.id);
