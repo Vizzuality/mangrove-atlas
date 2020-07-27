@@ -110,6 +110,7 @@ const getTotal = data => data.reduce((previous, current) => current.count + prev
 export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
+
     const downloadData = getDownloadData(data, year);
     const startIndex = chartData.findIndex(d => d.date.value === startDate);
     const endIndex = chartData.findIndex(d => d.date.value === endDate);
@@ -117,13 +118,12 @@ export const CONFIG = {
     const dateOptions = getDates(data);
     const dataFiltered = data
       .filter(d => endDate >= d.date.value && d.date.value >= startDate);
-
     return {
       chartData,
       monthsOptions,
       dateOptions,
       downloadData,
-      total: numberFormat(getTotal(dataFiltered)),
+      total: getTotal(dataFiltered),
       chartConfig: {
         height: 250,
         cartesianGrid: {
