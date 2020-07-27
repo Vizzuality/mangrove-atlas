@@ -104,7 +104,7 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend title="Total carbon density (t CO<sub>2</sub>e ha<sup>-1</sup>)" groups={groups} />;
+            return <WidgetLegend title="Total carbon density (t CO<sub>2</sub>e / ha)" groups={groups} />;
           }
         },
         tooltip: {
