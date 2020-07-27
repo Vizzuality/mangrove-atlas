@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
   data: state.ranking,
   isLoading: state.ranking.isLoading,
   ui: state.widgets.ui.activity || {
-    startDate: 2007,
+    startDate: 1996,
     endDate: 2016,
     filter: 'gain',
     order: 'desc',
