@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import { NavigationControl, FullscreenControl } from 'react-map-gl';
+import { NavigationControl } from 'react-map-gl';
 import classnames from 'classnames';
 import pick from 'lodash/pick';
-import Bowser from 'bowser';
 
 // Components
 import MobileLegendControl from 'components/map-legend/mobile';
@@ -49,8 +48,6 @@ export const MapContainer = ({
     };
   // eslint-disable-next-line
   }, []);
-
-  const { parsedResult: browser } = (Bowser.getParser(window.navigator.userAgent));
 
   /**
    * CHANGING CURSOR FOR INTERACTIVE LAYERS

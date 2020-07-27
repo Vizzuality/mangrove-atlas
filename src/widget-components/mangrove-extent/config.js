@@ -5,14 +5,12 @@ import WidgetLegend from 'components/widget-legend';
 
 import { format } from 'd3-format';
 
-
-const numberFormat = format(',.2f');
 const tooltipFormat = format(',~s');
 
 const widgetData = (data, unit) => {
   const { list, metadata } = data;
   if (list && list.length) {
-      const { location_coast_length_m: total } = metadata;
+    const { location_coast_length_m: total } = metadata;
 
     return list.filter(d => d.length_m).map((d) => {
       const year = new Date(d.date).getFullYear();
@@ -95,7 +93,7 @@ export const CONFIG = {
               }
             };
           }), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} direction='vertical' />;
+          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} direction="vertical" />;
         }
       },
       tooltip: {

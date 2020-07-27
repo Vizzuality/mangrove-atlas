@@ -8,7 +8,6 @@ import {
   Cell,
   Area,
   Pie,
-  RadialBar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -116,7 +115,7 @@ class Chart extends PureComponent {
 
     clearStack();
 
-    const { lines, bars, areas, pies, radial } = yKeys;
+    const { lines, bars, areas, pies } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     const RechartChart = rechartCharts.get(type);

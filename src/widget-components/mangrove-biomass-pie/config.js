@@ -3,38 +3,10 @@ import React from 'react';
 // utils
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
-import { format } from 'd3-format';
-
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
-import WidgetCustomLabel from 'components/widget-custom-label';
-
-const numberFormat = format(',.3r');
-
-const categoriesData = {
-  '0–50': {
-    color: '#EAF19D',
-    label: '0 – 50 t ha-1'
-  },
-  '50–100': {
-    color: '#B8E98E',
-    label: '50 – 100 t ha-1'
-  },
-  '100–150': {
-    color: '#1B97C1',
-    label: '100 – 150 t ha-1'
-  },
-  '150–200': {
-    color: '#1C52A3',
-    label: '150 – 200 t ha-1'
-  },
-  '200–250': {
-    color: '#13267F',
-    label: '200 – 250 t ha-1'
-  }
-};
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
