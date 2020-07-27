@@ -40,7 +40,7 @@ function MangroveBlueCarbon({
   const sentence = (
     <>
       Total organic carbon stored in
-      <strong>{location}{"'"}s</strong>
+      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
       mangroves is estimated at
       &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
       with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
