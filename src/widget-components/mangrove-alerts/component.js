@@ -45,26 +45,32 @@ const MangroveAlerts = ({
     return null;
   }
   const {
-    chartData, chartConfig, total, dateOptions, downloadData
+    chartData, chartConfig, total, dateOptions, downloadData, startDateOptions, endDateOptions,
   } = config.parse(data, startDate, endDate, year);
   if (chartData.length <= 0) {
     return null;
   }
   const changeDate = (type, value) => {
+    const yyyy = new Date(value).getFullYear();
+    const mm = new Date(value).getMonth();
+    const dd = new Date(2020, mm, 0).getDate();
+    const date = `${yyyy}-${mm}-${dd}`;
+
     setUi({
       id: 'alerts',
       value: {
-        [type]: value
+        [type]: date
       }
     });
   };
+  console.log(startDateOptions, startDate)
 
   const startDateSelect = (
     <Select
       value={startDate}
-      options={dateOptions}
-      isOptionDisabled={option => option.value > endDate
-        || option.value === startDate}
+      options={startDateOptions}
+      // isOptionDisabled={option => console.log(option.value, endDate, '****')||option.value > endDate
+      //   || option.value === startDate}
       onChange={value => changeDate('startDate', value)}
     />
   );
