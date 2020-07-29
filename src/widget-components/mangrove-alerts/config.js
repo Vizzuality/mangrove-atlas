@@ -58,11 +58,14 @@ const getData = (data, year) => sortBy(data
   .filter(d => new Date(d.date.value).getFullYear() === year && d.date.value >= '2020-04-01')
   .map((d) => {
     const date = months.find(month => month.value === new Date(d.date.value).getMonth() + 1);
-
+    const month = new Date(d.date.value).getMonth() + 1;
+    const day = new Date(year, month, 0).getDate();
     return (
       {
         ...d,
         month: date.value,
+        startDate: date.value,
+        endDate: `${year}-${month < 10 ? '0' : ''}${month}-${day}`,
         name: monthsConversion[date.label],
         alerts: d.count
       }
@@ -107,13 +110,13 @@ const getDates = data => sortBy(data
 const getStartDates = data => sortBy(data
   .map((d) => {
     const monthsConversionAlt = {
-      0: 'January',
-      1: 'February',
-      2: 'March',
-      3: 'April',
-      4: 'May',
-      5: 'June',
-      6: 'July',
+      1: 'January',
+      2: 'February',
+      3: 'March',
+      4: 'April',
+      5: 'May',
+      6: 'June',
+      7: 'July',
       8: 'August',
       9: 'September',
       10: 'October',
@@ -121,14 +124,11 @@ const getStartDates = data => sortBy(data
       12: 'December'
     };
     const year = new Date(d.date.value).getFullYear();
-    const month = new Date(d.date.value).getMonth() + 1;
-    const monthLabel = monthsConversionAlt[month];
-    const day = new Date(year, month, 0).getDate();
-    const date = `${year}-${month}-${day}`;
+    const month = monthsConversionAlt[new Date(d.date.value).getMonth() + 1];
 
     return {
-      label: `${monthLabel}, ${year}`,
-      value: date
+      label: `${month}, ${year}`,
+      value: d.date.value
     };
   })
   .filter(m => m.value >= '2020-04-01'),
@@ -137,13 +137,13 @@ const getStartDates = data => sortBy(data
 const getEndDates = data => sortBy(data
   .map((d) => {
     const monthsConversionAlt = {
-      0: 'January',
-      1: 'February',
-      2: 'March',
-      3: 'April',
-      4: 'May',
-      5: 'June',
-      6: 'July',
+      1: 'January',
+      2: 'February',
+      3: 'March',
+      4: 'April',
+      5: 'May',
+      6: 'June',
+      7: 'July',
       8: 'August',
       9: 'September',
       10: 'October',
@@ -154,13 +154,12 @@ const getEndDates = data => sortBy(data
     const month = new Date(d.date.value).getMonth() + 1;
     const monthLabel = monthsConversionAlt[month];
     const day = new Date(year, month, 0).getDate();
-    const date = `${year}-${month}-${day}`;
+    const date = `${year}-${month < 10 ? '0' : ''}${month}-${day}`;
     return {
       label: `${monthLabel}, ${year}`,
       value: date
     };
-  })
-  .filter(m => m.value >= '2020-04-01'),
+  }),
 ['date']);
 
 
@@ -170,15 +169,16 @@ export const CONFIG = {
   parse: ({ data }, startDate, endDate, year) => {
     const chartData = getData(data, year);
     const downloadData = getDownloadData(data, year);
-    const startIndex = chartData.findIndex(d => d.date.value === startDate);
-    const endIndex = chartData.findIndex(d => d.date.value === endDate);
+    const startIndex = chartData.findIndex(d => d.date.value === startDate.value);
+    const endIndex = chartData
+      .findIndex(d => new Date(d.date.value).getMonth() === new Date(endDate.value).getMonth());
     const monthsOptions = getDates(data, year);
     const dateOptions = getDates(data);
     const startDateOptions = getStartDates(data);
     const endDateOptions = getEndDates(data);
 
     const dataFiltered = data
-      .filter(d => endDate >= d.date.value && d.date.value >= startDate);
+      .filter(d => endDate >= d.date.value && d.date.value >= startDate.value);
 
     return {
       chartData,
@@ -248,8 +248,8 @@ export const CONFIG = {
             fill: 'url(#diagonal-stripe-1) #000'
           },
           {
-            x1: startDate,
-            x2: endDate,
+            x1: startDate.value,
+            x2: endDate.value,
             y1: -100,
             y2: 480,
             fill: '#fff',
