@@ -33,7 +33,7 @@ function MangroveNetChange({
         year: '2016',
       }
     });
-  }, [addFilter, unit]);
+  }, [addFilter, unit, endYear, startYear, years]);
 
   if (!rawData) {
     return null;

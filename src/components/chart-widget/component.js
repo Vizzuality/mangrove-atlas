@@ -17,7 +17,6 @@ function ChartWidget({
 }) {
   return (
     <Widget className={styles.widget} {...props}>
-      {console.log(Date.now())}
       <div className={styles.widget_template}>
         <div className={styles.sentence} key={Date.now()}>
           {sentence}

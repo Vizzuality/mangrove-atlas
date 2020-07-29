@@ -39,7 +39,7 @@ const MangroveAlerts = ({
         fetchAlerts({ start_date: startDate, end_date: endDate });
       }
     }
-  }, [year, currentLocation]);
+  }, [year, currentLocation, endDate, fetchAlerts, locationsList, startDate]);
 
   if (!data || data.length <= 0) {
     return null;
