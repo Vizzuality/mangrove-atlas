@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -33,7 +34,8 @@ class LocationSelector extends PureComponent {
     searchTerm: null
   };
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.isOpened) this.resetTerm();
   }
 
