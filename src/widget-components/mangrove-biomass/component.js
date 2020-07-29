@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Select from 'components/select';
+import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import sortBy from 'lodash/sortBy';
 
 import config from './config';
 
-const MangroveBiomass = ({
+
+function MangroveBiomass({
   data: rawData,
   currentLocation,
   isCollapsed,
@@ -16,7 +17,7 @@ const MangroveBiomass = ({
   ui: yearSelected,
   setUi,
   ...props
-}) => {
+}) {
   useEffect(() => {
     addFilter({
       filter: {
@@ -26,13 +27,11 @@ const MangroveBiomass = ({
     });
   }, [addFilter]);
 
-
   if (!rawData) {
     return null;
   }
-  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData, yearSelected);
-
-  if (chartData.length <= 0) {
+  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
+  if (!chartData || chartData.length <= 0) {
     return null;
   }
 
@@ -46,7 +45,7 @@ const MangroveBiomass = ({
     });
   };
 
-  const dateOptions = sortBy(metadata.map(year => ({
+  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
     label: year.toString(),
     value: year.toString()
   })), ['value']);
@@ -66,10 +65,11 @@ const MangroveBiomass = ({
 
   const sentence = (
     <>
-      Mean mangrove above-ground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{coverage} mg ha<sup>-1</sup></strong> in {yearSelector}.
+      Mean mangrove aboveground biomass density in <strong> {location}</strong>
+      &nbsp;was <strong>{coverage} t / ha</strong> in <strong>{2016 || yearSelector}</strong>.
     </>
   );
+
   const widgetData = {
     data: chartData,
     config: chartConfig
@@ -87,14 +87,30 @@ const MangroveBiomass = ({
       {...props}
     />
   );
-};
+}
 
 MangroveBiomass.propTypes = {
-  currentLocation: PropTypes.shape({})
+  data: PropTypes.shape({}),
+  currentLocation: PropTypes.shape({}),
+  addFilter: PropTypes.func,
+  isCollapsed: PropTypes.bool,
+  slug: PropTypes.string,
+  name: PropTypes.string,
+  metadata: PropTypes.shape({}),
+  ui: PropTypes.string,
+  setUi: PropTypes.func
 };
 
 MangroveBiomass.defaultProps = {
-  currentLocation: null
+  data: null,
+  currentLocation: null,
+  addFilter: () => { },
+  isCollapsed: false,
+  slug: null,
+  name: null,
+  metadata: null,
+  ui: null,
+  setUi: () => { }
 };
 
 export default MangroveBiomass;

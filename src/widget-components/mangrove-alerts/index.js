@@ -1,18 +1,22 @@
 import { connect } from 'react-redux';
-import moment from 'moment';
+import { fetchAlerts } from 'modules/alerts/actions';
 import { setUi } from 'modules/widgets/actions';
-
 import Component from './component';
 
-import data from './alerts.json';
-
 const mapStateToProps = state => ({
-  data,
+  data: state.alerts,
+  isLoading: state.ranking.isLoading,
+  currentLocation: state.locations.current,
+  locationsList: state.locations.list,
   ui: state.widgets.ui.alerts || {
-    startDate: moment('2019-01-01').add(2, 'M').toISOString(),
-    endDate: moment('2019-12-31').subtract(2, 'M').toISOString()
+    alerts: {
+      startDate: '2020-04-01',
+      endDate: '2020-05-01',
+      year: 2020
+    }
   }
 });
-const mapDispatchToProps = { setUi };
+
+const mapDispatchToProps = { setUi, fetchAlerts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
