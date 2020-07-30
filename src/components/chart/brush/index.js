@@ -61,7 +61,7 @@ export default class Brush extends PureComponent {
 
 
   // eslint-disable-next-line camelcase
-  UNSAFE_componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     const { height } = this.svg.getBoundingClientRect();
     const { margin, startIndex, endIndex } = this.props;
     const { startIndex: prevStartIndex, endIndex: prevEndIndex } = prevProps;

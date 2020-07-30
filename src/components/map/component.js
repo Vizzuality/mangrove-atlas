@@ -98,7 +98,7 @@ class Map extends Component {
 
   // eslint-disable-next-line camelcase
   // eslint-disable-next-line react/sort-comp
-  UNSAFE_componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     const { viewport: prevViewport, bounds: prevBounds } = prevProps;
     const { viewport, bounds } = this.props;
     const { viewport: stateViewport } = this.state;
