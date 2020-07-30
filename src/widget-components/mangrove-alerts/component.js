@@ -20,7 +20,6 @@ const MangroveAlerts = ({
 
   useEffect(() => {
     if (currentLocation && (currentLocation.id || currentLocation.iso)) {
-
       const location = locationsList.find((l) => {
         if (currentLocation.iso) {
           return l.iso === currentLocation.iso && l.location_type === 'country';
