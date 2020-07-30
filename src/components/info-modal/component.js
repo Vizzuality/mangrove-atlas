@@ -34,7 +34,7 @@ class InfoModal extends PureComponent {
   };
 
   // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.isOpened) this.reset();
   }
 
