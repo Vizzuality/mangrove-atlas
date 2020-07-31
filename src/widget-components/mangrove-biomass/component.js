@@ -30,7 +30,7 @@ function MangroveBiomass({
   if (!rawData) {
     return null;
   }
-  const { chartData, metadata, chartConfig, coverage } = config.parse(rawData);
+  const { chartData, metadata, chartConfig, coverage, downloadData } = config.parse(rawData);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
@@ -81,6 +81,7 @@ function MangroveBiomass({
       data={chartData}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}

@@ -29,8 +29,8 @@ const WidgetInfo = ({
         <DownloadLink
           data={downloadData || chartData || data}
           filename={filename}
-          headers={selectedLocation}
           label={selectedLocation}
+          headers={selectedLocation}
         />
       )}
       <Button
