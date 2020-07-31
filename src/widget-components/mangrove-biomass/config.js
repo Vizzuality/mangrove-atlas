@@ -37,7 +37,6 @@ const chunk = (array, size) => {
 
 const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
-
   const barsData = data[0].map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
 
@@ -47,13 +46,12 @@ const getData = (data, selectedYear) => {
   );
 
   formattedData = formattedData.map(d => d / total);
-
   return [
-    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–50', percentage: formattedData[0] * 100, color: '#EAF19D', value: formattedData[0] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[1] * 100, label: '50–100', percentage: formattedData[1] * 100, color: '#B8E98E', value: formattedData[1] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[2] * 100, label: '100–150', percentage: formattedData[2] * 100, color: '#1B97C1', value: formattedData[2] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[3] * 100, label: '150–200', percentage: formattedData[3] * 100, color: '#1C52A3', value: formattedData[3] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[4] * 100, label: '200–250', percentage: formattedData[4] * 100, color: '#13267F', value: formattedData[4] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–250', percentage: formattedData[0] * 100, color: '#EAF19D', value: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '250-500', percentage: formattedData[1] * 100, color: '#B8E98E', value: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '500-750', percentage: formattedData[2] * 100, color: '#1B97C1', value: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '750-1000', percentage: formattedData[3] * 100, color: '#1C52A3', value: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '1000-1250', percentage: formattedData[4] * 100, color: '#13267F', value: formattedData[4] / total * 100 },
   ];
 };
 
@@ -138,7 +136,7 @@ const CONFIG = {
                 }}
                 settings={[
                   { key: 'label' },
-                  { label: 'Percentage:', key: 'value', format: value => `${value ? (value).toFixed(2) : null} %`, position: '_column' },
+                  { label: 'Percentage:', key: 'percentage', format: value => `${value ? (value).toFixed(2) : null} %`, position: '_column' },
                 ]}
               />
             );
