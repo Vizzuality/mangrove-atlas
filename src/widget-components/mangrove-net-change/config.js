@@ -31,6 +31,17 @@ const widgetMetadata = ({ list }) => ({
   )
 });
 
+const getDownloadData = ({ list }) => {
+  const data = list.filter(l => l.loss_m2 || l.gain_m2);
+  return data.map(l => ({
+    date: l.date,
+    'gain (m2)': l.gain_m2,
+    'loss (m2)': l.loss_m2,
+    'net change (m2)': l.net_change_m2
+  }));
+};
+
+
 const CONFIG = {
   parse: (data, unit) => ({
     chartData: widgetData(data).map(l => (
@@ -42,6 +53,7 @@ const CONFIG = {
         name: l.label,
         year: l.year
       })),
+    downloadData: getDownloadData(data, unit),
     metadata: widgetMetadata(data),
     chartConfig: {
       stackOffset: 'sign',

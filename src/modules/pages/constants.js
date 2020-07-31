@@ -13,7 +13,7 @@ export const PAGES = [
   },
   {
     name: 'PAGE/AOI',
-    path: '/area-of-interest/:id',
+    path: '/area-of-interest/:location_id',
     page: 'app',
   },
   {

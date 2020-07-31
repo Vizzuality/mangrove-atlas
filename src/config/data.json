@@ -89,7 +89,7 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
-      "layersIds": ["alerts-style"]
+      "layersIds": ["alerts-heat"]
     },
     {
       "name": "Mangrove habitat extent",
