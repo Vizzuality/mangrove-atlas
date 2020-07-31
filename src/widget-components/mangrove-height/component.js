@@ -36,7 +36,7 @@ const MangroveHeight = ({
   const dataFiltered = rawData.filter(data => data.date.includes('2016'));
   const { chartData, metadata, chartConfig, heightCoverage, downloadData } = config.parse(dataFiltered, date);
 
-  if (chartData.length <= 0) {
+  if (!chartData || !chartData.length) {
     return null;
   }
 
