@@ -10,6 +10,7 @@ import styles from './style.module.scss';
 const HotspotsList = ({ data }) => (
   <div className={styles.hotspotsList}>
     {data && data.map(d => (
+
       <Link key={d.id} to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
         <div
           style={{

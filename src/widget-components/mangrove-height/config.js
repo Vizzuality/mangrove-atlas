@@ -54,7 +54,7 @@ const histogramData = (data) => {
 };
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
-const heightCoverage = (data, date) => {
+const getHeightCoverage = (data, date) => {
   const yearData = data.find(d => d.date.includes(date));
   if (!yearData) return null;
   return yearData.hmax_m.toFixed(2);
@@ -64,14 +64,32 @@ const metaData = data => Array.from(new Set(
   data.map(d => moment(d.date).year())
 ));
 
+const getDownloadData = (chartData, heightCoverage, date) => {
+  if (!chartData || !chartData.length) return null;
+  const data = chartData[0];
+  return [{
+    Date: date,
+    'Mangrove maximum canopy height (m)': heightCoverage,
+    '0–5 m': `percentage(%): ${data['0–5 m']} - color: #C9BB42`,
+    '5–10 m': `percentage(%): ${data['5–10 m']} - color: #8BA205`,
+    '10–15 m': `percentage(%): ${data['10–15 m']} - color: #428710`,
+    '15–20 m': `percentage(%): ${data['15–20 m']} - color: #0A6624`,
+    '20–25 m': `percentage(%): ${data['20–25 m']} - color: #103C1F`,
+  }];
+};
+
 export const CONFIG = {
   parse: (data, date) => {
     {
       const dataFiltered = filterData(data);
-      return {
+      const chartData = histogramData(dataFiltered);
+      const heightCoverage = getHeightCoverage(dataFiltered, date);
+      const downloadData = getDownloadData(chartData, heightCoverage, date);
 
-        chartData: histogramData(dataFiltered),
-        heightCoverage: heightCoverage(dataFiltered, date),
+      return {
+        chartData,
+        heightCoverage,
+        downloadData,
         metadata: metaData(dataFiltered),
         chartConfig: {
           height: 360,
