@@ -31,9 +31,9 @@ export const conservationHotspots = createSelector(
   (_locations) => {
 
     // Saloum and Rufiji
-    const ids = [894, 893];
-    const location_ids = [ '1_1_2_00000000000000000000', '1_1_1_00000000000000000000'];
-    const widgetData = _locations.filter(location => location_ids.includes(location.location_id));
+    const ids = [1534, 1555];
+    const location_ids = [ '2_000000000000000009ed', '2_0000000000000000059e'];
+    const widgetData = _locations.filter(location => ids.includes(location.id));
 
     return { widgetData };
   }
