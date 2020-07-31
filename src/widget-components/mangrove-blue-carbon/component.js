@@ -25,7 +25,7 @@ function MangroveBlueCarbon({
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig } = config.parse(rawData);
+  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
     return null;
@@ -59,6 +59,7 @@ function MangroveBlueCarbon({
       data={chartData}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}

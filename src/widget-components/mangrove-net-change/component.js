@@ -40,7 +40,7 @@ function MangroveNetChange({
   }
 
   const data = config.parse(rawData, unit);
-  const { metadata, chartData, chartConfig } = data;
+  const { metadata, chartData, chartConfig, downloadData } = data;
 
   const startYearOptions = metadata.years.map(year => ({
     label: year.toString(),
@@ -217,6 +217,7 @@ function MangroveNetChange({
       data={data}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}

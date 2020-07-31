@@ -61,7 +61,7 @@ function MangroveExtent({
     return null;
   }
   const data = config.parse(rawData, unit);
-  const { chartConfig, metadata } = data;
+  const { chartConfig, metadata, downloadData } = data;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),
     value: year
@@ -144,6 +144,7 @@ function MangroveExtent({
       data={data}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       sentence={sentence}
       chartData={chartData}
       {...props}
