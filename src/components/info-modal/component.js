@@ -1,3 +1,4 @@
+/* eslint-disable react/sort-comp */
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -32,6 +33,7 @@ class InfoModal extends PureComponent {
     search: null
   };
 
+  // eslint-disable-next-line camelcase
   componentWillReceiveProps(nextProps) {
     if (nextProps.isOpened) this.reset();
   }

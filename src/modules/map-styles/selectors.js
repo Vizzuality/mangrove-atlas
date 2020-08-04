@@ -147,14 +147,14 @@ export const mapStyle = createSelector(
     // GEN ALERTS URL TEMPLATE
     if (_locationId && (_locationId !== 'worldwide' && _locationId !== 1298)) {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: `start_date=${_startDateAlerts}`,
-        endDate: `&end_date=${_endDateAlerts}`,
+        startDate: `start_date=${_startDateAlerts.value}`,
+        endDate: `&end_date=${_endDateAlerts.value}`,
         locationId: `&location_id=${_locationId}`,
       });
     } else {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: `start_date=${_startDateAlerts}`,
-        endDate: `&end_date=${_endDateAlerts}`,
+        startDate: `start_date=${_startDateAlerts.value}`,
+        endDate: `&end_date=${_endDateAlerts.value}`,
         locationId: '',
       });
     }

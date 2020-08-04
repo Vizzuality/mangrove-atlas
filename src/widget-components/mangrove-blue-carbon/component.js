@@ -25,7 +25,7 @@ function MangroveBlueCarbon({
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig } = config.parse(rawData);
+  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
     return null;
@@ -40,7 +40,7 @@ function MangroveBlueCarbon({
   const sentence = (
     <>
       Total organic carbon stored in
-      <strong>{location}{"'"}s</strong>
+      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
       mangroves is estimated at
       &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
       with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
@@ -59,6 +59,7 @@ function MangroveBlueCarbon({
       data={chartData}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}

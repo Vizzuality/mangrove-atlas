@@ -21,40 +21,33 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
+const getData = (data, selectedYear) => {
+  if (!data || !data.length) return null;
+  const dataFormatted = data[0].hmax_hist_m;
 
-const getData = (barValues) => {
-  if (!barValues) return null;
-  const barsData = barValues.map(value => value[1]);
-  const chnkedData = chunk(barsData, 5);
-  let formattedData = chnkedData.map(
+  const barsData = dataFormatted.map(value => value[1]);
+  const total = Object.values(barsData).reduce((previous, current) => current + previous);
+
+
+  const chunkedData = chunk(barsData, 5);
+  const formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
 
-  const total = barsData.reduce((previous, current) => current + previous);
-  formattedData = formattedData.map(data => data / total);
-  return formattedData;
-};
-
-
-const histogramData = (data) => {
-  if (!data) {
-    return null;
-  }
-  const histogram = data.map(d => (
+  return [
     {
-      year: moment(d.date).year(),
-      '0–5 m': getData(d.hmax_hist_m)[0] * 100,
-      '5–10 m': getData(d.hmax_hist_m)[1] * 100,
-      '10–15 m': getData(d.hmax_hist_m)[2] * 100,
-      '15–20 m': getData(d.hmax_hist_m)[3] * 100,
-      '20–25 m': getData(d.hmax_hist_m)[4] * 100,
+      year: selectedYear,
+      '0–13 m': formattedData[0] / total * 100,
+      '13–26 m': formattedData[1] / total * 100,
+      '26–39 m': formattedData[2] / total * 100,
+      '39–52 m': formattedData[3] / total * 100,
+      '52–65 m': formattedData[4] / total * 100,
     }
-  ));
-  return histogram;
+  ];
 };
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
-const heightCoverage = (data, date) => {
+const getHeightCoverage = (data, date) => {
   const yearData = data.find(d => d.date.includes(date));
   if (!yearData) return null;
   return yearData.hmax_m.toFixed(2);
@@ -64,14 +57,32 @@ const metaData = data => Array.from(new Set(
   data.map(d => moment(d.date).year())
 ));
 
+const getDownloadData = (chartData, heightCoverage, date) => {
+  if (!chartData || !chartData.length) return null;
+  const data = chartData[0];
+  return [{
+    Date: date,
+    'Mangrove maximum canopy height (m)': heightCoverage,
+    '0–13 m': `percentage(%): ${data['0–13 m']} - color: #C9BB42`,
+    '13–26 m': `percentage(%): ${data['13–26 m']} - color: #8BA205`,
+    '26–39 m': `percentage(%): ${data['26–39 m']} - color: #428710`,
+    '39-52 m': `percentage(%): ${data['39–52 m']} - color: #0A6624`,
+    '52–65 m': `percentage(%): ${data['52–65 m']} - color: #103C1F`,
+  }];
+};
+
 export const CONFIG = {
   parse: (data, date) => {
     {
       const dataFiltered = filterData(data);
-      return {
+      const chartData = getData(dataFiltered);
+      const heightCoverage = getHeightCoverage(dataFiltered, date);
+      const downloadData = getDownloadData(chartData, heightCoverage, date);
 
-        chartData: histogramData(dataFiltered),
-        heightCoverage: heightCoverage(dataFiltered, date),
+      return {
+        chartData,
+        heightCoverage,
+        downloadData,
         metadata: metaData(dataFiltered),
         chartConfig: {
           height: 360,
@@ -85,7 +96,7 @@ export const CONFIG = {
           yKeys: {
             bars:
             {
-              '0–5 m':
+              '0–13 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -93,7 +104,7 @@ export const CONFIG = {
                 stroke: '#C9BB42',
                 isAnimationActive: false
               },
-              '5–10 m':
+              '13–26 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -101,7 +112,7 @@ export const CONFIG = {
                 stroke: '#8BA205',
                 isAnimationActive: false
               },
-              '10–15 m':
+              '26–39 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -109,7 +120,7 @@ export const CONFIG = {
                 stroke: '#428710',
                 isAnimationActive: false
               },
-              '15–20 m':
+              '39–52 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -117,7 +128,7 @@ export const CONFIG = {
                 stroke: '#0A6624',
                 isAnimationActive: false
               },
-              '20–25 m':
+              '52–65 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -177,24 +188,23 @@ export const CONFIG = {
           },
           tooltip: {
             cursor: false,
-            content: (
-              <WidgetTooltip
-                type="column"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  flexDirection: 'column'
-                }}
-                settings={[
-                  { label: '0–5 m', color: '#C9BB42', key: '0–5 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '5–10 m', color: '#8BA205', key: '5–10 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '10–15 m', color: '#428710', key: '10–15 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '15–20 m', color: '#0A6624', key: '15–20 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: '20–25 m', color: '#103C1F', key: '20–25 m', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                ].reverse()}
-                label={{ key: 'name' }}
-              />
-            )
+            content: (properties) => {
+              const { payload } = properties;
+              return (
+                <WidgetTooltip
+                  payload={payload}
+                  type="column"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    flexDirection: 'column'
+                  }}
+                  settings={payload.map(p => (
+                    { label: p.name, key: p.value, color: p.color, format: value => `${numberFormat(p.value)} %`, position: '_column', type: '_stacked'}
+                  ))}
+                />
+              );
+            }
           }
         },
       };

@@ -95,7 +95,6 @@ export const MapContainer = ({
       ]);
 
       const internalId = internalIdMap.get(areaName);
-
       if (internalId) {
         goToAOI({ id: internalId });
       }

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -95,6 +96,8 @@ class Map extends Component {
     }
   }
 
+  // eslint-disable-next-line camelcase
+  // eslint-disable-next-line react/sort-comp
   componentDidUpdate(prevProps) {
     const { viewport: prevViewport, bounds: prevBounds } = prevProps;
     const { viewport, bounds } = this.props;
