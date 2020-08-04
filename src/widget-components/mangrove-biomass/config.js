@@ -1,17 +1,26 @@
 import React from 'react';
+
+// utils
 import groupBy from 'lodash/groupBy';
-
-// Components
-import WidgetLegend from 'components/widget-legend';
-import WidgetTooltip from 'components/widget-tooltip';
-import WidgetCustomLabel from 'components/widget-custom-label';
-
-// Utils
-import { format } from 'd3-format';
 import sortBy from 'lodash/sortBy';
-import moment from 'moment';
 
-const numberFormat = format(',.3r');
+// components
+import WidgetTooltip from 'components/widget-tooltip';
+import WidgetLegend from 'components/widget-legend';
+
+const widgetMeta = ({ list, metadata }) => {
+  if (list && list.length && metadata) {
+    return {
+      years: list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear()),
+      total: metadata.location_coast_length_m
+    };
+  }
+
+  return {
+    years: [],
+    total: null
+  };
+};
 
 const chunk = (array, size) => {
   const chunkedArr = [];
@@ -26,179 +35,115 @@ const chunk = (array, size) => {
   return chunkedArr;
 };
 
+const getData = (data, selectedYear) => {
+  if (!data || !data.length) return null;
+  const barsData = data[0].map(value => value[1]);
+  const total = barsData.reduce((previous, current) => current + previous);
 
-const getBars = (barValues) => {
-  if (!barValues) return null;
-  const total = barValues.reduce((previous, current) => current[1] + previous[1]);
-  const chunkedData = chunk(barValues, 5);
+  const chunkedData = chunk(barsData, 5);
   let formattedData = chunkedData.map(
-    r => (r.reduce((previous, current) => current[1] + previous[1]))
+    r => (r.reduce((previous, current) => current + previous))
   );
 
-  formattedData = formattedData.map(data => data / total);
-  return formattedData;
+  formattedData = formattedData.map(d => d / total);
+  return [
+    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–250', percentage: formattedData[0] * 100, color: '#EAF19D', value: formattedData[0] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[1] * 100, label: '250-500', percentage: formattedData[1] * 100, color: '#B8E98E', value: formattedData[1] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[2] * 100, label: '500-750', percentage: formattedData[2] * 100, color: '#1B97C1', value: formattedData[2] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[3] * 100, label: '750-1000', percentage: formattedData[3] * 100, color: '#1C52A3', value: formattedData[3] / total * 100 },
+    { x: Number(selectedYear), y: formattedData[4] * 100, label: '1000-1250', percentage: formattedData[4] * 100, color: '#13267F', value: formattedData[4] / total * 100 },
+  ];
 };
 
-
-const histogramData = (data) => {
-  if (!data) {
-    return null;
-  }
-
-  const histogram = data.map(d => (
-    {
-      year: moment(d.date).year(),
-      '0–50': getBars(d.agb_hist_mgha_1)[0] * 100,
-      '50–100': getBars(d.agb_hist_mgha_1)[1] * 100,
-      '100–150': getBars(d.agb_hist_mgha_1)[2] * 100,
-      '150–200': getBars(d.agb_hist_mgha_1)[3] * 100,
-      '200–250': getBars(d.agb_hist_mgha_1)[4] * 100,
-    }
-  ));
-  return histogram;
-};
-
-const filterData = data => sortBy(data.filter(d => d.agb_mgha_1 !== null && d.agb_hist_mgha_1 !== null), ['date']);
-
-const biomassCoverage = (data, yearSelected) => {
-  const yearData = data.find(d => d.date
+const biomassCoverage = ({ list }, yearSelected) => {
+  const yearData = list.find(d => d.date
     .includes(yearSelected));
   if (!yearData) return null;
   return yearData.agb_mgha_1.toFixed(2);
 };
 
-const metaData = data => Array.from(new Set(
-  data.map(d => moment(d.date).year())
-));
+const filterData = ({ list }, yearSelected) => sortBy(
+  list
+    .filter(d => d.agb_mgha_1 !== null
+      && d.agb_hist_mgha_1 !== null
+      && d.date.includes(yearSelected)),
+  ['date']
+).map(i => i.agb_hist_mgha_1);
 
-export const CONFIG = {
-  parse: (data, yearSelected) => {
-    {
-      const dataFiltered = filterData(data);
-      const metadata = metaData(dataFiltered);
+const getDownloadData = (chartData, date, coverage) => {
+  if (!chartData) return null;
+  return chartData.map(d => ({
+    Date: date,
+    'Mangrove aboveground biomass density (t / ha)': coverage,
+    Label: d.label,
+    'Aboveground biomass density (t / ha)': d.value,
+    Percentage: d.percentage,
+    Color: d.color
+  }));
+};
 
-      return {
-        coverage: biomassCoverage(dataFiltered, yearSelected),
-        metadata,
-        chartData: histogramData(dataFiltered),
-        chartConfig: {
-          height: 360,
-          cartesianGrid: {
-            vertical: false,
-            horizontal: true,
-            strokeDasharray: '5 20'
-          },
-          margin: { top: 20, right: 0, left: 0, bottom: 20 },
-          xKey: 'year',
-          yKeys: {
-            bars:
-            {
-              '0–50':
-              {
-                stackId: 'bar',
-                fill: '#EAF19D',
-                stroke: '#EAF19D',
-                isAnimationActive: false
-              },
-              '50–100':
-              {
-                stackId: 'bar',
-                fill: '#B8E98E',
-                stroke: '#B8E98E',
-                isAnimationActive: false
-              },
-              '100–150':
-              {
-                stackId: 'bar',
-                fill: '#1B97C1',
-                stroke: '#1B97C1',
-                isAnimationActive: false
-              },
-              '150–200':
-              {
-                stackId: 'bar',
-                fill: '#1C52A3',
-                stroke: '#1C52A3',
-                isAnimationActive: false
-              },
-              '200–250':
-              {
-                stackId: 'bar',
-                fill: '#13267F',
-                stroke: '#13267F',
-                isAnimationActive: false
-              }
+const CONFIG = {
+  parse: (data, yearSelected = 2016) => {
+    const dataFiltered = filterData(data, yearSelected);
+    const chartData = getData(dataFiltered);
+    const coverage = biomassCoverage(data, yearSelected);
+    const downloadData = getDownloadData(chartData, yearSelected, coverage);
+    return {
+      chartData,
+      metadata: widgetMeta(filterData),
+      coverage,
+      downloadData,
+      chartConfig: {
+        type: 'pie',
+        layout: 'centric',
+        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        xKey: 'percentage',
+        yKeys: {
+          pies: {
+            y: {
+              cx: '50%',
+              cy: '50%',
+              dataKey: 'percentage',
+              nameKey: 'label',
+              paddingAngle: 2,
+              innerRadius: '60%',
+              outerRadius: '80%',
+              isAnimationActive: false
             }
-          },
-          referenceLines: [{
-            y: 0,
-            stroke: 'black',
-            strokeDasharray: 'solid',
-            fill: 'black',
-            opacity: '1',
-            label: null
-          }],
-          xAxis: {
-            tick: {
-              fontSize: 12,
-              fill: 'rgba(0,0,0,0.54)'
-            },
-            ticks: metadata,
-            domain: [0, 100],
-            interval: 0
-          },
-          yAxis: {
-            tick: {
-              fontSize: 12,
-              fill: 'rgba(0,0,0,0.54)'
-            },
-            width: 40,
-            tickFormatter: value => Math.round(value),
-            domain: [0, 100],
-            interval: 0,
-            orientation: 'right',
-            label: {
-              value: '%',
-              position: 'top',
-              offset: 25
-            },
-            type: 'number'
-          },
-          legend: {
-            position: 'relative',
-            verticalAlign: 'top',
-            layout: 'horizontal',
-            height: 80,
-            top: 0,
-            content: (properties) => {
-              const { payload } = properties;
-              const groups = groupBy(payload, p => p.payload);
-              return <WidgetLegend type="height" groups={groups} />;
-            }
-          },
-          tooltip: {
-            cursor: false,
-            content: (
-              <WidgetTooltip
-                type="column"
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-around',
-                  flexDirection: 'column'
-                }}
-                settings={[
-                  { label: <WidgetCustomLabel value="200–250" unit="mg ha" indexedValue="-1" />, color: '#13267F', key: '200–250', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="150–200" unit="mg ha" indexedValue="-1" />, color: '#1C52A3', key: '150–200', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="100–150" unit="mg ha" indexedValue="-1" />, color: '#1B97C1', key: '100–150', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="50–100" unit="mg ha" indexedValue="-1" />, color: '#B8E98E', key: '50–100', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                  { label: <WidgetCustomLabel value="0–50" unit="mg ha" indexedValue="-1" />, color: '#EAF19D', key: '0–50', format: value => `${numberFormat(value)} %`, position: '_column', type: '_stacked' },
-                ]}
-              />
-            )
           }
         },
-      };
-    }
+        legend: {
+          align: 'left',
+          verticalAlign: 'middle',
+          layout: 'vertical',
+          content: (properties) => {
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.payload.label);
+            return <WidgetLegend title="Aboveground biomass density </br>(t / ha)" groups={groups} type="height" />;
+          }
+        },
+        tooltip: {
+          cursor: false,
+          content: (properties) => {
+            const { payload } = properties;
+            return (
+              <WidgetTooltip
+                payload={payload}
+                style={{
+                  flexDirection: 'column',
+                  marginTop: '10px',
+                  marginLeft: '-50px'
+                }}
+                settings={[
+                  { key: 'label' },
+                  { label: 'Percentage:', key: 'percentage', format: value => `${value ? (value).toFixed(2) : null} %`, position: '_column' },
+                ]}
+              />
+            );
+          }
+        }
+      }
+    };
   }
 };
 

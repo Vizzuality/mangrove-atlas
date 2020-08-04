@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 // utils
@@ -17,11 +18,11 @@ const getData = (data) => {
   const dataFormatted = data[0].histogram;
   const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
   return [
-    { label: '400-1000', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#5C4A3D', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
-    { label: '1000-1300', value: dataFormatted['1000--1300'], color: '#933A06', percentage: dataFormatted['1000--1300'] / total * 100 },
+    { label: '400-1000', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#EEB66B', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
+    { label: '1000-1300', value: dataFormatted['1000--1300'], color: '#E68518', percentage: dataFormatted['1000--1300'] / total * 100 },
     { label: '1300-1600', value: dataFormatted['1300--1600'], color: '#B84E17', percentage: dataFormatted['1300--1600'] / total * 100 },
-    { label: '1600-1900', value: dataFormatted['1600--1900'], color: '#E68518', percentage: dataFormatted['1600--1900'] / total * 100 },
-    { label: '1900-2200', value: dataFormatted['1900--2200'], color: '#EEB66B', percentage: dataFormatted['1900--2200'] / total * 100 },
+    { label: '1600-1900', value: dataFormatted['1600--1900'], color: '#933A06', percentage: dataFormatted['1600--1900'] / total * 100 },
+    { label: '1900-2200', value: dataFormatted['1900--2200'], color: '#5C4A3D', percentage: dataFormatted['1900--2200'] / total * 100 },
   ];
 };
 
@@ -52,14 +53,44 @@ const filterData = ({ list }, yearSelected) => sortBy(
   };
 });
 
+const getDownloadData = ({ list }) => {
+  const data = list.filter(l => l.date.includes('2016'));
+  const total = (Object.values(data[0].toc_hist_tco2eha)
+    .reduce((previous, current) => current + previous)) / 100;
+  return data.map(l => (
+    {
+      Date: l.date,
+      'Total organic carbon stored in mangroves estimation (tco2e)': l.toc_tco2e,
+      'Amount stored in above-ground biomass (tco2e)': l.agb_tco2e,
+      'Amount stored in the upper 1m of soil (tco2e)': l.soc_tco2e,
+      'Histogram data 400--1000': `${l.toc_hist_tco2eha['400--700'] + l.toc_hist_tco2eha['700--1000']}
+        - color: #EEB66B - percentage (%):
+        ${(l.toc_hist_tco2eha['400--700'] + l.toc_hist_tco2eha['700--1000']) / total}`,
+      'Histogram data 1000-1300': `${l.toc_hist_tco2eha['1000--1300']}
+        - color: #E68518 - percentage (%):
+        ${l.toc_hist_tco2eha['1000--1300'] / total}`,
+      'Histogram data 1300-1600': `${l.toc_hist_tco2eha['1300--1600']}
+        - color: #B84E17 - percentage (%):
+        ${l.toc_hist_tco2eha['1300--1600'] / total}`,
+      'Histogram data 1600-1900': `${l.toc_hist_tco2eha['1600--1900']}
+        - color: #933A06 - percentage (%):
+        ${l.toc_hist_tco2eha['1600--1900'] / total}`,
+      'Histogram data 1900-2200': `${l.toc_hist_tco2eha['1900--2200']}
+        - color: #5C4A3D - percentage (%):
+        ${l.toc_hist_tco2eha['1900--2200'] / total}`
+
+    }));
+};
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
     const chartData = dataFiltered.length ? getData(dataFiltered) : '';
+    const downloadData = getDownloadData(data);
     return {
       chartData,
       coverage: biomassCoverage(data, yearSelected),
+      downloadData,
       totalValues: dataFiltered[0],
       chartConfig: {
         type: 'pie',
@@ -104,7 +135,7 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.payload.label);
-            return <WidgetLegend title="Total carbon density (t CO<sub>2</sub>e ha<sup>-1</sup>)" groups={groups} />;
+            return <WidgetLegend title="Total carbon density (t CO<sub>2</sub>e / ha)" groups={groups} />;
           }
         },
         tooltip: {

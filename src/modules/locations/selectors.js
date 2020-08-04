@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-// import sumBy from 'lodash/sumBy';
 
 const locations = state => state.locations.list;
 const currentLocationId = state => state.locations.current;

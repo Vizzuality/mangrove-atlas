@@ -50,10 +50,24 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
+const getDownloadData = ({ metadata, list }) => {
+  const coastline = metadata.location_coast_length_m;
+  const data = list.filter(l => l.date.includes('2016'));
+  return data.map(l => (
+    {
+      Date: l.date,
+      'Total coast length (m)': coastline,
+      'Mangrove habitat area (m2)': l.area_m2,
+      'Mangrove coastline coverage (m)': l.length_m,
+      'Percentage (%)': l.length_m / coastline * 100
+    }));
+};
+
 export const CONFIG = {
   parse: (data, unit) => ({
     chartData: widgetData(data, unit),
     metadata: widgetMeta(data),
+    downloadData: getDownloadData(data),
     chartConfig: {
       type: 'pie',
       layout: 'centric',

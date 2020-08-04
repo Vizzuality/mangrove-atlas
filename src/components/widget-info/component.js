@@ -16,7 +16,9 @@ const WidgetInfo = ({
   locationsList
 }) => {
   const selectedLocation = locationsList
-    .filter(location => location.iso === current || location.id === current || location.iso === 'WORLDWIDE')
+    .filter(location => current === location.iso
+      || current === location.id
+      || current === location.location_type)
     .map(l => [
       [`location - ${l.name}  `],
       [`location_type - ${l.location_type}  `],
@@ -29,8 +31,8 @@ const WidgetInfo = ({
         <DownloadLink
           data={downloadData || chartData || data}
           filename={filename}
-          headers={selectedLocation}
           label={selectedLocation}
+          headers={selectedLocation}
         />
       )}
       <Button

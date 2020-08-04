@@ -7,8 +7,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_biomass_pie",
+          "mangrove_alerts",
+          "mangrove_biomass",
           "mangrove_blue_carbon",
           "mangrove_height",
           "mangrove_activity"
@@ -20,8 +20,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_biomass_pie",
+          "mangrove_alerts",
+          "mangrove_biomass",
           "mangrove_blue_carbon",
           "mangrove_height"
         ]
@@ -32,8 +32,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_biomass_pie",
+          "mangrove_alerts",
+          "mangrove_biomass",
           "mangrove_blue_carbon",
           "mangrove_height"
         ]
@@ -44,8 +44,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_biomass_pie",
+          "mangrove_alerts",
+          "mangrove_biomass",
           "mangrove_blue_carbon",
           "mangrove_height"
         ]
@@ -58,8 +58,8 @@
           "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
-          "mangrove_alerts_line",
-          "mangrove_biomass_pie",
+          "mangrove_alerts",
+          "mangrove_biomass",
           "mangrove_blue_carbon",
           "mangrove_height"
         ]
@@ -80,14 +80,6 @@
       ]
     },
     {
-      "name": "Mangrove habitat extent",
-      "slug": "mangrove_extent",
-      "isActive": true,
-      "layersIds": [
-        "extent"
-      ]
-    },
-    {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "layersIds": [
@@ -97,12 +89,15 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
-      "layersIds": ["alerts-style"]
+      "layersIds": ["alerts-heat"]
     },
     {
-      "name": "Mangrove deforestation alerts",
-      "slug": "mangrove_alerts_line",
-      "layersIds": ["alerts-heat"]
+      "name": "Mangrove habitat extent",
+      "slug": "mangrove_extent",
+      "isActive": true,
+      "layersIds": [
+        "extent"
+      ]
     },
     {
       "name": "Mangrove Blue Carbon",
@@ -119,13 +114,6 @@
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
-      "layersIds": [
-        "biomass"
-      ]
-    },
-    {
-      "name": "Mangrove biomass",
-      "slug": "mangrove_biomass_pie",
       "layersIds": [
         "biomass"
       ]
