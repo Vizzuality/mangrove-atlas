@@ -7,9 +7,14 @@ import Widget from 'components/widget';
 
 import config from './config';
 import styles from './style.module.scss';
-import Rufiji from './images/rufiji.jpg';
-import Saloum from './images/saloum.jpg';
+import RufijiImage from './images/rufiji.jpg';
+import SaloumImage from './images/saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
+
+const bgImages = {
+  '1_1_1_00000000000000000000': RufijiImage,
+  '1_1_2_00000000000000000000': SaloumImage,
+};
 
 const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, name }) => {
   if (!rawData) {
@@ -31,16 +36,16 @@ const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, 
           { [styles.collapsed]: isCollapsed })}
         >
           {data.map(d => (
-            <Link key={d.id} to={{ type: 'PAGE/AOI', payload: { id: d.id } }}>
+            <Link key={d.id} to={{ type: 'PAGE/AOI', payload: { id: d.location_id } }}>
               {d.id !== currentLocation.id && (
                 <div
                   style={{
-                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${d.name === 'Rufiji Delta' ? Rufiji : Saloum})`,
+                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 64.18%, rgba(0,0,0,0) 100%), url(${bgImages[d.location_id]})`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover'
                   }}
                   className={classnames(styles.card, {
-                    [styles.active]: d.id === currentLocation.id
+                    [styles.active]: d.location_id === currentLocation.id
                   })}
                 >
                   <span className={styles.cardInfo}>

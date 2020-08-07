@@ -29,10 +29,9 @@ export const activeLayers = createSelector(
 export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {
-
     // Saloum and Rufiji
     const ids = [1534, 1555];
-    const location_ids = [ '2_000000000000000009ed', '2_0000000000000000059e'];
+    // const location_ids = [ '2_000000000000000009ed', '2_0000000000000000059e'];
     const widgetData = _locations.filter(location => ids.includes(location.id));
 
     return { widgetData };
