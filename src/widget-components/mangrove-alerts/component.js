@@ -41,7 +41,7 @@ const MangroveAlerts = ({
 
         // eslint-disable-next-line camelcase
         const { id: location_id } = location;
-        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate });
+        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
       }
     }
   }, [year, currentLocation]);
