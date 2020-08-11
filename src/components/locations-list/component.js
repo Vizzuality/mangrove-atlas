@@ -20,11 +20,11 @@ function LocationsList({ locationsData }) {
     return null;
   };
 
-  const getPayload = location => (
-    (location.location_type === 'country')
-      ? { iso: location.iso }
-      : { id: location.id }
-  );
+  const getPayload = location => ({
+    ...(location.location_type === 'country' && { iso: location.iso }),
+    ...(location.location_type !== 'country' && { id: location.id }),
+    ...(location.location_type === 'worldwide' && { id: 'worldwide' })
+  });
 
   return (
     <ul className={styles.list}>
