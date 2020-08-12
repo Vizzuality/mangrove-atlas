@@ -17,6 +17,7 @@ const mapStyles = state => state.mapStyles;
 const filters = createSelector([mapStyles], styles => styles.filters);
 const basemap = state => state.map.basemap;
 const locationId = state => state.locations.current.id || state.locations.current.iso;
+const locations = state => state.locations.list;
 const startDateAlerts = state => state.widgets.ui.alerts.startDate;
 const endDateAlerts = state => state.widgets.ui.alerts.endDate;
 const activeLayersIds = createSelector(
@@ -62,9 +63,10 @@ export const layerStyles = createSelector(
 );
 
 export const mapStyle = createSelector(
-  [basemap, layerStyles, filters, activeLayersIds, locationId, startDateAlerts, endDateAlerts],
+  [basemap, layerStyles, filters, activeLayersIds,
+    locationId, startDateAlerts, endDateAlerts, locations],
   (_basemap, _layerStyles, _filters, _activeLayersIds,
-    _locationId, _startDateAlerts, _endDateAlerts) => {
+    _locationId, _startDateAlerts, _endDateAlerts, _locations) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -144,8 +146,15 @@ export const mapStyle = createSelector(
         visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
+
+    // Getting location
+    let currentLocation = _locations.find(l => (l.iso === _locationId && l.location_type === 'country'));
+    if (!currentLocation) {
+      currentLocation = _locations.find(l => (l.id === _locationId));
+    }
+
     // GEN ALERTS URL TEMPLATE
-    if (_locationId && (_locationId !== 'worldwide' && _locationId !== 1298)) {
+    if (currentLocation && currentLocation.location_type !== 'worldwide') {
       bhSources.alerts.data = getAlertsUrl({
         startDate: `start_date=${_startDateAlerts.value}`,
         endDate: `&end_date=${_endDateAlerts.value}`,

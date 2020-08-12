@@ -24,22 +24,24 @@ const MangroveAlerts = ({
 
   useEffect(() => {
     if (currentLocation && (currentLocation.id || currentLocation.iso)) {
-      const location = locationsList.find((l) => {
-        if (currentLocation.iso) {
-          return l.iso === currentLocation.iso && l.location_type === 'country';
-        }
-        if (currentLocation.id && currentLocation.id !== 'worldwdie') {
-          return l.id === Number(currentLocation.id);
-        }
-        return false;
-      });
+      if (currentLocation.id === 'worldwide') {
+        fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
+      } else {
+        let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
 
-      if (location) {
+        // Find by location_id
+        if (!location) {
+          location = locationsList.find(l => (l.location_id === currentLocation.id));
+        }
+
+        // Find by id
+        if (!location) {
+          location = locationsList.find(l => (l.id === Number(currentLocation.id)));
+        }
+
         // eslint-disable-next-line camelcase
         const { id: location_id } = location;
-        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate });
-      } else if (location === undefined && currentLocation.id === 'worldwide') {
-        fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
+        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
       }
     }
   }, [year, currentLocation]);
