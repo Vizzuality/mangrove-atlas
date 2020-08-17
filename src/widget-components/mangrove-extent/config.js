@@ -13,7 +13,7 @@ const widgetData = (data, unit) => {
     const { location_coast_length_m: total } = metadata;
 
     return list.filter(d => d.length_m).map((d) => {
-      const year = new Date(d.date).getFullYear();
+      const year = new Date(d.date).getUTCFullYear();
 
       return ({
         x: Number(year),
@@ -37,7 +37,7 @@ const widgetMeta = ({ list, metadata }) => {
     return {
       years: Array.from(
         new Set(
-          list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear())
+          list.filter(d => d.length_m).map(d => new Date(d.date).getUTCFullYear())
         )
       ),
       total: metadata.location_coast_length_m
