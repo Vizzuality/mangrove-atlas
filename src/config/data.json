@@ -73,6 +73,14 @@
       "layersIds": []
     },
     {
+      "name": "Mangrove habitat extent",
+      "slug": "mangrove_extent",
+      "isActive": true,
+      "layersIds": [
+        "extent"
+      ]
+    },
+    {
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
       "layersIds": [
@@ -90,14 +98,6 @@
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "layersIds": ["alerts-heat"]
-    },
-    {
-      "name": "Mangrove habitat extent",
-      "slug": "mangrove_extent",
-      "isActive": true,
-      "layersIds": [
-        "extent"
-      ]
     },
     {
       "name": "Mangrove Blue Carbon",
