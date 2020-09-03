@@ -92,7 +92,7 @@ const NavMenu = ({ fixedHeader }) => {
               </p>
 
               <h4>Global Mangrove Watch Partners</h4>
-              <p>With support from the Oak Foundation, DOB Ecology and the Dutch Postcode Lottery,
+              <p>With support from the Oak Foundation, COmON Foundation, DOB Ecology and the Dutch Postcode Lottery,
                 The Nature Conservancy and Wetlands International have worked with Aberystwyth
                 University, soloEO, NASA, JAXA, UNEP-WCMC and a host of partners to develop Global Mangrove Watch.
               </p>
