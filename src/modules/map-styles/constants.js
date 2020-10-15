@@ -27,7 +27,7 @@ const geojsons = [
     source: {
       type: 'geojson',
       // Provided in the mapStyle selector
-      // data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=2020-04-01&end_date=2020-12-31{{locationId}}'
+      // data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{start_date}}&{{end_date}}&{{locationId}}'
     },
     layers: [
       {

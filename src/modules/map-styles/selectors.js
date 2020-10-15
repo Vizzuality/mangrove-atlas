@@ -23,7 +23,6 @@ const endDateAlerts = state => state.widgets.ui.alerts.endDate;
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
 );
-
 const ALERTS_URL_TEMPLATE = 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{startDate}}{{endDate}}{{locationId}}';
 const getAlertsUrl = template(ALERTS_URL_TEMPLATE, {
   interpolate: /{{([\s\S]+?)}}/g,
@@ -156,14 +155,14 @@ export const mapStyle = createSelector(
     // GEN ALERTS URL TEMPLATE
     if (currentLocation && currentLocation.location_type !== 'worldwide') {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: `start_date=${_startDateAlerts.value}`,
-        endDate: `&end_date=${_endDateAlerts.value}`,
+        startDate: `start_date=${_startDateAlerts.value || '2020-01-01'}`,
+        endDate: `&end_date=${_endDateAlerts.value || '2020-12-31'}`,
         locationId: `&location_id=${_locationId}`,
       });
     } else {
       bhSources.alerts.data = getAlertsUrl({
-        startDate: `start_date=${_startDateAlerts.value}`,
-        endDate: `&end_date=${_endDateAlerts.value}`,
+        startDate: `start_date=${_startDateAlerts.value || '2020-01-01'}`,
+        endDate: `&end_date=${_endDateAlerts.value || '2020-12-31'}`,
         locationId: '',
       });
     }
