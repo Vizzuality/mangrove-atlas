@@ -17,9 +17,9 @@ const MangroveAlerts = ({
   ...props
 }) => {
   const {
-    year = 2020,
-    startDate = { label: 'April, 2020', value: '2020-04-01' },
-    endDate = { label: 'May, 2020', value: '2020-05-31' }
+    year,
+    startDate,
+    endDate
   } = ui;
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const MangroveAlerts = ({
     }
   }, [year, currentLocation]);
 
-  if (!data || data.length <= 0) {
+  if (!data || data.data.length <= 0) {
     return null;
   }
   const {
@@ -91,9 +91,10 @@ const MangroveAlerts = ({
   const startDateSelect = (
     <Select
       value={startDate.value}
+      defaultValue={startDateOptions[0]}
       options={startDateOptions}
-      isOptionDisabled={option => option.value > endDate
-        || option.value === startDate}
+      isOptionDisabled={option => option.value > endDate.value
+        || option.value === startDate.value}
       onChange={value => changeDate('startDate', value)}
     />
   );
@@ -101,8 +102,9 @@ const MangroveAlerts = ({
   const endDateSelect = (
     <Select
       value={endDate.value}
+      defaultValue={endDateOptions[endDateOptions.length - 1]}
       options={endDateOptions}
-      isOptionDisabled={option => option < startDate.value
+      isOptionDisabled={option => option.value < startDate.value
         || option.value === endDate.value}
       onChange={value => changeDate('endDate', value)}
     />
@@ -131,7 +133,7 @@ const MangroveAlerts = ({
       sentence={sentence}
       chartData={chartRData}
       onBrushEnd={({ startIndex, endIndex }) => {
-        changeDate('startDate', chartData[startIndex].date.value);
+        changeDate('startDate', chartData[startIndex].startDate);
         changeDate('endDate', chartData[endIndex].endDate);
       }}
       {...props}
