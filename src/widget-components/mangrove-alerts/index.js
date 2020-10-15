@@ -8,13 +8,7 @@ const mapStateToProps = state => ({
   isLoading: state.ranking.isLoading,
   currentLocation: state.locations.current,
   locationsList: state.locations.list,
-  ui: state.widgets.ui.alerts || {
-    alerts: {
-      startDate: { label: 'April, 2020', value: '2020-04-01' },
-      endDate: { label: 'May, 2020', value: '2020-05-31' },
-      year: 2020
-    }
-  }
+  ui: state.widgets.ui.alerts
 });
 
 const mapDispatchToProps = { setUi, fetchAlerts };
