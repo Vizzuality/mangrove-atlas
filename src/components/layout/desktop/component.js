@@ -43,7 +43,7 @@ const DesktopLayout = ({ location }) => {
         </Sidebar>
         <div className={styles.vis}>
           <Map />
-          <p className={styles.printOnly}>Generate your report in https://mangrove-atlas.org</p>
+          <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
         </div>
       </div>
     </div>
