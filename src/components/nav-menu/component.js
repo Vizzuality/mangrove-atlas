@@ -82,6 +82,13 @@ const NavMenu = ({ fixedHeader }) => {
                 adaptation and sustainable development plans and policies.
               </p>
 
+              <h4>Global Mangrove Watch Partners</h4>
+              <p>The Global mangrove Watch (GMW) was established in 2011 under the Japan Aerospace Exploration Agency’s <a onClick={handleClose} href="https://www.eorc.jaxa.jp/ALOS/en/kyoto/mangrovewatch.htm" target="_blank" rel="noopener noreferrer">(JAXA) Kyoto & Carbon Initiative</a> by Aberystwyth University, solo Earth Observation and the International Water Management Institute, with the aim to provide open access geospatial information about mangrove extent and changes to the Ramsar Convention on Wetlands. In collaboration with Wetlands International and with support from DOB Ecology, the first GMW baseline maps were released in 2018 at the Ramsar COP13. The GMW maps also constitute the official mangrove datasets used by UNEP for reporting on Sustainable Development Goal 6.6.1 (change in the extent of water-related ecosystems over time).
+              </p>
+              
+              <p>With support from the Oak Foundation, COmON Foundation, DOB Ecology and the Dutch Postcode Lottery, The Nature Conservancy, Wetlands International, Aberystwyth University, and soloEO in 2019 initiated a deeper collaboration, and are working with NASA, JAXA, IWMI, UNEP-WCMC and a host of partners to develop the Global Mangrove Watch Platform.              
+              </p>
+
               <h4>GMW and the Global Mangrove Alliance</h4>
               <p>A coordinated effort across sectors and geographies will accomplish more, faster. Global Mangrove Watch is the
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
@@ -91,11 +98,6 @@ const NavMenu = ({ fixedHeader }) => {
                 </a>
               </p>
 
-              <h4>Global Mangrove Watch Partners</h4>
-              <p>With support from the Oak Foundation, COmON Foundation, DOB Ecology and the Dutch Postcode Lottery,
-                The Nature Conservancy and Wetlands International have worked with Aberystwyth
-                University, soloEO, NASA, JAXA, UNEP-WCMC and a host of partners to develop Global Mangrove Watch.
-              </p>
               <p>Got a query? Contact <a href="mailto://contact@mangrovealliance.org">Mangrove Alliance</a></p>
               <p>Convened by</p>
               <img src={convened} className={styles.logo} alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International" />
@@ -120,32 +122,32 @@ const NavMenu = ({ fixedHeader }) => {
             <section>
               <h3>Welcome to Global Mangrove Watch </h3>
               <button className={styles.menuItem} type="button" onClick={handleContent}>
-                About this tool
+                About Global Mangrove Watch
               </button>
               <nav>
                 Global Mangrove Alliance
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
                   About
                 </a>
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
                   Mangroves
                 </a>
-                <a onClick={handleClose} href="hhttp://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/initiatives/" target="_blank" rel="noopener noreferrer">
                   Initiatives
                 </a>
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/news/" target="_blank" rel="noopener noreferrer">
                   News
                 </a>
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/resources/" target="_blank" rel="noopener noreferrer">
                   Resources
                 </a>
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/contact/" target="_blank" rel="noopener noreferrer">
                   Contact
                 </a>
               </nav>
 
               <aside className={styles.footer}>
-                <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
                   <img src={logo} className={styles.logo} alt="Global Mangrove Alliance" />
                 </a>
                 <LanguageSelect />
