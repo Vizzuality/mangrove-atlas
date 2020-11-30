@@ -19,7 +19,6 @@ function MangroveNetChange({
     endYear,
     unit,
     years,
-    currentYear
   },
   setUi,
   ...props
@@ -34,14 +33,14 @@ function MangroveNetChange({
         year: '2016',
       }
     });
-  }, [addFilter, unit]);
+  }, [addFilter]);
 
   if (!rawData) {
     return null;
   }
 
   const data = config.parse(rawData, unit);
-  const { metadata, chartData, chartConfig } = data;
+  const { metadata, chartData, chartConfig, downloadData } = data;
 
   const startYearOptions = metadata.years.map(year => ({
     label: year.toString(),
@@ -201,7 +200,8 @@ function MangroveNetChange({
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong> has <strong>{direction}</strong> by <strong>{quantity}</strong> {unitSelector}
+      The extent of mangroves in <strong>{location}</strong>&nbsp;
+      has <strong>{direction}</strong> by <strong>{quantity}</strong> {unitSelector}
       &nbsp;between {startSelector} and {endSelector}.
     </>
   );
@@ -217,6 +217,7 @@ function MangroveNetChange({
       data={data}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}

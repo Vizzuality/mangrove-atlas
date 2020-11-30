@@ -32,11 +32,10 @@ const MangroveHeight = ({
     return null;
   }
 
-  // for widget to show 2016 until client has better data for the rest of the years
   const dataFiltered = rawData.filter(data => data.date.includes('2016'));
-  const { chartData, metadata, chartConfig, heightCoverage } = config.parse(dataFiltered, date);
+  const { chartData, metadata, chartConfig, heightCoverage, downloadData } = config.parse(dataFiltered, date);
 
-  if (chartData.length <= 0) {
+  if (!chartData || !chartData.length) {
     return null;
   }
 
@@ -82,6 +81,7 @@ const MangroveHeight = ({
       data={chartData}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}

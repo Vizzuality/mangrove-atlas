@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-// import sumBy from 'lodash/sumBy';
 
 const locations = state => state.locations.list;
 const currentLocationId = state => state.locations.current;
@@ -22,6 +21,8 @@ export const currentLocation = createSelector(
       result = _locations.find(location => location.iso === _currentId.iso && location.location_type === 'country');
     } else if (_currentId.id) {
       result = _locations.find(location => location.id === Number(_currentId.id));
+    } if (_currentId.id) {
+      result = _locations.find(location => location.location_id === _currentId.id);
     }
 
     if (!result) return null;

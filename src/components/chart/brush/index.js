@@ -59,17 +59,16 @@ export default class Brush extends PureComponent {
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
+
+  // eslint-disable-next-line camelcase
+  componentDidUpdate(prevProps) {
     const { height } = this.svg.getBoundingClientRect();
     const { margin, startIndex, endIndex } = this.props;
     const { startIndex: prevStartIndex, endIndex: prevEndIndex } = prevProps;
 
-    const { animate } = this.state;
-    const { animate: prevAnimate } = prevState;
-
     if (
-      startIndex !== prevStartIndex ||
-      endIndex !== prevEndIndex
+      startIndex !== prevStartIndex
+      || endIndex !== prevEndIndex
     ) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
@@ -148,9 +147,7 @@ export default class Brush extends PureComponent {
           }
 
           const [[sx0, sy0], [sx1, sy1]] = selection;
-          const [rx0, rx1] = [sx0, sx1].map((d) =>
-            Math.round(this.scale.invert(d))
-          );
+          const [rx0, rx1] = [sx0, sx1].map(d => Math.round(this.scale.invert(d)));
 
           this.setState({
             animate: true,

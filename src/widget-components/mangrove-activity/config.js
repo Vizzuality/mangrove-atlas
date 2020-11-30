@@ -4,7 +4,6 @@ import { Rectangle } from 'recharts';
 
 // Utils
 import { format } from 'd3-format';
-import moment from 'moment';
 import flatten from 'lodash/flatten';
 import orderBy from 'lodash/orderBy';
 
@@ -33,8 +32,6 @@ const widgetData = data => data.map(location => ({
   ...processData(location.mangrove_datum)
 }));
 
-const widgetMeta = data => data.dates.map(d => moment(d.date).year()).sort((a, b) => a - b);
-
 export const CONFIG = {
   parse: (data, filter, limit) => {
     const chartData = widgetData(data.data);
@@ -47,7 +44,7 @@ export const CONFIG = {
     return {
       chartData,
       dataRanked,
-      metaData: widgetMeta(data.meta),
+      metaData: [1996, 2007, 2008, 2009, 2010, 2015, 2016],
       chartConfig: {
         layout: 'vertical',
         height: limit === 5 ? 400 : limit / 5 * 100 + 350,

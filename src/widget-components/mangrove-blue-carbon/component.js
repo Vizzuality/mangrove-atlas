@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'd3-format';
 import ChartWidget from 'components/chart-widget';
 import config from './config';
-
-const numberFormat = format(',.2f');
 
 function MangroveBlueCarbon({
   data: rawData,
@@ -28,7 +25,7 @@ function MangroveBlueCarbon({
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig } = config.parse(rawData);
+  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
     return null;
@@ -42,8 +39,11 @@ function MangroveBlueCarbon({
 
   const sentence = (
     <>
-      Total organic carbon stored in <strong>{location}'s</strong> mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e  with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
+      Total organic carbon stored in
+      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
+      mangroves is estimated at
+      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
+      with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
       &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );
@@ -59,6 +59,7 @@ function MangroveBlueCarbon({
       data={chartData}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}

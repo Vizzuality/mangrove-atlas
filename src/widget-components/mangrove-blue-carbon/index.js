@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-
 import { setUi } from 'modules/widgets/actions';
 
 import Component from './component';

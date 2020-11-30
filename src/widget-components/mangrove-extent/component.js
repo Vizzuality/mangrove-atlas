@@ -61,7 +61,7 @@ function MangroveExtent({
     return null;
   }
   const data = config.parse(rawData, unit);
-  const { chartConfig, metadata } = data;
+  const { chartConfig, metadata, downloadData } = data;
   const optionsYears = sortBy(metadata.years.map(year => ({
     label: year.toString(),
     value: year
@@ -100,7 +100,6 @@ function MangroveExtent({
       { value: 'ha', label: 'ha' }
     ];
     const totalCoverage = metadata.total / 1000;
-    const coverage = (percentage * totalCoverage) / 100;
     const area = unit === 'ha'
       ? numberFormat(chartData.data[0].area / 10000)
       : numberFormat(chartData.data[0].area / 1000000);
@@ -145,6 +144,7 @@ function MangroveExtent({
       data={data}
       slug={slug}
       filename={slug}
+      downloadData={downloadData}
       sentence={sentence}
       chartData={chartData}
       {...props}

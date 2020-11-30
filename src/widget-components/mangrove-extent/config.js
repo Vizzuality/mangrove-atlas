@@ -5,17 +5,15 @@ import WidgetLegend from 'components/widget-legend';
 
 import { format } from 'd3-format';
 
-
-const numberFormat = format(',.2f');
 const tooltipFormat = format(',~s');
 
 const widgetData = (data, unit) => {
   const { list, metadata } = data;
   if (list && list.length) {
-      const { location_coast_length_m: total } = metadata;
+    const { location_coast_length_m: total } = metadata;
 
     return list.filter(d => d.length_m).map((d) => {
-      const year = new Date(d.date).getFullYear();
+      const year = new Date(d.date).getUTCFullYear();
 
       return ({
         x: Number(year),
@@ -39,7 +37,7 @@ const widgetMeta = ({ list, metadata }) => {
     return {
       years: Array.from(
         new Set(
-          list.filter(d => d.length_m).map(d => new Date(d.date).getFullYear())
+          list.filter(d => d.length_m).map(d => new Date(d.date).getUTCFullYear())
         )
       ),
       total: metadata.location_coast_length_m
@@ -52,10 +50,24 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
+const getDownloadData = ({ metadata, list }) => {
+  const coastline = metadata.location_coast_length_m;
+  const data = list.filter(l => l.date.includes('2016'));
+  return data.map(l => (
+    {
+      Date: l.date,
+      'Total coast length (m)': coastline,
+      'Mangrove habitat area (m2)': l.area_m2,
+      'Mangrove coastline coverage (m)': l.length_m,
+      'Percentage (%)': l.length_m / coastline * 100
+    }));
+};
+
 export const CONFIG = {
   parse: (data, unit) => ({
     chartData: widgetData(data, unit),
     metadata: widgetMeta(data),
+    downloadData: getDownloadData(data),
     chartConfig: {
       type: 'pie',
       layout: 'centric',
@@ -95,7 +107,7 @@ export const CONFIG = {
               }
             };
           }), p => p.payload.label);
-          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} direction='vertical' />;
+          return <WidgetLegend groups={groups} unit={unit === 'km' ? 'km' : unit} direction="vertical" />;
         }
       },
       tooltip: {
