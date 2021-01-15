@@ -12,18 +12,18 @@ import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
+const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#5C4A3D'];
 
 const getData = (data) => {
   if (!data || !data.length) return null;
   const dataFormatted = data[0].histogram;
   const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
-  return [
-    { label: '400-1000', value: dataFormatted['400--700'] + dataFormatted['700--1000'], color: '#EEB66B', percentage: (dataFormatted['400--700'] + dataFormatted['700--1000']) / total * 100 },
-    { label: '1000-1300', value: dataFormatted['1000--1300'], color: '#E68518', percentage: dataFormatted['1000--1300'] / total * 100 },
-    { label: '1300-1600', value: dataFormatted['1300--1600'], color: '#B84E17', percentage: dataFormatted['1300--1600'] / total * 100 },
-    { label: '1600-1900', value: dataFormatted['1600--1900'], color: '#933A06', percentage: dataFormatted['1600--1900'] / total * 100 },
-    { label: '1900-2200', value: dataFormatted['1900--2200'], color: '#5C4A3D', percentage: dataFormatted['1900--2200'] / total * 100 },
-  ];
+  return Object.keys(dataFormatted).map((key, index) => ({
+    label: key,
+    value: dataFormatted[key],
+    color: COLORS[index],
+    percentage: dataFormatted[key] / total * 100,
+  }));
 };
 
 const biomassCoverage = ({ list }, yearSelected) => {
@@ -57,28 +57,29 @@ const getDownloadData = ({ list }) => {
   const data = list.filter(l => l.date.includes('2016'));
   const total = (Object.values(data[0].toc_hist_tco2eha)
     .reduce((previous, current) => current + previous)) / 100;
+
+  // TO-DO: make dynamic depending on keys
   return data.map(l => (
     {
       Date: l.date,
       'Total organic carbon stored in mangroves estimation (tco2e)': l.toc_tco2e,
       'Amount stored in above-ground biomass (tco2e)': l.agb_tco2e,
       'Amount stored in the upper 1m of soil (tco2e)': l.soc_tco2e,
-      'Histogram data 400--1000': `${l.toc_hist_tco2eha['400--700'] + l.toc_hist_tco2eha['700--1000']}
+      'Histogram data 0--700': `${l.toc_hist_tco2eha['0--700']}
         - color: #EEB66B - percentage (%):
-        ${(l.toc_hist_tco2eha['400--700'] + l.toc_hist_tco2eha['700--1000']) / total}`,
-      'Histogram data 1000-1300': `${l.toc_hist_tco2eha['1000--1300']}
+        ${(l.toc_hist_tco2eha['0--700']) / total}`,
+      'Histogram data 700--1400': `${l.toc_hist_tco2eha['700--1400']}
         - color: #E68518 - percentage (%):
-        ${l.toc_hist_tco2eha['1000--1300'] / total}`,
-      'Histogram data 1300-1600': `${l.toc_hist_tco2eha['1300--1600']}
+        ${l.toc_hist_tco2eha['700--1400'] / total}`,
+      'Histogram data 1400-2100': `${l.toc_hist_tco2eha['1400--2100']}
         - color: #B84E17 - percentage (%):
-        ${l.toc_hist_tco2eha['1300--1600'] / total}`,
-      'Histogram data 1600-1900': `${l.toc_hist_tco2eha['1600--1900']}
+        ${l.toc_hist_tco2eha['1400--2100'] / total}`,
+      'Histogram data 2100-2800': `${l.toc_hist_tco2eha['2100--2800']}
         - color: #933A06 - percentage (%):
-        ${l.toc_hist_tco2eha['1600--1900'] / total}`,
-      'Histogram data 1900-2200': `${l.toc_hist_tco2eha['1900--2200']}
+        ${l.toc_hist_tco2eha['2100--2800'] / total}`,
+      'Histogram data 2800-3500': `${l.toc_hist_tco2eha['2800--3500']}
         - color: #5C4A3D - percentage (%):
-        ${l.toc_hist_tco2eha['1900--2200'] / total}`
-
+        ${l.toc_hist_tco2eha['2800--3500'] / total}`,
     }));
 };
 
