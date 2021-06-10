@@ -70,11 +70,13 @@
     {
       "name": "Highlighted places",
       "slug": "highlighted_places",
+      "categoryIds":[],
       "layersIds": []
     },
     {
       "name": "Mangrove habitat extent",
       "slug": "mangrove_extent",
+      "categoryIds":["default"],
       "isActive": true,
       "layersIds": [
         "extent"
@@ -83,6 +85,7 @@
     {
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
+      "categoryIds":["default"],
       "layersIds": [
         "coverage-1996-2016"
       ]
@@ -90,6 +93,7 @@
     {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
+      "categoryIds":["default"],
       "layersIds": [
         "net"
       ]
@@ -97,16 +101,19 @@
     {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
+      "categoryIds":["restoration_and_conservation"],
       "layersIds": ["alerts-heat"]
     },
     {
       "name": "Mangrove Blue Carbon",
       "slug": "mangrove_blue_carbon",
+      "categoryIds":["climate_and_policy", "ecosystem_services"],
       "layersIds": [ "carbon" ]
     },
     {
       "name": "Mangrove height",
       "slug": "mangrove_height",
+      "categoryIds":[],
       "layersIds": [
         "height"
       ]
@@ -114,6 +121,7 @@
     {
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
+      "categoryIds":[],
       "layersIds": [
         "biomass"
       ]
@@ -121,6 +129,7 @@
     {
       "name": "Conservation hotspots",
       "slug": "conservation_hotspots",
+      "categoryIds":[],
       "layersIds": [
         "cons-hotspots"
       ]
@@ -128,6 +137,7 @@
     {
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
+      "categoryIds":[],
       "layersIds": []
     }
   ],
@@ -169,5 +179,24 @@
       "name": "Mangrove deforestation alerts",
       "id": "alerts-point"
     }
+  ],
+  "categories":[
+    {
+      "id": "default",
+      "name":[]
+    },
+    {
+      "id": "restoration_and_conservation",
+      "name":["Restoration & Conservation"]
+    },
+    {
+      "id": "climate_and_policy",
+      "name":["Climate & Policy"]
+    },
+    {
+      "id": "ecosystem_services",
+      "name":["Ecosystem Services"]
+    }
+
   ]
 }
