@@ -6,12 +6,12 @@ const widgets = state => state.widgets.list;
 const locations = state => state.locations.list;
 
 export const dashboardWidgets = createSelector(
-  [widgets, currentDashboard],
-  (_widgets, _currentDashboard) => {
-    if (!_currentDashboard) return [];
+  [widgets, currentDashboard, currentLocation],
+  (_widgets, _currentDashboard, _currentLocation) => {
+    if (!_currentLocation) return [];
 
-    const { widgetsSlugs } = _currentDashboard;
-    return _widgets.filter(widget => widgetsSlugs.includes(widget.slug));
+    const { location_type } = _currentLocation;
+    return _widgets.filter(({ categoryIds, locationType }) => categoryIds.includes(_currentDashboard) && locationType.includes(location_type));
   }
 );
 
