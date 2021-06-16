@@ -1,5 +1,5 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "node": true,
@@ -9,17 +9,43 @@
     "Transifex": true
   },
   "rules": {
-    "no-underscore-dangle": 0,
-    "import/no-extraneous-dependencies": [
-        "error",
-        {
-         " devDependencies": [
-            ".storybook/**",
-            "stories/**"
-          ]
-        }
-      ],
-    "import/no-unresolved": "off"
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/button-has-type": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-console": [
+      "warn",
+      {
+        "allow": [
+          "warn",
+          "error"
+        ]
+      }
+    ]
   },
-  "extends": "vizzuality"
+  "plugins": [
+    "@babel",
+    "react-hooks",
+    "cypress",
+    "mocha"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/core-modules": [
+      "modules"
+    ]
+  },
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
+  ]
 }
