@@ -26,7 +26,6 @@ export const currentLocation = createSelector(
     }
 
     if (!result) return null;
-
     return { ...result };
   }
 );

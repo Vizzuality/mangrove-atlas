@@ -21,7 +21,7 @@ function* loadInitialData() {
     ranking
   } = yield select();
   if (!locations.list.length) yield put(fetchLocations());
-  if (!dashboards.defaults.length) yield put(fetchDashboards());
+  if (!dashboards.list.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());
   if (!layers.list.length) yield put(fetchLayers());
   if (!mapStyles.layers) yield put(fetchMapStyles());

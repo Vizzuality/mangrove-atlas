@@ -3,7 +3,7 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
-const categoriesData = {
+const listData = {
   'Benefits From Conservation': {
     color: '#86CEE8',
     label: 'Benefits From Conservation'
@@ -48,8 +48,8 @@ const widgetData = ({ list }, { scope }) => list.map((d) => {
     : Object.entries(hotSpotData).map(([catKey, catValue]) => ({
       x: Number(year),
       y: catValue,
-      color: categoriesData[catKey].color || '',
-      label: categoriesData[catKey].label,
+      color: listData[catKey].color || '',
+      label: listData[catKey].label,
       value: catValue,
       percentage: (catValue / total) * 100,
       unit: '%',
