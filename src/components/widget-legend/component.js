@@ -4,14 +4,11 @@ import classnames from 'classnames';
 import { format } from 'd3-format';
 import DangerousHTML from 'react-dangerous-html';
 
-import sortBy from 'lodash/sortBy';
-
 import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({
-  title,
+const Legend = ({ title,
   sup,
   type,
   position,
