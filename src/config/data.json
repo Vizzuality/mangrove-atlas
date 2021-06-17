@@ -19,13 +19,6 @@
   ],
   "widgets": [
     {
-      "name": "Highlighted places",
-      "slug": "highlighted_places",
-      "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":[],
-      "layersIds": []
-    },
-    {
       "name": "Mangrove habitat extent",
       "slug": "mangrove_extent",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
