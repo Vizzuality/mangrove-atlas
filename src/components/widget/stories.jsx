@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { withProvider } from 'utils/storybookProvider';
-import LegendComponent from './legend/component';
-import ConservationHotspots from './templates/conservation-hotspots/component';
-import MangroveActivity from './templates/mangrove-activity/component';
-import MangroveCoverage from './templates/mangrove-coverage/component';
-import MangroveNetChange from './templates/mangrove-net-change/component';
+import LegendComponent from 'components/widget-legend/component';
+import ConservationHotspots from 'widget-components/conservation-hotspots/component';
+import MangroveActivity from 'widget-components/mangrove-activity/component';
+import MangroveCoverage from 'widget-components/mangrove-coverage/component';
+import MangroveNetChange from 'widget-components/mangrove-net-change/component';
 
 import Widget from './component';
 
-import { toggleCollapse } from 'modules/widgets/actions';
-
-import TEMPLATES from './templates';
-import CONSERVATION_HOTSPOTS_CONFIG from './templates/conservation-hotspots/config';
+import TEMPLATES from 'components/widgets';
+import CONSERVATION_HOTSPOTS_CONFIG from 'widget-components/conservation-hotspots/config';
 
 // ** Widget Data ** //
 //  <-- Legend  --> //

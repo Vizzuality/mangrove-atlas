@@ -112,7 +112,6 @@ function MangroveNetChange({
       }
     });
   };
-
   const widgetData = chartData.filter(
     ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
       && parseInt(y, 10) <= parseInt(endYear, 10)

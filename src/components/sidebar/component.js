@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import OnScroll from 'react-on-scroll';
 import { breakpoints } from 'utils/responsive';
+
+// Components
+import WidgetMenu from 'components/widgets-menu';
 import Header from 'components/header';
 import Button from 'components/button';
+
 import styles from './style.module.scss';
 
 class Dashboard extends Component {
@@ -62,6 +66,7 @@ class Dashboard extends Component {
       >
         <div className={styles.header}>
           <Header sticky={sticky} />
+          <WidgetMenu />
           <div className={styles.actionBar}>
             {
               isCollapsed
