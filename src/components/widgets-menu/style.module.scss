@@ -1,0 +1,16 @@
+.widget_menu {
+
+  ul {
+    list-style: none;
+
+    li {
+      cursor: pointer;
+    }
+  }
+}
+
+._active {
+  background-color: aquamarine;
+}
+
+

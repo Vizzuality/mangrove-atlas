@@ -9,7 +9,6 @@ export const dashboardWidgets = createSelector(
   [widgets, currentDashboard, currentLocation],
   (_widgets, _currentDashboard, _currentLocation) => {
     if (!_currentLocation) return [];
-
     const { location_type } = _currentLocation;
     return _widgets.filter(({ categoryIds, locationType }) => categoryIds.includes(_currentDashboard) && locationType.includes(location_type));
   }
