@@ -1,6 +1,6 @@
 function toRasterSource({ filename, source }) {
   return {
-    tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
+    tiles: [`https://storage.googleapis.com/mangrove_atlas/staging/tilesets/${filename}/{z}/{x}/{y}.png`],
     type: 'raster',
     tileSize: 256,
     ...source,
@@ -373,8 +373,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw1996v2_0_z0-12',
-    filename: 'gmw1996v2_0_z0-12',
+    name: 'gmw1996v2_0_z0-06',
+    filename: 'gmw1996v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -382,8 +382,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2007v2_0_z0-12',
-    filename: 'gmw2007v2_0_z0-12',
+    name: 'gmw2007v2_0_z0-06',
+    filename: 'gmw2007v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -391,8 +391,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2008v2_0_z0-12',
-    filename: 'gmw2008v2_0_z0-12',
+    name: 'gmw2008v2_0_z0-06',
+    filename: 'gmw2008v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -400,8 +400,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2009v2_0_z0-12',
-    filename: 'gmw2009v2_0_z0-12',
+    name: 'gmw2009v2_0_z0-06',
+    filename: 'gmw2009v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -409,8 +409,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2010v2_0_z0-12',
-    filename: 'gmw2010v2_0_z0-12',
+    name: 'gmw2010v2_0_z0-06',
+    filename: 'gmw2010v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -418,8 +418,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2015v2_0_z0-12',
-    filename: 'gmw2015v2_0_z0-12',
+    name: 'gmw2015v2_0_z0-06',
+    filename: 'gmw2015v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -427,8 +427,8 @@ const rasters = [
     }
   },
   {
-    name: 'gmw2016v2_0_z0-12',
-    filename: 'gmw2016v2_0_z0-12',
+    name: 'gmw2016v2_0_z0-06',
+    filename: 'gmw2016v2_0_z0-06',
     source: {
       type: 'raster',
       minzoom: 0,
@@ -711,43 +711,43 @@ const layersMap = {
   ],
   extent: [
     {
-      layerId: 'gmw1996v2_0_z0-12',
+      layerId: 'gmw1996v2_0_z0-06',
       year: 1996,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2007v2_0_z0-12',
+      layerId: 'gmw2007v2_0_z0-06',
       year: 2007,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2008v2_0_z0-12',
+      layerId: 'gmw2008v2_0_z0-06',
       year: 2008,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2009v2_0_z0-12',
+      layerId: 'gmw2009v2_0_z0-06',
       year: 2009,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2010v2_0_z0-12',
+      layerId: 'gmw2010v2_0_z0-06',
       year: 2010,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2015v2_0_z0-12',
+      layerId: 'gmw2015v2_0_z0-06',
       year: 2015,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2016v2_0_z0-12',
+      layerId: 'gmw2016v2_0_z0-06',
       year: 2016,
       minZoom: 0,
       maxZoom: 12
