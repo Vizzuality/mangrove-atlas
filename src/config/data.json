@@ -4,7 +4,6 @@
       {
         "location_type": "worldwide",
         "widgetsSlugs": [
-          "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
@@ -17,7 +16,6 @@
       {
         "location_type": "country",
         "widgetsSlugs": [
-          "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
@@ -29,7 +27,6 @@
       {
         "location_type": "wdpa",
         "widgetsSlugs": [
-          "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
@@ -41,7 +38,6 @@
       {
         "location_type": "aoi",
         "widgetsSlugs": [
-          "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
@@ -55,7 +51,6 @@
       {
         "location_id": "25",
         "widgetsSlugs": [
-          "highlighted_places",
           "mangrove_extent",
           "mangrove_net_change",
           "mangrove_alerts",
