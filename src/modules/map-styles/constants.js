@@ -1,6 +1,6 @@
 function toRasterSource({ filename, source }) {
   return {
-    tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
+    tiles: [`https://storage.googleapis.com/mangrove_atlas/staging/tilesets/${filename}/{z}/{x}/{y}.png`],
     type: 'raster',
     tileSize: 256,
     ...source,
@@ -711,43 +711,43 @@ const layersMap = {
   ],
   extent: [
     {
-      layerId: 'gmw1996v2_0_z0-12',
+      layerId: 'gmw1996v2_0_z0-06',
       year: 1996,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2007v2_0_z0-12',
+      layerId: 'gmw2007v2_0_z0-06',
       year: 2007,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2008v2_0_z0-12',
+      layerId: 'gmw2008v2_0_z0-06',
       year: 2008,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2009v2_0_z0-12',
+      layerId: 'gmw2009v2_0_z0-06',
       year: 2009,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2010v2_0_z0-12',
+      layerId: 'gmw2010v2_0_z0-06',
       year: 2010,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2015v2_0_z0-12',
+      layerId: 'gmw2015v2_0_z0-06',
       year: 2015,
       minZoom: 0,
       maxZoom: 12
     },
     {
-      layerId: 'gmw2016v2_0_z0-12',
+      layerId: 'gmw2016v2_0_z0-06',
       year: 2016,
       minZoom: 0,
       maxZoom: 12
