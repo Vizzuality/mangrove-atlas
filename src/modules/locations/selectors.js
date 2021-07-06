@@ -20,12 +20,12 @@ export const currentLocation = createSelector(
     } else if (_currentId.iso) {
       result = _locations.find(location => location.iso === _currentId.iso && location.location_type === 'country');
     } else if (_currentId.id) {
-      result = _locations.find(location => location.id === Number(_currentId.id));
-    } if (_currentId.id) {
-      result = _locations
-        .find(location => location.location_id === _currentId.id
-          || location.id.toString() === _currentId.id);
+      result = _locations.find(
+        ({ id, location_id: locationId }) => id === Number(_currentId.id)
+        || locationId === _currentId.id
+      );
     }
+
     if (!result) return null;
 
     return { ...result };

@@ -10,7 +10,6 @@ export const decodeUrlForState = (url) => {
       paramsParsed[key] = params[key];
     }
   });
-
   return paramsParsed;
 };
 
@@ -23,6 +22,7 @@ export const encodeStateForUrl = (params) => {
       paramsParsed[key] = params[key];
     }
   });
+
 
   return queryString.stringify(paramsParsed).trim();
 };

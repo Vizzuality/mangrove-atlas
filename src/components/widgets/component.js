@@ -9,7 +9,6 @@ import styles from './style.module.scss';
 
 const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
   const onClickDownload = () => window.print();
-
   return (
     <div className={classnames(styles.widgets, {
       [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
