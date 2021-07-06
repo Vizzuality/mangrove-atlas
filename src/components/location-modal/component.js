@@ -39,6 +39,7 @@ class LocationSelector extends PureComponent {
     if (nextProps.isOpened) this.resetTerm();
   }
 
+
   closeModal = () => {
     const { closeSearchPanel } = this.props;
     closeSearchPanel();
@@ -57,7 +58,6 @@ class LocationSelector extends PureComponent {
 
   render() {
     const { isOpened, currentLocation, locations, highlightedPlaces } = this.props;
-
     if (!currentLocation) return null;
     const { searchTerm } = this.state;
     const locationsData = searchTerm

@@ -11,7 +11,7 @@ const locationNames = {
   wdpa: 'WDPA'
 };
 
-function LocationsList({ locationsData }) {
+const LocationsList = ({ locationsData }) => {
   const getType = (location) => {
     if (location.location_type === 'worldwide') return 'PAGE/APP';
     if (location.location_type === 'aoi') return 'PAGE/AOI';
@@ -44,7 +44,7 @@ function LocationsList({ locationsData }) {
       ))}
     </ul>
   );
-}
+};
 
 LocationsList.propTypes = {
   locationsData: PropTypes.arrayOf(PropTypes.shape({})).isRequired
