@@ -1,17 +1,10 @@
 @import 'styles/vars';
 
 .navMenu {
-  z-index: 4;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 20px;
+  @include menu-items;
 
   .menuItemTitle {
-    font-size: 10px;
-    margin-bottom: 5px;
-    color: $white;
+    @include menu-item-title;
   }
 
   svg {

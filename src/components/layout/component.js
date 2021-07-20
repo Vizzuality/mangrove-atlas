@@ -25,8 +25,8 @@ const Layout = ({ mapView }) => {
       {!isMobile && <DesktopLayout />}
       {isMobile && <MobileLayout />}
       {isMobile && <FooterMenu />}
-      {mapView && (
-        <div className={styles.vis}>
+      {(mapView || !isMobile) && (
+        <div className={cx(styles.vis, { [styles.mobileView]: mapView && isMobile})}>
           <Map />
           <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
         </div>)}

@@ -1,20 +1,14 @@
 @import 'styles/vars';
 
 .sidebarItem {
-  z-index: 4;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
+  @include menu-items;
 
   &.mobile {
     @include menu-items-mobile;
   }
 
   .menuItemTitle {
-    font-size: 10px;
-    margin-bottom: 5px;
-    color: $white;
+    @include menu-item-title;
   }
 
   svg {

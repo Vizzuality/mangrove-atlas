@@ -9,13 +9,17 @@ import styles from './style.module.scss';
 
 const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
   const [isOpen, toggleModal] = useState(false);
-  const [top, setPosition] = useState(null);
+  const [position, setPosition] = useState({
+    top: null,
+    left: null,
+    x: null
+  });
   const menuRef = useRef();
 
   useEffect(() => {
     if (menuRef.current) {
-      const { top } = menuRef.current.getBoundingClientRect();
-      setPosition(top);
+      const { top, left, x } = menuRef.current.getBoundingClientRect();
+      setPosition({ top, left, x });
     }
   }, [menuRef]);
 
@@ -32,15 +36,15 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
           <span className={styles.menuItemTitle}>Categories</span>
         </button>
         : (
-          <>
-            <span>Categories</span>
+          <button className={styles.categoriesMenuBtn}>
+            <span className={styles.menuItemTitle}>Categories</span>
             <ul>
               {dashboards?.map(({ slug, name }) => (
                 <li key={slug} onClick={() => handleModal(slug)} className={cx({ [styles._active]: currentDashboard === slug })}>
                   <Icon name={slug} className={cx([styles.icon])} alt={name} />
                 </li>))}
             </ul>
-          </>
+          </button>
         )}
       <Modal
         isOpen={isOpen}
@@ -48,7 +52,13 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
         widgetsMenu
         closeButton={false}
       >
-        <div className={cx(styles.modalContent, { [styles.mobile]: mobile })} style={{ top: mobile ? '50%' : top }}>
+        <div
+          className={cx(styles.modalContent, { [styles.mobile]: mobile })}
+          style={{
+            top: mobile ? '50%' : position.top,
+            left: mobile ? '50%' : position.left  - position.x / 2
+          }}
+        >
           <span className={styles.menuItemTitle}>Categories</span>
           <ul>
             {dashboards?.map(({ slug, name }) => (

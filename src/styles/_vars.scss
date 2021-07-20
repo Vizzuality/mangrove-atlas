@@ -30,6 +30,22 @@ $font-size-medium: 19px;
   line-height: 24px;
 }
 
+@mixin menu-items {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+@mixin menu-item-title {
+  margin-bottom: 5px;
+  padding-left: 6px;
+  font-size: 10px;
+  font-family: $font-family;
+  color: $white;
+}
+
 @mixin menu-items-mobile {
   flex-direction: column-reverse;
   justify-content: center;

@@ -10,7 +10,7 @@ const MobileLayout = () => (
   <div className={styles.printOnly_wrapper}>
     <div className={styles.dashboards}>
       <Header />
-      <Widgets mobile/>
+      <Widgets />
     </div>
   </div>
 );

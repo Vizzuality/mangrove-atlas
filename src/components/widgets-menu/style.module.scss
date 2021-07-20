@@ -3,14 +3,8 @@
 .widgets_menu,
 .modalContent {
   margin: 0 10px;
-
-  .menuItemTitle {
-    margin-bottom: 5px;
-    padding-left: 6px;
-    font-size: 10px;
-    font-family: $font-family;
-    color: $white;
-  }
+  display: flex;
+  flex-direction: column;
 
   ul {
     list-style: none;
@@ -19,6 +13,7 @@
     background-color: $white;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
     padding: 0;
+    margin: 0;
 
     li {
       display: flex;
@@ -51,6 +46,14 @@
   padding-bottom: 20px;
   text-align: center;
 
+  .categoriesMenuBtn {
+    @include menu-items;
+
+    .menuItemTitle {
+      @include menu-item-title;
+    }
+  }
+
   span {
     text-align: center;
   }
@@ -61,6 +64,7 @@
   }
 
   &.mobile {
+    flex-direction: row;
     margin: 0;
     padding: 0;
 
@@ -72,9 +76,7 @@
     }
 
     .menuItemTitle {
-      margin-top: 5px;
-      margin-bottom: 0;
-      padding: 0;
+      @include menu-item-title;
     }
 
     svg {
@@ -85,9 +87,10 @@
 
 .modalContent {
   position: absolute;
+  background-color: rgba(0, 0, 0, 0.08);
 
-  span {
-    text-align: start;
+  .menuItemTitle {
+    @include menu-item-title;
   }
 
   ul {
@@ -101,6 +104,7 @@
         line-height: 30px;
         margin-left: 10px;
         color: $black;
+        text-align: start;
       }
     }
   }
