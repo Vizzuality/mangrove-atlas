@@ -59,7 +59,6 @@ class LanguageSelect extends PureComponent {
     if (!data || !currentValue) return null;
 
     return (
-
       <ButtonGroup id="tx-live-lang-picker" className="container">
         {options.map(o => (
           <Button
