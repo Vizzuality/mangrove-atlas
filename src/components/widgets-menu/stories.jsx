@@ -3,13 +3,13 @@ import { storiesOf } from '@storybook/react';
 import Component from './component';
 
 const categories = [
-  'default',
+  'Distribution and Change',
   'Restoration & Conservation',
   'Climate & Policy',
   'Ecosystem Services',
 ];
 
 storiesOf('Widgets menu', module)
-  .add('Default', () => (
+  .add('Distribution and Change', () => (
     <Component dashboards={categories} />
   ))

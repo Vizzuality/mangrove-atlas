@@ -1,0 +1,27 @@
+@import 'styles/vars';
+
+.sidebarItem {
+  z-index: 4;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  &.mobile {
+    @include menu-items-mobile;
+  }
+
+  .menuItemTitle {
+    font-size: 10px;
+    margin-bottom: 5px;
+    color: $white;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: $primary;
+    background-color: $white;
+    border-radius: 30px;
+  }
+}

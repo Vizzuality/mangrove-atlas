@@ -2,5 +2,5 @@ export default {
   list: [],
   error: null,
   loading: false,
-  current: null
+  current: 'distribution_and_change'
 };

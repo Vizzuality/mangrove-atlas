@@ -1,15 +1,16 @@
 import { connect } from 'react-redux';
-import { setHeader } from 'modules/pages/actions';
+import { currentLocation } from 'modules/locations/selectors';
+import { openSearchPanel } from 'modules/locations/actions';
 import { expandAll, collapseAll } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  header: state.page.header,
+  location: currentLocation(state),
   isCollapsed: state.widgets.isCollapsed
 });
 
 const mapDispatchToProps = {
-  setHeader,
+  openSearchPanel,
   collapseAll,
   expandAll
 };

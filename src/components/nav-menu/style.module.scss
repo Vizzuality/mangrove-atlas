@@ -1,38 +1,33 @@
 @import 'styles/vars';
 
-.navMenu, .fixedNavMenu {
+.navMenu {
   z-index: 4;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
 
-  > button {
-    background-image: url('./menu.svg');
-    height: 72px;
-    width: 72px;
-    cursor: pointer;
+  .menuItemTitle {
+    font-size: 10px;
+    margin-bottom: 5px;
+    color: $white;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: $primary;
+    background-color: $white;
+    border-radius: 30px;
+  }
+
+  &.mobile {
+    @include menu-items-mobile;
   }
 
   @media print {
     display: none;
-  }
-
-  @media screen and (max-width: map-get($breakpoints, sm)) {
-    left: -4px;
-  }
-}
-
-.navMenu {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-}
-
-.fixedNavMenu {
-  position: relative;
-
-  .introModalBtn {
-
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      display: none;
-    }
   }
 }
 

@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import breakpoints from 'utils/responsive';
 import Spinner from 'components/spinner';
 import Button from 'components/button';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
+const WidgetList = ({ widgets, templates, mobile, ...parentProps }) => {
   const onClickDownload = () => window.print();
   return (
     <div className={classnames(styles.widgets, {
-      [styles.securityMargin]: isSticky && (window.innerWidth > breakpoints.lg + 1),
       [styles.spinner]: !widgets.length
     })}
     >
@@ -29,7 +27,7 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
           );
         })
       }
-      {widgets.length ? (
+      {widgets.length && !mobile ? (
         <Button
           className={styles.printBtn}
           hasBackground
@@ -43,6 +41,7 @@ const WidgetList = ({ widgets, templates, isSticky, ...parentProps }) => {
 };
 
 WidgetList.propTypes = {
+  mobile: PropTypes.bool,
   widgets: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -50,13 +49,12 @@ WidgetList.propTypes = {
     })
   ),
   templates: PropTypes.instanceOf(Map),
-  isSticky: PropTypes.bool
 };
 
 WidgetList.defaultProps = {
+  mobile: false,
   widgets: [],
   templates: new Map(),
-  isSticky: false
 };
 
 export default WidgetList;

@@ -1,8 +1,8 @@
 {
   "dashboards": [
     {
-      "slug": "default",
-      "name": "default"
+      "slug": "distribution_and_change",
+      "name": "Distribution and Change"
     },
     {
       "slug": "restoration_and_conservation",
@@ -29,7 +29,7 @@
       "name": "Mangrove habitat extent",
       "slug": "mangrove_extent",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["default"],
+      "categoryIds":["distribution_and_change"],
       "isActive": true,
       "layersIds": [
         "extent"
@@ -39,7 +39,7 @@
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
       "locationType": [""],
-      "categoryIds":["default"],
+      "categoryIds":["distribution_and_change"],
       "layersIds": [
         "coverage-1996-2016"
       ]
@@ -48,7 +48,7 @@
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["default"],
+      "categoryIds":["distribution_and_change"],
       "layersIds": [
         "net"
       ]
@@ -143,8 +143,8 @@
   ],
   "categories":[
     {
-      "id": "default",
-      "name":[]
+      "id": "distribution_and_change",
+      "name":["Distribution and Change"]
     },
     {
       "id": "restoration_and_conservation",

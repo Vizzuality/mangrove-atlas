@@ -3,10 +3,11 @@
 .header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 50px;
+  align-items: center;
+  margin-top: 100px;
+  z-index: 4;
 
-  .bg,
-  .bgFixed {
+  .bg {
     display: block;
     position: absolute;
     top: 0;
@@ -20,39 +21,11 @@
     }
   }
 
-  .bgFixed {
-    position: fixed;
-    z-index: 100;
-    height: 140px;
-  }
-
-  .logo {
-    position: absolute;
-    transform: translateX(-50px);
-  }
-
   .searchBar {
-    margin-top: 120px;
-    z-index: 300;
-    width: 100%;
+    font-size: 35px;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-
-    &.fixed {
-      position: fixed;
-      top: -110px;
-      max-width: 490px;
-
-      .buttonsWrapper {
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-
-    .buttonsWrapper {
-      display: flex;
-    }
+    flex-direction: column;
+    align-items: center;
   }
 
   .titleBtn {
@@ -71,10 +44,7 @@
     font-weight: 300;
     line-height: 0.85;
     text-align: left;
-
-    &.fixed {
-      font-size: 45px;
-    }
+    margin-bottom: 60px;
 
     @media print {
       display: none;
@@ -96,29 +66,25 @@
     margin-top: 30px;
     margin-bottom: 40px;
   }
+
+// .actionBar {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-bottom: 20px;
+//     display: flex;
+//     justify-content: space-between;
+//     @media screen and (max-width: map-get($breakpoints, lg)) {
+//       margin-bottom: 0;
+//     }
+//   }
 }
 
 @media screen and (max-width: map-get($breakpoints, lg)) {
   .header {
     margin-bottom: 25px;
 
-    .bg,
-    .bgFixed {
+    .bg {
       display: none;
-    }
-
-    .logo {
-      transform: translate(-15px, -15px);
-    }
-
-    .searchBar {
-      margin-top: 98px;
-      font-size: 35px;
-
-      &.fixed {
-        top: 0;
-        margin-top: 20px;
-      }
     }
 
     .title {
@@ -142,8 +108,7 @@
 @media screen and (max-width: map-get($breakpoints, sm)) {
   .header {
 
-    .bg,
-    .bgFixed {
+    .bg {
       width: 600px;
     }
   }
