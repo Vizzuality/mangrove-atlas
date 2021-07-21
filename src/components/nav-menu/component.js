@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import classnames from 'classnames';
+import cx from 'classnames';
+
+// components
+import Icon from 'components/icon';
 import Modal from 'components/modal';
 import LanguageSelect from 'components/language-selector';
 import HotspotsList from 'components/hotspots-list';
+
+// images
 import logo from './mangrove-alliance.png';
 import convened from './convened.png';
 import supported from './supported.png';
@@ -10,7 +15,7 @@ import donors from './donors.png';
 
 import styles from './style.module.scss';
 
-const NavMenu = ({ fixedHeader }) => {
+const NavMenu = ({ mobile }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem('modal');
   const [isOpen, toggleModal] = useState(modalStatus === null);
@@ -35,12 +40,14 @@ const NavMenu = ({ fixedHeader }) => {
   };
 
   return (
-    <div className={classnames({
-      [styles.fixedNavMenu]: fixedHeader,
-      [styles.navMenu]: !fixedHeader
-    })}
-    >
-      <button type="button" className={styles.introModalBtn} onClick={handleOpen} />
+    <>
+      <button
+        onClick={handleOpen}
+        className={cx(styles.navMenu, { [styles.mobile]: mobile })}
+      >
+        <span className={styles.menuItemTitle}>Menu</span>
+        <Icon name="menu" alt="Menu" className={styles.introModalBtn} />
+      </button>
       <Modal
         isOpen={isOpen}
         onRequestClose={handleClose}
@@ -85,8 +92,8 @@ const NavMenu = ({ fixedHeader }) => {
               <h4>Global Mangrove Watch Partners</h4>
               <p>The Global mangrove Watch (GMW) was established in 2011 under the Japan Aerospace Exploration Agency’s <a onClick={handleClose} href="https://www.eorc.jaxa.jp/ALOS/en/kyoto/mangrovewatch.htm" target="_blank" rel="noopener noreferrer">(JAXA) Kyoto & Carbon Initiative</a> by Aberystwyth University, solo Earth Observation and the International Water Management Institute, with the aim to provide open access geospatial information about mangrove extent and changes to the Ramsar Convention on Wetlands. In collaboration with Wetlands International and with support from DOB Ecology, the first GMW baseline maps were released in 2018 at the Ramsar COP13. The GMW maps also constitute the official mangrove datasets used by UNEP for reporting on Sustainable Development Goal 6.6.1 (change in the extent of water-related ecosystems over time).
               </p>
-              
-              <p>With support from the Oak Foundation, COmON Foundation, DOB Ecology and the Dutch Postcode Lottery, The Nature Conservancy, Wetlands International, Aberystwyth University, and soloEO in 2019 initiated a deeper collaboration, and are working with NASA, JAXA, IWMI, UNEP-WCMC and a host of partners to develop the Global Mangrove Watch Platform.              
+
+              <p>With support from the Oak Foundation, COmON Foundation, DOB Ecology and the Dutch Postcode Lottery, The Nature Conservancy, Wetlands International, Aberystwyth University, and soloEO in 2019 initiated a deeper collaboration, and are working with NASA, JAXA, IWMI, UNEP-WCMC and a host of partners to develop the Global Mangrove Watch Platform.
               </p>
 
               <h4>GMW and the Global Mangrove Alliance</h4>
@@ -94,7 +101,7 @@ const NavMenu = ({ fixedHeader }) => {
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                &nbsp;Learn more at MangroveAlliance.org.
+                  &nbsp;Learn more at MangroveAlliance.org.
                 </a>
               </p>
 
@@ -110,11 +117,11 @@ const NavMenu = ({ fixedHeader }) => {
 
               <h4>Disclaimer</h4>
               <p>
-              THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
-              AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
-              WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
-              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
-              PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+                THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
+                AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
+                WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
+                PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
               </p>
             </section>
           )}
@@ -156,9 +163,8 @@ const NavMenu = ({ fixedHeader }) => {
           )}
         </div>
       </Modal>
-    </div>
+    </>
   );
 };
-
 
 export default NavMenu;

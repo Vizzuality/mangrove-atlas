@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import Button from 'components/button';
+import Icon from 'components/icon';
 import styles from './style.module.scss';
 
 class ViewSelector extends PureComponent {
@@ -25,21 +25,23 @@ class ViewSelector extends PureComponent {
   render() {
     const { mapView, activeLayers } = this.props;
     return (
-      <Button
-        hasBackground
-        hasContrast={activeLayers === 0}
-        onClick={this.onChangeView}
-        className={styles.container}
-      >
-        <div className={styles.btnTitle}>
-          {mapView ? 'Dashboard View' : 'Map View'}
-        </div>
-        <span className={classnames(styles.btnInfo,
-          { [styles.activeLayers]: activeLayers !== 0 })}
+      <div className={styles.viewSelector}>
+        <button
+          type="button"
+          onClick={this.onChangeView}
         >
-          {activeLayers}
-        </span>
-      </Button>
+          {mapView
+            ? (<Icon name="close" />)
+            : (
+              <span className={classnames(styles.btnInfo,
+                { [styles.activeLayers]: activeLayers !== 0 })}
+              >
+                {activeLayers}
+              </span>
+            )}
+          <span>Map</span>
+        </button>
+      </div>
     );
   }
 }

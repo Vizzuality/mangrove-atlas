@@ -1,48 +1,44 @@
 @import 'styles/vars';
 
-.container {
-  position: fixed;
-  left: 5%;
-  width: 90%;
-  z-index: 301;
-  bottom: 10px;
-  border-radius: 25px;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-  min-height: 50px;
-  display: flex;
-  border: none;
+.viewSelector {
   justify-content: center;
-  align-items: center;
+  align-items: baseline;
 
-  .btnTitle {
-    color: $black;
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    &.activeLayers {
-      color: $white;
+    .btnInfo {
+      border: $white;
+      border-radius: 30px;
+      border: 2px solid #FFFFFF;
+
+      &.activeLayers {
+        width: 30px;
+        height: 30px;
+        color: $white;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    svg {
+      width: 35px;
+      height: 35px;
     }
   }
 
-  .btnInfo {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-weight: 200;
-    color: #00857F;
-    padding: 9px;
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(0, 133, 127, 0.2);
-    border-radius: 50%;
-    &.activeLayers {
-      color: $white;
-      font-weight: 600;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-    }
+  span {
+    font-size: 10px;
+    margin-top: 5px;
+    color: $white;
+    text-align: center;
   }
-}
 
-@media print {
-  .container {
+  @media print {
     display: none;
   }
 }

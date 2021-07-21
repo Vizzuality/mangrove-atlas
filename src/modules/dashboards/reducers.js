@@ -1,4 +1,4 @@
-import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
+import { fetchRequested, fetchSucceeded, fetchFailed, setCurrent } from './actions';
 
 export default {
   [fetchRequested]: state => ({
@@ -8,12 +8,16 @@ export default {
   }),
   [fetchSucceeded]: (state, { payload }) => ({
     ...state,
-    ...payload,
-    isLoading: false
+    isLoading: false,
+    list: payload,
   }),
   [fetchFailed]: (state, { payload }) => ({
     ...state,
     isLoading: false,
     error: payload
+  }),
+  [setCurrent]: (state, { payload }) => ({
+    ...state,
+    current: payload
   }),
 };

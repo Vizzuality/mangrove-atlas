@@ -9,7 +9,7 @@
     "source-layer": "selected_EEZ_land_v2_201410",
     "layout": {},
     "paint": {
-      "line-color": "hsl(177, 29%, 76%)"
+      "line-color": "hsl(58, 66%, 47%)"
     }
   },
   {
@@ -22,7 +22,7 @@
     "source-layer": "selected_EEZ_land_v2_201410",
     "layout": {},
     "paint": {
-      "fill-color": "hsla(177, 53%, 50%, 0.1)",
+      "fill-color": "hsla(58, 78%, 58%, 0.2)",
       "fill-opacity": [
         "interpolate",
         [

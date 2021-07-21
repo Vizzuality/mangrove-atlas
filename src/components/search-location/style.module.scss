@@ -1,0 +1,22 @@
+@import 'styles/vars';
+
+.sidebarItem {
+  @include menu-items;
+
+  &.mobile {
+    @include menu-items-mobile;
+  }
+
+  .menuItemTitle {
+    @include menu-item-title;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: $primary;
+    background-color: $white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+  }
+}
