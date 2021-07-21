@@ -75,7 +75,7 @@
     left: 5px;
     right: 5px;
     bottom: 5px;
-    border: 2px solid rgba($primary, 0.35);
+    border: 2px solid $primary;
     border-radius: $border-radius;
     pointer-events: none;
   }

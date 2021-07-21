@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
-import { NavigationControl } from 'react-map-gl';
+import { NavigationControl, FullscreenControl } from 'react-map-gl';
 import classnames from 'classnames';
 import pick from 'lodash/pick';
 
@@ -118,11 +118,9 @@ export const MapContainer = ({
       >
         {() => (
           <div className={styles.navigation}>
-            {/* {browser.name !== 'Safari' && (
               <MediaQuery minWidth={breakpoints.lg + 1}>
                 <FullscreenControl className={styles.fullscreen} />
               </MediaQuery>
-            )} */}
             <MediaQuery minWidth={breakpoints.sm}>
               <NavigationControl
                 captureClick

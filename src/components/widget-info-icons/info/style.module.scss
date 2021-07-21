@@ -1,0 +1,25 @@
+@import 'styles/vars';
+
+.modalBtn {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(#00857F, 0.2);
+  box-sizing: border-box;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+.modalContent {
+
+  h2 {
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 50px;
+    margin-top: 0;
+  }
+
+  p {
+    font-size: 19px;
+    line-height: 30px;
+  }
+}

@@ -10,14 +10,15 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 import styles from './style.module.scss';
+import WidgetControls from 'components/widget-info-icons/component';
 
 function Widget({
   children,
-  data,
-  downloadData,
+  // data,
+  // downloadData,
   name,
   slug,
-  filename,
+  // filename,
   layerId,
   layersIds,
   isActive,
@@ -63,20 +64,20 @@ function Widget({
       {name}
     </button>
   );
-  const ToggleLayersButton = () => (!haveLayers
-    ? null
-    : (
-      <Button
-        className={styles.toogleButton}
-        hasBackground={isActive}
-        hasContrast={!isActive}
-        isActive={isActive}
-        onClick={activeToggleHandler}
-      >
-        {isActive ? 'Hide layer' : 'Show layer'}
-      </Button>
-    )
-  );
+  // const ToggleLayersButton = () => (!haveLayers
+  //   ? null
+  //   : (
+  //     <Button
+  //       className={styles.toogleButton}
+  //       hasBackground={isActive}
+  //       hasContrast={!isActive}
+  //       isActive={isActive}
+  //       onClick={activeToggleHandler}
+  //     >
+  //       {isActive ? 'Hide layer' : 'Show layer'}
+  //     </Button>
+  //   )
+  // );
 
   return (
     <div className={classnames(styles.widget, widgetConditionalStyles, styles[`${slug}`])}>
@@ -87,7 +88,14 @@ function Widget({
         {!isLocationsModal && (
           <div className={styles.header}>
             <CollapseButton />
-            <ToggleLayersButton />
+            {/* <ToggleLayersButton /> */}
+            <WidgetControls
+              name={name}
+              slug={slug}
+              layerId={layerId}
+              layersIds={layersIds}
+              isActive={isActive}
+            />
           </div>
         )}
         {isLoading
@@ -105,9 +113,9 @@ function Widget({
         }
       </div>
 
-      {!isLocationsModal
+      {/* {!isLocationsModal
         && <WidgetInfo data={data} filename={filename} downloadData={downloadData} />
-      }
+      } */}
     </div>
   );
 }
