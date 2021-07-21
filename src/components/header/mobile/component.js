@@ -37,7 +37,6 @@ const Header = ({
     <div className={styles.header}>
       {location && (<div className={styles.searchBar}
       >
-
         <button type="button" className={styles.titleBtn} onClick={clickHandler}>
           <h1 className={classnames(styles.title, 'notranslate', {
             [styles._short]: location.name.length <= 10,
