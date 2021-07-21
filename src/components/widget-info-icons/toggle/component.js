@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import styles from './style.module.scss';
 
-
 const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive, toggleCollapse }) => {
 
 const handleChange = () =>  {
