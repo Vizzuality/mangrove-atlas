@@ -1,7 +1,8 @@
 .widgets {
   margin-bottom: 70px;
   max-width: 540px;
-  z-index: 300;
+  margin: auto;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,26 +11,33 @@
     margin-top: 100px;
   }
 
-  &.securityMargin {
-    margin-top: 75px;
-  }
-
   .printBtn {
-    margin-top: 45px;
+    margin: 45px 0;
 
     @media print {
       display: none;
     }
   }
 
-  @media print {
+  @media print  and (orientation: portrait){
+    margin-top: 200px;
+    break-before: page;
     max-width: 100%;
     margin: 65px 0;
-    break-after: always;
+    position: relative;
     display: grid;
-    grid-template-columns: 50% 50%;
-    column-gap: 20px;
-    row-gap: 50px;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+    margin-top: 500px;
+  }
+
+  @media print  and (orientation: landscape){
+    max-width: 100%;
+    margin: 65px 0;
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
   }
 }
 

@@ -1,0 +1,35 @@
+@import 'styles/vars';
+
+.dashboards {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 700px;
+  margin: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.printOnly {
+  font-size: 19px;
+  line-height: 29px;
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px 0;
+}
+
+@media print {
+  .printOnly {
+    display: block;
+  }
+
+  .printOnly_wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

@@ -41,7 +41,8 @@ class BasemapSelector extends PureComponent {
       <div className={classnames(
         'mapboxgl-ctrl',
         styles.basemap,
-        { [styles.collapse]: isCollapsed && mapView }
+        { [styles.collapse]: isCollapsed && mapView },
+        { [styles.mobileView]: mapView }
       )}
       >
         <div className={styles.current}>

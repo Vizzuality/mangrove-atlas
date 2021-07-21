@@ -1,6 +1,6 @@
 export default {
-  defaults: [],
-  custom: [],
+  list: [],
   error: null,
-  loading: false
+  loading: false,
+  current: 'distribution_and_change'
 };

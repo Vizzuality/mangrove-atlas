@@ -8,8 +8,7 @@ import styles from './style.module.scss';
 
 const numberFormat = format(',.2f');
 
-const Legend = ({
-  title,
+const Legend = ({ title,
   sup,
   type,
   position,

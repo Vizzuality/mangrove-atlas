@@ -1,53 +1,22 @@
 import React from 'react';
-import Link from 'redux-first-router-link';
+
+// components
+import HeaderDesktop from 'components/header/desktop';
 import Widgets from 'components/widgets';
-import Map from 'components/map-container';
-import Sidebar from 'components/sidebar';
-import NavMenu from 'components/nav-menu';
-import logo from 'components/layout/logo-bg.svg';
-import styles from '../style.module.scss';
+import SidebarMenu from 'components/bar-menu/sidebar-menu';
 
-const DesktopLayout = ({ location }) => {
-  let stylesOverride = { fontSize: 60, lineheight: 0.85 };
-  if ((location && location.name.length > 10)) {
-    stylesOverride = { fontSize: 45, lineheight: 1 };
-  }
-  if ((location && location.name.length > 30)) {
-    stylesOverride = { fontSize: 30, lineheight: 1 };
-  }
+import styles from './style.module.scss';
 
-  return (
-    <div>
-      <div className={styles.header}>
-        <NavMenu />
-        <Link to={{ type: 'PAGE/APP' }}>
-          <img className={styles.logo} src={logo} alt="mangrove-atlas-logo" />
-        </Link>
-        {location && (
-          <h1
-            className={styles.title}
-            style={stylesOverride}
-          >
-            {location.name}
-          </h1>
-
-        )}
-      </div>
-      <div className={styles.printOnly_wrapper}>
-        <Sidebar>
-          {({ isSticky }) => (
-            <>
-              <Widgets isSticky={isSticky} />
-            </>
-          )}
-        </Sidebar>
-        <div className={styles.vis}>
-          <Map />
-          <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
-        </div>
-      </div>
+const DesktopLayout = () => (
+  <div className={styles.printOnly_wrapper}>
+    <div className={styles.dashboards}>
+      <HeaderDesktop />
+      <Widgets />
+      <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
     </div>
-  );
-};
+      <SidebarMenu />
+  </div>
+);
+
 
 export default DesktopLayout;

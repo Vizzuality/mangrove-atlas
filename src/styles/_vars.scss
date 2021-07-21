@@ -11,6 +11,7 @@ $white: #FFFFFF;
 
 /* Fonts */
 $font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+$font-family2: 'Lato';
 
 $font-size-small: 12px;
 $font-size-medium: 19px;
@@ -27,6 +28,41 @@ $font-size-medium: 19px;
   text-transform: uppercase;
   letter-spacing: 1px;
   line-height: 24px;
+}
+
+@mixin menu-items {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+@mixin menu-item-title {
+  margin-bottom: 5px;
+  padding-left: 6px;
+  font-size: 10px;
+  font-family: $font-family;
+  color: $white;
+}
+
+@mixin menu-items-mobile {
+  flex-direction: column-reverse;
+  justify-content: center;
+  padding-bottom: 0;
+
+  span {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: $white;
+    background-color: transparent;
+    border-radius: 30px;
+  }
 }
 
 // Breakpoints

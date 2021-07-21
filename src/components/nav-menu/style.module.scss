@@ -1,38 +1,27 @@
 @import 'styles/vars';
 
-.navMenu, .fixedNavMenu {
-  z-index: 4;
+.navMenu {
+  @include menu-items;
 
-  > button {
-    background-image: url('./menu.svg');
-    height: 72px;
-    width: 72px;
-    cursor: pointer;
+  .menuItemTitle {
+    @include menu-item-title;
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    fill: $primary;
+    background-color: $white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+  }
+
+  &.mobile {
+    @include menu-items-mobile;
   }
 
   @media print {
     display: none;
-  }
-
-  @media screen and (max-width: map-get($breakpoints, sm)) {
-    left: -4px;
-  }
-}
-
-.navMenu {
-  position: absolute;
-  top: 15px;
-  left: 20px;
-}
-
-.fixedNavMenu {
-  position: relative;
-
-  .introModalBtn {
-
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      display: none;
-    }
   }
 }
 
