@@ -12,6 +12,7 @@ const DesktopLayout = () => (
     <div className={styles.dashboards}>
       <HeaderDesktop />
       <Widgets />
+      <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
     </div>
       <SidebarMenu />
   </div>

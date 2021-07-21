@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 // components
 import Button from 'components/button';
@@ -26,16 +27,6 @@ const Header = ({
   const clickHandler = () => {
     openSearchPanel();
   }
-
-
-  let stylesOverride = { fontSize: 60, lineheight: 0.85 };
-  if ((location && location.name.length > 10)) {
-    stylesOverride = { fontSize: 45, lineheight: 1 };
-  }
-  if ((location && location.name.length > 30)) {
-    stylesOverride = { fontSize: 30, lineheight: 1 };
-  }
-
   return (
     <div className={styles.header}>
       <img
@@ -44,41 +35,58 @@ const Header = ({
         alt="Background"
       />
       <div>
-        {location && (<div className={styles.searchBar}
-        >
+        {location && (<div className={styles.searchBar}>
           <button type="button" className={styles.titleBtn} onClick={clickHandler}>
-              <h1
-                className={styles.title, 'notranslate'}
-                style={stylesOverride}
-              >
-                {location.name}
-              </h1>
+            <h1 className={cx(styles.title, 'notranslate', {
+            [styles._short]: location.name.length < 10,
+            [styles._medium]: location.name.length > 10 && location.name.length < 30,
+            [styles._long]: location.name.length > 30,
+          }
+          )}>
+              {location.name}
+            </h1>
           </button>
-          {isCollapsed
-            ? (
-              <Button
-                hasBackground
-                hasContrast
-                onClick={onClickExpandAll}
-              >
-                Expand all widgets
-              </Button>
-            )
-            : (
-              <Button
-                isTransparent
-                isGrey
-                onClick={onClickCollapseAll}
-              >
-                Collapse all widgets
-              </Button>
-            )}
+          <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
+          <div className={styles.noPrint}>
+            {isCollapsed
+              ? (
+                <Button
+                  hasBackground
+                  hasContrast
+                  onClick={onClickExpandAll}
+                >
+                  Expand all widgets
+                </Button>
+              )
+              : (
+                <Button
+                  isTransparent
+                  isGrey
+                  onClick={onClickCollapseAll}
+                >
+                  Collapse all widgets
+                </Button>
+              )}
+          </div>
         </div>
         )}
-        <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
       </div>
     </div>
   );
 };
+
+Header.propTypes = {
+  location: PropTypes.string,
+  openSearchPanel: PropTypes.func,
+  isCollapsed: PropTypes.bool,
+  collapseAll: PropTypes.func.isRequired,
+  expandAll: PropTypes.func.isRequired,
+}
+
+Header.defaultProps = {
+  location: null,
+  openSearchPanel: null,
+  isCollapsed: true
+}
 
 export default Header;

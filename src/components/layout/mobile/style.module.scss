@@ -5,6 +5,7 @@
   flex-direction: column;
   position: relative;
   max-width: 700px;
+  margin: auto;
 }
 
 .header {
@@ -18,8 +19,7 @@
   display: none;
   width: 100%;
   text-align: center;
-  margin: 0;
-  margin-top: 60px;
+  margin-top: 20px 0;
 }
 
 @media print {

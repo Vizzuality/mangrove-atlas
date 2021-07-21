@@ -22,9 +22,7 @@
   },
   "plugins": [
     "@babel",
-    "react-hooks",
-    "cypress",
-    "mocha"
+    "react-hooks"
   ],
   "settings": {
     "react": {
@@ -37,7 +35,6 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "plugin:react/recommended",
-    "plugin:cypress/recommended"
+    "plugin:react/recommended"
   ]
 }

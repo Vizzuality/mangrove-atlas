@@ -2,11 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-import Link from 'redux-first-router-link';
-
-import logo from 'components/layout/logo.svg';
-
-
 // components
 import Button from 'components/button';
 
@@ -17,7 +12,8 @@ const Header = ({
   openSearchPanel,
   isCollapsed,
   collapseAll,
-  expandAll
+  expandAll,
+  setMobileView,
 }) => {
 
   const onClickCollapseAll = () => {
@@ -32,26 +28,27 @@ const Header = ({
     openSearchPanel();
   }
 
-  const onClickDownload = () => window.print();
-
-
-  let stylesOverride = { fontSize: 60, lineheight: 0.85 };
-  if ((location && location.name.length > 10)) {
-    stylesOverride = { fontSize: 45, lineheight: 1 };
-  }
-  if ((location && location.name.length > 30)) {
-    stylesOverride = { fontSize: 30, lineheight: 1 };
+  const onClickDownload = () => {
+    setMobileView(true);
+    window.print();
   }
 
   return (
     <div className={styles.header}>
       {location && (<div className={styles.searchBar}
       >
+
         <button type="button" className={styles.titleBtn} onClick={clickHandler}>
-          <h1 className={classnames(styles.title, 'notranslate')}>
+          <h1 className={classnames(styles.title, 'notranslate', {
+            [styles._short]: location.name.length < 10,
+            [styles._medium]: location.name.length > 10 && location.name.length < 30,
+            [styles._long]: location.name.length > 30,
+          }
+          )}>
             {location.name}
           </h1>
         </button>
+        <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
         <div className={styles.headerBtns}>
           {isCollapsed
             ? (
@@ -80,13 +77,25 @@ const Header = ({
           >
             Download as PDF
           </Button>
-
         </div>
       </div>
       )}
-      <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
     </div>
   );
 };
+
+Header.propTypes = {
+  location: PropTypes.string,
+  openSearchPanel: PropTypes.func,
+  isCollapsed: PropTypes.bool,
+  collapseAll: PropTypes.func.isRequired,
+  expandAll: PropTypes.func.isRequired,
+}
+
+Header.defaultProps = {
+  location: null,
+  openSearchPanel: null,
+  isCollapsed: true
+}
 
 export default Header;

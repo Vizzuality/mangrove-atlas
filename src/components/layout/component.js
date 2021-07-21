@@ -15,10 +15,11 @@ import FooterMenu from 'components/bar-menu/footer-menu/component';
 import Map from 'components/map-container';
 import styles from './style.module.scss';
 
-const Layout = ({ mapView }) => {
+const Layout = ({ mapView, location }) => {
   const isMobile = window.innerWidth < breakpoints.lg;
+
   return (
-    <div className={cx([styles.printOnly_wrapper], [styles.sidebar])}>
+    <div className={cx([styles.printOnly_wrapper])}>
       <Link to={{ type: 'PAGE/APP' }}>
         <img className={styles.logo} src={logo} alt="mangrove-atlas" />
       </Link>
@@ -26,9 +27,18 @@ const Layout = ({ mapView }) => {
       {isMobile && <MobileLayout />}
       {isMobile && <FooterMenu />}
       {(mapView || !isMobile) && (
-        <div className={cx(styles.vis, { [styles.mobileView]: mapView && isMobile})}>
+        <div className={cx(styles.vis, { [styles.mobileView]: mapView && isMobile })}>
+
+          <h1 className={cx(styles.printOnly,
+            {
+              [styles._short]: location?.name.length < 10,
+              [styles._medium]: location?.name.length > 10
+            })}>
+              {location?.name}
+          </h1>
+
+          <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
           <Map />
-          <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
         </div>)}
     </div>
   );

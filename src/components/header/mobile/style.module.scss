@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: center;
   margin-top: 100px;
+
+  @media print {
+    display: none;
+  }
 }
 
 .searchBar {
@@ -34,15 +38,25 @@
   border: 0;
   background: transparent;
   color: $body-color;
-  font-size: 60px;
   font-weight: 300;
-  line-height: 0.85;
-  text-align: left;
+  text-align: center;
   margin-bottom: 60px;
+  max-width: 540px;
+}
 
-  @media print {
-    display: none;
-  }
+._short {
+  font-size: 60px;
+  line-height: 0.85;
+}
+
+._medium {
+  font-size: 45;
+  line-height: 1;
+}
+
+._long {
+  font-size: 30;
+  line-height: 1;
 }
 
 .printOnly {
@@ -55,57 +69,10 @@
   margin-bottom: 40px;
 }
 
-// .actionBar {
-//     display: flex;
-//     justify-content: space-between;
-//     margin-bottom: 20px;
-//     display: flex;
-//     justify-content: space-between;
-//     @media screen and (max-width: map-get($breakpoints, lg)) {
-//       margin-bottom: 0;
-//     }
-//   }
-
-
 @media screen and (max-width: map-get($breakpoints, md)) {
   .header {
     .title {
       font-size: 35px;
-    }
-  }
-}
-
-@media print {
-  .header {
-    width: 100%;
-    margin-bottom: 0;
-    display: block;
-    position: absolute;
-    top: 20px;
-    align-items: center;
-
-    .toggle{
-      display: none;
-    }
-
-    img {
-      display: none!important;
-    }
-
-    .searchBar {
-      margin-top: 0;
-    }
-
-    .searchButton {
-      display: none;
-    }
-
-    .titleBtn {
-      margin: auto;
-    }
-
-    .printOnly {
-      display: block;
     }
   }
 }

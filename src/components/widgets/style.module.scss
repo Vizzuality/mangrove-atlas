@@ -19,14 +19,25 @@
     }
   }
 
-  @media print {
+  @media print  and (orientation: portrait){
+    margin-top: 200px;
+    break-before: page;
     max-width: 100%;
     margin: 65px 0;
-    break-after: always;
+    position: relative;
     display: grid;
-    grid-template-columns: 50% 50%;
-    column-gap: 20px;
-    row-gap: 50px;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+    margin-top: 500px;
+  }
+
+  @media print  and (orientation: landscape){
+    max-width: 100%;
+    margin: 65px 0;
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
   }
 }
 
