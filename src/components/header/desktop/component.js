@@ -27,6 +27,8 @@ const Header = ({
   const clickHandler = () => {
     openSearchPanel();
   }
+
+  console.log(location?.name.length)
   return (
     <div className={styles.header}>
       <img
