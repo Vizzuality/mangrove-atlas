@@ -75,7 +75,6 @@ WidgetInfo.propTypes = {
     PropTypes.number
   ]).isRequired,
   locationsList: PropTypes.array.isRequired
-
 };
 
 WidgetInfo.defaultProps = {

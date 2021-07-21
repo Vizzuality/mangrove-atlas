@@ -50,6 +50,7 @@ const reducers = combineReducers({
     {}
   )
 });
+
 const middleware = applyMiddleware(routerMiddleware, sagaMiddleware);
 const enhancers = composeWithDevTools(routerEnhancer, middleware);
 const store = createStore(reducers, enhancers);
