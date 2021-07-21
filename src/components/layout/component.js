@@ -5,8 +5,6 @@ import cx from 'classnames';
 import Link from 'redux-first-router-link';
 import { breakpoints } from 'utils/responsive';
 
-import logo from 'components/layout/logo.svg';
-
 // components
 import DesktopLayout from './desktop';
 import MobileLayout from './mobile';
@@ -21,7 +19,7 @@ const Layout = ({ mapView, location }) => {
   return (
     <div className={cx([styles.printOnly_wrapper])}>
       <Link to={{ type: 'PAGE/APP' }}>
-        <img className={styles.logo} src={logo} alt="mangrove-atlas" />
+        <img className={styles.logo} src={'/logo.svg'} alt="mangrove-atlas" />
       </Link>
       {!isMobile && <DesktopLayout />}
       {isMobile && <MobileLayout />}

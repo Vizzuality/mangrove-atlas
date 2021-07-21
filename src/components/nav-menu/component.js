@@ -40,12 +40,14 @@ const NavMenu = ({ mobile }) => {
   };
 
   return (
-    <button
-      onClick={handleOpen}
-      className={cx(styles.navMenu, { [styles.mobile]: mobile })}
-    >
-      <span className={styles.menuItemTitle}>Menu</span>
-      <Icon name="menu" alt="Menu" className={styles.introModalBtn} />
+    <>
+      <button
+        onClick={handleOpen}
+        className={cx(styles.navMenu, { [styles.mobile]: mobile })}
+      >
+        <span className={styles.menuItemTitle}>Menu</span>
+        <Icon name="menu" alt="Menu" className={styles.introModalBtn} />
+      </button>
       <Modal
         isOpen={isOpen}
         onRequestClose={handleClose}
@@ -99,7 +101,7 @@ const NavMenu = ({ mobile }) => {
                 evidence base informing the Global Mangrove Alliance, a collaboration of organisations working to increase
                 the world’s mangrove cover 20% by 2030.
                 <a onClick={handleClose} href="http://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">
-                &nbsp;Learn more at MangroveAlliance.org.
+                  &nbsp;Learn more at MangroveAlliance.org.
                 </a>
               </p>
 
@@ -115,11 +117,11 @@ const NavMenu = ({ mobile }) => {
 
               <h4>Disclaimer</h4>
               <p>
-              THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
-              AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
-              WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
-              FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
-              PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+                THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE PROVIDED ON AN “AS IS” BASIS
+                AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW,
+                WE DISCLAIM ALL WARRANTIES, STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY,
+                FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM MAPS AND INFORMATION
+                PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
               </p>
             </section>
           )}
@@ -161,7 +163,7 @@ const NavMenu = ({ mobile }) => {
           )}
         </div>
       </Modal>
-    </button>
+    </>
   );
 };
 

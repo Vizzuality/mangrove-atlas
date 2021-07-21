@@ -40,9 +40,9 @@ const Header = ({
 
         <button type="button" className={styles.titleBtn} onClick={clickHandler}>
           <h1 className={classnames(styles.title, 'notranslate', {
-            [styles._short]: location.name.length < 10,
+            [styles._short]: location.name.length <= 10,
             [styles._medium]: location.name.length > 10 && location.name.length < 30,
-            [styles._long]: location.name.length > 30,
+            [styles._long]: location.name.length >= 30,
           }
           )}>
             {location.name}

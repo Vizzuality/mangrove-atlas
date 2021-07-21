@@ -24,10 +24,10 @@ export default (props) => {
       style={customStyles}
       {...domProps}
       onRequestClose={onRequestClose}
-      className={cx(
-        { [styles.modalWrapper]: !widgetsMenu },
-        { [styles.widgetsMenu]: widgetsMenu }
-      )}
+      className={cx({
+        [styles.modalWrapper]: !widgetsMenu,
+        [styles.widgetsMenu]: widgetsMenu
+      })}
     >
       <div className={styles.content}>
         {children}
