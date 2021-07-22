@@ -37,6 +37,18 @@
           text-transform: uppercase;
           cursor: pointer;
         }
+
+        .modalIcon {
+          transform: rotate(180deg);
+        }
+
+        &._collapsed {
+          margin-bottom: -15px;
+
+          .modalIcon {
+            transform: rotate(90deg);
+          }
+        }
       }
 
       a {
