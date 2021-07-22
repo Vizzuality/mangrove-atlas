@@ -20,7 +20,7 @@ const Download = () => {
   };
 
   const handleClick = (id) => {
-    toggleCollapse({ [id]: !isCollapsed.id });
+    toggleCollapse({ ...isCollapsed, [id]: !isCollapsed[id] });
   }
 
   return (
@@ -29,7 +29,7 @@ const Download = () => {
         onClick={handleModal}
         className={cx(styles.modalBtn)}
       >
-        <Icon name="menu" alt="Download" className={styles.modalicon} />
+        <Icon name="menu" alt="Download" className={styles.modalIcon} />
       </button>
       <Modal
         isOpen={isOpen}
@@ -42,13 +42,17 @@ const Download = () => {
           {INFO.map(({ id, title, href, description }) => (
             <div key={id} className={styles.infoContent}>
               <div className={styles.headings}>
-                <div className={styles.title} onClick={() => handleClick(id)}>
-                  <Icon name="arrow_border" alt={isCollapsed ? 'expand content' : 'collapse content'} className={styles.modalicon} />
+                <div className={cx(styles.title, { [styles._collapsed]: isCollapsed[id] })} onClick={() => handleClick(id)}>
+                  <Icon
+                    name="arrow_border"
+                    alt={isCollapsed ? 'expand content' : 'collapse content'}
+                    className={cx(styles.modalIcon, { [styles._collapsed]: isCollapsed[id] })}
+                  />
                   <h3>{title}</h3>
                 </div>
                 <a href={href} target="_blank">DOWNLOAD</a>
               </div>
-              <p className={cx({ [styles._collapsed]: isCollapsed })}>{description}</p>
+              <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
             </div>
           ))}
         </div>
