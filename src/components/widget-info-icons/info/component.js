@@ -47,7 +47,9 @@ const Info = ({ slug }) => {
         isOpen={isOpen}
         onRequestClose={handleModal}
       >
-        {info()}
+        <div className={styles.modalContent}>
+          {info()}
+        </div>
       </Modal>
     </>
   );
