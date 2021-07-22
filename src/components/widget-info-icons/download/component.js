@@ -38,7 +38,7 @@ const Download = ({ name, slug }) => {
       >
         <div className={styles.modalContent}>
           <h2>Download Data</h2>
-          {INFO[slug].map(({ id, title, href, description }) => (
+          {INFO[slug].map(({ id, title, href, description, license }) => (
             <div key={id} className={styles.infoContent}>
               <div className={styles.headings}>
                 <div className={cx(styles.title, { [styles._collapsed]: isCollapsed[id] })} onClick={() => handleClick(id)}>
@@ -52,6 +52,7 @@ const Download = ({ name, slug }) => {
                 <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>
               </div>
               <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
+              <p>{license}</p>
             </div>
           ))}
         </div>
