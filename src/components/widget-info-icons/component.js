@@ -12,8 +12,8 @@ import styles from './style.module.scss';
 const WidgetControls = ({ name, slug, layerId, layersIds, isActive }) => {
   return (
     <div className={styles.widgetControls}>
-      <Download />
-      <Info />
+      <Download slug={slug} />
+      <Info slug={slug} />
       <Toggle
         name={name}
         slug={slug}

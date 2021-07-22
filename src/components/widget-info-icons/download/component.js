@@ -11,7 +11,7 @@ import { INFO } from './constants';
 import styles from './style.module.scss';
 
 
-const Download = () => {
+const Download = ({ name, slug }) => {
   const [isOpen, toggleModal] = useState(false);
   const [isCollapsed, toggleCollapse] = useState({});
 
@@ -37,9 +37,8 @@ const Download = () => {
         closeButton
       >
         <div className={styles.modalContent}>
-
           <h2>Download Data</h2>
-          {INFO.map(({ id, title, href, description }) => (
+          {INFO[slug].map(({ id, title, href, description }) => (
             <div key={id} className={styles.infoContent}>
               <div className={styles.headings}>
                 <div className={cx(styles.title, { [styles._collapsed]: isCollapsed[id] })} onClick={() => handleClick(id)}>
