@@ -17,7 +17,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default (props) => {
-  const { children, closeButton, title, onRequestClose, widgetsMenu, ...domProps } = props;
+  const { children, closeButton = true, title, onRequestClose, widgetsMenu, ...domProps } = props;
 
   return (
     <Modal
