@@ -29,7 +29,7 @@ const Download = ({ name, slug }) => {
         onClick={handleModal}
         className={cx(styles.modalBtn)}
       >
-        <Icon name="menu" alt="Download" className={styles.modalIcon} />
+        <Icon name="download" alt="Download" className={styles.modalIcon} />
       </button>
       <Modal
         isOpen={isOpen}
