@@ -1,0 +1,62 @@
+@import 'styles/vars';
+
+.modalBtn {
+  width: 30px;
+  height: 30px;
+  border: 2px solid rgba(#00857F, 0.2);
+  box-sizing: border-box;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+.modalContent {
+
+  h2 {
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 50px;
+    margin-top: 0;
+  }
+
+  .infoContent {
+
+    .headings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .title {
+        display: flex;
+        align-items: center;
+
+        h3 {
+          margin-left: 10px;
+          font-size: 12px;
+          line-height: 25px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+      }
+
+      a {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 25px;
+        letter-spacing: 1px;
+        text-decoration-line: underline;
+      }
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 19px;
+      line-height: 30px;
+      margin: 0;
+
+      &._collapsed {
+        display: none;
+      }
+    }
+  }
+}

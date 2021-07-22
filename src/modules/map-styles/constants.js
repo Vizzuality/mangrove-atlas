@@ -1,6 +1,9 @@
 function toRasterSource({ filename, source }) {
+  const extent = filename.includes('gmw');
   return {
-    tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
+    tiles: extent
+      ? [`https://mangrove_atlas.storage.googleapis.com/staging/tilesets/${filename}/{z}/{x}/{y}.png`]
+      : [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
     type: 'raster',
     tileSize: 256,
     ...source,

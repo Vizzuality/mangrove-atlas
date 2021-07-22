@@ -188,6 +188,7 @@ class Map extends Component {
     }, 2500);
   };
 
+
   render() {
     const {
       customClass,
@@ -222,7 +223,6 @@ class Map extends Component {
         });
       }
     };
-
 
     const MapFunctions = () => {
       if (loaded && Boolean(this.map)) {

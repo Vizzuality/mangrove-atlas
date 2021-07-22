@@ -80,21 +80,6 @@
     flex-direction: column-reverse;
     width: 100%;
   }
-
-  .dashboards {
-    max-width: 100%;
-    padding: 30px;
-
-    .header {
-      position: absolute;
-      top: 0px;
-      width: 100vw;
-
-      .actionBar {
-        display: none;
-      }
-    }
-  }
 }
 
 

@@ -4,8 +4,6 @@
   z-index: 101;
   background: rgba(0, 0, 0, 0.7);
   opacity: 0;
-  // transition:
-  //   opacity 0.1s linear;
 }
 
 .ReactModal__Overlay--after-open {
@@ -19,11 +17,11 @@
 }
 
 .ReactModal__Content {
-  // transform: translate(-10px, -10px);
-  // transition: transform 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transform: translate(-200px);
+  transition: transform 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 
 .ReactModal__Content--after-open {
-  // transform: translate(0);
-  // transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transform: translate(0);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
