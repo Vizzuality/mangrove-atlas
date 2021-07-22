@@ -4,6 +4,67 @@
     {
       "icon": {
         "paths": [
+          "M884.364 856.436l-363.055-363.055-363.055 363.055-130.327-130.327 493.382-493.382 493.382 493.382z"
+        ],
+        "attrs": [
+          {
+            "fill": "rgb(58, 63, 89)"
+          }
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "icn_arrow_01_open"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "rgb(58, 63, 89)"
+        }
+      ],
+      "properties": {
+        "order": 172,
+        "id": 19,
+        "name": "arrow_border",
+        "prevSize": 32
+      },
+      "setIdx": 7,
+      "setId": 20,
+      "iconIdx": 1
+    },
+    {
+      "icon": {
+        "paths": [
+          "M214 768h596v86h-596v-86zM810 384l-298 298-298-298h170v-256h256v256h170z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "file_download",
+          "get_app"
+        ],
+        "grid": 24
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 1,
+        "id": 1,
+        "prevSize": 24,
+        "name": "file_download"
+      },
+      "setIdx": 21,
+      "setId": 6,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
           "M1024 512c0 282.77-229.23 512-512 512s-512-229.23-512-512c0-282.77 229.23-512 512-512s512 229.23 512 512z",
           "M365.714 365.714l292.571 292.571",
           "M365.714 658.286l292.571-292.571"

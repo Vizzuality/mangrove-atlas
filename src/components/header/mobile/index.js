@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+
 import { currentLocation } from 'modules/locations/selectors';
 import { openSearchPanel } from 'modules/locations/actions';
 import { setMobileView } from 'modules/app/actions';

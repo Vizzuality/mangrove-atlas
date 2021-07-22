@@ -24,9 +24,13 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
   }, [menuRef]);
 
   const handleModal = (slug) => {
+    setCurrent(slug);
     toggleModal(!isOpen);
-    setCurrent(slug)
   };
+
+  const handleHover = () => {
+    toggleModal(!isOpen);
+  }
 
   return (
     <div className={cx(styles.widgets_menu, { [styles.mobile]: mobile })} ref={menuRef}>
@@ -40,7 +44,11 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
             <span className={styles.menuItemTitle}>Categories</span>
             <ul>
               {dashboards?.map(({ slug, name }) => (
-                <li key={slug} onClick={() => handleModal(slug)} className={cx({ [styles._active]: currentDashboard === slug })}>
+                <li key={slug}
+                  onClick={() => handleModal(slug)}
+                  onMouseOver={handleHover}
+                  className={cx({ [styles._active]: currentDashboard === slug })}
+                >
                   <Icon name={slug} className={cx([styles.icon])} alt={name} />
                 </li>))}
             </ul>

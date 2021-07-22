@@ -10,6 +10,12 @@ const Icons = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
+      <symbol id="icon-arrow_border" viewBox="0 0 32 32">
+        <path d="M27.636 26.764l-11.345-11.345-11.345 11.345-4.073-4.073 15.418-15.418 15.418 15.418z"></path>
+      </symbol>
+      <symbol id="icon-file_download" viewBox="0 0 24 24">
+        <path d="M5.016 18h13.969v2.016h-13.969v-2.016zM18.984 9l-6.984 6.984-6.984-6.984h3.984v-6h6v6h3.984z"></path>
+      </symbol>
       <symbol id="icon-close" viewBox="0 0 32 32">
         <path fill="#ffffff" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
         <path fill="#ffffff" stroke="#00857F" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3714" d="M11.429 11.429l9.143 9.143"></path>
