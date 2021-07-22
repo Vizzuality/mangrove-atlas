@@ -26,12 +26,11 @@ const WidgetControls = ({ name, slug, layerId, layersIds, isActive }) => {
 };
 
 WidgetControls.propTypes = {
-
-
-};
-
-WidgetControls.defaultProps = {
-
+  name: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  layerId: PropTypes.string.isRequired,
+  layersIds: PropTypes.array.isRequired,
+  isActive: PropTypes.bool.isRequired
 };
 
 export default WidgetControls;

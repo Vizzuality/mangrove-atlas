@@ -50,7 +50,7 @@ const Download = () => {
                   />
                   <h3>{title}</h3>
                 </div>
-                <a href={href} target="_blank">DOWNLOAD</a>
+                <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>
               </div>
               <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
             </div>
