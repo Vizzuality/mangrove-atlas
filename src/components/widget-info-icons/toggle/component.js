@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './style.module.scss';
 
 
-const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive }) => {
+const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive, toggleCollapse }) => {
 
 const handleChange = () =>  {
   if (layersIds) {
@@ -12,20 +12,30 @@ const handleChange = () =>  {
   } else {
     toggleActive({ id: slug, layerId, isActive: !isActive });
   }
-}
+  toggleCollapse({ id: slug });
+};
+
   return (
     <input type="checkbox" class={styles.checkbox} onChange={() => handleChange()} checked={isActive} />
   );
 };
 
 Toggle.propTypes = {
-  isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func
+  slug: PropTypes.string,
+  layerId: PropTypes.string,
+  layersIds: PropTypes.array,
+  isActive: PropTypes.bool,
+  toggleCollapse: PropTypes.func,
+  toggleActive: PropTypes.func
 };
 
 Toggle.defaultProps = {
-  isOpened: false,
-  closeSearchPanel: () => null
+  slug: '',
+  layerId: '',
+  layersIds: [],
+  isActive: false,
+  toggleCollapse: () => null,
+  toggleActive: () => null
 };
 
 export default Toggle;

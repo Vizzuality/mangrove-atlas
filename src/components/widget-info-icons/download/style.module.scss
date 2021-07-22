@@ -18,8 +18,45 @@
     margin-top: 0;
   }
 
-  p {
-    font-size: 19px;
-    line-height: 30px;
+  .infoContent {
+
+    .headings {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .title {
+        display: flex;
+        align-items: center;
+
+        h3 {
+          margin-left: 10px;
+          font-size: 12px;
+          line-height: 25px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+      }
+
+      a {
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 25px;
+        letter-spacing: 1px;
+        text-decoration-line: underline;
+      }
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 19px;
+      line-height: 30px;
+      margin: 0;
+
+      &._collapsed {
+        display: none;
+      }
+    }
   }
 }
