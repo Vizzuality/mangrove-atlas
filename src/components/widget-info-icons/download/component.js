@@ -43,7 +43,7 @@ const Download = () => {
             <div key={id} className={styles.infoContent}>
               <div className={styles.headings}>
                 <div className={styles.title} onClick={() => handleClick(id)}>
-                  {/* <Icon name="arrow_border" alt={isCollapsed ? 'expand content' : 'collapse content'} className={styles.modalicon} /> */}
+                  <Icon name="arrow_border" alt={isCollapsed ? 'expand content' : 'collapse content'} className={styles.modalicon} />
                   <h3>{title}</h3>
                 </div>
                 <a href={href} target="_blank">DOWNLOAD</a>
