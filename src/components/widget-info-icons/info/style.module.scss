@@ -7,10 +7,14 @@
   box-sizing: border-box;
   border-radius: 15px;
   margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .modalIcon {
-
-      fill: $primary;
+    width: 20px;
+    height: 20px;
+    fill: $primary;
   }
 }
 
