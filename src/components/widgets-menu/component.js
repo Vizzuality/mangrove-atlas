@@ -36,7 +36,7 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
     <div className={cx(styles.widgets_menu, { [styles.mobile]: mobile })} ref={menuRef}>
       {mobile
         ? <button className={styles.btn} onClick={() => toggleModal(!isOpen)}>
-          <Icon name="ecosystem_services" className={cx([styles.icon])} />
+            <Icon name="ecosystem_services" className={cx([styles.icon])} />
           <span className={styles.menuItemTitle}>Categories</span>
         </button>
         : (
@@ -56,7 +56,7 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
         )}
       <Modal
         isOpen={isOpen}
-        onRequestClose={handleModal}
+        onRequestClose={() => handleModal(currentDashboard)}
         widgetsMenu
         closeButton={false}
       >

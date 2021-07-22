@@ -41,7 +41,7 @@ const Info = ({ slug }) => {
         onClick={handleModal}
         className={cx(styles.modalBtn)}
       >
-        <Icon name="menu" alt="info" className={styles.modalIcon} />
+        <Icon name="info" alt="info" className={styles.modalIcon} />
       </button>
       <Modal
         isOpen={isOpen}
