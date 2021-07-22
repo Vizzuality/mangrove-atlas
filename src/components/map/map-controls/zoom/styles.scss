@@ -1,5 +1,6 @@
 .c-zoom-control {
-  position: relative;
+  position: absolute;
+  top: 0;
   display: flex;
   flex-direction: column;
 
@@ -38,4 +39,8 @@
       cursor: default;
     }
   }
+}
+
+.mapboxgl-ctrl-compass {
+  display: none;
 }
