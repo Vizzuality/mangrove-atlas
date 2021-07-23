@@ -37,6 +37,7 @@
       .title {
         display: flex;
         align-items: center;
+        margin-bottom: -15px;
 
         h3 {
           margin-left: 10px;
@@ -45,17 +46,25 @@
           letter-spacing: 1px;
           text-transform: uppercase;
           cursor: pointer;
+
+          &._noicon {
+            margin-left: 25px;
+          }
         }
 
         .modalIcon {
-          transform: rotate(180deg);
+          transform: rotate(90deg);
+
+          &._hidden {
+            display: none;
+          }
         }
 
         &._collapsed {
-          margin-bottom: -15px;
+          margin-bottom: 0;
 
           .modalIcon {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
           }
         }
       }
@@ -66,17 +75,19 @@
         line-height: 25px;
         letter-spacing: 1px;
         text-decoration-line: underline;
+        cursor: pointer;
       }
     }
 
     p {
-      font-weight: 300;
-      font-size: 19px;
-      line-height: 30px;
-      margin: 0;
+      display: none;
 
       &._collapsed {
-        display: none;
+        display: block;
+        font-weight: 300;
+        font-size: 19px;
+        line-height: 30px;
+        margin: 0;
       }
     }
   }

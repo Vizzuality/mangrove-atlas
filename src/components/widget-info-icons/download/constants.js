@@ -119,8 +119,7 @@ export const INFO = {
       {
         id: 18,
         title: 'Mangrove Blue Carbon (Total)',
-        href: 'https://zenodo.org/record/2536803#.YPWtPuhKg2x',
-        description: 'External link to mangrove soil carbon data from source (Zenodo)'
+        href: 'https://console.cloud.google.com/storage/browser/mangrove_atlas/ee_export_tiffs/total_organic_carbon?pageState=(%22StorageObjectListTable%22:(%22f%22:%22%255B%255D%22))&prefix=&forceOnObjectsSortingFiltering=false',
       },
       {
         id: 19,
