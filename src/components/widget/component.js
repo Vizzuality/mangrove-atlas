@@ -14,7 +14,7 @@ function Widget({
   layersIds,
   isActive,
   isLocationsModal,
-  isCollapsed,
+  isCollapsed = true,
   isLoading,
   toggleCollapse
 }) {

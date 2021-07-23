@@ -39,6 +39,7 @@ function processData(data, currentYear) {
 function MangroveCoverage({
   data: rawData,
   currentLocation,
+  isCollapsed = true,
   addFilter,
   slug,
   ui: {
@@ -131,6 +132,7 @@ function MangroveCoverage({
     <ChartWidget
       data={data}
       slug={slug}
+      isCollapsed={isCollapsed}
       filename={slug}
       sentence={sentence}
       chartData={chartData}

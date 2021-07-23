@@ -6,7 +6,7 @@ import config from './config';
 
 const MangroveAlerts = ({
   data,
-  isCollapsed,
+  isCollapsed = true,
   slug, name,
   addFilter,
   ui = {},

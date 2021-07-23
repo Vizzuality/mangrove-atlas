@@ -15,6 +15,10 @@
     {
       "slug": "ecosystem_services",
       "name": "Ecosystem Services"
+    },
+    {
+      "slug": "all_datasets",
+      "name": "All datasets"
     }
   ],
   "widgets": [
@@ -29,7 +33,7 @@
       "name": "Mangrove habitat extent",
       "slug": "mangrove_extent",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["distribution_and_change"],
+      "categoryIds":["all_datasets", "distribution_and_change"],
       "isActive": true,
       "layersIds": [
         "extent"
@@ -39,7 +43,7 @@
       "name": "Mangrove coverage",
       "slug": "mangrove_coverage",
       "locationType": [""],
-      "categoryIds":["distribution_and_change"],
+      "categoryIds":["all_datasets", "distribution_and_change"],
       "layersIds": [
         "coverage-1996-2016"
       ]
@@ -48,7 +52,7 @@
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["distribution_and_change"],
+      "categoryIds":["all_datasets", "distribution_and_change"],
       "layersIds": [
         "net"
       ]
@@ -57,14 +61,14 @@
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["restoration_and_conservation"],
+      "categoryIds":["all_datasets", "restoration_and_conservation"],
       "layersIds": ["alerts-heat"]
     },
     {
       "name": "Mangrove Blue Carbon",
       "slug": "mangrove_blue_carbon",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":["climate_and_policy", "ecosystem_services"],
+      "categoryIds":["all_datasets", "climate_and_policy", "ecosystem_services"],
       "layersIds": [ "carbon" ]
     },
     {
@@ -98,7 +102,7 @@
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
       "locationType": ["custom", "worldwide"],
-      "categoryIds":[],
+      "categoryIds":["all_datasets"],
       "layersIds": []
     }
   ],
@@ -157,6 +161,10 @@
     {
       "id": "ecosystem_services",
       "name":["Ecosystem Services"]
+    },
+    {
+      "id": "all_datasets",
+      "name":["All datasets"]
     }
   ]
 }

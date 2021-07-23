@@ -40,6 +40,7 @@ function MangroveExtent({
   data: rawData,
   currentLocation,
   addFilter,
+  isCollapsed = true,
   slug,
   ui: {
     currentYear,
@@ -144,6 +145,7 @@ function MangroveExtent({
       data={data}
       slug={slug}
       filename={slug}
+      isCollapsed={isCollapsed}
       downloadData={downloadData}
       sentence={sentence}
       chartData={chartData}

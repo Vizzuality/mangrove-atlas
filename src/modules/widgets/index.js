@@ -33,7 +33,7 @@ queryState.add({
       const { widgets: { list } } = state;
       const serializedList = list.map(widget => ({
         id: widget.slug,
-        isCollapsed: widget.isCollapsed || false,
+        isCollapsed: widget.isCollapsed || true,
         isActive: widget.isActive || false
       }));
 

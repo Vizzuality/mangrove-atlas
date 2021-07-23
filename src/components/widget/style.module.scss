@@ -2,7 +2,7 @@
 
 .widget {
   width: 100%;
-  $padding: 0 40px;
+  $padding: 0 40px 40px 40px;
   $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
   position: relative;
@@ -29,7 +29,7 @@
   }
 
   &._collapsed {
-    margin-bottom: -30px;
+    margin-bottom: -70px;
     background-position: 0;
 
     &:not(:first-of-type)  {

@@ -2,5 +2,5 @@ export default {
   list: [],
   isLoading: false,
   error: null,
-  isCollapsed: true
+  isCollapsed: false
 };
