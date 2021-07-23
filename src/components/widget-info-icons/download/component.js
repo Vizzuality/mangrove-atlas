@@ -47,11 +47,14 @@ const Download = ({ slug }) => {
                   <Icon
                     name="arrow_border"
                     alt={isCollapsed ? 'expand content' : 'collapse content'}
-                    className={cx(styles.modalIcon, { [styles._collapsed]: isCollapsed[id] })}
+                    className={cx(styles.modalIcon,
+                      { [styles._collapsed]: isCollapsed[id],
+                        [styles._hidden]: !description
+                    })}
                   />
-                  <h3>{title}</h3>
+                  <h3 className={cx({ [styles._noicon]: !description })}>{title}</h3>
                 </div>
-                <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>
+                {href && <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>}
               </div>
               <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
               <p>{license}</p>
