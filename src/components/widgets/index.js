@@ -57,7 +57,8 @@ export const templates = new Map([
 const mapStateToProps = state => ({
   currentLocation: currentLocation(state),
   widgets: dashboardWidgets(state),
-  templates
+  templates,
+  isCollapsed: state.widgets.isCollapsed
 });
 
 const mapDispatchToProps = {

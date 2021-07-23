@@ -133,7 +133,7 @@ const NavMenu = ({ mobile }) => {
               </button>
               <nav>
                 Global Mangrove Alliance
-                <a onClick={handleClose} href="https://www.mangrovealliance.org/mangrove-knowledge/" target="_blank" rel="noopener noreferrer">
+                <a onClick={handleClose} href="https://www.mangrovealliance.org/about-us/" target="_blank" rel="noopener noreferrer">
                   About
                 </a>
                 <a onClick={handleClose} href="https://www.mangrovealliance.org/mangrove-forests/" target="_blank" rel="noopener noreferrer">
