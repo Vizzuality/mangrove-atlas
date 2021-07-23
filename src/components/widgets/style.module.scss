@@ -14,6 +14,10 @@
   .printBtn {
     margin: 45px 0;
 
+    &._collapse {
+      margin: 95px 0;
+    }
+
     @media print {
       display: none;
     }

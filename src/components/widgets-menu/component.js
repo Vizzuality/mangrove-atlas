@@ -25,18 +25,17 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
 
   const handleModal = (slug) => {
     setCurrent(slug);
-    toggleModal(!isOpen);
   };
 
   const handleHover = () => {
     toggleModal(!isOpen);
-  }
+  };
 
   return (
     <div className={cx(styles.widgets_menu, { [styles.mobile]: mobile })} ref={menuRef}>
       {mobile
         ? <button className={styles.btn} onClick={() => toggleModal(!isOpen)}>
-            <Icon name="ecosystem_services" className={cx([styles.icon])} />
+          <Icon name="ecosystem_services" className={cx([styles.icon])} />
           <span className={styles.menuItemTitle}>Categories</span>
         </button>
         : (
@@ -45,7 +44,10 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
             <ul>
               {dashboards?.map(({ slug, name }) => (
                 <li key={slug}
-                  onClick={() => handleModal(slug)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleModal(slug)
+                  }}
                   onMouseOver={handleHover}
                   className={cx({ [styles._active]: currentDashboard === slug })}
                 >
@@ -59,18 +61,23 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
         onRequestClose={() => handleModal(currentDashboard)}
         widgetsMenu
         closeButton={false}
+        onMouseLeave={() => toggleModal(false)}
       >
-        <div
+        <div onMouseLeave={() => toggleModal(false)}
           className={cx(styles.modalContent, { [styles.mobile]: mobile })}
           style={{
             top: mobile ? '50%' : position.top,
-            left: mobile ? '50%' : position.left  - position.x / 2
+            left: mobile ? '50%' : position.left - position.x / 2
           }}
         >
           <span className={styles.menuItemTitle}>Categories</span>
           <ul>
             {dashboards?.map(({ slug, name }) => (
-              <li key={slug} onClick={() => handleModal(slug)} className={cx({ [styles._active]: currentDashboard === slug })}>
+              <li key={slug} onClick={(e) => {
+                e.stopPropagation();
+                handleModal(slug)
+              }}
+                className={cx({ [styles._active]: currentDashboard === slug })}>
                 <Icon name={slug} className={cx([styles.icon])} alt={name} />
                 <span>{name}</span>
               </li>))}

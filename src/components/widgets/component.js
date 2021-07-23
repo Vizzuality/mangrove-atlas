@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
+import cx from 'classnames';
 import Spinner from 'components/spinner';
 import Button from 'components/button';
 
 import styles from './style.module.scss';
 
-const WidgetList = ({ widgets, templates, mobile, ...parentProps }) => {
+const WidgetList = ({ widgets, isCollapsed, templates, mobile, ...parentProps }) => {
   const onClickDownload = () => window.print();
   return (
-    <div className={classnames(styles.widgets, {
+    <div className={cx(styles.widgets, {
       [styles.spinner]: !widgets.length
     })}
     >
@@ -29,7 +29,7 @@ const WidgetList = ({ widgets, templates, mobile, ...parentProps }) => {
       }
       {widgets.length && !mobile ? (
         <Button
-          className={styles.printBtn}
+          className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
           hasBackground
           onClick={onClickDownload}
         >

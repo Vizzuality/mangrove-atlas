@@ -14,6 +14,7 @@ const Header = ({
   collapseAll,
   expandAll,
   setMobileView,
+  widgets
 }) => {
 
   const onClickCollapseAll = () => {
@@ -50,8 +51,7 @@ const Header = ({
         </button>
         <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
         <div className={styles.headerBtns}>
-          {isCollapsed
-            ? (
+          {isCollapsed && widgets.length > 1 && (
               <Button
                 hasBackground
                 hasContrast
@@ -59,8 +59,8 @@ const Header = ({
               >
                 Expand all widgets
               </Button>
-            )
-            : (
+            )}
+            {!isCollapsed && widgets.length > 1 && (
               <Button
                 isTransparent
                 isGrey
