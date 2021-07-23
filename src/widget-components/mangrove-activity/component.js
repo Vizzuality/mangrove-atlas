@@ -13,7 +13,7 @@ import config from './config';
 function MangroveActivity({
   data: rawData,
   fetchRankingData,
-  isCollapsed,
+  isCollapsed = true,
   slug,
   name,
   ui,

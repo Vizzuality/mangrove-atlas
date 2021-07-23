@@ -10,7 +10,7 @@ import config from './config';
 function MangroveBiomass({
   data: rawData,
   currentLocation,
-  isCollapsed,
+  isCollapsed = true,
   slug,
   name,
   addFilter,

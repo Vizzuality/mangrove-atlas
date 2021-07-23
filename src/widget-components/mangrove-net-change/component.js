@@ -11,7 +11,7 @@ function MangroveNetChange({
   filename,
   currentLocation,
   addFilter,
-  isCollapsed,
+  isCollapsed = true,
   slug,
   name,
   ui: {

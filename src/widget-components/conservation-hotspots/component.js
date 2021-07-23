@@ -23,7 +23,7 @@ function ConservationHotspots({
   data: rawData,
   currentLocation,
   addFilter,
-  isCollapsed,
+  isCollapsed = true,
   slug,
   name,
   ui: scope,

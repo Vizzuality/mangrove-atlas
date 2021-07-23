@@ -10,7 +10,7 @@ const numberFormat = format(',.2f');
 
 const MangroveHeight = ({
   data: rawData,
-  isCollapsed,
+  isCollapsed = true,
   slug, name,
   currentLocation,
   addFilter,

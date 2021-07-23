@@ -6,7 +6,7 @@ import config from './config';
 function MangroveBlueCarbon({
   data: rawData,
   currentLocation,
-  isCollapsed,
+  isCollapsed = true,
   slug,
   name,
   addFilter,
