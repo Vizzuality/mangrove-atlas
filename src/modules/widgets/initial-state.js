@@ -9,5 +9,6 @@ export default {
       endDate: {},
       year: 2020
     }
-  }
+  },
+  isCollapsed: true,
 };

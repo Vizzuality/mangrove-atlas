@@ -11,7 +11,7 @@ import { INFO } from './constants';
 import styles from './style.module.scss';
 
 
-const Download = ({ name, slug }) => {
+const Download = ({ slug }) => {
   const [isOpen, toggleModal] = useState(false);
   const [isCollapsed, toggleCollapse] = useState({});
 
@@ -22,6 +22,8 @@ const Download = ({ name, slug }) => {
   const handleClick = (id) => {
     toggleCollapse({ ...isCollapsed, [id]: !isCollapsed[id] });
   }
+
+  if (!INFO[slug]) return null;
 
   return (
     <>
