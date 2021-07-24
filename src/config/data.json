@@ -75,7 +75,7 @@
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":[],
+      "categoryIds":["all_datasets"],
       "layersIds": [
         "height"
       ]
@@ -84,7 +84,7 @@
       "name": "Mangrove biomass",
       "slug": "mangrove_biomass",
       "locationType": ["custom", "aoi", "wdpa", "country", "worldwide"],
-      "categoryIds":[],
+      "categoryIds":["all_datasets"],
       "layersIds": [
         "biomass"
       ]
