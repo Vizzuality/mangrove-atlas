@@ -79,10 +79,6 @@
     .menuItemTitle {
       @include menu-item-title;
     }
-
-    svg {
-      fill: $white;
-    }
   }
 }
 
@@ -111,7 +107,9 @@
   }
 
   &.mobile {
-    transform: translate(50%, -50%);
+    transform: translate(-50%, 50%);
+    top: 0;
+    left: 0;
 
     .menuItemTitle {
       display: none;
