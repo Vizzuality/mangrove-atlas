@@ -2,7 +2,8 @@ import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effe
 import DATA from 'config/data.json';
 import { breakpoints } from 'utils/responsive';
 import { toggleActive as toggleLayerActive, fetchLayers } from 'modules/layers/actions';
-import { fetchSucceeded, toggleActive } from './actions';
+import { setCurrent } from 'modules/dashboards/actions';
+import { fetchSucceeded, toggleActive, collapseAll } from './actions';
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(() => resolve(true), ms));
@@ -89,6 +90,11 @@ export function* restoreWidgetsState() {
   yield takeLeading(fetchSucceeded().type, handler);
 }
 
+function* handleWidgetsMenu() {
+  yield put(collapseAll());
+}
+
 export default function* widgetsSagas() {
   yield takeLatest(fetchLayers().type, getWidgets);
+  yield takeLatest(setCurrent, handleWidgetsMenu);
 }

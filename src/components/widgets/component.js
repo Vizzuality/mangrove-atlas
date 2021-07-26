@@ -18,7 +18,6 @@ const WidgetList = ({ widgets, isCollapsed, templates, mobile, ...parentProps })
         : widgets.length && widgets.map((widget) => {
           const Widget = templates.get(widget.slug).component;
           return (
-
             <Widget
               key={widget.slug}
               {...widget}
