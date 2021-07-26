@@ -124,16 +124,16 @@ export const INFO = {
       {
         id: 19,
         title: 'Mangrove Soil Carbon',
-        href: false,
+        href: 'https://zenodo.org/record/2536803#.YP6xOuhKg2x',
         description: false,
         license: 'Creative Commons Attribution Share Alike 4.0 International',
       },
-      {
-        id: 20,
-        title: 'Mangrove Aboveground Carbon',
-        href: false,
-        description: false
-      },
+      // {
+      //   id: 20,
+      //   title: 'Mangrove Aboveground Carbon',
+      //   href: null,
+      //   description: false
+      // },
     ],
     'mangrove_height': [
       {
