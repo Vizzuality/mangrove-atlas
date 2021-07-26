@@ -135,7 +135,7 @@ export const INFO = {
         description: false
       },
     ],
-    'hmangrove_height': [
+    'mangrove_height': [
       {
         id: 21,
         title: 'Mangrove Height',
