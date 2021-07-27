@@ -23,7 +23,7 @@ const MangroveAlerts = ({
   } = ui;
 
   useEffect(() => {
-    if (currentLocation && (currentLocation.id || currentLocation.iso)) {
+    if (currentLocation && (currentLocation.id || currentLocation.location_id || currentLocation.iso)) {
       if (currentLocation.id === 'worldwide') {
         fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
       } else {

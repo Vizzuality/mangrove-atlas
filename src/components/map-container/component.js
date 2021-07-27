@@ -89,9 +89,9 @@ export const MapContainer = ({
       // Use NAME instead of WDPA_PID because there can be different areas with the same name
       const { properties: { NAME: areaName } } = wdpa;
       const internalIdMap = new Map([
-        [WDPA.DELTA_DU_SALOUM.areaName, WDPA.DELTA_DU_SALOUM.id],
-        [WDPA.RUFIKI_MAFIA_KILWA.areaName, WDPA.RUFIKI_MAFIA_KILWA.id],
-        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.id]
+        [WDPA.DELTA_DU_SALOUM.areaName, WDPA.DELTA_DU_SALOUM.location_id],
+        [WDPA.RUFIKI_MAFIA_KILWA.areaName, WDPA.RUFIKI_MAFIA_KILWA.location_id],
+        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.location_id]
       ]);
 
       const internalId = internalIdMap.get(areaName);
