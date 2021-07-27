@@ -18,6 +18,7 @@ const WidgetInfo = ({
   const selectedLocation = locationsList
     .filter(location => current === location.iso
       || current === location.id
+      || current === location.location_id
       || current === location.location_type)
     .map(l => [
       [`location - ${l.name}  `],
