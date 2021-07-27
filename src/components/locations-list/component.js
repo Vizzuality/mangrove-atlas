@@ -22,7 +22,7 @@ const LocationsList = ({ locationsData }) => {
 
   const getPayload = location => ({
     ...(location.location_type === 'country' && { iso: location.iso }),
-    ...(location.location_type !== 'country' && { id: location.id }),
+    ...(location.location_type !== 'country' && { id: location.location_id }),
     ...(location.location_type === 'worldwide' && { id: 'worldwide' })
   });
 
