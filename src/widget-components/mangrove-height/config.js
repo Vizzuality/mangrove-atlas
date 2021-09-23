@@ -28,8 +28,8 @@ const getData = (data, selectedYear) => {
   const barsData = dataFormatted.map(value => value[1]);
   const total = Object.values(barsData).reduce((previous, current) => current + previous);
 
-
-  const chunkedData = chunk(barsData, 5);
+  const chunksNumber = barsData.length / 5;
+  const chunkedData = chunk(barsData, chunksNumber);
   const formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
