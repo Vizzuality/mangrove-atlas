@@ -9,7 +9,7 @@ const pageMap = new Map([
   ['PAGE/APP', AppPage],
   ['PAGE/COUNTRY', AppPage],
   ['PAGE/AOI', AppPage],
-  ['PAGE/WDPA', AppPage]
+  ['PAGE/WDPA', AppPage],
 ]);
 
 // prompts or error logging should be handled here
