@@ -22,10 +22,6 @@ endif
 up:
 	docker-compose build && docker-compose up
 
-## init the folder as a github repository https://kbroman.org/github_tutorial/pages/init.html
-init-git:
-	git init && git remote add origin git@github.com:Vizzuality/data
-
 ## init the github hooks set up https://pre-commit.com/ and test them.
 init-prehooks: init-git
 	pre-commit install && pre-commit run --all-files
@@ -52,7 +48,7 @@ clean:
 	find . -type d -name "__pycache__" -delete
 
 ## Upload Data to S3
-sync_data_to_s3:
+sync_data_to_cloud::
 ifeq (default,$(PROFILE))
 	aws s3 sync data/ s3://$(BUCKET)/data/
 else
@@ -60,7 +56,7 @@ else
 endif
 
 ## Download Data from S3
-sync_data_from_s3:
+sync_data_from_cloud:
 ifeq (default,$(PROFILE))
 	aws s3 sync s3://$(BUCKET)/data/ data/
 else
