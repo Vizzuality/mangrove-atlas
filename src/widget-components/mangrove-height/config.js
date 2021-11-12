@@ -38,10 +38,10 @@ const getData = (data, selectedYear) => {
     {
       year: selectedYear,
       '0–13 m': formattedData[0] / total * 100,
-      '13–26 m': formattedData[1] / total * 100,
-      '26–39 m': formattedData[2] / total * 100,
-      '39–52 m': formattedData[3] / total * 100,
-      '52–65 m': formattedData[4] / total * 100,
+      '14–26 m': formattedData[1] / total * 100,
+      '27–39 m': formattedData[2] / total * 100,
+      '40–52 m': formattedData[3] / total * 100,
+      '53–65 m': formattedData[4] / total * 100,
     }
   ];
 };
@@ -104,7 +104,7 @@ export const CONFIG = {
                 stroke: '#C9BB42',
                 isAnimationActive: false
               },
-              '13–26 m':
+              '14–26 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -112,7 +112,7 @@ export const CONFIG = {
                 stroke: '#8BA205',
                 isAnimationActive: false
               },
-              '26–39 m':
+              '27–39 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -120,7 +120,7 @@ export const CONFIG = {
                 stroke: '#428710',
                 isAnimationActive: false
               },
-              '39–52 m':
+              '40–52 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -128,7 +128,7 @@ export const CONFIG = {
                 stroke: '#0A6624',
                 isAnimationActive: false
               },
-              '52–65 m':
+              '53–65 m':
               {
                 stackId: 'bar',
                 barSize: 60,
@@ -200,7 +200,7 @@ export const CONFIG = {
                     flexDirection: 'column'
                   }}
                   settings={payload.map(p => (
-                    { label: p.name, key: p.value, color: p.color, format: value => `${numberFormat(p.value)} %`, position: '_column', type: '_stacked'}
+                    { label: p.name, key: p.value, color: p.color, format: value => `${numberFormat(p.value)}%` || '0%', position: '_column', type: '_stacked'}
                   ))}
                 />
               );

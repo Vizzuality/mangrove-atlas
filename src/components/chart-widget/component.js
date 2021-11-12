@@ -13,6 +13,7 @@ function ChartWidget({
     data,
     config
   },
+  className,
   ...props
 }) {
   return (

@@ -8,34 +8,35 @@ import styles from './style.module.scss';
 
 const WidgetList = ({ widgets, isCollapsed, templates, mobile, ...parentProps }) => {
   const onClickDownload = () => window.print();
+
   return (
-    <div className={cx(styles.widgets, {
-      [styles.spinner]: !widgets.length
-    })}
-    >
-      {!widgets.length
-        ? <div className={styles.spinner}><Spinner /></div>
-        : widgets.length && widgets.map((widget) => {
-          const Widget = templates.get(widget.slug).component;
-          return (
-            <Widget
-              key={widget.slug}
-              {...widget}
-              {...parentProps}
-            />
-          );
-        })
-      }
-      {widgets.length && !mobile ? (
-        <Button
-          className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
-          hasBackground
-          onClick={onClickDownload}
-        >
-          Download report as PDF
-        </Button>
-      ) : null }
-    </div>
+      <div className={cx(styles.widgets, {
+        [styles.spinner]: !widgets.length
+      })}
+      >
+        {!widgets.length
+          ? <div className={styles.spinner}><Spinner /></div>
+          : widgets.length && widgets.map((widget) => {
+            const Widget = templates.get(widget.slug).component;
+            return (
+              <Widget
+                key={widget.slug}
+                {...widget}
+                {...parentProps}
+              />
+            );
+          })
+        }
+        {widgets.length && !mobile ? (
+          <Button
+            className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
+            hasBackground
+            onClick={onClickDownload}
+          >
+            Download report as PDF
+          </Button>
+        ) : null}
+      </div>
   );
 };
 
