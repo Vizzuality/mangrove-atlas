@@ -1,0 +1,15 @@
+# configuration requirements
+
+python-dotenv>=0.5.1
+
+# external tools requirements
+tqdm
+pandas
+geopandas
+simpledbf
+matplotlib
+earthengine-api
+gcsfs
+s3fs
+google-cloud-storage
+google-api-python-client
