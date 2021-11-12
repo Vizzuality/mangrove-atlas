@@ -25,7 +25,7 @@ export const PAGES = [
     name: NOT_FOUND,
     path: '/404',
     page: 'not-found'
-  }
+  },
 ];
 
 export default PAGES;
