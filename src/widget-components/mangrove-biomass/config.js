@@ -40,7 +40,8 @@ const getData = (data, selectedYear) => {
   const barsData = data[0].map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
 
-  const chunkedData = chunk(barsData, 5);
+  const chunkNumber = barsData.length / 5;
+  const chunkedData = chunk(barsData, chunkNumber);
   let formattedData = chunkedData.map(
     r => (r.reduce((previous, current) => current + previous))
   );
@@ -85,9 +86,10 @@ const getDownloadData = (chartData, date, coverage) => {
 const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered);
+    const chartData = getData(dataFiltered).filter(d => d.percentage !== 0);
     const coverage = biomassCoverage(data, yearSelected);
     const downloadData = getDownloadData(chartData, yearSelected, coverage);
+
     return {
       chartData,
       metadata: widgetMeta(filterData),
