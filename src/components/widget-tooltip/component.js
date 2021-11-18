@@ -24,12 +24,12 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
         <div className={styles.chart_tooltip} style={style}>
           {settings.map(
             d => (hideZeros && values[d.key] ? null : (
-              <div
+              (((d.label && d.labelKey) || !!d.key) || (values && !!d.key)) && <div
                 key={d.key}
-                className={classnames(styles.data_line, styles[d.position], styles[d.type])}
+                className={classnames(styles.data_line, styles[d.type], styles[d.position])}
               >
                 {/* LABEL */}
-                {((d.label && d.labelKey) || d.key) && (
+                {((d.label && d.labelKey) || !!d.key) && (
                   <div className={classnames(styles.data_label, styles[d.position])}>
                     {d.color && (
                       <div
@@ -39,7 +39,7 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                     )}
                     {values && d.key && (
                       <>
-                        {d.key === 'break'
+                        {(d.key === 'break')
                           ? <span className={styles.break_label}>{d.label}</span>
                           : <span>{d.label || values[d.labelKey]}</span>}
                       </>
@@ -47,11 +47,8 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                   </div>
                 )}
 
-                {/* UNIT */}
-                {values && d.key && (
-                  <div
-                    className={styles.data_value}
-                  >
+                {values && !!d.key && (
+                  <div className={styles.data_value}>
                     {getValue(d, values[d.key])}
                   </div>
                 )}

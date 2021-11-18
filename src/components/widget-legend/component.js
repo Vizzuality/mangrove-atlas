@@ -23,6 +23,7 @@ const Legend = ({ title,
     return (Number(j[0]) + Number(j[1])) - (Number(i[0]) + Number(i[1]));
   });
   const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
+
   return (
     <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
       {title && <DangerousHTML html={title} className={styles.widget_legend_title} />}
@@ -52,9 +53,9 @@ const Legend = ({ title,
                   />)}
 
                 <div className={classnames(styles.itemWrapper, styles[`_${type}`])}>
-                  <span>{item.value}</span>
-                  {sup && <DangerousHTML html={unit} />}
-                  {item.payload && item.payload.y && type !== 'height'
+                  {!!item.value && <span>{item.value}</span>}
+                  {!!sup && <DangerousHTML html={unit} />}
+                  {!!item.payload && !!item.payload.y && type !== 'height'
                     && (
                       <span className={styles.item}>
                         {`${numberFormat(item.payload.y)}  ${unit}`}
