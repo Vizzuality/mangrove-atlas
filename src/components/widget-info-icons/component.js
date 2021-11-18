@@ -14,13 +14,15 @@ const WidgetControls = ({ name, slug, layerId, layersIds, isActive }) => {
     <div className={styles.widgetControls}>
       <Download slug={slug} />
       <Info slug={slug} />
-      <Toggle
-        name={name}
-        slug={slug}
-        layerId={layerId}
-        layersIds={layersIds}
-        isActive={isActive}
-      />
+      {!!layersIds?.length && (
+        <Toggle
+          name={name}
+          slug={slug}
+          layerId={layerId}
+          layersIds={layersIds}
+          isActive={isActive}
+        />
+      )}
     </div>
   );
 };

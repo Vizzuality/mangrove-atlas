@@ -126,6 +126,69 @@ const geojsons = [
 
 const rasters = [
   {
+    name: 'gmw1996v2_0_z0-12',
+    filename: 'gmw1996v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2007v2_0_z0-12',
+    filename: 'gmw2007v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2008v2_0_z0-12',
+    filename: 'gmw2008v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2009v2_0_z0-12',
+    filename: 'gmw2009v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2010v2_0_z0-12',
+    filename: 'gmw2010v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2015v2_0_z0-12',
+    filename: 'gmw2015v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
+    name: 'gmw2016v2_0_z0-12',
+    filename: 'gmw2016v2_0_z0-12',
+    source: {
+      type: 'raster',
+      minzoom: 0,
+      maxzoom: 12
+    }
+  },
+  {
     name: 'biomass_1996_v1-0_z0-12',
     filename: 'mangrove_aboveground_biomass_1996_v1-0_z0-12',
     source: {
@@ -373,69 +436,6 @@ const rasters = [
       type: 'raster',
       minzoom: 0,
       maxzoom: 15
-    }
-  },
-  {
-    name: 'gmw1996v2_0_z0-12',
-    filename: 'gmw1996v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2007v2_0_z0-12',
-    filename: 'gmw2007v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2008v2_0_z0-12',
-    filename: 'gmw2008v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2009v2_0_z0-12',
-    filename: 'gmw2009v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2010v2_0_z0-12',
-    filename: 'gmw2010v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2015v2_0_z0-12',
-    filename: 'gmw2015v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
-    }
-  },
-  {
-    name: 'gmw2016v2_0_z0-12',
-    filename: 'gmw2016v2_0_z0-12',
-    source: {
-      type: 'raster',
-      minzoom: 0,
-      maxzoom: 12
     }
   },
   {
