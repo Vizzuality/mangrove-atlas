@@ -45,4 +45,56 @@
   }
 }
 
+.print {
+  margin-bottom: 70px;
+  margin: auto;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      font-size: 60px;
+    }
+
+    .subtitle {
+      font-size: large;
+    }
+  }
+
+  .printOnlyWidgets {
+    background-color: aquamarine;
+  }
+
+
+
+  @media print  and (orientation: portrait){
+    margin-top: 200px;
+    break-before: page;
+    max-width: 100%;
+    margin: 65px 0;
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+    margin-top: 500px;
+  }
+
+  @media print  and (orientation: landscape){
+    max-width: 100%;
+    margin: 65px 0;
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 30px;
+  }
+}
+
 
