@@ -86,7 +86,7 @@ const getDownloadData = (chartData, date, coverage) => {
 const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered).filter(d => d.percentage !== 0);
+    const chartData = getData(dataFiltered)?.filter(d => d.percentage !== 0);
     const coverage = biomassCoverage(data, yearSelected);
     const downloadData = getDownloadData(chartData, yearSelected, coverage);
 
