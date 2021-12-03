@@ -4,6 +4,17 @@ SHELL [ "/bin/bash", "-l", "-c" ]
 
 USER root
 
+# Downloading gcloud package
+RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
+
+# Installing the package
+RUN mkdir -p /usr/local/gcloud \
+  && tar -C /usr/local/gcloud -xvf /tmp/google-cloud-sdk.tar.gz \
+  && /usr/local/gcloud/google-cloud-sdk/install.sh
+
+# Adding the package path to local
+ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
+
 RUN pip install jupyter_contrib_nbextensions \
                 jupyter_nbextensions_configurator \
                 version_information \
@@ -15,6 +26,19 @@ RUN pip install jupyter_contrib_nbextensions \
                 ipyleaflet \
                 jupyterlab_templates
 
+### GDAl trhough conda because it fails through pip
+RUN conda update -n base conda && conda install -c conda-forge \
+            python-blosc \
+            cytoolz \
+            gdal \
+            dask==2.30 \
+            xhistogram \
+            lz4 \
+            nomkl \
+            dask-labextension==5.0 \
+            python-graphviz \
+            tini==0.18.0 \
+            xarray=0.16.1
 # Enable extensions
 RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextensions_configurator enable  && \
