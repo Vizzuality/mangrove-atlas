@@ -13,3 +13,12 @@ gcsfs
 s3fs
 google-cloud-storage
 google-api-python-client
+iso8601
+pystac
+python_jsonschema_objects
+rio-cogeo
+shapely
+zenodo_get
+pystac
+uuid
+geemap
