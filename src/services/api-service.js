@@ -42,7 +42,6 @@ class APIService {
 
   fetchMangroveProtectionData = (params = {}) => {
     const { id, iso } = params;
-    const locationParam = id || iso || 'worldwide';
 
     return this.client
       .get('/v2/widget/protected_areas', { params })
