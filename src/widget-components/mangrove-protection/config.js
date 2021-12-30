@@ -2,17 +2,15 @@
 import React from 'react';
 
 // utils
-import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import { format } from 'd3-format';
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
-import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
-const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#5C4A3D'];
+const COLORS = ['#ECECEC', 'green', 'yellow', '#ECECEC', '#17C3BC'];
 
 const getData = (data) => {
   if (!data || !data.length) return null;
@@ -103,40 +101,23 @@ export const CONFIG = {
             y: {
               cx: '50%',
               cy: '50%',
-              paddingAngle: 2,
               dataKey: 'percentage',
               nameKey: 'label',
-              innerRadius: '60%',
+              innerRadius: '50%',
               outerRadius: '80%',
               isAnimationActive: false,
               customLabel: ({ viewBox }) => {
                 const { cx, cy } = viewBox;
                 return (
                   <g>
-                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
-                    </text>
                     <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
-                    </text>
-                    <text x={cx} y={cy + 30} className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="26">%</tspan>
                     </text>
                   </g>
                 );
               }
             }
-          }
-        },
-        legend: {
-          align: 'left',
-          verticalAlign: 'middle',
-          layout: 'vertical',
-          fontSize: 9,
-          content: (properties) => {
-            const { payload } = properties;
-            const groups = groupBy(payload, p => p.value);
-            return <WidgetLegend widgetSpecific="blue-carbon" title="Total carbon density (t CO<sub>2</sub>e / ha)" groups={groups} />;
           }
         },
         tooltip: {
@@ -149,7 +130,6 @@ export const CONFIG = {
                 style={{
                   flexDirection: 'column',
                   marginTop: '10px',
-                  marginLeft: '-50px'
                 }}
                 payload={payload}
                 settings={[
