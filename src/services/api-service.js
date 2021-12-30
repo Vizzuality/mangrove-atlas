@@ -41,13 +41,29 @@ class APIService {
   }
 
   fetchMangroveProtectionData = (params = {}) => {
-    const { id, iso } = params;
+    const { locationId, year } = params;
+
+    const data = {
+      "data": {
+        "location_id": 1155,
+        "total": 6574.39,
+        "protected": true,
+        "precentage": 24.48,
+        "year": 2016
+      },
+      "metadata": {
+        "unit": "ha"
+      }
+    }
 
     return this.client
-      .get('/v2/widget/protected_areas', { params })
-      .then((response) => {
-        const { status, statusText, data } = response;
-        if (status >= 400) throw new Error(statusText);
+      .get('', { params })
+      // .then((response) => {
+      //   const { status, statusText, data } = response;
+      //   if (status >= 400) throw new Error(statusText);
+      //   return data;
+      // });
+      .then(() => {
         return data;
       });
   }

@@ -14,6 +14,6 @@ function* getMangroveProtectionData({ payload }) {
   }
 }
 
-export default function* mangroveDataSagas() {
-  yield takeLatest('LOCATIONS/SET_CURRENT', getMangroveProtectionData);
+export default function* mangroveProtectionDataSagas() {
+  yield takeLatest('MANGROVE_PROTECTION_DATA/FETCH_ALL', getMangroveProtectionData);
 }
