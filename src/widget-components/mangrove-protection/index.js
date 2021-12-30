@@ -6,7 +6,10 @@ import Component from './component';
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
   data: state.mangroveData,
-  ui: state.widgets.ui.blue_carbon
+  ui: state.widgets.ui.blue_carbon || {
+    currentYear: 2016,
+    years: [1996, 2007, 2008, 2009, 2015, 2016],
+  }
 });
 
 const mapDispatchToProps = {

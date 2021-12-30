@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ChartWidget from 'components/chart-widget';
+import sortBy from 'lodash/sortBy';
+
 import config from './config';
+
+import ChartWidget from 'components/chart-widget';
+import Select from 'components/select';
 
 function MangroveProtection({
   data: rawData,
@@ -12,6 +16,8 @@ function MangroveProtection({
   addFilter,
   ui: yearSelected,
   setUi,
+  unit,
+  currentYear,
   ...props
 }) {
   useEffect(() => {
@@ -31,20 +37,43 @@ function MangroveProtection({
     return null;
   }
 
-  const { avobeGround, soils, totalBiomass } = totalValues;
+  const { soils } = totalValues;
+
+  // const changeYear = (current) => {
+  //   addFilter({
+  //     filter: {
+  //       id: 'extent',
+  //       year: current
+  //     }
+  //   });
+  //   setUi({ id: 'coverage', value: { unit, currentYear: current } });
+  // };
+
+  // const optionsYears = sortBy(metadata.years.map(year => ({
+  //   label: year.toString(),
+  //   value: year
+  // })), ['value']);
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
+  // const yearSelector = (
+  //   <Select
+  //     className="notranslate"
+  //     width="auto"
+  //     value={currentYear}
+  //     options={optionsYears}
+  //     onChange={changeYear}
+  //   />
+  // );
+
   const sentence = (
     <>
       Protected mangroves in
-      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
-      mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
-      with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
-      &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
+      <strong>&nbsp;{location}&nbsp;</strong>
+      {/* in {yearSelector} */}
+      &nbsp;<strong>{soils}</strong> represented
     </>
   );
 

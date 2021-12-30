@@ -39,6 +39,19 @@ class APIService {
         return data;
       });
   }
+
+  fetchMangroveProtectionData = (params = {}) => {
+    const { id, iso } = params;
+    const locationParam = id || iso || 'worldwide';
+
+    return this.client
+      .get('/v2/widget/protected_areas', { params })
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      });
+  }
 }
 
 export default APIService;
