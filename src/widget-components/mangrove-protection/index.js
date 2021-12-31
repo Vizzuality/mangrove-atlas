@@ -4,7 +4,7 @@ import { setUi } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
+  // isLoading: state.mangroveData.isLoading,
   data: state.mangroveData,
   ui: state.widgets.ui.blue_carbon || {
     currentYear: 2016,

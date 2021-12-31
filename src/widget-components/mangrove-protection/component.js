@@ -16,7 +16,7 @@ function MangroveProtection({
   addFilter,
   ui: yearSelected,
   setUi,
-  unit,
+  unit = 'ha',
   currentYear,
   ...props
 }) {
@@ -72,8 +72,9 @@ function MangroveProtection({
     <>
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
-      {/* in {yearSelector} */}
-      &nbsp;<strong>{soils}</strong> represented
+      in
+      {/* {yearSelector} */}
+      &nbsp;<strong>{soils}</strong> represented <strong>{unit}</strong>
     </>
   );
 
@@ -82,6 +83,8 @@ function MangroveProtection({
     config: chartConfig
   };
 
+  console.log('download data', downloadData);
+  console.log('slug', slug)
   return (
     <ChartWidget
       name={name}
