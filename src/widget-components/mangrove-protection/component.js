@@ -20,6 +20,7 @@ function MangroveProtection({
   currentYear,
   ...props
 }) {
+  console.log('data protection', rawData);
   useEffect(() => {
     addFilter({
       filter: {

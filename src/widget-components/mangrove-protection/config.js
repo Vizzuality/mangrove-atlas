@@ -10,7 +10,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
-const COLORS = ['gray', 'green', 'yellow', '', '#17C3BC'];
+const COLORS = ['gray', 'green', 'yellow', 'red', '#17C3BC'];
 
 const getData = (data) => {
   if (!data || !data.length) return null;
