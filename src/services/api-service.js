@@ -55,17 +55,18 @@ class APIService {
         "unit": "ha"
       }
     }
-
-    return this.client
-      .get('', { params })
-      // .then((response) => {
-      //   const { status, statusText, data } = response;
-      //   if (status >= 400) throw new Error(statusText);
-      //   return data;
-      // });
-      .then(() => {
-        return data;
-      });
+    return data;
+    //   return this.client
+    //     .get('', { params })
+    //     // .then((response) => {
+    //     //   const { status, statusText, data } = response;
+    //     //   if (status >= 400) throw new Error(statusText);
+    //     //   return data;
+    //     // });
+    //     .then(() => {
+    //       return data;
+    //     });
+    // }
   }
 }
 
