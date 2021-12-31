@@ -31,7 +31,7 @@ function* loadInitialData() {
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
   if (!ranking.data.length) yield put(fetchRankingData());
-  yield put(fetchMangroveProtectionData());
+  if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
 }
 
 export default function* app() {

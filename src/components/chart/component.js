@@ -62,6 +62,7 @@ class Chart extends PureComponent {
   }
 
   findMaxValue = (data, config) => {
+    console.log('data maxvalue', data)
     const { yKeys } = config;
     const maxValues = [];
 
