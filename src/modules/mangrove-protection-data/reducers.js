@@ -6,12 +6,13 @@ export default {
     isLoading: true,
     error: null
   }),
-  [fetchSucceeded]: (state, { payload }) => ({
-    ...state,
-    isLoading: false,
-    data: payload.data,
-    metadata: payload.meta
-  }),
+  [fetchSucceeded]: (state, { payload }) => (
+    {
+      ...state,
+      isLoading: false,
+      data: payload.data,
+      metadata: payload.metadata
+    }),
   [fetchFailed]: (state, { payload }) => ({
     ...state,
     isLoading: false,

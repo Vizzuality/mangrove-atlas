@@ -16,11 +16,9 @@ function MangroveProtection({
   addFilter,
   ui: yearSelected,
   setUi,
-  unit = 'ha',
   currentYear,
   ...props
 }) {
-  console.log('data protection', rawData);
   useEffect(() => {
     addFilter({
       filter: {
@@ -32,13 +30,17 @@ function MangroveProtection({
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
-  if (!chartData || chartData.length <= 0) {
+  const { chartData, chartConfig } = config.parse(rawData);
+  const { data, metadata } = chartData;
+  console.log('---->Data and metadata', data, metadata);
+
+  if (!chartData) {
     return null;
   }
 
-  const { soils } = totalValues;
+  const { total, year } = data;
+  const { unit } = metadata;
 
   // const changeYear = (current) => {
   //   addFilter({
@@ -69,30 +71,33 @@ function MangroveProtection({
   //   />
   // );
 
+  console.log('location', location);
+
   const sentence = (
     <>
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      {/* {yearSelector} */}
-      &nbsp;<strong>{soils}</strong> represented <strong>{unit}</strong>
+      &nbsp;<strong>{year}</strong> represented <strong>{total}{unit}</strong>
     </>
   );
 
+  console.log('sentence', sentence);
+
   const widgetData = {
-    data: chartData,
+    data,
     config: chartConfig
   };
 
-  console.log('download data', downloadData);
-  console.log('slug', slug)
+  console.log('widgetData', widgetData);
+
   return (
     <ChartWidget
       name={name}
-      data={chartData}
+      data={data}
       slug={slug}
       filename={slug}
-      downloadData={downloadData}
+      // downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
