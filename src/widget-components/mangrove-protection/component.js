@@ -14,15 +14,14 @@ function MangroveProtection({
   slug,
   name,
   addFilter,
-  ui: yearSelected,
+  ui,
   setUi,
-  currentYear,
   ...props
 }) {
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'carbon',
+        id: 'protection',
         year: '2016'
       }
     });
@@ -32,47 +31,49 @@ function MangroveProtection({
   }
 
   const { chartData, chartConfig } = config.parse(rawData);
-  const { year, unit, total } = chartData;
+  const { unit, total } = chartData;
+  const { currentYear, years } = ui;
+  console.log('YEARS', years);
 
   if (!chartData) {
     return null;
   }
 
-  // const changeYear = (current) => {
-  //   addFilter({
-  //     filter: {
-  //       id: 'extent',
-  //       year: current
-  //     }
-  //   });
-  //   setUi({ id: 'coverage', value: { unit, currentYear: current } });
-  // };
+  const changeYear = (current) => {
+    addFilter({
+      filter: {
+        id: 'protection',
+        year: current
+      }
+    });
+    setUi({ id: 'protection', value: { unit, currentYear: current } });
+  };
 
-  // const optionsYears = sortBy(metadata.years.map(year => ({
-  //   label: year.toString(),
-  //   value: year
-  // })), ['value']);
+  const optionsYears = sortBy(years.map(year => ({
+    label: year.toString(),
+    value: year
+  })), ['value']);
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-  // const yearSelector = (
-  //   <Select
-  //     className="notranslate"
-  //     width="auto"
-  //     value={currentYear}
-  //     options={optionsYears}
-  //     onChange={changeYear}
-  //   />
-  // );
+  const yearSelector = (
+    <Select
+      className="notranslate"
+      width="auto"
+      value={currentYear}
+      options={optionsYears}
+      onChange={changeYear}
+    />
+  );
 
   const sentence = (
     <>
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{year}</strong> represented <strong>{total} {unit}</strong>
+      &nbsp;<strong>{yearSelector}</strong> represented <strong>{total} {unit}</strong>
     </>
   );
 
