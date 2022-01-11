@@ -9,28 +9,20 @@ import { format } from 'd3-format';
 import WidgetTooltip from 'components/widget-tooltip';
 
 const numberFormat = format(',.2f');
-const removeDecimals = format(',.0f');
-const COLORS = ['gray', 'green'];
 
 const getData = (data) => {
-  if (!data) return null;
-  return data;
-  // const dataFormatted = data[0].histogram;
-  // const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
-  // return Object.keys(dataFormatted).map((key, index) => ({
-  //   label: key,
-  //   value: dataFormatted[key],
-  //   color: COLORS[index],
-  //   percentage: dataFormatted[key] / total * 100,
-  // }));
+  if (!data) return [];
+  return ({
+    x: Number(data.data.year),
+    y: data.data.total,
+    color: '#06C4BD',
+    percentage: data.data.percentage,
+    year: data.data.year,
+    total: data.data.total,
+    unit: data.metadata.unit,
+    protected: data.data.protected,
+  });
 };
-
-// const biomassCoverage = ({ list }, yearSelected) => {
-//   const yearData = list.find(d => d.date
-//     .includes(yearSelected));
-//   if (!yearData) return null;
-//   return yearData.agb_mgha_1.toFixed(2);
-// };
 
 // const filterData = ({ list }, yearSelected) => sortBy(
 //   list
@@ -50,37 +42,7 @@ const getData = (data) => {
 //     biomass: numberFormat(i.bgb_tco2e / 1000000),
 //     avobeGround: numberFormat(i.agb_tco2e / 1000000)
 //   };
-// });
-
-// const getDownloadData = ({ list }) => {
-//   const data = list.filter(l => l.date.includes('2016'));
-//   const total = (Object.values(data[0].toc_hist_tco2eha)
-//     .reduce((previous, current) => current + previous)) / 100;
-
-//   // TO-DO: make dynamic depending on keys
-//   return data.map(l => (
-//     {
-//       Date: l.date,
-//       'Total organic carbon stored in mangroves estimation (tco2e)': l.toc_tco2e,
-//       'Amount stored in above-ground biomass (tco2e)': l.agb_tco2e,
-//       'Amount stored in the upper 1m of soil (tco2e)': l.soc_tco2e,
-//       'Histogram data 0--700': `${l.toc_hist_tco2eha['0--700']}
-//         - color: #EEB66B - percentage (%):
-//         ${(l.toc_hist_tco2eha['0--700']) / total}`,
-//       'Histogram data 700--1400': `${l.toc_hist_tco2eha['700--1400']}
-//         - color: #E68518 - percentage (%):
-//         ${l.toc_hist_tco2eha['700--1400'] / total}`,
-//       'Histogram data 1400-2100': `${l.toc_hist_tco2eha['1400--2100']}
-//         - color: #B84E17 - percentage (%):
-//         ${l.toc_hist_tco2eha['1400--2100'] / total}`,
-//       'Histogram data 2100-2800': `${l.toc_hist_tco2eha['2100--2800']}
-//         - color: #933A06 - percentage (%):
-//         ${l.toc_hist_tco2eha['2100--2800'] / total}`,
-//       'Histogram data 2800-3500': `${l.toc_hist_tco2eha['2800--3500']}
-//         - color: #5C4A3D - percentage (%):
-//         ${l.toc_hist_tco2eha['2800--3500'] / total}`,
-//     }));
-// };
+// });s
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
@@ -100,12 +62,13 @@ export const CONFIG = {
         xKey: 'percentage',
         yKeys: {
           pies: {
-            y: {
+            coverage: {
               cx: '50%',
               cy: '50%',
+              paddingAngle: 2,
               dataKey: 'percentage',
               nameKey: 'label',
-              innerRadius: '50%',
+              innerRadius: '55%',
               outerRadius: '80%',
               isAnimationActive: false,
               customLabel: ({ viewBox }) => {
@@ -115,7 +78,7 @@ export const CONFIG = {
                     <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
                       {/* <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan> */}
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{data.total || ''}</tspan>
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="26">%</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="26">{data.data.percentage}%</tspan>
                     </text>
                   </g>
                 );

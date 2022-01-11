@@ -32,15 +32,11 @@ function MangroveProtection({
   }
 
   const { chartData, chartConfig } = config.parse(rawData);
-  const { data, metadata } = chartData;
-  console.log('---->Data and metadata', data, metadata);
+  const { year, unit, total } = chartData;
 
   if (!chartData) {
     return null;
   }
-
-  const { total, year } = data;
-  const { unit } = metadata;
 
   // const changeYear = (current) => {
   //   addFilter({
@@ -71,25 +67,21 @@ function MangroveProtection({
   //   />
   // );
 
-  console.log('location', location);
-
   const sentence = (
     <>
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{year}</strong> represented <strong>{total}{unit}</strong>
+      &nbsp;<strong>{year}</strong> represented <strong>{total} {unit}</strong>
     </>
   );
 
-  console.log('sentence', sentence);
-
   const widgetData = {
-    data,
+    data: [chartData],
     config: chartConfig
   };
 
-  console.log('widgetData', widgetData);
+  const data = [chartData];
 
   return (
     <ChartWidget
@@ -97,7 +89,6 @@ function MangroveProtection({
       data={data}
       slug={slug}
       filename={slug}
-      // downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
