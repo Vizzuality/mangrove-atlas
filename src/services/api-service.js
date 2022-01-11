@@ -52,7 +52,7 @@ class APIService {
         "year": 2016
       },
       "metadata": {
-        "unit": "ha"
+        "unit": "ha",
       }
     }
     return data;
