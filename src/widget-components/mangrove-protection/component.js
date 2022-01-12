@@ -31,6 +31,7 @@ function MangroveProtection({
   }
 
   const { chartData, chartConfig } = config.parse(rawData);
+
   const { unit, total } = chartData;
   const { currentYear, years } = ui;
   console.log('YEARS', years);
@@ -78,11 +79,11 @@ function MangroveProtection({
   );
 
   const widgetData = {
-    data: [chartData],
+    data: chartData,
     config: chartConfig
   };
 
-  const data = [chartData];
+  const data = chartData;
 
   return (
     <ChartWidget
