@@ -48,7 +48,7 @@ class APIService {
         "location_id": 1155,
         "total": 6574.39,
         "protected": true,
-        "percentage": 24.48,
+        "percentage": 84.48,
         "year": 2016
       },
       "metadata": {
