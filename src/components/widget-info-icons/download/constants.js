@@ -135,9 +135,9 @@ export const INFO = {
     //   description: false
     // },
   ],
-  'mangrove_protection': [
+  // 'mangrove_protection': [
 
-  ],
+  // ],
   'mangrove_height': [
     {
       id: 21,
