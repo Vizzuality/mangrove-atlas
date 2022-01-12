@@ -16,13 +16,11 @@ const getData = (data) => {
     color: '#06C4BD',
     percentage: data.data.percentage,
     year: data.data.year,
-    total: ((data.data.total * data.data.percentage) / 100).toFixed(2),
   },
   {
     color: '#ECECEF',
     percentage: 100 - data.data.percentage,
     year: 0,
-    total: ((data.data.total * data.data.percentage) / 100).toFixed(2),
   }]);
 };
 
