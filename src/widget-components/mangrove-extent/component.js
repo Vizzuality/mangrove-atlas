@@ -85,8 +85,6 @@ function MangroveExtent({
 
   const widgetData = processData(data, currentYear, unit);
 
-  console.log('EXTENT CONFIG DATA--->', widgetData)
-
   if (widgetData === null) {
     return null;
   }

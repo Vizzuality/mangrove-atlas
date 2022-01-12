@@ -29,12 +29,14 @@ function MangroveProtection({
   if (!rawData) {
     return null;
   }
-
   const { chartData, chartConfig } = config.parse(rawData);
 
-  const { unit, total } = chartData;
   const { currentYear, years } = ui;
   console.log('YEARS', years);
+
+  const { metadata: { unit }, data: { total, percentage } } = rawData;
+
+  const totalProtected = ((total * percentage) / 100).toFixed(2);
 
   if (!chartData) {
     return null;
@@ -74,7 +76,7 @@ function MangroveProtection({
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{yearSelector}</strong> represented <strong>{total} {unit}</strong>
+      &nbsp;<strong>{yearSelector}</strong> represented <strong>{totalProtected} {unit}</strong>
     </>
   );
 
