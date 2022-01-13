@@ -41,6 +41,7 @@ class APIService {
   }
 
   fetchMangroveProtectionData = (params = {}) => {
+    console.log('params', params)
     const { locationId, year } = params;
 
     const data = {
@@ -53,6 +54,7 @@ class APIService {
       },
       "metadata": {
         "unit": "ha",
+        "years": [2016, 2017, 2018, 2019, 2020, 2021, 2022]
       }
     }
     return data;
