@@ -8,7 +8,6 @@ const mapStateToProps = state => ({
   data: state.mangroveProtectionData,
   ui: state.widgets.ui.protection || {
     currentYear: 2016,
-    years: [1996, 2016, 2015, 2010, 2009, 2008, 2007]
   }
 });
 

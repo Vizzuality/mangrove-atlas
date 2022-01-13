@@ -14,7 +14,7 @@ function MangroveProtection({
   slug,
   name,
   addFilter,
-  ui,
+  ui: { currentYear },
   setUi,
   ...props
 }) {
@@ -31,10 +31,8 @@ function MangroveProtection({
   }
   const { chartData, chartConfig } = config.parse(rawData);
 
-  const { currentYear, years } = ui;
-  console.log('YEARS', years);
 
-  const { metadata: { unit }, data: { total, percentage } } = rawData;
+  const { metadata: { unit, years }, data: { total, percentage } } = rawData;
 
   const totalProtected = ((total * percentage) / 100).toFixed(2);
 
@@ -49,7 +47,7 @@ function MangroveProtection({
         year: current
       }
     });
-    setUi({ id: 'protection', value: { unit, currentYear: current } });
+    setUi({ id: 'protection', value: { currentYear: current } });
   };
 
   const optionsYears = sortBy(years.map(year => ({
