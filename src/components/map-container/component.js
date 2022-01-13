@@ -46,7 +46,7 @@ export const MapContainer = ({
     return function cleanup() {
       window.removeEventListener('resize', resize);
     };
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   /**
@@ -118,14 +118,15 @@ export const MapContainer = ({
       >
         {() => (
           <div className={styles.navigation}>
-              <MediaQuery minWidth={breakpoints.lg + 1}>
-                <FullscreenControl className={styles.fullscreen} />
-              </MediaQuery>
+            <MediaQuery minWidth={breakpoints.lg + 1}>
+              <FullscreenControl className={styles.fullscreen} />
+            </MediaQuery>
             <MediaQuery minWidth={breakpoints.sm}>
               <NavigationControl
                 captureClick
                 captureDoubleClick
                 className={styles.zoomControls}
+                onViewportChange={onViewportChange}
               />
             </MediaQuery>
           </div>
