@@ -12,7 +12,7 @@ import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
-const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#5C4A3D'];
+const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#FCC862'];
 
 const getData = (data) => {
   if (!data || !data.length) return null;
@@ -26,12 +26,12 @@ const getData = (data) => {
   }));
 };
 
-const biomassCoverage = ({ list }, yearSelected) => {
-  const yearData = list.find(d => d.date
-    .includes(yearSelected));
-  if (!yearData) return null;
-  return yearData.agb_mgha_1.toFixed(2);
-};
+// const biomassCoverage = ({ list }, yearSelected) => {
+//   const yearData = list.find(d => d.date
+//     .includes(yearSelected));
+//   if (!yearData) return null;
+//   return yearData.agb_mgha_1.toFixed(2);
+// };
 
 const filterData = ({ list }, yearSelected) => sortBy(
   list
@@ -53,46 +53,45 @@ const filterData = ({ list }, yearSelected) => sortBy(
   };
 });
 
-const getDownloadData = ({ list }) => {
-  const data = list.filter(l => l.date.includes('2016'));
-  const total = (Object.values(data[0].toc_hist_tco2eha)
-    .reduce((previous, current) => current + previous)) / 100;
+// const getDownloadData = ({ list }) => {
+//   const data = list.filter(l => l.date.includes('2016'));
+//   const total = (Object.values(data[0].toc_hist_tco2eha)
+//     .reduce((previous, current) => current + previous)) / 100;
 
-  // TO-DO: make dynamic depending on keys
-  return data.map(l => (
-    {
-      Date: l.date,
-      'Total organic carbon stored in mangroves estimation (tco2e)': l.toc_tco2e,
-      'Amount stored in above-ground biomass (tco2e)': l.agb_tco2e,
-      'Amount stored in the upper 1m of soil (tco2e)': l.soc_tco2e,
-      'Histogram data 0--700': `${l.toc_hist_tco2eha['0--700']}
-        - color: #EEB66B - percentage (%):
-        ${(l.toc_hist_tco2eha['0--700']) / total}`,
-      'Histogram data 700--1400': `${l.toc_hist_tco2eha['700--1400']}
-        - color: #E68518 - percentage (%):
-        ${l.toc_hist_tco2eha['700--1400'] / total}`,
-      'Histogram data 1400-2100': `${l.toc_hist_tco2eha['1400--2100']}
-        - color: #B84E17 - percentage (%):
-        ${l.toc_hist_tco2eha['1400--2100'] / total}`,
-      'Histogram data 2100-2800': `${l.toc_hist_tco2eha['2100--2800']}
-        - color: #933A06 - percentage (%):
-        ${l.toc_hist_tco2eha['2100--2800'] / total}`,
-      'Histogram data 2800-3500': `${l.toc_hist_tco2eha['2800--3500']}
-        - color: #5C4A3D - percentage (%):
-        ${l.toc_hist_tco2eha['2800--3500'] / total}`,
-    }));
-};
+//   // TO-DO: make dynamic depending on keys
+//   return data.map(l => (
+//     {
+//       Date: l.date,
+//       'Total organic carbon stored in mangroves estimation (tco2e)': l.toc_tco2e,
+//       'Amount stored in above-ground biomass (tco2e)': l.agb_tco2e,
+//       'Amount stored in the upper 1m of soil (tco2e)': l.soc_tco2e,
+//       'Histogram data 0--700': `${l.toc_hist_tco2eha['0--700']}
+//         - color: #EEB66B - percentage (%):
+//         ${(l.toc_hist_tco2eha['0--700']) / total}`,
+//       'Histogram data 700--1400': `${l.toc_hist_tco2eha['700--1400']}
+//         - color: #E68518 - percentage (%):
+//         ${l.toc_hist_tco2eha['700--1400'] / total}`,
+//       'Histogram data 1400-2100': `${l.toc_hist_tco2eha['1400--2100']}
+//         - color: #B84E17 - percentage (%):
+//         ${l.toc_hist_tco2eha['1400--2100'] / total}`,
+//       'Histogram data 2100-2800': `${l.toc_hist_tco2eha['2100--2800']}
+//         - color: #933A06 - percentage (%):
+//         ${l.toc_hist_tco2eha['2100--2800'] / total}`,
+//       'Histogram data 2800-3500': `${l.toc_hist_tco2eha['2800--3500']}
+//         - color: #5C4A3D - percentage (%):
+//         ${l.toc_hist_tco2eha['2800--3500'] / total}`,
+//     }));
+// };
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
     const dataFiltered = filterData(data, yearSelected);
     const chartData = dataFiltered.length ? getData(dataFiltered) : '';
-    const downloadData = getDownloadData(data);
+    // const downloadData = getDownloadData(data);
     return {
       chartData,
-      coverage: biomassCoverage(data, yearSelected),
-      downloadData,
-      totalValues: dataFiltered[0],
+      // coverage: biomassCoverage(data, yearSelected),
+      // totalValues: dataFiltered[0],
       chartConfig: {
         type: 'pie',
         layout: 'centric',
@@ -116,9 +115,9 @@ export const CONFIG = {
                     <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
                     </text>
-                    <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
+                    {/* <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
-                    </text>
+                    </text> */}
                     <text x={cx} y={cy + 30} className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e</tspan>
                     </text>
