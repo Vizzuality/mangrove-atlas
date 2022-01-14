@@ -38,12 +38,9 @@ function MangroveSpecies({
 
   const sentence = (
     <>
-      Total organic carbon stored in
-      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
-      mangroves is estimated at
-      &nbsp;<strong>XXXXXXXX</strong> Mt CO₂e
-      with <strong>XXXXXXXX</strong> Mt CO₂e stored in above-ground biomass and
-      &nbsp;<strong>XXXXXXXX</strong> Mt CO₂e stored in the upper 1m of soil.
+      <strong>{location} </strong>has <strong>45</strong> species of mangroves.
+      Of them, <strong>1</strong> is<strong> endemic</strong> and <strong>4</strong> are considered
+      <strong> threatened</strong> by the IUCN Red List.
     </>
   );
 

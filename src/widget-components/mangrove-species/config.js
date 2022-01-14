@@ -10,6 +10,8 @@ import { format } from 'd3-format';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
+import { RED_LIST_CATEGORIES } from './constants';
+
 const numberFormat = format(',.2f');
 
 const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862'];
@@ -18,11 +20,11 @@ const getData = (data) => {
   const { list } = data;
   if (!list || !list.length) return null;
   const total = 100;
-  return Object.keys(list).map((key, index) => ({
-    label: key,
+  return list.map((item, index) => ({
     value: 70,
     color: COLORS[index],
-    percentage: 50 / total * 100,
+    percentage: 5 / total * 100,
+    label: `${RED_LIST_CATEGORIES[item.red_list_cat]}`
   }));
 };
 
@@ -97,30 +99,14 @@ export const CONFIG = {
         yKeys: {
           pies: {
             y: {
-              cx: '50%',
+              cx: '60%',
               cy: '50%',
               paddingAngle: 2,
               dataKey: 'percentage',
               nameKey: 'label',
-              innerRadius: '60%',
-              outerRadius: '80%',
+              innerRadius: '55%',
+              outerRadius: '85%',
               isAnimationActive: false,
-              customLabel: ({ viewBox }) => {
-                const { cx, cy } = viewBox;
-                return (
-                  <g>
-                    <text x={cx} y={cy - 30} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Total</tspan>
-                    </text>
-                    {/* <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="30">{dataFiltered[0].totalRing || ''}</tspan>
-                    </text> */}
-                    <text x={cx} y={cy + 30} className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">Mt CO₂e</tspan>
-                    </text>
-                  </g>
-                );
-              }
             }
           }
         },
@@ -132,7 +118,7 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.value);
-            return <WidgetLegend widgetSpecific="blue-carbon" title="Total carbon density (t CO<sub>2</sub>e / ha)" groups={groups} />;
+            return <WidgetLegend widgetSpecific="species" groups={groups} />;
           }
         },
         tooltip: {
