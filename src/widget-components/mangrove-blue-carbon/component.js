@@ -49,9 +49,6 @@ function MangroveBlueCarbon({
     </>
   );
 
-  console.log('chartData', chartData);
-  console.log('chartConfig', chartConfig);
-
   const widgetData = {
     data: chartData,
     config: chartConfig
