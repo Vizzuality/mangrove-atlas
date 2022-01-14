@@ -11,47 +11,47 @@ import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
-const removeDecimals = format(',.0f');
-const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#FCC862'];
+
+const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862'];
 
 const getData = (data) => {
-  if (!data || !data.length) return null;
-  const dataFormatted = data[0].histogram;
-  const total = Object.values(dataFormatted).reduce((previous, current) => current + previous);
-  return Object.keys(dataFormatted).map((key, index) => ({
+  const { list } = data;
+  if (!list || !list.length) return null;
+  const total = 100;
+  return Object.keys(list).map((key, index) => ({
     label: key,
-    value: dataFormatted[key],
+    value: 70,
     color: COLORS[index],
-    percentage: dataFormatted[key] / total * 100,
+    percentage: 50 / total * 100,
   }));
 };
 
-// const biomassCoverage = ({ list }, yearSelected) => {
-//   const yearData = list.find(d => d.date
-//     .includes(yearSelected));
-//   if (!yearData) return null;
-//   return yearData.agb_mgha_1.toFixed(2);
-// };
+const biomassCoverage = ({ list }, yearSelected) => {
+  const yearData = list.find(d => d.date
+    .includes(yearSelected));
+  if (!yearData) return null;
+  return yearData.agb_mgha_1.toFixed(2);
+};
 
-const filterData = ({ list }, yearSelected) => sortBy(
-  list
-    .filter(d => d.toc_hist_tco2eha
-      && d.soc_tco2e
-      && d.toc_tco2e
-      && d.bgb_tco2e
-      && d.agb_tco2e
-      && d.date.includes(yearSelected)),
-  ['date']
-).map((i) => {
-  return {
-    histogram: i.toc_hist_tco2eha,
-    soils: numberFormat(i.soc_tco2e / 1000000),
-    totalBiomass: numberFormat(i.toc_tco2e / 1000000),
-    totalRing: removeDecimals(i.toc_tco2e / 1000000),
-    biomass: numberFormat(i.bgb_tco2e / 1000000),
-    avobeGround: numberFormat(i.agb_tco2e / 1000000)
-  };
-});
+// const filterData = ({ list }, yearSelected) => sortBy(
+//   list
+//     .filter(d => d.toc_hist_tco2eha
+//       && d.soc_tco2e
+//       && d.toc_tco2e
+//       && d.bgb_tco2e
+//       && d.agb_tco2e
+//       && d.date.includes(yearSelected)),
+//   ['date']
+// ).map((i) => {
+//   return {
+//     histogram: i.toc_hist_tco2eha,
+//     soils: numberFormat(i.soc_tco2e / 1000000),
+//     totalBiomass: numberFormat(i.toc_tco2e / 1000000),
+//     totalRing: removeDecimals(i.toc_tco2e / 1000000),
+//     biomass: numberFormat(i.bgb_tco2e / 1000000),
+//     avobeGround: numberFormat(i.agb_tco2e / 1000000)
+//   };
+// });
 
 // const getDownloadData = ({ list }) => {
 //   const data = list.filter(l => l.date.includes('2016'));
@@ -85,13 +85,10 @@ const filterData = ({ list }, yearSelected) => sortBy(
 
 export const CONFIG = {
   parse: (data, yearSelected = 2016) => {
-    const dataFiltered = filterData(data, yearSelected);
-    const chartData = dataFiltered.length ? getData(dataFiltered) : '';
-    // const downloadData = getDownloadData(data);
+
     return {
-      chartData,
-      // coverage: biomassCoverage(data, yearSelected),
-      // totalValues: dataFiltered[0],
+      chartData: getData(data),
+      coverage: biomassCoverage(data, yearSelected),
       chartConfig: {
         type: 'pie',
         layout: 'centric',

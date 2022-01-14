@@ -17,7 +17,7 @@ function MangroveSpecies({
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'carbon',
+        id: 'species',
         year: '2016'
       }
     });
@@ -28,11 +28,11 @@ function MangroveSpecies({
 
   const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
+  console.log('chartData SPECIES ---->', chartData);
+  console.log('chartConfig SPECIES --->', chartConfig);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
-
-  // const { avobeGround, soils, totalBiomass } = totalValues;
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
