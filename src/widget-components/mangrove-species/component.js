@@ -28,8 +28,6 @@ function MangroveSpecies({
 
   const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
-  console.log('chartData SPECIES ---->', chartData);
-  console.log('chartConfig SPECIES --->', chartConfig);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
