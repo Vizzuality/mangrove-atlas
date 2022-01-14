@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import cx from 'classnames';
 
 import styles from './style.module.scss';
 
@@ -22,12 +23,14 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
     <div>
       {settings && settings.length && (
         <div className={styles.chart_tooltip} style={style}>
+
           {settings.map(
             d => (hideZeros && values[d.key] ? null : (
               (((d.label && d.labelKey) || !!d.key) || (values && !!d.key)) && <div
                 key={d.key}
                 className={classnames(styles.data_line, styles[d.type], styles[d.position])}
               >
+
                 {/* LABEL */}
                 {((d.label && d.labelKey) || !!d.key) && (
                   <div className={classnames(styles.data_label, styles[d.position])}>
@@ -37,6 +40,7 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                         style={{ backgroundColor: d.color }}
                       />
                     )}
+
                     {values && d.key && (
                       <>
                         {(d.key === 'break')
@@ -46,13 +50,26 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                     )}
                   </div>
                 )}
+                <div styles={{ backgroundColor: 'red', width: '10px', height: '14px' }} />
 
                 {values && !!d.key && (
-                  <div className={styles.data_value}>
+                  <div className={cx({
+                    [styles.data_value]: d.type !== 'species',
+                    [styles.data_value_species]: d.type === 'species'
+                  })}>
+                    {d.type === 'species' && (
+                      <svg width="10" height="12">
+                        <rect width="2" height="12" fill={values.color} />
+                      </svg>
+                    )}
                     {getValue(d, values[d.key])}
                   </div>
                 )}
+                {d.type === 'species' && (
+                  <p className={styles.description_label}>{d.description}</p>
+                )}
               </div>
+
             ))
           )}
         </div>

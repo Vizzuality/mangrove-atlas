@@ -135,7 +135,13 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
-                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
+                  {
+                    key: 'label',
+                    color: 'color',
+                    description: 'Camptostemon philippinense Heritiera globosa(endemic)',
+                    position: '_row',
+                    type: 'species',
+                  },
                 ]}
               />
             );
