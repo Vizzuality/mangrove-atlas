@@ -44,46 +44,52 @@ class APIService {
     const { locationId, year } = params;
     const data = {
       "data": [{
-        "agb_hist_mgha_1": null,
         "agb_mgha_1": 92.4071390052209,
-        "agb_tco2e": null,
-        "area_m2": null,
-        "bgb_tco2e": null,
-        "con_hotspot_summary_km2": null,
         "date": "2000-01-01",
-        "gain_m2": null,
-        "hba_hist_m": null,
-        "hba_m": null,
-        "hmax_hist_m": null,
         "hmax_m": 13.136334094711,
         "id": 39637,
-        "length_m": null,
-        "loss_m2": null,
         "net_change_m2": 0,
-        "soc_tco2e": null,
-        "toc_hist_tco2eha": null,
-        "toc_tco2e": null,
+        "red_list_cat": "dd"
       },
       {
-        "agb_hist_mgha_1": null,
         "agb_mgha_1": 92.4071390052209,
-        "agb_tco2e": null,
-        "area_m2": null,
-        "bgb_tco2e": null,
-        "con_hotspot_summary_km2": null,
         "date": "2000-01-01",
-        "gain_m2": null,
-        "hba_hist_m": null,
-        "hba_m": null,
-        "hmax_hist_m": null,
         "hmax_m": 13.136334094711,
         "id": 39637,
-        "length_m": null,
-        "loss_m2": null,
         "net_change_m2": 0,
-        "soc_tco2e": null,
-        "toc_hist_tco2eha": null,
-        "toc_tco2e": null,
+        "red_list_cat": "lc"
+      },
+      {
+        "agb_mgha_1": 92.4071390052209,
+        "date": "2000-01-01",
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "net_change_m2": 0,
+        "red_list_cat": "nt"
+      },
+      {
+        "agb_mgha_1": 92.4071390052209,
+        "date": "2000-01-01",
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "net_change_m2": 0,
+        "red_list_cat": "vu"
+      },
+      {
+        "agb_mgha_1": 92.4071390052209,
+        "date": "2000-01-01",
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "net_change_m2": 0,
+        "red_list_cat": "en"
+      },
+      {
+        "agb_mgha_1": 92.4071390052209,
+        "date": "2000-01-01",
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "net_change_m2": 0,
+        "red_list_cat": "cr"
       }],
       "metadata": {
         "unit": "ha",
