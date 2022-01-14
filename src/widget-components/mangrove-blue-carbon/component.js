@@ -25,6 +25,7 @@ function MangroveBlueCarbon({
   if (!rawData) {
     return null;
   }
+
   const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
@@ -47,6 +48,9 @@ function MangroveBlueCarbon({
       &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );
+
+  console.log('chartData', chartData);
+  console.log('chartConfig', chartConfig);
 
   const widgetData = {
     data: chartData,
