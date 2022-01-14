@@ -8,12 +8,13 @@ function* getMangroveSpeciesData({ payload }) {
   yield put(fetchRequested());
   try {
     const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, payload);
+
     yield put(fetchSucceeded(mangroveSpeciesData));
   } catch (err) {
     yield put(fetchFailed(err));
   }
 }
 
-export default function* mangroveDataSagas() {
+export default function* mangroveSpeciesDataSagas() {
   yield takeLatest('LOCATIONS/SET_CURRENT', getMangroveSpeciesData);
 }

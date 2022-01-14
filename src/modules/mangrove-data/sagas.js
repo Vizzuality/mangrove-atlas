@@ -8,6 +8,7 @@ function* getMangroveData({ payload }) {
   yield put(fetchRequested());
   try {
     const mangroveData = yield call(service.fetchMangroveData, payload);
+
     yield put(fetchSucceeded(mangroveData));
   } catch (err) {
     yield put(fetchFailed(err));

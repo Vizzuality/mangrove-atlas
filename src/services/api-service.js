@@ -61,6 +61,59 @@ class APIService {
       if (status >= 400) throw new Error(statusText);
       return filteredData[0];
     });
+  };
+  
+  fetchMangroveSpeciesData = (params = {}) => {
+    const { locationId, year } = params;
+    const data = {
+      "data": [{
+        "agb_hist_mgha_1": null,
+        "agb_mgha_1": 92.4071390052209,
+        "agb_tco2e": null,
+        "area_m2": null,
+        "bgb_tco2e": null,
+        "con_hotspot_summary_km2": null,
+        "date": "2000-01-01",
+        "gain_m2": null,
+        "hba_hist_m": null,
+        "hba_m": null,
+        "hmax_hist_m": null,
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "length_m": null,
+        "loss_m2": null,
+        "net_change_m2": 0,
+        "soc_tco2e": null,
+        "toc_hist_tco2eha": null,
+        "toc_tco2e": null,
+      },
+      {
+        "agb_hist_mgha_1": null,
+        "agb_mgha_1": 92.4071390052209,
+        "agb_tco2e": null,
+        "area_m2": null,
+        "bgb_tco2e": null,
+        "con_hotspot_summary_km2": null,
+        "date": "2000-01-01",
+        "gain_m2": null,
+        "hba_hist_m": null,
+        "hba_m": null,
+        "hmax_hist_m": null,
+        "hmax_m": 13.136334094711,
+        "id": 39637,
+        "length_m": null,
+        "loss_m2": null,
+        "net_change_m2": 0,
+        "soc_tco2e": null,
+        "toc_hist_tco2eha": null,
+        "toc_tco2e": null,
+      }],
+      "metadata": {
+        "unit": "ha",
+        "years": [2016, 2017, 2018, 2019, 2020, 2021, 2022]
+      }
+    }
+    return data;
   }
 }
 

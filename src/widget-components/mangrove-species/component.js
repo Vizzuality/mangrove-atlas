@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import config from './config';
 
-function MangroveBlueCarbon({
+function MangroveSpecies({
   data: rawData,
   currentLocation,
   isCollapsed = true,
@@ -25,13 +25,14 @@ function MangroveBlueCarbon({
   if (!rawData) {
     return null;
   }
+
   const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const { avobeGround, soils, totalBiomass } = totalValues;
+  // const { avobeGround, soils, totalBiomass } = totalValues;
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
@@ -42,9 +43,9 @@ function MangroveBlueCarbon({
       Total organic carbon stored in
       <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
       mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
-      with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
-      &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
+      &nbsp;<strong>XXXXXXXX</strong> Mt CO₂e
+      with <strong>XXXXXXXX</strong> Mt CO₂e stored in above-ground biomass and
+      &nbsp;<strong>XXXXXXXX</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );
 
@@ -68,7 +69,7 @@ function MangroveBlueCarbon({
   );
 }
 
-MangroveBlueCarbon.propTypes = {
+MangroveSpecies.propTypes = {
   data: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -80,7 +81,7 @@ MangroveBlueCarbon.propTypes = {
   setUi: PropTypes.func
 };
 
-MangroveBlueCarbon.defaultProps = {
+MangroveSpecies.defaultProps = {
   data: null,
   currentLocation: null,
   addFilter: () => { },
@@ -92,4 +93,4 @@ MangroveBlueCarbon.defaultProps = {
   setUi: () => { }
 };
 
-export default MangroveBlueCarbon;
+export default MangroveSpecies;

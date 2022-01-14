@@ -13,7 +13,11 @@ import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
+<<<<<<< HEAD
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
+=======
+import * as mangroveSpeciesData from 'modules/mangrove-species-data';
+>>>>>>> 4f10ce9 (feat: connect fetch species data with component)
 import * as ranking from 'modules/ranking';
 import * as alerts from 'modules/alerts';
 
@@ -32,6 +36,7 @@ const modules = [
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
+  { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: 'ranking', components: ranking },
   { namespace: 'alerts', components: alerts }
 ];
