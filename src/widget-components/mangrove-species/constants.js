@@ -22,5 +22,4 @@ export const RED_LIST_CATEGORIES = {
   [Types.NT]: 'NT - Near Threatened',
   [Types.LC]: 'LC - Least Concern',
   [Types.DD]: 'DD - Data Deficient',
-
 };
