@@ -1,9 +1,7 @@
-function toRasterSource({ filename, source }) {
-  const extent = filename.includes('gmw');
+function toRasterSource({ filename, version, year, source }) {
   return {
-    tiles: extent
-      ? [`https://mangrove_atlas.storage.googleapis.com/staging/tilesets/${filename}/{z}/{x}/{y}.png`]
-      : [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/{z}/{x}/{y}.png`],
+    // new data will be organise in different folders (name of the tilesets, year and data version)
+    tiles: [`https://mangrove_atlas.storage.googleapis.com/tilesets/${filename}/${!!version ? `${version}/${year}/` : ''}{z}/{x}/{y}.png`],
     type: 'raster',
     tileSize: 256,
     ...source,
@@ -127,7 +125,9 @@ const geojsons = [
 const rasters = [
   {
     name: 'gmw1996v2_0_z0-12',
-    filename: 'gmw1996v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 1996,
     source: {
       type: 'raster',
       minzoom: 0,
@@ -136,6 +136,9 @@ const rasters = [
   },
   {
     name: 'gmw2007v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2007,
     filename: 'gmw2007v2_0_z0-12',
     source: {
       type: 'raster',
@@ -145,6 +148,9 @@ const rasters = [
   },
   {
     name: 'gmw2008v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2008,
     filename: 'gmw2008v2_0_z0-12',
     source: {
       type: 'raster',
@@ -154,7 +160,9 @@ const rasters = [
   },
   {
     name: 'gmw2009v2_0_z0-12',
-    filename: 'gmw2009v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2009,
     source: {
       type: 'raster',
       minzoom: 0,
@@ -163,7 +171,9 @@ const rasters = [
   },
   {
     name: 'gmw2010v2_0_z0-12',
-    filename: 'gmw2010v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2010,
     source: {
       type: 'raster',
       minzoom: 0,
@@ -172,7 +182,9 @@ const rasters = [
   },
   {
     name: 'gmw2015v2_0_z0-12',
-    filename: 'gmw2015v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2015,
     source: {
       type: 'raster',
       minzoom: 0,
@@ -181,7 +193,9 @@ const rasters = [
   },
   {
     name: 'gmw2016v2_0_z0-12',
-    filename: 'gmw2016v2_0_z0-12',
+    filename: 'extent',
+    version: 'v3',
+    year: 2016,
     source: {
       type: 'raster',
       minzoom: 0,
