@@ -120,6 +120,8 @@
     {
       "name": "Mangrove Protection",
       "slug": "mangrove_protection",
+
+      // TO DO - check location types where this widget will be shown
       "locationType": [
         "custom",
         "aoi",
@@ -127,6 +129,7 @@
         "country",
         "worldwide"
       ],
+      // TO DO - check categories where this widget will be shown
       "categoryIds": [
         "all_datasets",
         "climate_and_policy"
