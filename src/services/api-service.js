@@ -65,60 +65,27 @@ class APIService {
   
   fetchMangroveSpeciesData = (params = {}) => {
     const { locationId, year } = params;
+
     const data = {
-      "data": [{
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "dd"
+      "data": {
+        "location_id": 1136,
+        "total": 45, "endemic": 4,
+        "threatened": 1,
+        "categories": {
+          "cr": 2,
+          "en": 5,
+          "vu": 1,
+          "nt": 3,
+          "lc": 1,
+          "dd": 1,
+        }
       },
-      {
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "lc"
-      },
-      {
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "nt"
-      },
-      {
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "vu"
-      },
-      {
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "en"
-      },
-      {
-        "agb_mgha_1": 92.4071390052209,
-        "date": "2000-01-01",
-        "hmax_m": 13.136334094711,
-        "id": 39637,
-        "net_change_m2": 0,
-        "red_list_cat": "cr"
-      }],
       "metadata": {
-        "unit": "ha",
-        "years": [2016, 2017, 2018, 2019, 2020, 2021, 2022]
+        "unit": null,
+        "note": ''
       }
     }
+
     return data;
   }
 }
