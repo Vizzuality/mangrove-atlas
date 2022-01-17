@@ -16,6 +16,7 @@ function MangroveProtection({
   addFilter,
   ui: { currentYear },
   setUi,
+  fetchMangroveProtectionData,
   ...props
 }) {
   useEffect(() => {
@@ -25,16 +26,15 @@ function MangroveProtection({
         year: '2016'
       }
     });
-  }, [addFilter]);
+    fetchMangroveProtectionData({ year: currentYear })
+  }, [addFilter, currentYear]);
   if (!rawData) {
     return null;
   }
   const { chartData, chartConfig } = config.parse(rawData);
 
-
-  const { metadata: { unit, years }, data: { total, percentage } } = rawData;
-
-  const totalProtected = ((total * percentage) / 100).toFixed(2);
+  const { metadata: { unit, years }, data: dataTotal } = rawData;
+  const total = dataTotal[0].total;
 
   if (!chartData) {
     return null;
@@ -74,7 +74,7 @@ function MangroveProtection({
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{yearSelector}</strong> represented <strong>{totalProtected} {unit}</strong>
+      &nbsp;<strong>{yearSelector}</strong> represented <strong>{total} {unit}</strong>
     </>
   );
 
