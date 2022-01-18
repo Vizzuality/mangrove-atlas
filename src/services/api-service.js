@@ -6,6 +6,12 @@ class APIService {
       baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { 'Content-Type': 'application/json' }
     });
+
+    // staging
+    this.clientStaging = axios.create({
+      baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api/v2`,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   fetchLocations = (params = {}) => this.client
@@ -41,7 +47,7 @@ class APIService {
   }
 
   fetchMangroveSpeciesData = (params = {}) => {
-    const { locationId } = params;
+    const { locationId = 1155 } = params;
 
     const data = {
       "data": {
@@ -65,6 +71,7 @@ class APIService {
     }
 
     return data;
+
   }
 }
 

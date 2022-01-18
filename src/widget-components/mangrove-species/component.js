@@ -12,6 +12,7 @@ function MangroveSpecies({
   addFilter,
   ui,
   setUi,
+  fetchMangroveSpeciesData,
   ...props
 }) {
   useEffect(() => {
@@ -20,6 +21,7 @@ function MangroveSpecies({
         id: 'species',
       }
     });
+    fetchMangroveSpeciesData()
   }, [addFilter]);
   if (!rawData) {
     return null;
@@ -28,7 +30,6 @@ function MangroveSpecies({
   const { list: { endemic, threatened, total } } = rawData;
 
   const { chartData, chartConfig } = config.parse(rawData);
-
 
   if (!chartData || chartData.length <= 0) {
     return null;
