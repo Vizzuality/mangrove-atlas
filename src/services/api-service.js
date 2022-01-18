@@ -64,7 +64,7 @@ class APIService {
   };
   
   fetchMangroveSpeciesData = (params = {}) => {
-    const { locationId } = params;
+    const { locationId = 1155 } = params;
 
     const data = {
       "data": {
@@ -88,6 +88,7 @@ class APIService {
     }
 
     return data;
+
   }
 }
 

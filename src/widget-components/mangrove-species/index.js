@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 import { setUi } from 'modules/widgets/actions';
 
+import { fetchMangroveSpeciesData } from 'modules/mangrove-species-data/actions';
+
 import Component from './component';
 
 const mapStateToProps = state => ({
@@ -10,7 +12,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setUi
+  setUi,
+  fetchMangroveSpeciesData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
