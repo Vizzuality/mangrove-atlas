@@ -64,20 +64,21 @@ class APIService {
   };
   
   fetchMangroveSpeciesData = (params = {}) => {
-    const { locationId, year } = params;
+    const { locationId } = params;
 
     const data = {
       "data": {
         "location_id": 1136,
-        "total": 45, "endemic": 4,
+        "total": 45,
+        "endemic": 6,
         "threatened": 1,
         "categories": {
-          "cr": 2,
-          "en": 5,
+          "cr": 5,
+          "en": 1,
           "vu": 1,
-          "nt": 3,
-          "lc": 1,
-          "dd": 1,
+          "nt": 4,
+          "lc": 5,
+          "dd": 31,
         }
       },
       "metadata": {
