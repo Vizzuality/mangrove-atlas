@@ -10,7 +10,7 @@ function MangroveSpecies({
   slug,
   name,
   addFilter,
-  ui: yearSelected,
+  ui,
   setUi,
   ...props
 }) {
@@ -18,7 +18,6 @@ function MangroveSpecies({
     addFilter({
       filter: {
         id: 'species',
-        year: '2016'
       }
     });
   }, [addFilter]);
@@ -26,7 +25,10 @@ function MangroveSpecies({
     return null;
   }
 
-  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
+  const { list: { endemic, threatened, total } } = rawData;
+
+  const { chartData, chartConfig } = config.parse(rawData);
+
 
   if (!chartData || chartData.length <= 0) {
     return null;
@@ -38,8 +40,8 @@ function MangroveSpecies({
 
   const sentence = (
     <>
-      <strong>{location} </strong>has <strong>45</strong> species of mangroves.
-      Of them, <strong>1</strong> is<strong> endemic</strong> and <strong>4</strong> are considered
+      <strong>{location} </strong>has <strong>{total}</strong> species of mangroves.
+      Of them, <strong>{endemic}</strong> is<strong> endemic</strong> and <strong>{threatened}</strong> are considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
   );
@@ -55,7 +57,6 @@ function MangroveSpecies({
       data={chartData}
       slug={slug}
       filename={slug}
-      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
