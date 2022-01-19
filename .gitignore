@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# ipython
+.ipynb_checkpoints
+
 # production
 /build
 
