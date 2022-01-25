@@ -44,8 +44,6 @@ function MangroveProtection({
   // const total = dataTotal[0].total;
 
   const years = [1996, 2007, 2010, 2016];
-  const { metadata: { unit, years }, data: dataTotal } = rawData;
-  const total = dataTotal[0].total;
 
   if (!chartData) {
     return null;
