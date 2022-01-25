@@ -10,6 +10,7 @@ import WidgetTooltip from 'components/widget-tooltip';
 const numberFormat = format(',.2f');
 
 const getData = (data) => {
+
   if (!data) return [];
   const protectedMangroves = data.protected_area;
   const nonProtected = data.total_area;
@@ -36,7 +37,9 @@ const getData = (data) => {
 export const CONFIG = {
   parse: (data) => {
     const chartData = getData(data);
+
     const protectedPercentage = data.protected_area * 100 / data.total_area;
+
     return {
       chartData,
       chartConfig: {

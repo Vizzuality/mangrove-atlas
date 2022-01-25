@@ -8,9 +8,11 @@ import config from './config';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+
 import { year } from 'utils/nice-date';
 
 const numberFormat = format(',.2f')
+
 
 function MangroveProtection({
   data: rawData,
@@ -42,6 +44,8 @@ function MangroveProtection({
   // const total = dataTotal[0].total;
 
   const years = [1996, 2007, 2010, 2016];
+  const { metadata: { unit, years }, data: dataTotal } = rawData;
+  const total = dataTotal[0].total;
 
   if (!chartData) {
     return null;
@@ -65,6 +69,7 @@ function MangroveProtection({
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
+
 
   const totalArea = numberFormat(chartData[0].protection);
   const unit = 'ha';
