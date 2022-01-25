@@ -10,7 +10,7 @@ export default {
       year: 2020
     },
     protection: {
-      currentYear: 2020,
+      currentYear: null,
     }
   },
   isCollapsed: true,

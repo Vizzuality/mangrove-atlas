@@ -10,33 +10,33 @@ import WidgetTooltip from 'components/widget-tooltip';
 const numberFormat = format(',.2f');
 
 const getData = (data) => {
-
   if (!data) return [];
-
-  const chartData = data.data[0];
-  const protectedMangroves = (chartData.percentage * chartData.total) / 100;
-  const nonProtected = chartData.total - protectedMangroves;
+  const protectedMangroves = data.protected_area;
+  const nonProtected = data.total_area;
+  const protectedPercentage = (data.protected_area * 100) / data.total_area;
+  const nonProtectedPercentage = 100 - protectedPercentage;
 
   return ([
     {
     color: '#06C4BD',
-    percentage: chartData.percentage,
-    total:  chartData.total,
-    year: chartData.year,
+    percentage: protectedPercentage,
+    total:  data.total,
+    year: data.year,
     protection: protectedMangroves,
-    unit: chartData.unit,
+    // unit: chartData.unit,
   },
   {
     color: '#ECECEF',
-    percentage: 100 - chartData.percentage,
+    percentage: nonProtectedPercentage,
     protection: nonProtected,
-    unit: chartData.unit,
+    // unit: chartData.unit,
   }])
 };
 
 export const CONFIG = {
   parse: (data) => {
     const chartData = getData(data);
+    const protectedPercentage = data.protected_area * 100 / data.total_area;
     return {
       chartData,
       chartConfig: {
@@ -60,7 +60,7 @@ export const CONFIG = {
                 return (
                   <g>
                     <text x={cx} y={cy} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="26">{data.data[0].percentage}%</tspan>
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="26">{numberFormat(protectedPercentage)}%</tspan>
                     </text>
                   </g>
                 );

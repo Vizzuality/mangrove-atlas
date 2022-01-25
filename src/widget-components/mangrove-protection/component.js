@@ -2,10 +2,15 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 
+import { format } from 'd3-format';
+
 import config from './config';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+import { year } from 'utils/nice-date';
+
+const numberFormat = format(',.2f')
 
 function MangroveProtection({
   data: rawData,
@@ -33,8 +38,10 @@ function MangroveProtection({
   }
   const { chartData, chartConfig } = config.parse(rawData);
 
-  const { metadata: { unit, years }, data: dataTotal } = rawData;
-  const total = dataTotal[0].total;
+  // const { metadata: { unit, years }, data: dataTotal } = rawData;
+  // const total = dataTotal[0].total;
+
+  const years = [1996, 2007, 2010, 2016];
 
   if (!chartData) {
     return null;
@@ -59,11 +66,14 @@ function MangroveProtection({
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
+  const totalArea = numberFormat(chartData[0].protection);
+  const unit = 'ha';
+
   const yearSelector = (
     <Select
       className="notranslate"
       width="auto"
-      value={currentYear}
+      value={currentYear || years[year.length - 1]}
       options={optionsYears}
       onChange={changeYear}
     />
@@ -74,7 +84,7 @@ function MangroveProtection({
       Protected mangroves in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{yearSelector}</strong> represented <strong>{total} {unit}</strong>
+      &nbsp;<strong>{yearSelector}</strong> represented <strong>{totalArea}{unit}</strong>
     </>
   );
 

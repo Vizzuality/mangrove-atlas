@@ -7,10 +7,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveProtectionData.isLoading,
-  data: state.mangroveProtectionData,
-  ui: state.widgets.ui.protection || {
-    currentYear: 2020,
-  }
+  data: state.mangroveProtectionData.data,
+  ui: state.widgets.ui.protection,
 });
 
 const mapDispatchToProps = {
