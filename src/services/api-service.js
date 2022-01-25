@@ -6,6 +6,12 @@ class APIService {
       baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { 'Content-Type': 'application/json' }
     });
+
+    // staging
+    this.clientStaging = axios.create({
+      baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api/v2`,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
   fetchLocations = (params = {}) => this.client
@@ -38,6 +44,23 @@ class APIService {
         if (status >= 400) throw new Error(statusText);
         return data;
       });
+  }
+
+  fetchMangroveProtectionData = (params = {}) => {
+    const { locationId = '1_2_74', year = 2016 } = params;
+    return this.client
+    // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
+    .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+
+      const filteredData = data.data.filter(d => d.year === year);
+
+      if (status >= 400) throw new Error(statusText);
+      return filteredData[0];
+    });
   }
 }
 
