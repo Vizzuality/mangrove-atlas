@@ -48,37 +48,37 @@ class APIService {
 
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = 1155, year = 2016 } = params;
-    return this.clientStaging
-    .get(`/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
+    return this.client
+    .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
     .then((response) => {
       const { status, statusText,
-        //data
+        data
       } = response;
 
-      const data = {
-        "data": [
-          {
-          "location_id": 1155,
-          "total": 6574.39,
-          "protected": true,
-          "percentage": 84.48,
-          "year": 2016,
-          "unit": 'ha',
-        },
-        {
-          "location_id": 1155,
-          "total": 549.39,
-          "protected": true,
-          "percentage": 17.12,
-          "year": 2020,
-          "unit": 'ha',
-        },
-      ].filter(d => d.year === year),
-        "metadata": {
-          "unit": "ha",
-          "years": [2016, 2017, 2018, 2019, 2020, 2021, 2022]
-        }
-      }
+      // const data = {
+      //   "data": [
+      //     {
+      //     "location_id": 1155,
+      //     "total": 6574.39,
+      //     "protected": true,
+      //     "percentage": 84.48,
+      //     "year": 2016,
+      //     "unit": 'ha',
+      //   },
+      //   {
+      //     "location_id": 1155,
+      //     "total": 549.39,
+      //     "protected": true,
+      //     "percentage": 17.12,
+      //     "year": 2020,
+      //     "unit": 'ha',
+      //   },
+      // ].filter(d => d.year === year),
+      //   "metadata": {
+      //     "unit": "ha",
+      //     "years": [2016, 2017, 2018, 2019, 2020, 2021, 2022]
+      //   }
+      // }
 
       if (status >= 400) throw new Error(statusText);
       return data;
