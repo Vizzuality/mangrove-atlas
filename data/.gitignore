@@ -90,3 +90,6 @@ target/
 .mypy_cache/
 
 .tox
+
+## Pandera hypotesis
+.hypothesis

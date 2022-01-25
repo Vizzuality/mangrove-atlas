@@ -8,6 +8,9 @@
 # testing
 /coverage
 
+# ipython
+.ipynb_checkpoints
+
 # production
 /build
 
@@ -18,6 +21,7 @@
 .env.test.local
 .env.production.local
 .vscode/launch.json
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
