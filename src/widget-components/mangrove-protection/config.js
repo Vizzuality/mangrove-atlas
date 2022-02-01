@@ -35,9 +35,8 @@ const getData = (data) => {
 };
 
 export const CONFIG = {
-  parse: (data) => {
+  parse: (data, unit) => {
     const chartData = getData(data);
-
     const protectedPercentage = data.protected_area * 100 / data.total_area;
 
     return {
@@ -87,7 +86,7 @@ export const CONFIG = {
                 payload={payload}
                 settings={[
                   { label: 'Percentage:', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
-                  { label: 'Area:', key: 'protection', format: value => `${numberFormat(value)} ha`, position: '_column' },
+                  { label: 'Area:', key: 'protection', format: value => `${numberFormat(value)} ${unit}`, position: '_column' },
                 ]}
               />
             );
