@@ -23,3 +23,5 @@ export const RED_LIST_CATEGORIES = {
   [Types.LC]: 'LC - Least Concern',
   [Types.DD]: 'DD - Data Deficient',
 };
+
+export const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF'];

@@ -4,7 +4,7 @@ import ChartWidget from 'components/chart-widget';
 import config from './config';
 
 function MangroveSpecies({
-  data: rawData,
+  data: data,
   currentLocation,
   isCollapsed = true,
   slug,
@@ -23,13 +23,13 @@ function MangroveSpecies({
     });
     fetchMangroveSpeciesData()
   }, [addFilter]);
-  if (!rawData) {
+  if (!data) {
     return null;
   }
 
-  const { list: { endemic, threatened, total } } = rawData;
+  const { list: { endemic, threatened, total } } = data;
 
-  const { chartData, chartConfig } = config.parse(rawData);
+  const { chartData, chartConfig } = config.parse(data);
 
   if (!chartData || chartData.length <= 0) {
     return null;
@@ -39,10 +39,13 @@ function MangroveSpecies({
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
+  const article = total > 1 ? 'are' : 'is';
+  const articleThreatened = threatened > 1 ? 'are' : 'is';
+
   const sentence = (
     <>
       <strong>{location} </strong>has <strong>{total}</strong> species of mangroves.
-      Of them, <strong>{endemic}</strong> is<strong> endemic</strong> and <strong>{threatened}</strong> are considered
+      Of them, <strong>{endemic}</strong> {article}<strong> endemic</strong> and <strong>{threatened}</strong> {articleThreatened} considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
   );
