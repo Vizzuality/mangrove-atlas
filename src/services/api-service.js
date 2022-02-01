@@ -47,31 +47,39 @@ class APIService {
   }
 
   fetchMangroveSpeciesData = (params = {}) => {
-    const { locationId = 1155 } = params;
+    const { locationId = '1_2_74', year = 2016 } = params;
 
-    const data = {
-      "data": {
-        "location_id": 1136,
-        "total": 45,
-        "endemic": 6,
-        "threatened": 1,
-        "categories": {
-          "cr": 5,
-          "en": 1,
-          "vu": 1,
-          "nt": 4,
-          "lc": 5,
-          "dd": 31,
-        }
-      },
-      "metadata": {
-        "unit": null,
-        "note": ''
-      }
-    }
+    // return this.client
+    // .get(`/v2/widgets/species?&location_id=${locationId}&dir=desc`)
+    // .then((response) => {
+    //   const { status, statusText,
+    //     data
+    //   } = response;
 
-    return data;
+    //   const filteredData = data.data.filter(d => d.year === year);
 
+    //   if (status >= 400) throw new Error(statusText);
+      return ({
+        "data": {
+          "location_id": 1136,
+          "total": 45,
+          "endemic": 6,
+          "threatened": 1,
+          "categories": {
+            "cr": 5,
+            "en": 1,
+            "vu": 1,
+            "nt": 4,
+            "lc": 5,
+            "dd": 31,
+          }
+        },
+        "metadata": {
+          "unit": null,
+          "note": ''
+        }}) 
+        // || filteredData[0];
+  //   });
   }
 }
 
