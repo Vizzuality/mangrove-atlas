@@ -120,7 +120,7 @@ function MangroveProtection({
 
   const sentence = (
     <>
-      Mangroves in protected areas in
+      Mangroves in protected areas
       <strong>&nbsp;{location}&nbsp;</strong>
       in
       &nbsp;<strong>{displayYear}</strong> represented <strong>{totalAreaProtected}{' '}{displayUnit}</strong> of <strong>{totalArea}{' '}{displayUnit}</strong>.
