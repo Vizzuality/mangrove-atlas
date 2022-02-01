@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 
@@ -9,41 +9,48 @@ import config from './config';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
-import { year } from 'utils/nice-date';
-
 const numberFormat = format(',.2f')
 
-
 function MangroveProtection({
-  data: rawData,
+  data,
   currentLocation,
   isCollapsed = true,
   slug,
   name,
   addFilter,
-  ui: { currentYear },
+  ui: { year, unit },
   setUi,
+  ui,
   fetchMangroveProtectionData,
   ...props
 }) {
+
+  // TO DO - update when data is ready
+  // const { metadata: { units, years }, data: dataTotal } = data;
+  const years = useMemo(() => [2010], []);
+  const units = useMemo(() => ['ha', 'km²'], []);
+
   useEffect(() => {
     addFilter({
       filter: {
         id: 'protection',
-        year: '2016'
+        year: years[years.length - 1],
+        unit: units[0],
       }
     });
-    fetchMangroveProtectionData({ year: currentYear })
-  }, [addFilter, currentYear]);
-  if (!rawData) {
+    fetchMangroveProtectionData({ year })
+    setUi({ id: 'protection', value: { year: year || years[years.length - 1], unit: unit || units[0] }});
+  }, [addFilter, year, unit]);
+  if (!data) {
     return null;
   }
-  const { chartData, chartConfig } = config.parse(rawData);
+  const parsedData = unit === 'ha' ? data : ({
+    ...data,
+    total_area: data.total_area / 100,
+    protected_area: data.protected_area / 100,
+  });
 
-  // const { metadata: { unit, years }, data: dataTotal } = rawData;
-  // const total = dataTotal[0].total;
-
-  const years = [1996, 2007, 2010, 2016];
+  const { chartData, chartConfig } = config.parse(parsedData, unit);
 
   if (!chartData) {
     return null;
@@ -52,11 +59,23 @@ function MangroveProtection({
   const changeYear = (current) => {
     addFilter({
       filter: {
+        ...ui,
         id: 'protection',
-        year: current
+        year: current, 
       }
     });
-    setUi({ id: 'protection', value: { currentYear: current } });
+    setUi({ id: 'protection', value: { year: current } });
+  };
+
+  const changeUnit = (current) => {
+    addFilter({
+      filter: {
+        ...ui,
+        id: 'protection',
+        unit: current
+      }
+    });
+    setUi({ id: 'protection', value: { unit: current } });
   };
 
   const optionsYears = sortBy(years.map(year => ({
@@ -64,30 +83,47 @@ function MangroveProtection({
     value: year
   })), ['value']);
 
+  const optionsUnits = sortBy(units.map(unit => ({
+    label: unit.toString(),
+    value: unit
+  })), ['value']);
+
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
 
-  const totalArea = numberFormat(chartData[0].protection);
-  const unit = 'ha';
-
-  const yearSelector = (
+  const totalAreaProtected = numberFormat(parsedData.protected_area);
+  const totalArea = numberFormat(parsedData.total_area);
+  
+  const displayYear = (optionsYears.length > 1 ?
     <Select
       className="notranslate"
       width="auto"
-      value={currentYear || years[year.length - 1]}
+      value={year || years[years.length - 1]}
       options={optionsYears}
       onChange={changeYear}
     />
+    : optionsYears[0].label
+  );
+
+  const displayUnit = (units.length > 1 ?
+    <Select
+      className="notranslate"
+      width="auto"
+      value={unit || units[0]}
+      options={optionsUnits}
+      onChange={changeUnit}
+    />
+    : units[0].label
   );
 
   const sentence = (
     <>
-      Protected mangroves in
+      Mangroves in protected areas
       <strong>&nbsp;{location}&nbsp;</strong>
       in
-      &nbsp;<strong>{yearSelector}</strong> represented <strong>{totalArea}{unit}</strong>
+      &nbsp;<strong>{displayYear}</strong> represented <strong>{totalAreaProtected}{' '}{displayUnit}</strong> of <strong>{totalArea}{' '}{displayUnit}</strong>.
     </>
   );
 
@@ -96,12 +132,10 @@ function MangroveProtection({
     config: chartConfig
   };
 
-  const data = chartData;
-
   return (
     <ChartWidget
       name={name}
-      data={data}
+      data={chartData}
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
