@@ -63,6 +63,12 @@ const widgetInfo = {
     'Date of content': '<p>2000, 2016</p>',
     License: '<p>NASAs Earth Science program Data and Information Policy (Aboveground biomass), [CC4-BY](https://creativecommons.org/licenses/by/4.0/) (Soil organic carbon)</p>',
   },
+  mangrove_protection: {
+    Title: '<h1>Mangrove Protection</h1>',
+    Overview: '<p>Pending</p>',
+    Reference: '<p>Pending</p>',
+    License: '<p>Pending</p>',
+  },
 };
 
 export default widgetInfo;

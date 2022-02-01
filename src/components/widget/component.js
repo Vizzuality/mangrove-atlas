@@ -64,8 +64,8 @@ function Widget({
           : (
             <div className={classnames(
               styles.content, {
-                [styles._large]: slug === 'mangrove_activity'
-              }
+              [styles._large]: slug === 'mangrove_activity'
+            }
             )}
             >
               {children}

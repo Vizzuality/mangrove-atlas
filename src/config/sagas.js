@@ -13,6 +13,7 @@ import dashboards from 'modules/dashboards/sagas';
 import languages from 'modules/languages/sagas';
 import mangroveData from 'modules/mangrove-data/sagas';
 import ranking from 'modules/ranking/sagas';
+import mangroveProtectionData from 'modules/mangrove-protection-data/sagas';
 import alerts from 'modules/alerts/sagas';
 
 export default function* root() {
@@ -29,6 +30,7 @@ export default function* root() {
     fork(languages),
     fork(mangroveData),
     fork(ranking),
+    fork(mangroveProtectionData),
     fork(alerts)
   ]);
 }
