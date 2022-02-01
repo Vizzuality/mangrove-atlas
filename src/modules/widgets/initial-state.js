@@ -8,6 +8,10 @@ export default {
       startDate: {},
       endDate: {},
       year: 2020
+    },
+    protection: {
+      year: null,
+      unit: null,
     }
   },
   isCollapsed: true,

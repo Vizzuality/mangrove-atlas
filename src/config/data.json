@@ -133,6 +133,21 @@
       ]
     },
     {
+      "name": "Mangrove Protection",
+      "slug": "mangrove_protection",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy"
+      ]
+    },
+    {
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "locationType": [

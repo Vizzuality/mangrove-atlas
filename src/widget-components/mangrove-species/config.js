@@ -8,9 +8,7 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
-import { RED_LIST_CATEGORIES } from './constants';
-
-const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF',];
+import { RED_LIST_CATEGORIES, COLORS } from './constants';
 
 const getData = (data) => {
   const { list } = data;
@@ -29,7 +27,6 @@ export const CONFIG = {
   parse: (data) => {
     return {
       chartData: getData(data),
-
       chartConfig: {
         type: 'pie',
         layout: 'centric',

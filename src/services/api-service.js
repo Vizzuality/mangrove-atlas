@@ -3,7 +3,7 @@ import axios from 'axios';
 class APIService {
   constructor() {
     this.client = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL}/api/v1`,
+      baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { 'Content-Type': 'application/json' }
     });
 
@@ -15,7 +15,7 @@ class APIService {
   }
 
   fetchLocations = (params = {}) => this.client
-    .get('/locations', { params })
+    .get('/v2//locations', { params })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -27,7 +27,7 @@ class APIService {
     const locationParam = id || iso || 'worldwide';
 
     return this.client
-      .get(`/locations/${locationParam}/mangrove_data`)
+      .get(`/v1/locations/${locationParam}/mangrove_data`)
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);
@@ -38,7 +38,7 @@ class APIService {
   fetchRankingData = (params = {}) => {
     const { filter = 'gain', startDate = '2007', endDate = '2016', limit = 5 } = params;
     return this.client
-      .get(`/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`)
+      .get(`/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`)
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);
@@ -81,6 +81,24 @@ class APIService {
         // || filteredData[0];
   //   });
   }
-}
+
+  fetchMangroveProtectionData = (params = {}) => {
+    const { locationId = '1_2_74', year = 2016 } = params;
+    return this.client
+    // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
+    .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+
+      const filteredData = data.data.filter(d => d.year === year);
+
+      if (status >= 400) throw new Error(statusText);
+      return filteredData[0];
+    });
+  }
+};
+
 
 export default APIService;
