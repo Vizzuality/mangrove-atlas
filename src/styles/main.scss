@@ -43,3 +43,13 @@ a {
     text-decoration: underline;
   }
 }
+
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-compass {
+  background-image: url('/map-controls-icons/compass.svg') !important;
+  background-size: cover;
+  background-position: center;
+}
+
+.mapboxgl-ctrl-group > button + button {
+  border: none !important;
+}
