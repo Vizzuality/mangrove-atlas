@@ -125,6 +125,7 @@ export const MapContainer = ({
               <NavigationControl
                 captureClick
                 captureDoubleClick
+                showCompass={true}
                 className={styles.zoomControls}
                 onViewportChange={onViewportChange}
               />

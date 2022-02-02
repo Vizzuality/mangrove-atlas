@@ -70,35 +70,20 @@ $space-left-map-mobile: 20px;
   margin: 10px;
 }
 
-
-:global(.mapboxgl-ctrl-compass) {
-  display: none;
-}
-
-
 .navigation {
   position: absolute;
   display: flex;
   flex-direction: column;
   top: 30px;
-  right: 75px;
+  right: 30px;
+
+  > * {
+    position: relative !important;
+  }
 }
 
 .zoomControls {
-
-  > button[title='Zoom In'] {
-    background-image: url('./icons/zoomin.svg') !important;
-    pointer-events: auto;
-  }
-
-  > button[title='Zoom Out'] {
-    border: none;
-    background-image: url('./icons/zoomout.svg') !important;
-  }
-
-  > button[title='Reset North'] {
-    display: none;
-  }
+  box-sizing: content-box;
 
   @media print {
     display: none;
@@ -107,7 +92,8 @@ $space-left-map-mobile: 20px;
 
 .fullscreen {
   > button[title='Toggle fullscreen'] {
-    background-image: url('./icons/fullscreen.svg') !important;
+    background-image: url('/map-controls-icons/fullscreen.svg') !important;
+    top: 200px !important;
   }
 
   @media print {
