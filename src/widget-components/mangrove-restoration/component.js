@@ -11,7 +11,7 @@ import Select from 'components/select';
 
 const numberFormat = format(',.2f')
 
-function MangroveProtection({
+function MangroveRestoration({
   data,
   currentLocation,
   isCollapsed = true,
@@ -33,13 +33,13 @@ function MangroveProtection({
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'protection',
+        id: 'restoration',
         year: years[years.length - 1],
         unit: units[0],
       }
     });
     fetchMangroveProtectionData({ year })
-    setUi({ id: 'protection', value: { year: year || years[years.length - 1], unit: unit || units[0] }});
+    setUi({ id: 'restoration', value: { year: year || years[years.length - 1], unit: unit || units[0] } });
   }, [addFilter, year, unit]);
   if (!data) {
     return null;
@@ -60,22 +60,22 @@ function MangroveProtection({
     addFilter({
       filter: {
         ...ui,
-        id: 'protection',
-        year: current, 
+        id: 'restoration',
+        year: current,
       }
     });
-    setUi({ id: 'protection', value: { year: current } });
+    setUi({ id: 'restoration', value: { year: current } });
   };
 
   const changeUnit = (current) => {
     addFilter({
       filter: {
         ...ui,
-        id: 'protection',
+        id: 'restoration',
         unit: current
       }
     });
-    setUi({ id: 'protection', value: { unit: current } });
+    setUi({ id: 'restoration', value: { unit: current } });
   };
 
   const optionsYears = sortBy(years.map(year => ({
@@ -95,7 +95,7 @@ function MangroveProtection({
 
   const totalAreaProtected = numberFormat(parsedData.protected_area);
   const totalArea = numberFormat(parsedData.total_area);
-  
+
   const displayYear = (optionsYears.length > 1 ?
     <Select
       className="notranslate"
@@ -146,7 +146,7 @@ function MangroveProtection({
   );
 }
 
-MangroveProtection.propTypes = {
+MangroveRestoration.propTypes = {
   data: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -158,7 +158,7 @@ MangroveProtection.propTypes = {
   setUi: PropTypes.func
 };
 
-MangroveProtection.defaultProps = {
+MangroveRestoration.defaultProps = {
   data: null,
   currentLocation: null,
   addFilter: () => { },
@@ -170,4 +170,4 @@ MangroveProtection.defaultProps = {
   setUi: () => { }
 };
 
-export default MangroveProtection;
+export default MangroveRestoration;
