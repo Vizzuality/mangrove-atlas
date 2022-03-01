@@ -12,6 +12,10 @@ export default {
     protection: {
       year: null,
       unit: null,
+    },
+    restoration: {
+      year: null,
+      unit: null,
     }
   },
   isCollapsed: true,

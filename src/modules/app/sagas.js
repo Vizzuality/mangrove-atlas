@@ -8,6 +8,7 @@ import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
 import { fetchRankingData } from 'modules/ranking/actions';
 import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
+import { fetchMangroveRestorationData } from 'modules/mangrove-restoration-data/actions';
 import { initializeApp } from './actions';
 
 function* loadInitialData() {
@@ -20,7 +21,8 @@ function* loadInitialData() {
     languages,
     mangroveData,
     ranking,
-    mangroveProtectionData
+    mangroveProtectionData,
+    mangroveRestorationData
   } = yield select();
 
   if (!locations.list.length) yield put(fetchLocations());
@@ -32,6 +34,7 @@ function* loadInitialData() {
   if (!mangroveData.list.length) yield put(fetchMangroveData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
+  if (!!mangroveRestorationData) yield put(fetchMangroveRestorationData());
 }
 
 export default function* app() {
