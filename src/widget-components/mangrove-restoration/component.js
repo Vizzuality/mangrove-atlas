@@ -118,15 +118,6 @@ function MangroveRestoration({
     : units[0].label
   );
 
-  const sentence = (
-    <>
-      Mangroves in protected areas in
-      <strong>&nbsp;{location}&nbsp;</strong>
-      in
-      &nbsp;<strong>{displayYear}</strong> represented <strong>{totalAreaProtected}{' '}{displayUnit}</strong> of <strong>{totalArea}{' '}{displayUnit}</strong>.
-    </>
-  );
-
   const widgetData = {
     data: chartData,
     config: chartConfig
@@ -139,7 +130,6 @@ function MangroveRestoration({
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
-      sentence={sentence}
       chartData={widgetData}
       {...props}
     />

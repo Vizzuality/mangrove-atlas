@@ -2,10 +2,12 @@
 import React from 'react';
 
 // utils
+import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
+import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 
@@ -19,19 +21,19 @@ const getData = (data) => {
 
   return ([
     {
-    color: '#06C4BD',
-    percentage: protectedPercentage,
-    total:  data.total,
-    year: data.year,
-    protection: protectedMangroves,
-    // unit: chartData.unit,
-  },
-  {
-    color: '#ECECEF',
-    percentage: nonProtectedPercentage,
-    protection: nonProtected,
-    // unit: chartData.unit,
-  }])
+      color: '#06C4BD',
+      percentage: protectedPercentage,
+      total: data.total,
+      year: data.year,
+      protection: protectedMangroves,
+      // unit: chartData.unit,
+    },
+    {
+      color: '#ECECEF',
+      percentage: nonProtectedPercentage,
+      protection: nonProtected,
+      // unit: chartData.unit,
+    }])
 };
 
 export const CONFIG = {
@@ -43,13 +45,13 @@ export const CONFIG = {
       chartData,
       chartConfig: {
         type: 'pie',
-        layout: 'centric',
+        layout: 'center',
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: 'percentage',
         yKeys: {
           pies: {
             protection: {
-              cx: '50%',
+              cx: '65%',
               cy: '50%',
               paddingAngle: 2,
               dataKey: 'percentage',
@@ -68,6 +70,22 @@ export const CONFIG = {
                 );
               }
             }
+          }
+        },
+        legend: {
+          align: 'left',
+          verticalAlign: 'middle',
+          layout: 'vertical',
+          fontSize: 9,
+          content: (properties) => {
+            console.log({ properties })
+            const { payload } = properties;
+            const groups = groupBy(payload, p => p.value);
+            return (
+              <>
+                <WidgetLegend widgetSpecific="restoration" title="" groups={groups} />
+              </>
+            )
           }
         },
         tooltip: {
