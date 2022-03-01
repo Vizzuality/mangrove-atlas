@@ -10,6 +10,9 @@ const Icons = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
+      <symbol id="icon-play" viewBox="0 0 32 32">
+        <path d="M6 4l20 12-20 12z"></path>
+      </symbol>
       <symbol id="icon-all_datasets" viewBox="0 0 32 32">
         <path d="M9.333 10.667c0-0.368 0.298-0.667 0.667-0.667h12c0.368 0 0.667 0.298 0.667 0.667v1.333h-1.333v-0.667h-10.667v0.667h-1.333v-1.333z"></path>
         <path d="M9.333 13.333c0-0.368 0.298-0.667 0.667-0.667h12c0.368 0 0.667 0.298 0.667 0.667v1.333h-1.333v-0.667h-10.667v0.667h-1.333v-1.333z"></path>
