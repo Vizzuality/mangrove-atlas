@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook:python-3.8.6
+FROM jupyter/datascience-notebook:python-3.8.6 AS base
 
 SHELL [ "/bin/bash", "-l", "-c" ]
 
@@ -24,6 +24,7 @@ WORKDIR /
 RUN rm -rf /tmp/tippecanoe-src \
   && apt-get -y remove --purge build-essential && apt-get -y autoremove
 
+FROM base AS stage_1
 # Downloading gcloud package
 RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
 
@@ -35,6 +36,9 @@ RUN mkdir -p /usr/local/gcloud \
 # Adding the package path to local
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
+FROM stage_1 AS stage_2
+
+# Installing the basic packages
 RUN pip install jupyter_contrib_nbextensions \
                 jupyter_nbextensions_configurator \
                 version_information \
@@ -67,6 +71,8 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter nbextension enable --py --sys-prefix ipyleaflet && \
                 jupyter labextension install jupyterlab_templates &&\
                 jupyter serverextension enable --py jupyterlab_templates
+
+FROM stage_2 AS stage_3
 
 # Add requirements file
 COPY jupyter_notebook_config.py /etc/jupyter/
