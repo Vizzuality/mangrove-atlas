@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { setUi } from 'modules/widgets/actions';
-import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
+import { fetchMangroveRestorationData } from 'modules/mangrove-restoration-data/actions';
 
 
 import Component from './component';
@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setUi,
-  fetchMangroveProtectionData,
+  fetchMangroveRestorationData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

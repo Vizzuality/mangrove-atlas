@@ -100,7 +100,6 @@
   .content {
     transition: max-height .5s ease-in-out;
     will-change: max-height;
-    max-height: 700px;
     overflow: visible;
   }
 }

@@ -16,8 +16,9 @@ function ChartWidget({
   className,
   ...props
 }) {
+
   return (
-    <Widget className={styles.widget} {...props}>
+    <Widget className={styles.widget} data={data} {...props}>
       <div className={styles.widget_template}>
         <div className={styles.sentence} key={Date.now()}>
           {sentence}

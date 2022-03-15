@@ -46,6 +46,11 @@ const Legend = ({ title,
                       fill={item.color}
                     />
                   </svg>)}
+                  {widgetSpecific === 'este' && (
+                  <div
+                    className={classnames(styles.item, styles[`_${type}`], styles[`_${item.value}`])}
+                    style={{ backgroundColor: 'red' }}
+                  />)}
                 {widgetSpecific === 'activity' && (
                   <div
                     className={classnames(styles.item, styles[`_${type}`], styles[`_${item.value}`])}

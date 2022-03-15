@@ -23,64 +23,6 @@
   ],
   "widgets": [
     {
-      "name": "Highlighted places",
-      "slug": "highlighted_places",
-      "locationType": [],
-      "categoryIds": [],
-      "layersIds": []
-    },
-    {
-      "name": "Mangrove habitat extent",
-      "slug": "mangrove_extent",
-      "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
-      ],
-      "isActive": true,
-      "layersIds": [
-        "extent"
-      ]
-    },
-    {
-      "name": "Mangrove coverage",
-      "slug": "mangrove_coverage",
-      "locationType": [
-        ""
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
-      ],
-      "layersIds": [
-        "coverage-1996-2016"
-      ]
-    },
-    {
-      "name": "Mangrove net change",
-      "slug": "mangrove_net_change",
-      "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
-      ],
-      "layersIds": [
-        "net"
-      ]
-    },
-    {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": [
@@ -144,7 +86,7 @@
       ],
       "categoryIds": [
         "all_datasets",
-        "climate_and_policy"
+        "distribution_and_change"
       ],
       "layersIds": [
         "restoration"

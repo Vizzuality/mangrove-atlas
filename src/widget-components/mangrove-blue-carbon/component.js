@@ -53,8 +53,6 @@ function MangroveBlueCarbon({
     config: chartConfig
   };
 
-  console.log({ chartData })
-
   return (
     <ChartWidget
       name={name}

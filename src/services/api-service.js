@@ -79,6 +79,22 @@ class APIService {
         return filteredData[0];
       });
   }
+
+  fetchMangroveRestorationPotential = (params = {}) => {
+    const { locationId = '1_2_74', year = 2016 } = params;
+    return this.client
+      .get(`v2/widget/restoration_potential?location_id=${locationId}&year=${year}`)
+      .then((response) => {
+        const { status, statusText,
+          data
+        } = response;
+
+        const filteredData = data.data.filter(d => d.year === year);
+
+        if (status >= 400) throw new Error(statusText);
+        return filteredData[0];
+      });
+  } 
 }
 
 export default APIService;

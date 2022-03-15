@@ -136,6 +136,7 @@ export const CONFIG = {
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(payload, p => p.value);
+            console.log(groups, 'blue carbon')
             return <WidgetLegend widgetSpecific="blue-carbon" title="Total carbon density (t CO<sub>2</sub>e / ha)" groups={groups} />;
           }
         },

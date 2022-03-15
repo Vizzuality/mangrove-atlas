@@ -29,6 +29,7 @@
     "react-dangerous-html": "^1.0.0",
     "react-datepicker": "^2.8.0",
     "react-dom": "^16.8.6",
+    "react-intersection-observer": "^8.33.1",
     "react-map-gl": "^5.0.3",
     "react-modal": "^3.9.1",
     "react-on-scroll": "^0.2.2",

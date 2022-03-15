@@ -1,18 +1,26 @@
 import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
+import { InView } from 'react-intersection-observer';
 
 import { format } from 'd3-format';
 
 import config from './config';
 
-import ChartWidget from 'components/chart-widget';
+import Widget from 'components/widget';
+import Chart from 'components/chart';
 import Select from 'components/select';
+import WidgetControls from 'components/widget-info-icons/component';
 
-const numberFormat = format(',.2f')
+import { Treemap } from 'recharts';
+
+import styles from 'components/widget/style.module.scss';
+
+const numberFormat = format(',.2f');
 
 function MangroveRestoration({
   data,
+  component,
   currentLocation,
   isCollapsed = true,
   slug,
@@ -21,7 +29,7 @@ function MangroveRestoration({
   ui: { year, unit },
   setUi,
   ui,
-  fetchMangroveProtectionData,
+  fetchMangroveRestorationData,
   ...props
 }) {
 
@@ -38,7 +46,7 @@ function MangroveRestoration({
         unit: units[0],
       }
     });
-    fetchMangroveProtectionData({ year })
+    fetchMangroveRestorationData({ year })
     setUi({ id: 'restoration', value: { year: year || years[years.length - 1], unit: unit || units[0] } });
   }, [addFilter, year, unit]);
   if (!data) {
@@ -50,12 +58,19 @@ function MangroveRestoration({
     protected_area: data.protected_area / 100,
   });
 
-  const { chartData, chartConfig } = config.parse(parsedData, unit);
-
-  if (!chartData) {
+  const {
+    chartLineData,
+    chartLineConfig,
+    chartRingData,
+    chartRingConfig,
+    chartTreeData,
+    chartTreeConfig,
+  }
+  = config.parse(parsedData, unit);
+  
+  if (!chartLineData || !chartRingData || !chartTreeData) {
     return null;
   }
-
   const changeYear = (current) => {
     addFilter({
       filter: {
@@ -118,21 +133,99 @@ function MangroveRestoration({
     : units[0].label
   );
 
-  const widgetData = {
-    data: chartData,
-    config: chartConfig
+  const restorationPotentialScore = "68%";
+
+  const widgetDataLine = {
+    data: chartLineData,
+    config: chartLineConfig,
   };
 
+  const widgetDataRing = {
+    data: chartRingData,
+    config: chartRingConfig,
+  };
+
+  const widgetDataTree = {
+    data: chartTreeData,
+    config: chartTreeConfig
+  }
+
+  const lossDriver = "Commodities";
+
+  // charts sentences
+  const restorationPotentialLineSentence = (
+    <>
+      The mean restoration potential score for {location} is {restorationPotentialScore}.
+    </>
+  );
+
+  const restorationPotentialRingSentence = (
+    <>
+      Mangroves in protected areas in
+      <strong>&nbsp;{location}&nbsp;</strong>
+      in
+      &nbsp;<strong>{displayYear}</strong> represented <strong>{totalAreaProtected}{' '}{displayUnit}</strong> of <strong>{totalArea}{' '}{displayUnit}</strong>.
+    </>
+  );
+
+  const restorationPotentialTreeMapSentence = (
+    <>
+      The main mangrove loss driver in <strong>{location}</strong> is <strong>{lossDriver}</strong> (rice, shrimp, and oil palm cultivation)
+    </>
+  );
+
   return (
-    <ChartWidget
-      name={name}
-      data={chartData}
-      slug={slug}
-      filename={slug}
-      isCollapsed={isCollapsed}
-      chartData={widgetData}
-      {...props}
-    />
+    <>
+      <Widget className={styles.widget} {...props} styles={{ height: 3000 }}>
+        <div className={styles.widget_template}>
+          <div className={styles.restorationPotentialSentence} key={Date.now()}>
+            {restorationPotentialLineSentence}
+          </div>
+          <Chart
+            {...props}
+            name={name}
+            slug={slug}
+            filename={slug}
+            isCollapsed={isCollapsed}
+            sentence={restorationPotentialLineSentence}
+            data={chartLineData}
+            config={chartLineConfig}
+            chartData={widgetDataLine}
+          />
+          <div className={styles.sentence} key={Date.now()}>
+            {restorationPotentialRingSentence}
+          </div>
+
+          <Chart
+            {...props}
+            name={name}
+            slug={slug}
+            filename={slug}
+            isCollapsed={isCollapsed}
+            sentence={restorationPotentialRingSentence}
+            data={chartRingData}
+            config={chartRingConfig}
+            chartData={widgetDataRing}
+          />
+          <div className={styles.sentence} key={Date.now()}>
+            {restorationPotentialTreeMapSentence}
+          </div>
+          <Chart
+            {...props}
+            name={name}
+            slug={slug}
+            filename={slug}
+            isCollapsed={isCollapsed}
+            sentence={restorationPotentialTreeMapSentence}
+            data={chartTreeData}
+            config={chartTreeConfig}
+            chartData={widgetDataTree}
+          />
+          {component}
+        </div>
+      </Widget>
+    </>
+
   );
 }
 
