@@ -118,6 +118,25 @@
       ]
     },
     {
+      "name": "Mangrove Investment Potential",
+      "slug": "mangrove_investment_potential",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
+        "ecosystem_services"
+      ],
+      "layersIds": [
+        "investment-potential"
+      ]
+    },
+    {
       "name": "Mangrove Protection",
       "slug": "mangrove_protection",
       "locationType": [
