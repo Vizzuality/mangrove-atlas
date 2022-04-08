@@ -224,6 +224,10 @@
       "id": "carbon"
     },
     {
+      "name": "Mangrove Investment Potential",
+      "id": "investment-potential"
+    },
+    {
       "name": "Mangrove change",
       "id": "net"
     },

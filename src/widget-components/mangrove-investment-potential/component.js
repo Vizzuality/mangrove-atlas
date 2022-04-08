@@ -3,25 +3,46 @@ import PropTypes from "prop-types";
 import ChartWidget from "components/chart-widget";
 import config from "./config";
 
-function MangroveInvestmentPotential({ data: rawData, slug, name, ...props }) {
+const rawData = [
+  {
+    id: "1",
+    date: "2016-06-25",
+    blue_carbon_rate: {
+      additional_invisible_blue_carbon: 58599882,
+      protected_area: 5996751,
+      invisible_blue_carbon: 36665682,
+      remaining_mangrove: 13668129,
+    },
+  },
+];
+function MangroveInvestmentPotential({
+  /*  data: rawData, */
+  currentLocation,
+  isCollapsed = true,
+  slug,
+  name,
+  addFilter,
+  ui: yearSelected,
+  setUi,
+  ...props
+}) {
   useEffect(() => {
     addFilter({
       filter: {
-        id: "Potential",
+        id: "investment-potential",
+        year: "2016",
       },
     });
   }, [addFilter]);
+
   if (!rawData) {
     return null;
   }
-  const { chartData, totalValues, chartConfig, downloadData } =
-    config.parse(rawData);
+  const { chartData, totalValues, chartConfig } = config.parse(rawData);
 
   if (!chartData || chartData.length <= 0) {
     return null;
   }
-
-  const { avobeGround, soils, totalBiomass } = totalValues;
 
   const location =
     currentLocation.location_type === "worldwide" ? (
@@ -32,8 +53,13 @@ function MangroveInvestmentPotential({ data: rawData, slug, name, ...props }) {
 
   const sentence = (
     <>
-      Blue Carbon Investment Potential Indonesia’s extent of investible blue
-      carbon (ha) is 325,400 (±21,100) (at $5/ton)
+      Blue Carbon Investment Potential
+      <strong>
+        &nbsp;{location}
+        {"'"}s&nbsp;
+      </strong>
+      extent of investible blue carbon (ha) is <strong>{totalValues} </strong>
+      (±21,100) (at $5/ton)
     </>
   );
 
@@ -45,10 +71,8 @@ function MangroveInvestmentPotential({ data: rawData, slug, name, ...props }) {
   return (
     <ChartWidget
       name={name}
-      data={chartData}
       slug={slug}
       filename={slug}
-      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
@@ -64,14 +88,21 @@ MangroveInvestmentPotential.propTypes = {
   isCollapsed: PropTypes.bool,
   slug: PropTypes.string,
   name: PropTypes.string,
+  metadata: PropTypes.shape({}),
+  ui: PropTypes.string,
+  setUi: PropTypes.func,
 };
 
 MangroveInvestmentPotential.defaultProps = {
   data: null,
   currentLocation: null,
+  addFilter: () => {},
   isCollapsed: false,
   slug: null,
   name: null,
+  metadata: null,
+  ui: null,
+  setUi: () => {},
 };
 
 export default MangroveInvestmentPotential;
