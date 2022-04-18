@@ -20,7 +20,7 @@
     "framer-motion": "^1.11.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.2",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.5.0",
     "react": "^16.8.6",
