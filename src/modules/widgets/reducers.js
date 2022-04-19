@@ -59,13 +59,13 @@ export default {
     ...state,
     list: state.list.map((item) => {
       if (item.slug !== payload.id) return item;
-      return ({ ...item, isActive: payload.isActive });
+      return ({ ...item, isActive: !payload.isActive });
     })
   }),
   [toggleActiveByLayerId]: (state, { payload }) => ({
     ...state,
     list: state.list.map((item) => {
-      if (!item.layersIds.includes(payload.layerId)) return item;
+      if (!item?.layersIds?.includes(payload.layerId)) return item;
       return ({ ...item, isActive: payload.isActive });
     })
   }),
