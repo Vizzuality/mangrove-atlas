@@ -12,7 +12,13 @@ import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
-const COLORS = ['#EEB66B', '#E68518', '#B84E17', '#933A06', '#5C4A3D'];
+const COLORS = {
+  '0--700': '#EEB66B',
+  '700--1400': '#E68518',
+  '1400--2100':'#B84E17',
+  '2100--2800': '#933A06',
+  '2800--3500': '#5C4A3D',
+};
 
 const getData = (data) => {
   if (!data || !data.length) return null;
@@ -21,7 +27,7 @@ const getData = (data) => {
   return Object.keys(dataFormatted).map((key, index) => ({
     label: key,
     value: dataFormatted[key],
-    color: COLORS[index],
+    color: COLORS[key],
     percentage: dataFormatted[key] / total * 100,
   }));
 };
