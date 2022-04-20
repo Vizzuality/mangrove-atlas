@@ -24,6 +24,7 @@ function MangroveInvestmentPotential({
   addFilter,
   ui: yearSelected,
   setUi,
+  fetchInvestmentPotentialData,
   ...props
 }) {
   useEffect(() => {
@@ -33,6 +34,7 @@ function MangroveInvestmentPotential({
         year: "2016",
       },
     });
+    fetchInvestmentPotentialData({ currentLocation });
   }, [addFilter]);
 
   if (!rawData) {

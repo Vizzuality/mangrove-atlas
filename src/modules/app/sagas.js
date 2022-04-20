@@ -1,14 +1,15 @@
-import { takeLatest, put, select } from 'redux-saga/effects';
-import { fetchLocations } from 'modules/locations/actions';
-import { fetchDashboards } from 'modules/dashboards/actions';
-import { fetchWidgets } from 'modules/widgets/actions';
-import { fetchLayers } from 'modules/layers/actions';
-import { fetchMapStyles } from 'modules/map-styles/actions';
-import { fetchLanguages } from 'modules/languages/actions';
-import { fetchMangroveData } from 'modules/mangrove-data/actions';
-import { fetchRankingData } from 'modules/ranking/actions';
-import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
-import { initializeApp } from './actions';
+import { takeLatest, put, select } from "redux-saga/effects";
+import { fetchLocations } from "modules/locations/actions";
+import { fetchDashboards } from "modules/dashboards/actions";
+import { fetchWidgets } from "modules/widgets/actions";
+import { fetchLayers } from "modules/layers/actions";
+import { fetchMapStyles } from "modules/map-styles/actions";
+import { fetchLanguages } from "modules/languages/actions";
+import { fetchMangroveData } from "modules/mangrove-data/actions";
+import { fetchRankingData } from "modules/ranking/actions";
+import { fetchMangroveProtectionData } from "modules/mangrove-protection-data/actions";
+import { fetchInvestmentPotentialData } from "modules/mangrove-investment-data/actions";
+import { initializeApp } from "./actions";
 
 function* loadInitialData() {
   const {
@@ -20,7 +21,8 @@ function* loadInitialData() {
     languages,
     mangroveData,
     ranking,
-    mangroveProtectionData
+    mangroveProtectionData,
+    InvestmentPotentialData,
   } = yield select();
 
   if (!locations.list.length) yield put(fetchLocations());
@@ -30,6 +32,7 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
+  if (!!InvestmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
 }
