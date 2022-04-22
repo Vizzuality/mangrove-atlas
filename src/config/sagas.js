@@ -1,20 +1,21 @@
-import { all, fork } from 'redux-saga/effects';
+import { all, fork } from "redux-saga/effects";
 
-import queryState from 'utils/query-state';
+import queryState from "utils/query-state";
 
-import app from 'modules/app/sagas';
-import pages from 'modules/pages/sagas';
-import map from 'modules/map/sagas';
-import mapStyles from 'modules/map-styles/sagas';
-import layers from 'modules/layers/sagas';
-import widgets from 'modules/widgets/sagas';
-import locations from 'modules/locations/sagas';
-import dashboards from 'modules/dashboards/sagas';
-import languages from 'modules/languages/sagas';
-import mangroveData from 'modules/mangrove-data/sagas';
-import ranking from 'modules/ranking/sagas';
-import mangroveProtectionData from 'modules/mangrove-protection-data/sagas';
-import alerts from 'modules/alerts/sagas';
+import app from "modules/app/sagas";
+import pages from "modules/pages/sagas";
+import map from "modules/map/sagas";
+import mapStyles from "modules/map-styles/sagas";
+import layers from "modules/layers/sagas";
+import widgets from "modules/widgets/sagas";
+import locations from "modules/locations/sagas";
+import dashboards from "modules/dashboards/sagas";
+import languages from "modules/languages/sagas";
+import mangroveData from "modules/mangrove-data/sagas";
+import ranking from "modules/ranking/sagas";
+import mangroveProtectionData from "modules/mangrove-protection-data/sagas";
+import mangroveInvestmentPotential from "modules/mangrove-investment-data/sagas";
+import alerts from "modules/alerts/sagas";
 
 export default function* root() {
   yield all([
@@ -31,6 +32,7 @@ export default function* root() {
     fork(mangroveData),
     fork(ranking),
     fork(mangroveProtectionData),
-    fork(alerts)
+    fork(mangroveInvestmentPotential),
+    fork(alerts),
   ]);
 }

@@ -22,7 +22,7 @@ function* loadInitialData() {
     mangroveData,
     ranking,
     mangroveProtectionData,
-    InvestmentPotentialData,
+    investmentPotentialData,
   } = yield select();
 
   if (!locations.list.length) yield put(fetchLocations());
@@ -32,8 +32,8 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
-  if (!!InvestmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!ranking.data.length) yield put(fetchRankingData());
+  if (!!investmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
 }
 
