@@ -31,16 +31,10 @@ const MangroveAlerts = ({
 
         // Find by location_id
         if (!location) {
-          location = locationsList.find(l => (l.location_id === currentLocation.id));
+          location = locationsList.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
         }
-
-        // Find by id
-        if (!location) {
-          location = locationsList.find(l => (l.id === Number(currentLocation.id)));
-        }
-
         // eslint-disable-next-line camelcase
-        const { id: location_id } = location;
+        const { location_id } = location;
         fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
       }
     }
