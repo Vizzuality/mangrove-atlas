@@ -61,27 +61,27 @@ class APIService {
       const filteredData = data.data.filter((d) => d.year === year);
 
       if (status >= 400) throw new Error(statusText);
-      return filteredData[0];
-      /*   ({
-        "data": {
-          "location_id": 1136,
-          "total": 45,
-          "endemic": 6,
-          "threatened": 1,
-          "categories": {
-            "cr": 5,
-            "en": 1,
-            "vu": 1,
-            "nt": 4,
-            "lc": 5,
-            "dd": 31,
-          }
+      return;
+      ({
+        data: {
+          location_id: 1136,
+          total: 45,
+          endemic: 6,
+          threatened: 1,
+          categories: {
+            cr: 5,
+            en: 1,
+            vu: 1,
+            nt: 4,
+            lc: 5,
+            dd: 31,
+          },
         },
-        "metadata": {
-          "unit": null,
-          "note": ''
-        }})  */
-      // ||
+        metadata: {
+          unit: null,
+          note: "",
+        },
+      } || filteredData[0]);
     });
   };
 
