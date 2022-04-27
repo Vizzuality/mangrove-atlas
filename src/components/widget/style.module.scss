@@ -69,7 +69,12 @@
 
      @media print {
       max-height: fit-content;
+      margin-bottom: 30px;
 
+      &:last-of-type:not(:last-child) {
+        margin-top: 70px;
+        margin-bottom: 0px;
+      }
       .content {
         max-height: fit-content;
         opacity: 1;
@@ -151,7 +156,7 @@
   
   .widget {
     max-width: 350px;
-    height: 450px;
+    height: 440px;
     box-shadow: none;
     border: 2px solid rgba($primary, 0.35);
     border-radius: $border-radius;
@@ -161,7 +166,9 @@
     &._layerActive::before {
       border: 0 solid rgba($primary, 0.35);
     }
-  
+    &:last-of-type:not(:last-child) {
+      height: 600px;
+    }
   }
   
 
