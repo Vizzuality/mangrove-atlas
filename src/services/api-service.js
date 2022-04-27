@@ -53,6 +53,26 @@ class APIService {
   };
 
   fetchMangroveSpeciesData = (params = {}) => {
+    const tempData = {
+      data: {
+        location_id: 1136,
+        total: 45,
+        endemic: 6,
+        threatened: 1,
+        categories: {
+          cr: 5,
+          en: 1,
+          vu: 1,
+          nt: 4,
+          lc: 5,
+          dd: 31,
+        },
+      },
+      metadata: {
+        unit: null,
+        note: "",
+      },
+    };
     const { locationId = "1_2_74", year = 2016 } = params;
 
     return this.client.get(`v2/widgets/biodiversity`).then((response) => {
@@ -61,27 +81,7 @@ class APIService {
       const filteredData = data.data.filter((d) => d.year === year);
 
       if (status >= 400) throw new Error(statusText);
-      return;
-      filteredData[0] || {
-        data: {
-          location_id: 1136,
-          total: 45,
-          endemic: 6,
-          threatened: 1,
-          categories: {
-            cr: 5,
-            en: 1,
-            vu: 1,
-            nt: 4,
-            lc: 5,
-            dd: 31,
-          },
-        },
-        metadata: {
-          unit: null,
-          note: "",
-        },
-      };
+      return filteredData[0] || tempData;
     });
   };
 
