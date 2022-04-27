@@ -15,7 +15,7 @@ class APIService {
   }
 
   fetchLocations = (params = {}) =>
-    this.client.get("/v2//locations", { params }).then((response) => {
+    this.client.get("/v2/locations", { params }).then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -62,7 +62,7 @@ class APIService {
 
       if (status >= 400) throw new Error(statusText);
       return;
-      ({
+      filteredData[0] || {
         data: {
           location_id: 1136,
           total: 45,
@@ -81,7 +81,7 @@ class APIService {
           unit: null,
           note: "",
         },
-      } || filteredData[0]);
+      };
     });
   };
 
