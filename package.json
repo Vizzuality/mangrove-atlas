@@ -32,7 +32,7 @@
     "react-map-gl": "^5.0.3",
     "react-modal": "^3.9.1",
     "react-on-scroll": "^0.2.2",
-    "react-redux": "^7.0.3",
+    "react-redux": "^8.0.1",
     "react-responsive": "^7.0.0",
     "react-scripts": "3.0.1",
     "react-select": "^3.0.4",
