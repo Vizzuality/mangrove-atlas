@@ -13,7 +13,7 @@ const cache = {};
 const getLocation = async (locationId) => {
   if (!locationId) return null;
   console.log('Getting geometry from locations API');
-  const response = await axios.get(`https://mangrove-atlas-api-staging.herokuapp.com/api/locations/${locationId}`, { httpAgent, httpsAgent});
+  const response = await axios.get(`https://mangrove-atlas-api.herokuapp.com/api/v2/locations/${locationId}`, { httpAgent, httpsAgent});
   if (response && response.data) return response.data.data;
   return null;
 };
