@@ -22,7 +22,9 @@ const startDateAlerts = state => state.widgets.ui.alerts.startDate;
 const endDateAlerts = state => state.widgets.ui.alerts.endDate;
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
+  
 );
+
 const ALERTS_URL_TEMPLATE = 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{startDate}}{{endDate}}{{locationId}}';
 const getAlertsUrl = template(ALERTS_URL_TEMPLATE, {
   interpolate: /{{([\s\S]+?)}}/g,
@@ -149,7 +151,7 @@ export const mapStyle = createSelector(
     // Getting location
     let currentLocation = _locations.find(l => (l.iso === _locationId && l.location_type === 'country'));
     if (!currentLocation) {
-      currentLocation = _locations.find(l => (l.id === _locationId));
+      currentLocation = _locations.find(l => (l.location_id === _locationId));
     }
 
     // GEN ALERTS URL TEMPLATE
