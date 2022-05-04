@@ -1,0 +1,12 @@
+version: '3'
+services:
+  upload_alerts:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # command: ogr2ogr -f "geojson" /home/data/results.json /home/data/vecs/LC08_L1TP_162068_20200210_20200224_01_T1_495_chng_vec.gpkg
+    # command: ogrmerge.py -overwrite_ds -single -progress -f geojson -o /home/data/results.json /home/data/vecs/*.gpkg
+    # command: ogrmerge.py -overwrite_ds -progress -f geojson -o /home/data/results.json /vsigs/mangrove_atlas/deforestation-alerts/africa/vecs/*.gpkg
+    # command: ogr2ogr -f "geojson" /home/data/results.json /vsigs/mangrove_atlas/deforestation-alerts/africa/vecs/LC08_L1TP_162068_20200210_20200224_01_T1_495_chng_vec.gpkg
+    volumes:
+      - './data:/home/data'
