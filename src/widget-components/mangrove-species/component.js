@@ -4,7 +4,7 @@ import ChartWidget from 'components/chart-widget';
 import config from './config';
 
 function MangroveSpecies({
-  data: data,
+  data,
   currentLocation,
   isCollapsed = true,
   slug,
@@ -21,8 +21,9 @@ function MangroveSpecies({
         id: 'species',
       }
     });
-    fetchMangroveSpeciesData()
-  }, [addFilter]);
+    const { location_id } = currentLocation;
+    fetchMangroveSpeciesData({ location_id })
+  }, [addFilter, currentLocation]);
   if (!data) {
     return null;
   }

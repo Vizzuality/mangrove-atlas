@@ -3,7 +3,7 @@ import axios from "axios";
 class APIService {
   constructor() {
     this.client = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL}/api/v1`,
+      baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { "Content-Type": "application/json" },
     });
 
@@ -43,7 +43,7 @@ class APIService {
     } = params;
     return this.client
       .get(
-        `/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
+        `/v2/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
       )
       .then((response) => {
         const { status, statusText, data } = response;
@@ -72,15 +72,14 @@ class APIService {
   fetchMangroveSpeciesData = (params = {}) => {
     const { id: location_id } = params;
 
-    return this.client.get(`v2/widgets/biodiversity?locatio_id=${location_id}`).then((response) => {
+    return this.clientStaging
+    .get(`/widgets/biodiversity?location_id=${location_id}`)
+    .then((response) => {
       const { status, statusText, data } = response;
-
-      const filteredData = data.data.filter((d) => d.year === year);
-
       if (status >= 400) throw new Error(statusText);
-      return filteredData[0] || tempData;
+      return data;
     });
-  };
+ };
 
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = "1_2_74", year = 2016 } = params;
