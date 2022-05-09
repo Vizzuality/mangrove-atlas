@@ -43,7 +43,7 @@ class APIService {
     } = params;
     return this.client
       .get(
-        `/v2/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
+        `/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
       )
       .then((response) => {
         const { status, statusText, data } = response;

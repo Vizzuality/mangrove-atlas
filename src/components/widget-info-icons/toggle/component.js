@@ -7,15 +7,15 @@ const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive, toggleCollap
 
 const handleChange = () =>  {
   if (layersIds) {
-    layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive }));
+    layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive: !isActive }));
   } else {
-    toggleActive({ id: slug, layerId, isActive });
+    toggleActive({ id: slug, layerId, isActive: !isActive });
   }
   toggleCollapse({ id: slug });
 };
 
   return (
-    <input type="checkbox" class={styles.checkbox} onChange={handleChange} checked={isActive} />
+    <input type="checkbox" class={styles.checkbox} onChange={handleChange} checked={!!isActive} />
   );
 };
 
