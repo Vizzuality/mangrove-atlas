@@ -1,22 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
 class APIService {
   constructor() {
     this.client = axios.create({
       baseURL: `${process.env.REACT_APP_API_URL}/api/v1`,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
 
     // staging
     this.clientStaging = axios.create({
       baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api/v2`,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { "Content-Type": "application/json" },
     });
   }
 
-  fetchLocations = (params = {}) => this.client
-    .get('/v2/locations', { params })
-    .then((response) => {
+  fetchLocations = (params = {}) =>
+    this.client.get("/v2/locations", { params }).then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -24,7 +23,7 @@ class APIService {
 
   fetchMangroveData = (params = {}) => {
     const { id, iso } = params;
-    const locationParam = id || iso || 'worldwide';
+    const locationParam = id || iso || "worldwide";
 
     return this.client
       .get(`/v1/locations/${locationParam}/mangrove_data`)
@@ -33,18 +32,25 @@ class APIService {
         if (status >= 400) throw new Error(statusText);
         return data;
       });
-  }
+  };
 
   fetchRankingData = (params = {}) => {
-    const { filter = 'gain', startDate = '2007', endDate = '2016', limit = 5 } = params;
+    const {
+      filter = "gain",
+      startDate = "2007",
+      endDate = "2016",
+      limit = 5,
+    } = params;
     return this.client
-      .get(`/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`)
+      .get(
+        `/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
+      )
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);
         return data;
       });
-  }
+  };
 
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = '1_2_74', year = 2016 } = params;
@@ -64,40 +70,34 @@ class APIService {
   };
   
   fetchMangroveSpeciesData = (params = {}) => {
-    const { locationId = '1_2_74', year = 2016 } = params;
+    const { id: location_id } = params;
 
-    // return this.client
-    // .get(`/v2/widgets/species?&location_id=${locationId}&dir=desc`)
-    // .then((response) => {
-    //   const { status, statusText,
-    //     data
-    //   } = response;
+    return this.client.get(`v2/widgets/biodiversity?locatio_id=${location_id}`).then((response) => {
+      const { status, statusText, data } = response;
 
-    //   const filteredData = data.data.filter(d => d.year === year);
+      const filteredData = data.data.filter((d) => d.year === year);
 
-    //   if (status >= 400) throw new Error(statusText);
-      return ({
-        "data": {
-          "location_id": 1136,
-          "total": 45,
-          "endemic": 6,
-          "threatened": 1,
-          "categories": {
-            "cr": 5,
-            "en": 1,
-            "vu": 1,
-            "nt": 4,
-            "lc": 5,
-            "dd": 31,
-          }
-        },
-        "metadata": {
-          "unit": null,
-          "note": ''
-        }}) 
-        // || filteredData[0];
-  //   });
-  }
+      if (status >= 400) throw new Error(statusText);
+      return filteredData[0] || tempData;
+    });
+  };
+
+  fetchMangroveProtectionData = (params = {}) => {
+    const { locationId = "1_2_74", year = 2016 } = params;
+    return (
+      this.client
+        // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
+        .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
+        .then((response) => {
+          const { status, statusText, data } = response;
+
+          const filteredData = data.data.filter((d) => d.year === year);
+
+          if (status >= 400) throw new Error(statusText);
+          return filteredData[0];
+        })
+    );
+  };
 }
 
 export default APIService;
