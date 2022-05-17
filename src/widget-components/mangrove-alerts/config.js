@@ -173,10 +173,8 @@ export const CONFIG = {
     const endDateOptions = getEndDates(data);
     const start = startDate.value || startDateOptions[0].value;
     const end = endDate.value || endDateOptions[endDateOptions.length - 1].value;
-    const startIndex = chartData
-      .findIndex(d => d.startDate === start);
-    const endIndex = chartData
-      .findIndex(d => d.endDate === end);
+    const startIndex = chartData.findIndex(d => d.startDate === start);
+    const endIndex = chartData.findIndex(d => d.endDate === end);
     const monthsOptions = getDates(data, year);
     const dateOptions = getDates(data);
 
