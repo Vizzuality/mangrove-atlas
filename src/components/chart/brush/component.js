@@ -39,6 +39,7 @@ class SVGBrush extends PureComponent {
       props.selection === undefined ? state.selection : props.selection,
   });
 
+
   constructor(props) {
     super(props);
     this.state = {
@@ -104,7 +105,6 @@ class SVGBrush extends PureComponent {
       ...(!animate && { type: 'tween', duration: 0 }),
       ...(animate && { type: 'spring', damping: 30, mass: 0.5 }),
     };
-
     const [[x0, y0], [x1, y1]] = selection;
     const [x, y, w, h] = [x0, y0, x1 - x0, y1 - y0];
     const xbf = (x) => Math.min(Math.max(x, ex0), ex1);
