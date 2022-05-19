@@ -13,7 +13,9 @@ import { RED_LIST_CATEGORIES } from './constants';
 const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF',];
 
 const getData = (data) => {
-  const { list: { categories, total } } = data;
+  const { list } = data;
+  const categories = list?.categories;
+  const total = list?.total;
 
   if (!categories || Object.keys(categories).length === 0) return null;
   return Object.entries(categories).map((item, index) => ({
@@ -28,7 +30,6 @@ export const CONFIG = {
   parse: (data) => {
     return {
       chartData: getData(data),
-
       chartConfig: {
         type: 'pie',
         layout: 'centric',
