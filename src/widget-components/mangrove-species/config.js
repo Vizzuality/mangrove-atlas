@@ -77,7 +77,7 @@ export const CONFIG = {
                   {
                     key: 'label',
                     color: 'color',
-                    description: 'Camptostemon philippinense Heritiera globosa(endemic)',
+                    description: `Number of species: ${payload[0]?.payload.value}`, //'Camptostemon philippinense Heritiera globosa (endemic)',
                     position: '_row',
                     type: 'species',
                   },

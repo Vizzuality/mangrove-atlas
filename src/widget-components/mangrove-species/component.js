@@ -37,7 +37,7 @@ function MangroveSpecies({
   }
 
   const location = (currentLocation.location_type === 'worldwide')
-    ? 'the world'
+    ? 'The world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
   const article = total > 1 ? 'are' : 'is';
