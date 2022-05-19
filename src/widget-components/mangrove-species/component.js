@@ -24,29 +24,24 @@ function MangroveSpecies({
     const { location_id } = currentLocation;
     fetchMangroveSpeciesData({ location_id })
   }, [addFilter, currentLocation]);
-  if (!data) {
-    return null;
-  }
 
-  const { list: { endemic, threatened, total } } = data;
+  const { list } = data;
 
+  const threatened = list?.threatened;
+  const total = list?.total;
+  
   const { chartData, chartConfig } = config.parse(data);
-
-  if (!chartData || chartData.length <= 0) {
-    return null;
-  }
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'The world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
-  const article = total > 1 ? 'are' : 'is';
-  const articleThreatened = threatened > 1 ? 'are' : 'is';
+  const article = threatened > 1 ? 'are' : 'is';
 
   const sentence = (
     <>
       <strong>{location} </strong>has <strong>{total}</strong> species of mangroves.
-      Of them, <strong>{endemic}</strong> {article}<strong> endemic</strong> and <strong>{threatened}</strong> {articleThreatened} considered
+      Of them, <strong>{threatened}</strong> {article} considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
   );
@@ -55,6 +50,10 @@ function MangroveSpecies({
     data: chartData,
     config: chartConfig
   };
+
+  if (!chartData || !chartData.length || !data) {
+    return null;
+  }
 
   return (
     <ChartWidget
