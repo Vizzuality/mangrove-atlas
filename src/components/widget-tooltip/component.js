@@ -24,6 +24,7 @@ function Tooltip({ payload, settings, style, hideZeros }) {
 
       {settings && settings.length && (
         <div className={styles.chart_tooltip} style={style}>
+
           {settings.map(
             d => (hideZeros && values[d.key] ? null : (
               (((d.label && d.labelKey) || !!d.key) || (values && !!d.key)) && <div

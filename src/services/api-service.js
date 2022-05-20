@@ -70,7 +70,6 @@ class APIService {
 
   fetchMangroveSpeciesData = (params = {}) => {
     const { id: location_id } = params;
-
     return this.clientStaging
       .get(`/widgets/biodiversity?location_id=${location_id}`)
       .then((response) => {
