@@ -3,49 +3,46 @@ import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import config from './config';
 
-function MangroveBlueCarbon({
-  data: rawData,
+function MangroveSpecies({
+  data,
   currentLocation,
   isCollapsed = true,
   slug,
   name,
   addFilter,
-  ui: yearSelected,
+  ui,
   setUi,
+  fetchMangroveSpeciesData,
   ...props
 }) {
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'carbon',
-        year: '2016'
+        id: 'species',
       }
     });
-  }, [addFilter]);
-  if (!rawData) {
-    return null;
-  }
+    const { location_id } = currentLocation;
+    fetchMangroveSpeciesData({ location_id })
+  }, [addFilter, currentLocation]);
 
-  const { chartData, totalValues, chartConfig, downloadData } = config.parse(rawData);
+  const { list } = data;
 
-  if (!chartData || chartData.length <= 0) {
-    return null;
-  }
-
-  const { avobeGround, soils, totalBiomass } = totalValues;
+  const threatened = list?.threatened;
+  const total = list?.total;
+  
+  const { chartData, chartConfig } = config.parse(data);
 
   const location = (currentLocation.location_type === 'worldwide')
-    ? 'the world'
+    ? 'The world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
+
+  const article = threatened > 1 ? 'are' : 'is';
 
   const sentence = (
     <>
-      Total organic carbon stored in
-      <strong>&nbsp;{location}{"'"}s&nbsp;</strong>
-      mangroves is estimated at
-      &nbsp;<strong>{totalBiomass}</strong> Mt CO₂e
-      with <strong>{avobeGround}</strong> Mt CO₂e stored in above-ground biomass and
-      &nbsp;<strong>{soils}</strong> Mt CO₂e stored in the upper 1m of soil.
+      <strong>{location} </strong>has <strong>{total}</strong> species of mangroves.
+      Of them, <strong>{threatened}</strong> {article} considered
+      <strong> threatened</strong> by the IUCN Red List.
     </>
   );
 
@@ -54,13 +51,16 @@ function MangroveBlueCarbon({
     config: chartConfig
   };
 
+  if (!chartData || !chartData.length || !data) {
+    return null;
+  }
+
   return (
     <ChartWidget
       name={name}
       data={chartData}
       slug={slug}
       filename={slug}
-      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
@@ -69,7 +69,7 @@ function MangroveBlueCarbon({
   );
 }
 
-MangroveBlueCarbon.propTypes = {
+MangroveSpecies.propTypes = {
   data: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -81,7 +81,7 @@ MangroveBlueCarbon.propTypes = {
   setUi: PropTypes.func
 };
 
-MangroveBlueCarbon.defaultProps = {
+MangroveSpecies.defaultProps = {
   data: null,
   currentLocation: null,
   addFilter: () => { },
@@ -93,4 +93,4 @@ MangroveBlueCarbon.defaultProps = {
   setUi: () => { }
 };
 
-export default MangroveBlueCarbon;
+export default MangroveSpecies;
