@@ -4,17 +4,17 @@ import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
 
 const service = new APIService();
 
-function* getMangroveData({ payload }) {
+function* getMangroveSpeciesData({ payload }) {
   yield put(fetchRequested());
   try {
-    const mangroveData = yield call(service.fetchMangroveData, payload);
+    const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, payload);
 
-    yield put(fetchSucceeded(mangroveData));
+    yield put(fetchSucceeded(mangroveSpeciesData));
   } catch (err) {
     yield put(fetchFailed(err));
   }
 }
 
-export default function* mangroveDataSagas() {
-  yield takeLatest('LOCATIONS/SET_CURRENT', getMangroveData);
+export default function* mangroveSpeciesDataSagas() {
+  yield takeLatest('LOCATIONS/SET_CURRENT', getMangroveSpeciesData);
 }

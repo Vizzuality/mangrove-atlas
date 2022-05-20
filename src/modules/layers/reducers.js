@@ -28,7 +28,7 @@ export default {
     ...state,
     list: state.list.map((item) => {
       if (item.id !== payload.id) return item;
-      return ({ ...item, isActive: payload.isActive });
+      return ({ ...item, isActive: !item.isActive });
     })
   })
 };
