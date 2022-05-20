@@ -16,6 +16,7 @@ function ChartWidget({
   className,
   ...props
 }) {
+
   return (
     <Widget className={styles.widget} {...props}>
       <div className={styles.widget_template}>
