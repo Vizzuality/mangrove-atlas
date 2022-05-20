@@ -131,6 +131,19 @@
       ]
     },
     {
+      "name": "Mangrove Species",
+      "slug": "mangrove_species",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+      ]
+    },
+    {
       "name": "Mangrove height",
       "slug": "mangrove_height",
       "locationType": [
