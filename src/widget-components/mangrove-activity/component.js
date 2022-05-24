@@ -161,7 +161,6 @@ function MangroveActivity({
   };
 
   return (
-
     <ChartWidget
       name={name}
       data={sortedData}
