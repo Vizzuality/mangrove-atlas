@@ -6,6 +6,7 @@ import config from './config';
 function MangroveSpecies({
   data,
   currentLocation,
+  locationsList,
   isCollapsed = true,
   slug,
   name,
@@ -15,15 +16,32 @@ function MangroveSpecies({
   fetchMangroveSpeciesData,
   ...props
 }) {
+
+  useEffect(() => {
+    if (currentLocation && (currentLocation.id || currentLocation.location_id || currentLocation.iso)) {
+      if (currentLocation.id === 'worldwide') {
+        fetchMangroveSpeciesData();
+      } else {
+        let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
+
+        // Find by location_id
+        if (!location) {
+          location = locationsList.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
+        }
+        // eslint-disable-next-line camelcase
+        const { id } = location;
+        fetchMangroveSpeciesData(id);
+      }
+    }
+  }, [currentLocation]);
+
   useEffect(() => {
     addFilter({
       filter: {
         id: 'species',
       }
     });
-    const { location_id } = currentLocation;
-    fetchMangroveSpeciesData({ location_id })
-  }, [addFilter, currentLocation]);
+  }, [addFilter]);
 
   const { list } = data;
 
