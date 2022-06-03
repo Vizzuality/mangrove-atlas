@@ -8,7 +8,8 @@ import Component from './component';
 const mapStateToProps = state => ({
   isLoading: state.mangroveSpeciesData.isLoading,
   data: state.mangroveSpeciesData,
-  ui: state.widgets.ui.blue_carbon
+  ui: state.widgets.ui.blue_carbon,
+  locationsList: state.locations.list,
 });
 
 const mapDispatchToProps = {

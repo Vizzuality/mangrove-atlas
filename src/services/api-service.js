@@ -15,7 +15,7 @@ class APIService {
   }
 
   fetchLocations = (params = {}) =>
-    this.client.get("/v2/locations", { params }).then((response) => {
+    this.clientStaging.get("/locations", { params }).then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -52,32 +52,16 @@ class APIService {
       });
   };
 
-  fetchMangroveProtectionData = (params = {}) => {
-    const { locationId = '1_2_74', year = 2016 } = params;
-    return this.client
-      .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
-      .then((response) => {
-        const { status, statusText,
-          data
-        } = response;
-
-        const filteredData = data.data.filter(d => d.year === year);
-
-        if (status >= 400) throw new Error(statusText);
-        return filteredData[0];
-      });
-  };
-
-  fetchMangroveSpeciesData = (params = {}) => {
-    const { id: location_id } = params;
-    return this.clientStaging
-      .get(`/widgets/biodiversity?location_id=${location_id}`)
-      .then((response) => {
-        const { status, statusText, data } = response;
-        if (status >= 400) throw new Error(statusText);
-        return data;
-      });
-  };
+fetchMangroveSpeciesData = (locationId) => {
+  const params = !!locationId && `location_id=${locationId}`;
+  return this.clientStaging
+    .get(`/widgets/biodiversity`, { params })
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+};
 
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = "1_2_74", year = 2016 } = params;
