@@ -1,0 +1,28 @@
+{
+  "name": "mangrove-atlas-fetch-alerts",
+  "version": "1.0.0",
+  "description": "Data processing for the mangrove atlas project",
+  "main": "index.js",
+  "scripts": {
+    "start": "GOOGLE_APPLICATION_CREDENTIALS=\"./credentials.json\" functions-framework --target=fetchAlerts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vizzuality/mangrove-atlas-data.git"
+  },
+  "author": "Vizzuality",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vizzuality/mangrove-atlas-data/issues"
+  },
+  "homepage": "https://github.com/Vizzuality/mangrove-atlas-data#readme",
+  "dependencies": {
+    "@google-cloud/bigquery": "^5.0.0",
+    "axios": "^0.21.1",
+    "turf-reverse": "^1.0.0"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.6.0"
+  }
+}
