@@ -52,16 +52,13 @@ class APIService {
       });
   };
 
-fetchMangroveSpeciesData = (locationId) => {
-  const params = !!locationId && `location_id=${locationId}`;
-  return this.clientStaging
-    .get(`/widgets/biodiversity`, { params })
-    .then((response) => {
-      const { status, statusText, data } = response;
-      if (status >= 400) throw new Error(statusText);
-      return data;
-    });
-};
+fetchMangroveSpeciesData = (params = {}) => this.clientStaging
+  .get(`/widgets/biodiversity`, { params: { ...params } })
+  .then((response) => {
+    const { status, statusText, data } = response;
+    if (status >= 400) throw new Error(statusText);
+    return data;
+  });
 
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = "1_2_74", year = 2016 } = params;
@@ -69,6 +66,7 @@ fetchMangroveSpeciesData = (locationId) => {
       this.client
         // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
         .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
+
         .then((response) => {
           const { status, statusText, data } = response;
 

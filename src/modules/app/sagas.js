@@ -32,7 +32,7 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
-  if (!mangroveSpeciesData.list) yield put(fetchMangroveSpeciesData());
+  if (!mangroveSpeciesData) yield put(fetchMangroveSpeciesData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
 }
