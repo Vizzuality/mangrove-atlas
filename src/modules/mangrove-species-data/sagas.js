@@ -9,7 +9,7 @@ function* getMangroveSpeciesData({ payload }) {
 
   yield put(fetchRequested());
   try {
-    const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, id);
+    const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, { location_id: id });
 
     yield put(fetchSucceeded(mangroveSpeciesData));
   } catch (err) {
