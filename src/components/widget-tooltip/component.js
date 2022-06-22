@@ -50,7 +50,6 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                     )}
                   </div>
                 )}
-                <div styles={{ backgroundColor: 'red', width: '10px', height: '14px' }} />
 
                 {values && !!d.key && (
                   <div className={cx({
@@ -65,6 +64,7 @@ function Tooltip({ payload, settings, style, hideZeros, offset }) {
                     {getValue(d, values[d.key])}
                   </div>
                 )}
+                
                 {d.type === 'species' && (
                   <p className={styles.description_label}>{d.description}</p>
                 )}
