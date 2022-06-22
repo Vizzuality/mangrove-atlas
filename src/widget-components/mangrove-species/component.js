@@ -30,10 +30,11 @@ function MangroveSpecies({
         }
         // eslint-disable-next-line camelcase
         const { id } = location;
-        fetchMangroveSpeciesData(id);
+
+        fetchMangroveSpeciesData({ location_id: id });
       }
     }
-  }, [currentLocation]);
+  }, [currentLocation, locationsList, fetchMangroveSpeciesData]);
 
   useEffect(() => {
     addFilter({

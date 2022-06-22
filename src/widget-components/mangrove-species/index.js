@@ -7,7 +7,7 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveSpeciesData.isLoading,
-  data: state.mangroveSpeciesData,
+  data: state.mangroveSpeciesData.data,
   ui: state.widgets.ui.blue_carbon,
   locationsList: state.locations.list,
 });
