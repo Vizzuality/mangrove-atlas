@@ -74,10 +74,13 @@ RUN jupyter contrib nbextension install --sys-prefix && \
 
 FROM stage_2 AS stage_3
 
+WORKDIR "/home/jovyan/"
 # Add requirements file
 COPY jupyter_notebook_config.py /etc/jupyter/
+COPY jupyter_server_config.py .jupyter/jupyter_server_config.py
 COPY requirements.txt /app/
 RUN pip install wheel -r /app/requirements.txt
 RUN mkdir /opt/app
 # Jupyter with Docker Compose
+
 EXPOSE 8888
