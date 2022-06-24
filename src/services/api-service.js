@@ -66,7 +66,6 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       this.client
         // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
         .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
-
         .then((response) => {
           const { status, statusText, data } = response;
 
@@ -76,6 +75,15 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
           return filteredData[0];
         })
     );
+  };
+
+  fetchInvestmentPotentialData = async (params = {}) => {
+    const response = await this.clientStaging.get(
+      '/widgets/blue-carbon-investment', { params:  { ...params } }
+    );
+    const { status, statusText, data } = response;
+    if (status >= 400) throw new Error(statusText);
+    return data;
   };
 }
 
