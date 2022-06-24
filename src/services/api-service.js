@@ -14,8 +14,9 @@ class APIService {
     });
   }
 
-  fetchLocations = (params = {}) =>
-    this.clientStaging.get("/locations", { params }).then((response) => {
+  fetchLocations = (params = {}) => this.clientStaging
+    .get('/locations', { params })
+    .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -60,22 +61,14 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
     return data;
   });
 
-  fetchMangroveProtectionData = (params = {}) => {
-    const { locationId = "1_2_74", year = 2016 } = params;
-    return (
-      this.client
-        // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
-        .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
-        .then((response) => {
-          const { status, statusText, data } = response;
+  fetchMangroveProtectionData = (params = {}) => this.clientStaging
+    .get('/widgets/protected-areas', { params: { ...params }})
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    })
 
-          const filteredData = data.data.filter((d) => d.year === year);
-
-          if (status >= 400) throw new Error(statusText);
-          return filteredData[0];
-        })
-    );
-  };
 
   fetchInvestmentPotentialData = async (params = {}) => {
     const response = await this.clientStaging.get(
@@ -85,6 +78,26 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
     if (status >= 400) throw new Error(statusText);
     return data;
   };
-}
+
+  fetchMangroveRestorationData = (params = {}) => this.clientStaging
+    .get('/widgets/restoration-potential', {  params: {  dir: 'desc', ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+
+  fetchMangroveDegradationAndLossData = (params = {}) => this.clientStaging
+    .get('/widgets/degradation-and-loss', { params: { ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+  } 
 
 export default APIService;
