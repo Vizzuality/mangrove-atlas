@@ -67,14 +67,8 @@ const getChartValueData = (data, year) => {
 };
 
 const CustomizedContent = (props) => {
-  const { depth, x, y, width, height, data, indicator } = props;
+  const { depth, x, y, width, height, data, color } = props;
   if (!data) return null;
-  const indicators = data?.map((d) => d.indicator);
-  const colorsScale = chroma.scale(["#7996F3", "#EB6240", "#A6CB10"]).colors(indicators.length);
-  const colors = indicators.reduce((acc, indicator, index) => ({
-    ...acc,
-    [indicator]: colorsScale[index],
-  }), {});
 
   return (
     <g>
@@ -86,7 +80,7 @@ const CustomizedContent = (props) => {
         style={{
           fill:
             depth < 2
-              ? colors[indicator]
+              ? color
               : "none",
           stroke: "white",
           strokeWidth: 2 / (depth + 1e-10),
@@ -106,11 +100,25 @@ const getChartLineData = () => ([{
   "year": 2016
 }])
 
+const getDegradationAndLossData = (data) => {
+  const indicators = data?.map((d) => d.indicator);
+  const colorsScale = chroma.scale(["#7996F3", "#EB6240", "#A6CB10"]).colors(indicators.length);
+  const colors = indicators.reduce((acc, indicator, index) => ({
+    ...acc,
+    [indicator]: colorsScale[index],
+  }), {});
+  return data.map((d) => ({
+    ...d,
+    color: colors[d.indicator]
+  }))
+}
+
 export const CONFIG = {
-  parse: (data, degradationAndLossData, year, unitRestorationPotential) => {
+  parse: (data, degradationAndLossData, ecosystemServicesData, year, unitRestorationPotential) => {
     const chartLineData = getChartLineData();
     const chartRingData = getChartRingData(data, year);
     const chartValueData = getChartValueData(data, year);
+    const degradationAndLossDataWidthColors = getDegradationAndLossData(degradationAndLossData);
     return {
       chartLineData,
       chartRingData,
@@ -192,7 +200,7 @@ export const CONFIG = {
         width: 175,
         height: 175,    
         name: 'indicator',
-        data: degradationAndLossData,
+        data: degradationAndLossDataWidthColors,
         dataKey: "value",
         yKeys: { tree: true },
         tooltip: {
@@ -211,11 +219,11 @@ export const CONFIG = {
             />
           )
         },
-        content: <CustomizedContent data={degradationAndLossData} />,
-        legend: degradationAndLossData?.reduce((acc, indicator) => ({
+        content: <CustomizedContent data={degradationAndLossDataWidthColors} />,
+        legend: degradationAndLossDataWidthColors?.reduce((acc, indicator) => ({
           ...acc,
           [indicator.indicator]: [{
-            color: "#7996F3",
+            color: indicator.color,
             type: "rect",
             key: indicator.indicator,
             payload: { y: indicator.value },
