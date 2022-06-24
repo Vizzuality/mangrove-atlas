@@ -17,4 +17,5 @@ function* getMangroveData({ payload }) {
 
 export default function* mangroveDataSagas() {
   yield takeLatest('LOCATIONS/SET_CURRENT', getMangroveData);
+  yield takeLatest('LOCATIONS/SET_CURRENT_ID', getMangroveData);
 }
