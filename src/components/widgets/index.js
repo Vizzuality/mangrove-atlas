@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { addFilter, removeFilter } from 'modules/map-styles/actions';
-import { expandAll, collapseAll } from 'modules/widgets/actions';
-import { dashboardWidgets } from 'modules/widgets/selectors';
-import { currentLocation } from 'modules/locations/selectors';
+import { addFilter, removeFilter } from "modules/map-styles/actions";
+import { expandAll, collapseAll } from "modules/widgets/actions";
+import { dashboardWidgets } from "modules/widgets/selectors";
+import { currentLocation } from "modules/locations/selectors";
 
 import HighlightedPlaces from 'widget-components/highlighted-places';
 import MangroveCoverage from 'widget-components/mangrove-coverage';
@@ -17,8 +17,9 @@ import MangroveAlerts from 'widget-components/mangrove-alerts';
 import MangroveHeight from 'widget-components/mangrove-height';
 import MangroveBiomass from 'widget-components/mangrove-biomass';
 import ConservationHotspots from 'widget-components/conservation-hotspots';
+import MangroveInvestmentPotential from "widget-components/mangrove-investment-potential";
 
-import Component from './component';
+import Component from "./component";
 
 export const templates = new Map([
   ['highlighted-places', {
@@ -59,21 +60,27 @@ export const templates = new Map([
   }],
   ['conservation_hotspots', {
     component: ConservationHotspots
-  }]
+  }],
+  [
+    "mangrove_investment_potential",
+    {
+      component: MangroveInvestmentPotential,
+    },
+  ],
 ]);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   currentLocation: currentLocation(state),
   widgets: dashboardWidgets(state),
   templates,
-  isCollapsed: state.widgets.isCollapsed
+  isCollapsed: state.widgets.isCollapsed,
 });
 
 const mapDispatchToProps = {
   expandAll,
   collapseAll,
   addFilter,
-  removeFilter
+  removeFilter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

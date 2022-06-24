@@ -15,6 +15,7 @@ import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
 import * as mangroveSpeciesData from 'modules/mangrove-species-data';
+import * as investmentPotentialData from "modules/mangrove-investment-data";
 import * as ranking from 'modules/ranking';
 import * as alerts from 'modules/alerts';
 
@@ -33,6 +34,7 @@ const modules = [
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
+  { namespace: "investmentPotentialData", components: investmentPotentialData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: 'ranking', components: ranking },
   { namespace: 'alerts', components: alerts }
@@ -42,7 +44,7 @@ const {
   initialDispatch,
   reducer: routerReducer,
   middleware: routerMiddleware,
-  enhancer: routerEnhancer
+  enhancer: routerEnhancer,
 } = router;
 
 const sagaMiddleware = createSagaMiddleware();
@@ -50,9 +52,12 @@ const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
   router: routerReducer,
   ...modules.reduce(
-    (acc, module) => ({ ...acc, [module.namespace]: handleModule(module.components) }),
+    (acc, module) => ({
+      ...acc,
+      [module.namespace]: handleModule(module.components),
+    }),
     {}
-  )
+  ),
 });
 
 const middleware = applyMiddleware(routerMiddleware, sagaMiddleware);
