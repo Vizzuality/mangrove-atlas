@@ -81,23 +81,12 @@ function MangroveProtection({
     setUi({ id: 'protection', value: { year: current } });
   };
 
-  const changeUnit = (current) => {
-    addFilter({
-      filter: {
-        ...ui,
-        id: 'protection',
-        unit: current
-      }
-    });
-    setUi({ id: 'protection', value: { unit: current } });
-  };
-
   const optionsYears = sortBy(years.map(year => ({
     label: year.toString(),
     value: year
   })), ['value']);
 
-  const location = (currentLocation.location_type === 'worldwide')
+  const location = (currentLocation.location_type === 'worldwide' || currentLocation.id === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
