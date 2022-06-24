@@ -6,10 +6,10 @@ const service = new APIService();
 
 function* getMangroveSpeciesData({ payload }) {
   const { id } = payload;
-
+  const params = id === 1561 ? null : { location_id: id };
   yield put(fetchRequested());
   try {
-    const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, { location_id: id });
+    const mangroveSpeciesData = yield call(service.fetchMangroveSpeciesData, { ...params });
 
     yield put(fetchSucceeded(mangroveSpeciesData));
   } catch (err) {

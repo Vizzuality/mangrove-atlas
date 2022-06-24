@@ -33,6 +33,7 @@ function* loadInitialData() {
     mangroveDegradationAndLoss,
     mangroveEcosystemServicesData,
   } = yield select();
+
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.list.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());
@@ -40,7 +41,7 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
-  if (!mangroveSpeciesData) yield put(fetchMangroveSpeciesData());
+  if (!Object.entries(mangroveSpeciesData.data)) yield put(fetchMangroveSpeciesData());
   if (!investmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());

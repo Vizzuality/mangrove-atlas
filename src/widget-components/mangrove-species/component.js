@@ -18,8 +18,7 @@ function MangroveSpecies({
 }) {
 
   useEffect(() => {
-    if (currentLocation && (currentLocation.id || currentLocation.location_id || currentLocation.iso)) {
-      if (currentLocation.id === 'worldwide') {
+      if (currentLocation.id === 'worldwide' || currentLocation.location_type === 'worldwide') {
         fetchMangroveSpeciesData();
       } else {
         let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
@@ -33,7 +32,6 @@ function MangroveSpecies({
 
         fetchMangroveSpeciesData({ location_id: id });
       }
-    }
   }, [currentLocation, locationsList, fetchMangroveSpeciesData]);
 
   useEffect(() => {

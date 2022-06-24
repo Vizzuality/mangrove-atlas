@@ -54,7 +54,7 @@ class APIService {
   };
 
 fetchMangroveSpeciesData = (params = {}) => this.clientStaging
-  .get(`/widgets/biodiversity`, { params: { ...params } })
+  .get('/widgets/biodiversity', { params: { ...params } })
   .then((response) => {
     const { status, statusText, data } = response;
     if (status >= 400) throw new Error(statusText);
