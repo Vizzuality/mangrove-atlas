@@ -266,9 +266,9 @@ function MangroveRestoration({
               />
               </div>
           </div>
-        <hr className={widgetStyles.breakLine} />
+        {/* <hr className={widgetStyles.breakLine} /> */}
         </div>
-
+{/* 
         <div className={widgetStyles.restorationChartWrapper}>
         <div className={widgetStyles.subtitle}>mangrove restoration value</div>
           <div className={styles.sentence} key={Date.now()}>
@@ -286,7 +286,7 @@ function MangroveRestoration({
             chartData={widgetDataValue}
           />
 
-        </div>
+        </div> */}
       </Widget>
   );
 }
