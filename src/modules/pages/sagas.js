@@ -5,15 +5,30 @@ import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 /**
   * Set current location
   */
-function* setLocation({ payload: { iso, id } }) {
+function* setLocation({ payload }) {
+  const { iso, id } = payload;
   const targetLocation = iso || id || 'worldwide';
   const idKey = iso ? 'iso' : 'id';
   const { locations: { current } } = yield select();
+  const { locations, router: { type } } = yield select();
 
+  
+  const getLocationType = () => {
+    if (type === 'PAGE/APP') return 'worldwide' 
+    else if (type === 'PAGE/COUNTRY') return 'country';
+    else if (type === 'PAGE/AOI') return 'area-of-interest';
+    else if (type === 'PAGE/WDPA') return 'protected-area';
+    else return 'worldwide';
+  }
+
+  const locationType = getLocationType();
+  const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
+  const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos.find(location => location.location_type === locationType)?.id;
+  if (currentLocationId) yield put(setCurrentId({ id: currentLocationId }));
+    
   if (!current || current[idKey] !== targetLocation) {
-    yield put(setCurrent({ [idKey]: targetLocation }));
-    yield put(setCurrentId({ id }));
-    yield put(resetUi());
+      yield put(setCurrent({ [idKey]: targetLocation }));
+      yield put(resetUi());
   }
 
   // In case user sets location from widget modal
