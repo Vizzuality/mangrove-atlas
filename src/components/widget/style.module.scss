@@ -2,6 +2,7 @@
 
 .widget {
   width: 100%;
+  height: 100%;
   $padding: 0 40px 40px 40px;
   $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
@@ -9,10 +10,9 @@
   margin: 10px 0;
   border-radius: $border-radius;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-  background: linear-gradient(180deg, white, #d6d6d6);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.001) 90%, rgba(0, 0, 0, 0.09) 100%);
   background-color: white;
   background-repeat: no-repeat;
-  background-position: 0 700px;
 
   transition: all .5s ease;
   will-change: margin-bottom;
@@ -31,6 +31,10 @@
   &._collapsed {
     margin-bottom: -70px;
     background-position: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.1) 100%);
+    background-color: white;
+    background-repeat: no-repeat;
+    transition: all .5s ease;
 
     &:not(:first-of-type)  {
       margin-top: -3px;
@@ -43,16 +47,12 @@
 
     &:last-of-type:not(:last-child) {
 
-      background-position: 0 700px;
+      background-position: 0 90%;
 
       .content {
         max-height: 400px;
         background-position: auto;
         opacity: 1;
-
-        &._large {
-          max-height: 700px;
-        }
       }
 
       .title {
@@ -63,7 +63,7 @@
     }
 
     .widget_template {
-      overflow: hidden;
+      // overflow: hidden;
       padding-top: 50px;
     }
 
@@ -135,7 +135,6 @@
   .content {
     transition: max-height .5s ease-in-out;
     will-change: max-height;
-    max-height: 700px;
     overflow: visible;
   }
 }

@@ -1,7 +1,7 @@
 export default {
   isOpened: false,
   current: null,
-  currentId: null,
+  currentId: { id: null },
   list: [],
   metadata: null,
   isLoading: false,

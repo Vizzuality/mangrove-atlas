@@ -18,7 +18,6 @@ function getValue(item, value) {
 
 function Tooltip({ payload, settings, style, hideZeros }) {
   const values = payload && payload.length > 0 && payload[0].payload;
-
   return (
     <div>
 

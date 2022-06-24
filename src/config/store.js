@@ -16,6 +16,8 @@ import * as mangroveData from 'modules/mangrove-data';
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
 import * as mangroveSpeciesData from 'modules/mangrove-species-data';
 import * as investmentPotentialData from "modules/mangrove-investment-data";
+import * as mangroveRestorationData from 'modules/mangrove-restoration-data';
+import * as mangroveDegradationAndLossData from 'modules/mangrove-degradation-and-loss-data';
 import * as ranking from 'modules/ranking';
 import * as alerts from 'modules/alerts';
 
@@ -36,6 +38,8 @@ const modules = [
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
   { namespace: "investmentPotentialData", components: investmentPotentialData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
+  { namespace: 'mangroveRestorationData', components: mangroveRestorationData },
+  { namespace: 'mangroveDegradationAndLossData', components: mangroveDegradationAndLossData },
   { namespace: 'ranking', components: ranking },
   { namespace: 'alerts', components: alerts }
 ];

@@ -10,6 +10,8 @@ import { fetchMangroveSpeciesData } from 'modules/mangrove-species-data/actions'
 import { fetchRankingData } from 'modules/ranking/actions';
 import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
 import { fetchInvestmentPotentialData } from "modules/mangrove-investment-data/actions";
+import { fetchMangroveRestorationData } from 'modules/mangrove-restoration-data/actions';
+import { fetchMangroveDegradationAndLossData } from 'modules/mangrove-degradation-and-loss-data/actions';
 import { initializeApp } from './actions';
 
 
@@ -26,6 +28,8 @@ function* loadInitialData() {
     ranking,
     mangroveProtectionData,
     investmentPotentialData,
+    mangroveRestorationData,
+    mangroveDegradationAndLoss,
   } = yield select();
 
   if (!locations.list.length) yield put(fetchLocations());
@@ -39,6 +43,8 @@ function* loadInitialData() {
   if (!investmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
+  if (!!mangroveRestorationData) yield put(fetchMangroveRestorationData());
+  if (!mangroveDegradationAndLoss) yield put(fetchMangroveDegradationAndLossData());
 }
 
 export default function* app() {

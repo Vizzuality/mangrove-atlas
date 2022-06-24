@@ -8,6 +8,7 @@ import {
   Cell,
   Area,
   Pie,
+  Treemap,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -76,6 +77,8 @@ class Chart extends PureComponent {
     return max(maxValues);
   };
 
+
+
   render() {
     const {
       data,
@@ -114,10 +117,8 @@ class Chart extends PureComponent {
     } = content;
 
     clearStack();
-
     const { lines, bars, areas, pies, tree } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
-
     const RechartChart = rechartCharts.get(type);
 
     Object.entries(content).forEach((entry) => {
@@ -129,7 +130,7 @@ class Chart extends PureComponent {
 
     return (
       <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
-        <ResponsiveContainer width="100%" height={height}>
+        <ResponsiveContainer width="100%" height={tree ? 0 : height}>
           <RechartChart
             stackOffset={stackOffset}
             // height={height}
@@ -205,6 +206,7 @@ class Chart extends PureComponent {
                 {...xAxis}
               />
             )}
+
             {yAxis && (
               <YAxis
                 axisLine={false}
@@ -280,6 +282,8 @@ class Chart extends PureComponent {
               ))
             )}
 
+
+
             {layout === 'vertical' && xAxis && (
               <XAxis
                 tick={{ fontSize: 12 }}
@@ -310,7 +314,12 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
-
+        {tree && (
+          <Treemap
+            data={data}
+            {...config}
+          />
+        )}
 
         {brush && (
           <Brush

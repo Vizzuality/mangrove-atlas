@@ -13,7 +13,9 @@ const numberFormat = format(',.2f')
 
 function MangroveProtection({
   data,
+  metadata,
   currentLocation,
+  currentLocationId,
   isCollapsed = true,
   slug,
   name,
@@ -25,29 +27,41 @@ function MangroveProtection({
   ...props
 }) {
 
-  // TO DO - update when data is ready
-  // const { metadata: { units, years }, data: dataTotal } = data;
-  const years = useMemo(() => [2010], []);
-  const units = useMemo(() => ['ha', 'km²'], []);
+  const { year: years, units: unitMetadata } = metadata;
+  const unitArea = unitMetadata.total_area;
 
   useEffect(() => {
     addFilter({
       filter: {
         id: 'protection',
         year: years[years.length - 1],
-        unit: units[0],
+        unit: unitArea,
       }
     });
-    fetchMangroveProtectionData({ year })
-    setUi({ id: 'protection', value: { year: year || years[years.length - 1], unit: unit || units[0] }});
-  }, [addFilter, year, unit]);
-  if (!data) {
+
+    if (!currentLocationId || currentLocation.id === 'worldwide') {
+      fetchMangroveProtectionData();
+    } else {
+      fetchMangroveProtectionData({ location_id: currentLocationId });
+    }
+
+    setUi({
+      id: 'protection',
+      value: { year: year || years[years.length - 1], unit: unit || unitArea }
+    });
+    
+  }, [addFilter, currentLocationId]);
+
+  if (!data || !data.length || !year) {
     return null;
   }
-  const parsedData = unit === 'ha' ? data : ({
-    ...data,
-    total_area: data.total_area / 100,
-    protected_area: data.protected_area / 100,
+
+  const filteredData = data && data?.find((d) => d.year === year );
+
+  const parsedData = unit === 'ha' ? filteredData : ({
+    ...filteredData,
+    total_area: filteredData.total_area,
+    protected_area: filteredData.protected_area,
   });
 
   const { chartData, chartConfig } = config.parse(parsedData, unit);
@@ -83,11 +97,6 @@ function MangroveProtection({
     value: year
   })), ['value']);
 
-  const optionsUnits = sortBy(units.map(unit => ({
-    label: unit.toString(),
-    value: unit
-  })), ['value']);
-
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
@@ -107,16 +116,7 @@ function MangroveProtection({
     : optionsYears[0].label
   );
 
-  const displayUnit = (units.length > 1 ?
-    <Select
-      className="notranslate"
-      width="auto"
-      value={unit || units[0]}
-      options={optionsUnits}
-      onChange={changeUnit}
-    />
-    : units[0].label
-  );
+  const displayUnit = unit || unitArea;
 
   const sentence = (
     <>
