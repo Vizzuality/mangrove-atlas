@@ -16,6 +16,7 @@ const Legend = ({ title,
   groups,
   direction,
   variant,
+  classname,
   unit }) => {
   const orderedData = Object.keys(groups).sort((a, b) => {
     const i = a.split('--');
@@ -25,7 +26,10 @@ const Legend = ({ title,
   const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
 
   return (
-    <div className={classnames(styles.widget_legend, { [styles.vertical]: direction === 'vertical' })}>
+    <div className={classnames(styles.widget_legend, {
+        [styles.vertical]: direction === 'vertical',
+        [styles[classname]]: !!classname })}
+      >
       {title && <DangerousHTML html={title} className={styles.widget_legend_title} />}
       {data.map(g => (
         <div key={g} className={styles.widget_legend_group}>
@@ -46,6 +50,7 @@ const Legend = ({ title,
                       fill={item.color}
                     />
                   </svg>)}
+        
                 {widgetSpecific === 'activity' && (
                   <div
                     className={classnames(styles.item, styles[`_${type}`], styles[`_${item.value}`])}
@@ -58,7 +63,7 @@ const Legend = ({ title,
                   {!!item.payload && !!item.payload.y && type !== 'height'
                     && (
                       <span className={styles.item}>
-                        {`${numberFormat(item.payload.y)}  ${unit}`}
+                        {`${numberFormat(item.payload.y)} ${unit}`}
                       </span>
                     )
                   }

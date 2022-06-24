@@ -15,6 +15,8 @@ import mangroveData from 'modules/mangrove-data/sagas';
 import mangroveSpeciesData from 'modules/mangrove-species-data/sagas';
 import ranking from 'modules/ranking/sagas';
 import mangroveProtectionData from 'modules/mangrove-protection-data/sagas';
+import mangroveRestorationData from 'modules/mangrove-restoration-data/sagas';
+import mangroveDegradationAndLossData from 'modules/mangrove-degradation-and-loss-data/sagas';
 import alerts from 'modules/alerts/sagas';
 import mangroveInvestmentPotential from "modules/mangrove-investment-data/sagas";
 
@@ -36,5 +38,8 @@ export default function* root() {
     fork(mangroveProtectionData),
     fork(mangroveInvestmentPotential),
     fork(alerts),
+    fork(mangroveRestorationData),
+    fork(mangroveDegradationAndLossData),
+    fork(alerts)
   ]);
 }

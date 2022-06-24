@@ -17,7 +17,7 @@ function MangroveInvestmentPotential({
 }) {
 
   useEffect(() => {
-    const { id } = currentLocation;
+    const id = currentLocation?.id;
       if (id === 'worldwide') {
         fetchInvestmentPotentialData();
       }
@@ -43,13 +43,6 @@ function MangroveInvestmentPotential({
   if (!chartData || chartData.length <= 0) {
     return null;
   }
-
-  const location =
-    currentLocation.location_type === "worldwide" ? (
-      "the world"
-    ) : (
-      <span className="notranslate">{`${currentLocation.name}`}</span>
-    );
 
   const sentence = (
     <>
