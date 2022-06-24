@@ -29,9 +29,11 @@ function MangroveRestoration({
   ui: { restoration: uiRestoration },
   fetchMangroveRestorationData,
   fetchMangroveDegradationAndLossData,
+  fetchMangroveEcosystemServicesData,
   restorationData,
   restorationDataMetadata,
   degradationAndLossData,
+  ecosystemServicesData,
   isLoading,
   setUi,
   ui,
@@ -56,6 +58,11 @@ function MangroveRestoration({
   },[lineChartRef]);
 
   useEffect(() => {
+    if (!location_id) {
+      fetchMangroveRestorationData();
+      fetchMangroveDegradationAndLossData();
+      fetchMangroveEcosystemServicesData();
+    }
     if (!isLoading) {
       addFilter({
         filter: {
@@ -67,8 +74,17 @@ function MangroveRestoration({
       setUi({ id: "restoration", value: { year } });
       fetchMangroveRestorationData({ location_id, unit });
       fetchMangroveDegradationAndLossData({ location_id });
+      fetchMangroveEcosystemServicesData({ location_id });
     }
-  }, [addFilter, unit, year, location_id, fetchMangroveRestorationData]);
+  }, [
+    addFilter,
+    unit,
+    year,
+    location_id,
+    fetchMangroveRestorationData,
+    fetchMangroveDegradationAndLossData,
+    fetchMangroveEcosystemServicesData
+  ]);
 
   const {
     chartRingData,
@@ -76,7 +92,7 @@ function MangroveRestoration({
     chartRingConfig,
     chartValueConfig,
     chartTreeConfig,
-  } = config.parse(restorationData, degradationAndLossData, year, unitRestorationPotential);
+  } = config.parse(restorationData, degradationAndLossData, ecosystemServicesData, year, unitRestorationPotential);
 
   const changeYear = (current) => {
     addFilter({
@@ -253,7 +269,7 @@ function MangroveRestoration({
         <hr className={widgetStyles.breakLine} />
         </div>
 
-        {/* <div className={widgetStyles.restorationChartWrapper}>
+        <div className={widgetStyles.restorationChartWrapper}>
         <div className={widgetStyles.subtitle}>mangrove restoration value</div>
           <div className={styles.sentence} key={Date.now()}>
             {restorationPotentialValue}
@@ -270,7 +286,7 @@ function MangroveRestoration({
             chartData={widgetDataValue}
           />
 
-        </div> */}
+        </div>
       </Widget>
   );
 }
