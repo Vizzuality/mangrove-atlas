@@ -3,9 +3,11 @@ import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
 import config from './config';
+import { styles } from '../../components/select/style';
 
 const MangroveAlerts = ({
   data,
+  isLoading,
   isCollapsed = true,
   slug, name,
   addFilter,
@@ -38,17 +40,38 @@ const MangroveAlerts = ({
         fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
       }
     }
-  }, [year, currentLocation]);
+  }, [year, currentLocation, fetchAlerts]);
 
-  if (!data || data.data.length <= 0) {
-    return null;
-  }
   const {
     chartData, chartConfig, total, downloadData, startDateOptions, endDateOptions,
   } = config.parse(data, startDate, endDate, year);
+
+  useEffect(() => {
+    if (!!startDateOptions.length && !startDate.label) {
+      setUi({
+        id: 'alerts',
+        value: {
+          startDate: startDateOptions[0],
+        }
+      });
+    }
+  }, [startDateOptions, isLoading]);
+
+  useEffect(() => {
+    if (!!endDateOptions.length && !endDate.label) {
+      setUi({
+        id: 'alerts',
+        value: {
+          endDate: endDateOptions[endDateOptions.length - 1],
+        }
+      });
+    }
+  }, [endDateOptions, isLoading]);
+
   if (chartData.length <= 0) {
     return null;
   }
+
   const changeDate = (type, value) => {
     const yyyy = new Date(value).getFullYear();
     const mm = new Date(value).getMonth();
@@ -90,6 +113,8 @@ const MangroveAlerts = ({
       isOptionDisabled={option => option.value > endDate.value
         || option.value === startDate.value}
       onChange={value => changeDate('startDate', value)}
+      classNamePrefix="react-select"
+      className="alerts"
     />
   );
 
@@ -101,6 +126,7 @@ const MangroveAlerts = ({
       isOptionDisabled={option => option.value < startDate.value
         || option.value === endDate.value}
       onChange={value => changeDate('endDate', value)}
+      style={{ maxHeight: 200, fontSize: 12, minWidth: 200, backgroundColor: 'red' }}
     />
   );
   const sentence = (
@@ -126,11 +152,11 @@ const MangroveAlerts = ({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
-      onBrushEnd={({ startIndex, endIndex }) => {
-        changeDate('startDate', chartData[startIndex].startDate);
-        changeDate('endDate', chartData[endIndex].endDate);
-      }}
       {...props}
+      onBrushEnd={({ startIndex, endIndex }) => {
+        changeDate('startDate', chartData[startIndex].start);
+        changeDate('endDate', chartData[endIndex].end);
+      }}
     />
   );
 };

@@ -1,3 +1,4 @@
+import { alertsStartDate, alertsEndDate } from "./constants";
 export default {
   list: [],
   isLoading: false,
@@ -5,9 +6,9 @@ export default {
   isOpened: false,
   ui: {
     alerts: {
-      startDate: {},
-      endDate: {},
-      year: 2020
+      startDate: alertsStartDate,
+      endDate: alertsEndDate,
+      year: 2020,
     },
     protection: {
       year: null,
