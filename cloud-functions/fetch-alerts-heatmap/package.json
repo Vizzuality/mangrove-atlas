@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "GOOGLE_APPLICATION_CREDENTIALS=\"./credentials.json\" functions-framework --target=fetchAlertsHeatmap",
+    "watch": "GOOGLE_APPLICATION_CREDENTIALS=\"./credentials.json\" nodemon --watch ./ --exec npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,9 @@
   "dependencies": {
     "@google-cloud/bigquery": "^5.0.0",
     "axios": "^0.21.1",
-    "turf-reverse": "^1.0.0"
+    "turf-reverse": "^1.0.0",
+    "concurrently": "^7.2.2",
+    "nodemon": "^2.0.16"
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.6.0"

@@ -92,4 +92,5 @@ target/
 .tox
 
 ## Pandera hypotesis
-.hypothesis
+*.hypothesis
+*.ipynb_checkpoints

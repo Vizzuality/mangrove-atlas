@@ -6,12 +6,14 @@ Requirements:
 
 * Unix system with Bash or ZSH
 * Docker
+* Google Cloud SDK
 
 ## How to use
 
-### 0. You need access to Google Cloud Storage client's account.
+### 0. You need access to Google Cloud Storage client's account
 
-Download `credentials.json` and save to the rooth of the project.
+* Download `credentials.json` and save to the root of the project (`./credentials.json`).  
+* Authenticate the client with `gcloud auth activate-service-account --key-file=./credentials.json`.
 
 ### 1. Extract data from .gpkg files and join the result in a single file
 
@@ -47,22 +49,23 @@ It transform the data `./data/results.json.gz` into `edited.json` file. **This f
 ```
 sh ./start.sh prepare
 ```
+
 NOTE: This command takes long time depending on your machine. Be patient, in case of error it should throw an error and stop.
 
 ### 5. Upload data to BigQuery table
 
-It will upload to BigQuery table the file created by the command above.
+It will upload to BigQuery table the file created by the command above. In order to do so we need to first upload the file to Google Cloud Storage. And later from the Google Cloud Storage we can upload the file to BigQuery table.
 
-```
+```bash
 # TEMPORAL
-gsutil cp ./data/edited.json gs://mangrove_atlas/deforestation-alerts/africa/
+gsutil cp ./data/edited.json gs://mangrove_atlas/deforestation-alerts/202103-202112/edited.json
 
 bq load \
     --replace \
     --source_format=NEWLINE_DELIMITED_JSON \
     deforestation_alerts.alerts \
-    gs://mangrove_atlas/deforestation-alerts/africa/edited.json
-	./schema.json
+    gs://mangrove_atlas/deforestation-alerts/202103-202112/edited.json \
+ ./schema.json
 
 # TO-DO
 sh ./start.sh upload 
