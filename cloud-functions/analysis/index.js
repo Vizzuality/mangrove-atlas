@@ -3,6 +3,16 @@ const PRIVATE_KEY = require('./credentials.json');
 
 const arrSum = arr => arr.reduce((a, b) => a + b, 0);
 
+const validate = (req, res) => {
+  if (!req.body.data) {
+    return res.status(400).json({"error":"No data provided"});
+  }
+
+  if (!req.body.assetId || !req.body.geometry) {
+    return res.status(400).json({"error":"assetId and geometry are required"});
+  }
+}
+
 const serialize = (originalData) => {
   if (!originalData || !originalData.length) return null;
 
@@ -52,10 +62,12 @@ const calcHistogram = (assetId, geometry) => {
 };
 
 exports.analyse = (req, res) => {
-  const assetId = req.body.assetId;
-  const geometry = req.body.geometry;
 
   res.set('Access-Control-Allow-Origin', '*');
+
+  validate(req, res);
+  const assetId = req.body.assetId;
+  const geometry = req.body.geometry;
 
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
@@ -63,12 +75,6 @@ exports.analyse = (req, res) => {
     res.set('Access-Control-Allow-Headers', 'Content-Type');
     res.set('Access-Control-Max-Age', '3600');
     res.status(204).send('');
-  }
-
-  if (!assetId || !geometry) {
-    return res.json({
-      error: 'assetId and geometry are required'
-    });
   }
 
   ee.data.authenticateViaPrivateKey(PRIVATE_KEY, () => {
