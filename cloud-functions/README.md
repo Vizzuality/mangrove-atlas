@@ -31,6 +31,7 @@ curl -X GET -G \
 -d name=Mario \
 -d surname=Bros
 ```
+
 Example response:
 
 ``` json
@@ -61,7 +62,6 @@ curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/f
 -d surname=Bros
 ```
 
-
 ### Fetch alerts heatmap (Map visualization)
 
 1. Go to the folder `fetch-alerts-heatmap`
@@ -85,6 +85,7 @@ curl -X GET -G \
 -d name=Mario \
 -d surname=Bros
 ```
+
 Example response:
 
 ``` json
@@ -131,6 +132,7 @@ curl -X GET -G \
 -d name=Mario \
 -d surname=Bros
 ```
+
 Example response:
 
 ``` json
@@ -169,3 +171,7 @@ curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/f
 * Download `credentials.json` and save to the root of the cloud function (`./credentials.json`).
 * Put your `.gpkg` files in the folder `./data/vecs`.
 * Run `make upload` to run the full pipe to transform and upload the data to BigQuery.
+
+## Todo
+
+* Set up automatic deploymend from github actions from master: <https://cloud.google.com/blog/topics/developers-practitioners/deploying-serverless-platforms-github-actions>
