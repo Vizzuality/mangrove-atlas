@@ -45,7 +45,7 @@ const makeQuery = (location, startDate, endDate) => {
 /**
  * Data aggregated by month
  */
-const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2020-12-31') => {
+const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2023-12-31') => {
   // First try to get data from cache in order to reduce costs
   const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
@@ -66,6 +66,8 @@ const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2020-1
 
   // Wait for the query to finish
   const [rows] = await job.getQueryResults();
+  console.log(`Job ${job.id} Finished.`);
+
 
   // Store in cache
   cache[cacheKey] = rows;
@@ -77,7 +79,7 @@ exports.fetchAlerts = (req, res) => {
   // Get data and return a JSON
   async function fetch() {
     const result =  await alertsJob(req.query.location_id, req.query.start_date, req.query.end_date);
-    res.json(result);
+    res.status(200).json(result);
   }
 
   // Set CORS headers for preflight requests

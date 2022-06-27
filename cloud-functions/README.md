@@ -1,4 +1,4 @@
-# mangrove-atlas-data
+# mangrove-atlas-cloud-functions
 Data processing for the mangrove atlas project
 
 ## Cloud functions
@@ -7,7 +7,7 @@ Data processing for the mangrove atlas project
 
 ### Fetch alerts
 
-Go to thefolder `fetch-alerts` and run `npm run start`.
+Go to the folder `fetch-alerts` and run `npm install && npm run start`.
 
 By default the endpoint returns all data for all locations and aggregated by month.
 
@@ -15,4 +15,3 @@ Params:
 
 * `location_id=1`, location ID from Mangrove API. Optional.
 * `format=geojson`, to export a geojson, it includes an aggregation for location
-

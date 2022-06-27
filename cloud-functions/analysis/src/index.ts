@@ -1,0 +1,181 @@
+import{ Request, Response} from 'express';
+import  * as ee from '@google/earthengine'
+import * as PRIVATE_KEY from './credentials.json'
+
+interface AnalysisResponse {
+  rows: {
+    min: number,
+    max: number,
+    count: number,
+    percent: number
+  }[],
+  fields: {
+    min: { type: 'number' },
+    max: { type: 'number' },
+    count: { type: 'number' },
+    percent: { type: 'number' }
+  }
+  total_rows: number,
+  stats: {
+    min: number,
+    max: number,
+    mean: number,
+    stdev: number,
+    sum: number
+  }
+}
+
+interface FeatureCollection {
+  type: string,
+  features: {
+    type: string,
+    properties: {
+      name: string
+    },
+    geometry: {
+      type: string,
+      coordinates: number[]
+    }
+  }[]
+}
+
+interface AnalysisRequestBody {
+  geometry: FeatureCollection
+}
+
+enum Widgets {
+  alpha  = "a",
+  beta   = "b",
+  gamma  = "g"
+}
+interface AnalysisRequestParams {
+  widgets: Widgets[],
+}
+
+function isValidAnalysisRequestBody(obj: any): obj is AnalysisRequestBody {
+  return obj.geometry;
+}
+
+function isValidAnalysisRequestParams(obj: any): obj is AnalysisRequestParams {
+  return obj.widgets;
+}
+
+function validate(req: Request, res:  Response): {"status": Boolean, "res": Response} {
+  console.log(req.query)
+  if (!req.body || !req.query) {
+    return {"status": false, "res":  res.status(400).json({"error":"No data provided"})};
+  }
+
+  if (!isValidAnalysisRequestBody(req.body)) {
+    return {"status": false, "res":  res.status(400).json({"error":"geometry is required as part of the body"})};
+  }
+
+  if (!isValidAnalysisRequestParams(req.query)) {
+    return {"status": false, "res":  res.status(400).json({"error":"a valid widget param is required"})};
+  }
+
+  return {"status": true, "res": res};
+}
+
+function serialize(originalData: any): AnalysisResponse {
+  if (!originalData || !originalData.length) return null;
+
+  const props = originalData[0].properties;
+  const data = props.histogram;
+  const bucketWidth = data.bucketWidth;
+  const countSum = arrSum(data.histogram);
+
+  return {
+    rows: data.histogram.map((d, i) => ({
+      min: data.bucketMin + (bucketWidth * i),
+      max: data.bucketMin + (bucketWidth * (i + 1)),
+      count: d,
+      percent: d / countSum
+    })),
+    fields: {
+      min: { type: 'number' },
+      max: { type: 'number' },
+      count: { type: 'number' },
+      percent: { type: 'number' }
+    },
+    total_rows: data.histogram.length,
+    stats: {
+       min: props.min,
+      max: props.max,
+      mean: props.mean,
+      stdev: props.stdDev,
+      sum: props.sum
+    }
+  };
+};
+function arrSum(arr: []): number {
+  return arr.reduce((a, b) => a + b, 0)
+};
+
+const calcHistogram = (assetId, geometry) => {
+
+  const image = ee.Image(assetId);
+  const region =ee.FeatureCollection(geometry.features);
+  const reducers = ee.Reducer.histogram(20)
+      .combine(ee.Reducer.minMax(), '', true)
+      .combine(ee.Reducer.mean(),'', true )
+      .combine(ee.Reducer.stdDev(), '', true)
+      .combine(ee.Reducer.sum(), '', true);
+
+  const regReducer = {
+    collection: region,
+    reducer: reducers
+  };
+
+  return image.reduceRegions(regReducer).toList(10000);
+};
+
+export function analyze(req: Request, res: Response): Response<AnalysisResponse> {
+
+  res.set('Access-Control-Allow-Origin', '*');
+
+  const isValid = validate(req, res);
+
+  if (!isValid.status) {
+    return isValid.res;
+  }
+
+  if (req.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    res.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.set('Access-Control-Max-Age', '3600');
+    return res.status(204).send('');
+  }
+
+  const assetId = 'asdf';
+  const geometry = req.body.geometry;
+
+  ee.data.authenticateViaPrivateKey(PRIVATE_KEY, () => {
+    ee.initialize(null, null, () => {
+      try {
+        const result = calcHistogram(assetId, geometry);
+
+        result.evaluate((success, failure) => {
+
+          if (success) {
+            const data = serialize(success);
+            res.status(200).json(data);
+          }
+          if (failure) {
+            res.status(500).json( {"error": failure});
+          }
+        });
+      }
+      catch (error) {
+        res.status(400).json({"error": error.message});
+      };
+  }, (error) => {
+    console.log(error);
+    res.status(400).json({"error": error});
+  });
+});
+
+  return res;
+
+};

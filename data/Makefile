@@ -30,38 +30,10 @@ init-prehooks: init-git
 lint:
 	yapf --recursive module_data && flake8 module_data
 
-## Run your code tests using tox
-test:
-	tox
-## Install Python Dependencies in your local if you dont want to use docker
-requirements: test_environment
-	python3 -m pip install -U pip setuptools wheel
-	python3 -m pip install -r requirements.txt
-
-# ## Make Dataset
-# data: requirements
-# 	python3 src/data/make_dataset.py data/raw data/processed
-
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
-
-## Upload Data to S3
-sync_data_to_cloud::
-ifeq (default,$(PROFILE))
-	aws s3 sync data/ s3://$(BUCKET)/data/
-else
-	aws s3 sync data/ s3://$(BUCKET)/data/ --profile $(PROFILE)
-endif
-
-## Download Data from S3
-sync_data_from_cloud:
-ifeq (default,$(PROFILE))
-	aws s3 sync s3://$(BUCKET)/data/ data/
-else
-	aws s3 sync s3://$(BUCKET)/data/ data/ --profile $(PROFILE)
-endif
 
 ## Set up python interpreter environment
 create_environment:
