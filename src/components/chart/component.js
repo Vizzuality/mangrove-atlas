@@ -115,7 +115,7 @@ class Chart extends PureComponent {
 
     clearStack();
 
-    const { lines, bars, areas, pies } = yKeys;
+    const { lines, bars, areas, pies, tree } = yKeys;
     const maxYValue = this.findMaxValue(data, config);
 
     const RechartChart = rechartCharts.get(type);
