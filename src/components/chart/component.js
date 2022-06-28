@@ -116,7 +116,6 @@ class Chart extends PureComponent {
     clearStack();
 
     const { lines, bars, areas, pies, tree } = yKeys;
-    const xAxisFontSize = xAxis?. xAxisFontSize;
     const maxYValue = this.findMaxValue(data, config);
 
     const RechartChart = rechartCharts.get(type);
@@ -202,7 +201,7 @@ class Chart extends PureComponent {
                 axisLine={false}
                 tickLine={false}
                 tickCount={8}
-                tick={{ dy: 8, fontSize: `${xAxisFontSize}px` || '12px', fill: 'rgba(0,0,0,0.54)', textShadow: '0 2 4 0 rgba(0,0,0,0.5)' }}
+                tick={{ dy: 8, fontSize: '12px', fill: 'rgba(0,0,0,0.54)', textShadow: '0 2 4 0 rgba(0,0,0,0.5)' }}
                 {...xAxis}
               />
             )}

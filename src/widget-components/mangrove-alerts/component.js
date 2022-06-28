@@ -126,7 +126,6 @@ const MangroveAlerts = ({
       isOptionDisabled={option => option.value < startDate.value
         || option.value === endDate.value}
       onChange={value => changeDate('endDate', value)}
-      style={{ maxHeight: 200, fontSize: 12, minWidth: 200, backgroundColor: 'red' }}
     />
   );
   const sentence = (
