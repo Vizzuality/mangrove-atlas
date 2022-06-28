@@ -88,7 +88,8 @@ export const styles = {
     '&:hover': {
       color: '#00857F',
       cursor: 'pointer'
-    }
+    },
+    whiteSpace: 'nowrap',
   }),
   singleValue: provided => ({
     ...provided,
@@ -115,5 +116,11 @@ export const styles = {
     left: '50%',
     transform: 'translate(-50%, 50%)',
     cursor: 'pointer',
-  })
+  }),
+  menuList: provided => ({
+    ...provided,
+    maxHeight: 250,
+    minWidth: 'content',
+    fontSize: 9,
+  }),
 };
