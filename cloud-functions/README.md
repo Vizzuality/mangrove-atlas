@@ -7,6 +7,8 @@ Alerts and analysis accessing for the mangrove atlas project
 [Documentation of the library](https://www.npmjs.com/package/@google-cloud/functions-framework) to simulate a cloud function in your local machine.
 In order to deploy the cloud function you need to create a service account and a bucket in Google Cloud Storage.
 
+Also automatic deployment of the cloud function is available at push in develop/master
+
 ### Fetch alerts
 
 1. Go to the folder `fetch-alerts`
@@ -26,24 +28,20 @@ Example request:
 
 ``` bash
 curl -X GET -G \
-'http://localhost:8080/' \
--d id=3 \
--d name=Mario \
--d surname=Bros
+'http://localhost:8080?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01' 
 ```
 
 Example response:
 
 ``` json
-{
-  "data": [
+[
  {
-   "id": "3",
-   "name": "Mario",
-   "surname": "Bros"
+ "date": {
+ "value": "2020-01-01"
+ },
+ "count": 492
  }
-  ]
-}
+]
 ```
 
 #### Deploying the function
@@ -53,13 +51,7 @@ gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http --memory 
 ```
 
 ``` bash
-curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts \
--H "Authorization:bearer $(gcloud auth print-identity-token)" \
--H "Content-Type:application/json" \
--d '{}'
--d id=3 \
--d name=Mario \
--d surname=Bros
+curl --request GET 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01'
 ```
 
 ### Fetch alerts heatmap (Map visualization)
@@ -73,47 +65,51 @@ By default the endpoint returns all data for all locations and aggregated by mon
 
 Params:
 
-* `location_id=1`, location ID from Mangrove API. Optional.
-* `format=geojson`, to export a geojson, it includes an aggregation for location
+* `location_id`, location ID from Mangrove API. Optional.
+* `start_date`, start date in format `YYYY-MM-DD`. Optional.
+* `end_date`, end date in format `YYYY-MM-DD`. Optional.
 
 Example request:  
 
 ``` bash
 curl -X GET -G \
-'http://localhost:8080/' \
--d id=3 \
--d name=Mario \
--d surname=Bros
+'http://localhost:8080?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01' 
 ```
 
 Example response:
 
 ``` json
 {
-  "data": [
- {
-   "id": "3",
-   "name": "Mario",
-   "surname": "Bros"
- }
-  ]
+    "type": "FeatureCollection",
+    "name": "deforestation-alerts",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "count": 1,
+                "intensity": 1
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    35.10860631785158,
+                    -20.94996841295125
+                ]
+            }
+        }
+    ]
 }
 ```
 
-#### Deploying the function
+#### Deploying
 
 ```bash
-gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlerts --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts
+gcloud functions deploy fetch-alerts-heatmap --runtime nodejs10 --trigger-http --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlertsHeatmap --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts-heatmap
 ```
 
 ``` bash
-curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts \
--H "Authorization:bearer $(gcloud auth print-identity-token)" \
--H "Content-Type:application/json" \
--d '{}'
--d id=3 \
--d name=Mario \
--d surname=Bros
+curl -X GET -G \
+'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?location_id=MOZ&start_date=2019-01-01&end_date=2022-01-01'
 ```
 
 ### Analysis
@@ -126,7 +122,7 @@ curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/f
 Example request:  
 
 ``` bash
-curl -X GET -G \
+curl --request POST \
 'http://localhost:8080/' \
 -d id=3 \
 -d name=Mario \
@@ -147,7 +143,7 @@ Example response:
 }
 ```
 
-#### Deploying the function
+#### Deploying it to cloud functions
 
 ```bash
 gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http \
@@ -156,13 +152,11 @@ gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http \
 ```
 
 ``` bash
-curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts \
+curl  Post https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts \
 -H "Authorization:bearer $(gcloud auth print-identity-token)" \
 -H "Content-Type:application/json" \
 -d '{}'
--d id=3 \
--d name=Mario \
--d surname=Bros
+
 ```
 
 ## Uploading alerts pipeline
@@ -173,7 +167,3 @@ curl -m 70 -X GET https://us-central1-mangrove-atlas-246414.cloudfunctions.net/f
 * Download `credentials.json` and save to the root of the cloud function (`./credentials.json`).
 * Put your `.gpkg` files in the folder `./data/vecs`.
 * Run `make upload` to run the full pipe to transform and upload the data to BigQuery.
-
-## Todo
-
-* Set up automatic deploymend from github actions from master: <https://cloud.google.com/blog/topics/developers-practitioners/deploying-serverless-platforms-github-actions>
