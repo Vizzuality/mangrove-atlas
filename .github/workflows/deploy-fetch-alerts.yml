@@ -1,20 +1,19 @@
-name: Deploy cloud functions to google
-
+name: Deploy fetch alerts cloud functions to google
+uses: google-github-actions/deploy-cloud-functions@v0.10.1
 permissions:
   id-token: write
   contents: read
-
 on:
   push:
     branches:
       - 'develop'
       - 'master'
+      - 'feature/GMW-109_analysis-cloudfunction'
     paths:
-      - 'cloud-functions/**'
+      - 'cloud-functions/fetch-alerts/**'
   workflow_dispatch:
-
 jobs:
-  job_id:
+  fetch_alerts_function:
     runs-on: ubuntu-20.04
     permissions:
       contents: 'read'
@@ -25,15 +24,18 @@ jobs:
 
     - id: auth
       uses: google-github-actions/auth@v0
-      with:
-        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+     with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
 
     - id: 'deploy'
       uses: 'google-github-actions/deploy-cloud-functions@v0'
       with:
-        name: 'my-function'
-        runtime: 'nodejs16'
+        name: 'fetch-alerts'
+        runtime: 'nodejs12'
+        entry_point: 'fetchAlerts'
+        memory_mb: '128'
+        region: 'us-central1'
+        source_dir: './cloud-functions/fetch-alerts'
 
     # Example of using the output
     - id: 'test'
