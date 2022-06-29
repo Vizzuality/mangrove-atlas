@@ -1,2 +1,5 @@
 .gitignore
 node_modules
+credentials.json
+.DS_Store
+package-lock.json
