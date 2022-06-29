@@ -150,7 +150,9 @@ Example response:
 #### Deploying the function
 
 ```bash
-gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlerts --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts
+gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http \
+   --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlerts \
+   --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts
 ```
 
 ``` bash

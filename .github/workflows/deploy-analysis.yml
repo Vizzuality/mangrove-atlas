@@ -1,0 +1,39 @@
+name: Deploy analysis cloud function to google
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'master'
+    paths:
+      - 'cloud-functions/analysis/**'
+  workflow_dispatch:
+jobs:
+  analysis_function:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - id: auth
+      uses: google-github-actions/auth@v0
+      with:
+        workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+        service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-cloud-functions@v0'
+      with:
+        name: 'my-function'
+        runtime: 'nodejs16'
+
+    # Example of using the output
+    - id: 'test'
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
