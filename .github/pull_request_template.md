@@ -23,5 +23,4 @@ _Link to the related task manager tickets_
 - [ ] Meaningful commits and code rebased on `develop`.
 - [ ] If this PR adds feature that should be tested for regressions when
       deploying to staging/production, please add brief testing instructions
-      to the deploy checklist (`docs/deployment-checklist.md`)
-- [ ] Update CHANGELOG file
+      to the deploy checklist 
