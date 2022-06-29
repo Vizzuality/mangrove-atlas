@@ -1,5 +1,4 @@
 name: Deploy fetch alerts cloud functions to google
-uses: google-github-actions/deploy-cloud-functions@v0.10.1
 permissions:
   id-token: write
   contents: read
