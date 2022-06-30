@@ -1,7 +1,11 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
     "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "rootDir": ".",
     "strict": false,
@@ -11,6 +15,10 @@
   "include": [
     "src/**/*.ts",
     "test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.*"
   ],
   "types": [
     "node"
