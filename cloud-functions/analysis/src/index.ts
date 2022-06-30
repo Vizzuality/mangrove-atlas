@@ -1,7 +1,8 @@
 import{ Request, Response} from 'express';
-import  * as ee from '@google/earthengine'
-import * as PRIVATE_KEY from './credentials.json'
+import   ee  from '@google/earthengine'
 
+import { eeAuthenticate, eeEvaluate } from './utils';
+import { serialize } from './serialize';
 import { AnalysisResponse } from './AnalysisResponse';
 import { FeatureCollection } from './FeatureCollection';
 import { BlueCarbonCalculations } from './calculations/BlueCarbon';
@@ -19,7 +20,7 @@ interface AnalysisRequestBody {
   geometry: FeatureCollection
 }
 
-export function analyze(req: Request, res: Response): Response<AnalysisResponse> {
+export async function analyze(req: Request, res: Response): Promise<Response> {
 
   res.set('Access-Control-Allow-Origin', '*');
 
@@ -37,72 +38,21 @@ export function analyze(req: Request, res: Response): Response<AnalysisResponse>
     return res.status(204).send('');
   }
 
-  ee.data.authenticateViaPrivateKey(PRIVATE_KEY, () => {
-    ee.initialize(null, null, () => {
-      try {
-        const geometryCollection = ee.FeatureCollection(req.body.geometry);
-        const result = BlueCarbonCalculations.calculateTotalTreeCover(geometryCollection);
+  try {
+    await eeAuthenticate();
+    const geometryCollection = ee.FeatureCollection(req.body.geometry);
+    const computedObject = BlueCarbonCalculations.calculateTotalTreeCover(geometryCollection);
+    const result = await eeEvaluate(computedObject);
 
-        result.evaluate((success, failure) => {
+    res.status(200).json(result);
 
-          if (success) {
-            const data = serialize(success);
-            res.status(200).json(data);
-          }
-          if (failure) {
-            console.error(failure)
-            res.status(500).json( {"error": failure});
-          }
-        });
-      }
-      catch (error) {
-        console.error(error)
-        res.status(400).json({"error": error.message});
-      };
-  }, (error) => {
-    console.log(error);
-    res.status(400).json({"error": error});
-  });
-});
+  } catch (error) {
+    console.error(error)
+    res.status(400).json({"error": error.message});
+  }
 
-  return res;
-
-};
-
-function serialize(originalData: any): AnalysisResponse {
-  if (!originalData || !originalData.length) return null;
-
-  const props = originalData[0].properties;
-  const data = props.histogram;
-  const bucketWidth = data.bucketWidth;
-  const countSum = arrSum(data.histogram);
-
-  return {
-    rows: data.histogram.map((d, i) => ({
-      min: data.bucketMin + (bucketWidth * i),
-      max: data.bucketMin + (bucketWidth * (i + 1)),
-      count: d,
-      percent: d / countSum
-    })),
-    fields: {
-      min: { type: 'number' },
-      max: { type: 'number' },
-      count: { type: 'number' },
-      percent: { type: 'number' }
-    },
-    total_rows: data.histogram.length,
-    stats: {
-       min: props.min,
-      max: props.max,
-      mean: props.mean,
-      stdev: props.stdDev,
-      sum: props.sum
-    }
-  };
-};
-function arrSum(arr: []): number {
-  return arr.reduce((a, b) => a + b, 0)
-};
+  return res
+}
 
 function isValidAnalysisRequestBody(obj: any): obj is AnalysisRequestBody {
   return obj.geometry;
@@ -115,15 +65,18 @@ function isValidAnalysisRequestParams(obj: any): obj is AnalysisRequestParams {
 function validate(req: Request, res:  Response): {"status": Boolean, "res": Response} {
   console.log(req.query)
   if (!req.body || !req.query) {
-    return {"status": false, "res":  res.status(400).json({"error":"No data provided"})};
+    return {"status": false,
+          "res":  res.status(400).json({"error":"No data provided"})};
   }
 
   if (!isValidAnalysisRequestBody(req.body)) {
-    return {"status": false, "res":  res.status(400).json({"error":"geometry is required as part of the body"})};
+    return {"status": false,
+            "res":  res.status(400).json({"error":"geometry is required as part of the body"})};
   }
 
   if (!isValidAnalysisRequestParams(req.query)) {
-    return {"status": false, "res":  res.status(400).json({"error":"a valid widget param is required"})};
+    return {"status": false,
+          "res":  res.status(400).json({"error":"a valid widget param is required"})};
   }
 
   return {"status": true, "res": res};
