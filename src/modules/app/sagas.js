@@ -6,11 +6,9 @@ import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchLanguages } from 'modules/languages/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
-import { fetchMangroveSpeciesData } from 'modules/mangrove-species-data/actions';
 import { fetchRankingData } from 'modules/ranking/actions';
 import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
 import { fetchInvestmentPotentialData } from "modules/mangrove-investment-data/actions";
-import { fetchMangroveRestorationData } from 'modules/mangrove-restoration-data/actions';
 import { fetchMangroveDegradationAndLossData } from 'modules/mangrove-degradation-and-loss-data/actions';
 import { fetchMangroveEcosystemServicesData } from 'modules/mangrove-ecosystem-services-data/actions';
 import { initializeApp } from './actions';
@@ -25,11 +23,9 @@ function* loadInitialData() {
     mapStyles,
     languages,
     mangroveData,
-    mangroveSpeciesData,
     ranking,
     mangroveProtectionData,
     investmentPotentialData,
-    mangroveRestorationData,
     mangroveDegradationAndLoss,
     mangroveEcosystemServicesData,
   } = yield select();
@@ -41,11 +37,9 @@ function* loadInitialData() {
   if (!mapStyles.layers) yield put(fetchMapStyles());
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
-  if (!Object.entries(mangroveSpeciesData.data)) yield put(fetchMangroveSpeciesData());
   if (!investmentPotentialData) yield put(fetchInvestmentPotentialData());
   if (!ranking.data.length) yield put(fetchRankingData());
   if (!!mangroveProtectionData) yield put(fetchMangroveProtectionData());
-  if (!!mangroveRestorationData) yield put(fetchMangroveRestorationData());
   if (!mangroveDegradationAndLoss) yield put(fetchMangroveDegradationAndLossData());
   if (!mangroveEcosystemServicesData.data.length) yield put(fetchMangroveEcosystemServicesData());
 }
