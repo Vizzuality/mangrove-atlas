@@ -16,22 +16,11 @@ function MangroveSpecies({
   fetchMangroveSpeciesData,
   ...props
 }) {
-
+  const { location_id, id } = currentLocation;
+  const location = locationsList.find(location => location.id === id);
+  
   useEffect(() => {
-      if (currentLocation.id === 'worldwide' || currentLocation.location_type === 'worldwide') {
-        fetchMangroveSpeciesData();
-      } else {
-        let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
-
-        // Find by location_id
-        if (!location) {
-          location = locationsList.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
-        }
-        // eslint-disable-next-line camelcase
-        const { id } = location;
-
-        fetchMangroveSpeciesData({ location_id: id });
-      }
+    fetchMangroveSpeciesData({ ...id && { location_id } });
   }, [currentLocation, locationsList, fetchMangroveSpeciesData]);
 
   useEffect(() => {
@@ -42,22 +31,19 @@ function MangroveSpecies({
     });
   }, [addFilter]);
 
-  const { list } = data;
-
-  const threatened = list?.threatened;
-  const total = list?.total;
+  const { threatened, total } = data;
   
   const { chartData, chartConfig } = config.parse(data);
 
-  const location = (currentLocation.location_type === 'worldwide')
+  const locationName = (currentLocation.location_type === 'worldwide')
     ? 'The world'
-    : <span className="notranslate">{`${currentLocation.name}`}</span>;
+    : <span className="notranslate">{`${location.name}`}</span>;
 
   const article = threatened > 1 ? 'are' : 'is';
 
   const sentence = (
     <>
-      <strong>{location} </strong>has <strong>{total}</strong> species of mangroves.
+      <strong>{locationName} </strong>has <strong>{total}</strong> species of mangroves.
       Of them, <strong>{threatened}</strong> {article} considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
