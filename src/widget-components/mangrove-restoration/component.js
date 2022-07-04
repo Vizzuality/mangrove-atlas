@@ -43,9 +43,9 @@ function MangroveRestoration({
 
   const year = useMemo(() => uiRestoration?.year || years[years.length - 1], [uiRestoration, years]);
   const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
-  const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata.units.restoration_potential_score, [isLoading]);
+  const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
 
-  const restorationPotentialScore = !isLoading && restorationData.restorable_area_perc;
+  const restorationPotentialScore = !isLoading && restorationData?.restorable_area_perc;
 
   const { location_id } = currentLocation;
   
