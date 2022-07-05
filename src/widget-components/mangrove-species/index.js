@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   ui: state.widgets.ui.species,
   locationsList: state.locations.list,
   currentLocationId: state.locations.currentId,
+  current: state.locations.id,
 });
 
 const mapDispatchToProps = {

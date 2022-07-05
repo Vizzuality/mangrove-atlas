@@ -11,7 +11,7 @@ function* setLocation({ payload }) {
   const idKey = iso ? 'iso' : 'id';
   const { locations: { current } } = yield select();
   const { locations, router: { type } } = yield select();
-
+  const { dashboards: { current: currentCategory } } = yield select();
   
   const getLocationType = () => {
     if (type === 'PAGE/APP') return 'worldwide' 
@@ -24,8 +24,9 @@ function* setLocation({ payload }) {
   const locationType = getLocationType();
   const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
   const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos.find(location => location.location_type === locationType)?.id;
-  yield put(setCurrentId({ ...currentLocationId && { location_id: currentLocationId } }));
 
+  if(!!currentLocationId) yield put(setCurrentId({ ...currentLocationId && { location_id: currentLocationId } }));
+   
   if (!current || current[idKey] !== targetLocation) {
       yield put(setCurrent({ [idKey]: targetLocation }));
       yield put(resetUi());

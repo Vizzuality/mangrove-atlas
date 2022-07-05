@@ -7,8 +7,9 @@ import Component from "./component";
 const mapStateToProps = (state) => ({
   metadata: state.investmentPotentialData.metadata,
   data: state.investmentPotentialData.data,
-  ui: state.widgets.ui.blue_carbon,
-  currentLocation: state.locations.currentId,
+  ui: state.widgets.ui.investment_potential,
+  currentLocationId: state.locations.currentId,
+  current: state.locations.id,
 });
 
 const mapDispatchToProps = {
