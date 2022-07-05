@@ -7,7 +7,12 @@ import { format } from "d3-format";
 import WidgetTooltip from "components/widget-tooltip";
 
 const numberFormat = format(",.2f");
-const COLORS = ["#ff7f0f", "#2da02b", "#1f78b4", "#d72729"];
+const COLORS = {
+  remaining: "#ff7f0f",
+  protected: "#2da02b",
+  carbon_10: "#1f78b4",
+  carbon_5: "#d72729"
+};
 
 const getData = (data, total) => {
   if (!data || !data.length) return null;
@@ -15,7 +20,7 @@ const getData = (data, total) => {
   return data.map((d, index) => ({
     label: d.category,
     value: d.value,
-    color: COLORS[index],
+    color: COLORS[d.category],
     total: total,
     percentage: d.percentage,
   })
