@@ -14,8 +14,9 @@ const numberFormat = format(',.2f')
 function MangroveProtection({
   data,
   metadata,
-  currentLocation,
+  current,
   currentLocationId,
+  locations,
   isCollapsed = true,
   slug,
   name,
@@ -29,6 +30,7 @@ function MangroveProtection({
 
   const { year: years, units: unitMetadata } = metadata;
   const unitArea = unitMetadata.total_area;
+  const currentLocation = locations.find(({ id }) => id === currentLocationId);
 
   useEffect(() => {
     addFilter({
@@ -38,19 +40,21 @@ function MangroveProtection({
         unit: unitArea,
       }
     });
-
-    if (!currentLocationId || currentLocation.id === 'worldwide') {
-      fetchMangroveProtectionData();
-    } else {
-      fetchMangroveProtectionData({ location_id: currentLocationId });
-    }
-
     setUi({
       id: 'protection',
       value: { year: year || years[years.length - 1], unit: unit || unitArea }
     });
     
   }, [addFilter, currentLocationId]);
+
+  useEffect(() => {
+    if (current === 'worldwide' || currentLocationId === 1561) {
+      fetchMangroveProtectionData()
+    }
+    else {
+      fetchMangroveProtectionData({ ...(currentLocationId && currentLocationId !== 1561) && { location_id: currentLocation.location_id } });
+    }
+  }, [currentLocation, current, fetchMangroveProtectionData]);
 
   if (!data || !data.length || !year) {
     return null;
