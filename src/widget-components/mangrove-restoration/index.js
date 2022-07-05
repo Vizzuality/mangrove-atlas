@@ -12,7 +12,11 @@ const mapStateToProps = state => ({
   restorationData: state.mangroveRestorationData.data.data,
   restorationDataMetadata: state.mangroveRestorationData.data.metadata,
   degradationAndLossData: state.mangroveDegradationAndLossData.data,
-  ecosystemServicesData: state.mangroveEcosystemServicesData.data
+  degradationAndLossDataMetadata: state.mangroveDegradationAndLossData.metadata,
+  ecosystemServicesData: state.mangroveEcosystemServicesData.data,
+  currentLocationId: state.locations.currentId?.location_id,
+  currentId: state.locations.current.id || state.locations.current.iso,
+  locations: state.locations
 });
 
 const mapDispatchToProps = {

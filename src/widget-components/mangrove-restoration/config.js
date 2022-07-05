@@ -41,27 +41,26 @@ const getChartRingData = (data, year) => {
 
 const getChartValueData = (data, year) => {
   if (!data) return [];
-  const restorableMangroves = data.restorable_area;
-  const nonRestorable = data.total_area;
-  const restorablePercentage = (data.restorable_area * 100) / data.total_area;
-  const nonRestorablePercentage = 100 - restorablePercentage;
+  const agb = data.agb;
+  const soc = data.soc;
+  const total = agb + soc;
+  const agbPercentage = total - agb / 100;
+  const socPercentage = total - soc / 100;
 
   return ([
     {
       label: 'Aboveground Carbon',
-      value: 'protection',
       color: '#7996F3',
-      percentage: restorablePercentage,
-      total: data.total,
+      total,
       year: year,
-      protection: restorableMangroves,
+      value: agb,
+      indicator: agbPercentage,
     },
     {
       label: 'Soil Organic Carbon',
-      value: 'nonRestorable',
       color: '#ECECEF',
-      percentage: nonRestorablePercentage,
-      protection: nonRestorable,
+      indicator: socPercentage,
+      value: soc,
       year: year,
     }])
 };
@@ -117,7 +116,7 @@ export const CONFIG = {
   parse: (data, degradationAndLossData, ecosystemServicesData, year, unitRestorationPotential) => {
     const chartLineData = getChartLineData();
     const chartRingData = getChartRingData(data, year);
-    const chartValueData = getChartValueData(data, year);
+    const chartValueData = getChartValueData(ecosystemServicesData);
     const degradationAndLossDataWidthColors = getDegradationAndLossData(degradationAndLossData);
     return {
       chartLineData,
@@ -237,15 +236,15 @@ export const CONFIG = {
         layout: 'center',
         height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
-        xKey: 'percentage',
+        xKey: 'name',
         yKeys: {
           pies: {
-            protection: {
+            value: {
               cx: '50%',
               cy: '50%',
               paddingAngle: 2,
-              dataKey: 'percentage',
-              nameKey: 'label',
+              dataKey: 'value',
+              nameKey: 'indicator',
               innerRadius: '55%',
               outerRadius: '80%',
               isAnimationActive: false,
