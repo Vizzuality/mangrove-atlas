@@ -17,7 +17,15 @@ export default {
     restoration: {
       year: null,
       unit: null,
-    }
+    },
+    investment_potential: {
+      year: null,
+      unit: null,
+    },
+    species: {
+      year: null,
+      unit: null,
+    },
   },
   isCollapsed: true,
 };

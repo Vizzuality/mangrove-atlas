@@ -5,7 +5,8 @@ import config from "./config";
 
 function MangroveInvestmentPotential({
   data,
-  currentLocation,
+  currentLocationId,
+  current,
   isCollapsed = true,
   slug,
   name,
@@ -15,25 +16,25 @@ function MangroveInvestmentPotential({
   fetchInvestmentPotentialData,
   ...props
 }) {
+  const { location_id } = currentLocationId;
 
   useEffect(() => {
-    const id = currentLocation?.id;
-      if (id === 'worldwide') {
-        fetchInvestmentPotentialData();
-      }
-      else {
-        fetchInvestmentPotentialData({ location_id: id });
+    if (location_id === 'worldwide' || location_id === 1561) {
+      fetchInvestmentPotentialData()
     }
-  }, [currentLocation, fetchInvestmentPotentialData]);
+    else {
+      fetchInvestmentPotentialData({ ...(location_id && location_id !== 1561) && { location_id } });
+    }
+  }, [currentLocationId, current, fetchInvestmentPotentialData]);
 
   useEffect(() => {
     addFilter({
       filter: {
-        id: "investment-potential",
+        id: "investment_potential",
         year: "2016",
       },
     });
-  }, [addFilter, currentLocation]);
+  }, [addFilter, currentLocationId]);
 
   if (!data || Object.entries(data).length === 0) {
     return null;

@@ -14,14 +14,20 @@ function MangroveSpecies({
   ui,
   setUi,
   fetchMangroveSpeciesData,
+  current,
   ...props
 }) {
-  const { location_id, id } = currentLocation;
+  const { id } = currentLocation;
   const location = locationsList.find(location => location.id === id);
-  
+
   useEffect(() => {
-    fetchMangroveSpeciesData({ ...id && { location_id } });
-  }, [currentLocation, locationsList, fetchMangroveSpeciesData]);
+    if (current === 'worldwide' || current === 1561) {
+      fetchMangroveSpeciesData()
+    }
+    else {
+      fetchMangroveSpeciesData({ ...(id && id !== 1561) && { location_id: id } });
+    }
+  }, [currentLocation, current, locationsList, fetchMangroveSpeciesData]);
 
   useEffect(() => {
     addFilter({
