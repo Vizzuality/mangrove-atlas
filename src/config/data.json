@@ -259,6 +259,11 @@
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     },
     {
+      "name": "Mangrove restoration",
+      "id": "restoration",
+      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
       "name": "Mangrove extent",
       "id": "extent"
     },

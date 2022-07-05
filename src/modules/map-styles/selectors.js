@@ -84,6 +84,12 @@ export const mapStyle = createSelector(
             newLayerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
+        case 'restoration':
+          widgetFilter = _filters.find(f => f.id === 'restoration');
+          if (widgetFilter) {
+            newLayerStyle.filter = netChangeFilter(widgetFilter);
+          }
+          break;
         default:
         case 'cons-hotspots':
           widgetFilter = _filters.find(f => f.id === 'cons-hotspots');

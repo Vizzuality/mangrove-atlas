@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { setUi } from 'modules/widgets/actions';
 import { fetchMangroveProtectionData } from 'modules/mangrove-protection-data/actions';
 
-
 import Component from './component';
 
 const mapStateToProps = state => ({
@@ -11,7 +10,7 @@ const mapStateToProps = state => ({
   metadata: state.mangroveProtectionData.metadata,
   ui: state.widgets.ui.protection,
   current: state.locations.current,
-  currentLocationId: state.locations.currentId.location_id,
+  currentLocationId: state.locations.currentId?.location_id,
   locations: state.locations.list,
 });
 
