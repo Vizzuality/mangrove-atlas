@@ -48,7 +48,7 @@ function MangroveProtection({
   }, [addFilter, currentLocationId]);
 
   useEffect(() => {
-    if (current === 'worldwide' || currentLocationId === 1561) {
+    if (current.id === 'worldwide' || currentLocationId === 1561) {
       fetchMangroveProtectionData()
     }
     else {
@@ -90,7 +90,7 @@ function MangroveProtection({
     value: year
   })), ['value']);
 
-  const location = (currentLocation.location_type === 'worldwide' || currentLocation.id === 'worldwide')
+  const location = (currentLocation?.location_type === 'worldwide' || currentLocation?.id === 'worldwide' || current.id === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
