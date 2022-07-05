@@ -10,8 +10,9 @@ const mapStateToProps = state => ({
   data: state.mangroveProtectionData.data,
   metadata: state.mangroveProtectionData.metadata,
   ui: state.widgets.ui.protection,
-  currentLocation: state.locations.current,
-  currentLocationId: state.locations.currentId.id,
+  current: state.locations.current,
+  currentLocationId: state.locations.currentId.location_id,
+  locations: state.locations.list,
 });
 
 const mapDispatchToProps = {
