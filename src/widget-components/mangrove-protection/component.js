@@ -16,6 +16,7 @@ function MangroveProtection({
   metadata,
   current,
   currentLocationId,
+  isLoading,
   locations,
   isCollapsed = true,
   slug,
@@ -28,15 +29,11 @@ function MangroveProtection({
   ...props
 }) {
 
-  const { year: years, units: unitMetadata } = metadata;
-  const unitArea = unitMetadata.total_area;
-  const currentLocation = locations.find(({ id }) => id === currentLocationId);
-
   useEffect(() => {
     addFilter({
       filter: {
         id: 'protection',
-        year: years[years.length - 1],
+        year: years[years.length - 1] || null,
         unit: unitArea,
       }
     });
@@ -48,15 +45,22 @@ function MangroveProtection({
   }, [addFilter, currentLocationId]);
 
   useEffect(() => {
-    if (current.id === 'worldwide' || currentLocationId === 1561) {
-      fetchMangroveProtectionData()
-    }
-    else {
-      fetchMangroveProtectionData({ ...(currentLocationId && currentLocationId !== 1561) && { location_id: currentLocation.location_id } });
+    if (!data || !metadata) {
+      if (current.id === 'worldwide' || currentLocationId === 1561) {
+        fetchMangroveProtectionData()
+      }
+      else {
+        fetchMangroveProtectionData({ ...(currentLocationId && currentLocationId !== 1561) && { location_id: currentLocation.location_id } });
+      }
     }
   }, [currentLocation, current, fetchMangroveProtectionData]);
 
-  if (!data || !data.length || !year) {
+  const years = metadata?.year || [];
+  const unitMetadata = metadata?.units;
+  const unitArea = unitMetadata?.total_area;
+  const currentLocation = locations?.find(({ id, iso }) => id === currentLocationId || id === current || iso === current);
+
+  if (!data || !data.length || !isLoading) {
     return null;
   }
 
@@ -69,6 +73,7 @@ function MangroveProtection({
   });
 
   const { chartData, chartConfig } = config.parse(parsedData, unit);
+
 
   if (!chartData) {
     return null;
@@ -90,10 +95,9 @@ function MangroveProtection({
     value: year
   })), ['value']);
 
-  const location = (currentLocation?.location_type === 'worldwide' || currentLocation?.id === 'worldwide' || current.id === 'worldwide')
+  const location = (currentLocation?.location_type === 'worldwide' || currentLocation?.id === 'worldwide' || current?.id === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
-
 
   const totalAreaProtected = numberFormat(parsedData.protected_area);
   const totalArea = numberFormat(parsedData.total_area);

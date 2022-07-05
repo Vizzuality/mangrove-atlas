@@ -16,6 +16,4 @@ function* getMangroveEcosystemServicesData({ payload }) {
 
 export default function* mangroveEcosystemServicesSagas() {
   yield takeLatest('MANGROVE_ECOSYSTEM_SERVICES_DATA/FETCH_ALL', getMangroveEcosystemServicesData);
-  yield takeLatest('LOCATIONS/SET_CURRENT_ID', getMangroveEcosystemServicesData);
-
 }
