@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 // utils
@@ -62,6 +61,7 @@ const getChartValueData = (data) => {
     value: 'indicator',
     percentage: (d.value * 100) / total,
     indicator: d.value,
+    name: dataConstants.label[d.indicator],
   }))
 };
 
@@ -244,7 +244,7 @@ export const CONFIG = {
               cx: '50%',
               cy: '50%',
               paddingAngle: 2,
-              dataKey: 'value',
+              dataKey: 'percentage',
               nameKey: 'indicator',
               innerRadius: '55%',
               outerRadius: '80%',
@@ -271,13 +271,13 @@ export const CONFIG = {
                   y: value,
                 }
               };
-            }), p => p.payload.label);
+            }), p => p.payload.name);
 
             return (
               <WidgetLegend
                 widgetSpecific="blue-carbon"
                 groups={groups}
-                unit={unitRestorationPotential}
+                unit={ecosystemServicesUnit}
                 classname="minWidth"
                 />
             );

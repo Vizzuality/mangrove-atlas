@@ -17,7 +17,8 @@ const mapStateToProps = state => ({
   ecosystemServicesMetadata: state.mangroveEcosystemServicesData.metadata,
   currentLocationId: state.locations.currentId?.location_id,
   currentId: state.locations.current.id || state.locations.current.iso,
-  locations: state.locations
+  locations: state.locations,
+  type : state.router.type,
 });
 
 const mapDispatchToProps = {
