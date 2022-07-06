@@ -17,6 +17,10 @@ export default {
       year: null,
       unit: null,
     },
+    degradation_and_loss: {
+      year: null,
+      unit: null,
+    },
     investment_potential: {
       year: null,
       unit: null,

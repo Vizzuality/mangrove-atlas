@@ -39,30 +39,30 @@ const getChartRingData = (data, year) => {
     }])
 };
 
-const getChartValueData = (data, year) => {
-  if (!data) return [];
-  const agb = data.agb;
-  const soc = data.soc;
-  const total = agb + soc;
-  const agbPercentage = total - agb / 100;
-  const socPercentage = total - soc / 100;
+const getChartValueData = (data) => {
+  if (!data.length) return [];
 
-  return ([
-    {
-      label: 'Aboveground Carbon',
-      color: '#7996F3',
-      total,
-      year: year,
-      value: agb,
-      indicator: agbPercentage,
+  const total = data.reduce((a, b) => (a.value + b.value));
+
+  const dataConstants = {
+    label: {
+      AGB: 'Aboveground Carbon',
+      SOC: 'Soil Organic Carbon',
     },
-    {
-      label: 'Soil Organic Carbon',
-      color: '#ECECEF',
-      indicator: socPercentage,
-      value: soc,
-      year: year,
-    }])
+    color: {
+      AGB: '#7996F3',
+      SOC: '#ECECEF'
+    },
+  };
+
+  return data.map(d => ({
+    label: dataConstants.label[d.indicator],
+    color: dataConstants.color[d.indicator],
+    total, 
+    value: 'indicator',
+    percentage: (d.value * 100) / total,
+    indicator: d.value,
+  }))
 };
 
 const CustomizedContent = (props) => {
@@ -113,11 +113,12 @@ const getDegradationAndLossData = (data) => {
 }
 
 export const CONFIG = {
-  parse: (data, degradationAndLossData, ecosystemServicesData, year, unitRestorationPotential) => {
+  parse: (data, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year, unitRestorationPotential) => {
     const chartLineData = getChartLineData();
     const chartRingData = getChartRingData(data, year);
     const chartValueData = getChartValueData(ecosystemServicesData);
     const degradationAndLossDataWidthColors = getDegradationAndLossData(degradationAndLossData);
+    const ecosystemServicesUnit = ecosystemServicesMetadata?.unit;
     return {
       chartLineData,
       chartRingData,
@@ -153,7 +154,7 @@ export const CONFIG = {
             const { payload } = properties;
             
             const groups = groupBy(payload.map((item) => {
-              const value =  item.payload.percentage
+              const value =  item.payload.value
               return {
                 ...item,
                 payload: {
@@ -236,10 +237,10 @@ export const CONFIG = {
         layout: 'center',
         height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
-        xKey: 'name',
+        xKey: 'indicator',
         yKeys: {
           pies: {
-            value: {
+            indicator: {
               cx: '50%',
               cy: '50%',
               paddingAngle: 2,
@@ -262,7 +263,7 @@ export const CONFIG = {
             const { payload } = properties;
             
             const groups = groupBy(payload.map((item) => {
-              const value =  item.payload.percentage
+              const value =  item.payload.indicator
               return {
                 ...item,
                 payload: {
@@ -271,6 +272,7 @@ export const CONFIG = {
                 }
               };
             }), p => p.payload.label);
+
             return (
               <WidgetLegend
                 widgetSpecific="blue-carbon"
@@ -296,8 +298,9 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
-                  { label: 'Total restorable area:', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
-                  { label: `Total mangrove area in ${year}:`, key: 'protection', format: value => `${numberFormat(value)}`, position: '_column' },
+                  { key: 'label' },
+                  { label: 'Total', key: 'indicator', format: (value) => `${numberFormat(value)} ${ecosystemServicesUnit}`, position: '_column' },
+                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
                 ]}
               />
             );
