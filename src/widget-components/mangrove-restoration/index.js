@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   degradationAndLossData: state.mangroveDegradationAndLossData.data,
   degradationAndLossDataMetadata: state.mangroveDegradationAndLossData.metadata,
   ecosystemServicesData: state.mangroveEcosystemServicesData.data,
+  ecosystemServicesMetadata: state.mangroveEcosystemServicesData.metadata,
   currentLocationId: state.locations.currentId?.location_id,
   currentId: state.locations.current.id || state.locations.current.iso,
   locations: state.locations

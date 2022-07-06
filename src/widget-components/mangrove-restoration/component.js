@@ -28,7 +28,7 @@ function MangroveRestoration({
   slug,
   name,
   addFilter,
-  ui: { restoration: uiRestoration },
+  ui: { restoration: uiRestoration, degradationAndLoss: uiDegradationAndLoss },
   fetchMangroveRestorationData,
   fetchMangroveDegradationAndLossData,
   degradationAndLossDataMetadata,
@@ -37,69 +37,79 @@ function MangroveRestoration({
   restorationDataMetadata,
   degradationAndLossData,
   ecosystemServicesData,
+  ecosystemServicesMetadata,
   isLoading,
   setUi,
-  ui,
   ...props
 }) {
-  
+  const [lineChartWidth, setLineChartWidth] = useState(null);
+  const lineChartRef = useRef();
+
+  const yearRestoration = useMemo(() => uiRestoration?.year || restorationDataMetadata?.year[restorationDataMetadata.year.length - 1], [uiRestoration, restorationDataMetadata]);
+  const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
+  const yearDegradationAndLoss = useMemo(() => uiDegradationAndLoss?.year || degradationAndLossDataMetadata?.year[degradationAndLossDataMetadata.year.length - 1], [uiDegradationAndLoss, degradationAndLossDataMetadata]);
+
   useEffect(() => {
     const properties = lineChartRef?.current?.getBoundingClientRect();
     setLineChartWidth(properties?.width);
   },[lineChartRef]);
 
   useEffect(() => {
-    fetchMangroveRestorationData({ ...currentLocationId && currentId !== 'worlwide' && { location_id: currentLocationId }});
-    fetchMangroveDegradationAndLossData({ ...currentLocationId && currentId !== 'worlwide' && { location_id: currentLocationId }});
-    fetchMangroveEcosystemServicesData({ ...currentLocationId && currentId !== 'worlwide' && { location_id: currentLocationId }});
+    fetchMangroveRestorationData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
+    fetchMangroveDegradationAndLossData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
+    fetchMangroveEcosystemServicesData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
 
     if (!isLoading) {
       addFilter({
         filter: {
           id: 'restoration',
-          year,
+          year: yearRestoration,
           unit,
         }
       });
-      setUi({ id: "restoration", value: { year } });
-      // fetchMangroveDegradationAndLossData({ ...currentLocationId && { ...currentLocationId }});
-      // fetchMangroveEcosystemServicesData({ currentLocationId });
+      setUi({ id: "restoration", value: { year: yearRestoration } });
+      addFilter({
+        filter: {
+          id: 'degradation_and_loss',
+          year: yearDegradationAndLoss,
+          unit,
+        }
+      });
+      setUi({ id: "degradation_and_loss", value: { year: yearDegradationAndLoss } });
     }
   }, [
     addFilter,
     unit,
-    year,
+    yearRestoration,
+    yearDegradationAndLoss,
     currentLocationId,
     fetchMangroveRestorationData,
     fetchMangroveDegradationAndLossData,
-    fetchMangroveEcosystemServicesData
+    fetchMangroveEcosystemServicesData,
+    currentId,
   ]);
 
   const currentLocation = locations.list.find(({ id, iso }) => id === currentId || iso === currentId.toUpperCase());
 
   const years = restorationDataMetadata?.year || [];
 
-  const year = useMemo(() => uiRestoration?.year || years[years.length - 1], [uiRestoration, years]);
-  const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
+  
   const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
 
   const restorationPotentialScore = !isLoading && restorationData?.restorable_area_perc;
   
-  const [lineChartWidth, setLineChartWidth] = useState(null);
-  const lineChartRef = useRef();
-
   const {
     chartRingData,
     chartValueData,
     chartRingConfig,
     chartValueConfig,
     chartTreeConfig,
-  } = config.parse(restorationData, degradationAndLossData, ecosystemServicesData, year, unitRestorationPotential);
+  } = config.parse(restorationData, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, yearRestoration, unitRestorationPotential);
 
   const changeYear = (current) => {
     addFilter({
       filter: {
-        ...ui,
+        ...uiRestoration,
         id: "restoration",
         year: current,
       },
@@ -134,7 +144,7 @@ function MangroveRestoration({
       <Select
         className="notranslate"
         width="auto"
-        value={year || years[years.length - 1]}
+        value={yearRestoration}
         options={optionsYears}
         onChange={changeYear}
       />
@@ -268,10 +278,10 @@ function MangroveRestoration({
               />
               </div>
           </div>
-        {/* <hr className={widgetStyles.breakLine} /> */}
+        <hr className={widgetStyles.breakLine} />
         </div>
 
-        {/* <div className={widgetStyles.restorationChartWrapper}>
+        <div className={widgetStyles.restorationChartWrapper}>
         <div className={widgetStyles.subtitle}>mangrove restoration value</div>
           <div className={styles.sentence} key={Date.now()}>
             {restorationPotentialValue}
@@ -288,7 +298,7 @@ function MangroveRestoration({
             chartData={widgetDataValue}
           />
 
-        </div> */}
+        </div>
       </Widget>
   );
 }
