@@ -14,7 +14,7 @@ import WidgetLegend from "components/widget-legend";
 
 import styles from "components/widget/style.module.scss";
 import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
-
+import { getLocationType } from 'modules/pages/sagas';
 import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 
 const numberFormat = format(",.2f");
@@ -36,10 +36,12 @@ function MangroveRestoration({
   restorationData,
   restorationDataMetadata,
   degradationAndLossData,
+  degradationAndLossMetadata,
   ecosystemServicesData,
   ecosystemServicesMetadata,
   isLoading,
   setUi,
+  type,
   ...props
 }) {
   const [lineChartWidth, setLineChartWidth] = useState(null);
@@ -89,7 +91,9 @@ function MangroveRestoration({
     currentId,
   ]);
 
-  const currentLocation = locations.list.find(({ id, iso }) => id === currentId || iso === currentId.toUpperCase());
+  const locationType = getLocationType(type);
+
+  const currentLocation = locations.list.find(({ id, iso, location_type }) => (id === currentId || iso === currentId.toUpperCase()) && location_type === locationType);
 
   const years = restorationDataMetadata?.year || [];
 
@@ -167,7 +171,7 @@ function MangroveRestoration({
     config: chartValueConfig,
   };
 
-  const lossDriver = "Commodities";
+  const lossDriver = degradationAndLossMetadata?.main_loss_driver || "Commodities";
 
   // charts sentences
   const restorationPotentialLineSentence = (
@@ -293,7 +297,7 @@ function MangroveRestoration({
             filename={slug}
             isCollapsed={isCollapsed}
             sentence={restorationPotentialValue}
-            data={ecosystemServicesData}
+            data={chartValueData}
             config={chartValueConfig}
             chartData={widgetDataValue}
           />

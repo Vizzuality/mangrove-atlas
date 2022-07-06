@@ -2,6 +2,15 @@ import { takeLatest, put, select } from 'redux-saga/effects';
 import { setCurrent, setCurrentId, closeSearchPanel } from 'modules/locations/actions';
 import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 
+
+export const getLocationType = (type) => {
+  if (type === 'PAGE/APP') return 'worldwide' 
+  else if (type === 'PAGE/COUNTRY') return 'country';
+  else if (type === 'PAGE/AOI') return 'area-of-interest';
+  else if (type === 'PAGE/WDPA') return 'protected-area';
+  else return 'worldwide';
+}
+
 /**
   * Set current location
   */
@@ -13,15 +22,7 @@ function* setLocation({ payload }) {
   const { locations, router: { type } } = yield select();
   const { dashboards: { current: currentCategory } } = yield select();
   
-  const getLocationType = () => {
-    if (type === 'PAGE/APP') return 'worldwide' 
-    else if (type === 'PAGE/COUNTRY') return 'country';
-    else if (type === 'PAGE/AOI') return 'area-of-interest';
-    else if (type === 'PAGE/WDPA') return 'protected-area';
-    else return 'worldwide';
-  }
-
-  const locationType = getLocationType();
+  const locationType = getLocationType(type);
   const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
   const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos.find(location => location.location_type === locationType)?.id;
 
