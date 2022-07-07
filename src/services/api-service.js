@@ -55,7 +55,6 @@ class APIService {
   fetchMangroveProtectionData = (params = {}) => {
     const { locationId = '1_2_74', year = 2016 } = params;
     return this.client
-      // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
       .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
       .then((response) => {
         const { status, statusText,
