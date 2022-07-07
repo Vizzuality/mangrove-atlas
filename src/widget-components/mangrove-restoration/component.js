@@ -217,7 +217,7 @@ function MangroveRestoration({
   if (!restorationData.restoration_potential_score) return null;
 
   return (
-      <Widget className={styles.widget} {...props} name={name}>
+      <Widget className={styles.widget} slug={slug} {...props} name={name}>
         <div className={widgetStyles.restorationChartWrapper}>
           <div className={widgetStyles.subtitle}>overview</div>
           <div className={styles.restorationPotentialSentence} key={Date.now()}>

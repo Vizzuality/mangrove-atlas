@@ -12,7 +12,7 @@ const extendedTemplate = {
   sources: {
     ...template.sources,
     alerts: {
-      type: 'geojson',
+      type: 'geojson', 
       data: alerts,
     }
   }

@@ -125,6 +125,15 @@ const geojsons = [
 ];
 
 const rasters = [
+  // {
+  //   name: 'MOW_Global_Mangrove_Restoration',
+  //   filename: 'MOW_Global_Mangrove_Restoration',
+  //   source: {
+  //     type: 'raster',
+  //     minzoom: 0,
+  //     maxzoom: 12
+  //   }
+  // },
   {
     name: 'gmw1996v2_0_z0-12',
     filename: 'gmw1996v2_0_z0-12',
