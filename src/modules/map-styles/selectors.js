@@ -98,7 +98,6 @@ export const mapStyle = createSelector(
           }
           break;
       }
-
       return newLayerStyle;
     });
 
