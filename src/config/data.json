@@ -160,20 +160,7 @@
       ],
       "categoryIds": [
         "all_datasets",
-        "climate_and_policy"
-      ]
-    },
-    {
-      "name": "Mangrove Species",
-      "slug": "mangrove_species",
-      "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
+        "restoration_and_conservation"
       ]
     },
     {
@@ -216,7 +203,7 @@
       "locationType": [
         "custom"
       ],
-      "categoryIds": [],
+      "categoryIds": ["all_datasets"],
       "layersIds": [
         "cons-hotspots"
       ]
@@ -245,7 +232,7 @@
       ],
       "categoryIds": [
         "all_datasets",
-        "distribution_and_change"
+        "restoration_and_conservation"
       ],
       "layersIds": [
         "restoration"
@@ -260,8 +247,7 @@
     },
     {
       "name": "Mangrove restoration",
-      "id": "restoration",
-      "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+      "id": "restoration"
     },
     {
       "name": "Mangrove extent",
