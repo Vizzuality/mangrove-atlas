@@ -109,6 +109,9 @@
       "categoryIds": [
         "all_datasets",
         "restoration_and_conservation"
+      ],
+      "layersIds": [
+        "alerts-heat"
       ]
     },
     {
@@ -124,9 +127,6 @@
       "categoryIds": [
         "all_datasets",
         "restoration_and_conservation"
-      ],
-      "layersIds": [
-        "alerts-heat"
       ]
     },
     {
