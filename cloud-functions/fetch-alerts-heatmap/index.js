@@ -88,7 +88,9 @@ const serializeToGeoJSON = (data) => ({
  * @param {Date} startDate
  * @param {Date} endDate
  */
-const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2020-12-31') => {
+const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
+
+  endDate = endDate || new Date().toISOString().split('T')[0];
   // First try to get data from cache in order to reduce costs
   const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {

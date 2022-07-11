@@ -33,7 +33,7 @@ const makeQuery = (location, startDate, endDate) => {
     whereQuery = `AND ST_INTERSECTS(ST_GEOGFROMGEOJSON('${JSON.stringify(geoJSONreverse.geometry)}'), ST_GEOGPOINT(longitude, latitude))`;
   }
 
-  return `SELECT DATE_TRUNC(scr5_obs_date, MONTH) as date, count(scr5_obs_date) as count
+  return `SELECT DATE_ADD(DATE_TRUNC(scr5_obs_date, MONTH), INTERVAL 1 DAY) as date, count(scr5_obs_date) as count
   FROM deforestation_alerts.alerts
   WHERE confident = 5
     AND scr5_obs_date BETWEEN DATE('${startDate}') AND DATE('${endDate}')
@@ -45,7 +45,9 @@ const makeQuery = (location, startDate, endDate) => {
 /**
  * Data aggregated by month
  */
-const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2020-12-31') => {
+const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
+
+  endDate = endDate || new Date().toISOString().split('T')[0];
   // First try to get data from cache in order to reduce costs
   const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
@@ -66,6 +68,8 @@ const alertsJob = async (locationId, startDate = '2020-01-01', endDate = '2020-1
 
   // Wait for the query to finish
   const [rows] = await job.getQueryResults();
+  console.log(`Job ${job.id} Finished.`);
+
 
   // Store in cache
   cache[cacheKey] = rows;
@@ -77,7 +81,7 @@ exports.fetchAlerts = (req, res) => {
   // Get data and return a JSON
   async function fetch() {
     const result =  await alertsJob(req.query.location_id, req.query.start_date, req.query.end_date);
-    res.json(result);
+    res.status(200).json(result);
   }
 
   // Set CORS headers for preflight requests
