@@ -100,12 +100,12 @@ function MangroveRestoration({
   
   const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
 
-  const restorationPotentialScore = !isLoading && restorationData?.restorable_area_perc;
+  const restorationPotentialScore = !isLoading && restorationData?.restoration_potential_score;
   
   const {
     chartRingData,
-    chartValueData,
     chartRingConfig,
+    chartValueData,
     chartValueConfig,
     chartTreeConfig,
   } = config.parse(restorationData, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, yearRestoration, unitRestorationPotential);

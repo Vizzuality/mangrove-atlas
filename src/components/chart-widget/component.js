@@ -9,10 +9,12 @@ import styles from './style.module.scss';
 function ChartWidget({
   sentence,
   component,
+  chart = true,
   chartData: {
     data,
     config
   },
+  children,
   className,
   ...props
 }) {
@@ -22,11 +24,15 @@ function ChartWidget({
         <div className={styles.sentence} key={Date.now()}>
           {sentence}
         </div>
-        <Chart
-          {...props}
-          data={data}
-          config={config}
-        />
+        {chart && (
+          <div>{chart}</div>
+          // <Chart
+          //   {...props}
+          //   data={data}
+          //   config={config}
+          // />
+        )}
+        {children}
         {component}
       </div>
     </Widget>
@@ -35,12 +41,18 @@ function ChartWidget({
 
 Widget.propTypes = {
   sentence: PropTypes.node,
-  chartData: PropTypes.shape({})
+  chartData: PropTypes.shape({}),
+  chart: PropTypes.boolean,
+  children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 Widget.defaultProps = {
   sentence: null,
-  chartData: {}
+  chartData: {},
+  chart: true,
+  children: null,
+  className: null,
 };
 
 export default ChartWidget;

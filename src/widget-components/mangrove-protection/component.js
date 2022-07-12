@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 
@@ -22,30 +22,17 @@ function MangroveProtection({
   slug,
   name,
   addFilter,
-  ui: { year, unit },
-  setUi,
   ui,
+  setUi,
   fetchMangroveProtectionData,
   ...props
 }) {
+  const years = metadata?.year.sort() || [];
+
+  const { year, unit } = ui;
 
   useEffect(() => {
-    addFilter({
-      filter: {
-        id: 'protection',
-        year: years[years.length - 1] || null,
-        unit: unitArea,
-      }
-    });
-    setUi({
-      id: 'protection',
-      value: { year: year || years[years.length - 1], unit: unit || unitArea }
-    });
-    
-  }, [addFilter, currentLocationId]);
-
-  useEffect(() => {
-    if (!data || !metadata) {
+    if (!data?.length || metadata) {
       if (current.id === 'worldwide' || currentLocationId === 1561) {
         fetchMangroveProtectionData()
       }
@@ -54,23 +41,49 @@ function MangroveProtection({
       }
     }
   }, [currentLocation, current, fetchMangroveProtectionData]);
+  useEffect(() => {
+    if (!isLoading) {
+      const yearUpdate = year || years?.[years?.length - 1]
+      addFilter({
+        filter: {
+          id: 'protection',
+          year: yearUpdate,
+          unit: (unit || unitArea),
+        }
+      });
+      setUi({
+        id: 'protection',
+        value: { year: yearUpdate, unit: (unit || unitArea) }
+      });
+    }
+  
+  }, [currentLocationId, year, years.length]);
 
-  const years = metadata?.year || [];
+  const changeYear = useCallback((current) => {
+    addFilter({
+      filter: {
+        ...ui,
+        id: 'protection',
+        year: current.value,
+      }
+    });
+    setUi({ id: 'protection', value: { year: current, ...ui.value } });
+  }, [current]);
+
   const unitMetadata = metadata?.units;
   const unitArea = unitMetadata?.total_area;
   const currentLocation = locations?.find(({ id, iso }) => id === currentLocationId || id === current || iso === current);
 
-  if (!data || !data.length || !isLoading) {
+  if (!data || !data?.length) {
     return null;
   }
 
-  const filteredData = data && data?.find((d) => d.year === year );
-
-  const parsedData = unit === 'ha' ? filteredData : ({
+  const filteredData = data && year && data?.find((d) => d.year === year );
+  const parsedData = {
     ...filteredData,
-    total_area: filteredData.total_area,
-    protected_area: filteredData.protected_area,
-  });
+    total_area: filteredData?.total_area,
+    protected_area: filteredData?.protected_area,
+  };
 
   const { chartData, chartConfig } = config.parse(parsedData, unit);
 
@@ -78,17 +91,6 @@ function MangroveProtection({
   if (!chartData) {
     return null;
   }
-
-  const changeYear = (current) => {
-    addFilter({
-      filter: {
-        ...ui,
-        id: 'protection',
-        year: current, 
-      }
-    });
-    setUi({ id: 'protection', value: { year: current } });
-  };
 
   const optionsYears = sortBy(years.map(year => ({
     label: year.toString(),
@@ -98,15 +100,15 @@ function MangroveProtection({
   const location = (currentLocation?.location_type === 'worldwide' || currentLocation?.id === 'worldwide' || current?.id === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
-
   const totalAreaProtected = numberFormat(parsedData.protected_area);
   const totalArea = numberFormat(parsedData.total_area);
-  
-  const displayYear = (optionsYears.length > 1 ?
+
+  const currentYear = optionsYears?.find(y => y.value === year)?.value;
+  const displayYear = (optionsYears?.length > 1 ?
     <Select
       className="notranslate"
       width="auto"
-      value={year || years[years.length - 1]}
+      value={currentYear}
       options={optionsYears}
       onChange={changeYear}
     />

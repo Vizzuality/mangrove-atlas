@@ -108,6 +108,16 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
+    
+  fetchMangroveInternationalStatusData = (params = {}) => this.clientStaging
+    .get('/widgets/international_status', { params: { ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
   } 
 
 export default APIService;

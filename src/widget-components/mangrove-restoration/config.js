@@ -27,6 +27,7 @@ const getChartRingData = (data, year) => {
       total: data.total,
       year,
       protection: protectedMangroves,
+      area: data.restorable_area
     },
     {
       label: 'Total mangrove area in',
@@ -35,6 +36,7 @@ const getChartRingData = (data, year) => {
       percentage: nonProtectedPercentage,
       protection: nonProtected,
       year,
+      area: data.mangrove_area_extent
     }])
 };
 
@@ -90,15 +92,6 @@ const CustomizedContent = (props) => {
   );
 };
 
-const getChartLineData = () => ([{
-  "restoration_potential_score": 68,
-  "restorable_area": 186611,
-  "restorable_area_perc": 68,
-  total: 100,
-  "mangrove_area_extent": 2703410,
-  "year": 2016
-}])
-
 const getDegradationAndLossData = (data) => {
   const indicators = data?.map((d) => d.indicator);
   const colorsScale = chroma.scale(["#7996F3", "#EB6240", "#A6CB10"]).colors(indicators.length);
@@ -114,13 +107,11 @@ const getDegradationAndLossData = (data) => {
 
 export const CONFIG = {
   parse: (data, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year, unitRestorationPotential) => {
-    const chartLineData = getChartLineData();
     const chartRingData = getChartRingData(data, year);
     const chartValueData = getChartValueData(ecosystemServicesData);
     const degradationAndLossDataWidthColors = getDegradationAndLossData(degradationAndLossData);
     const ecosystemServicesUnit = ecosystemServicesMetadata?.unit;
     return {
-      chartLineData,
       chartRingData,
       chartValueData,
       chartRingConfig: {
@@ -152,9 +143,8 @@ export const CONFIG = {
           content: (properties) => {
             
             const { payload } = properties;
-            
             const groups = groupBy(payload.map((item) => {
-              const value =  item.payload.value
+              const value =  item.payload.area
               return {
                 ...item,
                 payload: {

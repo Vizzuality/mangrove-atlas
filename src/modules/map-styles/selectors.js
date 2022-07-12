@@ -35,11 +35,10 @@ function sortLayers(layers) {
     'selected-wdpa-polygons copy 1': 10,
     'alerts-style': 100
   };
-
   return layers.sort((a, b) => {
     const aOrder = order[a.id] || 0;
     const bOrder = order[b.id] || 0;
-
+    
     return aOrder - bOrder;
   });
 }
@@ -49,9 +48,10 @@ export const layerStyles = createSelector(
     if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
       return [];
     }
-
+    
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const extendedLayers = [...layersStyles, ...rasterLayers];
+
     return extendedLayers.filter(
       style => _activeLayersIds.includes(style.id)
         || (
@@ -68,6 +68,7 @@ export const mapStyle = createSelector(
     locationId, startDateAlerts, endDateAlerts, locations],
   (_basemap, _layerStyles, _filters, _activeLayersIds,
     _locationId, _startDateAlerts, _endDateAlerts, _locations) => {
+
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -86,9 +87,6 @@ export const mapStyle = createSelector(
           break;
         case 'restoration':
           widgetFilter = _filters.find(f => f.id === 'restoration');
-          if (widgetFilter) {
-            newLayerStyle.filter = netChangeFilter(widgetFilter);
-          }
           break;
         default:
         case 'cons-hotspots':
@@ -113,11 +111,11 @@ export const mapStyle = createSelector(
      * We are patching here but the object should already be complete by now
      * Selectors are for filtering, not composing
      */
-    const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
+    const visibleLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find(f => f.id === layerId);
 
-      if (layerFilter && layerMap) {
+      if (layerFilter && layerMap && layerId) {
         if (layerFilter && layerFilter.id === 'net') {
           return [
             ...acc,
@@ -127,11 +125,12 @@ export const mapStyle = createSelector(
               ).map(layerMapItem => layerMapItem.layerId)
           ];
         }
+
         return [
           ...acc,
           ...layerMap
             .filter(
-              layerMapItem => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
+              layerMapItem => !!layerMapItem.year ? parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10) : layerMapItem.layerId
             ).map(layerMapItem => layerMapItem.layerId)
         ];
       }
@@ -149,7 +148,7 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
+        visibility: visibleLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
 
@@ -173,6 +172,7 @@ export const mapStyle = createSelector(
         locationId: '',
       });
     }
+
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
 
