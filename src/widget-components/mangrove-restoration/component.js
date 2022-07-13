@@ -1,22 +1,23 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import sortBy from "lodash/sortBy";
-import { format } from "d3-format";
 
 import { getLocationType, getCurrentLocation } from 'modules/pages/sagas';
+import { format } from "d3-format";
 
 // components
-import ChartWidget from 'components/chart-widget';
+import Widget from "components/widget";
 import Chart from "components/chart";
 import Select from "components/select";
 import Icon from "components/icon";
 import WidgetLegend from "components/widget-legend";
-import styles from "components/widget/style.module.scss";
 
-import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
-
-import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 import config from "./config";
+
+// styles
+import styles from "components/widget/style.module.scss";
+import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
+import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 
 const numberFormat = format(",.2f");
 
@@ -138,7 +139,7 @@ function MangroveRestoration({
     ) : (
       <span className="notranslate">{`${currentLocation?.name}`}</span>
     );
-console.log(isCollapsed)
+
   const totalAreaProtected = numberFormat(restorationData.restorable_area);
   const totalArea = numberFormat(restorationData.mangrove_area_extent);
 
@@ -216,21 +217,13 @@ console.log(isCollapsed)
   if (!restorationData.restoration_potential_score) return null;
 
   return (
-    <ChartWidget
-      name={name}
-      slug={slug}
-      filename={slug}
-      chart={false}
-      isCollapsed={isCollapsed}
-      {...props}
-      >
+      <Widget className={styles.widget} slug={slug} {...props} name={name}>
         <div className={widgetStyles.restorationChartWrapper}>
           <div className={widgetStyles.subtitle}>overview</div>
           <div className={styles.restorationPotentialSentence} key={Date.now()}>
             {restorationPotentialLineSentence}
           </div>
           <div>
-          <span className={widgetStyles.restorationPotentialUnit}>{unitRestorationPotential}</span>
           <WidgetLegend groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }} type="height" />
           </div>
             
@@ -309,7 +302,7 @@ console.log(isCollapsed)
           />
 
         </div>
-      </ChartWidget>
+      </Widget>
   );
 }
 

@@ -23,7 +23,6 @@ function* setLocation({ payload }) {
   const idKey = iso ? 'iso' : 'id';
   const { locations: { current } } = yield select();
   const { locations, router: { type } } = yield select();
-  const { dashboards: { current: currentCategory } } = yield select();
   
   const locationType = getLocationType(type);
   const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
