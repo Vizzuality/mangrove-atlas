@@ -1,9 +1,30 @@
-FROM jupyter/datascience-notebook:python-3.8.6
+FROM jupyter/datascience-notebook:python-3.8.6 AS base
 
 SHELL [ "/bin/bash", "-l", "-c" ]
 
 USER root
 
+
+# Update repos and install dependencies
+RUN apt-get update \
+  && apt-get -y upgrade \
+  && apt-get -y install git build-essential libsqlite3-dev zlib1g-dev
+
+# Create a directory and copy in all files
+RUN mkdir -p /tmp/tippecanoe-src
+RUN git clone https://github.com/mapbox/tippecanoe.git /tmp/tippecanoe-src
+WORKDIR /tmp/tippecanoe-src
+
+# Build tippecanoe
+RUN make \
+  && make install
+
+# Remove the temp directory and unneeded packages
+WORKDIR /
+RUN rm -rf /tmp/tippecanoe-src \
+  && apt-get -y remove --purge build-essential && apt-get -y autoremove
+
+FROM base AS stage_1
 # Downloading gcloud package
 RUN curl https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz > /tmp/google-cloud-sdk.tar.gz
 
@@ -15,6 +36,9 @@ RUN mkdir -p /usr/local/gcloud \
 # Adding the package path to local
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
+FROM stage_1 AS stage_2
+
+# Installing the basic packages
 RUN pip install jupyter_contrib_nbextensions \
                 jupyter_nbextensions_configurator \
                 version_information \
@@ -48,10 +72,15 @@ RUN jupyter contrib nbextension install --sys-prefix && \
                 jupyter labextension install jupyterlab_templates &&\
                 jupyter serverextension enable --py jupyterlab_templates
 
+FROM stage_2 AS stage_3
+
+WORKDIR "/home/jovyan/"
 # Add requirements file
 COPY jupyter_notebook_config.py /etc/jupyter/
+COPY jupyter_server_config.py .jupyter/jupyter_server_config.py
 COPY requirements.txt /app/
 RUN pip install wheel -r /app/requirements.txt
 RUN mkdir /opt/app
 # Jupyter with Docker Compose
+
 EXPOSE 8888
