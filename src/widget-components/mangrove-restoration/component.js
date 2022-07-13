@@ -94,13 +94,13 @@ function MangroveRestoration({
 
   const locationType = getLocationType(type);
   const currentLocation = getCurrentLocation(locations.list, currentId, locationType)
-  
+
   const years = restorationDataMetadata?.year || [];
-  
+
   const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
 
   const restorationPotentialScore = !isLoading && restorationData?.restoration_potential_score;
-  
+
   const {
     chartRingData,
     chartRingConfig,
@@ -210,7 +210,7 @@ console.log(isCollapsed)
       The restoration of mangroves in <strong>{location}</strong> would increase the value of the following ecosystem services:
     </>
   );
-  
+
   const trianglePosition = ((lineChartWidth * restorationPotentialScore) / 100) - 7; // substract icon size
 
   if (!restorationData.restoration_potential_score) return null;
@@ -233,7 +233,7 @@ console.log(isCollapsed)
           <span className={widgetStyles.restorationPotentialUnit}>{unitRestorationPotential}</span>
           <WidgetLegend groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }} type="height" />
           </div>
-            
+
             <div ref={lineChartRef} className={widgetStyles.lineChartWidget}>
             <Icon
               name="play"
