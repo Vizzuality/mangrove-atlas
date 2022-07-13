@@ -5,7 +5,6 @@ import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
 import { format } from 'd3-format';
 
-const numberFormat = format(',.3r');
 const formatAxis = format(',~s');
 
 const months = [
@@ -170,7 +169,7 @@ const getEndDates = data => sortBy(data
 const TickSmall = (({
   x, y, payload,
 }) => {
-  const { value, offset } = payload;
+  const { value } = payload;
   return (
     <g transform={`translate(${x},${y})`}>
       <text

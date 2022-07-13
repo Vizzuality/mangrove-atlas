@@ -12,7 +12,7 @@
             <feColorMatrix values="0 0 0 0 0.657070879   0 0 0 0 0.657070879   0 0 0 0 0.657070879  0 0 0 0.179496285 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
     </defs>
-    <g id="Design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="Design" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
         <g id="BG-map">
             <g id="Group-19">
                 <mask id="mask-2" fill="white">
@@ -20,7 +20,7 @@
                 </mask>
                 <g id="Mask" opacity="0">
                     <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
-                    <rect stroke="#ECECEF" stroke-width="1" stroke-linejoin="square" fill="#F7F9F9" fill-rule="evenodd" x="0.5" y="0.5" width="639" height="580"></rect>
+                    <rect stroke="#ECECEF" strokeWidth="1" strokeLinejoin="square" fill="#F7F9F9" fill-rule="evenodd" x="0.5" y="0.5" width="639" height="580"></rect>
                 </g>
                 <g mask="url(#mask-2)" fill="#00C5BD" id="Rectangle-6">
                     <g transform="translate(-12.000000, -195.000000)">
