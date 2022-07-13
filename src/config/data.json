@@ -216,7 +216,8 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "distribution_and_change"
       ],
       "layersIds": []
     },

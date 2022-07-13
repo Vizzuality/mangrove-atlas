@@ -96,7 +96,7 @@ WidgetsMenu.propTypes = {
       name: PropTypes.string
     })
   ),
-  setDashboard: PropTypes.func.isRequired
+  setDashboard: PropTypes.func
 };
 
 export default WidgetsMenu;

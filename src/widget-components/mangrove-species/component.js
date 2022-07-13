@@ -1,6 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import { getCurrentLocation } from 'modules/pages/sagas';
+
 import ChartWidget from 'components/chart-widget';
+
+
 import config from './config';
 
 function MangroveSpecies({
@@ -15,10 +20,11 @@ function MangroveSpecies({
   setUi,
   fetchMangroveSpeciesData,
   current,
+  locationType,
   ...props
 }) {
   const { id } = currentLocation;
-  const location = locationsList.find(location => location.id === id);
+  const location = getCurrentLocation(locationsList, current, locationType);
 
   useEffect(() => {
     if (current === 'worldwide' || current === 1561) {

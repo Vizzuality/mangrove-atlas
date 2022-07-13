@@ -11,7 +11,6 @@ function MangroveInvestmentPotential({
   slug,
   name,
   addFilter,
-  ui: yearSelected,
   setUi,
   fetchInvestmentPotentialData,
   ...props
@@ -77,7 +76,6 @@ MangroveInvestmentPotential.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
   setUi: PropTypes.func,
 };
 
@@ -89,7 +87,6 @@ MangroveInvestmentPotential.defaultProps = {
   slug: null,
   name: null,
   metadata: null,
-  ui: null,
   setUi: () => {},
 };
 
