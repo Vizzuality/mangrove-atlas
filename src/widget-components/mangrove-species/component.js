@@ -44,7 +44,7 @@ function MangroveSpecies({
   }, [addFilter]);
 
   const { threatened, total } = data;
-  
+
   const { chartData, chartConfig } = config.parse(data);
 
   const locationName = (currentLocation.location_type === 'worldwide')

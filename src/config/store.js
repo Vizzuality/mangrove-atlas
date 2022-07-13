@@ -38,6 +38,7 @@ const modules = [
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
+  { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: "investmentPotentialData", components: investmentPotentialData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: 'mangroveRestorationData', components: mangroveRestorationData },
