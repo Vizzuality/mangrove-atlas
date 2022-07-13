@@ -10,14 +10,12 @@ function ChartWidget({
   sentence,
   component,
   chart = true,
-  chartData: {
-    data,
-    config
-  },
+  chartData,
   children,
   className,
   ...props
 }) {
+  const { data, config } = !!chart && chartData;
   return (
     <Widget className={styles.widget} data={data} {...props}>
       <div className={styles.widget_template}>

@@ -70,7 +70,7 @@ const MangroveHeight = ({
       <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateOptions.length > 1 ? dateSelector : dateOptions[0].label}</strong>.
     </>
   );
-  const chartRData = {
+  const widgetData = {
     data: chartData,
     config: chartConfig
   };
@@ -84,7 +84,7 @@ const MangroveHeight = ({
       downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
-      chartData={chartRData}
+      chartData={widgetData}
       {...props}
     />
   );

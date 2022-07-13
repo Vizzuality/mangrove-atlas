@@ -29,6 +29,7 @@ export const MangroveInternationalStatus = ({
   currentLocation,
   isCollapsed = true,
   slug,
+  name,
   fetchMangroveInternationalStatusData,
   locationsList,
   current,
@@ -50,21 +51,12 @@ export const MangroveInternationalStatus = ({
   
   const { pledge_type, ndc_target, ndc_reduction_target, base_years, target_years, ndc_target_url } = data;
 
-  const widgetData = {
-    data: fakeData.data,
-    config: null
-  };
   return (
     <ChartWidget
-      name={'name'}
-
+      name={name}
       slug={slug}
       filename={slug}
       chart={false}
-      data={fakeData.data}
-      config={{}}
-      chartData={widgetData}
-
       isCollapsed={isCollapsed}
       {...props}
       >

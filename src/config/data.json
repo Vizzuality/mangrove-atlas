@@ -216,7 +216,8 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "distribution_and_change"
       ],
       "layersIds": []
     },
@@ -237,21 +238,6 @@
       "layersIds": [
         "restoration"
       ]
-    },
-    {
-      "name": "Mangrove International Status",
-      "slug": "mangrove_international_status",
-      "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets"
-      ],
-      "layersIds": []
     }
   ],
   "layers": [
