@@ -72,7 +72,7 @@ export const CONFIG = {
                 const y = cy + radius * Math.sin(-midAngle * RADIAN);
                 const getDy = () => {
                   if (startAngle === 0) return -5
-                  if (x < cx) return 5
+                  if (x < cx) return 0
                   else return 0
                 };
                 const dy = getDy();

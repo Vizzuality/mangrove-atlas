@@ -11,7 +11,7 @@ export const getLocationType = (type) => {
 }
 
 export const getCurrentLocation = (locationsList, currentId, locationType) => {
-  return locationsList.find(({ id, iso, location_type }) => (id === currentId?.id || iso === currentId?.iso.toUpperCase()) && location_type === locationType);
+  return locationsList.find(({ id, iso, location_type }) => (id === currentId || iso.toLowerCase() === currentId.toLowerCase()) && location_type.toLowerCase() === locationType.toLowerCase());
 }
 
 /**

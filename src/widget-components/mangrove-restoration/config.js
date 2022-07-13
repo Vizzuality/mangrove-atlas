@@ -116,7 +116,7 @@ export const CONFIG = {
       chartValueData,
       chartRingConfig: {
         type: 'pie',
-        layout: 'center',
+        layout: 'centric',
         height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: 'nonProtected',
@@ -224,7 +224,7 @@ export const CONFIG = {
       },
       chartValueConfig: {
         type: 'pie',
-        layout: 'center',
+        layout: 'centric',
         height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: 'indicator',

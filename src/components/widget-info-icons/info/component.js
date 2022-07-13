@@ -25,7 +25,7 @@ const Info = ({ slug }) => {
     const attributes = Object.keys(widgetSelected);
 
     return attributes.map(attribute => (
-      <div>
+      <div key={attribute}>
         <strong>
           {attribute !== 'Title'
             ? `${attribute}:`

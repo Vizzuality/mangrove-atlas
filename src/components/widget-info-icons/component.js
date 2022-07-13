@@ -30,8 +30,8 @@ const WidgetControls = ({ name, slug, layerId, layersIds, isActive }) => {
 WidgetControls.propTypes = {
   name: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
-  layerId: PropTypes.string.isRequired,
-  layersIds: PropTypes.array.isRequired,
+  layerId: PropTypes.string,
+  layersIds: PropTypes.array,
   isActive: PropTypes.bool.isRequired
 };
 

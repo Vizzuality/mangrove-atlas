@@ -6,9 +6,9 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveInternationalStatusData.isLoading,
-  data: state.mangroveInternationalStatusData.data.filter(d => d.year === 2016),
+  data: state.mangroveInternationalStatusData.data,
   locationsList: state.locations.list,
-  current: state.locations.current,
+  current: state.locations.current.id || state.locations.current.iso,
   type: state.router.type,
 });
 const mapDispatchToProps = { fetchMangroveInternationalStatusData };

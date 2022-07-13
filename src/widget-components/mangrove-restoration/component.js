@@ -14,7 +14,7 @@ import WidgetLegend from "components/widget-legend";
 
 import styles from "components/widget/style.module.scss";
 import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
-import { getLocationType } from 'modules/pages/sagas';
+import { getLocationType, getCurrentLocation } from 'modules/pages/sagas';
 import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 
 const numberFormat = format(",.2f");
@@ -92,11 +92,9 @@ function MangroveRestoration({
   ]);
 
   const locationType = getLocationType(type);
-
-  const currentLocation = locations.list.find(({ id, iso, location_type }) => (id === currentId || iso === currentId.toUpperCase()) && location_type === locationType);
-
+  const currentLocation = getCurrentLocation(locations.list, currentId, locationType)
+  
   const years = restorationDataMetadata?.year || [];
-
   
   const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
 
@@ -178,7 +176,7 @@ function MangroveRestoration({
     <>
       The mean restoration potential score for
       <strong>
-        &nbsp;{location} is {numberFormat(restorationPotentialScore)}%
+        &nbsp;{location} is {restorationPotentialScore}%
       </strong>
     </>
   );
@@ -232,7 +230,7 @@ function MangroveRestoration({
             <Icon
               name="play"
               className={widgetStyles.lineChartIcon}
-              style={{ left: trianglePosition }}
+              style={{ left: !!trianglePosition && trianglePosition }}
             />
           </div>
           <hr className={widgetStyles.breakLineDashed} />

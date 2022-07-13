@@ -25,12 +25,11 @@ function ChartWidget({
           {sentence}
         </div>
         {chart && (
-          <div>{chart}</div>
-          // <Chart
-          //   {...props}
-          //   data={data}
-          //   config={config}
-          // />
+          <Chart
+            {...props}
+            data={data}
+            config={config}
+          />
         )}
         {children}
         {component}
