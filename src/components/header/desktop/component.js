@@ -79,7 +79,9 @@ const Header = ({
 };
 
 Header.propTypes = {
-  location: PropTypes.string,
+  location: PropTypes.shape({
+    name: PropTypes.string,
+  }),
   openSearchPanel: PropTypes.func,
   isCollapsed: PropTypes.bool,
   collapseAll: PropTypes.func.isRequired,

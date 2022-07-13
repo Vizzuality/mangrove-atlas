@@ -24,13 +24,11 @@ const getData = (data) => {
     total:  data.total,
     year: data.year,
     protection: protectedMangroves,
-    // unit: chartData.unit,
   },
   {
     color: '#ECECEF',
     percentage: nonProtectedPercentage,
     protection: nonProtected,
-    // unit: chartData.unit,
   }])
 };
 

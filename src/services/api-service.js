@@ -14,8 +14,14 @@ class APIService {
     });
   }
 
+<<<<<<< HEAD
   fetchLocations = (params = {}) =>
     this.clientStaging.get("/locations", { params }).then((response) => {
+=======
+  fetchLocations = (params = {}) => this.clientStaging
+    .get('/locations', { params })
+    .then((response) => {
+>>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -51,6 +57,7 @@ class APIService {
         return data;
       });
   };
+<<<<<<< HEAD
 
 fetchMangroveSpeciesData = (params = {}) => this.clientStaging
   .get(`/widgets/biodiversity`, { params: { ...params } })
@@ -78,5 +85,74 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
     );
   };
 }
+=======
+
+fetchMangroveSpeciesData = (params = {}) => this.clientStaging
+  .get('/widgets/biodiversity', { params: { ...params } })
+  .then((response) => {
+    const { status, statusText, data } = response;
+    if (status >= 400) throw new Error(statusText);
+    return data;
+  });
+
+  fetchMangroveProtectionData = (params = {}) => this.clientStaging
+    .get('/widgets/protected-areas', { params: { ...params }})
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    })
+
+
+  fetchInvestmentPotentialData = async (params = {}) => {
+    const response = await this.clientStaging.get(
+      '/widgets/blue-carbon-investment', { params:  { ...params } }
+    );
+    const { status, statusText, data } = response;
+    if (status >= 400) throw new Error(statusText);
+    return data;
+  };
+
+  fetchMangroveRestorationData = (params = {}) => this.clientStaging
+    .get('/widgets/restoration-potential', {  params: {  dir: 'desc', ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+  
+  fetchMangroveEcosystemServicesData = (params = {}) => this.clientStaging
+    .get('/widgets/ecosystem_services', {  params: {  dir: 'desc', ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+  });
+
+  fetchMangroveDegradationAndLossData = (params = {}) => this.clientStaging
+    .get('/widgets/degradation-and-loss', { params: { ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+    
+  fetchMangroveInternationalStatusData = (params = {}) => this.clientStaging
+    .get('/widgets/international_status', { params: { ...params } })
+    .then((response) => {
+      const { status, statusText,
+        data
+      } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
+  } 
+>>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
 
 export default APIService;

@@ -81,6 +81,22 @@
       ]
     },
     {
+      "name": "Mangrove Investment Potential",
+      "slug": "mangrove_investment_potential",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
+        "ecosystem_services"
+      ]
+    },
+    {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": [
@@ -96,6 +112,21 @@
       ],
       "layersIds": [
         "alerts-heat"
+      ]
+    },
+    {
+      "name": "Mangrove Species",
+      "slug": "mangrove_species",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
       ]
     },
     {
@@ -130,6 +161,7 @@
       "categoryIds": [
         "all_datasets",
         "restoration_and_conservation"
+<<<<<<< HEAD
       ]
     },
     {
@@ -145,6 +177,8 @@
       "categoryIds": [
         "all_datasets",
         "restoration_and_conservation"
+=======
+>>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
       ]
     },
     {
@@ -187,7 +221,7 @@
       "locationType": [
         "custom"
       ],
-      "categoryIds": [],
+      "categoryIds": ["all_datasets"],
       "layersIds": [
         "cons-hotspots"
       ]
@@ -200,9 +234,28 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "distribution_and_change"
       ],
       "layersIds": []
+    },
+    {
+      "name": "Mangrove Restoration",
+      "slug": "mangrove_restoration",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      "layersIds": [
+        "restoration"
+      ]
     }
   ],
   "layers": [
@@ -212,12 +265,20 @@
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     },
     {
+      "name": "Mangrove restoration",
+      "id": "restoration"
+    },
+    {
       "name": "Mangrove extent",
       "id": "extent"
     },
     {
       "name": "Mangrove Blue Carbon",
       "id": "carbon"
+    },
+    {
+      "name": "Mangrove Investment Potential",
+      "id": "investment-potential"
     },
     {
       "name": "Mangrove change",

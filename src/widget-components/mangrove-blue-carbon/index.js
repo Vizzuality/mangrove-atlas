@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  setUi
+  setUi,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

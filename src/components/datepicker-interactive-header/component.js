@@ -78,7 +78,8 @@ const ReactSelectStyles = {
     },
   }),
   menuList: () => ({
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    maxHeight: 250,
 
   }),
   option: (provided, state) => ({
