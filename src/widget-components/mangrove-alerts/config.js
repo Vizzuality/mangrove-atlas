@@ -195,23 +195,16 @@ export const CONFIG = {
     const downloadData = getDownloadData(data, year);
     const startDateOptions = getStartDates(data);
     const endDateOptions = getEndDates(data);
-<<<<<<< HEAD
-    const start = startDate.value || startDateOptions[0].value;
-    const end = endDate.value || endDateOptions[endDateOptions.length - 1].value;
-    const startIndex = chartData.findIndex(d => d.startDate === start);
-    const endIndex = chartData.findIndex(d => d.endDate === end);
-=======
     const start = startDate?.value || startDateOptions[0]?.value;
     const end = endDate?.value || endDateOptions[endDateOptions.length - 1]?.value;
     const startIndex = chartData.findIndex(d => d.start === start);
     const endIndex = chartData.findIndex(d => d.end === end);
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
     const monthsOptions = getDates(data, year);
     const dateOptions = getDates(data);
 
     const dataFiltered = data
       .filter(d => end >= d.date.value && d.date.value >= start);
-    
+
       return {
       chartData,
       monthsOptions,

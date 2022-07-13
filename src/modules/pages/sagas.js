@@ -3,7 +3,7 @@ import { setCurrent, setCurrentId, closeSearchPanel } from 'modules/locations/ac
 import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 
 export const getLocationType = (type) => {
-  if (type === 'PAGE/APP') return 'worldwide' 
+  if (type === 'PAGE/APP') return 'worldwide'
   else if (type === 'PAGE/COUNTRY') return 'country';
   else if (type === 'PAGE/AOI') return 'area-of-interest';
   else if (type === 'PAGE/WDPA') return 'protected-area';
@@ -24,22 +24,16 @@ function* setLocation({ payload }) {
   const { locations: { current } } = yield select();
   const { locations, router: { type } } = yield select();
   const { dashboards: { current: currentCategory } } = yield select();
-  
+
   const locationType = getLocationType(type);
   const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
   const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos.find(location => location.location_type === locationType)?.id;
 
-  if(!!currentLocationId) yield put(setCurrentId({ ...currentLocationId && { location_id: currentLocationId } }));
-   
+  if(currentLocationId) yield put(setCurrentId({ ...currentLocationId && { location_id: currentLocationId } }));
+
   if (!current || current[idKey] !== targetLocation) {
-<<<<<<< HEAD
-    yield put(setCurrent({ [idKey]: targetLocation }));
-    yield put(setCurrentId({ id }));
-    yield put(resetUi());
-=======
       yield put(setCurrent({ [idKey]: targetLocation }));
       yield put(resetUi());
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
   }
 
   // In case user sets location from widget modal

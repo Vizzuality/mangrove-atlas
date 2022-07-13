@@ -15,14 +15,11 @@ import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
 import * as mangroveSpeciesData from 'modules/mangrove-species-data';
-<<<<<<< HEAD
-=======
 import * as investmentPotentialData from "modules/mangrove-investment-data";
 import * as mangroveRestorationData from 'modules/mangrove-restoration-data';
 import * as mangroveDegradationAndLossData from 'modules/mangrove-degradation-and-loss-data';
 import * as mangroveEcosystemServicesData from 'modules/mangrove-ecosystem-services-data';
 import * as mangroveInternationalStatusData from 'modules/mangrove-international-status-data';
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
 import * as ranking from 'modules/ranking';
 import * as alerts from 'modules/alerts';
 
@@ -41,16 +38,13 @@ const modules = [
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
-<<<<<<< HEAD
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
-=======
   { namespace: "investmentPotentialData", components: investmentPotentialData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: 'mangroveRestorationData', components: mangroveRestorationData },
   { namespace: 'mangroveDegradationAndLossData', components: mangroveDegradationAndLossData },
   { namespace: 'mangroveEcosystemServicesData', components: mangroveEcosystemServicesData },
   { namespace: 'mangroveInternationalStatusData', components: mangroveInternationalStatusData },
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
   { namespace: 'ranking', components: ranking },
   { namespace: 'alerts', components: alerts }
 ];
