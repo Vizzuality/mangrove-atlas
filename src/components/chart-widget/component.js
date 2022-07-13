@@ -15,11 +15,7 @@ function ChartWidget({
   className,
   ...props
 }) {
-<<<<<<< HEAD
-
-=======
   const { data, config } = !!chart && chartData;
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
   return (
     <Widget className={styles.widget} data={data} {...props}>
       <div className={styles.widget_template}>

@@ -14,14 +14,9 @@ class APIService {
     });
   }
 
-<<<<<<< HEAD
-  fetchLocations = (params = {}) =>
-    this.clientStaging.get("/locations", { params }).then((response) => {
-=======
   fetchLocations = (params = {}) => this.clientStaging
     .get('/locations', { params })
     .then((response) => {
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -57,35 +52,6 @@ class APIService {
         return data;
       });
   };
-<<<<<<< HEAD
-
-fetchMangroveSpeciesData = (params = {}) => this.clientStaging
-  .get(`/widgets/biodiversity`, { params: { ...params } })
-  .then((response) => {
-    const { status, statusText, data } = response;
-    if (status >= 400) throw new Error(statusText);
-    return data;
-  });
-
-  fetchMangroveProtectionData = (params = {}) => {
-    const { locationId = "1_2_74", year = 2016 } = params;
-    return (
-      this.client
-        // .get(`/v2/widgets/protected-areas?year=${year}&location_id=${locationId}&dir=desc`)
-        .get(`/v2/widgets/protected-areas?&location_id=${locationId}&dir=desc`)
-
-        .then((response) => {
-          const { status, statusText, data } = response;
-
-          const filteredData = data.data.filter((d) => d.year === year);
-
-          if (status >= 400) throw new Error(statusText);
-          return filteredData[0];
-        })
-    );
-  };
-}
-=======
 
 fetchMangroveSpeciesData = (params = {}) => this.clientStaging
   .get('/widgets/biodiversity', { params: { ...params } })
@@ -122,7 +88,7 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-  
+
   fetchMangroveEcosystemServicesData = (params = {}) => this.clientStaging
     .get('/widgets/ecosystem_services', {  params: {  dir: 'desc', ...params } })
     .then((response) => {
@@ -142,7 +108,7 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-    
+
   fetchMangroveInternationalStatusData = (params = {}) => this.clientStaging
     .get('/widgets/international_status', { params: { ...params } })
     .then((response) => {
@@ -152,7 +118,6 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-  } 
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
+  }
 
 export default APIService;
