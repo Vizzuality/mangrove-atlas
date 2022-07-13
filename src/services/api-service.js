@@ -88,7 +88,7 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-  
+
   fetchMangroveEcosystemServicesData = (params = {}) => this.clientStaging
     .get('/widgets/ecosystem_services', {  params: {  dir: 'desc', ...params } })
     .then((response) => {
@@ -108,7 +108,7 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-    
+
   fetchMangroveInternationalStatusData = (params = {}) => this.clientStaging
     .get('/widgets/international_status', { params: { ...params } })
     .then((response) => {
@@ -118,6 +118,6 @@ fetchMangroveSpeciesData = (params = {}) => this.clientStaging
       if (status >= 400) throw new Error(statusText);
       return data;
     });
-  } 
+  }
 
 export default APIService;

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 
@@ -56,7 +56,7 @@ function MangroveProtection({
         value: { year: yearUpdate, unit: (unit || unitArea) }
       });
     }
-  
+
   }, [currentLocationId, year, years.length]);
 
   const changeYear = useCallback((current) => {
@@ -119,7 +119,7 @@ function MangroveProtection({
 
   const sentence = (
     <>
-      Mangroves in protected areas
+      Mangroves in protected areas in
       <strong>&nbsp;{location}&nbsp;</strong>
       in
       &nbsp;<strong>{displayYear}</strong> represented <strong>{totalAreaProtected}{' '}{displayUnit}</strong> of <strong>{totalArea}{' '}{displayUnit}</strong>.

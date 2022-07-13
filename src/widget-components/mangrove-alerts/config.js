@@ -204,7 +204,7 @@ export const CONFIG = {
 
     const dataFiltered = data
       .filter(d => end >= d.date.value && d.date.value >= start);
-    
+
       return {
       chartData,
       monthsOptions,
