@@ -76,6 +76,15 @@ const widgetInfo = {
     'Date of content': '<p>Pending ...</p>',
     License: '<p>Pending ...</p>',
   },
+<<<<<<< HEAD
+=======
+  mangrove_restoration: {
+    Title: '<h1>Mangrove Restoration</h1>',
+    Overview: '<p>Pending</p>',
+    Reference: '<p>Pending</p>',
+    License: '<p>Pending</p>',
+  },
+>>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
 };
 
 export default widgetInfo;

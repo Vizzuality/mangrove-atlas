@@ -10,6 +10,9 @@ const Icons = () => (
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
+      <symbol id="icon-play" viewBox="0 0 32 32">
+        <path d="M6 4l20 12-20 12z"></path>
+      </symbol>
       <symbol id="icon-all_datasets" viewBox="0 0 32 32">
         <path d="M9.333 10.667c0-0.368 0.298-0.667 0.667-0.667h12c0.368 0 0.667 0.298 0.667 0.667v1.333h-1.333v-0.667h-10.667v0.667h-1.333v-1.333z"></path>
         <path d="M9.333 13.333c0-0.368 0.298-0.667 0.667-0.667h12c0.368 0 0.667 0.298 0.667 0.667v1.333h-1.333v-0.667h-10.667v0.667h-1.333v-1.333z"></path>
@@ -33,8 +36,8 @@ const Icons = () => (
       </symbol>
       <symbol id="icon-close" viewBox="0 0 32 32">
         <path fill="#ffffff" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
-        <path fill="#ffffff" stroke="#00857F" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3714" d="M11.429 11.429l9.143 9.143"></path>
-        <path stroke="#00857F" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="1.3714" d="M11.429 20.571l9.143-9.143"></path>
+        <path fill="#ffffff" stroke="#00857F" strokeLinejoin="round" strokeLinecap="round" strokeMiterlimit="4" strokeWidth="1.3714" d="M11.429 11.429l9.143 9.143"></path>
+        <path stroke="#00857F" strokeLinejoin="round" strokeLinecap="round" strokeMiterlimit="4" strokeWidth="1.3714" d="M11.429 20.571l9.143-9.143"></path>
       </symbol>
       <symbol id="icon-places" viewBox="0 0 32 32">
         <path d="M9.333 14.254c0 2.718 2.203 4.921 4.921 4.921 1.347 0 2.568-0.541 3.457-1.419 0.007-0.008 0.014-0.016 0.022-0.023s0.015-0.015 0.023-0.022c0.877-0.889 1.419-2.109 1.419-3.457 0-2.718-2.203-4.921-4.921-4.921s-4.921 2.203-4.921 4.921zM18.18 19.123c-1.073 0.867-2.439 1.385-3.926 1.385-3.454 0-6.254-2.8-6.254-6.254s2.8-6.254 6.254-6.254c3.454 0 6.254 2.8 6.254 6.254 0 1.487-0.519 2.852-1.385 3.926l3.984 3.984c0.26 0.26 0.26 0.682 0 0.943s-0.682 0.26-0.943 0l-3.984-3.984z"></path>

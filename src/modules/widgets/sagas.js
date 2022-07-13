@@ -18,7 +18,7 @@ export function* getWidgets() {
       if (widgets[i].slug === 'mangrove_extent') {
         yield put(toggleLayerActive({
           id: 'extent',
-          isActive: true
+          isActive: false
         }));
       }
     }

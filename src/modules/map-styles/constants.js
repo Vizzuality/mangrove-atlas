@@ -1,3 +1,7 @@
+import alerts from "./templates/alerts.json";
+
+
+
 function toRasterSource({ filename, source }) {
   const extent = filename.includes('gmw');
   return {
@@ -32,92 +36,26 @@ const geojsons = [
       // Provided in the mapStyle selector
       // data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{start_date}}&{{end_date}}&{{locationId}}'
     },
+    layers: alerts
+  }
+]; 
+
+const vectors = [
+  {
+    id: 'restoration',
+    source: {
+      type: 'vector',
+    },
     layers: [
       {
-        id: 'alerts-heat',
-        type: 'heatmap',
-        source: 'alerts',
-        maxzoom: 15,
-        paint: {
-          // NOTE: By default mapbox calculates the heatmap radius and intensity
-          'heatmap-weight': [
-            'interpolate',
-            ['linear'],
-            ['get', 'intensity'],
-            0,
-            0,
-            1,
-            1
-          ],
-          'heatmap-intensity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            0,
-            1,
-            9,
-            3
-          ],
-          'heatmap-color': [
-            'interpolate',
-            ['linear'],
-            ['heatmap-density'],
-            0,
-            'rgba(255, 255, 255, 0)',
-            0.1,
-            'rgba(255, 194, 0, 1)',
-            0.5,
-            'rgba(235, 68, 68, 1)',
-            1,
-            'rgba(199, 43, 214, 1)',
-          ],
-          // Adjust the heatmap radius by zoom level
-          'heatmap-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            0,
-            5,
-            9,
-            10
-          ],
-          // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            7,
-            1,
-            9,
-            0.7
-          ]
-        }
-      },
-      // Client doesn't want alerts point for now
-      {
-        id: 'alerts-point',
-        type: 'circle',
-        source: 'alerts',
-        paint: {
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            7,
-            ['interpolate', ['linear'], ['get', 'count'], 1, 1, 6, 4],
-            16,
-            ['interpolate', ['linear'], ['get', 'count'], 1, 5, 6, 50]
-          ],
-          'circle-color': 'rgba(210, 50, 169, 1)',
-          'circle-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            7,
-            0,
-            8,
-            1
-          ]
+        "id": "restoration",
+        "type": "fill",
+        "source": "restoration",
+        "source-layer": "MOW_Global_Mangrove_Restoration",
+        "layout": {},
+        "paint": {
+          "fill-color": "#8122A6",
+          "fill-opacity": 0.3
         }
       }
     ]
@@ -557,12 +495,12 @@ const rasters = [
   }
 ];
 
-const sourcesAndLayers = [...rasters, ...geojsons].reduce((acc, item) => {
+const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce((acc, item) => {
   const layers = (item.source.type === 'raster') ? createRasterLayer(item) : [];
   return {
     sources: {
       ...acc.sources,
-      ...item.source.type === 'geojson' && {
+      ...(item.source.type === 'geojson') && {
         [item.id]: item.source
       },
       ...item.source.type === 'raster' && { [`${item.name}-tiles`]: toRasterSource(item) },
@@ -570,7 +508,7 @@ const sourcesAndLayers = [...rasters, ...geojsons].reduce((acc, item) => {
     layers: [
       ...acc.layers,
       ...layers,
-      ...(item.source.type === 'geojson') ? item.layers : []
+      ...(item.source.type === 'geojson' || item.source.type === 'vector') ? item.layers : []
     ]
   };
 }, { sources: {}, layers: [] });
@@ -847,7 +785,14 @@ const layersMap = {
     {
       layerId: 'alerts-point',
     },
-  ]
+  ],
+  restoration: [
+    {
+      layerId: 'restoration',
+      minZoom: 0,
+      maxZoom: 12
+    }
+  ],
 };
 
 

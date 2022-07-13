@@ -36,6 +36,13 @@
     "composite": {
       "url": "mapbox://mangrove-atlas.selected_WDPA_polygons,mangrove-atlas.selected_EEZ_land_v2_201410,mangrove-atlas.gmw_1996_2016,mangrove-atlas.gmw_change_1996_2016,mangrove-atlas.cons_hotspots",
       "type": "vector"
+    },
+    "alerts": {
+      "type": "geojson"
+    },
+    "restoration": {
+      "type": "vector",
+      "url": "mapbox://mangrove-atlas.c7czuzvl"
     }
   },
   "sprite": "mapbox://sprites/mangrove-atlas/cjx4ikse805an1co712z98lel/95q41f91c3ead18lh93952y85",

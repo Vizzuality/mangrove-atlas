@@ -16,11 +16,11 @@ function getValue(item, value) {
   return `${preffix}${val}${suffix}`;
 }
 
-function Tooltip({ payload, settings, style, hideZeros, offset }) {
+function Tooltip({ payload, settings, style, hideZeros }) {
   const values = payload && payload.length > 0 && payload[0].payload;
-
   return (
     <div>
+
       {settings && settings.length && (
         <div className={styles.chart_tooltip} style={style}>
 
