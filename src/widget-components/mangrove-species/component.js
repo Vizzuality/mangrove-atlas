@@ -33,7 +33,7 @@ function MangroveSpecies({
     else {
       fetchMangroveSpeciesData({ ...(id && id !== 1561) && { location_id: id } });
     }
-  }, [currentLocation, current, locationsList, fetchMangroveSpeciesData]);
+  }, [id, current, locationsList, fetchMangroveSpeciesData]);
 
   useEffect(() => {
     addFilter({

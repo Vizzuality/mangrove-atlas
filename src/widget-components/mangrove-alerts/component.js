@@ -3,7 +3,6 @@ import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
 import config from './config';
-import { styles } from '../../components/select/style';
 
 const MangroveAlerts = ({
   data,

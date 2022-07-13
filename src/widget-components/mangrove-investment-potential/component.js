@@ -24,7 +24,7 @@ function MangroveInvestmentPotential({
     else {
       fetchInvestmentPotentialData({ ...(location_id && location_id !== 1561) && { location_id } });
     }
-  }, [currentLocationId, current, fetchInvestmentPotentialData]);
+  }, [location_id, current, fetchInvestmentPotentialData]);
 
   useEffect(() => {
     addFilter({

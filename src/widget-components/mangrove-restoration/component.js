@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import sortBy from "lodash/sortBy";
+
 import { format } from "d3-format";
 
 import { getLocationType, getCurrentLocation } from 'modules/pages/sagas';
@@ -11,12 +12,13 @@ import Chart from "components/chart";
 import Select from "components/select";
 import Icon from "components/icon";
 import WidgetLegend from "components/widget-legend";
-import styles from "components/widget/style.module.scss";
 
+import styles from "components/widget/style.module.scss";
 import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
 
-import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 import config from "./config";
+
+import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
 
 const numberFormat = format(",.2f");
 
@@ -138,7 +140,7 @@ function MangroveRestoration({
     ) : (
       <span className="notranslate">{`${currentLocation?.name}`}</span>
     );
-console.log(isCollapsed)
+
   const totalAreaProtected = numberFormat(restorationData.restorable_area);
   const totalArea = numberFormat(restorationData.mangrove_area_extent);
 
@@ -226,7 +228,7 @@ console.log(isCollapsed)
       >
         <div className={widgetStyles.restorationChartWrapper}>
           <div className={widgetStyles.subtitle}>overview</div>
-          <div className={styles.restorationPotentialSentence} key={Date.now()}>
+          <div className={widgetStyles.sentence} key={Date.now()}>
             {restorationPotentialLineSentence}
           </div>
           <div>

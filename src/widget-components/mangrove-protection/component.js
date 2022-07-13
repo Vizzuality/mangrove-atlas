@@ -4,10 +4,12 @@ import sortBy from 'lodash/sortBy';
 
 import { format } from 'd3-format';
 
-import config from './config';
+import { getCurrentLocation } from 'modules/pages/sagas';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+
+import config from './config';
 
 const numberFormat = format(',.2f')
 
@@ -24,12 +26,17 @@ function MangroveProtection({
   addFilter,
   ui,
   setUi,
+  locationType,
   fetchMangroveProtectionData,
   ...props
 }) {
   const years = metadata?.year.sort() || [];
 
   const { year, unit } = ui;
+
+  const id = current?.iso || current?.id;
+
+  const currentLocation = getCurrentLocation(locations, id, locationType);
 
   useEffect(() => {
     if (!data?.length || metadata) {
@@ -41,6 +48,7 @@ function MangroveProtection({
       }
     }
   }, [currentLocation, current, fetchMangroveProtectionData]);
+
   useEffect(() => {
     if (!isLoading) {
       const yearUpdate = year || years?.[years?.length - 1]
@@ -57,7 +65,7 @@ function MangroveProtection({
       });
     }
 
-  }, [currentLocationId, year, years.length]);
+  }, [year, years.length]);
 
   const changeYear = useCallback((current) => {
     addFilter({
@@ -72,7 +80,6 @@ function MangroveProtection({
 
   const unitMetadata = metadata?.units;
   const unitArea = unitMetadata?.total_area;
-  const currentLocation = locations?.find(({ id, iso }) => id === currentLocationId || id === current || iso === current);
 
   if (!data || !data?.length) {
     return null;
