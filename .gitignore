@@ -29,5 +29,5 @@ yarn-error.log*
 **/node_modules/**
 **/credentials.json
 **credentials.json
-/build/**
+**/build/**
 credentials.json
