@@ -1,0 +1,40 @@
+name: Deploy analysis cloud functions to google
+permissions:
+  id-token: write
+  contents: read
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'master'
+    paths:
+      - 'cloud-functions/analysis/**'
+  workflow_dispatch:
+jobs:
+  run:
+    name: Deploy analysis cloud function
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+    - uses: actions/checkout@v3
+    - id: auth
+      name: Authenticate in google cloud services
+      uses: google-github-actions/auth@v0.8.0
+      with:
+        credentials_json: '${{ secrets.gcp_credentials }}'
+    - id: 'deploy'
+      name: GC Functions deployment
+      uses: 'google-github-actions/deploy-cloud-functions@v0.10.1'
+      with:
+        name: 'analysis'
+        runtime: 'nodejs10'
+        entry_point: 'analyse'
+        memory_mb: '128'
+        region: 'us-central1'
+        source_dir: 'cloud-functions/analysis'
+    # Example of using the output
+    - id: 'test'
+      name: GC Functions testing deployment
+      run: 'curl "${{ steps.deploy.outputs.url }}"'
