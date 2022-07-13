@@ -12,10 +12,7 @@ import MangroveNetChange from 'widget-components/mangrove-net-change';
 import MangroveBlueCarbon from 'widget-components/mangrove-blue-carbon';
 import MangroveProtection from 'widget-components/mangrove-protection';
 import MangroveSpecies from 'widget-components/mangrove-species';
-<<<<<<< HEAD
-=======
 import MangroveRestoration from 'widget-components/mangrove-restoration';
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
 import MangroveActivity from 'widget-components/mangrove-activity';
 import MangroveAlerts from 'widget-components/mangrove-alerts';
 import MangroveHeight from 'widget-components/mangrove-height';
@@ -48,12 +45,9 @@ export const templates = new Map([
   ['mangrove_species', {
     component: MangroveSpecies
   }],
-<<<<<<< HEAD
-=======
   ['mangrove_restoration', {
     component: MangroveRestoration
   }],
->>>>>>> 25697e8dbf72d99a9484bee079cf82d30c928363
   ['mangrove_activity', {
     component: MangroveActivity
   }],
