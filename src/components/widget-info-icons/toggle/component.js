@@ -7,9 +7,9 @@ const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive, toggleCollap
 
 const handleChange = () =>  {
   if (layersIds) {
-    layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive: !isActive }));
+    layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive }));
   } else {
-    toggleActive({ id: slug, layerId, isActive: !isActive });
+    toggleActive({ id: slug, layerId, isActive });
   }
   toggleCollapse({ id: slug });
 };

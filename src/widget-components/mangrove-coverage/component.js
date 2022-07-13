@@ -49,9 +49,7 @@ function MangroveCoverage({
   setUi,
   ...props
 }) {
-  if (!rawData) {
-    return null;
-  }
+  if (!rawData) return null;
 
   const data = config.parse(rawData);
   const { chartConfig, metadata } = data;
