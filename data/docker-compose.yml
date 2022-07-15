@@ -17,9 +17,6 @@ services:
       environment:
         - GRANT_SUDO=yes
         - DOCKER_STACKS_JUPYTER_CMD=lab
-    #         - DASK_SCHEDULER_ADDRESS="tcp://scheduler:8786"
-      #extra_hosts:
-      #  - "mymachine:<your_ip>"
 
 
 
