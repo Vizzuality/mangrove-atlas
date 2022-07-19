@@ -16,11 +16,12 @@ const WidgetList = ({ widgets, isCollapsed, templates, mobile, ...parentProps })
       >
         {!widgets.length
           ? <div className={styles.spinner}><Spinner /></div>
-          : widgets.length && widgets.map((widget) => {
+          : widgets.length && widgets.map((widget, index) => {
             const Widget = templates.get(widget.slug).component;
             return (
               <Widget
                 key={widget.slug}
+                isLast={widgets.length - 1 === index}
                 {...widget}
                 {...parentProps}
               />
