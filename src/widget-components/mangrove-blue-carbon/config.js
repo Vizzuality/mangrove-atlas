@@ -9,6 +9,7 @@ import { format } from 'd3-format';
 // components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
+import { orderBy } from 'lodash';
 
 const numberFormat = format(',.2f');
 const removeDecimals = format(',.0f');
@@ -95,7 +96,7 @@ export const CONFIG = {
     const chartData = dataFiltered.length ? getData(dataFiltered) : '';
     const downloadData = getDownloadData(data);
     return {
-      chartData,
+      chartData: orderBy(chartData, d => Number(d.label.split('--', 1)), 'desc'),
       coverage: biomassCoverage(data, yearSelected),
       downloadData,
       totalValues: dataFiltered[0],

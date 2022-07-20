@@ -10,7 +10,7 @@ const MobileLayout = () => (
   <div className={styles.printOnly_wrapper}>
     <div className={styles.dashboards}>
       <Header />
-      <Widgets />
+      <Widgets mobile />
       <p className={styles.printOnly}>Generate your report at https://www.globalmangrovewatch.org</p>
     </div>
   </div>

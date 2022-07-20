@@ -5,8 +5,8 @@ import orderBy from 'lodash/orderBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
-import moreIcon from './icon-more.svg';
-import lessIcon from './icon-less.svg';
+import moreIcon from '../icons/icon-more.svg';
+import lessIcon from '../icons/icon-less.svg';
 
 import config from './config';
 

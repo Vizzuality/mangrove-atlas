@@ -249,8 +249,7 @@ class Map extends Component {
     return (
       <div
         ref={(r) => { this.mapContainer = r; }}
-        className={classnames({
-          [styles.map]: true,
+        className={classnames(styles.map, {
           [customClass]: !!customClass
         })}
       >
