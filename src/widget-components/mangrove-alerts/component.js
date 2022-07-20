@@ -125,6 +125,8 @@ const MangroveAlerts = ({
       isOptionDisabled={option => option.value < startDate.value
         || option.value === endDate.value}
       onChange={value => changeDate('endDate', value)}
+      classNamePrefix="react-select"
+      className="alerts"
     />
   );
   const sentence = (
