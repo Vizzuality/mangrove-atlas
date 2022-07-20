@@ -71,24 +71,25 @@ const CONFIG = {
             isAnimationActive: false
           }
         },
-        bars: {
-          gain: {
-            barSize: 10,
-            transform: `translate(${(4 + 10) / 2}, 0)`,
-            fill: '#A6CB10',
-            radius: [10, 10, 0, 0],
-            legend: 'Gain',
-            isAnimationActive: false
-          },
-          loss: {
-            barSize: 10,
-            transform: `translate(-${(4 + 10) / 2}, 0)`,
-            fill: '#EB6240',
-            radius: [10, 10, 0, 0],
-            legend: 'Loss',
-            isAnimationActive: false
-          }
-        }
+        // temporary hidden because of wrong calculations in data
+        // bars: {
+        //   gain: {
+        //     barSize: 10,
+        //     transform: `translate(${(4 + 10) / 2}, 0)`,
+        //     fill: '#A6CB10',
+        //     radius: [10, 10, 0, 0],
+        //     legend: 'Gain',
+        //     isAnimationActive: false
+        //   },
+        //   loss: {
+        //     barSize: 10,
+        //     transform: `translate(-${(4 + 10) / 2}, 0)`,
+        //     fill: '#EB6240',
+        //     radius: [10, 10, 0, 0],
+        //     legend: 'Loss',
+        //     isAnimationActive: false
+        //   }
+        // }
       },
       xAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' }
@@ -139,13 +140,13 @@ const CONFIG = {
               marginLeft: '30px'
             }}
             payload={[
-              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
-              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
+              // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
+              // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
               { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)} km²` }
             ]}
             settings={[
-              { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
-              { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
+              // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
+              // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
               {
                 label: 'Net result',
                 color: 'rgba(0,0,0,0.7)',
