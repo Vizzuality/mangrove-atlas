@@ -6,21 +6,25 @@ import groupBy from 'lodash/groupBy';
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
-import WidgetLegend from 'components/widget-legend';
+import SpeciesLegend from './species-legend';
+import Legend from 'components/widget-legend';
+
 
 import { RED_LIST_CATEGORIES } from './constants';
 
 const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF',];
 
 const getData = (data) => {
-  const { categories, total } = data;
+  const { categories, total, species } = data;
+  const speciesByGroup = groupBy(species, s => s.red_list_cat)
 
   if (!categories || Object.keys(categories).length === 0) return null;
   return Object.entries(categories).map((item, index) => ({
     value: item[1],
     color: COLORS[index],
     percentage: item[1] / total * 100,
-    label: `${RED_LIST_CATEGORIES[item[0]]}`
+    label: `${RED_LIST_CATEGORIES[item[0]]}`,
+    species: speciesByGroup[item[0]]
   }));
 };
 
@@ -49,13 +53,14 @@ export const CONFIG = {
         },
         legend: {
           align: 'left',
-          verticalAlign: 'middle',
+          verticalAlign: 'top',
           layout: 'vertical',
           fontSize: 9,
           content: (properties) => {
             const { payload } = properties;
+            if (!Object.keys(payload)) return null;
             const groups = groupBy(payload, p => p.value);
-            return <WidgetLegend widgetSpecific="species" groups={groups} />;
+            return <SpeciesLegend groups={groups} />;
           }
         },
         tooltip: {
@@ -75,7 +80,7 @@ export const CONFIG = {
                   {
                     key: 'label',
                     color: 'color',
-                    description: `Number of species: ${payload[0]?.payload.value}`, //'Camptostemon philippinense Heritiera globosa (endemic)',
+                    description: `Number of species: ${payload[0]?.payload.value}`,
                     position: '_row',
                     type: 'species',
                   },

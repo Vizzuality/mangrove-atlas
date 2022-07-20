@@ -1,5 +1,6 @@
 @import 'styles/_vars.scss';
 
+
 .dashboards {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,8 @@
   max-width: 700px;
 
   @media print {
-    max-width: 100%;
+    display: block;
+    page-break-before: always;
     padding: 30px;
   }
 }

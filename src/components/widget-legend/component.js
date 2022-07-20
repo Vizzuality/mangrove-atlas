@@ -59,6 +59,7 @@ const Legend = ({ title,
 
                 <div className={classnames(styles.itemWrapper, styles[`_${type}`])}>
                   {!!item.value && <span>{item.value}</span>}
+                  {widgetSpecific === 'species' && <ul>{item?.payload?.species[0].scientific_name}</ul>}
                   {!!sup && <DangerousHTML html={unit} />}
                   {!!item.payload && !!item.payload.y && type !== 'height'
                     && (

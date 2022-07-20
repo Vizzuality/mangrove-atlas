@@ -25,7 +25,7 @@ function Widget({
 
   const widgetConditionalStyles = {
     [styles._modal]: isLocationsModal,
-    [styles._collapsed]: isLast ? false : isCollapsed,
+    [styles._collapsed]: !!isLast ? false : isCollapsed,
     [styles._layerActive]: isActive
   };
 
@@ -36,6 +36,7 @@ function Widget({
     <button
       type="button"
       className={styles.title}
+      disabled={isLast}
       onClick={collapseToggleHandler}
     >
       {name}
