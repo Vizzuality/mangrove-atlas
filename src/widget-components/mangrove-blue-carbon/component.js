@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import config from './config';
 
+const note = "This information is based on an outdated GMW version. Please use for reference only while we are in the process of updating this to the latest GMW version 3."
+
 function MangroveBlueCarbon({
   data: rawData,
   currentLocation,
@@ -64,6 +66,7 @@ function MangroveBlueCarbon({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
+      note={note}
       {...props}
     />
   );

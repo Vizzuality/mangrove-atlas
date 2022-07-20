@@ -13,6 +13,7 @@ function ChartWidget({
   chartData,
   children,
   className,
+  note,
   ...props
 }) {
   const { data, config } = !!chart && chartData;
@@ -31,6 +32,12 @@ function ChartWidget({
         )}
         {children}
         {component}
+        {note && (
+          <div className={styles.note}>
+            <span>Note:</span>
+            <span>{note}</span>
+          </div>
+        )}
       </div>
     </Widget>
   );

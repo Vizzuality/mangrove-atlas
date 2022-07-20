@@ -118,6 +118,14 @@
   .bold {
     font-weight: bold;
   }
+
+  .note {
+    font-style: italic;
+
+    span {
+      padding-right: 5px;
+    }
+  }
 }
 
 .link {
