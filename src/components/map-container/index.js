@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   isCollapse: state.layers.isCollapsed,
   data: highlightedPlaces(state),
   currentLocation: currentLocation(state),
+  bounds: state.map.bounds,
 });
 
 const mapDispatchToProps = {

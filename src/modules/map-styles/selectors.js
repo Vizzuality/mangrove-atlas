@@ -20,8 +20,9 @@ const locationId = state => state.locations.current.id || state.locations.curren
 const locations = state => state.locations.list;
 const startDateAlerts = state => state.widgets.ui.alerts.startDate;
 const endDateAlerts = state => state.widgets.ui.alerts.endDate;
-const startDateNet = state => state.widgets.ui.net.startYear;
-const endDateNet = state => state.widgets.ui.net.endYear;
+const startYearNet = state => state.widgets.ui.net.startYear;
+const endYearNet= state => state.widgets.ui.net.endYear;
+
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
   
@@ -37,10 +38,11 @@ function sortLayers(layers) {
     'selected-wdpa-polygons copy 1': 10,
     'alerts-style': 100
   };
+
   return layers.sort((a, b) => {
     const aOrder = order[a.id] || 0;
     const bOrder = order[b.id] || 0;
-    
+
     return aOrder - bOrder;
   });
 }
@@ -50,6 +52,7 @@ export const layerStyles = createSelector(
     if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
       return [];
     }
+
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers.filter(
@@ -65,9 +68,9 @@ export const layerStyles = createSelector(
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters, activeLayersIds,
-    locationId, startDateAlerts, endDateAlerts, startDateNet, endDateNet,locations],
+    locationId, startDateAlerts, endDateAlerts, startYearNet, endYearNet, locations],
   (_basemap, _layerStyles, _filters, _activeLayersIds,
-    _locationId, _startDateAlerts, _endDateAlerts, _startDateNet, _endDateNet, _locations) => {
+    _locationId, _startDateAlerts, _endDateAlerts, _startYearNet, _endYearNet, _locations) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -84,9 +87,6 @@ export const mapStyle = createSelector(
             newLayerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
-        case 'restoration':
-          widgetFilter = _filters.find(f => f.id === 'restoration');
-          break;
         default:
         case 'cons-hotspots':
           widgetFilter = _filters.find(f => f.id === 'cons-hotspots');
@@ -95,6 +95,7 @@ export const mapStyle = createSelector(
           }
           break;
       }
+
       return newLayerStyle;
     });
 
@@ -110,28 +111,26 @@ export const mapStyle = createSelector(
      * We are patching here but the object should already be complete by now
      * Selectors are for filtering, not composing
      */
-    const visibleLayers = _activeLayersIds.reduce((acc, layerId) => {
+    const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find(f => f.id === layerId);
-      const yearsFiltered = layerFilter.years.filter(y => y <= _endDateNet && y >= _startDateNet)
+      const yearsNetChange = layerFilter.years.filter(y => y <= _endYearNet && y >= _startYearNet)
 
-      if (layerFilter && layerMap && layerId) {
+      if (layerFilter && layerMap) {
         if (layerFilter && layerFilter.id === 'net') {
           return [
             ...acc,
             ...layerMap
               .filter(
-                layerMapItem => 
-                  yearsFiltered.includes(parseInt(layerMapItem.year, 10))
+                layerMapItem => yearsNetChange.includes(parseInt(layerMapItem.year, 10))
               ).map(layerMapItem => layerMapItem.layerId)
           ];
         }
-
         return [
           ...acc,
           ...layerMap
             .filter(
-              layerMapItem => !!layerMapItem.year ? parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10) : layerMapItem.layerId
+              layerMapItem => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10)
             ).map(layerMapItem => layerMapItem.layerId)
         ];
       }
@@ -142,7 +141,6 @@ export const mapStyle = createSelector(
           ...layerMap.map(layerMapItem => layerMapItem.layerId)
         ];
       }
-
       return acc;
     }, []);
 
@@ -150,7 +148,7 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleLayers.includes(layer.id) ? 'visible' : 'none'
+        visibility: visibleRasterLayers.includes(layer.id) ? 'visible' : 'none'
       }
     }));
 
@@ -174,7 +172,6 @@ export const mapStyle = createSelector(
         locationId: '',
       });
     }
-
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
 
