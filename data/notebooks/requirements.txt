@@ -25,3 +25,4 @@ geemap
 pandera == 0.8.1
 pandera[strategies]
 pandera[hypothesis]
+rtree
