@@ -31,7 +31,6 @@ const WidgetList = ({
         widgets.length &&
         widgets.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-
           return (
             <div key={widget.slug} className={cx(styles.widgetWrapper, {
               [styles.pageBreak]: index % 2 !== 0

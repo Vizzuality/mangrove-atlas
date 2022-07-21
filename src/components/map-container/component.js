@@ -102,6 +102,7 @@ export const MapContainer = ({
       goToCountry({ iso: countryId });
     }
   };
+
   return (
     <div className={styles.map}>
       <MangroveMap
