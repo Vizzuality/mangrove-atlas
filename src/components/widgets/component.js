@@ -33,18 +33,15 @@ const WidgetList = ({
           const Widget = templates.get(widget.slug).component;
 
           return (
-            <div key={widget.slug} className={styles.widgetWrapper}>
-              <div className={cx({
-                  [styles.pageBreak]: index % 2 !== 0
-                })}
-              >
-                <Widget
-                  key={widget.slug}
-                  isLast={widgets.length - 1 === index}
-                  {...widget}
-                  {...parentProps}
-                />
-              </div>
+            <div key={widget.slug} className={cx(styles.widgetWrapper, {
+              [styles.pageBreak]: index % 2 !== 0
+            })}>
+              <Widget
+                key={widget.slug}
+                isLast={widgets.length - 1 === index}
+                {...widget}
+                {...parentProps}
+              />
             </div>
           );
         })
