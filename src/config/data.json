@@ -112,6 +112,9 @@
       "name": "Mangrove Species",
       "slug": "mangrove_species",
       "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
         "country",
         "worldwide"
       ],
