@@ -172,10 +172,13 @@
 .list {
   list-style: none;
   padding: 0;
-  margin: 5px 15px;
+  margin-top: 2px;
+  margin-left: 15px;
   overflow-y: auto;
   max-height: 140px;
   pointer-events: all;
+  width: fit-content;
+  font-style: italic;
   
   .speciesLink {
     pointer-events: all;

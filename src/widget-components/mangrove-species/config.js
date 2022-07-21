@@ -8,21 +8,19 @@ import groupBy from 'lodash/groupBy';
 import WidgetTooltip from 'components/widget-tooltip';
 import SpeciesLegend from './species-legend';
 
-import { RED_LIST_CATEGORIES } from './constants';
-
-const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF',];
+import { RED_LIST_CATEGORIES, COLORS } from './constants';
 
 const getData = (data) => {
   const { categories, total, species } = data;
   const speciesByGroup = groupBy(species, s => s.red_list_cat)
 
   if (!categories || Object.keys(categories).length === 0) return null;
-  return Object.entries(categories).map((item, index) => ({
+  return Object.entries(categories).map((item) => ({
     value: item[1],
-    color: COLORS[index],
+    color: COLORS[item[0]],
     percentage: item[1] / total * 100,
     label: `${RED_LIST_CATEGORIES[item[0]]}`,
-    species: speciesByGroup[item[0]]
+    species: speciesByGroup[item[0]].sort()
   }));
 };
 
