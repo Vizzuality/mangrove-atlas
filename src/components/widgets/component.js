@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import Spinner from "components/spinner";
 import Button from "components/button";
-import widgetInfo from "components/widget-info-icons/info/constants";
-
-import DangerousHTML from "react-dangerous-html";
 
 import styles from "./style.module.scss";
 
@@ -34,30 +31,19 @@ const WidgetList = ({
         widgets.length &&
         widgets.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-          const widgetSelected = widgetInfo?.[widget.slug];
-          const attributes = !!widgetSelected && Object.keys(widgetSelected);
 
           return (
             <div key={widget.slug} className={styles.widgetWrapper}>
-              <div className={styles.chartWrapper}>
+              <div className={cx({
+                  [styles.pageBreak]: index % 2 !== 0
+                })}
+              >
                 <Widget
                   key={widget.slug}
                   isLast={widgets.length - 1 === index}
                   {...widget}
                   {...parentProps}
                 />
-              </div>
-
-              <div className={styles.printOnly}>
-                {!!attributes &&
-                  attributes.map((attribute) => (
-                    <div key={attribute}>
-                      <strong>
-                        {attribute !== "Title" ? `${attribute}:` : ""}
-                      </strong>
-                      <DangerousHTML html={widgetSelected[attribute]} />
-                    </div>
-                  ))}
               </div>
             </div>
           );
