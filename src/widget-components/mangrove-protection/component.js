@@ -25,10 +25,20 @@ function MangroveProtection({
   ...props
 }) {
 
-  // TO DO - update when data is ready
-  // const { metadata: { units, years }, data: dataTotal } = data;
-  const years = useMemo(() => [2010], []);
-  const units = useMemo(() => ['ha', 'km²'], []);
+  const id = current?.iso || current?.id;
+
+  const currentLocation = getCurrentLocation(locations, id, locationType);
+
+  useEffect(() => {
+    if (!data?.length || metadata) {
+      if (current.id === 'worldwide' || currentLocationId === 1561) {
+        fetchMangroveProtectionData()
+      }
+      else {
+        fetchMangroveProtectionData({ ...(currentLocationId && currentLocationId !== 1561) && { location_id: currentLocation.location_id } });
+      }
+    }
+  }, [id, currentLocation, current, fetchMangroveProtectionData]);
 
   useEffect(() => {
     addFilter({
