@@ -70,4 +70,6 @@
 
 .pageBreak {
   page-break-after: always;
+  break-after: always;
+  break-inside: avoid;
 }
