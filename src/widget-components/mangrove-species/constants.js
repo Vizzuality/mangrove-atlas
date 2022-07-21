@@ -24,4 +24,13 @@ export const RED_LIST_CATEGORIES = {
   [Types.DD]: 'DD - Data Deficient',
 };
 
-export const COLORS = ['#F9737C', '#7C7C7C', '#F9443E', '#FEA740', '#FCC862', '#ECECEF'];
+export const COLORS = { 
+  ex: '#000000',
+  ew: '#542243',
+  cr: '#D51E08',
+  en: '#FC7F3F',
+  vu: '#FAE811',
+  nt: '#CCE227',
+  lc: '#61C55A',
+  dd: '#D1D1C8'
+};
