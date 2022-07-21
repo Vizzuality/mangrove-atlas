@@ -5,6 +5,17 @@ export default {
   error: null,
   isOpened: false,
   ui: {
+    net: {
+      startYear: null,
+      endYear: null,
+      range: {
+        startYear: null,
+        endYear: null
+      },
+      currentYear: null,
+      years: [],
+      unit: null
+    },
     alerts: {
       startDate: alertsStartDate,
       endDate: alertsEndDate,

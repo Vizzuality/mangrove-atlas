@@ -20,6 +20,8 @@ const locationId = state => state.locations.current.id || state.locations.curren
 const locations = state => state.locations.list;
 const startDateAlerts = state => state.widgets.ui.alerts.startDate;
 const endDateAlerts = state => state.widgets.ui.alerts.endDate;
+const startDateNet = state => state.widgets.ui.net.startYear;
+const endDateNet = state => state.widgets.ui.net.endYear;
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
   
@@ -48,10 +50,8 @@ export const layerStyles = createSelector(
     if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
       return [];
     }
-    
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const extendedLayers = [...layersStyles, ...rasterLayers];
-
     return extendedLayers.filter(
       style => _activeLayersIds.includes(style.id)
         || (
@@ -65,10 +65,9 @@ export const layerStyles = createSelector(
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters, activeLayersIds,
-    locationId, startDateAlerts, endDateAlerts, locations],
+    locationId, startDateAlerts, endDateAlerts, startDateNet, endDateNet,locations],
   (_basemap, _layerStyles, _filters, _activeLayersIds,
-    _locationId, _startDateAlerts, _endDateAlerts, _locations) => {
-
+    _locationId, _startDateAlerts, _endDateAlerts, _startDateNet, _endDateNet, _locations) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -114,6 +113,7 @@ export const mapStyle = createSelector(
     const visibleLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find(f => f.id === layerId);
+      const yearsFiltered = layerFilter.years.filter(y => y <= _endDateNet && y >= _startDateNet)
 
       if (layerFilter && layerMap && layerId) {
         if (layerFilter && layerFilter.id === 'net') {
@@ -121,7 +121,8 @@ export const mapStyle = createSelector(
             ...acc,
             ...layerMap
               .filter(
-                layerMapItem => layerFilter.years.includes(parseInt(layerMapItem.year, 10))
+                layerMapItem => 
+                  yearsFiltered.includes(parseInt(layerMapItem.year, 10))
               ).map(layerMapItem => layerMapItem.layerId)
           ];
         }
@@ -141,6 +142,7 @@ export const mapStyle = createSelector(
           ...layerMap.map(layerMapItem => layerMapItem.layerId)
         ];
       }
+
       return acc;
     }, []);
 

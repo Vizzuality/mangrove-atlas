@@ -1,3 +1,5 @@
+import { select } from 'redux-saga/effects';
+
 export function coverageFilter({ year }) {
   return [
     'all',
@@ -9,14 +11,17 @@ export function coverageFilter({ year }) {
       false
     ]
   ];
-}
+}   
 
-export function netChangeFilter({ startYear, endYear }) {
+export function* netChangeFilter({ startYear, endYear }) {
+
+  const { widgets: { ui: { net }} } = yield select();
+
   if (startYear === endYear) {
     return ['boolean', false];
   }
 
-  const availableYears = ['1996', '2007', '2008', '2009', '2010', '2015', '2016'];
+  const availableYears = net?.years;
 
   const years = availableYears
     .filter(y => parseInt(y, 10) >= parseInt(startYear, 10))
