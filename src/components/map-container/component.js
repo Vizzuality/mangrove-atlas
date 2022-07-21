@@ -31,7 +31,6 @@ export const MapContainer = ({
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   };
-
   const resize = () => {
     onViewportChange({
       ...viewport,
@@ -103,7 +102,6 @@ export const MapContainer = ({
       goToCountry({ iso: countryId });
     }
   };
-
   return (
     <div className={styles.map}>
       <MangroveMap

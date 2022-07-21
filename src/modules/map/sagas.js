@@ -61,6 +61,6 @@ export function* restoreMapState() {
 export default function* pages() {
   yield takeLatest('LOCATIONS/FETCH_SUCCEDED', flyToCurrentLocation);
   yield takeLatest('LOCATIONS/SET_CURRENT', flyToCurrentLocation);
-  yield takeLatest('LOCATIONS/SET_CURRENT_ID', flyToCurrentLocation);
+  yield takeLatest('LOCATIONS/SET_CURRENT_ID', flyToCurrentLocation);  
   yield takeLatest('APP/MOBILE', flyToCurrentLocation);
 }
