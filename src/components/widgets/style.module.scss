@@ -48,6 +48,8 @@
   
   @media print and (orientation: portrait){
     width: 100%;
+    padding-top: 20px;
+    margin: auto;
     background-color: blue;
     display: flex;
     flex-direction: column;
@@ -56,7 +58,8 @@
 
   @media print  and (orientation: landscape){
     width: 100%;
-
+    padding-top: 20px;
+    margin: auto;
     background-color: red;
     display: grid;
     grid-column: 1fr 1fr;
@@ -65,10 +68,8 @@
   }
 }
 
-// .chartWrapper {
-//   display: block;
-//   background-color: green;
-
-//   @media print  and (orientation: landscape){
-//   }
-// }
+.pageBreak {
+  page-break-after: always;
+  break-after: always;
+  break-inside: avoid;
+}

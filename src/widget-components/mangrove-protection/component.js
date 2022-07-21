@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import sortBy from 'lodash/sortBy';
 
@@ -35,7 +35,6 @@ function MangroveProtection({
   const { year, unit } = ui;
 
   const id = current?.iso || current?.id;
-
   const currentLocation = getCurrentLocation(locations, id, locationType);
 
   useEffect(() => {
@@ -50,21 +49,18 @@ function MangroveProtection({
   }, [id, currentLocation, current, fetchMangroveProtectionData]);
 
   useEffect(() => {
-    if (!isLoading) {
-      const yearUpdate = year || years?.[years?.length - 1]
-      addFilter({
-        filter: {
-          id: 'protection',
-          year: yearUpdate,
-          unit: (unit || unitArea),
-        }
-      });
-      setUi({
+    const yearUpdate = year || years?.[years?.length - 1]
+    addFilter({
+      filter: {
         id: 'protection',
-        value: { year: yearUpdate, unit: (unit || unitArea) }
-      });
-    }
-
+        year: yearUpdate,
+        unit: (unit || unitArea),
+      }
+    });
+    setUi({
+      id: 'protection',
+      value: { year: yearUpdate, unit: (unit || unitArea) }
+    });
   }, [year, years.length]);
 
   const changeYear = useCallback((current) => {
@@ -81,11 +77,17 @@ function MangroveProtection({
   const unitMetadata = metadata?.units;
   const unitArea = unitMetadata?.total_area;
 
-  if (!data || !data?.length) {
+  
+  const filteredData = useMemo(() => {
+    if (data && year) {
+      return data.find((d) => d.year === year)
+    }},
+    [data, year]);
+
+    if (!data || !data?.length) {
     return null;
   }
 
-  const filteredData = data && year && data?.find((d) => d.year === year );
   const parsedData = {
     ...filteredData,
     total_area: filteredData?.total_area,
