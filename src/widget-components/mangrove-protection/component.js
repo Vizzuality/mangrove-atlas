@@ -47,7 +47,7 @@ function MangroveProtection({
         fetchMangroveProtectionData({ ...(currentLocationId && currentLocationId !== 1561) && { location_id: currentLocation.location_id } });
       }
     }
-  }, [currentLocation, current, fetchMangroveProtectionData]);
+  }, [id, currentLocation, current, fetchMangroveProtectionData]);
 
   useEffect(() => {
     if (!isLoading) {
