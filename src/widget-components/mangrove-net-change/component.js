@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import sumBy from 'lodash/sumBy';
 
@@ -6,50 +6,56 @@ import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 import config, { numberFormat } from './config';
 
+const unitOptions = [
+  { value: 'ha', label: 'ha' },
+  { value: 'km', label: 'km²' }
+];
+
 function MangroveNetChange({
   data: rawData,
+  metadata: rawMetadata,
   filename,
   currentLocation,
   addFilter,
   isCollapsed = true,
   slug,
   name,
-  ui: {
-    startYear,
-    endYear,
-    unit,
-    years,
-  },
+  ui,
   setUi,
   ...props
 }) {
+  const { dates } = rawMetadata;
+  const { startYear, endYear, unit } = ui;
+  const years = useMemo(() => dates.map((d) => Number(d.date.split('-', 1)[0])), [dates]);
   useEffect(() => {
     addFilter({
       filter: {
         id: 'net',
-        startYear,
-        endYear,
+        startYear: startYear || years[0],
+        endYear: endYear || years[years.length - 1],
         years,
-        year: '2016',
+        unit: unit || unitOptions[0].value,
       }
     });
-  }, [addFilter]);
+    setUi({ id: 'net', value: { endYear: endYear || years[years.length - 1], startYear: startYear || years[0], unit: unit || unitOptions[0].value, } });
+  }, [startYear, endYear, unit, addFilter]);
+  
 
   if (!rawData) {
     return null;
   }
 
   const data = config.parse(rawData, unit);
-  const { metadata, chartData, chartConfig, downloadData } = data;
+  const { chartData, chartConfig, downloadData } = data;
 
-  const startYearOptions = metadata.years.map(year => ({
+  const startYearOptions = years.map(year => ({
     label: year.toString(),
-    value: year.toString()
+    value: year
   }));
 
-  const endYearOptions = metadata.years.map(year => ({
+  const endYearOptions = years.map(year => ({
     label: year.toString(),
-    value: year.toString()
+    value: year
   }));
 
   const changeStartYear = (year) => {
@@ -62,7 +68,7 @@ function MangroveNetChange({
           startYear: year,
           endYear,
         },
-        years: metadata.years.filter(i => i >= year && i <= endYear),
+        years: years.filter(i => i >= year && i <= endYear),
         year,
         unit
       }
@@ -92,7 +98,7 @@ function MangroveNetChange({
           startYear,
           endYear: year,
         },
-        years: metadata.years.filter(i => i >= year && i <= endYear),
+        years: years.filter(i => i >= year && i <= endYear),
         year,
         unit
       }
@@ -169,7 +175,7 @@ function MangroveNetChange({
       className="notranslate netChange"
       prefix="start-year"
       value={startYear}
-      options={startYearOptions.splice(0, metadata.years.length - 1)}
+      options={startYearOptions.splice(0, years.length - 1)}
       isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endYear, 10)
         || option.value === startYear}
       onChange={changeStartYear}
@@ -179,16 +185,11 @@ function MangroveNetChange({
       className="notranslate"
       prefix="end-year"
       value={endYear}
-      options={endYearOptions.splice(1, metadata.years.length)}
+      options={endYearOptions.splice(1, years.length)}
       isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startYear, 10)
         || option.value === endYear}
       onChange={changeEndYear}
     />);
-
-  const unitOptions = [
-    { value: 'km', label: 'km²' },
-    { value: 'ha', label: 'ha' }
-  ];
 
   const unitSelector = (
     <Select

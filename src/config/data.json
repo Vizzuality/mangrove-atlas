@@ -84,16 +84,10 @@
       "name": "Mangrove Investment Potential",
       "slug": "mangrove_investment_potential",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "climate_and_policy",
-        "ecosystem_services"
       ]
     },
     {
@@ -118,9 +112,6 @@
       "name": "Mangrove Species",
       "slug": "mangrove_species",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
@@ -152,9 +143,6 @@
       "name": "Mangrove Protection",
       "slug": "mangrove_protection",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
@@ -174,7 +162,9 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "restoration_and_conservation",
+        "ecosystem_services"
       ],
       "layersIds": [
         "height"
@@ -191,7 +181,9 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "restoration_and_conservation",
+        "ecosystem_services"
       ],
       "layersIds": [
         "biomass"
@@ -225,15 +217,10 @@
       "name": "Mangrove Restoration",
       "slug": "mangrove_restoration",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation"
       ],
       "layersIds": [
         "restoration"

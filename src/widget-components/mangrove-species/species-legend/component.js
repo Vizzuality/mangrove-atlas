@@ -6,11 +6,7 @@ import moreIcon from 'widget-components/icons/icon-more.svg';
 import lessIcon from 'widget-components/icons/icon-less.svg';
 import styles from "./style.module.scss";
 
-const Legend = ({ groups, type }) => {
-  const groupObject = Object.keys(groups).reduce((acc, item) => ({
-    ...acc,
-    [item]: true
-  }), {})
+const Legend = ({ groups }) => {
   const [collapse, toggleCollapse] = useState({});
   
   const handleCollapse = useCallback((id) => 
