@@ -275,7 +275,8 @@ class Chart extends PureComponent {
                     <Cell
                       key={`c_${item.color}`}
                       fill={item.color}
-                      stroke={item.color}
+                      stroke={item?.stroke || item.color}
+                      {...item}
                     />
                   ))}
                 </Pie>
