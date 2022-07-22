@@ -11,12 +11,15 @@ const WidgetList = ({
   isCollapsed,
   templates,
   mobile,
+  alerts,
+  category,
   ...parentProps
 }) => {
   const onClickDownload = (e) => {
     window.print();
   };
 
+  // const widgetsCategroy = widgets.filter(() => , []);
   return (
     <div
       className={cx(styles.widgets, {
@@ -33,6 +36,7 @@ const WidgetList = ({
           const Widget = templates.get(widget.slug).component;
           return (
             <div key={widget.slug} className={cx(styles.widgetWrapper, {
+              [styles._collapsed]: true,
               [styles.pageBreak]: index % 2 !== 0
             })}>
               <Widget
