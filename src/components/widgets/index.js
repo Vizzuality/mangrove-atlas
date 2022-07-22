@@ -85,6 +85,8 @@ const mapStateToProps = (state) => ({
   widgets: dashboardWidgets(state),
   templates,
   isCollapsed: state.widgets.isCollapsed,
+  alerts: state.alerts.data,
+  category: state.dashboards.currentCategory
 });
 
 const mapDispatchToProps = {

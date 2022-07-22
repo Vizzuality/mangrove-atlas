@@ -30,21 +30,25 @@
     margin-bottom: 0;
   }
 
-  &.collapsed {
-    margin-bottom: -90px;
-    background-position: 0;
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      margin-bottom: -85px;
-    }
+  // &.collapsed {
+  //   margin-bottom: -90px;
+  //   background-color: blue;
+  //   background-position: 0;
+  //   @media screen and (max-width: map-get($breakpoints, lg)) {
+  //     margin-bottom: -85px;
+  //   }
 
-    .content {
-      max-height: 0px;
-    }
-    .widget_template {
-      overflow: hidden;
-      padding-top: 50px;
-    }
-  }
+  //   .content {
+  //     max-height: 0px;
+  //   }
+  //   .widget_template {
+  //     overflow: hidden;
+  //     padding-top: 50px;
+  //   }
+  // }
+
+
+
 
   &.collapsed:last-child {
     background-position: 0 90%;

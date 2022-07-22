@@ -32,6 +32,21 @@
     display: block;
     align-items: center;
   }
+
+  &:last-of-type:not(:last-child) {
+    background-color: red;
+
+    .content {
+      max-height: fit-content;
+      opacity: 1;
+    }
+
+    .title {
+      & svg {
+        display: none;
+      }
+    }
+  }
 }
 
 .printOnly {
@@ -45,12 +60,28 @@
 
 .widgetWrapper {
   width: 540px;
+
+  &._collapsed {
+    margin-bottom: -90px;
+    background-color: blue;
+    background-position: 0;
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      margin-bottom: -85px;
+    }
+
+    .content {
+      max-height: 0px;
+    }
+    .widget_template {
+      overflow: hidden;
+      padding-top: 50px;
+    }
+  }
   
   @media print and (orientation: portrait){
     width: 100%;
     padding-top: 20px;
     margin: auto;
-    background-color: blue;
     display: flex;
     flex-direction: column;
     width: $widgetWidth;
@@ -60,7 +91,6 @@
     width: 100%;
     padding-top: 20px;
     margin: auto;
-    background-color: red;
     display: grid;
     grid-column: 1fr 1fr;
     grid-gap: 30px;
