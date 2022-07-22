@@ -33,7 +33,7 @@ export const CONFIG = {
       (previous, current) => current.value + previous
     );
     const chartData = getData(data, total);
-    const widgetSentence = data.find(d => d?.text?.includes('$5'))?.text;
+    const widgetSentence = data?.find(d => d?.text?.includes('$5'))?.text;
 
     return {
       chartData,
