@@ -119,6 +119,8 @@
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets",
+        "distribution_and_change"
       ]
     },
     {
@@ -148,6 +150,8 @@
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets",
+        "distribution_and_change"
       ]
     },
     {
@@ -207,8 +211,6 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
       ],
       "layersIds": []
     },
