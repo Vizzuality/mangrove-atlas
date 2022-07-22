@@ -94,7 +94,7 @@ export const CONFIG = {
                 payload={payload}
                 settings={[
                   { label: 'Percentage:', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
-                  { label: 'Area:', key: 'protection', format: value => `${numberFormat(value)} ${unit}`, position: '_column' },
+                  { label: 'Area:', key: 'protection', format: value => `${numberFormat(unit === 'ha' ? value : value / 100)} ${unit === 'ha' ? 'ha' : 'km²'}`, position: '_column' },
                 ]}
               />
             );

@@ -22,12 +22,11 @@ const Legend = ({ groups }) => {
                 key={`item-${i + 1}-${item.color}`}
                 className={styles.widget_legend_list_item}
               >
-      
                 <div className={cx(styles.itemWrapper, { [styles._collapse]: !collapse[item.value] })}>
                   <button className={styles.toggleList}  onClick={() => handleCollapse(item.value)}>
                     <span className={styles.itemColor} style={{ backgroundColor: item.color }} />
                     <span>{item.value}</span>
-                    <img alt={collapse ? 'Show species' : 'Hide species'} src={collapse[item.value] ? lessIcon : moreIcon} />
+                    <img alt={collapse ? 'Hide species' : 'Show species'} src={collapse[item.value] ? lessIcon : moreIcon} />
                   </button>
 
                   {
