@@ -47,7 +47,7 @@ export default {
       return ({ ...item, isCollapsed: !item.isCollapsed });
     });
 
-    const noCollapsed = list.find(item => item.isCollapsed === false);
+    const noCollapsed = list?.find(item => item.isCollapsed === false);
 
     return {
       ...state,

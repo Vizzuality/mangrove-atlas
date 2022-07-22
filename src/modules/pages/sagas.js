@@ -11,7 +11,7 @@ export const getLocationType = (type) => {
 }
 
 export const getCurrentLocation = (locationsList, currentId, locationType) => {
-  return locationsList.find(({ id, iso, location_type }) => (id === currentId || iso.toLowerCase() === currentId.toLowerCase()) && location_type.toLowerCase() === locationType.toLowerCase());
+  return locationsList?.find(({ id, iso, location_type }) => (id === currentId || iso.toLowerCase() === currentId.toLowerCase()) && location_type.toLowerCase() === locationType.toLowerCase());
 }
 
 /**
@@ -26,7 +26,7 @@ function* setLocation({ payload }) {
 
   const locationType = getLocationType(type);
   const currentLocationIsos = locations.list.filter((location) => location.iso === iso || id === location.id || location.location_id === id)
-  const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos.find(location => location.location_type === locationType)?.id;
+  const currentLocationId = currentLocationIsos.length === 1 ? currentLocationIsos[0].id : currentLocationIsos?.find(location => location.location_type === locationType)?.id;
 
   if(currentLocationId) yield put(setCurrentId({ ...currentLocationId && { location_id: currentLocationId } }));
 

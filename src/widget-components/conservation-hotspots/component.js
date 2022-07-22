@@ -59,7 +59,7 @@ function ConservationHotspots({
       ...chartData.data.map(o => (o.percentage ? o.percentage : null))
     ));
 
-    const highestCategory = (chartData.data).find(
+    const highestCategory = (chartData.data)?.find(
       findData => numberFormat(Number(findData.percentage)) === highestValue
     ).label;
 

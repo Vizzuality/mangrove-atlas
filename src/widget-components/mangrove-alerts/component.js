@@ -28,11 +28,11 @@ const MangroveAlerts = ({
       if (currentLocation.id === 'worldwide') {
         fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
       } else {
-        let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
+        let location = locationsList?.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
 
         // Find by location_id
         if (!location) {
-          location = locationsList.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
+          location = locationsList?.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
         }
         // eslint-disable-next-line camelcase
         const { location_id } = location;

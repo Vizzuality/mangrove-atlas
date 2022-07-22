@@ -48,7 +48,7 @@ const getData = (data, selectedYear) => {
 
 const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
 const getHeightCoverage = (data, date) => {
-  const yearData = data.find(d => d.date.includes(date));
+  const yearData = data?.find(d => d.date.includes(date));
   if (!yearData) return null;
   return yearData.hmax_m.toFixed(2);
 };

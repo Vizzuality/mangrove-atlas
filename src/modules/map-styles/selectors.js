@@ -73,20 +73,20 @@ export const mapStyle = createSelector(
       let widgetFilter;
       switch (layerStyle.id) {
         case 'coverage-1996-2016':
-          widgetFilter = _filters.find(f => f.id === 'coverage-1996-2016');
+          widgetFilter = _filters?.find(f => f.id === 'coverage-1996-2016');
           if (widgetFilter) {
             newLayerStyle.filter = coverageFilter(widgetFilter);
           }
           break;
         case 'net-change-1996-2016':
-          widgetFilter = _filters.find(f => f.id === 'net-change-1996-2016');
+          widgetFilter = _filters?.find(f => f.id === 'net-change-1996-2016');
           if (widgetFilter) {
             newLayerStyle.filter = netChangeFilter(widgetFilter);
           }
           break;
         default:
         case 'cons-hotspots':
-          widgetFilter = _filters.find(f => f.id === 'cons-hotspots');
+          widgetFilter = _filters?.find(f => f.id === 'cons-hotspots');
           if (widgetFilter && scopeFeature.get(widgetFilter.scope)) {
             newLayerStyle.paint['fill-color'][1][1] = scopeFeature.get(widgetFilter.scope);
           }
@@ -149,9 +149,9 @@ export const mapStyle = createSelector(
     }));
 
     // Getting location
-    let currentLocation = _locations.find(l => (l.iso === _locationId && l.location_type === 'country'));
+    let currentLocation = _locations?.find(l => (l.iso === _locationId && l.location_type === 'country'));
     if (!currentLocation) {
-      currentLocation = _locations.find(l => (l.location_id === _locationId));
+      currentLocation = _locations?.find(l => (l.location_id === _locationId));
     }
 
     // GEN ALERTS URL TEMPLATE
