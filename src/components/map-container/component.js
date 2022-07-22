@@ -31,9 +31,9 @@ export const MapContainer = ({
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
   };
-  const resize = () => {
+  const resize = (newViewport) => {
     onViewportChange({
-      ...viewport,
+      ...newViewport,
       width: window.innerWidth,
       height: window.innerHeight
     });
