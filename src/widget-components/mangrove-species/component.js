@@ -51,7 +51,7 @@ function MangroveSpecies({
     ? 'The world'
     : <span className="notranslate">{`${location?.name}`}</span>;
 
-  const article = threatened > 1 ? 'are' : 'is';
+  const article = threatened === 1 ? 'is' : 'are';
 
   const sentence = (
     <>
