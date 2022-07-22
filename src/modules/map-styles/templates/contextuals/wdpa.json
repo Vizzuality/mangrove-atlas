@@ -3,7 +3,7 @@
     "id": "selected-wdpa-polygons",
     "type": "fill",
     "source": "composite",
-    "source-layer": "selected_WDPA_polygons",
+    "source-layer": "wdpaclientjuly2022",
     "layout": {},
     "paint": {
       "fill-color": "#286ce2",
@@ -15,7 +15,7 @@
     "id": "selected-wdpa-polygons copy",
     "type": "line",
     "source": "composite",
-    "source-layer": "selected_WDPA_polygons",
+    "source-layer": "wdpaclientjuly2022",
     "layout": {},
     "paint": {
       "line-color": "#286ce2",
@@ -29,7 +29,7 @@
       "mapbox:group": "1f4439315750c8010c95dfe168ea659a"
     },
     "source": "composite",
-    "source-layer": "selected_WDPA_polygons",
+    "source-layer": "wdpaclientjuly2022",
     "layout": {
       "text-field": [
         "to-string",
