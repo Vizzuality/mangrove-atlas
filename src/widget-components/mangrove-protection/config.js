@@ -19,7 +19,12 @@ const getData = (data) => {
 
   return ([
     {
-    color: '#06C4BD',
+    color: "#6F98DC",
+    strokeColor: '#6F98DC',
+    strokeWidth: 2,
+    fillOpacity: 0.3,
+    strokeOpacity: 1,
+    strokePadding: 0,
     percentage: protectedPercentage,
     total:  data.total,
     year: data.year,
@@ -27,6 +32,7 @@ const getData = (data) => {
   },
   {
     color: '#ECECEF',
+    strokeWidth: 2,
     percentage: nonProtectedPercentage,
     protection: nonProtected,
   }])
@@ -34,7 +40,6 @@ const getData = (data) => {
 
 export const CONFIG = {
   parse: (data, unit) => {
-    console.log(unit)
     const chartData = getData(data);
     const protectedPercentage = data.protected_area * 100 / data.total_area;
     const totalAreaProtected = unit === 'ha' ? numberFormat(data.protected_area) : numberFormat(data.protected_area / 100);
