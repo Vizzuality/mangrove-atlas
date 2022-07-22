@@ -20,6 +20,7 @@ const locationId = state => state.locations.current.id || state.locations.curren
 const locations = state => state.locations.list;
 const startDateAlerts = state => state.widgets.ui.alerts.startDate;
 const endDateAlerts = state => state.widgets.ui.alerts.endDate;
+
 const activeLayersIds = createSelector(
   [activeLayers], _activeLayers => _activeLayers.map(activeLayer => activeLayer.id)
   
@@ -65,9 +66,11 @@ export const layerStyles = createSelector(
 
 export const mapStyle = createSelector(
   [basemap, layerStyles, filters, activeLayersIds,
+
     locationId, startDateAlerts, endDateAlerts, locations],
   (_basemap, _layerStyles, _filters, _activeLayersIds,
     _locationId, _startDateAlerts, _endDateAlerts, _locations) => {
+
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
       let widgetFilter;
@@ -118,7 +121,9 @@ export const mapStyle = createSelector(
             ...acc,
             ...layerMap
               .filter(
+
                 layerMapItem => layerFilter.years.includes(parseInt(layerMapItem.year, 10))
+
               ).map(layerMapItem => layerMapItem.layerId)
           ];
         }
