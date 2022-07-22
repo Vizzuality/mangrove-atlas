@@ -49,7 +49,7 @@ function MangroveSpecies({
 
   const locationName = (currentLocation.location_type === 'worldwide')
     ? 'The world'
-    : <span className="notranslate">{`${location.name}`}</span>;
+    : <span className="notranslate">{`${location?.name}`}</span>;
 
   const article = threatened > 1 ? 'are' : 'is';
 

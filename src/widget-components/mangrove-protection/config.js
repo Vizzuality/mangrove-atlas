@@ -34,10 +34,15 @@ const getData = (data) => {
 
 export const CONFIG = {
   parse: (data, unit) => {
+    console.log(unit)
     const chartData = getData(data);
     const protectedPercentage = data.protected_area * 100 / data.total_area;
+    const totalAreaProtected = unit === 'ha' ? numberFormat(data.protected_area) : numberFormat(data.protected_area / 100);
+    const totalArea = unit === 'ha' ? numberFormat(data.total_area) : numberFormat(data.total_area / 100);
 
     return {
+      totalArea,
+      totalAreaProtected,
       chartData,
       chartConfig: {
         type: 'pie',
