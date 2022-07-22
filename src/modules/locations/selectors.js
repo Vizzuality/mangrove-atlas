@@ -16,11 +16,11 @@ export const currentLocation = createSelector(
     let result;
 
     if (_currentId.id === 'worldwide') {
-      result = _locations.find(location => location.location_type === 'worldwide');
+      result = _locations?.find(location => location.location_type === 'worldwide');
     } else if (_currentId.iso) {
-      result = _locations.find(location => location.iso === _currentId.iso && location.location_type === 'country');
+      result = _locations?.find(location => location.iso === _currentId.iso && location.location_type === 'country');
     } else if (_currentId.id) {
-      result = _locations.find(
+      result = _locations?.find(
         ({ id, location_id: locationId }) => id === Number(_currentId.id)
         || locationId === _currentId.id
       );

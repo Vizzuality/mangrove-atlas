@@ -57,7 +57,7 @@ const getData = (data) => sortBy(data
   .filter(d => d.date.value >= '2020-01-01')
   .map((d) => {
     const year = Number(d.date.value.split('-', 1)[0]);
-    const month = months.find(m => m.value === new Date(d.date.value).getMonth() + 1);
+    const month = months?.find(m => m.value === new Date(d.date.value).getMonth() + 1);
     const day = new Date(year, month.value, 0).getDate();
 
     return (

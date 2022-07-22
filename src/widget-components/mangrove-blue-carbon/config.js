@@ -34,7 +34,7 @@ const getData = (data) => {
 };
 
 const biomassCoverage = ({ list }, yearSelected) => {
-  const yearData = list.find(d => d.date
+  const yearData = list?.find(d => d.date
     .includes(yearSelected));
   if (!yearData) return null;
   return yearData.agb_mgha_1.toFixed(2);

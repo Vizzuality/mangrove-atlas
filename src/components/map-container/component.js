@@ -67,9 +67,9 @@ export const MapContainer = ({
 
   const clickHandler = ({ event }) => {
     const { features } = event;
-    const country = features.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
-    const wdpa = features.find(feat => feat.layer.id === 'selected-wdpa-polygons');
-    const hotspots = features.find(feat => feat.layer.id === 'cons-hotspots');
+    const country = features?.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
+    const wdpa = features?.find(feat => feat.layer.id === 'selected-wdpa-polygons');
+    const hotspots = features?.find(feat => feat.layer.id === 'cons-hotspots');
 
     if (hotspots) {
       setPopup({

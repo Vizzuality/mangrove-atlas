@@ -95,7 +95,7 @@ function MangroveProtection({
 
   const filteredData = useMemo(() => {
     if (data && year) {
-      return data.find((d) => d.year === year);
+      return data?.find((d) => d.year === year);
     }
   }, [data, year]);
 
