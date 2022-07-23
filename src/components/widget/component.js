@@ -16,8 +16,8 @@ function Widget({
   isLocationsModal,
   isCollapsed = true,
   isLoading,
-  toggleCollapse,
   isLast,
+  toggleCollapse,
 }) {
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
@@ -25,7 +25,7 @@ function Widget({
 
   const widgetConditionalStyles = {
     [styles._modal]: isLocationsModal,
-    [styles._collapsed]: !!isLast ? false : isCollapsed,
+    [styles._collapsed]: isLast ? false : isCollapsed,
     [styles._layerActive]: isActive
   };
 
@@ -89,8 +89,8 @@ Widget.propTypes = {
   isLocationsModal: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isLast: PropTypes.bool,
   toggleCollapse: PropTypes.func,
-  isLast: PropTypes.bool
 };
 
 Widget.defaultProps = {
@@ -103,8 +103,8 @@ Widget.defaultProps = {
   isLocationsModal: false,
   isCollapsed: false,
   isLoading: false,
+  isLast: false,
   toggleCollapse: () => { },
-  isLast: false
 };
 
 export default Widget;

@@ -32,21 +32,6 @@
     display: block;
     align-items: center;
   }
-
-  &:last-of-type:not(:last-child) {
-    background-color: red;
-
-    .content {
-      max-height: fit-content;
-      opacity: 1;
-    }
-
-    .title {
-      & svg {
-        display: none;
-      }
-    }
-  }
 }
 
 .printOnly {
@@ -61,20 +46,49 @@
 .widgetWrapper {
   width: 540px;
 
-  &._collapsed {
-    margin-bottom: -90px;
-    background-color: blue;
-    background-position: 0;
-    @media screen and (max-width: map-get($breakpoints, lg)) {
-      margin-bottom: -85px;
-    }
+  &:last-of-type:not(:empty) {
+    cursor: initial;
 
-    .content {
-      max-height: 0px;
+    .widget {
+      margin-bottom: 0;
+      background: white;
+      background-color: white;
+      transition: none;
+
+      .wrapper {
+        .content {
+          max-height: fit-content !important;
+          opacity: 1;
+        }
+      }
     }
-    .widget_template {
-      overflow: hidden;
-      padding-top: 50px;
+  }
+  
+  @media print {
+    $border-radius: 20px;
+  
+    .widget {
+      max-width: 100%;
+      min-height: 530px;
+      box-shadow: none;
+      border: 2px solid rgba($primary, 0.35);
+      border-radius: $border-radius;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      $padding: 30px 20px 0 40px;
+      margin: auto;
+  
+      &._layerActive::before {
+        border: 0 solid rgba($primary, 0.35);
+      }
+    }
+  
+    .title svg {
+      display: none;
+    }
+  
+    .toogleButton {
+      display: none;
     }
   }
   

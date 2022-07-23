@@ -45,6 +45,7 @@
     "redux-first-router-link": "^2.1.1",
     "redux-saga": "^1.0.2",
     "reselect": "^4.0.0",
+    "use-dynamic-refs": "^1.0.0",
     "viewport-mercator-project": "^6.1.1",
     "vizzuality-redux-tools": "^4.0.2"
   },
