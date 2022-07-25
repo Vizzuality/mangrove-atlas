@@ -53,7 +53,7 @@
   &.disabled {
     cursor: default;
     pointer-events: none;
-    opacity: 0.2;
+    opacity: 0.5;
   }
 
   @media screen and (max-width: map-get($breakpoints, lg)) {

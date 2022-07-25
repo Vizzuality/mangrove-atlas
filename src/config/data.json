@@ -112,15 +112,12 @@
       "name": "Mangrove Species",
       "slug": "mangrove_species",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
       "categoryIds": [
         "all_datasets",
-        "distribution_and_change"
+        "restoration_and_conservation"
       ]
     },
     {
@@ -151,7 +148,7 @@
       ],
       "categoryIds": [
         "all_datasets",
-        "distribution_and_change"
+        "restoration_and_conservation"
       ]
     },
     {

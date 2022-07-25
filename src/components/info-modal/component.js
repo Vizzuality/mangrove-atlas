@@ -1,4 +1,3 @@
-/* eslint-disable react/sort-comp */
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -62,7 +61,7 @@ class InfoModal extends PureComponent {
     if (!widgetSelected) return null;
     const attributes = Object.keys(widgetSelected);
     return attributes.map(attribute => (
-      <div>
+      <div key={`${widgetSelected}-${attribute}`}>
         <strong>
           {attribute !== 'Title'
             ? `${attribute}:`
