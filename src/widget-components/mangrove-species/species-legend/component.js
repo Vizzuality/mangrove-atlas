@@ -12,6 +12,7 @@ const Legend = ({ groups }) => {
   const handleCollapse = useCallback((id) => 
     toggleCollapse({ [id]: !collapse?.[id]}), [collapse]);
 
+
     return (
     <div className={styles.widget_legend}>
       {Object.keys(groups).map((g) => (
@@ -22,7 +23,10 @@ const Legend = ({ groups }) => {
                 key={`item-${i + 1}-${item.color}`}
                 className={styles.widget_legend_list_item}
               >
-                <div className={cx(styles.itemWrapper, { [styles._collapse]: !collapse[item.value] })}>
+                <div
+                  style={{ maxHeight: collapse[item.value] ? 220 - (Object.keys(groups).length * 20) : 20}}
+                  className={cx(styles.itemWrapper, {[styles._collapse]: !collapse[item.value] })}
+                >
                   <button className={styles.toggleList}  onClick={() => handleCollapse(item.value)}>
                     <span className={styles.itemColor} style={{ backgroundColor: item.color }} />
                     <span>{item.value}</span>
@@ -30,9 +34,11 @@ const Legend = ({ groups }) => {
                   </button>
 
                   {
-                    <ul className={styles.list}>
+                    <ul className={cx(styles.list, {
+                      [styles._large]: item?.payload?.species?.length > 3
+                    })}>
                       {item?.payload?.species.map((s) => (
-                        <a className={styles.speciesLink} href={s.iucn_url}>
+                        <a key={s?.scientific_name} className={styles.speciesLink} href={s.iucn_url}>
                           <li>{s?.scientific_name}</li>
                         </a>
                       ))}

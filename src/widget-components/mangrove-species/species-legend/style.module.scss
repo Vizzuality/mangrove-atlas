@@ -134,19 +134,7 @@
     flex-direction: column;
     font-weight: bold;
     overflow: hidden;
-    max-height: 140px;
     position: relative;
-
-    // :after {
-    //   content: '';
-    //   position: absolute;
-    //   bottom: -5px;
-    //   left: 0;
-    //   right: 0;
-    //   height: 5px;
-    //   background-image: linear-gradient(to bottom, white, transparent);
-    //   backdrop-filter: blur(4px);
-    // }
 
     &._collapse {
       max-height: 20px;
@@ -177,11 +165,24 @@
   margin-top: 2px;
   margin-left: 15px;
   overflow-y: auto;
-  max-height: 140px;
   pointer-events: all;
-  width: fit-content;
+  width: 100%;
   font-style: italic;
-  
+
+  &._large {
+    padding-bottom: 10px;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      height: 20px;
+      bottom: 0px;
+      background: linear-gradient(180deg, rgba(139,167,32,0) 0%, rgba(255,255,255,1) 100%);
+      pointer-events: all;
+    }
+  }
+
   .speciesLink {
     pointer-events: all;
     cursor: pointer;

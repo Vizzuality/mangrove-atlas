@@ -71,10 +71,10 @@ const widgetInfo = {
   },
   mangrove_species: {
     Title: '<h2>Mangrove Species</h2>',
-    Overview: '<p>Pending ...</p>',
-    Reference: '<p>Pending ...</p>',
-    'Date of content': '<p>Pending ...</p>',
-    License: '<p>Pending ...</p>',
+    Overview: '<p>Species lists by country were compiled by the authors of the World Atlas of Mangroves (Spalding 2010) and verified by further expert and literature review. In 2022, hybrids were removed from the list, and the list was again cross checked against the IUCN Red List, and verified by a specialist group at IUCN. The status from the IUCN Red List was then assigned to each species. The number of threatened species reflects the number of endangered and critically endangered mangrove species. The data included are based on public literature and expert consultation and review; however, it cannot be assumed that species-level field verification has occurred consistently across every country or region, and may not incorporate temporal changes in species distribution.</p>',
+    Reference: '<p>Spalding, M. (2010). World atlas of mangroves. Routledge.</p>',
+    'Date of content': '<p>2022</p>',
+    License: '<p><a href="https://www.iucnredlist.org" target="_blank">IUCN. 2022. The IUCN Red List of Threatened Species. Version 2022-1.</a></p>',
   },
   mangrove_restoration: {
     Title: '<h1>Mangrove Restoration</h1>',

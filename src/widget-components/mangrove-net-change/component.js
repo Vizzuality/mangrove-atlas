@@ -13,7 +13,6 @@ const unitOptions = [
 
 function MangroveNetChange({
   data: rawData,
-  metadata: rawMetadata,
   filename,
   currentLocation,
   addFilter,
@@ -24,9 +23,11 @@ function MangroveNetChange({
   setUi,
   ...props
 }) {
-  const { dates } = rawMetadata;
   const { startYear, endYear, unit } = ui;
-  const years = useMemo(() => dates.map((d) => Number(d.date.split('-', 1)[0])), [dates]);
+  const years = useMemo(() => rawData?.list
+    .filter(({ loss_m2, gain_m2 }) => loss_m2 || gain_m2)
+    .map((d) => Number(d.date.split('-', 1)[0])), [rawData]).sort();
+
   useEffect(() => {
     addFilter({
       filter: {
