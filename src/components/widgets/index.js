@@ -85,7 +85,8 @@ const mapStateToProps = (state) => ({
   widgets: dashboardWidgets(state),
   templates,
   isCollapsed: state.widgets.isCollapsed,
-  category: state.dashboards.current
+  category: state.dashboards.current,
+  dataByWidget: state.mangroveData.list
 });
 
 const mapDispatchToProps = {

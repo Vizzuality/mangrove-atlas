@@ -87,7 +87,10 @@ export const styles = {
     backgroundColor: 'none',
     '&:hover': {
       color: '#00857F',
-      cursor: 'pointer'
+      cursor: state.isSelected ? 'default' : 'pointer'
+    },
+    '&:active': {
+      backgroundColor: 'transparent'
     },
     whiteSpace: 'nowrap',
   }),

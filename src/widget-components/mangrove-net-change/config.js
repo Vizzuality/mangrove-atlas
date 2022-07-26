@@ -58,7 +58,7 @@ const CONFIG = {
     chartConfig: {
       stackOffset: 'sign',
       height: 360,
-      margin: { top: 20, right: 15, left: 0, bottom: 20 },
+      margin: { top: 0, right: 15, left: 0, bottom: 20 },
       referenceLines: [
         { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
       ],
@@ -124,7 +124,13 @@ const CONFIG = {
             value: labelPayload.legend || value,
             variant: (labelPayload.dataKey === 'netChange') ? 'bar' : 'rect'
           }));
-          return <WidgetLegend direction="vertical" groups={{ labels }} />;
+          return (
+          <WidgetLegend
+            style={{ margin: { top: 0 }}}
+            direction="vertical"
+            groups={{ labels }}
+          />
+          );
         }
       },
       tooltip: {
