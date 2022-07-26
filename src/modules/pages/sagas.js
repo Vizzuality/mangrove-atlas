@@ -16,6 +16,27 @@ export const getCurrentLocation = (locationsList, currentId, locationType) => lo
   || iso.toLowerCase() === currentId.toLowerCase())
   && location_type.toLowerCase() === locationType.toLowerCase());
 
+export const getDataByWidget = (data) => {
+  const netChange = !!data.filter((d) => !!d?.gain_m2 || !!d?.loss_m2);
+  const biomass = !!data[0]?.hba_hist_m;
+  const height = !!data[0]?.hmax_hist_m;
+  const blueCarbon = !!data.filter((d) => !!d.toc_hist_tco2eha);
+
+  const widgetsData = {
+    mangrove_net_change: netChange,
+    mangrove_biomass: biomass,
+    mangrove_height: height,
+    mangrove_blue_carbon: blueCarbon,
+  };
+
+  return   Object.keys(widgetsData)
+  .reduce((o, key) => {
+    !widgetsData[key] && (o[key] = widgetsData[key]);
+    return o;
+  }, []);
+};
+
+
 /**
   * Set current location
   */

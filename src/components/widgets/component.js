@@ -1,10 +1,12 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Spinner from "components/spinner";
 import Button from "components/button";
 
 import useDynamicRefs from "use-dynamic-refs";
+
+import { getDataByWidget } from "../../modules/pages/sagas";
 
 import styles from "./style.module.scss";
 
@@ -15,6 +17,7 @@ const WidgetList = ({
   mobile,
   alerts,
   category,
+  dataByWidget,
   ...parentProps
 }) => {
   const onClickDownload = (e) => {
@@ -25,11 +28,15 @@ const WidgetList = ({
     [category]: null
   });
 
-  const widgetsCategory = widgets.filter(({ categoryIds }) => categoryIds.includes(category), [category]);
+  const widgetsWithData = getDataByWidget(dataByWidget)
+  const widgetsCategory = widgets
+    .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
+
+  const widgetsFiltered = useMemo(() => widgetsCategory?.filter(({ slug }) => !Object.keys(widgetsWithData).includes(slug) || ![widgetsWithData[slug]]), [widgetsCategory]);
+
   const widgetsCategoryLength = widgetsCategory.length - 1;
   const [getRef, setRef] =  useDynamicRefs();
-  const widgetsSlug = widgets.map(({ slug }) => slug)
-  
+  const widgetsSlug = widgets.map(({ slug }) => slug);
   const checkLastElementContent = (slugs, num) => {
     const ref = getRef(slugs[num])
     if (ref?.current?.children.length === 0) {
@@ -67,19 +74,23 @@ const WidgetList = ({
         </div>
       ) : (
         widgets.length &&
-        widgets.map((widget, index) => {
+        widgetsFiltered.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
           return (
             <div ref={setRef(widget.slug)} key={widget.slug} className={cx(styles.widgetWrapper, {
               [styles.pageBreak]: index % 2 !== 0
             })}>
               <Widget
+              className={cx(styles.widgetWrapper, {
+                [styles.pageBreak]: index % 2 !== 0
+              })}
                 key={widget.slug}
-                isLast={last[category] === widget.slug}
+                index={index}
+                isLast={widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug}
                 {...widget}
                 {...parentProps}
               />
-            </div>
+             </div>
           );
         })
       )}

@@ -12,6 +12,7 @@ const Legend = ({ title,
   sup,
   type,
   position,
+  style,
   widgetSpecific,
   groups,
   direction,
@@ -26,7 +27,7 @@ const Legend = ({ title,
   const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
 
   return (
-    <div className={classnames(styles.widget_legend, {
+    <div style={style} className={classnames(styles.widget_legend, {
         [styles.vertical]: direction === 'vertical',
         [styles[classname]]: !!classname })}
       >
@@ -79,6 +80,7 @@ const Legend = ({ title,
 
 Legend.propTypes = {
   title: PropTypes.string,
+  style: PropTypes.shape({}),
   direction: PropTypes.string,
   sup: PropTypes.bool,
   position: PropTypes.string,
@@ -91,6 +93,7 @@ Legend.propTypes = {
 
 Legend.defaultProps = {
   title: '',
+  style: {},
   direction: 'horizontal',
   sup: false,
   position: '',
