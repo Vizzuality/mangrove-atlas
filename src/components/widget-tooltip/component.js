@@ -61,7 +61,7 @@ function Tooltip({ payload, settings, style, hideZeros }) {
                         <rect width="2" height="12" fill={values.color} />
                       </svg>
                     )}
-                    {getValue(d, values[d.key])}
+                    {getValue(d, values[d.key])} {!!d.unit && d.unit}
                   </div>
                 )}
                 
