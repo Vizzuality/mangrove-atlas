@@ -33,13 +33,15 @@ function MangroveNetChange({
       filter: {
         id: 'net',
         startYear: startYear || years[0],
-        endYear: endYear || years[years.length - 1],
+        endYear: (endYear || years[years.length - 1]),
         years,
         unit: unit || unitOptions[0].value,
       }
     });
-    setUi({ id: 'net', value: { endYear: endYear || years[years.length - 1], startYear: startYear || years[0], unit: unit || unitOptions[0].value, } });
-  }, [startYear, endYear, unit, addFilter]);
+    setUi({
+      id: 'net',
+      value: { endYear: (endYear || years[years.length - 1]), startYear: startYear || years[0], unit: unit || unitOptions[0].value, } });
+  }, [years, startYear, endYear, unit, addFilter, setUi]);
   
 
   if (!rawData) {

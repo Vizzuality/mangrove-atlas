@@ -15,9 +15,6 @@
 
   .printBtn {
     margin: 30px 0;
-    position: absolute;
-    padding-bottom: 30px;
-    bottom: -180px;
 
     @media print {
       display: none;

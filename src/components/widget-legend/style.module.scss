@@ -7,6 +7,10 @@
   left: 0;
   position: relative;
 
+  &.top {
+    margin-top: -50px;
+  }
+
   &.vertical {
     max-width: 100%;
 
