@@ -5,11 +5,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: '%'
-  }
+  data: state.mangroveData.list,
+  ui: state.widgets.ui.biomass
 });
 const mapDispatchToProps = { setUi };
 

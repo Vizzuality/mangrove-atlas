@@ -16,6 +16,12 @@ export default {
       years: [],
       unit: null
     },
+    biomass: {
+      year: null,
+    },
+    height: {
+      year: null,
+    },
     alerts: {
       startDate: alertsStartDate,
       endDate: alertsEndDate,

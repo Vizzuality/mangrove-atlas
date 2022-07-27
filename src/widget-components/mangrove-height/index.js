@@ -6,7 +6,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   isLoading: state.mangroveData.isLoading,
   data: state.mangroveData.list,
-  ui: state.widgets.ui.height || '2016'
+  ui: state.widgets.ui.height
 });
 
 const mapDispatchToProps = { setUi };

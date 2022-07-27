@@ -37,7 +37,8 @@ const chunk = (array, size) => {
 
 const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
-  const barsData = data[0].map(value => value[1]);
+  const filteredData = data.filter(({ date }) => date.includes(selectedYear))[0].agb_hist_mgha_1;
+  const barsData = filteredData?.map(value => value[1]);
   const total = barsData.reduce((previous, current) => current + previous);
 
   const chunkNumber = barsData.length / 5;
@@ -63,14 +64,6 @@ const biomassCoverage = ({ list }, yearSelected) => {
   return yearData.agb_mgha_1.toFixed(2);
 };
 
-const filterData = ({ list }, yearSelected) => sortBy(
-  list
-    .filter(d => d.agb_mgha_1 !== null
-      && d.agb_hist_mgha_1 !== null
-      && d.date.includes(yearSelected)),
-  ['date']
-).map(i => i.agb_hist_mgha_1);
-
 const getDownloadData = (chartData, date, coverage) => {
   if (!chartData) return null;
   return chartData.map(d => ({
@@ -84,15 +77,14 @@ const getDownloadData = (chartData, date, coverage) => {
 };
 
 const CONFIG = {
-  parse: (data, yearSelected = 2016) => {
-    const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered)?.filter(d => d.percentage !== 0);
+  parse: (data, yearSelected) => {
+    const chartData = getData(data, yearSelected)?.filter(d => d.percentage !== 0);
     const coverage = biomassCoverage(data, yearSelected);
     const downloadData = getDownloadData(chartData, yearSelected, coverage);
 
     return {
       chartData,
-      metadata: widgetMeta(filterData),
+      metadata: widgetMeta(data),
       coverage,
       downloadData,
       chartConfig: {

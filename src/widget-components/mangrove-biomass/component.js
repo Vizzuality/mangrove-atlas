@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Select from 'components/select';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
@@ -14,23 +14,39 @@ function MangroveBiomass({
   slug,
   name,
   addFilter,
-  ui: yearSelected,
+  ui,
   setUi,
   ...props
 }) {
+  const { year } = ui;
+
+  const years = useMemo(() => sortBy(rawData?.filter(({ agb_hist_mgha_1, agb_mgha_1 }) => agb_hist_mgha_1 && agb_mgha_1), ['date', 'desc'])
+    .map(({ date }) => date),
+  [rawData]);
+
+  const yearSelected = years[0]?.split('-')[0];
+
   useEffect(() => {
     addFilter({
       filter: {
         id: 'biomass',
-        year: '2016'
+        year: (year || yearSelected),
       }
     });
-  }, [addFilter]);
+    setUi({ 
+      id: 'biomass',
+      value: {
+        ...ui,
+        year: (year || yearSelected),
+      }
+    });
+  }, [addFilter, year, yearSelected]);
 
-  if (!rawData) {
+  if (!rawData || !year) {
     return null;
-  }
-  const { chartData, metadata, chartConfig, coverage, downloadData } = config.parse(rawData);
+  };
+
+  const { chartData, metadata, chartConfig, coverage, downloadData } = config.parse(rawData, year);
   if (!chartData || chartData.length <= 0) {
     return null;
   }
@@ -45,7 +61,7 @@ function MangroveBiomass({
     });
   };
 
-  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
+  const dateOptions = years && sortBy(years.map(year => ({
     label: year.toString(),
     value: year.toString()
   })), ['value']);
@@ -66,7 +82,7 @@ function MangroveBiomass({
   const sentence = (
     <>
       Mean mangrove aboveground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{coverage} t / ha</strong> in <strong>{2016 || yearSelector}</strong>.
+      &nbsp;was <strong>{coverage} t / ha</strong> in <strong>{dateOptions.length > 1 ? yearSelector : year}</strong>.
     </>
   );
 

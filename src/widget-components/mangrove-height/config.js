@@ -1,7 +1,6 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
 import { format } from 'd3-format';
-import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
@@ -23,8 +22,7 @@ const chunk = (array, size) => {
 
 const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
-  const dataFormatted = data[0].hmax_hist_m;
-
+  const dataFormatted = data.find(({ date }) => date.includes(selectedYear)).hmax_hist_m;
   const barsData = dataFormatted.map(value => value[1]);
   const total = Object.values(barsData).reduce((previous, current) => current + previous);
 
@@ -46,16 +44,11 @@ const getData = (data, selectedYear) => {
   ];
 };
 
-const filterData = data => sortBy((data.filter(d => d.hmax_m !== null && d.hmax_hist_m !== null)), ['date']);
 const getHeightCoverage = (data, date) => {
   const yearData = data?.find(d => d.date.includes(date));
   if (!yearData) return null;
   return yearData.hmax_m.toFixed(2);
 };
-
-const metaData = data => Array.from(new Set(
-  data.map(d => moment(d.date).year())
-));
 
 const getDownloadData = (chartData, heightCoverage, date) => {
   if (!chartData || !chartData.length) return null;
@@ -72,18 +65,16 @@ const getDownloadData = (chartData, heightCoverage, date) => {
 };
 
 export const CONFIG = {
-  parse: (data, date) => {
+  parse: (data, yearSelected, years) => {
     {
-      const dataFiltered = filterData(data);
-      const chartData = getData(dataFiltered);
-      const heightCoverage = getHeightCoverage(dataFiltered, date);
-      const downloadData = getDownloadData(chartData, heightCoverage, date);
+      const chartData = getData(data, yearSelected);
+      const heightCoverage = getHeightCoverage(data, yearSelected);
+      const downloadData = getDownloadData(chartData, heightCoverage, yearSelected);
 
       return {
         chartData,
         heightCoverage,
         downloadData,
-        metadata: metaData(dataFiltered),
         chartConfig: {
           height: 360,
           cartesianGrid: {
@@ -152,7 +143,7 @@ export const CONFIG = {
               lineheight: 20,
               fill: 'rgba(0, 0, 0, 0.54)'
             },
-            ticks: metaData(data),
+            ticks: years,
             interval: 0
           },
           yAxis: {
