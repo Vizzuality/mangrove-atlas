@@ -25,9 +25,9 @@ const Legend = ({ title,
     return (Number(j[0]) + Number(j[1])) - (Number(i[0]) + Number(i[1]));
   });
   const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
-
   return (
-    <div style={style} className={classnames(styles.widget_legend, {
+    <div className={classnames(styles.widget_legend, {
+        [styles.top]: position === 'top',
         [styles.vertical]: direction === 'vertical',
         [styles[classname]]: !!classname })}
       >

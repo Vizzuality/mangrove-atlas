@@ -58,7 +58,7 @@ const CONFIG = {
     chartConfig: {
       stackOffset: 'sign',
       height: 360,
-      margin: { top: 0, right: 15, left: 0, bottom: 20 },
+      margin: { top: 60, right: 15, left: 0, bottom: 20 },
       referenceLines: [
         { y: 0, label: null, stroke: 'rgba(0,0,0,0.85)' }
       ],
@@ -126,7 +126,7 @@ const CONFIG = {
           }));
           return (
           <WidgetLegend
-            style={{ margin: { top: 0 }}}
+            position="top"
             direction="vertical"
             groups={{ labels }}
           />
