@@ -18,8 +18,8 @@ export const getCurrentLocation = (locationsList, currentId, locationType) => lo
 
 export const getDataByWidget = (data) => {
   const netChange = !!data.filter((d) => !!d?.gain_m2 || !!d?.loss_m2);
-  const biomass = !!data[0]?.hba_hist_m;
-  const height = !!data[0]?.hmax_hist_m;
+  const biomass = !!data.filter((d) => !!d.hba_hist_m);
+  const height = !!data.filter((d) => !!d.hmax_hist_m);
   const blueCarbon = !!data.filter((d) => !!d.toc_hist_tco2eha);
 
   const widgetsData = {

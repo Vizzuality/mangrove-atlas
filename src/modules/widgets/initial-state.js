@@ -41,6 +41,10 @@ export default {
       year: null,
       unit: null,
     },
+    emissions_mitigation: {
+      year: null,
+      unit: null,
+    },
   },
   isCollapsed: true,
 };

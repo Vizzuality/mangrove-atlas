@@ -1,7 +1,5 @@
 import alerts from "./templates/alerts.json";
 
-
-
 function toRasterSource({ filename, source }) {
   const extent = filename.includes('gmw');
   return {
@@ -56,9 +54,9 @@ const vectors = [
         "paint": {
           "fill-color": "#8122A6",
           "fill-opacity": 0.3
-        }
-      }
-    ]
+        },
+      },
+    ],
   }
 ];
 

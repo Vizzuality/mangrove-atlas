@@ -226,6 +226,19 @@
       "layersIds": [
         "restoration"
       ]
+    },
+    {
+      "name": "Mangrove Emissions Mitigation",
+      "slug": "mangrove_emissions_mitigation",
+      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+      ]
     }
   ],
   "layers": [

@@ -21,6 +21,7 @@ import alerts from 'modules/alerts/sagas';
 import mangroveInvestmentPotential from "modules/mangrove-investment-data/sagas";
 import mangroveEcosystemServicesData from "modules/mangrove-ecosystem-services-data/sagas";
 import mangroveInternationalStatusData from "modules/mangrove-international-status-data/sagas";
+import mangroveEmissionsMitigationData from "modules/mangrove-emissions-mitigation-data/sagas";
 
 export default function* root() {
   yield all([
@@ -44,6 +45,7 @@ export default function* root() {
     fork(mangroveDegradationAndLossData),
     fork(mangroveEcosystemServicesData),
     fork(mangroveInternationalStatusData),
+    fork(mangroveEmissionsMitigationData),
     fork(alerts)
   ]);
 }

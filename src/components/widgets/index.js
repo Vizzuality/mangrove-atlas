@@ -20,6 +20,7 @@ import MangroveBiomass from 'widget-components/mangrove-biomass';
 import ConservationHotspots from 'widget-components/conservation-hotspots';
 import MangroveInvestmentPotential from "widget-components/mangrove-investment-potential";
 import MangroveInternationalStatus from "widget-components/mangrove-international-status";
+import MangroveEmissionsMitigation from "widget-components/mangrove-emissions-mitigation";
 
 import Component from "./component";
 
@@ -76,6 +77,12 @@ export const templates = new Map([
     "mangrove_international_status",
     {
       component: MangroveInternationalStatus,
+    },
+  ],
+  [
+    "mangrove_emissions_mitigation",
+    {
+      component: MangroveEmissionsMitigation,
     },
   ],
 ]);

@@ -136,7 +136,7 @@ export const CONFIG = {
           }
         },
         legend: {
-          align: 'left',
+          align: 'right',
           verticalAlign: 'middle',
           layout: 'vertical',
           fontSize: 9,
