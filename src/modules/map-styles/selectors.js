@@ -122,11 +122,12 @@ export const mapStyle = createSelector(
               ).map((layerMapItem) => layerMapItem.layerId),
           ];
         }
+  
         return [
           ...acc,
           ...layerMap
             .filter(
-              (layerMapItem) => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10),
+              (layerMapItem) => parseInt(layerMapItem.year, 10) === parseInt(layerFilter.year, 10) || layerMapItem,
             ).map((layerMapItem) => layerMapItem.layerId),
         ];
       }
