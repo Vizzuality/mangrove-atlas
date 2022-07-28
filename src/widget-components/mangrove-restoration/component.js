@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { createRef, useEffect, useState, useMemo, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
-import sortBy from "lodash/sortBy";
 
 import { format } from "d3-format";
 
@@ -9,7 +8,6 @@ import { getLocationType, getCurrentLocation } from 'modules/pages/sagas';
 // components
 import ChartWidget from 'components/chart-widget';
 import Chart from "components/chart";
-import Select from "components/select";
 import Icon from "components/icon";
 import WidgetLegend from "components/widget-legend";
 
@@ -47,16 +45,17 @@ function MangroveRestoration({
   type,
   ...props
 }) {
-  const [lineChartWidth, setLineChartWidth] = useState(null);
-  const lineChartRef = useRef();
+  const ref = createRef();
   const yearRestoration = useMemo(() => uiRestoration?.year || restorationDataMetadata?.year[restorationDataMetadata.year.length - 1], [uiRestoration, restorationDataMetadata]);
   const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
   const yearDegradationAndLoss = useMemo(() => uiDegradationAndLoss?.year || degradationAndLossDataMetadata?.year[degradationAndLossDataMetadata.year.length - 1], [uiDegradationAndLoss, degradationAndLossDataMetadata]);
 
-  useEffect(() => {
-    const properties = lineChartRef?.current?.getBoundingClientRect();
-    setLineChartWidth(properties?.width);
-  },[lineChartRef]);
+  const [lineChartWidth, setLineChartWidth] = useState(0);
+
+  // fires synchronously after all DOM mutations.
+  useLayoutEffect(() => {
+    setLineChartWidth(ref?.current?.offsetWidth);
+  }, [ref]);
 
   useEffect(() => {
     fetchMangroveRestorationData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
@@ -194,7 +193,7 @@ function MangroveRestoration({
           <WidgetLegend groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }} type="height" />
           </div>
 
-            <div ref={lineChartRef} className={widgetStyles.lineChartWidget}>
+            <div ref={ref} className={widgetStyles.lineChartWidget}>
             <Icon
               name="play"
               className={widgetStyles.lineChartIcon}
