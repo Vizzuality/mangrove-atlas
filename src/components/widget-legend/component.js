@@ -12,7 +12,6 @@ const Legend = ({ title,
   sup,
   type,
   position,
-  style,
   widgetSpecific,
   groups,
   direction,
@@ -80,7 +79,6 @@ const Legend = ({ title,
 
 Legend.propTypes = {
   title: PropTypes.string,
-  style: PropTypes.shape({}),
   direction: PropTypes.string,
   sup: PropTypes.bool,
   position: PropTypes.string,
@@ -93,7 +91,6 @@ Legend.propTypes = {
 
 Legend.defaultProps = {
   title: '',
-  style: {},
   direction: 'horizontal',
   sup: false,
   position: '',
