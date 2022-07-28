@@ -60,11 +60,23 @@ const getLegendPayload = (data) => data.map((d) => ({
 
 const LabelContent = () => (
   <g>
-    <text x={-180} y={10} transform="rotate(270)" textAnchor="middle" fill="#C4C4C4" fontSize="14px">
+    <text x={-180} y={10} transform="rotate(270)" textAnchor="middle" fill="#000" fontSize="14px">
       Mitigation (tCO2/ha)
     </text>
   </g>
 );
+
+const LabelXAxis = ({ viewBox }) => {
+  const { x, y, height, width } = viewBox;
+  return (
+    <g>
+      <text x={x + width / 2} y={y + height + 5} textAnchor="middle" fill="#000" fontSize="14px">
+        Interventions
+      </text>
+    </g>
+  )
+};
+
 
 export const CONFIG = {
   parse: (data, filteredIndicators, setFilteredIndicators) => {
@@ -104,7 +116,10 @@ export const CONFIG = {
             lineheight: 20,
             fill: 'rgba(0, 0, 0, 0.54)'
           },
-          interval: 0
+          interval: 0,
+          label: {
+            content: LabelXAxis,
+          },
         },
         yAxis: {
           tick: {
