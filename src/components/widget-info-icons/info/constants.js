@@ -82,6 +82,12 @@ const widgetInfo = {
     Reference: '<p>Pending</p>',
     License: '<p>Pending</p>',
   },
+  mangrove_emissions_mitigation: {
+    Title: '<h1>Mangrove Emissions Mitigation</h1>',
+    Overview: '<p>Pending</p>',
+    Reference: '<p>Pending</p>',
+    License: '<p>Pending</p>',
+  },
 };
 
 export default widgetInfo;

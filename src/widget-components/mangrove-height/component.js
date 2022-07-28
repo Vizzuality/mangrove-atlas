@@ -14,10 +14,11 @@ const MangroveHeight = ({
   slug, name,
   currentLocation,
   addFilter,
-  ui: date,
+  ui,
   setUi,
   ...props
 }) => {
+  const { year } = ui;
   const years = useMemo(() => sortBy(rawData
     .filter(({ hmax_hist_m }) => hmax_hist_m), ['date', 'desc'])
     .map(({ date }) => date),
@@ -29,11 +30,19 @@ const MangroveHeight = ({
     addFilter({
       filter: {
         id: 'height',
-        year: date || yearSelected,
+        year: year || yearSelected,
         area: 'maximum'
       }
     });
-  }, [date, yearSelected, addFilter]);
+    setUi({
+      ...ui.height,
+      id: 'height',
+      value: {
+        year: year || yearSelected,
+        area: 'maximum'
+      }
+    })
+  }, [year, yearSelected, addFilter]);
  
   if (!rawData) {
     return null;
@@ -64,7 +73,7 @@ const MangroveHeight = ({
 
   const dateSelector = (
     <Select
-      value={date}
+      value={yearSelected}
       options={dateOptions}
       onChange={value => dateHandler(value)}
     />

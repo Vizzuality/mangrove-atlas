@@ -45,6 +45,10 @@ export default {
       year: null,
       unit: null,
     },
+    height: {
+      year: null,
+      unit: null,
+    },
   },
   isCollapsed: true,
 };

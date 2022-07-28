@@ -130,13 +130,13 @@ class APIService {
         data: [
           {
             indicator: 'Grassland and savanna fire mgmt',
-            category: 'Mangrove intervention',
+            category: 'Mangrove',
             value: 5,
             year: 2020,
           },
           {
             indicator: 'Reforestation (Tropics)',
-            category: 'Mangrove intervention',
+            category: 'Mangrove',
             value: 232,
             year: 2020,
           },

@@ -60,7 +60,7 @@ const getLegendPayload = (data) => data.map((d) => ({
 
 const LabelContent = () => (
   <g>
-    <text x={-180} y={10} transform="rotate(270)" textAnchor="middle" fill="#000" fontSize="14px">
+    <text x={-180} y={15} transform="rotate(270)" textAnchor="middle" fill="#000" fontSize="14px">
       Mitigation (tCO2/ha)
     </text>
   </g>
@@ -97,7 +97,7 @@ export const CONFIG = {
           horizontal: true,
           // strokeDasharray: '5 20'
         },
-        margin: { top: 20, right: 0, left: 30, bottom: 20 },
+        margin: { top: 20, right: 0, left: 15, bottom: 20 },
         xKey: 'category',
         yKeys: {
           bars: getBars(indicators, filteredIndicators)

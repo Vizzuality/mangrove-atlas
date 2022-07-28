@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { getCurrentLocation } from 'modules/pages/sagas';
-
 import ChartWidget from 'components/chart-widget';
 
 
@@ -24,8 +22,6 @@ function MangroveEmissionsMitigation({
   ...props
 }) {
   const { id } = currentLocation;
-  const location = getCurrentLocation(locationsList, current, locationType);
-
   const [filteredIndicators, setFilteredIndicators] = useState([]);
 
   useEffect(() => {
@@ -49,7 +45,7 @@ function MangroveEmissionsMitigation({
   const { chartData, chartConfig } = config.parse(data, filteredIndicators, setFilteredIndicators);
   const locationName = (currentLocation.location_type === 'worldwide')
     ? 'the world'
-    : <span className="notranslate">{`${location?.name}`}</span>;
+    : <span className="notranslate">{`${currentLocation?.name}`}</span>;
 
   const sentence = (
     <>
