@@ -76,6 +76,7 @@ FROM stage_2 AS stage_3
 
 WORKDIR "/home/jovyan/"
 # Add requirements file
+RUN npm install -g mapshaper@latest
 COPY jupyter_notebook_config.py /etc/jupyter/
 COPY jupyter_server_config.py .jupyter/jupyter_server_config.py
 COPY requirements.txt /app/
