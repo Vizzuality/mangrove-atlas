@@ -43,6 +43,7 @@ const WidgetList = ({
         widgets.length &&
         widgetsFiltered?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
+          const isLast = widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug;
           return (
             <div key={widget.slug} className={cx(styles.widgetWrapper, {
               [styles.pageBreak]: index % 2 !== 0
@@ -51,11 +52,12 @@ const WidgetList = ({
               className={cx(styles.widgetWrapper, {
                 [styles.pageBreak]: index % 2 !== 0
               })}
-                key={widget.slug}
-                index={index}
-                isLast={widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug}
                 {...widget}
                 {...parentProps}
+                key={widget.slug}
+                index={index}
+                isLast={isLast}
+                isCollapsed={isLast ? false : widget.isCollapsed}
               />
              </div>
           );

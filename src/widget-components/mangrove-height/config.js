@@ -21,8 +21,8 @@ const chunk = (array, size) => {
 
 const getData = (data, selectedYear) => {
   if (!data || !data.length) return null;
-  const dataFormatted = data.find(({ date }) => date.includes(selectedYear)).hmax_hist_m;
-  const barsData = dataFormatted.map(value => value[1]);
+  const dataFormatted = data.find(({ date }) => date.includes(selectedYear))?.hmax_hist_m;
+  const barsData = dataFormatted?.map(value => value[1]);
   const total = Object.values(barsData).reduce((previous, current) => current + previous);
 
   const chunksNumber = barsData.length / 5;
