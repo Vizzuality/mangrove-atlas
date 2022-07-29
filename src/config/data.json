@@ -221,9 +221,6 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation",
-        "ecosystem_services"
       ],
       "layersIds": [
         "restoration"
@@ -240,8 +237,6 @@
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "climate_and_policy"
       ]
     },
     {
