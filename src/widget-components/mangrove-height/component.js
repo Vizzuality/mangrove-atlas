@@ -19,14 +19,13 @@ const MangroveHeight = ({
   ...props
 }) => {
   const { year } = ui;
-  const years = useMemo(() => sortBy(rawData
-    .filter(({ hmax_hist_m }) => hmax_hist_m), ['date', 'desc'])
-    .map(({ date }) => date),
+  const years = useMemo(() => sortBy(rawData, ['date', 'desc'])
+    .filter(({ hmax_hist_m }) => hmax_hist_m)
+    .map(({ date }) => date?.split('-')[0]).reverse(),
   [rawData]);
-  
-  const yearSelected = years[0]?.split('-')[0];
- 
+
   useEffect(() => {
+    const yearSelected = years[0];
     addFilter({
       filter: {
         id: 'height',
@@ -34,35 +33,24 @@ const MangroveHeight = ({
         area: 'maximum'
       }
     });
-    setUi({
-      ...ui.height,
-      id: 'height',
-      value: {
-        year: year || yearSelected,
-        area: 'maximum'
-      }
-    })
-  }, [year, yearSelected, addFilter]);
+    setUi({ id: 'height', value: { year: year || yearSelected } })
+  }, [year, addFilter]);
  
-  if (!rawData) {
+  if (!rawData || !year) {
     return null;
   }
 
-  const { chartData, chartConfig, heightCoverage, downloadData } = config.parse(rawData, yearSelected, years);
+  const { chartData, chartConfig, heightCoverage, downloadData } = config.parse(rawData, year, years);
 
-  if (!chartData || !chartData.length) {
-    return null;
-  }
-
-  const location = currentLocation.name;
-
-  const dateOptions = sortBy(years.map(year => ({
+  const location = currentLocation?.name;
+  
+  const dateOptions = () => years.map(year => ({
     label: year.toString(),
     value: year.toString()
-  })), ['value']);
-
+  }));
+  
   const dateHandler = (value) => {
-    setUi({ id: 'height', value });
+    setUi({ id: 'height', value: { year: value } });
     addFilter({
       filter: {
         id: 'height',
@@ -70,26 +58,29 @@ const MangroveHeight = ({
       }
     });
   };
-
+  
   const dateSelector = (
     <Select
-      value={yearSelected}
-      options={dateOptions}
-      onChange={value => dateHandler(value)}
+    value={year}
+    options={dateOptions}
+    onChange={value => dateHandler(value)}
     />
-  );
-
-  const sentence = (
-    <>
+    );
+    
+    const sentence = (
+      <>
       Mean mangrove <strong>maximum</strong> canopy height in <strong>{location}</strong> was
-      <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateOptions.length > 1 ? dateSelector : yearSelected}</strong>.
+      <strong> {numberFormat(heightCoverage)} m</strong> in <strong>{dateOptions.length > 1 ? dateSelector : year}</strong>.
     </>
   );
   const widgetData = {
     data: chartData,
     config: chartConfig
   };
-
+  
+  if (!chartData || !chartData.length) {
+    return null;
+  }
   return (
     <ChartWidget
       name={name}

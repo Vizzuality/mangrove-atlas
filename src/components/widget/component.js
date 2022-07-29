@@ -25,7 +25,7 @@ function Widget({
 
   const widgetConditionalStyles = {
     [styles._modal]: isLocationsModal,
-    [styles._collapsed]: isLast ? false : isCollapsed,
+    [styles._collapsed]: isCollapsed,
     [styles._layerActive]: isActive
   };
 
