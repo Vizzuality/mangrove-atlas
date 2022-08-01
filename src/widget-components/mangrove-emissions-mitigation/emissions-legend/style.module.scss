@@ -1,36 +1,43 @@
 .widget_legend {
-  max-height: 220px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
   max-width: 200px;
-  line-height: 1;
+  max-height: 300px;
   font-size: 14px;
-
+  top: 0;
+  
   .widget_legend_list {
+    overflow-y: auto;
     margin: 10px;
     padding: 0;
     list-style: none;
     pointer-events: all;
+    max-height: 100%;
   }
 
   .item_color {
-    width: 5px;
-    height: 10px;
-    margin-right: 5px;
-    border-radius: 10px; 
+    width: 6px;
+    height: 12px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    margin-right: 9px;
   }
 
   .widget_legend_list_item {
     display: flex;
-    padding: 5px 0;
     justify-content: flex-start;
     align-items: baseline;
     list-style: none;
     position: relative;
     cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+    
+    &:not(:last-child) {
+      padding-bottom: 16px;
+    }
 
     &._disabled {
       opacity: 0.5;

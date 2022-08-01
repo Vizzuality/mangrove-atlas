@@ -6,6 +6,8 @@ import { format } from "d3-format";
 // components
 import WidgetTooltip from "components/widget-tooltip";
 
+import styles from 'components/chart/style.module.scss';
+
 const numberFormat = format(",.2f");
 const COLORS = {
   remaining: "#ff7f0f",
@@ -83,6 +85,7 @@ export const CONFIG = {
                     y={y}
                     dy={dy}
                     fill="#8884d8"
+                    className={styles.capitalize}
                     textAnchor={x > cx ? "start" : "end"}
                     dominantBaseline="central"
                     style={{ padding: 20 }}

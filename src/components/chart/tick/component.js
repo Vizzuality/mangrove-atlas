@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from '../style.module.scss';
+
 class Tick extends PureComponent {
   static propTypes = {
     x: PropTypes.number,
@@ -44,8 +46,8 @@ class Tick extends PureComponent {
             <feComposite in="SourceGraphic" />
           </filter>
         </defs>
-        <span>Hello</span>
         <text
+          className={styles.capitalize}
           x="0"
           y="3"
           textAnchor="start"

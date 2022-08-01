@@ -4,6 +4,9 @@ import sortBy from 'lodash/sortBy';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
 import { format } from 'd3-format';
+import cx from 'classnames';
+
+import styles from 'components/chart/style.module.scss';
 
 const formatAxis = format(',~s');
 
@@ -175,6 +178,7 @@ const TickSmall = (({
       <text
         x={0}
         y={0}
+        className={styles.capitalize}
         textAnchor="end"
         fill="#3A3F59"
         opacity={0.5}
@@ -311,7 +315,7 @@ export const CONFIG = {
             const { x, y } = viewBox;
             return (
               <g>
-                <text x={x + 20} y={y - 70} lineheight="19" className="recharts-text recharts-label-medium" textAnchor="middle" dominantBaseline="central">
+                <text x={x + 20} y={y - 70} lineheight="19" className={cx("recharts-text recharts-label-medium", styles.capitalize)} textAnchor="middle" dominantBaseline="central">
                   <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="12">Alerts</tspan>
                 </text>
                 {/* <text x={x + 20} y={y - 50} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
