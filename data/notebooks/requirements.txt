@@ -12,6 +12,7 @@ earthengine-api
 gcsfs
 s3fs
 google-cloud-storage
+google-cloud-datastore
 google-api-python-client
 iso8601
 pystac
