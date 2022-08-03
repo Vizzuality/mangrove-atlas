@@ -17,15 +17,13 @@ function ChartWidget({
   ...props
 }) {
   const { data, config } = !!chart && chartData;
-  const { isCollapsed } = props;
-
   return (
     <Widget className={styles.widget} data={data} {...props}>
       <div className={styles.widget_template}>
         <div className={styles.sentence} key={Date.now()}>
           {sentence}
         </div>
-        {chart && !isCollapsed && (
+        {chart && (
           <Chart
             {...props}
             data={data}

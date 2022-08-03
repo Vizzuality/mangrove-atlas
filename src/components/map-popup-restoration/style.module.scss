@@ -1,0 +1,15 @@
+.popupWrapper {
+  padding: 20px;
+  padding-bottom: 0;
+  
+  .infoContent {
+    display: flex;
+    
+    .title {
+      padding-right: 10px;
+    }
+    .content {
+      font-weight: bold;
+    }
+  }
+}

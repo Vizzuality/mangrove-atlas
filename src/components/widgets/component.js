@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Spinner from "components/spinner";
@@ -18,9 +18,9 @@ const WidgetList = ({
   dataByWidget,
   ...parentProps
 }) => {
-  const onClickDownload = (e) => {
+  const onClickDownload = useCallback(() => {
     window.print();
-  };
+  }, []);
 
   const widgetsWithData = getDataByWidget(dataByWidget)
   const widgetsCategory = widgets
