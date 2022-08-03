@@ -1,16 +1,16 @@
 import { connect } from 'react-redux';
 import { setUi } from 'modules/widgets/actions';
 
+import { fetchMangroveBiomassData } from 'modules/mangrove-biomass-data/actions';
+
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: '%'
-  }
+  isLoading: state.mangroveBiomassData.isLoading,
+  data: state.mangroveBiomassData.data,
+  metadata: state.mangroveBiomassData.metadata,
+  ui: state.widgets.ui.biomass
 });
-const mapDispatchToProps = { setUi };
+const mapDispatchToProps = { setUi, fetchMangroveBiomassData };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

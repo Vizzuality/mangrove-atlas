@@ -13,6 +13,7 @@ import dashboards from 'modules/dashboards/sagas';
 import languages from 'modules/languages/sagas';
 import mangroveData from 'modules/mangrove-data/sagas';
 import mangroveSpeciesData from 'modules/mangrove-species-data/sagas';
+import mangroveBiomassData from 'modules/mangrove-biomass-data/sagas';
 import ranking from 'modules/ranking/sagas';
 import mangroveProtectionData from 'modules/mangrove-protection-data/sagas';
 import mangroveRestorationData from 'modules/mangrove-restoration-data/sagas';
@@ -37,6 +38,7 @@ export default function* root() {
     fork(languages),
     fork(mangroveData),
     fork(mangroveSpeciesData),
+    fork(mangroveBiomassData),
     fork(ranking),
     fork(mangroveProtectionData),
     fork(mangroveInvestmentPotential),

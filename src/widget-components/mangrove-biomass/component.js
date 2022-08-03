@@ -1,42 +1,71 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Select from 'components/select';
 import PropTypes from 'prop-types';
 import ChartWidget from 'components/chart-widget';
 import sortBy from 'lodash/sortBy';
 
+// utils
+import { format } from 'd3-format';
+
 import config from './config';
 
+const numberFormat = format(',.2f');
 
 function MangroveBiomass({
-  data: rawData,
+  data,
+  metadata,
+  isLoading,
   currentLocation,
   isCollapsed = true,
   slug,
   name,
   addFilter,
-  ui: yearSelected,
+  ui,
   setUi,
+  fetchMangroveBiomassData,
   ...props
 }) {
-  useEffect(() => {
-    addFilter({
-      filter: {
-        id: 'biomass',
-        year: '2016'
-      }
-    });
-  }, [addFilter]);
+  const { id } = currentLocation;
+  const year = ui?.year;
+  const years = metadata?.year;
+  const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year).value, [metadata, year]);
 
-  if (!rawData) {
-    return null;
-  }
-  const { chartData, metadata, chartConfig, coverage, downloadData } = config.parse(rawData);
+  useEffect(() => {
+    if (!id || id === 1561) {
+      fetchMangroveBiomassData()
+    }
+    else {
+      fetchMangroveBiomassData({ location_id: id });
+    }
+  }, [id, fetchMangroveBiomassData]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      addFilter({
+        filter: {
+          id: 'biomass',
+          year: years?.[0]
+        }
+      });
+      setUi({
+        id: 'biomass',
+        value: {
+          year: (year || years?.[0])
+        }
+      })
+    }
+  }, [setUi, year, years, addFilter]);
+
+  if (!data) return null;
+  
+  const { chartData, chartConfig, downloadData } = config.parse(data, year, aboveGroundBiomass);
+  
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
   const dateHandler = (value) => {
-    setUi({ id: 'biomass', value });
+    setUi({ id: 'biomass', value: { year: value} });
     addFilter({
       filter: {
         id: 'biomass',
@@ -45,28 +74,30 @@ function MangroveBiomass({
     });
   };
 
-  const dateOptions = metadata && sortBy(metadata.years.map(year => ({
+  const dateOptions = years && sortBy(years.map(year => ({
     label: year.toString(),
-    value: year.toString()
-  })), ['value']);
+    value: year
+  })), ['label']);
 
   const location = (currentLocation.location_type === 'worldwide')
     ? 'the world'
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
   const yearSelector = (
+    dateOptions.length > 1 ? 
     <Select
-      value={yearSelected}
-      isOptionDisabled={option => option.value === yearSelected}
+      value={year}
+      isOptionDisabled={option => option.value === year}
       options={dateOptions}
       onChange={value => dateHandler(value)}
     />
+    : year
   );
 
   const sentence = (
     <>
       Mean mangrove aboveground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{coverage} t / ha</strong> in <strong>{2016 || yearSelector}</strong>.
+      &nbsp;was <strong>{numberFormat(aboveGroundBiomass)} t / ha</strong> in <strong>{yearSelector}</strong>.
     </>
   );
 

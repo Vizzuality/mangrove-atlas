@@ -221,8 +221,7 @@
       "categoryIds": [
         "all_datasets",
         "restoration_and_conservation",
-        "ecosystem_services",
-        "distribution_and_change"
+        "ecosystem_services"
       ],
       "layersIds": [
         "restoration"

@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
     - Metadata info for Mangrove Investible Blue Carbon, Mangrove International Status and Mangrove Emissions Mitigation widgets.
 
 ### Changed
-
+    - Refactor in biomass widget (widget adapted to new endpoint)
+    
 ### Fixed
 
 ### Removed
