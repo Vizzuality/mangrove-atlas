@@ -7,7 +7,7 @@ import { getLocationType } from 'modules/pages/sagas';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveSpeciesData.isLoading,
+  isLoading: state.mangroveEmissionsMitigationData.isLoading,
   data: state.mangroveEmissionsMitigationData.data,
   ui: state.widgets.ui.species,
   locationsList: state.locations.list,

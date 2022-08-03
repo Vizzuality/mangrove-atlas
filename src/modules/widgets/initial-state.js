@@ -49,6 +49,10 @@ export default {
       year: null,
       unit: null,
     },
+    biomass: {
+      year: null,
+      unit: null,
+    },
   },
   isCollapsed: true,
 };

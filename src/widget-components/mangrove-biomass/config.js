@@ -22,45 +22,18 @@ const widgetMeta = ({ list, metadata }) => {
   };
 };
 
-const chunk = (array, size) => {
-  const chunkedArr = [];
-  for (let i = 0; i < array.length; i++) {
-    const last = chunkedArr[chunkedArr.length - 1];
-    if (!last || last.length === size) {
-      chunkedArr.push([array[i]]);
-    } else {
-      last.push(array[i]);
-    }
-  }
-  return chunkedArr;
-};
 
-const getData = (data, selectedYear) => {
+
+const getData = (data, selectedYear = 2020) => {
   if (!data || !data.length) return null;
-  const barsData = data[0].map(value => value[1]);
-  const total = barsData.reduce((previous, current) => current + previous);
+  const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F']
+  const barsValues = data.map(({ value })=> value);
+  const total = barsValues.reduce((previous, current) => current + previous);
+  return data.map((d, index) => ({
+    x: selectedYear,
+    y: d.value * 100, label: d.indicator, percentage: d.value * 100, color: COLORS[index], value: d.value / total * 100,
 
-  const chunkNumber = barsData.length / 5;
-  const chunkedData = chunk(barsData, chunkNumber);
-  let formattedData = chunkedData.map(
-    r => (r.reduce((previous, current) => current + previous))
-  );
-
-  formattedData = formattedData.map(d => d / total);
-  return [
-    { x: Number(selectedYear), y: formattedData[0] * 100, label: '0–250', percentage: formattedData[0] * 100, color: '#EAF19D', value: formattedData[0] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[1] * 100, label: '250-500', percentage: formattedData[1] * 100, color: '#B8E98E', value: formattedData[1] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[2] * 100, label: '500-750', percentage: formattedData[2] * 100, color: '#1B97C1', value: formattedData[2] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[3] * 100, label: '750-1000', percentage: formattedData[3] * 100, color: '#1C52A3', value: formattedData[3] / total * 100 },
-    { x: Number(selectedYear), y: formattedData[4] * 100, label: '1000-1250', percentage: formattedData[4] * 100, color: '#13267F', value: formattedData[4] / total * 100 },
-  ];
-};
-
-const biomassCoverage = ({ list }, yearSelected) => {
-  const yearData = list?.find(d => d.date
-    .includes(yearSelected));
-  if (!yearData) return null;
-  return yearData.agb_mgha_1.toFixed(2);
+  }))
 };
 
 const filterData = ({ list }, yearSelected) => sortBy(
@@ -84,16 +57,13 @@ const getDownloadData = (chartData, date, coverage) => {
 };
 
 const CONFIG = {
-  parse: (data, yearSelected = 2016) => {
-    const dataFiltered = filterData(data, yearSelected);
-    const chartData = getData(dataFiltered)?.filter(d => d.percentage !== 0);
-    const coverage = biomassCoverage(data, yearSelected);
+  parse: (data, yearSelected = 2016, coverage) => {
+    const chartData = getData(data);
     const downloadData = getDownloadData(chartData, yearSelected, coverage);
 
     return {
       chartData,
       metadata: widgetMeta(filterData),
-      coverage,
       downloadData,
       chartConfig: {
         type: 'pie',
