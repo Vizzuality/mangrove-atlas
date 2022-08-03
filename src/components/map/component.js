@@ -8,13 +8,15 @@ import {
   FlyToInterpolator,
   TRANSITION_EVENTS,
 } from "react-map-gl";
+
 import WebMercatorViewport from "viewport-mercator-project";
 
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import { easeCubic } from "d3-ease";
 
-import MapPopupHotspots from "components/map-popup-hotspots";
+import PopUpRestoration from "components/map-popup-restoration";
+
 import styles from "./style.module.scss";
 
 const DEFAULT_VIEWPORT = {
@@ -89,6 +91,7 @@ class Map extends Component {
     },
     flying: false,
     loaded: false,
+    popup: [],
   };
 
   componentDidMount() {
@@ -211,46 +214,23 @@ class Map extends Component {
       onMouseLeave,
       onViewportChange,
       onZoomChange,
-      popup,
       onPopupClose,
       ...mapboxProps
     } = this.props;
     const { loaded, flying, viewport } = this.state;
     const ms = { ...mapStyle };
-console.log(this.state.viewport.latitude, this.state.viewport.longitude)
+    let hoveredStateId = null;
     const onClickHandler = (e) => {
-      // This makes sure that if you click on controls, map events does not get triggered
-      const { properties: restorationData } = e.features.find(
+      const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
-      );
-      const {
-        Type,
-        Max_Area_20_ha,
-        Area_loss_ha,
-        Rest_Area_Loss,
-        Rest_Score,
-        Area_dgrd_ha,
-        Tidal_range,
-        Tidal_range1,
-        Ant_SLR,
-        Ant_SLR1,
-        Future_SLR,
-        Future_SLR1,
-        AGB,
-        Class,
-        Country,
-        Fish_Score,
-        Fish_Score_Inv,
-        Med_Patch,
-        Med_Patch1,
-        People,
-        Region,
-        SOC,
-        Sediment,
-        Sediment1,
-        Time_Loss,
-        Time_Loss1,
-      } = restorationData;
+      )?.properties;
+      if (restorationData) {
+        this.setState({
+          ...this.state,
+          popup: [e?.lngLat[0], e?.lngLat[1]],
+          popupInfo: restorationData,
+        });
+      }
 
       if (e.target.className === "overlays") {
         onClick({
@@ -271,18 +251,58 @@ console.log(this.state.viewport.latitude, this.state.viewport.longitude)
       return null;
     };
 
-    const PopupRestoration = () => (
+    const removePopUp = () => {
+      this.setState({
+        popup: [],
+      });
+    };
+
+    const PopupRestoration = () => {
+      return (
         <Popup
           anchor="bottom"
-          longitude={this.state.viewport.latitude}
-          latitude={this.state.viewport.longitude}
-          onClose={onPopupClose}
-      >
-        <div style={{ width: 300, height: 300, backgroundColor: 'blue'}}>hola</div>
-     </Popup>
+          longitude={this.state.popup[0] || null}
+          latitude={this.state.popup[1] || null}
+          onClose={removePopUp}
+        >
+          <div style={{ width: 300, height: 300, backgroundColor: "blue" }}>
+            {<PopUpRestoration restorationData={this.state.popupInfo} />}
+          </div>
+        </Popup>
       );
+    };
 
     // applyFilters();
+    const onHover = (e) => {
+      const restorationData = e?.features.find(
+        ({ layer }) => layer.id === "restoration"
+      );
+
+      if (restorationData) {
+        if (hoveredStateId !== null) {
+          this.map.setFeatureState(
+            { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+            { hover: false }
+          );
+        }
+
+        hoveredStateId = restorationData?.id;
+        this.map.setFeatureState(
+          { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+          { hover: true }
+        );
+      }
+    };
+    const onLeave = (e) => {
+      if (hoveredStateId !== null) {
+        this.map.setFeatureState(
+          { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+          { hover: false }
+        );
+      }
+      hoveredStateId = null;
+    };
+  
     return (
       <div
         ref={(r) => {
@@ -314,11 +334,13 @@ console.log(this.state.viewport.latitude, this.state.viewport.longitude)
           onLoad={this.onLoad}
           onClick={onClickHandler}
           clickRadius={5}
+          onHover={onHover}
+          onMouseLeave={onLeave}
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >
           <MapFunctions />
-          <PopupRestoration />
+          {/* {!!this.state.popup.length && <PopupRestoration />} */}
         </ReactMapGL>
         {/* <MapControls>
           <ZoomControl

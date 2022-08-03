@@ -41,6 +41,7 @@
       "type": "geojson"
     },
     "restoration": {
+      "promoteId": "ID",
       "type": "vector",
       "url": "mapbox://mangrove-atlas.c7czuzvl"
     },

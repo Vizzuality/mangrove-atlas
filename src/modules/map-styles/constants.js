@@ -43,6 +43,7 @@ const vectors = [
     id: 'restoration',
     source: {
       type: 'vector',
+      promoteId: "ID",
     },
     layers: [
       {
@@ -50,10 +51,14 @@ const vectors = [
         "type": "fill",
         "source": "restoration",
         "source-layer": "MOW_Global_Mangrove_Restoration",
-        "layout": {},
         "paint": {
           "fill-color": "#8122A6",
-          "fill-opacity": 0.3
+          "fill-opacity": [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1,
+            0.5
+          ]
         },
       },
     ],
@@ -799,7 +804,6 @@ export const scopeFeature = new Map([
   ['medium', 'MT_Advice'],
   ['long', 'LT_Advice']
 ]);
-
 
 export default {
   layersMap,
