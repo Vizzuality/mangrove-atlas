@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
     - Refactor in biomass widget (widget adapted to new endpoint)
+    - Refactor in height widget (widget adapted to new endpoint)
     
 ### Fixed
 

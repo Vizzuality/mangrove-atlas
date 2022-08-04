@@ -18,6 +18,7 @@ import * as mangroveSpeciesData from 'modules/mangrove-species-data';
 import * as investmentPotentialData from 'modules/mangrove-investment-data';
 import * as mangroveRestorationData from 'modules/mangrove-restoration-data';
 import * as mangroveBiomassData from 'modules/mangrove-biomass-data';
+import * as mangroveHeightData from 'modules/mangrove-height-data';
 import * as mangroveDegradationAndLossData from 'modules/mangrove-degradation-and-loss-data';
 import * as mangroveEcosystemServicesData from 'modules/mangrove-ecosystem-services-data';
 import * as mangroveInternationalStatusData from 'modules/mangrove-international-status-data';
@@ -45,6 +46,7 @@ const modules = [
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: 'mangroveRestorationData', components: mangroveRestorationData },
   { namespace: 'mangroveBiomassData', components: mangroveBiomassData },
+  { namespace: 'mangroveHeightData', components: mangroveHeightData },
   { namespace: 'mangroveDegradationAndLossData', components: mangroveDegradationAndLossData },
   { namespace: 'mangroveEcosystemServicesData', components: mangroveEcosystemServicesData },
   { namespace: 'mangroveEmissionsMitigationData', components: mangroveEmissionsMitigationData },

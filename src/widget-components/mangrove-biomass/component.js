@@ -28,7 +28,7 @@ function MangroveBiomass({
   const { id } = currentLocation;
   const year = ui?.year;
   const years = metadata?.year;
-  const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year).value, [metadata, year]);
+  const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value, [metadata, year]);
 
   useEffect(() => {
     if (!id || id === 1561) {
@@ -54,7 +54,7 @@ function MangroveBiomass({
         }
       })
     }
-  }, [setUi, year, years, addFilter]);
+  }, [setUi, year, years, addFilter, isLoading]);
 
   if (!data) return null;
   
@@ -123,6 +123,7 @@ function MangroveBiomass({
 
 MangroveBiomass.propTypes = {
   data: PropTypes.shape({}),
+  isLoading: PropTypes.bool,
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
   isCollapsed: PropTypes.bool,
@@ -135,6 +136,7 @@ MangroveBiomass.propTypes = {
 
 MangroveBiomass.defaultProps = {
   data: null,
+  isLoading: true,
   currentLocation: null,
   addFilter: () => { },
   isCollapsed: false,

@@ -172,7 +172,7 @@ export const CONFIG = {
           content: ((properties) => {
             const { payload } = properties;
             if (!payload.length) return null;
-            const { name, payload: values } = payload[0];
+            const { payload: values } = payload[0];
             const { unit } = values;
             return (
               <WidgetTooltip
