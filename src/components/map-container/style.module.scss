@@ -106,8 +106,8 @@ $space-left-map-mobile: 20px;
 
 :global(.mapboxgl-popup-content) {
   border-radius: 12px;
-  padding: 5px;
-  max-width: 300px;
+  max-width: fit-content;
+  padding: 0;
 
   > button {
     padding: 10px;

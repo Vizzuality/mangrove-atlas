@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
     - Emissions mitigation widget.
     - International Status widget.
     - Metadata info for Mangrove Investible Blue Carbon, Mangrove International Status and Mangrove Emissions Mitigation widgets.
+    - Tooltip added to the map for restoration layer
 
 ### Changed
     - Refactor in biomass widget (widget adapted to new endpoint)

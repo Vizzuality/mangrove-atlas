@@ -9,7 +9,7 @@ import cx from 'classnames';
 import Modal from 'components/modal';
 import Icon from 'components/icon';
 
-import widgetInfo from './constants';
+import widgetInfo from 'components/widget-info/constants';
 import styles from './style.module.scss';
 
 const Info = ({ slug }) => {
