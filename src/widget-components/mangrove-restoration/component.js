@@ -1,12 +1,18 @@
-import React, { createRef, useEffect, useState, useMemo, useLayoutEffect } from "react";
+import React, {
+  createRef,
+  useEffect,
+  useState,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import PropTypes from "prop-types";
 
 import { format } from "d3-format";
 
-import { getLocationType, getCurrentLocation } from 'modules/pages/sagas';
+import { getLocationType, getCurrentLocation } from "modules/pages/sagas";
 
 // components
-import ChartWidget from 'components/chart-widget';
+import ChartWidget from "components/chart-widget";
 import Chart from "components/chart";
 import Icon from "components/icon";
 import WidgetLegend from "components/widget-legend";
@@ -16,7 +22,7 @@ import widgetStyles from "widget-components/mangrove-restoration/style.module.sc
 
 import config from "./config";
 
-import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from './constants';
+import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from "./constants";
 
 const numberFormat = format(",.2f");
 
@@ -41,14 +47,28 @@ function MangroveRestoration({
   ecosystemServicesData,
   ecosystemServicesMetadata,
   isLoading,
+  isLoadingRestorationData,
+  isLoadingDegradationAndLossData,
   setUi,
   type,
   ...props
 }) {
   const ref = createRef();
-  const yearRestoration = useMemo(() => uiRestoration?.year || restorationDataMetadata?.year[restorationDataMetadata.year.length - 1], [uiRestoration, restorationDataMetadata]);
+  const yearRestoration = useMemo(
+    () =>
+      uiRestoration?.year ||
+      restorationDataMetadata?.year[restorationDataMetadata.year.length - 1],
+    [uiRestoration, restorationDataMetadata]
+  );
   const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
-  const yearDegradationAndLoss = useMemo(() => uiDegradationAndLoss?.year || degradationAndLossDataMetadata?.year[degradationAndLossDataMetadata.year.length - 1], [uiDegradationAndLoss, degradationAndLossDataMetadata]);
+  const yearDegradationAndLoss = useMemo(
+    () =>
+      uiDegradationAndLoss?.year ||
+      degradationAndLossDataMetadata?.year[
+        degradationAndLossDataMetadata.year.length - 1
+      ],
+    [uiDegradationAndLoss, degradationAndLossDataMetadata]
+  );
 
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
@@ -58,27 +78,41 @@ function MangroveRestoration({
   }, [ref]);
 
   useEffect(() => {
-    fetchMangroveRestorationData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
-    fetchMangroveDegradationAndLossData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
-    fetchMangroveEcosystemServicesData({ ...currentLocationId && currentId !== 'worldwide' && { location_id: currentLocationId }});
+    fetchMangroveRestorationData({
+      ...(currentLocationId &&
+        currentId !== "worldwide" && { location_id: currentLocationId }),
+    });
+    fetchMangroveDegradationAndLossData({
+      ...(currentLocationId &&
+        currentId !== "worldwide" && { location_id: currentLocationId }),
+    });
+    fetchMangroveEcosystemServicesData({
+      ...(currentLocationId &&
+        currentId !== "worldwide" && { location_id: currentLocationId }),
+    });
 
-    if (!isLoading) {
+    if (!isLoadingRestorationData) {
       addFilter({
         filter: {
-          id: 'restoration',
+          id: "restoration",
           year: yearRestoration,
           unit,
-        }
+        },
       });
       setUi({ id: "restoration", value: { year: yearRestoration } });
+    }
+    if (!isLoadingDegradationAndLossData) {
       addFilter({
         filter: {
-          id: 'degradation_and_loss',
+          id: "degradation_and_loss",
           year: yearDegradationAndLoss,
           unit,
-        }
+        },
       });
-      setUi({ id: "degradation_and_loss", value: { year: yearDegradationAndLoss } });
+      setUi({
+        id: "degradation_and_loss",
+        value: { year: yearDegradationAndLoss },
+      });
     }
   }, [
     addFilter,
@@ -93,26 +127,44 @@ function MangroveRestoration({
   ]);
 
   const locationType = getLocationType(type);
-  const currentLocation = getCurrentLocation(locations.list, currentId, locationType)
+  const currentLocation = getCurrentLocation(
+    locations.list,
+    currentId,
+    locationType
+  );
 
-  const unitRestorationPotential = useMemo(() => !isLoading && restorationDataMetadata?.units?.restoration_potential_score, [isLoading]);
+  const unitRestorationPotential = useMemo(
+    () =>
+      !isLoading && restorationDataMetadata?.units?.restoration_potential_score,
+    [isLoading, restorationDataMetadata]
+  );
 
-  const restorationPotentialScore = !isLoading && restorationData?.restoration_potential_score;
-  const { units: restorationUnits } = !!restorationDataMetadata && restorationDataMetadata;
+  const restorationPotentialScore =
+    !isLoading && restorationData?.restoration_potential_score;
+  const { units: restorationUnits } =
+    !!restorationDataMetadata && restorationDataMetadata;
   const {
     chartRingData,
     chartRingConfig,
     chartValueData,
     chartValueConfig,
     chartTreeConfig,
-  } = config.parse(restorationData, restorationUnits, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, yearRestoration, unitRestorationPotential);
+  } = config.parse(
+    restorationData,
+    restorationUnits,
+    degradationAndLossData,
+    ecosystemServicesData,
+    ecosystemServicesMetadata,
+    yearRestoration,
+    unitRestorationPotential
+  );
 
   if (!restorationData) {
     return null;
   }
 
   const location =
-  currentLocation?.location_type === "worldwide" ? (
+    currentLocation?.location_type === "worldwide" ? (
       "the world"
     ) : (
       <span className="notranslate">{`${currentLocation?.name}`}</span>
@@ -134,7 +186,8 @@ function MangroveRestoration({
     config: chartValueConfig,
   };
 
-  const lossDriver = degradationAndLossMetadata?.main_loss_driver || "Commodities";
+  const lossDriver =
+    degradationAndLossMetadata?.main_loss_driver || "Commodities";
 
   // charts sentences
   const restorationPotentialLineSentence = (
@@ -148,11 +201,15 @@ function MangroveRestoration({
 
   const restorationPotentialRingSentence = (
     <>
-     <strong>{currentLocation?.location_type === "worldwide" ? (
-      "The world"
-    ) : (
-      <span className="notranslate">{`${currentLocation?.name}`}</span>
-    )}'s&nbsp;</strong> restorable mangrove areas represent <strong>{restorableAreaPerc}%</strong>{" "}
+      <strong>
+        {currentLocation?.location_type === "worldwide" ? (
+          "The world"
+        ) : (
+          <span className="notranslate">{`${currentLocation?.name}`}</span>
+        )}
+        's&nbsp;
+      </strong>{" "}
+      restorable mangrove areas represent <strong>{restorableAreaPerc}%</strong>{" "}
       of the total mangrove area.
     </>
   );
@@ -166,11 +223,13 @@ function MangroveRestoration({
 
   const restorationPotentialValue = (
     <>
-      The restoration of mangroves in <strong>{location}</strong> would increase the value of the following ecosystem services:
+      The restoration of mangroves in <strong>{location}</strong> would increase
+      the value of the following ecosystem services:
     </>
   );
 
-  const trianglePosition = ((lineChartWidth * restorationPotentialScore) / 100) - 7; // substract icon size
+  const trianglePosition =
+    (lineChartWidth * restorationPotentialScore) / 100 - 7; // substract icon size
 
   if (!restorationData.restoration_potential_score) return null;
 
@@ -182,57 +241,66 @@ function MangroveRestoration({
       chart={false}
       isCollapsed={isCollapsed}
       {...props}
-      >
-        <div className={widgetStyles.restorationChartWrapper}>
-          <div className={widgetStyles.subtitle}>overview</div>
-          <div className={widgetStyles.sentence} key={Date.now()}>
-            {restorationPotentialLineSentence}
-          </div>
-          <div>
-          <span className={widgetStyles.restorationPotentialUnit}>{unitRestorationPotential}</span>
-          <WidgetLegend groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }} type="height" />
-          </div>
-
-            <div ref={ref} className={widgetStyles.lineChartWidget}>
-            <Icon
-              name="play"
-              className={widgetStyles.lineChartIcon}
-              style={{ left: !!trianglePosition && trianglePosition }}
-            />
-          </div>
-          <hr className={widgetStyles.breakLineDashed} />
+    >
+      <div className={widgetStyles.restorationChartWrapper}>
+        <div className={widgetStyles.subtitle}>overview</div>
+        <div className={widgetStyles.sentence} key={Date.now()}>
+          {restorationPotentialLineSentence}
         </div>
-
-        <div className={widgetStyles.restorationChartWrapper}>
-        <div className={widgetStyles.subtitle}>Restorable Mangrove Area</div>
-          <div className={styles.sentence} key={Date.now()}>
-            {restorationPotentialRingSentence}
-          </div>
-          <Chart
-            {...props}
-            name={name}
-            slug={slug}
-            filename={slug}
-            isCollapsed={isCollapsed}
-            sentence={restorationPotentialRingSentence}
-            data={chartRingData}
-            config={chartRingConfig}
-            chartData={widgetDataRing}
+        <div>
+          <span className={widgetStyles.restorationPotentialUnit}>
+            {unitRestorationPotential}
+          </span>
+          <WidgetLegend
+            groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }}
+            type="height"
           />
-
-          <hr className={widgetStyles.breakLine} />
         </div>
 
-        <div className={widgetStyles.restorationChartWrapper}>
-          <div className={widgetStyles.subtitle}>Mangrove Loss</div>
-          <div className={styles.sentence} key={Date.now()}>
-            {restorationPotentialTreeMapSentence}
-          </div>
+        <div ref={ref} className={widgetStyles.lineChartWidget}>
+          <Icon
+            name="play"
+            className={widgetStyles.lineChartIcon}
+            style={{ left: !!trianglePosition && trianglePosition }}
+          />
+        </div>
+        <hr className={widgetStyles.breakLineDashed} />
+      </div>
 
-          <div className={widgetStyles.treemap}>
-          <WidgetLegend groups={chartTreeConfig.legend} type="blue-carbon" unit="ha" classname="maxWidth" />
+      <div className={widgetStyles.restorationChartWrapper}>
+        <div className={widgetStyles.subtitle}>Restorable Mangrove Area</div>
+        <div className={styles.sentence} key={Date.now()}>
+          {restorationPotentialRingSentence}
+        </div>
+        <Chart
+          {...props}
+          name={name}
+          slug={slug}
+          filename={slug}
+          isCollapsed={isCollapsed}
+          sentence={restorationPotentialRingSentence}
+          data={chartRingData}
+          config={chartRingConfig}
+          chartData={widgetDataRing}
+        />
+
+        <hr className={widgetStyles.breakLine} />
+      </div>
+
+      <div className={widgetStyles.restorationChartWrapper}>
+        <div className={widgetStyles.subtitle}>Mangrove Loss</div>
+        <div className={styles.sentence} key={Date.now()}>
+          {restorationPotentialTreeMapSentence}
+        </div>
+
+        <div className={widgetStyles.treemap}>
+          <WidgetLegend
+            groups={chartTreeConfig.legend}
+            type="blue-carbon"
+            unit="ha"
+            classname="maxWidth"
+          />
           <div className={widgetStyles.treemapChart}>
-
             <Chart
               className={widgetStyles.breakLine}
               {...props}
@@ -244,31 +312,30 @@ function MangroveRestoration({
               data={degradationAndLossData}
               config={chartTreeConfig}
               chartData={widgetDataTree}
-              />
-              </div>
+            />
           </div>
+        </div>
         <hr className={widgetStyles.breakLine} />
-        </div>
+      </div>
 
-        <div className={widgetStyles.restorationChartWrapper}>
+      <div className={widgetStyles.restorationChartWrapper}>
         <div className={widgetStyles.subtitle}>mangrove restoration value</div>
-          <div className={styles.sentence} key={Date.now()}>
-            {restorationPotentialValue}
-          </div>
-          <Chart
-            {...props}
-            name={name}
-            slug={slug}
-            filename={slug}
-            isCollapsed={isCollapsed}
-            sentence={restorationPotentialValue}
-            data={chartValueData}
-            config={chartValueConfig}
-            chartData={widgetDataValue}
-          />
-
+        <div className={styles.sentence} key={Date.now()}>
+          {restorationPotentialValue}
         </div>
-      </ChartWidget>
+        <Chart
+          {...props}
+          name={name}
+          slug={slug}
+          filename={slug}
+          isCollapsed={isCollapsed}
+          sentence={restorationPotentialValue}
+          data={chartValueData}
+          config={chartValueConfig}
+          chartData={widgetDataValue}
+        />
+      </div>
+    </ChartWidget>
   );
 }
 

@@ -11,8 +11,6 @@ import Select from "components/select";
 
 import config from "./config";
 
-const numberFormat = format(",.2f");
-
 const unitOptions = [
   { value: "ha", label: "ha" },
   { value: "km", label: "km²" },

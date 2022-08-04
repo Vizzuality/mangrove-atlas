@@ -217,6 +217,7 @@ class Map extends Component {
       onPopupClose,
       ...mapboxProps
     } = this.props;
+
     const { loaded, flying, viewport } = this.state;
     const ms = { ...mapStyle };
     let hoveredStateId = null;
@@ -265,8 +266,8 @@ class Map extends Component {
           latitude={this.state.popup[1] || null}
           onClose={removePopUp}
         >
-          <div style={{ width: 300, height: 300, backgroundColor: "blue" }}>
-            {<PopUpRestoration restorationData={this.state.popupInfo} />}
+          <div className={styles.popup}>
+            {<PopUpRestoration data={this.state.popupInfo} />}
           </div>
         </Popup>
       );
@@ -340,14 +341,8 @@ class Map extends Component {
           transitionEasing={easeCubic}
         >
           <MapFunctions />
-          {/* {!!this.state.popup.length && <PopupRestoration />} */}
+          {!!this.state.popup.length && !isEmpty(this.state.popupInfo) && <PopupRestoration data={this.state.popupInfo} />}
         </ReactMapGL>
-        {/* <MapControls>
-          <ZoomControl
-            viewport={viewport}
-            onClick={this.onZoomChange}
-          />
-        </MapControls> */}
       </div>
     );
   }

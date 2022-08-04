@@ -56,8 +56,14 @@ const vectors = [
           "fill-opacity": [
             'case',
             ['boolean', ['feature-state', 'hover'], false],
-            1,
+            0.8,
             0.5
+          ],
+          "fill-outline-color": [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            "#8122A6",
+            "rgba(129, 24, 166, 0.5)"
           ]
         },
       },
