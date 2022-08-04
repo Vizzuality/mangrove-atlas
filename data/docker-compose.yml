@@ -16,6 +16,8 @@ services:
         --NotebookApp.token=''"
       environment:
         - GRANT_SUDO=yes
+        - CHOWN_HOME=yes
+        - CHOWN_HOME_OPTS=-R
         - DOCKER_STACKS_JUPYTER_CMD=lab
 
 
