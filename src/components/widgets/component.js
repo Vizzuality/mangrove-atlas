@@ -26,7 +26,7 @@ const WidgetList = ({
   const widgetsCategory = widgets
     .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
 
-  const widgetsFiltered = useMemo(() => widgetsCategory?.filter(({ slug }) => !Object.keys(widgetsWithData).includes(slug) || ![widgetsWithData[slug]]), [widgetsCategory]);
+  const widgetsFiltered = useMemo(() => widgetsCategory?.filter(({ slug }) => !Object.keys(widgetsWithData).includes(slug) || ![widgetsWithData[slug]]), [widgetsWithData,widgetsCategory]);
  
   return (
     <div
