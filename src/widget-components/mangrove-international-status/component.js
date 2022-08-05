@@ -60,7 +60,7 @@ export const MangroveInternationalStatus = ({
       isCollapsed={isCollapsed}
       {...props}
       >
-             <div slug={slug}>
+        <div slug={slug}>
           {pledge_type &&(
           <div>
             <h3>Nationally determined contributions (NDC)</h3>
