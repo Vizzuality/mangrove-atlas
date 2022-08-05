@@ -91,6 +91,8 @@ const mapStateToProps = (state) => ({
   currentLocation: currentLocation(state),
   widgets: dashboardWidgets(state),
   templates,
+  biomassData: state.MangroveBiomassData,
+  heightData: state.MangroveHeightData,
   isCollapsed: state.widgets.isCollapsed,
   category: state.dashboards.current,
   dataByWidget: state.mangroveData.list

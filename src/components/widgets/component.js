@@ -15,6 +15,8 @@ const WidgetList = ({
   mobile,
   alerts,
   category,
+  biomassData,
+  heightData,
   dataByWidget,
   ...parentProps
 }) => {
@@ -22,12 +24,12 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  const widgetsWithData = getDataByWidget(dataByWidget)
+  const widgetsWithData = getDataByWidget(dataByWidget, biomassData, heightData);
   const widgetsCategory = widgets
     .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
 
   const widgetsFiltered = useMemo(() => widgetsCategory?.filter(({ slug }) => !Object.keys(widgetsWithData).includes(slug) || ![widgetsWithData[slug]]), [widgetsWithData,widgetsCategory]);
- 
+
   return (
     <div
       key={category}
