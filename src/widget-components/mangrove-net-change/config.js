@@ -7,8 +7,8 @@ import orderBy from 'lodash/orderBy';
 export const numberFormat = format(',.2f');
 export const formatAxis = format(',.0d');
 
-const widgetData = ({ list = [] }) =>
-  orderBy(list.map(l => (
+const widgetData = (data) =>
+  orderBy(data.map(l => (
     {
       label: l.year,
       year: l.year,
@@ -16,14 +16,9 @@ const widgetData = ({ list = [] }) =>
     })), l => l.year)
 
 const CONFIG = {
-  parse: (data, unit) => ({
-    chartData: widgetData(data).map(l => (
-      {
-        x: l.label,
-        netChange: l.netChange,
-        name: l.label,
-        year: l.year
-      })),
+  parse: (data, unit) => {
+    return ({
+    chartData: widgetData(data),
     metadata: data.metadata || {},
     chartConfig: {
       stackOffset: 'sign',
@@ -94,11 +89,26 @@ const CONFIG = {
             value: labelPayload.legend || value,
             variant: (labelPayload.dataKey === 'netChange') ? 'bar' : 'rect'
           }));
+
+          // TO DO - gain and loss should come from API. REmove hardcoded labels when API is ready
+          const labelsForLayer = [
+            ...labels,
+            {
+              color: '#A6CB10',
+              value: 'Gain',
+              variant: 'rect'
+            },
+            {
+              color: '#EB6240',
+              value: 'Loss',
+              variant: 'rect'
+            }
+          ]
           return (
           <WidgetLegend
             position="top"
             direction="vertical"
-            groups={{ labels }}
+            groups={{labelsForLayer}}
           />
           );
         }
@@ -136,6 +146,7 @@ const CONFIG = {
       }
     }
   })
+}
 };
 
 export default CONFIG;

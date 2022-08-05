@@ -47,7 +47,7 @@ const modules = [
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: "investmentPotentialData", components: investmentPotentialData },
-  { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
+  { namespace: 'mangroveNetChangeData', components: mangroveNetChangeData },
   { namespace: 'mangroveRestorationData', components: mangroveRestorationData },
   { namespace: 'mangroveBiomassData', components: mangroveBiomassData },
   { namespace: 'mangroveHeightData', components: mangroveHeightData },

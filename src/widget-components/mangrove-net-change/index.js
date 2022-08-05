@@ -8,7 +8,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveNetChangeData.isLoading,
-  data: state.mangroveNetChangeData,
+  data: state.mangroveNetChangeData.data,
+  metadata: state.mangroveNetChangeData.metadata,
   ui: state.widgets.ui.net,
   locations: state.locations.list,
   locationType: getLocationType(state.router.type)
@@ -16,7 +17,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setUi,
-  fetchMangroveNetChangeData
+  fetchMangroveNetChangeData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

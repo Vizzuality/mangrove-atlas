@@ -111,7 +111,6 @@ export const mapStyle = createSelector(
     const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find((f) => f.id === layerId);
-
       if (layerFilter && layerMap) {
         if (layerFilter && layerFilter.id === 'net') {
           return [
@@ -138,6 +137,7 @@ export const mapStyle = createSelector(
           ...layerMap.map((layerMapItem) => layerMapItem.layerId),
         ];
       }
+
       return acc;
     }, []);
 

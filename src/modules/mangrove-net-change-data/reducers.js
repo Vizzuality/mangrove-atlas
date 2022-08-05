@@ -9,7 +9,7 @@ export default {
   [fetchSucceeded]: (state, { payload }) => ({
     ...state,
     isLoading: false,
-    list: payload.data,
+    data: payload.data,
     metadata: payload.metadata
   }),
   [fetchFailed]: (state, { payload }) => ({
