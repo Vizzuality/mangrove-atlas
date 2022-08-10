@@ -1,4 +1,4 @@
-{
+export default {
   "dashboards": [
     {
       "slug": "distribution_and_change",
@@ -252,7 +252,8 @@
       "categoryIds": [
       ]
     }
-  ],
+    // ! I had an issue using spread operator in this file. Not sure about the reason but I ended up filtering the widgets manually.
+  ].filter((_widget) => process.env.REACT_APP_FEATURE_FLAG_DISABLE_CARBON_BLUE === 'true' ? _widget.slug !== 'mangrove_blue_carbon' : true ),
   "layers": [
     {
       "name": "Mangrove coverage",
