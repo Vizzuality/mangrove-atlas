@@ -6,16 +6,10 @@ class APIService {
       baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { "Content-Type": "application/json" },
     });
-
-    // staging
-    this.clientStaging = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api`,
-      headers: { "Content-Type": "application/json" },
-    });
   }
 
   fetchLocations = (params = {}) =>
-    this.clientStaging.get("/v2/locations", { params }).then((response) => {
+    this.client.get("/v2/locations", { params }).then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
       return data;
@@ -25,7 +19,7 @@ class APIService {
     const { id, iso } = params;
     const locationParam = id || iso || "worldwide";
 
-    return this.clientStaging
+    return this.client
       .get(`/v1/locations/${locationParam}/mangrove_data`)
       .then((response) => {
         const { status, statusText, data } = response;
@@ -35,7 +29,7 @@ class APIService {
   };
 
   fetchMangroveBiomassData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/net_change", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -43,9 +37,9 @@ class APIService {
         return data;
       }
     );
-  
+
   fetchMangroveBiomassData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/aboveground_biomass", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -55,7 +49,7 @@ class APIService {
     );
 
   fetchMangroveHeightData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/tree_height", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -71,7 +65,7 @@ class APIService {
       endDate = "2016",
       limit = 5,
     } = params;
-    return this.clientStaging
+    return this.client
       .get(
         `/v1/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
       )
@@ -83,7 +77,7 @@ class APIService {
   };
 
   fetchMangroveSpeciesData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/biodiversity", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -92,7 +86,7 @@ class APIService {
       });
 
   fetchMangroveProtectionData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/protected-areas", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -101,7 +95,7 @@ class APIService {
       });
 
   fetchInvestmentPotentialData = async (params = {}) => {
-    const response = await this.clientStaging.get(
+    const response = await this.client.get(
       "/v2/widgets/blue-carbon-investment",
       { params: { ...params } }
     );
@@ -111,7 +105,7 @@ class APIService {
   };
 
   fetchMangroveRestorationData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/restoration-potential", {
         params: { dir: "desc", ...params },
       })
@@ -122,7 +116,7 @@ class APIService {
       });
 
   fetchMangroveEcosystemServicesData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/ecosystem_services", {
         params: { dir: "desc", ...params },
       })
@@ -133,7 +127,7 @@ class APIService {
       });
 
   fetchMangroveDegradationAndLossData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/degradation-and-loss", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -142,7 +136,7 @@ class APIService {
       });
 
   fetchMangroveInternationalStatusData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/international_status", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
@@ -151,7 +145,7 @@ class APIService {
       });
 
   fetchMangroveEmissionsMitigationData = (params = {}) =>
-    this.clientStaging
+    this.client
       .get("/v2/widgets/international_status", { params: { ...params } })
       // .get('/widgets/emissions_mitigation', { params: { ...params } })
       .then((response) => {
