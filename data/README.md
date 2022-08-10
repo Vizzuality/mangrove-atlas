@@ -1,7 +1,7 @@
-data
+Data
 ==============================
 
-A short description of the project.
+Here lives all exploration and processing pipes developed for Mangrove Atlas platform.
 
 Project Organization
 ------------
@@ -13,42 +13,32 @@ Project Organization
     ├── Makefile           		<- Makefile with commands
     ├──.editorconfig			<- Helps maintain consistent coding styles
     ├──.pre-commit-config		<- Helps setup github basic precommit hooks
-    ├── Dockerfile         		<- Docker file definition
     ├── docker-compose.yml  	<- Docker configs environment definition
-    ├── .dockerignore  			<- files don't want to copy inside container
     ├── .gitignore  			<- files don't want to copy in githubs
-    ├── .github  				<- github configs
-    │   └── pull_request_template.md <- github pr template
-    ├── requirements.txt       	<- The requirements for development
-    ├── setup.cfg   			<- a config file for pytest, flake8 and yapf
-    ├── setup.py   				<- config file for pip module
-    ├── docs 					<- A default Sphinx project with support for module autodoc and markdown.
-    │   └── __init__.py
-    ├── test                	<- Test setup folder using pytest, datatest and hypothesis
-    │   └── __init__.py
-    ├── tox.ini            	    <- tox file with settings for running tox;
     |
     ├── data
     │   ├── processed           <- The final, canonical data sets for modeling.
     │   └── raw                 <- The original, immutable data dump.
     |
     |
-    │   ├── notebooks           <- Naming convention is a number (for ordering),
-    │   │                       the creator's initials, and a short `-` delimited e.g.
-    │   │                       `1.0-jqp-initial-data-exploration`.
-    │   │
-    │   ├──.env
-    │   ├──.dockerignore
-    │   ├──requirements.txt           <- Notebooks requirements
-    │   ├──Dockerfile                 <- Sets up Jupyter notebooks environment
-    │   ├──jupyter_notebook_config.py <- Configure Jupyter notebooks
-    │   ├── template_notebooks        <- where the notebooks template will live.
-    │   │
-    │   ├── Lab                 <- Testing and development
-    │   │
-    │   └── Final               <- The final cleaned notebooks for reports/ designers /
-    |				               developers etc.
-    │
+    └── notebooks           <- Naming convention is a number (for ordering),
+        │                       the creator's initials, and a short `-` delimited e.g.
+        │                       `1.0-jqp-initial-data-exploration`.
+        │
+        ├──.env
+        ├──.dockerignore
+        ├──requirements.txt           <- Notebooks requirements
+        ├──Dockerfile                 <- Sets up Jupyter notebooks environment
+        ├──jupyter_notebook_config.py / jupyter_server_config.py <- Configure Jupyter notebooks
+        │
+        ├── template_notebooks        <- where the notebooks template will live.
+        └── Lab                 <- Testing and development
+            │
+            ├── data_exploration
+            ├── data_processing
+                ├── GEE
+                ├── layers
+                └── widgets-v2
 
 --------
 
