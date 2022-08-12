@@ -1,5 +1,5 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import DATA from 'config/data.json';
+import DATA from 'config/data';
 import { activeWidgets as _activeWidgets } from 'modules/widgets/selectors';
 import { fetchSucceeded, toggleActive } from './actions';
 

@@ -1,5 +1,5 @@
 import { takeLatest, put } from 'redux-saga/effects';
-import DATA from 'config/data.json';
+import DATA from 'config/data';
 import { fetchSucceeded } from './actions';
 
 function* getDashboards() {

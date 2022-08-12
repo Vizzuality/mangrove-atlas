@@ -1,4 +1,4 @@
-{
+export default {
   "dashboards": [
     {
       "slug": "distribution_and_change",
@@ -252,7 +252,9 @@
       "categoryIds": [
       ]
     }
-  ],
+  ]
+  // ! I couldn't make process.env work with spread operator, so I'm doing this instead
+  .filter((_widget) => process.env.REACT_APP_FEATURE_FLAG_DISABLE_BLUE_CARBON === 'true' ? _widget.slug !== 'mangrove_blue_carbon' : true),
   "layers": [
     {
       "name": "Mangrove coverage",
