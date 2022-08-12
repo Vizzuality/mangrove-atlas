@@ -221,6 +221,7 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets"
       ],
       "layersIds": [
         "restoration"
@@ -237,6 +238,7 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets"
       ]
     },
     {
