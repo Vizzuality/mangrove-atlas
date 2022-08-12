@@ -98,7 +98,7 @@ export const MapContainer = ({
         goToAOI({ id: internalId });
       }
     } else if (country) {
-      const { properties: { ISO_3digit: countryId } } = country;
+      const { properties: { iso: countryId } } = country;
       goToCountry({ iso: countryId });
     }
   };
