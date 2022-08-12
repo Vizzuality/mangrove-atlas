@@ -303,7 +303,7 @@ class Map extends Component {
       }
       hoveredStateId = null;
     };
-  
+
     return (
       <div
         ref={(r) => {
