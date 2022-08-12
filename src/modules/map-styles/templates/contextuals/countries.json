@@ -6,7 +6,7 @@
       "mapbox:group": "c8ed86ce2aa267b2ff4ffd4a98a3b79c"
     },
     "source": "eez",
-    "source-layer": "GADM-EEZ-v3-8z9hm6",
+    "source-layer": "gadm_eez_location_v3",
     "layout": {},
     "paint": {
       "line-color": "hsl(58, 66%, 47%)"
@@ -16,7 +16,7 @@
     "id": "selected-eez-land-v2-201410",
     "type": "fill",
     "source": "eez",
-    "source-layer": "GADM-EEZ-v3-8z9hm6",
+    "source-layer": "gadm_eez_location_v3",
     "layout": {},
     "paint": {
       "fill-color": "hsla(58, 78%, 58%, 0.2)",
