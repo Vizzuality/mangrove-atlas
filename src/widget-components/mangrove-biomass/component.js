@@ -7,6 +7,8 @@ import sortBy from 'lodash/sortBy';
 // utils
 import { format } from 'd3-format';
 
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
+
 import config from './config';
 
 const numberFormat = format(',.2f');
@@ -31,7 +33,7 @@ function MangroveBiomass({
   const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value, [metadata, year]);
 
   useEffect(() => {
-    if (!id || id === 1561) {
+    if (!id || id === WORLWIDE_LOCATION_ID) {
       fetchMangroveBiomassData()
     }
     else {
@@ -57,9 +59,9 @@ function MangroveBiomass({
   }, [setUi, year, years, addFilter, isLoading]);
 
   if (!data) return null;
-  
+
   const { chartData, chartConfig, downloadData } = config.parse(data, year, aboveGroundBiomass);
-  
+
   if (!chartData || chartData.length <= 0) {
     return null;
   }
@@ -84,7 +86,7 @@ function MangroveBiomass({
     : <span className="notranslate">{`${currentLocation.name}`}</span>;
 
   const yearSelector = (
-    dateOptions.length > 1 ? 
+    dateOptions.length > 1 ?
     <Select
       value={year}
       isOptionDisabled={option => option.value === year}

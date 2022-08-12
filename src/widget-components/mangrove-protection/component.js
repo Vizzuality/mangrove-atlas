@@ -2,9 +2,8 @@ import React, { useEffect, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import sortBy from "lodash/sortBy";
 
-import { format } from "d3-format";
-
 import { getCurrentLocation } from "modules/pages/sagas";
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -45,12 +44,12 @@ function MangroveProtection({
 
   useEffect(() => {
     if (!data?.length || metadata) {
-      if (current.id === "worldwide" || currentLocationId === 1561) {
+      if (current.id === "worldwide" || currentLocationId === WORLWIDE_LOCATION_ID) {
         fetchMangroveProtectionData();
       } else {
         fetchMangroveProtectionData({
           ...(currentLocationId &&
-            currentLocationId !== 1561 && {
+            currentLocationId !== WORLWIDE_LOCATION_ID && {
               location_id: currentLocation.location_id,
             }),
         });

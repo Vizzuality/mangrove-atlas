@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ChartWidget from 'components/chart-widget';
 
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import config from './config';
 
@@ -25,11 +26,11 @@ function MangroveEmissionsMitigation({
   const [filteredIndicators, setFilteredIndicators] = useState([]);
 
   useEffect(() => {
-    if (current === 'worldwide' || current === 1561) {
+    if (current === 'worldwide' || current === WORLWIDE_LOCATION_ID) {
       fetchMangroveEmissionsMitigationData()
     }
     else {
-      fetchMangroveEmissionsMitigationData({ ...(id && id !== 1561) && { location_id: id } });
+      fetchMangroveEmissionsMitigationData({ ...(id && id !== WORLWIDE_LOCATION_ID) && { location_id: id } });
     }
   }, [id, current, locationsList, fetchMangroveEmissionsMitigationData]);
 

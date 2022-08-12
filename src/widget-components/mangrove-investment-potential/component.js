@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ChartWidget from "components/chart-widget";
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 import config from "./config";
 
 function MangroveInvestmentPotential({
@@ -18,11 +19,11 @@ function MangroveInvestmentPotential({
   const { location_id } = currentLocationId;
 
   useEffect(() => {
-    if (location_id === 'worldwide' || location_id === 1561) {
+    if (location_id === 'worldwide' || location_id === WORLWIDE_LOCATION_ID) {
       fetchInvestmentPotentialData()
     }
     else {
-      fetchInvestmentPotentialData({ ...(location_id && location_id !== 1561) && { location_id } });
+      fetchInvestmentPotentialData({ ...(location_id && location_id !== WORLWIDE_LOCATION_ID) && { location_id } });
     }
   }, [location_id, current, fetchInvestmentPotentialData]);
 

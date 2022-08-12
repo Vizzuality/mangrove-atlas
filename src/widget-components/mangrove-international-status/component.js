@@ -5,6 +5,8 @@ import ChartWidget from 'components/chart-widget';
 
 import { getCurrentLocation, getLocationType } from 'modules/pages/sagas';
 
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
+
 const fakeData = {
   data: {
       pledge_type: 'a GHG target',
@@ -44,11 +46,11 @@ export const MangroveInternationalStatus = ({
   const location = getCurrentLocation(locationsList, current, locationType);
 
   useEffect(() => {
-    if (current !== 'worldwide' || current !== 1561) {
+    if (current !== 'worldwide' || current !== WORLWIDE_LOCATION_ID) {
       fetchMangroveInternationalStatusData({ ...id && { location_id: id } });
     }
   }, [id, current, fetchMangroveInternationalStatusData]);
-  
+
   const { pledge_type, ndc_target, ndc_reduction_target, base_years, target_years, ndc_target_url } = data;
 
   return (

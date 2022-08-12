@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { getCurrentLocation } from 'modules/pages/sagas';
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import ChartWidget from 'components/chart-widget';
 
@@ -27,11 +28,11 @@ function MangroveSpecies({
   const location = getCurrentLocation(locationsList, current, locationType);
 
   useEffect(() => {
-    if (current === 'worldwide' || current === 1561) {
+    if (current === 'worldwide' || current === WORLWIDE_LOCATION_ID) {
       fetchMangroveSpeciesData()
     }
     else {
-      fetchMangroveSpeciesData({ ...(id && id !== 1561) && { location_id: id } });
+      fetchMangroveSpeciesData({ ...(id && id !== WORLWIDE_LOCATION_ID) && { location_id: id } });
     }
   }, [id, current, locationsList, fetchMangroveSpeciesData]);
 

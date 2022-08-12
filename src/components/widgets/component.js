@@ -15,8 +15,6 @@ const WidgetList = ({
   mobile,
   alerts,
   category,
-  biomassData,
-  heightData,
   dataByWidget,
   ...parentProps
 }) => {
@@ -24,7 +22,7 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  const widgetsWithData = getDataByWidget(dataByWidget, biomassData, heightData);
+  const widgetsWithData = getDataByWidget(dataByWidget);
   const widgetsCategory = widgets
     .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
 

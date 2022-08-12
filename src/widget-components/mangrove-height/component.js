@@ -8,6 +8,8 @@ import ChartWidget from "components/chart-widget";
 // utils
 import { format } from "d3-format";
 
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
+
 import config from "./config";
 
 const numberFormat = format(",.2f");
@@ -32,7 +34,7 @@ const MangroveHeight = ({
   const years = metadata?.year;
 
   useEffect(() => {
-    if (!id || id === 1561) {
+    if (!id || id === WORLWIDE_LOCATION_ID) {
       fetchMangroveHeightData();
     } else {
       fetchMangroveHeightData({ location_id: id });
