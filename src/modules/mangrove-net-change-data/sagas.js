@@ -14,6 +14,6 @@ function* getMangroveNetChangeData({ payload }) {
   }
 }
 
-export default function* mangroveNetChnageDataSagas() {
+export default function* mangroveNetChangeDataSagas() {
   yield takeLatest('MANGROVE_NET_CHANGE_DATA/FETCH_ALL', getMangroveNetChangeData);
 }

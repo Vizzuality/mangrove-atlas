@@ -5,6 +5,7 @@ import sortBy from 'lodash/sortBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import config from './config';
 
@@ -18,7 +19,7 @@ function processData(data, currentYear, unit) {
     return null;
   }
 
-  const nonMangrove = metadata.total - currentYearData.value;
+  const nonMangrove = metadata.total_lenght - currentYearData.value;
 
   return [
     {
@@ -28,9 +29,9 @@ function processData(data, currentYear, unit) {
       x: 0,
       y: nonMangrove,
       color: '#ECECEF',
-      percentage: nonMangrove / metadata.total * 100,
+      percentage: (nonMangrove / metadata.total_lenght) * 100,
       unit,
-      coverage: (nonMangrove / 1000).toFixed(2),
+      coverage: nonMangrove.toFixed(2),
       label: 'Non mangroves'
     }
   ];
@@ -39,6 +40,7 @@ function processData(data, currentYear, unit) {
 function MangroveExtent({
   data: rawData,
   currentLocation,
+  current,
   addFilter,
   isCollapsed = true,
   slug,
@@ -47,8 +49,17 @@ function MangroveExtent({
     unit
   },
   setUi,
+  fetchMangroveHabitatExtentData,
   ...props
 }) {
+  useEffect(() => {
+    fetchMangroveHabitatExtentData({
+      ...currentLocation?.id !== WORLWIDE_LOCATION_ID && {
+        location_id: currentLocation.id,
+      },
+    });
+  }, [fetchMangroveHabitatExtentData, currentLocation])
+
   useEffect(() => {
     addFilter({
       filter: {
@@ -61,9 +72,10 @@ function MangroveExtent({
   if (!rawData) {
     return null;
   }
+
   const data = config.parse(rawData, unit);
   const { chartConfig, metadata, downloadData } = data;
-  const optionsYears = sortBy(metadata.years.map(year => ({
+  const optionsYears = sortBy((metadata?.year || []).map(year => ({
     label: year.toString(),
     value: year
   })), ['value']);
@@ -100,17 +112,17 @@ function MangroveExtent({
       { value: 'km', label: 'km²' },
       { value: 'ha', label: 'ha' }
     ];
-    const totalCoverage = metadata.total / 1000;
+    const totalCoverage = unit === 'ha' ? numberFormat(metadata.total_lenght * 100) : numberFormat(metadata.total_lenght);
     const area = unit === 'ha'
-      ? numberFormat(chartData.data[0].area / 10000)
-      : numberFormat(chartData.data[0].area / 1000000);
+      ? numberFormat(chartData.data[0].area * 100)
+      : numberFormat(chartData.data[0].area);
 
     const coveragePercentage = numberFormat(percentage);
 
 
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world'
-      : <span className="notranslate">{`${currentLocation.name}`}</span>;
+      : <span className="notranslate">{`${currentLocation?.name}`}</span>;
     const unitSelector = (
       <Select
         value={unit}
@@ -133,7 +145,7 @@ function MangroveExtent({
         <span>The area of mangrove habitat in </span><strong>{location} </strong>
         <span>was </span>
         <strong className="notranslate">{area} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear coverage of <strong>{coveragePercentage}%</strong> </span> of the
-        <strong className="notranslate"> {numberFormat(totalCoverage)} km</strong><span> of the coastline.<br /></span>
+        <strong className="notranslate"> {totalCoverage} km</strong><span> of the coastline.<br /></span>
       </>
     );
   } catch (e) {

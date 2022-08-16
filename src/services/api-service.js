@@ -28,6 +28,16 @@ class APIService {
       });
   };
 
+  fetchMangroveHabitatExtentData = (params = {}) =>
+    this.client
+      .get("/v2/widgets/habitat_extent", { params: { ...params } })
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      }
+    );
+
   fetchMangroveNetChangeData = (params = {}) =>
     this.client
       .get("/v2/widgets/net_change", { params: { ...params } })

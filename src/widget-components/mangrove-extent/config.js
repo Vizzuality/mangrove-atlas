@@ -5,27 +5,27 @@ import WidgetLegend from 'components/widget-legend';
 
 import { format } from 'd3-format';
 
-const tooltipFormat = format(',~s');
+const tooltipFormat = format(',~');
 
 const widgetData = (data, unit) => {
-  const { list, metadata } = data;
+  const { list, metadata = {} } = data;
   if (list && list.length) {
-    const { location_coast_length_m: total } = metadata;
+    const {
+      total_lenght,
+      total_area,
+    } = metadata;
 
-    return list.filter(d => d.length_m).map((d) => {
-
-      const year = new Date(d.date).getUTCFullYear();
-
+    return list.filter(d => d.value).map((d) => {
       return ({
-        x: Number(year),
-        y: d.length_m,
+        x: d.year,
+        y: d.value,
         color: '#06C4BD',
-        percentage: d.length_m / total * 100,
+        percentage: (d.value / total_lenght) * 100,
         unit,
-        area: d.area_m2,
-        coverage: (d.length_m / 1000).toFixed(2),
-        value: (d.length_m).toFixed(2),
-        label: `Coastline coverage in ${year}`
+        area: d.value,
+        coverage: d.value.toFixed(2),
+        value: (d.value).toFixed(2),
+        label: `Coastline coverage in ${d.year}`
       });
     });
   }
@@ -33,30 +33,13 @@ const widgetData = (data, unit) => {
   return [];
 };
 
-const widgetMeta = ({ list, metadata }) => {
-  if (list && list.length && metadata) {
-    return {
-      years: Array.from(
-        new Set(
-          list.filter(d => d.length_m).map(d => new Date(d.date).getUTCFullYear())
-        )
-      ),
-      total: metadata.location_coast_length_m
-    };
-  }
-
-  return {
-    years: [],
-    total: null
-  };
-};
-
 const getDownloadData = ({ metadata, list }) => {
   const coastline = metadata.location_coast_length_m;
-  const data = list.filter(l => l.date.includes('2016'));
+  const data = list.filter(l => l.year === 2016);
   return data.map(l => (
     {
-      Date: l.date,
+      // Date: l.date,
+      year: l.year,
       'Total coast length (m)': coastline,
       'Mangrove habitat area (m2)': l.area_m2,
       'Mangrove coastline coverage (m)': l.length_m,
@@ -67,7 +50,7 @@ const getDownloadData = ({ metadata, list }) => {
 export const CONFIG = {
   parse: (data, unit) => ({
     chartData: widgetData(data, unit),
-    metadata: widgetMeta(data),
+    metadata: data.metadata || {},
     downloadData: getDownloadData(data),
     chartConfig: {
       type: 'pie',
