@@ -2,7 +2,6 @@ import React from 'react';
 import { format } from 'd3-format';
 import WidgetLegend from 'components/widget-legend';
 import WidgetTooltip from 'components/widget-tooltip';
-import moment from 'moment';
 import orderBy from 'lodash/orderBy';
 
 export const numberFormat = format(',.2f');
@@ -13,34 +12,8 @@ const widgetData = ({ list = [] }) =>
     {
       label: l.year,
       year: l.year,
-      // gain: l.gain_m2,
-      // netChange: l.net_change_m2,
       netChange: l.value,
-      // loss: -l.loss_m2
     })), l => l.year)
-    // .filter((l, i) => (i !== 0 && l.netChange !== 0));
-
-const widgetMetadata = ({ list }) => ({
-  years: Array.from(
-    new Set(
-      list
-        .filter(l => ((l.net_change_m2 !== null && l.net_change_m2 !== 0) || l.date.includes('1996')))
-        .map(r => (moment(r.date).year()))
-        .sort((a, b) => a - b)
-    )
-  )
-});
-
-const getDownloadData = ({ list }) => {
-  const data = list.filter(l => l.loss_m2 || l.gain_m2);
-  return data.map(l => ({
-    date: l.date,
-    'gain (m2)': l.gain_m2,
-    'loss (m2)': l.loss_m2,
-    'net change (m2)': l.net_change_m2
-  }));
-};
-
 
 const CONFIG = {
   parse: (data, unit) => ({
@@ -48,13 +21,10 @@ const CONFIG = {
       {
         x: l.label,
         netChange: l.netChange,
-        // gain: l.gain,
-        // loss: l.loss,
         name: l.label,
         year: l.year
       })),
-    downloadData: getDownloadData(data, unit),
-    metadata: widgetMetadata(data),
+    metadata: data.metadata || {},
     chartConfig: {
       stackOffset: 'sign',
       height: 360,
@@ -97,8 +67,8 @@ const CONFIG = {
       yAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
         tickFormatter: (v) => {
-          // const result = unit === 'ha' ? v / 10000 : v / 1000000;
-          return formatAxis(v);
+          const result = unit === 'ha' ? v * 100 : v;
+          return formatAxis(result);
         },
         tickMargin: 10,
         orientation: 'right',
@@ -148,7 +118,7 @@ const CONFIG = {
             payload={[
               // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
               // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
-              { label: 'Net change', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value / 1000000)} km²` }
+              { label: 'Net change', color: 'rgba(0,0,0,0.7)', key: 'netChange', format: value => `${numberFormat(value)} km²` }
             ]}
             settings={[
               // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
@@ -157,7 +127,7 @@ const CONFIG = {
                 label: 'Net result',
                 color: 'rgba(0,0,0,0.7)',
                 key: 'netChange',
-                format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}`,
+                format: value => `${unit === 'ha' ? numberFormat(value * 100) : numberFormat(value)} ${unit === 'ha' ? 'ha' : 'km²'}`,
                 bulletType: 'bar'
               }
             ]}

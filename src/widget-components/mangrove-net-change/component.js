@@ -5,7 +5,6 @@ import sumBy from 'lodash/sumBy';
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
 
-import { getCurrentLocation } from "modules/pages/sagas";
 import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import config, { numberFormat } from './config';
@@ -19,7 +18,6 @@ function MangroveNetChange({
   data: rawData,
   filename,
   current,
-  currentLocationId,
   locations,
   locationType,
   addFilter,
@@ -29,6 +27,7 @@ function MangroveNetChange({
   ui,
   setUi,
   fetchMangroveNetChangeData,
+  currentLocation,
   ...props
 }) {
   const { startYear, endYear, unit } = ui;
@@ -36,22 +35,14 @@ function MangroveNetChange({
     .map(({ year }) => year).sort(), [rawData]);
 
   const id = current?.iso || current?.id;
-  const currentLocation = getCurrentLocation(locations, id, locationType);
 
   useEffect(() => {
-    if(!rawData.list.length) {
-      if (current.id === "worldwide" || currentLocationId === WORLWIDE_LOCATION_ID) {
-        fetchMangroveNetChangeData();
-      } else {
-        fetchMangroveNetChangeData({
-          ...(currentLocationId &&
-            currentLocationId !== WORLWIDE_LOCATION_ID && {
-              location_id: currentLocation.location_id,
-            }),
-        });
-      }
-    }
-  }, [fetchMangroveNetChangeData])
+    fetchMangroveNetChangeData({
+      ...currentLocation?.id !== WORLWIDE_LOCATION_ID && {
+        location_id: currentLocation.id,
+      },
+    });
+  }, [fetchMangroveNetChangeData, currentLocation])
 
   useEffect(() => {
     addFilter({
@@ -74,7 +65,7 @@ function MangroveNetChange({
   }
 
   const data = config.parse(rawData, unit);
-  const { chartData, chartConfig, downloadData } = data;
+  const { chartData, chartConfig } = data;
 
   const startYearOptions = years.map(year => ({
     label: year.toString(),
@@ -157,17 +148,15 @@ function MangroveNetChange({
   // We consider startYear as 0
   // Therefore we substract that from the accumulated change of all following years.
   const change = (widgetData.length > 0) ? sumBy(widgetData, 'netChange') - widgetData[0].netChange : 0;
-  const quantity = unit === 'km' ? numberFormat(Math.abs(change / 1000000)) : numberFormat(Math.abs(change / 10000));
+  const quantity = unit === 'km' ? numberFormat(change) : numberFormat(change * 100);
 
   // Normalize startData
   widgetData[0] = {
     ...widgetData[0],
-    // gain: 0,
-    // loss: 0,
     netChange: 0
   };
 
-  const location = currentLocation.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
+  const location = currentLocation?.location_type === 'worldwide' ? 'the world' : <span className="notranslate">{currentLocation.name}</span>;
   const direction = (change > 0) ? 'increased' : 'decreased';
 
   const changeUnit = (selectedUnit) => {
@@ -247,7 +236,6 @@ function MangroveNetChange({
       data={data}
       slug={slug}
       filename={slug}
-      downloadData={downloadData}
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}

@@ -10,8 +10,6 @@ const mapStateToProps = state => ({
   isLoading: state.mangroveNetChangeData.isLoading,
   data: state.mangroveNetChangeData,
   ui: state.widgets.ui.net,
-  current: state.locations.current,
-  currentLocationId: state.locations.currentId?.location_id,
   locations: state.locations.list,
   locationType: getLocationType(state.router.type)
 });
