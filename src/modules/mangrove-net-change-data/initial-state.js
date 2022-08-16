@@ -1,5 +1,5 @@
 export default {
-  data: [],
+  list: [],
   metadata: null,
   isLoading: false,
   error: null

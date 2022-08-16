@@ -17,11 +17,9 @@ export const getCurrentLocation = (locationsList, currentId, locationType) => lo
   && location_type.toLowerCase() === locationType.toLowerCase());
 
 export const getDataByWidget = (data) => {
-  const netChange = !!data.filter((d) => !!d?.gain_m2 || !!d?.loss_m2);
   const blueCarbon = !!data.filter((d) => !!d.toc_hist_tco2eha);
 
   const widgetsData = {
-    mangrove_net_change: netChange,
     mangrove_blue_carbon: blueCarbon,
   };
 

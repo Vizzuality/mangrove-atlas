@@ -4,6 +4,10 @@ import sumBy from 'lodash/sumBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
+
+import { getCurrentLocation } from "modules/pages/sagas";
+import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
+
 import config, { numberFormat } from './config';
 
 const unitOptions = [
@@ -14,19 +18,40 @@ const unitOptions = [
 function MangroveNetChange({
   data: rawData,
   filename,
-  currentLocation,
+  current,
+  currentLocationId,
+  locations,
+  locationType,
   addFilter,
   isCollapsed = true,
   slug,
   name,
   ui,
   setUi,
+  fetchMangroveNetChangeData,
   ...props
 }) {
   const { startYear, endYear, unit } = ui;
   const years = useMemo(() => rawData?.list
-    .filter(({ loss_m2, gain_m2 }) => loss_m2 || gain_m2)
-    .map((d) => Number(d.date.split('-', 1)[0])), [rawData]).sort();
+    .map(({ year }) => year).sort(), [rawData]);
+
+  const id = current?.iso || current?.id;
+  const currentLocation = getCurrentLocation(locations, id, locationType);
+
+  useEffect(() => {
+    if(!rawData.list.length) {
+      if (current.id === "worldwide" || currentLocationId === WORLWIDE_LOCATION_ID) {
+        fetchMangroveNetChangeData();
+      } else {
+        fetchMangroveNetChangeData({
+          ...(currentLocationId &&
+            currentLocationId !== WORLWIDE_LOCATION_ID && {
+              location_id: currentLocation.location_id,
+            }),
+        });
+      }
+    }
+  }, [fetchMangroveNetChangeData])
 
   useEffect(() => {
     addFilter({
@@ -42,7 +67,7 @@ function MangroveNetChange({
       id: 'net',
       value: { endYear: (endYear || years[years.length - 1]), startYear: startYear || years[0], unit: unit || unitOptions[0].value, } });
   }, [years, startYear, endYear, unit, addFilter, setUi]);
-  
+
 
   if (!rawData) {
     return null;
@@ -126,6 +151,7 @@ function MangroveNetChange({
       && parseInt(y, 10) <= parseInt(endYear, 10)
   );
 
+
   // How this change is calculated?
   // Rows have year's 'gain', 'loss' and 'netChange'.
   // We consider startYear as 0
@@ -136,8 +162,8 @@ function MangroveNetChange({
   // Normalize startData
   widgetData[0] = {
     ...widgetData[0],
-    gain: 0,
-    loss: 0,
+    // gain: 0,
+    // loss: 0,
     netChange: 0
   };
 

@@ -15,7 +15,7 @@ const handleChange = () =>  {
 };
 
   return (
-    <input type="checkbox" class={styles.checkbox} onChange={handleChange} checked={!!isActive} />
+    <input type="checkbox" className={styles.checkbox} onChange={handleChange} checked={!!isActive} />
   );
 };
 

@@ -28,7 +28,7 @@ class APIService {
       });
   };
 
-  fetchMangroveBiomassData = (params = {}) =>
+  fetchMangroveNetChangeData = (params = {}) =>
     this.client
       .get("/v2/widgets/net_change", { params: { ...params } })
       .then((response) => {

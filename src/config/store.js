@@ -13,6 +13,7 @@ import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
+import * as mangroveNetChangeData from 'modules/mangrove-net-change-data';
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
 import * as mangroveSpeciesData from 'modules/mangrove-species-data';
 import * as investmentPotentialData from 'modules/mangrove-investment-data';
@@ -40,6 +41,7 @@ const modules = [
   { namespace: 'mapStyles', components: mapStyles },
   { namespace: 'languages', components: languages },
   { namespace: 'mangroveData', components: mangroveData },
+  { namespace: 'mangroveNetChangeData', components: mangroveNetChangeData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },
   { namespace: "investmentPotentialData", components: investmentPotentialData },

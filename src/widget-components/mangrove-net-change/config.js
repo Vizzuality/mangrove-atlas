@@ -8,17 +8,17 @@ import orderBy from 'lodash/orderBy';
 export const numberFormat = format(',.2f');
 export const formatAxis = format(',.0d');
 
-const widgetData = ({ list }) => {
-  const data = list.map(l => (
+const widgetData = ({ list = [] }) =>
+  orderBy(list.map(l => (
     {
-      label: JSON.stringify(moment(l.date).year()),
-      year: moment(l.date).year(),
-      gain: l.gain_m2,
-      netChange: l.net_change_m2,
-      loss: -l.loss_m2
-    }));
-  return orderBy(data, l => l.year).filter((l, i) => (i === 0 || l.netChange !== 0));
-};
+      label: l.year,
+      year: l.year,
+      // gain: l.gain_m2,
+      // netChange: l.net_change_m2,
+      netChange: l.value,
+      // loss: -l.loss_m2
+    })), l => l.year)
+    // .filter((l, i) => (i !== 0 && l.netChange !== 0));
 
 const widgetMetadata = ({ list }) => ({
   years: Array.from(
@@ -48,8 +48,8 @@ const CONFIG = {
       {
         x: l.label,
         netChange: l.netChange,
-        gain: l.gain,
-        loss: l.loss,
+        // gain: l.gain,
+        // loss: l.loss,
         name: l.label,
         year: l.year
       })),
@@ -71,25 +71,25 @@ const CONFIG = {
             isAnimationActive: false
           }
         },
-       // temporary hidden because of wrong calculations in data
-        bars: {
-          gain: {
-            barSize: 0,
-            transform: `translate(${(4 + 10) / 2}, 0)`,
-            fill: '#A6CB10',
-            radius: [10, 10, 0, 0],
-            legend: 'Gain',
-            isAnimationActive: false
-          },
-          loss: {
-            barSize: 0,
-            transform: `translate(-${(4 + 10) / 2}, 0)`,
-            fill: '#EB6240',
-            radius: [10, 10, 0, 0],
-            legend: 'Loss',
-            isAnimationActive: false
-          }
-        }
+        // temporary hidden because of wrong calculations in data
+        // bars: {
+        //   gain: {
+        //     barSize: 0,
+        //     transform: `translate(${(4 + 10) / 2}, 0)`,
+        //     fill: '#A6CB10',
+        //     radius: [10, 10, 0, 0],
+        //     legend: 'Gain',
+        //     isAnimationActive: false
+        //   },
+        //   loss: {
+        //     barSize: 0,
+        //     transform: `translate(-${(4 + 10) / 2}, 0)`,
+        //     fill: '#EB6240',
+        //     radius: [10, 10, 0, 0],
+        //     legend: 'Loss',
+        //     isAnimationActive: false
+        //   }
+        // }
       },
       xAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' }
@@ -97,8 +97,8 @@ const CONFIG = {
       yAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
         tickFormatter: (v) => {
-          const result = unit === 'ha' ? v / 10000 : v / 1000000;
-          return formatAxis(result);
+          // const result = unit === 'ha' ? v / 10000 : v / 1000000;
+          return formatAxis(v);
         },
         tickMargin: 10,
         orientation: 'right',
