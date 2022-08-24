@@ -14,6 +14,7 @@ import MangroveProtection from 'widget-components/mangrove-protection';
 import MangroveSpecies from 'widget-components/mangrove-species';
 import MangroveRestoration from 'widget-components/mangrove-restoration';
 import MangroveActivity from 'widget-components/mangrove-activity';
+import RestorationSites from 'widget-components/restoration-sites';
 import MangroveAlerts from 'widget-components/mangrove-alerts';
 import MangroveHeight from 'widget-components/mangrove-height';
 import MangroveBiomass from 'widget-components/mangrove-biomass';
@@ -54,6 +55,9 @@ export const templates = new Map([
   }],
   ['highlighted_places', {
     component: HighlightedPlaces
+  }],
+  ['restoration_sites', {
+    component: RestorationSites
   }],
   ['mangrove_alerts', {
     component: MangroveAlerts

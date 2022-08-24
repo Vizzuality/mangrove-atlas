@@ -93,6 +93,20 @@ export default {
       ]
     },
     {
+      "name": "Restoration Sites",
+      "slug": "restoration_sites",
+      "locationType": [
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      "layersIds": [
+        "restoration-sites"
+      ]
+    },
+    {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": [
