@@ -5,42 +5,15 @@ import sortBy from 'lodash/sortBy';
 
 import ChartWidget from 'components/chart-widget';
 import Select from 'components/select';
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 
 import config from './config';
 
 const numberFormat = format(',.2f');
 
-function processData(data, currentYear, unit) {
-  const { chartData, metadata } = data;
-  const currentYearData = chartData?.find(d => d.x === currentYear);
-
-  if (!currentYearData) {
-    return null;
-  }
-
-  const nonMangrove = metadata.total_lenght - currentYearData.value;
-
-  return [
-    {
-      ...currentYearData
-    },
-    {
-      x: 0,
-      y: nonMangrove,
-      color: '#ECECEF',
-      percentage: (nonMangrove / metadata.total_lenght) * 100,
-      unit,
-      coverage: nonMangrove.toFixed(2),
-      label: 'Non mangroves'
-    }
-  ];
-}
-
 function MangroveExtent({
-  data: rawData,
+  data,
+  metadata,
   currentLocation,
-  current,
   addFilter,
   isCollapsed = true,
   slug,
@@ -52,12 +25,13 @@ function MangroveExtent({
   fetchMangroveHabitatExtentData,
   ...props
 }) {
+
   useEffect(() => {
-    fetchMangroveHabitatExtentData({
-      ...currentLocation?.id !== WORLWIDE_LOCATION_ID && {
-        location_id: currentLocation.id,
-      },
-    });
+      fetchMangroveHabitatExtentData({
+        ...currentLocation?.iso !== "WORLDWIDE" && {
+          location_id: currentLocation.id,
+        },
+      });
   }, [fetchMangroveHabitatExtentData, currentLocation])
 
   useEffect(() => {
@@ -69,16 +43,17 @@ function MangroveExtent({
     });
   }, [addFilter, unit]);
 
-  if (!rawData) {
+  if (!data || !data.length) {
     return null;
   }
 
-  const data = config.parse(rawData, unit);
-  const { chartConfig, metadata, downloadData } = data;
+  const { total_area, total_lenght } = metadata;
+  const { totalMangroveArea, chartConfig, chartData, downloadData } = config.parse(data, metadata, currentYear, unit);
   const optionsYears = sortBy((metadata?.year || []).map(year => ({
     label: year.toString(),
     value: year
   })), ['value']);
+
   let sentence = null;
 
   const changeYear = (current) => {
@@ -95,30 +70,24 @@ function MangroveExtent({
     setUi({ id: 'coverage', value: { currentYear, unit: selectedUnit } });
   };
 
-  const widgetData = processData(data, currentYear, unit);
-
-  if (widgetData === null) {
-    return null;
-  }
-
-  const chartData = {
-    data: widgetData,
+  const widgetData = {
+    data: chartData,
     config: chartConfig
   };
 
   try {
-    const { percentage } = widgetData[0];
     const unitOptions = [
       { value: 'km', label: 'km²' },
       { value: 'ha', label: 'ha' }
     ];
-    const totalCoverage = unit === 'ha' ? numberFormat(metadata.total_lenght * 100) : numberFormat(metadata.total_lenght);
+    const totalCoverage = unit === 'ha' ? numberFormat(total_lenght * 100) : numberFormat(total_lenght);
     const area = unit === 'ha'
-      ? numberFormat(chartData.data[0].area * 100)
-      : numberFormat(chartData.data[0].area);
+      ? numberFormat(totalMangroveArea * 100)
+      : numberFormat(totalMangroveArea);
 
-    const coveragePercentage = numberFormat(percentage);
-
+    const coveragePercentage = unit === 'ha'
+    ? numberFormat(total_area * 100)
+    : numberFormat(total_area);
 
     const location = (currentLocation.location_type === 'worldwide')
       ? 'the world'
@@ -160,7 +129,7 @@ function MangroveExtent({
       isCollapsed={isCollapsed}
       downloadData={downloadData}
       sentence={sentence}
-      chartData={chartData}
+      chartData={widgetData}
       {...props}
     />
   );
@@ -169,13 +138,28 @@ function MangroveExtent({
 MangroveExtent.propTypes = {
   data: PropTypes.shape({}),
   metadata: PropTypes.shape({}),
-  currentLocation: PropTypes.shape({})
+  currentLocation: PropTypes.shape({}),
+  addFilter: PropTypes.func,
+  isCollapsed: PropTypes.bool,
+  slug: PropTypes.string,
+  ui: PropTypes.shape({
+    currentYear: PropTypes.number,
+    unit: PropTypes.string
+  }),
+  setUi: PropTypes.func,
+  fetchMangroveHabitatExtentData: PropTypes.func,
 };
 
 MangroveExtent.defaultProps = {
   data: null,
   metadata: null,
-  currentLocation: null
+  currentLocation: null,
+  addFilter: () => {},
+  isCollapsed: true,
+  slug: null,
+  ui: null,
+  setUi: () => {},
+  fetchMangroveHabitatExtentData: () => {},
 };
 
 export default MangroveExtent;
