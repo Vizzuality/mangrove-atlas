@@ -1,0 +1,6 @@
+@import 'styles/_vars.scss';
+
+.sentence {
+  @include widget-sentence;
+}
+
