@@ -81,6 +81,32 @@ export default {
       ]
     },
     {
+      "name": "Mangrove Investment Potential",
+      "slug": "mangrove_investment_potential",
+      "locationType": [
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy"
+      ]
+    },
+    {
+      "name": "Restoration Sites",
+      "slug": "restoration_sites",
+      "locationType": [
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      "layersIds": [
+        "restoration-sites"
+      ]
+    },
+    {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": [

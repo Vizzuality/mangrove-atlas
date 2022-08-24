@@ -68,6 +68,17 @@ $font-size-medium: 19px;
   }
 }
 
+@mixin widget-sentence {
+    @include medium-text;
+    margin: 1rem 0;
+    position: relative;
+
+    @media print {
+      font-size: 14px;
+      line-height: 19px;
+    }
+  }
+
 // Breakpoints
 $sm: 384px;
 $md: 768px;
