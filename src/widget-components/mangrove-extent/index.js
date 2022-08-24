@@ -6,7 +6,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveHabitatExtentData.isLoading,
-  data: state.mangroveHabitatExtentData,
+  data: state.mangroveHabitatExtentData.data,
+  metadata: state.mangroveHabitatExtentData.metadata,
   ui: state.widgets.ui.coverage || {
     currentYear: 2016,
     unit: 'km'

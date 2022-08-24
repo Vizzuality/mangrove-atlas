@@ -23,6 +23,7 @@ const Legend = ({ title,
     const j = b.split('--');
     return (Number(j[0]) + Number(j[1])) - (Number(i[0]) + Number(i[1]));
   });
+
   const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
   return (
     <div className={classnames(styles.widget_legend, {

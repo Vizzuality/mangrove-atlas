@@ -6,6 +6,11 @@ class APIService {
       baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { "Content-Type": "application/json" },
     });
+
+    this.clientStaging = axios.create({
+      baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api`,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   fetchLocations = (params = {}) =>
@@ -29,7 +34,7 @@ class APIService {
   };
 
   fetchMangroveHabitatExtentData = (params = {}) =>
-    this.client
+    this.clientStaging
       .get("/v2/widgets/habitat_extent", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
