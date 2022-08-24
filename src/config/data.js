@@ -37,6 +37,20 @@ export default {
       layersIds: [],
     },
     {
+      name: "Restoration Sites",
+      slug: "restoration_sites",
+      locationType: [
+        "worldwide"
+      ],
+      categoryIds: [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      layersIds: [
+        "restoration-sites"
+      ]
+    },
+    {
       name: "Mangrove habitat extent",
       slug: "mangrove_extent",
       locationType: ["custom-area", "wdpa", "country", "worldwide"],
