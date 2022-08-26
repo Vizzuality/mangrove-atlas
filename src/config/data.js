@@ -170,6 +170,7 @@ export default {
         "restoration_and_conservation",
         "ecosystem_services"
       ],
+      "categoryIds": ["all_datasets"],
       "layersIds": [
         "height"
       ]
