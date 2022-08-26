@@ -1,0 +1,1634 @@
+[
+  {
+    "FIELD1": 0,
+    "category": "carbon_5",
+    "value": 900,
+    "note": "extent of investible blue carbon (ha) is 900 (±100)  (at $5/ton)",
+    "location_id": 2029,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 1,
+    "category": "carbon_5",
+    "value": 98900,
+    "note": "extent of investible blue carbon (ha) is 98,900 (±2,800) (at $5/ton)",
+    "location_id": 4587,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 2,
+    "category": "carbon_5",
+    "value": 300,
+    "note": "extent of investible blue carbon (ha) is 300 (±100) (at $5/ton)",
+    "location_id": 3831,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 3,
+    "category": "carbon_5",
+    "value": 17300,
+    "note": "extent of investible blue carbon (ha) is 17,300 (±4,900) (at $5/ton)",
+    "location_id": 1985,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 4,
+    "category": "carbon_5",
+    "value": 33500,
+    "note": "extent of investible blue carbon (ha) is 33,500 (±1,100) (at $5/ton)",
+    "location_id": 4493,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 5,
+    "category": "carbon_5",
+    "value": 5700,
+    "note": "extent of investible blue carbon (ha) is 5,700 (±1,500) (at $5/ton)",
+    "location_id": 2498,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 6,
+    "category": "carbon_5",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2664,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 7,
+    "category": "carbon_5",
+    "value": 10000,
+    "note": "extent of investible blue carbon (ha) is 10,000 (±5,400) (at $5/ton)",
+    "location_id": 3020,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 8,
+    "category": "carbon_5",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3236,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 9,
+    "category": "carbon_5",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3457,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 10,
+    "category": "carbon_5",
+    "value": 2100,
+    "note": "extent of investible blue carbon (ha) is 2,100 (±600) (at $5/ton)",
+    "location_id": 2343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 11,
+    "category": "carbon_5",
+    "value": 1400,
+    "note": "extent of investible blue carbon (ha) is 1,400 (±300) (at $5/ton)",
+    "location_id": 3400,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 12,
+    "category": "carbon_5",
+    "value": 800,
+    "note": "extent of investible blue carbon (ha) is 800 (±100) (at $5/ton)",
+    "location_id": 4251,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 13,
+    "category": "carbon_5",
+    "value": 9300,
+    "note": "extent of investible blue carbon (ha) is 9,300 (±300) (at $5/ton)",
+    "location_id": 2111,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 14,
+    "category": "carbon_5",
+    "value": 900,
+    "note": "extent of investible blue carbon (ha) is 900 (±100) (at $5/ton)",
+    "location_id": 3343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 15,
+    "category": "carbon_5",
+    "value": 15800,
+    "note": "extent of investible blue carbon (ha) is 15,800 (±1,200) (at $5/ton)",
+    "location_id": 1879,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 16,
+    "category": "carbon_5",
+    "value": 500,
+    "note": "extent of investible blue carbon (ha) is 500 (±0) (at $5/ton)",
+    "location_id": 3741,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 17,
+    "category": "carbon_5",
+    "value": 0,
+    "note": "extent of investible blue carbon (ha) is 0 (at $5/ton)",
+    "location_id": 1695,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 18,
+    "category": "carbon_5",
+    "value": 100,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2710,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 19,
+    "category": "carbon_5",
+    "value": 4800,
+    "note": "extent of investible blue carbon (ha) is 4,800 (±400) (at $5/ton)",
+    "location_id": 3883,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 20,
+    "category": "carbon_5",
+    "value": 1300,
+    "note": "extent of investible blue carbon (ha) is 1,300 (±100) (at $5/ton)",
+    "location_id": 3105,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 21,
+    "category": "carbon_5",
+    "value": 2600,
+    "note": "extent of investible blue carbon (ha) is 2,600 (±500) (at $5/ton)",
+    "location_id": 3238,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 22,
+    "category": "carbon_5",
+    "value": 1900,
+    "note": "extent of investible blue carbon (ha) is 1,900 (±400) (at $5/ton)",
+    "location_id": 2652,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 23,
+    "category": "carbon_5",
+    "value": 325400,
+    "note": "extent of investible blue carbon (ha) is 325,400 (±21,100) (at $5/ton)",
+    "location_id": 3384,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 24,
+    "category": "carbon_5",
+    "value": 18900,
+    "note": "extent of investible blue carbon (ha) is 18,900 (±2,800) (at $5/ton)",
+    "location_id": 1712,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 25,
+    "category": "carbon_5",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2123,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 26,
+    "category": "carbon_5",
+    "value": 2000,
+    "note": "extent of investible blue carbon (ha) is 2,000 (±300) (at $5/ton)",
+    "location_id": 2544,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 27,
+    "category": "carbon_5",
+    "value": 7200,
+    "note": "extent of investible blue carbon (ha) is 7,200 (±300) (at $5/ton)",
+    "location_id": 3470,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 28,
+    "category": "carbon_5",
+    "value": 100,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2179,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 29,
+    "category": "carbon_5",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2558,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 30,
+    "category": "carbon_5",
+    "value": 71600,
+    "note": "extent of investible blue carbon (ha) is 71,600 (±1,600) (at $5/ton)",
+    "location_id": 1736,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 31,
+    "category": "carbon_5",
+    "value": 400,
+    "note": "extent of investible blue carbon (ha) is 400 (±400) (at $5/ton)",
+    "location_id": 4422,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 32,
+    "category": "carbon_5",
+    "value": 124500,
+    "note": "extent of investible blue carbon (ha) is 124,500 (±3,100) (at $5/ton)",
+    "location_id": 4616,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 33,
+    "category": "carbon_5",
+    "value": 7500,
+    "note": "extent of investible blue carbon (ha) is 7,500 (±300) (at $5/ton)",
+    "location_id": 3767,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 34,
+    "category": "carbon_5",
+    "value": 23500,
+    "note": "extent of investible blue carbon (ha) is 23,500 (±5,000) (at $5/ton)",
+    "location_id": 4195,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 35,
+    "category": "carbon_5",
+    "value": 73100,
+    "note": "extent of investible blue carbon (ha) is 73,100 (±8,300) (at $5/ton)",
+    "location_id": 4543,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 36,
+    "category": "carbon_5",
+    "value": 3900,
+    "note": "extent of investible blue carbon (ha) is 3,900 (±600) (at $5/ton)",
+    "location_id": 3183,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 37,
+    "category": "carbon_5",
+    "value": 2300,
+    "note": "extent of investible blue carbon (ha) is 2,300 (±700) (at $5/ton)",
+    "location_id": 3180,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 38,
+    "category": "carbon_5",
+    "value": 1000,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 2837,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 39,
+    "category": "carbon_5",
+    "value": 12000,
+    "note": "extent of investible blue carbon (ha) is 12,000 (±1,500) (at $5/ton)",
+    "location_id": 2757,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 40,
+    "category": "carbon_5",
+    "value": 48600,
+    "note": "extent of investible blue carbon (ha) is 48,600 (±2,500) (at $5/ton)",
+    "location_id": 3021,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 41,
+    "category": "carbon_5",
+    "value": 500,
+    "note": "extent of investible blue carbon (ha) is 500 (±200) (at $5/ton)",
+    "location_id": 2327,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 42,
+    "category": "carbon_5",
+    "value": 3200,
+    "note": "extent of investible blue carbon (ha) is 3,200 (±100) (at $5/ton)",
+    "location_id": 2845,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 43,
+    "category": "carbon_5",
+    "value": 8900,
+    "note": "extent of investible blue carbon (ha) is 8,900 (±500) (at $5/ton)",
+    "location_id": 4306,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 44,
+    "category": "carbon_5",
+    "value": 1000,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 1970,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 45,
+    "category": "carbon_5",
+    "value": 100,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2814,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 46,
+    "category": "carbon_5",
+    "value": 2800,
+    "note": "extent of investible blue carbon (ha) is 2,800 (±1,200) (at $5/ton)",
+    "location_id": 2292,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 47,
+    "category": "carbon_5",
+    "value": 8800,
+    "note": "extent of investible blue carbon (ha) is 8,800 (±1,700) (at $5/ton)",
+    "location_id": 3760,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 48,
+    "category": "carbon_5",
+    "value": 13500,
+    "note": "extent of investible blue carbon (ha) is 13,500 (±400) (at $5/ton)",
+    "location_id": 4511,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 49,
+    "category": "carbon_5",
+    "value": 3000,
+    "note": "extent of investible blue carbon (ha) is 3,000 (±700) (at $5/ton)",
+    "location_id": 3582,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 50,
+    "category": "carbon_5",
+    "value": 75900,
+    "note": "extent of investible blue carbon (ha) is 75,900 (±3,200) (at $5/ton)",
+    "location_id": 1681,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 51,
+    "category": "carbon_10",
+    "value": 1300,
+    "note": "extent of investible blue carbon (ha) is 900 (±100)  (at $5/ton)",
+    "location_id": 2029,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 52,
+    "category": "carbon_10",
+    "value": 113700,
+    "note": "extent of investible blue carbon (ha) is 98,900 (±2,800) (at $5/ton)",
+    "location_id": 4587,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 53,
+    "category": "carbon_10",
+    "value": 1100,
+    "note": "extent of investible blue carbon (ha) is 300 (±100) (at $5/ton)",
+    "location_id": 3831,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 54,
+    "category": "carbon_10",
+    "value": 49900,
+    "note": "extent of investible blue carbon (ha) is 17,300 (±4,900) (at $5/ton)",
+    "location_id": 1985,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 55,
+    "category": "carbon_10",
+    "value": 38300,
+    "note": "extent of investible blue carbon (ha) is 33,500 (±1,100) (at $5/ton)",
+    "location_id": 4493,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 56,
+    "category": "carbon_10",
+    "value": 12600,
+    "note": "extent of investible blue carbon (ha) is 5,700 (±1,500) (at $5/ton)",
+    "location_id": 2498,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 57,
+    "category": "carbon_10",
+    "value": 900,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2664,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 58,
+    "category": "carbon_10",
+    "value": 26400,
+    "note": "extent of investible blue carbon (ha) is 10,000 (±5,400) (at $5/ton)",
+    "location_id": 3020,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 59,
+    "category": "carbon_10",
+    "value": 600,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3236,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 60,
+    "category": "carbon_10",
+    "value": 500,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3457,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 61,
+    "category": "carbon_10",
+    "value": 5400,
+    "note": "extent of investible blue carbon (ha) is 2,100 (±600) (at $5/ton)",
+    "location_id": 2343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 62,
+    "category": "carbon_10",
+    "value": 3100,
+    "note": "extent of investible blue carbon (ha) is 1,400 (±300) (at $5/ton)",
+    "location_id": 3400,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 63,
+    "category": "carbon_10",
+    "value": 1200,
+    "note": "extent of investible blue carbon (ha) is 800 (±100) (at $5/ton)",
+    "location_id": 4251,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 64,
+    "category": "carbon_10",
+    "value": 10100,
+    "note": "extent of investible blue carbon (ha) is 9,300 (±300) (at $5/ton)",
+    "location_id": 2111,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 65,
+    "category": "carbon_10",
+    "value": 901,
+    "note": "extent of investible blue carbon (ha) is 900 (±100) (at $5/ton)",
+    "location_id": 3343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 66,
+    "category": "carbon_10",
+    "value": 20200,
+    "note": "extent of investible blue carbon (ha) is 15,800 (±1,200) (at $5/ton)",
+    "location_id": 1879,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 67,
+    "category": "carbon_10",
+    "value": 500,
+    "note": "extent of investible blue carbon (ha) is 500 (±0) (at $5/ton)",
+    "location_id": 3741,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 68,
+    "category": "carbon_10",
+    "value": null,
+    "note": "extent of investible blue carbon (ha) is 0 (at $5/ton)",
+    "location_id": 1695,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 69,
+    "category": "carbon_10",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2710,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 70,
+    "category": "carbon_10",
+    "value": 6500,
+    "note": "extent of investible blue carbon (ha) is 4,800 (±400) (at $5/ton)",
+    "location_id": 3883,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 71,
+    "category": "carbon_10",
+    "value": 4700,
+    "note": "extent of investible blue carbon (ha) is 1,300 (±100) (at $5/ton)",
+    "location_id": 3105,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 72,
+    "category": "carbon_10",
+    "value": 4700,
+    "note": "extent of investible blue carbon (ha) is 2,600 (±500) (at $5/ton)",
+    "location_id": 3238,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 73,
+    "category": "carbon_10",
+    "value": 2600,
+    "note": "extent of investible blue carbon (ha) is 1,900 (±400) (at $5/ton)",
+    "location_id": 2652,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 74,
+    "category": "carbon_10",
+    "value": 427600,
+    "note": "extent of investible blue carbon (ha) is 325,400 (±21,100) (at $5/ton)",
+    "location_id": 3384,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 75,
+    "category": "carbon_10",
+    "value": 30800,
+    "note": "extent of investible blue carbon (ha) is 18,900 (±2,800) (at $5/ton)",
+    "location_id": 1712,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 76,
+    "category": "carbon_10",
+    "value": 400,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2123,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 77,
+    "category": "carbon_10",
+    "value": 2900,
+    "note": "extent of investible blue carbon (ha) is 2,000 (±300) (at $5/ton)",
+    "location_id": 2544,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 78,
+    "category": "carbon_10",
+    "value": 8900,
+    "note": "extent of investible blue carbon (ha) is 7,200 (±300) (at $5/ton)",
+    "location_id": 3470,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 79,
+    "category": "carbon_10",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2179,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 80,
+    "category": "carbon_10",
+    "value": 500,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2558,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 81,
+    "category": "carbon_10",
+    "value": 77100,
+    "note": "extent of investible blue carbon (ha) is 71,600 (±1,600) (at $5/ton)",
+    "location_id": 1736,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 82,
+    "category": "carbon_10",
+    "value": 3800,
+    "note": "extent of investible blue carbon (ha) is 400 (±400) (at $5/ton)",
+    "location_id": 4422,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 83,
+    "category": "carbon_10",
+    "value": 142200,
+    "note": "extent of investible blue carbon (ha) is 124,500 (±3,100) (at $5/ton)",
+    "location_id": 4616,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 84,
+    "category": "carbon_10",
+    "value": 8700,
+    "note": "extent of investible blue carbon (ha) is 7,500 (±300) (at $5/ton)",
+    "location_id": 3767,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 85,
+    "category": "carbon_10",
+    "value": 51100,
+    "note": "extent of investible blue carbon (ha) is 23,500 (±5,000) (at $5/ton)",
+    "location_id": 4195,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 86,
+    "category": "carbon_10",
+    "value": 95000,
+    "note": "extent of investible blue carbon (ha) is 73,100 (±8,300) (at $5/ton)",
+    "location_id": 4543,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 87,
+    "category": "carbon_10",
+    "value": 6100,
+    "note": "extent of investible blue carbon (ha) is 3,900 (±600) (at $5/ton)",
+    "location_id": 3183,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 88,
+    "category": "carbon_10",
+    "value": 4100,
+    "note": "extent of investible blue carbon (ha) is 2,300 (±700) (at $5/ton)",
+    "location_id": 3180,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 89,
+    "category": "carbon_10",
+    "value": 3400,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 2837,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 90,
+    "category": "carbon_10",
+    "value": 20700,
+    "note": "extent of investible blue carbon (ha) is 12,000 (±1,500) (at $5/ton)",
+    "location_id": 2757,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 91,
+    "category": "carbon_10",
+    "value": 60600,
+    "note": "extent of investible blue carbon (ha) is 48,600 (±2,500) (at $5/ton)",
+    "location_id": 3021,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 92,
+    "category": "carbon_10",
+    "value": 1200,
+    "note": "extent of investible blue carbon (ha) is 500 (±200) (at $5/ton)",
+    "location_id": 2327,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 93,
+    "category": "carbon_10",
+    "value": 4200,
+    "note": "extent of investible blue carbon (ha) is 3,200 (±100) (at $5/ton)",
+    "location_id": 2845,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 94,
+    "category": "carbon_10",
+    "value": 10300,
+    "note": "extent of investible blue carbon (ha) is 8,900 (±500) (at $5/ton)",
+    "location_id": 4306,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 95,
+    "category": "carbon_10",
+    "value": 2300,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 1970,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 96,
+    "category": "carbon_10",
+    "value": 200,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2814,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 97,
+    "category": "carbon_10",
+    "value": 7100,
+    "note": "extent of investible blue carbon (ha) is 2,800 (±1,200) (at $5/ton)",
+    "location_id": 2292,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 98,
+    "category": "carbon_10",
+    "value": 22100,
+    "note": "extent of investible blue carbon (ha) is 8,800 (±1,700) (at $5/ton)",
+    "location_id": 3760,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 99,
+    "category": "carbon_10",
+    "value": 15500,
+    "note": "extent of investible blue carbon (ha) is 13,500 (±400) (at $5/ton)",
+    "location_id": 4511,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 100,
+    "category": "carbon_10",
+    "value": 8400,
+    "note": "extent of investible blue carbon (ha) is 3,000 (±700) (at $5/ton)",
+    "location_id": 3582,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 101,
+    "category": "carbon_10",
+    "value": 90900,
+    "note": "extent of investible blue carbon (ha) is 75,900 (±3,200) (at $5/ton)",
+    "location_id": 1681,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 102,
+    "category": "protected",
+    "value": 146,
+    "note": "extent of investible blue carbon (ha) is 900 (±100)  (at $5/ton)",
+    "location_id": 2029,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 103,
+    "category": "protected",
+    "value": 397048,
+    "note": "extent of investible blue carbon (ha) is 98,900 (±2,800) (at $5/ton)",
+    "location_id": 4587,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 104,
+    "category": "protected",
+    "value": 15868,
+    "note": "extent of investible blue carbon (ha) is 300 (±100) (at $5/ton)",
+    "location_id": 3831,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 105,
+    "category": "protected",
+    "value": 960634,
+    "note": "extent of investible blue carbon (ha) is 17,300 (±4,900) (at $5/ton)",
+    "location_id": 1985,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 106,
+    "category": "protected",
+    "value": 149115,
+    "note": "extent of investible blue carbon (ha) is 33,500 (±1,100) (at $5/ton)",
+    "location_id": 4493,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 107,
+    "category": "protected",
+    "value": 122961,
+    "note": "extent of investible blue carbon (ha) is 5,700 (±1,500) (at $5/ton)",
+    "location_id": 2498,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 108,
+    "category": "protected",
+    "value": 20031,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2664,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 109,
+    "category": "protected",
+    "value": 181950,
+    "note": "extent of investible blue carbon (ha) is 10,000 (±5,400) (at $5/ton)",
+    "location_id": 3020,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 110,
+    "category": "protected",
+    "value": 937,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3236,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 111,
+    "category": "protected",
+    "value": 15413,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3457,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 112,
+    "category": "protected",
+    "value": 71919,
+    "note": "extent of investible blue carbon (ha) is 2,100 (±600) (at $5/ton)",
+    "location_id": 2343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 113,
+    "category": "protected",
+    "value": 91446,
+    "note": "extent of investible blue carbon (ha) is 1,400 (±300) (at $5/ton)",
+    "location_id": 3400,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 114,
+    "category": "protected",
+    "value": 8442,
+    "note": "extent of investible blue carbon (ha) is 800 (±100) (at $5/ton)",
+    "location_id": 4251,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 115,
+    "category": "protected",
+    "value": 57549,
+    "note": "extent of investible blue carbon (ha) is 9,300 (±300) (at $5/ton)",
+    "location_id": 2111,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 116,
+    "category": "protected",
+    "value": 26886,
+    "note": "extent of investible blue carbon (ha) is 900 (±100) (at $5/ton)",
+    "location_id": 3343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 117,
+    "category": "protected",
+    "value": 111435,
+    "note": "extent of investible blue carbon (ha) is 15,800 (±1,200) (at $5/ton)",
+    "location_id": 1879,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 118,
+    "category": "protected",
+    "value": 20327,
+    "note": "extent of investible blue carbon (ha) is 500 (±0) (at $5/ton)",
+    "location_id": 3741,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 119,
+    "category": "protected",
+    "value": 63,
+    "note": "extent of investible blue carbon (ha) is 0 (at $5/ton)",
+    "location_id": 1695,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 120,
+    "category": "protected",
+    "value": 11545,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2710,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 121,
+    "category": "protected",
+    "value": 44075,
+    "note": "extent of investible blue carbon (ha) is 4,800 (±400) (at $5/ton)",
+    "location_id": 3883,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 122,
+    "category": "protected",
+    "value": 14353,
+    "note": "extent of investible blue carbon (ha) is 1,300 (±100) (at $5/ton)",
+    "location_id": 3105,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 123,
+    "category": "protected",
+    "value": 38391,
+    "note": "extent of investible blue carbon (ha) is 2,600 (±500) (at $5/ton)",
+    "location_id": 3238,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 124,
+    "category": "protected",
+    "value": 6649,
+    "note": "extent of investible blue carbon (ha) is 1,900 (±400) (at $5/ton)",
+    "location_id": 2652,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 125,
+    "category": "protected",
+    "value": 734320,
+    "note": "extent of investible blue carbon (ha) is 325,400 (±21,100) (at $5/ton)",
+    "location_id": 3384,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 126,
+    "category": "protected",
+    "value": 76569,
+    "note": "extent of investible blue carbon (ha) is 18,900 (±2,800) (at $5/ton)",
+    "location_id": 1712,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 127,
+    "category": "protected",
+    "value": 7353,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2123,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 128,
+    "category": "protected",
+    "value": 19784,
+    "note": "extent of investible blue carbon (ha) is 2,000 (±300) (at $5/ton)",
+    "location_id": 2544,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 129,
+    "category": "protected",
+    "value": 40502,
+    "note": "extent of investible blue carbon (ha) is 7,200 (±300) (at $5/ton)",
+    "location_id": 3470,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 130,
+    "category": "protected",
+    "value": 2096,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2179,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 131,
+    "category": "protected",
+    "value": 937,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2558,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 132,
+    "category": "protected",
+    "value": 50309,
+    "note": "extent of investible blue carbon (ha) is 71,600 (±1,600) (at $5/ton)",
+    "location_id": 1736,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 133,
+    "category": "protected",
+    "value": 749065,
+    "note": "extent of investible blue carbon (ha) is 400 (±400) (at $5/ton)",
+    "location_id": 4422,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 134,
+    "category": "protected",
+    "value": 14825,
+    "note": "extent of investible blue carbon (ha) is 124,500 (±3,100) (at $5/ton)",
+    "location_id": 4616,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 135,
+    "category": "protected",
+    "value": 162632,
+    "note": "extent of investible blue carbon (ha) is 7,500 (±300) (at $5/ton)",
+    "location_id": 3767,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 136,
+    "category": "protected",
+    "value": 73637,
+    "note": "extent of investible blue carbon (ha) is 23,500 (±5,000) (at $5/ton)",
+    "location_id": 4195,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 137,
+    "category": "protected",
+    "value": 46108,
+    "note": "extent of investible blue carbon (ha) is 73,100 (±8,300) (at $5/ton)",
+    "location_id": 4543,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 138,
+    "category": "protected",
+    "value": 58679,
+    "note": "extent of investible blue carbon (ha) is 3,900 (±600) (at $5/ton)",
+    "location_id": 3183,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 139,
+    "category": "protected",
+    "value": 28015,
+    "note": "extent of investible blue carbon (ha) is 2,300 (±700) (at $5/ton)",
+    "location_id": 3180,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 140,
+    "category": "protected",
+    "value": 63516,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 2837,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 141,
+    "category": "protected",
+    "value": 95116,
+    "note": "extent of investible blue carbon (ha) is 12,000 (±1,500) (at $5/ton)",
+    "location_id": 2757,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 142,
+    "category": "protected",
+    "value": 21062,
+    "note": "extent of investible blue carbon (ha) is 48,600 (±2,500) (at $5/ton)",
+    "location_id": 3021,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 143,
+    "category": "protected",
+    "value": 74431,
+    "note": "extent of investible blue carbon (ha) is 500 (±200) (at $5/ton)",
+    "location_id": 2327,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 144,
+    "category": "protected",
+    "value": 5134,
+    "note": "extent of investible blue carbon (ha) is 3,200 (±100) (at $5/ton)",
+    "location_id": 2845,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 145,
+    "category": "protected",
+    "value": 61332,
+    "note": "extent of investible blue carbon (ha) is 8,900 (±500) (at $5/ton)",
+    "location_id": 4306,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 146,
+    "category": "protected",
+    "value": 30227,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 1970,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 147,
+    "category": "protected",
+    "value": 0,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2814,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 148,
+    "category": "protected",
+    "value": 56980,
+    "note": "extent of investible blue carbon (ha) is 2,800 (±1,200) (at $5/ton)",
+    "location_id": 2292,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 149,
+    "category": "protected",
+    "value": 15894,
+    "note": "extent of investible blue carbon (ha) is 8,800 (±1,700) (at $5/ton)",
+    "location_id": 3760,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 150,
+    "category": "protected",
+    "value": 90598,
+    "note": "extent of investible blue carbon (ha) is 13,500 (±400) (at $5/ton)",
+    "location_id": 4511,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 151,
+    "category": "protected",
+    "value": 188342,
+    "note": "extent of investible blue carbon (ha) is 3,000 (±700) (at $5/ton)",
+    "location_id": 3582,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 152,
+    "category": "protected",
+    "value": 86140,
+    "note": "extent of investible blue carbon (ha) is 75,900 (±3,200) (at $5/ton)",
+    "location_id": 1681,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 153,
+    "category": "remaining",
+    "value": 26911,
+    "note": "extent of investible blue carbon (ha) is 900 (±100)  (at $5/ton)",
+    "location_id": 2029,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 154,
+    "category": "remaining",
+    "value": 0,
+    "note": "extent of investible blue carbon (ha) is 98,900 (±2,800) (at $5/ton)",
+    "location_id": 4587,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 155,
+    "category": "remaining",
+    "value": 35901,
+    "note": "extent of investible blue carbon (ha) is 300 (±100) (at $5/ton)",
+    "location_id": 3831,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 156,
+    "category": "remaining",
+    "value": 130937,
+    "note": "extent of investible blue carbon (ha) is 17,300 (±4,900) (at $5/ton)",
+    "location_id": 1985,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 157,
+    "category": "remaining",
+    "value": 9586,
+    "note": "extent of investible blue carbon (ha) is 33,500 (±1,100) (at $5/ton)",
+    "location_id": 4493,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 158,
+    "category": "remaining",
+    "value": 145193,
+    "note": "extent of investible blue carbon (ha) is 5,700 (±1,500) (at $5/ton)",
+    "location_id": 2498,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 159,
+    "category": "remaining",
+    "value": 16180,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2664,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 160,
+    "category": "remaining",
+    "value": 151344,
+    "note": "extent of investible blue carbon (ha) is 10,000 (±5,400) (at $5/ton)",
+    "location_id": 3020,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 161,
+    "category": "remaining",
+    "value": 2952,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3236,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 162,
+    "category": "remaining",
+    "value": 3271,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 3457,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 163,
+    "category": "remaining",
+    "value": 76224,
+    "note": "extent of investible blue carbon (ha) is 2,100 (±600) (at $5/ton)",
+    "location_id": 2343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 164,
+    "category": "remaining",
+    "value": 80155,
+    "note": "extent of investible blue carbon (ha) is 1,400 (±300) (at $5/ton)",
+    "location_id": 3400,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 165,
+    "category": "remaining",
+    "value": 8310,
+    "note": "extent of investible blue carbon (ha) is 800 (±100) (at $5/ton)",
+    "location_id": 4251,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 166,
+    "category": "remaining",
+    "value": 153496,
+    "note": "extent of investible blue carbon (ha) is 9,300 (±300) (at $5/ton)",
+    "location_id": 2111,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 167,
+    "category": "remaining",
+    "value": 33185,
+    "note": "extent of investible blue carbon (ha) is 900 (±100) (at $5/ton)",
+    "location_id": 3343,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 168,
+    "category": "remaining",
+    "value": 137197,
+    "note": "extent of investible blue carbon (ha) is 15,800 (±1,200) (at $5/ton)",
+    "location_id": 1879,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 169,
+    "category": "remaining",
+    "value": 4768,
+    "note": "extent of investible blue carbon (ha) is 500 (±0) (at $5/ton)",
+    "location_id": 3741,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 170,
+    "category": "remaining",
+    "value": 130,
+    "note": "extent of investible blue carbon (ha) is 0 (at $5/ton)",
+    "location_id": 1695,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 171,
+    "category": "remaining",
+    "value": 13220,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2710,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 172,
+    "category": "remaining",
+    "value": 12395,
+    "note": "extent of investible blue carbon (ha) is 4,800 (±400) (at $5/ton)",
+    "location_id": 3883,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 173,
+    "category": "remaining",
+    "value": 9207.84725,
+    "note": "extent of investible blue carbon (ha) is 1,300 (±100) (at $5/ton)",
+    "location_id": 3105,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 174,
+    "category": "remaining",
+    "value": 17473,
+    "note": "extent of investible blue carbon (ha) is 2,600 (±500) (at $5/ton)",
+    "location_id": 3238,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 175,
+    "category": "remaining",
+    "value": 6152,
+    "note": "extent of investible blue carbon (ha) is 1,900 (±400) (at $5/ton)",
+    "location_id": 2652,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 176,
+    "category": "remaining",
+    "value": 1791478,
+    "note": "extent of investible blue carbon (ha) is 325,400 (±21,100) (at $5/ton)",
+    "location_id": 3384,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 177,
+    "category": "remaining",
+    "value": 296416,
+    "note": "extent of investible blue carbon (ha) is 18,900 (±2,800) (at $5/ton)",
+    "location_id": 1712,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 178,
+    "category": "remaining",
+    "value": 2192,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2123,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 179,
+    "category": "remaining",
+    "value": 31746,
+    "note": "extent of investible blue carbon (ha) is 2,000 (±300) (at $5/ton)",
+    "location_id": 2544,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 180,
+    "category": "remaining",
+    "value": 13290,
+    "note": "extent of investible blue carbon (ha) is 7,200 (±300) (at $5/ton)",
+    "location_id": 3470,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 181,
+    "category": "remaining",
+    "value": 16041,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2179,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 182,
+    "category": "remaining",
+    "value": 18437,
+    "note": "extent of investible blue carbon (ha) is 200 (±100) (at $5/ton)",
+    "location_id": 2558,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 183,
+    "category": "remaining",
+    "value": 150158,
+    "note": "extent of investible blue carbon (ha) is 71,600 (±1,600) (at $5/ton)",
+    "location_id": 1736,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 184,
+    "category": "remaining",
+    "value": 213241.5659,
+    "note": "extent of investible blue carbon (ha) is 400 (±400) (at $5/ton)",
+    "location_id": 4422,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 185,
+    "category": "remaining",
+    "value": 386514,
+    "note": "extent of investible blue carbon (ha) is 124,500 (±3,100) (at $5/ton)",
+    "location_id": 4616,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 186,
+    "category": "remaining",
+    "value": 131403,
+    "note": "extent of investible blue carbon (ha) is 7,500 (±300) (at $5/ton)",
+    "location_id": 3767,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 187,
+    "category": "remaining",
+    "value": 399838,
+    "note": "extent of investible blue carbon (ha) is 23,500 (±5,000) (at $5/ton)",
+    "location_id": 4195,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 188,
+    "category": "remaining",
+    "value": 703135,
+    "note": "extent of investible blue carbon (ha) is 73,100 (±8,300) (at $5/ton)",
+    "location_id": 4543,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 189,
+    "category": "remaining",
+    "value": 9952,
+    "note": "extent of investible blue carbon (ha) is 3,900 (±600) (at $5/ton)",
+    "location_id": 3183,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 190,
+    "category": "remaining",
+    "value": 50674,
+    "note": "extent of investible blue carbon (ha) is 2,300 (±700) (at $5/ton)",
+    "location_id": 3180,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 191,
+    "category": "remaining",
+    "value": 86653,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 2837,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 192,
+    "category": "remaining",
+    "value": 168982,
+    "note": "extent of investible blue carbon (ha) is 12,000 (±1,500) (at $5/ton)",
+    "location_id": 2757,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 193,
+    "category": "remaining",
+    "value": 370812,
+    "note": "extent of investible blue carbon (ha) is 48,600 (±2,500) (at $5/ton)",
+    "location_id": 3021,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 194,
+    "category": "remaining",
+    "value": 51343,
+    "note": "extent of investible blue carbon (ha) is 500 (±200) (at $5/ton)",
+    "location_id": 2327,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 195,
+    "category": "remaining",
+    "value": 43317,
+    "note": "extent of investible blue carbon (ha) is 3,200 (±100) (at $5/ton)",
+    "location_id": 2845,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 196,
+    "category": "remaining",
+    "value": 81271,
+    "note": "extent of investible blue carbon (ha) is 8,900 (±500) (at $5/ton)",
+    "location_id": 4306,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 197,
+    "category": "remaining",
+    "value": 4779,
+    "note": "extent of investible blue carbon (ha) is 1,000 (±300) (at $5/ton)",
+    "location_id": 1970,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 198,
+    "category": "remaining",
+    "value": 3315,
+    "note": "extent of investible blue carbon (ha) is 100 (±0) (at $5/ton)",
+    "location_id": 2814,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 199,
+    "category": "remaining",
+    "value": 15964,
+    "note": "extent of investible blue carbon (ha) is 2,800 (±1,200) (at $5/ton)",
+    "location_id": 2292,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 200,
+    "category": "remaining",
+    "value": 214805,
+    "note": "extent of investible blue carbon (ha) is 8,800 (±1,700) (at $5/ton)",
+    "location_id": 3760,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 201,
+    "category": "remaining",
+    "value": 4689,
+    "note": "extent of investible blue carbon (ha) is 13,500 (±400) (at $5/ton)",
+    "location_id": 4511,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 202,
+    "category": "remaining",
+    "value": 87933,
+    "note": "extent of investible blue carbon (ha) is 3,000 (±700) (at $5/ton)",
+    "location_id": 3582,
+    "unit": "ha"
+  },
+  {
+    "FIELD1": 203,
+    "category": "remaining",
+    "value": 10107,
+    "note": "extent of investible blue carbon (ha) is 75,900 (±3,200) (at $5/ton)",
+    "location_id": 1681,
+    "unit": "ha"
+  }
+]
