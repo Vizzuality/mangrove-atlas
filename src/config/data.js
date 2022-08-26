@@ -81,18 +81,6 @@ export default {
       ]
     },
     {
-      "name": "Mangrove Investment Potential",
-      "slug": "mangrove_investment_potential",
-      "locationType": [
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "climate_and_policy"
-      ]
-    },
-    {
       "name": "Mangrove alerts",
       "slug": "mangrove_alerts",
       "locationType": [
@@ -177,18 +165,6 @@ export default {
       ]
     },
     {
-      "name": "Mangrove Protection",
-      "slug": "mangrove_protection",
-      "locationType": [
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation"
-      ]
-    },
-    {
       "name": "Conservation hotspots",
       "slug": "conservation_hotspots",
       "locationType": [
@@ -218,7 +194,9 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
+        "all_datasets",
+        "restoration_and_conservation",
+        "ecosystem_services"
       ],
       "layersIds": [
         "restoration"
@@ -235,7 +213,6 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
       ]
     },
     {
@@ -249,6 +226,35 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
+      ]
+    },
+    {
+        "name": "Mangrove Investment Potential",
+        "slug": "mangrove_investment_potential",
+        "locationType": [
+          "country",
+          "worldwide"
+        ],
+        "categoryIds": [
+          "all_datasets",
+          "climate_and_policy",
+          "ecosystem_services"
+      ],
+      "layersIds": [
+      ]
+    },
+    {
+      "name": "Mangrove Protection",
+      "slug": "mangrove_protection",
+      "locationType": [
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
       ]
     }
   ],

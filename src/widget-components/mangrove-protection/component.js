@@ -2,9 +2,6 @@ import React, { useEffect, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import sortBy from "lodash/sortBy";
 
-import { getCurrentLocation } from "modules/pages/sagas";
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
-
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
 
@@ -21,8 +18,7 @@ const note =
 function MangroveProtection({
   data,
   metadata,
-  current,
-  currentLocationId,
+  currentLocation,
   isLoading,
   locations,
   isCollapsed = true,
@@ -31,49 +27,38 @@ function MangroveProtection({
   addFilter,
   ui,
   setUi,
-  locationType,
   fetchMangroveProtectionData,
   ...props
 }) {
   const years = metadata?.year.sort() || [];
-
   const { year, unit } = ui;
 
-  const id = current?.iso || current?.id;
-  const currentLocation = getCurrentLocation(locations, id, locationType);
-
   useEffect(() => {
-    if (!data?.length || metadata) {
-      if (current.id === "worldwide" || currentLocationId === WORLWIDE_LOCATION_ID) {
-        fetchMangroveProtectionData();
-      } else {
-        fetchMangroveProtectionData({
-          ...(currentLocationId &&
-            currentLocationId !== WORLWIDE_LOCATION_ID && {
-              location_id: currentLocation.location_id,
-            }),
-        });
-      }
-    }
-  }, [id, currentLocation, current, fetchMangroveProtectionData]);
+    fetchMangroveProtectionData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [currentLocation, fetchMangroveProtectionData]);
 
   const unitMetadata = metadata?.units;
 
   useEffect(() => {
     const yearUpdate = year || years?.[years?.length - 1];
     const unitArea = unitMetadata?.total_area;
-
-    addFilter({
-      filter: {
+    if (yearUpdate) {
+      addFilter({
+        filter: {
+          id: "protection",
+          year: yearUpdate,
+          unit: unit || unitArea,
+        },
+      });
+      setUi({
         id: "protection",
-        year: yearUpdate,
-        unit: unit || unitArea,
-      },
-    });
-    setUi({
-      id: "protection",
-      value: { year: yearUpdate, unit: unit || unitArea },
-    });
+        value: { year: yearUpdate, unit: unit || unitArea },
+      });
+    }
   }, [year, years.length]);
 
   const changeYear = useCallback(
@@ -87,7 +72,7 @@ function MangroveProtection({
       });
       setUi({ id: "protection", value: { year: current, ...ui.value } });
     },
-    [current]
+    []
   );
 
   const filteredData = useMemo(() => {
@@ -122,9 +107,7 @@ function MangroveProtection({
   );
 
   const location =
-    currentLocation?.location_type === "worldwide" ||
-    currentLocation?.id === "worldwide" ||
-    current?.id === "worldwide" ? (
+    currentLocation?.location_type === "worldwide" ? (
       "the world"
     ) : (
       <span className="notranslate">{`${currentLocation.name}`}</span>

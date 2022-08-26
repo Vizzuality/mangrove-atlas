@@ -13,7 +13,7 @@ const getData = (data) => {
 
   if (!data) return [];
   const protectedMangroves = data.protected_area;
-  const nonProtected = data.total_area;
+  const nonProtected = data.total_area - protectedMangroves;
   const protectedPercentage = (data.protected_area * 100) / data.total_area;
   const nonProtectedPercentage = 100 - protectedPercentage;
 

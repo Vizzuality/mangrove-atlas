@@ -227,7 +227,7 @@ const layersMap = {
       maxZoom: 12,
     },
   ],
-  net: [ ...mangroveGainRasters, ...mangroveLossLayers],
+  net: [ ...mangroveGainLayers, ...mangroveLossLayers],
   "alerts-heat": [
     {
       layerId: "alerts-heat",

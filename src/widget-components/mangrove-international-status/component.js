@@ -1,57 +1,55 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
-import ChartWidget from 'components/chart-widget';
+import ChartWidget from "components/chart-widget";
 
-import { getCurrentLocation, getLocationType } from 'modules/pages/sagas';
-
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
-
-const fakeData = {
-  data: {
-      pledge_type: 'a GHG target',
-      base_years: '2005',
-      target_years: '2025 and 2030',
-      ndc_target: '220 and 480 mtCO2e/yr',
-      ndc_target_url: 'https://www4.unfccc.int/sites/NDCStaging/pages/Party.aspx?party=BRA',
-      ndc_reduction_target: '37 and 50%',
-      ndc_blurb: "Brazil intends to commit to reduce greenhouse gas emissions by 37% below 2005 levels in 2025.",
-      ndc_updated: false,
-      ndc: false,
-      ndc_mitigation: false,
-      ndc_adaptation: false
-  },
-  metadata: {
-      location_id: 1_2_74,
-  },
-};
+import styles from "./style.module.scss";
 
 export const MangroveInternationalStatus = ({
-  // data,
+  data,
   currentLocation,
   isCollapsed = true,
   slug,
-  name,
   fetchMangroveInternationalStatusData,
   locationsList,
-  current,
-  type,
   ...props
 }) => {
-  const { id } = currentLocation;
-
-  const { data } = fakeData;
-
-  const locationType = getLocationType(type);
-  const location = getCurrentLocation(locationsList, current, locationType);
+  const { id, name } = currentLocation;
 
   useEffect(() => {
-    if (current !== 'worldwide' || current !== WORLWIDE_LOCATION_ID) {
-      fetchMangroveInternationalStatusData({ ...id && { location_id: id } });
-    }
-  }, [id, current, fetchMangroveInternationalStatusData]);
+    fetchMangroveInternationalStatusData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [id, currentLocation.iso, currentLocation.id, fetchMangroveInternationalStatusData]);
 
-  const { pledge_type, ndc_target, ndc_reduction_target, base_years, target_years, ndc_target_url } = data;
+  if (!data) return null;
+  const {
+    pledge_type,
+    ndc_target,
+    ndc_reduction_target,
+    base_years,
+    target_years,
+    ndc_target_url,
+    ndc_updated,
+    ndc_mitigation,
+    ndc_adaptation,
+    ipcc_wetlands_suplement,
+    frel,
+    year_frel,
+    fow,
+  } = data;
+
+  const apostrophe = name[name.length - 1] === "s" ? "'" : "'s";
+  const targetYears = target_years.length > 4 ? "s" : "";
+  const reductionTargetSentence =
+    ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
+  const baseYearsSentence = base_years && ` from a baseline in ${base_years}`;
+  const targetYearsSentence =
+    !!target_years && `by target year${targetYears} ${target_years}`;
+  const ndcTargetSentence =
+    !!ndc_target && `. This represents a reduction of ${ndc_target}mtCO2e/yr.`;
 
   return (
     <ChartWidget
@@ -61,33 +59,87 @@ export const MangroveInternationalStatus = ({
       chart={false}
       isCollapsed={isCollapsed}
       {...props}
-      >
-        <div slug={slug}>
-          {pledge_type &&(
+    >
+      <div slug={slug}>
+        {pledge_type && (
           <div>
-            <h3>Nationally determined contributions (NDC)</h3>
-            <p>{location?.name}'s NDC pledge contains {pledge_type}</p>
+            <h3 className={styles.title}>
+              Nationally Determined Contributions (NDC)
+            </h3>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                {name}
+                {apostrophe} NDC pledge contains {pledge_type}
+              </p>
+            </div>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                {(ndc_target || ndc_reduction_target) && `The GHG target`}
+                {!ndc_reduction_target &&
+                  !!ndc_target &&
+                  "represents a reduction of" && (
+                    <a
+                      className={styles.link}
+                      href={ndc_target_url}
+                      alt="ndc target"
+                    >
+                      {ndc_target}
+                    </a>
+                  )}
+                {reductionTargetSentence}
+                {baseYearsSentence} {targetYearsSentence}
+                {ndcTargetSentence}
+                {!ndc_target && !ndc_reduction_target && "No data"}
+              </p>
+            </div>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                {name} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+                {!ndc_adaptation && !ndc_mitigation
+                  ? "doesn't include"
+                  : "includes"}{" "}
+                coastal and marine NBS {ndc_adaptation}
+                {ndc_mitigation}.
+              </p>
+            </div>
           </div>
-          )}
+        )}
+
+        {frel && (
+          <div>
+            <h3 className={styles.title}>Forest Reference Emission Levels</h3>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                {name}
+                {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({name}
+                {apostrophe} mangroves are considered {fow}) .
+              </p>
+            </div>
+          </div>
+        )}
+
         <div>
-          <h3>Forest Reference Emission Levels</h3>
-          <p>The GHG target {' '}
-            {!ndc_reduction_target && !!ndc_target && 'represents a reduction of' && <a href={ndc_target_url} alt="ndc target">{ndc_target}</a>}
-            {' '} is a {' '}{ndc_reduction_target} reduction {!!base_years && `from a baseline in ${base_years}`} {!!target_years && `by target year ${target_years}`}.{!!ndc_target && `This represents a reduction of ${ndc_target}.`}</p>
+          <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
+          <div className={styles.sentenceWrapper}>
+            <p>
+              {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
+              Supplement.
+            </p>
+          </div>
         </div>
       </div>
     </ChartWidget>
-  )
-}
+  );
+};
 
 MangroveInternationalStatus.propTypes = {
   data: PropTypes.shape({}),
-  currentLocation: PropTypes.shape({})
+  currentLocation: PropTypes.shape({}),
 };
 
 MangroveInternationalStatus.defaultProps = {
   data: null,
-  currentLocation: null
+  currentLocation: null,
 };
 
 export default MangroveInternationalStatus;
