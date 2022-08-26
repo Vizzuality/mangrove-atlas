@@ -1,0 +1,46 @@
+@import 'styles/_vars.scss';
+
+.title {
+  color: $primary;
+}
+
+.textarea {
+  width: 100%;
+  height: auto;
+  border: none;
+  overflow: auto;
+  outline: none;
+}
+
+.sentenceWrapper {
+  display: flex;
+  align-items: center;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.textBtn {
+  
+  svg {
+    margin-left: 10px;
+    width: 9px;
+    transform: rotateX(180);
+  }
+}
+
+.textBtnClose {
+  svg {
+    margin-left: 10px;
+    width: 20px;
+    pointer-events: all;
+  }
+}
+
+a {
+  text-decoration: underline;
+  color: $primary;
+}
+
+.link {
+  color: red;
+}

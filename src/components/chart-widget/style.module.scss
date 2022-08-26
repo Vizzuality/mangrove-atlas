@@ -92,6 +92,10 @@
     @include medium-text;
     margin: 1rem 0;
     position: relative;
+    
+    &:first-letter {
+      text-transform: uppercase;
+    }
 
     @media print {
       font-size: 14px;

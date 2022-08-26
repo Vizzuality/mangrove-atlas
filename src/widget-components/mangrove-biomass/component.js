@@ -7,8 +7,6 @@ import sortBy from 'lodash/sortBy';
 // utils
 import { format } from 'd3-format';
 
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
-
 import config from './config';
 
 const numberFormat = format(',.2f');
@@ -27,19 +25,17 @@ function MangroveBiomass({
   fetchMangroveBiomassData,
   ...props
 }) {
-  const { id, iso } = currentLocation;
   const year = ui?.year;
   const years = metadata?.year;
   const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value, [metadata, year]);
 
   useEffect(() => {
-    if (!iso || iso.toLowerCase() === 'worlwide') {
-      fetchMangroveBiomassData()
-    }
-    else {
-      fetchMangroveBiomassData({ location_id: id });
-    }
-  }, [id, fetchMangroveBiomassData]);
+      fetchMangroveBiomassData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [currentLocation, fetchMangroveBiomassData]);
 
   useEffect(() => {
     if (!isLoading) {

@@ -15,13 +15,14 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
   if (!data) return null;
   const { restorable_area: restorableAreaUnit, mangrove_area: mangroveAreaUnit } = restorationDataMetadata;
   const protectedMangroves = data.restorable_area;
-  const nonProtected = data.total_area;
+  const nonProtected = data.total_area - protectedMangroves;
   const protectedPercentage = data.restorable_area_perc;
   const nonProtectedPercentage = 100 - protectedPercentage;
 
   return ([
     {
       label: 'Total restorable area',
+      shortLabel: 'Total restorable area',
       value: 'protection',
       color: '#7996F3',
       percentage: protectedPercentage,
@@ -32,7 +33,8 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
       area: data.restorable_area
     },
     {
-      label: `Total mangrove area in ${year}`,
+      label: `Total non-restorable area in ${year}`,
+      shortLabel: 'Total non-restorable area',
       value: 'nonProtected',
       color: '#ECECEF',
       total: data.total,
@@ -183,7 +185,7 @@ export const CONFIG = {
                 }}
                 payload={payload} 
                 settings={[
-                  { key: 'label' },
+                  { key: 'shortLabel' },
                   { label: 'Area', key: 'area', format: (value) => `${numberFormat(value)} ${unit}`, position: '_column' },
                   { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
                 ]}
@@ -284,7 +286,6 @@ export const CONFIG = {
           content: ((properties) => {
             const { payload } = properties;
             if (!payload.length) return null;
-
             return (
               <WidgetTooltip
                 style={{

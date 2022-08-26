@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-import ChartWidget from 'components/chart-widget';
+import ChartWidget from "components/chart-widget";
 
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
-
-import config from './config';
+import config from "./config";
 
 function MangroveEmissionsMitigation({
   data,
@@ -22,41 +20,46 @@ function MangroveEmissionsMitigation({
   locationType,
   ...props
 }) {
-  const { id } = currentLocation;
   const [filteredIndicators, setFilteredIndicators] = useState([]);
 
   useEffect(() => {
-    if (current === 'worldwide' || current === WORLWIDE_LOCATION_ID) {
-      fetchMangroveEmissionsMitigationData()
-    }
-    else {
-      fetchMangroveEmissionsMitigationData({ ...(id && id !== WORLWIDE_LOCATION_ID) && { location_id: id } });
-    }
-  }, [id, current, locationsList, fetchMangroveEmissionsMitigationData]);
+    fetchMangroveEmissionsMitigationData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [currentLocation, fetchMangroveEmissionsMitigationData]);
 
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'species',
-      }
+        id: "species",
+      },
     });
   }, [addFilter]);
 
-
-  const { chartData, chartConfig } = config.parse(data, filteredIndicators, setFilteredIndicators);
-  const locationName = (currentLocation.location_type === 'worldwide')
-    ? 'the world'
-    : <span className="notranslate">{`${currentLocation?.name}`}</span>;
+  const { chartData, chartConfig } = config.parse(
+    data,
+    filteredIndicators,
+    setFilteredIndicators
+  );
+  const locationName =
+    currentLocation.location_type === "worldwide" ? (
+      "the world"
+    ) : (
+      <span className="notranslate">{`${currentLocation?.name}`}</span>
+    );
 
   const sentence = (
     <>
-      Emissions mitigation by area for mangrove and non-mangrove related interventions in <strong>{locationName}</strong>
+      Emissions mitigation by area for mangrove and non-mangrove related
+      interventions in <strong>{locationName}</strong>
     </>
   );
 
   const widgetData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   if (!chartData || !chartData.length || !data) {
@@ -86,19 +89,19 @@ MangroveEmissionsMitigation.propTypes = {
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
   ui: PropTypes.string,
-  setUi: PropTypes.func
+  setUi: PropTypes.func,
 };
 
 MangroveEmissionsMitigation.defaultProps = {
   data: null,
   currentLocation: null,
-  addFilter: () => { },
+  addFilter: () => {},
   isCollapsed: false,
   slug: null,
   name: null,
   metadata: null,
   ui: null,
-  setUi: () => { }
+  setUi: () => {},
 };
 
 export default MangroveEmissionsMitigation;

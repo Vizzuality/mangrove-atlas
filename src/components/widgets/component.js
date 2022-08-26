@@ -1,10 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Spinner from "components/spinner";
 import Button from "components/button";
-
-import { getDataByWidget } from "../../modules/pages/sagas";
 
 import styles from "./style.module.scss";
 

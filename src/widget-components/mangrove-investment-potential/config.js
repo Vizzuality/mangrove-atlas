@@ -16,13 +16,13 @@ const COLORS = {
 
 const getData = (data, total) => {
   if (!data || !data.length) return null;
-
   return data.map((d, index) => ({
     label: d.category,
     value: d.value,
     color: COLORS[d.category],
     total: total,
-    percentage: d.percentage,
+    // percentage: d.percentage,
+    percentage: (d.value * 100) / total
   })
 )};
 
@@ -30,8 +30,7 @@ const getData = (data, total) => {
 export const CONFIG = {
   parse: (data) => {
     const total = data.reduce(
-      (previous, current) => current.value + previous
-    );
+      (previous, current) => current.value + previous, 0);  
     const chartData = getData(data, total);
     const widgetSentence = data?.find(d => d?.text?.includes('$5'))?.text;
 

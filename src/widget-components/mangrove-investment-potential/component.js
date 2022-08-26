@@ -1,40 +1,25 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ChartWidget from "components/chart-widget";
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
 import config from "./config";
 
 function MangroveInvestmentPotential({
   data,
-  currentLocationId,
-  current,
+  currentLocation,
   isCollapsed = true,
   slug,
   name,
-  addFilter,
-  setUi,
   fetchInvestmentPotentialData,
   ...props
 }) {
-  const { location_id } = currentLocationId;
 
   useEffect(() => {
-    if (location_id === 'worldwide' || location_id === WORLWIDE_LOCATION_ID) {
-      fetchInvestmentPotentialData()
-    }
-    else {
-      fetchInvestmentPotentialData({ ...(location_id && location_id !== WORLWIDE_LOCATION_ID) && { location_id } });
-    }
-  }, [location_id, current, fetchInvestmentPotentialData]);
-
-  useEffect(() => {
-    addFilter({
-      filter: {
-        id: "investment_potential",
-        year: "2016",
-      },
+    fetchInvestmentPotentialData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
     });
-  }, [addFilter, currentLocationId]);
+  }, [currentLocation, fetchInvestmentPotentialData]);
 
   if (!data || Object.entries(data).length === 0) {
     return null;
@@ -45,11 +30,7 @@ function MangroveInvestmentPotential({
     return null;
   }
 
-  const sentence = (
-    <>
-      {widgetSentence}
-    </>
-  );
+  const sentence = <>{widgetSentence}</>;
 
   const widgetData = {
     data: chartData,
@@ -59,6 +40,7 @@ function MangroveInvestmentPotential({
   return (
     <ChartWidget
       name={name}
+      data={chartData}
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
@@ -72,23 +54,19 @@ function MangroveInvestmentPotential({
 MangroveInvestmentPotential.propTypes = {
   data: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
-  addFilter: PropTypes.func,
   isCollapsed: PropTypes.bool,
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  setUi: PropTypes.func,
 };
 
 MangroveInvestmentPotential.defaultProps = {
   data: null,
   currentLocation: null,
-  addFilter: () => {},
   isCollapsed: false,
   slug: null,
   name: null,
   metadata: null,
-  setUi: () => {},
 };
 
 export default MangroveInvestmentPotential;
