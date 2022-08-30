@@ -43,9 +43,10 @@ function MangroveProtection({
 
   const unitMetadata = metadata?.units;
 
+  const yearUpdate = useMemo(() => year || years?.[years?.length - 1], [year, years]);
+  const unitArea = unitMetadata?.total_area;
+
   useEffect(() => {
-    const yearUpdate = year || years?.[years?.length - 1];
-    const unitArea = unitMetadata?.total_area;
     if (yearUpdate) {
       addFilter({
         filter: {
@@ -59,7 +60,7 @@ function MangroveProtection({
         value: { year: yearUpdate, unit: unit || unitArea },
       });
     }
-  }, [year, years.length]);
+  }, [year, years.length, addFilter, setUi, unit, unitArea, years, yearUpdate]);
 
   const changeYear = useCallback(
     (current) => {
@@ -72,7 +73,7 @@ function MangroveProtection({
       });
       setUi({ id: "protection", value: { year: current, ...ui.value } });
     },
-    []
+    [addFilter, setUi, ui]
   );
 
   const filteredData = useMemo(() => {

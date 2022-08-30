@@ -1,12 +1,15 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import AlertsService from 'services/alerts-service';
+
 import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
 
-const service = new AlertsService();
 function* getAlerts({ payload }) {
+  const locationId = payload?.location_id;
   yield put(fetchRequested());
   try {
-    const alertsData = yield call(service.fetchAlerts, payload);
+    const alertsData = locationId === 'custom-area' ?
+    yield call(AlertsService.fetchMangroveCustomAreaAnalysisData, { geojson: payload.drawingValue }) : 
+    yield call(AlertsService.fetchAlerts, payload);
     yield put(fetchSucceeded(alertsData));
   } catch (err) {
     yield put(fetchFailed(err));

@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
-import orderBy from "lodash/orderBy";
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
+import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
 
 import config from "./config";
 
@@ -25,9 +25,12 @@ function MangroveExtent({
   slug,
   ui,
   setUi,
+  drawingValue,
+  drawingMode,
   fetchMangroveHabitatExtentData,
   ...props
 }) {
+  const [restart, setRestart] = useState(null);
   const { year: currentYear, unit } = ui;
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
@@ -39,12 +42,20 @@ function MangroveExtent({
   );
 
   useEffect(() => {
-    fetchMangroveHabitatExtentData({
-      ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
-        location_id: currentLocation.id,
-      }),
-    });
-  }, [fetchMangroveHabitatExtentData, currentLocation]);
+    if (!drawingValue) {
+      fetchMangroveHabitatExtentData({
+        ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+          location_id: currentLocation.id,
+        }),
+      });
+    } else {
+      fetchMangroveHabitatExtentData({
+        drawingValue,
+        slug: ["mangrove_extent"],
+        location_id: "custom-area",
+      });
+    }
+  }, [fetchMangroveHabitatExtentData, currentLocation, drawingValue]);
 
   useEffect(() => {
     if (year) {
@@ -57,7 +68,7 @@ function MangroveExtent({
       });
     }
     setUi({ id: "extent", value: { ...ui, year, unit: currentUnit } });
-  }, [addFilter, unit, year, currentUnit, metadata]);
+  }, [addFilter, unit, year, currentUnit, metadata, setUi]);
 
   const changeYear = useCallback(
     (current) => {
@@ -72,9 +83,24 @@ function MangroveExtent({
     [ui]
   );
 
-  const changeUnit = useCallback((selectedUnit) => {
-    setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
-  }, [ui]);
+  const changeUnit = useCallback(
+    (selectedUnit) => {
+      setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
+    },
+    [ui]
+  );
+
+  const location = useMemo(() => {
+    if (drawingValue) return "the area selected";
+    if (currentLocation.location_type === "worldwide") return "the world";
+    else
+      return <span className="notranslate">{`${currentLocation?.name}`}</span>;
+  }, [currentLocation, drawingValue, drawingMode, isLoading]);
+
+  const loadingAnalysis = useMemo(
+    () => (isLoading && drawingMode) || restart,
+    [isLoading, drawingMode, restart]
+  );
 
   if (!data || !data.length || !year) {
     return null;
@@ -88,12 +114,11 @@ function MangroveExtent({
     downloadData,
   } = config.parse(data, metadata, currentYear, unit);
 
-  const optionsYears = (
-    (years || []).map((year) => ({
-      label: year.toString(),
-      value: year,
-    })));
-    
+  const optionsYears = (years || []).map((year) => ({
+    label: year.toString(),
+    value: year,
+  }));
+
   let sentence = null;
 
   const widgetData = {
@@ -107,12 +132,6 @@ function MangroveExtent({
         ? numberFormat(mangroveArea * 100)
         : numberFormat(mangroveArea);
 
-    const location =
-      currentLocation.location_type === "worldwide" ? (
-        "the world"
-      ) : (
-        <span className="notranslate">{`${currentLocation?.name}`}</span>
-      );
     const unitSelector = (
       <Select value={currentUnit} options={unitOptions} onChange={changeUnit} />
     );
@@ -163,13 +182,26 @@ function MangroveExtent({
       data={chartData}
       slug={slug}
       filename={slug}
-      isCollapsed={isCollapsed}
+      isCollapsed={loadingAnalysis ? false : isCollapsed}
       downloadData={downloadData}
-      sentence={sentence}
+      sentence={loadingAnalysis ? null : sentence}
       config={chartConfig}
+      isLoading={isLoading}
       chartData={widgetData}
+      chart={!loadingAnalysis}
       {...props}
-    />
+    >
+      {drawingMode && (
+        <WidgetDrawingToolControls
+          slug="mangrove_extent"
+          fetch={fetchMangroveHabitatExtentData}
+          drawingValue={drawingValue}
+          isLoading={isLoading}
+          restart={restart}
+          setRestart={setRestart}
+        />
+      )}
+    </ChartWidget>
   );
 }
 

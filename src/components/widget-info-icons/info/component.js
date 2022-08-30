@@ -12,8 +12,12 @@ import Icon from 'components/icon';
 import widgetInfo from 'components/widget-info/constants';
 import styles from './style.module.scss';
 
-const Info = ({ slug }) => {
+const Info = ({ slug, onClick }) => {
   const [isOpen, toggleModal] = useState(false);
+
+  if (onClick) {
+    toggleModal(!isOpen)
+  }
 
   const handleModal = () => {
     toggleModal(!isOpen);
@@ -41,7 +45,7 @@ const Info = ({ slug }) => {
         onClick={handleModal}
         className={cx(styles.modalBtn)}
       >
-        <Icon name="info" alt="info" className={styles.modalIcon} />
+        <Icon name="info" alt="info" className={styles.modalIcon} size="xsm" />
       </button>
       <Modal
         isOpen={isOpen}

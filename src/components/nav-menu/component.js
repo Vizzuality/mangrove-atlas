@@ -52,6 +52,7 @@ const NavMenu = ({ mobile }) => {
       <Modal
         isOpen={isOpen}
         onRequestClose={handleClose}
+        maxHeight
       >
         <div className={styles.modalContent}>
 

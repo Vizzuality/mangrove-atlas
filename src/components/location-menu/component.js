@@ -3,7 +3,7 @@ import cx from "classnames";
 
 import styles from "./style.module.scss";
 
-const LocationMenu = ({ location }) => {
+const LocationMenu = ({ location, drawingMode }) => {
   let stylesOverride = { fontSize: 60, lineheight: 0.85 };
   if (location?.name.length > 10) {
     stylesOverride = { fontSize: 45, lineheight: 1 };
@@ -32,7 +32,7 @@ const LocationMenu = ({ location }) => {
         }
         style={stylesOverride}
       >
-        <span ref={titleRef}>{location?.name}</span>
+        <span ref={titleRef}>{drawingMode ? 'Custom area' : location?.name}</span>
       </h1>
     </div>
   );

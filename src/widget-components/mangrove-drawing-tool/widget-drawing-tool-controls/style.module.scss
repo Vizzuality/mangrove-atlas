@@ -1,0 +1,15 @@
+@import "styles/_vars.scss";
+
+.widgetControlsWrapper {
+  .description {
+    font-style: italic;
+  }
+  
+  .btnWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    min-width: 460px;
+  }
+}

@@ -4,10 +4,18 @@ import classnames from 'classnames';
 
 import './styles.scss';
 
-const Icon = ({ name, className, style }) => {
+const SIZE = {
+  xsm: '_xsmall',
+  sm: '_small',
+  md: '_medium',
+  lg: '_large',
+  xlg: '_xlarge'
+}
+
+const Icon = ({ name, className, size = null, style }) => {
   const classNames = classnames({ [className]: className });
   return (
-    <svg className={`c-icon ${classNames}`} style={style}>
+    <svg className={`c-icon ${classNames} ${SIZE[size]}`} style={style}>
       <use xlinkHref={`#icon-${name}`} />
     </svg>
   );

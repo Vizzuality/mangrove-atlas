@@ -77,7 +77,7 @@ $container-padding: 4px;
   .react-datepicker__header {
     padding-top: 0;
     background: $primary;
-    color: $black;
+    color: $blackOpacity;
 
     .react-datepicker__current-month {
       font-size: $font-size-small;
@@ -119,7 +119,7 @@ $container-padding: 4px;
 
   .react-datepicker__day--selected {
     background: $primary;
-    color: $black;
+    color: $blackOpacity;
     border-radius: 0;
     border-radius: 50%;
   }

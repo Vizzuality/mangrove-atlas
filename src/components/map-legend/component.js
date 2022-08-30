@@ -1,20 +1,32 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import LegendItem from './legend-item';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import LegendItem from "./legend-item";
 
-const Legend = ({ layers }) => (
-  <Fragment>
-    {layers.map(layer => <LegendItem key={layer.id} {...layer} />)}
-  </Fragment>
-);
-
+const Legend = ({ layers, drawingValue, drawingStatus }) => {
+  const customLayer = {
+    id: "custom-layer",
+    name: "delete custom area",
+    isActive: !!drawingValue,
+    isNegative: true,
+  };
+  return (
+    <Fragment>
+      {(drawingStatus === "progress" || !!drawingValue) && (
+        <LegendItem key={customLayer.id} {...customLayer} />
+      )}
+      {layers.map((layer) => (
+        <LegendItem key={layer.id} {...layer} />
+      ))}
+    </Fragment>
+  );
+};
 
 Legend.propTypes = {
-  layers: PropTypes.arrayOf(PropTypes.shape({}))
+  layers: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Legend.defaultProps = {
-  layers: []
+  layers: [],
 };
 
 export default Legend;

@@ -1,7 +1,7 @@
 @import 'styles/_vars.scss';
 
 .widgets {
-  max-width: 540px;
+  max-width: $widgetWidth;
   margin: auto;
   z-index: 5;
   display: flex;
@@ -45,7 +45,7 @@
 }
 
 .widgetWrapper {
-  width: 540px;
+  width: $widgetWidth;
 
   &:last-of-type:not(:empty) {
     cursor: initial;

@@ -11,6 +11,8 @@ import {
 
 import WebMercatorViewport from "viewport-mercator-project";
 
+import DrawingEditor from "./drawing-tool";
+
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import { easeCubic } from "d3-ease";
@@ -92,9 +94,11 @@ class Map extends Component {
     flying: false,
     loaded: false,
     popup: [],
+    modeId: null,
+    modeHandler: null,
     popUpPosition: {},
   };
-
+  
   componentDidMount() {
     const { bounds } = this.props;
 
@@ -218,6 +222,7 @@ class Map extends Component {
       onPopupClose,
       ...mapboxProps
     } = this.props;
+
     const { loaded, flying, viewport } = this.state;
     const ms = { ...mapStyle };
     let hoveredStateId = null;
@@ -364,6 +369,7 @@ class Map extends Component {
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >
+          <DrawingEditor />
           <MapFunctions />
           {!!this.state.popup?.length && !isEmpty(this.state.popupInfo) && (
             <PopupRestoration data={this.state.popupInfo} />

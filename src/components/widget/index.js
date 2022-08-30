@@ -3,7 +3,8 @@ import { toggleCollapse, toggleActive } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLocationsModal: state.locations.isOpened
+  isLocationsModal: state.locations.isOpened,
+  drawingMode: state.drawingTool.drawingMode
 });
 
 const mapDispatchToProps = {

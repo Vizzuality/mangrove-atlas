@@ -1,15 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
-import Select from 'components/select';
-import PropTypes from 'prop-types';
-import ChartWidget from 'components/chart-widget';
-import sortBy from 'lodash/sortBy';
+import React, { useEffect, useMemo, useState } from "react";
+
+import Select from "components/select";
+import PropTypes from "prop-types";
+import ChartWidget from "components/chart-widget";
+import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
+
+import sortBy from "lodash/sortBy";
 
 // utils
-import { format } from 'd3-format';
+import { format } from "d3-format";
 
-import config from './config';
+import config from "./config";
 
-const numberFormat = format(',.2f');
+const numberFormat = format(",.2f");
 
 function MangroveBiomass({
   data,
@@ -22,89 +25,130 @@ function MangroveBiomass({
   addFilter,
   ui,
   setUi,
+  drawingValue,
+  drawingMode,
   fetchMangroveBiomassData,
   ...props
 }) {
+  const [restart, setRestart] = useState(null);
   const year = ui?.year;
   const years = metadata?.year;
-  const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value, [metadata, year]);
+  const aboveGroundBiomass = useMemo(
+    () =>
+      !!year &&
+      metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value,
+    [metadata, year]
+  );
 
   useEffect(() => {
+    if (drawingValue) {
       fetchMangroveBiomassData({
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-        location_id: currentLocation.id,
-      }),
-    });
-  }, [currentLocation, fetchMangroveBiomassData]);
+        drawingValue,
+        slug: ["mangrove_biomass"],
+        location_id: "custom-area",
+      });
+    } else
+      fetchMangroveBiomassData({
+        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+          location_id: currentLocation.id,
+        }),
+      });
+  }, [currentLocation, fetchMangroveBiomassData, drawingValue]);
 
   useEffect(() => {
     if (!isLoading) {
       addFilter({
         filter: {
-          id: 'biomass',
-          year: years?.[0]
-        }
+          id: "biomass",
+          year: years?.[0],
+        },
       });
       setUi({
-        id: 'biomass',
+        id: "biomass",
         value: {
-          year: (year || years?.[0])
-        }
-      })
+          year: year || years?.[0],
+        },
+      });
     }
   }, [setUi, year, years, addFilter, isLoading]);
 
-  const filteredData = useMemo(() => data?.filter(({ indicator }) => indicator !== "total"), [data]);
-  const indicators = useMemo(() => filteredData.map(({ indicator }) => indicator), [filteredData]);
+  const filteredData = useMemo(
+    () => data?.filter(({ indicator }) => indicator !== "total"),
+    [data]
+  );
+  const indicators = useMemo(
+    () => filteredData.map(({ indicator }) => indicator),
+    [filteredData]
+  );
 
+  const location = useMemo(() => {
+    if (drawingValue) return "the area selected";
+    if (currentLocation.location_type === "worldwide") return "the world";
+    else
+      return <span className="notranslate">{`${currentLocation?.name}`}</span>;
+  }, [currentLocation.location_type, currentLocation.name, drawingValue]);
+
+  const loadingAnalysis = useMemo(
+    () => (isLoading && drawingMode) || restart,
+    [isLoading, drawingMode, restart]
+  );
+  
   if (!filteredData) return null;
 
-  const { chartData, chartConfig, downloadData } = config.parse(filteredData, indicators, year);
+  const { chartData, chartConfig, downloadData } = config.parse(
+    filteredData,
+    indicators,
+    year
+  );
 
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
   const dateHandler = (value) => {
-    setUi({ id: 'biomass', value: { year: value} });
+    setUi({ id: "biomass", value: { year: value } });
     addFilter({
       filter: {
-        id: 'biomass',
-        year: value
-      }
+        id: "biomass",
+        year: value,
+      },
     });
   };
 
-  const dateOptions = years && sortBy(years.map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['label']);
+  const dateOptions =
+    years &&
+    sortBy(
+      years.map((year) => ({
+        label: year.toString(),
+        value: year,
+      })),
+      ["label"]
+    );
 
-  const location = (currentLocation.location_type === 'worldwide')
-    ? 'the world'
-    : <span className="notranslate">{`${currentLocation.name}`}</span>;
-
-  const yearSelector = (
-    dateOptions.length > 1 ?
-    <Select
-      value={year}
-      isOptionDisabled={option => option.value === year}
-      options={dateOptions}
-      onChange={value => dateHandler(value)}
-    />
-    : year
-  );
+  const yearSelector =
+    dateOptions.length > 1 ? (
+      <Select
+        value={year}
+        isOptionDisabled={(option) => option.value === year}
+        options={dateOptions}
+        onChange={(value) => dateHandler(value)}
+      />
+    ) : (
+      year
+    );
 
   const sentence = (
     <>
       Mean mangrove aboveground biomass density in <strong> {location}</strong>
-      &nbsp;was <strong>{numberFormat(aboveGroundBiomass)} t / ha</strong> in <strong>{yearSelector}</strong>.
+      &nbsp;was <strong>
+        {numberFormat(aboveGroundBiomass)} t / ha
+      </strong> in <strong>{yearSelector}</strong>.
     </>
   );
 
   const widgetData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   return (
@@ -114,11 +158,23 @@ function MangroveBiomass({
       slug={slug}
       filename={slug}
       downloadData={downloadData}
-      isCollapsed={isCollapsed}
-      sentence={sentence}
+      isCollapsed={loadingAnalysis ? false : isCollapsed}
+      sentence={loadingAnalysis ? null : sentence}
       chartData={widgetData}
+      chart={!loadingAnalysis}
       {...props}
-    />
+    >
+      {drawingMode && (
+        <WidgetDrawingToolControls
+          slug="mangrove_biomass"
+          fetch={fetchMangroveBiomassData}
+          drawingValue={drawingValue}
+          isLoading={isLoading}
+          restart={restart}
+          setRestart={setRestart}
+        />
+      )}
+    </ChartWidget>
   );
 }
 
@@ -132,20 +188,20 @@ MangroveBiomass.propTypes = {
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
   ui: PropTypes.string,
-  setUi: PropTypes.func
+  setUi: PropTypes.func,
 };
 
 MangroveBiomass.defaultProps = {
   data: null,
   isLoading: true,
   currentLocation: null,
-  addFilter: () => { },
+  addFilter: () => {},
   isCollapsed: false,
   slug: null,
   name: null,
   metadata: null,
   ui: null,
-  setUi: () => { }
+  setUi: () => {},
 };
 
 export default MangroveBiomass;

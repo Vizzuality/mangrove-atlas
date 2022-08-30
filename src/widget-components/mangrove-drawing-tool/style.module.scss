@@ -1,0 +1,89 @@
+@import "styles/_vars.scss";
+
+.containers {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  color: $blackOpacity;
+
+  .drawingCard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 16px;
+    align-items: center;
+    margin: 16px 0;
+    box-sizing: border-box;
+    border: 2px solid #cce7e5;
+    cursor: pointer;
+    color: $primary;
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      text-align: start;
+
+      .description {
+        color: $blackOpacity;
+      }
+    }
+
+    .title {
+      font-weight: 600;
+    }
+
+    &._dashed {
+      background: linear-gradient(
+          0deg,
+          rgba(0, 133, 127, 0.08),
+          rgba(0, 133, 127, 0.08)
+        ),
+        #ffffff;
+
+      border: 1px dashed $primary;
+      border-radius: 15px;
+    }
+
+    &._active {
+      background-color: $primary;
+      color: white;
+      border: none;
+
+      svg {
+        stroke: white;
+      }
+    }
+
+    svg {
+      margin-right: 26px;
+      stroke: $primary;
+      fill: $primary;
+    }
+
+    &:hover {
+      color: $primary;
+      background: rgba(0, 133, 127, 0.05);
+      border: 2px solid rgba(0, 133, 127, 0.4);
+      border-radius: 15px;
+
+      svg {
+        stroke: $primary;
+        fill: $primary;
+      }
+    }
+  }
+
+  p {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.highlighted {
+  color: $primary;
+  text-decoration: underline;
+  font-weight: normal;
+}
+

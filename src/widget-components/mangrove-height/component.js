@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 
 // components
 import Select from "components/select";
 import ChartWidget from "components/chart-widget";
+import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
 
 // utils
 import { format } from "d3-format";
@@ -23,59 +24,82 @@ const MangroveHeight = ({
   addFilter,
   ui,
   setUi,
+  drawingValue,
+  drawingMode,
   fetchMangroveHeightData,
   ...props
 }) => {
+  const [restart, setRestart] = useState(null);
   const { year } = ui;
   const heightCoverage = metadata?.avg_height[0]?.value;
   const years = metadata?.year;
   const currentYear = useMemo(() => year || years?.[0], [year, years]);
 
   useEffect(() => {
+    if (!drawingValue) {
       fetchMangroveHeightData({
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-        location_id: currentLocation.id,
-      }),
-    });
-  }, [currentLocation.id, currentLocation.iso, fetchMangroveHeightData]);
+        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+          location_id: currentLocation.id,
+        }),
+      });
+    } else {
+      fetchMangroveHeightData({
+        drawingValue,
+        slug: ["mangrove_height"],
+        location_id: "custom-area",
+      });
+    }
+  }, [currentLocation, fetchMangroveHeightData, drawingValue]);
 
   useEffect(() => {
-      addFilter({
-        filter: {
-          id: "height",
-          year: currentYear,
-        },
-      });
-      setUi({
-        id: "height",
-        value: {
-          year: currentYear,
-        },
-      });
-  }, [setUi, currentYear, addFilter]);
-
-  const dateHandler = useCallback((value) => {
-    setUi({ id: "height", value: { year: value } });
     addFilter({
       filter: {
         id: "height",
-        year: value,
+        year: currentYear,
       },
     });
-  }, [addFilter, setUi]);
+    setUi({
+      id: "height",
+      value: {
+        year: currentYear,
+      },
+    });
+  }, [setUi, currentYear, addFilter]);
 
-  const location = (currentLocation.location_type === 'worldwide')
-  ? 'the world'
-  : <span className="notranslate">{`${currentLocation.name}`}</span>;
+  const dateHandler = useCallback(
+    (value) => {
+      setUi({ id: "height", value: { year: value } });
+      addFilter({
+        filter: {
+          id: "height",
+          year: value,
+        },
+      });
+    },
+    [addFilter, setUi]
+  );
 
+  const location = useMemo(() => {
+    if (drawingValue) return "the area selected";
+    else if (currentLocation.location_type === "worldwide") return "the world";
+    else return <span className="notranslate">{currentLocation.name}</span>;
+  }, [currentLocation, drawingValue]);
 
-  const dateOptions = useMemo(() =>
-    years?.map((year) => ({
-      label: year.toString(),
-      value: year,
-    })), [years]);
+  const dateOptions = useMemo(
+    () =>
+      years?.map((year) => ({
+        label: year.toString(),
+        value: year,
+      })),
+    [years]
+  );
 
-  if (!data || !year) {
+  const loadingAnalysis = useMemo(
+    () => (isLoading && drawingMode) || restart,
+    [isLoading, drawingMode, restart]
+  );
+
+  if (!data || !data.length) {
     return null;
   }
 
@@ -86,14 +110,16 @@ const MangroveHeight = ({
     heightCoverage
   );
 
-
-  const dateDisplay = dateOptions?.length > 1 ? (
-    <Select
-      value={year}
-      options={dateOptions}
-      onChange={(value) => dateHandler(value)}
-    />
-  ) : year;
+  const dateDisplay =
+    dateOptions?.length > 1 ? (
+      <Select
+        value={year}
+        options={dateOptions}
+        onChange={(value) => dateHandler(value)}
+      />
+    ) : (
+      year
+    );
 
   const sentence = (
     <>
@@ -117,12 +143,24 @@ const MangroveHeight = ({
       data={chartData}
       slug={slug}
       filename={slug}
+      isCollapsed={loadingAnalysis ? false : isCollapsed}
       downloadData={downloadData}
-      isCollapsed={isCollapsed}
-      sentence={sentence}
+      sentence={loadingAnalysis ? null : sentence}
       chartData={widgetData}
+      chart={!loadingAnalysis}
       {...props}
-    />
+    >
+      {drawingMode && (
+        <WidgetDrawingToolControls
+          slug="mangrove_height"
+          fetch={fetchMangroveHeightData}
+          drawingValue={drawingValue}
+          isLoading={isLoading}
+          restart={restart}
+          setRestart={setRestart}
+        />
+      )}
+    </ChartWidget>
   );
 };
 

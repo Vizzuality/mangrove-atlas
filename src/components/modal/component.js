@@ -17,7 +17,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default (props) => {
-  const { children, closeButton = true, title, onRequestClose, widgetsMenu, ...domProps } = props;
+  const { children, closeButton = true, title, onRequestClose, widgetsMenu, centered, maxHeight, ...domProps } = props;
 
   return (
     <Modal
@@ -26,10 +26,11 @@ export default (props) => {
       onRequestClose={onRequestClose}
       className={cx({
         [styles.modalWrapper]: !widgetsMenu,
-        [styles.widgetsMenu]: widgetsMenu
+        [styles.widgetsMenu]: widgetsMenu,
+        [styles.centered]: centered
       })}
     >
-      <div className={styles.content}>
+      <div className={cx(styles.content, { [styles.maxHeight]: !!maxHeight })}>
         {children}
       </div>
       {closeButton && <button type="button" onClick={onRequestClose} className={styles.closeButton}>

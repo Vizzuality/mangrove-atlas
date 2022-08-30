@@ -8,7 +8,7 @@ export default {
   }),
   [fetchSucceeded]: (state, { payload }) => ({
     ...state,
-    isLoading: false,
+    isLoading: payload.isLoading,
     data: payload.data,
     metadata: payload.metadata
   }),

@@ -124,6 +124,9 @@ function MangroveRestoration({
     fetchMangroveDegradationAndLossData,
     fetchMangroveEcosystemServicesData,
     currentId,
+    isLoadingDegradationAndLossData,
+    isLoadingRestorationData,
+    setUi
   ]);
 
   const locationType = getLocationType(type);

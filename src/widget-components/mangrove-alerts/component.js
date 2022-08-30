@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Select from "components/select";
 import ChartWidget from "components/chart-widget";
+import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
 
 import config from "./config";
-import Spinner from "components/spinner";
 
 const MangroveAlerts = ({
   data,
@@ -16,8 +16,11 @@ const MangroveAlerts = ({
   currentLocation,
   setUi,
   fetchAlerts,
+  drawingValue,
+  drawingMode,
   ...props
 }) => {
+  const [restart, setRestart] = useState(null);
   const { year, startDate, endDate } = ui;
 
   const [initialDate, setInitialDate] = useState({
@@ -26,13 +29,23 @@ const MangroveAlerts = ({
   });
 
   useEffect(() => {
-    fetchAlerts({
-      ...(initialDate.startInitialDate && { start_date: startDate?.value }),
-      ...(initialDate.endInitialDate && { end_date: endDate?.value }),
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-        location_id: currentLocation.location_id,
-      }),
-    });
+    if (drawingValue) {
+      fetchAlerts({
+        drawingValue,
+        slug: ["mangrove_alerts"],
+        location_id: "custom-area",
+        ...(initialDate.startInitialDate && { start_date: startDate?.value }),
+        ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+      });
+    } else
+      fetchAlerts({
+        ...(initialDate.startInitialDate && { start_date: startDate?.value }),
+        ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+          location_id: currentLocation.location_id,
+        }),
+      });
+
     if (startDate?.value || endDate?.value) {
       setInitialDate({
         startInitialDate: null,
@@ -40,13 +53,11 @@ const MangroveAlerts = ({
       });
     }
   }, [
-    currentLocation.location_id,
-    currentLocation.iso,
-    fetchAlerts,
     startDate,
     endDate,
     initialDate.startInitialDate,
     initialDate.endInitialDate,
+    drawingValue,
   ]);
 
   const {
@@ -84,6 +95,11 @@ const MangroveAlerts = ({
     currentLocation.location_id,
     currentLocation.iso,
   ]);
+
+  const loadingAnalysis = useMemo(
+    () => (isLoading && drawingMode) || restart,
+    [isLoading, drawingMode, restart]
+  );
 
   if (chartData.length <= 0) {
     return null;
@@ -163,22 +179,7 @@ const MangroveAlerts = ({
     config: chartConfig,
   };
 
-  return isLoading ? (
-    //   <ChartWidget
-    //   name={name}
-    //   downloadData={downloadData}
-    //   data={chartData}
-    //   slug={slug}
-    //   filename={slug}
-    //   isCollapsed={isCollapsed}
-    //   sentence={sentence}
-    //   chartData={chartRData}
-    //   {...props}
-    // >
-
-    <Spinner />
-  ) : (
-    // </ChartWidget>
+  return (
     <ChartWidget
       isLoading={isLoading}
       name={name}
@@ -186,15 +187,27 @@ const MangroveAlerts = ({
       data={chartData}
       slug={slug}
       filename={slug}
-      isCollapsed={isCollapsed}
-      sentence={sentence}
+      isCollapsed={loadingAnalysis ? false : isCollapsed}
+      sentence={loadingAnalysis ? null : sentence}
       chartData={chartRData}
+      chart={!loadingAnalysis}
       {...props}
       onBrushEnd={({ startIndex, endIndex }) => {
         changeDate("startDate", chartData[startIndex].start);
         changeDate("endDate", chartData[endIndex].end);
       }}
-    />
+    >
+      {drawingMode && (
+        <WidgetDrawingToolControls
+          slug="alerts"
+          fetch={fetchAlerts}
+          drawingValue={drawingValue}
+          isLoading={isLoading}
+          restart={restart}
+          setRestart={setRestart}
+        />
+      )}
+    </ChartWidget>
   );
 };
 
