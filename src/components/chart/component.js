@@ -77,8 +77,6 @@ class Chart extends PureComponent {
     return max(maxValues);
   };
 
-
-
   render() {
     const {
       data,

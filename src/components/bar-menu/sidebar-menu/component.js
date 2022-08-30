@@ -2,19 +2,17 @@ import React from 'react';
 
 // components
 import NavMenu from 'components/nav-menu';
-import SearchLocation from 'components/search-location';
+import DrawingToolControls from 'components/drawing-tool-controls';
 import WidgetsMenu from 'components/widgets-menu';
 
 import styles from './style.module.scss';
 
-const SidebarMenu = ({
-  isDisabled
-}) => {
+const SidebarMenu = () => {
   return (
     <div className={styles.sidebar_menu}>
       <NavMenu />
-      <SearchLocation />
-      <WidgetsMenu isDisabled={isDisabled} />
+      <DrawingToolControls />
+      <WidgetsMenu />
     </div>
   );
 };

@@ -14,7 +14,6 @@ class AlertsService {
     this.client
       .get("/fetch-alerts", {
         params: {
-          env: "staging",
           ...params,
         },
       })
@@ -23,6 +22,27 @@ class AlertsService {
         if (status >= 400) throw new Error(statusText);
         return data;
       });
+
+  fetchMangroveCustomAreaAnalysisData = ({ geojson }) => {
+    const controller = new AbortController();
+    return this.client
+      .request({
+        method: "post",
+        url: "/fetch-alerts",
+        data: {
+          geometry: {
+            type: "FeatureCollection",
+            features: geojson,
+          },
+        },
+        signal: controller.signal,
+      })
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      });
+  };
 }
 
-export default AlertsService;
+export default new AlertsService();

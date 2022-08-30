@@ -25,7 +25,7 @@ const widgetData = data => data.map(d => ({
 }));
 
 export const CONFIG = {
-  parse: (data, filter, limit) => {
+  parse: (data, filter, limit = 5 ) => {
     const chartData = widgetData(data);
     const dataRanked = sortRanking(chartData, filter);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));

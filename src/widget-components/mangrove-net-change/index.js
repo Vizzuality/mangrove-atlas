@@ -3,7 +3,6 @@ import { setUi } from 'modules/widgets/actions';
 
 import { getLocationType } from 'modules/pages/sagas';
 import { fetchMangroveNetChangeData } from 'modules/mangrove-net-change-data/actions';
-
 import Component from './component';
 
 const mapStateToProps = state => ({
@@ -12,12 +11,14 @@ const mapStateToProps = state => ({
   metadata: state.mangroveNetChangeData.metadata,
   ui: state.widgets.ui.net,
   locations: state.locations.list,
-  locationType: getLocationType(state.router.type)
+  locationType: getLocationType(state.router.type),
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode
 });
 
 const mapDispatchToProps = {
   setUi,
-  fetchMangroveNetChangeData
+  fetchMangroveNetChangeData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

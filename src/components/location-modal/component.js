@@ -70,6 +70,7 @@ class LocationSelector extends PureComponent {
           <Modal
             isOpen={isOpened}
             onRequestClose={this.closeModal}
+            maxHeight
           >
             <input
               // eslint-disable-next-line jsx-a11y/no-autofocus
@@ -94,6 +95,7 @@ class LocationSelector extends PureComponent {
             className={styles.location}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
+            maxHeight
           >
             <div className={styles.content}>
               <div className={styles.search}>

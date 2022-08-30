@@ -33,3 +33,11 @@
     display: block;
   }
 }
+
+.widgetWrapper {
+  z-index: 5;
+  max-width: $widgetWidth;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  margin: auto;
+}

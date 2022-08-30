@@ -1,7 +1,7 @@
 @import 'styles/_vars.scss';
 
 @mixin button {
-  color: $black;
+  color: $blackOpacity;
   min-width: unset;
   width: 50px;
   text-align: center;

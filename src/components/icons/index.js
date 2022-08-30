@@ -1,15 +1,281 @@
-import React from 'react';
+import React from "react";
 
 const Icons = () => (
   <svg
     aria-hidden="true"
     style={{
-      position: 'absolute', width: 0, height: 0, overflow: 'hidden',
+      position: "absolute",
+      width: 0,
+      height: 0,
+      overflow: "hidden",
     }}
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
   >
     <defs>
+      <symbol id="icon-globe" viewBox="0 0 32 32">
+        <path d="M16 27c6.075 0 11-4.925 11-11s-4.925-11-11-11c-6.075 0-11 4.925-11 11s4.925 11 11 11zM29 16c0 7.18-5.82 13-13 13s-13-5.82-13-13c0-7.18 5.82-13 13-13s13 5.82 13 13z"></path>
+        <path d="M15 28v-24h2v24h-2z"></path>
+        <path d="M15.721 27.040c0 0 0 0 0 0s0.002-0.001 0.004-0.001c0.006-0.002 0.019-0.006 0.037-0.012 0.037-0.012 0.097-0.033 0.177-0.064 0.16-0.062 0.399-0.164 0.69-0.317 0.584-0.306 1.372-0.811 2.163-1.602 1.56-1.56 3.207-4.305 3.207-9.043s-1.647-7.483-3.207-9.043c-0.791-0.791-1.579-1.297-2.163-1.603-0.292-0.153-0.53-0.255-0.691-0.317-0.080-0.031-0.14-0.052-0.177-0.064-0.018-0.006-0.031-0.010-0.037-0.012zM15.039 28.275c-0.151-0.53 0.154-1.081 0.682-1.235-0 0-0.001 0-0.001 0l0.001-0 0.002-0 0.001-0c0.001-0 0.001-0 0.276 0.961l0.275 0.962c-0.531 0.152-1.085-0.156-1.236-0.687zM16 4l0.275-0.962c-0.531-0.152-1.085 0.156-1.236 0.687-0.151 0.53 0.154 1.081 0.682 1.235 0 0 0 0 0 0zM16 4c0.275-0.962 0.275-0.961 0.276-0.961l0.001 0 0.003 0.001 0.009 0.003 0.025 0.008c0.020 0.006 0.047 0.015 0.080 0.026 0.066 0.022 0.156 0.054 0.267 0.097 0.223 0.086 0.531 0.219 0.895 0.41 0.729 0.382 1.69 1.001 2.649 1.96 1.94 1.94 3.793 5.195 3.793 10.457s-1.853 8.517-3.793 10.457c-0.959 0.959-1.921 1.578-2.649 1.96-0.365 0.191-0.673 0.323-0.895 0.41-0.111 0.043-0.202 0.075-0.267 0.097-0.033 0.011-0.060 0.019-0.080 0.026l-0.025 0.008-0.009 0.003-0.005 0.001c-0.001 0-0.001 0-0.276-0.961z"></path>
+        <path d="M16.279 27.040c0.528 0.154 0.834 0.705 0.682 1.235-0.152 0.531-0.705 0.838-1.236 0.687l0.275-0.962c-0.275 0.962-0.275 0.961-0.276 0.961l-0.002-0-0.004-0.001-0.009-0.003-0.025-0.008c-0.020-0.006-0.047-0.015-0.080-0.026-0.066-0.022-0.156-0.054-0.268-0.097-0.223-0.086-0.531-0.219-0.896-0.41-0.729-0.382-1.69-1.001-2.649-1.96-1.94-1.94-3.793-5.195-3.793-10.457s1.853-8.517 3.793-10.457c0.959-0.959 1.921-1.578 2.649-1.96 0.365-0.191 0.673-0.323 0.896-0.41 0.111-0.043 0.202-0.075 0.268-0.097 0.033-0.011 0.059-0.019 0.080-0.026l0.025-0.008 0.009-0.003 0.005-0.001c0.001-0 0.001-0 0.276 0.961l-0.275-0.962c0.531-0.152 1.085 0.156 1.236 0.687 0.151 0.53-0.154 1.081-0.682 1.235-0.001 0-0.002 0.001-0.004 0.001-0.006 0.002-0.019 0.006-0.037 0.012-0.037 0.012-0.097 0.033-0.177 0.064-0.16 0.062-0.399 0.164-0.69 0.317-0.584 0.306-1.372 0.812-2.163 1.603-1.56 1.56-3.207 4.305-3.207 9.043s1.647 7.482 3.207 9.043c0.791 0.791 1.579 1.297 2.163 1.602 0.291 0.153 0.53 0.255 0.69 0.317 0.080 0.031 0.14 0.052 0.177 0.064 0.018 0.006 0.031 0.010 0.037 0.012z"></path>
+        <path d="M4 15h24v2h-24v-2z"></path>
+      </symbol>
+      <symbol id="icon-alert" viewBox="0 0 32 32">
+        <path d="M16 3c-3.472 0-6.737 1.352-9.192 3.808s-3.808 5.72-3.808 9.192c0 3.472 1.352 6.737 3.808 9.192s5.72 3.808 9.192 3.808c3.472 0 6.737-1.352 9.192-3.808s3.808-5.72 3.808-9.192c0-3.472-1.352-6.737-3.808-9.192s-5.72-3.808-9.192-3.808zM16 0v0c8.837 0 16 7.163 16 16s-7.163 16-16 16c-8.837 0-16-7.163-16-16s7.163-16 16-16zM14 22h4v4h-4zM14 6h4v12h-4z"></path>
+      </symbol>
+      <symbol id="icon-polyline" viewBox="0 0 32 32">
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M14.667 8c0 1.841-1.492 3.333-3.333 3.333s-3.333-1.492-3.333-3.333c0-1.841 1.492-3.333 3.333-3.333s3.333 1.492 3.333 3.333z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M10.333 11.333l-1.667 8"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M11.333 22.333l8-0.333"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M11.333 22.667c0 1.841-1.492 3.333-3.333 3.333s-3.333-1.492-3.333-3.333c0-1.841 1.492-3.333 3.333-3.333s3.333 1.492 3.333 3.333z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M26 22c0 1.841-1.492 3.333-3.333 3.333s-3.333-1.492-3.333-3.333c0-1.841 1.492-3.333 3.333-3.333s3.333 1.492 3.333 3.333z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M23.333 12.667c0 1.841-1.492 3.333-3.333 3.333s-3.333-1.492-3.333-3.333c0-1.841 1.492-3.333 3.333-3.333s3.333 1.492 3.333 3.333z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="1.3333"
+          d="M21.667 18.667l-0.667-2.667"
+        ></path>
+      </symbol>
+      <symbol id="icon-chart" viewBox="0 0 31 32">
+        <path
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M6.788 20.317c1.607 0 2.909 1.302 2.909 2.909s-1.302 2.909-2.909 2.909c-1.607 0-2.909-1.302-2.909-2.909s1.302-2.909 2.909-2.909z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 20.317c1.607 0 2.909 1.302 2.909 2.909s-1.302 2.909-2.909 2.909c-1.607 0-2.909-1.302-2.909-2.909s1.302-2.909 2.909-2.909z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 6.742c1.607 0 2.909 1.302 2.909 2.909s-1.302 2.909-2.909 2.909c-1.607 0-2.909-1.302-2.909-2.909s1.302-2.909 2.909-2.909z"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M24.242 20.317c1.607 0 2.909 1.302 2.909 2.909s-1.302 2.909-2.909 2.909c-1.607 0-2.909-1.302-2.909-2.909s1.302-2.909 2.909-2.909z"
+        ></path>
+        <path
+          fill="none"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M6.788 21.287v-4.849h17.455v4.849"
+        ></path>
+        <path
+          fill="none"
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 13.53v7.758"
+        ></path>
+      </symbol>
+      <symbol id="icon-upload" viewBox="0 0 31 32">
+        <path strokeWidth="0.02" d="M16.201 6.056c-0.379-0.379-0.993-0.379-1.371 0l-6.171 6.171c-0.379 0.379-0.379 0.993 0 1.371s0.993 0.379 1.371 0l4.516-4.516v12.204h1.939v-12.204l4.516 4.516c0.379 0.379 0.993 0.379 1.371 0s0.379-0.993 0-1.371l-6.171-6.171zM5.818 19.348v-0.97h-1.939v3.879c0 2.142 1.737 3.879 3.879 3.879h15.515c2.142 0 3.879-1.737 3.879-3.879v-3.879h-1.939v3.879c0 1.071-0.868 1.939-1.939 1.939h-15.515c-1.071 0-1.939-0.868-1.939-1.939v-2.909z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 31 32">
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 10.62c3.213 0 5.818 2.605 5.818 5.818s-2.605 5.818-5.818 5.818c-3.213 0-5.818-2.605-5.818-5.818s2.605-5.818 5.818-5.818z"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 6.742v-4.848"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 30.984v-4.848"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M25.212 16.439h4.849"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M0.97 16.439h4.848"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M22.088 9.866l3.428-3.428"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M5.514 26.44l3.428-3.428"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M8.942 9.866l-3.428-3.428"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M25.516 26.44l-3.428-3.428"
+        ></path>
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 31 32">
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M15.515 22.556l-7.791 5.519 3.001-8.897-7.816-5.486 9.645 0.020 2.961-8.91 2.961 8.91 9.645-0.020-7.816 5.486 3.001 8.897-7.791-5.519z"
+        ></path>
+      </symbol>
+      <symbol id="icon-glass" viewBox="0 0 32 32">
+        <path
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="2"
+          d="M6 26.952l6.646-6.646"
+        ></path>
+        <path
+          strokeLinejoin="miter"
+          strokeLinecap="square"
+          strokeMiterlimit="4"
+          strokeWidth="2"
+          d="M18.571 22.762c-4.629 0-8.381-3.752-8.381-8.381s3.752-8.381 8.381-8.381c4.629 0 8.381 3.752 8.381 8.381s-3.752 8.381-8.381 8.381z"
+        ></path>
+      </symbol>
+      <symbol id="icon-reload" viewBox="0 0 31 32">
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M9.699 22.26c1.769 2.353 4.585 3.875 7.756 3.875 5.355 0 9.697-4.342 9.697-9.697s-4.342-9.697-9.697-9.697-9.697 4.341-9.697 9.697v2.909"
+        ></path>
+        <path
+          fill="none"
+          stroke="#00857f"
+          style={{ stroke: "var(--color1, #00857f)" }}
+          strokeLinejoin="round"
+          strokeLinecap="butt"
+          strokeMiterlimit="4"
+          strokeWidth="1.9394"
+          d="M12.606 14.499l-4.848 4.848-4.848-4.848"
+        ></path>
+      </symbol>
       <symbol id="icon-play" viewBox="0 0 32 32">
         <path d="M6 4l20 12-20 12z"></path>
       </symbol>
@@ -35,9 +301,27 @@ const Icons = () => (
         <path d="M5.016 18h13.969v2.016h-13.969v-2.016zM18.984 9l-6.984 6.984-6.984-6.984h3.984v-6h6v6h3.984z"></path>
       </symbol>
       <symbol id="icon-close" viewBox="0 0 32 32">
-        <path fill="#ffffff" d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"></path>
-        <path fill="#ffffff" stroke="#00857F" strokeLinejoin="round" strokeLinecap="round" strokeMiterlimit="4" strokeWidth="1.3714" d="M11.429 11.429l9.143 9.143"></path>
-        <path stroke="#00857F" strokeLinejoin="round" strokeLinecap="round" strokeMiterlimit="4" strokeWidth="1.3714" d="M11.429 20.571l9.143-9.143"></path>
+        <path
+          fill="#ffffff"
+          d="M32 16c0 8.837-7.163 16-16 16s-16-7.163-16-16c0-8.837 7.163-16 16-16s16 7.163 16 16z"
+        ></path>
+        <path
+          fill="#ffffff"
+          stroke="#00857F"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeMiterlimit="4"
+          strokeWidth="1.3714"
+          d="M11.429 11.429l9.143 9.143"
+        ></path>
+        <path
+          stroke="#00857F"
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          strokeMiterlimit="4"
+          strokeWidth="1.3714"
+          d="M11.429 20.571l9.143-9.143"
+        ></path>
       </symbol>
       <symbol id="icon-places" viewBox="0 0 32 32">
         <path d="M9.333 14.254c0 2.718 2.203 4.921 4.921 4.921 1.347 0 2.568-0.541 3.457-1.419 0.007-0.008 0.014-0.016 0.022-0.023s0.015-0.015 0.023-0.022c0.877-0.889 1.419-2.109 1.419-3.457 0-2.718-2.203-4.921-4.921-4.921s-4.921 2.203-4.921 4.921zM18.18 19.123c-1.073 0.867-2.439 1.385-3.926 1.385-3.454 0-6.254-2.8-6.254-6.254s2.8-6.254 6.254-6.254c3.454 0 6.254 2.8 6.254 6.254 0 1.487-0.519 2.852-1.385 3.926l3.984 3.984c0.26 0.26 0.26 0.682 0 0.943s-0.682 0.26-0.943 0l-3.984-3.984z"></path>

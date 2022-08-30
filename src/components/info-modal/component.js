@@ -89,6 +89,7 @@ class InfoModal extends PureComponent {
           <Modal
             isOpen={isOpened}
             onRequestClose={this.closeModal}
+            maxHeight
           >
 
             {widgetType === 'highlighted_places' && (
@@ -119,6 +120,7 @@ class InfoModal extends PureComponent {
             className={styles.location}
             isOpen={isOpened}
             onRequestClose={this.closeModal}
+            maxHeight
           >
             {widgetType === 'highlighted_places' && (
               <div className={styles.content}>

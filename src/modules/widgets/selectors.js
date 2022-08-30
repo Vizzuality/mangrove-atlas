@@ -26,18 +26,35 @@ const widgetsData = (state) => [
     mangrove_investment_potential: state.mangroveInvestmentPotentialData.data,
   },
 ];
+const drawingMode = (state) => state.drawingTool.drawingMode;
 
 export const dashboardWidgets = createSelector(
-  [widgets, currentDashboard, currentLocation, widgetsData],
-  (_widgets, _currentDashboard, _currentLocation, _widgetsData) => {
+  [widgets, currentDashboard, currentLocation, widgetsData, drawingMode],
+  (
+    _widgets,
+    _currentDashboard,
+    _currentLocation,
+    _widgetsData,
+    _drawingMode
+  ) => {
     if (!_currentLocation) return [];
     const { location_type } = _currentLocation;
 
-    return _widgets.filter(
-      ({ categoryIds, locationType }) =>
-        categoryIds.includes(_currentDashboard) &&
-        locationType.includes(location_type)
-    );
+    return _drawingMode
+      ? _widgets.filter(
+          ({ slug }) =>
+            slug === "mangrove_extent" ||
+            // slug === "mangrove_net_change" ||
+            slug === "mangrove_blue_carbon" ||
+            slug === "mangrove_alerts" ||
+            slug === "mangrove_height" ||
+            slug === "mangrove_biomass"
+        )
+      : _widgets.filter(
+          ({ categoryIds, locationType }) =>
+            categoryIds.includes(_currentDashboard) &&
+            locationType.includes(location_type)
+        );
   }
 );
 

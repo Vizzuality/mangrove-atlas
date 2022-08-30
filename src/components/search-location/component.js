@@ -12,8 +12,7 @@ const SearchLocation = ({
   openSearchPanel,
 }) => (
   <button className={cx(styles.sidebarItem, { [styles.mobile]: mobile })} type="button" onClick={() => openSearchPanel()}>
-    <span className={styles.menuItemTitle}>Places</span>
-    <Icon name="places" alt="Search" />
+    <Icon name="glass" alt="Search" />
   </button>
 );
 

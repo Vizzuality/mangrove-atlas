@@ -1,17 +1,24 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import APIService from "services/api-service";
+import AnalysisService from 'services/analysis-service';
+
 import { fetchRequested, fetchSucceeded, fetchFailed } from "./actions";
 
 const service = new APIService();
 
 function* getMangroveBlueCarbonData({ payload }) {
+  const locationId = payload?.location_id;
   yield put(fetchRequested());
   try {
-    const mangroveData = yield call(
-      service.fetchMangroveBlueCarbonData,
-      payload
-    );
-    yield put(fetchSucceeded(mangroveData));
+    const mangroveBlueCarbonDataData =
+      locationId === "custom-area"
+        ? yield call(AnalysisService.fetchMangroveCustomAreaAnalysisData, {
+            geojson: payload.drawingValue,
+            widgets: ["mangrove_blue_carbon"],
+            location_id: "custom-area",
+          })
+        : yield call(service.fetchMangroveBlueCarbonData, payload);
+    yield put(fetchSucceeded(mangroveBlueCarbonDataData));
   } catch (err) {
     yield put(fetchFailed(err));
   }

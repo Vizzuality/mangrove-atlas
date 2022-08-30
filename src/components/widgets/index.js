@@ -93,7 +93,9 @@ const mapStateToProps = (state) => ({
   templates,
   isCollapsed: state.widgets.isCollapsed,
   category: state.dashboards.current,
-  dataByWidget: getWidgetsWithData(state)
+  dataByWidget: getWidgetsWithData(state),
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode
 });
 
 const mapDispatchToProps = {

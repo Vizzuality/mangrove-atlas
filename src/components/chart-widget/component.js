@@ -14,6 +14,7 @@ function ChartWidget({
   children,
   className,
   note,
+  error,
   ...props
 }) {
   const { data, config } = !!chart && chartData;

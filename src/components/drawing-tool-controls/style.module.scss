@@ -1,0 +1,119 @@
+@import "styles/_vars.scss";
+
+.menuWrapper {
+  margin: 0 10px;
+  text-align: center;
+  padding-bottom: 20px;
+  @include menu-items;
+
+  .itemsWrapper {
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    align-items: center;
+
+    .middle {
+      margin: 10px 0;
+
+      &._active {
+        background-color: $primary;
+        border-radius: 30px;
+        padding: 0;
+
+        svg {
+          stroke: white;
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .sidebarItem {
+      margin: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+
+      &.mobile {
+        @include menu-items-mobile;
+      }
+
+      &._active {
+        background-color: $primary;
+        border-radius: 30px;
+
+        svg {
+          stroke: white;
+          fill: white;
+        }
+      }
+
+      .menuItemTitle {
+        @include menu-item-title;
+      }
+
+      svg {
+        fill: $primary;
+        stroke: $primary;
+        border-radius: 30px;
+        box-sizing: content-box;
+        padding: 8.5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.modalContent {
+  .modalDescription {
+    box-sizing: content-box;
+    font-size: 19px;
+    color: $blackOpacity;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: flex-start;
+    margin: 0;
+    padding: 20px 40px;
+
+    h3 {
+      font-size: 30px;
+      font-weight: 300;
+      padding-bottom: 24px;
+    }
+
+    p {
+      margin: 0;
+      padding-bottom: 24px;
+
+      span {
+        font-weight: bold;
+      }
+    }
+
+
+    .modalCheckbox {
+      display: flex;
+      flex-direction: row-reverse;
+      padding-bottom: 24px;
+      align-items: center;
+
+      input {
+        margin-right: 8px;
+      }
+    } 
+  }
+
+  .modalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    max-width: 50%;
+  }
+}

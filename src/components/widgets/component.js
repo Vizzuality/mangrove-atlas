@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+
 import Spinner from "components/spinner";
 import Button from "components/button";
 
@@ -11,25 +12,15 @@ const WidgetList = ({
   isCollapsed,
   templates,
   mobile,
-  alerts,
   category,
   dataByWidget,
+  drawingValue,
+  drawingMode,
   ...parentProps
 }) => {
   const onClickDownload = useCallback(() => {
     window.print();
   }, []);
-
-  const currentLocationType = parentProps?.currentLocation?.location_type;
-  const widgetsCategory = useMemo(
-    () =>
-      widgets.filter(
-        ({ categoryIds, locationType }) =>
-          categoryIds.includes(category) &&
-          locationType.includes(currentLocationType)
-      ),
-    [category, widgets, currentLocationType]
-  );
 
   const widgetsFiltered = useMemo(
     () =>
@@ -53,10 +44,11 @@ const WidgetList = ({
         </div>
       ) : (
         widgets.length &&
-        widgetsCategory?.map((widget, index) => {
+        widgets?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
           const isLast =
             widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
+
           return (
             <div
               key={widget.slug}

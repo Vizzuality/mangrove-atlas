@@ -35,6 +35,7 @@ class DatasetService {
       if (status >= 400) throw new Error(statusText);
       return geoJsonToJson(data);
     });
+    
 }
 
 export default DatasetService;

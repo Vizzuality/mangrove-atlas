@@ -60,7 +60,7 @@ export default {
     activity: {
       start_year: null,
       end_year: null,
-      limit: 10
+      limit: 5
     },
   },
   isCollapsed: true,

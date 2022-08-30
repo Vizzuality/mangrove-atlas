@@ -7,14 +7,14 @@ import orderBy from "lodash/orderBy";
 export const numberFormat = format(",.2f");
 export const formatAxis = format(",.0d");
 
+const cumulativeSum = (
+  (sum) => (value) =>
+    (sum += value)
+)(0);
 const widgetData = (data, unit) => {
-
   const netChangeValues = data.map((d) => (unit === "ha" ? d.net_change * 100 : d.net_change));
   netChangeValues.shift();
-  const cumulativeSum = (
-    (sum) => (value) =>
-      (sum += value)
-  )(0);
+
   const cumulativeValuesNetChange = [0, ...netChangeValues].map(cumulativeSum);
   return orderBy(
     data.map((l, i) => {
@@ -22,6 +22,8 @@ const widgetData = (data, unit) => {
         label: l.year,
         year: l.year,
         netChange: i === 0 ? 0 : cumulativeValuesNetChange[i],
+        gain: unit === "ha" ? l.gain * 100 : l.gain,
+        loss: unit === "ha" ? l.loss * 100 : l.loss,
         netChangeRaw: l.value,
       };
     }),
@@ -29,10 +31,30 @@ const widgetData = (data, unit) => {
   );
 };
 
+const getBars = (drawingMode) => drawingMode ? {
+  gain: {
+    barSize: 10,
+    transform: `translate(${(4 + 10) / 2}, 0)`,
+    fill: '#A6CB10',
+    radius: [10, 10, 0, 0],
+    legend: 'Gain',
+    isAnimationActive: false
+  },
+  loss: {
+    barSize: 10,
+    transform: `translate(-${(4 + 10) / 2}, 0)`,
+    fill: '#EB6240',
+    radius: [10, 10, 0, 0],
+    legend: 'Loss',
+    isAnimationActive: false
+  }
+} : {}
+
 const CONFIG = {
-  parse: (data, unit) => {
+  parse: (data, unit, drawingMode = true) => {
     const chartData = widgetData(data, unit);
     const change = chartData[chartData.length - 1]?.netChange;
+
     return {
       change,
       chartData,
@@ -52,24 +74,7 @@ const CONFIG = {
             },
           },
           // temporary hidden because of wrong calculations in data
-          // bars: {
-          //   gain: {
-          //     barSize: 0,
-          //     transform: `translate(${(4 + 10) / 2}, 0)`,
-          //     fill: '#A6CB10',
-          //     radius: [10, 10, 0, 0],
-          //     legend: 'Gain',
-          //     isAnimationActive: false
-          //   },
-          //   loss: {
-          //     barSize: 0,
-          //     transform: `translate(-${(4 + 10) / 2}, 0)`,
-          //     fill: '#EB6240',
-          //     radius: [10, 10, 0, 0],
-          //     legend: 'Loss',
-          //     isAnimationActive: false
-          //   }
-          // }
+          bars: getBars(drawingMode),
         },
         xAxis: {
           tick: { fontSize: 12, fill: "rgba(0, 0, 0, 0.54)" },
@@ -125,7 +130,7 @@ const CONFIG = {
               <WidgetLegend
                 position="top"
                 direction="vertical"
-                groups={{ labelsForLayer }}
+                groups={drawingMode ? { labels } : { labelsForLayer }}
               />
             );
           },
@@ -143,8 +148,8 @@ const CONFIG = {
                 marginLeft: "30px",
               }}
               payload={[
-                // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
-                // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
+                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
+                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
@@ -154,8 +159,8 @@ const CONFIG = {
                 },
               ]}
               settings={[
-                // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
-                // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
+                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
+                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",

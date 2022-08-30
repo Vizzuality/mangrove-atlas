@@ -8,6 +8,7 @@ import Component from './component';
 const mapStateToProps = state => ({
   currentDashboard: currentDashboard(state),
   dashboards: state.dashboards.list,
+  disabled: state.drawingTool.drawingMode
 });
 
 const mapDispatchToProps = {
