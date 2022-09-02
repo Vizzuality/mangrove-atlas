@@ -1,1 +1,1 @@
-export { default } from "./RestorationSitesConnectedToRedux";
+export { default } from './RestorationSitesConnectedToRedux';
