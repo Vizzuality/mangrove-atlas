@@ -27,6 +27,7 @@ import * as mangroveInternationalStatusData from 'modules/mangrove-international
 import * as mangroveEmissionsMitigationData from 'modules/mangrove-emissions-mitigation-data';
 import * as ranking from 'modules/ranking';
 import * as alerts from 'modules/alerts';
+import * as restorationSites from 'modules/restorationSites';
 
 import router from './router';
 import sagas from './sagas';
@@ -56,7 +57,8 @@ const modules = [
   { namespace: 'mangroveEmissionsMitigationData', components: mangroveEmissionsMitigationData },
   { namespace: 'mangroveInternationalStatusData', components: mangroveInternationalStatusData },
   { namespace: 'ranking', components: ranking },
-  { namespace: 'alerts', components: alerts }
+  { namespace: 'alerts', components: alerts },
+  { namespace: 'restorationSites', components: restorationSites },
 ];
 
 const {
