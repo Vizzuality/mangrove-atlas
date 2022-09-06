@@ -8,7 +8,8 @@ import Component from './component';
 
 const mapStateToProps = state => ({
   isLoading: state.mangroveNetChangeData.isLoading,
-  data: state.mangroveNetChangeData,
+  data: state.mangroveNetChangeData.data,
+  metadata: state.mangroveNetChangeData.metadata,
   ui: state.widgets.ui.net,
   locations: state.locations.list,
   locationType: getLocationType(state.router.type)

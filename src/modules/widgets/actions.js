@@ -18,3 +18,4 @@ export const closeInfoPanel = createAction('WIDGETS/CLOSE_PANEL');
 
 export const setUi = createAction('WIDGETS/SET_UI');
 export const resetUi = createAction('WIDGETS/RESET_UI');
+export const setData = createAction('WIDGETS/SET_DATA');

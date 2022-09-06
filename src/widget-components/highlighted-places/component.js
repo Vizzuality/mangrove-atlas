@@ -12,8 +12,8 @@ import SaloumImage from './images/saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
 
 const bgImages = {
-  '1_1_1_00000000000000000000': RufijiImage,
-  '1_1_2_00000000000000000000': SaloumImage,
+  '1e3d61bf-1f8b-5f89-9374-ef84a6b893ad': RufijiImage,
+  '9e2d8fc4-9ed4-5aea-8220-a200f1c388a7': SaloumImage,
 };
 
 const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, name }) => {

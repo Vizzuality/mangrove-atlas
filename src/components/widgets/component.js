@@ -22,11 +22,11 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  const widgetsWithData = getDataByWidget(dataByWidget);
+ 
   const widgetsCategory = widgets
     .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
 
-  const widgetsFiltered = useMemo(() => widgetsCategory?.filter(({ slug }) => !Object.keys(widgetsWithData).includes(slug) || ![widgetsWithData[slug]]), [widgetsWithData,widgetsCategory]);
+  const widgetsFiltered = widgetsCategory;
 
   return (
     <div

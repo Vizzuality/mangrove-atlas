@@ -314,7 +314,7 @@ class Map extends Component {
         })}
       >
         <ReactMapGL
-          ref={(map) => (this.map = map && map.getMap())}
+          ref={(map) => this.map = map && map.getMap()}
           // CUSTOM PROPS FROM REACT MAPBOX API
           mapStyle={ms}
           {...mapboxProps}

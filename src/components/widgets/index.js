@@ -32,7 +32,7 @@ export const templates = new Map([
     component: MangroveCoverage
   }],
   ['mangrove_extent', {
-    component: MangroveExtent
+    component: MangroveExtent,
   }],
   ['mangrove_net_change', {
     component: MangroveNetChange

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // components
 import Select from "components/select";
@@ -8,14 +8,14 @@ import ChartWidget from "components/chart-widget";
 // utils
 import { format } from "d3-format";
 
-import { WORLWIDE_LOCATION_ID } from 'modules/widgets/constants';
+import { WORLWIDE_LOCATION_ID } from "modules/widgets/constants";
 
 import config from "./config";
 
 const numberFormat = format(",.2f");
 
 const MangroveHeight = ({
-  data: rawData,
+  data,
   isLoading,
   metadata,
   isCollapsed = true,
@@ -25,6 +25,7 @@ const MangroveHeight = ({
   addFilter,
   ui,
   setUi,
+  setData,
   fetchMangroveHeightData,
   ...props
 }) => {
@@ -58,12 +59,16 @@ const MangroveHeight = ({
     }
   }, [setUi, year, years, addFilter, isLoading]);
 
-  if (!rawData || !year) {
+  useEffect(() => {
+    if (!data) setData({ slug, data: false });
+  }, [data]);
+
+  if (!data || !year) {
     return null;
   }
 
   const { chartData, chartConfig, downloadData } = config.parse(
-    rawData,
+    data,
     year,
     years,
     heightCoverage
@@ -130,10 +135,12 @@ MangroveHeight.propTypes = {
   data: PropTypes.shape({}),
   isLoading: PropTypes.bool,
   metadata: PropTypes.shape({
-    avg_height: PropTypes.arrayOf(PropTypes.shape({
-      year: PropTypes.number,
-      value: PropTypes.number
-    })),
+    avg_height: PropTypes.arrayOf(
+      PropTypes.shape({
+        year: PropTypes.number,
+        value: PropTypes.number,
+      })
+    ),
     location_id: PropTypes.string,
     note: PropTypes.string,
     units: PropTypes.shape({}),
@@ -160,7 +167,7 @@ MangroveHeight.defaultProps = {
   ui: null,
   addFilter: () => {},
   setUi: () => {},
-  fetchMangroveHeightData: () => {}
+  fetchMangroveHeightData: () => {},
 };
 
 export default MangroveHeight;

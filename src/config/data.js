@@ -133,24 +133,9 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "climate_and_policy",
-        "ecosystem_services"
       ],
       "layersIds": [
         "carbon"
-      ]
-    },
-    {
-      "name": "Mangrove Protection",
-      "slug": "mangrove_protection",
-      "locationType": [
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation"
       ]
     },
     {
@@ -189,6 +174,18 @@ export default {
       ],
       "layersIds": [
         "biomass"
+      ]
+    },
+    {
+      "name": "Mangrove Protection",
+      "slug": "mangrove_protection",
+      "locationType": [
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "restoration_and_conservation"
       ]
     },
     {
@@ -254,9 +251,7 @@ export default {
       "categoryIds": [
       ]
     }
-  ]
-  // ! I couldn't make process.env work with spread operator, so I'm doing this instead
-  .filter((_widget) => process.env.REACT_APP_FEATURE_FLAG_DISABLE_BLUE_CARBON === 'true' ? _widget.slug !== 'mangrove_blue_carbon' : true),
+  ],
   "layers": [
     {
       "name": "Mangrove coverage",
