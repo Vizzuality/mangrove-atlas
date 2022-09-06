@@ -27,13 +27,13 @@ function MangroveBiomass({
   fetchMangroveBiomassData,
   ...props
 }) {
-  const { id } = currentLocation;
+  const { id, iso } = currentLocation;
   const year = ui?.year;
   const years = metadata?.year;
   const aboveGroundBiomass = useMemo(() => !!year && metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value, [metadata, year]);
 
   useEffect(() => {
-    if (!id || id === WORLWIDE_LOCATION_ID) {
+    if (!iso || iso.toLowerCase() === 'worlwide') {
       fetchMangroveBiomassData()
     }
     else {

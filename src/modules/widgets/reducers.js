@@ -9,6 +9,7 @@ import {
   toggleActiveByLayerId,
   openInfoPanel,
   closeInfoPanel,
+  setData,
   setUi,
   resetUi,
 } from './actions';
@@ -55,6 +56,12 @@ export default {
       isCollapsed: !noCollapsed,
     };
   },
+  [setData]: (state, { payload }) => ({
+    ...state,
+    list: state.list.map((item) => {
+      if (item.slug === payload.slug) return ({ ...item, data: payload.data });
+    }),
+  }),
   [toggleActive]: (state, { payload }) => ({
     ...state,
     list: state.list.map((item) => {

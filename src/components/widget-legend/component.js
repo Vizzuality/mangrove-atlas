@@ -69,6 +69,7 @@ const Legend = ({ title,
                     )
                   }
                 </div>
+                
               </li>
             ))}
           </ul>

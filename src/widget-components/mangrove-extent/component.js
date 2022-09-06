@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { format } from 'd3-format';
-import sortBy from 'lodash/sortBy';
+import React, { useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
+import { format } from "d3-format";
+import orderBy from "lodash/orderBy";
 
-import ChartWidget from 'components/chart-widget';
-import Select from 'components/select';
+import ChartWidget from "components/chart-widget";
+import Select from "components/select";
 
-import config from './config';
+import config from "./config";
 
-const numberFormat = format(',.2f');
+const numberFormat = format(",.2f");
+
+const unitOptions = [
+  { value: "km²", label: "km²" },
+  { value: "ha", label: "ha" },
+];
 
 function MangroveExtent({
   data,
@@ -17,93 +22,106 @@ function MangroveExtent({
   addFilter,
   isCollapsed = true,
   slug,
-  ui: {
-    currentYear,
-    unit
-  },
+  ui,
   setUi,
+  setData,
   fetchMangroveHabitatExtentData,
   ...props
 }) {
+  const { year: currentYear, unit } = ui;
+  const { total_lenght } = metadata;
+  const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
+  const years = metadata?.year?.reverse();
+  const year = useMemo(
+    () => currentYear || years?.[years?.length - 1] || 2020,
+    [years, currentYear]
+  );
 
   useEffect(() => {
-      fetchMangroveHabitatExtentData({
-        ...currentLocation?.iso !== "WORLDWIDE" && {
-          location_id: currentLocation.id,
+    fetchMangroveHabitatExtentData({
+      ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [fetchMangroveHabitatExtentData, currentLocation]);
+
+  useEffect(() => {
+    if (year) {
+      addFilter({
+        filter: {
+          id: "extent",
+          year,
+          unit: currentUnit,
         },
       });
-  }, [fetchMangroveHabitatExtentData, currentLocation])
+    }
+    setUi({ id: "extent", value: { ...ui, year, unit: currentUnit } });
 
-  useEffect(() => {
-    addFilter({
-      filter: {
-        id: 'extent',
-        year: '2016'
-      }
-    });
-  }, [addFilter, unit]);
+  }, [addFilter, unit, year, currentUnit, metadata]);
 
-  if (!data || !data.length) {
+  // useEffect(() => {
+  //   setData({ slug, data: !!data.length });
+  // }, [setData, data]);
+
+  if (!data || !data.length || !year) {
     return null;
   }
 
-  const { total_area, total_lenght } = metadata;
-  const { totalMangroveArea, chartConfig, chartData, downloadData } = config.parse(data, metadata, currentYear, unit);
-  const optionsYears = sortBy((metadata?.year || []).map(year => ({
-    label: year.toString(),
-    value: year
-  })), ['value']);
+  const { mangroveArea, dataParsed,
+    mangroveCoastCoveragePercentage, chartConfig, chartData, downloadData } =
+    config.parse(data, metadata, currentYear, unit);
+
+  const optionsYears = orderBy(
+    (years || []).map((year) => ({
+      label: year.toString(),
+      value: year,
+    })),
+    ["value"],
+    ["desc"]
+  );
 
   let sentence = null;
 
   const changeYear = (current) => {
     addFilter({
       filter: {
-        id: 'extent',
-        year: current
-      }
+        id: "extent",
+        year: current,
+      },
     });
-    setUi({ id: 'coverage', value: { unit, currentYear: current } });
+    setUi({ id: "extent", value: { ...ui, year: current } });
   };
 
   const changeUnit = (selectedUnit) => {
-    setUi({ id: 'coverage', value: { currentYear, unit: selectedUnit } });
+    setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
   };
 
   const widgetData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   try {
-    const unitOptions = [
-      { value: 'km', label: 'km²' },
-      { value: 'ha', label: 'ha' }
-    ];
-    const totalCoverage = unit === 'ha' ? numberFormat(total_lenght * 100) : numberFormat(total_lenght);
-    const area = unit === 'ha'
-      ? numberFormat(totalMangroveArea * 100)
-      : numberFormat(totalMangroveArea);
 
-    const coveragePercentage = unit === 'ha'
-    ? numberFormat(total_area * 100)
-    : numberFormat(total_area);
+    const area =
+      unit === "ha"
+        ? numberFormat(mangroveArea * 100)
+        : numberFormat(mangroveArea);
 
-    const location = (currentLocation.location_type === 'worldwide')
-      ? 'the world'
-      : <span className="notranslate">{`${currentLocation?.name}`}</span>;
+    const location =
+      currentLocation.location_type === "worldwide" ? (
+        "the world"
+      ) : (
+        <span className="notranslate">{`${currentLocation?.name}`}</span>
+      );
     const unitSelector = (
-      <Select
-        value={unit}
-        options={unitOptions}
-        onChange={changeUnit}
-      />
+      <Select value={currentUnit} options={unitOptions} onChange={changeUnit} />
     );
     const yearSelector = (
       <Select
         className="notranslate"
         width="auto"
-        value={currentYear}
+        value={year}
         options={optionsYears}
         onChange={changeYear}
       />
@@ -111,10 +129,25 @@ function MangroveExtent({
 
     sentence = (
       <>
-        <span>The area of mangrove habitat in </span><strong>{location} </strong>
+        <span>The area of mangrove habitat in </span>
+        <strong>{location} </strong>
         <span>was </span>
-        <strong className="notranslate">{area} </strong>{unitSelector}<span> in </span>{yearSelector},<span> this represents a linear coverage of <strong>{coveragePercentage}%</strong> </span> of the
-        <strong className="notranslate"> {totalCoverage} km</strong><span> of the coastline.<br /></span>
+        <strong className="notranslate">{area} </strong>
+        {unitSelector}
+        <span> in </span>
+        {yearSelector},
+        <span>
+          {" "}
+          this represents a linear coverage of{" "}
+          <strong>{numberFormat(mangroveCoastCoveragePercentage)}%</strong>{" "}
+        </span>{" "}
+        of the
+        <strong className="notranslate"> {numberFormat(total_lenght)} km</strong>
+        <span>
+          {" "}
+          of the coastline.
+          <br />
+        </span>
       </>
     );
   } catch (e) {
@@ -122,13 +155,15 @@ function MangroveExtent({
   }
 
   return (
+  // <div>hola</div>
     <ChartWidget
-      data={data}
+      data={chartData}
       slug={slug}
       filename={slug}
       isCollapsed={isCollapsed}
       downloadData={downloadData}
       sentence={sentence}
+      config={chartConfig}
       chartData={widgetData}
       {...props}
     />
@@ -144,7 +179,7 @@ MangroveExtent.propTypes = {
   slug: PropTypes.string,
   ui: PropTypes.shape({
     currentYear: PropTypes.number,
-    unit: PropTypes.string
+    unit: PropTypes.string,
   }),
   setUi: PropTypes.func,
   fetchMangroveHabitatExtentData: PropTypes.func,

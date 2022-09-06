@@ -5,6 +5,10 @@ export default {
   error: null,
   isOpened: false,
   ui: {
+    extent: {
+      year: null,
+      unit: null,
+    },
     net: {
       startYear: null,
       endYear: null,

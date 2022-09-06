@@ -6,35 +6,41 @@ import WidgetLegend from "components/widget-legend";
 import { format } from "d3-format";
 
 const tooltipFormat = format(",~");
+const numberFormat = format(",.2f");
 
-const widgetData = (data, metadata, unit) => {
-  if (data) {
-    const { total_area: totalAreaPercentage } = metadata;
-
-    const { value, year } = data;
-    const totalAreaMangroves = (value * 100) / totalAreaPercentage;
-    const nonMangrove = totalAreaMangroves;
-
+const widgetData = (
+  mangroveArea,
+  mangroveCoastCoverage,
+  mangroveCoastCoveragePercentage,
+  metadata,
+  currentYear,
+  unit
+) => {
+  if (mangroveArea) {
+    const { total_lenght: total_length } = metadata;
+    const nonMangrove = total_length - mangroveCoastCoverage;
     return [
       {
-        x: year,
-        y: value,
+        label: `Coastline coverage in ${currentYear}`,
+        value: mangroveArea,
         color: "#06C4BD",
-        percent: totalAreaPercentage,
+        y: unit === "ha" ? mangroveArea * 100 : mangroveArea,
+        percentage: mangroveCoastCoveragePercentage,
         unit,
-        area: value,
-        coverage: value.toFixed(2),
-        value: value.toFixed(2),
-        label: `Coastline coverage in ${year}`,
+        area: mangroveArea,
+        coverage: mangroveCoastCoverage.toFixed(2),
+        year: currentYear,
       },
       {
-        x: 0,
-        y: nonMangrove,
         color: "#ECECEF",
-        percent: 100 - totalAreaPercentage,
+        percentage: 100 - mangroveCoastCoveragePercentage,
+        y: nonMangrove,
         unit,
         coverage: nonMangrove.toFixed(2),
         label: "Non mangroves",
+        value: nonMangrove,
+        area: nonMangrove,
+        year: currentYear,
       },
     ];
   }
@@ -56,25 +62,48 @@ const getDownloadData = (data, metadata) => {
 
 export const CONFIG = {
   parse: (data, metadata, currentYear, unit) => {
-    const dataByYear = data.find(({ year }) => year === currentYear);
-    const totalMangroveArea = dataByYear.value;
+    const dataByYear = data.filter(({ year }) => year === currentYear);
+    const dataParsed = dataByYear.reduce(
+      (acc, data) => ({
+        ...acc,
+        year: data.year,
+        [data.indicator]: data.value,
+      }),
+      {}
+    );
+    const { total_lenght: total_length } = metadata;
+    const mangroveArea = dataParsed.habitat_extent_area;
+    const mangroveCoastCoverage = dataParsed.linear_coverage;
+    const mangroveCoastCoveragePercentage =
+      (mangroveCoastCoverage * 100) / total_length;
+
     return {
-      totalMangroveArea,
-      chartData: widgetData(dataByYear, metadata, unit),
+      dataParsed,
+      mangroveArea,
+      mangroveCoastCoverage,
+      mangroveCoastCoveragePercentage,
+      chartData: widgetData(
+        mangroveArea,
+        mangroveCoastCoverage,
+        mangroveCoastCoveragePercentage,
+        metadata,
+        currentYear,
+        unit
+      ),
       downloadData: getDownloadData(data, metadata),
       chartConfig: {
         type: "pie",
         layout: "centric",
         height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
-        xKey: "percent",
+        xKey: "nonCovered",
         yKeys: {
           pies: {
             coverage: {
               cx: "50%",
               cy: "50%",
               paddingAngle: 2,
-              dataKey: "percent",
+              dataKey: "percentage",
               nameKey: "label",
               innerRadius: "55%",
               outerRadius: "80%",
@@ -92,14 +121,15 @@ export const CONFIG = {
             const groups = groupBy(
               payload.map((item) => {
                 const value =
-                  (item.payload.unit === "ha" && item.payload.coverage * 100) ||
-                  (item.payload.unit === "%" && item.payload.percentage) ||
-                  (item.payload.unit === "km" && Number(item.payload.coverage));
+                  (item.payload.unit === "ha" && item.payload.value * 100) ||
+                  (item.payload.unit === "%" && item.payload.percent) ||
+                  (item.payload.unit === "km²" && Number(item.payload.value));
 
                 return {
                   ...item.payload,
                   value: item.payload.label,
                   y: value,
+                  unit,
                   label: item.payload.label,
                 };
               }),
@@ -109,7 +139,7 @@ export const CONFIG = {
             return (
               <WidgetLegend
                 groups={groups}
-                unit={unit === "km" ? "km" : unit}
+                unit={unit === "km²" ? "km²" : "ha"}
                 direction="vertical"
               />
             );
@@ -130,7 +160,7 @@ export const CONFIG = {
                 { key: "label" },
                 {
                   label: "Percentage:",
-                  key: "percent",
+                  key: "percentage",
                   format: (percentage) =>
                     `${percentage ? percentage.toFixed(2) : null} %`,
                   position: "_column",

@@ -123,7 +123,7 @@ export const styles = {
   menuList: provided => ({
     ...provided,
     maxHeight: 250,
-    minWidth: 'content',
+    minWidth: 'fit-content',
     fontSize: 9,
   }),
 };
