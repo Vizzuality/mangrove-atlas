@@ -1,12 +1,14 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import { fetchLocations } from 'modules/locations/actions';
+
 import { fetchDashboards } from 'modules/dashboards/actions';
-import { fetchWidgets } from 'modules/widgets/actions';
-import { fetchLayers } from 'modules/layers/actions';
-import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchLanguages } from 'modules/languages/actions';
+import { fetchLayers } from 'modules/layers/actions';
+import { fetchLocations } from 'modules/locations/actions';
 import { fetchMangroveData } from 'modules/mangrove-data/actions';
+import { fetchMapStyles } from 'modules/map-styles/actions';
 import { fetchRankingData } from 'modules/ranking/actions';
+import { fetchRestorationSites } from 'modules/restorationSites/restorationSitesActions';
+import { fetchWidgets } from 'modules/widgets/actions';
 import { initializeApp } from './actions';
 
 
@@ -20,6 +22,7 @@ function* loadInitialData() {
     languages,
     mangroveData,
     ranking,
+    restorationSites,
   } = yield select();
 
   if (!locations.list.length) yield put(fetchLocations());
@@ -30,6 +33,7 @@ function* loadInitialData() {
   if (!languages.list.length) yield put(fetchLanguages());
   if (!mangroveData.list.length) yield put(fetchMangroveData());
   if (!ranking.data.length) yield put(fetchRankingData());
+  if (!restorationSites.data.length) yield put(fetchRestorationSites());
 }
 
 export default function* app() {
