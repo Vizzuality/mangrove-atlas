@@ -33,6 +33,7 @@ const ALERTS_URL_TEMPLATE =
 const getAlertsUrl = template(ALERTS_URL_TEMPLATE, {
   interpolate: /{{([\s\S]+?)}}/g,
 });
+const restorationSites = (state) => state.restorationSites.data
 
 function sortLayers(layers) {
   const order = {
@@ -77,7 +78,8 @@ export const mapStyle = createSelector(
     endDateAlerts,
     locations,
     customArea,
-    customGeojsonFeatures
+    customGeojsonFeatures,
+    restorationSites,
   ],
   (
     _basemap,
@@ -89,7 +91,8 @@ export const mapStyle = createSelector(
     _endDateAlerts,
     _locations,
     _customArea,
-    _customGeojsonFeatures
+    _customGeojsonFeatures,
+    _restorationSites,
   ) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
@@ -220,6 +223,21 @@ export const mapStyle = createSelector(
       });
     }
 
+    const restorationSiteFeatures = _restorationSites.filter(site => !!site.site_centroid )
+      .map(
+      site => {
+        if (site.site_centroid) {
+          return ({ geometry: site.site_centroid })
+        }
+        })
+    
+    // append restoration sites data
+    bhSources['restoration-sites'].data = {
+      type: "FeatureCollection",
+      features: restorationSiteFeatures
+    }
+
+   
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...ordered_array];
     return composedMapStyle;
