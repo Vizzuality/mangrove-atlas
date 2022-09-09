@@ -15,7 +15,7 @@ const WidgetInfo = ({
   current,
   locationsList
 }) => {
-  const selectedLocation = locationsList
+  const selectedLocation = locationsList?
     .filter(location => current === location.iso
       || current === location.id
       || current === location.location_id

@@ -77,7 +77,7 @@ class InfoModal extends PureComponent {
     if (!currentLocation) return null;
     const { search } = this.state;
     const locationsData = search
-      ? locations.filter(l => new RegExp(search, 'i').test(l.name))
+      ? locations?.filter(l => new RegExp(search, 'i').test(l.name))
       : locations;
 
     const widgetSelected = widgetInfo[widgetType];

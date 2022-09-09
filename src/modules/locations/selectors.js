@@ -5,7 +5,7 @@ const currentLocationId = state => state.locations.current;
 
 export const highlightedPlaces = createSelector(
   [locations],
-  _locations => _locations.filter(location => location.location_type === 'aoi')
+  _locations => _locations?.filter(location => location.location_type === 'aoi')
 );
 
 export const currentLocation = createSelector(

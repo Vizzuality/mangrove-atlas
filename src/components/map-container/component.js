@@ -59,7 +59,7 @@ export const MapContainer = ({
   */
   const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots', 'restoration'];
   const currentLayers = mapStyle.layers.map(layer => layer.id);
-  const interactiveLayerIds = requestedInteractiveLayerIds.filter(id => currentLayers.includes(id));
+  const interactiveLayerIds = requestedInteractiveLayerIds?.filter(id => currentLayers.includes(id));
 
   function popupCloseHandler() {
     removePopup();
