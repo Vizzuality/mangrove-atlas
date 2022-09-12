@@ -57,7 +57,7 @@ export const MapContainer = ({
    * You can provide a custom getCursor function that will overwrite
    * the one used by default, documentation is on the same page.
   */
-  const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots', 'restoration'];
+  const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots', 'restoration', 'restoration-sites'];
   const currentLayers = mapStyle.layers.map(layer => layer.id);
   const interactiveLayerIds = requestedInteractiveLayerIds.filter(id => currentLayers.includes(id));
 
