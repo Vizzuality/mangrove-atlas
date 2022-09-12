@@ -67,7 +67,7 @@ function MangroveExtent({
     return null;
   }
 
-  const { mangroveArea, dataParsed,
+  const { mangroveArea,
     mangroveCoastCoveragePercentage, chartConfig, chartData, downloadData } =
     config.parse(data, metadata, currentYear, unit);
 
@@ -153,6 +153,8 @@ function MangroveExtent({
   } catch (e) {
     sentence = <span>No data for this widget.</span>;
   }
+
+  if (!chartData) return null;
 
   return (
   // <div>hola</div>
