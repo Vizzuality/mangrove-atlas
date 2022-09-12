@@ -1,0 +1,23 @@
+[
+  {
+    "id": "restoration",
+    "type": "fill",
+    "source": "restoration",
+    "source-layer": "MOW_Global_Mangrove_Restoration",
+    "paint": {
+      "fill-color": "#8122A6",
+      "fill-opacity": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        0.8,
+        0.5
+      ],
+      "fill-outline-color": [
+        "case",
+        ["boolean", ["feature-state", "hover"], false],
+        "#8122A6",
+        "rgba(129, 24, 166, 0.5)"
+      ]
+    }
+  }
+]
