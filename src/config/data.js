@@ -213,6 +213,8 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
       ]
     },
     {

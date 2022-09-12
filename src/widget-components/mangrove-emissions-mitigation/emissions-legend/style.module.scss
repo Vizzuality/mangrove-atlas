@@ -1,6 +1,6 @@
 .widget_legend {
-  max-height: 220px;
-  overflow: hidden;
+  // max-height: 220px;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -8,6 +8,7 @@
   max-width: 200px;
   line-height: 1;
   font-size: 14px;
+  flex-shrink: 0;
 
   .widget_legend_list {
     margin: 10px;
@@ -20,7 +21,8 @@
     width: 5px;
     height: 10px;
     margin-right: 5px;
-    border-radius: 10px; 
+    border-radius: 10px;
+    flex-shrink: 0;
   }
 
   .widget_legend_list_item {
