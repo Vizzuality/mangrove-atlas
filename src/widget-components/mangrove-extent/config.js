@@ -6,7 +6,6 @@ import WidgetLegend from "components/widget-legend";
 import { format } from "d3-format";
 
 const tooltipFormat = format(",~");
-const numberFormat = format(",.2f");
 
 const widgetData = (
   mangroveArea,
@@ -28,7 +27,7 @@ const widgetData = (
         percentage: mangroveCoastCoveragePercentage,
         unit,
         area: mangroveArea,
-        coverage: mangroveCoastCoverage.toFixed(2),
+        coverage: mangroveCoastCoverage?.toFixed(2),
         year: currentYear,
       },
       {
@@ -78,7 +77,6 @@ export const CONFIG = {
       (mangroveCoastCoverage * 100) / total_length;
 
     return {
-      dataParsed,
       mangroveArea,
       mangroveCoastCoverage,
       mangroveCoastCoveragePercentage,

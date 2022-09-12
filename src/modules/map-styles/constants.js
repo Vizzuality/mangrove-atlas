@@ -92,7 +92,6 @@ const mangroveAbovegroundBiomassRasters = mangroveAbovegroundBiomassYears.map((y
   year,
   source: {
     type: "raster",
-    env: "staging",
     minzoom: 0,
     maxzoom: 12,
   },
@@ -100,6 +99,7 @@ const mangroveAbovegroundBiomassRasters = mangroveAbovegroundBiomassYears.map((y
     minzoom: 0,
     maxzoom: 12,
   },
+  env: "staging",
 }));
 
 const mangroveAbovegroundBiomassLayers =  mangroveAbovegroundBiomassRasters.map(({ name, year }) => ({
@@ -115,7 +115,6 @@ const mangroveCanopyHeightRasters = mangroveCanopyHeightYears.map((year) => ({
   year,
   source: {
     type: "raster",
-    env: "staging",
     minzoom: 0,
     maxzoom: 12,
   },
@@ -123,6 +122,7 @@ const mangroveCanopyHeightRasters = mangroveCanopyHeightYears.map((year) => ({
     minzoom: 0,
     maxzoom: 12,
   },
+  env: "staging",
 }));
 
 const mangroveCanopyHeightLayers = mangroveCanopyHeightRasters.map(({ name, year }) => ({
@@ -140,110 +140,110 @@ const rasters = flatten([
     filename: "gl_2007_1996_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "staging",
   },
   {
     name: "gl_2007_2008_loss_z0-12",
     filename: "gl_2007_2008_loss_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2008_2007_gain_z0-12",
     filename: "gl_2008_2007_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2008_2009_loss_z0-12",
     filename: "gl_2008_2009_loss_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2009_2008_gain_z0-12",
     filename: "gl_2009_2008_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2009_2010_loss_z0-12",
     filename: "gl_2009_2010_loss_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2010_2009_gain_z0-12",
     filename: "gl_2010_2009_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2010_2015_loss_z0-12",
     filename: "gl_2010_2015_loss_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2015_2010_gain_z0-12",
     filename: "gl_2015_2010_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2015_2016_loss_z0-12",
     filename: "gl_2015_2016_loss_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
   {
     name: "gl_2016_2015_gain_z0-12",
     filename: "gl_2016_2015_gain_z0-12",
     source: {
       type: "raster",
-      env: "prod",
       minzoom: 0,
       maxzoom: 12,
     },
+    env: "prod",
   },
 ]);
 const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce(

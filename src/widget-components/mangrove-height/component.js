@@ -59,9 +59,9 @@ const MangroveHeight = ({
     }
   }, [setUi, year, years, addFilter, isLoading]);
 
-  useEffect(() => {
-    if (!data) setData({ slug, data: false });
-  }, [data]);
+  // useEffect(() => {
+  //   if (!data) setData({ slug, data: false });
+  // }, [data, slug]);
 
   if (!data || !year) {
     return null;

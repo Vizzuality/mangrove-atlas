@@ -36,7 +36,7 @@ function MangroveNetChange({
     [startYearUi, years]
   );
   const endYear = useMemo(
-    () => endYearUi || years[years.length - 1],
+    () => endYearUi || years?.[years?.length - 1],
     [endYearUi, years]
   );
 
@@ -47,31 +47,33 @@ function MangroveNetChange({
 
   useEffect(() => {
     fetchMangroveNetChangeData({
-      ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
         location_id: currentLocation.id,
       }),
     });
   }, [fetchMangroveNetChangeData, currentLocation]);
 
   useEffect(() => {
-    addFilter({
-      filter: {
+    if (data && data.length) {
+      addFilter({
+        filter: {
+          id: "net",
+          startYear: startYear,
+          endYear: endYear,
+          years,
+          unit: unit,
+        },
+      });
+      setUi({
         id: "net",
-        startYear: startYear,
-        endYear: endYear,
-        years,
-        unit: unit,
-      },
-    });
-    setUi({
-      id: "net",
-      value: {
-        endYear: endYear,
-        startYear: startYear,
-        unit: unit,
-      },
-    });
-  }, [startYear, endYear, unit, addFilter, setUi, years]);
+        value: {
+          endYear: endYear,
+          startYear: startYear,
+          unit: unit,
+        },
+      });
+    }
+  }, [startYear, endYear, unit, addFilter, setUi, years, data, data.length]);
 
   const dataFilteredByYears = data.filter(
     ({ year }) => year >= startYear && year <= endYear
@@ -176,13 +178,13 @@ function MangroveNetChange({
 
   const startYearOptions = useMemo(
     () =>
-      yearsOptions.filter((y, index) =>
+      yearsOptions?.filter((y, index) =>
         index !== years.length - 1 ? y : null
       ) || [],
     [yearsOptions, years.length]
   );
   const endYearOptions = useMemo(
-    () => yearsOptions.filter((y, index) => (index !== 0 ? y : null)) || [],
+    () => yearsOptions?.filter((y, index) => (index !== 0 ? y : null)) || [],
     [yearsOptions]
   );
 
@@ -230,7 +232,7 @@ function MangroveNetChange({
     config: chartConfig,
   };
 
-  if (!data) {
+  if (!data || !data.length) {
     return null;
   }
   return (
