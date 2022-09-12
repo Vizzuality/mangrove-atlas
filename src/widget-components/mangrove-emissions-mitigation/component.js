@@ -16,8 +16,6 @@ function MangroveEmissionsMitigation({
   ui,
   setUi,
   fetchMangroveEmissionsMitigationData,
-  current,
-  locationType,
   ...props
 }) {
   const [filteredIndicators, setFilteredIndicators] = useState([]);

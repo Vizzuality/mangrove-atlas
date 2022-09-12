@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import emissionsMitigationData from "widget-components/mangrove-emissions-mitigation/data.json";
-
 class APIService {
   constructor() {
     this.client = axios.create({
@@ -155,11 +153,10 @@ class APIService {
 
   fetchMangroveEmissionsMitigationData = (params = {}) =>
     this.client
-      .get("/widgets/emissions_mitigation", { params: { ...params } })
+      .get("/v2/widgets/mitigation_potentials", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);
-
         return data;
       });
 }
