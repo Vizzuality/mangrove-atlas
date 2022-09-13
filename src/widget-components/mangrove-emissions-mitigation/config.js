@@ -8,6 +8,7 @@ import { format } from "d3-format";
 // components
 import WidgetLegend from "./emissions-legend";
 import WidgetTooltip from "components/widget-tooltip";
+import { styles } from "components/select/style";
 
 const numberFormat = format(",.3r");
 const significantDigitsFormat = format(".3s");
@@ -85,7 +86,7 @@ const LabelContent = () => (
       fill="#000"
       fontSize="14px"
     >
-      Mitigation (tCO2/ha)
+      Mitigation (tCO<tspan style={{ "baseline-shift": "sub" }}>2</tspan>/ha)
     </text>
   </g>
 );
