@@ -217,7 +217,6 @@ class Map extends Component {
       onPopupClose,
       ...mapboxProps
     } = this.props;
-
     const { loaded, flying, viewport } = this.state;
     const ms = { ...mapStyle };
     let hoveredStateId = null;
@@ -297,10 +296,11 @@ class Map extends Component {
     const onLeave = (e) => {
       if (hoveredStateId !== null) {
         this.map.setFeatureState(
-          { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+          { "sourceLayer": "null", source: "null", id: null },
           { hover: false }
         );
       }
+      
       hoveredStateId = null;
     };
 
@@ -341,7 +341,7 @@ class Map extends Component {
           transitionEasing={easeCubic}
         >
           <MapFunctions />
-          {!!this.state.popup.length && !isEmpty(this.state.popupInfo) && <PopupRestoration data={this.state.popupInfo} />}
+          {!!this.state.popup?.length && !isEmpty(this.state.popupInfo) && <PopupRestoration data={this.state.popupInfo} />}
         </ReactMapGL>
       </div>
     );

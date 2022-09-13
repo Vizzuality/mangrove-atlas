@@ -44,7 +44,6 @@ class Tick extends PureComponent {
             <feComposite in="SourceGraphic" />
           </filter>
         </defs>
-        <span>Hello</span>
         <text
           x="0"
           y="3"

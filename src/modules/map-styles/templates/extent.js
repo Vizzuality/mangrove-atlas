@@ -33,12 +33,14 @@ const extentFillStyle = {
 
 // based on years available in mapbox for this layer
 const years = [1996, 2007, 2008, 2009, 2010, 2015, 2016, 2017, 2018, 2019, 2020];
+
 export const extentLayers = years.map((year) => ({
   layerId: `extent_${year}`,
   year,
   minZoom: 0,
   maxZoom: 12,
 }));
+
 export const extentLayersStyles = flatten(years.reduce((acc, year) => {
   const fill = {
   id: `extent_${year}`,

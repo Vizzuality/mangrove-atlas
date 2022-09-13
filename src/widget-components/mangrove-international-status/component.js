@@ -94,7 +94,7 @@ export const MangroveInternationalStatus = ({
             </div>
             <div className={styles.sentenceWrapper}>
               <p>
-                {name} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+                {name}{apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
                 {!ndc_adaptation && !ndc_mitigation
                   ? "doesn't include"
                   : "includes"}{" "}

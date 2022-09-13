@@ -242,7 +242,6 @@ export default {
         "categoryIds": [
           "all_datasets",
           "climate_and_policy",
-          "ecosystem_services"
       ],
       "layersIds": [
       ]
