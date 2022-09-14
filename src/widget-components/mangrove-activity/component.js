@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
@@ -12,6 +12,7 @@ import config from './config';
 
 function MangroveActivity({
   data: rawData,
+  metadata,
   fetchRankingData,
   isCollapsed = true,
   slug,
@@ -20,6 +21,28 @@ function MangroveActivity({
   setUi,
   ...props
 }) {
+  const { start_year = 1996, end_year = 2020, limit, filter = "net" } = ui;
+
+  useEffect(() => {
+    if (start_year && end_year) {
+      fetchRankingData({
+        start_year,
+        end_year,
+      });
+    }
+  }, [fetchRankingData, start_year, end_year]);
+
+  useEffect(() => {
+    setUi({
+      id: 'activity',
+      value: {
+        ...ui,
+        start_year,
+        end_year
+      }
+    });
+  }, [setUi, start_year, end_year]);
+
   const changeYear = (type, value) => {
     const prop = (type === 'start') ? 'startDate' : 'endDate';
     setUi({
@@ -63,17 +86,13 @@ function MangroveActivity({
     });
   };
 
-  if (!rawData || !rawData.meta) {
+  if (!rawData.length) {
     return null;
   }
-
-  const { startDate, endDate, filter, limit } = ui;
+  
   const { chartData, metaData, chartConfig } = config.parse(rawData, filter, limit);
 
-  const sortRanking = (data) => {
-    const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return (filter === 'loss' ? dataRanked.reverse() : dataRanked);
-  };
+  const sortRanking = (data) => orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index }));
 
   // XXX: these options should come from an api ?
   const optionsFilter = [
@@ -102,25 +121,27 @@ function MangroveActivity({
     />
   );
 
-  const startYearSelector = (
-    <Select
-      value={startDate}
-      options={startYearOptions.splice(0, metaData.length - 1)}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
-        || option.value === startDate}
-      onChange={value => changeYear('start', value)}
-    />
-  );
+  const startYearSelector = start_year;
+  // (
+  //   <Select
+  //     value={startDate}
+  //     options={startYearOptions.splice(0, metaData.length - 1)}
+  //     isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+  //       || option.value === startDate}
+  //     onChange={value => changeYear('start', value)}
+  //   />
+  // );
 
-  const endYearSelector = (
-    <Select
-      value={endDate}
-      options={endYearOptions.splice(1, metaData.length)}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
-        || option.value === endDate}
-      onChange={value => changeYear('end', value)}
-    />
-  );
+  const endYearSelector = end_year;
+  // (
+  //   <Select
+  //     value={endDate}
+  //     options={endYearOptions.splice(1, metaData.length)}
+  //     isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+  //       || option.value === endDate}
+  //     onChange={value => changeYear('end', value)}
+  //   />
+  // );
 
   const customStyles = {
     display: 'flex',
@@ -135,7 +156,8 @@ function MangroveActivity({
 
   const sentence = (
     <>
-      Worldwide the {limit} countries with the largest {filterSelector}
+      Worldwide the {limit} countries with the largest net
+      {/* {filterSelector} TO - DO put back selector when API returns gain and loss values */} 
       &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>
   );
@@ -169,7 +191,7 @@ function MangroveActivity({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
-      component={countriesLimit}
+      // component={countriesLimit}
       {...props}
     />
   );

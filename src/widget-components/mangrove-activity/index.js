@@ -5,15 +5,10 @@ import { setUi } from 'modules/widgets/actions';
 import Component from './component';
 
 const mapStateToProps = state => ({
-  data: state.ranking,
+  data: state.ranking.data,
+  metadata: state.ranking.metadata,
   isLoading: state.ranking.isLoading,
-  ui: state.widgets.ui.activity || {
-    startDate: 1996,
-    endDate: 2016,
-    filter: 'gain',
-    order: 'desc',
-    limit: 5
-  }
+  ui: state.widgets.ui.activity,
 });
 
 const mapDispatchToProps = {

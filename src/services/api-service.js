@@ -65,16 +65,9 @@ class APIService {
       });
 
   fetchRankingData = (params = {}) => {
-    const {
-      filter = "gain",
-      startDate = "2007",
-      endDate = "2016",
-      limit = 5,
-    } = params;
     return this.client
       .get(
-        `/v2/locations?rank_by=${filter}_m2&start_date=${startDate}&end_date=${endDate}&location_type=country&limit=${limit}&dir=desc`
-      )
+        "/v2/widgets/country_ranking", { params: { ...params } })
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);

@@ -14,6 +14,6 @@ function* getMangroveEmissionsMitigationData({ payload }) {
   }
 }
 
-export default function* mangroveDegradationAndLossDataSagas() {
+export default function* mangroveEmissionsMitigationDataSagas() {
   yield takeLatest('MANGROVE_EMISSIONS_MITIGATION_DATA/FETCH_ALL', getMangroveEmissionsMitigationData);
 }
