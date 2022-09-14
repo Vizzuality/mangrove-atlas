@@ -8,7 +8,6 @@ import { format } from "d3-format";
 // components
 import WidgetLegend from "./emissions-legend";
 import WidgetTooltip from "components/widget-tooltip";
-import { styles } from "components/select/style";
 
 const numberFormat = format(",.3r");
 const significantDigitsFormat = format(".3s");

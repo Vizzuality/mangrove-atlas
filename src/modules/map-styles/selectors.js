@@ -3,7 +3,7 @@ import { activeLayers } from "modules/layers/selectors";
 import template from "lodash/template";
 import { rasterLayers } from "./rasters.json";
 import StyleManager from "./style-manager";
-import Layers, { scopeFeature } from "./constants";
+import Layers from "./constants";
 import { coverageFilter, netChangeFilter } from "./filters";
 
 const { sources: bhSources, layers: bhLayers, layersMap } = Layers;
@@ -98,14 +98,6 @@ export const mapStyle = createSelector(
           }
           break;
         default:
-        case "cons-hotspots":
-          widgetFilter = _filters?.find((f) => f.id === "cons-hotspots");
-          if (widgetFilter && scopeFeature.get(widgetFilter.scope)) {
-            newLayerStyle.paint["fill-color"][1][1] = scopeFeature.get(
-              widgetFilter.scope
-            );
-          }
-          break;
       }
 
       return newLayerStyle;

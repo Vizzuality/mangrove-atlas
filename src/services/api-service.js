@@ -46,6 +46,15 @@ class APIService {
         return data;
       });
 
+  fetchMangroveBlueCarbonData = (params = {}) =>
+    this.client
+      .get("/v2/widgets/blue_carbon", { params: { ...params } })
+      .then((response) => {
+        const { status, statusText, data } = response;
+        if (status >= 400) throw new Error(statusText);
+        return data;
+      });
+
   fetchMangroveBiomassData = (params = {}) =>
     this.client
       .get("/v2/widgets/aboveground_biomass", { params: { ...params } })
