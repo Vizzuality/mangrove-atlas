@@ -105,7 +105,9 @@ export default {
         "restoration_and_conservation"
       ],
       "layersIds": [
-        "restoration-sites"
+        "restoration-sites",
+        "restoration-sites-clusters",
+        "estoration-sites-cluster-count"
       ]
     },
     {

@@ -34,7 +34,9 @@ const RestorationSites = ({
         </>
         {' '}
         restoration site
-        {isMoreThanOneSite ? 's.' : '.'}
+        {isMoreThanOneSite ? 's' : null}
+        {' '}
+        worldwide.
       </p>
     </Widget>
   );

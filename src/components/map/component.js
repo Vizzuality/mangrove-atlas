@@ -198,6 +198,45 @@ class Map extends Component {
     }, 2500);
   };
 
+  setRestorationSitePopUpState = (event) => {
+    const siteFromEvent = event.features[0]
+      const { organizations } = siteFromEvent.properties     
+      
+      const propertiesWithOrganizationNamesParsed =
+      {
+        ...siteFromEvent.properties,
+        organizations: organizations ? JSON.parse(organizations) : []
+      
+      }
+    
+      this.setState({
+        ...this.state,
+        popup: [event?.lngLat[0], event?.lngLat[1]],
+        popupInfo: propertiesWithOrganizationNamesParsed,
+        popupFeatureType: 'restoration-sites'
+      });        
+  }
+
+  expandMarkerCluster = ({ event, clusterLayerId, sourceId }) => {
+    const clusterFeatures = this.map.queryRenderedFeatures(event.point, {
+      layers: [clusterLayerId]
+    });
+    const clusterClicked = clusterFeatures[0]
+    const clusterId = clusterClicked.properties.cluster_id;
+    this.map.getSource(sourceId).getClusterExpansionZoom(
+      clusterId,
+      (error, zoom) => {
+        if (error) {
+          return;
+        }
+        this.map.easeTo({
+          center: clusterClicked.geometry.coordinates,
+          zoom
+        });
+      }
+    );
+  }
+
   render() {
     const {
       customClass,
@@ -228,25 +267,22 @@ class Map extends Component {
       );
 
      const isClickFromRestorationSite = getFeatureLayerById('restoration-sites')
+     const isClickFromRestorationSiteCluster = getFeatureLayerById('restoration-sites-clusters')
 
       if (isClickFromRestorationSite) {
         // This layer is different from the existing 'restoration' layer and refers to
         // restoration sites where restoration is happening. 
         // These sites are collected as part of the Mangrove Restoration Tracking Took (MRTT)
         // project whose code lives here:  https://github.com/globalmangrovewatch/gmw-users/tree/develop/mrtt-ui
-        const propertiesWithOrganizationNamesParsed =
-        {
-          ...e.features[0].properties,
-          organization_names: JSON.parse(e.features[0].properties.organization_names)
-         }
-        
-        this.setState({
-          ...this.state,
-          popup: [e?.lngLat[0], e?.lngLat[1]],
-          popupInfo: propertiesWithOrganizationNamesParsed,
-          popupFeatureType: 'restoration-sites'
+        this.setRestorationSitePopUpState(e)        
+      }
 
-        });
+      if (isClickFromRestorationSiteCluster) {
+        this.expandMarkerCluster({
+          event: e,
+          clusterLayerId: 'restoration-sites-clusters',
+          sourceId: 'restoration-sites'
+        })
       }
 
       const restorationData = e?.features.find(
@@ -312,7 +348,11 @@ class Map extends Component {
           <dt>Landscape</dt>
           <dd>{this.state.popupInfo?.landscape_name}</dd>
           <dt>Organizations</dt>
-          {this.state.popupInfo?.organization_names.map(organizationName => <dd>{ organizationName }</dd>)}
+          {
+            this.state.popupInfo?.organizations.map(
+              organization => <dd key={organization.id}>{organization.organization_name}</dd>
+            )
+          }
         </dl>
       </PopupMangroveStyle>
     
