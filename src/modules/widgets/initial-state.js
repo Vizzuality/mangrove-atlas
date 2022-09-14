@@ -57,6 +57,11 @@ export default {
       year: null,
       unit: null,
     },
+    activity: {
+      startYear: null,
+      endYear: null,
+      limit: 10
+    },
   },
   isCollapsed: true,
 };

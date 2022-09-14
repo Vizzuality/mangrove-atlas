@@ -179,7 +179,6 @@ export default {
       "name": "Mangrove habitat change",
       "slug": "mangrove_activity",
       "locationType": [
-        "custom",
         "worldwide"
       ],
       "categoryIds": [
