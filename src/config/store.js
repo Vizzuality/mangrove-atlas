@@ -14,6 +14,7 @@ import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
 import * as mangroveData from 'modules/mangrove-data';
 import * as mangroveNetChangeData from 'modules/mangrove-net-change-data';
+import * as mangroveBlueCarbonData from 'modules/mangrove-blue-carbon-data';
 import * as mangroveHabitatExtentData from 'modules/mangrove-habitat-extent-data';
 import * as mangroveProtectionData from 'modules/mangrove-protection-data';
 import * as mangroveSpeciesData from 'modules/mangrove-species-data';
@@ -45,6 +46,7 @@ const modules = [
   { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveNetChangeData', components: mangroveNetChangeData },
   { namespace: 'mangroveActivityData', components: mangroveActivityData },
+  { namespace: 'mangroveBlueCarbonData', components: mangroveBlueCarbonData },
   { namespace: 'mangroveHabitatExtentData', components: mangroveHabitatExtentData },
   { namespace: 'mangroveProtectionData', components: mangroveProtectionData },
   { namespace: 'mangroveSpeciesData', components: mangroveSpeciesData },

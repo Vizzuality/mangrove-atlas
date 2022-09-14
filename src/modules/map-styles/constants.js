@@ -168,11 +168,22 @@ const mangroveLossLayers = mangroveLossRasters.map(
   })
 );
 
+const mangroveCarbonRasters = {
+  name: 'toc_co2eha-1_2016_z0z12',
+  filename: 'toc_co2eha-1_2016_z0z12',
+  source: {
+    type: "raster",
+    minzoom: 0,
+    maxzoom: 12,
+  },
+};
+
 const rasters = flatten([
   ...mangroveAbovegroundBiomassRasters,
   ...mangroveCanopyHeightRasters,
   ...mangroveGainRasters,
-  ...mangroveLossRasters
+  ...mangroveLossRasters,
+  mangroveCarbonRasters
 ]);
 
 const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce(
@@ -231,11 +242,6 @@ const layersMap = {
   ],
   extent: extentLayers,
 };
-export const scopeFeature = new Map([
-  ["short", "ST_Advice"],
-  ["medium", "MT_Advice"],
-  ["long", "LT_Advice"],
-]);
 
 export default {
   layersMap,
