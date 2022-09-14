@@ -226,7 +226,6 @@ export const mapStyle = createSelector(
     const restorationSiteFeatures = _restorationSites.filter(site => !!site.site_centroid )
       .map(
         ({ site_centroid, landscape_name, organizations, site_name }) => {
-          const organization_names = organizations.map(({ organization_name }) => organization_name)
         if (site_centroid) {
           return (
             {
@@ -234,7 +233,7 @@ export const mapStyle = createSelector(
               properties:
                 {
                 landscape_name,
-                organization_names,
+                organizations,
                 site_name
                 }
             })
