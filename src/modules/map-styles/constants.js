@@ -89,10 +89,6 @@ const mangroveAbovegroundBiomassRasters = mangroveAbovegroundBiomassYears.map(
       minzoom: 0,
       maxzoom: 12,
     },
-    render: {
-      minzoom: 0,
-      maxzoom: 12,
-    },
     env: "staging",
   })
 );
@@ -112,10 +108,6 @@ const mangroveCanopyHeightRasters = mangroveCanopyHeightYears.map((year) => ({
   year,
   source: {
     type: "raster",
-    minzoom: 0,
-    maxzoom: 12,
-  },
-  render: {
     minzoom: 0,
     maxzoom: 12,
   },
@@ -141,10 +133,6 @@ const mangroveGainRasters = mangroveGainLossYears.map(
       minzoom: 0,
       maxzoom: 12,
     },
-    render: {
-      minzoom: 0,
-      maxzoom: 12,
-    },
     env: "staging",
   })
 );
@@ -164,10 +152,6 @@ const mangroveLossRasters = mangroveGainLossYears.map(
     year,
     source: {
       type: "raster",
-      minzoom: 0,
-      maxzoom: 12,
-    },
-    render: {
       minzoom: 0,
       maxzoom: 12,
     },
