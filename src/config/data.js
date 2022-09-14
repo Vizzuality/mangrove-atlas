@@ -37,22 +37,6 @@ export default {
       layersIds: [],
     },
     {
-      name: "Mangrove Restoration Sites",
-      slug: "restoration_sites",
-      locationType: [
-        "wdpa",
-        "country",
-        "worldwide"
-      ],
-      categoryIds: [
-        "all_datasets",
-        "restoration_and_conservation"
-      ],
-      layersIds: [
-        "restoration-sites"
-      ]
-    },
-    {
       name: "Mangrove habitat extent",
       slug: "mangrove_extent",
       locationType: ["custom-area", "wdpa", "country", "worldwide"],
@@ -80,6 +64,24 @@ export default {
       locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "restoration_and_conservation"],
       layersIds: ["alerts-heat"],
+    },
+    {
+      name: "Mangrove Restoration Sites",
+      slug: "restoration_sites",
+      locationType: [
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      categoryIds: [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      layersIds: [
+        "restoration-sites",
+        "restoration-sites-clusters",
+        "estoration-sites-cluster-count"
+      ]
     },
     {
       name: "Mangrove Species",
