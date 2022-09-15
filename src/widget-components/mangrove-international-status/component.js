@@ -22,7 +22,12 @@ export const MangroveInternationalStatus = ({
         location_id: currentLocation.id,
       }),
     });
-  }, [id, currentLocation.iso, currentLocation.id, fetchMangroveInternationalStatusData]);
+  }, [
+    id,
+    currentLocation.iso,
+    currentLocation.id,
+    fetchMangroveInternationalStatusData,
+  ]);
 
   if (!data) return null;
   const {
@@ -41,8 +46,10 @@ export const MangroveInternationalStatus = ({
     fow,
   } = data;
 
-  const apostrophe = name[name.length - 1] === "s" ? "'" : "'s";
-  const targetYears = target_years.length > 4 ? "s" : "";
+  console.log(!ndc_target && !ndc_reduction_target);
+
+  const apostrophe = name[name?.length - 1] === "s" ? "'" : "'s";
+  const targetYears = target_years?.length > 4 ? "s" : "";
   const reductionTargetSentence =
     ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
   const baseYearsSentence = base_years && ` from a baseline in ${base_years}`;
@@ -50,6 +57,8 @@ export const MangroveInternationalStatus = ({
     !!target_years && `by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
     !!ndc_target && `. This represents a reduction of ${ndc_target}mtCO2e/yr.`;
+    const hasNDCTarget = !!ndc_target && ndc_target > 0;
+    const hasNDCReductionTarget = !!ndc_reduction_target && ndc_reduction_target > 0;
 
   return (
     <ChartWidget
@@ -72,38 +81,41 @@ export const MangroveInternationalStatus = ({
                 {apostrophe} NDC pledge contains {pledge_type}
               </p>
             </div>
-            <div className={styles.sentenceWrapper}>
-              <p>
-                {(ndc_target || ndc_reduction_target) && `The GHG target`}
-                {!ndc_reduction_target &&
-                  !!ndc_target &&
-                  "represents a reduction of" && (
-                    <a
-                      className={styles.link}
-                      href={ndc_target_url}
-                      alt="ndc target"
-                    >
-                      {ndc_target}
-                    </a>
-                  )}
-                {reductionTargetSentence}
-                {baseYearsSentence} {targetYearsSentence}
-                {ndcTargetSentence}
-                {!ndc_target && !ndc_reduction_target && "No data"}
-              </p>
-            </div>
-            <div className={styles.sentenceWrapper}>
-              <p>
-                {name}{apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
-                {!ndc_adaptation && !ndc_mitigation
-                  ? "doesn't include"
-                  : "includes"}{" "}
-                coastal and marine NBS {ndc_adaptation}
-                {ndc_mitigation}.
-              </p>
-            </div>
           </div>
         )}
+
+        <div className={styles.sentenceWrapper}>
+          <p>
+            {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
+            {!hasNDCReductionTarget && hasNDCTarget && (
+              <span>
+                represents a reduction of{" "}
+                <a
+                  className={styles.link}
+                  href={ndc_target_url}
+                  alt="ndc target"
+                >
+                  {ndc_target}
+                </a>
+              </span>
+            )}
+            {reductionTargetSentence}
+            {baseYearsSentence} {targetYearsSentence}
+            {ndcTargetSentence}
+            {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
+          </p>
+        </div>
+        <div className={styles.sentenceWrapper}>
+          <p>
+            {name}
+            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+            {!ndc_adaptation && !ndc_mitigation
+              ? "doesn't include"
+              : "includes"}{" "}
+            coastal and marine NBS {ndc_adaptation}
+            {ndc_mitigation}.
+          </p>
+        </div>
 
         {frel && (
           <div>
