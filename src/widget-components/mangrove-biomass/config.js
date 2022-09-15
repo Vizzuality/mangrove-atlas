@@ -3,10 +3,13 @@ import React from 'react';
 // utils
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
+import compact from 'lodash/compact';
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
+
+const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
 const widgetMeta = ({ list, metadata }) => {
   if (list && list.length && metadata) {
@@ -24,14 +27,21 @@ const widgetMeta = ({ list, metadata }) => {
 
 const getData = (data, selectedYear = 2020) => {
   if (!data || !data.length) return null;
-  const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F']
-  const barsValues = data.map(({ value })=> value);
-  const total = barsValues.reduce((previous, current) => current + previous);
-  return data.map((d, index) => ({
-    x: selectedYear,
-    y: d.value * 100, label: d.indicator, percentage: d.value * 100, color: COLORS[index], value: d.value / total * 100,
+  const colorKeys = data.reduce((acc, d, i) => ({
+    ...acc,
+    [d.indicator]: COLORS[i]
+  }), {});
 
-  }))
+  const total = data.reduce((previous, current) => current.value + previous);
+
+  return compact(data.map((d) => d.value > 0 && ({
+    x: selectedYear,
+    y: d.value * 100,
+    label: d.indicator,
+    percentage: d.value * 100,
+    color: colorKeys[d.indicator],
+    value: d.value / total * 100,
+  })))
 };
 
 const filterData = ({ list }, yearSelected) => sortBy(
