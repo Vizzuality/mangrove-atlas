@@ -232,20 +232,6 @@ export default {
       ]
     },
     {
-        "name": "Mangrove Investment Potential",
-        "slug": "mangrove_investment_potential",
-        "locationType": [
-          "country",
-          "worldwide"
-        ],
-        "categoryIds": [
-          "all_datasets",
-          "climate_and_policy",
-      ],
-      "layersIds": [
-      ]
-    },
-    {
       "name": "Mangrove Protection",
       "slug": "mangrove_protection",
       "locationType": [
@@ -256,7 +242,21 @@ export default {
         "all_datasets",
         "restoration_and_conservation"
       ]
-    }
+    },
+    {
+      "name": "Carbon Market Potential",
+      "slug": "mangrove_investment_potential",
+      "locationType": [
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
+    ],
+    "layersIds": [
+    ]
+  },
   ],
   "layers": [
     {
