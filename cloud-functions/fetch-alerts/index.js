@@ -1,6 +1,7 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 const axios = require('axios').default;
 const reverse = require('turf-reverse');
+const mapshaper = require('mapshaper');
 const http = require('http');
 const https = require('https');
 
@@ -11,15 +12,19 @@ const bigquery = new BigQuery();
 
 const cache = {};
 
-const getLocation = async (locationId) => {
+const getLocation = async (locationId, env) => {
   if (!locationId) return null;
   console.log('Getting geometry from locations API');
-  const response = await axios.get(`https://mangrove-atlas-api.herokuapp.com/api/v2/locations/${locationId}`, { httpAgent, httpsAgent });
+  const apiUrl = {
+    production: 'https://mangrove-atlas-api.herokuapp.com',
+    staging: 'https://mangrove-atlas-api-staging.herokuapp.com',
+  }
+  const response = await axios.get(`${apiUrl[env]}/api/v2/locations/${locationId}`, { httpAgent, httpsAgent });
   if (response && response.data) return response.data.data;
   return null;
 };
 
-const makeQuery = (location, startDate, endDate) => {
+const makeQuery = async (location, startDate, endDate) => {
   let whereQuery = '';
 
   if (location) {
@@ -28,8 +33,13 @@ const makeQuery = (location, startDate, endDate) => {
       properties: {},
       geometry: location.geometry,
     };
+    const input = {'input.geojson': JSON.stringify(geoJSON)};
+    const cmd = '-i input.geojson -simplify dp 20% keep-shapes -clean -o output.geojson format=geojson geojson-type=Feature';
+
+    const geoJSONsimp = (await mapshaper.applyCommands(cmd, input))['output.geojson'].toString();
+
+    const geoJSONreverse = reverse(JSON.parse(geoJSONsimp));
     // Reverse coordinates to get [latitude, longitude]
-    const geoJSONreverse = reverse(geoJSON);
     whereQuery = `AND ST_INTERSECTS(ST_GEOGFROMGEOJSON('${JSON.stringify(geoJSONreverse.geometry)}'), ST_GEOGPOINT(longitude, latitude))`;
   }
 
@@ -45,9 +55,7 @@ const makeQuery = (location, startDate, endDate) => {
 /**
  * Data aggregated by month
  */
-const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
-
-  endDate = endDate || new Date().toISOString().split('T')[0];
+const alertsJob = async (locationId, startDate, endDate, env) => {
   // First try to get data from cache in order to reduce costs
   const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
@@ -55,9 +63,9 @@ const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId);
+  const location = locationId && await getLocation(locationId, env);
   const options = {
-    query: makeQuery(location, startDate, endDate),
+    query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
     location: 'US',
   };
@@ -80,8 +88,18 @@ const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
 exports.fetchAlerts = (req, res) => {
   // Get data and return a JSON
   async function fetch() {
-    const result =  await alertsJob(req.query.location_id, req.query.start_date, req.query.end_date);
-    res.status(200).json(result);
+    try {
+      const startDate = req.query.startDate || '2020-01-01';
+      const endDate = req.query.end_date || new Date().toISOString().split('T')[0];
+      const env = req.query.env || 'production';
+
+      const result =  await alertsJob(req.query.location_id, startDate, endDate, env);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+
+    }
   }
 
   // Set CORS headers for preflight requests
@@ -96,6 +114,6 @@ exports.fetchAlerts = (req, res) => {
     res.set('Access-Control-Max-Age', '3600');
     res.status(204).send('');
   } else {
-    fetch();
+      fetch();
   }
 };
