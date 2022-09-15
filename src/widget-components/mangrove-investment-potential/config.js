@@ -1,6 +1,7 @@
 import React from "react";
 
 // utils
+import sortBy from 'lodash/sortBy';
 import { format } from "d3-format";
 
 // components
@@ -11,33 +12,45 @@ const COLORS = {
   remaining: "#ff7f0f",
   protected: "#2da02b",
   carbon_10: "#1f78b4",
-  carbon_5: "#d72729"
+  carbon_5: "#d72729",
 };
 
-const getData = (data, total) => {
+const CATEGORY_DICTIONARY = {
+  carbon_5: "Investible Blue Carbon",
+  carbon_10: "Additional Investible Blue Carbon",
+  Remaining: "Remaining mangrove",
+  Protected: "Area of Mangrove in Protected Areas"
+}
+
+const getData = (data) => {
   if (!data || !data.length) return null;
-  return data.map((d, index) => ({
-    label: d.category,
-    value: d.value,
-    color: COLORS[d.category],
-    total: total,
-    // percentage: d.percentage,
-    percentage: (d.value * 100) / total
-  })
-)};
+
+  return sortBy(data.map((d) => {
+    const hasLabel = d.label.toLowerCase() !== d.category;
+    return ({
+      category: CATEGORY_DICTIONARY[d.category],
+      label: d.label,
+      value: d.value,
+      color: COLORS[d.category],
+      description: hasLabel ? d.description : null,
+      percentage: d.percentage,
+      tooltipValue: hasLabel ? d.description : `${numberFormat(d.value)} ha`,
+    });
+}), "value")};
 
 
 export const CONFIG = {
-  parse: (data) => {
+  parse: (data, investibleBlueCarbon) => {   
     const total = data.reduce(
-      (previous, current) => current.value + previous, 0);  
+      (previous, current) => current.value + previous,
+      0
+    );
     const chartData = getData(data, total);
-    const widgetSentence = data?.find(d => d?.text?.includes('$5'))?.text;
+    const investibleBlueCarbonValue = data.find(({ label }) => label.includes(investibleBlueCarbon));
 
     return {
       chartData,
-      totalValues: total,
-      widgetSentence,
+      investibleBlueCarbonValue,
       chartConfig: {
         type: "pie",
         layout: "centric",
@@ -50,51 +63,48 @@ export const CONFIG = {
               cy: "50%",
               paddingAngle: 2,
               dataKey: "percentage",
-              nameKey: "label",
+              nameKey: "category",
               innerRadius: "60%",
               outerRadius: "80%",
               isAnimationActive: false,
               labelLine: false,
-              label: ({
-                cx,
-                cy,
-                midAngle,
-                innerRadius,
-                outerRadius,
-                label,
-                startAngle,
-                ...rest
-              }) => {
+              label: ({ cx, cy, midAngle, outerRadius, label, category }) => {
                 const RADIAN = Math.PI / 180;
-                const radius = 5 + innerRadius + (outerRadius - innerRadius);
-                const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                const getDy = () => {
-                  if (startAngle === 0) return -5
-                  if (x < cx) return 0
-                  else return 0
-                };
-                const dy = getDy();
-
+                const sin = Math.sin(-RADIAN * midAngle);
+                const cos = Math.cos(-RADIAN * midAngle);
+                const mx = cx + (outerRadius + 10) * cos;
+                const my = cy + (outerRadius + 10) * sin;
+                const ex = mx + (cos >= 0 ? 1 : -1);
+                const ey = my;
+                const textAnchor = cos >= 0 ? "start" : "end";
+                const hasLabel = label.toLowerCase() !== category;
                 return (
-                  <text
-                    x={x}
-                    y={y}
-                    dy={dy}
-                    fill="#8884d8"
-                    textAnchor={x > cx ? "start" : "end"}
-                    dominantBaseline="central"
-                    style={{ padding: 20 }}
-                  >
-                    {label}
-                  </text>
+                  <g>
+                    {hasLabel && (
+                      <text
+                        x={ex + (cos >= 0 ? 1 : -1)}
+                        y={ey}
+                        textAnchor={textAnchor}
+                        fill="#8884d8"
+                      >
+                        {category}
+                      </text>
+                    )}
+                    <text
+                      x={ex + (cos >= 0 ? 1 : -1)}
+                      y={ey}
+                      dy={hasLabel ? 10 : 0}
+                      textAnchor={textAnchor}
+                      fill="#8884d8"
+                    >
+                      {label}
+                    </text>
+                  </g>
                 );
-              }
-              
+              },
             },
           },
         },
-
         tooltip: {
           cursor: false,
           content: (properties) => {
@@ -109,6 +119,11 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
+                  {
+                    label: "Area",
+                    key: "tooltipValue",
+                    position: "_column",
+                  },
                   {
                     label: "Percentage",
                     key: "percentage",

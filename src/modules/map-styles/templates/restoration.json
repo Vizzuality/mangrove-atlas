@@ -5,7 +5,15 @@
     "source": "restoration",
     "source-layer": "MOW_Global_Mangrove_Restoration",
     "paint": {
-      "fill-color": "#8122A6",
+      "fill-color": [
+        "interpolate",
+        ["linear"],
+        ["get", "Rest_Score"],
+        0,
+        "#D4EBFC",
+        1,
+        "#831D9E"
+    ],
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
