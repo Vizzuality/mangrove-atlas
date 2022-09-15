@@ -1,71 +1,64 @@
-import React, { useEffect } from 'react';
-import Select from 'components/select';
-import ChartWidget from 'components/chart-widget';
+import React, { useEffect } from "react";
+import Select from "components/select";
+import ChartWidget from "components/chart-widget";
 
-import config from './config';
+import config from "./config";
 
 const MangroveAlerts = ({
   data,
   isLoading,
   isCollapsed = true,
-  slug, name,
+  slug,
+  name,
   addFilter,
   ui = {},
   currentLocation,
-  locationsList,
   setUi,
   fetchAlerts,
   ...props
 }) => {
-  const {
-    year,
-    startDate,
-    endDate
-  } = ui;
+  const { year, startDate, endDate } = ui;
 
   useEffect(() => {
-    if (currentLocation && (currentLocation.id || currentLocation.location_id || currentLocation.iso)) {
-      if (currentLocation.id === 'worldwide') {
-        fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
-      } else {
-        let location = locationsList?.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
-
-        // Find by location_id
-        if (!location) {
-          location = locationsList?.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
-        }
-        // eslint-disable-next-line camelcase
-        const { location_id } = location;
-        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
-      }
-    }
-  }, [year, currentLocation, fetchAlerts]);
+    fetchAlerts({
+      start_date: startDate.value,
+      end_date: endDate.value,
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.location_id,
+      }),
+    });
+  }, [currentLocation.id, currentLocation.iso, startDate, endDate, fetchAlerts]);
 
   const {
-    chartData, chartConfig, total, downloadData, startDateOptions, endDateOptions,
+    chartData,
+    chartConfig,
+    total,
+    downloadData,
+    startDateOptions,
+    endDateOptions,
   } = config.parse(data, startDate, endDate, year);
 
   useEffect(() => {
     if (!!startDateOptions.length && !startDate.label) {
       setUi({
-        id: 'alerts',
+        id: "alerts",
         value: {
           startDate: startDateOptions[0],
-        }
+        },
       });
     }
-  }, [startDateOptions, isLoading]);
+  }, [startDateOptions, isLoading, setUi, startDate.label]);
 
   useEffect(() => {
     if (!!endDateOptions.length && !endDate.label) {
       setUi({
-        id: 'alerts',
+        id: "alerts",
         value: {
           endDate: endDateOptions[endDateOptions.length - 1],
-        }
+        },
       });
     }
-  }, [endDateOptions, isLoading]);
+  }, [endDateOptions, isLoading, setUi, endDate.label]);
 
   if (chartData.length <= 0) {
     return null;
@@ -76,31 +69,31 @@ const MangroveAlerts = ({
     const mm = new Date(value).getMonth();
 
     const monthsConversionAlt = {
-      0: 'January',
-      1: 'February',
-      2: 'March',
-      3: 'April',
-      4: 'May',
-      5: 'June',
-      6: 'July',
-      7: 'August',
-      8: 'September',
-      9: 'October',
-      10: 'November',
-      11: 'December'
+      0: "January",
+      1: "February",
+      2: "March",
+      3: "April",
+      4: "May",
+      5: "June",
+      6: "July",
+      7: "August",
+      8: "September",
+      9: "October",
+      10: "November",
+      11: "December",
     };
 
     const monthLabel = monthsConversionAlt[mm];
     const label = `${monthLabel}, ${yyyy}`;
 
     setUi({
-      id: 'alerts',
+      id: "alerts",
       value: {
         [type]: {
           label,
-          value
-        }
-      }
+          value,
+        },
+      },
     });
   };
 
@@ -109,9 +102,10 @@ const MangroveAlerts = ({
       value={startDate.value}
       defaultValue={startDateOptions[0]}
       options={startDateOptions}
-      isOptionDisabled={option => option.value > endDate.value
-        || option.value === startDate.value}
-      onChange={value => changeDate('startDate', value)}
+      isOptionDisabled={(option) =>
+        option.value > endDate.value || option.value === startDate.value
+      }
+      onChange={(value) => changeDate("startDate", value)}
       classNamePrefix="react-select"
       className="alerts"
     />
@@ -122,16 +116,18 @@ const MangroveAlerts = ({
       value={endDate.value}
       defaultValue={endDateOptions[endDateOptions.length - 1]}
       options={endDateOptions}
-      isOptionDisabled={option => option.value < startDate.value
-        || option.value === endDate.value}
-      onChange={value => changeDate('endDate', value)}
+      isOptionDisabled={(option) =>
+        option.value < startDate.value || option.value === endDate.value
+      }
+      onChange={(value) => changeDate("endDate", value)}
       classNamePrefix="react-select"
       className="alerts"
     />
   );
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts<br />
+      There were <strong>{total}</strong> mangrove disturbance alerts
+      <br />
       between {startDateSelect}
       &nbsp;and {endDateSelect}.
     </>
@@ -139,7 +135,7 @@ const MangroveAlerts = ({
 
   const chartRData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   return (
@@ -154,8 +150,8 @@ const MangroveAlerts = ({
       chartData={chartRData}
       {...props}
       onBrushEnd={({ startIndex, endIndex }) => {
-        changeDate('startDate', chartData[startIndex].start);
-        changeDate('endDate', chartData[endIndex].end);
+        changeDate("startDate", chartData[startIndex].start);
+        changeDate("endDate", chartData[endIndex].end);
       }}
     />
   );

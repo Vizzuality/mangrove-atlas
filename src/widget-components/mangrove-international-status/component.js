@@ -46,8 +46,6 @@ export const MangroveInternationalStatus = ({
     fow,
   } = data;
 
-  console.log(!ndc_target && !ndc_reduction_target);
-
   const apostrophe = name[name?.length - 1] === "s" ? "'" : "'s";
   const targetYears = target_years?.length > 4 ? "s" : "";
   const reductionTargetSentence =
