@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "components/select";
 import ChartWidget from "components/chart-widget";
 
@@ -19,15 +19,26 @@ const MangroveAlerts = ({
 }) => {
   const { year, startDate, endDate } = ui;
 
+  const [initialDate, setInitialDate] = useState({
+    startInitialDate: null,
+    endInitialDate: null,
+  });
+
   useEffect(() => {
     fetchAlerts({
-      start_date: startDate.value,
-      end_date: endDate.value,
+      ...(initialDate.startInitialDate && { start_date: startDate?.value }),
+      ...(initialDate.endInitialDate && { end_date: endDate?.value }),
       ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
         location_id: currentLocation.location_id,
       }),
     });
-  }, [currentLocation.location_id, currentLocation.iso, startDate, endDate, fetchAlerts]);
+  }, [
+    currentLocation.location_id,
+    currentLocation.iso,
+    fetchAlerts,
+    startDate,
+    endDate,
+  ]);
 
   const {
     chartData,
@@ -39,26 +50,31 @@ const MangroveAlerts = ({
   } = config.parse(data, startDate, endDate, year);
 
   useEffect(() => {
-    if (!!startDateOptions.length && !startDate.label) {
+    setInitialDate({
+      startInitialDate: startDateOptions[0],
+      endInitialDate: endDateOptions[endDateOptions.length - 1],
+      });
+  }, [
+    startDateOptions.length,
+    endDateOptions.length,
+  ]);
+
+  useEffect(() => {
+    if(startDateOptions[0] !== startDate?.value || endDateOptions[endDateOptions.length - 1] !== endDate?.value) {
       setUi({
         id: "alerts",
         value: {
           startDate: startDateOptions[0],
-        },
-      });
-    }
-  }, [startDateOptions, isLoading, setUi, startDate.label]);
-
-  useEffect(() => {
-    if (!!endDateOptions.length && !endDate.label) {
-      setUi({
-        id: "alerts",
-        value: {
           endDate: endDateOptions[endDateOptions.length - 1],
         },
       });
     }
-  }, [endDateOptions, isLoading, setUi, endDate.label]);
+  }, [
+    startDateOptions.length,
+    endDateOptions.length,
+    currentLocation.location_id,
+    currentLocation.iso,
+  ]);
 
   if (chartData.length <= 0) {
     return null;
@@ -99,11 +115,11 @@ const MangroveAlerts = ({
 
   const startDateSelect = (
     <Select
-      value={startDate.value}
+      value={startDate?.value}
       defaultValue={startDateOptions[0]}
       options={startDateOptions}
       isOptionDisabled={(option) =>
-        option.value > endDate.value || option.value === startDate.value
+        option.value > endDate?.value || option.value === startDate?.value
       }
       onChange={(value) => changeDate("startDate", value)}
       classNamePrefix="react-select"
@@ -113,11 +129,11 @@ const MangroveAlerts = ({
 
   const endDateSelect = (
     <Select
-      value={endDate.value}
+      value={endDate?.value}
       defaultValue={endDateOptions[endDateOptions.length - 1]}
       options={endDateOptions}
       isOptionDisabled={(option) =>
-        option.value < startDate.value || option.value === endDate.value
+        option.value < startDate?.value || option.value === endDate?.value
       }
       onChange={(value) => changeDate("endDate", value)}
       classNamePrefix="react-select"
