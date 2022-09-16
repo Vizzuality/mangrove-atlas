@@ -296,11 +296,10 @@ class Map extends Component {
     const onLeave = (e) => {
       if (hoveredStateId !== null) {
         this.map.setFeatureState(
-          { "sourceLayer": "null", source: "null", id: null },
+          { "sourceLayer": "nulll", source: "restoration", id: null },
           { hover: false }
         );
-      }
-      
+      }      
       hoveredStateId = null;
     };
 
