@@ -85,7 +85,7 @@ const LabelContent = () => (
       fill="#000"
       fontSize="14px"
     >
-      Mitigation (tCO<tspan style={{ "baseline-shift": "sub" }}>2</tspan>/ha)
+      Mitigation (tCO<tspan style={{ "baseline-shift": "sub" }}>2</tspan>e/ha)
     </text>
   </g>
 );

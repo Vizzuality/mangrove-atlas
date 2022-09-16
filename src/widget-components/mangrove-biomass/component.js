@@ -54,9 +54,12 @@ function MangroveBiomass({
     }
   }, [setUi, year, years, addFilter, isLoading]);
 
-  if (!data) return null;
+  const filteredData = useMemo(() => data?.filter(({ indicator }) => indicator !== "total"), [data]);
+  const indicators = useMemo(() => filteredData.map(({ indicator }) => indicator), [filteredData]);
 
-  const { chartData, chartConfig, downloadData } = config.parse(data, year, aboveGroundBiomass);
+  if (!filteredData) return null;
+
+  const { chartData, chartConfig, downloadData } = config.parse(filteredData, indicators, year);
 
   if (!chartData || chartData.length <= 0) {
     return null;

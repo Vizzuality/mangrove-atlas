@@ -27,7 +27,7 @@ const MangroveAlerts = ({
         location_id: currentLocation.location_id,
       }),
     });
-  }, [currentLocation.id, currentLocation.iso, startDate, endDate, fetchAlerts]);
+  }, [currentLocation.location_id, currentLocation.iso, startDate, endDate, fetchAlerts]);
 
   const {
     chartData,
