@@ -34,7 +34,6 @@ export const MangroveInternationalStatus = ({
     pledge_type,
     ndc_target,
     ndc_reduction_target,
-    base_years,
     target_years,
     ndc_target_url,
     ndc_updated,
@@ -50,11 +49,10 @@ export const MangroveInternationalStatus = ({
   const targetYears = target_years?.length > 4 ? "s" : "";
   const reductionTargetSentence =
     ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
-  const baseYearsSentence = base_years && ` from a baseline in ${base_years}`;
   const targetYearsSentence =
     !!target_years && `by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
-    !!ndc_target && `. This represents a reduction of ${ndc_target}mtCO2e/yr.`;
+    !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
     const hasNDCTarget = !!ndc_target && ndc_target > 0;
     const hasNDCReductionTarget = !!ndc_reduction_target && ndc_reduction_target > 0;
 
@@ -98,7 +96,7 @@ export const MangroveInternationalStatus = ({
               </span>
             )}
             {reductionTargetSentence}
-            {baseYearsSentence} {targetYearsSentence}
+            {targetYearsSentence}
             {ndcTargetSentence}
             {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
           </p>
@@ -115,7 +113,7 @@ export const MangroveInternationalStatus = ({
           </p>
         </div>
 
-        {frel && (
+        {frel && fow && (
           <div>
             <h3 className={styles.title}>Forest Reference Emission Levels</h3>
             <div className={styles.sentenceWrapper}>
@@ -127,15 +125,24 @@ export const MangroveInternationalStatus = ({
             </div>
           </div>
         )}
-
         <div>
           <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
+          {ipcc_wetlands_suplement ? (
           <div className={styles.sentenceWrapper}>
             <p>
               {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
               Supplement.
             </p>
           </div>
+          ) : (
+
+          <div className={styles.sentenceWrapper}>
+            <p>
+              There is no information as to whether {name} has implemented the IPCC Wetlands
+              Supplement.
+            </p>
+          </div>
+          )}
         </div>
       </div>
     </ChartWidget>
