@@ -14,7 +14,7 @@ class AlertsService {
     this.client
       .get("/fetch-alerts", {
         params: {
-          ...(process.env.NODE_ENV === "development" && { env: "staging" }),
+          env: "staging",
           ...params,
         },
       })

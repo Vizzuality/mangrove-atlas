@@ -25,6 +25,12 @@
   }
 }
 
+.introModalContent {
+  .logo {
+    width: 230px;
+  }
+}
+
 .modalContent {
   @include medium-text;
   height: 100%;
