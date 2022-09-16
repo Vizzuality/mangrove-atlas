@@ -106,8 +106,7 @@ const getDates = data => sortBy(data
       label: `${month}, ${year}`,
       value: d.date.value
     };
-  })
-  .filter(m => m.value >= '2020-01-01'),
+  }),
 ['date']);
 
 const getStartDates = data => sortBy(data
@@ -133,8 +132,7 @@ const getStartDates = data => sortBy(data
       label: `${month}, ${year}`,
       value: d.date.value
     };
-  })
-  .filter(m => m.value >= '2020-01-01'),
+  }),
 ['date']);
 
 const getEndDates = data => sortBy(data
