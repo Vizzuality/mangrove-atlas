@@ -12,6 +12,7 @@ import logo from './mangrove-alliance.png';
 import convened from './convened.png';
 import supported from './supported.png';
 import donors from './donors.png';
+import vizzuality from './vizzuality.png';
 
 import styles from './style.module.scss';
 
@@ -107,13 +108,16 @@ const NavMenu = ({ mobile }) => {
 
               <p>Got a query? Contact <a href="mailto://contact@mangrovealliance.org">Mangrove Alliance</a></p>
               <p>Convened by</p>
-              <img src={convened} className={styles.logo} alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International" />
+              <img src={convened} alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International" />
 
               <p>Supported by</p>
-              <img src={supported} className={styles.logo} alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography" />
+              <img src={supported} alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography" />
 
               <p>Donors</p>
-              <img src={donors} className={styles.logo} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
+              <img src={donors} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
+
+              <p>Designed by:</p>
+                <a href="https://www.vizzuality.com/" alt="vizzuality" target="_blank"><img src={vizzuality} className={styles.logo} alt="vizzuality" /></a>
 
               <h4>Disclaimer</h4>
               <p>
