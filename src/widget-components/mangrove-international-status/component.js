@@ -44,18 +44,17 @@ export const MangroveInternationalStatus = ({
     year_frel,
     fow,
   } = data;
-
-  const apostrophe = name[name?.length - 1] === "s" ? "'" : "'s";
-  const targetYears = target_years?.length > 4 ? "s" : "";
-  const reductionTargetSentence =
-    ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
-  const targetYearsSentence =
-    !!target_years && `by target year${targetYears} ${target_years}`;
-  const ndcTargetSentence =
-    !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
   const hasNDCTarget = !!ndc_target && ndc_target > 0;
   const hasNDCReductionTarget =
     !!ndc_reduction_target && ndc_reduction_target > 0;
+  const apostrophe = name[name?.length - 1] === "s" ? "'" : "'s";
+  const targetYears = target_years?.length > 4 ? "s" : "";
+  const reductionTargetSentence =
+    !!ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
+  const targetYearsSentence =
+    !!target_years && (!!hasNDCTarget || !!hasNDCReductionTarget) && `by target year${targetYears} ${target_years}`;
+  const ndcTargetSentence =
+    !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
 
   return (
     <ChartWidget
@@ -81,33 +80,36 @@ export const MangroveInternationalStatus = ({
           </div>
         )}
 
-        {((!pledge_type && !hasNDCTarget && !hasNDCReductionTarget) ||
-          ndc_updated) && (
+        {!pledge_type && !hasNDCTarget && !hasNDCReductionTarget && (
+          <div>
             <h3 className={styles.title}>
               Nationally Determined Contributions (NDC)
             </h3>
-          )}
+          </div>
+        )}
 
         <div className={styles.sentenceWrapper}>
-          <p>
-            {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
-            {!hasNDCReductionTarget && hasNDCTarget && (
-              <span>
-                represents a reduction of{" "}
-                <a
-                  className={styles.link}
-                  href={ndc_target_url}
-                  alt="ndc target"
-                >
-                  {ndc_target}
-                </a>
-              </span>
-            )}
-            {!hasNDCReductionTarget && hasNDCTarget && reductionTargetSentence}
-            {!hasNDCReductionTarget && hasNDCTarget && targetYearsSentence}
-            {ndcTargetSentence}
-            {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
-          </p>
+          <a
+            className={
+              !hasNDCTarget && !hasNDCReductionTarget ? styles.resetLink : styles.link
+            }
+            href={
+              !hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url
+            }
+            alt="ndc target"
+          >
+          
+            <p>
+              {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
+              {!hasNDCReductionTarget && hasNDCTarget && (
+                <span>represents a reduction of {ndc_target}</span>
+              )}
+              {reductionTargetSentence}
+              {targetYearsSentence}
+              {ndcTargetSentence}
+              {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
+            </p>
+          </a>
         </div>
         <div className={styles.sentenceWrapper}>
           <p>
@@ -146,7 +148,7 @@ export const MangroveInternationalStatus = ({
             <div className={styles.sentenceWrapper}>
               <p>
                 There is no information as to whether {name} has implemented the
-                IPCC Wetlands Supplement.
+                wetlands supplement
               </p>
             </div>
           )}

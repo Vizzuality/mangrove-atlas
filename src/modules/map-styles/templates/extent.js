@@ -1,15 +1,13 @@
 import { flatten } from "lodash";
 
 const extentLineStyle = {
-  "line-color": "#06C4BD",
+  "line-color": 'blue', //"#06C4BD",
   "line-width": [
     "interpolate",
     ["linear"],
     ["zoom"],
     0,
-    7,
-    5,
-    1,
+    10,
     12,
     0,
 ],
@@ -19,8 +17,6 @@ const extentLineStyle = {
     ["zoom"],
     0,
     60,
-    5,
-    20,
     12,
     0,
 ],
