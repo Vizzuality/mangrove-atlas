@@ -37,7 +37,6 @@ function MangroveInvestmentPotential({
   }, [currentLocation, fetchInvestmentPotentialData]);
 
   const labelHandler = useCallback((value) => {
-    console.log(value)
     setInvestibleBlueCarbon(value);
   }, [setInvestibleBlueCarbon]);
 
