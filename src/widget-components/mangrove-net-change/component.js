@@ -53,6 +53,8 @@ function MangroveNetChange({
     });
   }, [fetchMangroveNetChangeData, currentLocation]);
 
+  const filteredYears = useMemo(() => years.filter((year) => !!years.length && year >= startYear && year <= endYear), [years, startYear, endYear]);
+
   useEffect(() => {
     if (data && data.length) {
       addFilter({
@@ -60,7 +62,7 @@ function MangroveNetChange({
           id: "net",
           startYear: startYear,
           endYear: endYear,
-          years,
+          years: filteredYears,
           unit: unit,
         },
       });
@@ -69,6 +71,7 @@ function MangroveNetChange({
         value: {
           endYear: endYear,
           startYear: startYear,
+          years: filteredYears,
           unit: unit,
         },
       });

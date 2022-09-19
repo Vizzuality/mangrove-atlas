@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
     - Refactor in biomass widget (widget adapted to new endpoint)
     - Refactor in height widget (widget adapted to new endpoint)
-    - Refactor in net change and extent widgets (new implementation and new endpoints
+    - Refactor in net change and extent widgets (new implementation and new endpoints)
     
 ### Fixed
     - Protected areas and restoration widgets showing wrong values in tooltip for totals of non-protected and non-restorable areas.

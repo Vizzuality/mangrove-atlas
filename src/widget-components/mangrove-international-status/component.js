@@ -52,11 +52,11 @@ export const MangroveInternationalStatus = ({
   const reductionTargetSentence =
     !!ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
   const targetYearsSentence =
-    !!target_years && (!!hasNDCTarget || !!hasNDCReductionTarget) && `by target year${targetYears} ${target_years}`;
+    !!target_years && (!!hasNDCTarget || !!hasNDCReductionTarget) && ` by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
     !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
 
-  return (
+    return (
     <ChartWidget
       name={name}
       slug={slug}
