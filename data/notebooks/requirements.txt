@@ -7,12 +7,13 @@ tqdm == 4.62.3
 pandas == 1.2.2
 geopandas == 0.10.2
 simpledbf
+psycopg2
 matplotlib == 3.3.4
 earthengine-api
 gcsfs
 s3fs
-google-cloud-storage
-google-cloud-datastore
+google-cloud-storage == 2.4.0
+google-cloud-datastore == 2.8.0
 google-api-python-client
 iso8601
 pystac
