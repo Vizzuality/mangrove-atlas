@@ -32,6 +32,12 @@ const MangroveAlerts = ({
         location_id: currentLocation.location_id,
       }),
     });
+    if (startDate?.value || endDate?.value) {
+      setInitialDate({
+        startInitialDate: null,
+        endInitialDate: null,
+      })
+    }
   }, [
     currentLocation.location_id,
     currentLocation.iso,

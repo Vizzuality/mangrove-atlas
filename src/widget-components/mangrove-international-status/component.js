@@ -53,8 +53,9 @@ export const MangroveInternationalStatus = ({
     !!target_years && `by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
     !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
-    const hasNDCTarget = !!ndc_target && ndc_target > 0;
-    const hasNDCReductionTarget = !!ndc_reduction_target && ndc_reduction_target > 0;
+  const hasNDCTarget = !!ndc_target && ndc_target > 0;
+  const hasNDCReductionTarget =
+    !!ndc_reduction_target && ndc_reduction_target > 0;
 
   return (
     <ChartWidget
@@ -80,6 +81,13 @@ export const MangroveInternationalStatus = ({
           </div>
         )}
 
+        {((!pledge_type && !hasNDCTarget && !hasNDCReductionTarget) ||
+          ndc_updated) && (
+            <h3 className={styles.title}>
+              Nationally Determined Contributions (NDC)
+            </h3>
+          )}
+
         <div className={styles.sentenceWrapper}>
           <p>
             {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
@@ -95,8 +103,8 @@ export const MangroveInternationalStatus = ({
                 </a>
               </span>
             )}
-            {reductionTargetSentence}
-            {targetYearsSentence}
+            {!hasNDCReductionTarget && hasNDCTarget && reductionTargetSentence}
+            {!hasNDCReductionTarget && hasNDCTarget && targetYearsSentence}
             {ndcTargetSentence}
             {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
           </p>
@@ -128,20 +136,19 @@ export const MangroveInternationalStatus = ({
         <div>
           <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
           {ipcc_wetlands_suplement ? (
-          <div className={styles.sentenceWrapper}>
-            <p>
-              {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
-              Supplement.
-            </p>
-          </div>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
+                Supplement.
+              </p>
+            </div>
           ) : (
-
-          <div className={styles.sentenceWrapper}>
-            <p>
-              There is no information as to whether {name} has implemented the IPCC Wetlands
-              Supplement.
-            </p>
-          </div>
+            <div className={styles.sentenceWrapper}>
+              <p>
+                There is no information as to whether {name} has implemented the
+                IPCC Wetlands Supplement.
+              </p>
+            </div>
           )}
         </div>
       </div>

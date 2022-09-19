@@ -1,7 +1,7 @@
 import React from "react";
 
 // utils
-import sortBy from 'lodash/sortBy';
+import sortBy from "lodash/sortBy";
 import { format } from "d3-format";
 
 // components
@@ -18,35 +18,44 @@ const COLORS = {
 const CATEGORY_DICTIONARY = {
   carbon_5: "Investible Blue Carbon",
   carbon_10: "Additional Investible Blue Carbon",
-  Remaining: "Remaining mangrove",
-  Protected: "Area of Mangrove in Protected Areas"
-}
+  remaining: "Remaining mangrove",
+  protected: "Area of Mangrove in Protected Areas",
+};
 
 const getData = (data) => {
   if (!data || !data.length) return null;
 
-  return sortBy(data.map((d) => {
-    const hasLabel = d.label.toLowerCase() !== d.category;
-    return ({
-      category: CATEGORY_DICTIONARY[d.category],
-      label: d.label,
-      value: d.value,
-      color: COLORS[d.category],
-      description: hasLabel ? d.description : null,
-      percentage: d.percentage,
-      tooltipValue: hasLabel ? d.description : `${numberFormat(d.value)} ha`,
-    });
-}), "value")};
+  return sortBy(
+    data.map((d) => {
+      const hasLabel = d.label.toLowerCase() !== d.category;
+      const labelDisplayed = `${CATEGORY_DICTIONARY[d.category]} ${
+        hasLabel ? d.label : ""
+      }`;
 
+      return {
+        category: labelDisplayed,
+        label: hasLabel ? d.label : null,
+        value: d.value,
+        color: COLORS[d.category],
+        description: d.description,
+        percentage: d.percentage,
+        tooltipValue: hasLabel ? d.description : `${numberFormat(d.value)} ha`,
+      };
+    }),
+    "value"
+  );
+};
 
 export const CONFIG = {
-  parse: (data, investibleBlueCarbon) => {   
+  parse: (data, investibleBlueCarbon) => {
     const total = data.reduce(
       (previous, current) => current.value + previous,
       0
     );
     const chartData = getData(data, total);
-    const investibleBlueCarbonValue = data.find(({ label }) => label.includes(investibleBlueCarbon));
+    const investibleBlueCarbonValue = data.find(({ label }) =>
+      label.includes(investibleBlueCarbon)
+    );
 
     return {
       chartData,
@@ -54,7 +63,7 @@ export const CONFIG = {
       chartConfig: {
         type: "pie",
         layout: "centric",
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        margin: { top: 20, right: 0, left: 0, bottom: 20 },
         xKey: "percentage",
         yKeys: {
           pies: {
@@ -68,37 +77,47 @@ export const CONFIG = {
               outerRadius: "80%",
               isAnimationActive: false,
               labelLine: false,
-              label: ({ cx, cy, midAngle, outerRadius, label, category }) => {
+              label: (props) => {
+                const {
+                  cx,
+                  cy,
+                  midAngle,
+                  outerRadius,
+                  category,
+                  percentage,
+                  index,
+                } = props;
                 const RADIAN = Math.PI / 180;
                 const sin = Math.sin(-RADIAN * midAngle);
                 const cos = Math.cos(-RADIAN * midAngle);
-                const mx = cx + (outerRadius + 10) * cos;
-                const my = cy + (outerRadius + 10) * sin;
-                const ex = mx + (cos >= 0 ? 1 : -1);
+                const mx = cx + outerRadius * cos;
+                const my = cy + outerRadius * sin;
+                const ex = mx + (cos >= 0 ? 1 : -1) * 22 - (cos >= 0 ? 0 : 130);
                 const ey = my;
-                const textAnchor = cos >= 0 ? "start" : "end";
-                const hasLabel = label.toLowerCase() !== category;
+                const heightMargin = percentage < 5 ? 10 : 0;
                 return (
                   <g>
-                    {hasLabel && (
-                      <text
-                        x={ex + (cos >= 0 ? 1 : -1)}
-                        y={ey}
-                        textAnchor={textAnchor}
-                        fill="#8884d8"
+                    <foreignObject
+                      x={ex + (cos >= 0 ? 1 : -1)}
+                      y={ey - heightMargin * index}
+                      width="100%"
+                      height="100px"
+                      
+                    >
+                      <div
+                        style={{
+                          marginTop: 2,
+                          marginBottom: 5,
+                          display: "flex",
+                          color: "#A5A5A5",
+                          lineHeight: "10px",
+                          width: "125px",
+                          fontSize: "11px"
+                        }}
                       >
                         {category}
-                      </text>
-                    )}
-                    <text
-                      x={ex + (cos >= 0 ? 1 : -1)}
-                      y={ey}
-                      dy={hasLabel ? 10 : 0}
-                      textAnchor={textAnchor}
-                      fill="#8884d8"
-                    >
-                      {label}
-                    </text>
+                      </div>
+                    </foreignObject>
                   </g>
                 );
               },

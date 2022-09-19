@@ -50,6 +50,7 @@ export const styles = {
     paddingTop: 10,
     paddingBottom: 10,
     transform: 'translateX(-50%)',
+    scrollbarWidth: 'thin',
     left: '50%',
     '&:after': {
       content: '" "',
