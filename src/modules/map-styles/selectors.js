@@ -1,14 +1,19 @@
 import { createSelector } from "reselect";
 import { activeLayers } from "modules/layers/selectors";
 import template from "lodash/template";
+import orderBy from "lodash/orderBy";
 import { rasterLayers } from "./rasters.json";
 import StyleManager from "./style-manager";
-import Layers from "./constants";
+import {
+  LAYERS_ORDER,
+  sourcesAndLayers,
+  layersMap,
+} from "./constants";
+import { mapOrder } from 'utils/sortArrayByArray.js'
 import { coverageFilter, netChangeFilter } from "./filters";
 
-const { sources: bhSources, layers: bhLayers, layersMap } = Layers;
 const styleManager = new StyleManager();
-
+const {  sources: bhSources,  layers: bhLayers } = sourcesAndLayers;
 const mapStyles = (state) => state.mapStyles;
 const filters = createSelector([mapStyles], (styles) => styles.filters);
 const basemap = (state) => state.map.basemap;
@@ -124,10 +129,9 @@ export const mapStyle = createSelector(
           return [
             ...acc,
             ...layerMap
-              .filter((layerMapItem) =>{
-               return Number(layerFilter.year) === layerMapItem.year
-              }
-              )
+              .filter((layerMapItem) => {
+                return Number(layerFilter.year) === layerMapItem.year;
+              })
               .map((layerMapItem) => layerMapItem.layerId),
           ];
         }
@@ -163,13 +167,15 @@ export const mapStyle = createSelector(
       return acc;
     }, []);
 
-    const bhLayersUpdated = bhLayers.map((layer) => ({
+    const bhLayersUpdated = orderBy(bhLayers, "order").map((layer) => ({
       ...layer,
       layout: {
         ...layer.layout,
         visibility: visibleRasterLayers.includes(layer.id) ? "visible" : "none",
       },
     }));
+
+    const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
 
     // Getting location
     let currentLocation = _locations?.find(
@@ -194,7 +200,7 @@ export const mapStyle = createSelector(
       });
     }
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
-    composedMapStyle.layers = [...composedMapStyle.layers, ...bhLayersUpdated];
+    composedMapStyle.layers = [...composedMapStyle.layers, ...ordered_array];
     return composedMapStyle;
   }
 );

@@ -182,6 +182,8 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
+        "all_datasets",
+        "distribution_and_change"
       ],
       "layersIds": []
     },
@@ -269,10 +271,6 @@ export default {
       "id": "restoration"
     },
     {
-      "name": "Mangrove extent",
-      "id": "extent"
-    },
-    {
       "name": "Mangrove Blue Carbon",
       "id": "carbon"
     },
@@ -303,7 +301,11 @@ export default {
     {
       "name": "Mangrove deforestation alerts",
       "id": "alerts-point"
-    }
+    },
+    {
+      "name": "Mangrove extent",
+      "id": "extent"
+    },
   ],
   "categories": [
     {
