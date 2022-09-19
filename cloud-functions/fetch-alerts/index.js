@@ -43,7 +43,7 @@ const makeQuery = async (location, startDate, endDate) => {
     whereQuery = `AND ST_INTERSECTS(ST_GEOGFROMGEOJSON('${JSON.stringify(geoJSONreverse.geometry)}'), ST_GEOGPOINT(longitude, latitude))`;
   }
 
-  return `SELECT DATE_TRUNC(scr5_obs_date, MONTH) as date, count(scr5_obs_date) as count
+  return `SELECT DATE_ADD(DATE_TRUNC(scr5_obs_date, MONTH), INTERVAL 1 DAY) as date, count(scr5_obs_date) as count
   FROM deforestation_alerts.alerts
   WHERE confident = 5
     AND scr5_obs_date BETWEEN DATE('${startDate}') AND DATE('${endDate}')
