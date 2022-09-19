@@ -136,7 +136,7 @@ export const mapStyle = createSelector(
             ...acc,
             ...layerMap
               .filter((layerMapItem) =>
-                layerFilter.years.includes(parseInt(layerMapItem.year, 10))
+                layerFilter.years.includes(layerMapItem.year)
               )
               .map((layerMapItem) => layerMapItem.layerId),
           ];
