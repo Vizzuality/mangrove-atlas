@@ -15,8 +15,6 @@
 .sentenceWrapper {
   display: flex;
   align-items: center;
-  pointer-events: all;
-  cursor: pointer;
 }
 
 .textBtn {
@@ -36,11 +34,13 @@
   }
 }
 
-a {
+.link {
   text-decoration: underline;
   color: $primary;
 }
 
-.link {
-  color: $primary;
+.resetLink {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: normal;
 }

@@ -10,10 +10,16 @@
         ["linear"],
         ["get", "Rest_Score"],
         0,
-        "#D4EBFC",
+        "#F9DDDA",
+        0.25,
+        "#FFADAD",
+        0.5,
+        "#CE78B3",
+        0.75,
+        "#8478CE",
         1,
-        "#831D9E"
-    ],
+        "#224294"
+      ],
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
@@ -23,7 +29,7 @@
       "fill-outline-color": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        "#8122A6",
+        "#224294",
         "rgba(129, 24, 166, 0.5)"
       ]
     }

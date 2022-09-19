@@ -82,24 +82,27 @@ export const CONFIG = {
                   cx,
                   cy,
                   midAngle,
+                  endAngle,
                   outerRadius,
                   category,
                   percentage,
                   index,
                 } = props;
+
                 const RADIAN = Math.PI / 180;
                 const sin = Math.sin(-RADIAN * midAngle);
                 const cos = Math.cos(-RADIAN * midAngle);
                 const mx = cx + outerRadius * cos;
                 const my = cy + outerRadius * sin;
-                const ex = mx + (cos >= 0 ? 1 : -1) * 22 - (cos >= 0 ? 0 : 130);
+                const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
                 const ey = my;
                 const heightMargin = percentage < 5 ? 10 : 0;
+                const top = endAngle < cy ? 30 : 0;
                 return (
                   <g>
                     <foreignObject
                       x={ex + (cos >= 0 ? 1 : -1)}
-                      y={ey - heightMargin * index}
+                      y={ey - heightMargin * index - top}
                       width="100%"
                       height="100px"
                       
