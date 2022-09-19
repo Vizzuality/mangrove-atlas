@@ -238,7 +238,6 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets"
       ]
     },
     {
