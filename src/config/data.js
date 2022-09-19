@@ -89,10 +89,23 @@ export default {
       layersIds: ["restoration"],
     },
     {
-      name: "Mangrove biomass",
-      slug: "mangrove_biomass",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [
+      "name": "Conservation hotspots",
+      "slug": "conservation_hotspots",
+      "locationType": [
+        "custom"
+      ],
+      "categoryIds": ["all_datasets"],
+      "layersIds": [
+        "cons-hotspots"
+      ]
+    },
+    {
+      "name": "Mangrove habitat change",
+      "slug": "mangrove_activity",
+      "locationType": [
+        "worldwide"
+      ],
+      "categoryIds": [
         "all_datasets",
         "restoration_and_conservation",
         "ecosystem_services",
@@ -106,7 +119,7 @@ export default {
       categoryIds: [
         "all_datasets",
         "restoration_and_conservation",
-        "ecosystem_services",
+        "ecosystem_services"
       ],
       categoryIds: ["all_datasets"],
       layersIds: ["height"],
