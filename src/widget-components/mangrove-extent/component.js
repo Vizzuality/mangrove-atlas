@@ -32,6 +32,7 @@ function MangroveExtent({
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.reverse();
+
   const year = useMemo(
     () => currentYear || years?.[years?.length - 1] || 2020,
     [years, currentYear]
