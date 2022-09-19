@@ -1,13 +1,17 @@
 import { flatten } from "lodash";
 
 const extentLineStyle = {
-  "line-color": 'blue', //"#06C4BD",
+  "line-color": "#06C4BD",
   "line-width": [
     "interpolate",
     ["linear"],
     ["zoom"],
     0,
+    12,
+    4,
     10,
+    8,
+    1,
     12,
     0,
 ],
@@ -17,6 +21,10 @@ const extentLineStyle = {
     ["zoom"],
     0,
     60,
+    4,
+    40,
+    8,
+    20,
     12,
     0,
 ],
@@ -30,12 +38,20 @@ const extentFillStyle = {
 // based on years available in mapbox for this layer
 const years = [1996, 2007, 2008, 2009, 2010, 2015, 2016, 2017, 2018, 2019, 2020];
 
-export const extentLayers = years.map((year) => ({
+export const extentLayers = flatten(years.reduce((acc, year) => {
+  const fill = {
   layerId: `extent_${year}`,
   year,
   minZoom: 0,
   maxZoom: 12,
-}));
+};
+const line = {
+  layerId: `extent_${year}_line`,
+  year,
+  minZoom: 0,
+  maxZoom: 12,
+};
+return ([ ...acc, fill, line])}, []));
 
 export const extentLayersStyles = flatten(years.reduce((acc, year) => {
   const fill = {
@@ -53,5 +69,4 @@ const line = {
   "source-layer": `mng_mjr_${year}`,
   paint: extentLineStyle,
 };
-
-return ([ ...acc, { ...fill }, { ...line }])}, []));
+return ([ ...acc, fill, line])}, []));
