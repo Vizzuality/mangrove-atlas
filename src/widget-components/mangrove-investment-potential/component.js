@@ -63,6 +63,13 @@ function MangroveInvestmentPotential({
     return null;
   }
 
+  const locationName =
+  currentLocation.location_type === "worldwide" ? (
+    "The world"
+  ) : (
+    <span className="notranslate">{`${currentLocation?.name}`}</span>
+  );
+
   const sentence = (
     <>
       The extent of investible blue carbon (ha){" "}

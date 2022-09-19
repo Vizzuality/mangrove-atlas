@@ -232,33 +232,6 @@ export default {
       ]
     },
     {
-        "name": "Mangrove Investment Potential",
-        "slug": "mangrove_investment_potential",
-        "locationType": [
-          "country",
-          "worldwide"
-        ],
-        "categoryIds": [
-          "all_datasets",
-          "climate_and_policy",
-          "ecosystem_services"
-      ],
-      "layersIds": [
-      ]
-    },
-    {
-      "name": "Mangrove Protection",
-      "slug": "mangrove_protection",
-      "locationType": [
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation"
-      ]
-    },
-    {
       "name": "Mangrove Protection",
       "slug": "mangrove_protection",
       "locationType": [
