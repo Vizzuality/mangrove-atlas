@@ -197,7 +197,7 @@ export const CONFIG = {
       chartTreeConfig: {
         width: 175,
         height: 175,    
-        name: 'indicator',
+        name: 'label',
         data: LossDataWidthColors,
         dataKey: "value",
         yKeys: { tree: true },
@@ -220,13 +220,13 @@ export const CONFIG = {
         content: <CustomizedContent data={LossDataWidthColors} />,
         legend: LossDataWidthColors?.reduce((acc, indicator) => ({
           ...acc,
-          [indicator.indicator]: [{
+          [indicator.label]: [{
             color: indicator.color,
             type: "rect",
             key: indicator.indicator,
             payload: { y: indicator.value },
-            [indicator.indicator]: indicator.indicator,
-            value: indicator.indicator.replace('_', ' '),
+            [indicator.label]: indicator.label,
+            value: indicator.label.replace('_', ' '),
           }]
         }), {})
       },

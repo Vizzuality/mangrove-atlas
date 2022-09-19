@@ -12,7 +12,7 @@ const widgetData = (data) =>
     data.map((l) => ({
       label: l.year,
       year: l.year,
-      netChange: l.value,
+      netChange: l.cum_sum,
     })),
     (l) => l.year
   );

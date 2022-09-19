@@ -21,40 +21,44 @@ function MangroveActivity({
   setUi,
   ...props
 }) {
-  const { start_year = 1996, end_year = 2020, limit, filter = "net" } = ui;
+  const { start_year, end_year, limit, filter = "net" } = ui;
+
+  const years = useMemo(() => metadata.years, [metadata.years]);
+
+  const startDate = useMemo(() => start_year || Number(metadata?.start_year), [start_year, metadata.start_year]);
+  const endDate = useMemo(() => end_year || Number(metadata?.end_year), [end_year, metadata.end_year]);
 
   useEffect(() => {
     if (start_year && end_year) {
       fetchRankingData({
-        start_year,
-        end_year,
+        start_year: startDate,
+        end_year: endDate,
       });
     }
-  }, [fetchRankingData, start_year, end_year]);
+  }, [fetchRankingData, start_year, end_year, startDate, endDate]);
 
   useEffect(() => {
     setUi({
       id: 'activity',
       value: {
         ...ui,
-        start_year,
-        end_year
+        start_year: startDate,
+        end_year: endDate
       }
     });
-  }, [setUi, start_year, end_year]);
+  }, [setUi, start_year, end_year, startDate, endDate]);
 
   const changeYear = (type, value) => {
-    const prop = (type === 'start') ? 'startDate' : 'endDate';
     setUi({
       id: 'activity',
       value: {
         ...ui,
-        [prop]: value
+        [type]: value
       }
     });
     fetchRankingData({
       ...ui,
-      [prop]: value
+      [type]: value
     });
   };
 
@@ -86,11 +90,11 @@ function MangroveActivity({
     });
   };
 
-  if (!rawData.length) {
+  if (!rawData.length || !metadata) {
     return null;
   }
   
-  const { chartData, metaData, chartConfig } = config.parse(rawData, filter, limit);
+  const { chartData, chartConfig } = config.parse(rawData, filter, limit);
 
   const sortRanking = (data) => orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index }));
 
@@ -101,12 +105,12 @@ function MangroveActivity({
     { value: 'net_change', label: 'net increase' },
   ];
 
-  const startYearOptions = metaData.map(year => ({
+  const startYearOptions = years.map(year => ({
     label: year,
     value: year
   }));
 
-  const endYearOptions = metaData.map(year => ({
+  const endYearOptions = years.map(year => ({
     label: year,
     value: year
   }));
@@ -121,27 +125,25 @@ function MangroveActivity({
     />
   );
 
-  const startYearSelector = start_year;
-  // (
-  //   <Select
-  //     value={startDate}
-  //     options={startYearOptions.splice(0, metaData.length - 1)}
-  //     isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
-  //       || option.value === startDate}
-  //     onChange={value => changeYear('start', value)}
-  //   />
-  // );
+  const startYearSelector = (
+    <Select
+      value={startDate}
+      options={startYearOptions}
+      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
+        || option.value === startDate}
+      onChange={value => changeYear('start_year', value)}
+    />
+  );
 
-  const endYearSelector = end_year;
-  // (
-  //   <Select
-  //     value={endDate}
-  //     options={endYearOptions.splice(1, metaData.length)}
-  //     isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
-  //       || option.value === endDate}
-  //     onChange={value => changeYear('end', value)}
-  //   />
-  // );
+  const endYearSelector = (
+    <Select
+      value={endDate}
+      options={endYearOptions}
+      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
+        || option.value === endDate}
+      onChange={value => changeYear('end_year', value)}
+    />
+  );
 
   const customStyles = {
     display: 'flex',
@@ -191,7 +193,7 @@ function MangroveActivity({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={chartRData}
-      // component={countriesLimit}
+      component={countriesLimit}
       {...props}
     />
   );

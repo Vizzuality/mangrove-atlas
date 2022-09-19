@@ -3,6 +3,7 @@ import Select from "components/select";
 import ChartWidget from "components/chart-widget";
 
 import config from "./config";
+import Spinner from "components/spinner";
 
 const MangroveAlerts = ({
   data,
@@ -36,7 +37,7 @@ const MangroveAlerts = ({
       setInitialDate({
         startInitialDate: null,
         endInitialDate: null,
-      })
+      });
     }
   }, [
     currentLocation.location_id,
@@ -59,14 +60,14 @@ const MangroveAlerts = ({
     setInitialDate({
       startInitialDate: startDateOptions[0],
       endInitialDate: endDateOptions[endDateOptions.length - 1],
-      });
-  }, [
-    startDateOptions.length,
-    endDateOptions.length,
-  ]);
+    });
+  }, [startDateOptions.length, endDateOptions.length]);
 
   useEffect(() => {
-    if(startDateOptions[0] !== startDate?.value || endDateOptions[endDateOptions.length - 1] !== endDate?.value) {
+    if (
+      startDateOptions[0] !== startDate?.value ||
+      endDateOptions[endDateOptions.length - 1] !== endDate?.value
+    ) {
       setUi({
         id: "alerts",
         value: {
@@ -160,7 +161,9 @@ const MangroveAlerts = ({
     config: chartConfig,
   };
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <ChartWidget
       name={name}
       downloadData={downloadData}

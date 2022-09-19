@@ -186,9 +186,10 @@ const rasters = flatten([
   mangroveCarbonRasters
 ]);
 
-const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce(
+export const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce(
   (acc, item) => {
     const layers = item.source.type === "raster" ? createRasterLayer(item) : [];
+
     return {
       sources: {
         ...acc.sources,
@@ -211,7 +212,7 @@ const sourcesAndLayers = [...rasters, ...geojsons, ...vectors].reduce(
   { sources: {}, layers: [] }
 );
 
-const layersMap = {
+export const layersMap = {
   biomass: mangroveAbovegroundBiomassLayers,
   height: mangroveCanopyHeightLayers,
   carbon: [
@@ -243,8 +244,77 @@ const layersMap = {
   extent: extentLayers,
 };
 
+export const LAYERS_ORDER = [
+  { id: 1, name: "extent_1996" },
+  { id: 1, name: "extent_1996_line" },
+  { id: 1, name: "extent_2007" },
+  { id: 1, name: "extent_2007_line" },
+  { id: 1, name: "extent_2008" },
+  { id: 1, name: "extent_2008_line" },
+  { id: 1, name: "extent_2009" },
+  { id: 1, name: "extent_2009_line" },
+  { id: 1, name: "extent_2010" },
+  { id: 1, name: "extent_2010_line" },
+  { id: 1, name: "extent_2015" },
+  { id: 1, name: "extent_2015_line" },
+  { id: 1, name: "extent_2016" },
+  { id: 1, name: "extent_2016_line" },
+  { id: 1, name: "extent_2017" },
+  { id: 1, name: "extent_2017_line" },
+  { id: 1, name: "extent_2018" },
+  { id: 1, name: "extent_2018_line" },
+  { id: 1, name: "extent_2019" },
+  { id: 1, name: "extent_2019_line" },
+  { id: 1, name: "extent_2020" },
+  { id: 1, name: "extent_2020_line" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_1996" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2007" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2008" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2009" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2010" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2015" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2016" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2017" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2018" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2019" },
+  { id: 6, name: "biomass_1996_v1-0_z0-12_2020" },
+  { id: 3, name: "mangrove_canopy_height-v3_2007" },
+  { id: 3, name: "mangrove_canopy_height-v3_2008" },
+  { id: 3, name: "mangrove_canopy_height-v3_2009" },
+  { id: 3, name: "mangrove_canopy_height-v3_2010" },
+  { id: 3, name: "mangrove_canopy_height-v3_2015" },
+  { id: 3, name: "mangrove_canopy_height-v3_2016" },
+  { id: 3, name: "mangrove_canopy_height-v3_2017" },
+  { id: 3, name: "mangrove_canopy_height-v3_2018" },
+  { id: 3, name: "mangrove_canopy_height-v3_2019" },
+  { id: 3, name: "mangrove_canopy_height-v3_2020" },
+  { id: 4, name: "gain_2007" },
+  { id: 4, name: "gain_2008" },
+  { id: 4, name: "gain_2009" },
+  { id: 4, name: "gain_2010" },
+  { id: 4, name: "gain_2015" },
+  { id: 4, name: "gain_2016" },
+  { id: 4, name: "gain_2017" },
+  { id: 4, name: "gain_2018" },
+  { id: 4, name: "gain_2019" },
+  { id: 4, name: "gain_2020" },
+  { id: 4, name: "loss_2007" },
+  { id: 4, name: "loss_2008" },
+  { id: 4, name: "loss_2009" },
+  { id: 4, name: "loss_2010" },
+  { id: 4, name: "loss_2015" },
+  { id: 4, name: "loss_2016" },
+  { id: 4, name: "loss_2017" },
+  { id: 4, name: "loss_2018" },
+  { id: 4, name: "loss_2019" },
+  { id: 4, name: "loss_2020" },
+  { id: 5, name: "toc_co2eha-1_2016_z0z12" },
+  { id: 2, name: "alerts-heat" },
+  { id: 2, name: "alerts-point" },
+  { id: 7, name: "restoration" },
+];
+
 export default {
   layersMap,
-
   ...sourcesAndLayers,
 };
