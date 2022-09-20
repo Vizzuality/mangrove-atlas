@@ -23,6 +23,17 @@ export default {
   ],
   "widgets": [
     {
+      "name": "Conservation hotspots",
+      "slug": "conservation_hotspots",
+      "locationType": [
+        "custom"
+      ],
+      "categoryIds": ["all_datasets"],
+      "layersIds": [
+        "cons-hotspots"
+      ]
+    },
+    {
       "name": "Highlighted places",
       "slug": "highlighted_places",
       "locationType": [],
@@ -239,6 +250,10 @@ export default {
       "name": "Mangrove coverage",
       "id": "coverage-1996-2016",
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
+    },
+    {
+      "name": "Conservation hotspots",
+      "id": "cons-hotspots"
     },
     {
       "name": "Mangrove extent",

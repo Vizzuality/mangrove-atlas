@@ -12,8 +12,8 @@ import SaloumImage from './images/saloum.jpg';
 import Worldwide from './images/worldwide.jpg';
 
 const bgImages = {
-  '1e3d61bf-1f8b-5f89-9374-ef84a6b893ad': RufijiImage,
-  '9e2d8fc4-9ed4-5aea-8220-a200f1c388a7': SaloumImage,
+  [process.env.RUFIKI_MAFIA_KILWA_LOCATION_ID]: RufijiImage,
+  [process.env.MAFIA_ISLAND_LOCATION_ID]: SaloumImage,
 };
 
 const HighlightedPlaces = ({ data: rawData, currentLocation, isCollapsed, slug, name }) => {

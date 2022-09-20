@@ -113,7 +113,7 @@ export const MangroveInternationalStatus = ({
           </div>
         )}
 
-        {!pledge_type && !hasNDCTarget && !hasNDCReductionTarget && (
+        {!pledge_type && (hasNDCTarget || hasNDCReductionTarget) && (
           <div>
             <h3 className={styles.title}>
               Nationally Determined Contributions{" "}
