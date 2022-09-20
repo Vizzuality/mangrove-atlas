@@ -145,7 +145,7 @@ export const MangroveInternationalStatus = ({
             {targetYearsSentence}
             {ndcTargetSentence}
           </p>
-        </div>
+        </div>}
         {ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
           <p>
             {name}
