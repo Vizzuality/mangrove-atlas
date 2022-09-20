@@ -9,29 +9,37 @@
         "interpolate",
         ["linear"],
         ["get", "Rest_Score"],
-        0,
-        "#F9DDDA",
-        0.25,
-        "#FFADAD",
-        0.5,
-        "#CE78B3",
-        0.75,
-        "#8478CE",
-        1,
+        20,
+        "#f9ddda",
+        40,
+        "#ffadad",
+        60,
+        "#ce78b3",
+        80,
+        "#8478ce",
+        100,
         "#224294"
       ],
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        0.8,
-        0.5
-      ],
-      "fill-outline-color": [
-        "case",
-        ["boolean", ["feature-state", "hover"], false],
-        "#224294",
-        "rgba(129, 24, 166, 0.5)"
-      ]
+        0.8,1],
+      "fill-outline-color":
+        [
+          "interpolate",
+          ["linear"],
+          ["get", "Rest_Score"],
+          20,
+          "#f9ddda",
+          40,
+          "#ffadad",
+          60,
+          "#ce78b3",
+          80,
+          "#8478ce",
+          100,
+          "#224294"
+        ]
     }
   }
 ]

@@ -4,14 +4,16 @@ const extentLineStyle = {
   "line-color": "#06C4BD",
   "line-width": [
     "interpolate",
-    ["linear"],
+    ["exponential", 0.7],
     ["zoom"],
     0,
+<<<<<<< HEAD
     8,
     4,
     5,
+=======
+>>>>>>> updated colors and functionality
     8,
-    1,
     12,
     0,
   ],
@@ -20,10 +22,13 @@ const extentLineStyle = {
     ["linear"],
     ["zoom"],
     0,
+<<<<<<< HEAD
     80,
     4,
     60,
     8,
+=======
+>>>>>>> updated colors and functionality
     20,
     12,
     0,
