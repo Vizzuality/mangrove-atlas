@@ -53,9 +53,6 @@ export const MangroveInternationalStatus = ({
     ndc_blurb,
   } = data;
 
-  console.log(ipcc_wetlands_suplement, 'ipcc_wetlands_suplement')
-
-
   const hasNDCTarget = !!ndc_target && ndc_target > 0;
   const hasNDCReductionTarget =
     !!ndc_reduction_target && ndc_reduction_target > 0;
@@ -117,7 +114,7 @@ export const MangroveInternationalStatus = ({
           </div>
         )}
 
-        {!pledge_type && (hasNDCTarget || hasNDCReductionTarget) && (
+        {!pledge_type && (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
           <div>
             <h3 className={styles.title}>
               Nationally Determined Contributions{" "}
@@ -138,9 +135,9 @@ export const MangroveInternationalStatus = ({
           </div>
         )}
 
-        <div className={styles.sentenceWrapper}>
+        {(hasNDCTarget || hasNDCReductionTarget) && <div className={styles.sentenceWrapper}>
           <p>
-            {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
+            {`The GHG target`}{" "}
             {!hasNDCReductionTarget && hasNDCTarget && (
               <span>represents a reduction of {ndc_target}</span>
             )}
