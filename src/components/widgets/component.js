@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Spinner from "components/spinner";
@@ -20,9 +20,13 @@ const WidgetList = ({
     window.print();
   }, []);
 
- 
-  const widgetsCategory = widgets
-    .filter(({ categoryIds }) => categoryIds.includes(category), [category]);
+  const widgetsCategory = useMemo(() =>
+    widgets.filter(
+      ({ categoryIds }) =>
+        categoryIds.includes(category),
+      [category, widgets]
+    )
+  );
 
   const widgetsFiltered = widgetsCategory;
 
@@ -41,15 +45,19 @@ const WidgetList = ({
         widgets.length &&
         widgetsFiltered?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-          const isLast = widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug;
+          const isLast =
+            widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug;
           return (
-            <div key={widget.slug} className={cx(styles.widgetWrapper, {
-              [styles.pageBreak]: index % 2 !== 0
-            })}>
-              <Widget
+            <div
+              key={widget.slug}
               className={cx(styles.widgetWrapper, {
-                [styles.pageBreak]: index % 2 !== 0
+                [styles.pageBreak]: index % 2 !== 0,
               })}
+            >
+              <Widget
+                className={cx(styles.widgetWrapper, {
+                  [styles.pageBreak]: index % 2 !== 0,
+                })}
                 {...widget}
                 {...parentProps}
                 key={widget.slug}
@@ -57,7 +65,7 @@ const WidgetList = ({
                 isLast={isLast}
                 isCollapsed={isLast ? false : widget.isCollapsed}
               />
-             </div>
+            </div>
           );
         })
       )}

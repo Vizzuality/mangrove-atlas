@@ -7,12 +7,14 @@ import WidgetsMenu from 'components/widgets-menu';
 
 import styles from './style.module.scss';
 
-const SidebarMenu = () => {
+const SidebarMenu = ({
+  isDisabled
+}) => {
   return (
     <div className={styles.sidebar_menu}>
       <NavMenu />
       <SearchLocation />
-      <WidgetsMenu />
+      <WidgetsMenu isDisabled={isDisabled} />
     </div>
   );
 };

@@ -23,10 +23,12 @@ function MangroveActivity({
 }) {
   const { start_year, end_year, limit, filter = "net" } = ui;
 
-  const years = useMemo(() => metadata.years, [metadata.years]);
+  const years = useMemo(() => metadata?.years, [metadata]);
+  const startYear = useMemo(() => metadata?.start_year, [metadata]);
+  const endYear = useMemo(() => metadata?.end_year, [metadata]);
 
-  const startDate = useMemo(() => start_year || Number(metadata?.start_year), [start_year, metadata.start_year]);
-  const endDate = useMemo(() => end_year || Number(metadata?.end_year), [end_year, metadata.end_year]);
+  const startDate = useMemo(() => start_year || Number(startYear), [start_year, startYear]);
+  const endDate = useMemo(() => end_year || Number(endYear), [end_year, endYear]);
 
   useEffect(() => {
     if (start_year && end_year) {
@@ -62,19 +64,20 @@ function MangroveActivity({
     });
   };
 
-  const changeFilter = (filterState) => {
-    setUi({
-      id: 'activity',
-      value: {
-        ...ui,
-        filter: filterState,
-      }
-    });
-    fetchRankingData({
-      ...ui,
-      filter: filterState
-    });
-  };
+  // temporary hidden as there is no data to filter
+  // const changeFilter = (filterState) => {
+  //   setUi({
+  //     id: 'activity',
+  //     value: {
+  //       ...ui,
+  //       filter: filterState,
+  //     }
+  //   });
+  //   fetchRankingData({
+  //     ...ui,
+  //     filter: filterState
+  //   });
+  // };
 
   const changeLimit = (limitState) => {
     setUi({
@@ -98,12 +101,12 @@ function MangroveActivity({
 
   const sortRanking = (data) => orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index }));
 
-  // XXX: these options should come from an api ?
-  const optionsFilter = [
-    { value: 'gain', label: 'gain' },
-    { value: 'loss', label: 'loss' },
-    { value: 'net_change', label: 'net increase' },
-  ];
+  //temporary hidden as data needs to be uploaded
+  // const optionsFilter = [
+  //   { value: 'gain', label: 'gain' },
+  //   { value: 'loss', label: 'loss' },
+  //   { value: 'net_change', label: 'net increase' },
+  // ];
 
   const startYearOptions = years.map(year => ({
     label: year,
@@ -115,15 +118,16 @@ function MangroveActivity({
     value: year
   }));
 
+  // temporary hidden as there is no data
   // Selectors
-  const filterSelector = (
-    <Select
-      value={filter}
-      options={optionsFilter}
-      classNamePrefix="react-select"
-      onChange={value => changeFilter(value)}
-    />
-  );
+  // const filterSelector = (
+  //   <Select
+  //     value={filter}
+  //     options={optionsFilter}
+  //     classNamePrefix="react-select"
+  //     onChange={value => changeFilter(value)}
+  //   />
+  // );
 
   const startYearSelector = (
     <Select
@@ -158,7 +162,7 @@ function MangroveActivity({
 
   const sentence = (
     <>
-      Worldwide the {limit} countries with the largest net
+      Worldwide the {limit} countries with the largest net change
       {/* {filterSelector} TO - DO put back selector when API returns gain and loss values */} 
       &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
     </>

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import emissionsMitigationData from "widget-components/mangrove-emissions-mitigation/data.json";
-
 class APIService {
   constructor() {
     this.client = axios.create({

@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { addFilter, removeFilter } from "modules/map-styles/actions";
 import { expandAll, collapseAll } from "modules/widgets/actions";
-import { dashboardWidgets } from "modules/widgets/selectors";
+import { dashboardWidgets, getWidgetsWithData } from "modules/widgets/selectors";
 import { currentLocation } from "modules/locations/selectors";
 
 import HighlightedPlaces from 'widget-components/highlighted-places';
@@ -93,7 +93,7 @@ const mapStateToProps = (state) => ({
   templates,
   isCollapsed: state.widgets.isCollapsed,
   category: state.dashboards.current,
-  dataByWidget: state.mangroveData.list
+  dataByWidget: getWidgetsWithData(state)
 });
 
 const mapDispatchToProps = {
