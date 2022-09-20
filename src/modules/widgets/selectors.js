@@ -67,8 +67,8 @@ export const conservationHotspots = createSelector(
     // Saloum and Rufiji
     // const ids = [1534, 1555];
     const location_ids = [
-      "1_1_1_00000000000000000000",
-      "1_1_2_00000000000000000000",
+      process.env.RUFIKI_MAFIA_KILWA_LOCATION_ID,
+      process.env.MAFIA_ISLAND_LOCATION_ID
     ];
     const widgetData = _locations.filter((location) =>
       location_ids.includes(location.location_id)
