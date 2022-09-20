@@ -2,6 +2,7 @@ import React from 'react';
 
 // utils
 import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import chroma from 'chroma-js';
 
@@ -12,7 +13,7 @@ import WidgetLegend from 'components/widget-legend';
 const numberFormat = format(',.2f');
 
 const getChartRingData = (data, restorationDataMetadata, year) => {
-  if (!data) return null;
+  if (isEmpty(data)) return null;
   const { restorable_area: restorableAreaUnit, mangrove_area: mangroveAreaUnit } = restorationDataMetadata;
   const protectedMangroves = data.restorable_area;
   const nonProtected = data.total_area - protectedMangroves;
