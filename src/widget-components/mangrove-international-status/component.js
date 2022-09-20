@@ -1,9 +1,16 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 import ChartWidget from "components/chart-widget";
+import Icon from "components/icon";
+import { Tooltip } from "react-tippy";
+import { format } from "d3-format";
 
+import TooltipContent from "./tooltip-content";
 import styles from "./style.module.scss";
+
+const numberFormat = format(",.2f");
 
 export const MangroveInternationalStatus = ({
   data,
@@ -43,6 +50,7 @@ export const MangroveInternationalStatus = ({
     frel,
     year_frel,
     fow,
+    ndc_blurb,
   } = data;
   const hasNDCTarget = !!ndc_target && ndc_target > 0;
   const hasNDCReductionTarget =
@@ -52,11 +60,13 @@ export const MangroveInternationalStatus = ({
   const reductionTargetSentence =
     !!ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
   const targetYearsSentence =
-    !!target_years && (!!hasNDCTarget || !!hasNDCReductionTarget) && ` by target year${targetYears} ${target_years}`;
+    !!target_years &&
+    (!!hasNDCTarget || !!hasNDCReductionTarget) &&
+    ` by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
     !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
 
-    return (
+  return (
     <ChartWidget
       name={name}
       slug={slug}
@@ -69,47 +79,69 @@ export const MangroveInternationalStatus = ({
         {pledge_type && (
           <div>
             <h3 className={styles.title}>
-              Nationally Determined Contributions (NDC)
+              Nationally Determined Contributions{" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  !hasNDCTarget && !hasNDCReductionTarget
+                    ? null
+                    : ndc_target_url
+                }
+                alt="ndc target"
+              >
+                (NDC)
+              </a>
             </h3>
-            <div className={styles.sentenceWrapper}>
-              <p>
-                {name}
-                {apostrophe} NDC pledge contains {pledge_type}
-              </p>
-            </div>
+            <Tooltip
+              html={ndc_blurb ? <TooltipContent>{ndc_blurb}</TooltipContent> : null}
+              position="top-start"
+              arrow={true}
+              trigger="mouseenter"
+            >
+              <div className={cx(styles.sentenceWrapper, styles.interactive)}>
+                <p>
+                  {name}
+                  {apostrophe} NDC pledge contains {pledge_type}
+                </p>
+                <span className={styles.icon}>
+                  <Icon name="info" alt="info" />
+                </span>
+              </div>
+            </Tooltip>
           </div>
         )}
 
         {!pledge_type && !hasNDCTarget && !hasNDCReductionTarget && (
           <div>
             <h3 className={styles.title}>
-              Nationally Determined Contributions (NDC)
+              Nationally Determined Contributions{" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={
+                  !hasNDCTarget && !hasNDCReductionTarget
+                    ? null
+                    : ndc_target_url
+                }
+                alt="ndc target"
+              >
+                (NDC)
+              </a>
             </h3>
           </div>
         )}
 
         <div className={styles.sentenceWrapper}>
-          <a
-            className={
-              !hasNDCTarget && !hasNDCReductionTarget ? styles.resetLink : styles.link
-            }
-            href={
-              !hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url
-            }
-            alt="ndc target"
-          >
-          
-            <p>
-              {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
-              {!hasNDCReductionTarget && hasNDCTarget && (
-                <span>represents a reduction of {ndc_target}</span>
-              )}
-              {reductionTargetSentence}
-              {targetYearsSentence}
-              {ndcTargetSentence}
-              {!hasNDCTarget && !hasNDCReductionTarget && "No data"}
-            </p>
-          </a>
+          <p>
+            {(hasNDCTarget || hasNDCReductionTarget) && `The GHG target`}{" "}
+            {!hasNDCReductionTarget && hasNDCTarget && (
+              <span>represents a reduction of {ndc_target}</span>
+            )}
+            {reductionTargetSentence}
+            {targetYearsSentence}
+            {ndcTargetSentence}
+          </p>
         </div>
         <div className={styles.sentenceWrapper}>
           <p>
@@ -129,7 +161,8 @@ export const MangroveInternationalStatus = ({
             <div className={styles.sentenceWrapper}>
               <p>
                 {name}
-                {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({name}
+                {apostrophe} {year_frel} FREL is {numberFormat(frel)} Mt CO₂e/yr
+                ({name}
                 {apostrophe} mangroves are considered {fow}) .
               </p>
             </div>

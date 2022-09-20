@@ -4,8 +4,8 @@ import { fetchInvestmentPotentialData } from "modules/mangrove-investment-data/a
 import Component from "./component";
 
 const mapStateToProps = (state) => ({
-  metadata: state.investmentPotentialData.metadata,
-  data: state.investmentPotentialData.data,
+  metadata: state.mangroveInvestmentPotentialData.metadata,
+  data: state.mangroveInvestmentPotentialData.data,
   ui: state.widgets.ui.investment_potential,
 });
 

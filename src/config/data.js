@@ -49,20 +49,6 @@ export default {
       ]
     },
     {
-      "name": "Mangrove coverage",
-      "slug": "mangrove_coverage",
-      "locationType": [
-        ""
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
-      ],
-      "layersIds": [
-        "coverage-1996-2016"
-      ]
-    },
-    {
       "name": "Mangrove net change",
       "slug": "mangrove_net_change",
       "locationType": [
@@ -79,6 +65,18 @@ export default {
       "layersIds": [
         "net"
       ]
+    },
+    {
+      "name": "Mangrove habitat change",
+      "slug": "mangrove_activity",
+      "locationType": [
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "distribution_and_change"
+      ],
+      "layersIds": []
     },
     {
       "name": "Mangrove alerts",
@@ -111,28 +109,21 @@ export default {
       ]
     },
     {
-      "name": "Mangrove Blue Carbon",
-      "slug": "mangrove_blue_carbon",
+      "name": "Mangrove Protection",
+      "slug": "mangrove_protection",
       "locationType": [
         "country",
         "worldwide"
       ],
       "categoryIds": [
         "all_datasets",
-        "climate_and_policy",
-        "ecosystem_services"
-      ],
-      "layersIds": [
-        "carbon"
+        "restoration_and_conservation"
       ]
     },
     {
-      "name": "Mangrove height",
-      "slug": "mangrove_height",
+      "name": "Mangrove Restoration",
+      "slug": "mangrove_restoration",
       "locationType": [
-        "custom",
-        "aoi",
-        "wdpa",
         "country",
         "worldwide"
       ],
@@ -142,7 +133,7 @@ export default {
         "ecosystem_services"
       ],
       "layersIds": [
-        "height"
+        "restoration"
       ]
     },
     {
@@ -165,32 +156,12 @@ export default {
       ]
     },
     {
-      "name": "Conservation hotspots",
-      "slug": "conservation_hotspots",
+      "name": "Mangrove height",
+      "slug": "mangrove_height",
       "locationType": [
-        "custom"
-      ],
-      "categoryIds": ["all_datasets"],
-      "layersIds": [
-        "cons-hotspots"
-      ]
-    },
-    {
-      "name": "Mangrove habitat change",
-      "slug": "mangrove_activity",
-      "locationType": [
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "distribution_and_change"
-      ],
-      "layersIds": []
-    },
-    {
-      "name": "Mangrove Restoration",
-      "slug": "mangrove_restoration",
-      "locationType": [
+        "custom",
+        "aoi",
+        "wdpa",
         "country",
         "worldwide"
       ],
@@ -200,7 +171,23 @@ export default {
         "ecosystem_services"
       ],
       "layersIds": [
-        "restoration"
+        "height"
+      ]
+    },
+    {
+      "name": "Mangrove Blue Carbon",
+      "slug": "mangrove_blue_carbon",
+      "locationType": [
+        "country",
+        "worldwide"
+      ],
+      "categoryIds": [
+        "all_datasets",
+        "climate_and_policy",
+        "ecosystem_services"
+      ],
+      "layersIds": [
+        "carbon"
       ]
     },
     {
@@ -229,18 +216,6 @@ export default {
       "categoryIds": [
         "all_datasets",
         "climate_and_policy",
-      ]
-    },
-    {
-      "name": "Mangrove Protection",
-      "slug": "mangrove_protection",
-      "locationType": [
-        "country",
-        "worldwide"
-      ],
-      "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation"
       ]
     },
     {

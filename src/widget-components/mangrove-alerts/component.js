@@ -45,6 +45,8 @@ const MangroveAlerts = ({
     fetchAlerts,
     startDate,
     endDate,
+    initialDate.startInitialDate,
+    initialDate.endInitialDate
   ]);
 
   const {

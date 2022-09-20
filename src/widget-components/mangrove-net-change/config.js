@@ -13,6 +13,7 @@ const widgetData = (data) =>
       label: l.year,
       year: l.year,
       netChange: l.cum_sum,
+      netChangeRaw: l.value,
     })),
     (l) => l.year
   );

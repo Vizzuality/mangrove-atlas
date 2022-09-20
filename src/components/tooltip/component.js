@@ -1,18 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { Tippy, Tooltip } from 'react-tippy';
+import Tippy from 'tippy.js/headless';
 
-const Tooltip2 = ({ content, children }) => (
-	<Tippy render={() => content}>
+const Tooltip = ({
+  content,
+  children,
+  ...props
+}) => (
+  <Tippy
+    {...props}
+    interactive
+    render={() => content}
+  >
+
     {children}
   </Tippy>
-	// <div>tooltip</div>
 );
 
-Tooltip.propTypes = {
-  content: PropTypes.node.isRequired,
-	children: PropTypes.node.isRequired,
-};
-
-export default Tooltip2;
+export default Tooltip;
