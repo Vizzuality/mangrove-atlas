@@ -45,8 +45,7 @@ export const getWidgetsWithData = createSelector(
   [widgetsData],
   (_widgetsData) =>
     _widgetsData?.reduce(
-      (acc, w) =>
-        !!Object.values(w)[0]?.length || !isEmpty(Object.values(w)[0])
+      (acc, w) => !!Object.values(w)[0]?.length || !isEmpty(Object.values(w)[0])
           ? [...acc, Object.keys(w)[0]]
           : [...acc],
       []

@@ -19,7 +19,7 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile, isDisab
   useEffect(() => {
     if (menuRef.current) {
       const { top, left, x } = menuRef.current.getBoundingClientRect();
-      setPosition({ top, left, x });
+      setPosition({ top, left, x: x });
     }
   }, [menuRef]);
 
