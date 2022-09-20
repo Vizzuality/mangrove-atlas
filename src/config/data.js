@@ -240,32 +240,16 @@ export default {
       "mapboxGroup": "0f5c9a8450ae3fcd2174726a3d327ad1"
     },
     {
-      "name": "Mangrove restoration",
-      "id": "restoration"
-    },
-    {
-      "name": "Mangrove Blue Carbon",
-      "id": "carbon"
-    },
-    {
-      "name": "Mangrove Investment Potential",
-      "id": "investment-potential"
+      "name": "Mangrove extent",
+      "id": "extent"
     },
     {
       "name": "Mangrove change",
       "id": "net"
     },
     {
-      "name": "Conservation hotspots",
-      "id": "cons-hotspots"
-    },
-    {
-      "name": "Height canopy",
-      "id": "height"
-    },
-    {
-      "name": "Mangrove biomass",
-      "id": "biomass"
+      "name": "Mangrove restoration",
+      "id": "restoration"
     },
     {
       "name": "Mangrove deforestation alerts",
@@ -276,8 +260,16 @@ export default {
       "id": "alerts-point"
     },
     {
-      "name": "Mangrove extent",
-      "id": "extent"
+      "name": "Mangrove Blue Carbon",
+      "id": "carbon"
+    },
+    {
+      "name": "Height canopy",
+      "id": "height"
+    },
+    {
+      "name": "Mangrove biomass",
+      "id": "biomass"
     },
   ],
   "categories": [

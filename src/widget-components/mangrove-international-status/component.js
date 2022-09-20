@@ -83,6 +83,7 @@ export const MangroveInternationalStatus = ({
               <a
                 target="_blank"
                 rel="noopener noreferrer"
+                className={styles.underline}
                 href={
                   !hasNDCTarget && !hasNDCReductionTarget
                     ? null
@@ -119,6 +120,7 @@ export const MangroveInternationalStatus = ({
               <a
                 target="_blank"
                 rel="noopener noreferrer"
+                className={styles.underline}
                 href={
                   !hasNDCTarget && !hasNDCReductionTarget
                     ? null
