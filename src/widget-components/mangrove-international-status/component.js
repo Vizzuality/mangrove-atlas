@@ -52,6 +52,10 @@ export const MangroveInternationalStatus = ({
     fow,
     ndc_blurb,
   } = data;
+
+  console.log(ipcc_wetlands_suplement, 'ipcc_wetlands_suplement')
+
+
   const hasNDCTarget = !!ndc_target && ndc_target > 0;
   const hasNDCReductionTarget =
     !!ndc_reduction_target && ndc_reduction_target > 0;
@@ -64,7 +68,7 @@ export const MangroveInternationalStatus = ({
     (!!hasNDCTarget || !!hasNDCReductionTarget) &&
     ` by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
-    !!ndc_target && `. This represents a reduction of ${ndc_target} tCO2/yr.`;
+    !!ndc_target && `. This represents a reduction of ${ndc_target} CO2/yr.`;
 
   return (
     <ChartWidget
@@ -145,17 +149,39 @@ export const MangroveInternationalStatus = ({
             {ndcTargetSentence}
           </p>
         </div>
-        <div className={styles.sentenceWrapper}>
+        {ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
           <p>
             {name}
             {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
             {!ndc_adaptation && !ndc_mitigation
               ? "doesn't include"
               : "includes"}{" "}
-            coastal and marine NBS {ndc_adaptation}
-            {ndc_mitigation}.
+            coastal and marine NBS for mitigation and adaptation.
           </p>
-        </div>
+        </div>}
+
+        {ndc_adaptation && !ndc_mitigation && <div className={styles.sentenceWrapper}>
+          <p>
+            {name}
+            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+            {!ndc_adaptation && !ndc_mitigation
+              ? "doesn't include"
+              : "includes"}{" "}
+            coastal and marine NBS for adaptation'.
+          </p>
+        </div>}
+
+
+        {!ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
+          <p>
+            {name}
+            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+            {!ndc_adaptation && !ndc_mitigation
+              ? "doesn't include"
+              : "includes"}{" "}
+            coastal and marine NBS for mitigation'.
+          </p>
+        </div>}
 
         {frel && fow && (
           <div>
@@ -172,7 +198,7 @@ export const MangroveInternationalStatus = ({
         )}
         <div>
           <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
-          {ipcc_wetlands_suplement ? (
+          {ipcc_wetlands_suplement === 'has' ? (
             <div className={styles.sentenceWrapper}>
               <p>
                 {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands

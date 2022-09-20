@@ -133,7 +133,7 @@ export default {
     {
       name: "Carbon Market Potential",
       slug: "mangrove_investment_potential",
-      locationType: ["country", "worldwide"],
+      locationType: ["country"],
       categoryIds: ["all_datasets", "climate_and_policy"],
       layersIds: [],
     },
