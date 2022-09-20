@@ -146,7 +146,7 @@ function MangroveNetChange({
     currentLocation?.location_type === "worldwide" ? (
       "the world"
     ) : (
-      <span className="notranslate">{currentLocation.name}</span>
+      <span className="notranslate">{currentLocation?.name}</span>
     );
   const direction = change > 0 ? "increased" : "decreased";
 
