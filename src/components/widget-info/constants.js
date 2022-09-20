@@ -98,4 +98,3 @@ const widgetInfo = {
 };
 
 export default widgetInfo;
-
