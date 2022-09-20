@@ -52,13 +52,6 @@ export default {
       layersIds: ["net"],
     },
     {
-      name: "Mangrove habitat change",
-      slug: "mangrove_activity",
-      locationType: ["worldwide"],
-      categoryIds: ["all_datasets", "distribution_and_change"],
-      layersIds: [],
-    },
-    {
       name: "Mangrove alerts",
       slug: "mangrove_alerts",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
