@@ -106,9 +106,6 @@ export default {
         "worldwide"
       ],
       "categoryIds": [
-        "all_datasets",
-        "restoration_and_conservation",
-        "ecosystem_services",
       ],
       layersIds: ["biomass"],
     },

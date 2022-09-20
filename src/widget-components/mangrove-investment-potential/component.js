@@ -62,12 +62,6 @@ function MangroveInvestmentPotential({
   if (!chartData || chartData.length <= 0) {
     return null;
   }
-  const locationName =
-    currentLocation.location_type === "worldwide" ? (
-      "the world"
-    ) : (
-      <span className="notranslate">{`${currentLocation?.name}'s`}</span>
-    );
 
   const locationName =
   currentLocation.location_type === "worldwide" ? (
