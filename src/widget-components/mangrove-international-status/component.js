@@ -65,7 +65,7 @@ export const MangroveInternationalStatus = ({
     (!!hasNDCTarget || !!hasNDCReductionTarget) &&
     ` by target year${targetYears} ${target_years}`;
   const ndcTargetSentence =
-    !!ndc_target && `. This represents a reduction of ${ndc_target} CO2/yr.`;
+    !!ndc_target && `. This represents a reduction of ${ndc_target} Mt CO₂e/yr`;
 
   return (
     <ChartWidget
@@ -164,7 +164,7 @@ export const MangroveInternationalStatus = ({
             {!ndc_adaptation && !ndc_mitigation
               ? "doesn't include"
               : "includes"}{" "}
-            coastal and marine NBS for adaptation'.
+            coastal and marine NBS for adaptation.
           </p>
         </div>}
 
