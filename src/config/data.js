@@ -127,7 +127,7 @@ export default {
       name: "Mangrove International Status",
       slug: "mangrove_international_status",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [],
+      categoryIds: ["all_datasets", "climate_and_policy"],
     },
     {
       name: "Carbon Market Potential",
