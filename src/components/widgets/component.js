@@ -28,7 +28,14 @@ const WidgetList = ({
     )
   );
 
-  const widgetsFiltered = widgetsCategory;
+  const widgetsFiltered = useMemo(() =>
+    widgets.filter(
+      ({ categoryIds, slug }) =>
+        categoryIds.includes(category) && dataByWidget.includes(slug),
+      [category, widgets, dataByWidget]
+    )
+  );
+
 
   return (
     <div
@@ -43,10 +50,9 @@ const WidgetList = ({
         </div>
       ) : (
         widgets.length &&
-        widgetsFiltered?.map((widget, index) => {
+        widgetsCategory?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-          const isLast =
-            widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug;
+          const isLast = widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
           return (
             <div
               key={widget.slug}

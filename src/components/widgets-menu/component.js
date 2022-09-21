@@ -7,7 +7,7 @@ import Modal from 'components/modal';
 
 import styles from './style.module.scss';
 
-const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile, isDisabled }) => {
+const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile }) => {
   const [isOpen, toggleModal] = useState(false);
   const [position, setPosition] = useState({
     top: null,
@@ -32,7 +32,7 @@ const WidgetsMenu = ({ currentDashboard, dashboards, setCurrent, mobile, isDisab
   };
 
   return (
-    <div className={cx(styles.widgets_menu, { [styles.mobile]: mobile, [styles._disabled]: isDisabled })} ref={menuRef}>
+    <div className={cx(styles.widgets_menu, { [styles.mobile]: mobile })} ref={menuRef}>
       {mobile
         ? <button className={styles.btn} onClick={() => toggleModal(!isOpen)}>
           <Icon name="ecosystem_services" className={cx([styles.icon])} />
