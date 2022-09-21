@@ -18,9 +18,9 @@ function getValue(item, value) {
 
 function Tooltip({ payload, settings, style, hideZeros }) {
   const values = payload && payload.length > 0 && payload[0].payload;
+
   return (
     <div>
-
       {settings && settings.length && (
         <div className={styles.chart_tooltip} style={style}>
 
