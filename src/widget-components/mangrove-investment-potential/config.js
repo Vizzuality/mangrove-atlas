@@ -39,7 +39,7 @@ const getData = (data) => {
         color: COLORS[d.category],
         description: d.description,
         percentage: d.percentage,
-        tooltipValue: hasLabel ? d.description : `${numberFormat(d.value)} ha`,
+        tooltipValue: `${numberFormat(d.value)} ha`,
       };
     }),
     "value"
@@ -141,6 +141,7 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
+                  { title: "category", key: "category" },
                   {
                     label: "Area",
                     key: "tooltipValue",
