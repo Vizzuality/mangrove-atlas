@@ -24,4 +24,8 @@ export function eeEvaluate(eeStatement: ee.ComputedObject): Promise<any> {
 
 export function arrSum(arr: []): number {
   return arr.reduce((a, b) => a + b, 0)
-};
+}
+
+export function cumSum(arr: []): number {
+  return arr.reduce((a, b) => a + b, 0)
+}

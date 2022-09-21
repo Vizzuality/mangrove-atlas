@@ -1,15 +1,17 @@
 import{ Request, Response} from 'express';
 import   ee  from '@google/earthengine'
+import type { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
 
 import { eeAuthenticate, eeEvaluate } from './utils';
 import { serialize } from './serialize';
 import { AnalysisResponse } from './AnalysisResponse';
 import { FeatureCollection } from './FeatureCollection';
-import { BlueCarbonCalculations } from './calculations/BlueCarbon';
+import { NetChangeCalculations } from './calculations/NetChange';
+import { HabitatExtentCalculations } from './calculations/HabitatExtent';
 
 enum Widgets {
-  alpha  = "a",
-  beta   = "b",
+  "habitat-extent"  = "habitat-extent",
+  "net-change"  = "net-change",
   gamma  = "g"
 }
 interface AnalysisRequestParams {
@@ -20,10 +22,13 @@ interface AnalysisRequestBody {
   geometry: FeatureCollection
 }
 
-export async function analyze(req: Request, res: Response): Promise<Response> {
+export const analyze: HttpFunction = async (req, res) => {
 
   res.set('Access-Control-Allow-Origin', '*');
-
+  const TEST_DICT = {
+    "habitat-extent": HabitatExtentCalculations,
+    "net-change": NetChangeCalculations,
+  }
   const isValid = validate(req, res);
 
   if (!isValid.status) {
@@ -41,10 +46,14 @@ export async function analyze(req: Request, res: Response): Promise<Response> {
   try {
     await eeAuthenticate();
     const geometryCollection = ee.FeatureCollection(req.body.geometry);
-    const computedObject = BlueCarbonCalculations.calculateTotalTreeCover(geometryCollection);
-    const result = await eeEvaluate(computedObject);
+    const widgets = req.query.widgets as Widgets[];
+    const asyncRes = await Promise.all(widgets.map(async (i) => {
+      const calculation = TEST_DICT[i];
+      const result = await eeEvaluate(calculation.calculate(geometryCollection));
+      return serialize(result, i);
+    }));
 
-    res.status(200).json(result);
+    res.status(200).json(asyncRes);
 
   } catch (error) {
     console.error(error)
@@ -63,7 +72,6 @@ function isValidAnalysisRequestParams(obj: any): obj is AnalysisRequestParams {
 }
 
 function validate(req: Request, res:  Response): {"status": Boolean, "res": Response} {
-  console.log(req.query)
   if (!req.body || !req.query) {
     return {"status": false,
           "res":  res.status(400).json({"error":"No data provided"})};

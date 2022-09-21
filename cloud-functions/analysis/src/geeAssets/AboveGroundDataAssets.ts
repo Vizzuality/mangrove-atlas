@@ -7,9 +7,10 @@ export interface IHansenDataAsset extends IDataAsset {
 
 export const HansenDataAsset: IHansenDataAsset = {
   assetPath: {
-    default: "UMD/hansen/global_forest_change_2021_v1_9" },
+    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_aboveground_biomass-v3"
+  },
   numYears: 20,
   getEEAsset(){
-    return ee.Image(this.assetPath.default);
+    return ee.ImageCollection(this.assetPath.default);
   }
 };
