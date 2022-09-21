@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { currentDashboard } from "modules/dashboards/selectors";
 import { currentLocation } from "modules/locations/selectors";
-import { isEmpty } from "lodash";
+import { flatten, isEmpty, compact } from "lodash";
 
 const widgets = (state) => state.widgets.list;
 const locations = (state) => state.locations.list;
@@ -44,11 +44,16 @@ export const dashboardWidgets = createSelector(
 export const getWidgetsWithData = createSelector(
   [widgetsData],
   (_widgetsData) =>
-    _widgetsData?.reduce(
-      (acc, w) => !!Object.values(w)[0]?.length || !isEmpty(Object.values(w)[0])
-          ? [...acc, Object.keys(w)[0]]
-          : [...acc],
-      []
+    flatten(
+      _widgetsData?.reduce((acc, w) => {
+        if (!!Object.values(w)[0].length) {
+          return [...acc, Object.keys(w)];
+        } else if (!isEmpty(Object.values(w)[0])) {
+          return [...acc, Object.keys(w)];
+        } else {
+          return [...acc];
+        }
+      }, [])
     )
 );
 
@@ -64,11 +69,9 @@ export const activeLayers = createSelector(
 export const conservationHotspots = createSelector(
   [locations],
   (_locations) => {
-    // Saloum and Rufiji
-    // const ids = [1534, 1555];
     const location_ids = [
       process.env.RUFIKI_MAFIA_KILWA_LOCATION_ID,
-      process.env.MAFIA_ISLAND_LOCATION_ID
+      process.env.MAFIA_ISLAND_LOCATION_ID,
     ];
     const widgetData = _locations.filter((location) =>
       location_ids.includes(location.location_id)

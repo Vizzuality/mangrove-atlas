@@ -5,7 +5,6 @@ import Spinner from "components/spinner";
 import Button from "components/button";
 
 import styles from "./style.module.scss";
-import { currentLocation } from "modules/locations/selectors";
 
 const WidgetList = ({
   widgets,
@@ -25,12 +24,20 @@ const WidgetList = ({
   const widgetsCategory = useMemo(() =>
     widgets.filter(
       ({ categoryIds, locationType }) =>
-        categoryIds.includes(category) && locationType.includes(currentLocationType),
+        categoryIds.includes(category) &&
+        locationType.includes(currentLocationType),
       [category, widgets]
     )
   );
 
-  const widgetsFiltered = widgetsCategory;
+  const widgetsFiltered = useMemo(() =>
+    widgets.filter(
+      ({ categoryIds, slug }) =>
+        categoryIds.includes(category) && dataByWidget.includes(slug),
+      [category, widgets, dataByWidget]
+    )
+  );
+
 
   return (
     <div
@@ -45,10 +52,9 @@ const WidgetList = ({
         </div>
       ) : (
         widgets.length &&
-        widgetsFiltered?.map((widget, index) => {
+        widgetsCategory?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-          const isLast =
-            widgetsFiltered[widgetsFiltered.length - 1].slug === widget.slug;
+          const isLast = widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
           return (
             <div
               key={widget.slug}
