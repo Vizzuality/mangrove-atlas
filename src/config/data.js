@@ -55,7 +55,7 @@ export default {
       name: "Mangrove habitat change",
       slug: "mangrove_activity",
       locationType: ["worldwide"],
-      categoryIds: ["all_datasets", "distribution_and_change"],
+      categoryIds: [],
       layersIds: [],
     },
     {
