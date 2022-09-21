@@ -5,7 +5,6 @@ import Spinner from "components/spinner";
 import Button from "components/button";
 
 import styles from "./style.module.scss";
-import { currentLocation } from "modules/locations/selectors";
 
 const WidgetList = ({
   widgets,
@@ -25,7 +24,8 @@ const WidgetList = ({
   const widgetsCategory = useMemo(() =>
     widgets.filter(
       ({ categoryIds, locationType }) =>
-        categoryIds.includes(category) && locationType.includes(currentLocationType),
+        categoryIds.includes(category) &&
+        locationType.includes(currentLocationType),
       [category, widgets]
     )
   );
