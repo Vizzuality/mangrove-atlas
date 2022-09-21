@@ -129,8 +129,9 @@ function MangroveNetChange({
   // Therefore we substract that from the accumulated change of all following years.
   const change =
     widgetDataFiltered.length > 0
-      ? sumBy(widgetDataFiltered, "netChangeRaw") - widgetDataFiltered[0].netChange
+      ?   widgetDataFiltered[0].netChangeRaw - widgetDataFiltered[widgetDataFiltered.length - 1].netChangeRaw
       : 0;
+
   const quantity =
     unit === "km²"
       ? numberFormat(Math.abs(change))
