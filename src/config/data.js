@@ -114,7 +114,7 @@ export default {
     {
       name: "Mangrove Blue Carbon",
       slug: "mangrove_blue_carbon",
-      locationType: ["country", "worldwide"],
+      locationType: ["country"],
       categoryIds: ["all_datasets", "climate_and_policy", "ecosystem_services"],
       layersIds: ["carbon"],
     },

@@ -142,7 +142,7 @@ const CONFIG = {
                 // { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
                 // { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
                 {
-                  label: "Net result",
+                  label: "Net change",
                   color: "rgba(0,0,0,0.7)",
                   key: "netChange",
                   format: (value) =>
