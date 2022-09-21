@@ -52,6 +52,13 @@ export default {
       layersIds: ["net"],
     },
     {
+      name: "Mangrove habitat change",
+      slug: "mangrove_activity",
+      locationType: ["worldwide"],
+      categoryIds: ["all_datasets", "distribution_and_change"],
+      layersIds: [],
+    },
+    {
       name: "Mangrove alerts",
       slug: "mangrove_alerts",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
@@ -82,23 +89,13 @@ export default {
       layersIds: ["restoration"],
     },
     {
-      "name": "Conservation hotspots",
-      "slug": "conservation_hotspots",
-      "locationType": [
-        "custom"
-      ],
-      "categoryIds": ["all_datasets"],
-      "layersIds": [
-        "cons-hotspots"
-      ]
-    },
-    {
-      "name": "Mangrove habitat change",
-      "slug": "mangrove_activity",
-      "locationType": [
-        "worldwide"
-      ],
-      "categoryIds": [
+      name: "Mangrove biomass",
+      slug: "mangrove_biomass",
+      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      categoryIds: [
+        "all_datasets",
+        "restoration_and_conservation",
+        "ecosystem_services",
       ],
       layersIds: ["biomass"],
     },
@@ -109,15 +106,14 @@ export default {
       categoryIds: [
         "all_datasets",
         "restoration_and_conservation",
-        "ecosystem_services"
+        "ecosystem_services",
       ],
-      categoryIds: ["all_datasets"],
       layersIds: ["height"],
     },
     {
       name: "Mangrove Blue Carbon",
       slug: "mangrove_blue_carbon",
-      locationType: ["country"],
+      locationType: ["country", "worldwide"],
       categoryIds: ["all_datasets", "climate_and_policy", "ecosystem_services"],
       layersIds: ["carbon"],
     },
@@ -136,7 +132,7 @@ export default {
     {
       name: "Carbon Market Potential",
       slug: "mangrove_investment_potential",
-      locationType: ["country", "worldwide"],
+      locationType: ["country"],
       categoryIds: ["all_datasets", "climate_and_policy"],
       layersIds: [],
     },
