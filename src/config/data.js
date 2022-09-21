@@ -81,11 +81,7 @@ export default {
       name: "Mangrove Restoration",
       slug: "mangrove_restoration",
       locationType: ["country", "worldwide"],
-      categoryIds: [
-        "all_datasets",
-        "restoration_and_conservation",
-        "ecosystem_services",
-      ],
+      categoryIds: [],
       layersIds: ["restoration"],
     },
     {
