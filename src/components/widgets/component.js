@@ -38,7 +38,6 @@ const WidgetList = ({
     )
   );
 
-
   return (
     <div
       key={category}
