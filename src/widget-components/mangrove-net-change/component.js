@@ -131,6 +131,7 @@ function MangroveNetChange({
     widgetDataFiltered.length > 0
       ? widgetDataFiltered[0].netChangeRaw - widgetDataFiltered[widgetDataFiltered.length - 1].netChangeRaw
       : 0;
+
   const quantity =
     unit === "km²"
       ? numberFormat(Math.abs(change))
