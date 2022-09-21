@@ -54,7 +54,7 @@ const Download = ({ slug }) => {
                   />
                   <h3 className={cx({ [styles._noicon]: !description })}>{title}</h3>
                 </div>
-                {href && <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>}
+                {href && <a href={href} target="_blank" rel="noopener noreferrer">DOWNLOAD</a>}
               </div>
               <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
               <p>{license}</p>

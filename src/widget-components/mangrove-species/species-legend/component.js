@@ -38,7 +38,7 @@ const Legend = ({ groups }) => {
                       [styles._large]: item?.payload?.species?.length > 3
                     })}>
                       {item?.payload?.species.map((s) => (
-                        <a key={s?.scientific_name} className={styles.speciesLink} href={s.iucn_url}>
+                        <a key={s?.scientific_name} className={styles.speciesLink} href={s.iucn_url} target="_blank" rel="noopener noreferrer">
                           <li>{s?.scientific_name}</li>
                         </a>
                       ))}

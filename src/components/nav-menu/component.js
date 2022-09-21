@@ -117,7 +117,7 @@ const NavMenu = ({ mobile }) => {
               <img src={donors} alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation" />
 
               <p>Designed by:</p>
-                <a href="https://www.vizzuality.com/" alt="vizzuality" target="_blank" rel="noreferrer"><img src={vizzuality} className={styles.logo} alt="vizzuality" /></a>
+                <a href="https://www.vizzuality.com/" alt="vizzuality" target="_blank" rel="noopener noreferrer"><img src={vizzuality} className={styles.logo} alt="vizzuality" /></a>
 
               <h4>Disclaimer</h4>
               <p>
