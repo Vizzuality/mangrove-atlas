@@ -117,7 +117,7 @@ export default {
       name: "Mangrove Emissions Mitigation",
       slug: "mangrove_emissions_mitigation",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [],
+      categoryIds: ["all_datasets", "climate_and_policy"],
     },
     {
       name: "Mangrove International Status",
