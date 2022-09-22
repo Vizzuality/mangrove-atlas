@@ -105,7 +105,6 @@ export const CONFIG = {
                       y={ey - heightMargin * index - top}
                       width="100%"
                       height="100px"
-                      
                     >
                       <div
                         style={{
@@ -115,7 +114,7 @@ export const CONFIG = {
                           color: "#A5A5A5",
                           lineHeight: "10px",
                           width: "125px",
-                          fontSize: "11px"
+                          fontSize: "11px",
                         }}
                       >
                         {category}
