@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
 import orderBy from "lodash/orderBy";
@@ -16,6 +16,7 @@ const unitOptions = [
 ];
 
 function MangroveExtent({
+  isLoading,
   data,
   metadata,
   currentLocation,
@@ -34,7 +35,7 @@ function MangroveExtent({
   const years = metadata?.year?.reverse();
 
   const year = useMemo(
-    () => currentYear || years?.[years?.length - 1] || 2020,
+    () => currentYear || years?.[years?.length - 1],
     [years, currentYear]
   );
 
@@ -57,20 +58,33 @@ function MangroveExtent({
       });
     }
     setUi({ id: "extent", value: { ...ui, year, unit: currentUnit } });
-
   }, [addFilter, unit, year, currentUnit, metadata]);
 
-  // useEffect(() => {
-  //   setData({ slug, data: !!data.length });
-  // }, [setData, data]);
+  const changeYear = useCallback((current) => {
+    addFilter({
+      filter: {
+        id: "extent",
+        year: current,
+      },
+    });
+    setUi({ id: "extent", value: { ...ui, year: current } });
+  }, [ui]);
+
+  const changeUnit = useCallback((selectedUnit) => {
+    setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
+  }, []);
 
   if (!data || !data.length || !year) {
     return null;
   }
 
-  const { mangroveArea,
-    mangroveCoastCoveragePercentage, chartConfig, chartData, downloadData } =
-    config.parse(data, metadata, currentYear, unit);
+  const {
+    mangroveArea,
+    mangroveCoastCoveragePercentage,
+    chartConfig,
+    chartData,
+    downloadData,
+  } = config.parse(data, metadata, currentYear, unit);
 
   const optionsYears = orderBy(
     (years || []).map((year) => ({
@@ -83,27 +97,12 @@ function MangroveExtent({
 
   let sentence = null;
 
-  const changeYear = (current) => {
-    addFilter({
-      filter: {
-        id: "extent",
-        year: current,
-      },
-    });
-    setUi({ id: "extent", value: { ...ui, year: current } });
-  };
-
-  const changeUnit = (selectedUnit) => {
-    setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
-  };
-
   const widgetData = {
     data: chartData,
     config: chartConfig,
   };
 
   try {
-
     const area =
       unit === "ha"
         ? numberFormat(mangroveArea * 100)
@@ -143,7 +142,10 @@ function MangroveExtent({
           <strong>{numberFormat(mangroveCoastCoveragePercentage)}%</strong>{" "}
         </span>{" "}
         of the
-        <strong className="notranslate"> {numberFormat(total_lenght)} km</strong>
+        <strong className="notranslate">
+          {" "}
+          {numberFormat(total_lenght)} km
+        </strong>
         <span>
           {" "}
           of the coastline.
@@ -157,8 +159,7 @@ function MangroveExtent({
 
   if (!chartData) return null;
 
-  return (
-  // <div>hola</div>
+  return !isLoading ? (
     <ChartWidget
       data={chartData}
       slug={slug}
@@ -170,7 +171,7 @@ function MangroveExtent({
       chartData={widgetData}
       {...props}
     />
-  );
+  ) : null;
 }
 
 MangroveExtent.propTypes = {
