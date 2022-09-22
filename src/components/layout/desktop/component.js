@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 // components
 import HeaderDesktop from 'components/header/desktop';

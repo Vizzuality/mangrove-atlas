@@ -75,7 +75,7 @@ export const CONFIG = {
     const agbFormat = numberFormat(agb / 1000000);
     const tocFormat = numberFormat(toc / 1000000);
     const socFormat = numberFormat(soc / 1000000);
-    const tocInt = removeDecimals(toc / 1000000);
+    const tocInt = toc > 1000000 ? removeDecimals(toc) : tocFormat;
 
     const downloadData = {}; //getDownloadData(data);
 

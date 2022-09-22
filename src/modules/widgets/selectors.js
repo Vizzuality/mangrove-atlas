@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { currentDashboard } from "modules/dashboards/selectors";
 import { currentLocation } from "modules/locations/selectors";
-import { flatten, isEmpty, compact } from "lodash";
+import { flatten, isEmpty } from "lodash";
 
 const widgets = (state) => state.widgets.list;
 const locations = (state) => state.locations.list;

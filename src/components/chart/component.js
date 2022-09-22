@@ -88,7 +88,6 @@ class Chart extends PureComponent {
       onBrushEnd,
     } = this.props;
 
-    console.log(this.props)
     const {
       margin = { top: 20, right: 0, left: 50, bottom: 0 },
       padding = { top: 0, right: 0, left: 0, bottom: 0 },
@@ -128,7 +127,7 @@ class Chart extends PureComponent {
         addComponent(key, definition);
       }
     });
-console.log('hola render')
+
     return (
       <div key={this.props.name} ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer width="100%" height={tree ? 0 : height}>
