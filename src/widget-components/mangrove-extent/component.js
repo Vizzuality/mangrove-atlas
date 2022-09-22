@@ -32,7 +32,7 @@ function MangroveExtent({
   const { year: currentYear, unit } = ui;
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
-  const years = metadata?.year?.reverse();
+  const years = metadata?.year;
 
   const year = useMemo(
     () => currentYear || years?.[years?.length - 1],
