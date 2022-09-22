@@ -92,7 +92,6 @@ export const CONFIG = {
       chartConfig: {
         type: "pie",
         layout: "centric",
-        height: 250,
         margin: { top: 20, right: 0, left: 0, bottom: 0 },
         xKey: "nonCovered",
         yKeys: {
@@ -110,10 +109,10 @@ export const CONFIG = {
           },
         },
         legend: {
-          align: "left",
-          maxWidth: 170,
           verticalAlign: "middle",
           layout: "vertical",
+          align: "left",
+          chartWidth: 100,
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(
@@ -138,7 +137,6 @@ export const CONFIG = {
               <WidgetLegend
                 groups={groups}
                 unit={unit === "km²" ? "km²" : "ha"}
-                direction="vertical"
               />
             );
           },
