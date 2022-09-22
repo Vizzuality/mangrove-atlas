@@ -48,7 +48,7 @@ export default {
       name: "Mangrove net change",
       slug: "mangrove_net_change",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [],
+      categoryIds: ["all_datasets", "distribution_and_change"],
       layersIds: ["net"],
     },
     {
