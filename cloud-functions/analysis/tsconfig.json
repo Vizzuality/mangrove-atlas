@@ -20,7 +20,8 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "rootDir": ".",
-    "outDir": "build"
+    "outDir": "build",
+    "experimentalDecorators": true,
   },
 
   "include": [

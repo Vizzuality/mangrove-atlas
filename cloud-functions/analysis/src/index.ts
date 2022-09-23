@@ -1,25 +1,40 @@
 import{ Request, Response} from 'express';
+import {
+  ArrayNotEmpty,
+  validateOrReject,
+  IsEnum
+} from 'class-validator';
+import 'reflect-metadata';
+import { plainToClass } from 'class-transformer';
+
 import   ee  from '@google/earthengine'
 import type { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
 
 import { eeAuthenticate, eeEvaluate } from './utils';
-import { serialize } from './serialize';
-import { AnalysisResponse } from './AnalysisResponse';
 import { FeatureCollection } from './FeatureCollection';
+
 import { NetChangeCalculations } from './calculations/NetChange';
 import { HabitatExtentCalculations } from './calculations/HabitatExtent';
+import { TreeHeightCalculations } from './calculations/TreeHeight';
+import { BiomassCalculations } from './calculations/AbovegroundBiomass';
+import { BlueCarbonCalculations } from './calculations/BlueCarbon';
 
 enum Widgets {
   "habitat-extent"  = "habitat-extent",
   "net-change"  = "net-change",
-  gamma  = "g"
-}
-interface AnalysisRequestParams {
-  widgets: Widgets[],
+  "tree-height"  = "tree-height",
+  "aboveground-biomass"  = "aboveground-biomass",
+  "blue-carbon"  = "blue-carbon"
 }
 
-interface AnalysisRequestBody {
-  geometry: FeatureCollection
+class AnalysisRequestBody {
+  geometry: FeatureCollection;
+}
+class AnalysisRequestParams {
+  @ArrayNotEmpty()
+  @IsEnum(Widgets, { each: true })
+
+  widgets: Widgets[];
 }
 
 export const analyze: HttpFunction = async (req, res) => {
@@ -28,8 +43,11 @@ export const analyze: HttpFunction = async (req, res) => {
   const TEST_DICT = {
     "habitat-extent": HabitatExtentCalculations,
     "net-change": NetChangeCalculations,
+    "tree-height": TreeHeightCalculations,
+    "aboveground-biomass": BiomassCalculations,
+    "blue-carbon": BlueCarbonCalculations
   }
-  const isValid = validate(req, res);
+  const isValid = await validateInput(req, res);
 
   if (!isValid.status) {
     return isValid.res;
@@ -50,10 +68,13 @@ export const analyze: HttpFunction = async (req, res) => {
     const asyncRes = await Promise.all(widgets.map(async (i) => {
       const calculation = TEST_DICT[i];
       const result = await eeEvaluate(calculation.calculate(geometryCollection));
-      return serialize(result, i);
+      return result;
     }));
+    const response = widgets.reduce((accumulator, element, index) => {
+      return {...accumulator, [element]: asyncRes[index]};
+    }, {});
 
-    res.status(200).json(asyncRes);
+    res.status(200).json(response);
 
   } catch (error) {
     console.error(error)
@@ -63,30 +84,20 @@ export const analyze: HttpFunction = async (req, res) => {
   return res
 }
 
-function isValidAnalysisRequestBody(obj: any): obj is AnalysisRequestBody {
-  return obj.geometry;
-}
+async function validateInput(req: Request, res:  Response): Promise<{"status": Boolean, "res": Response}> {
+  try {
+    if (!req.body || !req.query) {
+      return {"status": false,
+            "res":  res.status(400).json({"error":"No data provided"})};
+    }
 
-function isValidAnalysisRequestParams(obj: any): obj is AnalysisRequestParams {
-  return obj.widgets;
-}
+    await validateOrReject(plainToClass(AnalysisRequestParams, req.query));
+    await validateOrReject(plainToClass(AnalysisRequestBody, req.body));
 
-function validate(req: Request, res:  Response): {"status": Boolean, "res": Response} {
-  if (!req.body || !req.query) {
-    return {"status": false,
-          "res":  res.status(400).json({"error":"No data provided"})};
+    return {"status": true, "res": res};
   }
-
-  if (!isValidAnalysisRequestBody(req.body)) {
-    return {"status": false,
-            "res":  res.status(400).json({"error":"geometry is required as part of the body"})};
+  catch (errors) {
+    return {"status": false, "res": res.status(400).json({"error": errors})};
   }
-
-  if (!isValidAnalysisRequestParams(req.query)) {
-    return {"status": false,
-          "res":  res.status(400).json({"error":"a valid widget param is required"})};
-  }
-
-  return {"status": true, "res": res};
 }
 

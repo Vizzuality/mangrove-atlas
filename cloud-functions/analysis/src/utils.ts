@@ -29,3 +29,4 @@ export function arrSum(arr: []): number {
 export function cumSum(arr: []): number {
   return arr.reduce((a, b) => a + b, 0)
 }
+

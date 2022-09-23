@@ -33,17 +33,21 @@ class NetChangeCalculationsClass extends BaseCalculation {
       }))
     ).toList(10000)
 
-    return gain.zip(loss)
-    .map((list: ee.List) => {
-      const item = ee.List(list);
-      const gain = ee.Feature(item.get(0));
-      const loss = ee.Feature(item.get(1));
-      const year = ee.Number.parse(ee.String(loss.id()).slice(8,12));
-      const net_change = ee.Number(gain.get('gain')).subtract(ee.Number(loss.get('loss')));
-      return gain.toDictionary()
-      .combine(loss.toDictionary())
-      .combine(ee.Dictionary({'year':year, 'net_change': net_change}));
-    });
+    return ee.Dictionary({
+      'data':gain.zip(loss)
+        .map((list: ee.List) => {
+          const item = ee.List(list);
+          const gain = ee.Feature(item.get(0));
+          const loss = ee.Feature(item.get(1));
+          const year = ee.Number.parse(ee.String(loss.id()).slice(8,12));
+          const net_change = ee.Number(gain.get('gain')).subtract(ee.Number(loss.get('loss')));
+          return gain.toDictionary()
+          .combine(loss.toDictionary())
+          .combine(ee.Dictionary({'year':year, 'net_change': net_change}));
+        }),
+  'metadata':{
+
+  }});
   }
 }
 
