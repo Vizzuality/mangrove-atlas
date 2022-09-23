@@ -7,21 +7,34 @@ import orderBy from "lodash/orderBy";
 export const numberFormat = format(",.2f");
 export const formatAxis = format(",.0d");
 
-const widgetData = (data) =>
-  orderBy(
-    data.map((l) => ({
-      label: l.year,
-      year: l.year,
-      netChange: l.cum_sum,
-      netChangeRaw: l.value,
-    })),
+const widgetData = (data, unit) => {
+  const dataValues = data.map((d) => (unit === "ha" ? d.value * 100 : d.value));
+  dataValues.shift();
+  const cumulativeSum = (
+    (sum) => (value) =>
+      (sum += value)
+  )(0);
+  const cumulativeValues = [0, ...dataValues].map(cumulativeSum);
+  return orderBy(
+    data.map((l, i) => {
+      return {
+        label: l.year,
+        year: l.year,
+        netChange: i === 0 ? 0 : cumulativeValues[i],
+        netChangeRaw: l.value,
+      };
+    }),
     (l) => l.year
   );
+};
 
 const CONFIG = {
   parse: (data, unit) => {
+    const chartData = widgetData(data, unit);
+    const change = chartData[chartData.length - 1]?.netChange;
     return {
-      chartData: widgetData(data),
+      change,
+      chartData,
       metadata: data.metadata || {},
       chartConfig: {
         stackOffset: "sign",
@@ -135,7 +148,8 @@ const CONFIG = {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
                   key: "netChange",
-                  format: (value) => `${numberFormat(value)} km²`,
+                  format: (value) =>
+                    value === 0 ? 0 : `${numberFormat(value)} km²`,
                 },
               ]}
               settings={[
@@ -145,12 +159,7 @@ const CONFIG = {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
                   key: "netChange",
-                  format: (value) =>
-                    `${
-                      unit === "ha"
-                        ? numberFormat(value * 100)
-                        : numberFormat(value)
-                    } ${unit === "ha" ? "ha" : "km²"}`,
+                  format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}`,
                   bulletType: "bar",
                 },
               ]}
