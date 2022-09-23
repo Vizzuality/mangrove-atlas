@@ -63,6 +63,7 @@ export const analyze: HttpFunction = async (req, res) => {
 
   try {
     await eeAuthenticate();
+
     const geometryCollection = ee.FeatureCollection(req.body.geometry);
     const widgets = req.query.widgets as Widgets[];
     const asyncRes = await Promise.all(widgets.map(async (i) => {
