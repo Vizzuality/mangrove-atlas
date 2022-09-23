@@ -62,6 +62,7 @@ export const analyze: HttpFunction = async (req, res) => {
   }
 
   try {
+
     await eeAuthenticate();
 
     const geometryCollection = ee.FeatureCollection(req.body.geometry);
