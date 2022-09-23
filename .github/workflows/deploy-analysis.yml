@@ -30,7 +30,7 @@ jobs:
       shell: bash
     - uses: "finnp/create-file-action@master"
       env:
-        FILE_NAME: "cloud-functions/analysis/credentials.json"
+        FILE_NAME: "cloud-functions/analysis/build/src/credentials.json"
         FILE_DATA: "${{ secrets.GEE_CREDENTIALS_JSON }}"
     - id: 'deploy'
       name: GC Functions deployment
