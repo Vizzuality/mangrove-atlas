@@ -24,14 +24,14 @@ jobs:
       uses: google-github-actions/auth@v0.8.0
       with:
         credentials_json: '${{ secrets.gcp_credentials }}'
-    - uses: "finnp/create-file-action@master"
-      env:
-        FILE_NAME: "cloud-functions/analysis/src/credentials.json"
-        FILE_DATA: "${{ secrets.GEE_CREDENTIALS_JSON }}"
     - id: build
       name: Build cloud function
       run: 'cd cloud-functions/analysis && node -v && npm -v && npm install && npm run compile'
       shell: bash
+    - uses: "finnp/create-file-action@master"
+      env:
+        FILE_NAME: "cloud-functions/analysis/build/src/credentials.json"
+        FILE_DATA: "${{ secrets.GEE_CREDENTIALS_JSON }}"
     - id: 'deploy'
       name: GC Functions deployment
       uses: 'google-github-actions/deploy-cloud-functions@v0.10.1'
