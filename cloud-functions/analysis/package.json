@@ -8,7 +8,8 @@
     "watch": "concurrently \"tsc -w\" \"nodemon --watch ./build/ --exec npm run start\"",
     "lint": "gts lint",
     "clean": "gts clean",
-    "compile": "tsc"
+    "compile": "tsc ",
+    "build": "tsc --build"
   },
   "author": "Vizzuality",
   "license": "ISC",

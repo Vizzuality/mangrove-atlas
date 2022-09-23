@@ -26,7 +26,7 @@ jobs:
         credentials_json: '${{ secrets.gcp_credentials }}'
     - id: build
       name: Build cloud function
-      run: 'cd cloud-functions/analysis && node -v && npm -v && npm install && npm run start'
+      run: 'cd cloud-functions/analysis && node -v && npm -v && npm install && npm run build'
       shell: bash
     - id: 'deploy'
       name: GC Functions deployment
