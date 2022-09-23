@@ -1,9 +1,10 @@
 import ee from '@google/earthengine';
-import * as PRIVATE_KEY from './credentials.json'
+import { readFileSync } from 'fs';
 
 export function eeAuthenticate(): Promise<void> {
   return new Promise((resolve, reject) => {
     // Authenticate to service account using short living access tokens
+    const PRIVATE_KEY = JSON.parse(readFileSync('./src/credentials.json', 'utf8'));
     ee.data.authenticateViaPrivateKey(PRIVATE_KEY,
       () => ee.initialize(null, null, resolve, reject),
       (error) => {
