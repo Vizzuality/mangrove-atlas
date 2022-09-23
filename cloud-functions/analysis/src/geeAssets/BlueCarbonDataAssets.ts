@@ -5,12 +5,12 @@ export interface IHansenDataAsset extends IDataAsset {
   numYears: number;
 }
 
-export const HansenDataAsset: IHansenDataAsset = {
+export const BlueCarbonDataAsset: IHansenDataAsset = {
   assetPath: {
-    default: "UMD/hansen/global_forest_change_2021_v1_9"
+    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_total_co2e_1996--2016"
   },
   numYears: 1,
   getEEAsset(){
-    return ee.Image(this.assetPath.default);
+    return ee.ImageCollection(this.assetPath.default);
   }
 };
