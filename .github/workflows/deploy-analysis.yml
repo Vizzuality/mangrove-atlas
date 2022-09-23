@@ -24,13 +24,17 @@ jobs:
       uses: google-github-actions/auth@v0.8.0
       with:
         credentials_json: '${{ secrets.gcp_credentials }}'
+    - id: build
+      name: Build cloud function
+      run: 'ls -la && cd cloud-functions/analysis && npm install && npm run start'
+      shell: bash
     - id: 'deploy'
       name: GC Functions deployment
       uses: 'google-github-actions/deploy-cloud-functions@v0.10.1'
       with:
         name: 'analysis'
         runtime: 'nodejs10'
-        entry_point: 'analyse'
+        entry_point: 'analyze'
         memory_mb: '128'
         region: 'us-central1'
         source_dir: 'cloud-functions/analysis'
