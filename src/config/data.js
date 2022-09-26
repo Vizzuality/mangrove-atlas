@@ -62,7 +62,7 @@ export default {
       name: "Mangrove alerts",
       slug: "mangrove_alerts",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: ["all_datasets", "restoration_and_conservation"],
+      categoryIds: [],
       layersIds: ["alerts-heat"],
     },
     {
@@ -81,7 +81,11 @@ export default {
       name: "Mangrove Restoration",
       slug: "mangrove_restoration",
       locationType: ["country", "worldwide"],
-      categoryIds: [],
+      categoryIds: [
+        "all_datasets",
+        "restoration_and_conservation",
+        "ecosystem_services",
+      ],
       layersIds: ["restoration"],
     },
     {
@@ -117,7 +121,7 @@ export default {
       name: "Mangrove Emissions Mitigation",
       slug: "mangrove_emissions_mitigation",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [],
+      categoryIds: ["all_datasets", "climate_and_policy"],
     },
     {
       name: "Mangrove International Status",

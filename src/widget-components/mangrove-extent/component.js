@@ -25,7 +25,6 @@ function MangroveExtent({
   slug,
   ui,
   setUi,
-  setData,
   fetchMangroveHabitatExtentData,
   ...props
 }) {
@@ -60,15 +59,18 @@ function MangroveExtent({
     setUi({ id: "extent", value: { ...ui, year, unit: currentUnit } });
   }, [addFilter, unit, year, currentUnit, metadata]);
 
-  const changeYear = useCallback((current) => {
-    addFilter({
-      filter: {
-        id: "extent",
-        year: current,
-      },
-    });
-    setUi({ id: "extent", value: { ...ui, year: current } });
-  }, [ui]);
+  const changeYear = useCallback(
+    (current) => {
+      addFilter({
+        filter: {
+          id: "extent",
+          year: current,
+        },
+      });
+      setUi({ id: "extent", value: { ...ui, year: current } });
+    },
+    [ui]
+  );
 
   const changeUnit = useCallback((selectedUnit) => {
     setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
@@ -159,7 +161,7 @@ function MangroveExtent({
 
   if (!chartData) return null;
 
-  return !isLoading ? (
+  return (
     <ChartWidget
       data={chartData}
       slug={slug}
@@ -171,7 +173,7 @@ function MangroveExtent({
       chartData={widgetData}
       {...props}
     />
-  ) : null;
+  );
 }
 
 MangroveExtent.propTypes = {

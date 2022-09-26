@@ -21,21 +21,23 @@ const WidgetList = ({
   }, []);
 
   const currentLocationType = parentProps?.currentLocation?.location_type;
-  const widgetsCategory = useMemo(() =>
-    widgets.filter(
-      ({ categoryIds, locationType }) =>
-        categoryIds.includes(category) &&
-        locationType.includes(currentLocationType),
-      [category, widgets]
-    )
+  const widgetsCategory = useMemo(
+    () =>
+      widgets.filter(
+        ({ categoryIds, locationType }) =>
+          categoryIds.includes(category) &&
+          locationType.includes(currentLocationType)
+      ),
+    [category, widgets, currentLocationType]
   );
 
-  const widgetsFiltered = useMemo(() =>
-    widgets.filter(
-      ({ categoryIds, slug }) =>
-        categoryIds.includes(category) && dataByWidget.includes(slug),
-      [category, widgets, dataByWidget]
-    )
+  const widgetsFiltered = useMemo(
+    () =>
+      widgets.filter(
+        ({ categoryIds, slug }) =>
+          categoryIds.includes(category) && dataByWidget.includes(slug)
+      ),
+    [category, widgets, dataByWidget]
   );
 
   return (
@@ -53,7 +55,8 @@ const WidgetList = ({
         widgets.length &&
         widgetsCategory?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
-          const isLast = widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
+          const isLast =
+            widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
           return (
             <div
               key={widget.slug}
