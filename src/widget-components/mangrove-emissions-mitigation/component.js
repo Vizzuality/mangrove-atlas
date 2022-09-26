@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import orderBy from "lodash/orderBy";
+
 import ChartWidget from "components/chart-widget";
 
 import config from "./config";
@@ -36,8 +38,9 @@ function MangroveEmissionsMitigation({
     });
   }, [addFilter]);
 
+  const orderedData = orderBy(data, 'category');
   const { chartData, chartConfig } = config.parse(
-    data,
+    orderedData,
     filteredIndicators,
     setFilteredIndicators
   );

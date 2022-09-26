@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 
 // components
@@ -23,13 +23,13 @@ const MangroveHeight = ({
   addFilter,
   ui,
   setUi,
-  setData,
   fetchMangroveHeightData,
   ...props
 }) => {
   const { year } = ui;
   const heightCoverage = metadata?.avg_height[0]?.value;
   const years = metadata?.year;
+  const currentYear = useMemo(() => year || years?.[0], [year, years]);
 
   useEffect(() => {
       fetchMangroveHeightData({
@@ -40,25 +40,37 @@ const MangroveHeight = ({
   }, [currentLocation, fetchMangroveHeightData]);
 
   useEffect(() => {
-    if (!isLoading) {
       addFilter({
         filter: {
           id: "height",
-          year: years?.[0],
+          year: currentYear,
         },
       });
       setUi({
         id: "height",
         value: {
-          year: year || years?.[0],
+          year: currentYear,
         },
       });
-    }
-  }, [setUi, year, years, addFilter, isLoading]);
+  }, [setUi, currentYear, addFilter]);
 
-  // useEffect(() => {
-  //   if (!data) setData({ slug, data: false });
-  // }, [data, slug]);
+  const dateHandler = useCallback((value) => {
+    setUi({ id: "height", value: { year: value } });
+    addFilter({
+      filter: {
+        id: "height",
+        year: value,
+      },
+    });
+  }, [addFilter, setUi]);
+
+  const location = currentLocation?.name;
+
+  const dateOptions = useMemo(() =>
+    years?.map((year) => ({
+      label: year.toString(),
+      value: year,
+    })), [years]);
 
   if (!data || !year) {
     return null;
@@ -71,38 +83,21 @@ const MangroveHeight = ({
     heightCoverage
   );
 
-  const location = currentLocation?.name;
 
-  const dateOptions = () =>
-    years.map((year) => ({
-      label: year.toString(),
-      value: year,
-    }));
-
-  const dateHandler = (value) => {
-    setUi({ id: "height", value: { year: value } });
-    addFilter({
-      filter: {
-        id: "height",
-        year: value,
-      },
-    });
-  };
-
-  const dateSelector = (
+  const dateDisplay = dateOptions?.length > 1 ? (
     <Select
       value={year}
       options={dateOptions}
       onChange={(value) => dateHandler(value)}
     />
-  );
+  ) : year;
 
   const sentence = (
     <>
       Mean mangrove <strong>maximum</strong> canopy height in{" "}
       <strong>{location}</strong> was
       <strong> {numberFormat(heightCoverage)} m</strong> in{" "}
-      <strong>{dateOptions.length > 1 ? dateSelector : year}</strong>.
+      <strong>{dateDisplay}</strong>.
     </>
   );
   const widgetData = {

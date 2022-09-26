@@ -62,7 +62,7 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
           <div className={styles.lineChartWidget}>
             <div
               className={styles.lineChartFill}
-              styles={{ width: `${Rest_Score}%` }}
+              style={{ width: `${Rest_Score}%` }}
             />
           </div>
           <div className={styles.chartScore}>{Rest_Score}%</div>

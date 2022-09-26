@@ -93,6 +93,7 @@ class Map extends Component {
     loaded: false,
     popup: [],
     popupFeatureType: undefined,
+    popUpPosition: {},
   };
 
   componentDidMount() {
@@ -288,13 +289,17 @@ class Map extends Component {
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       )?.properties;
+
       if (restorationData) {
         this.setState({
           ...this.state,
           popup: [e?.lngLat[0], e?.lngLat[1]],
           popupInfo: restorationData,
-          popupFeatureType: 'restoration' 
-
+          popupFeatureType: 'restoration', 
+          popUpPosition: {
+            x: e.center.x,
+            y: e.center.y,
+          },
         });
       }
 
@@ -324,9 +329,20 @@ class Map extends Component {
     };
 
     const PopupRestoration = () => {
+      const {
+        popUpPosition: { x, y },
+      } = this.state;
+      const popUpWidth = 440;
+      const sidebarWidth = 630;
+      const anchor = () => {
+        if (x < sidebarWidth + popUpWidth) return "left";
+        else if (y - popUpWidth < 0) return "top";
+        else if (x - popUpWidth > popUpWidth) return "right";
+        else return "bottom";
+      };
       return (
         <Popup
-          anchor="bottom"
+          anchor={anchor()}
           longitude={this.state.popup[0] || null}
           latitude={this.state.popup[1] || null}
           onClose={removePopUp}
@@ -370,14 +386,22 @@ class Map extends Component {
       if (restorationData) {
         if (hoveredStateId !== null) {
           this.map.setFeatureState(
-            { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+            {
+              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              source: "restoration",
+              id: hoveredStateId,
+            },
             { hover: false }
           );
         }
 
         hoveredStateId = restorationData?.id;
         this.map.setFeatureState(
-          { "sourceLayer": "MOW_Global_Mangrove_Restoration", source: "restoration", id: hoveredStateId },
+          {
+            sourceLayer: "MOW_Global_Mangrove_Restoration",
+            source: "restoration",
+            id: hoveredStateId,
+          },
           { hover: true }
         );
       }
@@ -385,11 +409,10 @@ class Map extends Component {
     const onLeave = (e) => {
       if (hoveredStateId !== null) {
         this.map.setFeatureState(
-          { "sourceLayer": "null", source: "null", id: null },
+          { sourceLayer: "null", source: "restoration", id: null },
           { hover: false }
         );
       }
-      
       hoveredStateId = null;
     };
 
@@ -403,7 +426,7 @@ class Map extends Component {
         })}
       >
         <ReactMapGL
-          ref={(map) => this.map = map && map.getMap()}
+          ref={(map) => (this.map = map && map.getMap())}
           // CUSTOM PROPS FROM REACT MAPBOX API
           mapStyle={ms}
           {...mapboxProps}

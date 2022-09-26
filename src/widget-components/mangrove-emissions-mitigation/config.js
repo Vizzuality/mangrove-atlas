@@ -85,7 +85,7 @@ const LabelContent = () => (
       fill="#000"
       fontSize="14px"
     >
-      Mitigation (tCO<tspan style={{ "baseline-shift": "sub" }}>2</tspan>/ha)
+      Mitigation (tCO<tspan style={{ "baseline-shift": "sub" }}>2</tspan>e/ha)
     </text>
   </g>
 );
@@ -109,7 +109,7 @@ const LabelXAxis = ({ viewBox }) => {
 
 export const CONFIG = {
   parse: (data, filteredIndicators, setFilteredIndicators) => {
-    const COLOR_RAMP = chroma.scale(["#D4A6C8", "#8CD17D"]).colors(data.length);
+    const COLOR_RAMP = chroma.scale(["#79D09A", "#3EA3A1", "#FBD07E", "#FF98B1", "#C57CF2", "#74C5FF", "#7287F9" ]).colors(data.length);
     const indicators = data.map((d, i) => ({
       [d.indicator]: COLOR_RAMP[i],
     }));

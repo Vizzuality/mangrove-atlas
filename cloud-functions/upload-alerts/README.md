@@ -22,7 +22,6 @@ Requirements:
 
 ### 1. Extract data from .gpkg files and join the result in a single file
 
-
 The result data will be saved to `./data/results.json`.
 
 ```
@@ -68,5 +67,6 @@ make load-bq
 **NOTE:** This command will drop the data in bigquery and replace it with the new data.
 
 ### Todo
-* Validate the data before upload to BigQuery table
+
+* Validate the data before upload to BigQuery table  
 * Add a command to append the data to BigQuery table from Google Cloud Storage instead of replacing it

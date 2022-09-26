@@ -5,7 +5,7 @@ import WidgetLegend from "components/widget-legend";
 import WidgetTooltip from "components/widget-tooltip";
 
 const numberFormat = format(",.3r");
-const COLORS = ["#C9BB42", "#428710", "#428710", "#0A6624", "#103C1F"];
+const COLORS = ["#C9BB42", "#8BA205", "#428710", "#0A6624", "#103C1F"];
 const getData = (data) => {
   if (!data || !data.length) return null;
   const barsValues = data?.map(({ value }) => value);

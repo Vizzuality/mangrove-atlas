@@ -1,7 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+
+import Select from 'components/select';
 import ChartWidget from "components/chart-widget";
+
 import config from "./config";
+
+const labelOptions = [
+  {
+    label: "at $5/ton",
+    value: 5,
+  },
+  {
+    label: "at $10/ton",
+    value: 10,
+  },
+];
 
 function MangroveInvestmentPotential({
   data,
@@ -13,6 +27,7 @@ function MangroveInvestmentPotential({
   ...props
 }) {
 
+  const [investibleBlueCarbon, setInvestibleBlueCarbon] = useState(labelOptions[0].value);
   useEffect(() => {
     fetchInvestmentPotentialData({
       ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
@@ -21,16 +36,47 @@ function MangroveInvestmentPotential({
     });
   }, [currentLocation, fetchInvestmentPotentialData]);
 
+  const labelHandler = useCallback((value) => {
+    setInvestibleBlueCarbon(value);
+  }, [setInvestibleBlueCarbon]);
+
   if (!data || Object.entries(data).length === 0) {
     return null;
   }
-  const { chartData, widgetSentence, chartConfig } = config.parse(data);
+
+  const {
+    chartData,
+    chartConfig,
+    investibleBlueCarbonValue,
+  } = config.parse(data, investibleBlueCarbon);
+
+
+  const labelSelector = (
+    <Select
+      value={investibleBlueCarbon}
+      options={labelOptions}
+      onChange={labelHandler}
+    />
+  );
 
   if (!chartData || chartData.length <= 0) {
     return null;
   }
 
-  const sentence = <>{widgetSentence}</>;
+  const locationName =
+  currentLocation.location_type === "worldwide" ? (
+    "The world"
+  ) : (
+    <span className="notranslate">{`${currentLocation?.name}`}</span>
+  );
+
+  const sentence = (
+    <>
+      The extent of investible blue carbon (ha){" "}
+      <strong>{labelSelector}</strong> in <strong>{locationName}</strong> is{" "}
+      <strong>{investibleBlueCarbonValue?.description}</strong>
+    </>
+  );
 
   const widgetData = {
     data: chartData,

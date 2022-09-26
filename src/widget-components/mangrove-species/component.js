@@ -49,7 +49,7 @@ function MangroveSpecies({
   const sentence = (
     <>
       <strong>{locationName} </strong>has <strong>{total}</strong> species of
-      mangroves. Of them, <strong>{threatened}</strong> {article} considered
+      mangroves. Of them, <strong>{threatened !== 0 ? threatened : 'none'}</strong> {article} considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
   );

@@ -18,5 +18,4 @@ const DesktopLayout = () => (
   </div>
 );
 
-
 export default DesktopLayout;

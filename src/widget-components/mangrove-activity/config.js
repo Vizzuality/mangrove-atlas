@@ -36,7 +36,6 @@ export const CONFIG = {
     return {
       chartData,
       dataRanked,
-      metaData: [1996, 2007, 2008, 2009, 2010, 2015, 2016],
       chartConfig: {
         layout: 'vertical',
         height: limit === 5 ? 400 : limit / 5 * 100 + 350,
@@ -142,8 +141,8 @@ export const CONFIG = {
               barSize: 10,
               fill: '#000',
               stackId: '2',
-              legend: 'Net',
-              shape: ({ x, y, width, height, fill, ...props }) => {
+              legend: 'Net change',
+              shape: ({ x, y, width, height, fill }) => {
                 return (
                   <Rectangle
                     x={x}
@@ -171,7 +170,7 @@ export const CONFIG = {
             //   value: labelPayload.legend,
             // }));
             const labels = [
-              { color: '#000', value: 'Net' },
+              { color: '#000', value: 'Net', name: 'Net change' },
               // { color: '#EB6240', value: 'Loss' },
               // { color: '#A6CB10', value: 'Gain' }
             ];
@@ -190,7 +189,7 @@ export const CONFIG = {
             <WidgetTooltip
               settings={[
                 { title: 'name', key: 'name' },
-                { label: 'Net', color: 'rgba(0,0,0,0.7)', key: 'net_change', format: value => `${numberFormat(value)} km²` }
+                { label: 'Net change', color: 'rgba(0,0,0,0.7)', key: 'net_change', format: value => `${numberFormat(value)} km²` }
               ]}
               label={{ key: 'name' }}
               payload={[

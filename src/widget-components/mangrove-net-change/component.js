@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import PropTypes from "prop-types";
-import sumBy from "lodash/sumBy";
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -53,6 +52,8 @@ function MangroveNetChange({
     });
   }, [fetchMangroveNetChangeData, currentLocation]);
 
+  const filteredYears = useMemo(() => years.filter((year) => !!years.length && year >= startYear && year <= endYear), [years, startYear, endYear]);
+
   useEffect(() => {
     if (data && data.length) {
       addFilter({
@@ -60,7 +61,7 @@ function MangroveNetChange({
           id: "net",
           startYear: startYear,
           endYear: endYear,
-          years,
+          years: filteredYears,
           unit: unit,
         },
       });
@@ -69,18 +70,19 @@ function MangroveNetChange({
         value: {
           endYear: endYear,
           startYear: startYear,
+          years: filteredYears,
           unit: unit,
         },
       });
     }
-  }, [startYear, endYear, unit, addFilter, setUi, years, data, data.length]);
+  }, [startYear, endYear, unit, addFilter, setUi, years, data, data.length, filteredYears]);
 
   const dataFilteredByYears = data.filter(
     ({ year }) => year >= startYear && year <= endYear
   );
 
   const widgetData = config.parse(dataFilteredByYears, unit);
-  const { chartData, chartConfig } = widgetData;
+  const { change, chartData, chartConfig } = widgetData;
 
   const yearsOptions = years.map((y) => ({
     label: y.toString(),
@@ -124,10 +126,7 @@ function MangroveNetChange({
   // Rows have year's 'gain', 'loss' and 'netChange'.
   // We consider startYear as 0
   // Therefore we substract that from the accumulated change of all following years.
-  const change =
-    widgetDataFiltered.length > 0
-      ? sumBy(widgetDataFiltered, "netChange") - widgetDataFiltered[0].netChange
-      : 0;
+
   const quantity =
     unit === "km²"
       ? numberFormat(Math.abs(change))
@@ -143,7 +142,7 @@ function MangroveNetChange({
     currentLocation?.location_type === "worldwide" ? (
       "the world"
     ) : (
-      <span className="notranslate">{currentLocation.name}</span>
+      <span className="notranslate">{currentLocation?.name}</span>
     );
   const direction = change > 0 ? "increased" : "decreased";
 

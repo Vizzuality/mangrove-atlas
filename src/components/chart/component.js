@@ -85,9 +85,10 @@ class Chart extends PureComponent {
       config,
       handleMouseMove,
       handleMouseLeave,
-      onBrushEnd
+      onBrushEnd,
     } = this.props;
 
+    console.log(this.props)
     const {
       margin = { top: 20, right: 0, left: 50, bottom: 0 },
       padding = { top: 0, right: 0, left: 0, bottom: 0 },
@@ -127,14 +128,14 @@ class Chart extends PureComponent {
         addComponent(key, definition);
       }
     });
-
+console.log('hola render')
     return (
-      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
+      <div key={this.props.name} ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer width="100%" height={tree ? 0 : height}>
           <RechartChart
             stackOffset={stackOffset}
-            // height={height}
-            // width={width}
+            height={height || "100%"}
+            width={"100%"}
             viewBox={viewBox}
             data={data}
             layout={layout}
@@ -282,8 +283,6 @@ class Chart extends PureComponent {
                 </Pie>
               ))
             )}
-
-
 
             {layout === 'vertical' && xAxis && (
               <XAxis

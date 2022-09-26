@@ -10,7 +10,7 @@ export default {
     {
       ...state,
       isLoading: false,
-      data: payload,
+      data: payload.data,
       metadata: payload.metadata
     }),
   [fetchFailed]: (state, { payload }) => ({
