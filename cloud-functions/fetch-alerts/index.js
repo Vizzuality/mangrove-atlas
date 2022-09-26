@@ -67,7 +67,7 @@ const alertsJob = async (locationId, startDate, endDate, env, geojson) => {
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId, env) || geojson;
+  const location = locationId && await getLocation(locationId, env) || geojson.features[0];
   const options = {
     query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
@@ -96,8 +96,8 @@ exports.fetchAlerts = (req, res) => {
       const startDate = req.query.startDate || '2020-01-01';
       const endDate = req.query.end_date || new Date().toISOString().split('T')[0];
       const env = req.query.env || 'production';
-      const locationId = req.query.locationId || null;
-      const geojson = req.body && req.body.geojson || null;
+      const locationId = req.query.location_id || null;
+      const geojson = req.body && req.body.geometry || null;
 
       const result =  await alertsJob(locationId, startDate, endDate, env, geojson);
       res.status(200).json(result);
