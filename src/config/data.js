@@ -82,7 +82,6 @@ export default {
       slug: "mangrove_restoration",
       locationType: ["country", "worldwide"],
       categoryIds: [
-  
       ],
       layersIds: ["restoration"],
     },
