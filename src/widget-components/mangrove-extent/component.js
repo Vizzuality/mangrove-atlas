@@ -31,7 +31,7 @@ function MangroveExtent({
   const { year: currentYear, unit } = ui;
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
-  const years = metadata?.year;
+  const years = metadata?.year?.sort((a, b) => a - b);
 
   const year = useMemo(
     () => currentYear || years?.[years?.length - 1],
@@ -88,15 +88,12 @@ function MangroveExtent({
     downloadData,
   } = config.parse(data, metadata, currentYear, unit);
 
-  const optionsYears = orderBy(
+  const optionsYears = (
     (years || []).map((year) => ({
       label: year.toString(),
       value: year,
-    })),
-    ["value"],
-    ["desc"]
-  );
-
+    })));
+    
   let sentence = null;
 
   const widgetData = {
