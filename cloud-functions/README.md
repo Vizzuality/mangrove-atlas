@@ -23,6 +23,7 @@ Params:
 * `location_id`, location ID from Mangrove API. Optional.
 * `start_date`, start date in format `YYYY-MM-DD`. Optional.
 * `end_date`, end date in format `YYYY-MM-DD`. Optional.
+* geometry, geojson of the area to filter. Optional, should be located in the body.
 
 Example request:  
 
@@ -122,24 +123,109 @@ curl -X GET -G \
 Example request:  
 
 ``` bash
-curl --request POST \
-'http://localhost:8080/' \
--d id=3 \
--d name=Mario \
--d surname=Bros
+ curl --location -g --request POST 'https://localhost:8080?widgets[]=habitat-extent&widgets[]=net-change&widgets[]=tree-height&widgets[]=aboveground-biomass&widgets[]=blue-carbon' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+ "geometry": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                8.9208984375,
+                                0.021972655711432625
+                            ],
+                            [
+                                9.7998046875,
+                                0.021972655711432625
+                            ],
+                            [
+                                9.7998046875,
+                                0.9667509997666425
+                            ],
+                            [
+                                8.9208984375,
+                                0.9667509997666425
+                            ],
+                            [
+                                8.9208984375,
+                                0.021972655711432625
+                            ]
+                        ]
+                    ]
+                }
+            }
+        ]
+    }
+}'
 ```
 
 Example response:
 
 ``` json
 {
-  "data": [
- {
-   "id": "3",
-   "name": "Mario",
-   "surname": "Bros"
- }
-  ]
+  "habitat-extent": {
+    "data": [
+      {
+        "indicator": "habitat_extent_area",
+        "value": 823.5097862578755,
+        "year": 1996
+      },
+	  ...
+      {
+        "indicator": "coastal_extent",
+        "value": 823509.7862576442,
+        "year": 1996
+      },
+	  ...
+    ],
+    "metadata": {}
+  },
+  "net-change": {
+    "data": [
+      {
+        "gain": 5203856.324630438,
+        "loss": 6039561.102233887,
+        "net_change": -835704.7776034484,
+        "year": 2007
+      },
+      
+    ],
+    "metadata": {}
+  },
+  "tree-height": {
+    "data": [
+      { "indicator": "0-5", "value": 3476.9607843136923 },
+      { "indicator": "5-10", "value": 38342.53333333302 },
+      { "indicator": "10-15", "value": 20638.188235293717 },
+      { "indicator": "15-20", "value": 7419.0274509805295 },
+      { "indicator": "20-65", "value": 13055.188235294063 }
+    ],
+    "metadata": { "avg": 12.401117966982184, "year": 2020 }
+  },
+  "aboveground-biomass": {
+    "data": [
+      { "indicator": "0-50", "value": 31374.227450980125 },
+      { "indicator": "50-100", "value": 19976.75294117625 },
+      { "indicator": "100-150", "value": 8399.317647059055 },
+      { "indicator": "150-250", "value": 7164.070588235437 },
+      { "indicator": "250-1600", "value": 16017.529411764608 }
+    ],
+    "metadata": { "avg": 167.95549554402743, "year": 2020 }
+  },
+  "blue-carbon": {
+    "data": [
+      { "indicator": "700-1400", "value": 10209.909803921679 },
+      { "indicator": "1400-2100", "value": 73597.97647058626 },
+      { "indicator": "2100-2800", "value": 730.8588235294117 }
+    ],
+    "metadata": { "avg": 1651.0303452118142, "year": 2016 }
+  }
 }
 ```
 
@@ -147,15 +233,51 @@ Example response:
 
 ```bash
 gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http \
-   --memory 128MB --timeout 540s --region us-central1 --entry-point fetchAlerts \
-   --service-account-file ./credentials.json --source ./cloud-functions/fetch-alerts
+   --memory 256MB --timeout 540s --region us-central1 --entry-point Analysis \
+   --service-account-file ./credentials.json --source ./cloud-functions/Analysis
 ```
 
 ``` bash
-curl  Post https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts \
--H "Authorization:bearer $(gcloud auth print-identity-token)" \
--H "Content-Type:application/json" \
--d '{}'
+curl --location -g --request POST 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/analysis?widgets[]=habitat-extent&widgets[]=net-change&widgets[]=tree-height&widgets[]=aboveground-biomass&widgets[]=blue-carbon' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+ "geometry": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                8.9208984375,
+                                0.021972655711432625
+                            ],
+                            [
+                                9.7998046875,
+                                0.021972655711432625
+                            ],
+                            [
+                                9.7998046875,
+                                0.9667509997666425
+                            ],
+                            [
+                                8.9208984375,
+                                0.9667509997666425
+                            ],
+                            [
+                                8.9208984375,
+                                0.021972655711432625
+                            ]
+                        ]
+                    ]
+                }
+            }
+        ]
+    }
+}'
 
 ```
 

@@ -4,7 +4,6 @@ import path from 'path';
 
 export function eeAuthenticate(): Promise<void> {
   return new Promise((resolve, reject) => {
-    console.log('path result: ', path.resolve(process.cwd(), './credentials.json'));
     // Authenticate to service account using short living access tokens
     const PRIVATE_KEY = JSON.parse(readFileSync(path.resolve(process.cwd(), './credentials.json'), 'utf8'));
     ee.data.authenticateViaPrivateKey(PRIVATE_KEY,
