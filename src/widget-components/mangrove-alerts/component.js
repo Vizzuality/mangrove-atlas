@@ -46,7 +46,7 @@ const MangroveAlerts = ({
     startDate,
     endDate,
     initialDate.startInitialDate,
-    initialDate.endInitialDate
+    initialDate.endInitialDate,
   ]);
 
   const {
@@ -164,9 +164,23 @@ const MangroveAlerts = ({
   };
 
   return isLoading ? (
+    //   <ChartWidget
+    //   name={name}
+    //   downloadData={downloadData}
+    //   data={chartData}
+    //   slug={slug}
+    //   filename={slug}
+    //   isCollapsed={isCollapsed}
+    //   sentence={sentence}
+    //   chartData={chartRData}
+    //   {...props}
+    // >
+
     <Spinner />
   ) : (
+    // </ChartWidget>
     <ChartWidget
+      isLoading={isLoading}
       name={name}
       downloadData={downloadData}
       data={chartData}
