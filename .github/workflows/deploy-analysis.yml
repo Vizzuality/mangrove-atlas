@@ -39,7 +39,7 @@ jobs:
         name: 'analysis'
         runtime: 'nodejs16'
         entry_point: 'analyze'
-        memory_mb: '128'
+        memory_mb: '256'
         region: 'us-central1'
         source_dir: 'cloud-functions/analysis'
     # Example of using the output

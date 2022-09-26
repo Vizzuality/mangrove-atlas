@@ -2,6 +2,8 @@ const { BigQuery } = require('@google-cloud/bigquery');
 const axios = require('axios').default;
 const reverse = require('turf-reverse');
 const mapshaper = require('mapshaper');
+
+const crypto = require('crypto');
 const http = require('http');
 const https = require('https');
 
@@ -11,6 +13,8 @@ const httpsAgent = new https.Agent({keepAlive: true});
 const bigquery = new BigQuery();
 
 const cache = {};
+
+const md5 = (x) => crypto.createHash('md5').update(JSON.stringify(x), 'utf8').digest('hex');
 
 const getLocation = async (locationId, env) => {
   if (!locationId) return null;
@@ -55,15 +59,15 @@ const makeQuery = async (location, startDate, endDate) => {
 /**
  * Data aggregated by month
  */
-const alertsJob = async (locationId, startDate, endDate, env) => {
+const alertsJob = async (locationId, startDate, endDate, env, geojson) => {
   // First try to get data from cache in order to reduce costs
-  const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
+  const cacheKey = `${locationId || md5(geojson) || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
     console.log(`Response from cache ${cacheKey}`);
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId, env);
+  const location = locationId && await getLocation(locationId, env) || geojson;
   const options = {
     query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
@@ -92,8 +96,10 @@ exports.fetchAlerts = (req, res) => {
       const startDate = req.query.startDate || '2020-01-01';
       const endDate = req.query.end_date || new Date().toISOString().split('T')[0];
       const env = req.query.env || 'production';
+      const locationId = req.query.locationId || null;
+      const geojson = req.body && req.body.geojson || null;
 
-      const result =  await alertsJob(req.query.location_id, startDate, endDate, env);
+      const result =  await alertsJob(locationId, startDate, endDate, env, geojson);
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
@@ -110,6 +116,7 @@ exports.fetchAlerts = (req, res) => {
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
     res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Methods', 'POST');
     res.set('Access-Control-Allow-Headers', 'Content-Type');
     res.set('Access-Control-Max-Age', '3600');
     res.status(204).send('');
