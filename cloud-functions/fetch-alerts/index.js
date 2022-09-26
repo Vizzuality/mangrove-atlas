@@ -68,7 +68,7 @@ const alertsJob = async (locationId, startDate, endDate, env, geojson) => {
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId, env) || geojson && geojson.features[0];
+  const location = locationId && await getLocation(locationId, env) || geojson.features[0];
   const options = {
     query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
