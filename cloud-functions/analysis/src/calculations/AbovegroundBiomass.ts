@@ -20,6 +20,11 @@ class BiomassCalculationsClass extends BaseCalculation {
     // @TODO: this can be further simplified by ussing a recursive function
     const reducers = ee.Reducer.mean()
     .combine({
+      reducer2: ee.Reducer.sum(),
+      outputPrefix: '',
+      sharedInputs: true
+    })
+    .combine({
       reducer2: ee.Reducer.fixedHistogram({'min':0,'max':150,'steps':3})
       .combine({
         reducer2: ee.Reducer.fixedHistogram({'min':150,'max':250,'steps':1})
@@ -34,18 +39,11 @@ class BiomassCalculationsClass extends BaseCalculation {
   }).setOutputs(['first', 'second', 'third']),
       outputPrefix: '',
       sharedInputs: true
-    })
+    });
 
     const bands = ee.List(['agb'])
     const reducerNames = reducers.getOutputs()
-    const out_names = ee.List(bands.map(
-      (i: ee.String) => {
-        return reducerNames.map(
-          (j: ee.String) => {
-            return ee.String(i).cat('_').cat(j)
-          })
-      }
-    )).flatten();
+    const out_names = _getOutNames(bands, reducerNames);
     const reduced = image
           .reduceRegion({
             reducer: reducers,
@@ -55,7 +53,6 @@ class BiomassCalculationsClass extends BaseCalculation {
             bestEffort: true
           })
     return _formatOutput(image, reduced, out_names, histogramBucket);
-
   }
 }
 
@@ -74,22 +71,43 @@ function _remapHistogram(arr: ee.Array<ee.Array>, buckets: ee.Dictionary): ee.Ar
 }
 function _formatOutput(im: ee.Image, elm: ee.Dictionary, out_names, histogramBucket): ee.Dictionary {
   const year = ee.Number.parse(ee.String(im.id()).split('_').get(-1))
+
   const histogramA = ee.List(_remapHistogram(
-    elm.getArray(out_names.get(1)),
-    histogramBucket));
-  const histogramB = ee.List(_remapHistogram(
     elm.getArray(out_names.get(2)),
     histogramBucket));
-  const histogramC = ee.List(_remapHistogram(
+  const histogramB = ee.List(_remapHistogram(
     elm.getArray(out_names.get(3)),
+    histogramBucket));
+  const histogramC = ee.List(_remapHistogram(
+    elm.getArray(out_names.get(4)),
     histogramBucket));
 
   return ee.Dictionary({
     'metadata':  {
-      'year':year,
-      'avg': elm.get(out_names.get(0), null)
+      "location_id": "custom-area",
+      "units": {
+        "value": "tons/ha"
+      },
+      'year':ee.List([year]),
+      "avg_aboveground_biomass": ee.List([ee.Dictionary({
+        'year': year,
+        'value':elm.get(out_names.get(0))})]),
+      "total_aboveground_biomass": ee.List([ee.Dictionary({
+        'year': year,
+        'value':elm.get(out_names.get(1))})])
   }
   }).combine({'data': histogramA.cat(histogramB).cat(histogramC)});
+}
+
+function _getOutNames(bands, reducerNames): ee.List {
+  return ee.List(bands.map(
+    (i: ee.String) => {
+      return reducerNames.map(
+        (j: ee.String) => {
+          return ee.String(i).cat('_').cat(j)
+        })
+    }
+  )).flatten()
 }
 
 export const BiomassCalculations = new BiomassCalculationsClass();
