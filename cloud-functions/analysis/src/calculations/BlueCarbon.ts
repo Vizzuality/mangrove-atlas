@@ -14,36 +14,32 @@ class BlueCarbonCalculationsClass extends BaseCalculation {
         2100: '2100-2800',
         2800: '2800-3500',
       });
+    const reducerOpt = {
+      geometry: feature.geometry(),
+      scale: 30,
+      maxPixels: 256 * 256 * 16,
+      bestEffort: true
+    }
     const image = ee.Image(this.dataAsset.getEEAsset()
                     .sort('system:index', false)
-                    .first())
-                    .select('total_co2e');
-    const reducers = ee.Reducer.mean()
-    .combine({
-      reducer2: ee.Reducer.fixedHistogram({'min':0,'max':3500,'steps':5}),
-      outputPrefix: '',
-      sharedInputs: true
-    })
+                    .first());
+    const reducers = ee.Reducer.fixedHistogram({'min':0,'max':3500,'steps':5})
 
-    const bands = ee.List(['total_co2e'])
-    const reducerNames = reducers.getOutputs()
-    const out_names = ee.List(bands.map(
-      (i: ee.String) => {
-        return reducerNames.map(
-          (j: ee.String) => {
-            return ee.String(i).cat('_').cat(j)
-          })
-      }
-    )).flatten();
-    const reduced = image
+    // const bands = ee.List(['total_co2e'])  image.bandNames()
+    // const reducerNames = [] //reducers.getOutputs()
+    const out_names = ee.List(['total_co2e']) // _getOutNames
+    const histogram = image.select('total_co2e')
           .reduceRegion({
-            reducer: reducers,
-            geometry: feature.geometry(),
-            scale: 30,
-            maxPixels: 256 * 256 * 16,
-            bestEffort: true
+            ...reducerOpt,
+            reducer: reducers
           })
-  return _formatOutput(image, reduced, out_names, histogramBucket);
+    const from = ee.List(['abg_co2e', 'soc_co2e','total_co2e'])
+    const to = ee.List(['agb', 'soc', 'toc'])
+    const totals = image.select(from).reduceRegion({
+      ...reducerOpt,
+      reducer: ee.Reducer.sum(),
+    }).rename(from, to)
+  return _formatOutput(image, histogram, out_names, histogramBucket, totals);
 
   }
 }
@@ -61,18 +57,35 @@ function _remapHistogram(arr: ee.Array<ee.Array>, buckets: ee.Dictionary): ee.Ar
   ee.List([])
   );
 }
-function _formatOutput(im: ee.Image, elm: ee.Dictionary, out_names, histogramBucket): ee.Dictionary {
+function _formatOutput(im: ee.Image, elm: ee.Dictionary, out_names, histogramBucket, totals: ee.Dictionary,): ee.Dictionary {
   const year = ee.Number.parse(ee.String(im.id()).split('_').get(-1))
   const histogram = ee.List(_remapHistogram(
-    elm.getArray(out_names.get(1)),
+    elm.getArray(out_names.get(0)),
     histogramBucket));
 
   return ee.Dictionary({
-    'metadata':  {
-      'year':year,
-      'avg': elm.get(out_names.get(0), null)
-  }
+    'metadata':  ee.Dictionary({
+      "location_id": "custom-area",
+      "units": {
+        "value": "CO2e/ha",
+        "toc": "t CO₂e",
+        "soc": "t CO₂e",
+        "agb": "t CO₂e"
+      },
+      'year':ee.List([year])})
+      .combine(totals)
   }).combine({'data': histogram});
+}
+
+function _getOutNames(bands, reducerNames): ee.List {
+  return ee.List(bands.map(
+    (i: ee.String) => {
+      return reducerNames.map(
+        (j: ee.String) => {
+          return ee.String(i).cat('_').cat(j)
+        })
+    }
+  )).flatten()
 }
 
 export const BlueCarbonCalculations = new BlueCarbonCalculationsClass();

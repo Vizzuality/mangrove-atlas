@@ -32,14 +32,7 @@ class TreeHeightCalculationsClass extends BaseCalculation {
 
     const bands = ee.List(['height'])
     const reducerNames = reducers.getOutputs()
-    const out_names = ee.List(bands.map(
-      (i: ee.String) => {
-        return reducerNames.map(
-          (j: ee.String) => {
-            return ee.String(i).cat('_').cat(j)
-          })
-      }
-    )).flatten();
+    const out_names = _getOutNames(bands, reducerNames);
     const reduced = image
           .reduceRegion({
             reducer: reducers,
@@ -77,10 +70,27 @@ function _formatOutput(im: ee.Image, elm: ee.Dictionary, out_names, histogramBuc
 
   return ee.Dictionary({
     'metadata':  {
-      'year':year,
-      'avg': elm.get(out_names.get(0), null)
-  }
+      "location_id": "custom-area",
+      "units": {
+        "value": "m"
+      },
+      'year':ee.List([year]),
+      "avg_height": ee.List([ee.Dictionary({
+        'year': year,
+        'value':elm.get(out_names.get(0))})])
+    }
   }).combine({'data': histogramA.cat(histogramB)});
+}
+
+function _getOutNames(bands, reducerNames): ee.List {
+  return ee.List(bands.map(
+    (i: ee.String) => {
+      return reducerNames.map(
+        (j: ee.String) => {
+          return ee.String(i).cat('_').cat(j)
+        })
+    }
+  )).flatten()
 }
 
 export const TreeHeightCalculations = new TreeHeightCalculationsClass();
