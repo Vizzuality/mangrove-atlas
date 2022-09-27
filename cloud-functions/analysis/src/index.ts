@@ -20,11 +20,11 @@ import { BiomassCalculations } from './calculations/AbovegroundBiomass';
 import { BlueCarbonCalculations } from './calculations/BlueCarbon';
 
 enum Widgets {
-  "habitat-extent"  = "habitat-extent",
-  "net-change"  = "net-change",
-  "tree-height"  = "tree-height",
-  "aboveground-biomass"  = "aboveground-biomass",
-  "blue-carbon"  = "blue-carbon"
+  "mangrove_extent"  = "mangrove_extent",
+  "mangrove_net_change"  = "mangrove_net_change",
+  "mangrove_height"  = "mangrove_height",
+  "mangrove_biomass"  = "mangrove_biomass",
+  "mangrove_blue_carbon"  = "mangrove_blue_carbon"
 }
 
 class AnalysisRequestBody {
@@ -33,7 +33,6 @@ class AnalysisRequestBody {
 class AnalysisRequestParams {
   @ArrayNotEmpty()
   @IsEnum(Widgets, { each: true })
-
   widgets: Widgets[];
 }
 
@@ -41,11 +40,11 @@ export const analyze: HttpFunction = async (req, res) => {
 
   res.set('Access-Control-Allow-Origin', '*');
   const TEST_DICT = {
-    "habitat-extent": HabitatExtentCalculations,
-    "net-change": NetChangeCalculations,
-    "tree-height": TreeHeightCalculations,
-    "aboveground-biomass": BiomassCalculations,
-    "blue-carbon": BlueCarbonCalculations
+    "mangrove_extent": HabitatExtentCalculations,
+    "mangrove_net_change": NetChangeCalculations,
+    "mangrove_height": TreeHeightCalculations,
+    "mangrove_biomass": BiomassCalculations,
+    "mangrove_blue_carbon": BlueCarbonCalculations
   }
   const isValid = await validateInput(req, res);
 
