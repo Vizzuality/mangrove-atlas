@@ -7,10 +7,10 @@ export interface IExtentDataAsset extends IDataAsset {
 
 export const CoastalExtentDataAsset: IExtentDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/land-cover/mangrove_extent-v3"
+    default: "projects/global-mangrove-watch/physical-environment/coastlines-v3"
   },
   numYears: 11,
   getEEAsset(){
-    return ee.ImageCollection(this.assetPath.default);
+    return ee.FeatureCollection(this.assetPath.default);
   }
 };
