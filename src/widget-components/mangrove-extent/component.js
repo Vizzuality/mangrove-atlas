@@ -74,7 +74,7 @@ function MangroveExtent({
 
   const changeUnit = useCallback((selectedUnit) => {
     setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
-  }, []);
+  }, [ui]);
 
   if (!data || !data.length || !year) {
     return null;
