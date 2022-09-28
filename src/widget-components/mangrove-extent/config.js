@@ -23,9 +23,9 @@ const widgetData = (
         label: `Coastline coverage in ${currentYear}`,
         value: mangroveArea,
         color: "#06C4BD",
-        y: unit === "ha" ? mangroveArea * 100 : mangroveArea,
+        y: mangroveCoastCoverage,
         percentage: mangroveCoastCoveragePercentage,
-        unit,
+        unit: "km",
         area: mangroveArea,
         coverage: mangroveCoastCoverage?.toFixed(2),
         year: currentYear,
@@ -34,7 +34,7 @@ const widgetData = (
         color: "#ECECEF",
         percentage: 100 - mangroveCoastCoveragePercentage,
         y: nonMangrove,
-        unit,
+        unit: "km",
         coverage: nonMangrove.toFixed(2),
         label: "Non mangroves",
         value: nonMangrove,
@@ -117,28 +117,15 @@ export const CONFIG = {
             const { payload } = properties;
             const groups = groupBy(
               payload.map((item) => {
-                const value =
-                  (item.payload.unit === "ha" && item.payload.value * 100) ||
-                  (item.payload.unit === "%" && item.payload.percent) ||
-                  (item.payload.unit === "km²" && Number(item.payload.value));
-
                 return {
                   ...item.payload,
-                  value: item.payload.label,
-                  y: value,
-                  unit,
                   label: item.payload.label,
                 };
               }),
               "label"
             );
 
-            return (
-              <WidgetLegend
-                groups={groups}
-                unit={unit === "km²" ? "km²" : "ha"}
-              />
-            );
+            return <WidgetLegend groups={groups} unit="km" />;
           },
         },
         tooltip: {

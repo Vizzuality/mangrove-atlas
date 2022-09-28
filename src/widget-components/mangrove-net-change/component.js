@@ -27,7 +27,6 @@ function MangroveNetChange({
   currentLocation,
   ...props
 }) {
-  
   const { startYear: startYearUi, endYear: endYearUi, unit: unitUi } = ui;
   const years = metadata?.year.sort() || [];
   const startYear = useMemo(
@@ -39,10 +38,7 @@ function MangroveNetChange({
     [endYearUi, years]
   );
 
-  const unit = useMemo(
-    () => unitUi || unitOptions[0].value,
-    [unitUi]
-  );
+  const unit = useMemo(() => unitUi || unitOptions[0].value, [unitUi]);
 
   useEffect(() => {
     fetchMangroveNetChangeData({
@@ -52,7 +48,13 @@ function MangroveNetChange({
     });
   }, [fetchMangroveNetChangeData, currentLocation]);
 
-  const filteredYears = useMemo(() => years.filter((year) => !!years.length && year >= startYear && year <= endYear), [years, startYear, endYear]);
+  const filteredYears = useMemo(
+    () =>
+      years.filter(
+        (year) => !!years.length && year >= startYear && year <= endYear
+      ),
+    [years, startYear, endYear]
+  );
 
   useEffect(() => {
     if (data && data.length) {
@@ -75,7 +77,17 @@ function MangroveNetChange({
         },
       });
     }
-  }, [startYear, endYear, unit, addFilter, setUi, years, data, data.length, filteredYears]);
+  }, [
+    startYear,
+    endYear,
+    unit,
+    addFilter,
+    setUi,
+    years,
+    data,
+    data.length,
+    filteredYears,
+  ]);
 
   const dataFilteredByYears = data.filter(
     ({ year }) => year >= startYear && year <= endYear
@@ -89,32 +101,35 @@ function MangroveNetChange({
     value: y,
   }));
 
-  const changeYear = useCallback((key, value) => {
-    addFilter({
-      filter: {
-        ...ui,
+  const changeYear = useCallback(
+    (key, value) => {
+      addFilter({
+        filter: {
+          ...ui,
+          id: "net",
+          [key]: value,
+          range: {
+            ...ui.range,
+            [key]: value,
+          },
+          years: years.filter((i) => i >= startYear && i <= endYear),
+        },
+      });
+      setUi({
         id: "net",
-        [key]: value,
-        range: {
-          ...ui.range,
+        ...ui,
+        value: {
+          ...ui.value,
           [key]: value,
+          range: {
+            ...ui.range,
+            [key]: value,
+          },
         },
-        years: years.filter((i) => i >= startYear && i <= endYear),
-      },
-    });
-    setUi({
-      id: "net",
-      ...ui,
-      value: {
-        ...ui.value,
-        [key]: value,
-        range: {
-          ...ui.range,
-          [key]: value,
-        },
-      },
-    });
-  }, [setUi, addFilter, endYear, startYear, ui, years]);
+      });
+    },
+    [setUi, addFilter, endYear, startYear, ui, years]
+  );
 
   const widgetDataFiltered = chartData.filter(
     ({ year: y }) =>
@@ -127,10 +142,7 @@ function MangroveNetChange({
   // We consider startYear as 0
   // Therefore we substract that from the accumulated change of all following years.
 
-  const quantity =
-    unit === "km²"
-      ? numberFormat(Math.abs(change))
-      : numberFormat(Math.abs(change * 100));
+  const quantity = numberFormat(Math.abs(change));
 
   // Normalize startData
   widgetDataFiltered[0] = {

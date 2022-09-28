@@ -123,7 +123,7 @@ export const mapStyle = createSelector(
     const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find((f) => f.id === layerId);
-
+    
       if (layerFilter && layerMap) {
         if (layerFilter && layerFilter.id === "extent") {
           return [
@@ -140,7 +140,7 @@ export const mapStyle = createSelector(
             ...acc,
             ...layerMap
               .filter((layerMapItem) =>
-                layerFilter.years.includes(layerMapItem.year)
+                layerFilter.years.includes(layerMapItem.year) && layerFilter.years[0] !== layerMapItem.year
               )
               .map((layerMapItem) => layerMapItem.layerId),
           ];
