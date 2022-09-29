@@ -61,13 +61,14 @@ const makeQuery = async (location, startDate, endDate) => {
  */
 const alertsJob = async (locationId, startDate, endDate, env, geojson) => {
   // First try to get data from cache in order to reduce costs
-  const cacheKey = `${locationId || md5(geojson) || ''}_${startDate}_${endDate}`;
+  const geojson_md5 = geojson  ? md5(geojson) : null;
+  const cacheKey = `${locationId || geojson_md5 || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
     console.log(`Response from cache ${cacheKey}`);
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId, env) || geojson.features[0];
+  const location = locationId && await getLocation(locationId, env) || geojson && geojson.features[0];
   const options = {
     query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
