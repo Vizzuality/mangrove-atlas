@@ -58,8 +58,8 @@ export default {
       unit: null,
     },
     activity: {
-      startYear: null,
-      endYear: null,
+      start_year: null,
+      end_year: null,
       limit: 10
     },
   },

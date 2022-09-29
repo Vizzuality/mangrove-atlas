@@ -8,19 +8,20 @@ export const numberFormat = format(",.2f");
 export const formatAxis = format(",.0d");
 
 const widgetData = (data, unit) => {
-  const dataValues = data.map((d) => (unit === "ha" ? d.value * 100 : d.value));
-  dataValues.shift();
+
+  const netChangeValues = data.map((d) => (unit === "ha" ? d.net_change * 100 : d.net_change));
+  netChangeValues.shift();
   const cumulativeSum = (
     (sum) => (value) =>
       (sum += value)
   )(0);
-  const cumulativeValues = [0, ...dataValues].map(cumulativeSum);
+  const cumulativeValuesNetChange = [0, ...netChangeValues].map(cumulativeSum);
   return orderBy(
     data.map((l, i) => {
       return {
         label: l.year,
         year: l.year,
-        netChange: i === 0 ? 0 : cumulativeValues[i],
+        netChange: i === 0 ? 0 : cumulativeValuesNetChange[i],
         netChangeRaw: l.value,
       };
     }),
