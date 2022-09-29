@@ -82,9 +82,6 @@ export default {
       slug: "mangrove_restoration",
       locationType: ["country", "worldwide"],
       categoryIds: [
-        "all_datasets",
-        "restoration_and_conservation",
-        "ecosystem_services",
       ],
       layersIds: ["restoration"],
     },
@@ -121,7 +118,7 @@ export default {
       name: "Mangrove Emissions Mitigation",
       slug: "mangrove_emissions_mitigation",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: ["all_datasets", "climate_and_policy"],
+      categoryIds: [],
     },
     {
       name: "Mangrove International Status",
