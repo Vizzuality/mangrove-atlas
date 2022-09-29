@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+
+
+### Changed
+   
+### Fixed
+  
+  
+## 2022.09.20
+
+### Added
     - Emissions mitigation widget.
     - International Status widget.
     - Investment potential widget.
