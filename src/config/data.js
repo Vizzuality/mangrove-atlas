@@ -62,7 +62,7 @@ export default {
       name: "Mangrove alerts",
       slug: "mangrove_alerts",
       locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
-      categoryIds: [],
+      categoryIds: ["all_datasets", "restoration_and_conservation"],
       layersIds: ["alerts-heat"],
     },
     {

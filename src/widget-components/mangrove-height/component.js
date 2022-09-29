@@ -37,7 +37,7 @@ const MangroveHeight = ({
         location_id: currentLocation.id,
       }),
     });
-  }, [currentLocation, fetchMangroveHeightData]);
+  }, [currentLocation.id, currentLocation.iso, fetchMangroveHeightData]);
 
   useEffect(() => {
       addFilter({
@@ -64,7 +64,10 @@ const MangroveHeight = ({
     });
   }, [addFilter, setUi]);
 
-  const location = currentLocation?.name;
+  const location = (currentLocation.location_type === 'worldwide')
+  ? 'the world'
+  : <span className="notranslate">{`${currentLocation.name}`}</span>;
+
 
   const dateOptions = useMemo(() =>
     years?.map((year) => ({
