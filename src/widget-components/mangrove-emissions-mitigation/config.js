@@ -79,7 +79,7 @@ const LabelContent = () => (
   <g>
     <text
       x={-180}
-      y={15}
+      y={14}
       transform="rotate(270)"
       textAnchor="middle"
       fill="#000"
@@ -126,7 +126,7 @@ export const CONFIG = {
           horizontal: true,
           // strokeDasharray: '5 20'
         },
-        margin: { top: 20, right: 0, left: 15, bottom: 20 },
+        margin: { top: 20, right: 0, left: 25, bottom: 20 },
         xKey: "category",
         yKeys: {
           bars: getBars(indicators, filteredIndicators),
