@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -23,20 +23,18 @@ const WidgetsMenu = ({
 
   const menuRef = useRef();
 
-  useLayoutEffect(() => {
-    if (menuRef.current) {
-      const { top, left, x } = menuRef.current.getBoundingClientRect();
-      setPosition({ top, left, x: x });
-    }
-  }, [menuRef]);
-
   const handleModal = (slug) => {
     setCurrent(slug);
   };
 
-  const handleHover = () => {
+  const handleHover = useCallback(() => {
+    if (menuRef.current) {
+      const { top, left, x } = menuRef.current.getBoundingClientRect();
+      setPosition({ top, left, x });
+    }
+
     toggleModal(!isOpen);
-  };
+  }, [menuRef, isOpen]);
 
   return (
     <div
@@ -92,7 +90,7 @@ const WidgetsMenu = ({
           className={cx(styles.modalContent, { [styles.mobile]: mobile })}
           style={{
             top: mobile ? "50%" : position.top,
-            left: mobile ? "50%" : position.left - position.x / 2,
+            left: mobile ? "50%" : position.left - position.x,
           }}
         >
           <span className={styles.menuItemTitle}>Categories</span>
