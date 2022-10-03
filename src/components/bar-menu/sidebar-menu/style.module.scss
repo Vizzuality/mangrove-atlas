@@ -17,6 +17,12 @@
   @media print {
     display: none;
   }
+
+  .sidebarBtnsWrapper {
+    position: relative;
+    top: 0px;
+    overflow-y: auto;
+  }
 }
 
 

@@ -67,8 +67,12 @@ function MangroveExtent({
         },
       });
     }
-    setUi({ id: "extent", value: { ...ui, year, unit: currentUnit } });
-  }, [addFilter, unit, year, currentUnit, metadata, setUi]);
+    if (!isLoading) {
+      setUi({ id: "extent", value: { year, unit: currentUnit } });
+    }
+  }, [addFilter, year, currentUnit, 
+    //ui, 
+    metadata, isLoading, setUi]);
 
   const changeYear = useCallback(
     (current) => {
@@ -80,14 +84,14 @@ function MangroveExtent({
       });
       setUi({ id: "extent", value: { ...ui, year: current } });
     },
-    [ui]
+    [ui, addFilter, setUi]
   );
 
   const changeUnit = useCallback(
     (selectedUnit) => {
       setUi({ id: "extent", value: { ...ui, unit: selectedUnit } });
     },
-    [ui]
+    [ui, setUi]
   );
 
   const location = useMemo(() => {
@@ -95,7 +99,7 @@ function MangroveExtent({
     if (currentLocation.location_type === "worldwide") return "the world";
     else
       return <span className="notranslate">{`${currentLocation?.name}`}</span>;
-  }, [currentLocation, drawingValue, drawingMode, isLoading]);
+  }, [currentLocation, drawingValue]);
 
   const loadingAnalysis = useMemo(
     () => (isLoading && drawingMode) || restart,

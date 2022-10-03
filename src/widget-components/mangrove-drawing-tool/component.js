@@ -69,7 +69,7 @@ export const MangroveDrawingTool = ({
           <Icon name="upload" size="md" />
           <div className={styles.text}>
             <span className={styles.title}>Browse shapefile</span>
-            <span className={styles.description}>(Clic or drag-and-drop file)</span>
+            <span className={styles.description}>(Click or drag-and-drop file)</span>
           </div>
         </button>
       </div>

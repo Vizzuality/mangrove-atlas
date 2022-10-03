@@ -11,8 +11,10 @@ const SidebarMenu = () => {
   return (
     <div className={styles.sidebar_menu}>
       <NavMenu />
-      <DrawingToolControls />
-      <WidgetsMenu />
+      <div className={styles.sidebarBtnsWrapper}>
+        <DrawingToolControls />
+        <WidgetsMenu />
+      </div>
     </div>
   );
 };
