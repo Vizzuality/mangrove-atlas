@@ -12,18 +12,17 @@ const cumulativeSum = (
     (sum += value)
 )(0);
 const widgetData = (data, unit) => {
-  const netChangeValues = data.map((d) => (unit === "ha" ? d.net_change * 100 : d.net_change));
+  const netChangeValues = data.map((d) => d.net_change);
   netChangeValues.shift();
-
   const cumulativeValuesNetChange = [0, ...netChangeValues].map(cumulativeSum);
   return orderBy(
     data.map((l, i) => {
       return {
         label: l.year,
         year: l.year,
-        netChange: i === 0 ? 0 : cumulativeValuesNetChange[i],
-        gain: unit === "ha" ? l.gain * 100 : l.gain,
-        loss: unit === "ha" ? l.loss * 100 : l.loss,
+        netChange: unit === "ha" ? cumulativeValuesNetChange[i] : cumulativeValuesNetChange[i],
+        gain: unit === "ha" ? l.gain * 100000 : l.gain * 1000,
+        loss: unit === "ha" ? -l.loss * 100000 : -l.loss * 1000,
         netChangeRaw: l.value,
       };
     }),
@@ -147,20 +146,9 @@ const CONFIG = {
                 justifyContent: "space-around",
                 marginLeft: "30px",
               }}
-              payload={[
-                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}²` },
-                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
-                {
-                  label: "Net change",
-                  color: "rgba(0,0,0,0.7)",
-                  key: "netChange",
-                  format: (value) =>
-                    value === 0 ? 0 : `${numberFormat(value)} km²`,
-                },
-              ]}
               settings={[
-                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: value => `${unit === 'ha' ? numberFormat(value / 10000) : numberFormat(value / 1000000)} ${unit === 'ha' ? 'ha' : 'km²'}` },
-                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: value => `${numberFormat(Math.abs(value / 1000000))} km²` },
+                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}` },
+                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}` },
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",

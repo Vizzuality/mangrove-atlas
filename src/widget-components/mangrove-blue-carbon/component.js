@@ -65,7 +65,7 @@ function MangroveBlueCarbon({
     return null;
   }
 
-  const { chartData, chartConfig, downloadData, agb, toc, soc } = config.parse(
+  const { chartData, chartConfig, downloadData, agb, toc, soc, isAgbParsed } = config.parse(
     data,
     metadata
   );
@@ -82,7 +82,7 @@ function MangroveBlueCarbon({
         {"'"}s&nbsp;
       </strong>
       mangroves is estimated at &nbsp;<strong>{toc}</strong> Mt CO₂e with{" "}
-      <strong>{agb}</strong> Mt CO₂e stored in above-ground biomass and &nbsp;
+      <strong>{agb}</strong> {isAgbParsed ? 't CO₂e' : 'Mt CO₂e'} stored in above-ground biomass and &nbsp;
       <strong>{soc}</strong> Mt CO₂e stored in the upper 1m of soil.
     </>
   );

@@ -35,7 +35,7 @@ function MangroveNetChange({
   const { startYear: startYearUi, endYear: endYearUi, unit: unitUi } = ui;
   const years = metadata?.year.sort() || [];
   const startYear = useMemo(
-    () => startYearUi || years[0],
+    () => startYearUi && years.includes(startYear) ? startYear : years[0],
     [startYearUi, years]
   );
   const endYear = useMemo(
@@ -52,7 +52,6 @@ function MangroveNetChange({
         slug: ["mangrove_net_change"],
         location_id: "custom-area",
       });
-      // fetchMangroveCustomAreaAnalysisData(drawingValue, ['mangrove_net_change']);
     } else {
       fetchMangroveNetChangeData({
         ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
@@ -205,11 +204,11 @@ function MangroveNetChange({
     () =>
       yearsOptions?.filter((y, index) =>
         index !== years.length - 1 ? y : null
-      ) || [],
+      ),
     [yearsOptions, years.length]
   );
   const endYearOptions = useMemo(
-    () => yearsOptions?.filter((y, index) => (index !== 0 ? y : null)) || [],
+    () => yearsOptions?.filter((y, index) => (index !== 0 ? y : null)),
     [yearsOptions]
   );
 
