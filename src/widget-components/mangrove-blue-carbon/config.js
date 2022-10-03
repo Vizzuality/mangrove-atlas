@@ -72,7 +72,8 @@ export const CONFIG = {
   parse: (data, metadata) => {
     const chartData = getData(data);
     const { toc, agb, soc } = metadata;
-    const agbFormat = numberFormat(agb / 1000000);
+    const isAgbParsed = agb < 1;
+    const agbFormat = isAgbParsed ? numberFormat(agb * 1000000) : numberFormat(agb / 1000000);
     const tocFormat = numberFormat(toc / 1000000);
     const socFormat = numberFormat(soc / 1000000);
     const tocInt = toc > 1000000 ? removeDecimals(toc / 1000000) : tocFormat;
@@ -83,6 +84,7 @@ export const CONFIG = {
       agb: agbFormat,
       toc: tocFormat,
       soc: socFormat,
+      isAgbParsed,
       chartData: orderBy(
         chartData,
         (d) => Number(d.label.split("--", 1)),

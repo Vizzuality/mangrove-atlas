@@ -44,7 +44,7 @@ export const dashboardWidgets = createSelector(
       ? _widgets.filter(
           ({ slug }) =>
             slug === "mangrove_extent" ||
-            // slug === "mangrove_net_change" ||
+            slug === "mangrove_net_change" ||
             slug === "mangrove_blue_carbon" ||
             slug === "mangrove_alerts" ||
             slug === "mangrove_height" ||
