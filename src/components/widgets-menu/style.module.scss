@@ -5,7 +5,7 @@
   margin: 0 10px;
   display: flex;
   flex-direction: column;
-  
+
   ul {
     list-style: none;
     display: flex;
@@ -93,7 +93,6 @@
 
 .modalContent {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.08);
 
   .menuItemTitle {
     @include menu-item-title;
