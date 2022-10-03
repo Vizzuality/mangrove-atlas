@@ -301,7 +301,6 @@ class Chart extends PureComponent {
                 {...tooltip}
               />
             )}
-
             {legend && (
               <Legend
                 wrapperStyle={{ pointerEvents: 'none' }}

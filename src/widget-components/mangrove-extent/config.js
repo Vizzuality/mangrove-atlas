@@ -13,7 +13,6 @@ const widgetData = (
   mangroveCoastCoveragePercentage,
   metadata,
   currentYear,
-  unit
 ) => {
   if (mangroveArea) {
     const { total_lenght: total_length } = metadata;
@@ -112,7 +111,6 @@ export const CONFIG = {
           verticalAlign: "middle",
           layout: "vertical",
           align: "left",
-          chartWidth: 100,
           content: (properties) => {
             const { payload } = properties;
             const groups = groupBy(

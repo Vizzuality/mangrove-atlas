@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -20,9 +20,10 @@ const WidgetsMenu = ({
     left: null,
     x: null,
   });
+
   const menuRef = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (menuRef.current) {
       const { top, left, x } = menuRef.current.getBoundingClientRect();
       setPosition({ top, left, x: x });
