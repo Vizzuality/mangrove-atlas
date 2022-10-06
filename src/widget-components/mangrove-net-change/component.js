@@ -35,7 +35,7 @@ function MangroveNetChange({
   const { startYear: startYearUi, endYear: endYearUi, unit: unitUi } = ui;
   const years = metadata?.year.sort() || [];
   const startYear = useMemo(
-    () => startYearUi && years.includes(startYear) ? startYear : years[0],
+    () => startYearUi && years.includes(startYearUi) ? startYearUi : years[0],
     [startYearUi, years]
   );
   const endYear = useMemo(
@@ -220,7 +220,7 @@ function MangroveNetChange({
       options={startYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) > parseInt(endYear, 10) ||
-        option.value === startYear
+        option.value === startYear || endYear === option.value
       }
       onChange={(v) => changeYear("startYear", v)}
     />
@@ -234,7 +234,7 @@ function MangroveNetChange({
       options={endYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) < parseInt(startYear, 10) ||
-        option.value === endYear
+        option.value === endYear || startYear === option.value
       }
       onChange={(v) => changeYear("endYear", v)}
     />

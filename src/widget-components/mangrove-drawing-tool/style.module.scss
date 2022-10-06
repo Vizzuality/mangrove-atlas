@@ -44,6 +44,10 @@
 
       border: 1px dashed $primary;
       border-radius: 15px;
+
+      .fileUpload {
+        display: none;
+      }
     }
 
     &._active {
@@ -56,6 +60,18 @@
       }
     }
 
+    &:hover {
+      box-sizing: border-box;
+      color: $primary;
+      background-color: rgba(0, 133, 127, 0.05);
+      border: 2px solid rgba(0, 133, 127, 0.4);
+      border-radius: 15px;
+
+      svg {
+        stroke:  $primary;
+      }
+    }
+    
     svg {
       margin-right: 26px;
       stroke: $primary;
@@ -73,6 +89,10 @@
         fill: $primary;
       }
     }
+
+    &.fileWrapper {
+      flex-direction: column;
+    }
   }
 
   p {
@@ -87,3 +107,6 @@
   font-weight: normal;
 }
 
+.bold {
+  font-weight: bold;
+}

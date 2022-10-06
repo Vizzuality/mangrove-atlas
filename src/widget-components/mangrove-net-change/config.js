@@ -7,22 +7,30 @@ import orderBy from "lodash/orderBy";
 export const numberFormat = format(",.2f");
 export const formatAxis = format(",.0d");
 
-const cumulativeSum = (
-  (sum) => (value) =>
-    (sum += value)
-)(0);
 const widgetData = (data, unit) => {
   const netChangeValues = data.map((d) => d.net_change);
   netChangeValues.shift();
-  const cumulativeValuesNetChange = [0, ...netChangeValues].map(cumulativeSum);
+
+  const cumulativeValuesNetChange = [0, ...netChangeValues]?.reduce(
+    (acc, value, i) => {
+      acc.push((acc[i] += value));
+      return acc;
+    },
+    [0]
+  );
+
   return orderBy(
     data.map((l, i) => {
       return {
         label: l.year,
         year: l.year,
-        netChange: unit === "ha" ? cumulativeValuesNetChange[i] : cumulativeValuesNetChange[i],
-        gain: unit === "ha" ? l.gain * 100000 : l.gain * 1000,
-        loss: unit === "ha" ? -l.loss * 100000 : -l.loss * 1000,
+
+        netChange:
+          unit === "ha"
+            ? cumulativeValuesNetChange[i] * 100
+            : cumulativeValuesNetChange[i],
+        gain: unit === "ha" ? l.gain * 100 : l.gain,
+        loss: unit === "ha" ? -l.loss * 100 : -l.loss,
         netChangeRaw: l.value,
       };
     }),
@@ -30,24 +38,27 @@ const widgetData = (data, unit) => {
   );
 };
 
-const getBars = (drawingMode) => drawingMode ? {
-  gain: {
-    barSize: 10,
-    transform: `translate(${(4 + 10) / 2}, 0)`,
-    fill: '#A6CB10',
-    radius: [10, 10, 0, 0],
-    legend: 'Gain',
-    isAnimationActive: false
-  },
-  loss: {
-    barSize: 10,
-    transform: `translate(-${(4 + 10) / 2}, 0)`,
-    fill: '#EB6240',
-    radius: [10, 10, 0, 0],
-    legend: 'Loss',
-    isAnimationActive: false
-  }
-} : {}
+const getBars = (drawingMode) =>
+  drawingMode
+    ? {
+        gain: {
+          barSize: 10,
+          transform: `translate(${(4 + 10) / 2}, 0)`,
+          fill: "#A6CB10",
+          radius: [10, 10, 0, 0],
+          legend: "Gain",
+          isAnimationActive: false,
+        },
+        loss: {
+          barSize: 10,
+          transform: `translate(-${(4 + 10) / 2}, 0)`,
+          fill: "#EB6240",
+          radius: [10, 10, 0, 0],
+          legend: "Loss",
+          isAnimationActive: false,
+        },
+      }
+    : {};
 
 const CONFIG = {
   parse: (data, unit, drawingMode = true) => {
@@ -147,13 +158,32 @@ const CONFIG = {
                 marginLeft: "30px",
               }}
               settings={[
-                drawingMode && { label: 'Gain', color: '#A6CB10', key: 'gain', format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}` },
-                drawingMode && { label: 'Loss', color: '#EB6240', key: 'loss', format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}` },
+                drawingMode && {
+                  label: "Gain",
+                  color: "#A6CB10",
+                  key: "gain",
+                  format: (value) =>
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
+                },
+                drawingMode && {
+                  label: "Loss",
+                  color: "#EB6240",
+                  key: "loss",
+                  format: (value) =>
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
+                },
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
                   key: "netChange",
-                  format: (value) => `${ value === 0 ? value : numberFormat(value)} ${unit === "ha" ? "ha" : "km²"}`,
+                  format: (value) =>
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
                   bulletType: "bar",
                 },
               ]}
