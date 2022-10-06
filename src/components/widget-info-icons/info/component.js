@@ -50,6 +50,7 @@ const Info = ({ slug, onClick }) => {
       <Modal
         isOpen={isOpen}
         onRequestClose={handleModal}
+        maxHeight
       >
         <div className={styles.modalContent}>
           {info()}

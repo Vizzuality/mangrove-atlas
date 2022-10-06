@@ -98,7 +98,7 @@ function MangroveInvestmentPotential({
 }
 
 MangroveInvestmentPotential.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
   currentLocation: PropTypes.shape({}),
   isCollapsed: PropTypes.bool,
   slug: PropTypes.string,

@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   locationsList: state.locations.list,
   ui: state.widgets.ui.alerts,
   drawingValue: state.drawingTool.drawingValue,
-  drawingMode: state.drawingTool.drawingMode
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 
 const mapDispatchToProps = { setUi, fetchAlerts };

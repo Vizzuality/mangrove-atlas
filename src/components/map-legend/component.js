@@ -2,16 +2,17 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import LegendItem from "./legend-item";
 
-const Legend = ({ layers, drawingValue, drawingStatus }) => {
+const Legend = ({ layers, drawingValue, drawingStatus, customGeojsonFeatures }) => {
   const customLayer = {
     id: "custom-layer",
     name: "delete custom area",
-    isActive: !!drawingValue,
+    isActive: !!drawingValue || !!customGeojsonFeatures,
     isNegative: true,
   };
+
   return (
     <Fragment>
-      {(drawingStatus === "progress" || !!drawingValue) && (
+      {(drawingStatus === "progress" || !!drawingValue || !!customGeojsonFeatures) && (
         <LegendItem key={customLayer.id} {...customLayer} />
       )}
       {layers.map((layer) => (

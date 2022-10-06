@@ -12,8 +12,8 @@ const mapStateToProps = state => ({
   metadata: state.mangroveHeightData.metadata,
   ui: state.widgets.ui.height,
   drawingValue: state.drawingTool.drawingValue,
-  drawingMode: state.drawingTool.drawingMode
-
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 
 const mapDispatchToProps = {

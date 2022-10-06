@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
   error: state.mangroveHabitatExtentData.error,
   ui: state.widgets.ui.extent,
   drawingValue: state.drawingTool.drawingValue,
-  drawingMode: state.drawingTool.drawingMode
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 const mapDispatchToProps = {
   setUi,

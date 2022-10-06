@@ -98,7 +98,7 @@ class Map extends Component {
     modeHandler: null,
     popUpPosition: {},
   };
-  
+
   componentDidMount() {
     const { bounds } = this.props;
 
@@ -242,14 +242,11 @@ class Map extends Component {
           },
         });
       }
-
-      if (e.target.className === "overlays") {
-        onClick({
-          event: e,
-          map: this.map,
-          mapContainer: this.mapContainer,
-        });
-      }
+      onClick({
+        event: e,
+        map: this.map,
+        mapContainer: this.mapContainer,
+      });
     };
 
     const MapFunctions = () => {

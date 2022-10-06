@@ -32,7 +32,7 @@ const LocationMenu = ({ location, drawingMode }) => {
         }
         style={stylesOverride}
       >
-        <span ref={titleRef}>{drawingMode ? 'Custom area' : location?.name}</span>
+        <span ref={titleRef}>{drawingMode ? 'custom area' : location?.name}</span>
       </h1>
     </div>
   );

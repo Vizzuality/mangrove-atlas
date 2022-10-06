@@ -39,7 +39,7 @@ export default {
     {
       name: "Mangrove habitat extent",
       slug: "mangrove_extent",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "distribution_and_change"],
       isActive: true,
       layersIds: ["extent"],
@@ -47,7 +47,7 @@ export default {
     {
       name: "Mangrove net change",
       slug: "mangrove_net_change",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "distribution_and_change"],
       layersIds: ["net"],
     },
@@ -61,7 +61,7 @@ export default {
     {
       name: "Mangrove alerts",
       slug: "mangrove_alerts",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "restoration_and_conservation"],
       layersIds: ["alerts-heat"],
     },
@@ -91,7 +91,7 @@ export default {
     {
       name: "Mangrove biomass",
       slug: "mangrove_biomass",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: [
         "all_datasets",
         "restoration_and_conservation",
@@ -102,7 +102,7 @@ export default {
     {
       name: "Mangrove height",
       slug: "mangrove_height",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom-area", "wdpa", "country", "worldwide"],
       categoryIds: [
         "all_datasets",
         "restoration_and_conservation",
@@ -113,20 +113,20 @@ export default {
     {
       name: "Mangrove Blue Carbon",
       slug: "mangrove_blue_carbon",
-      locationType: ["country", "worldwide"],
+      locationType: ["custom-area", "country", "worldwide"],
       categoryIds: ["all_datasets", "climate_and_policy", "ecosystem_services"],
       layersIds: ["carbon"],
     },
     {
       name: "Mangrove Emissions Mitigation",
       slug: "mangrove_emissions_mitigation",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "climate_and_policy"],
     },
     {
       name: "Mangrove International Status",
       slug: "mangrove_international_status",
-      locationType: ["custom", "aoi", "wdpa", "country", "worldwide"],
+      locationType: ["custom", "wdpa", "country", "worldwide"],
       categoryIds: ["all_datasets", "climate_and_policy"],
     },
     {
@@ -185,6 +185,10 @@ export default {
     {
       name: "Mangrove biomass",
       id: "biomass",
+    },
+    {
+      name: "Custom analysis",
+      id: "custom-area",
     },
   ],
   categories: [

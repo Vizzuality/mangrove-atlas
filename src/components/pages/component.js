@@ -7,8 +7,8 @@ import NotFoundPage from 'pages/not-found';
 
 const pageMap = new Map([
   ['PAGE/APP', AppPage],
+  ['PAGE/CUSTOM', AppPage],
   ['PAGE/COUNTRY', AppPage],
-  ['PAGE/AOI', AppPage],
   ['PAGE/WDPA', AppPage],
 ]);
 

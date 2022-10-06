@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { toggleActive } from 'modules/layers/actions';
 import { toggleActiveByLayerId as toggleWidgetActive } from 'modules/widgets/actions';
-import { setDrawingValue } from "modules/drawing-tool/actions";
+import { setDrawingValue, setCustomGeojsonFeatures } from "modules/drawing-tool/actions";
 
 import Component from './component';
 
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   toggleActive,
   toggleWidgetActive,
-  setDrawingValue
+  setDrawingValue,
+  setCustomGeojsonFeatures
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

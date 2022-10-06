@@ -28,6 +28,7 @@ function MangroveExtent({
   drawingValue,
   drawingMode,
   fetchMangroveHabitatExtentData,
+  customGeojsonFeatures,
   ...props
 }) {
   const [restart, setRestart] = useState(null);
@@ -35,6 +36,10 @@ function MangroveExtent({
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
+  const customArea = useMemo(
+    () => !!drawingValue?.length || !!customGeojsonFeatures?.length,
+    [drawingValue, customGeojsonFeatures]
+  );
 
   const year = useMemo(
     () => currentYear || years?.[years?.length - 1],
@@ -43,19 +48,24 @@ function MangroveExtent({
 
   useEffect(() => {
     fetchMangroveHabitatExtentData(
-      !currentLocation.id === 'custom-area'
+      currentLocation?.id === "custom-area" || drawingMode
         ? {
-            ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
-              location_id: currentLocation.id,
-            }),
-          }
-        : {
             drawingValue,
             slug: ["mangrove_extent"],
             location_id: "custom-area",
           }
+        : {
+            ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.id,
+            }),
+          }
     );
-  }, [fetchMangroveHabitatExtentData, currentLocation, drawingValue]);
+  }, [
+    fetchMangroveHabitatExtentData,
+    currentLocation,
+    drawingValue,
+    drawingMode,
+  ]);
 
   useEffect(() => {
     if (year) {
@@ -70,7 +80,7 @@ function MangroveExtent({
     if (!isLoading) {
       setTimeout(() => {
         setUi({ id: "extent", value: { year, unit: currentUnit } });
-      }, 0)
+      }, 0);
     }
   }, [addFilter, year, currentUnit, metadata, isLoading, setUi]);
 
@@ -95,11 +105,11 @@ function MangroveExtent({
   );
 
   const location = useMemo(() => {
-    if (drawingValue) return "the area selected";
-    if (currentLocation.location_type === "worldwide") return "the world";
+    if (customArea) return "the area selected";
+    if (currentLocation?.location_type === "worldwide") return "the world";
     else
       return <span className="notranslate">{`${currentLocation?.name}`}</span>;
-  }, [currentLocation, drawingValue]);
+  }, [currentLocation, drawingValue, customArea]);
 
   const loadingAnalysis = useMemo(
     () => (isLoading && drawingMode) || restart,
@@ -210,7 +220,7 @@ function MangroveExtent({
 }
 
 MangroveExtent.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
   metadata: PropTypes.shape({}),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,

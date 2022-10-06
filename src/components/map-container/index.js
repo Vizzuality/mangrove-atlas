@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
   data: highlightedPlaces(state),
   currentLocation: currentLocation(state),
   bounds: state.map.bounds,
+  
 });
 
 const mapDispatchToProps = {
@@ -21,7 +22,7 @@ const mapDispatchToProps = {
   setPopup,
   removePopup,
   goToCountry: pageActions['PAGE/COUNTRY'],
-  goToAOI: pageActions['PAGE/AOI']
+  goToCustomArea: pageActions['PAGE/CUSTOM'],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

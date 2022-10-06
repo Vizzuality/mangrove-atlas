@@ -20,6 +20,8 @@ const basemap = (state) => state.map.basemap;
 const locationId = (state) =>
   state.locations.current.id || state.locations.current.iso;
 const locations = (state) => state.locations.list;
+const customArea = (state) => state.drawingTool.drawingValue;
+const customGeojsonFeatures = (state) => state.drawingTool.customGeojsonFeatures;
 const startDateAlerts = (state) => state.widgets.ui.alerts.startDate;
 const endDateAlerts = (state) => state.widgets.ui.alerts.endDate;
 const activeLayersIds = createSelector([activeLayers], (_activeLayers) =>
@@ -47,12 +49,11 @@ function sortLayers(layers) {
 }
 
 export const layerStyles = createSelector(
-  [mapStyles, activeLayersIds],
-  (_mapStyles, _activeLayersIds) => {
+  [mapStyles, activeLayersIds, customArea],
+  (_mapStyles, _activeLayersIds, _customArea) => {
     if (!_mapStyles.layers || !_mapStyles.layers.mapStyle) {
       return [];
     }
-
     const { layers: layersStyles } = _mapStyles.layers.mapStyle;
     const extendedLayers = [...layersStyles, ...rasterLayers];
     return extendedLayers.filter(
@@ -75,6 +76,8 @@ export const mapStyle = createSelector(
     startDateAlerts,
     endDateAlerts,
     locations,
+    customArea,
+    customGeojsonFeatures
   ],
   (
     _basemap,
@@ -84,7 +87,9 @@ export const mapStyle = createSelector(
     _locationId,
     _startDateAlerts,
     _endDateAlerts,
-    _locations
+    _locations,
+    _customArea,
+    _customGeojsonFeatures
   ) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
@@ -171,7 +176,7 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!customGeojsonFeatures.length) ? "visible" : "none",
       },
     }));
 
@@ -180,9 +185,25 @@ export const mapStyle = createSelector(
     // Getting location
     let currentLocation = _locations?.find(
       (l) => l.iso === _locationId && l.location_type === "country"
-    );
+    );  
+
+    if (_locationId.id === 'custom-area') return _locationId;
     if (!currentLocation) {
       currentLocation = _locations?.find((l) => l.location_id === _locationId);
+    }
+    
+    if (!_customArea && !!_customGeojsonFeatures?.length) {
+      bhSources['custom-area'].data = ({
+        type: "FeatureCollection",
+        features: _customGeojsonFeatures,
+      });
+    }
+
+    if (!_customGeojsonFeatures?.length) {
+      bhSources['custom-area'].data = ({
+        type: "FeatureCollection",
+        features: [],
+      });
     }
 
     // GEN ALERTS URL TEMPLATE
@@ -199,6 +220,7 @@ export const mapStyle = createSelector(
         locationId: "",
       });
     }
+
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...ordered_array];
     return composedMapStyle;

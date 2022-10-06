@@ -14,6 +14,7 @@ import analysisService from "services/analysis-service";
 
 import styles from "./style.module.scss";
 
+
 const sentence = (
   <>
     Draw in the map the area you want to analyze through on-the-fly
@@ -23,41 +24,105 @@ const sentence = (
 export const MangroveDrawingTool = ({
   current,
   setCurrent,
+  setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
-  setDrawingStatus,
   drawingValue,
-  setDrawingMode,
   drawingMode,
+  setDrawingStatus,
   expandAll,
   fetchMangroveHabitatExtentData,
+  fetchMangroveNetChangeData,
+  fetchMangroveHeightData,
+  fetchMangroveBiomassData,
+  fetchMangroveBlueCarbonData,
+  fetchAlerts,
+  setCustomGeojsonFeatures,
+  customGeojsonFeatures
 }) => {
   const onDropAccepted = useCallback(async (acceptedFiles) => {
+    setCurrent("drawingMode")
+setDrawingMode(true)
     const file = acceptedFiles[0];
+
     analysisService.uploadFile(file).then(({ data }) => {
-      console.log(drawingValue, data.features, "drawingValue data features");
-      console.log(data.features)
-      // setDrawingValue(data.features)
+      setDrawingMode(true);
+      setCustomGeojsonFeatures(data.features);
       setCurrentLocation({
         id: "custom-area",
         bounds: data.features[0].geometry,
         iso: "custom-area",
         location_id: "custom-area",
         location_type: "custom-area",
-        name: "Custom area",
+        name: "custom area",
       });
-      setCurrent("editing");
+      // setCurrent("editing");
       setDrawingStatus({
         type: "FeatureCollection",
         features: "progress",
       });
-      setDrawingMode(false);
       fetchMangroveHabitatExtentData({
         drawingValue: data.features,
         slug: ["mangrove_extent"],
         location_id: "custom-area",
       });
+      fetchMangroveNetChangeData({
+        drawingValue: data.features,
+        slug: ["mangrove_net_change"],
+        location_id: "custom-area",
+      });
+      fetchMangroveBiomassData({
+        drawingValue: data.features,
+        slug: ["mangrove_biomass"],
+        location_id: "custom-area",
+      });
+      fetchMangroveHeightData({
+        drawingValue: data.features,
+        slug: ["mangrove_height"],
+        location_id: "custom-area",
+      });
+      fetchMangroveBlueCarbonData({
+        drawingValue: data.features,
+        slug: ["mangrove_blue_carbon"],
+        location_id: "custom-area",
+      });
+      fetchMangroveNetChangeData({
+        drawingValue: data.features,
+        slug: ["mangrove_net_change"],
+        location_id: "custom-area",
+      });
+      fetchMangroveBiomassData({
+        drawingValue: data.features,
+        slug: ["mangrove_biomass"],
+        location_id: "custom-area",
+      });
+      fetchMangroveNetChangeData({
+        drawingValue: data.features,
+        slug: ["mangrove_net_change"],
+        location_id: "custom-area",
+      });
+      fetchMangroveBiomassData({
+        drawingValue: data.features,
+        slug: ["mangrove_biomass"],
+        location_id: "custom-area",
+      });
+      fetchMangroveHeightData({
+        drawingValue: data.features,
+        slug: ["mangrove_height"],
+        location_id: "custom-area",
+      });
+      fetchMangroveBlueCarbonData({
+        drawingValue: data.features,
+        slug: ["mangrove_blue_carbon"],
+        location_id: "custom-area",
+      });
+      fetchAlerts({
+        drawingValue: data.features,
+        slug: ["mangrove_alerts"],
+        location_id: "custom-area",
+      });
     });
+    return null; //TO DO feedback usuario
   }, []);
 
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
@@ -76,21 +141,22 @@ export const MangroveDrawingTool = ({
   ));
 
   useEffect(() => {
+    if (current === null) setCurrent("editing");
     if (drawingMode && drawingValue) {
       expandAll();
     }
-  }, [drawingMode, drawingValue, expandAll]);
+  }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
 
   const handleClick = () => {
     console.log("handle click");
   };
   const handleDrawingMode = useCallback(() => {
-    console.log('entra drawing')
     setDrawingValue(null);
+    setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
   }, [setDrawingValue, setCurrent]);
 
-  return drawingValue ? (
+  return drawingValue || customGeojsonFeatures ? (
     <Widgets />
   ) : (
     <ChartWidget
@@ -110,7 +176,11 @@ export const MangroveDrawingTool = ({
           onClick={handleDrawingMode}
         >
           <Icon name="polyline" size="md" /> {/* primary color */}
-          <span className={styles.title}>Draw area</span>
+          <span className={styles.title}>
+       {current === "drawPolygon"
+         ? "Start drawing on the map"
+         : "Draw area"}
+     </span>
         </button>
         or
         {!acceptedFileItems.length ? (

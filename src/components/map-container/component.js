@@ -25,8 +25,10 @@ export const MapContainer = ({
   mapboxApiAccessToken,
   mapStyle,
   bounds,
+  goToCustomArea,
   goToCountry,
-  goToAOI,
+  goToWDPA,
+  currentLocation,
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
@@ -71,6 +73,10 @@ export const MapContainer = ({
     const wdpa = features?.find(feat => feat.layer.id === 'selected-wdpa-polygons');
     const hotspots = features?.find(feat => feat.layer.id === 'cons-hotspots');
 
+    // // if (customArea) {
+    //  goToCustomArea({ id: 'custom-area', location_type: 'custom-area' });
+    // // }
+
     if (hotspots) {
       setPopup({
         type: 'hotspots',
@@ -95,10 +101,12 @@ export const MapContainer = ({
 
       const internalId = internalIdMap.get(areaName);
       if (internalId) {
-        goToAOI({ id: internalId });
+        goToWDPA({ id: internalId });
       }
-    } else if (country) {
+    } 
+    else if (country) {
       const { properties: { iso: countryId } } = country;
+   
       goToCountry({ iso: countryId });
     }
   };
@@ -157,7 +165,7 @@ MapContainer.propTypes = {
   mapStyle: PropTypes.shape({}).isRequired,
   bounds: PropTypes.shape({}).isRequired,
   goToCountry: PropTypes.func,
-  goToAOI: PropTypes.func,
+  goToWDPA: PropTypes.func,
   setPopup: PropTypes.func,
   removePopup: PropTypes.func
 };
@@ -177,7 +185,7 @@ MapContainer.defaultProps = {
   removePopup: () => { },
   setViewport: () => { },
   goToCountry: () => { },
-  goToAOI: () => { }
+  goToWDPA: () => { }
 };
 
 export default MapContainer;

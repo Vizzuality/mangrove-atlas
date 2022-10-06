@@ -18,7 +18,6 @@ function MangroveNetChange({
   metadata,
   filename,
   locations,
-  locationType,
   addFilter,
   isCollapsed = true,
   slug,
@@ -29,13 +28,14 @@ function MangroveNetChange({
   currentLocation,
   drawingValue,
   drawingMode,
+  customGeojsonFeatures,
   ...props
 }) {
   const [restart, setRestart] = useState(null);
   const { startYear: startYearUi, endYear: endYearUi, unit: unitUi } = ui;
   const years = metadata?.year.sort() || [];
   const startYear = useMemo(
-    () => startYearUi && years.includes(startYearUi) ? startYearUi : years[0],
+    () => (startYearUi && years.includes(startYearUi) ? startYearUi : years[0]),
     [startYearUi, years]
   );
   const endYear = useMemo(
@@ -44,22 +44,23 @@ function MangroveNetChange({
   );
 
   const unit = useMemo(() => unitUi || unitOptions[0].value, [unitUi]);
+  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
-    if (drawingValue) {
-      fetchMangroveNetChangeData({
-        drawingValue,
-        slug: ["mangrove_net_change"],
-        location_id: "custom-area",
-      });
-    } else {
-      fetchMangroveNetChangeData({
-        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-          location_id: currentLocation.id,
-        }),
-      });
-    }
-  }, [fetchMangroveNetChangeData, currentLocation, drawingValue]);
+    fetchMangroveNetChangeData(
+      currentLocation?.id === "custom-area" || drawingMode
+        ? {
+            drawingValue,
+            slug: ["mangrove_net_change"],
+            location_id: "custom-area",
+          }
+        : {
+            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.id,
+            }),
+          }
+    );
+  }, [fetchMangroveNetChangeData, currentLocation, drawingValue, drawingMode]);
 
   const filteredYears = useMemo(
     () =>
@@ -164,10 +165,10 @@ function MangroveNetChange({
   };
 
   const location = useMemo(() => {
-    if (drawingValue) return "the area selected"
-    if (currentLocation.location_type === "worldwide") return "the world"
-    else return currentLocation?.name
-  }, [drawingValue, currentLocation]);
+    if (customArea) return "the area selected";
+    if (currentLocation.location_type === "worldwide") return "the world";
+    else return currentLocation?.name;
+  }, [currentLocation, customArea]);
 
   const direction = change > 0 ? "increased" : "decreased";
 
@@ -220,12 +221,13 @@ function MangroveNetChange({
       options={startYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) > parseInt(endYear, 10) ||
-        option.value === startYear || endYear === option.value
+        option.value === startYear ||
+        endYear === option.value
       }
       onChange={(v) => changeYear("startYear", v)}
     />
   );
-  
+
   const endSelector = (
     <Select
       className="notranslate"
@@ -234,7 +236,8 @@ function MangroveNetChange({
       options={endYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) < parseInt(startYear, 10) ||
-        option.value === endYear || startYear === option.value
+        option.value === endYear ||
+        startYear === option.value
       }
       onChange={(v) => changeYear("endYear", v)}
     />
@@ -278,7 +281,7 @@ function MangroveNetChange({
       chartData={chartRData}
       chart={!loadingAnalysis}
       {...props}
-      >
+    >
       {drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_net_change"
@@ -289,13 +292,13 @@ function MangroveNetChange({
           setRestart={setRestart}
         />
       )}
-      </ChartWidget>
+    </ChartWidget>
   );
 }
 
 MangroveNetChange.propTypes = {
   name: PropTypes.string,
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
   slug: PropTypes.string,
   filename: PropTypes.string,
   currentLocation: PropTypes.shape({}),

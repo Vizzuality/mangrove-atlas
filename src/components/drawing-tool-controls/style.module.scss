@@ -52,6 +52,10 @@
         }
       }
 
+      > .icon {
+        stroke-width: 5px;
+      }
+
       .menuItemTitle {
         @include menu-item-title;
       }

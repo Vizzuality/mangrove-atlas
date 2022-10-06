@@ -12,7 +12,8 @@ const mapStateToProps = state => ({
   isCollapsed: state.widgets.isCollapsed,
   widgetsLength: dashboardWidgets(state).length,
   drawingMode: state.drawingTool.drawingMode,
-  drawingValue: state.drawingTool.drawingValue
+  drawingValue: state.drawingTool.drawingValue,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 
 const mapDispatchToProps = {

@@ -27,6 +27,7 @@ const widgetsData = (state) => [
   },
 ];
 const drawingMode = (state) => state.drawingTool.drawingMode;
+const drawingValue = (state) => state.drawingTool.drawingValue;
 
 export const dashboardWidgets = createSelector(
   [widgets, currentDashboard, currentLocation, widgetsData, drawingMode],
@@ -37,23 +38,23 @@ export const dashboardWidgets = createSelector(
     _widgetsData,
     _drawingMode
   ) => {
-    if (!_currentLocation) return [];
-    const { location_type } = _currentLocation;
+    const location_type = _currentLocation?.location_type;
 
     return _drawingMode
       ? _widgets.filter(
-          ({ slug }) =>
+          ({ locationType, slug }) =>
             slug === "mangrove_extent" ||
             slug === "mangrove_net_change" ||
-            slug === "mangrove_blue_carbon" ||
-            slug === "mangrove_alerts" ||
+            slug === "mangrove_biomass" ||
             slug === "mangrove_height" ||
-            slug === "mangrove_biomass"
+            slug === "mangrove_blue_carbon" ||
+            (slug === "mangrove_alerts" && locationType.includes(location_type))
         )
       : _widgets.filter(
           ({ categoryIds, locationType }) =>
             categoryIds.includes(_currentDashboard) &&
-            locationType.includes(location_type)
+            (locationType.includes(location_type) ||
+              locationType.includes("worlwide"))
         );
   }
 );
@@ -72,6 +73,11 @@ export const getWidgetsWithData = createSelector(
         }
       }, [])
     )
+);
+
+export const isActiveCustomArea = createSelector(
+  [drawingValue],
+  (_drawingValue) => !!_drawingValue.length
 );
 
 export const activeWidgets = createSelector([widgets], (_widgets) =>

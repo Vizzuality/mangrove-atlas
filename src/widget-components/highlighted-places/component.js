@@ -47,7 +47,7 @@ const HighlightedPlaces = ({
               (
                 <Link
                   key={d.id}
-                  to={{ type: "PAGE/AOI", payload: { id: d.location_id } }}
+                  to={{ type: "PAGE/WDPA", payload: { id: d.location_id } }}
                 >
                   {d.id !== currentLocation.id && (
                     <div
@@ -70,7 +70,7 @@ const HighlightedPlaces = ({
                 </Link>
               )
           )}
-          {currentLocation.location_type === "aoi" && (
+          {currentLocation.location_type === "wdpa" && (
             <Link to={{ type: "PAGE/APP" }}>
               <div
                 key={currentLocation.id}

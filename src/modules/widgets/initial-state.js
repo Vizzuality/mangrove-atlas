@@ -41,10 +41,6 @@ export default {
       year: null,
       unit: null,
     },
-    species: {
-      year: null,
-      unit: null,
-    },
     emissions_mitigation: {
       year: null,
       unit: null,

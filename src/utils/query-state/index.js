@@ -1,10 +1,18 @@
-import { takeEvery, takeLatest, all, fork, put, select, throttle } from 'redux-saga/effects';
-import get from 'lodash/get';
-import { redirect } from 'redux-first-router';
+import {
+  takeEvery,
+  takeLatest,
+  all,
+  fork,
+  put,
+  select,
+  throttle,
+} from "redux-saga/effects";
+import get from "lodash/get";
+import { redirect } from "redux-first-router";
 
-import { setViewport } from 'modules/map/actions';
-import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
-import { ACTIONS } from './constants';
+import { setViewport } from "modules/map/actions";
+import { decodeUrlForState, encodeStateForUrl } from "./stateToUrl";
+import { ACTIONS } from "./constants";
 
 class QueryStateManager {
   /**
@@ -36,13 +44,13 @@ class QueryStateManager {
     // We make it an arrow function to have registry state available
     const { kind } = action.meta.location;
 
-    if (kind && kind === 'load') {
+    if (kind && kind === "load") {
       dispatch(ACTIONS.RESTORE_STATE());
     } else {
       // We assume it is put, so far it have worked
       dispatch(ACTIONS.STORE_STATE());
     }
-  }
+  };
 
   /**
    * Add a namespace to the registry for act upon changes.
@@ -50,7 +58,7 @@ class QueryStateManager {
    */
   add(namespace) {
     const { name } = namespace;
-    const actions = get(namespace, 'encode.after', null);
+    const actions = get(namespace, "encode.after", null);
 
     if (!actions || actions.length < 1) {
       // todo: Throw no-encoding-actions error
@@ -68,24 +76,46 @@ class QueryStateManager {
   /**
    * This is for redux-sagas... using thunks should work pretty similar though.
    */
-  * sagas() {
+  *sagas() {
     const rules = Array.from(this.triggers.entries());
-
     const encodeRules = rules.map(([action, name]) => {
       const encodeRule = function* encodeRule() {
         const actionListener = function* actionListener() {
           const namespace = this.registry.get(name);
           const state = yield select();
           const { router } = state;
-
-          yield put(redirect({ type: router.type,
-            payload: {
-              ...router.payload,
-              query: {
-                ...router.query,
-                [name]: namespace.encode.selector(state)
-              }
-            } }));
+          if (
+            state.locations.current &&
+            state.locations.current?.id === "custom-area"
+          ) {
+            yield put(
+              redirect({
+                type: "PAGE/CUSTOM",
+                payload: {
+                  ...router.payload,
+                  id: "custom-area",
+                  iso: "custom-area",
+                  query: {
+                    ...router.query,
+                    [name]: namespace.encode.selector(state),
+                  },
+                },
+              })
+            );
+          } else {
+            yield put(
+              redirect({
+                type: router.type,
+                payload: {
+                  ...router.payload,
+                  query: {
+                    ...router.query,
+                    [name]: namespace.encode.selector(state),
+                  },
+                },
+              })
+            );
+          }
         };
 
         if (action === setViewport().type) {
@@ -111,7 +141,7 @@ class QueryStateManager {
           return null;
         });
 
-        yield all(triggers.filter(trigger => Boolean(trigger)));
+        yield all(triggers.filter((trigger) => Boolean(trigger)));
       }
 
       yield takeEvery(ACTIONS.RESTORE_STATE().type, sub.bind(this));
@@ -124,7 +154,4 @@ class QueryStateManager {
 const queryState = new QueryStateManager();
 
 export default queryState;
-export {
-  QueryStateManager,
-  queryState
-};
+export { QueryStateManager, queryState };

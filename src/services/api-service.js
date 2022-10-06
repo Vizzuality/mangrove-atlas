@@ -15,19 +15,6 @@ class APIService {
       return data;
     });
 
-  fetchMangroveData = (params = {}) => {
-    const { id, iso } = params;
-    const locationParam = id || iso || "worldwide";
-
-    return this.client
-      .get(`/v2/locations/${locationParam}/mangrove_data`)
-      .then((response) => {
-        const { status, statusText, data } = response;
-        if (status >= 400) throw new Error(statusText);
-        return data;
-      });
-  };
-
   fetchMangroveHabitatExtentData = (params = {}) =>
     this.client
       .get("/v2/widgets/habitat_extent", { params: { ...params } })

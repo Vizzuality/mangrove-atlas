@@ -14,7 +14,6 @@ const WidgetList = ({
   mobile,
   category,
   dataByWidget,
-  drawingValue,
   drawingMode,
   ...parentProps
 }) => {
@@ -25,10 +24,9 @@ const WidgetList = ({
   const widgetsFiltered = useMemo(
     () =>
       widgets.filter(
-        ({ categoryIds, slug }) =>
-          categoryIds.includes(category) && dataByWidget.includes(slug)
+        ({ slug }) => dataByWidget.includes(slug) 
       ),
-    [category, widgets, dataByWidget]
+    [widgets, dataByWidget]
   );
 
   return (

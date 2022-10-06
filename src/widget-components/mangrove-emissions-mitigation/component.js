@@ -82,14 +82,17 @@ function MangroveEmissionsMitigation({
 }
 
 MangroveEmissionsMitigation.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
   isCollapsed: PropTypes.bool,
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
+  ui: PropTypes.shape({
+    year: PropTypes.number,
+    unit: PropTypes.string,
+  }),
   setUi: PropTypes.func,
 };
 

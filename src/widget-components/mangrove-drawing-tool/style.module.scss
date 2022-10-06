@@ -34,6 +34,18 @@
       font-weight: 600;
     }
 
+    &:hover {
+      color: $primary;
+      background: rgba(0, 133, 127, 0.05);
+      border: 2px solid rgba(0, 133, 127, 0.4);
+      border-radius: 15px;
+
+      svg {
+        stroke: $primary;
+        fill: $primary;
+      }
+    }
+
     &._dashed {
       background: linear-gradient(
           0deg,
@@ -50,16 +62,6 @@
       }
     }
 
-    &._active {
-      background-color: $primary;
-      color: white;
-      border: none;
-
-      svg {
-        stroke: white;
-      }
-    }
-
     &:hover {
       box-sizing: border-box;
       color: $primary;
@@ -72,22 +74,21 @@
       }
     }
     
+    &._active {
+      background-color: $primary;
+      color: white;
+      border: none;
+
+      svg {
+        stroke: white;
+      }
+    }
+
+    
     svg {
       margin-right: 26px;
       stroke: $primary;
       fill: $primary;
-    }
-
-    &:hover {
-      color: $primary;
-      background: rgba(0, 133, 127, 0.05);
-      border: 2px solid rgba(0, 133, 127, 0.4);
-      border-radius: 15px;
-
-      svg {
-        stroke: $primary;
-        fill: $primary;
-      }
     }
 
     &.fileWrapper {
