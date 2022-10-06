@@ -1,0 +1,21 @@
+.chart {
+  width: 100%;
+  height: 250px;
+  position: relative;
+}
+
+.chart text {
+  fill: rgba(0, 0, 0, 0.54);
+  font-size: 12px;
+  line-height: 20px;
+  text-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  text-transform: none;
+}
+
+@media print {
+  .chart :global(.recharts-wrapper),
+  .chart :global(.recharts-surface) {
+    width: calc(100%) !important;
+  }
+}
+/*# sourceMappingURL=style.module.css.map */

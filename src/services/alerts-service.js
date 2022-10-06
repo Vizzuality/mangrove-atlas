@@ -23,13 +23,13 @@ class AlertsService {
         return data;
       });
 
-  fetchMangroveCustomAreaAnalysisData = ({ geojson }) => {
+  fetchMangroveCustomAreaAnalysisData = ({ geojson, data }) => {
     const controller = new AbortController();
     return this.client
       .request({
         method: "post",
         url: "/fetch-alerts",
-        data: {
+        data: !!data ? data : {
           geometry: {
             type: "FeatureCollection",
             features: geojson,

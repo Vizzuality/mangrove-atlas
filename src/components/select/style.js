@@ -85,10 +85,11 @@ export const styles = {
     textAlign: 'center',
     opacity: state.isDisabled && !state.isSelected ? 0.4 : 1,
     color: state.isSelected ? '#00857F' : provided.color,
+    cursor: state.isDisabled ? 'default !important' : 'pointer',
     backgroundColor: 'none',
     '&:hover': {
       color: '#00857F',
-      cursor: state.isSelected ? 'default' : 'pointer'
+      cursor: (state.isSelected && !state.isDisabled) ? 'default' : 'pointer'
     },
     '&:active': {
       backgroundColor: 'transparent'
@@ -101,7 +102,6 @@ export const styles = {
     transform: 'none',
     maxWidth: '100%',
     margin: 0,
-    cursor: 'pointer',
     marginBottom: -4
   }),
   valueContainer: provided => ({
@@ -119,7 +119,6 @@ export const styles = {
     bottom: '-7px',
     left: '50%',
     transform: 'translate(-50%, 50%)',
-    cursor: 'pointer',
   }),
   menuList: provided => ({
     ...provided,

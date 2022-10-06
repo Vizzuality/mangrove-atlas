@@ -42,19 +42,19 @@ function MangroveExtent({
   );
 
   useEffect(() => {
-    if (!drawingValue) {
-      fetchMangroveHabitatExtentData({
-        ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
-          location_id: currentLocation.id,
-        }),
-      });
-    } else {
-      fetchMangroveHabitatExtentData({
-        drawingValue,
-        slug: ["mangrove_extent"],
-        location_id: "custom-area",
-      });
-    }
+    fetchMangroveHabitatExtentData(
+      !currentLocation.id === 'custom-area'
+        ? {
+            ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.id,
+            }),
+          }
+        : {
+            drawingValue,
+            slug: ["mangrove_extent"],
+            location_id: "custom-area",
+          }
+    );
   }, [fetchMangroveHabitatExtentData, currentLocation, drawingValue]);
 
   useEffect(() => {
@@ -68,11 +68,11 @@ function MangroveExtent({
       });
     }
     if (!isLoading) {
-      setUi({ id: "extent", value: { year, unit: currentUnit } });
+      setTimeout(() => {
+        setUi({ id: "extent", value: { year, unit: currentUnit } });
+      }, 0)
     }
-  }, [addFilter, year, currentUnit, 
-    //ui, 
-    metadata, isLoading, setUi]);
+  }, [addFilter, year, currentUnit, metadata, isLoading, setUi]);
 
   const changeYear = useCallback(
     (current) => {
@@ -106,7 +106,7 @@ function MangroveExtent({
     [isLoading, drawingMode, restart]
   );
 
-  if (!data || !data.length || !year) {
+  if (!data || !data.length) {
     return null;
   }
 

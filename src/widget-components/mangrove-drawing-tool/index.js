@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 
 import { expandAll } from 'modules/widgets/actions';
-import { setCurrent, setDrawingValue } from 'modules/drawing-tool/actions';
+import { fetchMangroveHabitatExtentData } from 'modules/mangrove-habitat-extent-data/actions';
+import { setCurrent, setDrawingValue, setDrawingMode, setDrawingStatus } from 'modules/drawing-tool/actions';
+import { setCurrent as setCurrentLocation } from "modules/locations/actions";
 
 import Component from './component';
 
@@ -13,8 +15,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setCurrent,
+  setCurrentLocation,
   setDrawingValue,
-  expandAll
+  setDrawingMode,
+  setDrawingStatus,
+  expandAll,
+  fetchMangroveHabitatExtentData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
