@@ -95,7 +95,7 @@ const mapStateToProps = (state) => ({
   category: state.dashboards.current,
   dataByWidget: getWidgetsWithData(state),
   drawingValue: state.drawingTool.drawingValue,
-  drawingMode: state.drawingTool.drawingMode
+  drawingMode: state.drawingTool.drawingMode,
 });
 
 const mapDispatchToProps = {

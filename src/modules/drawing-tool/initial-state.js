@@ -3,4 +3,5 @@ export default {
   drawingMode: false,
   drawingValue: null,
   drawingStatus: null,
+  customGeojsonFeatures: null
 };

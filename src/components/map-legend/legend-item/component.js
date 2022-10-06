@@ -13,11 +13,14 @@ const LegendItem = ({
   setDrawingValue,
   isCollapsed,
   mapView,
+  setCustomGeojsonFeatures
 }) => {
   const isCustomLayer = id === 'custom-layer';
+
   const onClickHandler = useCallback(() => {
     if (isCustomLayer) {
       setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
     } else {
       toggleActive({ id, isActive: false });
       toggleWidgetActive({ layerId: id, isActive: false });

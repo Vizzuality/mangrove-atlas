@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { setCurrent, setDrawingValue, setDrawingStatus } from 'modules/drawing-tool/actions';
+import { setCurrent, setDrawingValue, setDrawingStatus, setCustomGeojsonFeatures } from 'modules/drawing-tool/actions';
 
 import Component from './component';
 
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   setCurrent,
   setDrawingValue,
-  setDrawingStatus
+  setDrawingStatus,
+  setCustomGeojsonFeatures
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

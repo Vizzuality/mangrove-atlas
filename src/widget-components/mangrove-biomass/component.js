@@ -27,6 +27,7 @@ function MangroveBiomass({
   setUi,
   drawingValue,
   drawingMode,
+  customGeojsonFeatures,
   fetchMangroveBiomassData,
   ...props
 }) {
@@ -39,21 +40,23 @@ function MangroveBiomass({
       metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value,
     [metadata, year]
   );
+  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
-    if (drawingValue) {
-      fetchMangroveBiomassData({
-        drawingValue,
-        slug: ["mangrove_biomass"],
-        location_id: "custom-area",
-      });
-    } else
-      fetchMangroveBiomassData({
-        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-          location_id: currentLocation.id,
-        }),
-      });
-  }, [currentLocation, fetchMangroveBiomassData, drawingValue]);
+    fetchMangroveBiomassData(
+      currentLocation?.id === "custom-area" || drawingMode
+        ? {
+            drawingValue,
+            slug: ["mangrove_biomass"],
+            location_id: "custom-area",
+          }
+        : {
+            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.id,
+            }),
+          }
+    );
+  }, [currentLocation, fetchMangroveBiomassData, drawingValue, drawingMode]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -82,17 +85,17 @@ function MangroveBiomass({
   );
 
   const location = useMemo(() => {
-    if (drawingValue) return "the area selected";
+    if (customArea) return "the area selected";
     if (currentLocation.location_type === "worldwide") return "the world";
     else
       return <span className="notranslate">{`${currentLocation?.name}`}</span>;
-  }, [currentLocation.location_type, currentLocation.name, drawingValue]);
+  }, [currentLocation.location_type, currentLocation.name, customArea]);
 
   const loadingAnalysis = useMemo(
     () => (isLoading && drawingMode) || restart,
     [isLoading, drawingMode, restart]
   );
-  
+
   if (!filteredData) return null;
 
   const { chartData, chartConfig, downloadData } = config.parse(
@@ -179,7 +182,7 @@ function MangroveBiomass({
 }
 
 MangroveBiomass.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
   isLoading: PropTypes.bool,
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -187,7 +190,10 @@ MangroveBiomass.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
+  ui: PropTypes.shape({
+    year: PropTypes.number,
+    unit: PropTypes.string,
+  }),
   setUi: PropTypes.func,
 };
 

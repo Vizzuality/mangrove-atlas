@@ -1,5 +1,6 @@
 import { flatten } from "lodash";
 import alerts from "./templates/alerts.json";
+import customArea from "./templates/custom.json";
 import { extentLayersStyles, extentLayers } from "./templates/extent";
 import restoration from "./templates/restoration.json";
 
@@ -48,7 +49,19 @@ const geojsons = [
     },
     layers: alerts,
   },
+  {
+    id: "custom-area",
+    source: {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: {},
+      }
+    },
+    layers: customArea,
+  },
 ];
+
 const vectors = [
   {
     id: "restoration",

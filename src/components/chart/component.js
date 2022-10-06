@@ -131,8 +131,7 @@ class Chart extends PureComponent {
         <ResponsiveContainer width="100%" height={tree ? 0 : height}>
           <RechartChart
             stackOffset={stackOffset}
-            height={height || "100%"}
-            width={"100%"}
+            height={height}
             viewBox={viewBox}
             data={data}
             layout={layout}

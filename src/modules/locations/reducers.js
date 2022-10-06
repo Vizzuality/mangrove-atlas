@@ -1,6 +1,6 @@
 import {
   fetchRequested, fetchSucceeded, fetchFailed,
-  setCurrent, setCurrentId, openSearchPanel, closeSearchPanel
+  setCurrent, openSearchPanel, closeSearchPanel
 } from './actions';
 
 export default {
@@ -23,10 +23,6 @@ export default {
   [setCurrent]: (state, { payload }) => ({
     ...state,
     current: payload
-  }),
-  [setCurrentId]: (state, { payload }) => ({
-    ...state,
-    currentId: payload
   }),
   [openSearchPanel]: state => ({ ...state, isOpened: true }),
   [closeSearchPanel]: state => ({ ...state, isOpened: false }),

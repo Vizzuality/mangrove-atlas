@@ -4,12 +4,13 @@ import { Editor, EditingMode, DrawPolygonMode } from "react-map-gl-draw";
 
 import { featureStyle, editHandleStyle } from "./styles";
 
-export const DrawingTool = ({
+export const DrawingEditor = ({
   setCurrent,
   current,
   setDrawingValue,
   drawingValue,
   setDrawingStatus,
+  setCustomGeojsonFeatures,
 }) => {
   const editorRef = useRef(null);
 
@@ -19,28 +20,31 @@ export const DrawingTool = ({
       return new DrawPolygonMode();
     }
     
-    return null;
+    return new EditingMode();
   }, [current]);
 
   useEffect(() => {
     const EDITOR = editorRef?.current;
 
     if (!current && !!EDITOR) {
-      // EDITOR.deleteFeatures(drawingValue);
+      EDITOR.deleteFeatures(drawingValue);
       setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
     }
-  }, [current, drawingValue]); // eslint-disable-line
+  }, [current, drawingValue, setDrawingValue, setCustomGeojsonFeatures]); 
 
-  // useEffect(() => {
-  //   const EDITOR = editorRef?.current;
+  useEffect(() => {
+    const EDITOR = editorRef?.current;
 
-  //   if (!uploading && !!EDITOR) {
-  //     EDITOR.deleteFeatures(uploadingValue);
-  //     dispatch(setUploadingValue(null));
-  //   }
-  // }, [uploading, uploadingValue]); // eslint-disable-line
+    return () => {
+      if (EDITOR) {
+        EDITOR.deleteFeatures(drawingValue);
+        setDrawingValue(null);
+        setCustomGeojsonFeatures(null);
+      }
+    };
+  }, []); // eslint-disable-line
 
-  // Delete feature as soon as you unmount this component
   useEffect(() => {
     const EDITOR = editorRef?.current;
     return () => {
@@ -48,7 +52,7 @@ export const DrawingTool = ({
         EDITOR.deleteFeatures(drawingValue);
       }
     };
-  }, [editorRef?.current, setDrawingValue, drawingValue]); // eslint-disable-line
+  }, [editorRef?.current, setDrawingValue, drawingValue]);
 
   return (
     <Editor
@@ -65,7 +69,6 @@ export const DrawingTool = ({
         const EDITION_TYPES = ["addFeature"];
         const UPDATE_TYPES = ["addFeature", "addPosition", "movePosition"];
         const dataToStorage = data;
-
         if (editType === "addTentativePosition" && !drawingValue) {
           // set the state to process when user starts drawing
 
@@ -86,4 +89,4 @@ export const DrawingTool = ({
   );
 };
 
-export default DrawingTool;
+export default DrawingEditor;

@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import Link from "redux-first-router-link";
+
 import cx from "classnames";
 
 import Icon from "components/icon";
@@ -18,29 +19,35 @@ const DrawingToolControls = ({
   locationType,
   mobile,
   openModal,
+  setCustomGeojsonFeatures,
+  customGeojsonFeatures
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
 
-  const handleDrawing = useCallback(
+  const handleDrawing = 
     (value) => {
-      if (!!drawingValue && modalStatus === null) {
+      if ((!!drawingValue || !!customGeojsonFeatures) && modalStatus === null) {
         toggleModalAlert(true);
       }
       setDrawingMode(value);
       if (modalStatus) {
         setDrawingValue(null);
+        setCustomGeojsonFeatures(null);
       }
-    },
-    [setDrawingMode, drawingValue, modalStatus, setDrawingValue]
-  );
+      
+    }
+
+  ;
 
   const handleReset = useCallback(() => {
-    toggleModalAlert(isOpenModalAlert);
     setDrawingValue(null);
-  }, [setDrawingValue, isOpenModalAlert]);
+    setCustomGeojsonFeatures(null);
+    toggleModalAlert(!isOpenModalAlert);
+
+  }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert]);
 
   const handleCancel = useCallback(
     () => toggleModalAlert(false),
@@ -56,7 +63,7 @@ const DrawingToolControls = ({
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
       {mobile ? (
         <button className={styles.btn}>
-          <Icon name="ecosystem_services" className={styles.icon} />
+          <Icon name="ecosystem_services" />
           <span className={styles.menuItemTitle}>Place</span>
         </button>
       ) : (
@@ -72,13 +79,12 @@ const DrawingToolControls = ({
             >
               <Icon
                 name="globe"
-                className={styles.icon}
                 size="md"
                 alt="worldwide location"
               />
             </Link>
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
-              <SearchLocation className={styles._active} />
+              <SearchLocation className={styles._active} handleDrawing={handleDrawing} isOpenModalAlert={isOpenModalAlert} />
             </div>
             <button
               type="button"
@@ -88,7 +94,7 @@ const DrawingToolControls = ({
               })}
             >
               <Icon
-                name="upload"
+                name="polyline"
                 className={styles.icon}
                 size="md"
                 alt="create custom area"
@@ -107,7 +113,7 @@ const DrawingToolControls = ({
               you want to reset the page?
             </p>
             <div className={styles.modalCheckbox}>
-              <label for="modal">Don’t ask me again.</label>
+              <label htmlFor="modal">Don’t ask me again.</label>
               <input
                 type="checkbox"
                 name="modal"

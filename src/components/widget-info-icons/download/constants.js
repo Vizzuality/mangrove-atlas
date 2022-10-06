@@ -15,49 +15,67 @@ export const INFO = {
     {
       id: 9,
       title: 'GMW Mangrove Extent 1996 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw1996v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_1996_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 10,
       title: 'GMW Mangrove Extent 2007 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2007v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2007_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 11,
       title: 'GMW Mangrove Extent 2008 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2008v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2008_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 12,
       title: 'GMW Mangrove Extent 2009 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2009v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2009_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 13,
       title: 'GMW Mangrove Extent 2010 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2010v2_0.tif',
-      description: 'Raster depicting areas of mangrove gain and loss'
-    },
-    {
-      id: 14,
-      title: 'GMW Mangrove Extent 2011 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2011v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2010_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 15,
       title: 'GMW Mangrove Extent 2015 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2015v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2015_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
     {
       id: 16,
       title: 'GMW Mangrove Extent 2016 v2',
-      href: 'https://storage.googleapis.com/mangrove_atlas/land-cover/gmw2016v2_0.tif',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2016_gtiff.zip',
+      description: 'Raster depicting areas of mangrove gain and loss'
+    },
+    {
+      id: 23,
+      title: 'GMW Mangrove Extent 2017 v2',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2017_gtiff.zip',
+      description: 'Raster depicting areas of mangrove gain and loss'
+    },
+    {
+      id: 24,
+      title: 'GMW Mangrove Extent 2018 v2',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2018_gtiff.zip',
+      description: 'Raster depicting areas of mangrove gain and loss'
+    },
+    {
+      id: 25,
+      title: 'GMW Mangrove Extent 2019 v2',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2019_gtiff.zip',
+      description: 'Raster depicting areas of mangrove gain and loss'
+    },
+    {
+      id: 26,
+      title: 'GMW Mangrove Extent 2020 v2',
+      href: 'https://storage.googleapis.com/mangrove_atlas/GMW%20v3.14%20geotiffs/gmw_v3_2020_gtiff.zip',
       description: 'Raster depicting areas of mangrove gain and loss'
     },
   ],

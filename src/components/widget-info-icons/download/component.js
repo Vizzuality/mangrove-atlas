@@ -37,6 +37,7 @@ const Download = ({ slug }) => {
         isOpen={isOpen}
         onRequestClose={handleModal}
         closeButton
+        maxHeight
       >
         <div className={styles.modalContent}>
           <h2>Download Data</h2>

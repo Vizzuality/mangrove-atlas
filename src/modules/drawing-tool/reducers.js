@@ -3,6 +3,7 @@ import {
   setDrawingValue,
   setDrawingMode,
   setDrawingStatus,
+  setCustomGeojsonFeatures
 } from "./actions";
 
 export default {
@@ -13,6 +14,10 @@ export default {
   [setDrawingValue]: (state, { payload }) => ({
     ...state,
     drawingValue: payload,
+  }),
+  [setCustomGeojsonFeatures]: (state, { payload }) => ({
+    ...state,
+    customGeojsonFeatures: payload,
   }),
   [setDrawingMode]: (state, { payload }) => ({
     ...state,

@@ -11,7 +11,6 @@ import widgets from 'modules/widgets/sagas';
 import locations from 'modules/locations/sagas';
 import dashboards from 'modules/dashboards/sagas';
 import languages from 'modules/languages/sagas';
-import mangroveData from 'modules/mangrove-data/sagas';
 import mangroveSpeciesData from 'modules/mangrove-species-data/sagas';
 import mangroveBiomassData from 'modules/mangrove-biomass-data/sagas';
 import mangroveHeightData from 'modules/mangrove-height-data/sagas';
@@ -41,7 +40,6 @@ export default function* root() {
     fork(locations),
     fork(dashboards),
     fork(languages),
-    fork(mangroveData),
     fork(mangroveSpeciesData),
     fork(mangroveBiomassData),
     fork(mangroveHeightData),

@@ -7,8 +7,8 @@ import countriesDictionary from './constants';
 function* flyToCurrentLocation() {
   const state = yield select();
   const location = currentLocation(state);
+  const drawingValue = state.drawingTool.drawingValue;
   const { mapView } = state.app.mobile;
-
   if (location) {
     if (location.location_type === 'worldwide') {
       if (!state.map.isViewportFixed) {
@@ -42,6 +42,7 @@ export function* restoreMapState() {
   const basemapSelector = state => (state.router.query
     && state.router.query.map
     && state.router.query.map.basemap) || null;
+
   const viewportSelector = state => (state.router.query
     && state.router.query.map
     && state.router.query.map.viewport) || null;
@@ -61,6 +62,6 @@ export function* restoreMapState() {
 export default function* pages() {
   yield takeLatest('LOCATIONS/FETCH_SUCCEDED', flyToCurrentLocation);
   yield takeLatest('LOCATIONS/SET_CURRENT', flyToCurrentLocation);
-  yield takeLatest('LOCATIONS/SET_CURRENT_ID', flyToCurrentLocation);
+  yield takeLatest('DRAWING_TOOL/SET_DRAWING_VALUE', flyToCurrentLocation);
   yield takeLatest('APP/MOBILE', flyToCurrentLocation);
 }

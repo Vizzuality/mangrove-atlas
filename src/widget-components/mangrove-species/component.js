@@ -12,8 +12,6 @@ function MangroveSpecies({
   slug,
   name,
   addFilter,
-  ui,
-  setUi,
   fetchMangroveSpeciesData,
   ...props
 }) {
@@ -85,8 +83,6 @@ MangroveSpecies.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
-  setUi: PropTypes.func,
 };
 
 MangroveSpecies.defaultProps = {
@@ -97,8 +93,6 @@ MangroveSpecies.defaultProps = {
   slug: null,
   name: null,
   metadata: null,
-  ui: null,
-  setUi: () => {},
 };
 
 export default MangroveSpecies;

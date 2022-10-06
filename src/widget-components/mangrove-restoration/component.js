@@ -126,7 +126,6 @@ function MangroveRestoration({
     currentId,
     isLoadingDegradationAndLossData,
     isLoadingRestorationData,
-    setUi
   ]);
 
   const locationType = getLocationType(type);
@@ -349,7 +348,10 @@ MangroveRestoration.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
+  ui: PropTypes.shape({
+    year: PropTypes.number,
+    unit: PropTypes.string,
+  }),
   setUi: PropTypes.func,
 };
 

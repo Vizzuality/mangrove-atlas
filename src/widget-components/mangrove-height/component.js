@@ -26,6 +26,7 @@ const MangroveHeight = ({
   setUi,
   drawingValue,
   drawingMode,
+  customGeojsonFeatures,
   fetchMangroveHeightData,
   ...props
 }) => {
@@ -34,22 +35,23 @@ const MangroveHeight = ({
   const heightCoverage = metadata?.avg_height[0]?.value;
   const years = metadata?.year;
   const currentYear = useMemo(() => year || years?.[0], [year, years]);
+  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
-    if (!drawingValue) {
-      fetchMangroveHeightData({
-        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-          location_id: currentLocation.id,
-        }),
-      });
-    } else {
-      fetchMangroveHeightData({
-        drawingValue,
-        slug: ["mangrove_height"],
-        location_id: "custom-area",
-      });
-    }
-  }, [currentLocation, fetchMangroveHeightData, drawingValue]);
+    fetchMangroveHeightData(
+      currentLocation?.id !== "custom-area" || drawingMode
+        ? {
+            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.id,
+            }),
+          }
+        : {
+            drawingValue,
+            slug: ["mangrove_height"],
+            location_id: "custom-area",
+          }
+    );
+  }, [currentLocation, fetchMangroveHeightData, drawingValue, drawingMode]);
 
   useEffect(() => {
     addFilter({
@@ -80,10 +82,10 @@ const MangroveHeight = ({
   );
 
   const location = useMemo(() => {
-    if (drawingValue) return "the area selected";
-    else if (currentLocation.location_type === "worldwide") return "the world";
+    if (customArea) return "the area selected";
+    else if (currentLocation?.location_type === "worldwide") return "the world";
     else return <span className="notranslate">{currentLocation.name}</span>;
-  }, [currentLocation, drawingValue]);
+  }, [currentLocation, customArea]);
 
   const dateOptions = useMemo(
     () =>
@@ -165,7 +167,9 @@ const MangroveHeight = ({
 };
 
 MangroveHeight.propTypes = {
-  data: PropTypes.shape({}),
+  data: PropTypes.arrayOf(
+    PropTypes.shape({})
+  ),
   isLoading: PropTypes.bool,
   metadata: PropTypes.shape({
     avg_height: PropTypes.arrayOf(
@@ -183,7 +187,10 @@ MangroveHeight.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   currentLocation: PropTypes.shape({}),
-  ui: PropTypes.string,
+  ui: PropTypes.shape({
+      year: PropTypes.number,
+      unit: PropTypes.string,
+  }),
   addFilter: PropTypes.func,
   setUi: PropTypes.func,
   fetchMangroveHeightData: PropTypes.func,

@@ -1,30 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
 
 // components
-import Icon from 'components/icon';
+import Icon from "components/icon";
 
-import styles from './style.module.scss';
+import styles from "./style.module.scss";
 
-const SearchLocation = ({
-  mobile,
-  openSearchPanel,
-}) => (
-  <button className={cx(styles.sidebarItem, { [styles.mobile]: mobile })} type="button" onClick={() => openSearchPanel()}>
-    <Icon name="glass" alt="Search" />
-  </button>
-);
+const SearchLocation = ({ mobile, openSearchPanel, handleDrawing }) => {
+  const handleModal = useCallback(() => {
+    if (handleDrawing) {
+      handleDrawing(false)
+    }
+    openSearchPanel();
+  }, [handleDrawing]);
+   
+  return (
+    <button
+      className={cx(styles.sidebarItem, { [styles.mobile]: mobile })}
+      type="button"
+      onClick={handleModal}
+    >
+      <Icon name="glass" alt="Search" />
+    </button>
+  );
+};
 
 SearchLocation.propTypes = {
   mobile: PropTypes.bool,
-  openSearchPanel: PropTypes.func
+  openSearchPanel: PropTypes.func,
+  handleDrawing: PropTypes.func,
+  isOpenModalAlert:  PropTypes.bool,
 };
 
 SearchLocation.defaultProps = {
   mobile: false,
-  openSearchPanel: null
+  openSearchPanel: null,
+  handleDrawing: null,
+  isOpenModalAlert: false,
 };
-
 
 export default SearchLocation;

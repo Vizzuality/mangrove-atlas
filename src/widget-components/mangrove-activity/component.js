@@ -153,7 +153,7 @@ function MangroveActivity({
       options={startYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) > parseInt(endDate, 10) ||
-        option.value === startDate
+        option.value === startDate || option.value === endDate
       }
       onChange={(value) => changeYear("start_year", value)}
     />
@@ -165,7 +165,7 @@ function MangroveActivity({
       options={endYearOptions}
       isOptionDisabled={(option) =>
         parseInt(option.value, 10) < parseInt(startDate, 10) ||
-        option.value === endDate
+        option.value === endDate || option.value === startDate
       }
       onChange={(value) => changeYear("end_year", value)}
     />

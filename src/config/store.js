@@ -13,7 +13,6 @@ import * as locations from 'modules/locations';
 import * as dashboards from 'modules/dashboards';
 import * as languages from 'modules/languages';
 import * as drawingTool from 'modules/drawing-tool';
-import * as mangroveData from 'modules/mangrove-data';
 import * as mangroveNetChangeData from 'modules/mangrove-net-change-data';
 import * as mangroveBlueCarbonData from 'modules/mangrove-blue-carbon-data';
 import * as mangroveHabitatExtentData from 'modules/mangrove-habitat-extent-data';
@@ -45,7 +44,6 @@ const modules = [
   { namespace: 'mapStyles', components: mapStyles },
   { namespace: 'languages', components: languages },
   { namespace: 'drawingTool', components: drawingTool },
-  { namespace: 'mangroveData', components: mangroveData },
   { namespace: 'mangroveNetChangeData', components: mangroveNetChangeData },
   { namespace: 'mangroveActivityData', components: mangroveActivityData },
   { namespace: 'mangroveBlueCarbonData', components: mangroveBlueCarbonData },

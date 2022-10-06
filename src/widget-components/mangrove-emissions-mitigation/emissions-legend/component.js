@@ -27,7 +27,7 @@ const Legend = ({ groups, onClick, filteredIndicators, setFilteredIndicators }) 
 );
 
 Legend.propTypes = {
-  groups: PropTypes.shape({}).isRequired,
+  groups: PropTypes.arrayOf(PropTypes.shape({}).isRequired),
   onClick: PropTypes.func.isRequired,
 };
 

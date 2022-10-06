@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -17,6 +17,7 @@ const Header = ({
   widgetsLength,
   drawingMode,
   drawingValue,
+  customGeojsonFeatures
 }) => {
   const onClickCollapseAll = () => {
     collapseAll();
@@ -29,6 +30,8 @@ const Header = ({
   const clickHandler = () => {
     openSearchPanel();
   };
+
+  const hasCustomArea = useMemo(() => !!drawingValue || !!customGeojsonFeatures, [drawingValue, customGeojsonFeatures]);
 
   return (
     <div className={styles.header}>
@@ -56,7 +59,7 @@ const Header = ({
             Powered by Global Mangrove Watch.
             https://www.globalmangrovewatch.org
           </p>
-          {!!widgetsLength && (!drawingMode && !drawingValue) && (
+          {!!widgetsLength && (!drawingMode && hasCustomArea) && (
             <div className={styles.noPrint}>
               {isCollapsed ? (
                 <Button

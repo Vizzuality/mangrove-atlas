@@ -12,7 +12,9 @@ const mapStateToProps = (state) => ({
   ui: state.widgets.ui.biomass,
   drawingValue: state.drawingTool.drawingValue,
   drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
 });
+
 const mapDispatchToProps = {
   setUi,
   fetchMangroveBiomassData,

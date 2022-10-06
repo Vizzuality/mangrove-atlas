@@ -17,6 +17,7 @@ const MangroveAlerts = ({
   setUi,
   fetchAlerts,
   drawingValue,
+  customGeojsonFeatures,
   drawingMode,
   ...props
 }) => {
@@ -27,24 +28,29 @@ const MangroveAlerts = ({
     startInitialDate: null,
     endInitialDate: null,
   });
-
+  
   useEffect(() => {
-    if (drawingValue) {
-      fetchAlerts({
-        drawingValue,
-        slug: ["mangrove_alerts"],
-        location_id: "custom-area",
-        ...(initialDate.startInitialDate && { start_date: startDate?.value }),
-        ...(initialDate.endInitialDate && { end_date: endDate?.value }),
-      });
-    } else
-      fetchAlerts({
-        ...(initialDate.startInitialDate && { start_date: startDate?.value }),
-        ...(initialDate.endInitialDate && { end_date: endDate?.value }),
-        ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-          location_id: currentLocation.location_id,
-        }),
-      });
+    fetchAlerts(
+      currentLocation?.id === "custom-area" || drawingMode
+        ? {
+            drawingValue,
+            slug: ["mangrove_alerts"],
+            location_id: "custom-area",
+            ...(initialDate.startInitialDate && {
+              start_date: startDate?.value,
+            }),
+            ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+          }
+        : {
+            ...(initialDate.startInitialDate && {
+              start_date: startDate?.value,
+            }),
+            ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+              location_id: currentLocation.location_id,
+            }),
+          }
+    );
 
     if (startDate?.value || endDate?.value) {
       setInitialDate({
@@ -58,6 +64,7 @@ const MangroveAlerts = ({
     initialDate.startInitialDate,
     initialDate.endInitialDate,
     drawingValue,
+    currentLocation
   ]);
 
   const {
@@ -97,7 +104,7 @@ const MangroveAlerts = ({
   ]);
 
   const loadingAnalysis = useMemo(
-    () => (isLoading && drawingMode) || restart,
+    () => (isLoading && (drawingMode || customGeojsonFeatures)) || restart,
     [isLoading, drawingMode, restart]
   );
 
