@@ -70,7 +70,7 @@ const HighlightedPlaces = ({
                 </Link>
               )
           )}
-          {currentLocation.location_type === "aoi" && (
+          {currentLocation.location_type !== "worldwide" && (
             <Link to={{ type: "PAGE/APP" }}>
               <div
                 key={currentLocation.id}
@@ -79,13 +79,10 @@ const HighlightedPlaces = ({
                   backgroundPosition: "center",
                   backgroundSize: "cover",
                 }}
-                className={classnames(styles.card, {
-                  [styles.hidden]:
-                    currentLocation.location_type === "worldwide",
-                })}
+                className={styles.card}
               >
                 <span className={styles.cardInfo}>
-                  <h3 className={classnames("notranslate", styles.title)}>
+                  <h3 className="notranslate">
                     Worlwide
                   </h3>
                 </span>

@@ -37,7 +37,7 @@
       min-height: 200px;
       padding: 20px 30px;
       border-radius: 20px;
-      width: auto;
+      width: 140px;
       color: $white;
       text-align: center;
       line-height: 20px;
@@ -58,15 +58,6 @@
           margin: 0;
           font-weight: bold;
           padding-bottom: 10px;
-
-          &.title {
-            margin-bottom: 30px;
-          }
-        }
-
-        p {
-          font-weight: normal;
-          margin: 5px;
         }
       }
 
