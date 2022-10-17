@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
-import { breakpoints } from 'utils/responsive';
-import { NavigationControl, FullscreenControl } from 'react-map-gl';
-import classnames from 'classnames';
-import pick from 'lodash/pick';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import MediaQuery from "react-responsive";
+import { breakpoints } from "utils/responsive";
+import { NavigationControl, FullscreenControl } from "react-map-gl";
+import classnames from "classnames";
+import pick from "lodash/pick";
 
 // Components
-import MobileLegendControl from 'components/map-legend/mobile';
-import MangroveMap from 'components/map';
-import BasemapSelector from 'components/basemap-selector';
-import Legend from 'components/map-legend';
+import MobileLegendControl from "components/map-legend/mobile";
+import MangroveMap from "components/map";
+import BasemapSelector from "components/basemap-selector";
+import Legend from "components/map-legend";
 
-import { WDPA } from 'modules/locations/constants';
+import { WDPA } from "modules/locations/constants";
 
-import styles from './style.module.scss';
+import styles from "./style.module.scss";
 
 export const MapContainer = ({
   viewport,
@@ -29,23 +29,26 @@ export const MapContainer = ({
   goToCountry,
   goToWDPA,
   currentLocation,
+  drawingValue,
 }) => {
   const onViewportChange = (newViewport) => {
-    setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
+    setViewport(
+      pick(newViewport, ["latitude", "longitude", "zoom", "bearing", "pitch"])
+    );
   };
   const resize = (newViewport) => {
     onViewportChange({
       ...newViewport,
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     });
   };
 
   useEffect(() => {
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
     return function cleanup() {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
     };
     // eslint-disable-next-line
   }, []);
@@ -58,10 +61,17 @@ export const MapContainer = ({
    * https://uber.github.io/react-map-gl/#/Documentation/api-reference/interactive-map?section=interaction-options
    * You can provide a custom getCursor function that will overwrite
    * the one used by default, documentation is on the same page.
-  */
-  const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots', 'restoration'];
-  const currentLayers = mapStyle.layers.map(layer => layer.id);
-  const interactiveLayerIds = requestedInteractiveLayerIds.filter(id => currentLayers.includes(id));
+   */
+  const requestedInteractiveLayerIds = [
+    "selected-eez-land-v2-201410",
+    "selected-wdpa-polygons",
+    "cons-hotspots",
+    "restoration",
+  ];
+  const currentLayers = mapStyle.layers.map((layer) => layer.id);
+  const interactiveLayerIds = requestedInteractiveLayerIds.filter((id) =>
+    currentLayers.includes(id)
+  );
 
   function popupCloseHandler() {
     removePopup();
@@ -69,44 +79,40 @@ export const MapContainer = ({
 
   const clickHandler = ({ event }) => {
     const { features } = event;
-    const country = features?.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
-    const wdpa = features?.find(feat => feat.layer.id === 'selected-wdpa-polygons');
-    const hotspots = features?.find(feat => feat.layer.id === 'cons-hotspots');
+    const country = features?.find(
+      (feat) => feat.layer.id === "selected-eez-land-v2-201410"
+    );
+    const wdpa = features?.find(
+      (feat) => feat.layer.id === "selected-wdpa-polygons"
+    );
 
     // // if (customArea) {
     //  goToCustomArea({ id: 'custom-area', location_type: 'custom-area' });
     // // }
-
-    if (hotspots) {
-      setPopup({
-        type: 'hotspots',
-        coordinates: event.lngLat.slice(),
-        data: hotspots.properties
-      });
-      return;
-    }
-
     popupCloseHandler();
 
     if (wdpa) {
       // todo: this should be done at api level
       // unify AOI ids
       // Use NAME instead of WDPA_PID because there can be different areas with the same name
-      const { properties: { NAME: areaName } } = wdpa;
+      const {
+        properties: { NAME: areaName },
+      } = wdpa;
       const internalIdMap = new Map([
         [WDPA.DELTA_DU_SALOUM.areaName, WDPA.DELTA_DU_SALOUM.location_id],
         [WDPA.RUFIKI_MAFIA_KILWA.areaName, WDPA.RUFIKI_MAFIA_KILWA.location_id],
-        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.location_id]
+        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.location_id],
       ]);
 
       const internalId = internalIdMap.get(areaName);
       if (internalId) {
         goToWDPA({ id: internalId });
       }
-    } 
-    else if (country) {
-      const { properties: { iso: countryId } } = country;
-   
+    } else if (country) {
+      const {
+        properties: { iso: countryId },
+      } = country;
+
       goToCountry({ iso: countryId });
     }
   };
@@ -138,12 +144,13 @@ export const MapContainer = ({
               />
             </MediaQuery>
           </div>
-        )
-        }
+        )}
       </MangroveMap>
 
-      <div className={classnames(styles.legend,
-        { [styles.expanded]: !isCollapse })}
+      <div
+        className={classnames(styles.legend, {
+          [styles.expanded]: !isCollapse,
+        })}
       >
         <MediaQuery maxWidth={breakpoints.sm - 1}>
           <MobileLegendControl />
@@ -167,7 +174,7 @@ MapContainer.propTypes = {
   goToCountry: PropTypes.func,
   goToWDPA: PropTypes.func,
   setPopup: PropTypes.func,
-  removePopup: PropTypes.func
+  removePopup: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
@@ -179,13 +186,13 @@ MapContainer.defaultProps = {
     zoom: 2,
     maxZoom: 16,
     bearing: 0,
-    pitch: 0
+    pitch: 0,
   },
-  setPopup: () => { },
-  removePopup: () => { },
-  setViewport: () => { },
-  goToCountry: () => { },
-  goToWDPA: () => { }
+  setPopup: () => {},
+  removePopup: () => {},
+  setViewport: () => {},
+  goToCountry: () => {},
+  goToWDPA: () => {},
 };
 
 export default MapContainer;

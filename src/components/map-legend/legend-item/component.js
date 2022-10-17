@@ -25,7 +25,7 @@ const LegendItem = ({
       toggleActive({ id, isActive: false });
       toggleWidgetActive({ layerId: id, isActive: false });
     }
-  }, [id, toggleActive, toggleWidgetActive, isCustomLayer, setDrawingValue]);
+  }, [id, toggleActive, toggleWidgetActive, isCustomLayer, setDrawingValue, setCustomGeojsonFeatures]);
 
   return (
     <div

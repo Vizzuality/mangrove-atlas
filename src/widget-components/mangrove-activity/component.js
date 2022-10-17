@@ -230,7 +230,7 @@ function MangroveActivity({
 }
 
 MangroveActivity.propTypes = {
-  data: PropTypes.shape({}).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   fetchRankingData: PropTypes.func.isRequired,
 };
 

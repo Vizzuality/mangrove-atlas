@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
   drawingMode: state.drawingTool.drawingMode,
   openModal: state.locations.isOpened,
   drawingValue: state.drawingTool.drawingValue,
-  router: state.router,
   customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 

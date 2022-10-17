@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -13,7 +13,7 @@ const SearchLocation = ({ mobile, openSearchPanel, handleDrawing }) => {
       handleDrawing(false)
     }
     openSearchPanel();
-  }, [handleDrawing]);
+  }, [handleDrawing, openSearchPanel]);
    
   return (
     <button
