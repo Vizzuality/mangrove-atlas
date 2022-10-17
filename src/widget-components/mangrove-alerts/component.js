@@ -24,12 +24,11 @@ const MangroveAlerts = ({
     startInitialDate: null,
     endInitialDate: null,
   });
-
   useEffect(() => {
     fetchAlerts({
       ...(initialDate.startInitialDate && { start_date: startDate?.value }),
       ...(initialDate.endInitialDate && { end_date: endDate?.value }),
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+      ...(currentLocation?.location_id && {
         location_id: currentLocation.location_id,
       }),
     });
