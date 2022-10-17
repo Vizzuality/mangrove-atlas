@@ -70,7 +70,7 @@ const HighlightedPlaces = ({
                 </Link>
               )
           )}
-          {currentLocation.location_type !== "worldwide" && (
+          {currentLocation.location_type === "wdpa" &&  (
             <Link to={{ type: "PAGE/APP" }}>
               <div
                 key={currentLocation.id}
