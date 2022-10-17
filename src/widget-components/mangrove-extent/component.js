@@ -63,8 +63,8 @@ function MangroveExtent({
   }, [
     fetchMangroveHabitatExtentData,
     currentLocation,
-    drawingValue,
     drawingMode,
+    drawingValue
   ]);
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function MangroveExtent({
     if (currentLocation?.location_type === "worldwide") return "the world";
     else
       return <span className="notranslate">{`${currentLocation?.name}`}</span>;
-  }, [currentLocation, drawingValue, customArea]);
+  }, [currentLocation, customArea]);
 
   const loadingAnalysis = useMemo(
     () => (isLoading && drawingMode) || restart,

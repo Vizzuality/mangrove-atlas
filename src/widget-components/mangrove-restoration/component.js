@@ -114,7 +114,7 @@ function MangroveRestoration({
         value: { year: yearDegradationAndLoss },
       });
     }
-  }, [
+  }, [ // eslint-disable-line
     addFilter,
     unit,
     yearRestoration,
@@ -124,8 +124,6 @@ function MangroveRestoration({
     fetchMangroveDegradationAndLossData,
     fetchMangroveEcosystemServicesData,
     currentId,
-    isLoadingDegradationAndLossData,
-    isLoadingRestorationData,
   ]);
 
   const locationType = getLocationType(type);

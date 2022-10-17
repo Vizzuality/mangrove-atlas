@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -13,7 +13,6 @@ import Icon from "components/icon";
 import analysisService from "services/analysis-service";
 
 import styles from "./style.module.scss";
-
 
 const sentence = (
   <>
@@ -38,101 +37,115 @@ export const MangroveDrawingTool = ({
   fetchMangroveBlueCarbonData,
   fetchAlerts,
   setCustomGeojsonFeatures,
-  customGeojsonFeatures
+  customGeojsonFeatures,
 }) => {
-  const onDropAccepted = useCallback(async (acceptedFiles) => {
-    setCurrent("drawingMode")
-setDrawingMode(true)
-    const file = acceptedFiles[0];
-
-    analysisService.uploadFile(file).then(({ data }) => {
+  const onDropAccepted = useCallback(
+    async (acceptedFiles) => {
+      setCurrent("drawingMode");
       setDrawingMode(true);
-      setCustomGeojsonFeatures(data.features);
-      setCurrentLocation({
-        id: "custom-area",
-        bounds: data.features[0].geometry,
-        iso: "custom-area",
-        location_id: "custom-area",
-        location_type: "custom-area",
-        name: "custom area",
-      });
-      // setCurrent("editing");
-      setDrawingStatus({
-        type: "FeatureCollection",
-        features: "progress",
-      });
-      fetchMangroveHabitatExtentData({
-        drawingValue: data.features,
-        slug: ["mangrove_extent"],
-        location_id: "custom-area",
-      });
-      fetchMangroveNetChangeData({
-        drawingValue: data.features,
-        slug: ["mangrove_net_change"],
-        location_id: "custom-area",
-      });
-      fetchMangroveBiomassData({
-        drawingValue: data.features,
-        slug: ["mangrove_biomass"],
-        location_id: "custom-area",
-      });
-      fetchMangroveHeightData({
-        drawingValue: data.features,
-        slug: ["mangrove_height"],
-        location_id: "custom-area",
-      });
-      fetchMangroveBlueCarbonData({
-        drawingValue: data.features,
-        slug: ["mangrove_blue_carbon"],
-        location_id: "custom-area",
-      });
-      fetchMangroveNetChangeData({
-        drawingValue: data.features,
-        slug: ["mangrove_net_change"],
-        location_id: "custom-area",
-      });
-      fetchMangroveBiomassData({
-        drawingValue: data.features,
-        slug: ["mangrove_biomass"],
-        location_id: "custom-area",
-      });
-      fetchMangroveNetChangeData({
-        drawingValue: data.features,
-        slug: ["mangrove_net_change"],
-        location_id: "custom-area",
-      });
-      fetchMangroveBiomassData({
-        drawingValue: data.features,
-        slug: ["mangrove_biomass"],
-        location_id: "custom-area",
-      });
-      fetchMangroveHeightData({
-        drawingValue: data.features,
-        slug: ["mangrove_height"],
-        location_id: "custom-area",
-      });
-      fetchMangroveBlueCarbonData({
-        drawingValue: data.features,
-        slug: ["mangrove_blue_carbon"],
-        location_id: "custom-area",
-      });
-      fetchAlerts({
-        drawingValue: data.features,
-        slug: ["mangrove_alerts"],
-        location_id: "custom-area",
-      });
-    });
-    return null; //TO DO feedback usuario
-  }, []);
+      const file = acceptedFiles[0];
 
-  const { acceptedFiles, getRootProps, getInputProps, isDragActive } =
-    useDropzone({
-      multiple: false,
-      onDropAccepted,
-      accept: {
-        "multipart/form-data": [".zip", ".gpkg", ".geojson", ".json"],
-      },
-    });
+      analysisService.uploadFile(file).then(({ data }) => {
+        setDrawingMode(true);
+        setCustomGeojsonFeatures(data.features);
+        setCurrentLocation({
+          id: "custom-area",
+          bounds: data.features[0].geometry,
+          iso: "custom-area",
+          location_id: "custom-area",
+          location_type: "custom-area",
+          name: "custom area",
+        });
+        // setCurrent("editing");
+        setDrawingStatus({
+          type: "FeatureCollection",
+          features: "progress",
+        });
+        fetchMangroveHabitatExtentData({
+          drawingValue: data.features,
+          slug: ["mangrove_extent"],
+          location_id: "custom-area",
+        });
+        fetchMangroveNetChangeData({
+          drawingValue: data.features,
+          slug: ["mangrove_net_change"],
+          location_id: "custom-area",
+        });
+        fetchMangroveBiomassData({
+          drawingValue: data.features,
+          slug: ["mangrove_biomass"],
+          location_id: "custom-area",
+        });
+        fetchMangroveHeightData({
+          drawingValue: data.features,
+          slug: ["mangrove_height"],
+          location_id: "custom-area",
+        });
+        fetchMangroveBlueCarbonData({
+          drawingValue: data.features,
+          slug: ["mangrove_blue_carbon"],
+          location_id: "custom-area",
+        });
+        fetchMangroveNetChangeData({
+          drawingValue: data.features,
+          slug: ["mangrove_net_change"],
+          location_id: "custom-area",
+        });
+        fetchMangroveBiomassData({
+          drawingValue: data.features,
+          slug: ["mangrove_biomass"],
+          location_id: "custom-area",
+        });
+        fetchMangroveNetChangeData({
+          drawingValue: data.features,
+          slug: ["mangrove_net_change"],
+          location_id: "custom-area",
+        });
+        fetchMangroveBiomassData({
+          drawingValue: data.features,
+          slug: ["mangrove_biomass"],
+          location_id: "custom-area",
+        });
+        fetchMangroveHeightData({
+          drawingValue: data.features,
+          slug: ["mangrove_height"],
+          location_id: "custom-area",
+        });
+        fetchMangroveBlueCarbonData({
+          drawingValue: data.features,
+          slug: ["mangrove_blue_carbon"],
+          location_id: "custom-area",
+        });
+        fetchAlerts({
+          drawingValue: data.features,
+          slug: ["mangrove_alerts"],
+          location_id: "custom-area",
+        });
+      });
+      return null; //TO DO feedback usuario
+    },
+    [
+      setCurrent,
+      setCurrentLocation,
+      setCustomGeojsonFeatures,
+      setDrawingMode,
+      setDrawingStatus,
+      fetchMangroveHabitatExtentData,
+      fetchMangroveNetChangeData,
+      fetchMangroveHeightData,
+      fetchMangroveBiomassData,
+      fetchMangroveBlueCarbonData,
+      fetchAlerts,
+    ]
+  );
+
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    multiple: false,
+    onDropAccepted,
+    accept: {
+      "multipart/form-data": [".zip", ".gpkg", ".geojson", ".json"],
+    },
+  });
 
   const acceptedFileItems = acceptedFiles.map((file) => (
     <span key={file.path}>
@@ -154,8 +167,12 @@ setDrawingMode(true)
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
-  }, [setDrawingValue, setCurrent]);
+  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures]);
 
+  const noFile = useMemo(
+    () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
+    [acceptedFileItems, customGeojsonFeatures]
+  );
   return drawingValue || customGeojsonFeatures ? (
     <Widgets />
   ) : (
@@ -177,13 +194,13 @@ setDrawingMode(true)
         >
           <Icon name="polyline" size="md" /> {/* primary color */}
           <span className={styles.title}>
-       {current === "drawPolygon"
-         ? "Start drawing on the map"
-         : "Draw area"}
-     </span>
+            {current === "drawPolygon"
+              ? "Start drawing on the map"
+              : "Draw area"}
+          </span>
         </button>
         or
-        {!acceptedFileItems.length ? (
+        {noFile ? (
           <div
             {...getRootProps()}
             className={cx(styles.drawingCard, styles._dashed)}

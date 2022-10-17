@@ -52,7 +52,7 @@ export const DrawingEditor = ({
         EDITOR.deleteFeatures(drawingValue);
       }
     };
-  }, [editorRef?.current, setDrawingValue, drawingValue]);
+  }, [setDrawingValue, drawingValue]); 
 
   return (
     <Editor

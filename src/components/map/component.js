@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+
 import {
   InteractiveMap as ReactMapGL,
   Popup,
@@ -112,7 +113,7 @@ class Map extends Component {
   componentDidUpdate(prevProps) {
     const { viewport: prevViewport, bounds: prevBounds } = prevProps;
     const { viewport, bounds } = this.props;
-    const { viewport: stateViewport } = this.state;
+    const { viewport: stateViewport } = this.state;  
 
     if (!isEqual(viewport, prevViewport)) {
       this.setState({
@@ -220,6 +221,7 @@ class Map extends Component {
       onViewportChange,
       onZoomChange,
       onPopupClose,
+      drawingMode,
       ...mapboxProps
     } = this.props;
 
@@ -242,11 +244,13 @@ class Map extends Component {
           },
         });
       }
-      onClick({
-        event: e,
-        map: this.map,
-        mapContainer: this.mapContainer,
-      });
+      // if (e.target.className === "overlays") {
+        onClick({
+          event: e,
+          map: this.map,
+          mapContainer: this.mapContainer,
+        });
+      // }
     };
 
     const MapFunctions = () => {
@@ -320,6 +324,7 @@ class Map extends Component {
         );
       }
     };
+
     const onLeave = (e) => {
       if (hoveredStateId !== null) {
         this.map.setFeatureState(
@@ -366,7 +371,7 @@ class Map extends Component {
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >
-          <DrawingEditor />
+          {drawingMode && <DrawingEditor />}
           <MapFunctions />
           {!!this.state.popup?.length && !isEmpty(this.state.popupInfo) && (
             <PopupRestoration data={this.state.popupInfo} />

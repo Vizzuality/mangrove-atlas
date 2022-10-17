@@ -176,10 +176,9 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!customGeojsonFeatures.length) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
       },
     }));
-
     const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
 
     // Getting location

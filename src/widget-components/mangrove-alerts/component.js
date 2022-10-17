@@ -46,7 +46,7 @@ const MangroveAlerts = ({
               start_date: startDate?.value,
             }),
             ...(initialDate.endInitialDate && { end_date: endDate?.value }),
-            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+            ...(currentLocation?.location_id && {
               location_id: currentLocation.location_id,
             }),
           }
@@ -64,7 +64,9 @@ const MangroveAlerts = ({
     initialDate.startInitialDate,
     initialDate.endInitialDate,
     drawingValue,
-    currentLocation
+    currentLocation,
+    drawingMode,
+    fetchAlerts
   ]);
 
   const {
@@ -81,7 +83,7 @@ const MangroveAlerts = ({
       startInitialDate: startDateOptions[0],
       endInitialDate: endDateOptions[endDateOptions.length - 1],
     });
-  }, [startDateOptions.length, endDateOptions.length]);
+  }, [startDateOptions.length, endDateOptions.length]); // eslint-disable-line
 
   useEffect(() => {
     if (
@@ -96,7 +98,7 @@ const MangroveAlerts = ({
         },
       });
     }
-  }, [
+  }, [ // eslint-disable-line
     startDateOptions.length,
     endDateOptions.length,
     currentLocation.location_id,
@@ -105,7 +107,7 @@ const MangroveAlerts = ({
 
   const loadingAnalysis = useMemo(
     () => (isLoading && (drawingMode || customGeojsonFeatures)) || restart,
-    [isLoading, drawingMode, restart]
+    [isLoading, drawingMode, customGeojsonFeatures, restart]
   );
 
   if (chartData.length <= 0) {
