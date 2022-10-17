@@ -4,8 +4,7 @@ import WidgetLegend from "components/widget-legend";
 import WidgetTooltip from "components/widget-tooltip";
 import orderBy from "lodash/orderBy";
 
-export const numberFormat = format(".2~f");
-export const smallNumberFormat = format(".4~f");
+export const numberFormat = format(",.2f");
 export const formatAxis = format(",.0d");
 
 const widgetData = (data, unit) => {
@@ -62,7 +61,7 @@ const getBars = (drawingMode) =>
     : {};
 
 const CONFIG = {
-  parse: (data, unit, drawingMode = false) => {
+  parse: (data, unit, drawingMode = true) => {
     const chartData = widgetData(data, unit);
     const change = chartData[chartData.length - 1]?.netChange;
 
@@ -94,9 +93,7 @@ const CONFIG = {
           tick: { fontSize: 12, fill: "rgba(0, 0, 0, 0.54)" },
           tickFormatter: (v) => {
             const result = unit === "ha" ? v * 100 : v;
-            return result === 0 ? 0 : (Math.abs(v) < 0.01
-              ? smallNumberFormat(result)
-              : formatAxis(result));
+            return formatAxis(result);
           },
           tickMargin: 10,
           orientation: "right",
@@ -161,52 +158,32 @@ const CONFIG = {
                 marginLeft: "30px",
               }}
               settings={[
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Gain",
-                        color: "#A6CB10",
-                        key: "gain",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : (value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value))
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Loss",
-                        color: "#EB6240",
-                        key: "loss",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : (value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value))
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
+                ...(drawingMode ? [{
+                  label: "Gain",
+                  color: "#A6CB10",
+                  key: "gain",
+                  format: (value) =>
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
+                }] : []),
+                ...(drawingMode ? [{
+                  label: "Loss",
+                  color: "#EB6240",
+                  key: "loss",
+                  format: (value) =>
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
+                }] : []),
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
                   key: "netChange",
                   format: (value) =>
-                    `${
-                      value === 0
-                        ? value
-                        : (value < 1000
-                        ? smallNumberFormat(value)
-                        : numberFormat(value))
-                    } ${unit === "ha" ? "ha" : "km²"}`,
+                    `${value === 0 ? value : numberFormat(value)} ${
+                      unit === "ha" ? "ha" : "km²"
+                    }`,
                   bulletType: "bar",
                 },
               ]}
