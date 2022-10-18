@@ -65,6 +65,10 @@
       }
     }
 
+    &._cursor {
+      cursor: default;
+    }
+
     @media print {
       font-size: 35px;
     }

@@ -50,6 +50,7 @@ const Header = ({
                   location.name.length > 10 && location.name.length < 30,
                 [styles._long]: location.name.length >= 30,
                 [styles._short]: location.name.length <= 10 || drawingMode,
+                [styles._cursor]: drawingMode
               })}
             >
               {drawingMode ? "Custom area" : location.name}

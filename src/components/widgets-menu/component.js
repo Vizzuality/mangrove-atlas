@@ -93,7 +93,7 @@ const WidgetsMenu = ({
             left: mobile ? "50%" : position.left - position.x,
           }}
         >
-          <span className={styles.menuItemTitle}>Categories</span>
+          <span className={styles.menuItemTitle}>Category</span>
           <ul>
             {dashboards?.map(({ slug, name }) => (
               <li
