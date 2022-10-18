@@ -63,7 +63,6 @@ export const DrawingEditor = ({
       featureStyle={featureStyle}
       editHandleStyle={editHandleStyle}
       editHandleShape="circle"
-      keybindings={true}
       onUpdate={(s) => {
         const { data, editType } = s;
         const EDITION_TYPES = ["addFeature"];

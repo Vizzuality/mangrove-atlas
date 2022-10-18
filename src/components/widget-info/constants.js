@@ -95,11 +95,12 @@ const widgetInfo = {
     Title: '<h1>Mangrove Investible Blue Carbon</h1>',
     Overview: '<p>Estimates of mangrove forest area that can qualify for blue carbon financing that is financially sustainable over 30 years, based on prices of $5/ton and $10/ton based on <a href="https://ap5.fas.nus.edu.sg/fass/geofd/zeng%20et%20al%202021%20return%20on%20investment%20mangrove%20blue%20carbon.pdf" target="_blank">Zeng et al. (2021)</a>. These investible carbon areas are mangrove forests that can be protected through carbon financing. Areas of investible mangrove are defined as those under imminent threat of loss or decline if left unprotected by a conservation intervention. The estimate also accounts for carbon from above and below ground biomass, as well as soil carbon. Profitability of projects was based on average costs of project establishment and annual maintenance, weighted by the country’s GDP. Investible areas are rounded to the nearest 1,000</p><p>Estimates of mangroves in protected areas are based on the World Database of Protected Areas (July 2022). Calculations of remaining mangroves (i.e. mangroves that are not within protected areas and not considered investible) are based on GMW extent v 3.14.</p><p>These data can be used to better understand, at a national scale, the potential of blue carbon finance that can be used towards climate mitigation goals, including nationally determined contributions specified under the Paris Climate Agreement.</p>'
   },
-  alert: {
+  drawingToolAlert: {
     'Analysis of a custom area': '<p>Draw or uppload a custom shape</p>', 
     Analysis: '<p>Be aware to draw or upload a minimun size area in order to ensure enough data for the analysis. The recommended maximum file size is 10MB. Anything larger than that may not work properly.</p>',
-    'List of supported file formats': ''
+    'List of supported file formats': '<ul><li><a href="https://geojson.org" target="_blank" rel="noopener noreferrer">geoJSON (.json, .geojson)</a></li><li><a href="http://www.geopackage.org" target="_blank" rel="noopener noreferrer">geoPackage (.gpkg)</a></li><li><a href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm" target="_blank" rel="noopener noreferrer">.zip with the following file formats .shp, .shx, .dbf and .prj</a></li></ul>'
   }
 };
 
 export default widgetInfo;
+

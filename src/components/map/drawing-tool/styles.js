@@ -30,8 +30,7 @@ const SELECTED_STYLE = {
 const HOVERED_STYLE = {
   stroke: '#00857F',
   strokeWidth: 3,
-  fill: '#00857F',
-  fillOpacity: 0.3,
+  fill: 'transparent',
 };
 
 const UNCOMMITTED_STYLE = {

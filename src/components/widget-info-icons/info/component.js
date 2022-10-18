@@ -12,7 +12,7 @@ import Icon from 'components/icon';
 import widgetInfo from 'components/widget-info/constants';
 import styles from './style.module.scss';
 
-const Info = ({ slug, onClick }) => {
+const Info = ({ slug, onClick, icon, children }) => {
   const [isOpen, toggleModal] = useState(false);
 
   if (onClick) {
@@ -38,14 +38,15 @@ const Info = ({ slug, onClick }) => {
       </div>
     ));
   };
-
+ 
   return (
     <>
       <button
         onClick={handleModal}
-        className={cx(styles.modalBtn)}
+        className={cx({ [styles.modalBtnIcon]: icon })}
       >
-        <Icon name="info" alt="info" className={styles.modalIcon} size="xsm" />
+        {icon && <Icon name="info" alt="info" className={styles.modalIcon} size="xsm" />}
+        {children}
       </button>
       <Modal
         isOpen={isOpen}
@@ -62,12 +63,16 @@ const Info = ({ slug, onClick }) => {
 
 Info.propTypes = {
   isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func
+  closeSearchPanel: PropTypes.func,
+  icon: PropTypes.bool,
+  children: PropTypes.node
 };
 
 Info.defaultProps = {
   isOpened: false,
-  closeSearchPanel: () => null
+  closeSearchPanel: () => null,
+  icon: true,
+  children: null
 };
 
 export default Info;

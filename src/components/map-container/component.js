@@ -118,7 +118,10 @@ export const MapContainer = ({
   };
 
   return (
-    <div className={styles.map}>
+    <div className={styles.mapContainerWrapper}>
+
+    
+    <div className={styles.mapContainer}>
       <MangroveMap
         viewport={viewport}
         bounds={bounds}
@@ -160,6 +163,7 @@ export const MapContainer = ({
           <BasemapSelector />
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { fetchMangroveBlueCarbonData } from 'modules/mangrove-blue-carbon-data/a
 import { fetchAlerts } from 'modules/alerts/actions';
 import { setCurrent, setDrawingValue, setDrawingMode, setDrawingStatus, setCustomGeojsonFeatures } from 'modules/drawing-tool/actions';
 import { setCurrent as setCurrentLocation } from "modules/locations/actions";
+import { setBounds } from "modules/map/actions";
 
 import Component from './component';
 
@@ -32,7 +33,8 @@ const mapDispatchToProps = {
   fetchMangroveBiomassData,
   fetchMangroveBlueCarbonData,
   fetchAlerts,
-  setCustomGeojsonFeatures
+  setCustomGeojsonFeatures,
+  setBounds
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -29,13 +29,18 @@ const DrawingToolControls = ({
 
   const handleDrawing = 
     (value) => {
-      if ((!!drawingValue || !!customGeojsonFeatures) && modalStatus === null) {
+      if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.lenth) && modalStatus === null) {
         toggleModalAlert(true);
+        setDrawingMode(value);
       }
-      setDrawingMode(value);
       if (modalStatus) {
         setDrawingValue(null);
         setCustomGeojsonFeatures(null);
+        setDrawingMode(!value);
+      }
+
+      if (!value && (!drawingValue?.length || !customGeojsonFeatures?.lenth)) {
+        setDrawingMode(true);
       }
       
     }
@@ -88,7 +93,7 @@ const DrawingToolControls = ({
             </div>
             <button
               type="button"
-              onClick={() => handleDrawing(!drawingMode)}
+              onClick={() => handleDrawing(drawingMode)}
               className={cx(styles.sidebarItem, {
                 [styles._active]: drawingMode,
               })}

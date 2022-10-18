@@ -17,7 +17,6 @@ function* flyToCurrentLocation() {
   const drawingValue = state.drawingTool.drawingValue;
   const { mapView } = state.app.mobile;
 
-  
   if (!!drawingValue?.length) {
     const lon = flatten(drawingValue[0]?.geometry?.coordinates).map(
       (d) => d[0]

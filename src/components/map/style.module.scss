@@ -7,6 +7,11 @@
   @media print {
     page-break-after: page;
     page-break-inside: avoid;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 500px;
+    left: -500px;
   }
 }
 

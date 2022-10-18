@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { useDropzone } from "react-dropzone";
 
-// import { useIntl } from 'react-intl';
+import Info from "components/widget-info-icons/info";
 
 import ChartWidget from "components/chart-widget";
 import Widgets from "components/widgets";
@@ -160,9 +160,6 @@ export const MangroveDrawingTool = ({
     }
   }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
 
-  const handleClick = () => {
-    console.log("handle click");
-  };
   const handleDrawingMode = useCallback(() => {
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
@@ -178,7 +175,7 @@ export const MangroveDrawingTool = ({
   ) : (
     <ChartWidget
       name="Draw or upload an area"
-      slug="alert"
+      slug="drawingToolAlert"
       filename={null}
       sentence={sentence}
       chart={false}
@@ -231,14 +228,14 @@ export const MangroveDrawingTool = ({
       </div>
       <p>
         Learn more about
-        <button onClick={handleClick} className={styles.highlighted}>
-          supported file formats
-        </button>
+        <Info slug="drawingToolAlert" icon={false}>
+          <span className={styles.highlighted}>supported file formats</span>
+        </Info>
         <br />
         By uploading data you agree to the{" "}
         <a href="" className={styles.highlighted}>
           Terms of Service
-        </a>
+        </a> 
       </p>
     </ChartWidget>
   );
