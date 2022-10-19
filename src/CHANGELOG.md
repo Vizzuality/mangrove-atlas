@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
     - Tooltip added to the map for restoration layer.
     - Extent layer changed from raster to vector.
     - New layers: "gain", "loss", "height" and "biomass".
+    - Map drawing tool
 
 ### Changed
     - Refactor in biomass widget (widget adapted to new endpoint)

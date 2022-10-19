@@ -6,6 +6,7 @@ const mapStateToProps = (state) => ({
   drawingMode: state.drawingTool.drawingMode,
   customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
   drawingValue: state.drawingTool.drawingValue,
+  locationsModal: state.locations.isOpened
 });
 
 const mapDispatchToProps = {
