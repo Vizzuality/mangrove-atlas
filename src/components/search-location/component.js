@@ -12,15 +12,15 @@ const SearchLocation = ({
   openSearchPanel,
   handleDrawing,
   drawingMode,
-  isOpenLocationModal,
+  locationsModal,
   drawingValue,
   customGeojsonFeatures,
 }) => {
   useEffect(() => {
-    if (isOpenLocationModal) {
+    if (locationsModal) {
       openSearchPanel();
     }
-  }, [isOpenLocationModal, openSearchPanel]);
+  }, [locationsModal, openSearchPanel]);
 
   const handleModal = useCallback(() => {
     if (handleDrawing) {
@@ -53,7 +53,7 @@ SearchLocation.propTypes = {
   openSearchPanel: PropTypes.func,
   handleDrawing: PropTypes.func,
   drawingMode: PropTypes.bool,
-  isOpenLocationModal: PropTypes.bool,
+  locationsModal: PropTypes.bool,
 };
 
 SearchLocation.defaultProps = {
@@ -61,7 +61,7 @@ SearchLocation.defaultProps = {
   openSearchPanel: null,
   handleDrawing: null,
   drawingMode: false,
-  isOpenLocationModal: false,
+  locationsModal: false,
 };
 
 export default SearchLocation;

@@ -20,13 +20,14 @@ const DrawingToolControls = ({
   mobile,
   openModal,
   setCustomGeojsonFeatures,
-  customGeojsonFeatures
+  customGeojsonFeatures,
+  locationsModal,
+  closeSearchPanel,
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
-  const [isOpenLocationModal, toggleLocationModal] = useState(false);
 
   const handleDrawing = 
     (value) => {
@@ -43,9 +44,11 @@ const DrawingToolControls = ({
       if (!value && (!drawingValue?.length || !customGeojsonFeatures?.lenth)) {
         setDrawingMode(true);
       }
-      
-    }
 
+      if (value && !drawingValue?.length && !customGeojsonFeatures?.lenth) {
+        setDrawingMode(!value);
+      }
+    }
   ;
 
   const handleReset = useCallback(() => {
@@ -58,9 +61,9 @@ const DrawingToolControls = ({
   const handleCancel = useCallback(
     () => {
       toggleModalAlert(false);
-      toggleLocationModal(false);
+      closeSearchPanel();
     },
-    [toggleModalAlert, toggleLocationModal]
+    [toggleModalAlert, closeSearchPanel]
   );
 
   const handleChange = useCallback(
@@ -81,7 +84,7 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             <Link
               to={{ type: "PAGE/APP" }}
-              onClick={() => handleDrawing(drawingMode)}
+              onClick={() => handleDrawing(true)}
               className={cx(styles.sidebarItem, {
                 [styles._active]: locationType === "PAGE/APP" && !drawingMode,
               })}
@@ -97,14 +100,13 @@ const DrawingToolControls = ({
                 className={styles._active}
                 handleDrawing={handleDrawing}
                 isOpenModalAlert={isOpenModalAlert}
-                isOpenLocationModal={isOpenLocationModal}
               />
             </div>
             <button
               type="button"
               onClick={() => handleDrawing(drawingMode)}
               className={cx(styles.sidebarItem, {
-                [styles._active]: drawingMode && isOpenLocationModal,
+                [styles._active]: drawingMode && !locationsModal,
               })}
             >
               <Icon
