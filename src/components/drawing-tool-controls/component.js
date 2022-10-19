@@ -26,6 +26,7 @@ const DrawingToolControls = ({
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
+  const [isOpenLocationModal, toggleLocationModal] = useState(false);
 
   const handleDrawing = 
     (value) => {
@@ -55,8 +56,11 @@ const DrawingToolControls = ({
   }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert]);
 
   const handleCancel = useCallback(
-    () => toggleModalAlert(false),
-    [toggleModalAlert]
+    () => {
+      toggleModalAlert(false);
+      toggleLocationModal(false);
+    },
+    [toggleModalAlert, toggleLocationModal]
   );
 
   const handleChange = useCallback(
@@ -77,7 +81,7 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             <Link
               to={{ type: "PAGE/APP" }}
-              onClick={() => handleDrawing(false)}
+              onClick={() => handleDrawing(drawingMode)}
               className={cx(styles.sidebarItem, {
                 [styles._active]: locationType === "PAGE/APP" && !drawingMode,
               })}
@@ -89,13 +93,18 @@ const DrawingToolControls = ({
               />
             </Link>
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
-              <SearchLocation className={styles._active} handleDrawing={handleDrawing} isOpenModalAlert={isOpenModalAlert} />
+              <SearchLocation
+                className={styles._active}
+                handleDrawing={handleDrawing}
+                isOpenModalAlert={isOpenModalAlert}
+                isOpenLocationModal={isOpenLocationModal}
+              />
             </div>
             <button
               type="button"
               onClick={() => handleDrawing(drawingMode)}
               className={cx(styles.sidebarItem, {
-                [styles._active]: drawingMode,
+                [styles._active]: drawingMode && isOpenLocationModal,
               })}
             >
               <Icon
