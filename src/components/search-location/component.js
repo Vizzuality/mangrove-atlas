@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -7,14 +7,36 @@ import Icon from "components/icon";
 
 import styles from "./style.module.scss";
 
-const SearchLocation = ({ mobile, openSearchPanel, handleDrawing }) => {
+const SearchLocation = ({
+  mobile,
+  openSearchPanel,
+  handleDrawing,
+  drawingMode,
+  isOpenLocationModal,
+  drawingValue,
+  customGeojsonFeatures,
+}) => {
+  useEffect(() => {
+    if (isOpenLocationModal) {
+      openSearchPanel();
+    }
+  }, [isOpenLocationModal, openSearchPanel]);
+
   const handleModal = useCallback(() => {
     if (handleDrawing) {
-      handleDrawing(false)
+      handleDrawing(drawingMode);
     }
-    openSearchPanel();
-  }, [handleDrawing, openSearchPanel]);
-   
+    if (!drawingValue?.length || !customGeojsonFeatures?.length) {
+      openSearchPanel();
+    }
+  }, [
+    handleDrawing,
+    drawingMode,
+    drawingValue,
+    customGeojsonFeatures,
+    openSearchPanel,
+  ]);
+
   return (
     <button
       className={cx(styles.sidebarItem, { [styles.mobile]: mobile })}
@@ -30,14 +52,16 @@ SearchLocation.propTypes = {
   mobile: PropTypes.bool,
   openSearchPanel: PropTypes.func,
   handleDrawing: PropTypes.func,
-  isOpenModalAlert:  PropTypes.bool,
+  drawingMode: PropTypes.bool,
+  isOpenLocationModal: PropTypes.bool,
 };
 
 SearchLocation.defaultProps = {
   mobile: false,
   openSearchPanel: null,
   handleDrawing: null,
-  isOpenModalAlert: false,
+  drawingMode: false,
+  isOpenLocationModal: false,
 };
 
 export default SearchLocation;
