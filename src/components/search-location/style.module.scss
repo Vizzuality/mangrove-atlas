@@ -8,5 +8,21 @@
     height: 35px;
     stroke: $primary;
     fill: transparent;
+
+  }
+
+  &.mobile {
+    padding: 0px;
+
+    svg {
+      width: 30px;
+      height: 30px;
+      stroke: $white;
+    }
+
+    .menuItemTitle {
+      @include menu-item-title;
+      margin: 0;
+    }
   }
 }
