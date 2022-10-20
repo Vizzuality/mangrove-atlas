@@ -31,7 +31,7 @@ const DrawingToolControls = ({
 
   const handleDrawing = 
     (value) => {
-      if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.lenth) && modalStatus === null) {
+      if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.length) && modalStatus === null) {
         toggleModalAlert(true);
         setDrawingMode(value);
       }
@@ -41,11 +41,11 @@ const DrawingToolControls = ({
         setDrawingMode(!value);
       }
 
-      if (!value && (!drawingValue?.length || !customGeojsonFeatures?.lenth)) {
+      if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
         setDrawingMode(true);
       }
 
-      if (value && !drawingValue?.length && !customGeojsonFeatures?.lenth) {
+      if (value && !drawingValue?.length && !customGeojsonFeatures?.length) {
         setDrawingMode(!value);
       }
     }
