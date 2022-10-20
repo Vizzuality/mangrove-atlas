@@ -44,6 +44,7 @@ const SearchLocation = ({
       onClick={handleModal}
     >
       <Icon name="glass" alt="Search" />
+      {mobile && <p className={styles.menuItemTitle}>Search</p>}
     </button>
   );
 };

@@ -85,6 +85,11 @@
       justify-content: center;
     }
 
+    .icon {
+      background-color: #00AFA7;
+      fill: $white;
+    }
+
     .menuItemTitle {
       @include menu-item-title;
     }

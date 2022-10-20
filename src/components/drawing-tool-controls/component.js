@@ -29,7 +29,7 @@ const DrawingToolControls = ({
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
 
-  const handleDrawing = 
+  const handleDrawing =
     (value) => {
       if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.length) && modalStatus === null) {
         toggleModalAlert(true);
