@@ -78,16 +78,19 @@
     margin: 0;
     padding: 0;
 
+
     button {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
     }
 
     .icon {
       background-color: #00AFA7;
       fill: $white;
+
     }
 
     .menuItemTitle {

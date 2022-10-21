@@ -39,7 +39,10 @@ const SearchLocation = ({
 
   return (
     <button
-      className={cx(styles.sidebarItem, { [styles.mobile]: mobile })}
+      className={cx(styles.sidebarItem, {
+        [styles.mobile]: mobile,
+        [styles._active]: locationsModal && mobile,
+      })}
       type="button"
       onClick={handleModal}
     >
