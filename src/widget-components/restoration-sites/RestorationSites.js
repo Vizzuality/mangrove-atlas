@@ -13,10 +13,17 @@ const RestorationSites = ({
   isCollapsed = true,
   slug = undefined,
   name,
+  fetchRestorationSites,
   ...props
 }) => {
+
   const sitesCount = data.length;
   const isMoreThanOneSite = sitesCount > 1;
+
+  // eslint-disable-next-line prefer-arrow-callback
+  useEffect(function loadRestorationSites() {
+    fetchRestorationSites();
+  }, [fetchRestorationSites]);
 
   return (
     <Widget

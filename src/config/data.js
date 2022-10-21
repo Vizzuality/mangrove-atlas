@@ -37,7 +37,7 @@ export default {
       layersIds: [],
     },
     {
-      name: "Mangrove Restoration Sites",
+      name: "Restoration Sites",
       slug: "restoration_sites",
       locationType: [
         "worldwide"
@@ -191,10 +191,6 @@ export default {
     {
       name: "Mangrove Blue Carbon",
       id: "carbon",
-    },
-    {
-      "name": "Mangrove Restoration Sites",
-      "id": "restoration-sites"
     },
     {
       name: "Height canopy",
