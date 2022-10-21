@@ -40,7 +40,6 @@
 
       &.mobile {
         @include menu-items-mobile;
-
       }
 
       &._active {
@@ -100,15 +99,17 @@
       }
 
       &._active {
+        margin-top: 4px;
         svg {
           fill: $primary;
           stroke: $primary;
+          stroke-width: 0.1px;
           background-color: $white;
           width: 40px;
-          height: 27px;
+          height: 25px;
         }
         .menuItemTitle {
-          margin-top: 5px;
+          margin-top: 4px;
         }
       }
     }
