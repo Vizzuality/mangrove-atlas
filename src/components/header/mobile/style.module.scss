@@ -23,7 +23,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  max-width: $widgetWidth; // widgets dashboard max width
+  max-width: $widgetWidthMobile; // widgets dashboard max width
 }
 
 .titleBtn {
@@ -41,7 +41,7 @@
   font-weight: 300;
   text-align: center;
   margin-bottom: 60px;
-  max-width: $widgetWidth; // to avoid overflow widgets
+  max-width: $widgetWidthMobile; // to avoid overflow widgets
 }
 
 ._short {
