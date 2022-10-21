@@ -120,15 +120,21 @@
         text-align: start;
       }
     }
+
   }
 
   &.mobile {
-    transform: translate(-50%, 50%);
-    top: 0;
-    left: 0;
+    transform: translate(-52%, 50%);
+    width: 80%;
 
     .menuItemTitle {
       display: none;
+    }
+
+    ul {
+      box-sizing: border-box;
+      padding: 20px;
+      width: 100%;
     }
   }
 }
