@@ -36,13 +36,20 @@ const WidgetsMenu = ({
     toggleModal(!isOpen);
   }, [menuRef, isOpen]);
 
+  console.log({isOpen})
+
   return (
     <div
       className={cx(styles.widgets_menu, { [styles.mobile]: mobile })}
       ref={menuRef}
     >
       {mobile ? (
-        <button className={styles.btn} onClick={() => toggleModal(!isOpen)}>
+        <button
+          className={cx(styles.btn, {
+            [styles._active]: isOpen,
+          })}
+          onClick={() => toggleModal(!isOpen)}
+        >
           <Icon name="ecosystem_services" className={cx([styles.icon])} />
           <span className={styles.menuItemTitle}>Category</span>
         </button>
