@@ -1,66 +1,27 @@
-
-// eslint-disable-next-line no-unused-vars
+import ChartWidget from 'components/chart-widget';
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Widget from 'components/widget';
+import Select from 'components/select';
 
 import restorationSiteStyles from './restorationSiteStyles.module.scss';
-
+import Widget from 'components/widget';
 
 const RestorationSites = ({
-  data,
   isLoading,
   isCollapsed = true,
-  slug = undefined,
-  name,
-  fetchRestorationSites,
+  slug, name,
   ...props
 }) => {
-
-  const sitesCount = data.length;
-  const isMoreThanOneSite = sitesCount > 1;
-
-  // eslint-disable-next-line prefer-arrow-callback
-  useEffect(function loadRestorationSites() {
-    fetchRestorationSites();
-  }, [fetchRestorationSites]);
-
+  useEffect(function loadRestorationSites() {}, []);
   return (
     <Widget
       name={name}
       slug={slug}
       isCollapsed={isCollapsed}
-      isLoading={isLoading}
       {...props}
     >
-      <p className={restorationSiteStyles.sentence}>
-        There
-        {isMoreThanOneSite ? ' are ' : ' is '}
-        <>
-          {sitesCount}
-        </>
-        {' '}
-        restoration site
-        {isMoreThanOneSite ? 's.' : '.'}
-      </p>
+      <p className={restorationSiteStyles.sentence}>There are X restoration sites</p>
     </Widget>
   );
-};
-
-RestorationSites.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  fetchRestorationSites: PropTypes.func.isRequired,
-  isCollapsed: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  name: PropTypes.string,
-  slug: PropTypes.string,
-};
-
-RestorationSites.defaultProps = {
-  isCollapsed: false,
-  isLoading: false,
-  name: null,
-  slug: null,
 };
 
 export default RestorationSites;
