@@ -73,11 +73,11 @@
     border-radius: 30px;
   }
 
+
   &.mobile {
     flex-direction: row;
     margin: 0;
     padding: 0;
-
 
     button {
       display: flex;
@@ -85,19 +85,35 @@
       align-items: center;
       justify-content: center;
 
+      &._active {
+        .icon {
+          background-color: $white;
+          fill: $primary;
+        }
+      }
     }
 
     .icon {
       background-color: #00AFA7;
       fill: $white;
-
+      width: 40px;
+      height: 40px;
     }
 
     .menuItemTitle {
       @include menu-item-title;
+      margin-top: 5px;
+      margin-bottom: 0;
     }
   }
+
+
 }
+// &._active {
+//   .icon {
+//     background-color: red;
+//   }
+// }
 
 .modalContent {
   position: absolute;
