@@ -16,7 +16,7 @@ const FooterMenu = () => (
       <SearchLocation mobile={true} />
       <DrawingToolControls mobile />
       <WidgetsMenu mobile />
-      <ViewSelector />
+      <ViewSelector mobile />
     </div>
   </div>
 );

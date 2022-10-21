@@ -36,8 +36,6 @@ const WidgetsMenu = ({
     toggleModal(!isOpen);
   }, [menuRef, isOpen]);
 
-  console.log({isOpen})
-
   return (
     <div
       className={cx(styles.widgets_menu, { [styles.mobile]: mobile })}
