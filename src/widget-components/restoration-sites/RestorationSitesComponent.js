@@ -34,9 +34,7 @@ const RestorationSites = ({
         </>
         {' '}
         restoration site
-        {isMoreThanOneSite ? 's' : null}
-        {' '}
-        worldwide.
+        {isMoreThanOneSite ? 's.' : '.'}
       </p>
     </Widget>
   );
@@ -44,6 +42,7 @@ const RestorationSites = ({
 
 RestorationSites.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  fetchRestorationSites: PropTypes.func.isRequired,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
   name: PropTypes.string,

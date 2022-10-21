@@ -67,8 +67,7 @@ export const MapContainer = ({
     "selected-wdpa-polygons",
     "cons-hotspots",
     "restoration",
-    'restoration-sites',
-    'restoration-sites-clusters',
+    'restoration-sites'
   ];
   const currentLayers = mapStyle.layers.map((layer) => layer.id);
   const interactiveLayerIds = requestedInteractiveLayerIds.filter((id) =>

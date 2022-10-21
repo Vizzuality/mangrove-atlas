@@ -64,60 +64,16 @@ const geojsons = [
     id: 'restoration-sites',
     source: {
       type: 'geojson',
-      cluster: true,
-      // Data formatted and appended in mapStyle selector.
+      // Data formatted in mapStyle selector.
       // Data initially fetched by Pages component (initializeApp).
     },
     layers: [
-    {
-        id: 'restoration-sites-cluster-count',
-        type: 'symbol',
-        source: 'restoration-sites',
-        filter: ['has', 'point_count'],
-        layout: {
-          'text-field': '{point_count_abbreviated}',
-          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 16,
-        },
-        paint: {
-          'text-color': '#fff',
-        },
-      },
-      {
-        id: 'restoration-sites-clusters',
-        type: 'circle',
-        source: 'restoration-sites',
-        filter: ['has', 'point_count'],
-        paint: {
-          'circle-color': '#00AFA7',
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#00857F',
-          'circle-radius': [
-            'step',
-            ['get', 'point_count'],
-            20,
-            100,
-            30,
-            500,
-            40,
-          ],
-        },
-      },
-      
       {
         id: 'restoration-sites',
         type: 'circle',
-        source: 'restoration-sites',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-          'circle-color': '#00AFA7',
-          'circle-radius': 5,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#00857F',
-        },
-      },
-    ],
-  },
+        source: 'restoration-sites'
+      }]
+  }
 ];
 
 const vectors = [
@@ -313,12 +269,7 @@ export const layersMap = {
     },
   ],
   extent: extentLayers,
-  'restoration-sites': [
-    { layerId: 'restoration-sites' },
-    { layerId: 'restoration-sites-cluster-count' },
-    { layerId: 'restoration-sites-clusters' },
-  ],
-
+  'restoration-sites': [{layerId: 'restoration-sites'}]
 };
 
 export const LAYERS_ORDER = [
