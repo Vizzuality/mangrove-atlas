@@ -40,6 +40,7 @@
 
       &.mobile {
         @include menu-items-mobile;
+
       }
 
       &._active {
@@ -70,6 +71,51 @@
         height: 30px;
         cursor: pointer;
       }
+    }
+  }
+
+  &.mobile {
+    margin: 0;
+    padding: 0;
+    width: 50px;
+
+    .btn {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      svg {
+        fill: $white;
+        stroke: $white;
+        border-radius: 30px;
+        box-sizing: content-box;
+        padding-top: 6px;
+        padding-bottom: 8.5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      &._active {
+        svg {
+          fill: $primary;
+          stroke: $primary;
+          background-color: $white;
+          width: 40px;
+          height: 27px;
+        }
+        .menuItemTitle {
+          margin-top: 5px;
+        }
+      }
+    }
+    .menuItemTitle {
+      @include menu-item-title;
+      margin-bottom: 0;
+      margin-top: 1px;
     }
   }
 }
@@ -111,7 +157,7 @@
       input {
         margin-right: 8px;
       }
-    } 
+    }
   }
 
   .modalButtons {

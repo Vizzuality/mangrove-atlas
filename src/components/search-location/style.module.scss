@@ -8,11 +8,11 @@
     height: 35px;
     stroke: $primary;
     fill: transparent;
-
   }
 
   &.mobile {
     padding: 0px;
+    width: 50px;
 
     svg {
       width: 30px;
