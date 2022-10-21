@@ -74,8 +74,13 @@ const DrawingToolControls = ({
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
       {mobile ? (
-        <button className={styles.btn}>
-          <Icon name="ecosystem_services" />
+        <button
+          className={cx(styles.btn, {
+            [styles._active]: drawingMode,
+          })}
+          onClick={() => console.info('handleDrawing')}
+        >
+          <Icon name="polyline" />
           <span className={styles.menuItemTitle}>Place</span>
         </button>
       ) : (

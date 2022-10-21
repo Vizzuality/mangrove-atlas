@@ -79,11 +79,13 @@
     margin: 0;
     padding: 0;
 
+
     button {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: 50px;
 
       &._active {
         .icon {
@@ -106,14 +108,7 @@
       margin-bottom: 0;
     }
   }
-
-
 }
-// &._active {
-//   .icon {
-//     background-color: red;
-//   }
-// }
 
 .modalContent {
   position: absolute;
