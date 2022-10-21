@@ -40,8 +40,6 @@ export default {
       name: "Mangrove Restoration Sites",
       slug: "restoration_sites",
       locationType: [
-        "wdpa",
-        "country",
         "worldwide"
       ],
       categoryIds: [

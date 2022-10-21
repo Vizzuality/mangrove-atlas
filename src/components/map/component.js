@@ -18,8 +18,8 @@ import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import { easeCubic } from "d3-ease";
 
-import PopupMangroveStyle from "./mangrove-map-styled-popup/PopupMangroveStyle";
 import PopUpRestoration from "components/map-popup-restoration";
+
 import styles from "./style.module.scss";
 
 const DEFAULT_VIEWPORT = {
@@ -98,7 +98,6 @@ class Map extends Component {
     modeId: null,
     modeHandler: null,
     popUpPosition: {},
-    popupFeatureType: undefined,
   };
 
   componentDidMount() {
@@ -230,33 +229,6 @@ class Map extends Component {
     const ms = { ...mapStyle };
     let hoveredStateId = null;
     const onClickHandler = (e) => {
-
-      const getFeatureLayerById = (layerId) => e.features?.find(
-        ({ layer }) => layer.id === layerId
-      );
-
-     const isClickFromRestorationSite = getFeatureLayerById('restoration-sites')
-
-      if (isClickFromRestorationSite) {
-        // This layer is different from the existing 'restoration' layer and refers to
-        // restoration sites where restoration is happening. 
-        // These sites are collected as part of the Mangrove Restoration Tracking Took (MRTT)
-        // project whose code lives here:  https://github.com/globalmangrovewatch/gmw-users/tree/develop/mrtt-ui
-        const propertiesWithOrganizationNamesParsed =
-        {
-          ...e.features[0].properties,
-          organization_names: JSON.parse(e.features[0].properties.organization_names)
-         }
-        
-        this.setState({
-          ...this.state,
-          popup: [e?.lngLat[0], e?.lngLat[1]],
-          popupInfo: propertiesWithOrganizationNamesParsed,
-          popupFeatureType: 'restoration-sites'
-
-        });
-      }
-
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       )?.properties;
@@ -270,8 +242,6 @@ class Map extends Component {
             x: e.center.x,
             y: e.center.y,
           },
-          popupFeatureType: 'restoration' 
-
         });
       }
         onClick({
@@ -323,25 +293,6 @@ class Map extends Component {
       );
     };
 
-    const popupRestorationSites =
-      <PopupMangroveStyle
-          removePopUp={removePopUp}
-          longitude={this.state.popup[0]}
-          latitude={this.state.popup[1]}>
-        <h2>{this.state.popupInfo?.site_name}</h2>
-        <dl>
-          <dt>Landscape</dt>
-          <dd>{this.state.popupInfo?.landscape_name}</dd>
-          <dt>Organizations</dt>
-          {this.state.popupInfo?.organization_names.map(organizationName => <dd>{ organizationName }</dd>)}
-        </dl>
-      </PopupMangroveStyle>
-    
-    const shouldShowPopup = !!this.state.popup.length && !isEmpty(this.state.popupInfo)
-    const popupContent = this.state.popupFeatureType === 'restoration-sites'
-      ? popupRestorationSites
-      : <PopupRestoration data={this.state.popupInfo} />
-  
     // applyFilters();
     const onHover = (e) => {
       const restorationData = e?.features.find(
@@ -420,7 +371,9 @@ class Map extends Component {
         >
           {drawingMode && <DrawingEditor />}
           <MapFunctions />
-          {shouldShowPopup ? popupContent : null}
+          {!!this.state.popup?.length && !isEmpty(this.state.popupInfo) && (
+            <PopupRestoration data={this.state.popupInfo} />
+          )}
         </ReactMapGL>
       </div>
     );
