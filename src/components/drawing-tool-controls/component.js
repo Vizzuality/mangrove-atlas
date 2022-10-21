@@ -23,6 +23,8 @@ const DrawingToolControls = ({
   customGeojsonFeatures,
   locationsModal,
   closeSearchPanel,
+  mapView,
+  setMobileView,
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
@@ -71,19 +73,21 @@ const DrawingToolControls = ({
     [myStorage]
   );
 
+
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
       {mobile ? (
         <button
           className={cx(styles.btn, {
-            [styles._active]: drawingMode,
+            // [styles._active]: drawingMode,
+            [styles._active]: mapView,
           })}
           onClick={() => {
-            handleDrawing(drawingMode);
-            console.info(drawingMode);
+            setMobileView(!mapView);
+            // handleDrawing(drawingMode);
           }}
         >
-          <Icon name={drawingMode ? "globe" : "polyline"} />
+          <Icon name={mapView ? "globe" : "polyline"} />
           <span className={styles.menuItemTitle}>Place</span>
         </button>
       ) : (
