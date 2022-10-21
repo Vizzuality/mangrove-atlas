@@ -235,7 +235,7 @@ export const MangroveDrawingTool = ({
         By uploading data you agree to the{" "}
         <a href="" className={styles.highlighted}>
           Terms of Service
-        </a> 
+        </a>
       </p>
     </ChartWidget>
   );

@@ -34,3 +34,11 @@
     flex-direction: column-reverse;
   }
 }
+
+.widgetWrapper {
+  z-index: 7;
+  max-width: $widgetWidthMobile;
+  // page-break-inside: avoid;
+  // break-inside: avoid;
+  margin: auto;
+}

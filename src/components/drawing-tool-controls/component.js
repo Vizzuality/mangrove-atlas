@@ -79,15 +79,17 @@ const DrawingToolControls = ({
       {mobile ? (
         <button
           className={cx(styles.btn, {
-            // [styles._active]: drawingMode,
-            [styles._active]: mapView,
+            [styles._active]: drawingMode,
           })}
           onClick={() => {
             setMobileView(!mapView);
-            // handleDrawing(drawingMode);
+            handleDrawing(drawingMode);
           }}
         >
-          <Icon name={mapView ? "globe" : "polyline"} />
+          <Icon
+            alt={drawingMode ? "worldwide location" : "create custom area"}
+            name={drawingMode ? "globe" : "polyline"}
+          />
           <span className={styles.menuItemTitle}>Place</span>
         </button>
       ) : (
