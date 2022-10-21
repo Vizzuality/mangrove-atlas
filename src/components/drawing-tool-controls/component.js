@@ -78,9 +78,12 @@ const DrawingToolControls = ({
           className={cx(styles.btn, {
             [styles._active]: drawingMode,
           })}
-          onClick={() => console.info('handleDrawing')}
+          onClick={() => {
+            handleDrawing(drawingMode);
+            console.info(drawingMode);
+          }}
         >
-          <Icon name="polyline" />
+          <Icon name={drawingMode ? "globe" : "polyline"} />
           <span className={styles.menuItemTitle}>Place</span>
         </button>
       ) : (

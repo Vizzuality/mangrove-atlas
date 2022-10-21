@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import cx from "classnames";
 import Icon from 'components/icon';
 import styles from './style.module.scss';
 
@@ -23,9 +24,12 @@ class ViewSelector extends PureComponent {
   }
 
   render() {
-    const { mapView, activeLayers } = this.props;
+    const { mapView, activeLayers, mobile } = this.props;
     return (
-      <div className={styles.viewSelector}>
+      <div className={cx(styles.viewSelector, {
+        [styles.mobile]: mobile,
+        [styles._active]: mapView,
+      })}>
         <button
           type="button"
           onClick={this.onChangeView}
@@ -39,7 +43,7 @@ class ViewSelector extends PureComponent {
                 {activeLayers}
               </span>
             )}
-          <span>Map</span>
+          <span className={styles.menuItemTitle}>Map</span>
         </button>
       </div>
     );
