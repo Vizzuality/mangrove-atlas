@@ -25,6 +25,13 @@
       fill: $white;
     }
 
+    &._active {
+      .icon {
+        background-color: $white;
+        border-radius: 30px;
+        fill: $primary;
+      }
+    }
   }
 
   @media print {
