@@ -16,13 +16,14 @@
 
     svg {
       width: 30px;
-      height: 30px;
+      height: 40px;
       stroke: $white;
     }
 
     .menuItemTitle {
       @include menu-item-title;
-      margin: 0;
+      margin: 2px 0 0 0;
+
     }
   }
 }

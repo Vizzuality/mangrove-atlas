@@ -64,10 +64,10 @@
       }
     }
   }
-  
+
   @media print {
     $border-radius: 20px;
-  
+
     .widget {
       max-width: 100%;
       min-height: 530px;
@@ -78,21 +78,25 @@
       page-break-inside: avoid;
       $padding: 30px 20px 0 40px;
       margin: auto;
-  
+
       &._layerActive::before {
         border: 0 solid rgba($primary, 0.35);
       }
     }
-  
+
     .title svg {
       display: none;
     }
-  
+
     .toogleButton {
       display: none;
     }
   }
-  
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    width: $widgetWidthMobile;
+  }
+
   @media print and (orientation: portrait){
     width: 100%;
     padding-top: 20px;
