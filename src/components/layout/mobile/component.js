@@ -15,7 +15,7 @@ const MobileLayout = ({ drawingMode }) => (
       <Header />
       {drawingMode && (
         <div className={styles.widgetWrapper}>
-          <MangroveDrawingTool />
+          <MangroveDrawingTool mobile />
         </div>
       )}
       <Widgets mobile />
