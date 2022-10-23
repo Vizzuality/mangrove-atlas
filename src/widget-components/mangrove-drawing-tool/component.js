@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -38,6 +38,7 @@ export const MangroveDrawingTool = ({
   fetchAlerts,
   setCustomGeojsonFeatures,
   customGeojsonFeatures,
+  mobile
 }) => {
   const onDropAccepted = useCallback(
     async (acceptedFiles) => {
@@ -160,19 +161,25 @@ export const MangroveDrawingTool = ({
     }
   }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
 
+  console.log(current);
+
+  const [openPanel, setOpenPanel] = useState(true);
+
   const handleDrawingMode = useCallback(() => {
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
+    mobile && setOpenPanel(false);
   }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
     [acceptedFileItems, customGeojsonFeatures]
   );
-  return drawingValue || customGeojsonFeatures ? (
+  return drawingValue || customGeojsonFeatures  ? (
     <Widgets />
   ) : (
+    openPanel && (
     <ChartWidget
       name="Draw or upload an area"
       slug="drawingToolAlert"
@@ -191,7 +198,7 @@ export const MangroveDrawingTool = ({
         >
           <Icon name="polyline" size="md" /> {/* primary color */}
           <span className={styles.title}>
-            {current === "drawPolygon"
+            {!mobile && current === "drawPolygon"
               ? "Start drawing on the map"
               : "Draw area"}
           </span>
@@ -238,6 +245,7 @@ export const MangroveDrawingTool = ({
         </a>
       </p>
     </ChartWidget>
+    )
   );
 };
 
