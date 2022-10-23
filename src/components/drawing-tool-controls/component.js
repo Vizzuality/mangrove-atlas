@@ -84,6 +84,7 @@ const DrawingToolControls = ({
           onClick={() => {
             setMobileView(!mapView);
             handleDrawing(drawingMode);
+            drawingMode && toggleModalAlert(true);
           }}
         >
           <Icon
