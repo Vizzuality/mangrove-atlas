@@ -13,7 +13,6 @@ const mapStateToProps = (state) => ({
   drawingValue: state.drawingTool.drawingValue,
   customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
   locationsModal: state.locations.isOpened,
-  mapView: state.app.mobile.mapView,
 });
 
 const mapDispatchToProps = {
@@ -21,7 +20,6 @@ const mapDispatchToProps = {
   setDrawingValue,
   setCustomGeojsonFeatures,
   closeSearchPanel,
-  setMobileView
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

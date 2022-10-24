@@ -23,8 +23,6 @@ const DrawingToolControls = ({
   customGeojsonFeatures,
   locationsModal,
   closeSearchPanel,
-  mapView,
-  setMobileView,
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
@@ -82,7 +80,6 @@ const DrawingToolControls = ({
             [styles._active]: drawingMode,
           })}
           onClick={() => {
-            setMobileView(!mapView);
             handleDrawing(drawingMode);
             drawingMode && toggleModalAlert(true);
           }}
