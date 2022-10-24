@@ -163,8 +163,6 @@ export const MangroveDrawingTool = ({
     }
   }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
 
-  console.log(current);
-
   const [openPanel, setOpenPanel] = useState(true);
 
   const handleDrawingMode = useCallback(() => {
