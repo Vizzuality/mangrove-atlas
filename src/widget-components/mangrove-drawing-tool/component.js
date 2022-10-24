@@ -161,7 +161,9 @@ export const MangroveDrawingTool = ({
     if (drawingMode && drawingValue) {
       expandAll();
     }
+    if(drawingValue && mobile) setMobileView(false);
   }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
+
 
   const [openPanel, setOpenPanel] = useState(true);
 
@@ -177,6 +179,7 @@ export const MangroveDrawingTool = ({
     () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
     [acceptedFileItems, customGeojsonFeatures]
   );
+
   return drawingValue || customGeojsonFeatures  ? (
     <Widgets />
   ) : (
