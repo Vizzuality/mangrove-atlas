@@ -119,48 +119,52 @@ export const MapContainer = ({
 
   return (
     <div className={styles.mapContainerWrapper}>
+      <div className={styles.mapContainer}>
+        <MangroveMap
+          viewport={viewport}
+          bounds={bounds}
+          mapStyle={mapStyle}
+          mapboxApiAccessToken={mapboxApiAccessToken}
+          onViewportChange={onViewportChange}
+          onClick={clickHandler}
+          interactiveLayerIds={interactiveLayerIds}
+          onPopupClose={popupCloseHandler}
+        >
+          {() => (
+            <div className={styles.navigation}>
+              <MediaQuery minWidth={breakpoints.lg + 1}>
+                <FullscreenControl className={styles.fullscreen} />
+              </MediaQuery>
+              <MediaQuery minWidth={breakpoints.sm}>
+                <NavigationControl
+                  captureClick
+                  captureDoubleClick
+                  showCompass={true}
+                  className={styles.zoomControls}
+                  onViewportChange={onViewportChange}
+                />
+              </MediaQuery>
+            </div>
+          )}
+        </MangroveMap>
 
-
-    <div className={styles.mapContainer}>
-      <MangroveMap
-        viewport={viewport}
-        bounds={bounds}
-        mapStyle={mapStyle}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={onViewportChange}
-        onClick={clickHandler}
-        interactiveLayerIds={interactiveLayerIds}
-        onPopupClose={popupCloseHandler}
-      >
-        {() => (
-          <div className={styles.navigation}>
-            <MediaQuery minWidth={breakpoints.lg + 1}>
-              <FullscreenControl className={styles.fullscreen} />
-            </MediaQuery>
-            <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl
-                captureClick
-                captureDoubleClick
-                showCompass={true}
-                className={styles.zoomControls}
-                onViewportChange={onViewportChange}
-              />
-            </MediaQuery>
-          </div>
-        )}
-      </MangroveMap>
-
-      <div
-        className={classnames(styles.legend, {
-          [styles.expanded]: !isCollapse,
-        })}
-      >
-          <MobileLegendControl>
+        <div
+          className={classnames(styles.legend, {
+            [styles.expanded]: !isCollapse,
+          })}
+        >
+          <MediaQuery maxWidth={breakpoints.lg - 1}>
+            <MobileLegendControl>
+              <Legend />
+              <BasemapSelector />
+            </MobileLegendControl>
+          </MediaQuery>
+          <MediaQuery minWidth={breakpoints.lg}>
             <Legend />
             <BasemapSelector />
-          </MobileLegendControl>
+          </MediaQuery>
+        </div>
       </div>
-    </div>
     </div>
   );
 };

@@ -9,8 +9,7 @@
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 12px 0 rgba(168, 168, 168, 0.25);
-  height: 40px;
-  width: 100%;
+
   @media screen and (max-width: map-get($breakpoints, lg)) {
     width: 296px;
   }
