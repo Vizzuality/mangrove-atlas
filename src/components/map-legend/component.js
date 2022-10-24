@@ -12,6 +12,7 @@ const Legend = ({ layers, drawingValue, drawingStatus, customGeojsonFeatures }) 
 
   return (
     <Fragment>
+
       {(drawingStatus === "progress" || !!drawingValue || !!customGeojsonFeatures) && (
         <LegendItem key={customLayer.id} {...customLayer} />
       )}

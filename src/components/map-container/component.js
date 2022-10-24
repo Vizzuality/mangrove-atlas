@@ -120,7 +120,7 @@ export const MapContainer = ({
   return (
     <div className={styles.mapContainerWrapper}>
 
-    
+
     <div className={styles.mapContainer}>
       <MangroveMap
         viewport={viewport}
@@ -155,13 +155,10 @@ export const MapContainer = ({
           [styles.expanded]: !isCollapse,
         })}
       >
-        <MediaQuery maxWidth={breakpoints.sm - 1}>
-          <MobileLegendControl />
-        </MediaQuery>
-        <div className={styles.tooltip}>
-          <Legend />
-          <BasemapSelector />
-        </div>
+          <MobileLegendControl>
+            <Legend />
+            <BasemapSelector />
+          </MobileLegendControl>
       </div>
     </div>
     </div>
