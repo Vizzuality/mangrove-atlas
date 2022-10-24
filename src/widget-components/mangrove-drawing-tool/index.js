@@ -10,6 +10,7 @@ import { fetchAlerts } from 'modules/alerts/actions';
 import { setCurrent, setDrawingValue, setDrawingMode, setDrawingStatus, setCustomGeojsonFeatures } from 'modules/drawing-tool/actions';
 import { setCurrent as setCurrentLocation } from "modules/locations/actions";
 import { setBounds } from "modules/map/actions";
+import { setMobileView } from 'modules/app/actions';
 
 import Component from './component';
 
@@ -17,7 +18,9 @@ const mapStateToProps = (state) => ({
   current: state.drawingTool.current,
   drawingMode: state.drawingTool.drawingMode,
   drawingValue: state.drawingTool.drawingValue,
-  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
+  mapView: state.app.mobile.mapView,
+
 });
 
 const mapDispatchToProps = {
@@ -34,7 +37,8 @@ const mapDispatchToProps = {
   fetchMangroveBlueCarbonData,
   fetchAlerts,
   setCustomGeojsonFeatures,
-  setBounds
+  setBounds,
+  setMobileView,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

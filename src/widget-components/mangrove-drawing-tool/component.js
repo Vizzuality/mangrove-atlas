@@ -38,7 +38,9 @@ export const MangroveDrawingTool = ({
   fetchAlerts,
   setCustomGeojsonFeatures,
   customGeojsonFeatures,
-  mobile
+  mapView,
+  setMobileView,
+  mobile,
 }) => {
   const onDropAccepted = useCallback(
     async (acceptedFiles) => {
@@ -166,6 +168,7 @@ export const MangroveDrawingTool = ({
   const [openPanel, setOpenPanel] = useState(true);
 
   const handleDrawingMode = useCallback(() => {
+    mobile && setMobileView(!mapView);
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
@@ -198,7 +201,7 @@ export const MangroveDrawingTool = ({
         >
           <Icon name="polyline" size="md" /> {/* primary color */}
           <span className={styles.title}>
-            {!mobile && current === "drawPolygon"
+            {current === "drawPolygon"
               ? "Start drawing on the map"
               : "Draw area"}
           </span>
