@@ -14,7 +14,8 @@ const Header = ({
   collapseAll,
   expandAll,
   setMobileView,
-  widgets
+  widgets,
+  drawingMode,
 }) => {
 
   const onClickCollapseAll = () => {
@@ -49,36 +50,38 @@ const Header = ({
           </h1>
         </button>
         <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
-        <div className={styles.headerBtns}>
-          {isCollapsed && (
-              <Button
-                hasBackground
-                hasContrast
-                onClick={onClickExpandAll}
-                isDisabled={widgets.length === 1}
-              >
-                Expand all widgets
-              </Button>
-            )}
-            {!isCollapsed && (
-              <Button
-                isTransparent
-                isGrey
-                onClick={onClickCollapseAll}
-                isDisabled={widgets.length === 1}
-              >
-                Collapse all widgets
-              </Button>
-            )}
-          <Button
-            className={styles.printBtn}
-            isTransparent
-            isGrey
-            onClick={onClickDownload}
-          >
-            Download as PDF
-          </Button>
-        </div>
+        {!drawingMode && (
+          <div className={styles.headerBtns}>
+            {isCollapsed && (
+                <Button
+                  hasBackground
+                  hasContrast
+                  onClick={onClickExpandAll}
+                  isDisabled={widgets.length === 1}
+                >
+                  Expand all widgets
+                </Button>
+              )}
+              {!isCollapsed && (
+                <Button
+                  isTransparent
+                  isGrey
+                  onClick={onClickCollapseAll}
+                  isDisabled={widgets.length === 1}
+                >
+                  Collapse all widgets
+                </Button>
+              )}
+            <Button
+              className={styles.printBtn}
+              isTransparent
+              isGrey
+              onClick={onClickDownload}
+            >
+              Download as PDF
+            </Button>
+          </div>
+        )}
       </div>
       )}
     </div>

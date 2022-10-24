@@ -10,10 +10,8 @@ function delay(ms) {
 }
 
 export function* getWidgets() {
-  const isDesktop = window.matchMedia(`(min-width: ${breakpoints.md}px)`).matches;
   const { widgets } = DATA;
 
-  if (isDesktop) {
     for (let i = 0; i < widgets.length; i++) {
       if (widgets[i].slug === 'mangrove_extent') {
         yield put(toggleLayerActive({
@@ -22,7 +20,6 @@ export function* getWidgets() {
         }));
       }
     }
-  }
 
   yield put(fetchSucceeded(widgets));
 }
