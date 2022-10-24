@@ -13,7 +13,7 @@ const FooterMenu = () => (
   <div className={styles.footerMenu}>
     <div className={styles.menu}>
       <NavMenu mobile />
-      <SearchLocation mobile={true} />
+      <SearchLocation mobile />
       <DrawingToolControls mobile />
       <WidgetsMenu mobile />
       <ViewSelector mobile />

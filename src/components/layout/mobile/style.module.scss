@@ -37,8 +37,13 @@
 
 .widgetWrapper {
   z-index: 7;
-  max-width: $widgetWidthMobile;
+  max-width: $widgetWidth;
   page-break-inside: avoid;
   break-inside: avoid;
   margin: auto;
+
+  @media (max-width: map-get($breakpoints, sm)) and (max-width: map-get($breakpoints, lg)) {
+    display: flex;
+    max-width: $widgetWidthMobile;
+  }
 }

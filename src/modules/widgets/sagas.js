@@ -1,6 +1,5 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
 import DATA from 'config/data';
-import { breakpoints } from 'utils/responsive';
 import { toggleActive as toggleLayerActive, fetchLayers } from 'modules/layers/actions';
 import { setCurrent } from 'modules/dashboards/actions';
 import { fetchSucceeded, toggleActive, collapseAll } from './actions';

@@ -35,6 +35,7 @@ const DrawingToolControls = ({
         toggleModalAlert(true);
         setDrawingMode(value);
       }
+      
       if (modalStatus) {
         setDrawingValue(null);
         setCustomGeojsonFeatures(null);
@@ -88,7 +89,7 @@ const DrawingToolControls = ({
             alt={drawingMode ? "worldwide location" : "create custom area"}
             name={drawingMode ? "globe" : "polyline"}
           />
-          <span className={styles.menuItemTitle}>Place</span>
+          <span className={styles.menuItemTitle}>{drawingMode ? "Place" : "Custom"}</span>
         </button>
       ) : (
         <>

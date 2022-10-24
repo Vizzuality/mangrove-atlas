@@ -11,6 +11,7 @@ export const DrawingEditor = ({
   drawingValue,
   setDrawingStatus,
   setCustomGeojsonFeatures,
+  setMobileView
 }) => {
   const editorRef = useRef(null);
 
@@ -100,10 +101,12 @@ export const DrawingEditor = ({
         if (EDITION_TYPES.includes(editType)) {
           setCurrent("editing");
           setDrawingValue(dataToStorage);
+          setMobileView(false)
         }
 
         if (UPDATE_TYPES.includes(editType)) {
           setDrawingValue(dataToStorage);
+          setMobileView(false)
         }
       }}
     />
