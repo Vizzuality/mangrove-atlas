@@ -46,7 +46,7 @@ const Header = ({
             [styles._long]: location.name.length >= 30,
           }
           )}>
-            {location.name}
+              {drawingMode ? "Custom area" : location.name}
           </h1>
         </button>
         <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
