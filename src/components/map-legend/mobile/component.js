@@ -1,13 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import MediaQuery from 'react-responsive';
 import { breakpoints } from 'utils/responsive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.scss';
 
-const MobileLegendControl = ({ isCollapsed, toggleCollapse }) => {
+const MobileLegendControl = ({ isCollapsed, toggleCollapse, children }) => {
   const onToggleCollapsed = () => {
     toggleCollapse(!isCollapsed);
   };
@@ -15,24 +14,23 @@ const MobileLegendControl = ({ isCollapsed, toggleCollapse }) => {
   return (
     <Fragment>
       <MediaQuery maxWidth={breakpoints.lg - 1}>
-        <div className={classnames(styles.layersCollapse,
-          { [styles.collapse]: isCollapsed })}
-        >
-          <div className={classnames(styles.title,
-            { [styles.collapse]: isCollapsed })}
-          >
-            <span>Layers</span>
+        <div className={styles.legendContainer}>
+          <div className={styles.layersCollapse}>
+            <div className={styles.title}>
+              <span>Layers</span>
+            </div>
+            <button
+              type="button"
+              className={styles.layersBtn}
+              onClick={onToggleCollapsed}
+            >
+              {isCollapsed
+                ? <FontAwesomeIcon icon={faChevronDown} />
+                : <FontAwesomeIcon icon={faChevronUp} />
+              }
+            </button>
           </div>
-          <button
-            type="button"
-            className={styles.layersBtn}
-            onClick={onToggleCollapsed}
-          >
-            {isCollapsed
-              ? <FontAwesomeIcon icon={faChevronDown} />
-              : <FontAwesomeIcon icon={faChevronUp} />
-            }
-          </button>
+          {!isCollapsed && children}
         </div>
       </MediaQuery>
     </Fragment>
