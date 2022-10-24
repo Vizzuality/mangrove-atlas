@@ -9,11 +9,11 @@ import MangroveDrawingTool from "widget-components/mangrove-drawing-tool";
 
 import styles from './style.module.scss';
 
-const MobileLayout = ({ drawingMode }) => (
+const MobileLayout = ({ drawingMode, mapView }) => (
   <div className={styles.printOnly_wrapper}>
     <div className={styles.dashboards}>
       <Header />
-      {drawingMode ? (
+      {drawingMode && !mapView ? (
         <div className={styles.widgetWrapper}>
           <MangroveDrawingTool mobile />
         </div>

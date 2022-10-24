@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import { setCurrent, setDrawingValue, setDrawingStatus, setCustomGeojsonFeatures } from 'modules/drawing-tool/actions';
+import { setMobileView } from 'modules/app/actions';
 
 import Component from './component';
 
@@ -13,7 +14,8 @@ const mapDispatchToProps = {
   setCurrent,
   setDrawingValue,
   setDrawingStatus,
-  setCustomGeojsonFeatures
+  setCustomGeojsonFeatures,
+  setMobileView
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -31,7 +31,7 @@ export const WidgetDrawingToolControls = ({
 
   return (
     <div className={styles.widgetControlsWrapper}>
-      {restart && !isLoading && (<p className={styles.description}>Explanation: Lorem ipsum</p>)}
+      {restart && !isLoading && (<p className={styles.description}>An error occurred while fetching the data. You can try again</p>)}
       <div className={styles.btnWrapper}>
         {isLoading && (
           <Button hasBackground onClick={abortRequest}>

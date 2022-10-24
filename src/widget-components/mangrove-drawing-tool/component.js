@@ -162,7 +162,7 @@ export const MangroveDrawingTool = ({
       expandAll();
     }
     if(drawingValue && mobile) setMobileView(false);
-  }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
+  }, [drawingMode, drawingValue, expandAll, current, setCurrent, mobile, setMobileView]);
 
 
   const [openPanel, setOpenPanel] = useState(true);
@@ -173,7 +173,7 @@ export const MangroveDrawingTool = ({
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
     mobile && setOpenPanel(false);
-  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures]);
+  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures, mobile, setMobileView, mapView]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
