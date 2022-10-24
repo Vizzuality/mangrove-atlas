@@ -148,6 +148,12 @@
       }
     }
 
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      font-size: 16px;
+      h3 {
+        font-size: 24px;
+      }
+    }
 
     .modalCheckbox {
       display: flex;
@@ -166,5 +172,10 @@
     justify-content: space-between;
     margin: auto;
     max-width: 50%;
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      max-width: 70%;
+    }
   }
 }
+
