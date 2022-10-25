@@ -315,7 +315,7 @@ class Map extends Component {
         {
           sourceLayer: "MOW_Global_Mangrove_Restoration",
           source: "restoration",
-          id: hoveredStateId,
+          id: "rest",
         },
         { hover: true }
       );
@@ -324,7 +324,7 @@ class Map extends Component {
     const onLeave = (e) => {
       if (hoveredStateId !== null) {
         this.map.setFeatureState(
-          { sourceLayer: "null", source: "restoration", id: null },
+          { sourceLayer: "null", source: "restoration", id: hoveredStateId },
           { hover: false }
         );
       }
