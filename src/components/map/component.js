@@ -113,7 +113,7 @@ class Map extends Component {
   componentDidUpdate(prevProps) {
     const { viewport: prevViewport, bounds: prevBounds } = prevProps;
     const { viewport, bounds } = this.props;
-    const { viewport: stateViewport } = this.state;  
+    const { viewport: stateViewport } = this.state;
 
     if (!isEqual(viewport, prevViewport)) {
       this.setState({
@@ -244,11 +244,11 @@ class Map extends Component {
           },
         });
       }
-        onClick({
-          event: e,
-          map: this.map,
-          mapContainer: this.mapContainer,
-        });
+      onClick({
+        event: e,
+        map: this.map,
+        mapContainer: this.mapContainer,
+      });
     };
 
     const MapFunctions = () => {
@@ -299,28 +299,26 @@ class Map extends Component {
         ({ layer }) => layer.id === "restoration"
       );
 
-      if (restorationData) {
-        if (hoveredStateId !== null) {
-          this.map.setFeatureState(
-            {
-              sourceLayer: "MOW_Global_Mangrove_Restoration",
-              source: "restoration",
-              id: hoveredStateId,
-            },
-            { hover: false }
-          );
-        }
-
-        hoveredStateId = restorationData?.id;
+      if (hoveredStateId !== null) {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
             source: "restoration",
             id: hoveredStateId,
           },
-          { hover: true }
+          { hover: false }
         );
       }
+
+      hoveredStateId = restorationData?.id;
+      this.map.setFeatureState(
+        {
+          sourceLayer: "MOW_Global_Mangrove_Restoration",
+          source: "restoration",
+          id: hoveredStateId,
+        },
+        { hover: true }
+      );
     };
 
     const onLeave = (e) => {
