@@ -15,6 +15,7 @@ function* flyToCurrentLocation() {
   const state = yield select();
   const location = currentLocation(state);
   const drawingValue = state.drawingTool.drawingValue;
+  const drawingMode = state.drawingTool.drawingMode;
   const { mapView } = state.app.mobile;
 
   if (!!drawingValue?.length) {
@@ -39,7 +40,7 @@ function* flyToCurrentLocation() {
     );
   }
 
-  if (location && !drawingValue) {
+  if (location && !drawingValue && !drawingMode) {
     if (location.location_type === "worldwide") {
       if (!state.map.isViewportFixed) {
         yield put(resetViewport());
@@ -66,7 +67,6 @@ function* flyToCurrentLocation() {
         );
       }
     }
-
     yield put(setViewportFixed({ value: false }));
   }
 }

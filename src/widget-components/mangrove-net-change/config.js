@@ -8,18 +8,13 @@ export const numberFormat = format(".2~f");
 export const smallNumberFormat = format(".4~f");
 export const formatAxis = format(",.0d");
 
-// const getFormat = (v) => {
-//   const decimalCount = -Math.floor(Math.log10(v) + 1);
-//   // if (!decimalCount) return null;
-
-//   const formatByDecimals = format(
-//     `.${decimalCount === "Infinity" ? 1 : decimalCount}~f`
-//   );
-//   return formatByDecimals(v);
-//   if (v < 0.01) return smallNumberFormat(v);
-//   else if (v < 0.001) return smallNumberFormat(v);
-//   else return formatAxis(v);
-// };
+const getFormat = (v) => {
+  const decimalCount = -Math.floor(Math.log10(v) + 1) + 1;
+  const formatByDecimals = format(
+    `.${decimalCount === Infinity ?  1 : Math.abs(decimalCount)}~f`
+  );
+  return formatByDecimals(v);
+};
 
 const widgetData = (data, unit) => {
   const firstYear = data[0]?.year;
@@ -108,12 +103,11 @@ const CONFIG = {
         yAxis: {
           tick: { fontSize: 12, fill: "rgba(0, 0, 0, 0.54)" },
           tickFormatter: (v) => {
-            const result = unit === "ha" ? v * 100 : v;
+            const parsedNumber = unit === "ha" ? v * 100 : v;
+            const result = getFormat(Math.abs(parsedNumber))
             return result === 0
               ? 0
-              : Math.abs(v) < 0.01
-              ? smallNumberFormat(result)
-              : formatAxis(result);
+              : result;
           },
           tickMargin: 10,
           orientation: "right",
