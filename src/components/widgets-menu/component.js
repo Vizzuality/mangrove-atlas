@@ -48,7 +48,7 @@ const WidgetsMenu = ({
           })}
           onClick={() => toggleModal(!isOpen)}
         >
-          <Icon name="ecosystem_services" className={cx([styles.icon])} />
+          <Icon name="ecosystem_services" className={cx([styles.icon], [styles.ecosystem_services] )} />
           <span className={styles.menuItemTitle}>Category</span>
         </button>
       ) : (
@@ -76,7 +76,7 @@ const WidgetsMenu = ({
                     [styles._active]: currentDashboard === slug,
                   })}
                 >
-                  <Icon name={slug} className={cx([styles.icon])} alt={name} />
+                  <Icon name={slug} className={cx([styles.icon], [styles[slug]])} alt={name} />
                 </li>
               </button>
             ))}
@@ -109,7 +109,7 @@ const WidgetsMenu = ({
                 }}
                 className={cx({ [styles._active]: currentDashboard === slug })}
               >
-                <Icon name={slug} className={cx([styles.icon])} alt={name} />
+                <Icon name={slug} className={cx([styles.icon], [styles[slug]])} alt={name} />
                 <span>{name}</span>
               </li>
             ))}
