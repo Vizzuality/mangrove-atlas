@@ -26,6 +26,10 @@
           background-color: $primary;
           fill: $white;
           box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+
+          &.ecosystem_services {
+            stroke: $white;
+          }
         }
       }
 
@@ -41,6 +45,12 @@
     border-radius: 30px;
     background-color: $white;
     fill: $primary;
+
+    &.ecosystem_services {
+      width: 37px;
+      height: 37px;
+      stroke: $primary;
+    }
   }
 }
 
@@ -74,6 +84,7 @@
   }
 
 
+
   &.mobile {
     flex-direction: row;
     margin: 0;
@@ -91,6 +102,7 @@
         .icon {
           background-color: $white;
           fill: $primary;
+          stroke: $primary;
         }
       }
     }
@@ -98,8 +110,7 @@
     .icon {
       background-color: #00AFA7;
       fill: $white;
-      width: 40px;
-      height: 40px;
+      stroke: $white;
     }
 
     .menuItemTitle {

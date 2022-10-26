@@ -4,6 +4,134 @@
     {
       "icon": {
         "paths": [
+          "M274.812 621.663c40.809 0 73.891 33.082 73.891 73.891s-33.082 73.891-73.891 73.891c-40.809 0-73.891-33.082-73.891-73.891s33.082-73.891 73.891-73.891z",
+          "M496.485 621.663c40.809 0 73.891 33.082 73.891 73.891s-33.082 73.891-73.891 73.891c-40.809 0-73.891-33.082-73.891-73.891s33.082-73.891 73.891-73.891z",
+          "M496.485 276.839c40.809 0 73.891 33.082 73.891 73.891s-33.082 73.891-73.891 73.891c-40.809 0-73.891-33.082-73.891-73.891s33.082-73.891 73.891-73.891z",
+          "M718.158 621.663c40.809 0 73.891 33.082 73.891 73.891s-33.082 73.891-73.891 73.891c-40.809 0-73.891-33.082-73.891-73.891s33.082-73.891 73.891-73.891z",
+          "M274.812 646.294v-123.152h443.345v123.152",
+          "M496.485 449.251v197.042"
+        ],
+        "attrs": [
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          },
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          },
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          },
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          },
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          },
+          {
+            "fill": "none",
+            "stroke": "rgb(0, 133, 127)",
+            "strokeLinejoin": "round",
+            "strokeLinecap": "butt",
+            "strokeMiterlimit": "4",
+            "strokeWidth": 62.06060606060606
+          }
+        ],
+        "width": 993,
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "chart"
+        ]
+      },
+      "attrs": [
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        },
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        },
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        },
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        },
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        },
+        {
+          "fill": "none",
+          "stroke": "rgb(0, 133, 127)",
+          "strokeLinejoin": "round",
+          "strokeLinecap": "butt",
+          "strokeMiterlimit": "4",
+          "strokeWidth": 62.06060606060606
+        }
+      ],
+      "properties": {
+        "order": 6,
+        "id": 1,
+        "prevSize": 32,
+        "name": "ecosystem_services"
+      },
+      "setIdx": 0,
+      "setId": 11,
+      "iconIdx": 1
+    },
+    {
+      "icon": {
+        "paths": [
           "M518.426 193.793c-12.117-12.118-31.766-12.118-43.883 0l-197.476 197.474c-12.118 12.12-12.118 31.766 0 43.886 12.118 12.117 31.765 12.117 43.882 0l144.505-144.505v390.541h62.061v-390.541l144.505 144.505c12.117 12.117 31.763 12.117 43.883 0 12.117-12.12 12.117-31.766 0-43.886l-197.477-197.474zM186.182 619.129v-31.030h-62.061v124.121c0 68.549 55.571 124.121 124.121 124.121h496.485c68.549 0 124.121-55.572 124.121-124.121v-124.121h-62.061v124.121c0 34.276-27.785 62.061-62.061 62.061h-496.485c-34.275 0-62.061-27.785-62.061-62.061v-93.091z"
         ],
         "attrs": [
