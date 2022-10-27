@@ -28,50 +28,56 @@ const DrawingToolControls = ({
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
-
-  const handleDrawing =
-    (value) => {
-      if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.length) && modalStatus === null) {
-        toggleModalAlert(true);
-        setDrawingMode(value);
-      }
-      
-      if (modalStatus) {
-        setDrawingValue(null);
-        setCustomGeojsonFeatures(null);
-        setDrawingMode(!value);
-      }
-
-      if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
-        setDrawingMode(true);
-      }
-
-      if (value && !drawingValue?.length && !customGeojsonFeatures?.length) {
-        setDrawingMode(!value);
-      }
+  const [sidebarActive, setSidebarActive] = useState(null)
+  const handleDrawing = useCallback((value, type) => {
+    setSidebarActive(type)
+    if (
+      value &&
+      (!!drawingValue?.length || !!customGeojsonFeatures?.length) &&
+      modalStatus === null
+    ) {
+      toggleModalAlert(true);
+      setDrawingMode(value);
     }
-  ;
 
-  const handleReset = useCallback(() => {
-    setDrawingValue(null);
-    setCustomGeojsonFeatures(null);
-    toggleModalAlert(!isOpenModalAlert);
+    if (modalStatus) {
+      setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
+      setDrawingMode(!value);
+    }
 
-  }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert]);
+    if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
+      setDrawingMode(true);
+    }
 
-  const handleCancel = useCallback(
+    if (value && !drawingValue?.length && !customGeojsonFeatures?.length) {
+      setDrawingMode(!value);
+    }
+    setTimeout(() => {
+      setSidebarActive(false);
+    }, 1000);
+  }, [customGeojsonFeatures, drawingValue, modalStatus, setCustomGeojsonFeatures, setDrawingMode,setDrawingValue]);
+
+  const handleReset = useCallback(
     () => {
-      toggleModalAlert(false);
-      closeSearchPanel();
+      setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
+      toggleModalAlert(!isOpenModalAlert);
+      sidebarActive !== "drawingTool" && setDrawingMode(false);
     },
-    [toggleModalAlert, closeSearchPanel]
+    // eslint-disable-next-line
+    [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert, setDrawingMode]
   );
+
+  const handleCancel = useCallback(() => {
+    toggleModalAlert(false);
+    closeSearchPanel();
+  }, [toggleModalAlert, closeSearchPanel]);
 
   const handleChange = useCallback(
     () => myStorage.setItem("drawingAlert", false),
     [myStorage]
   );
-
 
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
@@ -81,7 +87,7 @@ const DrawingToolControls = ({
             [styles._active]: drawingMode,
           })}
           onClick={() => {
-            handleDrawing(drawingMode);
+            handleDrawing(drawingMode, null);
             drawingMode && toggleModalAlert(true);
           }}
         >
@@ -89,7 +95,9 @@ const DrawingToolControls = ({
             alt={drawingMode ? "worldwide location" : "create custom area"}
             name={drawingMode ? "globe" : "polyline"}
           />
-          <span className={styles.menuItemTitle}>{drawingMode ? "Place" : "Custom"}</span>
+          <span className={styles.menuItemTitle}>
+            {drawingMode ? "Place" : "Custom"}
+          </span>
         </button>
       ) : (
         <>
@@ -97,16 +105,12 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             <Link
               to={{ type: "PAGE/APP" }}
-              onClick={() => handleDrawing(true)}
+              onClick={handleDrawing}
               className={cx(styles.sidebarItem, {
                 [styles._active]: locationType === "PAGE/APP" && !drawingMode,
               })}
             >
-              <Icon
-                name="globe"
-                size="md"
-                alt="worldwide location"
-              />
+              <Icon name="globe" size="md" alt="worldwide location" />
             </Link>
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
               <SearchLocation
@@ -117,7 +121,7 @@ const DrawingToolControls = ({
             </div>
             <button
               type="button"
-              onClick={() => handleDrawing(drawingMode)}
+              onClick={() => handleDrawing(drawingMode, 'drawingTool')}
               className={cx(styles.sidebarItem, {
                 [styles._active]: drawingMode && !locationsModal,
               })}
@@ -132,7 +136,12 @@ const DrawingToolControls = ({
           </div>
         </>
       )}
-      <Modal isOpen={isOpenModalAlert} onRequestClose={handleCancel} closeButton centered>
+      <Modal
+        isOpen={isOpenModalAlert}
+        onRequestClose={handleCancel}
+        closeButton
+        centered
+      >
         <div className={styles.modalContent}>
           <div className={styles.modalDescription}>
             <h3>Reset the page and delete area</h3>
@@ -152,18 +161,10 @@ const DrawingToolControls = ({
             </div>
           </div>
           <div className={styles.modalButtons}>
-            <Button
-              type="button"
-              isTransparent
-              onClick={handleCancel}
-            >
+            <Button type="button" isTransparent onClick={handleCancel}>
               Cancel
             </Button>
-            <Button
-              type="button"
-              hasBackground
-              onClick={handleReset}
-            >
+            <Button type="button" hasBackground onClick={handleReset}>
               Reset page
             </Button>
           </div>
