@@ -15,7 +15,7 @@ import styles from 'components/widget/style.module.scss';
 // import { faAssistiveListeningSystems } from '@fortawesome/free-solid-svg-icons';
 
 const numberFormat = format(',.3r');
-const sortRanking = (data, filter) => orderBy(data, d => -Math.abs(d[filter]))
+const sortRanking = (data, filter) => orderBy(data, d => Math.abs(d[filter]))
   .map((f, index) => ({ ...f, x: index }));
 
 const widgetData = data => data.map(d => ({
@@ -25,9 +25,8 @@ const widgetData = data => data.map(d => ({
 }));
 
 export const CONFIG = {
-  parse: (data, filter, limit = 5 ) => {
+  parse: (data, limit = 5 ) => {
     const chartData = widgetData(data);
-    const dataRanked = sortRanking(chartData, filter);
     const max = Math.max(...flatten(chartData.map(d => [Math.abs(d.gain), Math.abs(d.loss)])));
     const domainX = [(-max + (-max * 0.05)), (max + (max * 0.05))];
     const startDomain = parseInt(domainX[0], 10);
@@ -35,7 +34,6 @@ export const CONFIG = {
 
     return {
       chartData,
-      dataRanked,
       chartConfig: {
         layout: 'vertical',
         height: limit === 5 ? 400 : limit / 5 * 100 + 350,
@@ -73,8 +71,7 @@ export const CONFIG = {
               label: {
                 content: (prs) => {
                   const { index, y } = prs;
-                  const { name, iso } = dataRanked[index];
-
+                  const { name, iso } = chartData[index];
                   return (
                     <g className={styles.activity_widget}>
                       <Link key={name} to={{ type: 'PAGE/COUNTRY', payload: { iso } }}>

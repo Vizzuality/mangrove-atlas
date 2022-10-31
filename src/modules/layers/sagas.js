@@ -22,7 +22,6 @@ function* getLayers() {
   const activeLayers = activeWidgets.map(w => w.layersIds);
   const updatedLayers = layers.map((l) => {
     const newLayer = Object.assign({}, l);
-    
     if (activeLayers.includes(l.id)) {
       newLayer.isActive = true;
     }

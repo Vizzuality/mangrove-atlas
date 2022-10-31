@@ -10,16 +10,6 @@ function delay(ms) {
 
 export function* getWidgets() {
   const { widgets } = DATA;
-
-    for (let i = 0; i < widgets.length; i++) {
-      if (widgets[i].slug === 'mangrove_extent') {
-        yield put(toggleLayerActive({
-          id: 'extent',
-          isActive: false
-        }));
-      }
-    }
-
   yield put(fetchSucceeded(widgets));
 }
 

@@ -157,6 +157,7 @@ export default {
     {
       name: "Mangrove extent",
       id: "extent",
+      isActive: true,
     },
     {
       name: "Mangrove change",
