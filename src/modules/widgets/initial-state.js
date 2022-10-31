@@ -8,6 +8,7 @@ export default {
     extent: {
       year: null,
       unit: null,
+      isActive: true,
     },
     net: {
       startYear: null,

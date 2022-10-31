@@ -15,7 +15,7 @@ $space-left-map-mobile: 20px;
     height: 200%;
     display: flex;
     justify-content: center;
-    background-color: aquamarine;
+    margin: auto;
   }
 }
 
@@ -23,12 +23,15 @@ $space-left-map-mobile: 20px;
   width: 100%;
   height: 100%;
   position: relative;
-
+  
   @media print {
+    display: flex;
+    justify-content: center;
+    margin: auto;
     position: relative;
-    background-color: bisque;
-    // width: 100%;
-    // height: 1900px;
+    align-items: center;
+    align-content: center;
+    width: 100%;
   }
 }
 

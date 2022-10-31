@@ -19,17 +19,13 @@ import styles from "./style.module.scss";
 export const MapContainer = ({
   viewport,
   setViewport,
-  setPopup,
   removePopup,
   isCollapse,
   mapboxApiAccessToken,
   mapStyle,
   bounds,
-  goToCustomArea,
   goToCountry,
   goToWDPA,
-  currentLocation,
-  drawingValue,
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(
