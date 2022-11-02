@@ -20,44 +20,59 @@ const DrawingToolControls = ({
   mobile,
   openModal,
   setCustomGeojsonFeatures,
-  customGeojsonFeatures
+  customGeojsonFeatures,
+  locationsModal,
+  closeSearchPanel,
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
-
-  const handleDrawing = 
-    (value) => {
-      if (value && (!!drawingValue?.length || !!customGeojsonFeatures?.lenth) && modalStatus === null) {
-        toggleModalAlert(true);
-        setDrawingMode(value);
-      }
-      if (modalStatus) {
-        setDrawingValue(null);
-        setCustomGeojsonFeatures(null);
-        setDrawingMode(!value);
-      }
-
-      if (!value && (!drawingValue?.length || !customGeojsonFeatures?.lenth)) {
-        setDrawingMode(true);
-      }
-      
+  const [sidebarActive, setSidebarActive] = useState(null)
+  const handleDrawing = useCallback((value, type) => {
+    setSidebarActive(type)
+    if (
+      value &&
+      (!!drawingValue?.length || !!customGeojsonFeatures?.length) &&
+      modalStatus === null
+    ) {
+      toggleModalAlert(true);
+      setDrawingMode(value);
     }
 
-  ;
+    if (modalStatus) {
+      setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
+      setDrawingMode(!value);
+    }
 
-  const handleReset = useCallback(() => {
-    setDrawingValue(null);
-    setCustomGeojsonFeatures(null);
-    toggleModalAlert(!isOpenModalAlert);
+    if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
+      setDrawingMode(true);
+    }
 
-  }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert]);
+    if (value && !drawingValue?.length && !customGeojsonFeatures?.length) {
+      setDrawingMode(!value);
+    }
+    setTimeout(() => {
+      setSidebarActive(false);
+    }, 1000);
+  }, [customGeojsonFeatures, drawingValue, modalStatus, setCustomGeojsonFeatures, setDrawingMode,setDrawingValue]);
 
-  const handleCancel = useCallback(
-    () => toggleModalAlert(false),
-    [toggleModalAlert]
+  const handleReset = useCallback(
+    () => {
+      setDrawingValue(null);
+      setCustomGeojsonFeatures(null);
+      toggleModalAlert(!isOpenModalAlert);
+      sidebarActive !== "drawingTool" && setDrawingMode(false);
+    },
+    // eslint-disable-next-line
+    [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert, setDrawingMode]
   );
+
+  const handleCancel = useCallback(() => {
+    toggleModalAlert(false);
+    closeSearchPanel();
+  }, [toggleModalAlert, closeSearchPanel]);
 
   const handleChange = useCallback(
     () => myStorage.setItem("drawingAlert", false),
@@ -67,9 +82,22 @@ const DrawingToolControls = ({
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
       {mobile ? (
-        <button className={styles.btn}>
-          <Icon name="ecosystem_services" />
-          <span className={styles.menuItemTitle}>Place</span>
+        <button
+          className={cx(styles.btn, {
+            [styles._active]: drawingMode,
+          })}
+          onClick={() => {
+            handleDrawing(drawingMode, null);
+            drawingMode && toggleModalAlert(true);
+          }}
+        >
+          <Icon
+            alt={drawingMode ? "worldwide location" : "create custom area"}
+            name={drawingMode ? "globe" : "polyline"}
+          />
+          <span className={styles.menuItemTitle}>
+            {drawingMode ? "Place" : "Custom"}
+          </span>
         </button>
       ) : (
         <>
@@ -77,25 +105,25 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             <Link
               to={{ type: "PAGE/APP" }}
-              onClick={() => handleDrawing(false)}
+              onClick={handleDrawing}
               className={cx(styles.sidebarItem, {
                 [styles._active]: locationType === "PAGE/APP" && !drawingMode,
               })}
             >
-              <Icon
-                name="globe"
-                size="md"
-                alt="worldwide location"
-              />
+              <Icon name="globe" size="md" alt="worldwide location" />
             </Link>
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
-              <SearchLocation className={styles._active} handleDrawing={handleDrawing} isOpenModalAlert={isOpenModalAlert} />
+              <SearchLocation
+                className={styles._active}
+                handleDrawing={handleDrawing}
+                isOpenModalAlert={isOpenModalAlert}
+              />
             </div>
             <button
               type="button"
-              onClick={() => handleDrawing(drawingMode)}
+              onClick={() => handleDrawing(drawingMode, 'drawingTool')}
               className={cx(styles.sidebarItem, {
-                [styles._active]: drawingMode,
+                [styles._active]: drawingMode && !locationsModal,
               })}
             >
               <Icon
@@ -108,7 +136,12 @@ const DrawingToolControls = ({
           </div>
         </>
       )}
-      <Modal isOpen={isOpenModalAlert} onRequestClose={handleCancel} closeButton centered>
+      <Modal
+        isOpen={isOpenModalAlert}
+        onRequestClose={handleCancel}
+        closeButton
+        centered
+      >
         <div className={styles.modalContent}>
           <div className={styles.modalDescription}>
             <h3>Reset the page and delete area</h3>
@@ -128,18 +161,10 @@ const DrawingToolControls = ({
             </div>
           </div>
           <div className={styles.modalButtons}>
-            <Button
-              type="button"
-              isTransparent
-              onClick={handleCancel}
-            >
+            <Button type="button" isTransparent onClick={handleCancel}>
               Cancel
             </Button>
-            <Button
-              type="button"
-              hasBackground
-              onClick={handleReset}
-            >
+            <Button type="button" hasBackground onClick={handleReset}>
               Reset page
             </Button>
           </div>

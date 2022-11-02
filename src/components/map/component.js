@@ -114,7 +114,7 @@ class Map extends Component {
   componentDidUpdate(prevProps) {
     const { viewport: prevViewport, bounds: prevBounds } = prevProps;
     const { viewport, bounds } = this.props;
-    const { viewport: stateViewport } = this.state;  
+    const { viewport: stateViewport } = this.state;
 
     if (!isEqual(viewport, prevViewport)) {
       this.setState({
@@ -310,11 +310,11 @@ class Map extends Component {
 
         });
       }
-        onClick({
-          event: e,
-          map: this.map,
-          mapContainer: this.mapContainer,
-        });
+      onClick({
+        event: e,
+        map: this.map,
+        mapContainer: this.mapContainer,
+      });
     };
 
     const MapFunctions = () => {
@@ -387,20 +387,19 @@ class Map extends Component {
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       );
+      hoveredStateId = restorationData?.id;
+      if (hoveredStateId !== null && restorationData) {
+        this.map.setFeatureState(
+          {
+            sourceLayer: "MOW_Global_Mangrove_Restoration",
+            source: "restoration",
+            id: hoveredStateId,
+          },
+          { hover: false }
+        );
+      }
 
-      if (restorationData) {
-        if (hoveredStateId !== null) {
-          this.map.setFeatureState(
-            {
-              sourceLayer: "MOW_Global_Mangrove_Restoration",
-              source: "restoration",
-              id: hoveredStateId,
-            },
-            { hover: false }
-          );
-        }
-
-        hoveredStateId = restorationData?.id;
+      if (hoveredStateId !== null && !restorationData) {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
@@ -410,16 +409,6 @@ class Map extends Component {
           { hover: true }
         );
       }
-    };
-
-    const onLeave = (e) => {
-      if (hoveredStateId !== null) {
-        this.map.setFeatureState(
-          { sourceLayer: "null", source: "restoration", id: null },
-          { hover: false }
-        );
-      }
-      hoveredStateId = null;
     };
 
     return (
@@ -454,7 +443,6 @@ class Map extends Component {
           onClick={onClickHandler}
           clickRadius={5}
           onHover={onHover}
-          onMouseLeave={onLeave}
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
         >

@@ -7,7 +7,7 @@
     @include menu-item-title;
   }
 
-  svg {
+  .icon {
     width: 60px;
     height: 60px;
     fill: $primary;
@@ -18,6 +18,20 @@
 
   &.mobile {
     @include menu-items-mobile;
+
+    .icon {
+      border-radius: 0px;
+      box-shadow: none;
+      fill: $white;
+    }
+
+    &._active {
+      .icon {
+        background-color: $white;
+        border-radius: 30px;
+        fill: $primary;
+      }
+    }
   }
 
   @media print {

@@ -19,17 +19,13 @@ import styles from "./style.module.scss";
 export const MapContainer = ({
   viewport,
   setViewport,
-  setPopup,
   removePopup,
   isCollapse,
   mapboxApiAccessToken,
   mapStyle,
   bounds,
-  goToCustomArea,
   goToCountry,
   goToWDPA,
-  currentLocation,
-  drawingValue,
 }) => {
   const onViewportChange = (newViewport) => {
     setViewport(
@@ -121,51 +117,52 @@ export const MapContainer = ({
 
   return (
     <div className={styles.mapContainerWrapper}>
+      <div className={styles.mapContainer}>
+        <MangroveMap
+          viewport={viewport}
+          bounds={bounds}
+          mapStyle={mapStyle}
+          mapboxApiAccessToken={mapboxApiAccessToken}
+          onViewportChange={onViewportChange}
+          onClick={clickHandler}
+          interactiveLayerIds={interactiveLayerIds}
+          onPopupClose={popupCloseHandler}
+        >
+          {() => (
+            <div className={styles.navigation}>
+              <MediaQuery minWidth={breakpoints.lg + 1}>
+                <FullscreenControl className={styles.fullscreen} />
+              </MediaQuery>
+              <MediaQuery minWidth={breakpoints.sm}>
+                <NavigationControl
+                  captureClick
+                  captureDoubleClick
+                  showCompass={true}
+                  className={styles.zoomControls}
+                  onViewportChange={onViewportChange}
+                />
+              </MediaQuery>
+            </div>
+          )}
+        </MangroveMap>
 
-    
-    <div className={styles.mapContainer}>
-      <MangroveMap
-        viewport={viewport}
-        bounds={bounds}
-        mapStyle={mapStyle}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={onViewportChange}
-        onClick={clickHandler}
-        interactiveLayerIds={interactiveLayerIds}
-        onPopupClose={popupCloseHandler}
-      >
-        {() => (
-          <div className={styles.navigation}>
-            <MediaQuery minWidth={breakpoints.lg + 1}>
-              <FullscreenControl className={styles.fullscreen} />
-            </MediaQuery>
-            <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl
-                captureClick
-                captureDoubleClick
-                showCompass={true}
-                className={styles.zoomControls}
-                onViewportChange={onViewportChange}
-              />
-            </MediaQuery>
-          </div>
-        )}
-      </MangroveMap>
-
-      <div
-        className={classnames(styles.legend, {
-          [styles.expanded]: !isCollapse,
-        })}
-      >
-        <MediaQuery maxWidth={breakpoints.sm - 1}>
-          <MobileLegendControl />
-        </MediaQuery>
-        <div className={styles.tooltip}>
-          <Legend />
-          <BasemapSelector />
+        <div
+          className={classnames(styles.legend, {
+            [styles.expanded]: !isCollapse,
+          })}
+        >
+          <MediaQuery maxWidth={breakpoints.lg - 1}>
+            <MobileLegendControl>
+              <Legend />
+              <BasemapSelector />
+            </MobileLegendControl>
+          </MediaQuery>
+          <MediaQuery minWidth={breakpoints.lg}>
+            <Legend />
+            <BasemapSelector />
+          </MediaQuery>
         </div>
       </div>
-    </div>
     </div>
   );
 };

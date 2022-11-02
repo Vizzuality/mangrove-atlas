@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
   location: currentLocation(state),
   isCollapsed: state.widgets.isCollapse,
   widgets: dashboardWidgets(state),
+  drawingMode: state.drawingTool.drawingMode,
 });
 
 const mapDispatchToProps = {

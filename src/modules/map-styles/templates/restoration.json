@@ -23,7 +23,7 @@
       "fill-opacity": [
         "case",
         ["boolean", ["feature-state", "hover"], false],
-        0.8,1],
+        1, 0.6],
       "fill-outline-color":
         [
           "interpolate",

@@ -44,10 +44,13 @@ const NavMenu = ({ mobile }) => {
     <>
       <button
         onClick={handleOpen}
-        className={cx(styles.navMenu, { [styles.mobile]: mobile })}
+        className={cx(styles.navMenu, {
+          [styles.mobile]: mobile,
+          [styles._active]: isOpen,
+        })}
       >
         <span className={styles.menuItemTitle}>Menu</span>
-        <Icon name="menu" alt="Menu" className={styles.introModalBtn} />
+        <Icon name="menu" alt="Menu" className={styles.icon} />
       </button>
       <Modal
         isOpen={isOpen}

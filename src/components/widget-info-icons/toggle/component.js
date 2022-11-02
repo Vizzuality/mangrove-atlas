@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import styles from './style.module.scss';
 
 const Toggle = ({ slug, layerId, layersIds, isActive, toggleActive, toggleCollapse }) => {
-
 const handleChange = () =>  {
   if (layersIds) {
     layersIds.forEach(lId => toggleActive({ id: slug, layerId: lId, isActive }));

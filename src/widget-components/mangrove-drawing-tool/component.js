@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -38,6 +38,9 @@ export const MangroveDrawingTool = ({
   fetchAlerts,
   setCustomGeojsonFeatures,
   customGeojsonFeatures,
+  mapView,
+  setMobileView,
+  mobile,
 }) => {
   const onDropAccepted = useCallback(
     async (acceptedFiles) => {
@@ -158,21 +161,29 @@ export const MangroveDrawingTool = ({
     if (drawingMode && drawingValue) {
       expandAll();
     }
-  }, [drawingMode, drawingValue, expandAll, current, setCurrent]);
+    if(drawingValue && mobile) setMobileView(false);
+  }, [drawingMode, drawingValue, expandAll, current, setCurrent, mobile, setMobileView]);
+
+
+  const [openPanel, setOpenPanel] = useState(true);
 
   const handleDrawingMode = useCallback(() => {
+    mobile && setMobileView(!mapView);
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
-  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures]);
+    mobile && setOpenPanel(false);
+  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures, mobile, setMobileView, mapView]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
     [acceptedFileItems, customGeojsonFeatures]
   );
-  return drawingValue || customGeojsonFeatures ? (
+
+  return drawingValue || customGeojsonFeatures  ? (
     <Widgets />
   ) : (
+    openPanel && (
     <ChartWidget
       name="Draw or upload an area"
       slug="drawingToolAlert"
@@ -235,9 +246,10 @@ export const MangroveDrawingTool = ({
         By uploading data you agree to the{" "}
         <a href="" className={styles.highlighted}>
           Terms of Service
-        </a> 
+        </a>
       </p>
     </ChartWidget>
+    )
   );
 };
 

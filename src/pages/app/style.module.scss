@@ -31,5 +31,6 @@
   }
   @media screen and (max-width: map-get($breakpoints, lg)) {
     max-width: 100%;
+    overflow-x: hidden;
   }
 }

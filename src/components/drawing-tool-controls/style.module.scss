@@ -72,6 +72,53 @@
       }
     }
   }
+
+  &.mobile {
+    margin: 0;
+    padding: 0;
+    width: 50px;
+
+    .btn {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      svg {
+        fill: $white;
+        stroke: $white;
+        border-radius: 30px;
+        box-sizing: content-box;
+        padding-top: 6px;
+        padding-bottom: 8.5px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+
+      &._active {
+        margin-top: 4px;
+        svg {
+          fill: $primary;
+          stroke: $primary;
+          stroke-width: 0.1px;
+          background-color: $white;
+          width: 40px;
+          height: 25px;
+        }
+        .menuItemTitle {
+          margin-top: 4px;
+        }
+      }
+    }
+    .menuItemTitle {
+      @include menu-item-title;
+      margin-bottom: 0;
+      margin-top: 1px;
+    }
+  }
 }
 
 .modalContent {
@@ -101,6 +148,12 @@
       }
     }
 
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      font-size: 16px;
+      h3 {
+        font-size: 24px;
+      }
+    }
 
     .modalCheckbox {
       display: flex;
@@ -111,7 +164,7 @@
       input {
         margin-right: 8px;
       }
-    } 
+    }
   }
 
   .modalButtons {
@@ -119,5 +172,10 @@
     justify-content: space-between;
     margin: auto;
     max-width: 50%;
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      max-width: 70%;
+    }
   }
 }
+
