@@ -23,7 +23,6 @@ function MangroveActivity({
   ...props
 }) {
   const { start_year, end_year, limit = 5, filter = "net" } = ui;
-  console.log(rawData)
 
   const years = useMemo(() => metadata?.years, [metadata]);
   const startYear = useMemo(() => metadata?.start_year, [metadata]);
@@ -209,7 +208,6 @@ function MangroveActivity({
   );
 
   const sortedData = sortRanking(chartData);
-console.log(sortedData)
   const chartRData = {
     data: chartData,
     config: chartConfig,
