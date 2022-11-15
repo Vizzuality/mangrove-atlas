@@ -111,7 +111,7 @@ export const CONFIG = {
                 return (
                   <g>
                     <foreignObject
-                      x={ex + (cos >= 0 ? 1 : -1)}
+                      x={ex + (cos >= 0 ? 1 : -10)}
                       y={ey - heightMargin * index - top}
                       width="100%"
                       height="100px"
