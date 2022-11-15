@@ -24,7 +24,7 @@ const SearchLocation = ({
 
   const handleModal = useCallback(() => {
     if (handleDrawing) {
-      handleDrawing(drawingMode);
+      handleDrawing(!drawingMode);
     }
     if (!drawingValue?.length || !customGeojsonFeatures?.length) {
       openSearchPanel();

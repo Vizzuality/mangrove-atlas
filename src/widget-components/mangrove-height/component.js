@@ -60,13 +60,12 @@ const MangroveHeight = ({
         year: currentYear,
       },
     });
-    setUi({
-      id: "height",
-      value: {
-        year: currentYear,
-      },
-    });
-  }, [setUi, currentYear, addFilter]);
+    if (!isLoading) {
+      setTimeout(() => {
+        setUi({ id: "height", value: { year: currentYear, } });
+      }, 0);
+    }
+  }, [setUi, currentYear, addFilter, isLoading]);
 
   const dateHandler = useCallback(
     (value) => {
