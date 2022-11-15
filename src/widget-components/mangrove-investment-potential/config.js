@@ -89,15 +89,6 @@ export const CONFIG = {
                   index,
                 } = props;
 
-                console.log({   cx,
-                  cy,
-                  midAngle,
-                  endAngle,
-                  outerRadius,
-                  category,
-                  percentage,
-                  index})
-
                 const RADIAN = Math.PI / 180;
                 const sin = Math.sin(-RADIAN * midAngle);
                 const cos = Math.cos(-RADIAN * midAngle);
@@ -111,10 +102,10 @@ export const CONFIG = {
                 return (
                   <g>
                     <foreignObject
-                      x={ex + (cos >= 0 ? 1 : -10)}
+                      x={ex + (cos >= 0 ? 1 : -6)}
                       y={ey - heightMargin * index - top}
-                      width="100%"
-                      height="100px"
+                      height="20px"
+                      width="125px"
                     >
                       <div
                         style={{
@@ -123,7 +114,7 @@ export const CONFIG = {
                           display: "flex",
                           color: "#A5A5A5",
                           lineHeight: "10px",
-                          width: "125px",
+                          width: "100%",
                           fontSize: "11px",
                         }}
                       >
