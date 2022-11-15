@@ -96,7 +96,7 @@ export const CONFIG = {
                 const my = cy + outerRadius * sin;
                 const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
                 const ey = my;
-                const heightMargin = percentage < 5 ? 16 : 5;
+                const heightMargin = percentage < 5 ? 16 : 6;
                 const top = endAngle < cy ? 6 : 0;
 
                 return (
@@ -104,12 +104,12 @@ export const CONFIG = {
                     <foreignObject
                       x={ex + (cos >= 0 ? 1 : -6)}
                       y={ey - heightMargin * index - top}
-                      height="20px"
+                      height="30px"
                       width="125px"
                     >
                       <div
                         style={{
-                          marginTop: 2,
+                          marginTop: 5,
                           marginBottom: 5,
                           display: "flex",
                           color: "#A5A5A5",
