@@ -89,6 +89,9 @@ export const CONFIG = {
                   index,
                 } = props;
 
+                console.log({
+                  percentage})
+
                 const RADIAN = Math.PI / 180;
                 const sin = Math.sin(-RADIAN * midAngle);
                 const cos = Math.cos(-RADIAN * midAngle);
@@ -97,12 +100,15 @@ export const CONFIG = {
                 const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
                 const ey = my;
                 const heightMargin = percentage < 5 ? 10 : 0;
-                const top = endAngle < cy ? 30 : 0;
+                const top = endAngle < cy ? 6 : 0;
+                // add
+                const INDEX = (percentage < 2 && index === 0) ? -0.75 : index;
+
                 return (
                   <g>
                     <foreignObject
                       x={ex + (cos >= 0 ? 1 : -1)}
-                      y={ey - heightMargin * index - top}
+                      y={ey - heightMargin * INDEX - top}
                       width="100%"
                       height="100px"
                     >
