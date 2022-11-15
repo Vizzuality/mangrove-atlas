@@ -5,10 +5,11 @@ import { fetchRequested, fetchSucceeded, fetchFailed } from './actions';
 
 function* getAlerts({ payload }) {
   const locationId = payload?.location_id;
+  const { drawingValue, ...params } = payload;
   yield put(fetchRequested());
   try {
     const alertsData = locationId === 'custom-area' ?
-    yield call(AlertsService.fetchMangroveCustomAreaAnalysisData, { geojson: payload.drawingValue }) : 
+    yield call(AlertsService.fetchMangroveCustomAreaAnalysisData, { geojson: payload.drawingValue, ...params }) : 
     yield call(AlertsService.fetchAlerts, payload);
     yield put(fetchSucceeded(alertsData));
   } catch (err) {
