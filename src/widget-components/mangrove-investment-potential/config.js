@@ -72,10 +72,10 @@ export const CONFIG = {
               cy: "50%",
               paddingAngle: 2,
               dataKey: "percentage",
-              nameKey: "category",
+              nameKey: "label",
               innerRadius: "60%",
               outerRadius: "80%",
-              isAnimationActive: false,
+              isAnimationActive: true,
               labelLine: false,
               label: (props) => {
                 const {

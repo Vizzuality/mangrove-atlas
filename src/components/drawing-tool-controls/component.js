@@ -46,6 +46,10 @@ const DrawingToolControls = ({
       setDrawingMode(!value);
     }
 
+    if (!modalStatus && (!!drawingValue || !!customGeojsonFeatures)) {
+      toggleModalAlert(true);
+    }
+
     if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
       setDrawingMode(true);
     }

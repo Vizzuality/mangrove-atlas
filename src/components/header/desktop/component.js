@@ -32,7 +32,6 @@ const Header = ({
   };
 
   const hasCustomArea = useMemo(() => !!drawingValue || !!customGeojsonFeatures, [drawingValue, customGeojsonFeatures]);
-
   return (
     <div className={styles.header}>
       <img className={styles.bg} src={background} alt="Background" />
