@@ -69,7 +69,7 @@ export const CONFIG = {
           pies: {
             y: {
               cx: "50%",
-              cy: "50%",
+              cy: "60%",
               paddingAngle: 2,
               dataKey: "percentage",
               nameKey: "label",
@@ -89,8 +89,14 @@ export const CONFIG = {
                   index,
                 } = props;
 
-                console.log({
-                  percentage})
+                console.log({   cx,
+                  cy,
+                  midAngle,
+                  endAngle,
+                  outerRadius,
+                  category,
+                  percentage,
+                  index})
 
                 const RADIAN = Math.PI / 180;
                 const sin = Math.sin(-RADIAN * midAngle);
@@ -99,16 +105,14 @@ export const CONFIG = {
                 const my = cy + outerRadius * sin;
                 const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
                 const ey = my;
-                const heightMargin = percentage < 5 ? 10 : 0;
+                const heightMargin = percentage < 5 ? 16 : 5;
                 const top = endAngle < cy ? 6 : 0;
-                // add
-                const INDEX = (percentage < 2 && index === 0) ? -0.75 : index;
 
                 return (
                   <g>
                     <foreignObject
                       x={ex + (cos >= 0 ? 1 : -1)}
-                      y={ey - heightMargin * INDEX - top}
+                      y={ey - heightMargin * index - top}
                       width="100%"
                       height="100px"
                     >
