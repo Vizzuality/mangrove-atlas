@@ -36,6 +36,7 @@ export const MangroveDrawingTool = ({
   fetchMangroveBiomassData,
   fetchMangroveBlueCarbonData,
   fetchAlerts,
+  alertsUi,
   setCustomGeojsonFeatures,
   customGeojsonFeatures,
   mapView,
@@ -123,6 +124,8 @@ export const MangroveDrawingTool = ({
           drawingValue: data.features,
           slug: ["mangrove_alerts"],
           location_id: "custom-area",
+          start_date: alertsUi.startDate,
+          end_date: alertsUi.endDate 
         });
       });
       return null; //TO DO feedback usuario
@@ -139,6 +142,7 @@ export const MangroveDrawingTool = ({
       fetchMangroveBiomassData,
       fetchMangroveBlueCarbonData,
       fetchAlerts,
+      alertsUi
     ]
   );
 
