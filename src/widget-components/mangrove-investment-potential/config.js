@@ -98,7 +98,6 @@ export const CONFIG = {
                 const ey = my;
                 const heightMargin = percentage < 5 ? 16 : 6;
                 const top = endAngle < cy ? 6 : 0;
-
                 return (
                   <g>
                     <foreignObject
@@ -137,7 +136,6 @@ export const CONFIG = {
                 style={{
                   flexDirection: "column",
                   marginTop: "10px",
-                  marginLeft: "-50px",
                 }}
                 payload={payload}
                 settings={[
