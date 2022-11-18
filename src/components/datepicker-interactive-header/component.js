@@ -80,7 +80,7 @@ const ReactSelectStyles = {
   menuList: () => ({
     overflowX: 'hidden',
     maxHeight: 250,
-
+    scrollbarWidth: 'thin',
   }),
   option: (provided, state) => ({
     ...provided,
