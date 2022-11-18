@@ -172,41 +172,58 @@ const CONFIG = {
                 justifyContent: "space-around",
                 marginLeft: "30px",
               }}
-              settings={[
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Gain",
-                        color: "#A6CB10",
-                        key: "gain",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value)
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Loss",
-                        color: "#EB6240",
-                        key: "loss",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value)
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
+              settings={
+              //   [
+              //   ...(drawingMode
+              //     ? [
+              //         {
+              //           label: "Gain",
+              //           color: "#A6CB10",
+              //           key: "gain",
+              //           format: (value) =>
+              //             `${
+              //               value === 0
+              //                 ? value
+              //                 : value < 1000
+              //                 ? smallNumberFormat(value)
+              //                 : numberFormat(value)
+              //             } ${unit === "ha" ? "ha" : "km²"}`,
+              //         },
+              //       ]
+              //     : []),
+              //   ...(drawingMode
+              //     ? [
+              //         {
+              //           label: "Loss",
+              //           color: "#EB6240",
+              //           key: "loss",
+              //           format: (value) =>
+              //             `${
+              //               value === 0
+              //                 ? value
+              //                 : value < 1000
+              //                 ? smallNumberFormat(value)
+              //                 : numberFormat(value)
+              //             } ${unit === "ha" ? "ha" : "km²"}`,
+              //         },
+              //       ]
+              //     : []),
+              //   {
+              //     label: "Net change",
+              //     color: "rgba(0,0,0,0.7)",
+              //     key: "netChange",
+              //     format: (value) =>
+              //       `${
+              //         value === 0
+              //           ? value
+              //           : value < 1000
+              //           ? smallNumberFormat(value)
+              //           : numberFormat(value)
+              //       } ${unit === "ha" ? "ha" : "km²"}`,
+              //     bulletType: "bar",
+              //   },
+              // ]
+              [[], [],
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
@@ -221,7 +238,8 @@ const CONFIG = {
                     } ${unit === "ha" ? "ha" : "km²"}`,
                   bulletType: "bar",
                 },
-              ]}
+              ]
+            }
             />
           ),
         },
