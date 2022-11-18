@@ -49,27 +49,27 @@ const widgetData = (data, unit) => {
   );
 };
 
-const getBars = (drawingMode) =>
-  drawingMode
-    ? {
-        gain: {
-          barSize: 10,
-          transform: `translate(${(4 + 10) / 2}, 0)`,
-          fill: "#A6CB10",
-          radius: [10, 10, 0, 0],
-          legend: "Gain",
-          isAnimationActive: false,
-        },
-        loss: {
-          barSize: 10,
-          transform: `translate(-${(4 + 10) / 2}, 0)`,
-          fill: "#EB6240",
-          radius: [10, 10, 0, 0],
-          legend: "Loss",
-          isAnimationActive: false,
-        },
-      }
-    : {};
+// const getBars = (drawingMode) =>
+//   drawingMode
+//     ? {
+//         gain: {
+//           barSize: 10,
+//           transform: `translate(${(4 + 10) / 2}, 0)`,
+//           fill: "#A6CB10",
+//           radius: [10, 10, 0, 0],
+//           legend: "Gain",
+//           isAnimationActive: false,
+//         },
+//         loss: {
+//           barSize: 10,
+//           transform: `translate(-${(4 + 10) / 2}, 0)`,
+//           fill: "#EB6240",
+//           radius: [10, 10, 0, 0],
+//           legend: "Loss",
+//           isAnimationActive: false,
+//         },
+//       }
+//     : {};
 
 const CONFIG = {
   parse: (data, unit, drawingMode = false) => {
