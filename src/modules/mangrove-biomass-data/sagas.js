@@ -17,7 +17,7 @@ function* getMangroveBiomassData({ payload }) {
             widgets: ["mangrove_biomass"],
             location_id: "custom-area",
           })
-        : yield call(service.fetchmangroveBiomassData, payload);
+        : yield call(service.fetchMangroveBiomassData, payload);
     yield put(fetchSucceeded(mangroveBiomassData));
   } catch (err) {
     yield put(fetchFailed(err));
