@@ -79,6 +79,7 @@ function MangroveBiomass({
     () => data?.filter(({ indicator }) => indicator !== "total"),
     [data]
   );
+
   const indicators = useMemo(
     () => filteredData.map(({ indicator }) => indicator),
     [filteredData]
@@ -166,8 +167,7 @@ function MangroveBiomass({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_biomass"
           fetch={fetchMangroveBiomassData}
@@ -177,7 +177,7 @@ function MangroveBiomass({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

@@ -1,16 +1,14 @@
 .widget_legend {
-  max-height: 220px;
   max-width: 220px;
-  overflow: hidden;
   display: block;
-  justify-content: flex-start;
-  height: 100%;
+  justify-content: center;
+  height: fit-content;
   width: 100%;
-  top: 0;
   left: 0;
   position: relative;
   line-height: 1;
   font-size: 14px;
+  margin: auto;
 
   &._rect svg {
     width: 2px;
