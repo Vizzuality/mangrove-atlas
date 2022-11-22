@@ -281,8 +281,7 @@ function MangroveNetChange({
       chartData={chartRData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_net_change"
           fetch={fetchMangroveNetChangeData}
@@ -292,7 +291,7 @@ function MangroveNetChange({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

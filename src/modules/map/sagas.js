@@ -16,20 +16,21 @@ function* flyToCurrentLocation() {
   const location = currentLocation(state);
   const drawingValue = state.drawingTool.drawingValue;
   const drawingMode = state.drawingTool.drawingMode;
+  const customGeojsonFeatures = state.drawingTool.customGeojsonFeatures;
   const { mapView } = state.app.mobile;
 
   if (!!drawingValue?.length) {
-    const lon = flatten(drawingValue[0]?.geometry?.coordinates).map(
+    const coordinates = drawingValue[0]?.geometry?.coordinates || customGeojsonFeatures[0]?.geometry?.coordinates
+    const lon = flatten(coordinates).map(
       (d) => d[0]
     );
-    const lat = flatten(drawingValue[0]?.geometry?.coordinates).map(
+    const lat = flatten(coordinates).map(
       (d) => d[1]
     );
     const maxLat = Math.max(...lat);
     const maxLon = Math.max(...lon);
     const minLat = Math.min(...lat);
     const minLon = Math.min(...lon);
-
     yield put(
       setBounds({
         bbox: [minLon, minLat, maxLon, maxLat],

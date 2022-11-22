@@ -150,8 +150,7 @@ const MangroveHeight = ({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_height"
           fetch={fetchMangroveHeightData}
@@ -161,7 +160,7 @@ const MangroveHeight = ({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 };
 

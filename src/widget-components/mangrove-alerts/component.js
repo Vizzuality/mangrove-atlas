@@ -205,8 +205,7 @@ const MangroveAlerts = ({
         changeDate("startDate", chartData[startIndex].start);
         changeDate("endDate", chartData[endIndex].end);
       }}
-    >
-      {drawingMode && (
+      component={      drawingMode && (
         <WidgetDrawingToolControls
           slug="alerts"
           fetch={fetchAlerts}
@@ -215,8 +214,10 @@ const MangroveAlerts = ({
           restart={restart}
           setRestart={setRestart}
         />
-      )}
-    </ChartWidget>
+      )
+
+      }
+    />
   );
 };
 
