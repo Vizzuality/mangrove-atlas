@@ -114,7 +114,8 @@ function MangroveRestoration({
         value: { year: yearDegradationAndLoss },
       });
     }
-  }, [ // eslint-disable-line
+  }, [
+    // eslint-disable-line
     addFilter,
     unit,
     yearRestoration,
@@ -241,101 +242,108 @@ function MangroveRestoration({
       chart={false}
       isCollapsed={isCollapsed}
       {...props}
-    >
-      <div className={widgetStyles.restorationChartWrapper}>
-        <div className={widgetStyles.subtitle}>overview</div>
-        <div className={widgetStyles.sentence} key={Date.now()}>
-          {restorationPotentialLineSentence}
-        </div>
-        <div>
-          <span className={widgetStyles.restorationPotentialUnit}>
-            {unitRestorationPotential}
-          </span>
-          <WidgetLegend
-            groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }}
-            type="height"
-          />
-        </div>
+      component={
+        <>
+          <div className={widgetStyles.restorationChartWrapper}>
+            <div className={widgetStyles.subtitle}>overview</div>
+            <div className={widgetStyles.sentence} key={Date.now()}>
+              {restorationPotentialLineSentence}
+            </div>
+            <div>
+              <span className={widgetStyles.restorationPotentialUnit}>
+                {unitRestorationPotential}
+              </span>
+              <WidgetLegend
+                groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }}
+                type="height"
+              />
+            </div>
 
-        <div ref={ref} className={widgetStyles.lineChartWidget}>
-          <Icon
-            name="play"
-            className={widgetStyles.lineChartIcon}
-            style={{ left: !!trianglePosition && trianglePosition }}
-          />
-        </div>
-        <hr className={widgetStyles.breakLineDashed} />
-      </div>
+            <div ref={ref} className={widgetStyles.lineChartWidget}>
+              <Icon
+                name="play"
+                className={widgetStyles.lineChartIcon}
+                style={{ left: !!trianglePosition && trianglePosition }}
+              />
+            </div>
+            <hr className={widgetStyles.breakLineDashed} />
+          </div>
 
-      <div className={widgetStyles.restorationChartWrapper}>
-        <div className={widgetStyles.subtitle}>Restorable Mangrove Area</div>
-        <div className={styles.sentence} key={Date.now()}>
-          {restorationPotentialRingSentence}
-        </div>
-        <Chart
-          {...props}
-          name={name}
-          slug={slug}
-          filename={slug}
-          isCollapsed={isCollapsed}
-          sentence={restorationPotentialRingSentence}
-          data={chartRingData}
-          config={chartRingConfig}
-          chartData={widgetDataRing}
-        />
-
-        <hr className={widgetStyles.breakLine} />
-      </div>
-
-      <div className={widgetStyles.restorationChartWrapper}>
-        <div className={widgetStyles.subtitle}>Mangrove Loss</div>
-        <div className={styles.sentence} key={Date.now()}>
-          {restorationPotentialTreeMapSentence}
-        </div>
-
-        <div className={widgetStyles.treemap}>
-          <WidgetLegend
-            groups={chartTreeConfig.legend}
-            type="blue-carbon"
-            unit="ha"
-            classname="maxWidth"
-          />
-          <div className={widgetStyles.treemapChart}>
+          <div className={widgetStyles.restorationChartWrapper}>
+            <div className={widgetStyles.subtitle}>
+              Restorable Mangrove Area
+            </div>
+            <div className={styles.sentence} key={Date.now()}>
+              {restorationPotentialRingSentence}
+            </div>
             <Chart
-              className={widgetStyles.breakLine}
               {...props}
               name={name}
               slug={slug}
               filename={slug}
               isCollapsed={isCollapsed}
-              sentence={restorationPotentialTreeMapSentence}
-              data={degradationAndLossData}
-              config={chartTreeConfig}
-              chartData={widgetDataTree}
+              sentence={restorationPotentialRingSentence}
+              data={chartRingData}
+              config={chartRingConfig}
+              chartData={widgetDataRing}
+            />
+
+            <hr className={widgetStyles.breakLine} />
+          </div>
+
+          <div className={widgetStyles.restorationChartWrapper}>
+            <div className={widgetStyles.subtitle}>Mangrove Loss</div>
+            <div className={styles.sentence} key={Date.now()}>
+              {restorationPotentialTreeMapSentence}
+            </div>
+
+            <div className={widgetStyles.treemap}>
+              <WidgetLegend
+                groups={chartTreeConfig.legend}
+                type="blue-carbon"
+                unit="ha"
+                classname="maxWidth"
+              />
+              <div className={widgetStyles.treemapChart}>
+                <Chart
+                  className={widgetStyles.breakLine}
+                  {...props}
+                  name={name}
+                  slug={slug}
+                  filename={slug}
+                  isCollapsed={isCollapsed}
+                  sentence={restorationPotentialTreeMapSentence}
+                  data={degradationAndLossData}
+                  config={chartTreeConfig}
+                  chartData={widgetDataTree}
+                />
+              </div>
+            </div>
+            <hr className={widgetStyles.breakLine} />
+          </div>
+
+          <div className={widgetStyles.restorationChartWrapper}>
+            <div className={widgetStyles.subtitle}>
+              mangrove restoration value
+            </div>
+            <div className={styles.sentence} key={Date.now()}>
+              {restorationPotentialValue}
+            </div>
+            <Chart
+              {...props}
+              name={name}
+              slug={slug}
+              filename={slug}
+              isCollapsed={isCollapsed}
+              sentence={restorationPotentialValue}
+              data={chartValueData}
+              config={chartValueConfig}
+              chartData={widgetDataValue}
             />
           </div>
-        </div>
-        <hr className={widgetStyles.breakLine} />
-      </div>
-
-      <div className={widgetStyles.restorationChartWrapper}>
-        <div className={widgetStyles.subtitle}>mangrove restoration value</div>
-        <div className={styles.sentence} key={Date.now()}>
-          {restorationPotentialValue}
-        </div>
-        <Chart
-          {...props}
-          name={name}
-          slug={slug}
-          filename={slug}
-          isCollapsed={isCollapsed}
-          sentence={restorationPotentialValue}
-          data={chartValueData}
-          config={chartValueConfig}
-          chartData={widgetDataValue}
-        />
-      </div>
-    </ChartWidget>
+        </>
+      }
+    />
   );
 }
 

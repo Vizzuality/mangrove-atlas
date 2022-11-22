@@ -175,15 +175,14 @@ export const mapStyle = createSelector(
       return acc;
     }, []);
 
-    const bhLayersUpdated = orderBy(bhLayers, "order").map((layer) => ({
+    const bhLayersUpdated = orderBy(bhLayers, "l").map((layer) => ({
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.l) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
       },
     }));
-    const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
-
+    const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "position");
     // Getting location
     let currentLocation = _locations?.find(
       (l) => l.iso === _locationId && l.location_type === "country"
@@ -245,7 +244,6 @@ export const mapStyle = createSelector(
       type: "FeatureCollection",
       features: restorationSiteFeatures
     }
-
    
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...ordered_array];

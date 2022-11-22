@@ -6,12 +6,11 @@ import moreIcon from 'widget-components/icons/icon-more.svg';
 import lessIcon from 'widget-components/icons/icon-less.svg';
 import styles from "./style.module.scss";
 
-const Legend = ({ groups }) => {
+const Legend = ({ groups, data }) => {
   const [collapse, toggleCollapse] = useState({});
   
   const handleCollapse = useCallback((id) => 
     toggleCollapse({ [id]: !collapse?.[id]}), [collapse]);
-
 
     return (
     <div className={styles.widget_legend}>
@@ -24,7 +23,7 @@ const Legend = ({ groups }) => {
                 className={styles.widget_legend_list_item}
               >
                 <div
-                  style={{ maxHeight: collapse[item.value] ? 220 - (Object.keys(groups).length * 20) : 20}}
+                  style={{ maxHeight: collapse[item.value] ? 320 : 20}}
                   className={cx(styles.itemWrapper, {[styles._collapse]: !collapse[item.value] })}
                 >
                   <button className={styles.toggleList}  onClick={() => handleCollapse(item.value)}>

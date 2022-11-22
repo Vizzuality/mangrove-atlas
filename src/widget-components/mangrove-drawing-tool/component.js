@@ -26,6 +26,7 @@ export const MangroveDrawingTool = ({
   setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
+  setBounds,
   drawingValue,
   drawingMode,
   setDrawingStatus,
@@ -48,10 +49,18 @@ export const MangroveDrawingTool = ({
       setCurrent("drawingMode");
       setDrawingMode(true);
       const file = acceptedFiles[0];
-
+      setCurrentLocation({
+        id: "custom-area",
+        bounds: [0, 0],
+        iso: "custom-area",
+        location_id: "custom-area",
+        location_type: "custom-area",
+        name: "custom area",
+      });
       analysisService.uploadFile(file).then(({ data }) => {
         setDrawingMode(true);
         setCustomGeojsonFeatures(data.features);
+        setBounds(data.features[0].geometry);
         setCurrentLocation({
           id: "custom-area",
           bounds: data.features[0].geometry,
@@ -125,7 +134,7 @@ export const MangroveDrawingTool = ({
           slug: ["mangrove_alerts"],
           location_id: "custom-area",
           start_date: alertsUi.startDate,
-          end_date: alertsUi.endDate 
+          end_date: alertsUi.endDate,
         });
       });
       return null; //TO DO feedback usuario
@@ -142,7 +151,8 @@ export const MangroveDrawingTool = ({
       fetchMangroveBiomassData,
       fetchMangroveBlueCarbonData,
       fetchAlerts,
-      alertsUi
+      alertsUi,
+      customGeojsonFeatures,
     ]
   );
 
@@ -165,9 +175,16 @@ export const MangroveDrawingTool = ({
     if (drawingMode && drawingValue) {
       expandAll();
     }
-    if(drawingValue && mobile) setMobileView(false);
-  }, [drawingMode, drawingValue, expandAll, current, setCurrent, mobile, setMobileView]);
-
+    if (drawingValue && mobile) setMobileView(false);
+  }, [
+    drawingMode,
+    drawingValue,
+    expandAll,
+    current,
+    setCurrent,
+    mobile,
+    setMobileView,
+  ]);
 
   const [openPanel, setOpenPanel] = useState(true);
 
@@ -177,82 +194,94 @@ export const MangroveDrawingTool = ({
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
     mobile && setOpenPanel(false);
-  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures, mobile, setMobileView, mapView]);
+  }, [
+    setDrawingValue,
+    setCurrent,
+    setCustomGeojsonFeatures,
+    mobile,
+    setMobileView,
+    mapView,
+  ]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
     [acceptedFileItems, customGeojsonFeatures]
   );
 
-  return drawingValue || customGeojsonFeatures  ? (
+  return drawingValue || customGeojsonFeatures ? (
     <Widgets />
   ) : (
     openPanel && (
-    <ChartWidget
-      name="Draw or upload an area"
-      slug="drawingToolAlert"
-      filename={null}
-      sentence={sentence}
-      chart={false}
-      isCollapsed={false}
-    >
-      <div className={styles.containers}>
-        <button
-          type="button"
-          className={cx(styles.drawingCard, {
-            [styles._active]: current === "drawPolygon",
-          })}
-          onClick={handleDrawingMode}
-        >
-          <Icon name="polyline" size="md" /> {/* primary color */}
-          <span className={styles.title}>
-            {current === "drawPolygon"
-              ? "Start drawing on the map"
-              : "Draw area"}
-          </span>
-        </button>
-        or
-        {noFile ? (
-          <div
-            {...getRootProps()}
-            className={cx(styles.drawingCard, styles._dashed)}
-          >
-            <Icon name="upload" size="md" />
-            <input {...getInputProps()} />
-            <label id="label-file-upload" htmlFor="input-file-upload">
-              <div className={styles.text}>
-                <span className={styles.title}>Browse shapefile</span>
-                <span className={styles.description}>
-                  (Click or drag-and-drop file)
+      <ChartWidget
+        name="Draw or upload an area"
+        slug="drawingToolAlert"
+        filename={null}
+        sentence={sentence}
+        chart={false}
+        isCollapsed={false}
+        component={
+          <>
+            <div className={styles.containers}>
+              <button
+                type="button"
+                className={cx(styles.drawingCard, {
+                  [styles._active]: current === "drawPolygon",
+                })}
+                onClick={handleDrawingMode}
+              >
+                <Icon name="polyline" size="md" /> {/* primary color */}
+                <span className={styles.title}>
+                  {current === "drawPolygon"
+                    ? "Start drawing on the map"
+                    : "Draw area"}
                 </span>
-              </div>
-            </label>
-          </div>
-        ) : (
-          <div
-            className={cx(
-              styles.drawingCard,
-              styles._dashed,
-              styles.fileWrapper
-            )}
-          >
-            {acceptedFileItems}
-            <span className={styles.bold}>Upload shapefile</span>
-          </div>
-        )}
-      </div>
-      <p>
-        Learn more about
-        <Info slug="drawingToolAlert" icon={false}>
-          <span className={styles.highlighted}>supported file formats</span>
-        </Info>
-        <br />
-        By uploading data you agree to the{" "}
-        <a href="" className={styles.highlighted}>
-          Terms of Service
-        </a>
-      </p>
-    </ChartWidget>
+              </button>
+              or
+              {noFile ? (
+                <div
+                  {...getRootProps()}
+                  className={cx(styles.drawingCard, styles._dashed)}
+                >
+                  <Icon name="upload" size="md" />
+                  <input {...getInputProps()} />
+                  <label id="label-file-upload" htmlFor="input-file-upload">
+                    <div className={styles.text}>
+                      <span className={styles.title}>Browse shapefile</span>
+                      <span className={styles.description}>
+                        (Click or drag-and-drop file)
+                      </span>
+                    </div>
+                  </label>
+                </div>
+              ) : (
+                <div
+                  className={cx(
+                    styles.drawingCard,
+                    styles._dashed,
+                    styles.fileWrapper
+                  )}
+                >
+                  {acceptedFileItems}
+                  <span className={styles.bold}>Upload shapefile</span>
+                </div>
+              )}
+            </div>
+            <p>
+              Learn more about
+              <Info slug="drawingToolAlert" icon={false}>
+                <span className={styles.highlighted}>
+                  supported file formats
+                </span>
+              </Info>
+              <br />
+              By uploading data you agree to the{" "}
+              <a href="" className={styles.highlighted}>
+                Terms of Service
+              </a>
+            </p>
+          </>
+        }
+      />
     )
   );
 };

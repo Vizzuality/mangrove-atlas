@@ -106,8 +106,7 @@ function MangroveBlueCarbon({
       chart={!loadingAnalysis}
       note={note}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_blue_carbon"
           fetch={fetchMangroveBlueCarbonData}
@@ -117,7 +116,7 @@ function MangroveBlueCarbon({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

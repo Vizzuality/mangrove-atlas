@@ -204,8 +204,7 @@ function MangroveExtent({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_extent"
           fetch={fetchMangroveHabitatExtentData}
@@ -215,7 +214,7 @@ function MangroveExtent({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

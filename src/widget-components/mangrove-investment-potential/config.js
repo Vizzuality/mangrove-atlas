@@ -62,6 +62,7 @@ export const CONFIG = {
       investibleBlueCarbonValue,
       chartConfig: {
         type: "pie",
+        height: 250,
         layout: "centric",
         margin: { top: 20, right: 0, left: 0, bottom: 20 },
         xKey: "percentage",

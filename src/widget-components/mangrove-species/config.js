@@ -31,7 +31,8 @@ export const CONFIG = {
       chartConfig: {
         type: 'pie',
         layout: 'centric',
-        margin: { top: 20, right: 0, left: -10, bottom: 0 },
+        height: 250,
+        margin: { top: 20, right: 0, left: -20, bottom: 0 },
         xKey: 'percentage',
         yKeys: {
           pies: {
@@ -45,18 +46,6 @@ export const CONFIG = {
               outerRadius: '85%',
               isAnimationActive: false,
             }
-          }
-        },
-        legend: {
-          align: 'left',
-          verticalAlign: 'top',
-          layout: 'vertical',
-          fontSize: 9,
-          content: (properties) => {
-            const { payload } = properties;
-            if (!Object.keys(payload)) return null;
-            const groups = groupBy(payload, p => p.value);
-            return <SpeciesLegend groups={groups} />;
           }
         },
         tooltip: {

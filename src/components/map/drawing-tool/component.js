@@ -91,7 +91,6 @@ export const DrawingEditor = ({
         const EDITION_TYPES = ["addFeature"];
         const UPDATE_TYPES = ["addFeature", "addPosition", "movePosition"];
         const dataToStorage = abilityEventListener ? [] : data;
-
         if (editType === "addTentativePosition" && !drawingValue) {
           // set the state to process when user starts drawing
           setAbilityEventListener(false);
