@@ -9,7 +9,7 @@ const Legend = ({ layers, drawingValue, drawingStatus, customGeojsonFeatures }) 
     isActive: !!drawingValue || !!customGeojsonFeatures,
     isNegative: true,
   };
-
+console.log({activeLayersForLegend: layers})
   return (
     <Fragment>
       {(drawingStatus === "progress" || !!drawingValue || !!customGeojsonFeatures) && (
