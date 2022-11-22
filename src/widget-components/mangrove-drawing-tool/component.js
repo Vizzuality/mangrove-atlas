@@ -29,6 +29,7 @@ export const MangroveDrawingTool = ({
   setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
+  setBounds,
   drawingValue,
   drawingMode,
   setDrawingStatus,
@@ -144,7 +145,7 @@ export const MangroveDrawingTool = ({
       fetchMangroveBiomassData,
       fetchMangroveBlueCarbonData,
       fetchAlerts,
-      alertsUi,
+      alertsUi
     ]
   );
 
@@ -184,21 +185,14 @@ export const MangroveDrawingTool = ({
     setCustomGeojsonFeatures(null);
     setCurrent("drawPolygon");
     mobile && setOpenPanel(false);
-  }, [
-    setDrawingValue,
-    setCurrent,
-    setCustomGeojsonFeatures,
-    mobile,
-    setMobileView,
-    mapView,
-  ]);
+  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures, mobile, setMobileView, mapView]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || isEmpty(customGeojsonFeatures),
     [acceptedFileItems, customGeojsonFeatures]
   );
 
-  return drawingValue || customGeojsonFeatures ? (
+  return drawingValue || customGeojsonFeatures  ? (
     <Widgets />
   ) : (
     openPanel && (

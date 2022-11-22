@@ -175,14 +175,15 @@ export const mapStyle = createSelector(
       return acc;
     }, []);
 
-    const bhLayersUpdated = orderBy(bhLayers, "position").map((layer) => ({
+    const bhLayersUpdated = orderBy(bhLayers, "order").map((layer) => ({
       ...layer,
       layout: {
         ...layer.layout,
         visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area') ? "visible" : "none",
       },
     }));
-    const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "position");
+    const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
+
     // Getting location
     let currentLocation = _locations?.find(
       (l) => l.iso === _locationId && l.location_type === "country"
