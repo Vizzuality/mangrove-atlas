@@ -1,5 +1,8 @@
 import React, { useEffect, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import bboxTurf from "@turf/bbox";
+import { isEmpty } from "lodash";
+
 import cx from "classnames";
 
 import { useDropzone } from "react-dropzone";
@@ -26,7 +29,6 @@ export const MangroveDrawingTool = ({
   setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
-  setBounds,
   drawingValue,
   drawingMode,
   setDrawingStatus,
@@ -44,32 +46,23 @@ export const MangroveDrawingTool = ({
   setMobileView,
   mobile,
 }) => {
+
   const onDropAccepted = useCallback(
     async (acceptedFiles) => {
       setCurrent("drawingMode");
-      setDrawingMode(true);
+      setDrawingMode(false);
       const file = acceptedFiles[0];
-      setCurrentLocation({
-        id: "custom-area",
-        bounds: [0, 0],
-        iso: "custom-area",
-        location_id: "custom-area",
-        location_type: "custom-area",
-        name: "custom area",
-      });
       analysisService.uploadFile(file).then(({ data }) => {
-        setDrawingMode(true);
-        setCustomGeojsonFeatures(data.features);
-        setBounds(data.features[0].geometry);
+        setDrawingMode(false);
+        setCustomGeojsonFeatures(data?.features[0]);
         setCurrentLocation({
           id: "custom-area",
-          bounds: data.features[0].geometry,
+          bounds: bboxTurf(data),
           iso: "custom-area",
           location_id: "custom-area",
           location_type: "custom-area",
           name: "custom area",
         });
-        // setCurrent("editing");
         setDrawingStatus({
           type: "FeatureCollection",
           features: "progress",
@@ -134,7 +127,7 @@ export const MangroveDrawingTool = ({
           slug: ["mangrove_alerts"],
           location_id: "custom-area",
           start_date: alertsUi.startDate,
-          end_date: alertsUi.endDate,
+          end_date: alertsUi.endDate 
         });
       });
       return null; //TO DO feedback usuario
@@ -152,7 +145,6 @@ export const MangroveDrawingTool = ({
       fetchMangroveBlueCarbonData,
       fetchAlerts,
       alertsUi,
-      customGeojsonFeatures,
     ]
   );
 
@@ -171,7 +163,6 @@ export const MangroveDrawingTool = ({
   ));
 
   useEffect(() => {
-    if (current === null) setCurrent("editing");
     if (drawingMode && drawingValue) {
       expandAll();
     }
@@ -180,7 +171,6 @@ export const MangroveDrawingTool = ({
     drawingMode,
     drawingValue,
     expandAll,
-    current,
     setCurrent,
     mobile,
     setMobileView,
@@ -204,7 +194,7 @@ export const MangroveDrawingTool = ({
   ]);
 
   const noFile = useMemo(
-    () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
+    () => !acceptedFileItems.length || isEmpty(customGeojsonFeatures),
     [acceptedFileItems, customGeojsonFeatures]
   );
 
