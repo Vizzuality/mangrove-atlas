@@ -37,8 +37,8 @@ function* setLocation({ payload }) {
   //   yield put(setCurrentId(
   //     { ...currentLocation && { id: currentLocation } },
   //   ));
-  // } 
-  
+  // }
+
    if (!current || current[idKey] !== targetLocation) {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());

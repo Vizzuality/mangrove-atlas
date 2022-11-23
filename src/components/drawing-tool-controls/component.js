@@ -14,6 +14,8 @@ import styles from "./style.module.scss";
 const DrawingToolControls = ({
   setDrawingMode,
   setDrawingValue,
+  setCurrentLocation,
+  currentLocation,
   drawingMode,
   drawingValue,
   locationType,
@@ -68,9 +70,45 @@ const DrawingToolControls = ({
       setCustomGeojsonFeatures(null);
       toggleModalAlert(!isOpenModalAlert);
       sidebarActive !== "drawingTool" && setDrawingMode(false);
-    },
+      setCurrentLocation({
+        name: "Worldwide",
+        location_type: "worldwide",
+        iso: "WORLDWIDE",
+        bounds: {
+          "type": "Polygon",
+          "coordinates": [
+                      [
+                          [
+                              -180,
+                              -90
+                          ],
+                          [
+                              -180,
+                              90
+                          ],
+                          [
+                              180,
+                              90
+                          ],
+                          [
+                              180,
+                              -90
+                          ],
+                          [
+                              -180,
+                              -90
+                          ]
+                      ]
+          ]
+        },
+        location_id: "worldwide",
+        coast_length_m: 2139308926.360556,
+        area_m2: 287645000,
+        id: "worldwide",
+      });
+
     // eslint-disable-next-line
-    [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert, setDrawingMode]
+        }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert, setDrawingMode, setCurrentLocation]
   );
 
   const handleCancel = useCallback(() => {

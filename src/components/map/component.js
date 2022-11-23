@@ -304,7 +304,7 @@ class Map extends Component {
             x: e.center.x,
             y: e.center.y,
           },
-          // popupFeatureType: 'restoration'
+          popupFeatureType: 'restoration'
         });
       }
       onClick({
