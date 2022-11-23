@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-
+import bboxTurf from "@turf/bbox";
 import { Editor, EditingMode, DrawPolygonMode } from "react-map-gl-draw";
 
 import { featureStyle, editHandleStyle } from "./styles";
 
 export const DrawingEditor = ({
-  setCurrent,
+  setCurrentLocation,
   current,
   setDrawingValue,
   drawingValue,
@@ -37,7 +37,7 @@ export const DrawingEditor = ({
   }, [setAbilityEventListener, abilityEventListener]);
 
   const mode = useMemo(() => {
-    if (current === "editing") return new EditingMode();
+    // if (current === "editing") return new EditingMode();
     if (current === "drawPolygon") {
       return new DrawPolygonMode();
     }
@@ -88,7 +88,7 @@ export const DrawingEditor = ({
       editHandleShape="circle"
       onUpdate={(s) => {
         const { data, editType } = s;
-        const EDITION_TYPES = ["addFeature"];
+        // const EDITION_TYPES = ["addFeature"];
         const UPDATE_TYPES = ["addFeature", "addPosition", "movePosition"];
         const dataToStorage = abilityEventListener ? [] : data;
 
@@ -98,14 +98,16 @@ export const DrawingEditor = ({
           setDrawingStatus("progress");
         }
 
-        if (EDITION_TYPES.includes(editType)) {
-          setCurrent("editing");
-          setDrawingValue(dataToStorage);
-          setMobileView(false)
-        }
-
         if (UPDATE_TYPES.includes(editType)) {
           setDrawingValue(dataToStorage);
+          setCurrentLocation({
+            id: "custom-area",
+            bounds: bboxTurf({type: 'FeatureCollection', features: dataToStorage}),
+            iso: "custom-area",
+            location_id: "custom-area",
+            location_type: "custom-area",
+            name: "custom area",
+          });
           setMobileView(false)
         }
       }}

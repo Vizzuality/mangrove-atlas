@@ -206,21 +206,21 @@ class Map extends Component {
 
   setRestorationSitePopUpState = (event) => {
     const siteFromEvent = event.features[0]
-      const { organizations } = siteFromEvent.properties     
-      
+      const { organizations } = siteFromEvent.properties
+
       const propertiesWithOrganizationNamesParsed =
       {
         ...siteFromEvent.properties,
         organizations: organizations ? JSON.parse(organizations) : []
-      
+
       }
-    
+
       this.setState({
         ...this.state,
         popup: [event?.lngLat[0], event?.lngLat[1]],
         popupInfo: propertiesWithOrganizationNamesParsed,
         popupFeatureType: 'restoration-sites'
-      });        
+      });
   }
 
   expandMarkerCluster = ({ event, clusterLayerId, sourceId }) => {
@@ -279,10 +279,10 @@ class Map extends Component {
 
       if (isClickFromRestorationSite) {
         // This layer is different from the existing 'restoration' layer and refers to
-        // restoration sites where restoration is happening. 
+        // restoration sites where restoration is happening.
         // These sites are collected as part of the Mangrove Restoration Tracking Took (MRTT)
         // project whose code lives here:  https://github.com/globalmangrovewatch/gmw-users/tree/develop/mrtt-ui
-        this.setRestorationSitePopUpState(e)        
+        this.setRestorationSitePopUpState(e)
       }
 
       if (isClickFromRestorationSiteCluster) {
@@ -306,7 +306,7 @@ class Map extends Component {
             x: e.center.x,
             y: e.center.y,
           },
-          popupFeatureType: 'restoration' 
+          popupFeatureType: 'restoration'
 
         });
       }
@@ -376,19 +376,19 @@ class Map extends Component {
           }
         </dl>
       </PopupMangroveStyle>
-    
+
     const shouldShowPopup = !!this.state.popup.length && !isEmpty(this.state.popupInfo)
     const popupContent = this.state.popupFeatureType === 'restoration-sites'
       ? popupRestorationSites
       : <PopupRestoration data={this.state.popupInfo} />
-  
+
     // applyFilters();
     const onHover = (e) => {
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       );
       hoveredStateId = restorationData?.id;
-      if (hoveredStateId !== null && restorationData) {
+      if (!!hoveredStateId && restorationData) {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
@@ -399,7 +399,7 @@ class Map extends Component {
         );
       }
 
-      if (hoveredStateId !== null && !restorationData) {
+      if (!!hoveredStateId  && !restorationData) {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
