@@ -71,39 +71,8 @@ const DrawingToolControls = ({
       toggleModalAlert(!isOpenModalAlert);
       sidebarActive !== "drawingTool" && setDrawingMode(false);
       setCurrentLocation({
-        name: "Worldwide",
+        ...currentLocation,
         location_type: "worldwide",
-        iso: "WORLDWIDE",
-        bounds: {
-          "type": "Polygon",
-          "coordinates": [
-                      [
-                          [
-                              -180,
-                              -90
-                          ],
-                          [
-                              -180,
-                              90
-                          ],
-                          [
-                              180,
-                              90
-                          ],
-                          [
-                              180,
-                              -90
-                          ],
-                          [
-                              -180,
-                              -90
-                          ]
-                      ]
-          ]
-        },
-        location_id: "worldwide",
-        coast_length_m: 2139308926.360556,
-        area_m2: 287645000,
         id: "worldwide",
       });
 
