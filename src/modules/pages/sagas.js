@@ -39,7 +39,7 @@ function* setLocation({ payload }) {
   //   ));
   // }
 
-   if (!current || current[idKey] !== targetLocation) {
+   if (!current || current[idKey] !== targetLocation && id !== 'worldwide') {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());
   }

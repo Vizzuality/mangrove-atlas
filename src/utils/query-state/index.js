@@ -108,6 +108,8 @@ class QueryStateManager {
                 type: router.type,
                 payload: {
                   ...router.payload,
+                  id: "worldwide",
+                  iso: 'WORLDWIDE',
                   query: {
                     ...router.query,
                     [name]: namespace.encode.selector(state),
