@@ -22,6 +22,7 @@ function* flyToCurrentLocation() {
         yield put(resetViewport());
       }
     } else {
+
       const locationException = countriesDictionary[location.iso];
 
       const bbox = locationException
@@ -82,6 +83,5 @@ export function* restoreMapState() {
 export default function* pages() {
   yield takeLatest("LOCATIONS/FETCH_SUCCEDED", flyToCurrentLocation);
   yield takeLatest("LOCATIONS/SET_CURRENT", flyToCurrentLocation);
-  yield takeLatest("DRAWING_TOOL/SET_DRAWING_VALUE", flyToCurrentLocation);
   yield takeLatest("APP/MOBILE", flyToCurrentLocation);
 }
