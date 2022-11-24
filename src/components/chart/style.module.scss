@@ -3,6 +3,17 @@
   height: 250px;
   position: relative;
 
+  .customTooltip {
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
+    color: gray;
+    margin-right: auto;
+    background: white;
+    border-radius: 6px;
+    font-size: 14px;
+    max-width: 80%;
+    padding: 4px 30px;
+  }
+
   text {
     fill: rgba(0, 0, 0, 0.54);
     font-size: 12px;
