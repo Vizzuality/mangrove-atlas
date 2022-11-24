@@ -307,7 +307,6 @@ class Map extends Component {
             y: e.center.y,
           },
           popupFeatureType: 'restoration'
-
         });
       }
       onClick({
@@ -370,7 +369,7 @@ class Map extends Component {
           <dd>{this.state.popupInfo?.landscape_name}</dd>
           <dt>Organizations</dt>
           {
-            this.state.popupInfo?.organizations.map(
+            this.state.popupInfo?.organizations?.map(
               organization => <dd key={organization.id}>{organization.organization_name}</dd>
             )
           }
@@ -381,7 +380,7 @@ class Map extends Component {
     const popupContent = this.state.popupFeatureType === 'restoration-sites'
       ? popupRestorationSites
       : <PopupRestoration data={this.state.popupInfo} />
-
+      
     // applyFilters();
     const onHover = (e) => {
       const restorationData = e?.features.find(
