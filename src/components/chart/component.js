@@ -129,7 +129,7 @@ class Chart extends PureComponent {
     const CustomTooltip = ({ active, payload }) => {
       if (active &&payload && payload.length) {
         return (
-          <div style={{ boxShadow: '0 0 6px 0 rgba(0, 0, 0, 0.19)', color: 'gray', marginRight: 'auto', background: 'white', borderRadius: '6px', fontSize: '14px', maxWidth: '80%', padding: '4px 30px'}}>
+          <div className={styles.customTooltip}>
             <p><b>{`${payload[0].payload.label}:`}</b></p>
             <p>{`${payload[0].value} ha.`}</p>
           </div>
