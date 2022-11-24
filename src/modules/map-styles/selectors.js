@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { activeLayers } from "modules/layers/selectors";
 import template from "lodash/template";
-import orderBy from "lodash/orderBy";
+import { orderBy, isEmpty } from "lodash";
 import { rasterLayers } from "./rasters.json";
 import StyleManager from "./style-manager";
 import {
@@ -179,7 +179,7 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area') ? "visible" : "none",
       },
     }));
     const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
@@ -194,14 +194,14 @@ export const mapStyle = createSelector(
       currentLocation = _locations?.find((l) => l.location_id === _locationId);
     }
     
-    if (!_customArea && !!_customGeojsonFeatures?.length) {
+    if (!_customArea && !isEmpty(_customGeojsonFeatures)) {
       bhSources['custom-area'].data = ({
         type: "FeatureCollection",
-        features: _customGeojsonFeatures,
+        features: [_customGeojsonFeatures],
       });
     }
 
-    if (!_customGeojsonFeatures?.length) {
+    if (isEmpty(_customGeojsonFeatures)) {
       bhSources['custom-area'].data = ({
         type: "FeatureCollection",
         features: [],

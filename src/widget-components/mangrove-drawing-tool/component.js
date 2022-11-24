@@ -205,7 +205,7 @@ export const MangroveDrawingTool = ({
           })}
           onClick={handleDrawingMode}
         >
-          <Icon name="polyline" size="md" /> primary color
+          <Icon name="polyline" size="md" /> {/* primary color */}
           <span className={styles.title}>
             {current === "drawPolygon"
               ? "Start drawing on the map"

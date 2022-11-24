@@ -39,15 +39,15 @@ function* setLocation({ payload }) {
   //   ));
   // }
 
-   if (!current || current[idKey] !== targetLocation && id !== 'worldwide') {
+   if ((!current || current[idKey] !== targetLocation) && id !== 'worldwide') {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());
   }
 
   // In case user sets location from widget modal
   if (current) {
-    if ((current.iso && current.iso !== targetLocation)
-      || (current.id && current.id !== targetLocation)) {
+    if ((current.iso && current.iso !== targetLocation.toLowerCase())
+      || (current.id && current.id !== targetLocation.toLowerCase())) {
       yield put(closeSearchPanel());
       yield put(closeInfoPanel());
     }
