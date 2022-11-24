@@ -6,7 +6,6 @@ import groupBy from 'lodash/groupBy';
 
 // components
 import WidgetTooltip from 'components/widget-tooltip';
-import SpeciesLegend from './species-legend';
 
 import { RED_LIST_CATEGORIES, COLORS } from './constants';
 
@@ -73,7 +72,7 @@ export const CONFIG = {
               />
             );
           })
-        }
+        },
       }
     };
   }
