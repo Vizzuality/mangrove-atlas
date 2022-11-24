@@ -84,9 +84,6 @@ export const MapContainer = ({
       (feat) => feat.layer.id === "selected-wdpa-polygons"
     );
 
-    // // if (customArea) {
-    //  goToCustomArea({ id: 'custom-area', location_type: 'custom-area' });
-    // // }
     popupCloseHandler();
 
     if (wdpa) {
