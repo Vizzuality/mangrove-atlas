@@ -126,6 +126,20 @@ class Chart extends PureComponent {
       }
     });
 
+    const CustomTooltip = ({ active, payload }) => {
+      if (active &&payload && payload.length) {
+        return (
+          <div style={{ boxShadow: '0 0 6px 0 rgba(0, 0, 0, 0.19)', color: 'gray', marginRight: 'auto', background: 'white', borderRadius: '6px', fontSize: '14px', maxWidth: '80%', padding: '4px 30px'}}>
+            <p><b>{`${payload[0].payload.label}:`}</b></p>
+            <p>{`${payload[0].value} ha.`}</p>
+          </div>
+        );
+      }
+
+      return null;
+    };
+
+
     return (
       <div key={this.props.name} ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer width="100%" height={tree ? 0 : height}>
@@ -309,11 +323,18 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
+
         {tree && (
           <Treemap
             data={data}
             {...config}
-          />
+          >
+            <Tooltip
+              allowEscapeViewBox
+              content={<CustomTooltip />}
+              position={{ x: 0, y: 0 }}
+            />
+          </Treemap>
         )}
 
         {brush && (
