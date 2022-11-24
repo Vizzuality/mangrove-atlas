@@ -332,7 +332,7 @@ class Chart extends PureComponent {
             <Tooltip
               allowEscapeViewBox
               content={<CustomTooltip />}
-              position={{ x: 0, y: 0 }}
+              position={{ x: 0, y: 20 }}
             />
           </Treemap>
         )}
