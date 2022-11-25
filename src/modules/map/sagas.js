@@ -1,5 +1,6 @@
 import { takeLatest, put, select } from "redux-saga/effects";
 import { currentLocation } from "modules/locations/selectors";
+import bboxTurf from "@turf/bbox";
 import {
   resetViewport,
   setBounds,
@@ -21,7 +22,6 @@ function* flyToCurrentLocation() {
         yield put(resetViewport());
       }
     } else {
-
       const locationException = countriesDictionary[location.iso];
 
       const bbox = locationException
@@ -31,7 +31,7 @@ function* flyToCurrentLocation() {
       if (!state.map.isViewportFixed) {
         yield put(
           setBounds({
-            bbox,
+            bbox: bboxTurf(bbox),
             options: {
               padding: {
                 top: 50,
