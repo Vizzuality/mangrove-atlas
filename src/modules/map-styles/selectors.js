@@ -175,11 +175,11 @@ export const mapStyle = createSelector(
       return acc;
     }, []);
 
-    const bhLayersUpdated = orderBy(bhLayers, "l").map((layer) => ({
+    const bhLayersUpdated = orderBy(bhLayers, "position").map((layer) => ({
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.l) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && _customGeojsonFeatures?.length) ? "visible" : "none",
       },
     }));
     const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "position");
