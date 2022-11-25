@@ -399,6 +399,7 @@ class Map extends Component {
       }
 
       if (!!hoveredStateId  && !restorationData) {
+        console.log('aqui', hoveredStateId)
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",

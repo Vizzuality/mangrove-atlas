@@ -52,10 +52,9 @@ export const MangroveDrawingTool = ({
       setCurrent("drawingMode");
       setDrawingMode(false);
       const file = acceptedFiles[0];
-
       analysisService.uploadFile(file).then(({ data }) => {
         setDrawingMode(false);
-        setCustomGeojsonFeatures(data.features[0]);
+        setCustomGeojsonFeatures(data?.features[0]);
         setCurrentLocation({
           id: "custom-area",
           bounds: bboxTurf(data),
