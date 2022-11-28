@@ -400,8 +400,18 @@ class Map extends Component {
           );
         }
 
-      if (!!hoveredStateId  && !restorationData) {
-        console.log('aqui', hoveredStateId)
+        hoveredStateId = restorationData?.id;
+        if (hoveredStateId !== null) {
+          this.map.setFeatureState(
+            {
+              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              source: "restoration",
+              id: hoveredStateId,
+            },
+            { hover: true }
+          );
+        }
+      } else {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
