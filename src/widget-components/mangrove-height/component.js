@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 
 // components
 import Select from "components/select";
@@ -35,7 +36,7 @@ const MangroveHeight = ({
   const heightCoverage = metadata?.avg_height[0]?.value;
   const years = metadata?.year;
   const currentYear = useMemo(() => year || years?.[0], [year, years]);
-  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
+  const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
     fetchMangroveHeightData(

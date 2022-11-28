@@ -67,7 +67,6 @@ class QueryStateManager {
 
     this.registry.set(name, namespace);
     this.names.add(name);
-
     actions.forEach((action) => {
       this.triggers.set(action().type, name);
     });
@@ -102,10 +101,11 @@ class QueryStateManager {
                 },
               })
             );
-          } else {
+          } 
+          else if (state.locations.current?.id === "worldwide") {
             yield put(
-              redirect({
-                type: router.type,
+              yield put(redirect({
+                type: "PAGE/APP",
                 payload: {
                   ...router.payload,
                   id: "worldwide",
@@ -115,7 +115,20 @@ class QueryStateManager {
                     [name]: namespace.encode.selector(state),
                   },
                 },
-              })
+              }))
+            );
+          }
+          else {
+            yield put(
+              redirect({ 
+                type: router.type,
+                payload: {
+                  ...router.payload,
+                  query: {
+                    ...router.query,
+                    [name]: namespace.encode.selector(state)
+                  }
+                } })
             );
           }
         };

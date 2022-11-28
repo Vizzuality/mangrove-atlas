@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
+
 import Link from "redux-first-router-link";
 
 import cx from "classnames";
@@ -25,60 +27,83 @@ const DrawingToolControls = ({
   customGeojsonFeatures,
   locationsModal,
   closeSearchPanel,
+  openSearchPanel,
+  setCurrentStatus
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
-  const [sidebarActive, setSidebarActive] = useState(null)
-  const handleDrawing = useCallback((value, type) => {
-    setSidebarActive(type)
-    if (
-      value &&
-      (!!drawingValue?.length || !!customGeojsonFeatures?.length) &&
-      modalStatus === null
-    ) {
-      toggleModalAlert(true);
-      setDrawingMode(value);
-    }
+  const [sidebarActive, setSidebarActive] = useState(null);
+  const handleDrawing = useCallback(
+    (value, type) => {
+      setSidebarActive(type);
+      if (
+        value &&
+        (!!drawingValue?.length || !isEmpty(customGeojsonFeatures)) &&
+        modalStatus === null
+      ) {
+        toggleModalAlert(true);
+        setDrawingMode(value);
+      }
 
-    if (modalStatus) {
-      setDrawingValue(null);
-      setCustomGeojsonFeatures(null);
-      setDrawingMode(!value);
-    }
+      if (modalStatus) {
+        setDrawingValue(null);
+        setCustomGeojsonFeatures(null);
+        setDrawingMode(!value);
+      }
 
-    if (!modalStatus && (!!drawingValue || !!customGeojsonFeatures)) {
-      toggleModalAlert(true);
-    }
+      if (!modalStatus && (!!drawingValue || !!customGeojsonFeatures)) {
+        toggleModalAlert(true);
+      }
 
-    if (!value && (!drawingValue?.length || !customGeojsonFeatures?.length)) {
-      setDrawingMode(true);
-    }
+      if (!value && (!drawingValue?.length || isEmpty(customGeojsonFeatures))) {
+        setDrawingMode(true);
+      }
 
-    if (value && !drawingValue?.length && !customGeojsonFeatures?.length) {
-      setDrawingMode(!value);
-    }
-    setTimeout(() => {
-      setSidebarActive(false);
-    }, 1000);
-  }, [customGeojsonFeatures, drawingValue, modalStatus, setCustomGeojsonFeatures, setDrawingMode,setDrawingValue]);
-
-  const handleReset = useCallback(
-    () => {
-      setDrawingValue(null);
-      setCustomGeojsonFeatures(null);
-      toggleModalAlert(!isOpenModalAlert);
-      sidebarActive !== "drawingTool" && setDrawingMode(false);
-      setCurrentLocation({
-        ...currentLocation,
-        location_type: "worldwide",
-        id: "worldwide",
-      });
-
-    // eslint-disable-next-line
-        }, [setDrawingValue, setCustomGeojsonFeatures, isOpenModalAlert, setDrawingMode, setCurrentLocation]
+      if (value && !drawingValue?.length && isEmpty(customGeojsonFeatures)) {
+        setDrawingMode(!value);
+      }
+      if (type === 'drawingTool') {
+        setCurrentStatus("drawingMode")
+      }
+      setTimeout(() => {
+        setSidebarActive(false);
+      }, 1000);
+    },
+    [
+      customGeojsonFeatures,
+      drawingValue,
+      modalStatus,
+      setCustomGeojsonFeatures,
+      setDrawingMode,
+      setDrawingValue,
+      setCurrentStatus
+    ]
   );
+
+  const handleReset = useCallback(() => {
+    setDrawingValue(null);
+    setCustomGeojsonFeatures(null);
+    toggleModalAlert(!isOpenModalAlert);
+    sidebarActive !== "drawingTool" && setDrawingMode(false);
+    setCurrentLocation({
+      ...currentLocation,
+      location_type: "worldwide",
+      id: "worldwide",
+    });
+    openSearchPanel();
+// setCurrentStatus("drawingMode")
+    // eslint-disable-next-line
+  }, [
+    setDrawingValue,
+    setCustomGeojsonFeatures,
+    isOpenModalAlert,
+    setDrawingMode,
+    setCurrentLocation,
+    openSearchPanel,
+    setCurrentStatus
+  ]);
 
   const handleCancel = useCallback(() => {
     toggleModalAlert(false);
@@ -114,15 +139,26 @@ const DrawingToolControls = ({
         <>
           <span className={styles.menuItemTitle}>Place</span>
           <div className={styles.itemsWrapper}>
-            <Link
-              to={{ type: "PAGE/APP" }}
-              onClick={handleDrawing}
-              className={cx(styles.sidebarItem, {
-                [styles._active]: locationType === "PAGE/APP" && !drawingMode,
-              })}
-            >
-              <Icon name="globe" size="md" alt="worldwide location" />
-            </Link>
+            {drawingMode ? (
+              <button
+                onClick={handleDrawing}
+                className={cx(styles.sidebarItem, {
+                  [styles._active]: locationType === "PAGE/APP" && !drawingMode,
+                })}
+              >
+                <Icon name="globe" size="md" alt="worldwide location" />
+              </button>
+            ) : (
+              <Link
+                to={{ type: "PAGE/APP" }}
+                // onClick={handleDrawing}
+                className={cx(styles.sidebarItem, {
+                  [styles._active]: locationType === "PAGE/APP" && !drawingMode,
+                })}
+              >
+                <Icon name="globe" size="md" alt="worldwide location" />
+              </Link>
+            )}
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
               <SearchLocation
                 className={styles._active}
@@ -132,7 +168,7 @@ const DrawingToolControls = ({
             </div>
             <button
               type="button"
-              onClick={() => handleDrawing(drawingMode, 'drawingTool')}
+              onClick={() => handleDrawing(drawingMode, "drawingTool")}
               className={cx(styles.sidebarItem, {
                 [styles._active]: drawingMode && !locationsModal,
               })}
