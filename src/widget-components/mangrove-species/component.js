@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import ChartWidget from "components/chart-widget";
+import SpeciesLegend from "./species-legend";
 
 import config from "./config";
 
