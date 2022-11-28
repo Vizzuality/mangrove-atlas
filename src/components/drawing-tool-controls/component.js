@@ -92,8 +92,7 @@ const DrawingToolControls = ({
       location_type: "worldwide",
       id: "worldwide",
     });
-    openSearchPanel();
-// setCurrentStatus("drawingMode")
+    sidebarActive === 'search' && openSearchPanel();
     // eslint-disable-next-line
   }, [
     setDrawingValue,
@@ -141,7 +140,7 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             {drawingMode ? (
               <button
-                onClick={handleDrawing}
+                onClick={() => handleDrawing(drawingMode, 'worldwide')}
                 className={cx(styles.sidebarItem, {
                   [styles._active]: locationType === "PAGE/APP" && !drawingMode,
                 })}
@@ -162,7 +161,7 @@ const DrawingToolControls = ({
             <div className={cx(styles.middle, { [styles._active]: openModal })}>
               <SearchLocation
                 className={styles._active}
-                handleDrawing={handleDrawing}
+                handleDrawing={() => handleDrawing((drawingMode, 'search'))}
                 isOpenModalAlert={isOpenModalAlert}
               />
             </div>
