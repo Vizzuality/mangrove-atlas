@@ -49,16 +49,11 @@
       "type": "vector",
       "url": "mapbox://mangrove-atlas.c7czuzvl"
     },
-    "net": {
-      "type": "raster",
-      "url": "mapbox://mangrove-atlas.gmw_change_1996_2016"
-    },
     "extent": {
       "url": "mapbox://mangrove-atlas.d9oug4i8,mangrove-atlas.chioll1m,mangrove-atlas.0w8q1i5b,mangrove-atlas.9ql2q52e,mangrove-atlas.5x3dvtif,mangrove-atlas.7k5ujoxv,mangrove-atlas.8aile714,mangrove-atlas.bhzh0i5k,mangrove-atlas.8qv8h4rc,mangrove-atlas.d7dqscr7,mangrove-atlas.33m0z6zt",
       "type": "vector"
     }
   },
-  "sprite": "mapbox://sprites/mangrove-atlas/cjx4ikse805an1co712z98lel/95q41f91c3ead18lh93952y85",
   "glyphs": "mapbox://fonts/mangrove-atlas/{fontstack}/{range}.pbf",
   "layers": [],
   "created": "2019-06-19T09:39:40.309Z",
