@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import bboxTurf from "@turf/bbox";
+import { isEmpty } from "lodash";
 
 import cx from "classnames";
 
@@ -28,7 +29,6 @@ export const MangroveDrawingTool = ({
   setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
-  setBounds,
   drawingValue,
   drawingMode,
   setDrawingStatus,
@@ -145,7 +145,6 @@ export const MangroveDrawingTool = ({
       fetchMangroveBlueCarbonData,
       fetchAlerts,
       alertsUi,
-      customGeojsonFeatures,
     ]
   );
 
@@ -172,7 +171,6 @@ export const MangroveDrawingTool = ({
     drawingMode,
     drawingValue,
     expandAll,
-    current,
     setCurrent,
     mobile,
     setMobileView,
@@ -196,7 +194,7 @@ export const MangroveDrawingTool = ({
   ]);
 
   const noFile = useMemo(
-    () => !acceptedFileItems.length || !customGeojsonFeatures?.length,
+    () => !acceptedFileItems.length || isEmpty(customGeojsonFeatures),
     [acceptedFileItems, customGeojsonFeatures]
   );
 

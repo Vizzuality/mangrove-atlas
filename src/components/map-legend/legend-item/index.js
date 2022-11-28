@@ -2,20 +2,23 @@ import { connect } from 'react-redux';
 
 import { toggleActive } from 'modules/layers/actions';
 import { toggleActiveByLayerId as toggleWidgetActive } from 'modules/widgets/actions';
-import { setDrawingValue, setCustomGeojsonFeatures } from "modules/drawing-tool/actions";
+import { setDrawingValue, setCurrent as setDrawingStatus, setCustomGeojsonFeatures } from "modules/drawing-tool/actions";
+import { setCurrent } from "modules/locations/actions";
 
 import Component from './component';
 
 const mapStateToProps = state => ({
   isCollapsed: state.layers.isCollapsed,
-  mapView: state.app.mobile.mapView
+  mapView: state.app.mobile.mapView,
 });
 
 const mapDispatchToProps = {
   toggleActive,
   toggleWidgetActive,
   setDrawingValue,
-  setCustomGeojsonFeatures
+  setCustomGeojsonFeatures,
+  setCurrent,
+  setDrawingStatus
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
