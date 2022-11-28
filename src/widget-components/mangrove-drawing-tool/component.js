@@ -29,7 +29,6 @@ export const MangroveDrawingTool = ({
   setDrawingMode,
   setCurrentLocation,
   setDrawingValue,
-  setBounds,
   drawingValue,
   drawingMode,
   setDrawingStatus,

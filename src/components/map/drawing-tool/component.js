@@ -7,6 +7,7 @@ import { featureStyle, editHandleStyle } from "./styles";
 export const DrawingEditor = ({
   setCurrentLocation,
   current,
+  setCurrent,
   setDrawingValue,
   drawingValue,
   setDrawingStatus,
@@ -107,7 +108,7 @@ export const DrawingEditor = ({
             location_type: "custom-area",
             name: "custom area",
           });
-          setMobileView(false)
+          setMobileView(false);
         }
       }}
     />

@@ -69,12 +69,10 @@ const Download = ({ slug }) => {
 
 Download.propTypes = {
   isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func
 };
 
 Download.defaultProps = {
   isOpened: false,
-  closeSearchPanel: () => null
 };
 
 export default Download;

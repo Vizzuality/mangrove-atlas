@@ -15,7 +15,6 @@ function* flyToCurrentLocation() {
   const location = currentLocation(state);
 
   const { mapView } = state.app.mobile;
-
   if (location) {
     if (location.location_type === "worldwide") {
       if (!state.map.isViewportFixed) {
@@ -32,7 +31,7 @@ function* flyToCurrentLocation() {
       if (!state.map.isViewportFixed) {
         yield put(
           setBounds({
-            bbox: bboxTurf(bbox),
+            bbox: location.id === 'custom-area' ? bbox : bboxTurf(bbox),
             options: {
               padding: {
                 top: 50,
