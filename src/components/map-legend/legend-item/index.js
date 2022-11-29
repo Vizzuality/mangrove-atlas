@@ -18,7 +18,7 @@ const mapDispatchToProps = {
   setDrawingValue,
   setCustomGeojsonFeatures,
   setCurrent,
-  setDrawingStatus
+  setDrawingStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

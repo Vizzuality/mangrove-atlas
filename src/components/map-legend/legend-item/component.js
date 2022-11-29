@@ -15,6 +15,7 @@ const LegendItem = ({
   isCollapsed,
   mapView,
   setCustomGeojsonFeatures,
+  setCurrent
 }) => {
   const isCustomLayer = id === 'custom-layer';
 
@@ -23,6 +24,7 @@ const LegendItem = ({
       setDrawingStatus(null);
       setDrawingValue(null);
       setCustomGeojsonFeatures(null);
+      setCurrent({ id: 'worldwide' });
     } else {
       toggleActive({ id, isActive: false });
       toggleWidgetActive({ layerId: id, isActive: false });
