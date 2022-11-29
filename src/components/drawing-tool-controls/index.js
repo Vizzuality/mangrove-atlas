@@ -13,7 +13,8 @@ const mapStateToProps = (state) => ({
   customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
   locationsModal: state.locations.isOpened,
   currentLocation: state.locations.current,
-  router: state.router
+  router: state.router,
+  mapView: state.app.mobile.mapView
 });
 
 const mapDispatchToProps = {

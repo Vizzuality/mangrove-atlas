@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 
@@ -28,7 +28,8 @@ const DrawingToolControls = ({
   locationsModal,
   closeSearchPanel,
   openSearchPanel,
-  setCurrentStatus
+  setCurrentStatus,
+  mapView
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem("drawingAlert");
@@ -114,6 +115,8 @@ const DrawingToolControls = ({
     [myStorage]
   );
 
+  const isDrawingMobileMenu = useMemo(() => drawingMode && !mapView , [drawingMode, mapView]);
+
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
       {mobile ? (
@@ -127,11 +130,11 @@ const DrawingToolControls = ({
           }}
         >
           <Icon
-            alt={drawingMode ? "worldwide location" : "create custom area"}
-            name={drawingMode ? "globe" : "polyline"}
+            alt={isDrawingMobileMenu  ? "worldwide location" : "create custom area"}
+            name={isDrawingMobileMenu ? "globe" : "polyline"}
           />
           <span className={styles.menuItemTitle}>
-            {drawingMode ? "Place" : "Custom"}
+            {isDrawingMobileMenu ? "Place" : "Custom"}
           </span>
         </button>
       ) : (
