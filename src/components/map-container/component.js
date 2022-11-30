@@ -126,6 +126,7 @@ export const MapContainer = ({
           onClick={clickHandler}
           interactiveLayerIds={interactiveLayerIds}
           onPopupClose={popupCloseHandler}
+          preserveDrawingBuffer
         >
           {() => (
             <div className={styles.navigation}>
