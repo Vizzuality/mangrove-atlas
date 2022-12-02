@@ -67,9 +67,11 @@ export const MapContainer = ({
     'restoration-sites-clusters',
   ];
   const currentLayers = mapStyle.layers.map((layer) => layer.id);
+
   const interactiveLayerIds = requestedInteractiveLayerIds.filter((id) =>
     currentLayers.includes(id)
   );
+
 
   function popupCloseHandler() {
     removePopup();

@@ -131,7 +131,7 @@ export const mapStyle = createSelector(
     const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find((f) => f.id === layerId);
-    
+
       if (layerFilter && layerMap) {
         if (layerFilter && layerFilter.id === "extent") {
           return [
@@ -182,18 +182,19 @@ export const mapStyle = createSelector(
         visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area') ? "visible" : "none",
       },
     }));
+
     const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
 
     // Getting location
     let currentLocation = _locations?.find(
       (l) => l.iso === _locationId && l.location_type === "country"
-    );  
+    );
 
     if (_locationId.id === 'custom-area') return _locationId;
     if (!currentLocation) {
       currentLocation = _locations?.find((l) => l.location_id === _locationId);
     }
-    
+
     if (!_customArea && !isEmpty(_customGeojsonFeatures)) {
       bhSources['custom-area'].data = ({
         type: "FeatureCollection",
@@ -239,13 +240,13 @@ export const mapStyle = createSelector(
             })
         }
         })
-    
+
     // append restoration sites data
     bhSources['restoration-sites'].data = {
       type: "FeatureCollection",
       features: restorationSiteFeatures
     }
-   
+
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };
     composedMapStyle.layers = [...composedMapStyle.layers, ...ordered_array];
     return composedMapStyle;
