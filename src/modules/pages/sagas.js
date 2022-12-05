@@ -35,7 +35,6 @@ function* setLocation({ payload }) {
   if (current) {
     if (current.iso !== 'custom-area' && (current.iso !== targetLocation.toLowerCase()
     || current.id !== targetLocation.toLowerCase())) {
-      yield put(closeSearchPanel());
       yield put(closeInfoPanel());
     }
   }
