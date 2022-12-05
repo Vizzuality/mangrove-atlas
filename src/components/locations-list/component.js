@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
@@ -10,7 +10,15 @@ const locationNames = {
   wdpa: 'WDPA'
 };
 
-const LocationsList = ({ locationsData }) => {
+const LocationsList = ({ closeSearchPanel, locationsData }) => {
+  const [ newLocation, saveNewLocation ] = useState(null);
+
+  useEffect(() => {
+    if(newLocation) {
+      closeSearchPanel()
+    }
+  },[newLocation]);
+
   const getType = (location) => {
     if (location.location_type === 'worldwide') return 'PAGE/APP';
     if (location.location_type === 'custom-area') return 'PAGE/CUSTOM';
@@ -31,7 +39,7 @@ const LocationsList = ({ locationsData }) => {
       {locationsData.map(location => (
         <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
           <Link to={{ type: getType(location), payload: getPayload(location) }}>
-            <div className={styles.items}>
+            <div className={styles.items} onClick={() => saveNewLocation(location)}>
               <span>
                 {location.name}
               </span>
