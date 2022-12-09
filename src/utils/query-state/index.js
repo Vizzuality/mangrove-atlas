@@ -11,6 +11,7 @@ import get from "lodash/get";
 import { redirect } from "redux-first-router";
 
 import { setViewport } from "modules/map/actions";
+import { activeWidgets } from 'modules/widgets/selectors';
 import { decodeUrlForState, encodeStateForUrl } from "./stateToUrl";
 import { ACTIONS } from "./constants";
 
@@ -80,11 +81,12 @@ class QueryStateManager {
     const encodeRules = rules.map(([action, name]) => {
       const encodeRule = function* encodeRule() {
         const actionListener = function* actionListener() {
-          const namespace = this.registry.get(name);
-          const state = yield select();
-          const { router, dashboards, layers } = state;
 
-          const activeLayers = layers?.list?.filter((l)=> !!l.isActive).map((l) => l.id).join(',');
+          const state = yield select();
+          const activeLayers = activeWidgets(state).map((l) => l.slug).join(',');
+
+
+          const { router, dashboards } = state;
 
           if (
             state.locations.current &&
@@ -100,7 +102,7 @@ class QueryStateManager {
                   query: {
                     ...router.query,
                     category: dashboards?.current,
-                    layers: activeLayers,
+                    activeLayers,
                   },
                 },
               })
@@ -118,7 +120,7 @@ class QueryStateManager {
                   query: {
                     ...router.query,
                     category: dashboards?.current,
-                    layers: activeLayers
+                    activeLayers,
                   },
                 },
               }))
@@ -133,7 +135,7 @@ class QueryStateManager {
                   query: {
                     ...router.query,
                     category: dashboards?.current,
-                    layers: activeLayers
+                    activeLayers,
                   }
                 } })
             );
