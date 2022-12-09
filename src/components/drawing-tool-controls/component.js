@@ -35,6 +35,7 @@ const DrawingToolControls = ({
   const modalStatus = myStorage.getItem("drawingAlert");
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
+
   const [sidebarActive, setSidebarActive] = useState(null);
   const handleDrawing = useCallback(
     (value, type) => {
@@ -124,10 +125,7 @@ const DrawingToolControls = ({
           className={cx(styles.btn, {
             [styles._active]: drawingMode,
           })}
-          onClick={() => {
-            handleDrawing(drawingMode, null);
-            drawingMode && toggleModalAlert(true);
-          }}
+          onClick={() => handleDrawing(drawingMode, "worldwide")}
         >
           <Icon
             alt={isDrawingMobileMenu  ? "worldwide location" : "create custom area"}
@@ -153,7 +151,7 @@ const DrawingToolControls = ({
             ) : (
               <Link
                 to={{ type: "PAGE/APP" }}
-                // onClick={handleDrawing}
+                onClick={() => handleDrawing(drawingMode, 'worldwide')}
                 className={cx(styles.sidebarItem, {
                   [styles._active]: locationType === "PAGE/APP" && !drawingMode,
                 })}
