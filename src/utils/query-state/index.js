@@ -82,7 +82,10 @@ class QueryStateManager {
         const actionListener = function* actionListener() {
           const namespace = this.registry.get(name);
           const state = yield select();
-          const { router } = state;
+          const { router, dashboards, layers } = state;
+
+          const activeLayers = layers?.list?.filter((l)=> !!l.isActive).map((l) => l.id).join(',');
+
           if (
             state.locations.current &&
             state.locations.current?.id === "custom-area"
@@ -96,13 +99,15 @@ class QueryStateManager {
                   iso: "custom-area",
                   query: {
                     ...router.query,
-                    [name]: namespace.encode.selector(state),
+                    category: dashboards?.current,
+                    layers: activeLayers,
                   },
                 },
               })
             );
-          } 
+          }
           else if (state.locations.current?.id === "worldwide") {
+
             yield put(
               yield put(redirect({
                 type: "PAGE/APP",
@@ -112,7 +117,8 @@ class QueryStateManager {
                   iso: 'WORLDWIDE',
                   query: {
                     ...router.query,
-                    [name]: namespace.encode.selector(state),
+                    category: dashboards?.current,
+                    layers: activeLayers
                   },
                 },
               }))
@@ -120,13 +126,14 @@ class QueryStateManager {
           }
           else {
             yield put(
-              redirect({ 
+              redirect({
                 type: router.type,
                 payload: {
                   ...router.payload,
                   query: {
                     ...router.query,
-                    [name]: namespace.encode.selector(state)
+                    category: dashboards?.current,
+                    layers: activeLayers
                   }
                 } })
             );
