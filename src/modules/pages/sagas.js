@@ -33,7 +33,6 @@ function* setLocation({ payload }) {
   // In case user sets location from widget modal
 
   if (current) {
-    console.log({ current, targetLocation })
     if (current.iso !== 'custom-area' && (current.iso !== targetLocation.toLowerCase()
     || current.id !== targetLocation.toLowerCase())) {
       // yield put(closeSearchPanel());
