@@ -15,6 +15,7 @@ export const decodeUrlForState = (url) => {
 
 export const encodeStateForUrl = (params) => {
   const paramsParsed = {};
+
   Object.keys(params).forEach((key) => {
     if (typeof params[key] === 'object') {
       paramsParsed[key] = btoa(JSON.stringify(params[key]));
