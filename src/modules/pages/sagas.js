@@ -1,5 +1,5 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import { setCurrent, closeSearchPanel } from 'modules/locations/actions';
+import { setCurrent } from 'modules/locations/actions';
 import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 
 export const getLocationType = (type) => {
@@ -35,7 +35,6 @@ function* setLocation({ payload }) {
   if (current) {
     if (current.iso !== 'custom-area' && (current.iso !== targetLocation.toLowerCase()
     || current.id !== targetLocation.toLowerCase())) {
-      // yield put(closeSearchPanel());
       yield put(closeInfoPanel());
     }
   }

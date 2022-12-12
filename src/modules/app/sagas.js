@@ -17,10 +17,16 @@ function* loadInitialData() {
     mapStyles,
     languages,
     restorationSites,
-    router
+    router,
   } = yield select();
 
-  if (router.prev.query.category) yield put(setCurrent(router.prev.query.category));
+  const { current } = dashboards;
+  if (router?.prev?.query?.category) {
+    yield put(setCurrent(router?.prev?.query?.category))
+  } else {
+    yield put(setCurrent(current))
+  };
+
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.list.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());

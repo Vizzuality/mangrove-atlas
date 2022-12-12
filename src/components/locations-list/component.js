@@ -17,7 +17,7 @@ const LocationsList = ({ closeSearchPanel, locationsData }) => {
     if(newLocation) {
       closeSearchPanel()
     }
-  },[newLocation]);
+  },[newLocation, closeSearchPanel]);
 
   const getType = (location) => {
     if (location.location_type === 'worldwide') return 'PAGE/APP';
