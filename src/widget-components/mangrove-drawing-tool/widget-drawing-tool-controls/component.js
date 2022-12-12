@@ -50,13 +50,11 @@ export const WidgetDrawingToolControls = ({
 
 WidgetDrawingToolControls.propTypes = {
   current: PropTypes.string,
-  setCurrent: PropTypes.func,
   setDrawingValue: PropTypes.func,
 };
 
 WidgetDrawingToolControls.defaultProps = {
   current: null,
-  setCurrent: () => null,
   setDrawingValue: () => null,
 };
 

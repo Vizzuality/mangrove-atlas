@@ -7,7 +7,6 @@ import { featureStyle, editHandleStyle } from "./styles";
 export const DrawingEditor = ({
   setCurrentLocation,
   current,
-  setCurrent,
   setDrawingValue,
   drawingValue,
   setDrawingStatus,

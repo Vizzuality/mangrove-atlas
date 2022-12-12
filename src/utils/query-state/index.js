@@ -87,7 +87,6 @@ class QueryStateManager {
 
 
           const { router, dashboards } = state;
-
           if (
             state.locations.current &&
             state.locations.current?.id === "custom-area"
