@@ -8,7 +8,6 @@ import {
   setViewport,
   setViewportFixed,
 } from "./actions";
-import countriesDictionary from "./constants";
 
 function* flyToCurrentLocation() {
   const state = yield select();
@@ -22,11 +21,7 @@ function* flyToCurrentLocation() {
       }
     } else {
 
-      const locationException = countriesDictionary[location.iso];
-
-      const bbox = locationException
-        ? locationException.bounds
-        : location.bounds;
+      const bbox = location.bounds;
 
       if (!state.map.isViewportFixed) {
         yield put(
