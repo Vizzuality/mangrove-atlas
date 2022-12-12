@@ -125,7 +125,7 @@ const DrawingToolControls = ({
           className={cx(styles.btn, {
             [styles._active]: drawingMode,
           })}
-          onClick={() => handleDrawing(drawingMode, "worldwide")}
+          onClick={handleDrawing}
         >
           <Icon
             alt={isDrawingMobileMenu  ? "worldwide location" : "create custom area"}
@@ -139,7 +139,7 @@ const DrawingToolControls = ({
         <>
           <span className={styles.menuItemTitle}>Place</span>
           <div className={styles.itemsWrapper}>
-            {drawingMode ? (
+            {drawingMode || drawingValue?.length || !isEmpty(customGeojsonFeatures) ? (
               <button
                 onClick={() => handleDrawing(drawingMode, 'worldwide')}
                 className={cx(styles.sidebarItem, {
