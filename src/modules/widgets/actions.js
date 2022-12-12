@@ -11,6 +11,7 @@ export const collapseAll = createAction('WIDGETS/COLLAPSE_ALL');
 export const expandAll = createAction('WIDGETS/EXPAND_ALL');
 
 export const toggleActive = createAction('WIDGET/TOGGLE_ACTIVE');
+export const toggleActiveById = createAction('WIDGET/TOGGLE_ACTIVE_BY_ID');
 export const toggleActiveByLayerId = createAction('WIDGET/TOGGLE_ACTIVE_BY_LAYER_ID');
 
 export const openInfoPanel = createAction('WIDGETS/OPEN_PANEL');

@@ -27,6 +27,7 @@ queryState.add({
       actions.collapseAll,
       actions.toggleCollapse,
       actions.toggleActive,
+      actions.toggleActiveById,
       actions.toggleActiveByLayerId
     ],
     selector: (state) => {
