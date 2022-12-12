@@ -1,6 +1,6 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import { fetchLocations } from 'modules/locations/actions';
-import { fetchDashboards } from 'modules/dashboards/actions';
+import { fetchDashboards, setCurrent } from 'modules/dashboards/actions';
 import { fetchWidgets } from 'modules/widgets/actions';
 import { fetchLayers } from 'modules/layers/actions';
 import { fetchMapStyles } from 'modules/map-styles/actions';
@@ -17,8 +17,10 @@ function* loadInitialData() {
     mapStyles,
     languages,
     restorationSites,
+    router
   } = yield select();
 
+  if (router.prev.query.category) yield put(setCurrent(router.prev.query.category));
   if (!locations.list.length) yield put(fetchLocations());
   if (!dashboards.list.length) yield put(fetchDashboards());
   if (!widgets.list.length) yield put(fetchWidgets());

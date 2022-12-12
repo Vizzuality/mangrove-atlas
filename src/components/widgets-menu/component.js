@@ -1,4 +1,5 @@
 import React, { useState, useRef, useCallback } from "react";
+
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -68,7 +69,7 @@ const WidgetsMenu = ({
                   e.stopPropagation();
                   handleModal(slug);
                 }}
-                onMouseOver={disabled ? null :handleHover}
+                onMouseOver={disabled ? null : handleHover}
                 disabled={true}
               >
                 <li
