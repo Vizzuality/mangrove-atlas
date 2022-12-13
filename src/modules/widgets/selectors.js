@@ -80,8 +80,7 @@ export const isActiveCustomArea = createSelector(
   (_drawingValue) => !!_drawingValue.length
 );
 
-export const activeWidgets = createSelector([widgets], (_widgets) =>
-  _widgets.filter((widget) => widget.isActive)
+export const activeWidgets = createSelector([widgets], (_widgets) =>  _widgets.filter((widget) => widget.isActive)
 );
 
 export const activeLayers = createSelector(
