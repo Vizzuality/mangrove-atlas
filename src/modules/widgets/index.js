@@ -27,8 +27,8 @@ queryState.add({
       actions.collapseAll,
       actions.toggleCollapse,
       actions.toggleActive,
-      actions.toggleActiveById,
-      actions.toggleActiveByLayerId
+      actions.toggleActiveByLayerId,
+      actions.setActiveLayers
     ],
     selector: (state) => {
       const { widgets: { list } } = state;
