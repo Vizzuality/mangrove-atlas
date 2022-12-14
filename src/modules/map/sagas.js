@@ -8,7 +8,6 @@ import {
   setViewport,
   setViewportFixed,
 } from "./actions";
-import countriesDictionary from "./constants";
 
 function* flyToCurrentLocation() {
   const state = yield select();
@@ -22,11 +21,7 @@ function* flyToCurrentLocation() {
       }
     } else {
 
-      const locationException = countriesDictionary[location.iso];
-
-      const bbox = locationException
-        ? locationException.bounds
-        : location.bounds;
+      const bbox = location.bounds;
 
       if (!state.map.isViewportFixed) {
         yield put(
@@ -82,5 +77,7 @@ export function* restoreMapState() {
 export default function* pages() {
   yield takeLatest("LOCATIONS/FETCH_SUCCEDED", flyToCurrentLocation);
   yield takeLatest("LOCATIONS/SET_CURRENT", flyToCurrentLocation);
+  yield takeLatest("DRAWING_TOOL/SET_DRAWING_VALUE", flyToCurrentLocation);
+  yield takeLatest("DRAWING_TOOL/SET_CUSTOM_GEOJSON_FEATURES", flyToCurrentLocation);
   yield takeLatest("APP/MOBILE", flyToCurrentLocation);
 }

@@ -2,7 +2,8 @@ import { fetchRequested,
   fetchSucceeded,
   fetchFailed,
   toggleActive,
-  toggleCollapse } from './actions';
+  toggleCollapse,
+} from './actions';
 
 export default {
   [fetchRequested]: state => ({
