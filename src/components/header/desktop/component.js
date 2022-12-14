@@ -17,7 +17,7 @@ const Header = ({
   widgetsLength,
   drawingMode,
   drawingValue,
-  customGeojsonFeatures
+  customGeojsonFeatures,
 }) => {
   const onClickCollapseAll = () => {
     collapseAll();

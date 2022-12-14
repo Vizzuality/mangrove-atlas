@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import Button from 'components/button';
 
 import styles from './style.module.scss';
+import { setPrintMode } from 'modules/app/actions';
 
 const Header = ({
   location,
@@ -31,8 +32,10 @@ const Header = ({
   }
 
   const onClickDownload = () => {
+    setPrintMode(true);
     setMobileView(true);
     window.print();
+    setTimeout(() => setPrintMode(false), 1000);
   }
 
   return (
