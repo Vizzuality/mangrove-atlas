@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -18,16 +18,27 @@ const WidgetList = ({
   categoryWidgets,
   dataByWidget,
   drawingMode,
+  setPrintingMode,
+  bounds,
+  setBounds,
+  printMode,
   ...parentProps
 }) => {
   const onClickDownload = useCallback(() => {
-    window.print();
-  }, []);
+    setPrintingMode(true);
+  }, [setPrintingMode]);
 
   const widgetsFiltered = useMemo(
     () => widgets.filter(({ slug }) => dataByWidget.includes(slug)),
     [widgets, dataByWidget]
   );
+
+  useEffect(() => {
+    if (printMode) {
+      setPrintingMode(false);
+      window.print();
+    }
+  }, [printMode, setPrintingMode]);
 
   return (
     <div

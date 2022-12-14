@@ -1,6 +1,12 @@
-import { takeLatest, put, select } from "redux-saga/effects";
+import { takeLatest, put, select, delay } from "redux-saga/effects";
 import { currentLocation } from "modules/locations/selectors";
 import bboxTurf from "@turf/bbox";
+
+import {
+  TRANSITION_EVENTS,
+} from "react-map-gl";
+
+import { fitBounds } from "viewport-mercator-project";
 import {
   resetViewport,
   setBounds,
@@ -9,11 +15,13 @@ import {
   setViewportFixed,
 } from "./actions";
 
+import { setPrintMode } from 'modules/app/actions';
+
 function* flyToCurrentLocation() {
   const state = yield select();
   const location = currentLocation(state);
 
-  const { mapView } = state.app.mobile;
+  const { mobile: { mapView } } = state.app;
   if (location) {
     if (location.location_type === "worldwide") {
       if (!state.map.isViewportFixed) {
@@ -41,6 +49,56 @@ function* flyToCurrentLocation() {
     }
     yield put(setViewportFixed({ value: false }));
   }
+}
+
+function* setPrintingProcess({ payload: isPrinting }) {
+  const {
+    map: {
+      bounds: { bbox },
+      viewport,
+    },
+  } = yield select();
+
+  const getLeftOffset = () => {
+    if (isPrinting) {
+      // todo: this magic formula does not work.
+      return window.innerWidth > 795 ? - (window.innerWidth + 400) : 0;
+    }
+
+    //? size of the sidebar
+    return 620;
+  }
+
+  if (bbox) {
+    const { longitude, latitude, zoom } = fitBounds({
+      bounds: [
+        [bbox[0], bbox[1]],
+        [bbox[2], bbox[3]],
+      ],
+      width: window.innerWidth,
+      height: window.innerHeight,
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: getLeftOffset(),
+      },
+    });
+
+    const newViewport = {
+      ...viewport,
+      longitude,
+      latitude,
+      zoom,
+      transitionDuration : 0,
+      transitionInterruption: TRANSITION_EVENTS.UPDATE,
+    };
+
+    yield put(setViewport(newViewport));
+    yield delay(500);
+  }
+
+  yield put(setPrintMode(isPrinting));
 }
 
 // Part of query state, not normal flow.
@@ -80,4 +138,5 @@ export default function* pages() {
   yield takeLatest("DRAWING_TOOL/SET_DRAWING_VALUE", flyToCurrentLocation);
   yield takeLatest("DRAWING_TOOL/SET_CUSTOM_GEOJSON_FEATURES", flyToCurrentLocation);
   yield takeLatest("APP/MOBILE", flyToCurrentLocation);
+  yield takeLatest("APP/SET_PRINTING_MODE", setPrintingProcess);
 }
