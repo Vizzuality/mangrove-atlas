@@ -13,6 +13,7 @@ const WidgetList = ({
   templates,
   mobile,
   category,
+  categoryWidgets,
   dataByWidget,
   drawingMode,
   ...parentProps
@@ -21,10 +22,11 @@ const WidgetList = ({
     window.print();
   }, []);
 
+  console.log({ categoryWidgets: categoryWidgets.length });
   const widgetsFiltered = useMemo(
     () =>
       widgets.filter(
-        ({ slug }) => dataByWidget.includes(slug) 
+        ({ slug }) => dataByWidget.includes(slug)
       ),
     [widgets, dataByWidget]
   );
@@ -36,6 +38,9 @@ const WidgetList = ({
         [styles.spinner]: !widgets.length,
       })}
     >
+      {categoryWidgets.length === 0 && (
+        <div style={{ height: 200, width: 200, border: '2px solid red'}}>NO DATA</div>
+      )}
       {!widgets.length ? (
         <div className={styles.spinner}>
           <Spinner />

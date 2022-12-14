@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
   widgetsLength: dashboardWidgets(state).length,
   drawingMode: state.drawingTool.drawingMode,
   drawingValue: state.drawingTool.drawingValue,
-  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
 });
 
 const mapDispatchToProps = {

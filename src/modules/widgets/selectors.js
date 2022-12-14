@@ -28,6 +28,7 @@ const widgetsData = (state) => [
 ];
 const drawingMode = (state) => state.drawingTool.drawingMode;
 const drawingValue = (state) => state.drawingTool.drawingValue;
+const currentCategory = (state) => state.dashboards.current;
 
 export const dashboardWidgets = createSelector(
   [widgets, currentDashboard, currentLocation, widgetsData, drawingMode],
@@ -56,6 +57,19 @@ export const dashboardWidgets = createSelector(
             (locationType.includes(location_type) ||
               locationType.includes("worlwide"))
         );
+  }
+);
+
+export const categoryWidgets = createSelector(
+  [widgets, widgetsData, currentCategory],
+  (
+    _widgets,
+    _widgetsData,
+    _currentCategory,
+  ) => {
+    const widgetsByCategory = _widgets.filter(({ categoryIds }) => categoryIds.includes(_currentCategory)).map((w) => w.slug);
+
+    return _widgetsData.filter((w) => Object.values(w)[0].length > 0 && widgetsByCategory.includes(Object.keys(w)[0]))
   }
 );
 
