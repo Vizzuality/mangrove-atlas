@@ -5,6 +5,7 @@ import { addFilter, removeFilter } from "modules/map-styles/actions";
 import { expandAll, collapseAll } from "modules/widgets/actions";
 import { setBounds } from "modules/map/actions";
 import { dashboardWidgets, getWidgetsWithData, categoryWidgets } from "modules/widgets/selectors";
+import { setBounds } from "modules/map/actions";
 import { currentLocation } from "modules/locations/selectors";
 
 import HighlightedPlaces from 'widget-components/highlighted-places';
