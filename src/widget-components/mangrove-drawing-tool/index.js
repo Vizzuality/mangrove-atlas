@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
   drawingValue: state.drawingTool.drawingValue,
   customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
   mapView: state.app.mobile.mapView,
-
+  alertsUi: state.widgets.ui.alerts
 });
 
 const mapDispatchToProps = {

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { isEmpty } from "lodash";
 
 import Select from "components/select";
 import PropTypes from "prop-types";
@@ -40,7 +41,7 @@ function MangroveBiomass({
       metadata?.avg_aboveground_biomass.find((b) => b.year === year)?.value,
     [metadata, year]
   );
-  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
+  const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
     fetchMangroveBiomassData(
@@ -79,6 +80,7 @@ function MangroveBiomass({
     () => data?.filter(({ indicator }) => indicator !== "total"),
     [data]
   );
+
   const indicators = useMemo(
     () => filteredData.map(({ indicator }) => indicator),
     [filteredData]
@@ -166,8 +168,7 @@ function MangroveBiomass({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_biomass"
           fetch={fetchMangroveBiomassData}
@@ -177,7 +178,7 @@ function MangroveBiomass({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

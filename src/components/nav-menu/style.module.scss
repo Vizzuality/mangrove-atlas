@@ -124,14 +124,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0px;
 
     .logo {
       width: 130px;
       padding-right: 20px;
+    }
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 30px;
+
+      .image {
+        max-width: 150px;
+      }
     }
   }
 }

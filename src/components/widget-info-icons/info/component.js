@@ -63,14 +63,12 @@ const Info = ({ slug, onClick, icon, children }) => {
 
 Info.propTypes = {
   isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func,
   icon: PropTypes.bool,
   children: PropTypes.node
 };
 
 Info.defaultProps = {
   isOpened: false,
-  closeSearchPanel: () => null,
   icon: true,
   children: null
 };

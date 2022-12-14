@@ -6,6 +6,7 @@ import {
   expandAll,
   toggleCollapse,
   toggleActive,
+  setActiveLayers,
   toggleActiveByLayerId,
   openInfoPanel,
   closeInfoPanel,
@@ -55,11 +56,18 @@ export default {
       isCollapsed: !noCollapsed,
     };
   },
-  [toggleActive]: (state, { payload }) => ({
+  [toggleActive]: (state, { payload }) =>   ({
     ...state,
     list: state.list.map((item) => {
       if (item.slug !== payload.id) return item;
       return ({ ...item, isActive: !payload.isActive });
+    }),
+  }),
+  [setActiveLayers]: (state, { payload }) => ({
+    ...state,
+    list: state.list.map((item) => {
+      if (!payload.includes(item.slug)) return item;
+      return ({ ...item, isActive: true });
     }),
   }),
   [toggleActiveByLayerId]: (state, { payload }) => ({

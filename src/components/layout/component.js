@@ -14,7 +14,7 @@ import Map from "components/map-container";
 import styles from "./style.module.scss";
 
 const Layout = ({ mapView, location }) => {
-  const isMobile = window.innerWidth < breakpoints.lg || window.innerHeight < 620;
+  const isMobile = window.innerWidth < breakpoints.lg;
 
   return (
     <div className={cx([styles.printOnly_wrapper])}>

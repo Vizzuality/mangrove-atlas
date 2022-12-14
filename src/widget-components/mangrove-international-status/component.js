@@ -75,144 +75,143 @@ export const MangroveInternationalStatus = ({
       chart={false}
       isCollapsed={isCollapsed}
       {...props}
-    >
-      <div slug={slug}>
-        {pledge_type && (
-          <div>
-            <h3 className={styles.title}>
-              Nationally Determined Contributions{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.underline}
-                href={
-                  !hasNDCTarget && !hasNDCReductionTarget
-                    ? null
-                    : ndc_target_url
-                }
-                alt="ndc target"
-              >
-                (NDC)
-              </a>
-            </h3>
-            <Tooltip
-              html={ndc_blurb ? <TooltipContent>{ndc_blurb}</TooltipContent> : null}
-              position="top-start"
-              arrow={true}
-              trigger="mouseenter"
+      component={      <div slug={slug}>
+      {pledge_type && (
+        <div>
+          <h3 className={styles.title}>
+            Nationally Determined Contributions{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.underline}
+              href={
+                !hasNDCTarget && !hasNDCReductionTarget
+                  ? null
+                  : ndc_target_url
+              }
+              alt="ndc target"
             >
-              <div className={cx(styles.sentenceWrapper, styles.interactive)}>
-                <p>
-                  {name}
-                  {apostrophe} NDC pledge contains {pledge_type}
-                </p>
-                <span className={styles.icon}>
-                  <Icon name="info" alt="info" />
-                </span>
-              </div>
-            </Tooltip>
-          </div>
-        )}
-
-        {!pledge_type && (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
-          <div>
-            <h3 className={styles.title}>
-              Nationally Determined Contributions{" "}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.underline}
-                href={
-                  !hasNDCTarget && !hasNDCReductionTarget
-                    ? null
-                    : ndc_target_url
-                }
-                alt="ndc target"
-              >
-                (NDC)
-              </a>
-            </h3>
-          </div>
-        )}
-
-        {(hasNDCTarget || hasNDCReductionTarget) && <div className={styles.sentenceWrapper}>
-          <p>
-            {`The GHG target`}{" "}
-            {!hasNDCReductionTarget && hasNDCTarget && (
-              <span>represents a reduction of {ndc_target}</span>
-            )}
-            {reductionTargetSentence}
-            {targetYearsSentence}
-            {ndcTargetSentence}
-          </p>
-        </div>}
-        {ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
-            {!ndc_adaptation && !ndc_mitigation
-              ? "doesn't include"
-              : "includes"}{" "}
-            coastal and marine NBS for mitigation and adaptation.
-          </p>
-        </div>}
-
-        {ndc_adaptation && !ndc_mitigation && <div className={styles.sentenceWrapper}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
-            {!ndc_adaptation && !ndc_mitigation
-              ? "doesn't include"
-              : "includes"}{" "}
-            coastal and marine NBS for adaptation.
-          </p>
-        </div>}
-
-
-        {!ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
-            {!ndc_adaptation && !ndc_mitigation
-              ? "doesn't include"
-              : "includes"}{" "}
-            coastal and marine NBS for mitigation'.
-          </p>
-        </div>}
-
-        {frel && fow && (
-          <div>
-            <h3 className={styles.title}>Forest Reference Emission Levels</h3>
-            <div className={styles.sentenceWrapper}>
+              (NDC)
+            </a>
+          </h3>
+          <Tooltip
+            html={ndc_blurb ? <TooltipContent>{ndc_blurb}</TooltipContent> : null}
+            position="top-start"
+            arrow={true}
+            trigger="mouseenter"
+          >
+            <div className={cx(styles.sentenceWrapper, styles.interactive)}>
               <p>
                 {name}
-                {apostrophe} {year_frel} FREL is {numberFormat(frel)} Mt CO₂e/yr
-                ({name}
-                {apostrophe} mangroves are considered {fow}) .
+                {apostrophe} NDC pledge contains {pledge_type}
               </p>
+              <span className={styles.icon}>
+                <Icon name="info" alt="info" />
+              </span>
             </div>
+          </Tooltip>
+        </div>
+      )}
+
+      {!pledge_type && (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
+        <div>
+          <h3 className={styles.title}>
+            Nationally Determined Contributions{" "}
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.underline}
+              href={
+                !hasNDCTarget && !hasNDCReductionTarget
+                  ? null
+                  : ndc_target_url
+              }
+              alt="ndc target"
+            >
+              (NDC)
+            </a>
+          </h3>
+        </div>
+      )}
+
+      {(hasNDCTarget || hasNDCReductionTarget) && <div className={styles.sentenceWrapper}>
+        <p>
+          {`The GHG target`}{" "}
+          {!hasNDCReductionTarget && hasNDCTarget && (
+            <span>represents a reduction of {ndc_target}</span>
+          )}
+          {reductionTargetSentence}
+          {targetYearsSentence}
+          {ndcTargetSentence}
+        </p>
+      </div>}
+      {ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+          {!ndc_adaptation && !ndc_mitigation
+            ? "doesn't include"
+            : "includes"}{" "}
+          coastal and marine NBS for mitigation and adaptation.
+        </p>
+      </div>}
+
+      {ndc_adaptation && !ndc_mitigation && <div className={styles.sentenceWrapper}>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+          {!ndc_adaptation && !ndc_mitigation
+            ? "doesn't include"
+            : "includes"}{" "}
+          coastal and marine NBS for adaptation.
+        </p>
+      </div>}
+
+
+      {!ndc_adaptation && ndc_mitigation && <div className={styles.sentenceWrapper}>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? "updated" : "first"} NDC pledge{" "}
+          {!ndc_adaptation && !ndc_mitigation
+            ? "doesn't include"
+            : "includes"}{" "}
+          coastal and marine NBS for mitigation'.
+        </p>
+      </div>}
+
+      {frel && fow && (
+        <div>
+          <h3 className={styles.title}>Forest Reference Emission Levels</h3>
+          <div className={styles.sentenceWrapper}>
+            <p>
+              {name}
+              {apostrophe} {year_frel} FREL is {numberFormat(frel)} Mt CO₂e/yr
+              ({name}
+              {apostrophe} mangroves are considered {fow}) .
+            </p>
+          </div>
+        </div>
+      )}
+      <div>
+        <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
+        {ipcc_wetlands_suplement === 'has' ? (
+          <div className={styles.sentenceWrapper}>
+            <p>
+              {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
+              Supplement.
+            </p>
+          </div>
+        ) : (
+          <div className={styles.sentenceWrapper}>
+            <p>
+              There is no information as to whether {name} has implemented the
+              wetlands supplement
+            </p>
           </div>
         )}
-        <div>
-          <h3 className={styles.title}>IPCC Wetlands Supplement</h3>
-          {ipcc_wetlands_suplement === 'has' ? (
-            <div className={styles.sentenceWrapper}>
-              <p>
-                {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands
-                Supplement.
-              </p>
-            </div>
-          ) : (
-            <div className={styles.sentenceWrapper}>
-              <p>
-                There is no information as to whether {name} has implemented the
-                wetlands supplement
-              </p>
-            </div>
-          )}
-        </div>
       </div>
-    </ChartWidget>
+    </div>}
+    />
   );
 };
 

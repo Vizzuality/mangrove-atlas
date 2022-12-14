@@ -62,6 +62,7 @@ export const CONFIG = {
       investibleBlueCarbonValue,
       chartConfig: {
         type: "pie",
+        height: 250,
         layout: "centric",
         margin: { top: 20, right: 0, left: 0, bottom: 20 },
         xKey: "percentage",
@@ -69,13 +70,13 @@ export const CONFIG = {
           pies: {
             y: {
               cx: "50%",
-              cy: "50%",
+              cy: "60%",
               paddingAngle: 2,
               dataKey: "percentage",
-              nameKey: "category",
+              nameKey: "label",
               innerRadius: "60%",
               outerRadius: "80%",
-              isAnimationActive: false,
+              isAnimationActive: true,
               labelLine: false,
               label: (props) => {
                 const {
@@ -96,24 +97,24 @@ export const CONFIG = {
                 const my = cy + outerRadius * sin;
                 const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
                 const ey = my;
-                const heightMargin = percentage < 5 ? 10 : 0;
-                const top = endAngle < cy ? 30 : 0;
+                const heightMargin = percentage < 5 ? 16 : 6;
+                const top = endAngle < cy ? 6 : 0;
                 return (
                   <g>
                     <foreignObject
-                      x={ex + (cos >= 0 ? 1 : -1)}
+                      x={ex + (cos >= 0 ? 1 : -6)}
                       y={ey - heightMargin * index - top}
-                      width="100%"
-                      height="100px"
+                      height="30px"
+                      width="125px"
                     >
                       <div
                         style={{
-                          marginTop: 2,
+                          marginTop: 5,
                           marginBottom: 5,
                           display: "flex",
                           color: "#A5A5A5",
                           lineHeight: "10px",
-                          width: "125px",
+                          width: "100%",
                           fontSize: "11px",
                         }}
                       >
@@ -136,7 +137,6 @@ export const CONFIG = {
                 style={{
                   flexDirection: "column",
                   marginTop: "10px",
-                  marginLeft: "-50px",
                 }}
                 payload={payload}
                 settings={[

@@ -66,6 +66,24 @@ export default {
       layersIds: ["alerts-heat"],
     },
     {
+      name: "Mangrove Restoration Sites",
+      slug: "restoration_sites",
+      locationType: [
+        "wdpa",
+        "country",
+        "worldwide"
+      ],
+      categoryIds: [
+        "all_datasets",
+        "restoration_and_conservation"
+      ],
+      layersIds: [
+        "restoration-sites",
+        "restoration-sites-clusters",
+        "estoration-sites-cluster-count"
+      ]
+    },
+    {
       name: "Mangrove Species",
       slug: "mangrove_species",
       locationType: ["country", "worldwide"],
@@ -178,6 +196,10 @@ export default {
     {
       name: "Mangrove Blue Carbon",
       id: "carbon",
+    },
+    {
+      "name": "Mangrove Restoration Sites",
+      "id": "restoration-sites"
     },
     {
       name: "Height canopy",

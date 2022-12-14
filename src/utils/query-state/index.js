@@ -11,6 +11,7 @@ import get from "lodash/get";
 import { redirect } from "redux-first-router";
 
 import { setViewport } from "modules/map/actions";
+import { activeWidgets } from 'modules/widgets/selectors';
 import { decodeUrlForState, encodeStateForUrl } from "./stateToUrl";
 import { ACTIONS } from "./constants";
 
@@ -67,7 +68,6 @@ class QueryStateManager {
 
     this.registry.set(name, namespace);
     this.names.add(name);
-
     actions.forEach((action) => {
       this.triggers.set(action().type, name);
     });
@@ -81,9 +81,12 @@ class QueryStateManager {
     const encodeRules = rules.map(([action, name]) => {
       const encodeRule = function* encodeRule() {
         const actionListener = function* actionListener() {
-          const namespace = this.registry.get(name);
+
           const state = yield select();
-          const { router } = state;
+          const activeLayers = activeWidgets(state).map((l) => l.slug).join(',');
+
+
+          const { router, dashboards } = state;
           if (
             state.locations.current &&
             state.locations.current?.id === "custom-area"
@@ -97,12 +100,32 @@ class QueryStateManager {
                   iso: "custom-area",
                   query: {
                     ...router.query,
-                    [name]: namespace.encode.selector(state),
+                    category: dashboards?.current,
+                    activeLayers,
                   },
                 },
               })
             );
-          } else {
+          }
+          else if (state.locations.current?.id === "worldwide") {
+
+            yield put(
+              yield put(redirect({
+                type: "PAGE/APP",
+                payload: {
+                  ...router.payload,
+                  id: "worldwide",
+                  iso: 'WORLDWIDE',
+                  query: {
+                    ...router.query,
+                    category: dashboards?.current,
+                    activeLayers,
+                  },
+                },
+              }))
+            );
+          }
+          else {
             yield put(
               redirect({
                 type: router.type,
@@ -110,10 +133,10 @@ class QueryStateManager {
                   ...router.payload,
                   query: {
                     ...router.query,
-                    [name]: namespace.encode.selector(state),
-                  },
-                },
-              })
+                    category: dashboards?.current,
+                    activeLayers,
+                  }
+                } })
             );
           }
         };

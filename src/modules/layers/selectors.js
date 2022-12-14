@@ -13,5 +13,5 @@ export const activeLayers = createSelector(
  */
 export const activeLayersForLegend = createSelector(
   [layers],
-  _layers => orderBy(_layers.filter(layer => layer.isActive), l => -l.weight).reverse()
+  _layers => orderBy(_layers.filter(layer => layer.isActive), l => l.weight).reverse()
 );

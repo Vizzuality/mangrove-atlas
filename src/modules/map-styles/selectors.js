@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { activeLayers } from "modules/layers/selectors";
 import template from "lodash/template";
-import orderBy from "lodash/orderBy";
+import { orderBy, isEmpty } from "lodash";
 import { rasterLayers } from "./rasters.json";
 import StyleManager from "./style-manager";
 import {
@@ -33,6 +33,7 @@ const ALERTS_URL_TEMPLATE =
 const getAlertsUrl = template(ALERTS_URL_TEMPLATE, {
   interpolate: /{{([\s\S]+?)}}/g,
 });
+const restorationSites = (state) => state.restorationSites.data
 
 function sortLayers(layers) {
   const order = {
@@ -77,7 +78,8 @@ export const mapStyle = createSelector(
     endDateAlerts,
     locations,
     customArea,
-    customGeojsonFeatures
+    customGeojsonFeatures,
+    restorationSites,
   ],
   (
     _basemap,
@@ -89,7 +91,8 @@ export const mapStyle = createSelector(
     _endDateAlerts,
     _locations,
     _customArea,
-    _customGeojsonFeatures
+    _customGeojsonFeatures,
+    _restorationSites,
   ) => {
     const layersWithFilters = _layerStyles.map((layerStyle) => {
       const newLayerStyle = { ...layerStyle };
@@ -128,7 +131,7 @@ export const mapStyle = createSelector(
     const visibleRasterLayers = _activeLayersIds.reduce((acc, layerId) => {
       const layerMap = layersMap[layerId];
       const layerFilter = _filters.find((f) => f.id === layerId);
-    
+
       if (layerFilter && layerMap) {
         if (layerFilter && layerFilter.id === "extent") {
           return [
@@ -176,29 +179,30 @@ export const mapStyle = createSelector(
       ...layer,
       layout: {
         ...layer.layout,
-        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area' && !!_customGeojsonFeatures?.length) ? "visible" : "none",
+        visibility: visibleRasterLayers.includes(layer.id) || (layer.id === 'custom-area') ? "visible" : "none",
       },
     }));
+
     const ordered_array = mapOrder(bhLayersUpdated, LAYERS_ORDER, "id");
 
     // Getting location
     let currentLocation = _locations?.find(
       (l) => l.iso === _locationId && l.location_type === "country"
-    );  
+    );
 
     if (_locationId.id === 'custom-area') return _locationId;
     if (!currentLocation) {
       currentLocation = _locations?.find((l) => l.location_id === _locationId);
     }
-    
-    if (!_customArea && !!_customGeojsonFeatures?.length) {
+
+    if (!_customArea && !isEmpty(_customGeojsonFeatures)) {
       bhSources['custom-area'].data = ({
         type: "FeatureCollection",
-        features: _customGeojsonFeatures,
+        features: [_customGeojsonFeatures],
       });
     }
 
-    if (!_customGeojsonFeatures?.length) {
+    if (isEmpty(_customGeojsonFeatures)) {
       bhSources['custom-area'].data = ({
         type: "FeatureCollection",
         features: [],
@@ -218,6 +222,29 @@ export const mapStyle = createSelector(
         endDate: `&end_date=${_endDateAlerts?.value || "2022-12-31"}`,
         locationId: "",
       });
+    }
+
+    const restorationSiteFeatures = _restorationSites.filter(site => !!site.site_centroid )
+      .map(
+        ({ site_centroid, landscape_name, organizations, site_name }) => {
+        if (site_centroid) {
+          return (
+            {
+              geometry: site_centroid,
+              properties:
+                {
+                landscape_name,
+                organizations,
+                site_name
+                }
+            })
+        }
+        })
+
+    // append restoration sites data
+    bhSources['restoration-sites'].data = {
+      type: "FeatureCollection",
+      features: restorationSiteFeatures
     }
 
     composedMapStyle.sources = { ...composedMapStyle.sources, ...bhSources };

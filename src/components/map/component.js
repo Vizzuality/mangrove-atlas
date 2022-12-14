@@ -18,8 +18,8 @@ import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import { easeCubic } from "d3-ease";
 
+import PopupMangroveStyle from "./mangrove-map-styled-popup/PopupMangroveStyle";
 import PopUpRestoration from "components/map-popup-restoration";
-
 import styles from "./style.module.scss";
 
 const DEFAULT_VIEWPORT = {
@@ -98,6 +98,7 @@ class Map extends Component {
     modeId: null,
     modeHandler: null,
     popUpPosition: {},
+    popupFeatureType: undefined,
   };
 
   componentDidMount() {
@@ -203,6 +204,42 @@ class Map extends Component {
     }, 2500);
   };
 
+  setRestorationSitePopUpState = (event) => {
+    const siteFromEvent = event.features[0];
+    const { organizations } = siteFromEvent.properties;
+
+    const propertiesWithOrganizationNamesParsed = {
+      ...siteFromEvent.properties,
+      organizations: organizations ? JSON.parse(organizations) : [],
+    };
+
+    this.setState({
+      ...this.state,
+      popup: [event?.lngLat[0], event?.lngLat[1]],
+      popupInfo: propertiesWithOrganizationNamesParsed,
+      popupFeatureType: "restoration-sites",
+    });
+  };
+
+  expandMarkerCluster = ({ event, clusterLayerId, sourceId }) => {
+    const clusterFeatures = this.map.queryRenderedFeatures(event.point, {
+      layers: [clusterLayerId],
+    });
+    const clusterClicked = clusterFeatures[0];
+    const clusterId = clusterClicked.properties.cluster_id;
+    this.map
+      .getSource(sourceId)
+      .getClusterExpansionZoom(clusterId, (error, zoom) => {
+        if (error) {
+          return;
+        }
+        this.map.easeTo({
+          center: clusterClicked.geometry.coordinates,
+          zoom,
+        });
+      });
+  };
+
   render() {
     const {
       customClass,
@@ -229,6 +266,31 @@ class Map extends Component {
     const ms = { ...mapStyle };
     let hoveredStateId = null;
     const onClickHandler = (e) => {
+      const getFeatureLayerById = (layerId) =>
+        e.features?.find(({ layer }) => layer.id === layerId);
+
+      const isClickFromRestorationSite =
+        getFeatureLayerById("restoration-sites");
+      const isClickFromRestorationSiteCluster = getFeatureLayerById(
+        "restoration-sites-clusters"
+      );
+
+      if (isClickFromRestorationSite) {
+        // This layer is different from the existing 'restoration' layer and refers to
+        // restoration sites where restoration is happening.
+        // These sites are collected as part of the Mangrove Restoration Tracking Took (MRTT)
+        // project whose code lives here:  https://github.com/globalmangrovewatch/gmw-users/tree/develop/mrtt-ui
+        this.setRestorationSitePopUpState(e);
+      }
+
+      if (isClickFromRestorationSiteCluster) {
+        this.expandMarkerCluster({
+          event: e,
+          clusterLayerId: "restoration-sites-clusters",
+          sourceId: "restoration-sites",
+        });
+      }
+
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       )?.properties;
@@ -242,6 +304,7 @@ class Map extends Component {
             x: e.center.x,
             y: e.center.y,
           },
+          // popupFeatureType: 'restoration'
         });
       }
       onClick({
@@ -293,13 +356,62 @@ class Map extends Component {
       );
     };
 
+    const popupRestorationSites = (
+      <PopupMangroveStyle
+        removePopUp={removePopUp}
+        longitude={this.state.popup[0]}
+        latitude={this.state.popup[1]}
+      >
+        <h2>{this.state.popupInfo?.site_name}</h2>
+        <dl>
+          <dt>Landscape</dt>
+          <dd>{this.state.popupInfo?.landscape_name}</dd>
+          <dt>Organizations</dt>
+          {this.state.popupInfo?.organizations?.map((organization) => (
+            <dd key={organization.id}>{organization.organization_name}</dd>
+          ))}
+        </dl>
+      </PopupMangroveStyle>
+    );
+
+    const shouldShowPopup =
+      !!this.state.popup.length && !isEmpty(this.state.popupInfo);
+    const popupContent =
+      this.state.popupFeatureType === "restoration-sites" ? (
+        popupRestorationSites
+      ) : (
+        <PopupRestoration data={this.state.popupInfo} />
+      );
+
     // applyFilters();
     const onHover = (e) => {
       const restorationData = e?.features.find(
         ({ layer }) => layer.id === "restoration"
       );
-      hoveredStateId = restorationData?.id;
-      if (hoveredStateId !== null && restorationData) {
+      if (restorationData) {
+        if (hoveredStateId !== null) {
+          this.map.setFeatureState(
+            {
+              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              source: "restoration",
+              id: hoveredStateId,
+            },
+            { hover: false }
+          );
+        }
+
+        hoveredStateId = restorationData?.id;
+        if (hoveredStateId !== null) {
+          this.map.setFeatureState(
+            {
+              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              source: "restoration",
+              id: hoveredStateId,
+            },
+            { hover: true }
+          );
+        }
+      } else {
         this.map.setFeatureState(
           {
             sourceLayer: "MOW_Global_Mangrove_Restoration",
@@ -308,17 +420,7 @@ class Map extends Component {
           },
           { hover: false }
         );
-      }
-
-      if (hoveredStateId !== null && !restorationData) {
-        this.map.setFeatureState(
-          {
-            sourceLayer: "MOW_Global_Mangrove_Restoration",
-            source: "restoration",
-            id: hoveredStateId,
-          },
-          { hover: true }
-        );
+        hoveredStateId = null;
       }
     };
 
@@ -359,9 +461,7 @@ class Map extends Component {
         >
           {drawingMode && <DrawingEditor />}
           <MapFunctions />
-          {!!this.state.popup?.length && !isEmpty(this.state.popupInfo) && (
-            <PopupRestoration data={this.state.popupInfo} />
-          )}
+          {shouldShowPopup ? popupContent : null}
         </ReactMapGL>
       </div>
     );

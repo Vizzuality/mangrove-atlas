@@ -49,11 +49,11 @@ const Header = ({
                 [styles._medium]:
                   location.name.length > 10 && location.name.length < 30,
                 [styles._long]: location.name.length >= 30,
-                [styles._short]: location.name.length <= 10 || drawingMode,
+                [styles._short]: location.name.length <= 10 || drawingMode || hasCustomArea,
                 [styles._cursor]: drawingMode
               })}
             >
-              {drawingMode ? "Custom area" : location.name}
+              {drawingMode || hasCustomArea ? "Custom area" : location.name}
             </h1>
           </button>
           <p className={styles.printOnly}>

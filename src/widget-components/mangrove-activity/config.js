@@ -5,18 +5,14 @@ import { Rectangle } from 'recharts';
 // Utils
 import { format } from 'd3-format';
 import flatten from 'lodash/flatten';
-import orderBy from 'lodash/orderBy';
 
 // Components
 import WidgetTooltip from 'components/widget-tooltip';
 import WidgetLegend from 'components/widget-legend';
 
 import styles from 'components/widget/style.module.scss';
-// import { faAssistiveListeningSystems } from '@fortawesome/free-solid-svg-icons';
 
 const numberFormat = format(',.3r');
-const sortRanking = (data, filter) => orderBy(data, d => Math.abs(d[filter]))
-  .map((f, index) => ({ ...f, x: index }));
 
 const widgetData = data => data.map(d => ({
   name: d.name,

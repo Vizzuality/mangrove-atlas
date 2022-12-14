@@ -4,6 +4,7 @@
   width: 100%;
   $padding: 30px 40px 0 40px;
   height: 100%;
+  min-height: 250px;
   $paddingMobile: 20px 20px 0 20px;
   $border-radius: 20px;
 
@@ -89,17 +90,10 @@
 
 .widget_template {
   .sentence {
-    @include medium-text;
-    margin: 1rem 0;
-    position: relative;
+    @include widget-sentence;
     
     &:first-letter {
       text-transform: uppercase;
-    }
-
-    @media print {
-      font-size: 14px;
-      line-height: 19px;
     }
   }
 
@@ -113,6 +107,15 @@
     span {
       padding-right: 5px;
     }
+  }
+
+  .flexibleLegend {
+    display: flex;
+  }
+
+  .chart_legend_wrapper {
+    display: flex;
+    height: fit-content;
   }
 }
 

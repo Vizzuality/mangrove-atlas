@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+import { isEmpty } from "lodash";
 
 // components
 import Icon from "components/icon";
@@ -24,9 +25,9 @@ const SearchLocation = ({
 
   const handleModal = useCallback(() => {
     if (handleDrawing) {
-      handleDrawing(drawingMode);
+      handleDrawing(!drawingMode);
     }
-    if (!drawingValue?.length || !customGeojsonFeatures?.length) {
+    if (!drawingValue?.length || isEmpty(customGeojsonFeatures)) {
       openSearchPanel();
     }
   }, [

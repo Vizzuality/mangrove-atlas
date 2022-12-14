@@ -4,7 +4,7 @@ import WidgetLegend from "components/widget-legend";
 import WidgetTooltip from "components/widget-tooltip";
 import orderBy from "lodash/orderBy";
 
-export const numberFormat = format(".2~f");
+export const numberFormat = format(",.2~f");
 export const smallNumberFormat = format(".4~f");
 export const formatAxis = format(",.0d");
 
@@ -49,27 +49,27 @@ const widgetData = (data, unit) => {
   );
 };
 
-const getBars = (drawingMode) =>
-  drawingMode
-    ? {
-        gain: {
-          barSize: 10,
-          transform: `translate(${(4 + 10) / 2}, 0)`,
-          fill: "#A6CB10",
-          radius: [10, 10, 0, 0],
-          legend: "Gain",
-          isAnimationActive: false,
-        },
-        loss: {
-          barSize: 10,
-          transform: `translate(-${(4 + 10) / 2}, 0)`,
-          fill: "#EB6240",
-          radius: [10, 10, 0, 0],
-          legend: "Loss",
-          isAnimationActive: false,
-        },
-      }
-    : {};
+// const getBars = (drawingMode) =>
+//   drawingMode
+//     ? {
+//         gain: {
+//           barSize: 10,
+//           transform: `translate(${(4 + 10) / 2}, 0)`,
+//           fill: "#A6CB10",
+//           radius: [10, 10, 0, 0],
+//           legend: "Gain",
+//           isAnimationActive: false,
+//         },
+//         loss: {
+//           barSize: 10,
+//           transform: `translate(-${(4 + 10) / 2}, 0)`,
+//           fill: "#EB6240",
+//           radius: [10, 10, 0, 0],
+//           legend: "Loss",
+//           isAnimationActive: false,
+//         },
+//       }
+//     : {};
 
 const CONFIG = {
   parse: (data, unit, drawingMode = false) => {
@@ -95,7 +95,8 @@ const CONFIG = {
             },
           },
           // temporary hidden because of wrong calculations in data
-          bars: getBars(drawingMode),
+          // bars: getBars(drawingMode),
+          bars: {},
         },
         xAxis: {
           tick: { fontSize: 12, fill: "rgba(0, 0, 0, 0.54)" },
@@ -154,7 +155,7 @@ const CONFIG = {
               <WidgetLegend
                 position="top"
                 direction="vertical"
-                groups={drawingMode ? { labels } : { labelsForLayer }}
+                groups={{ labelsForLayer }}
               />
             );
           },
@@ -171,41 +172,58 @@ const CONFIG = {
                 justifyContent: "space-around",
                 marginLeft: "30px",
               }}
-              settings={[
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Gain",
-                        color: "#A6CB10",
-                        key: "gain",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value)
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
-                ...(drawingMode
-                  ? [
-                      {
-                        label: "Loss",
-                        color: "#EB6240",
-                        key: "loss",
-                        format: (value) =>
-                          `${
-                            value === 0
-                              ? value
-                              : value < 1000
-                              ? smallNumberFormat(value)
-                              : numberFormat(value)
-                          } ${unit === "ha" ? "ha" : "km²"}`,
-                      },
-                    ]
-                  : []),
+              settings={
+              //   [
+              //   ...(drawingMode
+              //     ? [
+              //         {
+              //           label: "Gain",
+              //           color: "#A6CB10",
+              //           key: "gain",
+              //           format: (value) =>
+              //             `${
+              //               value === 0
+              //                 ? value
+              //                 : value < 1000
+              //                 ? smallNumberFormat(value)
+              //                 : numberFormat(value)
+              //             } ${unit === "ha" ? "ha" : "km²"}`,
+              //         },
+              //       ]
+              //     : []),
+              //   ...(drawingMode
+              //     ? [
+              //         {
+              //           label: "Loss",
+              //           color: "#EB6240",
+              //           key: "loss",
+              //           format: (value) =>
+              //             `${
+              //               value === 0
+              //                 ? value
+              //                 : value < 1000
+              //                 ? smallNumberFormat(value)
+              //                 : numberFormat(value)
+              //             } ${unit === "ha" ? "ha" : "km²"}`,
+              //         },
+              //       ]
+              //     : []),
+              //   {
+              //     label: "Net change",
+              //     color: "rgba(0,0,0,0.7)",
+              //     key: "netChange",
+              //     format: (value) =>
+              //       `${
+              //         value === 0
+              //           ? value
+              //           : value < 1000
+              //           ? smallNumberFormat(value)
+              //           : numberFormat(value)
+              //       } ${unit === "ha" ? "ha" : "km²"}`,
+              //     bulletType: "bar",
+              //   },
+              // ]
+              [[], [],
                 {
                   label: "Net change",
                   color: "rgba(0,0,0,0.7)",
@@ -220,7 +238,8 @@ const CONFIG = {
                     } ${unit === "ha" ? "ha" : "km²"}`,
                   bulletType: "bar",
                 },
-              ]}
+              ]
+            }
             />
           ),
         },

@@ -11,16 +11,20 @@ const LegendItem = ({
   toggleActive,
   toggleWidgetActive,
   setDrawingValue,
+  setDrawingStatus,
   isCollapsed,
   mapView,
-  setCustomGeojsonFeatures
+  setCustomGeojsonFeatures,
+  setCurrent
 }) => {
   const isCustomLayer = id === 'custom-layer';
 
   const onClickHandler = useCallback(() => {
     if (isCustomLayer) {
+      setDrawingStatus(null);
       setDrawingValue(null);
       setCustomGeojsonFeatures(null);
+      setCurrent({ id: 'worldwide' });
     } else {
       toggleActive({ id, isActive: false });
       toggleWidgetActive({ layerId: id, isActive: false });

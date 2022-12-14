@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 
 // components
 import Select from "components/select";
@@ -35,7 +36,7 @@ const MangroveHeight = ({
   const heightCoverage = metadata?.avg_height[0]?.value;
   const years = metadata?.year;
   const currentYear = useMemo(() => year || years?.[0], [year, years]);
-  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
+  const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
     fetchMangroveHeightData(
@@ -60,13 +61,12 @@ const MangroveHeight = ({
         year: currentYear,
       },
     });
-    setUi({
-      id: "height",
-      value: {
-        year: currentYear,
-      },
-    });
-  }, [setUi, currentYear, addFilter]);
+    if (!isLoading) {
+      setTimeout(() => {
+        setUi({ id: "height", value: { year: currentYear, } });
+      }, 0);
+    }
+  }, [setUi, currentYear, addFilter, isLoading]);
 
   const dateHandler = useCallback(
     (value) => {
@@ -151,8 +151,7 @@ const MangroveHeight = ({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_height"
           fetch={fetchMangroveHeightData}
@@ -162,7 +161,7 @@ const MangroveHeight = ({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 };
 

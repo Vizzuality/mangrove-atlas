@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useCallback, useState } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -44,7 +45,7 @@ function MangroveNetChange({
   );
 
   const unit = useMemo(() => unitUi || unitOptions[0].value, [unitUi]);
-  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
+  const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
     fetchMangroveNetChangeData(
@@ -281,8 +282,7 @@ function MangroveNetChange({
       chartData={chartRData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_net_change"
           fetch={fetchMangroveNetChangeData}
@@ -292,7 +292,7 @@ function MangroveNetChange({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

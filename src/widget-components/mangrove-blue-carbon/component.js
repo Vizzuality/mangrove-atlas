@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 
 import ChartWidget from "components/chart-widget";
 import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
@@ -25,7 +26,7 @@ function MangroveBlueCarbon({
   ...props
 }) {
   const [restart, setRestart] = useState(null);
-  const customArea = useMemo(() => !!drawingValue?.length || !!customGeojsonFeatures?.length, [drawingValue, customGeojsonFeatures]);
+  const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
   useEffect(() => {
     fetchMangroveBlueCarbonData(
@@ -106,8 +107,7 @@ function MangroveBlueCarbon({
       chart={!loadingAnalysis}
       note={note}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_blue_carbon"
           fetch={fetchMangroveBlueCarbonData}
@@ -117,7 +117,7 @@ function MangroveBlueCarbon({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

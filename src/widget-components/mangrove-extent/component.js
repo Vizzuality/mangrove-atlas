@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { format } from "d3-format";
+import { isEmpty } from "lodash";
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -36,8 +37,9 @@ function MangroveExtent({
   const { total_lenght } = metadata;
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
+
   const customArea = useMemo(
-    () => !!drawingValue?.length || !!customGeojsonFeatures?.length,
+    () => !!drawingValue?.length || !isEmpty(customGeojsonFeatures),
     [drawingValue, customGeojsonFeatures]
   );
 
@@ -204,8 +206,7 @@ function MangroveExtent({
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
-    >
-      {drawingMode && (
+      component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_extent"
           fetch={fetchMangroveHabitatExtentData}
@@ -215,7 +216,7 @@ function MangroveExtent({
           setRestart={setRestart}
         />
       )}
-    </ChartWidget>
+    />
   );
 }
 

@@ -1,7 +1,6 @@
 import { takeLatest, put, select } from "redux-saga/effects";
-import bboxTurf from "@turf/bbox";
-import { flatten } from "lodash";
 import { currentLocation } from "modules/locations/selectors";
+import bboxTurf from "@turf/bbox";
 import {
   resetViewport,
   setBounds,
@@ -9,52 +8,25 @@ import {
   setViewport,
   setViewportFixed,
 } from "./actions";
-import countriesDictionary from "./constants";
 
 function* flyToCurrentLocation() {
   const state = yield select();
   const location = currentLocation(state);
-  const drawingValue = state.drawingTool.drawingValue;
-  const drawingMode = state.drawingTool.drawingMode;
+
   const { mapView } = state.app.mobile;
-
-  if (!!drawingValue?.length) {
-    const lon = flatten(drawingValue[0]?.geometry?.coordinates).map(
-      (d) => d[0]
-    );
-    const lat = flatten(drawingValue[0]?.geometry?.coordinates).map(
-      (d) => d[1]
-    );
-    const maxLat = Math.max(...lat);
-    const maxLon = Math.max(...lon);
-    const minLat = Math.min(...lat);
-    const minLon = Math.min(...lon);
-
-    yield put(
-      setBounds({
-        bbox: [minLon, minLat, maxLon, maxLat],
-        options: {
-          padding: { top: 50, bottom: 50, right: 20, left: mapView ? 20 : 620 },
-        },
-      })
-    );
-  }
-
-  if (location && !drawingValue && !drawingMode) {
+  if (location) {
     if (location.location_type === "worldwide") {
       if (!state.map.isViewportFixed) {
         yield put(resetViewport());
       }
     } else {
-      const locationException = countriesDictionary[location.iso];
-      const bbox = locationException
-        ? locationException.bounds
-        : bboxTurf(location.bounds);
+
+      const bbox = location.bounds;
 
       if (!state.map.isViewportFixed) {
         yield put(
           setBounds({
-            bbox,
+            bbox: location.id === 'custom-area' ? bbox : bboxTurf(bbox),
             options: {
               padding: {
                 top: 50,
@@ -106,5 +78,6 @@ export default function* pages() {
   yield takeLatest("LOCATIONS/FETCH_SUCCEDED", flyToCurrentLocation);
   yield takeLatest("LOCATIONS/SET_CURRENT", flyToCurrentLocation);
   yield takeLatest("DRAWING_TOOL/SET_DRAWING_VALUE", flyToCurrentLocation);
+  yield takeLatest("DRAWING_TOOL/SET_CUSTOM_GEOJSON_FEATURES", flyToCurrentLocation);
   yield takeLatest("APP/MOBILE", flyToCurrentLocation);
 }
