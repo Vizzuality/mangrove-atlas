@@ -24,8 +24,7 @@ class NetChangeCalculationsClass extends BaseCalculation {
           "net_change": "km2",
           "gain": "km2",
           "loss": "km2"},
-      'year': netChange.map((f: ee.Dictionary) => ee.Dictionary(f).get('year'))
-      .unshift(1996) // add 1996 as the first element of the list
+      'year': (netChange.map((f: ee.Dictionary) => ee.Dictionary(f).get('year'))).insert(0,1996) // add 1996 as the first element of the list
   }});
   }
 
