@@ -1,7 +1,9 @@
 import { connect } from "react-redux";
 
+import { setPrintingMode } from 'modules/app/actions';
 import { addFilter, removeFilter } from "modules/map-styles/actions";
 import { expandAll, collapseAll } from "modules/widgets/actions";
+import { setBounds } from "modules/map/actions";
 import { dashboardWidgets, getWidgetsWithData, categoryWidgets } from "modules/widgets/selectors";
 import { currentLocation } from "modules/locations/selectors";
 
@@ -101,6 +103,8 @@ const mapStateToProps = (state) => ({
   dataByWidget: getWidgetsWithData(state),
   drawingValue: state.drawingTool.drawingValue,
   drawingMode: state.drawingTool.drawingMode,
+  printMode: state.app.printMode,
+  bounds: state.map.bounds
 });
 
 const mapDispatchToProps = {
@@ -108,6 +112,8 @@ const mapDispatchToProps = {
   collapseAll,
   addFilter,
   removeFilter,
+  setPrintingMode,
+  setBounds
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
