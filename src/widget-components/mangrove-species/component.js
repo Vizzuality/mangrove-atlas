@@ -1,45 +1,34 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
-import { getCurrentLocation } from 'modules/pages/sagas';
+import ChartWidget from "components/chart-widget";
+import SpeciesLegend from "./species-legend";
 
-import ChartWidget from 'components/chart-widget';
-
-
-import config from './config';
+import config from "./config";
 
 function MangroveSpecies({
   data,
   currentLocation,
-  locationsList,
   isCollapsed = true,
   slug,
   name,
   addFilter,
-  ui,
-  setUi,
   fetchMangroveSpeciesData,
-  current,
-  locationType,
   ...props
 }) {
-  const { id } = currentLocation;
-  const location = getCurrentLocation(locationsList, current, locationType);
-
   useEffect(() => {
-    if (current === 'worldwide' || current === 1561) {
-      fetchMangroveSpeciesData()
-    }
-    else {
-      fetchMangroveSpeciesData({ ...(id && id !== 1561) && { location_id: id } });
-    }
-  }, [id, current, locationsList, fetchMangroveSpeciesData]);
+    fetchMangroveSpeciesData({
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    });
+  }, [currentLocation, fetchMangroveSpeciesData]);
 
   useEffect(() => {
     addFilter({
       filter: {
-        id: 'species',
-      }
+        id: "species",
+      },
     });
   }, [addFilter]);
 
@@ -47,23 +36,26 @@ function MangroveSpecies({
 
   const { chartData, chartConfig } = config.parse(data);
 
-  const locationName = (currentLocation.location_type === 'worldwide')
-    ? 'The world'
-    : <span className="notranslate">{`${location?.name}`}</span>;
+  const locationName =
+    currentLocation.location_type === "worldwide" ? (
+      "The world"
+    ) : (
+      <span className="notranslate">{`${currentLocation?.name}`}</span>
+    );
 
-  const article = threatened === 1 ? 'is' : 'are';
+  const article = threatened === 1 ? "is" : "are";
 
   const sentence = (
     <>
-      <strong>{locationName} </strong>has <strong>{total}</strong> species of mangroves.
-      Of them, <strong>{threatened}</strong> {article} considered
+      <strong>{locationName} </strong>has <strong>{total}</strong> species of
+      mangroves. Of them, <strong>{threatened !== 0 ? threatened : 'none'}</strong> {article} considered
       <strong> threatened</strong> by the IUCN Red List.
     </>
   );
 
   const widgetData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   if (!chartData || !chartData.length || !data) {
@@ -79,6 +71,8 @@ function MangroveSpecies({
       isCollapsed={isCollapsed}
       sentence={sentence}
       chartData={widgetData}
+      hasFlexibleLegend={true}
+      component={<SpeciesLegend data={chartData} />}
       {...props}
     />
   );
@@ -92,20 +86,16 @@ MangroveSpecies.propTypes = {
   slug: PropTypes.string,
   name: PropTypes.string,
   metadata: PropTypes.shape({}),
-  ui: PropTypes.string,
-  setUi: PropTypes.func
 };
 
 MangroveSpecies.defaultProps = {
   data: null,
   currentLocation: null,
-  addFilter: () => { },
+  addFilter: () => {},
   isCollapsed: false,
   slug: null,
   name: null,
   metadata: null,
-  ui: null,
-  setUi: () => { }
 };
 
 export default MangroveSpecies;

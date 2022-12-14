@@ -16,7 +16,24 @@ services:
         --NotebookApp.token=''"
       environment:
         - GRANT_SUDO=yes
+        - CHOWN_HOME=yes
+        - CHOWN_HOME_OPTS=-R
         - DOCKER_STACKS_JUPYTER_CMD=lab
 
+  spatial_db:
+      image: postgis/postgis:14-3.2
+      container_name: spatial_db_db
+      volumes:
+      - ./data:/work
+      - pg_tileserv_db:/var/lib/postgresql/data
+      ports:
+      - 5432:5432
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=postgres
+
+volumes:
+  pg_tileserv_db:
 
 

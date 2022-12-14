@@ -1,4 +1,4 @@
-@import 'styles/_vars.scss';
+@import "styles/_vars.scss";
 
 .widget {
   width: 100%;
@@ -13,13 +13,13 @@
   background-color: white;
   background-repeat: no-repeat;
 
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   will-change: margin-bottom;
   overflow: hidden;
 
-    &._modal {
-      box-shadow: none;
-    }
+  &._modal {
+    box-shadow: none;
+  }
 
   @media screen and (max-width: map-get($breakpoints, lg)) {
     display: flex;
@@ -30,18 +30,23 @@
   &._collapsed {
     margin-bottom: -70px;
     background-position: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.0001) 0%, rgba(0, 0, 0, 0.08) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.0001) 0%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
     background-color: white;
     background-repeat: no-repeat;
-    transition: all .5s ease;
+    transition: all 0.5s ease;
 
-    &:not(:first-of-type)  {
+    &:not(:first-of-type) {
       margin-top: -3px;
     }
 
     .content {
       max-height: 0px;
-      opacity: 0.0;
+      opacity: 0;
     }
 
     &:last-of-type:not(:last-child) {
@@ -69,6 +74,7 @@
       background: none;
 
       .content {
+        max-height: 100%;
         opacity: 1;
       }
 
@@ -81,7 +87,7 @@
   }
 
   &._layerActive::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 5px;
     left: 5px;
@@ -140,7 +146,7 @@
   }
 
   .content {
-    transition: max-height .5s ease-in-out;
+    transition: max-height 0.5s ease-in-out;
     will-change: max-height;
     overflow: visible;
   }
@@ -179,4 +185,3 @@
     display: none;
   }
 }
-

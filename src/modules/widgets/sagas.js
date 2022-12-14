@@ -1,6 +1,5 @@
 import { all, takeLeading, takeLatest, put, call, select } from 'redux-saga/effects';
-import DATA from 'config/data.json';
-import { breakpoints } from 'utils/responsive';
+import DATA from 'config/data';
 import { toggleActive as toggleLayerActive, fetchLayers } from 'modules/layers/actions';
 import { setCurrent } from 'modules/dashboards/actions';
 import { fetchSucceeded, toggleActive, collapseAll } from './actions';
@@ -10,20 +9,7 @@ function delay(ms) {
 }
 
 export function* getWidgets() {
-  const isDesktop = window.matchMedia(`(min-width: ${breakpoints.md}px)`).matches;
   const { widgets } = DATA;
-
-  if (isDesktop) {
-    for (let i = 0; i < widgets.length; i++) {
-      if (widgets[i].slug === 'mangrove_extent') {
-        yield put(toggleLayerActive({
-          id: 'extent',
-          isActive: false
-        }));
-      }
-    }
-  }
-
   yield put(fetchSucceeded(widgets));
 }
 

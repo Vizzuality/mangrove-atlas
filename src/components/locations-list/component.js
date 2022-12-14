@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'redux-first-router-link';
 import classnames from 'classnames';
@@ -6,15 +6,22 @@ import styles from './style.module.scss';
 
 const locationNames = {
   worldwide: 'Worldwide',
-  aoi: 'Area of interest',
   country: 'Country',
   wdpa: 'WDPA'
 };
 
-const LocationsList = ({ locationsData }) => {
+const LocationsList = ({ closeSearchPanel, locationsData }) => {
+  const [ newLocation, saveNewLocation ] = useState(null);
+
+  useEffect(() => {
+    if(newLocation) {
+      closeSearchPanel()
+    }
+  },[newLocation, closeSearchPanel]);
+
   const getType = (location) => {
     if (location.location_type === 'worldwide') return 'PAGE/APP';
-    if (location.location_type === 'aoi') return 'PAGE/AOI';
+    if (location.location_type === 'custom-area') return 'PAGE/CUSTOM';
     if (location.location_type === 'country') return 'PAGE/COUNTRY';
     if (location.location_type === 'wdpa') return 'PAGE/WDPA';
     return null;
@@ -22,6 +29,7 @@ const LocationsList = ({ locationsData }) => {
 
   const getPayload = location => ({
     ...(location.location_type === 'country' && { iso: location.iso, id: location.id }),
+    ...(location.location_type === 'cutom-area' && { id: location.id }),
     ...(location.location_type !== 'country' && { id: location.location_id }),
     ...(location.location_type === 'worldwide' && { id: 'worldwide' })
   });
@@ -31,7 +39,7 @@ const LocationsList = ({ locationsData }) => {
       {locationsData.map(location => (
         <li key={location.id} className={classnames(styles.listItem, 'notranslate')}>
           <Link to={{ type: getType(location), payload: getPayload(location) }}>
-            <div className={styles.items}>
+            <div className={styles.items} onClick={() => saveNewLocation(location)}>
               <span>
                 {location.name}
               </span>

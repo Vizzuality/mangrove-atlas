@@ -5,6 +5,11 @@ export default {
   error: null,
   isOpened: false,
   ui: {
+    extent: {
+      year: null,
+      unit: null,
+      isActive: true,
+    },
     net: {
       startYear: null,
       endYear: null,
@@ -37,9 +42,22 @@ export default {
       year: null,
       unit: null,
     },
-    species: {
+    emissions_mitigation: {
       year: null,
       unit: null,
+    },
+    height: {
+      year: null,
+      unit: null,
+    },
+    biomass: {
+      year: null,
+      unit: null,
+    },
+    activity: {
+      start_year: null,
+      end_year: null,
+      limit: 5
     },
   },
   isCollapsed: true,

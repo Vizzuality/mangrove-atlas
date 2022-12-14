@@ -5,13 +5,13 @@ $body-line-height: 1.4;
 /* Widgets */
 
 $widgetWidth: 540px;
+$widgetWidthMobile: 95%;
 
 /* Theme */
 $primary: #00857F;
 $background-mobile: #00C5BD;
-$black: #000000;
+$blackOpacity:rgba(0, 0, 0, 0.85);
 $white: #FFFFFF;
-
 
 /* Fonts */
 $font-family: 'Open Sans', Arial, Helvetica, sans-serif;
@@ -67,6 +67,17 @@ $font-size-medium: 19px;
     border-radius: 30px;
   }
 }
+
+@mixin widget-sentence {
+    @include medium-text;
+    margin: 1rem 0;
+    position: relative;
+
+    @media print {
+      font-size: 14px;
+      line-height: 19px;
+    }
+  }
 
 // Breakpoints
 $sm: 384px;

@@ -9,11 +9,15 @@ import cx from 'classnames';
 import Modal from 'components/modal';
 import Icon from 'components/icon';
 
-import widgetInfo from './constants';
+import widgetInfo from 'components/widget-info/constants';
 import styles from './style.module.scss';
 
-const Info = ({ slug }) => {
+const Info = ({ slug, onClick, icon, children }) => {
   const [isOpen, toggleModal] = useState(false);
+
+  if (onClick) {
+    toggleModal(!isOpen)
+  }
 
   const handleModal = () => {
     toggleModal(!isOpen);
@@ -34,18 +38,20 @@ const Info = ({ slug }) => {
       </div>
     ));
   };
-
+ 
   return (
     <>
       <button
         onClick={handleModal}
-        className={cx(styles.modalBtn)}
+        className={cx({ [styles.modalBtnIcon]: icon })}
       >
-        <Icon name="info" alt="info" className={styles.modalIcon} />
+        {icon && <Icon name="info" alt="info" className={styles.modalIcon} size="xsm" />}
+        {children}
       </button>
       <Modal
         isOpen={isOpen}
         onRequestClose={handleModal}
+        maxHeight
       >
         <div className={styles.modalContent}>
           {info()}
@@ -57,12 +63,14 @@ const Info = ({ slug }) => {
 
 Info.propTypes = {
   isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func
+  icon: PropTypes.bool,
+  children: PropTypes.node
 };
 
 Info.defaultProps = {
   isOpened: false,
-  closeSearchPanel: () => null
+  icon: true,
+  children: null
 };
 
 export default Info;

@@ -1,6 +1,9 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 const axios = require('axios').default;
 const reverse = require('turf-reverse');
+const mapshaper = require('mapshaper');
+
+const crypto = require('crypto');
 const http = require('http');
 const https = require('https');
 
@@ -11,15 +14,21 @@ const bigquery = new BigQuery();
 
 const cache = {};
 
-const getLocation = async (locationId) => {
+const md5 = (x) => crypto.createHash('md5').update(JSON.stringify(x), 'utf8').digest('hex');
+
+const getLocation = async (locationId, env) => {
   if (!locationId) return null;
   console.log('Getting geometry from locations API');
-  const response = await axios.get(`https://mangrove-atlas-api.herokuapp.com/api/v2/locations/${locationId}`, { httpAgent, httpsAgent });
+  const apiUrl = {
+    production: 'https://mangrove-atlas-api.herokuapp.com',
+    staging: 'https://mangrove-atlas-api-staging.herokuapp.com',
+  }
+  const response = await axios.get(`${apiUrl[env]}/api/v2/locations/${locationId}`, { httpAgent, httpsAgent });
   if (response && response.data) return response.data.data;
   return null;
 };
 
-const makeQuery = (location, startDate, endDate) => {
+const makeQuery = async (location, startDate, endDate) => {
   let whereQuery = '';
 
   if (location) {
@@ -28,12 +37,17 @@ const makeQuery = (location, startDate, endDate) => {
       properties: {},
       geometry: location.geometry,
     };
+    const input = {'input.geojson': JSON.stringify(geoJSON)};
+    const cmd = '-i input.geojson -simplify dp 20% keep-shapes -clean -o output.geojson format=geojson geojson-type=Feature';
+
+    const geoJSONsimp = (await mapshaper.applyCommands(cmd, input))['output.geojson'].toString();
+
+    const geoJSONreverse = reverse(JSON.parse(geoJSONsimp));
     // Reverse coordinates to get [latitude, longitude]
-    const geoJSONreverse = reverse(geoJSON);
     whereQuery = `AND ST_INTERSECTS(ST_GEOGFROMGEOJSON('${JSON.stringify(geoJSONreverse.geometry)}'), ST_GEOGPOINT(longitude, latitude))`;
   }
 
-  return `SELECT DATE_TRUNC(scr5_obs_date, MONTH) as date, count(scr5_obs_date) as count
+  return `SELECT DATE_ADD(DATE_TRUNC(scr5_obs_date, MONTH), INTERVAL 1 DAY) as date, count(scr5_obs_date) as count
   FROM deforestation_alerts.alerts
   WHERE confident = 5
     AND scr5_obs_date BETWEEN DATE('${startDate}') AND DATE('${endDate}')
@@ -45,19 +59,18 @@ const makeQuery = (location, startDate, endDate) => {
 /**
  * Data aggregated by month
  */
-const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
-
-  endDate = endDate || new Date().toISOString().split('T')[0];
+const alertsJob = async (locationId, startDate, endDate, env, geojson) => {
   // First try to get data from cache in order to reduce costs
-  const cacheKey = `${locationId || ''}_${startDate}_${endDate}`;
+  const geojson_md5 = geojson  ? md5(geojson) : null;
+  const cacheKey = `${locationId || geojson_md5 || ''}_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
     console.log(`Response from cache ${cacheKey}`);
     return cache[cacheKey];
   }
 
-  const location = locationId && await getLocation(locationId);
+  const location = locationId && await getLocation(locationId, env) || geojson.features[0];
   const options = {
-    query: makeQuery(location, startDate, endDate),
+    query: await makeQuery(location, startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
     location: 'US',
   };
@@ -80,8 +93,20 @@ const alertsJob = async (locationId, startDate = '2020-01-01', endDate) => {
 exports.fetchAlerts = (req, res) => {
   // Get data and return a JSON
   async function fetch() {
-    const result =  await alertsJob(req.query.location_id, req.query.start_date, req.query.end_date);
-    res.status(200).json(result);
+    try {
+      const startDate = req.query.startDate || '2020-01-01';
+      const endDate = req.query.end_date || new Date().toISOString().split('T')[0];
+      const env = req.query.env || 'production';
+      const locationId = req.query.location_id || null;
+      const geojson = req.body && req.body.geometry || null;
+
+      const result =  await alertsJob(locationId, startDate, endDate, env, geojson);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+
+    }
   }
 
   // Set CORS headers for preflight requests
@@ -92,10 +117,11 @@ exports.fetchAlerts = (req, res) => {
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
     res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Methods', 'POST');
     res.set('Access-Control-Allow-Headers', 'Content-Type');
     res.set('Access-Control-Max-Age', '3600');
     res.status(204).send('');
   } else {
-    fetch();
+      fetch();
   }
 };

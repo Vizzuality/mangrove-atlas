@@ -65,7 +65,14 @@
   height: 26px;
   width: 100%;
   margin-top: 20px;
-  background: linear-gradient(90deg, #D6EDFD 0%, #7996F3 28.65%, #7546E1 50.52%, #7B35C6 74.48%, #831C9D 100%);
+  background: linear-gradient(
+    90deg,
+    #f9ddda 20%,
+    #ffadad 40%,
+    #ce78b3 60%,
+    #8478ce 80%,
+    #224294 100%
+  );
 }
 
 .restorationChartWrapper {
@@ -77,7 +84,7 @@
 
 .restorationPotentialUnit {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   opacity: 85%;
   font-size: 14px;
 }

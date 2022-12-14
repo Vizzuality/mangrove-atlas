@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import React, { useMemo } from "react";
+import PropTypes from "prop-types";
+import cx from "classnames";
 
 // components
-import Button from 'components/button';
+import Button from "components/button";
 
-import background from './bg-shapes.svg';
-import styles from './style.module.scss';
+import background from "./bg-shapes.svg";
+import styles from "./style.module.scss";
 
 const Header = ({
   location,
@@ -14,66 +14,77 @@ const Header = ({
   isCollapsed,
   collapseAll,
   expandAll,
-  widgets
+  widgetsLength,
+  drawingMode,
+  drawingValue,
+  customGeojsonFeatures
 }) => {
-
   const onClickCollapseAll = () => {
     collapseAll();
-  }
+  };
 
   const onClickExpandAll = () => {
     expandAll();
-  }
+  };
 
   const clickHandler = () => {
     openSearchPanel();
-  }
+  };
+
+  const hasCustomArea = useMemo(() => !!drawingValue || !!customGeojsonFeatures, [drawingValue, customGeojsonFeatures]);
+
   return (
     <div className={styles.header}>
-      <img
-        className={styles.bg}
-        src={background}
-        alt="Background"
-      />
-      <div>
-        {location && (<div className={styles.searchBar}>
-          <button type="button" className={styles.titleBtn} onClick={clickHandler}>
-            <h1 className={cx(styles.title, 'notranslate', {
-              [styles._short]: location.name.length <= 10,
-              [styles._medium]: location.name.length > 10 && location.name.length < 30,
-              [styles._long]: location.name.length >= 30,
-            }
-            )}>
-              {location.name}
+      <img className={styles.bg} src={background} alt="Background" />
+      {location && (
+        <div className={styles.searchBar}>
+          <button
+            type="button"
+            className={styles.titleBtn}
+            onClick={clickHandler}
+            disabled={drawingMode}
+          >
+            <h1
+              className={cx(styles.title, "notranslate", {
+                [styles._medium]:
+                  location.name.length > 10 && location.name.length < 30,
+                [styles._long]: location.name.length >= 30,
+                [styles._short]: location.name.length <= 10 || drawingMode || hasCustomArea,
+                [styles._cursor]: drawingMode
+              })}
+            >
+              {drawingMode || hasCustomArea ? "Custom area" : location.name}
             </h1>
           </button>
-          <p className={styles.printOnly}>Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org</p>
-          {widgets.length > 1 && (
+          <p className={styles.printOnly}>
+            Powered by Global Mangrove Watch.
+            https://www.globalmangrovewatch.org
+          </p>
+          {!!widgetsLength && (!drawingMode && hasCustomArea) && (
             <div className={styles.noPrint}>
-              {isCollapsed
-                ? (
-                  <Button
-                    hasBackground
-                    hasContrast
-                    onClick={onClickExpandAll}
-                  >
-                    Expand all widgets
-                  </Button>
-                )
-                : (
-                  <Button
-                    isTransparent
-                    isGrey
-                    onClick={onClickCollapseAll}
-                  >
-                    Collapse all widgets
-                  </Button>
-                )}
+              {isCollapsed ? (
+                <Button
+                  hasBackground
+                  hasContrast
+                  onClick={onClickExpandAll}
+                  isDisabled={widgetsLength === 1}
+                >
+                  Expand all widgets
+                </Button>
+              ) : (
+                <Button
+                  isTransparent
+                  isGrey
+                  onClick={onClickCollapseAll}
+                  isDisabled={widgetsLength === 1}
+                >
+                  Collapse all widgets
+                </Button>
+              )}
             </div>
           )}
         </div>
-        )}
-      </div>
+      )}
     </div>
   );
 };
@@ -86,12 +97,16 @@ Header.propTypes = {
   isCollapsed: PropTypes.bool,
   collapseAll: PropTypes.func.isRequired,
   expandAll: PropTypes.func.isRequired,
-}
+  widgetsLength: PropTypes.number,
+  drawingMode: PropTypes.bool,
+};
 
 Header.defaultProps = {
   location: null,
   openSearchPanel: null,
-  isCollapsed: true
-}
+  isCollapsed: true,
+  widgetsLength: null,
+  drawingMode: false,
+};
 
 export default Header;

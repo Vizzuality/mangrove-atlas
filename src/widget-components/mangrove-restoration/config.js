@@ -2,6 +2,7 @@ import React from 'react';
 
 // utils
 import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
 import { format } from 'd3-format';
 import chroma from 'chroma-js';
 
@@ -11,31 +12,37 @@ import WidgetLegend from 'components/widget-legend';
 
 const numberFormat = format(',.2f');
 
-const getChartRingData = (data, year) => {
-  if (!data) return null;
+const getChartRingData = (data, restorationDataMetadata, year) => {
+  if (isEmpty(data)) return null;
+  const { restorable_area: restorableAreaUnit, mangrove_area: mangroveAreaUnit } = restorationDataMetadata;
   const protectedMangroves = data.restorable_area;
-  const nonProtected = data.total_area;
+  const nonProtected = data.total_area - protectedMangroves;
   const protectedPercentage = data.restorable_area_perc;
   const nonProtectedPercentage = 100 - protectedPercentage;
 
   return ([
     {
       label: 'Total restorable area',
+      shortLabel: 'Total restorable area',
       value: 'protection',
       color: '#7996F3',
       percentage: protectedPercentage,
       total: data.total,
       year,
+      unit: restorableAreaUnit,
       protection: protectedMangroves,
       area: data.restorable_area
     },
     {
-      label: 'Total mangrove area in',
+      label: `Total non-restorable area in ${year}`,
+      shortLabel: 'Total non-restorable area',
       value: 'nonProtected',
       color: '#ECECEF',
+      total: data.total,
       percentage: nonProtectedPercentage,
       protection: nonProtected,
       year,
+      unit: mangroveAreaUnit,
       area: data.mangrove_area_extent
     }])
 };
@@ -92,24 +99,25 @@ const CustomizedContent = (props) => {
   );
 };
 
-const getDegradationAndLossData = (data) => {
-  const indicators = data?.map((d) => d.indicator);
+const getLossData = (data) => {
+  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area')
+  const indicators = lossData?.map((d) => d.indicator);
   const colorsScale = chroma.scale(["#7996F3", "#EB6240", "#A6CB10"]).colors(indicators.length);
   const colors = indicators.reduce((acc, indicator, index) => ({
     ...acc,
     [indicator]: colorsScale[index],
   }), {});
-  return data.map((d) => ({
+  return lossData.map((d) => ({
     ...d,
     color: colors[d.indicator]
   }))
 }
 
 export const CONFIG = {
-  parse: (data, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year, unitRestorationPotential) => {
-    const chartRingData = getChartRingData(data, year);
+  parse: (data, restorationDataMetadata, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year, unitRestorationPotential) => {
+    const chartRingData = getChartRingData(data, restorationDataMetadata, year);
     const chartValueData = getChartValueData(ecosystemServicesData);
-    const degradationAndLossDataWidthColors = getDegradationAndLossData(degradationAndLossData);
+    const LossDataWidthColors = getLossData(degradationAndLossData);
     const ecosystemServicesUnit = ecosystemServicesMetadata?.unit;
     return {
       chartRingData,
@@ -167,20 +175,21 @@ export const CONFIG = {
           content: ((properties) => {
             const { payload } = properties;
             if (!payload.length) return null;
-
+            const { payload: values } = payload[0];
+            const { unit } = values;
             return (
               <WidgetTooltip
                 style={{
+                  display: 'flex',
                   flexDirection: 'column',
                   marginTop: '10px',
-
                 }}
                 payload={payload} 
                 settings={[
-                  { label: 'Restorable area:', key: 'percentage', format: value => `${numberFormat(100 - value)} %`, position: '_column' },
-                  { label: `Total area in ${year}:`, key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
+                  { key: 'shortLabel' },
+                  { label: 'Area', key: 'area', format: (value) => `${numberFormat(value)} ${unit}`, position: '_column' },
+                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
                 ]}
-           
               />
             );
           })
@@ -189,8 +198,8 @@ export const CONFIG = {
       chartTreeConfig: {
         width: 175,
         height: 175,    
-        name: 'indicator',
-        data: degradationAndLossDataWidthColors,
+        name: 'label',
+        data: LossDataWidthColors,
         dataKey: "value",
         yKeys: { tree: true },
         tooltip: {
@@ -199,7 +208,7 @@ export const CONFIG = {
             <WidgetTooltip
               settings={[
                 { label: 'Restoration potential Score', color: '#06C4BD', key: 'restorable_area_perc', format: value => `${value} %` },
-                { label: 'Total', color: '#ECECEF', key: 'total', format: value => `${numberFormat(Math.abs(value))} ha` },
+                { label: 'Total', color: '#ECECEF', key: 'area', format: value => `${numberFormat(Math.abs(value))} ha` },
               ]}
               style={{
                 flexDirection: 'column',
@@ -209,16 +218,16 @@ export const CONFIG = {
             />
           )
         },
-        content: <CustomizedContent data={degradationAndLossDataWidthColors} />,
-        legend: degradationAndLossDataWidthColors?.reduce((acc, indicator) => ({
+        content: <CustomizedContent data={LossDataWidthColors} />,
+        legend: LossDataWidthColors?.reduce((acc, indicator) => ({
           ...acc,
-          [indicator.indicator]: [{
+          [indicator.label]: [{
             color: indicator.color,
             type: "rect",
             key: indicator.indicator,
             payload: { y: indicator.value },
-            [indicator.indicator]: indicator.indicator,
-            value: indicator.indicator.replace('_', ' '),
+            [indicator.label]: indicator.label,
+            value: indicator.label.replace('_', ' '),
           }]
         }), {})
       },
@@ -278,7 +287,6 @@ export const CONFIG = {
           content: ((properties) => {
             const { payload } = properties;
             if (!payload.length) return null;
-
             return (
               <WidgetTooltip
                 style={{

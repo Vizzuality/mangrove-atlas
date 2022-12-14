@@ -1,16 +1,24 @@
 import { connect } from 'react-redux';
 import { setUi } from 'modules/widgets/actions';
 
+import { fetchMangroveHabitatExtentData } from 'modules/mangrove-habitat-extent-data/actions';
+
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: 'km'
-  }
+  isLoading: state.mangroveHabitatExtentData.isLoading,
+  data: state.mangroveHabitatExtentData.data,
+  analysis: state.mangroveHabitatExtentData.dataAnalysis,
+  metadata: state.mangroveHabitatExtentData?.metadata,
+  error: state.mangroveHabitatExtentData.error,
+  ui: state.widgets.ui.extent,
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
-const mapDispatchToProps = { setUi };
+const mapDispatchToProps = {
+  setUi,
+  fetchMangroveHabitatExtentData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

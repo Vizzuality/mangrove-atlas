@@ -38,7 +38,7 @@ class Select extends PureComponent {
   render() {
     const { value: defaultValue, options, onChange, ...props } = this.props;
     const { selectedOption } = this.state;
-    const selectedValue = options.find(opt => opt.value === selectedOption);
+    const selectedValue = options?.find(opt => opt.value === selectedOption);
 
     return (
       <ReactSelect

@@ -77,15 +77,13 @@ class Chart extends PureComponent {
     return max(maxValues);
   };
 
-
-
   render() {
     const {
       data,
       config,
       handleMouseMove,
       handleMouseLeave,
-      onBrushEnd
+      onBrushEnd,
     } = this.props;
 
     const {
@@ -128,13 +126,26 @@ class Chart extends PureComponent {
       }
     });
 
+    const CustomTooltip = ({ active, payload }) => {
+      if (active &&payload && payload.length) {
+        return (
+          <div className={styles.customTooltip}>
+            <p><b>{`${payload[0].payload.label}:`}</b></p>
+            <p>{`${payload[0].value} ha.`}</p>
+          </div>
+        );
+      }
+
+      return null;
+    };
+
+
     return (
-      <div ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
+      <div key={this.props.name} ref={(r) => { this.chart = r; }} className={styles.chart} style={{ height }}>
         <ResponsiveContainer width="100%" height={tree ? 0 : height}>
           <RechartChart
             stackOffset={stackOffset}
-            // height={height}
-            // width={width}
+            height={height}
             viewBox={viewBox}
             data={data}
             layout={layout}
@@ -275,14 +286,13 @@ class Chart extends PureComponent {
                     <Cell
                       key={`c_${item.color}`}
                       fill={item.color}
-                      stroke={item.color}
+                      stroke={item?.stroke || item.color}
+                      {...item}
                     />
                   ))}
                 </Pie>
               ))
             )}
-
-
 
             {layout === 'vertical' && xAxis && (
               <XAxis
@@ -304,7 +314,6 @@ class Chart extends PureComponent {
                 {...tooltip}
               />
             )}
-
             {legend && (
               <Legend
                 wrapperStyle={{ pointerEvents: 'none' }}
@@ -314,11 +323,18 @@ class Chart extends PureComponent {
             )}
           </RechartChart>
         </ResponsiveContainer>
+
         {tree && (
           <Treemap
             data={data}
             {...config}
-          />
+          >
+            <Tooltip
+              allowEscapeViewBox
+              content={<CustomTooltip />}
+              position={{ x: 0, y: 20 }}
+            />
+          </Treemap>
         )}
 
         {brush && (

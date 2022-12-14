@@ -41,4 +41,16 @@
   @media print {
     display: none;
   }
+
+  &.mobile {
+    button {
+      .menuItemTitle {
+        margin-top: 6px;
+      }
+    }
+  }
+
+  &.mobile._active {
+    margin-top: 4px;
+  }
 }

@@ -86,7 +86,7 @@
             "rgba(210, 50, 169, 1)"
         ],
         "circle-stroke-color": "white",
-        "circle-stroke-width": 0.5,
+        "circle-strokeWidth": 0.5,
         "circle-opacity": [
           "interpolate",
           ["linear"],

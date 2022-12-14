@@ -1,0 +1,126 @@
+.chart_tooltip {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: 'space-around';
+      -ms-flex-pack: 'space-around';
+          justify-content: 'space-around';
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 19px;
+  padding: 10px 20px;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
+  background-color: #FFF;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  font-weight: bold;
+}
+
+.data_title {
+  display: block;
+}
+
+.data_line {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-right: 20px;
+  font-size: bold;
+}
+
+.data_line._column {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding: 5px;
+}
+
+.data_line:last-of-type {
+  margin-right: 0;
+}
+
+.data_line._stacked {
+  margin-right: 0;
+}
+
+.data_line.right {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  text-align: right;
+}
+
+.data_label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.data_label._column {
+  margin-right: 0;
+}
+
+.break_label {
+  font-style: italic;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.data_color {
+  width: 9px;
+  height: 18px;
+  border-radius: 22px;
+  margin-right: 10px;
+}
+
+.data_color.bar {
+  border-radius: 0;
+  width: 4px;
+}
+
+.data_value {
+  white-space: nowrap;
+  margin-left: 19px;
+  font-weight: normal;
+}
+
+.data_value_species {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.description_label {
+  color: black;
+  font-size: 12px;
+  font-weight: 400;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+}
+/*# sourceMappingURL=style.module.css.map */

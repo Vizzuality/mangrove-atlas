@@ -1,16 +1,23 @@
-import { connect } from 'react-redux';
-import { setUi } from 'modules/widgets/actions';
+import { connect } from "react-redux";
+import { setUi } from "modules/widgets/actions";
 
-import Component from './component';
+import { fetchMangroveBiomassData } from "modules/mangrove-biomass-data/actions";
 
-const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.coverage || {
-    currentYear: 2016,
-    unit: '%'
-  }
+import Component from "./component";
+
+const mapStateToProps = (state) => ({
+  isLoading: state.mangroveBiomassData.isLoading,
+  data: state.mangroveBiomassData.data,
+  metadata: state.mangroveBiomassData.metadata,
+  ui: state.widgets.ui.biomass,
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures,
 });
-const mapDispatchToProps = { setUi };
+
+const mapDispatchToProps = {
+  setUi,
+  fetchMangroveBiomassData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -1,7 +1,9 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
-import DATA from 'config/data.json';
+import DATA from 'config/data';
 import { activeWidgets as _activeWidgets } from 'modules/widgets/selectors';
 import { fetchSucceeded, toggleActive } from './actions';
+
+import { flatten } from 'lodash';
 
 export function* toggleActiveLayer({ payload }) {
   yield put(toggleActive({ id: payload.layerId, isActive: payload.isActive }));
@@ -19,14 +21,12 @@ function* getLayers() {
    */
   const activeWidgets = yield select(_activeWidgets);
   const { layers } = DATA;
-  const activeLayers = activeWidgets.map(w => w.layersIds);
+  const activeLayers = flatten(activeWidgets.map(w => w.layersIds));
   const updatedLayers = layers.map((l) => {
     const newLayer = Object.assign({}, l);
-
     if (activeLayers.includes(l.id)) {
       newLayer.isActive = true;
     }
-
     return newLayer;
   });
   yield put(fetchSucceeded(updatedLayers));
@@ -34,5 +34,6 @@ function* getLayers() {
 
 export default function* layersSagas() {
   yield takeLatest('WIDGET/TOGGLE_ACTIVE', toggleActiveLayer);
+  yield takeLatest('WIDGETS/SET_ACTIVE_LAYERS', getLayers);
   yield takeLatest('LAYERS/FETCH_ALL', getLayers);
 }

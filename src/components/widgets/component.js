@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
+
 import Spinner from "components/spinner";
 import Button from "components/button";
 
@@ -11,14 +12,26 @@ const WidgetList = ({
   isCollapsed,
   templates,
   mobile,
+  category,
+  dataByWidget,
+  drawingMode,
   ...parentProps
 }) => {
-  const onClickDownload = (e) => {
+  const onClickDownload = useCallback(() => {
     window.print();
-  };
+  }, []);
+
+  const widgetsFiltered = useMemo(
+    () =>
+      widgets.filter(
+        ({ slug }) => dataByWidget.includes(slug) 
+      ),
+    [widgets, dataByWidget]
+  );
 
   return (
     <div
+      key={category}
       className={cx(styles.widgets, {
         [styles.spinner]: !widgets.length,
       })}
@@ -29,17 +42,28 @@ const WidgetList = ({
         </div>
       ) : (
         widgets.length &&
-        widgets.map((widget, index) => {
+        widgets?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
+          const isLast =
+            widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
+
           return (
-            <div key={widget.slug} className={cx(styles.widgetWrapper, {
-              [styles.pageBreak]: index % 2 !== 0
-            })}>
+            <div
+              key={widget.slug}
+              className={cx(styles.widgetWrapper, {
+                [styles.pageBreak]: index % 2 !== 0,
+              })}
+            >
               <Widget
-                key={widget.slug}
-                isLast={widgets.length - 1 === index}
+                className={cx(styles.widgetWrapper, {
+                  [styles.pageBreak]: index % 2 !== 0,
+                })}
                 {...widget}
                 {...parentProps}
+                key={widget.slug}
+                index={index}
+                isLast={isLast}
+                isCollapsed={isLast ? false : widget.isCollapsed}
               />
             </div>
           );

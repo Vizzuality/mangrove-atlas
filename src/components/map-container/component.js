@@ -1,49 +1,50 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
-import { breakpoints } from 'utils/responsive';
-import { NavigationControl, FullscreenControl } from 'react-map-gl';
-import classnames from 'classnames';
-import pick from 'lodash/pick';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import MediaQuery from "react-responsive";
+import { breakpoints } from "utils/responsive";
+import { NavigationControl, FullscreenControl } from "react-map-gl";
+import classnames from "classnames";
+import pick from "lodash/pick";
 
 // Components
-import MobileLegendControl from 'components/map-legend/mobile';
-import MangroveMap from 'components/map';
-import BasemapSelector from 'components/basemap-selector';
-import Legend from 'components/map-legend';
+import MobileLegendControl from "components/map-legend/mobile";
+import MangroveMap from "components/map";
+import BasemapSelector from "components/basemap-selector";
+import Legend from "components/map-legend";
 
-import { WDPA } from 'modules/locations/constants';
+import { WDPA } from "modules/locations/constants";
 
-import styles from './style.module.scss';
+import styles from "./style.module.scss";
 
 export const MapContainer = ({
   viewport,
   setViewport,
-  setPopup,
   removePopup,
   isCollapse,
   mapboxApiAccessToken,
   mapStyle,
   bounds,
   goToCountry,
-  goToAOI,
+  goToWDPA,
 }) => {
   const onViewportChange = (newViewport) => {
-    setViewport(pick(newViewport, ['latitude', 'longitude', 'zoom', 'bearing', 'pitch']));
+    setViewport(
+      pick(newViewport, ["latitude", "longitude", "zoom", "bearing", "pitch"])
+    );
   };
   const resize = (newViewport) => {
     onViewportChange({
       ...newViewport,
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     });
   };
 
   useEffect(() => {
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
     resize();
     return function cleanup() {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("resize", resize);
     };
     // eslint-disable-next-line
   }, []);
@@ -56,10 +57,21 @@ export const MapContainer = ({
    * https://uber.github.io/react-map-gl/#/Documentation/api-reference/interactive-map?section=interaction-options
    * You can provide a custom getCursor function that will overwrite
    * the one used by default, documentation is on the same page.
-  */
-  const requestedInteractiveLayerIds = ['selected-eez-land-v2-201410', 'selected-wdpa-polygons', 'cons-hotspots'];
-  const currentLayers = mapStyle.layers.map(layer => layer.id);
-  const interactiveLayerIds = requestedInteractiveLayerIds.filter(id => currentLayers.includes(id));
+   */
+  const requestedInteractiveLayerIds = [
+    "selected-eez-land-v2-201410",
+    "selected-wdpa-polygons",
+    "cons-hotspots",
+    "restoration",
+    'restoration-sites',
+    'restoration-sites-clusters',
+  ];
+  const currentLayers = mapStyle.layers.map((layer) => layer.id);
+
+  const interactiveLayerIds = requestedInteractiveLayerIds.filter((id) =>
+    currentLayers.includes(id)
+  );
+
 
   function popupCloseHandler() {
     removePopup();
@@ -67,18 +79,12 @@ export const MapContainer = ({
 
   const clickHandler = ({ event }) => {
     const { features } = event;
-    const country = features.find(feat => feat.layer.id === 'selected-eez-land-v2-201410');
-    const wdpa = features.find(feat => feat.layer.id === 'selected-wdpa-polygons');
-    const hotspots = features.find(feat => feat.layer.id === 'cons-hotspots');
-
-    if (hotspots) {
-      setPopup({
-        type: 'hotspots',
-        coordinates: event.lngLat.slice(),
-        data: hotspots.properties
-      });
-      return;
-    }
+    const country = features?.find(
+      (feat) => feat.layer.id === "selected-eez-land-v2-201410"
+    );
+    const wdpa = features?.find(
+      (feat) => feat.layer.id === "selected-wdpa-polygons"
+    );
 
     popupCloseHandler();
 
@@ -86,63 +92,74 @@ export const MapContainer = ({
       // todo: this should be done at api level
       // unify AOI ids
       // Use NAME instead of WDPA_PID because there can be different areas with the same name
-      const { properties: { NAME: areaName } } = wdpa;
+      const {
+        properties: { NAME: areaName },
+      } = wdpa;
       const internalIdMap = new Map([
         [WDPA.DELTA_DU_SALOUM.areaName, WDPA.DELTA_DU_SALOUM.location_id],
         [WDPA.RUFIKI_MAFIA_KILWA.areaName, WDPA.RUFIKI_MAFIA_KILWA.location_id],
-        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.location_id]
+        [WDPA.MAFIA_ISLAND.areaName, WDPA.MAFIA_ISLAND.location_id],
       ]);
 
       const internalId = internalIdMap.get(areaName);
       if (internalId) {
-        goToAOI({ id: internalId });
+        goToWDPA({ id: internalId });
       }
     } else if (country) {
-      const { properties: { ISO_3digit: countryId } } = country;
+      const {
+        properties: { iso: countryId },
+      } = country;
+
       goToCountry({ iso: countryId });
     }
   };
 
   return (
-    <div className={styles.map}>
-      <MangroveMap
-        viewport={viewport}
-        bounds={bounds}
-        mapStyle={mapStyle}
-        mapboxApiAccessToken={mapboxApiAccessToken}
-        onViewportChange={onViewportChange}
-        onClick={clickHandler}
-        interactiveLayerIds={interactiveLayerIds}
-        onPopupClose={popupCloseHandler}
-      >
-        {() => (
-          <div className={styles.navigation}>
-            <MediaQuery minWidth={breakpoints.lg + 1}>
-              <FullscreenControl className={styles.fullscreen} />
-            </MediaQuery>
-            <MediaQuery minWidth={breakpoints.sm}>
-              <NavigationControl
-                captureClick
-                captureDoubleClick
-                showCompass={true}
-                className={styles.zoomControls}
-                onViewportChange={onViewportChange}
-              />
-            </MediaQuery>
-          </div>
-        )
-        }
-      </MangroveMap>
+    <div className={styles.mapContainerWrapper}>
+      <div className={styles.mapContainer}>
+        <MangroveMap
+          viewport={viewport}
+          bounds={bounds}
+          mapStyle={mapStyle}
+          mapboxApiAccessToken={mapboxApiAccessToken}
+          onViewportChange={onViewportChange}
+          onClick={clickHandler}
+          interactiveLayerIds={interactiveLayerIds}
+          onPopupClose={popupCloseHandler}
+        >
+          {() => (
+            <div className={styles.navigation}>
+              <MediaQuery minWidth={breakpoints.lg + 1}>
+                <FullscreenControl className={styles.fullscreen} />
+              </MediaQuery>
+              <MediaQuery minWidth={breakpoints.sm}>
+                <NavigationControl
+                  captureClick
+                  captureDoubleClick
+                  showCompass={true}
+                  className={styles.zoomControls}
+                  onViewportChange={onViewportChange}
+                />
+              </MediaQuery>
+            </div>
+          )}
+        </MangroveMap>
 
-      <div className={classnames(styles.legend,
-        { [styles.expanded]: !isCollapse })}
-      >
-        <MediaQuery maxWidth={breakpoints.sm - 1}>
-          <MobileLegendControl />
-        </MediaQuery>
-        <div className={styles.tooltip}>
-          <Legend />
-          <BasemapSelector />
+        <div
+          className={classnames(styles.legend, {
+            [styles.expanded]: !isCollapse,
+          })}
+        >
+          <MediaQuery maxWidth={breakpoints.lg - 1}>
+            <MobileLegendControl>
+              <Legend />
+              <BasemapSelector />
+            </MobileLegendControl>
+          </MediaQuery>
+          <MediaQuery minWidth={breakpoints.lg}>
+            <Legend />
+            <BasemapSelector />
+          </MediaQuery>
         </div>
       </div>
     </div>
@@ -157,9 +174,9 @@ MapContainer.propTypes = {
   mapStyle: PropTypes.shape({}).isRequired,
   bounds: PropTypes.shape({}).isRequired,
   goToCountry: PropTypes.func,
-  goToAOI: PropTypes.func,
+  goToWDPA: PropTypes.func,
   setPopup: PropTypes.func,
-  removePopup: PropTypes.func
+  removePopup: PropTypes.func,
 };
 
 MapContainer.defaultProps = {
@@ -171,13 +188,13 @@ MapContainer.defaultProps = {
     zoom: 2,
     maxZoom: 16,
     bearing: 0,
-    pitch: 0
+    pitch: 0,
   },
-  setPopup: () => { },
-  removePopup: () => { },
-  setViewport: () => { },
-  goToCountry: () => { },
-  goToAOI: () => { }
+  setPopup: () => {},
+  removePopup: () => {},
+  setViewport: () => {},
+  goToCountry: () => {},
+  goToWDPA: () => {},
 };
 
 export default MapContainer;

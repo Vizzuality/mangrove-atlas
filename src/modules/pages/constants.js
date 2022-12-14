@@ -12,8 +12,8 @@ export const PAGES = [
     page: 'app',
   },
   {
-    name: 'PAGE/AOI',
-    path: '/area-of-interest/:id',
+    name: 'PAGE/CUSTOM',
+    path: '/custom-area',
     page: 'app',
   },
   {

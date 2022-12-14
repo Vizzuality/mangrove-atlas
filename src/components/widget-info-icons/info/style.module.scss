@@ -1,25 +1,22 @@
-@import 'styles/_vars.scss';
+@import "styles/_vars.scss";
 
-.modalBtn {
+.modalBtnIcon {
+  border-radius: 15px;
+  border: 2px solid rgba($primary, 0.2);
   width: 30px;
   height: 30px;
-  border: 2px solid rgba(#00857F, 0.2);
   box-sizing: border-box;
-  border-radius: 15px;
   margin-right: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
 
   .modalIcon {
-    width: 20px;
-    height: 20px;
     fill: $primary;
   }
 }
 
 .modalContent {
-
   h2 {
     font-weight: 300;
     font-size: 30px;
@@ -28,8 +25,12 @@
   }
 
   p {
-    font-weight: 300;
+    font-weight: 400;
     font-size: 19px;
     line-height: 30px;
+  }
+
+  span {
+    font-weight: 500;
   }
 }

@@ -1,16 +1,20 @@
 import { connect } from 'react-redux';
-import { setUi } from 'modules/widgets/actions';
+
+import { fetchMangroveBlueCarbonData } from 'modules/mangrove-blue-carbon-data/actions';
 
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveData.isLoading,
-  data: state.mangroveData,
-  ui: state.widgets.ui.blue_carbon
+  isLoading: state.mangroveBlueCarbonData.isLoading,
+  data: state.mangroveBlueCarbonData.data,
+  metadata: state.mangroveBlueCarbonData.metadata,
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 
 const mapDispatchToProps = {
-  setUi,
+  fetchMangroveBlueCarbonData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -7,15 +7,15 @@ import { fetchMangroveEcosystemServicesData } from 'modules/mangrove-ecosystem-s
 import Component from './component';
 
 const mapStateToProps = state => ({
-  isLoading: state.mangroveRestorationData.isLoading,
+  isLoadingRestorationData: state.mangroveRestorationData.isLoading,
+  isLoadingDegradationAndLossData: state.mangroveRestorationData.isLoading,
   ui: state.widgets.ui,
-  restorationData: state.mangroveRestorationData.data.data,
-  restorationDataMetadata: state.mangroveRestorationData.data.metadata,
+  restorationData: state.mangroveRestorationData.data,
+  restorationDataMetadata: state.mangroveRestorationData.metadata,
   degradationAndLossData: state.mangroveDegradationAndLossData.data,
   degradationAndLossDataMetadata: state.mangroveDegradationAndLossData.metadata,
   ecosystemServicesData: state.mangroveEcosystemServicesData.data,
   ecosystemServicesMetadata: state.mangroveEcosystemServicesData.metadata,
-  currentLocationId: state.locations.currentId?.location_id,
   currentId: state.locations.current.id || state.locations.current.iso,
   locations: state.locations,
   type : state.router.type,

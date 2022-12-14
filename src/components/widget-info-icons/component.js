@@ -8,12 +8,11 @@ import Toggle from './toggle';
 
 import styles from './style.module.scss';
 
-
 const WidgetControls = ({ name, slug, layerId, layersIds, isActive }) => {
   return (
     <div className={styles.widgetControls}>
       <Download slug={slug} />
-      <Info slug={slug} />
+      <Info slug={slug} icon />
       {!!layersIds?.length && (
         <Toggle
           name={name}
@@ -32,7 +31,13 @@ WidgetControls.propTypes = {
   slug: PropTypes.string.isRequired,
   layerId: PropTypes.string,
   layersIds: PropTypes.array,
-  isActive: PropTypes.bool.isRequired
+  isActive: PropTypes.bool,
+};
+
+WidgetControls.defayltProps = {
+  layerId: null,
+  layersIds: null,
+  isActive: null,
 };
 
 export default WidgetControls;

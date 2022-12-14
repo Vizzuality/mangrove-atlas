@@ -50,6 +50,7 @@ export const styles = {
     paddingTop: 10,
     paddingBottom: 10,
     transform: 'translateX(-50%)',
+    scrollbarWidth: 'thin',
     left: '50%',
     '&:after': {
       content: '" "',
@@ -84,10 +85,14 @@ export const styles = {
     textAlign: 'center',
     opacity: state.isDisabled && !state.isSelected ? 0.4 : 1,
     color: state.isSelected ? '#00857F' : provided.color,
+    cursor: state.isDisabled ? 'default !important' : 'pointer',
     backgroundColor: 'none',
     '&:hover': {
       color: '#00857F',
-      cursor: 'pointer'
+      cursor: (state.isSelected && !state.isDisabled) ? 'default' : 'pointer'
+    },
+    '&:active': {
+      backgroundColor: 'transparent'
     },
     whiteSpace: 'nowrap',
   }),
@@ -97,7 +102,6 @@ export const styles = {
     transform: 'none',
     maxWidth: '100%',
     margin: 0,
-    cursor: 'pointer',
     marginBottom: -4
   }),
   valueContainer: provided => ({
@@ -115,12 +119,25 @@ export const styles = {
     bottom: '-7px',
     left: '50%',
     transform: 'translate(-50%, 50%)',
-    cursor: 'pointer',
   }),
   menuList: provided => ({
     ...provided,
     maxHeight: 250,
-    minWidth: 'content',
+    minWidth: 'fit-content',
     fontSize: 9,
+    scrollbarWidth:  'thin',
+    "::-webkit-scrollbar": {
+      width: "4px",
+      height: "0px",
+    },
+    "::-webkit-scrollbar-track": {
+      background: "#f1f1f1"
+    },
+    "::-webkit-scrollbar-thumb": {
+      background: "#888"
+    },
+    "::-webkit-scrollbar-thumb:hover": {
+      background: "#555"
+    }
   }),
 };

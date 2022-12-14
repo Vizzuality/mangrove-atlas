@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
-import { fetchAlerts } from 'modules/alerts/actions';
 import { setUi } from 'modules/widgets/actions';
+
+import { fetchAlerts } from 'modules/alerts/actions';
+
 import Component from './component';
 
 const mapStateToProps = state => ({
   data: state.alerts,
   isLoading: state.alerts.isLoading,
-  currentLocation: state.locations.current,
   locationsList: state.locations.list,
   ui: state.widgets.ui.alerts,
+  drawingValue: state.drawingTool.drawingValue,
+  drawingMode: state.drawingTool.drawingMode,
+  customGeojsonFeatures: state.drawingTool.customGeojsonFeatures
 });
 
 const mapDispatchToProps = { setUi, fetchAlerts };

@@ -1,17 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import orderBy from 'lodash/orderBy';
+import React, { useCallback, useEffect, useMemo } from "react";
+import PropTypes from "prop-types";
+import orderBy from "lodash/orderBy";
 
-import ChartWidget from 'components/chart-widget';
-import Select from 'components/select';
+import ChartWidget from "components/chart-widget";
+import Select from "components/select";
 
-import moreIcon from '../icons/icon-more.svg';
-import lessIcon from '../icons/icon-less.svg';
+import moreIcon from "../icons/icon-more.svg";
+import lessIcon from "../icons/icon-less.svg";
 
-import config from './config';
+import config from "./config";
 
 function MangroveActivity({
+  isLoading,
   data: rawData,
+  metadata,
   fetchRankingData,
   isCollapsed = true,
   slug,
@@ -20,144 +22,195 @@ function MangroveActivity({
   setUi,
   ...props
 }) {
-  const changeYear = (type, value) => {
-    const prop = (type === 'start') ? 'startDate' : 'endDate';
-    setUi({
-      id: 'activity',
-      value: {
-        ...ui,
-        [prop]: value
-      }
-    });
-    fetchRankingData({
-      ...ui,
-      [prop]: value
-    });
-  };
+  const { start_year, end_year, limit = 5, filter = "net" } = ui;
 
-  const changeFilter = (filterState) => {
-    setUi({
-      id: 'activity',
-      value: {
-        ...ui,
-        filter: filterState,
-      }
-    });
-    fetchRankingData({
-      ...ui,
-      filter: filterState
-    });
-  };
+  const years = useMemo(() => metadata?.years, [metadata]);
+  const startYear = useMemo(() => metadata?.start_year, [metadata]);
+  const endYear = useMemo(() => metadata?.end_year, [metadata]);
 
-  const changeLimit = (limitState) => {
-    setUi({
-      id: 'activity',
-      value: {
-        ...ui,
-        limit: limitState
-      }
-    });
-    fetchRankingData({
-      ...ui,
-      limit: limitState
-    });
-  };
+  const startDate = useMemo(
+    () => start_year || Number(startYear),
+    [start_year, startYear]
+  );
+  const endDate = useMemo(
+    () => end_year || Number(endYear),
+    [end_year, endYear]
+  );
 
-  if (!rawData || !rawData.meta) {
+  useEffect(() => {
+    fetchRankingData({
+      ...(startDate && { start_year: startDate }),
+      ...(endDate && { end_year: endDate }),
+      limit,
+    });
+  }, [fetchRankingData, start_year, end_year, startDate, endDate, limit]);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setUi({
+        id: "activity",
+        value: {
+          start_year: startDate,
+          end_year: endDate,
+          limit,
+        },
+      });
+    }
+  }, [start_year, end_year, startDate, endDate, isLoading, limit, setUi]);
+
+  const changeYear = useCallback(
+    (type, value) => {
+      setUi({
+        id: "activity",
+        value: {
+          ...ui,
+          [type]: value,
+        },
+      });
+    },
+    [setUi, ui]
+  );
+
+  // temporary hidden as there is no data to filter
+  // const changeFilter = (filterState) => {
+  //   setUi({
+  //     id: 'activity',
+  //     value: {
+  //       ...ui,
+  //       filter: filterState,
+  //     }
+  //   });
+  //   fetchRankingData({
+  //     ...ui,
+  //     filter: filterState
+  //   });
+  // };
+
+  const changeLimit = useCallback(
+    (limitState) => {
+      setUi({
+        id: "activity",
+        value: {
+          ...ui,
+          limit: limitState,
+        },
+      });
+    },
+    [setUi, ui]
+  );
+
+  const startYearOptions = useMemo(
+    () =>
+      years?.map((year) => ({
+        label: year,
+        value: year,
+      })),
+    [years]
+  );
+
+  const endYearOptions = useMemo(
+    () =>
+      years?.map((year) => ({
+        label: year,
+        value: year,
+      })),
+    [years]
+  );
+
+  if (!rawData.length || !metadata) {
     return null;
   }
 
-  const { startDate, endDate, filter, limit } = ui;
-  const { chartData, metaData, chartConfig } = config.parse(rawData, filter, limit);
+  const { chartData, chartConfig } = config.parse(rawData, limit);
 
-  const sortRanking = (data) => {
-    const dataRanked = orderBy(data, filter, d => Math.abs(d`${filter}`)).map((f, index) => ({ ...f, x: index })).reverse();
-    return (filter === 'loss' ? dataRanked.reverse() : dataRanked);
-  };
+  const sortRanking = (data) =>
+    orderBy(data, filter, (d) => Math.abs(d`${filter}`)).map((f, index) => ({
+      ...f,
+      x: index,
+    }));
 
-  // XXX: these options should come from an api ?
-  const optionsFilter = [
-    { value: 'gain', label: 'gain' },
-    { value: 'loss', label: 'loss' },
-    { value: 'net_change', label: 'net increase' },
-  ];
+  //temporary hidden as data needs to be uploaded
+  // const optionsFilter = [
+  //   { value: 'gain', label: 'gain' },
+  //   { value: 'loss', label: 'loss' },
+  //   { value: 'net_change', label: 'net increase' },
+  // ];
 
-  const startYearOptions = metaData.map(year => ({
-    label: year,
-    value: year
-  }));
-
-  const endYearOptions = metaData.map(year => ({
-    label: year,
-    value: year
-  }));
-
+  // temporary hidden as there is no data
   // Selectors
-  const filterSelector = (
-    <Select
-      value={filter}
-      options={optionsFilter}
-      classNamePrefix="react-select"
-      onChange={value => changeFilter(value)}
-    />
-  );
+  // const filterSelector = (
+  //   <Select
+  //     value={filter}
+  //     options={optionsFilter}
+  //     classNamePrefix="react-select"
+  //     onChange={value => changeFilter(value)}
+  //   />
+  // );
 
   const startYearSelector = (
     <Select
       value={startDate}
-      options={startYearOptions.splice(0, metaData.length - 1)}
-      isOptionDisabled={option => parseInt(option.value, 10) > parseInt(endDate, 10)
-        || option.value === startDate}
-      onChange={value => changeYear('start', value)}
+      options={startYearOptions}
+      isOptionDisabled={(option) =>
+        parseInt(option.value, 10) > parseInt(endDate, 10) ||
+        option.value === startDate || option.value === endDate
+      }
+      onChange={(value) => changeYear("start_year", value)}
     />
   );
 
   const endYearSelector = (
     <Select
       value={endDate}
-      options={endYearOptions.splice(1, metaData.length)}
-      isOptionDisabled={option => parseInt(option.value, 10) < parseInt(startDate, 10)
-        || option.value === endDate}
-      onChange={value => changeYear('end', value)}
+      options={endYearOptions}
+      isOptionDisabled={(option) =>
+        parseInt(option.value, 10) < parseInt(startDate, 10) ||
+        option.value === endDate || option.value === startDate
+      }
+      onChange={(value) => changeYear("end_year", value)}
     />
   );
 
   const customStyles = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    fontSize: '14px',
-    color: '#00857F',
-    fontWeight: 600
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    fontSize: "14px",
+    color: "#00857F",
+    fontWeight: 600,
   };
-
 
   const sentence = (
     <>
-      Worldwide the {limit} countries with the largest {filterSelector}
-      &nbsp;in Mangrove habitat extent between {startYearSelector} and {endYearSelector} were:
+      Worldwide the {limit} countries with the largest net change
+      {/* {filterSelector} TO - DO put back selector when API returns gain and loss values */}
+      &nbsp;in Mangrove habitat extent between {startYearSelector} and{" "}
+      {endYearSelector} were:
     </>
   );
-
   const countriesLimit = (
     <>
       <button
         style={customStyles}
         type="button"
-        onClick={value => changeLimit(limit === 5 ? limit + 5 : limit - 5, value)}
+        onClick={(value) =>
+          changeLimit(limit === 5 ? limit + 5 : limit - 5, value)
+        }
       >
-        {limit === 5 ? 'Show 10' : 'Show 5'}
-        <img alt={limit === 5 ? 'Show more results' : 'Show less results'} src={limit === 5 ? moreIcon : lessIcon} />
+        {limit === 5 ? "Show 10" : "Show 5"}
+        <img
+          alt={limit === 5 ? "Show more results" : "Show less results"}
+          src={limit === 5 ? moreIcon : lessIcon}
+        />
       </button>
     </>
   );
 
   const sortedData = sortRanking(chartData);
-
   const chartRData = {
-    data: sortedData,
-    config: chartConfig
+    data: chartData,
+    config: chartConfig,
   };
 
   return (
@@ -176,8 +229,8 @@ function MangroveActivity({
 }
 
 MangroveActivity.propTypes = {
-  data: PropTypes.shape({}).isRequired,
-  fetchRankingData: PropTypes.func.isRequired
+  data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  fetchRankingData: PropTypes.func.isRequired,
 };
 
 export default MangroveActivity;

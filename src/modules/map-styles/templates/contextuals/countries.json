@@ -1,12 +1,12 @@
 [
   {
-    "id": "selected-eez-land-v2-201410 copy",
+    "id": "selected-eez-land-v2-201410-line",
     "type": "line",
     "metadata": {
       "mapbox:group": "c8ed86ce2aa267b2ff4ffd4a98a3b79c"
     },
-    "source": "composite",
-    "source-layer": "selected_EEZ_land_v2_201410",
+    "source": "eez",
+    "source-layer": "gadm_eez_location_v3",
     "layout": {},
     "paint": {
       "line-color": "hsl(58, 66%, 47%)"
@@ -15,11 +15,8 @@
   {
     "id": "selected-eez-land-v2-201410",
     "type": "fill",
-    "metadata": {
-      "mapbox:group": "c8ed86ce2aa267b2ff4ffd4a98a3b79c"
-    },
-    "source": "composite",
-    "source-layer": "selected_EEZ_land_v2_201410",
+    "source": "eez",
+    "source-layer": "gadm_eez_location_v3",
     "layout": {},
     "paint": {
       "fill-color": "hsla(58, 78%, 58%, 0.2)",

@@ -7,7 +7,7 @@
     @include menu-item-title;
   }
 
-  svg {
+  .icon {
     width: 60px;
     height: 60px;
     fill: $primary;
@@ -18,10 +18,30 @@
 
   &.mobile {
     @include menu-items-mobile;
+
+    .icon {
+      border-radius: 0px;
+      box-shadow: none;
+      fill: $white;
+    }
+
+    &._active {
+      .icon {
+        background-color: $white;
+        border-radius: 30px;
+        fill: $primary;
+      }
+    }
   }
 
   @media print {
     display: none;
+  }
+}
+
+.introModalContent {
+  .logo {
+    width: 230px;
   }
 }
 
@@ -90,7 +110,7 @@
       top: 45px;
       bottom: 0;
       width: 1px;
-      background-color: rgba($black, 0.08);
+      background-color: rgba($blackOpacity, 0.08);
     }
   }
 
@@ -104,14 +124,26 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0px;
 
     .logo {
       width: 130px;
       padding-right: 20px;
+    }
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 30px;
+
+      .image {
+        max-width: 150px;
+      }
     }
   }
 }

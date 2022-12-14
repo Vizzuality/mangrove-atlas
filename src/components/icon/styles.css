@@ -1,0 +1,32 @@
+.c-icon {
+  width: 14px;
+  height: 14px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.c-icon._xsmall {
+  width: 20px;
+  height: 20px;
+}
+
+.c-icon._small {
+  width: 30px;
+  height: 30px;
+}
+
+.c-icon._medium {
+  width: 40px;
+  height: 40px;
+}
+
+.c-icon._large {
+  width: 60px;
+  height: 60px;
+}
+
+.c-icon._xlarge {
+  width: 90px;
+  height: 90px;
+}
+/*# sourceMappingURL=styles.css.map */

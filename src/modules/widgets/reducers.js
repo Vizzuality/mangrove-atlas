@@ -6,40 +6,41 @@ import {
   expandAll,
   toggleCollapse,
   toggleActive,
+  setActiveLayers,
   toggleActiveByLayerId,
   openInfoPanel,
   closeInfoPanel,
   setUi,
-  resetUi
+  resetUi,
 } from './actions';
 
 import initialState from './initial-state';
 
 export default {
-  [fetchRequested]: state => ({
+  [fetchRequested]: (state) => ({
     ...state,
     isLoading: true,
-    error: null
+    error: null,
   }),
   [fetchSucceeded]: (state, { payload }) => ({
     ...state,
     isLoading: false,
-    list: payload
+    list: payload,
   }),
   [fetchFailed]: (state, { payload }) => ({
     ...state,
     isLoading: false,
-    error: payload
+    error: payload,
   }),
-  [collapseAll]: state => ({
+  [collapseAll]: (state) => ({
     ...state,
     isCollapsed: true,
-    list: state.list.map(item => ({ ...item, isCollapsed: true }))
+    list: state.list.map((item) => ({ ...item, isCollapsed: true })),
   }),
-  [expandAll]: state => ({
+  [expandAll]: (state) => ({
     ...state,
     isCollapsed: false,
-    list: state.list.map(item => ({ ...item, isCollapsed: false }))
+    list: state.list.map((item) => ({ ...item, isCollapsed: false })),
   }),
   [toggleCollapse]: (state, { payload: { id } }) => {
     const list = state.list.map((item) => {
@@ -47,43 +48,50 @@ export default {
       return ({ ...item, isCollapsed: !item.isCollapsed });
     });
 
-    const noCollapsed = list.find(item => item.isCollapsed === false);
+    const noCollapsed = list?.find((item) => item.isCollapsed === false);
 
     return {
       ...state,
       list,
-      isCollapsed: !noCollapsed
+      isCollapsed: !noCollapsed,
     };
   },
-  [toggleActive]: (state, { payload }) => ({
+  [toggleActive]: (state, { payload }) =>   ({
     ...state,
     list: state.list.map((item) => {
       if (item.slug !== payload.id) return item;
       return ({ ...item, isActive: !payload.isActive });
-    })
+    }),
+  }),
+  [setActiveLayers]: (state, { payload }) => ({
+    ...state,
+    list: state.list.map((item) => {
+      if (!payload.includes(item.slug)) return item;
+      return ({ ...item, isActive: true });
+    }),
   }),
   [toggleActiveByLayerId]: (state, { payload }) => ({
     ...state,
     list: state.list.map((item) => {
       if (!item?.layersIds?.includes(payload.layerId)) return item;
       return ({ ...item, isActive: payload.isActive });
-    })
+    }),
   }),
   [openInfoPanel]: (state, { payload }) => ({
     ...state,
     isOpened: true,
-    type: payload
+    type: payload,
   }),
-  [closeInfoPanel]: state => ({ ...state, isOpened: false }),
+  [closeInfoPanel]: (state) => ({ ...state, isOpened: false }),
   [setUi]: (state, { payload }) => ({
     ...state,
     ui: {
       ...state.ui,
       [payload.id]: {
         ...state.ui[payload.id],
-        ...payload.value
-      }
-    }
+        ...payload.value,
+      },
+    },
   }),
-  [resetUi]: state => ({ ...state, ui: initialState.ui })
+  [resetUi]: (state) => ({ ...state, ui: initialState.ui }),
 };

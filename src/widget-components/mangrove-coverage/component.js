@@ -12,7 +12,7 @@ const numberFormat = format(',.2f');
 
 function processData(data, currentYear) {
   const { chartData, metadata } = data;
-  const currentYearData = chartData.find(d => d.x === currentYear);
+  const currentYearData = chartData?.find(d => d.x === currentYear);
 
   if (!currentYearData) {
     return null;

@@ -1,10 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Spinner from 'components/spinner';
-import classnames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
 
-import styles from './style.module.scss';
-import WidgetControls from 'components/widget-info-icons/component';
+import Spinner from "components/spinner";
+
+import WidgetControls from "components/widget-info-icons/component";
+import styles from "./style.module.scss";
 
 function Widget({
   children,
@@ -16,8 +17,9 @@ function Widget({
   isLocationsModal,
   isCollapsed = true,
   isLoading,
-  toggleCollapse,
   isLast,
+  toggleCollapse,
+  drawingMode,
 }) {
   const collapseToggleHandler = () => {
     toggleCollapse({ id: slug });
@@ -25,8 +27,8 @@ function Widget({
 
   const widgetConditionalStyles = {
     [styles._modal]: isLocationsModal,
-    [styles._collapsed]: !!isLast ? false : isCollapsed,
-    [styles._layerActive]: isActive
+    [styles._collapsed]: isCollapsed,
+    [styles._layerActive]: isActive,
   };
 
   // These components are declared here not to clutter component's element
@@ -44,10 +46,17 @@ function Widget({
   );
 
   return (
-    <div className={classnames(styles.widget, widgetConditionalStyles, styles[`${slug}`])}>
-      <div className={classnames(styles.wrapper, {
-        [styles._modal]: isLocationsModal
-      })}
+    <div
+      className={classnames(
+        styles.widget,
+        widgetConditionalStyles,
+        styles[`${slug}`]
+      )}
+    >
+      <div
+        className={classnames(styles.wrapper, {
+          [styles._modal]: isLocationsModal,
+        })}
       >
         {!isLocationsModal && (
           <div className={styles.header}>
@@ -61,19 +70,18 @@ function Widget({
             />
           </div>
         )}
-        {isLoading
-          ? <Spinner />
-          : (
-            <div className={classnames(
-              styles.content, {
-              [styles._large]: slug === 'mangrove_activity'
-            }
-            )}
-            >
-              {children}
-            </div>
-          )
-        }
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <div
+            className={classnames(styles.content, {
+              [styles._large]: slug === "mangrove_activity",
+            })}
+          >
+            {!drawingMode && children}
+          </div>
+        )}
+        {drawingMode && children}
       </div>
     </div>
   );
@@ -89,8 +97,8 @@ Widget.propTypes = {
   isLocationsModal: PropTypes.bool,
   isCollapsed: PropTypes.bool,
   isLoading: PropTypes.bool,
+  isLast: PropTypes.bool,
   toggleCollapse: PropTypes.func,
-  isLast: PropTypes.bool
 };
 
 Widget.defaultProps = {
@@ -103,8 +111,8 @@ Widget.defaultProps = {
   isLocationsModal: false,
   isCollapsed: false,
   isLoading: false,
-  toggleCollapse: () => { },
-  isLast: false
+  isLast: false,
+  toggleCollapse: () => {},
 };
 
 export default Widget;

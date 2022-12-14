@@ -1,71 +1,114 @@
-import React, { useEffect } from 'react';
-import Select from 'components/select';
-import ChartWidget from 'components/chart-widget';
+import React, { useState, useEffect, useMemo } from "react";
+import Select from "components/select";
+import ChartWidget from "components/chart-widget";
+import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
 
-import config from './config';
+import config from "./config";
 
 const MangroveAlerts = ({
   data,
   isLoading,
   isCollapsed = true,
-  slug, name,
+  slug,
+  name,
   addFilter,
   ui = {},
   currentLocation,
-  locationsList,
   setUi,
   fetchAlerts,
+  drawingValue,
+  customGeojsonFeatures,
+  drawingMode,
   ...props
 }) => {
-  const {
-    year,
-    startDate,
-    endDate
-  } = ui;
+  const [restart, setRestart] = useState(null);
+  const { year, startDate, endDate } = ui;
 
+  const [initialDate, setInitialDate] = useState({
+    startInitialDate: null,
+    endInitialDate: null,
+  });
+  
   useEffect(() => {
-    if (currentLocation && (currentLocation.id || currentLocation.location_id || currentLocation.iso)) {
-      if (currentLocation.id === 'worldwide') {
-        fetchAlerts({ start_date: startDate.value, end_date: endDate.value });
-      } else {
-        let location = locationsList.find(l => (l.iso === currentLocation.iso && l.location_type === 'country'));
+    fetchAlerts(
+      currentLocation?.id === "custom-area" || drawingMode
+        ? {
+            drawingValue,
+            slug: ["mangrove_alerts"],
+            location_id: "custom-area",
+            ...(initialDate.startInitialDate && {
+              start_date: startDate?.value,
+            }),
+            ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+          }
+        : {
+            ...(initialDate.startInitialDate && {
+              start_date: startDate?.value,
+            }),
+            ...(initialDate.endInitialDate && { end_date: endDate?.value }),
+            ...(currentLocation?.location_id && {
+              location_id: currentLocation.location_id,
+            }),
+          }
+    );
 
-        // Find by location_id
-        if (!location) {
-          location = locationsList.find(l => (l.location_id === currentLocation?.location_id || l.location_id === currentLocation.id));
-        }
-        // eslint-disable-next-line camelcase
-        const { location_id } = location;
-        fetchAlerts({ location_id, start_date: startDate.value, end_date: endDate.value });
-      }
+    if (startDate?.value || endDate?.value) {
+      setInitialDate({
+        startInitialDate: null,
+        endInitialDate: null,
+      });
     }
-  }, [year, currentLocation, fetchAlerts]);
+  }, [
+    startDate,
+    endDate,
+    initialDate.startInitialDate,
+    initialDate.endInitialDate,
+    drawingValue,
+    currentLocation,
+    drawingMode,
+    fetchAlerts
+  ]);
 
   const {
-    chartData, chartConfig, total, downloadData, startDateOptions, endDateOptions,
+    chartData,
+    chartConfig,
+    total,
+    downloadData,
+    startDateOptions,
+    endDateOptions,
   } = config.parse(data, startDate, endDate, year);
 
   useEffect(() => {
-    if (!!startDateOptions.length && !startDate.label) {
-      setUi({
-        id: 'alerts',
-        value: {
-          startDate: startDateOptions[0],
-        }
-      });
-    }
-  }, [startDateOptions, isLoading]);
+    setInitialDate({
+      startInitialDate: startDateOptions[0],
+      endInitialDate: endDateOptions[endDateOptions.length - 1],
+    });
+  }, [startDateOptions.length, endDateOptions.length]); // eslint-disable-line
 
   useEffect(() => {
-    if (!!endDateOptions.length && !endDate.label) {
+    if (
+      startDateOptions[0] !== startDate?.value ||
+      endDateOptions[endDateOptions.length - 1] !== endDate?.value
+    ) {
       setUi({
-        id: 'alerts',
+        id: "alerts",
         value: {
+          startDate: startDateOptions[0],
           endDate: endDateOptions[endDateOptions.length - 1],
-        }
+        },
       });
     }
-  }, [endDateOptions, isLoading]);
+  }, [ // eslint-disable-line
+    startDateOptions.length,
+    endDateOptions.length,
+    currentLocation.location_id,
+    currentLocation.iso,
+  ]);
+
+  const loadingAnalysis = useMemo(
+    () => (isLoading && (drawingMode || customGeojsonFeatures)) || restart,
+    [isLoading, drawingMode, customGeojsonFeatures, restart]
+  );
 
   if (chartData.length <= 0) {
     return null;
@@ -76,42 +119,43 @@ const MangroveAlerts = ({
     const mm = new Date(value).getMonth();
 
     const monthsConversionAlt = {
-      0: 'January',
-      1: 'February',
-      2: 'March',
-      3: 'April',
-      4: 'May',
-      5: 'June',
-      6: 'July',
-      7: 'August',
-      8: 'September',
-      9: 'October',
-      10: 'November',
-      11: 'December'
+      0: "January",
+      1: "February",
+      2: "March",
+      3: "April",
+      4: "May",
+      5: "June",
+      6: "July",
+      7: "August",
+      8: "September",
+      9: "October",
+      10: "November",
+      11: "December",
     };
 
     const monthLabel = monthsConversionAlt[mm];
     const label = `${monthLabel}, ${yyyy}`;
 
     setUi({
-      id: 'alerts',
+      id: "alerts",
       value: {
         [type]: {
           label,
-          value
-        }
-      }
+          value,
+        },
+      },
     });
   };
 
   const startDateSelect = (
     <Select
-      value={startDate.value}
+      value={startDate?.value}
       defaultValue={startDateOptions[0]}
       options={startDateOptions}
-      isOptionDisabled={option => option.value > endDate.value
-        || option.value === startDate.value}
-      onChange={value => changeDate('startDate', value)}
+      isOptionDisabled={(option) =>
+        option.value > endDate?.value || option.value === startDate?.value
+      }
+      onChange={(value) => changeDate("startDate", value)}
       classNamePrefix="react-select"
       className="alerts"
     />
@@ -119,19 +163,21 @@ const MangroveAlerts = ({
 
   const endDateSelect = (
     <Select
-      value={endDate.value}
+      value={endDate?.value}
       defaultValue={endDateOptions[endDateOptions.length - 1]}
       options={endDateOptions}
-      isOptionDisabled={option => option.value < startDate.value
-        || option.value === endDate.value}
-      onChange={value => changeDate('endDate', value)}
+      isOptionDisabled={(option) =>
+        option.value < startDate?.value || option.value === endDate?.value
+      }
+      onChange={(value) => changeDate("endDate", value)}
       classNamePrefix="react-select"
       className="alerts"
     />
   );
   const sentence = (
     <>
-      There were <strong>{total}</strong> mangrove disturbance alerts<br />
+      There were <strong>{total}</strong> mangrove disturbance alerts
+      <br />
       between {startDateSelect}
       &nbsp;and {endDateSelect}.
     </>
@@ -139,24 +185,38 @@ const MangroveAlerts = ({
 
   const chartRData = {
     data: chartData,
-    config: chartConfig
+    config: chartConfig,
   };
 
   return (
     <ChartWidget
+      isLoading={isLoading}
       name={name}
       downloadData={downloadData}
       data={chartData}
       slug={slug}
       filename={slug}
-      isCollapsed={isCollapsed}
-      sentence={sentence}
+      isCollapsed={loadingAnalysis ? false : isCollapsed}
+      sentence={loadingAnalysis ? null : sentence}
       chartData={chartRData}
+      chart={!loadingAnalysis}
       {...props}
       onBrushEnd={({ startIndex, endIndex }) => {
-        changeDate('startDate', chartData[startIndex].start);
-        changeDate('endDate', chartData[endIndex].end);
+        changeDate("startDate", chartData[startIndex].start);
+        changeDate("endDate", chartData[endIndex].end);
       }}
+      component={      drawingMode && (
+        <WidgetDrawingToolControls
+          slug="alerts"
+          fetch={fetchAlerts}
+          drawingValue={drawingValue}
+          isLoading={isLoading}
+          restart={restart}
+          setRestart={setRestart}
+        />
+      )
+
+      }
     />
   );
 };

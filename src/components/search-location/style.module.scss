@@ -1,22 +1,39 @@
-@import 'styles/_vars.scss';
+@import "styles/_vars.scss";
 
 .sidebarItem {
-  @include menu-items;
-
-  &.mobile {
-    @include menu-items-mobile;
-  }
-
-  .menuItemTitle {
-    @include menu-item-title;
-  }
+  padding: 10px;
 
   svg {
-    width: 60px;
-    height: 60px;
-    fill: $primary;
-    background-color: $white;
-    border-radius: 30px;
-    box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+    width: 35px;
+    height: 35px;
+    stroke: $primary;
+    fill: transparent;
+  }
+
+  &.mobile {
+    padding: 0px;
+    width: 50px;
+
+    svg {
+      width: 30px;
+      height: 40px;
+      stroke: $white;
+    }
+
+    .menuItemTitle {
+      @include menu-item-title;
+      margin: 2px 0 0 0;
+    }
+
+    &._active {
+      svg {
+        padding: 5px;
+        border-radius: 30px;
+        background-color: $white;
+        width: 30px;
+        height: 30px;
+        stroke: $primary;
+      }
+    }
   }
 }

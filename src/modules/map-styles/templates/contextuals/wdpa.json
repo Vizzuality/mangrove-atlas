@@ -12,7 +12,7 @@
     }
   },
   {
-    "id": "selected-wdpa-polygons copy",
+    "id": "selected-wdpa-polygons-border",
     "type": "line",
     "source": "composite",
     "source-layer": "wdpaclientjuly2022",
@@ -23,7 +23,7 @@
     }
   },
   {
-    "id": "selected-wdpa-polygons copy 1",
+    "id": "selected-wdpa-polygons-label",
     "type": "symbol",
     "metadata": {
       "mapbox:group": "1f4439315750c8010c95dfe168ea659a"

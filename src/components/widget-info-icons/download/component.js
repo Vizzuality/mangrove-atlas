@@ -37,6 +37,7 @@ const Download = ({ slug }) => {
         isOpen={isOpen}
         onRequestClose={handleModal}
         closeButton
+        maxHeight
       >
         <div className={styles.modalContent}>
           <h2>Download Data</h2>
@@ -54,7 +55,7 @@ const Download = ({ slug }) => {
                   />
                   <h3 className={cx({ [styles._noicon]: !description })}>{title}</h3>
                 </div>
-                {href && <a href={href} target="_blank" rel="noreferrer">DOWNLOAD</a>}
+                {href && <a href={href} target="_blank" rel="noopener noreferrer">DOWNLOAD</a>}
               </div>
               <p className={cx({ [styles._collapsed]: isCollapsed[id] })}>{description}</p>
               <p>{license}</p>
@@ -68,12 +69,10 @@ const Download = ({ slug }) => {
 
 Download.propTypes = {
   isOpened: PropTypes.bool,
-  closeSearchPanel: PropTypes.func
 };
 
 Download.defaultProps = {
   isOpened: false,
-  closeSearchPanel: () => null
 };
 
 export default Download;
