@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -22,7 +22,8 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  console.log({ categoryWidgets: categoryWidgets.length });
+  const [hasWidgets, setWidgets] = useState(true); 
+
   const widgetsFiltered = useMemo(
     () =>
       widgets.filter(
@@ -31,6 +32,19 @@ const WidgetList = ({
     [widgets, dataByWidget]
   );
 
+  const widgetsWithDataSelectedCategory =  useMemo(
+    () => !!categoryWidgets.length && !!widgets.length &&
+    (categoryWidgets.some(elem => dataByWidget.includes(elem))),
+    [categoryWidgets.length, widgets.length, dataByWidget, category]
+  )
+  console.log({ widgets, widgetsFiltered, categoryWidgets, dataByWidget, widgetsWithDataSelectedCategory})
+
+  useEffect(() => {
+    if (!!widgets.length && !widgetsWithDataSelectedCategory.length) {
+      setTimeout(() => setWidgets(false), [500]);
+    }
+  }, [widgets.length, categoryWidgets.length]);
+
   return (
     <div
       key={category}
@@ -38,16 +52,13 @@ const WidgetList = ({
         [styles.spinner]: !widgets.length,
       })}
     >
-      {categoryWidgets.length === 0 && (
-        <div style={{ height: 200, width: 200, border: '2px solid red'}}>NO DATA</div>
-      )}
-      {!widgets.length ? (
+      {!widgets.length ?
         <div className={styles.spinner}>
           <Spinner />
         </div>
-      ) : (
-        widgets.length &&
-        widgets?.map((widget, index) => {
+         
+
+: widgets?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
           const isLast =
             widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
@@ -72,8 +83,8 @@ const WidgetList = ({
               />
             </div>
           );
-        })
-      )}
+        })}
+      {!!widgets.length && !widgetsFiltered.length && !!categoryWidgets && !!dataByWidget.length && <div style={{ width: '500px', height: '500px', border: '2px solid blue' }}>NO DATA</div>}
       {widgets.length && !mobile ? (
         <Button
           className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
@@ -85,7 +96,7 @@ const WidgetList = ({
       ) : null}
     </div>
   );
-};
+} ;
 
 WidgetList.propTypes = {
   mobile: PropTypes.bool,
