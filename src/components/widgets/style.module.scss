@@ -63,6 +63,35 @@
         }
       }
     }
+
+    .noDataWidget {
+      align-items: center;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 100%;
+      min-height: 334px;
+      box-shadow: 0 4px 12px 0 rgb(0 0 0 / 8%);
+      border-radius: 20px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      $padding: 30px 20px 0 40px;
+      margin: auto;
+
+      .noDataIcon {
+        height: 160px;
+        width: 160px;
+      }
+
+      p {
+        font-family: $font-family;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 29px;
+        text-align: center;
+      }
+    }
   }
 
   @media print {

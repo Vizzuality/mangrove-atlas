@@ -7,6 +7,8 @@ import Button from "components/button";
 
 import styles from "./style.module.scss";
 
+import noDataIcon from "./no-data.svg";
+
 const WidgetList = ({
   widgets,
   isCollapsed,
@@ -22,7 +24,7 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  const [hasWidgets, setWidgets] = useState(true); 
+  const [hasWidgets, setWidgets] = useState(true);
 
   const widgetsFiltered = useMemo(
     () =>
@@ -37,7 +39,6 @@ const WidgetList = ({
     (categoryWidgets.some(elem => dataByWidget.includes(elem))),
     [categoryWidgets.length, widgets.length, dataByWidget, category]
   )
-  console.log({ widgets, widgetsFiltered, categoryWidgets, dataByWidget, widgetsWithDataSelectedCategory})
 
   useEffect(() => {
     if (!!widgets.length && !widgetsWithDataSelectedCategory.length) {
@@ -56,7 +57,7 @@ const WidgetList = ({
         <div className={styles.spinner}>
           <Spinner />
         </div>
-         
+
 
 : widgets?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
@@ -84,8 +85,19 @@ const WidgetList = ({
             </div>
           );
         })}
-      {!!widgets.length && !widgetsFiltered.length && !!categoryWidgets && !!dataByWidget.length && <div style={{ width: '500px', height: '500px', border: '2px solid blue' }}>NO DATA</div>}
-      {widgets.length && !mobile ? (
+      {!!widgets.length && !widgetsFiltered.length && !!categoryWidgets && !!dataByWidget.length &&
+        <div className={styles.widgetWrapper}>
+          <div className={styles.noDataWidget}>
+            <img className={styles.noDataIcon} src={noDataIcon} alt="no-data" />
+            <p>
+              Sorry, there are <b>no data</b> for this location.
+              <br/>
+              Try with another category.
+            </p>
+          </div>
+        </div>
+      }
+      {widgets.length && widgetsFiltered.length && !mobile ? (
         <Button
           className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
           hasBackground
