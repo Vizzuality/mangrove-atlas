@@ -67,9 +67,7 @@ export const categoryWidgets = createSelector(
     _widgetsData,
     _currentCategory,
   ) => {
-    const widgetsByCategory = _widgets.filter(({ categoryIds }) => categoryIds.includes(_currentCategory)).map((w) => w.slug);
-
-    return _widgetsData.filter((w) => Object.values(w)[0].length > 0 && widgetsByCategory.includes(Object.keys(w)[0]))
+    return _widgets.filter(({ categoryIds }) => categoryIds.includes(_currentCategory)).map((w) => w.slug);
   }
 );
 
