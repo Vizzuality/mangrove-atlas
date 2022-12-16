@@ -39,8 +39,6 @@ function MangroveExtent({
   const { year: currentYear, unit } = ui;
   const { total_lenght } = metadata;
 
-
-
   const params = (currentLocation?.id === "custom-area" || drawingMode) ? {
       drawingValue,
       slug: ["mangrove_extent"],
@@ -52,7 +50,7 @@ function MangroveExtent({
     };
 
   const { data: habitantExtentData, isFetching, isFetched } = useHabitatExtent(params);
-  console.log({ habitantExtentData, isFetching, isFetched });
+  console.log({ data: habitantExtentData, isFetching, isFetched });
 
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
