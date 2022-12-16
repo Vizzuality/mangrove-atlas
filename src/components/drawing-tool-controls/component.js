@@ -141,7 +141,8 @@ const DrawingToolControls = ({
           <div className={styles.itemsWrapper}>
             {drawingMode || drawingValue?.length || !isEmpty(customGeojsonFeatures) ? (
               <button
-                onClick={() => handleDrawing(drawingMode, 'worldwide')}
+                onClick={!drawingMode ? false : () => handleDrawing(drawingMode, 'worldwide')}
+                disabled={locationType === "PAGE/APP" && !drawingMode}
                 className={cx(styles.sidebarItem, {
                   [styles._active]: locationType === "PAGE/APP" && !drawingMode,
                 })}
@@ -151,7 +152,8 @@ const DrawingToolControls = ({
             ) : (
               <Link
                 to={{ type: "PAGE/APP" }}
-                onClick={() => handleDrawing(drawingMode, 'worldwide')}
+                disabled={locationType === "PAGE/APP" && !drawingMode}
+                onClick={!drawingMode ? false : () => handleDrawing(drawingMode, 'worldwide')}
                 className={cx(styles.sidebarItem, {
                   [styles._active]: locationType === "PAGE/APP" && !drawingMode,
                 })}

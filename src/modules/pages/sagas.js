@@ -2,14 +2,6 @@ import { takeLatest, put, select } from 'redux-saga/effects';
 import { setCurrent } from 'modules/locations/actions';
 import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
 
-export const getLocationType = (type) => {
-  if (type === 'PAGE/APP') return 'worldwide';
-  if (type === 'PAGE/CUSTOM') return 'custom-area';
-  if (type === 'PAGE/COUNTRY') return 'country';
-  if (type === 'PAGE/WDPA') return 'protected-area';
-  return 'worldwide';
-};
-
 export const getCurrentLocation = (locationsList, currentId, locationType) => locationsList?.find(({
   id, iso, location_type,
 }) => (id === currentId
