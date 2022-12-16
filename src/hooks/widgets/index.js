@@ -6,7 +6,7 @@ import WIDGETS from 'services/widgets';
 
 export function useHabitatExtent({ params = {} }) {
 
-  const query = useQuery('habitat_extent', async () => WIDGETS.request({
+  const query = useQuery('habitat-extent', async () => WIDGETS.request({
     method: 'GET',
     url: '/habitat_extent',
     params: params
@@ -15,11 +15,29 @@ export function useHabitatExtent({ params = {} }) {
   const { data } = query;
 
   return useMemo(() => {
-    const parsedData = Array.isArray(data?.data?.data) ? data?.data?.data : [];
-
     return {
       ...query,
-      data: parsedData,
+      data: data?.data?.data || [],
+      metadata: data?.data?.meta || {},
     };
-  }, [query, data?.data?.data]);
+  }, [query, data?.data?.data, data?.data?.meta]);
+}
+
+export function useNetChange({ params = {} }) {
+
+  const query = useQuery('net-change', async () => WIDGETS.request({
+    method: 'GET',
+    url: '/net_change',
+    params: params,
+  }));
+
+  const { data } = query;
+
+  return useMemo(() => {
+    return {
+      ...query,
+      data: data?.data?.data || [],
+      metadata: data?.data?.meta || {},
+    };
+  }, [query, data?.data?.data, data?.data?.meta]);
 }

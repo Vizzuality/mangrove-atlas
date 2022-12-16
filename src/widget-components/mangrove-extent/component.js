@@ -49,8 +49,8 @@ function MangroveExtent({
       }),
     };
 
-  const { data: habitantExtentData, isFetching, isFetched } = useHabitatExtent(params);
-  console.log({ data: habitantExtentData, isFetching, isFetched });
+  const { data: habitantExtentData, metadata: habitatExtentMetadata, isFetching, isFetched } = useHabitatExtent(params);
+  console.log({ data: habitantExtentData, habitatExtentMetadata, isFetching, isFetched });
 
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
