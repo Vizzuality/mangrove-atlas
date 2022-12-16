@@ -20,9 +20,6 @@ const unitOptions = [
 ];
 
 function MangroveExtent({
-  isLoading,
-  data,
-  metadata,
   currentLocation,
   addFilter,
   isCollapsed = true,
@@ -31,13 +28,11 @@ function MangroveExtent({
   setUi,
   drawingValue,
   drawingMode,
-  fetchMangroveHabitatExtentData,
   customGeojsonFeatures,
   ...props
 }) {
   const [restart, setRestart] = useState(null);
   const { year: currentYear, unit } = ui;
-  const { total_lenght } = metadata;
 
   const params = (currentLocation?.id === "custom-area" || drawingMode) ? {
       drawingValue,
@@ -49,8 +44,8 @@ function MangroveExtent({
       }),
     };
 
-  const { data: habitantExtentData, metadata: habitatExtentMetadata, isFetching, isFetched } = useHabitatExtent(params);
-  console.log({ data: habitantExtentData, habitatExtentMetadata, isFetching, isFetched });
+  const { data, metadata, isFetching } = useHabitatExtent(params);
+  const { total_lenght } = metadata || {};
 
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
@@ -65,28 +60,6 @@ function MangroveExtent({
     [years, currentYear]
   );
 
-
-  useEffect(() => {
-    fetchMangroveHabitatExtentData(
-      currentLocation?.id === "custom-area" || drawingMode
-        ? {
-            drawingValue,
-            slug: ["mangrove_extent"],
-            location_id: "custom-area",
-          }
-        : {
-            ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
-              location_id: currentLocation.id,
-            }),
-          }
-    );
-  }, [
-    fetchMangroveHabitatExtentData,
-    currentLocation,
-    drawingMode,
-    drawingValue
-  ]);
-
   useEffect(() => {
     if (year) {
       addFilter({
@@ -97,12 +70,12 @@ function MangroveExtent({
         },
       });
     }
-    if (!isLoading) {
+    if (!isFetching) {
       setTimeout(() => {
         setUi({ id: "extent", value: { year, unit: currentUnit } });
       }, 0);
     }
-  }, [addFilter, year, currentUnit, metadata, isLoading, setUi]);
+  }, [addFilter, year, currentUnit, metadata, isFetching, setUi]);
 
   const changeYear = useCallback(
     (current) => {
@@ -132,8 +105,8 @@ function MangroveExtent({
   }, [currentLocation, customArea]);
 
   const loadingAnalysis = useMemo(
-    () => (isLoading && drawingMode) || restart,
-    [isLoading, drawingMode, restart]
+    () => (isFetching && drawingMode) || restart,
+    [isFetching, drawingMode, restart]
   );
 
   if (!data || !data.length) {
@@ -220,16 +193,16 @@ function MangroveExtent({
       downloadData={downloadData}
       sentence={loadingAnalysis ? null : sentence}
       config={chartConfig}
-      isLoading={isLoading}
+      isLoading={isFetching}
       chartData={widgetData}
       chart={!loadingAnalysis}
       {...props}
       component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_extent"
-          fetch={fetchMangroveHabitatExtentData}
+          fetch={useHabitatExtent}
           drawingValue={drawingValue}
-          isLoading={isLoading}
+          isLoading={isFetching}
           restart={restart}
           setRestart={setRestart}
         />
@@ -250,7 +223,6 @@ MangroveExtent.propTypes = {
     unit: PropTypes.string,
   }),
   setUi: PropTypes.func,
-  fetchMangroveHabitatExtentData: PropTypes.func,
 };
 
 MangroveExtent.defaultProps = {
@@ -262,7 +234,6 @@ MangroveExtent.defaultProps = {
   slug: null,
   ui: null,
   setUi: () => {},
-  fetchMangroveHabitatExtentData: () => {},
 };
 
 export default MangroveExtent;
