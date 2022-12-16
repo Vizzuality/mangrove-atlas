@@ -17,6 +17,7 @@ const WidgetList = ({
   drawingMode,
   ...parentProps
 }) => {
+
   const onClickDownload = useCallback(() => {
     window.print();
   }, []);
@@ -24,7 +25,7 @@ const WidgetList = ({
   const widgetsFiltered = useMemo(
     () =>
       widgets.filter(
-        ({ slug }) => dataByWidget.includes(slug) 
+        ({ slug }) => dataByWidget.includes(slug)
       ),
     [widgets, dataByWidget]
   );

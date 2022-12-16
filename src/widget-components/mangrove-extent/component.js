@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+
 import PropTypes from "prop-types";
 import { format } from "d3-format";
 import { isEmpty } from "lodash";
+
+import { useHabitatExtent } from 'hooks/widgets'
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -35,6 +38,22 @@ function MangroveExtent({
   const [restart, setRestart] = useState(null);
   const { year: currentYear, unit } = ui;
   const { total_lenght } = metadata;
+
+
+
+  const params = (currentLocation?.id === "custom-area" || drawingMode) ? {
+      drawingValue,
+      slug: ["mangrove_extent"],
+      location_id: "custom-area",
+    } : {
+      ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
+    };
+
+  const { data: habitantExtentData, isFetching, isFetched } = useHabitatExtent(params);
+  console.log({ habitantExtentData, isFetching, isFetched });
+
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
   const years = metadata?.year?.sort((a, b) => a - b);
 
@@ -47,6 +66,7 @@ function MangroveExtent({
     () => currentYear || years?.[years?.length - 1],
     [years, currentYear]
   );
+
 
   useEffect(() => {
     fetchMangroveHabitatExtentData(
