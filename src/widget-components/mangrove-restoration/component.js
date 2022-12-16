@@ -9,8 +9,6 @@ import PropTypes from "prop-types";
 
 import { format } from "d3-format";
 
-import { getLocationType, getCurrentLocation } from "modules/pages/sagas";
-
 // components
 import ChartWidget from "components/chart-widget";
 import Chart from "components/chart";
@@ -28,9 +26,6 @@ const numberFormat = format(",.2f");
 
 function MangroveRestoration({
   component,
-  currentLocationId,
-  currentId,
-  locations,
   isCollapsed = true,
   slug,
   name,
@@ -50,7 +45,7 @@ function MangroveRestoration({
   isLoadingRestorationData,
   isLoadingDegradationAndLossData,
   setUi,
-  type,
+  currentLocation,
   ...props
 }) {
   const ref = createRef();
@@ -79,16 +74,19 @@ function MangroveRestoration({
 
   useEffect(() => {
     fetchMangroveRestorationData({
-      ...(currentLocationId &&
-        currentId !== "worldwide" && { location_id: currentLocationId }),
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
     });
     fetchMangroveDegradationAndLossData({
-      ...(currentLocationId &&
-        currentId !== "worldwide" && { location_id: currentLocationId }),
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
     });
     fetchMangroveEcosystemServicesData({
-      ...(currentLocationId &&
-        currentId !== "worldwide" && { location_id: currentLocationId }),
+      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+        location_id: currentLocation.id,
+      }),
     });
 
     if (!isLoadingRestorationData) {
@@ -120,19 +118,11 @@ function MangroveRestoration({
     unit,
     yearRestoration,
     yearDegradationAndLoss,
-    currentLocationId,
     fetchMangroveRestorationData,
     fetchMangroveDegradationAndLossData,
     fetchMangroveEcosystemServicesData,
-    currentId,
+    currentLocation
   ]);
-
-  const locationType = getLocationType(type);
-  const currentLocation = getCurrentLocation(
-    locations.list,
-    currentId,
-    locationType
-  );
 
   const unitRestorationPotential = useMemo(
     () =>
@@ -168,7 +158,7 @@ function MangroveRestoration({
     currentLocation?.location_type === "worldwide" ? (
       "the world"
     ) : (
-      <span className="notranslate">{`${currentLocation?.name}`}</span>
+      <span className="notranslate">{`${currentLocation.name}`}</span>
     );
   const restorableAreaPerc = numberFormat(restorationData.restorable_area_perc);
 
@@ -203,11 +193,11 @@ function MangroveRestoration({
   const restorationPotentialRingSentence = (
     <>
       <strong>
-        {currentLocation?.location_type === "worldwide" ? (
-          "The world"
-        ) : (
-          <span className="notranslate">{`${currentLocation?.name}`}</span>
-        )}
+        { currentLocation?.location_type === "worldwide" ? (
+      "the world"
+    ) : (
+      <span className="notranslate">{`${currentLocation.name}`}</span>
+    )}
         's&nbsp;
       </strong>{" "}
       restorable mangrove areas represent <strong>{restorableAreaPerc}%</strong>{" "}
