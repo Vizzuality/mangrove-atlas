@@ -4,34 +4,21 @@ import { useQuery } from 'react-query';
 
 import WIDGETS from 'services/widgets';
 
-export function useHabitatExtent({ params = {} }) {
+export function useWidget({ params = {}, wId }) {
 
-  const query = useQuery('habitat-extent', async () => WIDGETS.request({
+  console.log({params, wId})
+
+  const query = useQuery(`${wId}`, async () => WIDGETS.request({
     method: 'GET',
-    url: '/habitat_extent',
+    url: `/${wId}`,
     params: params
-  }));
+  }), {
+    enabled: !!wId
+  });
 
   const { data } = query;
 
-  return useMemo(() => {
-    return {
-      ...query,
-      data: data?.data?.data || [],
-      metadata: data?.data?.meta || {},
-    };
-  }, [query, data?.data?.data, data?.data?.meta]);
-}
-
-export function useNetChange({ params = {} }) {
-
-  const query = useQuery('net-change', async () => WIDGETS.request({
-    method: 'GET',
-    url: '/net_change',
-    params: params,
-  }));
-
-  const { data } = query;
+  console.log({data})
 
   return useMemo(() => {
     return {

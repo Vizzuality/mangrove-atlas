@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 
+import { useWidget } from 'hooks/widgets'
+
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
 import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
@@ -14,9 +16,6 @@ const unitOptions = [
 ];
 
 function MangroveNetChange({
-  data,
-  isLoading,
-  metadata,
   filename,
   locations,
   addFilter,
@@ -25,7 +24,6 @@ function MangroveNetChange({
   name,
   ui,
   setUi,
-  fetchMangroveNetChangeData,
   currentLocation,
   drawingValue,
   drawingMode,
@@ -34,11 +32,27 @@ function MangroveNetChange({
 }) {
   const [restart, setRestart] = useState(null);
   const { startYear: startYearUi, endYear: endYearUi, unit: unitUi } = ui;
-  const years = metadata?.year.sort() || [];
+
+  const params = (currentLocation?.id === "custom-area" || drawingMode) ? {
+    drawingValue,
+    slug: ["mangrove_net_change"],
+    location_id: "custom-area",
+  } : {
+    ...(currentLocation?.iso.toLowerCase() !== "worldwide" && {
+      location_id: currentLocation.id,
+    }),
+  };
+
+  const { data, metadata, isFetching } = useWidget({ params, wId: 'net_change' });
+  const { year } = metadata || {};
+
+  const years = year?.sort() || [];
+
   const startYear = useMemo(
     () => (startYearUi && years.includes(startYearUi) ? startYearUi : years[0]),
     [startYearUi, years]
   );
+
   const endYear = useMemo(
     () => endYearUi || years?.[years?.length - 1],
     [endYearUi, years]
@@ -47,21 +61,6 @@ function MangroveNetChange({
   const unit = useMemo(() => unitUi || unitOptions[0].value, [unitUi]);
   const customArea = useMemo(() => !!drawingValue?.length || !isEmpty(customGeojsonFeatures), [drawingValue, customGeojsonFeatures]);
 
-  useEffect(() => {
-    fetchMangroveNetChangeData(
-      currentLocation?.id === "custom-area" || drawingMode
-        ? {
-            drawingValue,
-            slug: ["mangrove_net_change"],
-            location_id: "custom-area",
-          }
-        : {
-            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-              location_id: currentLocation.id,
-            }),
-          }
-    );
-  }, [fetchMangroveNetChangeData, currentLocation, drawingValue, drawingMode]);
 
   const filteredYears = useMemo(
     () =>
@@ -262,8 +261,8 @@ function MangroveNetChange({
   };
 
   const loadingAnalysis = useMemo(
-    () => (isLoading && drawingMode) || restart,
-    [isLoading, drawingMode, restart]
+    () => (isFetching && drawingMode) || restart,
+    [isFetching, drawingMode, restart]
   );
 
   if (!data || !data.length) {
@@ -278,18 +277,19 @@ function MangroveNetChange({
       filename={slug}
       isCollapsed={loadingAnalysis ? false : isCollapsed}
       sentence={loadingAnalysis ? null : sentence}
-      isLoading={isLoading}
+      isLoading={isFetching}
       chartData={chartRData}
       chart={!loadingAnalysis}
       {...props}
       component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_net_change"
-          fetch={fetchMangroveNetChangeData}
+          fetch={useWidget}
           drawingValue={drawingValue}
-          isLoading={isLoading}
+          isLoading={isFetching}
           restart={restart}
           setRestart={setRestart}
+          wId='net_change'
         />
       )}
     />

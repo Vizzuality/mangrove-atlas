@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { format } from "d3-format";
 import { isEmpty } from "lodash";
 
-import { useHabitatExtent } from 'hooks/widgets'
+import { useWidget } from 'hooks/widgets'
 
 import ChartWidget from "components/chart-widget";
 import Select from "components/select";
@@ -44,7 +44,7 @@ function MangroveExtent({
       }),
     };
 
-  const { data, metadata, isFetching } = useHabitatExtent(params);
+  const { data, metadata, isFetching } = useWidget({ params, wId: 'habitat_extent' });
   const { total_lenght } = metadata || {};
 
   const currentUnit = useMemo(() => unit || unitOptions[0].value, [unit]);
@@ -200,11 +200,12 @@ function MangroveExtent({
       component={drawingMode && (
         <WidgetDrawingToolControls
           slug="mangrove_extent"
-          fetch={useHabitatExtent}
+          fetch={useWidget}
           drawingValue={drawingValue}
           isLoading={isFetching}
           restart={restart}
           setRestart={setRestart}
+          wId='habitat_extent'
         />
       )}
     />

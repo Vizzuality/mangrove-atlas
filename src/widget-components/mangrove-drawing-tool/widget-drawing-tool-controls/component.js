@@ -14,6 +14,7 @@ export const WidgetDrawingToolControls = ({
   isLoading,
   restart,
   setRestart,
+  wId,
 }) => {
   const abortRequest = useCallback(() => {
     analysisService.widgetControllers[slug].abort();
@@ -22,10 +23,11 @@ export const WidgetDrawingToolControls = ({
 
   const restartRequest = useCallback(() => {
     fetch({
-      drawingValue,
-      slug: [slug],
-      location_id: "custom-area",
-    });
+      params: {
+        drawingValue,
+        slug: [slug],
+        location_id: "custom-area",
+      }, wId });
     setRestart(null);
   }, [fetch, slug, drawingValue, setRestart]);
 
