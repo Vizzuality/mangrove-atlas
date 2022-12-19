@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
@@ -24,27 +24,10 @@ const WidgetList = ({
     window.print();
   }, []);
 
-  const [hasWidgets, setWidgets] = useState(true);
-
   const widgetsFiltered = useMemo(
-    () =>
-      widgets.filter(
-        ({ slug }) => dataByWidget.includes(slug)
-      ),
+    () => widgets.filter(({ slug }) => dataByWidget.includes(slug)),
     [widgets, dataByWidget]
   );
-
-  const widgetsWithDataSelectedCategory =  useMemo(
-    () => !!categoryWidgets.length && !!widgets.length &&
-    (categoryWidgets.some(elem => dataByWidget.includes(elem))),
-    [categoryWidgets.length, widgets.length, dataByWidget, category]
-  )
-
-  useEffect(() => {
-    if (!!widgets.length && !widgetsWithDataSelectedCategory.length) {
-      setTimeout(() => setWidgets(false), [500]);
-    }
-  }, [widgets.length, categoryWidgets.length]);
 
   return (
     <div
@@ -53,13 +36,12 @@ const WidgetList = ({
         [styles.spinner]: !widgets.length,
       })}
     >
-      {!widgets.length ?
+      {!widgets.length ? (
         <div className={styles.spinner}>
           <Spinner />
         </div>
-
-
-: widgets?.map((widget, index) => {
+      ) : (
+        widgets?.map((widget, index) => {
           const Widget = templates.get(widget.slug).component;
           const isLast =
             widgetsFiltered[widgetsFiltered?.length - 1]?.slug === widget.slug;
@@ -84,19 +66,27 @@ const WidgetList = ({
               />
             </div>
           );
-        })}
-      {!!widgets.length && !widgetsFiltered.length && !!categoryWidgets && !!dataByWidget.length &&
-        <div className={styles.widgetWrapper}>
-          <div className={styles.noDataWidget}>
-            <img className={styles.noDataIcon} src={noDataIcon} alt="no-data" />
-            <p>
-              Sorry, there are <b>no data</b> for this location.
-              <br/>
-              Try with another category.
-            </p>
+        })
+      )}
+      {!!widgets.length &&
+        !widgetsFiltered.length &&
+        !!categoryWidgets &&
+        !!dataByWidget.length && (
+          <div className={styles.widgetWrapper}>
+            <div className={styles.noDataWidget}>
+              <img
+                className={styles.noDataIcon}
+                src={noDataIcon}
+                alt="no-data"
+              />
+              <p>
+                Sorry, there are <b>no data</b> for this location.
+                <br />
+                Try with another category.
+              </p>
+            </div>
           </div>
-        </div>
-      }
+        )}
       {widgets.length && widgetsFiltered.length && !mobile ? (
         <Button
           className={cx(styles.printBtn, { [styles._collapse]: isCollapsed })}
@@ -108,7 +98,7 @@ const WidgetList = ({
       ) : null}
     </div>
   );
-} ;
+};
 
 WidgetList.propTypes = {
   mobile: PropTypes.bool,
