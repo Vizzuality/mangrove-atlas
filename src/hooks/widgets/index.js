@@ -6,7 +6,7 @@ import WIDGETS from 'services/widgets';
 
 export function useWidget({ params = {}, wId }) {
 
-  console.log({params, wId})
+  console.log({ params, wId });
 
   const query = useQuery(`${wId}`, async () => WIDGETS.request({
     method: 'GET',
@@ -17,8 +17,6 @@ export function useWidget({ params = {}, wId }) {
   });
 
   const { data } = query;
-
-  console.log({data})
 
   return useMemo(() => {
     return {

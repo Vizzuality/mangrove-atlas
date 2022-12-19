@@ -2,13 +2,13 @@ import React, { useEffect, useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import bboxTurf from "@turf/bbox";
 import { isEmpty } from "lodash";
-
 import cx from "classnames";
-
 import { useDropzone } from "react-dropzone";
 
-import Info from "components/widget-info-icons/info";
+import { useUploadCustomAreaFile } from 'hooks/upload';
+import { useWidget } from 'hooks/widgets';
 
+import Info from "components/widget-info-icons/info";
 import ChartWidget from "components/chart-widget";
 import Widgets from "components/widgets";
 import Icon from "components/icon";
@@ -46,13 +46,12 @@ export const MangroveDrawingTool = ({
   setMobileView,
   mobile,
 }) => {
-
-  const onDropAccepted = useCallback(
-    async (acceptedFiles) => {
+  const onDropAccepted = useCallback((acceptedFiles) => {
       setCurrent("drawingMode");
       setDrawingMode(false);
       const file = acceptedFiles[0];
       analysisService.uploadFile(file).then(({ data }) => {
+
         setDrawingMode(false);
         setCustomGeojsonFeatures(data?.features[0]);
         setCurrentLocation({
@@ -127,26 +126,30 @@ export const MangroveDrawingTool = ({
           slug: ["mangrove_alerts"],
           location_id: "custom-area",
           start_date: alertsUi.startDate,
-          end_date: alertsUi.endDate 
+          end_date: alertsUi.endDate
         });
       });
       return null; //TO DO feedback usuario
     },
-    [
-      setCurrent,
-      setCurrentLocation,
-      setCustomGeojsonFeatures,
-      setDrawingMode,
-      setDrawingStatus,
-      fetchMangroveHabitatExtentData,
-      fetchMangroveNetChangeData,
-      fetchMangroveHeightData,
-      fetchMangroveBiomassData,
-      fetchMangroveBlueCarbonData,
-      fetchAlerts,
-      alertsUi
-    ]
   );
+
+  // const uploadCustomAreaFileMutation = useUploadCustomAreaFile({});
+
+  // const onDropAccepted = async (acceptedFiles) => {
+  //   setCurrent("drawingMode");
+  //   setDrawingMode(false);
+  //   const file = acceptedFiles[0];
+  //   const data = new FormData();
+  //   data.append('file', file);
+
+  //   uploadCustomAreaFileMutation.mutate({ data }, {
+  //     onSuccess: ({ data }) => {
+  //     },
+  //     onError: ({ response }) => {
+
+  //     },
+  //   });
+  // };
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
