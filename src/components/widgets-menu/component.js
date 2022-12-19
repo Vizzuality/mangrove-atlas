@@ -5,6 +5,7 @@ import cx from "classnames";
 
 import Icon from "components/icon";
 import Modal from "components/modal";
+import Content from "./menu-content";
 
 import styles from "./style.module.scss";
 
@@ -49,40 +50,21 @@ const WidgetsMenu = ({
           })}
           onClick={() => toggleModal(!isOpen)}
         >
-          <Icon name="ecosystem_services" className={cx([styles.icon], [styles.ecosystem_services] )} />
+          <Icon
+            name="ecosystem_services"
+            className={cx([styles.icon], [styles.ecosystem_services])}
+          />
           <span className={styles.menuItemTitle}>Category</span>
         </button>
       ) : (
-        <div
-          className={cx(styles.categoriesMenuBtn, {
-            [styles._disabled]: disabled,
-          })}
-        >
-          <span className={styles.menuItemTitle}>Category</span>
-          <ul>
-            {dashboards?.map(({ slug, name }) => (
-              <button
-                key={slug}
-                type="button"
-                className={styles.menuItemBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleModal(slug);
-                }}
-                onMouseOver={disabled ? null : handleHover}
-                disabled={true}
-              >
-                <li
-                  className={cx({
-                    [styles._active]: currentDashboard === slug,
-                  })}
-                >
-                  <Icon name={slug} className={cx([styles.icon], [styles[slug]])} alt={name} />
-                </li>
-              </button>
-            ))}
-          </ul>
-        </div>
+        <Content
+          className={styles.categoriesMenuBtn}
+          currentDashboard={currentDashboard}
+          dashboards={dashboards}
+          disabled={disabled}
+          handleModal={handleModal}
+          handleHover={handleHover}
+        />
       )}
       <Modal
         isOpen={isOpen}
@@ -91,31 +73,20 @@ const WidgetsMenu = ({
         closeButton={false}
         onMouseLeave={() => toggleModal(false)}
       >
-        <div
-          onMouseLeave={() => toggleModal(false)}
+        <Content
           className={cx(styles.modalContent, { [styles.mobile]: mobile })}
+          toggleModal={toggleModal}
           style={{
             top: mobile ? "50%" : position.top,
             left: mobile ? "50%" : position.left - position.x,
           }}
-        >
-          <span className={styles.menuItemTitle}>Category</span>
-          <ul>
-            {dashboards?.map(({ slug, name }) => (
-              <li
-                key={slug}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleModal(slug);
-                }}
-                className={cx({ [styles._active]: currentDashboard === slug })}
-              >
-                <Icon name={slug} className={cx([styles.icon], [styles[slug]])} alt={name} />
-                <span>{name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+          currentDashboard={currentDashboard}
+          dashboards={dashboards}
+          disabled={disabled}
+          handleModal={handleModal}
+          handleHover={handleHover}
+          text
+        />
       </Modal>
     </div>
   );
@@ -135,7 +106,7 @@ WidgetsMenu.propTypes = {
 };
 
 WidgetsMenu.defaultPros = {
-  currentDashboard: 'distribution_and_change',
+  currentDashboard: "distribution_and_change",
   dashboards: null,
   setCurrent: () => null,
   mobile: false,

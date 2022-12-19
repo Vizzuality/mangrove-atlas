@@ -17,7 +17,6 @@
 
     li {
       display: flex;
-      cursor: pointer;
       margin: 5px;
       align-items: center;
 
@@ -34,7 +33,7 @@
       }
 
       &._disabled {
-        opacity: 0.5;
+        opacity: 0.1;
       }
     }
   }
@@ -65,17 +64,16 @@
   .categoriesMenuBtn {
     @include menu-items;
 
-    .menuItemTitle {
-      @include menu-item-title;
-    }
-
-    .menuItemBtn {
-      padding: 0;
-    }
-
     &._disabled {
       opacity: 0.5;
-      cursor: default;
+      
+      > ul {
+        >li {
+          > button {
+            cursor: inherit;
+          }
+        }
+      }
     }
   }
 
@@ -84,13 +82,10 @@
     border-radius: 30px;
   }
 
-
-
   &.mobile {
     flex-direction: row;
     margin: 0;
     padding: 0;
-
 
     button {
       display: flex;
@@ -160,4 +155,15 @@
       width: 100%;
     }
   }
+}
+
+.menuItemTitle {
+  @include menu-item-title;
+}
+
+.menuItemBtn {
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
