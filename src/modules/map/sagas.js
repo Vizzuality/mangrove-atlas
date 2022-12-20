@@ -62,39 +62,42 @@ function* setPrintingProcess({ payload: isPrinting }) {
   const getLeftOffset = () => {
     if (isPrinting) {
       // todo: this magic formula does not work.
-      return window.innerWidth > 795 ? -(window.innerWidth + 400) : 0;
+      return window.innerWidth > 795 ? - (window.innerWidth + 400) : 0;
     }
 
     //? size of the sidebar
     return 620;
   }
 
-  const { longitude, latitude, zoom } = fitBounds({
-    bounds: [
-      [bbox[0], bbox[1]],
-      [bbox[2], bbox[3]],
-    ],
-    width: window.innerWidth,
-    height: window.innerHeight,
-    padding: {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: getLeftOffset(),
-    },
-  });
+  if (bbox) {
+    const { longitude, latitude, zoom } = fitBounds({
+      bounds: [
+        [bbox[0], bbox[1]],
+        [bbox[2], bbox[3]],
+      ],
+      width: window.innerWidth,
+      height: window.innerHeight,
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: getLeftOffset(),
+      },
+    });
 
-  const newViewport = {
-    ...viewport,
-    longitude,
-    latitude,
-    zoom,
-    transitionDuration : 0,
-    transitionInterruption: TRANSITION_EVENTS.UPDATE,
-  };
+    const newViewport = {
+      ...viewport,
+      longitude,
+      latitude,
+      zoom,
+      transitionDuration : 0,
+      transitionInterruption: TRANSITION_EVENTS.UPDATE,
+    };
 
-  yield put(setViewport(newViewport));
-  yield delay(500);
+    yield put(setViewport(newViewport));
+    yield delay(500);
+  }
+
   yield put(setPrintMode(isPrinting));
 }
 
