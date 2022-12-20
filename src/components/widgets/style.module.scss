@@ -26,8 +26,8 @@
   }
 
   @media print {
-    margin-top: 1500px;
     page-break-before: page;
+    break-before: page;
     max-width: 100%;
     position: relative;
     display: block;
