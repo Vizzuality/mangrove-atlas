@@ -62,7 +62,7 @@ function* setPrintingProcess({ payload: isPrinting }) {
   const getLeftOffset = () => {
     if (isPrinting) {
       // todo: this magic formula does not work.
-      return window.innerWidth > 795 ? - (window.innerWidth + 400) : 0;
+      return window.innerWidth > 795 ? -(window.innerWidth + 400) : 0;
     }
 
     //? size of the sidebar

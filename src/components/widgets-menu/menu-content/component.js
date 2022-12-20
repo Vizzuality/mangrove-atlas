@@ -25,7 +25,6 @@ const WidgetsMenuContent = ({
     style={style}
   >
     <span className={styles.menuItemTitle}>Category</span>
-    {console.log(disabled)}
     <ul>
       {dashboards?.map(({ slug, name }) => (
         <li
@@ -40,11 +39,8 @@ const WidgetsMenuContent = ({
               className={styles.menuItemBtn}
               onClick={(e) => {
                 e.stopPropagation();
-                console.log(e, slug);
                 handleModal(slug);
               }}
-              // onMouseOver={disabled ? null : handleHover}
-              // disabled={true}
             >
               <Icon
                 name={slug}
@@ -59,7 +55,6 @@ const WidgetsMenuContent = ({
               className={styles.menuItemBtn}
               onClick={(e) => {
                 e.stopPropagation();
-                console.log(e, slug);
                 handleModal(slug);
               }}
               onMouseOver={disabled ? null : handleHover}

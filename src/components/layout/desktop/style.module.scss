@@ -35,6 +35,8 @@
 @media print {
   .printOnly {
     display: block;
+    page-break-before: always;
+    break-before: always;
   }
 }
 

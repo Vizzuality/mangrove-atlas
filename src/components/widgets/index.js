@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 
-import { setPrintingMode } from 'modules/app/actions';
 import { addFilter, removeFilter } from "modules/map-styles/actions";
 import { expandAll, collapseAll } from "modules/widgets/actions";
+import { setPrintingMode } from 'modules/app/actions';
 import { setBounds } from "modules/map/actions";
-import { dashboardWidgets, getWidgetsWithData, categoryWidgets } from "modules/widgets/selectors";
+import { dashboardWidgets, getWidgetsWithData } from "modules/widgets/selectors";
 import { currentLocation } from "modules/locations/selectors";
 
 import HighlightedPlaces from 'widget-components/highlighted-places';
@@ -96,7 +96,6 @@ export const templates = new Map([
 const mapStateToProps = (state) => ({
   currentLocation: currentLocation(state),
   widgets: dashboardWidgets(state),
-  categoryWidgets: categoryWidgets(state),
   templates,
   isCollapsed: state.widgets.isCollapsed,
   category: state.dashboards.current,
