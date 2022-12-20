@@ -10,9 +10,11 @@
   @media print {
     display: flex;
     page-break-before: always;
+    break-before: always;
     padding: 30px;
     justify-content: center;
     margin: auto;
+    margin-top: 900px;
   }
 }
 

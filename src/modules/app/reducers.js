@@ -1,4 +1,4 @@
-import { setMobileView } from './actions';
+import { setMobileView, setPrintMode } from './actions';
 
 export default {
   [setMobileView]: (state, { payload }) => ({
@@ -7,5 +7,9 @@ export default {
       ...state.mobile,
       mapView: payload
     }
+  }),
+    [setPrintMode]: (state, { payload }) => ({
+      ...state,
+      printMode: payload
   })
 };

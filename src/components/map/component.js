@@ -184,12 +184,14 @@ class Map extends Component {
       options
     );
 
+    const transitionDuration = options.transitionDuration !== undefined ? options.transitionDuration : 2500;
+
     const newViewport = {
       ...viewport,
       longitude,
       latitude,
       zoom,
-      transitionDuration: 2500,
+      transitionDuration,
       transitionInterruption: TRANSITION_EVENTS.UPDATE,
     };
 
@@ -201,7 +203,7 @@ class Map extends Component {
 
     setTimeout(() => {
       this.setState({ flying: false });
-    }, 2500);
+    }, transitionDuration);
   };
 
   setRestorationSitePopUpState = (event) => {

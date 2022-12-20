@@ -5,13 +5,15 @@
   z-index: 1;
  
   @media print {
-    page-break-after: page;
+    page-break-after: always;
+    break-after: always;
     page-break-inside: avoid;
+    break-inside: avoid;
     position: relative;
     top: 0;
     bottom: 0;
     right: 0;
-    left: -500px;
+    left: 0;
     margin: auto;
     width: 100%;
     display: flex;
