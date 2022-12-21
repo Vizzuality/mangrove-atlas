@@ -31,10 +31,7 @@
     }],
     "no-restricted-exports": "off"
   },
-  "plugins": [
-    "@babel",
-    "react-hooks"
-  ],
+  "plugins": [],
   "settings": {
     "react": {
       "version": "detect"
@@ -46,6 +43,7 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ]
 }
