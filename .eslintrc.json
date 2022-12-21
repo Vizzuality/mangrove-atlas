@@ -1,5 +1,11 @@
 {
   "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+   }
+  },
   "env": {
     "browser": true,
     "node": true,
@@ -18,7 +24,12 @@
     "react/button-has-type": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
-    "no-console": "error"
+    "no-console": "error",
+    "react/function-component-definition": [2, {
+      "namedComponents": ["function-declaration", "arrow-function"],
+      "unnamedComponents": "arrow-function"
+    }],
+    "no-restricted-exports": "off"
   },
   "plugins": [
     "@babel",
