@@ -6,8 +6,6 @@ import WIDGETS from 'services/widgets';
 
 export function useWidget({ params = {}, wId }) {
 
-  console.log({ params, wId });
-
   const query = useQuery(`${wId}`, async () => WIDGETS.request({
     method: 'GET',
     url: `/${wId}`,

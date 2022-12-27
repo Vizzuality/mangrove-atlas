@@ -46,11 +46,13 @@ export const MangroveDrawingTool = ({
   setMobileView,
   mobile,
 }) => {
-  const onDropAccepted = useCallback((acceptedFiles) => {
+
+  const onDropAccepted = (acceptedFiles) => {
       setCurrent("drawingMode");
       setDrawingMode(false);
       const file = acceptedFiles[0];
       analysisService.uploadFile(file).then(({ data }) => {
+
 
         setDrawingMode(false);
         setCustomGeojsonFeatures(data?.features[0]);
@@ -66,11 +68,19 @@ export const MangroveDrawingTool = ({
           type: "FeatureCollection",
           features: "progress",
         });
-        fetchMangroveHabitatExtentData({
-          drawingValue: data.features,
-          slug: ["mangrove_extent"],
-          location_id: "custom-area",
-        });
+        // fetchMangroveHabitatExtentData({
+        //   drawingValue: data.features,
+        //   slug: ["mangrove_extent"],
+        //   location_id: "custom-area",
+        // });
+        useWidget({
+          params: {
+            drawingValue: data?.features,
+            slug: ["mangrove_extent"],
+            location_id: "custom-area"
+          },
+          wId: 'habitat_extent'
+        })
         fetchMangroveNetChangeData({
           drawingValue: data.features,
           slug: ["mangrove_net_change"],
@@ -130,8 +140,8 @@ export const MangroveDrawingTool = ({
         });
       });
       return null; //TO DO feedback usuario
-    },
-  );
+  };
+
 
   // const uploadCustomAreaFileMutation = useUploadCustomAreaFile({});
 

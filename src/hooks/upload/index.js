@@ -1,10 +1,12 @@
 import { useMutation } from 'react-query';
 
 import UPLOAD from 'services/upload';
+// import { useWidget } from 'hooks/widgets';
 
 export function useUploadCustomAreaFile({}) {
 
   const uploadCustomAreaFile = ({ data }) => {
+
     return UPLOAD.request({
       method: 'POST',
       url: '',
@@ -13,13 +15,15 @@ export function useUploadCustomAreaFile({}) {
     });
   };
 
-  // useWidget({
-  //   params: {
-  //     drawingValue: data.features,
-  //     slug: ["mangrove_extent"],
-  //     location_id: "custom-area"},
-  //     wId: 'habitat_extent',
-  //   })
+//   useWidget({ params: {
+//       drawingValue: data.features,
+//       slug: ["mangrove_extent"],
+//       location_id: "custom-area"
+//       },
+//       wId: 'habitat_extent'
+// }, {
+//   enabled:!!data
+// })
 
   return useMutation(uploadCustomAreaFile, {
     onSuccess: (data, variables, context) => {
