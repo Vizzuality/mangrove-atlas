@@ -9,21 +9,20 @@ import styles from "./style.module.scss";
 import RestorationDataGroup from "../restoration-data-group";
 
 const EcosystemServicesInfo = ({ data, isOpen, handleClick }) => {
-  const { SOC, AGB, People, Fish_Score_Inv, Fish_Score } = data;
- return (
+  const { SOC, AGB, Fish_Score_Inv, Fish_Score } = data;
+  return (
     <div className={cx(styles.wrapper, { [styles._collapsed]: !isOpen }) }>
       <div className={styles.head} onClick={handleClick}>
         <span className={styles.title}>
           <h3>ECOSYSTEM SERVICES</h3>
-          <p>for restores mangroves</p>
+          <p>for restored mangroves</p>
         </span>
         <span className={styles.icon}>{isOpen ? "-" : "+"}</span>
       </div>
       <div className={styles.section}>
         <div className={styles.group}>
-          <RestorationDataGroup label="Soil organic carbon" value={SOC} />
-          <RestorationDataGroup label="Aboveground carbon" value={AGB} />
-          <RestorationDataGroup label="People protected" value={People} />
+          <RestorationDataGroup label="Soil organic carbon" value={SOC} unit="t" />
+          <RestorationDataGroup label="Aboveground carbon" value={AGB} unit="t" />
         </div>
         <div className={styles.group}>
           <RestorationDataGroup
