@@ -35,12 +35,12 @@ const RestorationDetailsInfo = ({ data, isOpen, handleClick }) => {
       </div>
 
       <div className={styles.section}>
-        <Detail label="Tital range" pct={Tidal_range1} value={Tidal_range} />
+        <Detail label="Tidal range" pct={Tidal_range1} value={Tidal_range} />
         <Detail label="Antecedent SLR" pct={Ant_SLR1} value={Ant_SLR} />
         <Detail label="Future SLR" pct={Future_SLR1} value={Future_SLR} />
-        <Detail label="Time since loss" pct={Time_Loss1} value={Time_Loss} />
+        <Detail label="Timing of loss" pct={Time_Loss1} value={Time_Loss} />
         <Detail label="Sus. sediment trend" pct={Sediment1} value={Sediment} />
-        <Detail label="Median patch size" pct={Med_Patch1} value={Med_Patch} />
+        <Detail label="Patch size and number" pct={Med_Patch1} value={Med_Patch} />
         <Detail
           label="Percent contiguous"
           pct={Prop_loss1}

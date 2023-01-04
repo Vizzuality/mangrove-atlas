@@ -15,8 +15,7 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
     Area_loss_pct,
     Rest_Area_Loss,
     Rest_Area_Loss_pct,
-    Area_dgrd_ha,
-    Area_dgrd_pct,
+    Loss_Driver,
     Rest_Score,
   } = data;
 
@@ -34,8 +33,9 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
         <div className={styles.group}>
           <RestorationDataGroup label="Mangrove type" value={Class} />
           <RestorationDataGroup
-            label="Max magrove area 1996 - 2016"
+            label="Max mangrove area 1996 - 2016"
             value={Max_Area_20_ha}
+            unit="ha"
           />
         </div>
         <div className={styles.group}>
@@ -43,16 +43,17 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
             label="Area of Loss"
             value={Area_loss_ha}
             pct={Area_loss_pct}
+            unit="ha"
           />
           <RestorationDataGroup
             label="Restorable Area"
             value={Rest_Area_Loss}
             pct={Rest_Area_Loss_pct}
+            unit="ha"
           />
           <RestorationDataGroup
-            label="Area Degraded"
-            value={Area_dgrd_ha}
-            pct={Area_dgrd_pct}
+            label="Primary Loss Driver"
+            value={Loss_Driver}
           />
         </div>
       </div>
