@@ -33,7 +33,6 @@ function MangroveRestoration({
   ui: { restoration: uiRestoration, degradationAndLoss: uiDegradationAndLoss },
   fetchMangroveRestorationData,
   fetchMangroveDegradationAndLossData,
-  degradationAndLossDataMetadata,
   fetchMangroveEcosystemServicesData,
   restorationData,
   restorationDataMetadata,
@@ -59,10 +58,10 @@ function MangroveRestoration({
   const yearDegradationAndLoss = useMemo(
     () =>
       uiDegradationAndLoss?.year ||
-      degradationAndLossDataMetadata?.year[
-        degradationAndLossDataMetadata.year.length - 1
+      degradationAndLossMetadata?.year[
+        degradationAndLossMetadata.year.length - 1
       ],
-    [uiDegradationAndLoss, degradationAndLossDataMetadata]
+    [uiDegradationAndLoss, degradationAndLossMetadata]
   );
 
   const [lineChartWidth, setLineChartWidth] = useState(0);
@@ -176,9 +175,10 @@ function MangroveRestoration({
     data: chartValueData,
     config: chartValueConfig,
   };
-
+console.log(degradationAndLossMetadata)
   const lossDriver =
-    degradationAndLossMetadata?.main_loss_driver || "Commodities";
+    degradationAndLossMetadata?.main_loss_driver
+    || "Commodities";
 
   // charts sentences
   const restorationPotentialLineSentence = (
