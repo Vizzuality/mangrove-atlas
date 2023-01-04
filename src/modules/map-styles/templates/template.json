@@ -47,7 +47,7 @@
     "restoration": {
       "promoteId": "ID",
       "type": "vector",
-      "url": "mapbox://mangrove-atlas.c7czuzvl"
+      "url": "mapbox://globalmangrovewatch.7rr6p3ir"
     },
     "extent": {
       "url": "mapbox://globalmangrovewatch.20cshxs9,globalmangrovewatch.b1wlg2x7,globalmangrovewatch.2cws6y26,globalmangrovewatch.bgrhiwte,globalmangrovewatch.aokkuxu7,globalmangrovewatch.0l7s8iga,globalmangrovewatch.a08vpx09,globalmangrovewatch.7kyxxf0e,globalmangrovewatch.1cu4rmy9,globalmangrovewatch.6st408jz,globalmangrovewatch.1clkx4nk",

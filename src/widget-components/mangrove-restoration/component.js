@@ -175,7 +175,7 @@ function MangroveRestoration({
     data: chartValueData,
     config: chartValueConfig,
   };
-console.log(degradationAndLossMetadata)
+
   const lossDriver =
     degradationAndLossMetadata?.main_loss_driver
     || "Commodities";

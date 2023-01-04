@@ -394,7 +394,7 @@ class Map extends Component {
         if (hoveredStateId !== null) {
           this.map.setFeatureState(
             {
-              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              sourceLayer: "MOW_Global_Mangrove_Restoration_202212",
               source: "restoration",
               id: hoveredStateId,
             },
@@ -406,7 +406,7 @@ class Map extends Component {
         if (hoveredStateId !== null) {
           this.map.setFeatureState(
             {
-              sourceLayer: "MOW_Global_Mangrove_Restoration",
+              sourceLayer: "MOW_Global_Mangrove_Restoration_202212",
               source: "restoration",
               id: hoveredStateId,
             },
@@ -416,7 +416,7 @@ class Map extends Component {
       } else {
         this.map.setFeatureState(
           {
-            sourceLayer: "MOW_Global_Mangrove_Restoration",
+            sourceLayer: "MOW_Global_Mangrove_Restoration_202212",
             source: "restoration",
             id: hoveredStateId,
           },

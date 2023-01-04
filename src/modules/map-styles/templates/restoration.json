@@ -3,7 +3,7 @@
     "id": "restoration",
     "type": "fill",
     "source": "restoration",
-    "source-layer": "MOW_Global_Mangrove_Restoration",
+    "source-layer": "MOW_Global_Mangrove_Restoration_202212",
     "paint": {
       "fill-color": [
         "interpolate",
