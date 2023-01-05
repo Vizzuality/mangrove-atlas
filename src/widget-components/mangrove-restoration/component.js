@@ -208,7 +208,7 @@ function MangroveRestoration({
   const restorationPotentialTreeMapSentence = (
     <>
       The main mangrove loss driver in <strong>{location}</strong> is{" "}
-      <strong>{lossDriver}</strong> (rice, shrimp, and oil palm cultivation)
+      <strong>{lossDriver === 'Commodities' ? `${lossDriver} (rice, shrimp, and oil palm cultivation)}` : lossDriver}</strong> 
     </>
   );
 
