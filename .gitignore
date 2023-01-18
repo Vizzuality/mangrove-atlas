@@ -14,6 +14,17 @@
 # production
 /build
 
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+
 # misc
 .DS_Store
 .env*
@@ -21,11 +32,9 @@
 .vscode/launch.json
 .vscode
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 **/node_modules/**
 **/credentials.json
 **credentials.json
 **/build/**
 credentials.json
+/log

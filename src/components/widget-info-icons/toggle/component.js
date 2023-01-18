@@ -14,7 +14,7 @@ const handleChange = () =>  {
 };
 
   return (
-    <input type="checkbox" className={styles.checkbox} onChange={handleChange} checked={!!isActive} />
+    <input type="checkbox" title={isActive ? 'Hide layer' : 'Add layer to the map'} className={styles.checkbox} onChange={handleChange} checked={!!isActive} />
   );
 };
 

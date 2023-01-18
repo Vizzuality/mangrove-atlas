@@ -34,7 +34,7 @@ WidgetControls.propTypes = {
   isActive: PropTypes.bool,
 };
 
-WidgetControls.defayltProps = {
+WidgetControls.defaultProps = {
   layerId: null,
   layersIds: null,
   isActive: null,
