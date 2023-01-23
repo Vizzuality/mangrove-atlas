@@ -1,25 +1,25 @@
-import React from "react";
+import React from 'react';
 
 // utils
-import sortBy from "lodash/sortBy";
-import { format } from "d3-format";
+import sortBy from 'lodash/sortBy';
+import { format } from 'd3-format';
 
 // components
-import WidgetTooltip from "components/widget-tooltip";
+import WidgetTooltip from 'components/widget-tooltip';
 
-const numberFormat = format(",.2f");
+const numberFormat = format(',.2f');
 const COLORS = {
-  remaining: "#ff7f0f",
-  protected: "#2da02b",
-  carbon_10: "#1f78b4",
-  carbon_5: "#d72729",
+  remaining: '#ff7f0f',
+  protected: '#2da02b',
+  carbon_10: '#1f78b4',
+  carbon_5: '#d72729',
 };
 
 const CATEGORY_DICTIONARY = {
-  carbon_5: "Investible Blue Carbon",
-  carbon_10: "Additional Investible Blue Carbon",
-  remaining: "Remaining mangrove",
-  protected: "Area of Mangrove in Protected Areas",
+  carbon_5: 'Investible Blue Carbon',
+  carbon_10: 'Additional Investible Blue Carbon',
+  remaining: 'Remaining mangrove',
+  protected: 'Area of Mangrove in Protected Areas',
 };
 
 const getData = (data) => {
@@ -29,7 +29,7 @@ const getData = (data) => {
     data.map((d) => {
       const hasLabel = d.label.toLowerCase() !== d.category;
       const labelDisplayed = `${CATEGORY_DICTIONARY[d.category]} ${
-        hasLabel ? d.label : ""
+        hasLabel ? d.label : ''
       }`;
 
       return {
@@ -42,40 +42,38 @@ const getData = (data) => {
         tooltipValue: `${numberFormat(d.value)} ha`,
       };
     }),
-    "value"
+    'value',
   );
 };
 
 export const CONFIG = {
-  parse: (data, investibleBlueCarbon) => {
+  parse: (data) => {
     const total = data.reduce(
       (previous, current) => current.value + previous,
-      0
+      0,
     );
     const chartData = getData(data, total);
-    const investibleBlueCarbonValue = data.find(({ label }) =>
-      label.includes(investibleBlueCarbon)
-    );
 
     return {
       chartData,
-      investibleBlueCarbonValue,
       chartConfig: {
-        type: "pie",
+        type: 'pie',
         height: 250,
-        layout: "centric",
-        margin: { top: 20, right: 0, left: 0, bottom: 20 },
-        xKey: "percentage",
+        layout: 'centric',
+        margin: {
+          top: 20, right: 0, left: 0, bottom: 20,
+        },
+        xKey: 'percentage',
         yKeys: {
           pies: {
             y: {
-              cx: "50%",
-              cy: "60%",
+              cx: '50%',
+              cy: '60%',
               paddingAngle: 2,
-              dataKey: "percentage",
-              nameKey: "label",
-              innerRadius: "60%",
-              outerRadius: "80%",
+              dataKey: 'percentage',
+              nameKey: 'label',
+              innerRadius: '60%',
+              outerRadius: '80%',
               isAnimationActive: true,
               labelLine: false,
               label: (props) => {
@@ -111,11 +109,11 @@ export const CONFIG = {
                         style={{
                           marginTop: 5,
                           marginBottom: 5,
-                          display: "flex",
-                          color: "#A5A5A5",
-                          lineHeight: "10px",
-                          width: "100%",
-                          fontSize: "11px",
+                          display: 'flex',
+                          color: '#A5A5A5',
+                          lineHeight: '10px',
+                          width: '100%',
+                          fontSize: '11px',
                         }}
                       >
                         {category}
@@ -135,22 +133,22 @@ export const CONFIG = {
             return (
               <WidgetTooltip
                 style={{
-                  flexDirection: "column",
-                  marginTop: "10px",
+                  flexDirection: 'column',
+                  marginTop: '10px',
                 }}
                 payload={payload}
                 settings={[
-                  { title: "category", key: "category" },
+                  { title: 'category', key: 'category' },
                   {
-                    label: "Area",
-                    key: "tooltipValue",
-                    position: "_column",
+                    label: 'Area',
+                    key: 'tooltipValue',
+                    position: '_column',
                   },
                   {
-                    label: "Percentage",
-                    key: "percentage",
+                    label: 'Percentage',
+                    key: 'percentage',
                     format: (value) => `${numberFormat(value)} %`,
-                    position: "_column",
+                    position: '_column',
                   },
                 ]}
               />
