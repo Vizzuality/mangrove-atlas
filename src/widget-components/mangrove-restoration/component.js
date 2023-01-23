@@ -4,25 +4,25 @@ import React, {
   useState,
   useMemo,
   useLayoutEffect,
-} from "react";
-import PropTypes from "prop-types";
+} from 'react';
+import PropTypes from 'prop-types';
 
-import { format } from "d3-format";
+import { format } from 'd3-format';
 
 // components
-import ChartWidget from "components/chart-widget";
-import Chart from "components/chart";
-import Icon from "components/icon";
-import WidgetLegend from "components/widget-legend";
+import ChartWidget from 'components/chart-widget';
+import Chart from 'components/chart';
+import Icon from 'components/icon';
+import WidgetLegend from 'components/widget-legend';
 
-import styles from "components/widget/style.module.scss";
-import widgetStyles from "widget-components/mangrove-restoration/style.module.scss";
+import styles from 'components/widget/style.module.scss';
+import widgetStyles from 'widget-components/mangrove-restoration/style.module.scss';
 
-import config from "./config";
+import config from './config';
 
-import { MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS } from "./constants";
+import MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS from './constants';
 
-const numberFormat = format(",.2f");
+const numberFormat = format(',.2f');
 
 function MangroveRestoration({
   component,
@@ -49,19 +49,17 @@ function MangroveRestoration({
 }) {
   const ref = createRef();
   const yearRestoration = useMemo(
-    () =>
-      uiRestoration?.year ||
-      restorationDataMetadata?.year[restorationDataMetadata.year.length - 1],
-    [uiRestoration, restorationDataMetadata]
+    () => uiRestoration?.year
+      || restorationDataMetadata?.year[restorationDataMetadata.year.length - 1],
+    [uiRestoration, restorationDataMetadata],
   );
   const unit = useMemo(() => uiRestoration?.unit, [uiRestoration]);
   const yearDegradationAndLoss = useMemo(
-    () =>
-      uiDegradationAndLoss?.year ||
-      degradationAndLossMetadata?.year[
+    () => uiDegradationAndLoss?.year
+      || degradationAndLossMetadata?.year[
         degradationAndLossMetadata.year.length - 1
       ],
-    [uiDegradationAndLoss, degradationAndLossMetadata]
+    [uiDegradationAndLoss, degradationAndLossMetadata],
   );
 
   const [lineChartWidth, setLineChartWidth] = useState(0);
@@ -73,17 +71,17 @@ function MangroveRestoration({
 
   useEffect(() => {
     fetchMangroveRestorationData({
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+      ...(currentLocation?.iso?.toLowerCase() !== 'worldwide' && {
         location_id: currentLocation.id,
       }),
     });
     fetchMangroveDegradationAndLossData({
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+      ...(currentLocation?.iso?.toLowerCase() !== 'worldwide' && {
         location_id: currentLocation.id,
       }),
     });
     fetchMangroveEcosystemServicesData({
-      ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
+      ...(currentLocation?.iso?.toLowerCase() !== 'worldwide' && {
         location_id: currentLocation.id,
       }),
     });
@@ -91,23 +89,23 @@ function MangroveRestoration({
     if (!isLoadingRestorationData) {
       addFilter({
         filter: {
-          id: "restoration",
+          id: 'restoration',
           year: yearRestoration,
           unit,
         },
       });
-      setUi({ id: "restoration", value: { year: yearRestoration } });
+      setUi({ id: 'restoration', value: { year: yearRestoration } });
     }
     if (!isLoadingDegradationAndLossData) {
       addFilter({
         filter: {
-          id: "degradation_and_loss",
+          id: 'degradation_and_loss',
           year: yearDegradationAndLoss,
           unit,
         },
       });
       setUi({
-        id: "degradation_and_loss",
+        id: 'degradation_and_loss',
         value: { year: yearDegradationAndLoss },
       });
     }
@@ -120,19 +118,16 @@ function MangroveRestoration({
     fetchMangroveRestorationData,
     fetchMangroveDegradationAndLossData,
     fetchMangroveEcosystemServicesData,
-    currentLocation
+    currentLocation,
   ]);
 
   const unitRestorationPotential = useMemo(
-    () =>
-      !isLoading && restorationDataMetadata?.units?.restoration_potential_score,
-    [isLoading, restorationDataMetadata]
+    () => !isLoading && restorationDataMetadata?.units?.restoration_potential_score,
+    [isLoading, restorationDataMetadata],
   );
 
-  const restorationPotentialScore =
-    !isLoading && restorationData?.restoration_potential_score;
-  const { units: restorationUnits } =
-    !!restorationDataMetadata && restorationDataMetadata;
+  const restorationPotentialScore = !isLoading && restorationData?.restoration_potential_score;
+  const { units: restorationUnits } = !!restorationDataMetadata && restorationDataMetadata;
   const {
     chartRingData,
     chartRingConfig,
@@ -146,19 +141,17 @@ function MangroveRestoration({
     ecosystemServicesData,
     ecosystemServicesMetadata,
     yearRestoration,
-    unitRestorationPotential
   );
 
   if (!restorationData) {
     return null;
   }
 
-  const location =
-    currentLocation?.location_type === "worldwide" ? (
-      "the world"
-    ) : (
-      <span className="notranslate">{`${currentLocation.name}`}</span>
-    );
+  const location = currentLocation?.location_type === 'worldwide' ? (
+    'the world'
+  ) : (
+    <span className="notranslate">{`${currentLocation.name}`}</span>
+  );
   const restorableAreaPerc = numberFormat(restorationData.restorable_area_perc);
 
   const widgetDataRing = {
@@ -176,16 +169,21 @@ function MangroveRestoration({
     config: chartValueConfig,
   };
 
-  const lossDriver =
-    degradationAndLossMetadata?.main_loss_driver
-    || "Commodities";
+  const lossDriver = degradationAndLossMetadata?.main_loss_driver
+    || 'Commodities';
 
   // charts sentences
   const restorationPotentialLineSentence = (
     <>
       The mean restoration potential score for
       <strong>
-        &nbsp;{location} is {restorationPotentialScore}%
+        &nbsp;
+        {location}
+        {' '}
+        is
+        {' '}
+        {restorationPotentialScore}
+        %
       </strong>
     </>
   );
@@ -193,34 +191,49 @@ function MangroveRestoration({
   const restorationPotentialRingSentence = (
     <>
       <strong>
-        { currentLocation?.location_type === "worldwide" ? (
-      "the world"
+        { currentLocation?.location_type === 'worldwide' ? (
+      'the world'
     ) : (
       <span className="notranslate">{`${currentLocation.name}`}</span>
     )}
         's&nbsp;
-      </strong>{" "}
-      restorable mangrove areas represent <strong>{restorableAreaPerc}%</strong>{" "}
+      </strong>
+      {' '}
+      restorable mangrove areas represent
+      {' '}
+      <strong>
+        {restorableAreaPerc}
+        %
+      </strong>
+      {' '}
       of the total mangrove area.
     </>
   );
 
   const restorationPotentialTreeMapSentence = (
     <>
-      The main mangrove loss driver in <strong>{location}</strong> is{" "}
-      <strong>{lossDriver === 'Commodities' ? `${lossDriver} (rice, shrimp, and oil palm cultivation)` : lossDriver}</strong> 
+      The main mangrove loss driver in
+      {' '}
+      <strong>{location}</strong>
+      {' '}
+      is
+      {' '}
+      <strong>{lossDriver === 'Commodities' ? `${lossDriver} (rice, shrimp, and oil palm cultivation)` : lossDriver}</strong>
     </>
   );
 
   const restorationPotentialValue = (
     <>
-      The restoration of mangroves in <strong>{location}</strong> would increase
+      The restoration of mangroves in
+      {' '}
+      <strong>{location}</strong>
+      {' '}
+      would increase
       the value of the following ecosystem services:
     </>
   );
 
-  const trianglePosition =
-    (lineChartWidth * restorationPotentialScore) / 100 - 7; // substract icon size
+  const trianglePosition = (lineChartWidth * restorationPotentialScore) / 100 - 7; // substract icon size
 
   if (!restorationData.restoration_potential_score) return null;
 
@@ -232,7 +245,7 @@ function MangroveRestoration({
       chart={false}
       isCollapsed={isCollapsed}
       {...props}
-      component={
+      component={(
         <>
           <div className={widgetStyles.restorationChartWrapper}>
             <div className={widgetStyles.subtitle}>overview</div>
@@ -332,7 +345,7 @@ function MangroveRestoration({
             />
           </div>
         </>
-      }
+      )}
     />
   );
 }

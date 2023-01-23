@@ -6,7 +6,7 @@ import { fetchMangroveEcosystemServicesData } from 'modules/mangrove-ecosystem-s
 
 import Component from './component';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoadingRestorationData: state.mangroveRestorationData.isLoading,
   isLoadingDegradationAndLossData: state.mangroveRestorationData.isLoading,
   ui: state.widgets.ui,

@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import RestorationInfo from "./restoration-info";
-import RestorationDetailsInfo from "./restoration-details-info";
-import EcosystemServicesInfo from "./ecosystem-services-info";
+import RestorationInfo from './restoration-info';
+import RestorationDetailsInfo from './restoration-details-info';
+import EcosystemServicesInfo from './ecosystem-services-info';
 
-import style from "./style.module.scss";
+import style from './style.module.scss';
 
 const MapPopUpRestoration = ({ data }) => {
   const [open, setOpen] = useState();
@@ -15,25 +15,25 @@ const MapPopUpRestoration = ({ data }) => {
         setOpen(id);
       } else setOpen();
     },
-    [open]
+    [open],
   );
 
   return (
     <div className={style.popupWrapper}>
       <RestorationInfo
         data={data}
-        isOpen={open === "restoration"}
-        handleClick={() => handleClick("restoration")}
+        isOpen={open === 'restoration'}
+        handleClick={() => handleClick('restoration')}
       />
       <RestorationDetailsInfo
         data={data}
-        isOpen={open === "details"}
-        handleClick={() => handleClick("details")}
+        isOpen={open === 'details'}
+        handleClick={() => handleClick('details')}
       />
       <EcosystemServicesInfo
         data={data}
-        isOpen={open === "ecosystem"}
-        handleClick={() => handleClick("ecosystem")}
+        isOpen={open === 'ecosystem'}
+        handleClick={() => handleClick('ecosystem')}
       />
     </div>
   );
