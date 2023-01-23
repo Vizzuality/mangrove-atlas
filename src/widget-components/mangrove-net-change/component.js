@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo, useCallback, useState } from "react";
-import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
+import React, {
+  useEffect, useMemo, useCallback, useState,
+} from 'react';
+import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
-import ChartWidget from "components/chart-widget";
-import Select from "components/select";
-import WidgetDrawingToolControls from "widget-components/mangrove-drawing-tool/widget-drawing-tool-controls";
+import ChartWidget from 'components/chart-widget';
+import Select from 'components/select';
+import WidgetDrawingToolControls from 'widget-components/mangrove-drawing-tool/widget-drawing-tool-controls';
 
-import config, { numberFormat } from "./config";
+import config, { numberFormat } from './config';
 
 const unitOptions = [
-  { value: "km²", label: "km²" },
-  { value: "ha", label: "ha" },
+  { value: 'km²', label: 'km²' },
+  { value: 'ha', label: 'ha' },
 ];
 
 function MangroveNetChange({
@@ -37,11 +39,11 @@ function MangroveNetChange({
   const years = metadata?.year.sort() || [];
   const startYear = useMemo(
     () => (startYearUi && years.includes(startYearUi) ? startYearUi : years[0]),
-    [startYearUi, years]
+    [startYearUi, years],
   );
   const endYear = useMemo(
     () => endYearUi || years?.[years?.length - 1],
-    [endYearUi, years]
+    [endYearUi, years],
   );
 
   const unit = useMemo(() => unitUi || unitOptions[0].value, [unitUi]);
@@ -49,48 +51,49 @@ function MangroveNetChange({
 
   useEffect(() => {
     fetchMangroveNetChangeData(
-      currentLocation?.id === "custom-area" || drawingMode
+      currentLocation?.id === 'custom-area' || drawingMode
         ? {
-            drawingValue,
-            slug: ["mangrove_net_change"],
-            location_id: "custom-area",
-          }
+          drawingValue,
+          slug: ['mangrove_net_change'],
+          location_id: 'custom-area',
+        }
         : {
-            ...(currentLocation?.iso?.toLowerCase() !== "worldwide" && {
-              location_id: currentLocation.id,
-            }),
-          }
+          ...(currentLocation?.iso?.toLowerCase() !== 'worldwide' && {
+            location_id: currentLocation.id,
+          }),
+        },
     );
   }, [fetchMangroveNetChangeData, currentLocation, drawingValue, drawingMode]);
 
   const filteredYears = useMemo(
-    () =>
-      years.filter(
-        (year) => !!years.length && year >= startYear && year <= endYear
-      ),
-    [years, startYear, endYear]
+    () => years.filter(
+      (year) => !!years.length && year >= startYear && year <= endYear,
+    ),
+    [years, startYear, endYear],
   );
 
   useEffect(() => {
-    if (data && data.length) {
+    if (data && data.length && !isLoading) {
       addFilter({
         filter: {
-          id: "net",
-          startYear: startYear,
-          endYear: endYear,
+          id: 'net',
+          startYear,
+          endYear,
           years: filteredYears,
-          unit: unit,
+          unit,
         },
       });
-      setUi({
-        id: "net",
-        value: {
-          endYear: endYear,
-          startYear: startYear,
-          years: filteredYears,
-          unit: unit,
-        },
-      });
+      setTimeout(() => {
+        setUi({
+          id: 'net',
+          value: {
+            endYear,
+            startYear,
+            years: filteredYears,
+            unit,
+          },
+        });
+      }, 0);
     }
   }, [
     startYear,
@@ -102,10 +105,11 @@ function MangroveNetChange({
     data,
     data.length,
     filteredYears,
+    isLoading,
   ]);
 
   const dataFilteredByYears = data.filter(
-    ({ year }) => year >= startYear && year <= endYear
+    ({ year }) => year >= startYear && year <= endYear,
   );
 
   const widgetData = config.parse(dataFilteredByYears, unit, drawingMode);
@@ -121,7 +125,7 @@ function MangroveNetChange({
       addFilter({
         filter: {
           ...ui,
-          id: "net",
+          id: 'net',
           [key]: value,
           range: {
             ...ui.range,
@@ -131,7 +135,7 @@ function MangroveNetChange({
         },
       });
       setUi({
-        id: "net",
+        id: 'net',
         ...ui,
         value: {
           ...ui.value,
@@ -143,13 +147,12 @@ function MangroveNetChange({
         },
       });
     },
-    [setUi, addFilter, endYear, startYear, ui, years]
+    [setUi, addFilter, endYear, startYear, ui, years],
   );
 
   const widgetDataFiltered = chartData.filter(
-    ({ year: y }) =>
-      parseInt(y, 10) >= parseInt(startYear, 10) &&
-      parseInt(y, 10) <= parseInt(endYear, 10)
+    ({ year: y }) => parseInt(y, 10) >= parseInt(startYear, 10)
+      && parseInt(y, 10) <= parseInt(endYear, 10),
   );
 
   // How this change is calculated?
@@ -166,17 +169,17 @@ function MangroveNetChange({
   };
 
   const location = useMemo(() => {
-    if (customArea) return "the area selected";
-    if (currentLocation.location_type === "worldwide") return "the world";
-    else return currentLocation?.name;
+    if (customArea) return 'the area selected';
+    if (currentLocation.location_type === 'worldwide') return 'the world';
+    return currentLocation?.name;
   }, [currentLocation, customArea]);
 
-  const direction = change > 0 ? "increased" : "decreased";
+  const direction = change > 0 ? 'increased' : 'decreased';
 
   const changeUnit = (selectedUnit) => {
     addFilter({
       filter: {
-        id: "net",
+        id: 'net',
         startYear,
         endYear,
         range: {
@@ -188,7 +191,7 @@ function MangroveNetChange({
       },
     });
     setUi({
-      id: "net",
+      id: 'net',
       value: {
         startYear,
         endYear,
@@ -203,15 +206,12 @@ function MangroveNetChange({
   };
 
   const startYearOptions = useMemo(
-    () =>
-      yearsOptions?.filter((y, index) =>
-        index !== years.length - 1 ? y : null
-      ),
-    [yearsOptions, years.length]
+    () => yearsOptions?.filter((y, index) => (index !== years.length - 1 ? y : null)),
+    [yearsOptions, years.length],
   );
   const endYearOptions = useMemo(
     () => yearsOptions?.filter((y, index) => (index !== 0 ? y : null)),
-    [yearsOptions]
+    [yearsOptions],
   );
 
   const startSelector = (
@@ -220,12 +220,10 @@ function MangroveNetChange({
       prefix="start-year"
       value={startYear}
       options={startYearOptions}
-      isOptionDisabled={(option) =>
-        parseInt(option.value, 10) > parseInt(endYear, 10) ||
-        option.value === startYear ||
-        endYear === option.value
-      }
-      onChange={(v) => changeYear("startYear", v)}
+      isOptionDisabled={(option) => parseInt(option.value, 10) > parseInt(endYear, 10)
+        || option.value === startYear
+        || endYear === option.value}
+      onChange={(v) => changeYear('startYear', v)}
     />
   );
 
@@ -235,12 +233,10 @@ function MangroveNetChange({
       prefix="end-year"
       value={endYear}
       options={endYearOptions}
-      isOptionDisabled={(option) =>
-        parseInt(option.value, 10) < parseInt(startYear, 10) ||
-        option.value === endYear ||
-        startYear === option.value
-      }
-      onChange={(v) => changeYear("endYear", v)}
+      isOptionDisabled={(option) => parseInt(option.value, 10) < parseInt(startYear, 10)
+        || option.value === endYear
+        || startYear === option.value}
+      onChange={(v) => changeYear('endYear', v)}
     />
   );
 
@@ -250,9 +246,26 @@ function MangroveNetChange({
 
   const sentence = (
     <>
-      The extent of mangroves in <strong>{location}</strong>&nbsp; has{" "}
-      <strong>{direction}</strong> by <strong>{quantity}</strong> {unitSelector}
-      &nbsp;between {startSelector} and {endSelector}.
+      The extent of mangroves in
+      {' '}
+      <strong>{location}</strong>
+&nbsp; has
+      {' '}
+      <strong>{direction}</strong>
+      {' '}
+      by
+      {' '}
+      <strong>{quantity}</strong>
+      {' '}
+      {unitSelector}
+      &nbsp;between
+      {' '}
+      {startSelector}
+      {' '}
+      and
+      {' '}
+      {endSelector}
+      .
     </>
   );
 
@@ -263,7 +276,7 @@ function MangroveNetChange({
 
   const loadingAnalysis = useMemo(
     () => (isLoading && drawingMode) || restart,
-    [isLoading, drawingMode, restart]
+    [isLoading, drawingMode, restart],
   );
 
   if (!data || !data.length) {
@@ -300,6 +313,7 @@ MangroveNetChange.propTypes = {
   name: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.shape({})),
   slug: PropTypes.string,
+  isLoading: PropTypes.bool,
   filename: PropTypes.string,
   currentLocation: PropTypes.shape({}),
   addFilter: PropTypes.func,
@@ -309,6 +323,7 @@ MangroveNetChange.defaultProps = {
   name: null,
   data: null,
   slug: null,
+  isLoading: null,
   filename: null,
   currentLocation: null,
   addFilter: null,
