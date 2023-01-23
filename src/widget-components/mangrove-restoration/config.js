@@ -31,7 +31,7 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
       year,
       unit: restorableAreaUnit,
       protection: protectedMangroves,
-      area: data.restorable_area
+      area: data.restorable_area,
     },
     {
       label: `Total non-restorable area in ${year}`,
@@ -43,8 +43,8 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
       protection: nonProtected,
       year,
       unit: mangroveAreaUnit,
-      area: data.mangrove_area_extent
-    }])
+      area: data.mangrove_area_extent,
+    }]);
 };
 
 const getChartValueData = (data) => {
@@ -59,23 +59,25 @@ const getChartValueData = (data) => {
     },
     color: {
       AGB: '#7996F3',
-      SOC: '#ECECEF'
+      SOC: '#ECECEF',
     },
   };
 
-  return data.map(d => ({
+  return data.map((d) => ({
     label: dataConstants.label[d.indicator],
     color: dataConstants.color[d.indicator],
-    total, 
+    total,
     value: 'indicator',
     percentage: (d.value * 100) / total,
     indicator: d.value,
     name: dataConstants.label[d.indicator],
-  }))
+  }));
 };
 
 const CustomizedContent = (props) => {
-  const { depth, x, y, width, height, data, color } = props;
+  const {
+    depth, x, y, width, height, data, color,
+  } = props;
   if (!data) return null;
 
   return (
@@ -89,10 +91,10 @@ const CustomizedContent = (props) => {
           fill:
             depth < 2
               ? color
-              : "none",
-          stroke: "white",
+              : 'none',
+          stroke: 'white',
           strokeWidth: 2 / (depth + 1e-10),
-          strokeOpacity: 1 / (depth + 1e-10)
+          strokeOpacity: 1 / (depth + 1e-10),
         }}
       />
     </g>
@@ -100,21 +102,21 @@ const CustomizedContent = (props) => {
 };
 
 const getLossData = (data) => {
-  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area')
+  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area');
   const indicators = lossData?.map((d) => d.indicator);
-  const colorsScale = chroma.scale(["#7996F3", "#EB6240", "#A6CB10"]).colors(indicators.length);
+  const colorsScale = chroma.scale(['#7996F3', '#EB6240', '#A6CB10']).colors(indicators.length);
   const colors = indicators.reduce((acc, indicator, index) => ({
     ...acc,
     [indicator]: colorsScale[index],
   }), {});
   return lossData.map((d) => ({
     ...d,
-    color: colors[d.indicator]
-  }))
-}
+    color: colors[d.indicator],
+  }));
+};
 
 export const CONFIG = {
-  parse: (data, restorationDataMetadata, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year, unitRestorationPotential) => {
+  parse: (data, restorationDataMetadata, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year) => {
     const chartRingData = getChartRingData(data, restorationDataMetadata, year);
     const chartValueData = getChartValueData(ecosystemServicesData);
     const LossDataWidthColors = getLossData(degradationAndLossData);
@@ -126,7 +128,9 @@ export const CONFIG = {
         type: 'pie',
         layout: 'centric',
         height: 250,
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        margin: {
+          top: 20, right: 0, left: 0, bottom: 0,
+        },
         xKey: 'nonProtected',
         yKeys: {
           pies: {
@@ -139,8 +143,8 @@ export const CONFIG = {
               innerRadius: '55%',
               outerRadius: '80%',
               isAnimationActive: false,
-            }
-          }
+            },
+          },
         },
         legend: {
           align: 'left',
@@ -149,26 +153,26 @@ export const CONFIG = {
           layout: 'vertical',
           fontSize: 9,
           content: (properties) => {
-            
             const { payload } = properties;
             const groups = groupBy(payload.map((item) => {
-              const value =  item.payload.area
+              const value = item.payload.area;
               return {
                 ...item,
                 payload: {
                   ...item.payload,
                   y: value,
-                }
+                },
               };
-            }), p => p.payload.label);
+            }), (p) => p.payload.label);
             return (
-              <WidgetLegend 
+              <WidgetLegend
                 widgetSpecific="blue-carbon"
-                groups={groups} unit={'ha'}
+                groups={groups}
+                unit="ha"
                 classname="minWidth"
               />
             );
-          }
+          },
         },
         tooltip: {
           cursor: false,
@@ -184,58 +188,68 @@ export const CONFIG = {
                   flexDirection: 'column',
                   marginTop: '10px',
                 }}
-                payload={payload} 
+                payload={payload}
                 settings={[
                   { key: 'shortLabel' },
-                  { label: 'Area', key: 'area', format: (value) => `${numberFormat(value)} ${unit}`, position: '_column' },
-                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
+                  {
+                    label: 'Area', key: 'area', format: (value) => `${numberFormat(value)} ${unit}`, position: '_column',
+                  },
+                  {
+                    label: 'Percentage', key: 'percentage', format: (value) => `${numberFormat(value)} %`, position: '_column',
+                  },
                 ]}
               />
             );
-          })
-        }
+          }),
+        },
       },
       chartTreeConfig: {
         width: 175,
-        height: 175,    
+        height: 175,
         name: 'label',
         data: LossDataWidthColors,
-        dataKey: "value",
+        dataKey: 'value',
         yKeys: { tree: true },
         tooltip: {
           cursor: false,
           content: (
             <WidgetTooltip
               settings={[
-                { label: 'Restoration potential Score', color: '#06C4BD', key: 'restorable_area_perc', format: value => `${value} %` },
-                { label: 'Total', color: '#ECECEF', key: 'area', format: value => `${numberFormat(Math.abs(value))} ha` },
+                {
+                  label: 'Restoration potential Score', color: '#06C4BD', key: 'restorable_area_perc', format: (value) => `${value} %`,
+                },
+                {
+                  label: 'Total', color: '#ECECEF', key: 'area', format: (value) => `${numberFormat(Math.abs(value))} ha`,
+                },
               ]}
               style={{
                 flexDirection: 'column',
                 marginTop: '10px',
-                marginLeft: '-50px'
+                marginLeft: '-50px',
               }}
             />
-          )
+          ),
         },
         content: <CustomizedContent data={LossDataWidthColors} />,
         legend: LossDataWidthColors?.reduce((acc, indicator) => ({
           ...acc,
           [indicator.label]: [{
             color: indicator.color,
-            type: "rect",
+            type: 'rect',
             key: indicator.indicator,
             payload: { y: indicator.value },
             [indicator.label]: indicator.label,
             value: indicator.label.replace('_', ' '),
-          }]
-        }), {})
+          }],
+        }), {}),
       },
       chartValueConfig: {
         type: 'pie',
         layout: 'centric',
         height: 250,
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
+        margin: {
+          top: 20, right: 0, left: 0, bottom: 0,
+        },
         xKey: 'indicator',
         yKeys: {
           pies: {
@@ -248,8 +262,8 @@ export const CONFIG = {
               innerRadius: '55%',
               outerRadius: '80%',
               isAnimationActive: false,
-            }
-          }
+            },
+          },
         },
         legend: {
           align: 'left',
@@ -258,19 +272,18 @@ export const CONFIG = {
           layout: 'vertical',
           fontSize: 9,
           content: (properties) => {
-            
             const { payload } = properties;
-            
+
             const groups = groupBy(payload.map((item) => {
-              const value =  item.payload.indicator
+              const value = item.payload.indicator;
               return {
                 ...item,
                 payload: {
                   ...item.payload,
                   y: value,
-                }
+                },
               };
-            }), p => p.payload.name);
+            }), (p) => p.payload.name);
 
             return (
               <WidgetLegend
@@ -278,9 +291,9 @@ export const CONFIG = {
                 groups={groups}
                 unit={ecosystemServicesUnit}
                 classname="minWidth"
-                />
+              />
             );
-          }
+          },
         },
         tooltip: {
           cursor: false,
@@ -297,16 +310,20 @@ export const CONFIG = {
                 payload={payload}
                 settings={[
                   { key: 'label' },
-                  { label: 'Total', key: 'indicator', format: (value) => `${numberFormat(value)} ${ecosystemServicesUnit}`, position: '_column' },
-                  { label: 'Percentage', key: 'percentage', format: value => `${numberFormat(value)} %`, position: '_column' },
+                  {
+                    label: 'Total', key: 'indicator', format: (value) => `${numberFormat(value)} ${ecosystemServicesUnit}`, position: '_column',
+                  },
+                  {
+                    label: 'Percentage', key: 'percentage', format: (value) => `${numberFormat(value)} %`, position: '_column',
+                  },
                 ]}
               />
             );
-          })
-        }
+          }),
+        },
       },
     };
-  }
+  },
 };
 
 export default CONFIG;

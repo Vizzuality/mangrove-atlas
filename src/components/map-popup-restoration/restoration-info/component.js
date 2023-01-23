@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
-import styles from "./style.module.scss";
+import styles from './style.module.scss';
 
 // components
-import RestorationDataGroup from "../restoration-data-group";
+import RestorationDataGroup from '../restoration-data-group';
 
 const RestorationInfo = ({ data, isOpen, handleClick }) => {
   const {
@@ -20,20 +20,20 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
   } = data;
 
   return (
-    <div className={cx(styles.wrapper, { [styles._collapsed]: !isOpen }) }>
+    <div className={cx(styles.wrapper, { [styles._collapsed]: !isOpen })}>
       <div className={styles.head} onClick={handleClick}>
         <span className={styles.title}>
           <h3>RESTORATION SCORES</h3>
         </span>
         <span className={styles.icon}>
-          {isOpen ? "-" : "+"}
+          {isOpen ? '-' : '+'}
         </span>
       </div>
       <div className={styles.section}>
         <div className={styles.group}>
           <RestorationDataGroup label="Mangrove type" value={Class} />
           <RestorationDataGroup
-            label="Max mangrove area 1996 - 2016"
+            label="Max mangrove area 1996 - 2020"
             value={Max_Area_20_ha}
             unit="ha"
           />
@@ -66,7 +66,10 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
               style={{ width: `${Rest_Score}%` }}
             />
           </div>
-          <div className={styles.chartScore}>{Rest_Score}%</div>
+          <div className={styles.chartScore}>
+            {Rest_Score}
+            %
+          </div>
 
         </div>
       </div>
@@ -87,13 +90,13 @@ RestorationInfo.propTypes = {
     Rest_Score: PropTypes.number,
   }),
   isOpen: PropTypes.bool,
-  handleClick: PropTypes.func
+  handleClick: PropTypes.func,
 };
 
 RestorationInfo.defaultProps = {
   data: {},
   isOpen: false,
-  handleClick: () => {}
+  handleClick: () => {},
 };
 
 export default RestorationInfo;
