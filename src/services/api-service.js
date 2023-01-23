@@ -6,10 +6,7 @@ class APIService {
       baseURL: `${process.env.REACT_APP_API_URL}/api`,
       headers: { 'Content-Type': 'application/json' },
     });
-    this.clientStaging = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL_STAGING}/api`,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    this.clientStaging;
   }
 
   fetchLocations = (params = {}) => this.client.get('/v2/locations', { params }).then((response) => {
@@ -85,7 +82,10 @@ class APIService {
     });
 
   fetchInvestmentPotentialData = async (params = {}) => {
-    const response = await this.clientStaging.get(
+    const response = await axios.create({
+      baseURL: 'https://mangrove-atlas-api-staging.herokuapp.com/api',
+      headers: { 'Content-Type': 'application/json' },
+    }).get(
       '/v2/widgets/blue-carbon-investment',
       { params: { ...params } },
     );
