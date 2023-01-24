@@ -36,6 +36,21 @@
     margin: 10px 0 0;
   }
 
+  .widget_legend_group:first-child {
+    margin: 0;
+  }
+
+  &.horizontal {
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .widget_legend_group,
+    .widget_legend_group:first-child {
+      margin:  10px 0;
+    }
+  }
+
   .widget_legend_title {
     font-size: 14px;
     font-weight: bold;
@@ -45,9 +60,6 @@
     width: 100%;
   }
 
-  .widget_legend_group:first-child {
-    margin: 0;
-  }
 
   .widget_legend_list {
     display: flex;

@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
 // utils
-import chroma from "chroma-js";
-import groupBy from "lodash/groupBy";
-import { format } from "d3-format";
+import chroma from 'chroma-js';
+import groupBy from 'lodash/groupBy';
+import { format } from 'd3-format';
 
 // components
-import WidgetLegend from "./emissions-legend";
-import WidgetTooltip from "components/widget-tooltip";
+import WidgetTooltip from 'components/widget-tooltip';
+import WidgetLegend from './emissions-legend';
 
-const numberFormat = format(",.3r");
-const significantDigitsFormat = format(".3s");
+const numberFormat = format(',.3r');
+const significantDigitsFormat = format('.3s');
 
 const handleChartBars = (
   indicator,
   filteredIndicators,
-  setFilteredIndicators
+  setFilteredIndicators,
 ) => {
   const index = filteredIndicators.indexOf(indicator);
   if (index === -1) {
@@ -23,14 +23,14 @@ const handleChartBars = (
   } else {
     const filter = filteredIndicators.splice(index, 1);
     const updatedIndicators = filteredIndicators.filter(
-      (indicator) => indicator !== filter
+      (indicator) => indicator !== filter,
     );
     setFilteredIndicators(updatedIndicators);
   }
 };
 
 const getData = (data) => {
-  const dataByCategory = groupBy(data, "category");
+  const dataByCategory = groupBy(data, 'category');
   const bars = Object.values(dataByCategory);
 
   return bars.reduce(
@@ -42,38 +42,36 @@ const getData = (data) => {
           ...acc2,
           [r.indicator]: r.value,
         }),
-        {}
+        {},
       ),
     ],
-    []
+    [],
   );
 };
 
-const getBars = (indicators, filteredIndicators) =>
-  indicators.reduce(
-    (acc, indicator, i) => ({
-      ...acc,
-      [Object.keys(indicator)[0]]: {
-        stackId: "bar",
-        barSize: 60,
-        fill: Object.values(indicator)[0],
-        stroke: Object.values(indicator)[0],
-        isAnimationActive: false,
-        opacity:
-          filteredIndicators.includes(Object.keys(indicator)[0]) ||
-          !filteredIndicators.length
+const getBars = (indicators, filteredIndicators) => indicators.reduce(
+  (acc, indicator, i) => ({
+    ...acc,
+    [Object.keys(indicator)[0]]: {
+      stackId: 'bar',
+      barSize: 60,
+      fill: Object.values(indicator)[0],
+      stroke: Object.values(indicator)[0],
+      isAnimationActive: false,
+      opacity:
+          filteredIndicators.includes(Object.keys(indicator)[0])
+          || !filteredIndicators.length
             ? 1
             : 0.5,
-      },
-    }),
-    {}
-  );
+    },
+  }),
+  {},
+);
 
-const getLegendPayload = (data) =>
-  data.map((d) => ({
-    label: Object.keys(d)[0],
-    color: Object.values(d)[0],
-  }));
+const getLegendPayload = (data) => data.map((d) => ({
+  label: Object.keys(d)[0],
+  color: Object.values(d)[0],
+}));
 
 const LabelContent = () => (
   <g>
@@ -85,13 +83,17 @@ const LabelContent = () => (
       fill="#000"
       fontSize="14px"
     >
-      Mitigation (tCO<tspan style={{ "baselineShift": "sub" }}>2</tspan>e/ha)
+      Mitigation (tCO
+      <tspan style={{ baselineShift: 'sub' }}>2</tspan>
+      e/ha)
     </text>
   </g>
 );
 
 const LabelXAxis = ({ viewBox }) => {
-  const { x, y, height, width } = viewBox;
+  const {
+    x, y, height, width,
+  } = viewBox;
   return (
     <g>
       <text
@@ -109,7 +111,7 @@ const LabelXAxis = ({ viewBox }) => {
 
 export const CONFIG = {
   parse: (data, filteredIndicators, setFilteredIndicators) => {
-    const COLOR_RAMP = chroma.scale(["#79D09A", "#3EA3A1", "#FBD07E", "#FF98B1", "#C57CF2", "#74C5FF", "#7287F9" ]).colors(data.length);
+    const COLOR_RAMP = chroma.scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9']).colors(data.length);
     const indicators = data.map((d, i) => ({
       [d.indicator]: COLOR_RAMP[i],
     }));
@@ -126,18 +128,20 @@ export const CONFIG = {
           horizontal: true,
           // strokeDasharray: '5 20'
         },
-        margin: { top: 20, right: 0, left: 25, bottom: 20 },
-        xKey: "category",
+        margin: {
+          top: 20, right: 0, left: 25, bottom: 20,
+        },
+        xKey: 'category',
         yKeys: {
           bars: getBars(indicators, filteredIndicators),
         },
         referenceLines: [
           {
             y: 0,
-            stroke: "black",
-            strokeDasharray: "solid",
-            fill: "black",
-            opacity: "1",
+            stroke: 'black',
+            strokeDasharray: 'solid',
+            fill: 'black',
+            opacity: '1',
             label: null,
           },
         ],
@@ -145,7 +149,7 @@ export const CONFIG = {
           tick: {
             fontSize: 12,
             lineheight: 20,
-            fill: "rgba(0, 0, 0, 0.54)",
+            fill: 'rgba(0, 0, 0, 0.54)',
           },
           interval: 0,
           label: {
@@ -155,7 +159,7 @@ export const CONFIG = {
         yAxis: {
           tick: {
             fontSize: 12,
-            fill: "rgba(0,0,0,0.54)",
+            fill: 'rgba(0,0,0,0.54)',
           },
           tickFormatter: (value) => significantDigitsFormat(value),
           width: 40,
@@ -163,12 +167,12 @@ export const CONFIG = {
           label: {
             content: LabelContent,
           },
-          type: "number",
+          type: 'number',
         },
         legend: {
-          align: "right",
-          verticalAlign: "middle",
-          layout: "vertical",
+          align: 'right',
+          verticalAlign: 'middle',
+          layout: 'vertical',
           fontSize: 9,
           maxWidth: 200,
           content: () => (
@@ -187,20 +191,20 @@ export const CONFIG = {
             const { payload } = properties;
             return (
               <WidgetTooltip
-                payload={payload}
+                payload={payload.reverse()}
                 type="column"
                 style={{
-                  display: "flex",
-                  justifyContent: "space-around",
-                  flexDirection: "column",
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  flexDirection: 'column',
                 }}
                 settings={payload.map((p) => ({
                   label: p.name,
                   key: p.value,
                   color: p.color,
                   format: () => numberFormat(p.value),
-                  position: "_column",
-                  type: "_stacked",
+                  position: '_column',
+                  type: '_stacked',
                 }))}
               />
             );
