@@ -1,12 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import { format } from "d3-format";
-import DangerousHTML from "react-dangerous-html";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { format } from 'd3-format';
+import DangerousHTML from 'react-dangerous-html';
 
-import styles from "./style.module.scss";
+import styles from './style.module.scss';
 
-const numberFormat = format(",.2f");
+const numberFormat = format(',.2f');
 
 const Legend = ({
   title,
@@ -18,21 +18,23 @@ const Legend = ({
   direction,
   variant,
   classname,
+  style,
   unit,
 }) => {
   const orderedData = Object.keys(groups).sort((a, b) => {
-    const i = a.split("--");
-    const j = b.split("--");
+    const i = a.split('--');
+    const j = b.split('--');
     return Number(j[0]) + Number(j[1]) - (Number(i[0]) + Number(i[1]));
   });
 
-  const data =
-    widgetSpecific === "blue-carbon" ? orderedData : Object.keys(groups);
+  const data = widgetSpecific === 'blue-carbon' ? orderedData : Object.keys(groups);
   return (
     <div
+      style={style}
       className={classnames(styles.widget_legend, {
-        [styles.top]: position === "top",
-        [styles.vertical]: direction === "vertical",
+        [styles.top]: position === 'top',
+        [styles.vertical]: direction === 'vertical',
+        [styles.horizontal]: type === 'horizontal',
         [styles[classname]]: !!classname,
       })}
     >
@@ -45,7 +47,7 @@ const Legend = ({
             className={classnames(
               styles.widget_legend_list,
               styles[`_${type}`],
-              styles[`_${position}`]
+              styles[`_${position}`],
             )}
           >
             {groups[g].map((item, i) => (
@@ -55,10 +57,10 @@ const Legend = ({
                   styles.widget_legend_list_item,
                   styles[`_${item.variant || variant}`],
                   styles[`_${widgetSpecific}`],
-                  styles[`_${type}`]
+                  styles[`_${type}`],
                 )}
               >
-                {widgetSpecific !== "activity" && (
+                {widgetSpecific !== 'activity' && (
                   <svg height="12" width="12">
                     <rect
                       className={classnames(styles.item, styles[`_${type}`])}
@@ -67,12 +69,12 @@ const Legend = ({
                   </svg>
                 )}
 
-                {widgetSpecific === "activity" && (
+                {widgetSpecific === 'activity' && (
                   <div
                     className={classnames(
                       styles.item,
                       styles[`_${type}`],
-                      styles[`_${item.value}`]
+                      styles[`_${item.value}`],
                     )}
                     style={{ backgroundColor: item.color }}
                   />
@@ -84,7 +86,7 @@ const Legend = ({
                   {!!item.name && <span>{item.name}</span>}
                   {!!item.value && !item.name && <span>{item.value}</span>}
                   {!!sup && <DangerousHTML html={unit} />}
-                  {!!item.payload && !!item.payload.y && type !== "height" && (
+                  {!!item.payload && !!item.payload.y && type !== 'height' && (
                     <span className={styles.item}>
                       {`${numberFormat(item.payload.y)} ${unit}`}
                     </span>
@@ -112,14 +114,14 @@ Legend.propTypes = {
 };
 
 Legend.defaultProps = {
-  title: "",
-  direction: "horizontal",
+  title: '',
+  direction: 'horizontal',
   sup: false,
-  position: "",
-  widgetSpecific: "",
-  type: "",
-  variant: "rect",
-  unit: "",
+  position: '',
+  widgetSpecific: '',
+  type: '',
+  variant: 'rect',
+  unit: '',
 };
 
 export default Legend;

@@ -1,21 +1,23 @@
-import React, { useEffect, useCallback, useMemo, useState } from "react";
-import PropTypes from "prop-types";
-import bboxTurf from "@turf/bbox";
-import { isEmpty } from "lodash";
+import React, {
+  useEffect, useCallback, useMemo, useState,
+} from 'react';
+import PropTypes from 'prop-types';
+import bboxTurf from '@turf/bbox';
+import { isEmpty } from 'lodash';
 
-import cx from "classnames";
+import cx from 'classnames';
 
-import { useDropzone } from "react-dropzone";
+import { useDropzone } from 'react-dropzone';
 
-import Info from "components/widget-info-icons/info";
+import Info from 'components/widget-info-icons/info';
 
-import ChartWidget from "components/chart-widget";
-import Widgets from "components/widgets";
-import Icon from "components/icon";
+import ChartWidget from 'components/chart-widget';
+import Widgets from 'components/widgets';
+import Icon from 'components/icon';
 
-import analysisService from "services/analysis-service";
+import analysisService from 'services/analysis-service';
 
-import styles from "./style.module.scss";
+import styles from './style.module.scss';
 
 const sentence = (
   <>
@@ -45,92 +47,94 @@ export const MangroveDrawingTool = ({
   mapView,
   setMobileView,
   mobile,
+  zoom,
+  viewport,
+  setViewport,
 }) => {
-
   const onDropAccepted = useCallback(
     async (acceptedFiles) => {
-      setCurrent("drawingMode");
+      setCurrent('drawingMode');
       setDrawingMode(false);
       const file = acceptedFiles[0];
       analysisService.uploadFile(file).then(({ data }) => {
         setDrawingMode(false);
         setCustomGeojsonFeatures(data?.features[0]);
         setCurrentLocation({
-          id: "custom-area",
+          id: 'custom-area',
           bounds: bboxTurf(data),
-          iso: "custom-area",
-          location_id: "custom-area",
-          location_type: "custom-area",
-          name: "custom area",
+          iso: 'custom-area',
+          location_id: 'custom-area',
+          location_type: 'custom-area',
+          name: 'custom area',
         });
         setDrawingStatus({
-          type: "FeatureCollection",
-          features: "progress",
+          type: 'FeatureCollection',
+          features: 'progress',
         });
         fetchMangroveHabitatExtentData({
           drawingValue: data.features,
-          slug: ["mangrove_extent"],
-          location_id: "custom-area",
+          slug: ['mangrove_extent'],
+          location_id: 'custom-area',
         });
         fetchMangroveNetChangeData({
           drawingValue: data.features,
-          slug: ["mangrove_net_change"],
-          location_id: "custom-area",
+          slug: ['mangrove_net_change'],
+          location_id: 'custom-area',
         });
         fetchMangroveBiomassData({
           drawingValue: data.features,
-          slug: ["mangrove_biomass"],
-          location_id: "custom-area",
+          slug: ['mangrove_biomass'],
+          location_id: 'custom-area',
         });
         fetchMangroveHeightData({
           drawingValue: data.features,
-          slug: ["mangrove_height"],
-          location_id: "custom-area",
+          slug: ['mangrove_height'],
+          location_id: 'custom-area',
         });
         fetchMangroveBlueCarbonData({
           drawingValue: data.features,
-          slug: ["mangrove_blue_carbon"],
-          location_id: "custom-area",
+          slug: ['mangrove_blue_carbon'],
+          location_id: 'custom-area',
         });
         fetchMangroveNetChangeData({
           drawingValue: data.features,
-          slug: ["mangrove_net_change"],
-          location_id: "custom-area",
+          slug: ['mangrove_net_change'],
+          location_id: 'custom-area',
         });
         fetchMangroveBiomassData({
           drawingValue: data.features,
-          slug: ["mangrove_biomass"],
-          location_id: "custom-area",
+          slug: ['mangrove_biomass'],
+          location_id: 'custom-area',
         });
         fetchMangroveNetChangeData({
           drawingValue: data.features,
-          slug: ["mangrove_net_change"],
-          location_id: "custom-area",
+          slug: ['mangrove_net_change'],
+          location_id: 'custom-area',
         });
         fetchMangroveBiomassData({
           drawingValue: data.features,
-          slug: ["mangrove_biomass"],
-          location_id: "custom-area",
+          slug: ['mangrove_biomass'],
+          location_id: 'custom-area',
         });
         fetchMangroveHeightData({
           drawingValue: data.features,
-          slug: ["mangrove_height"],
-          location_id: "custom-area",
+          slug: ['mangrove_height'],
+          location_id: 'custom-area',
         });
         fetchMangroveBlueCarbonData({
           drawingValue: data.features,
-          slug: ["mangrove_blue_carbon"],
-          location_id: "custom-area",
+          slug: ['mangrove_blue_carbon'],
+          location_id: 'custom-area',
         });
         fetchAlerts({
           drawingValue: data.features,
-          slug: ["mangrove_alerts"],
-          location_id: "custom-area",
+          slug: ['mangrove_alerts'],
+          location_id: 'custom-area',
           start_date: alertsUi.startDate,
-          end_date: alertsUi.endDate 
+          end_date: alertsUi.endDate,
         });
       });
-      return null; //TO DO feedback usuario
+      return null; // TO DO feedback usuario
     },
     [
       setCurrent,
@@ -144,21 +148,27 @@ export const MangroveDrawingTool = ({
       fetchMangroveBiomassData,
       fetchMangroveBlueCarbonData,
       fetchAlerts,
-      alertsUi
-    ]
+      alertsUi,
+    ],
   );
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
     onDropAccepted,
     accept: {
-      "multipart/form-data": [".zip", ".gpkg", ".geojson", ".json"],
+      'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
     },
   });
 
   const acceptedFileItems = acceptedFiles.map((file) => (
     <span key={file.path}>
-      {file.path} - {file.size / 1000} MB
+      {file.path}
+      {' '}
+      -
+      {' '}
+      {file.size / 1000}
+      {' '}
+      MB
     </span>
   ));
 
@@ -179,19 +189,35 @@ export const MangroveDrawingTool = ({
   const [openPanel, setOpenPanel] = useState(true);
 
   const handleDrawingMode = useCallback(() => {
-    mobile && setMobileView(!mapView);
+    if (mobile) {
+      setMobileView(!mapView);
+      setOpenPanel(false);
+    }
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
-    setCurrent("drawPolygon");
-    mobile && setOpenPanel(false);
-  }, [setDrawingValue, setCurrent, setCustomGeojsonFeatures, mobile, setMobileView, mapView]);
+    setViewport({
+      ...viewport,
+      zoom,
+    });
+    setCurrent('drawPolygon');
+  }, [
+    setDrawingValue,
+    setCurrent,
+    setViewport,
+    viewport,
+    zoom,
+    setCustomGeojsonFeatures,
+    mobile,
+    setMobileView,
+    mapView,
+  ]);
 
   const noFile = useMemo(
     () => !acceptedFileItems.length || isEmpty(customGeojsonFeatures),
-    [acceptedFileItems, customGeojsonFeatures]
+    [acceptedFileItems, customGeojsonFeatures],
   );
 
-  return drawingValue || customGeojsonFeatures  ? (
+  return drawingValue || customGeojsonFeatures ? (
     <Widgets />
   ) : (
     openPanel && (
@@ -202,21 +228,23 @@ export const MangroveDrawingTool = ({
         sentence={sentence}
         chart={false}
         isCollapsed={false}
-        component={
+        component={(
           <>
             <div className={styles.containers}>
               <button
                 type="button"
                 className={cx(styles.drawingCard, {
-                  [styles._active]: current === "drawPolygon",
+                  [styles._active]: current === 'drawPolygon',
                 })}
                 onClick={handleDrawingMode}
               >
-                <Icon name="polyline" size="md" /> {/* primary color */}
+                <Icon name="polyline" size="md" />
+                {' '}
+                {/* primary color */}
                 <span className={styles.title}>
-                  {current === "drawPolygon"
-                    ? "Start drawing on the map"
-                    : "Draw area"}
+                  {current === 'drawPolygon'
+                    ? 'Start drawing on the map'
+                    : 'Draw area'}
                 </span>
               </button>
               or
@@ -241,7 +269,7 @@ export const MangroveDrawingTool = ({
                   className={cx(
                     styles.drawingCard,
                     styles._dashed,
-                    styles.fileWrapper
+                    styles.fileWrapper,
                   )}
                 >
                   {acceptedFileItems}
@@ -257,13 +285,14 @@ export const MangroveDrawingTool = ({
                 </span>
               </Info>
               <br />
-              By uploading data you agree to the{" "}
+              By uploading data you agree to the
+              {' '}
               <a href="" className={styles.highlighted}>
                 Terms of Service
               </a>
             </p>
           </>
-        }
+        )}
       />
     )
   );

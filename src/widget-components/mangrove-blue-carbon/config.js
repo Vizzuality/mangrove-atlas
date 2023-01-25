@@ -1,35 +1,33 @@
-import React from "react";
+import React from 'react';
 
 // utils
-import groupBy from "lodash/groupBy";
-import { format } from "d3-format";
+import groupBy from 'lodash/groupBy';
+import { format } from 'd3-format';
 
 // components
-import WidgetTooltip from "components/widget-tooltip";
-import WidgetLegend from "components/widget-legend";
-import { orderBy } from "lodash";
+import WidgetTooltip from 'components/widget-tooltip';
+import WidgetLegend from 'components/widget-legend';
+import { orderBy } from 'lodash';
 
-const numberFormat = format(",.2f");
-const removeDecimals = format(',.0f');
+const numberFormat = format(',.2f');
 
 const COLORS = {
-  "0-700": "#EEB66B",
-  "700-1400": "#E68518",
-  "1400-2100": "#B84E17",
-  "2100-2800": "#933A06",
-  "2800-3500": "#5C4A3D",
+  '0-700': '#EEB66B',
+  '700-1400': '#E68518',
+  '1400-2100': '#B84E17',
+  '2100-2800': '#933A06',
+  '2800-3500': '#5C4A3D',
 };
 
 const getData = (data) => {
   if (!data || !data.length) return null;
   const orderedData = orderBy(data.map((d) => ({
     ...d,
-    shortLabel: Number(d.indicator.split("-", 1)[0]),
-  })), "shortLabel");
+    shortLabel: Number(d.indicator.split('-', 1)[0]),
+  })), 'shortLabel');
 
-  const barsValues =
-  orderedData.map(({ value }) => value);
- 
+  const barsValues = orderedData.map(({ value }) => value);
+
   const total = barsValues.reduce((previous, current) => current + previous);
 
   return orderedData.map((d) => ({
@@ -76,9 +74,8 @@ export const CONFIG = {
     const agbFormat = isAgbParsed ? numberFormat(agb * 1000000) : numberFormat(agb / 1000000);
     const tocFormat = numberFormat(toc / 1000000);
     const socFormat = numberFormat(soc / 1000000);
-    const tocInt = toc > 1000000 ? removeDecimals(toc / 1000000) : tocFormat;
 
-    const downloadData = {}; //getDownloadData(data);
+    const downloadData = {}; // getDownloadData(data);
 
     return {
       agb: agbFormat,
@@ -87,27 +84,29 @@ export const CONFIG = {
       isAgbParsed,
       chartData: orderBy(
         chartData,
-        (d) => Number(d.label.split("--", 1)),
-        "desc"
+        (d) => Number(d.label.split('--', 1)),
+        'desc',
       ),
       coverage: 90,
       downloadData,
       chartConfig: {
-        type: "pie",
+        type: 'pie',
         height: 250,
-        layout: "centric",
-        margin: { top: 20, right: 0, left: 0, bottom: 0 },
-        xKey: "percentage",
+        layout: 'centric',
+        margin: {
+          top: 20, right: 0, left: 0, bottom: 0,
+        },
+        xKey: 'percentage',
         yKeys: {
           pies: {
             y: {
-              cx: "50%",
-              cy: "50%",
+              cx: '50%',
+              cy: '50%',
               paddingAngle: 2,
-              dataKey: "percentage",
-              nameKey: "label",
-              innerRadius: "60%",
-              outerRadius: "80%",
+              dataKey: 'percentage',
+              nameKey: 'label',
+              innerRadius: '60%',
+              outerRadius: '80%',
               isAnimationActive: false,
               customLabel: ({ viewBox }) => {
                 const { cx, cy } = viewBox;
@@ -140,9 +139,9 @@ export const CONFIG = {
                         alignmentBaseline="middle"
                         fill="rgba(0,0,0,0.85)"
                         lineheight="29"
-                        fontSize="30"
+                        fontSize="28"
                       >
-                        {tocInt}
+                        {tocFormat}
                       </tspan>
                     </text>
                     <text
@@ -167,9 +166,9 @@ export const CONFIG = {
           },
         },
         legend: {
-          align: "left",
-          verticalAlign: "middle",
-          layout: "vertical",
+          align: 'left',
+          verticalAlign: 'middle',
+          layout: 'vertical',
           fontSize: 9,
           content: (properties) => {
             const { payload } = properties;
@@ -191,17 +190,17 @@ export const CONFIG = {
             return (
               <WidgetTooltip
                 style={{
-                  flexDirection: "column",
-                  marginTop: "10px",
-                  marginLeft: "-50px",
+                  flexDirection: 'column',
+                  marginTop: '10px',
+                  marginLeft: '-50px',
                 }}
                 payload={payload}
                 settings={[
                   {
-                    label: "Percentage",
-                    key: "percentage",
+                    label: 'Percentage',
+                    key: 'percentage',
                     format: (value) => `${numberFormat(value)} %`,
-                    position: "_column",
+                    position: '_column',
                   },
                 ]}
               />

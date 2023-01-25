@@ -1,6 +1,7 @@
 export default {
+  initial: false,
   mobile: {
-    mapView: false
+    mapView: false,
   },
-  printMode: false
+  printMode: false,
 };

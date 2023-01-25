@@ -1,9 +1,13 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { setDrawingMode, setDrawingValue, setCustomGeojsonFeatures, setCurrent as setCurrentStatus } from "modules/drawing-tool/actions";
-import { closeSearchPanel, openSearchPanel, setCurrent as setCurrentLocation } from "modules/locations/actions";
+import {
+  setDrawingMode, setDrawingValue, setCustomGeojsonFeatures, setCurrent as setCurrentStatus,
+} from 'modules/drawing-tool/actions';
+import { closeSearchPanel, openSearchPanel, setCurrent as setCurrentLocation } from 'modules/locations/actions';
 
-import Component from "./component";
+import { setViewport } from 'modules/map/actions';
+
+import Component from './component';
 
 const mapStateToProps = (state) => ({
   locationType: state.router.type,
@@ -14,7 +18,8 @@ const mapStateToProps = (state) => ({
   locationsModal: state.locations.isOpened,
   currentLocation: state.locations.current,
   router: state.router,
-  mapView: state.app.mobile.mapView
+  mapView: state.app.mobile.mapView,
+  viewport: state.map.viewport,
 });
 
 const mapDispatchToProps = {
@@ -24,7 +29,8 @@ const mapDispatchToProps = {
   setCustomGeojsonFeatures,
   setCurrentStatus,
   closeSearchPanel,
-  openSearchPanel
+  openSearchPanel,
+  setViewport,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
