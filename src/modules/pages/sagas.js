@@ -1,6 +1,7 @@
 import { takeLatest, put, select } from 'redux-saga/effects';
 import { setCurrent } from 'modules/locations/actions';
 import { closeInfoPanel, resetUi } from 'modules/widgets/actions';
+import { resetViewport } from 'modules/map/actions';
 
 export const getCurrentLocation = (locationsList, currentId, locationType) => locationsList?.find(({
   id, iso, location_type,
@@ -15,14 +16,20 @@ function* setLocation({ payload }) {
   const { iso, id } = payload;
   const targetLocation = iso || id || 'worldwide';
   const idKey = iso ? 'iso' : 'id';
-  const { locations: { current } } = yield select();
+  const { locations: { current }, drawingTool } = yield select();
+  const { drawingMode } = drawingTool;
 
   if ((!current || current[idKey] !== targetLocation) && id !== 'worldwide') {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());
   }
+  if (targetLocation === 'worldwide' && !drawingMode) {
+    yield put(setCurrent({ [idKey]: targetLocation }));
+    yield put(resetViewport());
+    yield put(resetUi());
+  }
 
-  if (targetLocation === 'worldwide') {
+  if (targetLocation === 'worldwide' && drawingMode) {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());
   }

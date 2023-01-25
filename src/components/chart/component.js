@@ -103,7 +103,6 @@ class Chart extends PureComponent {
       stackOffset,
       ...content
     } = config;
-    console.log(config);
     const {
       xKey,
       yKeys,

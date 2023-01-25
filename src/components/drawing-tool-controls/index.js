@@ -5,6 +5,8 @@ import {
 } from 'modules/drawing-tool/actions';
 import { closeSearchPanel, openSearchPanel, setCurrent as setCurrentLocation } from 'modules/locations/actions';
 
+import { setViewport } from 'modules/map/actions';
+
 import Component from './component';
 
 const mapStateToProps = (state) => ({
@@ -17,6 +19,7 @@ const mapStateToProps = (state) => ({
   currentLocation: state.locations.current,
   router: state.router,
   mapView: state.app.mobile.mapView,
+  viewport: state.map.viewport,
 });
 
 const mapDispatchToProps = {
@@ -27,6 +30,7 @@ const mapDispatchToProps = {
   setCurrentStatus,
   closeSearchPanel,
   openSearchPanel,
+  setViewport,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);

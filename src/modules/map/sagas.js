@@ -30,7 +30,7 @@ function* flyToCurrentLocation() {
       if (!state.map.isViewportFixed && initial) {
         yield put(resetViewport({ zoom }));
       } else if (!state.map.isViewportFixed && !initial && !zoom) {
-        yield put(resetViewport({ zoom: 2 }));
+        yield put(resetViewport());
       }
     } else {
       const bbox = location.bounds;

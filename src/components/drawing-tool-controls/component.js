@@ -30,6 +30,8 @@ const DrawingToolControls = ({
   openSearchPanel,
   setCurrentStatus,
   mapView,
+  viewport,
+  setViewport,
 }) => {
   const myStorage = window.localStorage;
   const modalStatus = myStorage.getItem('drawingAlert');
@@ -65,6 +67,11 @@ const DrawingToolControls = ({
 
       if (value && !drawingValue?.length && isEmpty(customGeojsonFeatures)) {
         setDrawingMode(!value);
+        setViewport({
+          ...viewport,
+          zoom: 2,
+        });
+        console.log('reset zoom');
       }
       if (type === 'drawingTool') {
         setCurrentStatus('drawingMode');
