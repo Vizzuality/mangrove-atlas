@@ -1,17 +1,17 @@
-import React, { useCallback, useState, useMemo } from "react";
-import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
+import React, { useCallback, useState, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
-import Link from "redux-first-router-link";
+import Link from 'redux-first-router-link';
 
-import cx from "classnames";
+import cx from 'classnames';
 
-import Icon from "components/icon";
-import SearchLocation from "components/search-location";
-import Modal from "components/modal";
-import Button from "components/button";
+import Icon from 'components/icon';
+import SearchLocation from 'components/search-location';
+import Modal from 'components/modal';
+import Button from 'components/button';
 
-import styles from "./style.module.scss";
+import styles from './style.module.scss';
 
 const DrawingToolControls = ({
   setDrawingMode,
@@ -29,10 +29,10 @@ const DrawingToolControls = ({
   closeSearchPanel,
   openSearchPanel,
   setCurrentStatus,
-  mapView
+  mapView,
 }) => {
   const myStorage = window.localStorage;
-  const modalStatus = myStorage.getItem("drawingAlert");
+  const modalStatus = myStorage.getItem('drawingAlert');
 
   const [isOpenModalAlert, toggleModalAlert] = useState(false);
 
@@ -41,9 +41,9 @@ const DrawingToolControls = ({
     (value, type) => {
       setSidebarActive(type);
       if (
-        value &&
-        (!!drawingValue?.length || !isEmpty(customGeojsonFeatures)) &&
-        modalStatus === null
+        value
+        && (!!drawingValue?.length || !isEmpty(customGeojsonFeatures))
+        && modalStatus === null
       ) {
         toggleModalAlert(true);
         setDrawingMode(value);
@@ -67,7 +67,7 @@ const DrawingToolControls = ({
         setDrawingMode(!value);
       }
       if (type === 'drawingTool') {
-        setCurrentStatus("drawingMode")
+        setCurrentStatus('drawingMode');
       }
       setTimeout(() => {
         setSidebarActive(false);
@@ -80,19 +80,19 @@ const DrawingToolControls = ({
       setCustomGeojsonFeatures,
       setDrawingMode,
       setDrawingValue,
-      setCurrentStatus
-    ]
+      setCurrentStatus,
+    ],
   );
 
   const handleReset = useCallback(() => {
     setDrawingValue(null);
     setCustomGeojsonFeatures(null);
     toggleModalAlert(!isOpenModalAlert);
-    sidebarActive !== "drawingTool" && setDrawingMode(false);
+    sidebarActive !== 'drawingTool' && setDrawingMode(false);
     setCurrentLocation({
       ...currentLocation,
-      location_type: "worldwide",
-      id: "worldwide",
+      location_type: 'worldwide',
+      id: 'worldwide',
     });
     sidebarActive === 'search' && openSearchPanel();
     // eslint-disable-next-line
@@ -103,7 +103,7 @@ const DrawingToolControls = ({
     setDrawingMode,
     setCurrentLocation,
     openSearchPanel,
-    setCurrentStatus
+    setCurrentStatus,
   ]);
 
   const handleCancel = useCallback(() => {
@@ -112,11 +112,11 @@ const DrawingToolControls = ({
   }, [toggleModalAlert, closeSearchPanel]);
 
   const handleChange = useCallback(
-    () => myStorage.setItem("drawingAlert", false),
-    [myStorage]
+    () => myStorage.setItem('drawingAlert', false),
+    [myStorage],
   );
 
-  const isDrawingMobileMenu = useMemo(() => drawingMode && !mapView , [drawingMode, mapView]);
+  const isDrawingMobileMenu = useMemo(() => drawingMode && !mapView, [drawingMode, mapView]);
 
   return (
     <div className={cx(styles.menuWrapper, { [styles.mobile]: mobile })}>
@@ -128,11 +128,11 @@ const DrawingToolControls = ({
           onClick={handleDrawing}
         >
           <Icon
-            alt={isDrawingMobileMenu  ? "worldwide location" : "create custom area"}
-            name={isDrawingMobileMenu ? "globe" : "polyline"}
+            alt={isDrawingMobileMenu ? 'worldwide location' : 'create custom area'}
+            name={isDrawingMobileMenu ? 'globe' : 'polyline'}
           />
           <span className={styles.menuItemTitle}>
-            {isDrawingMobileMenu ? "Place" : "Custom"}
+            {isDrawingMobileMenu ? 'Place' : 'Custom'}
           </span>
         </button>
       ) : (
@@ -142,20 +142,20 @@ const DrawingToolControls = ({
             {drawingMode || drawingValue?.length || !isEmpty(customGeojsonFeatures) ? (
               <button
                 onClick={!drawingMode ? false : () => handleDrawing(drawingMode, 'worldwide')}
-                disabled={locationType === "PAGE/APP" && !drawingMode}
+                disabled={locationType === 'PAGE/APP' && !drawingMode}
                 className={cx(styles.sidebarItem, {
-                  [styles._active]: locationType === "PAGE/APP" && !drawingMode,
+                  [styles._active]: locationType === 'PAGE/APP' && !drawingMode,
                 })}
               >
                 <Icon name="globe" size="md" alt="worldwide location" />
               </button>
             ) : (
               <Link
-                to={{ type: "PAGE/APP" }}
-                disabled={locationType === "PAGE/APP" && !drawingMode}
+                to={{ type: 'PAGE/APP' }}
+                disabled={locationType === 'PAGE/APP' && !drawingMode}
                 onClick={!drawingMode ? false : () => handleDrawing(drawingMode, 'worldwide')}
                 className={cx(styles.sidebarItem, {
-                  [styles._active]: locationType === "PAGE/APP" && !drawingMode,
+                  [styles._active]: locationType === 'PAGE/APP' && !drawingMode,
                 })}
               >
                 <Icon name="globe" size="md" alt="worldwide location" />
@@ -170,7 +170,7 @@ const DrawingToolControls = ({
             </div>
             <button
               type="button"
-              onClick={() => handleDrawing(drawingMode, "drawingTool")}
+              onClick={() => handleDrawing(drawingMode, 'drawingTool')}
               className={cx(styles.sidebarItem, {
                 [styles._active]: drawingMode && !locationsModal,
               })}
@@ -195,8 +195,10 @@ const DrawingToolControls = ({
           <div className={styles.modalDescription}>
             <h3>Reset the page and delete area</h3>
             <p>
-              If you reset the page,{" "}
-              <span>your custom area will be deleted</span>. Are you sure that
+              If you reset the page,
+              {' '}
+              <span>your custom area will be deleted</span>
+              . Are you sure that
               you want to reset the page?
             </p>
             <div className={styles.modalCheckbox}>

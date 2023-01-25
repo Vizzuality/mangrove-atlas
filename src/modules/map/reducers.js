@@ -10,42 +10,42 @@ const {
   setBounds,
   setViewportFixed,
   setPopup,
-  removePopup
+  removePopup,
 } = actions;
 
 export default {
-  [resetViewport]: state => ({
+  [resetViewport]: (state, { payload }) => ({
     ...state,
     viewport: {
       ...state.viewport,
       longitude: viewport.longitude,
       latitude: viewport.latitude,
-      zoom: viewport.zoom
+      zoom: payload?.zoom || viewport.zoom,
     },
-    bounds
+    bounds,
   }),
   [setViewport]: (state, { payload }) => ({
     ...state,
-    viewport: payload
+    viewport: payload,
   }),
   [setBasemap]: (state, { payload }) => ({
     ...state,
-    basemap: payload
+    basemap: payload,
   }),
   [setBounds]: (state, { payload }) => ({
     ...state,
-    bounds: payload
+    bounds: payload,
   }),
   [setViewportFixed]: (state, { payload }) => ({
     ...state,
-    isViewportFixed: payload.value
+    isViewportFixed: payload.value,
   }),
   [setPopup]: (state, { payload }) => ({
     ...state,
-    popup: payload
+    popup: payload,
   }),
-  [removePopup]: state => ({
+  [removePopup]: (state) => ({
     ...state,
-    popup: null
-  })
+    popup: null,
+  }),
 };

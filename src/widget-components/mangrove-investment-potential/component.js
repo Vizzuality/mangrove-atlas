@@ -3,14 +3,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-import { format } from 'd3-format';
-
 import Select from 'components/select';
 import ChartWidget from 'components/chart-widget';
 
 import config from './config';
-
-const numberFormat = format(',.0f');
 
 const labelOptions = [
   {
@@ -121,7 +117,7 @@ function MangroveInvestmentPotential({
       is
       {' '}
       <strong>
-        {numberFormat(investibleBlueCarbonValue?.value)}
+        {investibleBlueCarbonValue?.description}
         {' '}
         {unitsSelector}
       </strong>

@@ -6,14 +6,14 @@ import {
   put,
   select,
   throttle,
-} from "redux-saga/effects";
-import get from "lodash/get";
-import { redirect } from "redux-first-router";
+} from 'redux-saga/effects';
+import get from 'lodash/get';
+import { redirect } from 'redux-first-router';
 
-import { setViewport } from "modules/map/actions";
+import { setViewport } from 'modules/map/actions';
 import { activeWidgets } from 'modules/widgets/selectors';
-import { decodeUrlForState, encodeStateForUrl } from "./stateToUrl";
-import { ACTIONS } from "./constants";
+import { decodeUrlForState, encodeStateForUrl } from './stateToUrl';
+import { ACTIONS } from './constants';
 
 class QueryStateManager {
   /**
@@ -45,7 +45,7 @@ class QueryStateManager {
     // We make it an arrow function to have registry state available
     const { kind } = action.meta.location;
 
-    if (kind && kind === "load") {
+    if (kind && kind === 'load') {
       dispatch(ACTIONS.RESTORE_STATE());
     } else {
       // We assume it is put, so far it have worked
@@ -59,7 +59,7 @@ class QueryStateManager {
    */
   add(namespace) {
     const { name } = namespace;
-    const actions = get(namespace, "encode.after", null);
+    const actions = get(namespace, 'encode.after', null);
 
     if (!actions || actions.length < 1) {
       // todo: Throw no-encoding-actions error
@@ -76,56 +76,55 @@ class QueryStateManager {
   /**
    * This is for redux-sagas... using thunks should work pretty similar though.
    */
-  *sagas() {
+  * sagas() {
     const rules = Array.from(this.triggers.entries());
     const encodeRules = rules.map(([action, name]) => {
       const encodeRule = function* encodeRule() {
         const actionListener = function* actionListener() {
-
           const state = yield select();
           const activeLayers = activeWidgets(state).map((l) => l.slug).join(',');
 
+          const { map, dashboards, router } = state;
+          const { zoom } = map.viewport;
 
-          const { router, dashboards } = state;
           if (
-            state.locations.current &&
-            state.locations.current?.id === "custom-area"
+            state.locations.current
+            && state.locations.current?.id === 'custom-area'
           ) {
             yield put(
               redirect({
-                type: "PAGE/CUSTOM",
+                type: 'PAGE/CUSTOM',
                 payload: {
                   ...router.payload,
-                  id: "custom-area",
-                  iso: "custom-area",
+                  id: 'custom-area',
+                  iso: 'custom-area',
                   query: {
                     ...router.query,
                     category: dashboards?.current,
                     activeLayers,
+                    zoom,
                   },
                 },
-              })
+              }),
             );
-          }
-          else if (state.locations.current?.id === "worldwide") {
-
+          } else if (state.locations.current?.id === 'worldwide') {
             yield put(
               yield put(redirect({
-                type: "PAGE/APP",
+                type: 'PAGE/APP',
                 payload: {
                   ...router.payload,
-                  id: "worldwide",
+                  id: 'worldwide',
                   iso: 'WORLDWIDE',
                   query: {
                     ...router.query,
                     category: dashboards?.current,
                     activeLayers,
+                    zoom,
                   },
                 },
-              }))
+              })),
             );
-          }
-          else {
+          } else {
             yield put(
               redirect({
                 type: router.type,
@@ -135,8 +134,10 @@ class QueryStateManager {
                     ...router.query,
                     category: dashboards?.current,
                     activeLayers,
-                  }
-                } })
+                    zoom,
+                  },
+                },
+              }),
             );
           }
         };

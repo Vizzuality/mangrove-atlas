@@ -1,6 +1,5 @@
 import React from 'react';
 import groupBy from 'lodash/groupBy';
-import orderBy from 'lodash/orderBy';
 
 import { format } from 'd3-format';
 import WidgetLegend from 'components/widget-legend';
@@ -58,22 +57,8 @@ const getDownloadData = (data, heightCoverage) => {
   return rest;
 };
 
-const sortByIndicator = (obj) => {
-  const order = []; const
-    res = {};
-  Object.keys(obj).forEach((key) => order[obj[key].indicator - 1] = key);
-  order.forEach((key) => {
-    res[key] = obj[key];
-  });
-  return res;
-};
-
 export const CONFIG = {
-  parse: (d, yearSelected, years, heightCoverage) => {
-    const data = orderBy(d.map((el) => ({
-      ...el,
-      position: Number(el.indicator.replace('-', '')),
-    })), ['position'], ['desc']);
+  parse: (data, yearSelected, years, heightCoverage) => {
     const chartData = getData(data, yearSelected);
     const downloadData = getDownloadData(data, heightCoverage);
     const bars = getBars(data);
@@ -141,7 +126,7 @@ export const CONFIG = {
           position: 'relative',
           content: (properties) => {
             const { payload } = properties;
-            const groups = groupBy(payload.reverse(), (p) => p.payload.dataKey);
+            const groups = groupBy(payload, (p) => p.payload.dataKey);
             return <WidgetLegend type="horizontal" groups={groups} style={{ maxWidth: 440 }} />;
           },
         },

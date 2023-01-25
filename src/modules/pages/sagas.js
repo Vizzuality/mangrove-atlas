@@ -17,7 +17,12 @@ function* setLocation({ payload }) {
   const idKey = iso ? 'iso' : 'id';
   const { locations: { current } } = yield select();
 
-   if ((!current || current[idKey] !== targetLocation) && id !== 'worldwide') {
+  if ((!current || current[idKey] !== targetLocation) && id !== 'worldwide') {
+    yield put(setCurrent({ [idKey]: targetLocation }));
+    yield put(resetUi());
+  }
+
+  if (targetLocation === 'worldwide') {
     yield put(setCurrent({ [idKey]: targetLocation }));
     yield put(resetUi());
   }

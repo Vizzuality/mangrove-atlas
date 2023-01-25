@@ -1,34 +1,38 @@
-import { takeLatest, put, select, delay } from "redux-saga/effects";
-import { currentLocation } from "modules/locations/selectors";
-import bboxTurf from "@turf/bbox";
+import {
+  takeLatest, put, select, delay,
+} from 'redux-saga/effects';
+import { currentLocation } from 'modules/locations/selectors';
+import bboxTurf from '@turf/bbox';
 
 import {
   TRANSITION_EVENTS,
-} from "react-map-gl";
+} from 'react-map-gl';
 
-import { fitBounds } from "viewport-mercator-project";
+import { fitBounds } from 'viewport-mercator-project';
+import { setPrintMode } from 'modules/app/actions';
 import {
   resetViewport,
   setBounds,
   setBasemap,
   setViewport,
   setViewportFixed,
-} from "./actions";
-
-import { setPrintMode } from 'modules/app/actions';
+} from './actions';
 
 function* flyToCurrentLocation() {
   const state = yield select();
   const location = currentLocation(state);
+  const { initial } = state.app;
 
   const { mobile: { mapView } } = state.app;
+  const zoom = state?.router?.query?.zoom;
   if (location) {
-    if (location.location_type === "worldwide") {
-      if (!state.map.isViewportFixed) {
-        yield put(resetViewport());
+    if (location.location_type === 'worldwide') {
+      if (!state.map.isViewportFixed && initial) {
+        yield put(resetViewport({ zoom }));
+      } else if (!state.map.isViewportFixed && !initial && !zoom) {
+        yield put(resetViewport({ zoom: 2 }));
       }
     } else {
-
       const bbox = location.bounds;
 
       if (!state.map.isViewportFixed) {
@@ -43,7 +47,7 @@ function* flyToCurrentLocation() {
                 left: mapView ? 20 : 620,
               },
             },
-          })
+          }),
         );
       }
     }
@@ -65,9 +69,9 @@ function* setPrintingProcess({ payload: isPrinting }) {
       return window.innerWidth > 795 ? -(window.innerWidth + 400) : 0;
     }
 
-    //? size of the sidebar
+    // ? size of the sidebar
     return 620;
-  }
+  };
 
   if (bbox) {
     const { longitude, latitude, zoom } = fitBounds({
@@ -90,7 +94,7 @@ function* setPrintingProcess({ payload: isPrinting }) {
       longitude,
       latitude,
       zoom,
-      transitionDuration : 0,
+      transitionDuration: 0,
       transitionInterruption: TRANSITION_EVENTS.UPDATE,
     };
 
@@ -108,17 +112,15 @@ export function* restoreMapState() {
    * A regular selector, it could be on a selectors file with reselect
    * or better yet, be created automatically by the package based on registered namespace info.
    */
-  const basemapSelector = (state) =>
-    (state.router.query &&
-      state.router.query.map &&
-      state.router.query.map.basemap) ||
-    null;
+  const basemapSelector = (state) => (state.router.query
+      && state.router.query.map
+      && state.router.query.map.basemap)
+    || null;
 
-  const viewportSelector = (state) =>
-    (state.router.query &&
-      state.router.query.map &&
-      state.router.query.map.viewport) ||
-    null;
+  const viewportSelector = (state) => (state.router.query
+      && state.router.query.map
+      && state.router.query.map.viewport)
+    || null;
   const basemap = yield select(basemapSelector);
   const viewport = yield select(viewportSelector);
 
@@ -133,10 +135,10 @@ export function* restoreMapState() {
 }
 
 export default function* pages() {
-  yield takeLatest("LOCATIONS/FETCH_SUCCEDED", flyToCurrentLocation);
-  yield takeLatest("LOCATIONS/SET_CURRENT", flyToCurrentLocation);
-  yield takeLatest("DRAWING_TOOL/SET_DRAWING_VALUE", flyToCurrentLocation);
-  yield takeLatest("DRAWING_TOOL/SET_CUSTOM_GEOJSON_FEATURES", flyToCurrentLocation);
-  yield takeLatest("APP/MOBILE", flyToCurrentLocation);
-  yield takeLatest("APP/SET_PRINTING_MODE", setPrintingProcess);
+  yield takeLatest('LOCATIONS/FETCH_SUCCEDED', flyToCurrentLocation);
+  yield takeLatest('LOCATIONS/SET_CURRENT', flyToCurrentLocation);
+  yield takeLatest('DRAWING_TOOL/SET_DRAWING_VALUE', flyToCurrentLocation);
+  yield takeLatest('DRAWING_TOOL/SET_CUSTOM_GEOJSON_FEATURES', flyToCurrentLocation);
+  yield takeLatest('APP/MOBILE', flyToCurrentLocation);
+  yield takeLatest('APP/SET_PRINTING_MODE', setPrintingProcess);
 }
