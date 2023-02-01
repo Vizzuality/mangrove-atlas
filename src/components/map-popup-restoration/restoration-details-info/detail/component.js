@@ -1,16 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import style from "./style.module.scss";
+import style from './style.module.scss';
 
-const Detail = ({ label, pct, value, unit }) => (
+const Detail = ({
+  label, pct, value, unit,
+}) => (
   <div className={style.wrapper}>
     <div className={style.label}>{label}</div>
     <div className={style.lineChartWidget}>
-      <div className={style.lineChartFill} style={{ width: `${pct}%`, marginRight: !!pct && pct > 0 ? 2 : 0 }} />
-      <div className={style.lineChartBackground} />
+      <div className={style.lineChartFill} style={{ width: `${100}%`, marginRight: !!pct && pct > 0 ? 2 : 0 }}>
+        <span className={style.lineChartFillPct} style={{ left: `${pct * 10}%`, right: 0 }} />
+      </div>
     </div>
-    <div className={style.value}>{value}{(!!unit && typeof value === 'number') && unit}</div>
+    <div className={style.value}>
+      {value}
+      {(!!unit && typeof value === 'number') && unit}
+    </div>
   </div>
 );
 

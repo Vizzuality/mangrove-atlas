@@ -53,6 +53,7 @@
 
         .lineChartFill {
           height: 100%;
+          position: relative;
           background: linear-gradient(
             90deg,
             #f9ddda 0%,
@@ -61,6 +62,13 @@
             #8478ce 74.48%,
             #224294 100%
           );
+
+          .lineChartFillLeft {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            background-color: #ececef;
+          }
         }
       }
 

@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
+import React from 'react';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 // components
-import Detail from "./detail";
+import Detail from './detail';
 
-import styles from "./style.module.scss";
+import styles from './style.module.scss';
 
 const RestorationDetailsInfo = ({ data, isOpen, handleClick }) => {
   const {
@@ -31,7 +31,7 @@ const RestorationDetailsInfo = ({ data, isOpen, handleClick }) => {
         <span className={styles.title}>
           <h3>DETAILS</h3>
         </span>
-        <span className={styles.icon}>{isOpen ? "-" : "+"}</span>
+        <span className={styles.icon}>{isOpen ? '-' : '+'}</span>
       </div>
 
       <div className={styles.section}>

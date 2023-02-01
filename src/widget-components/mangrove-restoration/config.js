@@ -23,7 +23,6 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
   return ([
     {
       label: 'Total restorable area',
-      shortLabel: 'Total restorable area',
       value: 'protection',
       color: '#7996F3',
       percentage: protectedPercentage,
@@ -34,8 +33,7 @@ const getChartRingData = (data, restorationDataMetadata, year) => {
       area: data.restorable_area,
     },
     {
-      label: `Total non-restorable area in ${year}`,
-      shortLabel: 'Total non-restorable area',
+      label: `Mangrove area in ${year}`,
       value: 'nonProtected',
       color: '#ECECEF',
       total: data.total,
@@ -190,7 +188,7 @@ export const CONFIG = {
                 }}
                 payload={payload}
                 settings={[
-                  { key: 'shortLabel' },
+                  { key: 'label' },
                   {
                     label: 'Area', key: 'area', format: (value) => `${numberFormat(value)} ${unit}`, position: '_column',
                   },

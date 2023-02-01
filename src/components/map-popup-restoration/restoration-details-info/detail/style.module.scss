@@ -17,14 +17,22 @@
     display: flex;
 
     .lineChartFill {
+      position: relative;
       background-color: #B2CBF9;
       height: 100%;
+
+      .lineChartFillPct {
+        position: absolute;
+        font-size: small;
+        background-color: #ECECEF;
+        flex-grow: 1;
+        height: 100%;
+        
+      }
     }
 
     .lineChartBackground {
-      background-color: #ECECEF;
-      flex-grow: 1;
-      height: 100%;
+
     }
   }
 

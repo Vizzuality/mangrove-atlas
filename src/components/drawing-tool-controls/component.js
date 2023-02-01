@@ -71,7 +71,6 @@ const DrawingToolControls = ({
           ...viewport,
           zoom: 2,
         });
-        console.log('reset zoom');
       }
       if (type === 'drawingTool') {
         setCurrentStatus('drawingMode');
