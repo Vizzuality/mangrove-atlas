@@ -12,13 +12,12 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
     Class,
     Max_Area_20_ha,
     Area_loss_ha,
-    Area_loss_pct,
     Rest_Area_Loss,
-    Rest_Area_Loss_pct,
     Loss_Driver,
     Rest_Score,
   } = data;
 
+  const nonRestScore = 100 - Rest_Score;
   return (
     <div className={cx(styles.wrapper, { [styles._collapsed]: !isOpen })}>
       <div className={styles.head} onClick={handleClick}>
@@ -42,13 +41,11 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
           <RestorationDataGroup
             label="Area of Loss"
             value={Area_loss_ha}
-            pct={Area_loss_pct}
             unit="ha"
           />
           <RestorationDataGroup
             label="Restorable Area"
             value={Rest_Area_Loss}
-            pct={Rest_Area_Loss_pct}
             unit="ha"
           />
           <RestorationDataGroup
@@ -63,8 +60,15 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
           <div className={styles.lineChartWidget}>
             <div
               className={styles.lineChartFill}
-              style={{ width: `${Rest_Score}%` }}
-            />
+              style={{ width: '100%' }}
+            >
+              <span
+                className={styles.lineChartFillLeft}
+                style={{
+                  width: `${nonRestScore}%`,
+                }}
+              />
+            </div>
           </div>
           <div className={styles.chartScore}>
             {Rest_Score}
