@@ -23,8 +23,8 @@ const EcosystemServicesInfo = ({ data, isOpen, handleClick }) => {
       </div>
       <div className={styles.section}>
         <div className={styles.group}>
-          <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit=" mtCO2e" />
-          <RestorationDataGroup label="Aboveground carbon" value={AGB} unit="t" />
+          <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
+          <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
         </div>
         <div className={styles.group}>
           <RestorationDataGroup

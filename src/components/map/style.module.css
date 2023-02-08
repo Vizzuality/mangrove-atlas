@@ -7,8 +7,6 @@
 
 @media print {
   .map {
-    page-break-after: always;
-    break-after: always;
     page-break-inside: avoid;
   }
 }
