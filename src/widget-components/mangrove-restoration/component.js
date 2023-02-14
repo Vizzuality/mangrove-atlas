@@ -134,6 +134,7 @@ function MangroveRestoration({
     chartValueData,
     chartValueConfig,
     chartTreeConfig,
+    totalLoss,
   } = config.parse(
     restorationData,
     restorationUnits,
@@ -157,11 +158,6 @@ function MangroveRestoration({
   const widgetDataRing = {
     data: chartRingData,
     config: chartRingConfig,
-  };
-
-  const widgetDataTree = {
-    data: restorationData,
-    config: chartTreeConfig,
   };
 
   const widgetDataValue = {
@@ -293,7 +289,6 @@ function MangroveRestoration({
 
             <hr className={widgetStyles.breakLine} />
           </div>
-
           <div className={widgetStyles.restorationChartWrapper}>
             <div className={widgetStyles.subtitle}>Mangrove Loss</div>
             <div className={styles.sentence} key={Date.now()}>
@@ -302,10 +297,12 @@ function MangroveRestoration({
 
             <div className={widgetStyles.treemap}>
               <WidgetLegend
-                groups={chartTreeConfig.legend}
+                title="Total area loss"
+                subtitle={`(${totalLoss} ha)`}
+                groups={chartTreeConfig?.legend}
                 type="blue-carbon"
                 unit="ha"
-                classname="maxWidth"
+                className="maxWidth"
               />
               <div className={widgetStyles.treemapChart}>
                 <Chart
@@ -316,9 +313,7 @@ function MangroveRestoration({
                   filename={slug}
                   isCollapsed={isCollapsed}
                   sentence={restorationPotentialTreeMapSentence}
-                  data={degradationAndLossData}
                   config={chartTreeConfig}
-                  chartData={widgetDataTree}
                 />
               </div>
             </div>

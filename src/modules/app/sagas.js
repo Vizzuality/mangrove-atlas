@@ -20,7 +20,6 @@ function* loadInitialData() {
     languages,
     restorationSites,
     router,
-    map,
   } = yield select();
 
   const { current } = dashboards;

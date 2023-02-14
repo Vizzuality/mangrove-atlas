@@ -10,6 +10,7 @@ const numberFormat = format(',.2f');
 
 const Legend = ({
   title,
+  subtitle,
   sup,
   type,
   position,
@@ -40,6 +41,9 @@ const Legend = ({
     >
       {title && (
         <DangerousHTML html={title} className={styles.widget_legend_title} />
+      )}
+      {subtitle && (
+      <DangerousHTML html={subtitle} className={classnames(styles.widget_legend_subtitle)} />
       )}
       {data.map((g) => (
         <div key={g} className={styles.widget_legend_group}>

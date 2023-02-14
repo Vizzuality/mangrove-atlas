@@ -74,22 +74,28 @@ const getChartValueData = (data) => {
 
 const CustomizedContent = (props) => {
   const {
-    depth, x, y, width, height, data, color,
+    depth, x, y, width, height, data, label, root, index,
   } = props;
   if (!data) return null;
-
+  const color = depth >= 2 && root?.children?.find((child) => child?.indicator === props?.indicator).color;
   return (
     <g>
+      {depth === 1 ? (
+        <text x={x + width / 2} y={y + height / 2 + 7} textAnchor="middle" fill="#fff" fontSize={14}>
+          {label}
+        </text>
+      ) : null}
       <rect
         x={x}
         y={y}
         width={width}
         height={height}
         style={{
+          zIndex: 0,
           fill:
             depth < 2
-              ? color
-              : 'none',
+              ? '#EB6240'
+              : color,
           stroke: 'white',
           strokeWidth: 2 / (depth + 1e-10),
           strokeOpacity: 1 / (depth + 1e-10),
@@ -100,28 +106,52 @@ const CustomizedContent = (props) => {
 };
 
 const getLossData = (data) => {
-  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area');
-  const indicators = lossData?.map((d) => d.indicator);
+  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area' && indicator !== 'mangrove_area');
+
+  // TO DO - this should come from API
+
+  const dataParsed = [
+    {
+      indicator: 'total_loss',
+      label: 'Total area loss',
+      children: lossData,
+    }];
+  const indicators = dataParsed[0].children?.map((d) => d.indicator);
   const colorsScale = chroma.scale(['#7996F3', '#EB6240', '#A6CB10']).colors(indicators.length);
+
   const colors = indicators.reduce((acc, indicator, index) => ({
     ...acc,
     [indicator]: colorsScale[index],
   }), {});
-  return lossData.map((d) => ({
+
+  return dataParsed.map((d, index) => ({
     ...d,
-    color: colors[d.indicator],
+    color: colors[index],
+    children: d.children.map((child) => ({
+      ...child,
+      color: colors[child.indicator],
+    })),
   }));
 };
 
 export const CONFIG = {
-  parse: (data, restorationDataMetadata, degradationAndLossData, ecosystemServicesData, ecosystemServicesMetadata, year) => {
+  parse: (
+    data,
+    restorationDataMetadata,
+    degradationAndLossData,
+    ecosystemServicesData,
+    ecosystemServicesMetadata,
+    year,
+  ) => {
     const chartRingData = getChartRingData(data, restorationDataMetadata, year);
     const chartValueData = getChartValueData(ecosystemServicesData);
     const LossDataWidthColors = getLossData(degradationAndLossData);
     const ecosystemServicesUnit = ecosystemServicesMetadata?.unit;
+    const totalLoss = numberFormat(LossDataWidthColors[0]?.children.reduce((previous, current) => current.value + previous, 0));
     return {
       chartRingData,
       chartValueData,
+      totalLoss,
       chartRingConfig: {
         type: 'pie',
         layout: 'centric',
@@ -208,28 +238,8 @@ export const CONFIG = {
         data: LossDataWidthColors,
         dataKey: 'value',
         yKeys: { tree: true },
-        tooltip: {
-          cursor: false,
-          content: (
-            <WidgetTooltip
-              settings={[
-                {
-                  label: 'Restoration potential Score', color: '#06C4BD', key: 'restorable_area_perc', format: (value) => `${value} %`,
-                },
-                {
-                  label: 'Total', color: '#ECECEF', key: 'area', format: (value) => `${numberFormat(Math.abs(value))} ha`,
-                },
-              ]}
-              style={{
-                flexDirection: 'column',
-                marginTop: '10px',
-                marginLeft: '-50px',
-              }}
-            />
-          ),
-        },
         content: <CustomizedContent data={LossDataWidthColors} />,
-        legend: LossDataWidthColors?.reduce((acc, indicator) => ({
+        legend: LossDataWidthColors[0].children?.reduce((acc, indicator) => ({
           ...acc,
           [indicator.label]: [{
             color: indicator.color,
