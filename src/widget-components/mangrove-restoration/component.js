@@ -208,7 +208,7 @@ function MangroveRestoration({
 
   const restorationPotentialTreeMapSentence = (
     <>
-      The main mangrove loss driver in
+      The main restorable loss driver in
       {' '}
       <strong>{location}</strong>
       {' '}
