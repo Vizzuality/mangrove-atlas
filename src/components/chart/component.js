@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'd3-format';
 import maxBy from 'lodash/maxBy';
 import max from 'lodash/max';
 import {
@@ -38,6 +39,8 @@ const rechartCharts = new Map([
   ['radial', RadialBarChart],
   ['composed', ComposedChart],
 ]);
+
+const numberFormat = format(',.2f');
 
 class Chart extends PureComponent {
   static propTypes = {
@@ -136,7 +139,7 @@ class Chart extends PureComponent {
         return (
           <div className={styles.customTooltip}>
             <p><b>{`${payload[0].payload.label}:`}</b></p>
-            <p>{`${payload[0].value} ha.`}</p>
+            <p>{`${numberFormat(payload[0].value)} ha`}</p>
           </div>
         );
       }
