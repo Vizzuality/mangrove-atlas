@@ -106,7 +106,7 @@ const CustomizedContent = (props) => {
 };
 
 const getLossData = (data) => {
-  const lossData = data.filter(({ indicator }) => indicator !== 'degraded_area' && indicator !== 'mangrove_area');
+  const lossData = data.filter(({ indicator }) => indicator !== 'lost_area' && indicator !== 'mangrove_area');
 
   // TO DO - this should come from API
 
