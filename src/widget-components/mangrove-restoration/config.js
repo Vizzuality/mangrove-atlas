@@ -74,7 +74,7 @@ const getChartValueData = (data) => {
 
 const CustomizedContent = (props) => {
   const {
-    depth, x, y, width, height, data, label, root, index,
+    depth, x, y, width, height, data, label, root,
   } = props;
   if (!data) return null;
   const color = depth >= 2 && root?.children?.find((child) => child?.indicator === props?.indicator).color;
