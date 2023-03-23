@@ -72,9 +72,7 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
           </div>
           <div className={styles.chartScore}>
             {Rest_Score}
-            %
           </div>
-
         </div>
       </div>
     </div>

@@ -179,7 +179,6 @@ function MangroveRestoration({
         is
         {' '}
         {restorationPotentialScore}
-        %
       </strong>
     </>
   );
@@ -248,10 +247,7 @@ function MangroveRestoration({
             <div className={widgetStyles.sentence} key={Date.now()}>
               {restorationPotentialLineSentence}
             </div>
-            <div>
-              <span className={widgetStyles.restorationPotentialUnit}>
-                {unitRestorationPotential}
-              </span>
+            <div className={widgetStyles.restorationLegend}>
               <WidgetLegend
                 groups={{ MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS }}
                 type="height"
