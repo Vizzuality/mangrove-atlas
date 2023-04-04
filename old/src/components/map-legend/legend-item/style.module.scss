@@ -1,0 +1,43 @@
+@import "styles/_vars.scss";
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-bottom: 5px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px 0 rgba(168, 168, 168, 0.25);
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    width: 296px;
+  }
+
+  &.collapse {
+    display: none;
+  }
+  > h3 {
+    @include upper-text;
+    margin: 10px;
+  }
+
+  &._negative {
+    background-color: $primary;
+
+    * {
+      color: white;
+    }
+  }
+
+  .removeButton {
+    display: block;
+    border: 0;
+    padding: 10px;
+    margin: 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

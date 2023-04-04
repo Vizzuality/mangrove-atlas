@@ -1,0 +1,100 @@
+@import 'styles/_vars.scss';
+
+.modalWrapper {
+  $padding: 30px;
+  $border-radius: 20px;
+
+  position: absolute;
+  max-width: $widgetWidth;
+  width: 100%;
+  top: 50px;
+  left: 80px;
+  bottom: 50px;
+
+  z-index: 99;
+
+  &:focus {
+    outline: none;
+  }
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    top: 10px;
+    bottom: 70px;
+    left: 10px;
+    right: 10px;
+    width: $widgetWidthMobile;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    padding: $padding;
+    width: 100%;
+    overflow-y: auto;
+    border-radius: $border-radius;
+    background: white;
+
+    box-shadow: $box-shadow;
+    box-sizing: border-box;
+
+    overflow: auto;
+    z-index: 1;
+
+    &.maxHeight {
+      max-height: 100%;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      position: absolute;
+      left: 0;
+      right: -10px;
+    }
+  }
+
+  .closeButton {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    top: 30px;
+    right: -45px;
+    border: 0;
+    border-radius: 0 10px 10px 0;
+    background: white;
+
+    cursor: pointer;
+
+    @media screen and (max-width: map-get($breakpoints, lg)) {
+      top: 20px;
+      right: 20px;
+      z-index: 2;
+      left: initial;
+    }
+
+  }
+
+  &.centered {
+    max-width: 640px;
+    display: flex;
+    flex: 1;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 200;
+
+    .closeButton {
+      background: none;
+      width: 25px;
+      height: 25px;
+      top: 45px;
+      right: 25px;
+      z-index: 2;
+    }
+  }
+}
+

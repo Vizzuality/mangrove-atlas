@@ -1,0 +1,169 @@
+@import 'styles/_vars.scss';
+
+.widgets_menu,
+.modalContent {
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      margin: 5px;
+      align-items: center;
+
+      &._active {
+        .icon {
+          background-color: $primary;
+          fill: $white;
+          box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+
+          &.ecosystem_services {
+            stroke: $white;
+          }
+        }
+      }
+
+      &._disabled {
+        opacity: 0.1;
+      }
+    }
+  }
+
+  .icon {
+    width: 47px;
+    height: 47px;
+    border-radius: 30px;
+    background-color: $white;
+    fill: $primary;
+
+    &.ecosystem_services {
+      width: 37px;
+      height: 37px;
+      margin: 5px;
+      stroke: $primary;
+    }
+  }
+}
+
+.widgets_menu  {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+  text-align: center;
+
+  .categoriesMenuBtn {
+    @include menu-items;
+
+    &._disabled {
+      opacity: 0.5;
+      
+      > ul {
+        >li {
+          > button {
+            cursor: inherit;
+          }
+        }
+      }
+    }
+  }
+
+  ul {
+    align-items: center;
+    border-radius: 30px;
+  }
+
+  &.mobile {
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+
+      &._active {
+        .icon {
+          background-color: $white;
+          fill: $primary;
+          stroke: $primary;
+        }
+      }
+    }
+
+    .icon {
+      background-color: #00AFA7;
+      fill: $white;
+      stroke: $white;
+    }
+
+    .menuItemTitle {
+      @include menu-item-title;
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modalContent {
+  position: absolute;
+
+  .menuItemTitle {
+    @include menu-item-title;
+  }
+
+  ul {
+    align-items: flex-start;
+    width: fit-content;
+    border-radius: 30px;
+
+    li {
+      span {
+        font-size: 19px;
+        line-height: 30px;
+        margin-left: 10px;
+        color: $blackOpacity;
+        text-align: start;
+      }
+    }
+
+  }
+
+  &.mobile {
+    transform: translate(-52%, 50%);
+    width: 80%;
+
+    .menuItemTitle {
+      display: none;
+    }
+
+    ul {
+      box-sizing: border-box;
+      padding: 20px;
+      width: 100%;
+    }
+  }
+}
+
+.menuItemTitle {
+  @include menu-item-title;
+}
+
+.menuItemBtn {
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

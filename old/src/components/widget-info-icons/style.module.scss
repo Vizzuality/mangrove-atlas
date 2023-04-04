@@ -1,0 +1,10 @@
+@import 'styles/_vars.scss';
+
+.widgetControls {
+  display: flex;
+  align-items: center;
+
+  @media print {
+    display: none;
+  }
+}

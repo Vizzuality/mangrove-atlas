@@ -1,0 +1,113 @@
+import DocsLayout from 'layouts/docs'
+
+# Tools
+
+Looking to work more comfortably, we recommend the use of the following tools:
+
+## 1. NODE VERSION MANAGEMENT
+
+Using [NVM](https://github.com/nvm-sh/nvm) (Node Version Manager) makes it easier to install and manage multiple versions of Node.js on a single local environment. Even if you only need a single version of Node.js right now, we still recommend using nvm because it allows you to switch between different versions of Node (depending on the requirements of your project) with minimal hassle.
+
+Recommendations using NVM:
+
+- set a default Node.js version (preferably LTS version if you don't have a specific version in mind). This version will be use as fallback when there is no version to use available in the directory:
+
+```bash
+nvm install --lts /* installs LTS version of Node.js available */
+nvm alias default 'lts/*' /* sets the LTS version as your default Node.js version */
+```
+
+- trigger NVM on directory change: this will avoid typing `nvm use` every time someone changes to a different folder (for instance, jumping from a project to another). To achieve this, please follow [the official guide](https://github.com/nvm-sh/nvm#deeper-shell-integration).
+
+Useful links:
+- [Install NodeJS with nvm tutorial](https://heynode.com/tutorial/install-nodejs-locally-nvm)
+
+## 2. VISUAL CODE EXTENSIONS
+
+Per agreement, the frontend team uses [Visual Studio Code](https://code.visualstudio.com/) as code editor. You are free to use a different one as long as you have working the **mandatory extensions** listed below and the workflow does not compromise the quality of the code/project.
+
+You **must** install the mandatory extensions listed below. Recommended ones improve the experience but you are free to install or ignore them.
+
+## Mandatory
+
+**ESLINT** integrates ESLint into VS Code. The extension uses the ESLint library installed in the opened workspace folder. If the folder doesn't provide one the extension looks for a global install version.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+
+**HEADWIND** enforces consistent ordering of Tailwind CSS classes by parsing your code and reprinting class.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=heybourn.headwind)
+
+
+**TAILWIND CSS INTELLISENSE** provides a better Tailwind experience with advanced features such as autocomplete, syntax highlighting, and linting.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+**CODE SPELL CHECKER**: a basic spell checker that works well with code and documents.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)
+
+
+**LIVE SHARE** enables you to collaboratively edit and debug with others in real time.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
+
+
+
+## Recommended
+
+**GITHUB COPILOT** (**PAID**) suggests code and entire functions in real-time right from your editor.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
+
+[Learn more](github.com/features/copilot)
+
+[Getting Started Guide](https://docs.github.com/en/copilot/getting-started-with-github-copilot/getting-started-with-github-copilot-in-visual-studio-code)
+
+
+**BETTER COMMENTS** help you create more human-friendly comments in your code.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments)
+
+
+**PATH INTELLISENSE** autocompletes filenames.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
+
+
+**NPM INTELLISENSE** autocompletes npm modules in import statements.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
+
+
+**AUTO CLOSE TAG** automatically add HTML/XML close tag.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+
+
+**AUTO RENAME TAG** automatically rename paired HTML/XML tag.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+
+
+**DotENV** for .env syntax highlighting.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=mikestead.dotenv)
+
+
+**LIVE SHARE AUDIO** enhances the existing Visual Studio Live Share experience, by enabling you to quickly spin up an audio call directly from within Visual Studio Code.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare-audio)
+
+
+**RapidAPI CLIENT** a full-featured HTTP client that lets you test and describes the APIs you build or consume.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=RapidAPI.vscode-rapidapi-client)
+
+**EditorConfig for VS Code** overrides user/workspace settings with settings found in `.editorconfig` files.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+
+
+export default ({ children }) => <DocsLayout>{children}</DocsLayout>

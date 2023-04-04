@@ -1,0 +1,30 @@
+@import 'styles/_vars.scss';
+
+.ReactModal__Overlay {
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+}
+
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transition:
+    opacity 0.1s linear;
+}
+
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+}
+
+.ReactModal__Content {
+  transform: translate(-200px);
+  transition: transform 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.ReactModal__Content--after-open {
+  transform: translate(0);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+}

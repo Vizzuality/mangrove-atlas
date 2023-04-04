@@ -1,0 +1,78 @@
+@import 'styles/_vars.scss';
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+
+  @media print {
+    display: none;
+  }
+}
+
+.searchBar {
+  font-size: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.headerBtns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: $widgetWidthMobile; // widgets dashboard max width
+}
+
+.titleBtn {
+  border: 0;
+  padding: 0;
+  appearance: none;
+  max-width: $widgetWidthMobile;
+}
+
+.title {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: $body-color;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+._short {
+  font-size: 60px;
+  line-height: 0.85;
+}
+
+._medium {
+  font-size: 45;
+  line-height: 1;
+}
+
+._long {
+  font-size: 30;
+  line-height: 1;
+}
+
+.printOnly {
+  font-size: 19px;
+  line-height: 29px;
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+@media screen and (max-width: map-get($breakpoints, md)) {
+  .header {
+    .title {
+      font-size: 35px;
+    }
+  }
+}

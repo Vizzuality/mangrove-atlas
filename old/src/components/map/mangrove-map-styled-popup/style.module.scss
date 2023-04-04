@@ -1,0 +1,97 @@
+@import 'styles/_vars.scss';
+
+:global {
+  // here, the built-in mapbox popup tip is given the same colour as the border. 
+  .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: $primary;
+  }
+  .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: $primary;
+  }
+  .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: $primary;
+  }
+  .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: $primary;
+  }
+
+  // a div with this class name is included in the popup
+  // content and overlaid on top of the in-built popup tip,
+  // slightly offset to make the insite of the popup
+  // tip the same colour as the popup contents background
+  .tooltip-fill {
+    width: 0; 
+    height: 0; 
+    z-index: 50;
+    position: absolute;
+   
+  }
+  .mapboxgl-popup-anchor-top .tooltip-fill  {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    top: -8px;
+    left: 81px;
+  }
+
+  .mapboxgl-popup-anchor-bottom .tooltip-fill  {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff;
+    bottom: -8px;
+    left: 81px;
+  } 
+}
+
+.map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+ 
+  @media print {
+    page-break-after: page;
+    page-break-inside: avoid;
+  }
+}
+
+.popup {
+  position: relative; // so that we can absolutely position a 'fill' triangle for the popup tip
+  
+}
+.popup-content {
+  width: 150px;
+  height: 175px;
+  padding: 15px;
+  overflow: auto;
+  border: solid thin $primary;
+  h2 {
+    font-size: $font-size-big;
+    margin: 0;
+  }
+  dt {
+    text-transform: uppercase;
+    font-size: $font-size-small;
+  }
+  dd {
+    margin-left: 0;
+    font-weight: 600;
+  }
+  dd:first-of-type {
+    // assumes dd associated with landscape has no siblings
+    margin-bottom: 10px;
+  }
+
+ 
+  
+
+ 
+}
+
+
+
+

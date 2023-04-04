@@ -1,0 +1,32 @@
+.chart {
+  width: 100%;
+  min-height: 250px;
+  height: fit-content;
+  position: relative;
+
+  .customTooltip {
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.19);
+    color: 'black';
+    margin-right: auto;
+    background: white;
+    border-radius: 6px;
+    font-size: 14px;
+    max-width: 80%;
+    padding: 4px 30px;
+  }
+
+  text {
+    fill: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+    line-height: 20px;
+    text-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+    text-transform: none;
+  }
+
+  :global(.recharts-wrapper),
+  :global(.recharts-surface) {
+    @media print {
+      width: calc(100%)!important;
+    }
+  }
+}

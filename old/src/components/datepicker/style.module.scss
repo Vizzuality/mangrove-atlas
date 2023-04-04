@@ -1,0 +1,18 @@
+@import 'styles/_vars.scss';
+
+.Datepicker {
+  border-bottom: 2px solid $primary;
+
+  &._inline {
+    display: inline-block;
+  }
+
+  .react-datepicker__day-name {
+    font-family: $font-family;
+  }
+}
+
+.DatepickerPopper {
+  z-index: 10!important;
+}
+

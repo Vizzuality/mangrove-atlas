@@ -1,0 +1,63 @@
+@import 'styles/_vars.scss';
+
+.button {
+  padding: 0 10px;
+  min-width: 116px;
+  min-height: 30px;
+  background-color: transparent;
+  border-radius: 18px;
+  border: 2px solid rgba($primary, 0.2);
+  color: $primary;
+  font-size: $body-font-size;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: rgba($primary, 0.4);
+    cursor: pointer;
+  }
+
+  &.background {
+    background-color: $primary;
+    color:$white;
+
+    &.contrast {
+      background-color: $white;
+      color: $primary;
+      border-color: $white;
+    }
+  }
+
+  &.transparent {
+    border-color: rgba(0, 133, 127, 0.4);
+    background-color: transparent;
+    color: $primary;
+
+    &:hover {
+      border: 2px solid rgba(0, 133, 127, 0.4);
+    }
+
+    &.contrast {
+      color: $white;
+    }
+
+    &.grey {
+      border-color: rgba(0,0,0,0.2);
+      color: $body-color;
+      &:hover {
+        border-color: rgba(0,0,0,0.4);
+      }
+    }
+  }
+
+  &.disabled {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    min-width: 0;
+  }
+}

@@ -1,92 +1,93 @@
-# Mangrove Atlas
+# Front end scaffold
 
-## Table of Contents
+This is a project template which could be used to the creation of new projects. Some of the features included are:
 
-1. [Installation & development](#installation--development)
-2. [Deployment](#deployment)
-3. [Good practices & Style guide](#good-practices--style-guide)
+- Based on [Next.js](https://nextjs.org/)
+- [Tailwind](https://tailwindcss.com/) as CSS Framework
+- Reusable components such as forms, modals, icons, and other most use components
+- Authentication based on [Next-Auth](https://next-auth.js.org/) already implemented
+- [Redux](https://redux.js.org/) and [Redux-Toolkit](https://redux-toolkit.js.org/)
+- [Typescript](https://www.typescriptlang.org/) already configured
+- [Cypress](https://www.cypress.io/) as testing client
+- git workflow and hooks
+- editorconfig and code style based on [Airbnb](https://github.com/airbnb/javascript)
+- [Storybook](https://storybook.js.org/) also available and configured
 
-## Installation & development
+## Getting Started
 
-Requirements:
+Check our [documentation](https://front-end-scaffold-docs.vercel.app/?path=/story/intro--page).
 
-* NodeJs v10.5.3
-* Yarn
+### Quick start
 
-This app was created using [https://github.com/facebook/create-react-app](create-react-app).
-
-1. Before start you have to create an env file called `.env.local` copying the content inside `.env.sample`. If you need more information about env variables you can follow [https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables](this instructions).
-
-2. Install node dependencies:
-
-```bash
-yarn install
-```
-
-3. Init server for development:
+First, run the development server:
 
 ```bash
-yarn start
+yarn dev
 ```
 
-It will open automatically the browser [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Deployment
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-We have two deployment instances.
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-1. Development/Staging (Automatically deployed on develop branch push)
-2. Production/Release (Automatically deployed on master branch push)
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-The idea is to merge to master once a week and update the changelog.
+## Learn More
 
-### Manual deploy
+To learn more about this project, take a look at the following resources:
 
-Put all your code in `develop` branch.
+- [Blogin internal post](https://vizzuality.blogin.co/posts/a-scaffold-to-rule-all-of-them-135768) - communication to Vizzuality
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Standardization guidelines](https://vizzuality.github.io/frontismos/docs/guidelines/standardization/) - a set of agreements and conventions.
 
-Add heroku site:
+## Deploy on Vercel
 
-```
-heroku git:remote -a mangroves-atlas
-```
+First, we recommend to read the guideline about [how to use Vercel](https://vizzuality.github.io/frontismos/docs/guidelines/vercel/).
 
-And deploy:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-```
-git push heroku develop:master
-```
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
-**[⬆ back to top](#table-of-contents)**
+## Contribution rules
 
-## Good practices & Style guide
+Please, **create a PR** for any improvement or feature you want to add. Try to not commit directly anything on the `main` branch.
 
-This is loosely based on [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript). The purpose of this section is to improve quality of code by defining some rules for create standard, clean and readable code. It is opinionated, the rules expressed are not expected to be the best or only way to write code, but they try to achieve the following:
+## Vulnerability mitigation
 
-* Establish a unique non-ambiguous convention for these repository that is expected to be followed for any contribution, internal or external.
-* Help solve conflicts regarding PRs and requested changes, this is the source of truth for the repository. If it is not defined here it cannot be used as an argument for requesting changes, ADD IT by first reaching contributors consensus. Following the same logic, "I like it this way" is not an argument, please refer to this guide if you are requesting changes.
+[Dependabot's vulnerability security alerts](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) are configured in this repository and are displayed to the administrators.
 
-This section is a work in progress but please don't write things to be defined at a later time, either it is in the guide or it is not, if you don't have the time to add it properly probably it is not important enough to be enforced by this guide.
+When vulnerabilities are detected, a warning message is displayed at the top of the repository. The list of alerts can be found in the Dependabot alerts page.
 
-### Directory structure
+Here's a step by step guide on how to address vulnerabilities found in production code:
 
-* Components are expected to be in its own directory inside of `src/components`.
-* Components are expected to have an `index.js` file that will be used for the container part and redux connect, it can be a single line export. This is the only part of the component that should change if the component is used somewhere else.
-* Do not nest components, prefix children components if you think is needed. Nesting components makes difficult to discover components by visual directory inspection because those nested components won't appear on the top-level components folder.
+1. Go to the Dependabot alerts page and locate the front-end vulnerability to address
+2. Identify if the vulnerability affects production code:
+	- To do so run `yarn npm audit --recursive --environment production`
+	- If the dependency is _not_ listed by this command, then the vulnerability only affects development code. You can dismiss the alert on GitHub as “Vulnerable code is not actually used” in the top right corner of the vulnerability page.
+	- If the dependency _is_ listed, follow the steps below.
+3. On the vulnerability page, click the “Create Dependabot security update” button
+	- This will create a Pull Request with a fix for the vulnerability. If GitHub can generate this PR, then you can merge and the security alert will disappear.
+	- If the vulnerability can't be patched automatically, follow the steps below.
+4. If the action fails, then you can semi-automatically update the vulnerable dependency by running `npm_config_yes=true npx yarn-audit-fix --only prod`
+	- `yarn-audit-fix` (see [repository](https://github.com/antongolub/yarn-audit-fix)) is a tool that applies the fixes from `npm audit fix` to Yarn installations
+	- The tool might also not be able to fix the vulnerability. If so, continue with the steps below.
+5. If the action fails, then you will have to manually update the dependencies until the vulnerability is solved
 
-### Javascript
+## Env variables
 
-* Use arrow functions only if object context is needed, otherwise use regular functions.
-* Use destructuring for function parameters whenever it is possible.
-* If statements need brackets even if it is single line.
 
-### CSS and SCSS
+| Variable name           | Description                                                             |  Default value                      |
+|-------------------------|-------------------------------------------------------------------------|------------------------------------:|
+| NEXTAUTH_SECRET         |  Key used to encrypt the NextAuth.js JWT, and to hash email verification tokens. Do not forget to add a secret. NextAuth can handle without it in development mode,  but it won't in production! [https://next-auth.js.org/configuration/options#secret](https://next-auth.js.org/configuration/options#secret) |  |
+| NEXTAUTH_URL            |  Needed by the next-auth library for [handling auth requests and callbacks](https://next-auth.js.org/configuration/options#nextauth_url). Set the environment variable to the canonical URL of your site. Not needed in Vercel deploys.   |  |
+| NEXT_PUBLIC_API_URL  | URL of the API. | http://localhost:3000   |
+| STORYBOOK_API_URL  | URL of the API for storybook. |    |
+| NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
+| STORYBOOK_MAPBOX_API_TOKEN  | Mapbox token for storybook. |    |
+| NEXT_PUBLIC_GA_TRACKING_ID  | Google Analytics tracking ID. If you're working with an Google Analytics 4 property, you have a Measurement ID instead of a Tracking ID. |    |
 
-Style is expected to be in a `style.module.scss` file at component level. There are two exceptions.
 
-* Top level styles.
-* Plugins specific style that follows other conventions (ex. style.js).
 
-### React
 
-* Try to use function components.
-* Use hooks whenever it is possible.

@@ -1,0 +1,153 @@
+@import 'styles/_vars.scss';
+
+.widgets {
+  max-width: $widgetWidth;
+  margin: auto;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  &.spinner {
+    margin-top: 100px;
+  }
+
+  .printBtn {
+    margin: 30px 0;
+
+    @media print {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    margin-bottom: 100px;
+  }
+
+  @media print {
+    page-break-before: page;
+    break-before: page;
+    max-width: 100%;
+    position: relative;
+    display: block;
+    align-items: center;
+  }
+}
+
+.printOnly {
+  display: none;
+
+  @media print {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.widgetWrapper {
+  width: $widgetWidth;
+
+  &:last-of-type:not(:empty) {
+    cursor: initial;
+
+    .widget {
+      margin-bottom: 0;
+      background: white;
+      background-color: white;
+      transition: none;
+
+      .wrapper {
+        .content {
+          max-height: fit-content !important;
+          opacity: 1;
+        }
+      }
+    }
+
+    .noDataWidget {
+      align-items: center;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 100%;
+      min-height: 334px;
+      box-shadow: 0 4px 12px 0 rgb(0 0 0 / 8%);
+      border-radius: 20px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      $padding: 30px 20px 0 40px;
+      margin: auto;
+
+      .noDataIcon {
+        height: 160px;
+        width: 160px;
+      }
+
+      p {
+        font-family: $font-family;
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 29px;
+        text-align: center;
+      }
+    }
+  }
+
+  @media print {
+    $border-radius: 20px;
+
+    .widget {
+      max-width: 100%;
+      min-height: 530px;
+      box-shadow: none;
+      border: 2px solid rgba($primary, 0.35);
+      border-radius: $border-radius;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      $padding: 30px 20px 0 40px;
+      margin: auto;
+
+      &._layerActive::before {
+        border: 0 solid rgba($primary, 0.35);
+      }
+    }
+
+    .title svg {
+      display: none;
+    }
+
+    .toogleButton {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    width: $widgetWidthMobile;
+  }
+
+  @media print and (orientation: portrait){
+    width: 100%;
+    padding-top: 20px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: $widgetWidth;
+  }
+
+  @media print  and (orientation: landscape){
+    width: 100%;
+    padding-top: 20px;
+    margin: auto;
+    display: grid;
+    grid-column: 1fr 1fr;
+    grid-gap: 30px;
+    width: $widgetWidth;
+  }
+}
+
+.pageBreak {
+  page-break-after: always;
+  break-after: always;
+  break-inside: avoid;
+}

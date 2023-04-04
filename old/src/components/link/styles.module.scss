@@ -1,0 +1,10 @@
+@import 'styles/_vars.scss';
+
+.link {
+  &:hover {
+    text-decoration: none;
+  }
+  .icon {
+    padding-right: 10px;
+  }
+}

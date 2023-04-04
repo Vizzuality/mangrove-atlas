@@ -1,0 +1,150 @@
+@import 'styles/_vars.scss';
+
+.navMenu {
+  @include menu-items;
+
+  .menuItemTitle {
+    @include menu-item-title;
+  }
+
+  .icon {
+    width: 60px;
+    height: 60px;
+    fill: $primary;
+    background-color: $white;
+    border-radius: 30px;
+    box-shadow: 0px 0px 0px 1px rgba(#000, 0.1), 0px 4px 12px rgba(#000, 0.08);
+  }
+
+  &.mobile {
+    @include menu-items-mobile;
+
+    .icon {
+      border-radius: 0px;
+      box-shadow: none;
+      fill: $white;
+    }
+
+    &._active {
+      .icon {
+        background-color: $white;
+        border-radius: 30px;
+        fill: $primary;
+      }
+    }
+  }
+
+  @media print {
+    display: none;
+  }
+}
+
+.introModalContent {
+  .logo {
+    width: 230px;
+  }
+}
+
+.modalContent {
+  @include medium-text;
+  height: 100%;
+  position: relative;
+
+  > h3 {
+    @include medium-text;
+    font-size: 30px;
+    margin: 10px 0;
+  }
+
+  section {
+    margin-top: 20px;
+
+    .menuItem {
+      padding: 0;
+      color: $body-color;
+      text-decoration: none;
+      @include medium-text;
+      line-height: 40px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    button {
+      display: inline-block;
+      z-index: 300;
+      pointer-events: all;
+    }
+
+    p {
+
+      span {
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+
+    a {
+      padding: 10px 0;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    line-height: 40px;
+
+    > a {
+      margin-left: 30px;
+      color: $body-color;
+      text-decoration: none;
+      @include medium-text;
+      line-height: 40px;
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 45px;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba($blackOpacity, 0.08);
+    }
+  }
+
+  .welcomeLink {
+    color: $primary;
+    display: block;
+    @include medium-text;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      width: 130px;
+      padding-right: 20px;
+    }
+  }
+
+  .donors {
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 30px;
+
+      .image {
+        max-width: 150px;
+      }
+    }
+  }
+}
+

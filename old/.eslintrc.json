@@ -1,0 +1,49 @@
+{
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+   }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "Transifex": true
+  },
+  "rules": {
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/button-has-type": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-console": "error",
+    "react/function-component-definition": [2, {
+      "namedComponents": ["function-declaration", "arrow-function"],
+      "unnamedComponents": "arrow-function"
+    }],
+    "no-restricted-exports": "off"
+  },
+  "plugins": [],
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/core-modules": [
+      "modules"
+    ]
+  },
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ]
+}

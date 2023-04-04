@@ -1,0 +1,73 @@
+@import 'styles/_vars.scss';
+
+.title {
+  color: $primary;
+}
+
+.textarea {
+  width: 100%;
+  height: auto;
+  border: none;
+  overflow: auto;
+  outline: none;
+}
+
+.sentenceWrapper {
+  display: flex;
+  align-items: center;
+
+  &.interactive {
+    cursor: pointer;
+  }
+
+  .icon {
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(#00857F, 0.2);
+    box-sizing: border-box;
+    border-radius: 15px;
+    margin-left: 5px;
+    margin-top: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    svg {
+      width: 10px;
+      height: 10px;
+      fill: $primary;
+    }
+  }
+}
+
+.textBtn {
+  
+  svg {
+    margin-left: 10px;
+    width: 9px;
+    transform: rotateX(180);
+  }
+}
+
+.textBtnClose {
+  svg {
+    margin-left: 10px;
+    width: 20px;
+    pointer-events: all;
+  }
+}
+
+.link {
+  text-decoration: underline;
+  color: $primary;
+}
+
+.resetLink {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: normal;
+}
+
+.underline {
+  text-decoration: underline;
+}

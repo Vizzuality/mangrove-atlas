@@ -1,0 +1,26 @@
+import { connect } from 'react-redux';
+
+import { currentLocation } from 'modules/locations/selectors';
+import { openSearchPanel } from 'modules/locations/actions';
+import { setMobileView, setPrintMode } from 'modules/app/actions';
+import { dashboardWidgets } from 'modules/widgets/selectors';
+import { expandAll, collapseAll } from 'modules/widgets/actions';
+import Component from './component';
+
+const mapStateToProps = state => ({
+  mapView: state.app.mobile.mapView,
+  location: currentLocation(state),
+  isCollapsed: state.widgets.isCollapse,
+  widgets: dashboardWidgets(state),
+  drawingMode: state.drawingTool.drawingMode,
+});
+
+const mapDispatchToProps = {
+  openSearchPanel,
+  collapseAll,
+  expandAll,
+  setMobileView,
+  setPrintMode
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Component);

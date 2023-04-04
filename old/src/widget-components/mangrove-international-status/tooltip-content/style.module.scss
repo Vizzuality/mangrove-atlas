@@ -1,0 +1,12 @@
+@import 'styles/_vars.scss';
+
+.content {
+  max-width: 500px;
+  box-shadow: none;
+  border: 2px solid rgba($primary, 0.35);
+  border-radius: 20px;
+  padding: 20px;
+  margin: auto;
+  background-color: white;
+  box-shadow: 0 4px 12px 0 rgba(168,168,168,0.25);
+}

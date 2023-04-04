@@ -1,0 +1,44 @@
+@import 'styles/_vars.scss';
+
+.legendContainer {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  width: 338px;
+
+  .layersCollapse {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+
+    > * {
+      padding: 0 20px 5px 20px;
+      margin-bottom: 5px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px 0 rgba(168,168,168,0.25);
+      align-items: center;
+    }
+    > div {
+      width: 100%;
+    }
+    .title {
+      color: $blackOpacity;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      line-height: 15px;
+      display: flex;
+      text-transform: uppercase;
+    }
+
+    .layersBtn {
+      width: 15px;
+      height: 45px;
+      box-sizing: content-box;
+      margin-left: 5px;
+    }
+  }
+}

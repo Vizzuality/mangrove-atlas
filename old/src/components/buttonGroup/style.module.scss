@@ -1,0 +1,53 @@
+@import 'styles/_vars.scss';
+
+.container {
+  border: 2px solid rgba($primary,0.2);
+  display: inline-flex;
+  height: 26px;
+  border-radius: 15px;
+
+  @media screen and (max-width: map-get($breakpoints, lg)) {
+    right: 15px;
+  }
+
+
+  button {
+    display: block;
+    position: relative;
+    margin: -2px;
+    border-left: none;
+    border: none;
+    text-align: center;
+    color: $primary;
+    padding: 0 10px;
+
+    &:first-of-type {
+      border-right: 2px solid rgba($primary,0.2);
+      border-radius: 15px 0 0 15px;
+
+      &:focus {
+        border-radius: 15px;
+      }
+    }
+
+    &:last-of-type {
+      border-left: 2px solid rgba($primary, 0.2);
+      border-radius: 0 15px 15px 0;
+
+      &:focus {
+        border-radius: 15px;
+      }
+    }
+
+    &:focus {
+      text-align: center;
+      border: 2px solid $white;
+      margin: -2px;
+      height: 30px;
+      background-color: $primary;
+      color: $white;
+      border-radius: 15px;
+      padding: 0 5px;
+    }
+  }
+}

@@ -8,33 +8,47 @@
 # testing
 /coverage
 
-# ipython
-.ipynb_checkpoints
+# next.js
+/.next/
+/out/
 
 # production
 /build
+
+# tailwind styles
+/public/styles/
+
+# misc
+.DS_Store
+*.pem
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# local env files
+.env*
+!.env.default
+
+# vercel
+.vercel
+
+# Test with Cypress
+/cypress/screenshots
+/cypress/videos
+
 # Yarn
 .yarn/*
+!.yarn/patches
 !.yarn/releases
 !.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
 .pnp.*
 
-# misc
-.DS_Store
-.env*
+# typescript
+tsconfig.tsbuildinfo
 
-.vscode/launch.json
-.vscode
-
-**/node_modules/**
-**/credentials.json
-**credentials.json
-**/build/**
-credentials.json
-/log
+# storybook
+/storybook-static/

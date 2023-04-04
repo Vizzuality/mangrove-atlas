@@ -1,0 +1,47 @@
+@import 'styles/_vars.scss';
+
+
+.dashboards {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 700px;
+
+  @media print {
+    display: flex;
+    padding: 30px;
+    justify-content: center;
+    margin: auto;
+    margin-top: 500px;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.printOnly {
+  font-size: 19px;
+  line-height: 29px;
+  display: none;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px 0;
+}
+
+@media print {
+  .printOnly {
+    display: block;
+    page-break-before: always;
+    break-before: always;
+  }
+}
+
+.widgetWrapper {
+  z-index: 5;
+  max-width: $widgetWidth;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  margin: auto;
+}

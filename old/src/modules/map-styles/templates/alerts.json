@@ -1,0 +1,140 @@
+[
+  {
+     "id": "alerts-heat",
+     "type": "heatmap",
+     "source": "alerts",
+     "maxzoom": 15,
+     "paint": {
+        "heatmap-weight": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "get",
+              "intensity"
+           ],
+           0,
+           0,
+           1,
+           1
+        ],
+        "heatmap-intensity": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "zoom"
+           ],
+           0,
+           1,
+           9,
+           3
+        ],
+        "heatmap-color": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "heatmap-density"
+           ],
+           0,
+           "rgba(255, 255, 255, 0)",
+           0.1,
+           "rgba(255, 194, 0, 1)",
+           0.5,
+           "rgba(235, 68, 68, 1)",
+           1,
+           "rgba(199, 43, 214, 1)"
+        ],
+        "heatmap-radius": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "zoom"
+           ],
+           0,
+           5,
+           9,
+           10
+        ],
+        "heatmap-opacity": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "zoom"
+           ],
+           7,
+           1,
+           9,
+           0.7
+        ]
+     }
+  },
+  {
+     "id": "alerts-point",
+     "type": "circle",
+     "source": "alerts",
+     "paint": {
+        "circle-radius": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "zoom"
+           ],
+           7,
+           [
+              "interpolate",
+              [
+                 "linear"
+              ],
+              [
+                 "get",
+                 "count"
+              ],
+              1,
+              1,
+              6,
+              4
+           ],
+           16,
+           [
+              "interpolate",
+              [
+                 "linear"
+              ],
+              [
+                 "get",
+                 "count"
+              ],
+              1,
+              5,
+              6,
+              50
+           ]
+        ],
+        "circle-color": "rgba(210, 50, 169, 1)",
+        "circle-opacity": [
+           "interpolate",
+           [
+              "linear"
+           ],
+           [
+              "zoom"
+           ],
+           7,
+           0,
+           8,
+           1
+        ]
+     }
+  }
+]

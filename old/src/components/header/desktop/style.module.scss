@@ -1,0 +1,120 @@
+@import 'styles/_vars.scss';
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  z-index: 4;
+
+  @media print {
+    display: none;
+  }
+
+  .bg {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: -9;
+
+    &.isHidden {
+      display: none;
+    }
+
+    @media print {
+      display: none;
+    }
+  }
+
+  .searchBar {
+    font-size: 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .titleBtn {
+    border: 0;
+    padding: 0;
+    appearance: none;
+  }
+
+  .title {
+    display: flex;
+    max-width: 400px;
+
+    &._short {
+      font-size: 60px;
+      line-height: 0.85;
+    }
+
+    &._medium {
+      font-size: 45;
+      line-height: 1;
+    }
+
+    &._long {
+      font-size: 30;
+      line-height: 1;
+
+      @media print {
+        font-size: 35px;
+      }
+    }
+
+    &._cursor {
+      cursor: default;
+    }
+
+    @media print {
+      font-size: 35px;
+    }
+  }
+
+  .printOnly {
+    font-size: 19px;
+    line-height: 29px;
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, lg)) {
+  .header {
+    margin-bottom: 25px;
+
+    .bg {
+      display: none;
+    }
+
+    .title {
+      font-size: 35px;
+    }
+
+    .searchButton {
+      padding: 6px 12px;
+      height: auto;
+      width: auto;
+
+      svg {
+        height: 30px;
+        width: 30px;
+        vertical-align: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: map-get($breakpoints, sm)) {
+  .header {
+    .bg {
+      width: 600px;
+    }
+  }
+}
