@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import classnames from "classnames";
-import styles from "./style.module.scss";
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import classnames from 'classnames';
+import { setViewport } from 'modules/map/actions';
+import styles from './style.module.scss';
 
 const LegendItem = ({
   id,
@@ -15,7 +16,8 @@ const LegendItem = ({
   isCollapsed,
   mapView,
   setCustomGeojsonFeatures,
-  setCurrent
+  setCurrent,
+  setViewport,
 }) => {
   const isCustomLayer = id === 'custom-layer';
 
@@ -24,6 +26,7 @@ const LegendItem = ({
       setDrawingStatus(null);
       setDrawingValue(null);
       setCustomGeojsonFeatures(null);
+      setViewport({ zoom: 2 });
       setCurrent({ id: 'worldwide' });
     } else {
       toggleActive({ id, isActive: false });
@@ -35,7 +38,7 @@ const LegendItem = ({
     <div
       className={classnames(styles.legendItem, {
         [styles.collapse]: isCollapsed && mapView,
-        [styles._negative]: isCustomLayer
+        [styles._negative]: isCustomLayer,
       })}
     >
       <h3>{name}</h3>
