@@ -3,19 +3,19 @@ import axios from 'axios';
 class APIService {
   constructor() {
     this.client = axios.create({
-      baseURL: `${process.env.REACT_APP_API_URL}/api`,
+      baseURL: `${process.env.REACT_APP_API_URL}/api/v2`,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  fetchLocations = (params = {}) => this.client.get('/v2/locations', { params }).then((response) => {
+  fetchLocations = (params = {}) => this.client.get('/locations', { params }).then((response) => {
     const { status, statusText, data } = response;
     if (status >= 400) throw new Error(statusText);
     return data;
   });
 
   fetchMangroveHabitatExtentData = (params = {}) => this.client
-    .get('/v2/widgets/habitat_extent', { params: { ...params } })
+    .get('/widgets/habitat_extent', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -23,7 +23,7 @@ class APIService {
     });
 
   fetchMangroveNetChangeData = (params = {}) => this.client
-    .get('/v2/widgets/net_change', { params: { ...params } })
+    .get('/widgets/net_change', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -31,7 +31,7 @@ class APIService {
     });
 
   fetchMangroveBlueCarbonData = (params = {}) => this.client
-    .get('/v2/widgets/blue_carbon', { params: { ...params } })
+    .get('/widgets/blue_carbon', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -39,7 +39,7 @@ class APIService {
     });
 
   fetchMangroveBiomassData = (params = {}) => this.client
-    .get('/v2/widgets/aboveground_biomass', { params: { ...params } })
+    .get('/widgets/aboveground_biomass', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -47,7 +47,7 @@ class APIService {
     });
 
   fetchMangroveHeightData = (params = {}) => this.client
-    .get('/v2/widgets/tree_height', { params: { ...params } })
+    .get('/widgets/tree_height', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -56,7 +56,7 @@ class APIService {
 
   fetchRankingData = (params = {}) => this.client
     .get(
-      '/v2/widgets/country_ranking', { params: { ...params } },
+      '/widgets/country_ranking', { params: { ...params } },
     )
     .then((response) => {
       const { status, statusText, data } = response;
@@ -65,7 +65,7 @@ class APIService {
     });
 
   fetchMangroveSpeciesData = (params = {}) => this.client
-    .get('/v2/widgets/biodiversity', { params: { ...params } })
+    .get('/widgets/biodiversity', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -73,7 +73,7 @@ class APIService {
     });
 
   fetchMangroveProtectionData = (params = {}) => this.client
-    .get('/v2/widgets/protected-areas', { params: { ...params } })
+    .get('/widgets/protected-areas', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -85,7 +85,7 @@ class APIService {
       baseURL: 'https://mangrove-atlas-api-staging.herokuapp.com/api',
       headers: { 'Content-Type': 'application/json' },
     }).get(
-      '/v2/widgets/blue-carbon-investment',
+      '/widgets/blue-carbon-investment',
       { params: { ...params } },
     );
     const { status, statusText, data } = response;
@@ -95,7 +95,7 @@ class APIService {
   };
 
   fetchMangroveRestorationData = (params = {}) => this.client
-    .get('/v2/widgets/restoration-potential', {
+    .get('/widgets/restoration-potential', {
       params: { dir: 'desc', ...params },
     })
     .then((response) => {
@@ -106,7 +106,7 @@ class APIService {
     });
 
   fetchMangroveEcosystemServicesData = (params = {}) => this.client
-    .get('/v2/widgets/ecosystem_services', {
+    .get('/widgets/ecosystem_services', {
       params: { dir: 'desc', ...params },
     })
     .then((response) => {
@@ -117,7 +117,7 @@ class APIService {
     });
 
   fetchMangroveDegradationAndLossData = (params = {}) => this.client
-    .get('/v2/widgets/degradation-and-loss', { params: { ...params } })
+    .get('/widgets/degradation-and-loss', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -125,7 +125,7 @@ class APIService {
     });
 
   fetchMangroveInternationalStatusData = (params = {}) => this.client
-    .get('/v2/widgets/international_status', { params: { ...params } })
+    .get('/widgets/international_status', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);
@@ -133,7 +133,7 @@ class APIService {
     });
 
   fetchMangroveEmissionsMitigationData = (params = {}) => this.client
-    .get('/v2/widgets/mitigation_potentials', { params: { ...params } })
+    .get('/widgets/mitigation_potentials', { params: { ...params } })
     .then((response) => {
       const { status, statusText, data } = response;
       if (status >= 400) throw new Error(statusText);

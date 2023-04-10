@@ -3,7 +3,7 @@ import axios from 'axios';
 class RestorationSitesService {
   constructor() {
     this.client = axios.create({
-      baseURL: process.env.REACT_APP_MRTT_BASE_URL,
+      baseURL: `${process.env.REACT_APP_API_STAGING_URL}/api/v2`,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -12,7 +12,7 @@ class RestorationSitesService {
 
   fetchSites(params = {}) {
     return this.client
-      .get('/sites', { params })
+      .get('/dashboard/sites', { params })
       .then((response) => {
         const { status, statusText, data } = response;
         if (status >= 400) throw new Error(statusText);

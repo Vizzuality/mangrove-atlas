@@ -13477,6 +13477,7 @@ __metadata:
     "@storybook/react": ^5.1.9
     "@turf/bbox": ^6.0.1
     axios: ^0.27.2
+    babel-loader: 8.1.0
     bowser: ^2.6.1
     chroma-js: ^2.4.2
     classnames: ^2.2.6

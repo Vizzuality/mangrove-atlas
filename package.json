@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@turf/bbox": "^6.0.1",
     "axios": "^0.27.2",
+    "babel-loader": "8.1.0",
     "bowser": "^2.6.1",
     "chroma-js": "^2.4.2",
     "classnames": "^2.2.6",
@@ -73,7 +74,7 @@
     "sass": "^1.50.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "CI=false react-scripts build",
     "lint": "eslint ./src",
     "test": "react-scripts test",
