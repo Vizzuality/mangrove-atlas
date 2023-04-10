@@ -4787,6 +4787,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@radix-ui/react-checkbox@npm:^1.0.3":
   version: 1.0.3
   resolution: "@radix-ui/react-checkbox@npm:1.0.3"
@@ -4804,6 +4805,12 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   checksum: aca9213eddb7f5c65b2d396421bc5a9d18fb87fad81e1964d0ac7a72fe6abb3b2c2c51ecc29b0643286843187680974ba1ff7197b2a936dd7d5edde25819800f
+=======
+"gl-matrix@npm:^3.0.0, gl-matrix@npm:^3.4.0, gl-matrix@npm:^3.4.3":
+  version: 3.4.3
+  resolution: "gl-matrix@npm:3.4.3"
+  checksum: c47830ba727f3d0fab635c48135af96aef66274079a3e0afd6f68b68c98eae9fc1bcfdc7312fe2301e4fd22dd24c5e0f1b5d025960a208e50d07101ed8d940f9
+>>>>>>> 8212ed04 (initial set up next)
   languageName: node
   linkType: hard
 
@@ -5036,6 +5043,7 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "@radix-ui/react-popover@npm:^1.0.5":
   version: 1.0.5
   resolution: "@radix-ui/react-popover@npm:1.0.5"
@@ -5060,6 +5068,19 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   checksum: 5a748af34b9889350c0f4dc0a15b1d09c3ab8a8bacc6e7a358c70341de94acbbdb07aafbeadfbe0371cf77dabdaf4e273bbcf742f5d67f29543eb8cea58ee2a9
+=======
+"hammerjs@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "hammerjs@npm:2.0.8"
+  checksum: b092da7d1565a165d7edb53ef0ce212837a8b11f897aa3cf81a7818b66686b0ab3f4747fbce8fc8a41d1376594639ce3a054b0fd4889ca8b5b136a29ca500e27
+  languageName: node
+  linkType: hard
+
+"hamt_plus@npm:1.0.2":
+  version: 1.0.2
+  resolution: "hamt_plus@npm:1.0.2"
+  checksum: af26ea32db03009019cc83dfa9411521a2fa16079443de1a502c9be46d8b3c975acda8ed93fc5750ef08d3186d35901e2d8cfe717dd54bea67b358601fa74e4c
+>>>>>>> 8212ed04 (initial set up next)
   languageName: node
   linkType: hard
 
@@ -13422,10 +13443,81 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "promise-inflight@npm:^1.0.1":
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
   checksum: 22749483091d2c594261517f4f80e05226d4d5ecc1fc917e1886929da56e22b5718b7f2a75f3807e7a7d471bc3be2907fe92e6e8f373ddf5c64bae35b5af3981
+=======
+"mangrove-atlas@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "mangrove-atlas@workspace:."
+  dependencies:
+    "@artsy/fresnel": 6.1.0
+    "@deck.gl/core": ^8.9.6
+    "@mdx-js/loader": 2.3.0
+    "@mdx-js/react": 2.3.0
+    "@next/font": ^13.2.4
+    "@next/mdx": 13.2.4
+    "@radix-ui/react-accordion": ^1.1.1
+    "@radix-ui/react-checkbox": ^1.0.3
+    "@radix-ui/react-collapsible": ^1.0.2
+    "@radix-ui/react-dialog": ^1.0.3
+    "@radix-ui/react-dropdown-menu": ^2.0.4
+    "@radix-ui/react-hover-card": ^1.0.5
+    "@radix-ui/react-icons": ^1.3.0
+    "@radix-ui/react-popover": ^1.0.5
+    "@radix-ui/react-progress": ^1.0.2
+    "@radix-ui/react-select": ^1.2.1
+    "@radix-ui/react-switch": ^1.0.2
+    "@radix-ui/react-toggle": ^1.0.2
+    "@radix-ui/react-tooltip": ^1.0.5
+    "@tailwindcss/forms": 0.5.3
+    "@tailwindcss/line-clamp": 0.4.2
+    "@tailwindcss/typography": 0.5.9
+    "@tanstack/react-query": 4.26.1
+    "@types/google.analytics": 0.0.42
+    "@types/node": 18.15.0
+    "@types/react": 18.0.28
+    "@types/react-dom": 18.0.11
+    "@typescript-eslint/eslint-plugin": 5.48.2
+    assert: 2.0.0
+    autoprefixer: 10.4.14
+    axios: 1.3.4
+    classnames: ^2.3.2
+    clsx: 1.2.1
+    cypress: 12.7.0
+    eslint: 8.32.0
+    eslint-config-next: 13.1.2
+    eslint-config-prettier: 8.6.0
+    eslint-plugin-prettier: 4.2.1
+    husky: 6.0.0
+    mapbox-gl: ^2.13.0
+    next: 13.2.4
+    postcss: 8.4.21
+    prettier: 2.8.3
+    prettier-plugin-tailwindcss: 0.2.1
+    react: 18.2.0
+    react-dom: 18.2.0
+    react-map-gl: ^7.0.21
+    react-query: ^3.39.3
+    recoil: ^0.7.7
+    start-server-and-test: 1.12.1
+    svg-sprite-loader: 6.0.11
+    svgo: 3.0.2
+    svgo-loader: 3.0.3
+    tailwind-merge: ^1.11.0
+    tailwindcss: 3.2.7
+    typescript: 4.9.4
+    use-debounce: ^9.0.3
+  languageName: unknown
+  linkType: soft
+
+"map-cache@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "map-cache@npm:0.2.2"
+  checksum: 3067cea54285c43848bb4539f978a15dedc63c03022abeec6ef05c8cb6829f920f13b94bcaf04142fc6a088318e564c4785704072910d120d55dbc2e0c421969
+>>>>>>> 8212ed04 (initial set up next)
   languageName: node
   linkType: hard
 
@@ -13471,10 +13563,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
+=======
+"math.gl@npm:^3.6.2":
+  version: 3.6.3
+  resolution: "math.gl@npm:3.6.3"
+  dependencies:
+    "@math.gl/core": 3.6.3
+  checksum: fb626ebabd8f26f7f0ec3b7689205bd0465a2b7bfbcfc98cb808a9ff379c500570f012d4f0bbb2b3fc2fec91b4e0d4569cd986d6e818b6dac3013fd03db6de84
+  languageName: node
+  linkType: hard
+
+"mdast-util-definitions@npm:^5.0.0":
+  version: 5.1.2
+  resolution: "mdast-util-definitions@npm:5.1.2"
+  dependencies:
+    "@types/mdast": ^3.0.0
+    "@types/unist": ^2.0.0
+    unist-util-visit: ^4.0.0
+  checksum: 2544daccab744ea1ede76045c2577ae4f1cc1b9eb1ea51ab273fe1dca8db5a8d6f50f87759c0ce6484975914b144b7f40316f805cb9c86223a78db8de0b77bae
+>>>>>>> 8212ed04 (initial set up next)
   languageName: node
   linkType: hard
 
@@ -14122,12 +14234,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+<<<<<<< HEAD
 "request-progress@npm:^3.0.0":
   version: 3.0.0
   resolution: "request-progress@npm:3.0.0"
   dependencies:
     throttleit: ^1.0.0
   checksum: 6ea1761dcc8a8b7b5894afd478c0286aa31bd69438d7050294bd4fd0d0b3e09b5cde417d38deef9c49809039c337d8744e4bb49d8632b0c3e4ffa5e8a687e0fd
+=======
+"mjolnir.js@npm:^2.7.0":
+  version: 2.7.1
+  resolution: "mjolnir.js@npm:2.7.1"
+  dependencies:
+    "@types/hammerjs": ^2.0.41
+    hammerjs: ^2.0.8
+  checksum: 41a8e4d28e9f10ff411a6ca5e67eb35961faea5d284350bc54551a9fd44044e9001b1296c0aef938e6bac6efc7e0d53cf75caa6871e443f87467da788b31e64b
+  languageName: node
+  linkType: hard
+
+"mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "mkdirp@npm:1.0.4"
+  bin:
+    mkdirp: bin/cmd.js
+  checksum: a96865108c6c3b1b8e1d5e9f11843de1e077e57737602de1b82030815f311be11f96f09cce59bd5b903d0b29834733e5313f9301e3ed6d6f6fba2eae0df4298f
+>>>>>>> 8212ed04 (initial set up next)
   languageName: node
   linkType: hard
 
