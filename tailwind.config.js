@@ -12,6 +12,7 @@ module.exports = {
     './src/containers/**/*.@(tsx|ts)',
     './src/layouts/**/*.@(tsx|ts)',
     './src/pages/**/*.@(tsx|ts)',
+    './src/images/**/*.@(tsx|ts)',
   ],
   plugins: [forms, lineClamp, typography],
   theme: {

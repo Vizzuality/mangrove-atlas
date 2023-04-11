@@ -52,6 +52,12 @@ const DEFAULT_PROPS = {
   // },
 };
 
+const LAYERS = [
+  { id: 'mangrove-coverage', label: 'Mangrove Coverage' },
+  { id: 'mangrove-mass', label: 'Mangrove Mass' },
+  { id: 'habitat-change', label: 'Mangrove Habitat Change' },
+];
+
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
@@ -88,7 +94,7 @@ const Home: React.FC = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
         <div className="absolute top-0 z-10">
-          <CollapsibleDemo layers={['Mangrove Coverage', 'Another Layer']} />
+          <CollapsibleDemo layers={LAYERS} />
         </div>
         <MapContainer />
       </div>
