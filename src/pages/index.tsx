@@ -7,6 +7,7 @@ import MapContainer from 'containers/map';
 
 import CollapsibleDemo from 'components/collapsible';
 import Map from 'components/map';
+import RadioGroupDemo from 'components/radio-group';
 
 const DEFAULT_PROPS = {
   id: 'default',
@@ -94,6 +95,7 @@ const Home: React.FC = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
         <div className="absolute top-0 z-10">
+          <RadioGroupDemo />
           <CollapsibleDemo layers={LAYERS} />
         </div>
         <MapContainer />
