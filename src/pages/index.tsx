@@ -1,12 +1,13 @@
 import Head from 'next/head';
 
 import { Cross2Icon } from '@radix-ui/react-icons';
+import { PlusIcon } from '@radix-ui/react-icons';
 import cx from 'classnames';
 
 import MapContainer from 'containers/map';
 
-import CollapsibleDemo from 'components/collapsible';
 import Map from 'components/map';
+import TooltipDemo from 'components/tooltip';
 
 const DEFAULT_PROPS = {
   id: 'default',
@@ -88,7 +89,11 @@ const Home: React.FC = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
         <div className="absolute top-0 z-10">
-          <CollapsibleDemo />
+          <TooltipDemo content={<div>Add to library</div>}>
+            <button className="text-violet11 shadow-blackA7 hover:bg-violet3 inline-flex h-[35px] w-[35px] items-center justify-center rounded-full bg-white shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-black">
+              <PlusIcon />
+            </button>
+          </TooltipDemo>
         </div>
         <MapContainer />
       </div>

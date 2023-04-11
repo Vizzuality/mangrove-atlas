@@ -19,7 +19,10 @@ module.exports = {
       fontFamily: {},
       colors: {
         black: '#000000',
-        grey: '#939393',
+        grey: {
+          400: '#939393',
+          800: '#808080',
+        },
         teal: {
           400: '#00C5BD',
           800: '#00857F',

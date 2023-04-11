@@ -1,34 +1,32 @@
 import { useState } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
-import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
+import { ChevronUpIcon } from '@radix-ui/react-icons';
 
 const CollapsibleDemo = () => {
-  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Collapsible.Root className="w-[300px]" defaultOpen={true} open={open} onOpenChange={setOpen}>
-      <div
-        className="relative"
-        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-      >
+    <Collapsible.Root open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
+      <div className="flex items-center justify-between space-x-4 px-4">
+        <h4 className="text-sm font-semibold">Layer</h4>
         <Collapsible.Trigger asChild>
-          <button className="drop-shadow-[0px 4px 12px  0px #00000014] focus:drop-shadow-[0px  4px  12px  0px #00000014x]  text-color-black absolute bottom-0 -right-8 inline-flex h-[25px] w-[25px] items-center justify-center rounded-lg font-bold outline-none drop-shadow-lg">
-            {open ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          <button className="w-9 p-0">
+            <ChevronUpIcon className="h-4 w-4" />
+            <span className="sr-only">Toggle</span>
           </button>
         </Collapsible.Trigger>
       </div>
 
-      <div className="shadow-blackA7 rounded bg-white p-[10px] shadow-[0_2px_10px]">
-        <span className="text-violet11 text-[15px] leading-[25px]">Layers</span>
-      </div>
-
-      <Collapsible.Content>
-        <div className="shadow-blackA7 my-[10px] rounded bg-white p-[10px] shadow-[0_2px_10px]">
-          <span className="text-violet11 text-[15px] leading-[25px]">Layer 1</span>
+      <Collapsible.Content className="space-y-2">
+        <div className="rounded-md border border-slate-200 px-4 py-3 font-mono text-sm dark:border-slate-700">
+          Layer 1
         </div>
-        <div className="shadow-blackA7 my-[10px] rounded bg-white p-[10px] shadow-[0_2px_10px]">
-          <span className="text-violet11 text-[15px] leading-[25px]">Layer 2</span>
+        <div className="rounded-md border border-slate-200 px-4 py-3 font-mono text-sm dark:border-slate-700">
+          Layer 2
+        </div>
+        <div className="rounded-md border border-slate-200 px-4 py-3 font-mono text-sm dark:border-slate-700">
+          Layer 3
         </div>
       </Collapsible.Content>
     </Collapsible.Root>
