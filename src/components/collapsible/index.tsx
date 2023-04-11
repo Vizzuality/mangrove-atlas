@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useState } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cx from 'classnames';
+
+import Icon from 'components/icon';
+
+import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
 interface Layer {
   id: string;
@@ -34,7 +39,9 @@ const CollapsibleDemo = ({ layers }: { layers: Layer[] }) => {
           {isOpen && !!selectedLayers.length && (
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold uppercase">{selectedLayers[0].label}</p>
-              <button onClick={() => removeLayer(selectedLayers[0].id)}>x</button>
+              <button onClick={() => removeLayer(selectedLayers[0].id)}>
+                <Icon icon={REMOVE_SVG} className="h-4 w-4" />
+              </button>
             </div>
           )}
         </div>
@@ -59,7 +66,9 @@ const CollapsibleDemo = ({ layers }: { layers: Layer[] }) => {
               className="flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm shadow-light"
             >
               <p className="text-xs font-semibold uppercase">{l.label}</p>
-              <button onClick={() => removeLayer(l.id)}>x</button>
+              <button onClick={() => removeLayer(l.id)}>
+                <Icon icon={REMOVE_SVG} className="h-4 w-4" />
+              </button>
             </div>
           );
         })}

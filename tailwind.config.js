@@ -13,6 +13,7 @@ module.exports = {
     './src/layouts/**/*.@(tsx|ts)',
     './src/pages/**/*.@(tsx|ts)',
     './src/images/**/*.@(tsx|ts)',
+    './src/svgs/**/*.@(tsx|ts)',
   ],
   plugins: [forms, lineClamp, typography],
   theme: {
