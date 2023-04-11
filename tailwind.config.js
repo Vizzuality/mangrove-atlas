@@ -16,6 +16,9 @@ module.exports = {
   plugins: [forms, lineClamp, typography],
   theme: {
     extend: {
+      boxShadow: {
+        light: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
+      },
       fontFamily: {},
       colors: {
         black: '#000000',
