@@ -5,6 +5,7 @@ import cx from 'classnames';
 
 import MapContainer from 'containers/map';
 
+import CollapsibleDemo from 'components/collapsible';
 import Map from 'components/map';
 
 const DEFAULT_PROPS = {
@@ -79,14 +80,16 @@ const Home: React.FC = () => {
               [styles._medium]: location?.name.length > 10,
             })}"
         >
-           {location?.name} 
+           {location?.name}
           Worldwide
         </h1> */}
 
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-
+        <div className="absolute top-0 z-10">
+          <CollapsibleDemo />
+        </div>
         <MapContainer />
       </div>
     </div>

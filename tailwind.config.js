@@ -18,8 +18,11 @@ module.exports = {
     extend: {
       fontFamily: {},
       colors: {
+        black: '#000000',
+        grey: '#939393',
         teal: {
-          0: '#00857F',
+          400: '#00C5BD',
+          800: '#00857F',
         },
       },
     },
