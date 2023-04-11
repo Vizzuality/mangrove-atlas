@@ -7,7 +7,20 @@
 
 @media print {
   .map {
-    page-break-inside: avoid;
+    -webkit-column-break-after: always;
+            break-after: always;
+    -webkit-column-break-inside: avoid;
+            break-inside: avoid;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
 }
 

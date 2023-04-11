@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import Select from '@radix-ui/react-select';
@@ -74,7 +74,7 @@ type SelectItemProps = {
   className?: string;
 };
 
-const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
+const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
       <Select.Item

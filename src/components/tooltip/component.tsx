@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { PlusIcon } from '@radix-ui/react-icons';
 import Tooltip from '@radix-ui/react-tooltip';
 

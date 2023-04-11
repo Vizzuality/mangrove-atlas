@@ -50,7 +50,14 @@
 }
 
 .data_line._stacked {
+  width: 100%;
   margin-right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .data_line.right {

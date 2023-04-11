@@ -38,6 +38,25 @@
   margin: 10px 0 0;
 }
 
+.widget_legend .widget_legend_group:first-child {
+  margin: 0;
+}
+
+.widget_legend.horizontal {
+  max-width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.widget_legend.horizontal .widget_legend_group,
+.widget_legend.horizontal .widget_legend_group:first-child {
+  margin: 10px 0;
+}
+
 .widget_legend .widget_legend_title {
   font-size: 14px;
   font-weight: bold;
@@ -50,8 +69,8 @@
   width: 100%;
 }
 
-.widget_legend .widget_legend_group:first-child {
-  margin: 0;
+.widget_legend .widget_legend_subtitle {
+  opacity: 0.5;
 }
 
 .widget_legend .widget_legend_list {

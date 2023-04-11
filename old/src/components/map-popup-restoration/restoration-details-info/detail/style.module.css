@@ -10,7 +10,7 @@
 
 .wrapper .label {
   white-space: nowrap;
-  width: 170px;
+  width: 165px;
   text-align: right;
 }
 
@@ -25,12 +25,14 @@
 }
 
 .wrapper .lineChartWidget .lineChartFill {
+  position: relative;
   background-color: #B2CBF9;
-  margin-right: 2px;
   height: 100%;
 }
 
-.wrapper .lineChartWidget .lineChartBackground {
+.wrapper .lineChartWidget .lineChartFill .lineChartFillPct {
+  position: absolute;
+  font-size: small;
   background-color: #ECECEF;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
