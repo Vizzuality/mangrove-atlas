@@ -119,7 +119,7 @@ class QueryStateManager {
                     ...router.query,
                     category: dashboards?.current,
                     activeLayers,
-                    zoom,
+                    zoom: 2
                   },
                 },
               })),
