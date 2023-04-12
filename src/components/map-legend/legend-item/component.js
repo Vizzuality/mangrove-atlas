@@ -25,8 +25,6 @@ const LegendItem = ({
       setDrawingStatus(null);
       setDrawingValue(null);
       setCustomGeojsonFeatures(null);
-      setCurrent({ id: 'worldwide' });
-      resetViewport();
     } else {
       toggleActive({ id, isActive: false });
       toggleWidgetActive({ layerId: id, isActive: false });
