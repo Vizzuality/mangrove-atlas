@@ -80,19 +80,13 @@ class APIService {
       return data;
     });
 
-  fetchInvestmentPotentialData = async (params = {}) => {
-    const response = await axios.create({
-      baseURL: 'https://mangrove-atlas-api-staging.herokuapp.com/api',
-      headers: { 'Content-Type': 'application/json' },
-    }).get(
-      '/widgets/blue-carbon-investment',
-      { params: { ...params } },
-    );
-    const { status, statusText, data } = response;
-    if (status >= 400) throw new Error(statusText);
-
-    return data;
-  };
+  fetchInvestmentPotentialData = (params = {}) => this.client
+    .get('/widgets/blue-carbon-investment', { params: { ...params } })
+    .then((response) => {
+      const { status, statusText, data } = response;
+      if (status >= 400) throw new Error(statusText);
+      return data;
+    });
 
   fetchMangroveRestorationData = (params = {}) => this.client
     .get('/widgets/restoration-potential', {
