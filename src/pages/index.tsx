@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import Head from 'next/head';
 
-import HoverMenu from 'containers/hover-menu';
 import MapContainer from 'containers/map';
 
 const Home: React.FC = () => {
@@ -24,9 +23,9 @@ const Home: React.FC = () => {
       {isMobile && <FooterMenu />} */}
 
       <div
-        className="{cx(styles.vis, {
-            [styles.mobileView]: mapView && isMobile,
-          })}"
+        className="{cx(styles.vis, { [styles.mobileView]:
+            mapView && isMobile, })}
+          relative"
       >
         {/* <h1
           className="{cx(styles.printOnly, {
@@ -41,7 +40,6 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-
         <MapContainer />
       </div>
     </div>

@@ -48,6 +48,9 @@
     "clsx": "1.2.1",
     "cypress": "12.7.0",
     "framer-motion": "^10.12.3",
+    "fuse.js": "^6.6.2",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "mapbox-gl": "^2.13.0",
     "next": "13.2.4",
     "postcss": "8.4.21",
@@ -56,6 +59,7 @@
     "react-map-gl": "^7.0.21",
     "react-query": "^3.39.3",
     "recoil": "^0.7.7",
+    "recoil-sync": "^0.2.0",
     "tailwind-merge": "^1.11.0",
     "tailwindcss": "3.2.7",
     "use-debounce": "^9.0.3"
