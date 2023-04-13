@@ -1,4 +1,39 @@
+import { useMemo } from 'react';
+
 import type { SourceProps, LayerProps } from 'react-map-gl';
+
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+
+import type { UseParamsOptions } from 'types/widget';
+
+import API from 'services/api';
+
+// widget data
+export function useMangroveRestorationSites(
+  params: UseParamsOptions,
+  queryOptions: UseQueryOptions = {}
+) {
+  const fetchMangroveRestorationSites = () =>
+    API.request({
+      method: 'GET',
+      url: '/dashboards/sites',
+      params,
+    }).then((response) => response);
+
+  const query = useQuery(['restoration-sites', params], fetchMangroveRestorationSites, {
+    placeholderData: [],
+    select: (data) => ({
+      data,
+    }),
+    ...queryOptions,
+  });
+
+  return useMemo(() => {
+    return {
+      ...query,
+    } as typeof query;
+  }, [query]);
+}
 
 // const _restorationSites = [
 //   {
