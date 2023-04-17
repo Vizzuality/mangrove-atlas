@@ -12,14 +12,25 @@ module.exports = {
     './src/containers/**/*.@(tsx|ts)',
     './src/layouts/**/*.@(tsx|ts)',
     './src/pages/**/*.@(tsx|ts)',
+    './src/images/**/*.@(tsx|ts)',
+    './src/svgs/**/*.@(tsx|ts)',
   ],
   plugins: [forms, lineClamp, typography],
   theme: {
     extend: {
+      boxShadow: {
+        light: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
+      },
       fontFamily: {},
       colors: {
-        teal: {
-          0: '#00857F',
+        black: '#000000',
+        grey: {
+          400: '#939393',
+          800: '#808080',
+        },
+        brand: {
+          400: '#00C5BD',
+          800: '#00857F',
         },
       },
     },

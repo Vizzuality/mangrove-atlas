@@ -1,15 +1,18 @@
+import React from 'react';
+
 import { Source, Layer } from 'react-map-gl';
 
-import type { LayerProps } from 'types/layers';
+import { LayerProps } from 'types/layers';
 
 import { years } from './constants';
-import { useLayer, useSource } from './hooks';
+import { useLayer, useSources } from './hooks';
 
-const MangrovesLayer = ({ beforeId }: LayerProps) => {
-  const SOURCES = useSource(years);
+export const MangrovesLayer = ({ beforeId }: LayerProps) => {
+  const SOURCES = useSources(years);
   const LAYER = useLayer();
 
   if (!SOURCES || !LAYER) return null;
+
   return (
     <>
       {SOURCES.map((SOURCE) => (

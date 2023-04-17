@@ -1,11 +1,13 @@
 import Head from 'next/head';
 
 import { Cross2Icon } from '@radix-ui/react-icons';
-import cx from 'classnames';
+import { PlusIcon } from '@radix-ui/react-icons';
 
 import MapContainer from 'containers/map';
 
+import CollapsibleDemo from 'components/collapsible';
 import Map from 'components/map';
+import RadioGroupDemo from 'components/radio-group';
 
 const DEFAULT_PROPS = {
   id: 'default',
@@ -51,6 +53,18 @@ const DEFAULT_PROPS = {
   // },
 };
 
+const LAYERS = [
+  { id: 'mangrove-coverage', label: 'Mangrove Coverage' },
+  { id: 'mangrove-mass', label: 'Mangrove Mass' },
+  { id: 'habitat-change', label: 'Mangrove Habitat Change' },
+];
+
+const OPTIONS = [
+  { id: 'default', label: 'Default' },
+  { id: 'mangrove-mass', label: 'Mangrove Mass' },
+  { id: 'habitat-change', label: 'Mangrove Habitat Change' },
+];
+
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
@@ -79,14 +93,17 @@ const Home: React.FC = () => {
               [styles._medium]: location?.name.length > 10,
             })}"
         >
-           {location?.name} 
+           {location?.name}
           Worldwide
         </h1> */}
 
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-
+        <div className="absolute top-0 z-10">
+          <RadioGroupDemo options={OPTIONS} />
+          <CollapsibleDemo layers={LAYERS} />
+        </div>
         <MapContainer />
       </div>
     </div>

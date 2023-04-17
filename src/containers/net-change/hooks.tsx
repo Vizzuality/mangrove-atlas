@@ -1,6 +1,6 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-export function useSource(years): SourceProps[] {
+export function useSources(years): SourceProps[] {
   return years.map((year) => ({
     id: `net-change-${year}`,
     type: 'raster',
