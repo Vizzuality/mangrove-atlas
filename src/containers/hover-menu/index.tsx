@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useCallback, useState } from 'react';
 
+import cn from 'lib/classnames';
+
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -83,14 +85,14 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
                 onClick={() => setCategory(id)}
               >
                 <div
-                  className={cx({
+                  className={cn({
                     'flex h-12 w-12 items-center justify-center rounded-full bg-white': true,
                     'bg-brand-800': category === id,
                   })}
                 >
                   <Icon
                     icon={icon}
-                    className={cx({
+                    className={cn({
                       'h-8 w-8 stroke-none': true,
                       'fill-white': category === id,
                       'fill-brand-800': category !== id,
@@ -104,44 +106,6 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
         </motion.div>
       )}
     </AnimatePresence>
-    // <Dialog.Root open={isOpen}>
-    //   <Dialog.Portal>
-    //     <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-    //     <Dialog.Content
-    //       className={cx({
-    //         'text-black/85 fixed z-20 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
-    //           true,
-    //         [className]: !!className,
-    //       })}
-    //       onMouseLeave={() => setIsOpen(false)}
-    //     >
-    //       {WIDGET_OPTIONS.map(({ id, label, icon }) => (
-    //         <button
-    //           key={id}
-    //           className="flex cursor-pointer items-center space-x-3"
-    //           onClick={() => setCategory(id)}
-    //         >
-    //           <div
-    //             className={cx({
-    //               'flex h-12 w-12 items-center justify-center rounded-full bg-white': true,
-    //               'bg-brand-800': category === id,
-    //             })}
-    //           >
-    //             <Icon
-    //               icon={icon}
-    //               className={cx({
-    //                 'h-8 w-8 stroke-none': true,
-    //                 'fill-white': category === id,
-    //                 'fill-brand-800': category !== id,
-    //               })}
-    //             />
-    //           </div>
-    //           <p>{label}</p>
-    //         </button>
-    //       ))}
-    //     </Dialog.Content>
-    //   </Dialog.Portal>
-    // </Dialog.Root>
   );
 };
 
