@@ -5,9 +5,9 @@ import type { LayerProps } from 'types/layers';
 import { useLayers, useSource } from './hooks';
 
 const MangrovesLayer = ({ beforeId }: LayerProps) => {
-  const year = 2020;
   const SOURCE = useSource();
-  const LAYERS = useLayers(year);
+  const LAYERS = useLayers();
+
   if (!SOURCE || !LAYERS) return null;
   return (
     <Source key={SOURCE.id} {...SOURCE}>

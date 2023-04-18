@@ -3,8 +3,10 @@ import cx from 'classnames';
 
 import Map from 'components/map';
 
+import LayerManager from './layer-manager';
+
 const DEFAULT_PROPS = {
-  id: 'default',
+  id: 'hola',
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -55,10 +57,8 @@ const MapContainer = () => {
     <div className="relative h-screen w-full">
       <Map
         id={id}
-        // mapStyle="mapbox://styles/afilatore90/cjuvfwn1heng71ftijvnv2ek6"
-        // mapStyle="mapbox://styles/afilatore90/cldlfn6r0000601pdppkwocaz"
         mapStyle={mapStyle}
-        // mapStyle="mapbox://styles/globalmangrovewatch/clb3kol2a000314nizrmbp9ka"
+        // mapStyle=""
         minZoom={minZoom}
         maxZoom={maxZoom}
         initialViewState={initialViewState}
@@ -69,11 +69,7 @@ const MapContainer = () => {
       >
         {() => (
           <>
-            {/* <LayerManager />
-
-          <Controls />
-
-          <Popup /> */}
+            <LayerManager />
           </>
         )}
       </Map>

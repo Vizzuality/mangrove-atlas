@@ -13,6 +13,7 @@ import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
+import { MapProvider } from 'react-map-gl';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '700'],
@@ -46,24 +47,17 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <>
-      <style jsx global>
-        {`
-          :root {
-            --font-sans: ${OpenSansFont.style.fontFamily};
-          }
-        `}
-      </style>
-      <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <MediaContextProvider disableDynamicMediaQueries>
-              <Component {...pageProps} />
-            </MediaContextProvider>
-          </Hydrate>
-        </QueryClientProvider>
-      </RecoilRoot>
-    </>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <MediaContextProvider disableDynamicMediaQueries>
+            <MapProvider>
+            <Component {...pageProps} />
+            </MapProvider>
+          </MediaContextProvider>
+        </Hydrate>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 
