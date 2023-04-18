@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import Head from 'next/head';
 
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { PlusIcon } from '@radix-ui/react-icons';
 
+import DialogHover from 'containers/dialog-hover';
 import MapContainer from 'containers/map';
 
 import CollapsibleDemo from 'components/collapsible';
@@ -66,6 +69,7 @@ const OPTIONS = [
 ];
 
 const Home: React.FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
@@ -103,6 +107,9 @@ const Home: React.FC = () => {
         <div className="absolute top-0 z-10">
           <RadioGroupDemo options={OPTIONS} />
           <CollapsibleDemo layers={LAYERS} />
+
+          <button onMouseEnter={() => setIsOpen(true)}>HOVER HERE</button>
+          <DialogHover isOpen={isOpen} setIsOpen={setIsOpen} className="top-16" />
         </div>
         <MapContainer />
       </div>
