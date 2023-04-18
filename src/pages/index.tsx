@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { PlusIcon } from '@radix-ui/react-icons';
 
-import DialogHover from 'containers/dialog-hover';
+import HoverMenu from 'containers/hover-menu';
 import MapContainer from 'containers/map';
 
 import CollapsibleDemo from 'components/collapsible';
@@ -108,10 +108,8 @@ const Home: React.FC = () => {
           <RadioGroupDemo options={OPTIONS} />
           <CollapsibleDemo layers={LAYERS} />
 
-          <button className="relative" onMouseEnter={() => setIsOpen(true)}>
-            <DialogHover isOpen={isOpen} setIsOpen={setIsOpen} className="top-16" />
-            HOVER HERE
-          </button>
+          <button onMouseEnter={() => setIsOpen(true)}>HOVER HERE</button>
+          <HoverMenu isOpen={isOpen} setIsOpen={setIsOpen} />
         </div>
         <MapContainer />
       </div>
