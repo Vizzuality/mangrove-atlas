@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import cx from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Icon from 'components/icon';
 
@@ -16,43 +17,55 @@ interface DialogHoverPros {
 const DialogHoverComponent = ({ className, isOpen, setIsOpen }: DialogHoverPros) => {
   const [category, setCategory] = useState('summary');
 
+  const contentVariants = {
+    open: { x: 0, left: 12 },
+    close: { x: -200, left: -100 },
+  };
+
   return (
     <Dialog.Root open={isOpen}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-        <Dialog.Content
-          onMouseLeave={() => setIsOpen(false)}
-          className={cx({
-            'fixed left-2 z-20 rounded-[30px] bg-white p-1.5 pr-4 focus:outline-none': true,
-            [className]: !!className,
-          })}
-        >
-          <Dialog.Description className="text-black/85 space-y-4 font-sans text-[19px] font-light">
-            {WIDGET_OPTIONS.map(({ id, label, icon }) => (
-              <button
-                key={id}
-                className="flex cursor-pointer items-center space-x-3"
-                onClick={() => setCategory(id)}
-              >
-                <div
-                  className={cx({
-                    'flex h-12 w-12 items-center justify-center rounded-full bg-white': true,
-                    'bg-brand-800': category === id,
-                  })}
+        <Dialog.Content onMouseLeave={() => setIsOpen(false)}>
+          <AnimatePresence>
+            <motion.div
+              initial={false}
+              variants={contentVariants}
+              animate={isOpen ? 'open' : 'close'}
+              exit="close"
+              transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
+              className={cx({
+                'text-black/85 fixed z-20 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
+                  true,
+                [className]: !!className,
+              })}
+            >
+              {WIDGET_OPTIONS.map(({ id, label, icon }) => (
+                <button
+                  key={id}
+                  className="flex cursor-pointer items-center space-x-3"
+                  onClick={() => setCategory(id)}
                 >
-                  <Icon
-                    icon={icon}
+                  <div
                     className={cx({
-                      'h-8 w-8': true,
-                      'fill-white stroke-white': category === id,
-                      'fill-brand-800 stroke-brand-800': category !== id,
+                      'flex h-12 w-12 items-center justify-center rounded-full bg-white': true,
+                      'bg-brand-800': category === id,
                     })}
-                  />
-                </div>
-                <p>{label}</p>
-              </button>
-            ))}
-          </Dialog.Description>
+                  >
+                    <Icon
+                      icon={icon}
+                      className={cx({
+                        'h-8 w-8 stroke-none': true,
+                        'fill-white': category === id,
+                        'fill-brand-800': category !== id,
+                      })}
+                    />
+                  </div>
+                  <p>{label}</p>
+                </button>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

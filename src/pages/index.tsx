@@ -69,7 +69,7 @@ const OPTIONS = [
 ];
 
 const Home: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
@@ -108,8 +108,10 @@ const Home: React.FC = () => {
           <RadioGroupDemo options={OPTIONS} />
           <CollapsibleDemo layers={LAYERS} />
 
-          <button onMouseEnter={() => setIsOpen(true)}>HOVER HERE</button>
-          <DialogHover isOpen={isOpen} setIsOpen={setIsOpen} className="top-16" />
+          <button className="relative" onMouseEnter={() => setIsOpen(true)}>
+            <DialogHover isOpen={isOpen} setIsOpen={setIsOpen} className="top-16" />
+            HOVER HERE
+          </button>
         </div>
         <MapContainer />
       </div>
