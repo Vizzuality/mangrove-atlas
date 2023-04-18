@@ -55,7 +55,7 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
           animate="animate"
           exit="exit"
           variants={overlayVariants}
-          className="bg-blur absolute top-0 left-0 z-10 h-screen w-screen bg-black/25"
+          className="absolute top-0 left-0 z-10 h-screen w-screen bg-black/50"
           onClick={handleClose}
         />
       )}
