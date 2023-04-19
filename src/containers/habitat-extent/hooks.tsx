@@ -1,4 +1,39 @@
+import { useMemo } from 'react';
+
 import type { SourceProps, LayerProps } from 'react-map-gl';
+
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+
+import type { UseParamsOptions } from 'types/widget';
+
+import API from 'services/api';
+
+// widget data
+export function useMangroveHabitatExtent(
+  params: UseParamsOptions,
+  queryOptions: UseQueryOptions = {}
+) {
+  const fetchHabitatExtent = () =>
+    API.request({
+      method: 'GET',
+      url: 'widgets/habitat-extent',
+      params,
+    }).then((response) => response);
+
+  const query = useQuery(['habitat-extent', params], fetchHabitatExtent, {
+    placeholderData: [],
+    select: (data) => ({
+      data,
+    }),
+    ...queryOptions,
+  });
+
+  return useMemo(() => {
+    return {
+      ...query,
+    } as typeof query;
+  }, [query]);
+}
 
 export function useSource(): SourceProps {
   return {

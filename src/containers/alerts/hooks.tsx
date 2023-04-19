@@ -1,5 +1,39 @@
+import { useMemo } from 'react';
+
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+
+import type { UseParamsOptions } from 'types/widget';
+
+import API from 'services/cloud-functions';
+
+// widget data
+
+export function useAlerts(params: UseParamsOptions, queryOptions: UseQueryOptions = {}) {
+  const fetchAlerts = () =>
+    API.request({
+      method: 'GET',
+      url: '/fetch-alerts',
+      params,
+    }).then((response) => response);
+
+  const query = useQuery(['alerts', params], fetchAlerts, {
+    placeholderData: [],
+    select: (data) => ({
+      data,
+    }),
+    ...queryOptions,
+  });
+
+  return useMemo(() => {
+    return {
+      ...query,
+    } as typeof query;
+  }, [query]);
+}
+
+// dataset layer
 export function useSource(): SourceProps {
   return {
     id: 'alerts',
