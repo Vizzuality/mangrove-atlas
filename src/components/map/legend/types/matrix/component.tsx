@@ -44,7 +44,7 @@ export const LegendTypeMatrix: React.FC<LegendTypeMatrixProps> = ({
               ))}
             </div>
 
-            <div className="font-heading text-xxs absolute bottom-0 left-full z-10 h-full w-2 transform justify-between text-white">
+            <div className="font-heading absolute bottom-0 left-full z-10 h-full w-2 transform justify-between text-xxs text-white">
               <div
                 className="absolute flex h-px items-center space-x-1 leading-none"
                 style={{ bottom: `${(100 / 11) * 2}%` }}
@@ -74,7 +74,7 @@ export const LegendTypeMatrix: React.FC<LegendTypeMatrixProps> = ({
               </div>
             </div>
 
-            <div className="font-heading text-xxs absolute -bottom-1 -left-1 z-10 h-full w-2 origin-bottom rotate-90 transform justify-between text-white">
+            <div className="font-heading absolute -bottom-1 -left-1 z-10 h-full w-2 origin-bottom rotate-90 transform justify-between text-xxs text-white">
               <div
                 className="absolute flex h-px transform items-center space-x-1 leading-none"
                 style={{ bottom: `${100 - (100 / 11) * 2}%` }}

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import CHART_SVG from 'svgs/chart.svg?sprite';
-import RELOAD_SVG from 'svgs/reload.svg?sprite';
-import STAR_SVG from 'svgs/star.svg?sprite';
-import SUN_SVG from 'svgs/sun.svg?sprite';
+import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
+import RELOAD_SVG from 'svgs/sidebar/reload.svg?sprite';
+import STAR_SVG from 'svgs/sidebar/star.svg?sprite';
+import SUN_SVG from 'svgs/sidebar/sun.svg?sprite';
 
 export const WIDGET_OPTIONS = [
   { id: 'summary', label: 'Summary', icon: STAR_SVG },

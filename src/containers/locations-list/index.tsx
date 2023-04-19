@@ -5,8 +5,6 @@ import Link from 'next/link';
 // react aria
 import cn from 'lib/classnames';
 
-import { useSearchFieldState } from '@react-stately/searchfield';
-
 // react types
 import cx from 'classnames';
 
@@ -24,8 +22,6 @@ const locationNames = {
 };
 
 const LocationsList = ({ ...rest }) => {
-  const state = useSearchFieldState(rest);
-
   const ref = useRef();
   ('');
 
@@ -44,15 +40,13 @@ const LocationsList = ({ ...rest }) => {
           onChange={(e) => console.log(e.target.value)}
         />
 
-        {state.value !== '' && (
-          <button
-            aria-label="close"
-            className="relative flex h-5 w-5 items-center justify-center self-center"
-            type="button"
-          >
-            <Icon icon={CLOSE_SVG} className="inline-block h-2 w-2" />
-          </button>
-        )}
+        {/* <button
+          aria-label="close"
+          className="relative flex h-5 w-5 items-center justify-center self-center"
+          type="button"
+        >
+          <Icon icon={CLOSE_SVG} className="inline-block h-2 w-2" />
+        </button> */}
       </div>
       <ul className="space-y-2 font-sans">
         {data.map(({ id, iso, name, location_type }) => (

@@ -72,7 +72,7 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
         >
           <div
             className={cx({
-              'text-black/85 fixed z-20 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
+              'text-black/85 fixed z-20 mt-6 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
                 true,
               [className]: !!className,
             })}
@@ -94,8 +94,8 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
                     icon={icon}
                     className={cn({
                       'h-8 w-8 stroke-none': true,
-                      'fill-white': category === id,
-                      'fill-brand-800': category !== id,
+                      'fill-current text-white': category === id,
+                      'fill-current text-brand-800': category !== id,
                     })}
                   />
                 </div>

@@ -7,10 +7,10 @@ const SwitchDemo = () => (
         Airplane mode
       </label>
       <Switch.Root
-        className="relative h-7 w-12 cursor-default rounded-full border-2 border-teal-0 border-opacity-20 outline-none data-[state=checked]:bg-teal-0"
+        className="border-teal-0 data-[state=checked]:bg-teal-0 relative h-7 w-12 cursor-default rounded-full border-2 border-opacity-20 outline-none"
         id="airplane-mode"
       >
-        <Switch.Thumb className=" block h-5 w-5 translate-x-0.5 rounded-full bg-teal-0 transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white" />
+        <Switch.Thumb className=" bg-teal-0 block h-5 w-5 translate-x-0.5 rounded-full transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white" />
       </Switch.Root>
     </div>
   </form>

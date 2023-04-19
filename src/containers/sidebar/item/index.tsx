@@ -8,7 +8,7 @@ const Sidebar = ({ title, children }) => {
       </div>
       <div
         className={cn({
-          'active:brand-800 flex flex-col items-center justify-center space-y-4 rounded-full bg-white p-1.5 text-brand-800 hover:bg-brand-800 hover:text-white active:text-white':
+          'flex flex-col items-center justify-center space-y-4 rounded-full bg-white p-1.5 text-brand-800':
             true,
         })}
       >
