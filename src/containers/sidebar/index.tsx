@@ -7,42 +7,27 @@ import HighlightedPlaces from 'containers/highlighted-places';
 import HoverMenu from 'containers/hover-menu';
 import LocationsList from 'containers/locations-list';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 import GLOBE_SVG from 'svgs/sidebar/globe.svg?sprite';
-import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
 import RELOAD_SVG from 'svgs/sidebar/reload.svg?sprite';
 import STAR_SVG from 'svgs/sidebar/star.svg?sprite';
 import SUN_SVG from 'svgs/sidebar/sun.svg?sprite';
+
+import Menu from './menu';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
     <div className="absolute top-0 left-0 z-10 flex h-screen w-[80px] flex-col items-start justify-start bg-brand-600 p-2.5 py-20">
-      <div className="font-lato w-full py-2 text-center text-xxs leading-[10px] text-white">
-        Menu
-      </div>
-      <div className="flex h-[60px] w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white text-brand-800">
-        <Dialog>
-          <DialogTrigger>
-            <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
-          </DialogTrigger>
-          <DialogContent>
-            <HighlightedPlaces />
-            <LocationsList />
-          </DialogContent>
-        </Dialog>
-      </div>
-      {/* <div className="flex flex-col items-center justify-center space-y-4 rounded-full bg-white p-1.5 text-brand-800">
-        <button type="button">
-          <Icon icon={MAP_SETTINGS_SVG} className="h-8 w-8 fill-current text-brand-600" />
-        </button>
-      </div> */}
+      <Menu />
+
+      {/* <HighlightedPlaces />
+            <LocationsList /> */}
 
       <div className="flex flex-col text-center">
         <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Place</div>

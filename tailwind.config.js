@@ -26,8 +26,8 @@ module.exports = {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       fontSize: {
-        xxs: 10,
-        xl: 19,
+        xxs: '0.625rem',
+        '2lg': '1.188rem',
       },
       colors: {
         black: '#000000',

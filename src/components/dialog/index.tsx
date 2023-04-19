@@ -8,6 +8,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
@@ -42,18 +43,18 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0 fixed z-50 grid w-full gap-4 bg-white p-6 sm:max-w-lg':
+        'animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 fixed top-10 left-[80px] z-[60] w-full bg-white p-6 sm:max-w-lg':
           true,
         [className]: !!className,
       })}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-slate-100">
-        <Icon icon={CLOSE_SVG} className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
+    <DialogPrimitive.Close className="absolute top-16 left-[570px] z-50 flex h-11 w-16 cursor-pointer items-center justify-end rounded-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+      <span className="sr-only">Close</span>
+    </DialogPrimitive.Close>
   </DialogPortal>
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
