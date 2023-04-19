@@ -6,9 +6,9 @@ import cn from 'lib/classnames';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Icon from 'components/icon';
+import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
 
-import { WIDGET_OPTIONS } from './constants';
+import Icon from 'components/icon';
 
 interface HoverMenuProps {
   className?: string;
@@ -16,7 +16,7 @@ interface HoverMenuProps {
   setIsOpen: (boolean) => void;
 }
 const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
-  const [category, setCategory] = useState(WIDGET_OPTIONS[0].id);
+  const [category, setCategory] = useState(CATEGORY_OPTIONS[0].id);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -78,7 +78,7 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
             })}
             onMouseLeave={() => setIsOpen(false)}
           >
-            {WIDGET_OPTIONS.map(({ id, label, icon }) => (
+            {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button
                 key={id}
                 className="flex cursor-pointer items-center space-x-3"

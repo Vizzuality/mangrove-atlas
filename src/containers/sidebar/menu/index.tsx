@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
 
+import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
+
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
-
-import { EXT_MENU_OPTIONS } from './constants';
 
 const Menu = () => {
   const [aboutSection, setAboutSection] = useState<boolean>(false);
 
   return (
     <>
-      <div className="font-lato w-full py-2 text-center text-xxs leading-[10px] text-white">
-        Menu
-      </div>
-      <div className="flex h-[60px] w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white text-brand-800">
+      <div className="w-full pb-1 text-center font-sans text-xxs text-white">Menu</div>
+      <div className="flex h-[60px] w-[60px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
         <Dialog>
           <DialogTrigger>
             <div className="flex justify-center" onClick={() => setAboutSection(false)}>
