@@ -32,7 +32,7 @@ export function useMangroveNetChange(params: UseParamsOptions, queryOptions: Use
   }, [query]);
 }
 
-export function useSource(years): SourceProps[] {
+export function useSources(years): SourceProps[] {
   return years.map((year) => ({
     id: `net-change-${year}`,
     type: 'raster',
