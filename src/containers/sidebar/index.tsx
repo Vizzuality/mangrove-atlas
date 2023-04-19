@@ -26,9 +26,6 @@ const Sidebar = () => {
     <div className="absolute top-0 left-0 z-10 flex h-screen w-[80px] flex-col items-start justify-start bg-brand-600 p-2.5 py-20">
       <Menu />
 
-      {/* <HighlightedPlaces />
-            <LocationsList /> */}
-
       <div className="flex flex-col text-center">
         <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Place</div>
         <div className="flex w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">

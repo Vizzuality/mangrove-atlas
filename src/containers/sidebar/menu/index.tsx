@@ -19,9 +19,9 @@ const Menu = () => {
       <div className="flex h-[60px] w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white text-brand-800">
         <Dialog>
           <DialogTrigger>
-            <button className="flex justify-center" onClick={() => setAboutSection(false)}>
+            <div className="flex justify-center" onClick={() => setAboutSection(false)}>
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
-            </button>
+            </div>
           </DialogTrigger>
           <DialogContent className="scroll-y h-[540px] overflow-y-auto overflow-x-hidden rounded-[20px]">
             {!aboutSection && (
