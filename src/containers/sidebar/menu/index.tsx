@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+
 import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
@@ -12,6 +14,7 @@ import GMA_PNG from 'images/gma.png';
 import VIZZUALITY_PNG from 'images/vizzuality.png';
 
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const Menu = () => {
   const [aboutSection, setAboutSection] = useState<boolean>(false);
@@ -88,6 +91,10 @@ const Menu = () => {
                 <h4 className="py-6 text-2lg font-bold">Global Mangrove Watch Partners</h4>
               </div>
             )}
+            <DialogPrimitive.Close className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+              <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+              <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
           </DialogContent>
         </Dialog>
       </div>

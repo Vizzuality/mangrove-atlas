@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import cn from 'lib/classnames';
 
+import * as DialogPrimitive from '@radix-ui/react-dialog';
+
 import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
@@ -9,6 +11,7 @@ import Icon from 'components/icon';
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 import GLOBE_SVG from 'svgs/sidebar/globe.svg?sprite';
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const Place = () => {
   return (
@@ -35,6 +38,10 @@ const Place = () => {
             </DialogTrigger>
             <DialogContent className="h-[90vh] w-[540px] rounded-[20px]">
               <LocationsList />
+              <DialogPrimitive.Close className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+                <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+                <span className="sr-only">Close</span>
+              </DialogPrimitive.Close>
             </DialogContent>
           </Dialog>
           <button
