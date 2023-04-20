@@ -63,20 +63,22 @@ const LocationsList = ({ ...rest }) => {
           </div>
         </Link>
       </div>
-      <ul className="space-y-2 font-sans">
-        {data.map(({ id, iso, name, location_type }) => (
-          <li key={id} className="flex w-full flex-1">
-            <Link href={`/${iso}`} className="flex w-full flex-1 items-center justify-between">
-              <span className="text-xl leading-[30px]">{name}</span>
-              {location_type && (
-                <span className="text-xs text-grey-800 text-opacity-90">
-                  {locationNames[location_type]}
-                </span>
-              )}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {data && (
+        <ul className="space-y-2 font-sans">
+          {data.map(({ id, iso, name, location_type }) => (
+            <li key={id} className="flex w-full flex-1">
+              <Link href={`/${iso}`} className="flex w-full flex-1 items-center justify-between">
+                <span className="text-xl leading-[30px]">{name}</span>
+                {location_type && (
+                  <span className="text-xs text-grey-800 text-opacity-90">
+                    {locationNames[location_type]}
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
