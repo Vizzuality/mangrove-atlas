@@ -7,7 +7,6 @@ const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
-
   return (
     <div className="{cx([styles.printOnly_wrapper])}">
       <Head>
@@ -19,7 +18,6 @@ const Home: React.FC = () => {
       {/* {!isMobile && <DesktopLayout />}
       {isMobile && <MobileLayout />}
       {isMobile && <FooterMenu />} */}
-
       <div
         className="{cx(styles.vis, { [styles.mobileView]:
             mapView && isMobile, })}

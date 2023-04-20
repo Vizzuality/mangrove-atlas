@@ -37,10 +37,12 @@ export function useMangroveProtectedAreas(
 
 export function useSource(): SourceProps {
   return {
+    id: 'protection',
     type: 'vector',
-    id: 'selected-wdpa-polygons',
+    url: 'mapbox://globalmangrovewatch.325yq2xj',
   };
 }
+
 export function useLayers(): LayerProps[] {
   return [
     {

@@ -1,16 +1,19 @@
+import React from 'react';
+
 import { Source, Layer } from 'react-map-gl';
 
-import type { LayerProps } from 'types/layers';
+import { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
-const MangrovesLayer = ({ beforeId }: LayerProps) => {
+export const MangrovesCountryBoundariesLayer = ({ beforeId }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers();
 
   if (!SOURCE || !LAYERS) return null;
+
   return (
-    <Source key={SOURCE.id} {...SOURCE}>
+    <Source {...SOURCE}>
       {LAYERS.map((LAYER) => (
         <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
       ))}
@@ -18,4 +21,4 @@ const MangrovesLayer = ({ beforeId }: LayerProps) => {
   );
 };
 
-export default MangrovesLayer;
+export default MangrovesCountryBoundariesLayer;

@@ -8,6 +8,8 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import { years } from './constants';
+
 // widget data
 export function useMangroveBiomass(params: UseParamsOptions, queryOptions: UseQueryOptions = {}) {
   const fetchMangroveBiomass = () =>
@@ -32,16 +34,17 @@ export function useMangroveBiomass(params: UseParamsOptions, queryOptions: UseQu
   }, [query]);
 }
 
-export function useSource(years): SourceProps[] {
-  return years.map((year) => ({
-    id: `aboveground_biomass-${year}`,
+export function useSource(): SourceProps {
+  const tiles = years.map<string>((year: number) => {
+    return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`;
+  });
+  return {
+    id: 'aboveground_biomass-source',
     type: 'raster',
-    tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`,
-    ],
-    minZoom: 0,
-    maxZoom: 12,
-  }));
+    tiles,
+    minzoom: 0,
+    maxzoom: 12,
+  };
 }
 export function useLayer(): LayerProps {
   return {

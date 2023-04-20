@@ -32,16 +32,18 @@ export function useMangroveHeight(params: UseParamsOptions, queryOptions: UseQue
   }, [query]);
 }
 
-export function useSource(years): SourceProps[] {
-  return years.map((year) => ({
-    id: `mangrove_canopy_height-v3-${year}`,
+export function useSource(years: number[]): SourceProps {
+  const tiles = years.map<string>((year: number) => {
+    return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_canopy_height-v3/${year}/{z}/{x}/{y}.png`;
+  });
+
+  return {
+    id: 'mangrove_canopy_height-v3-source',
     type: 'raster',
-    tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_canopy_height-v3/${year}/{z}/{x}/{y}.png`,
-    ],
-    minZoom: 0,
-    maxZoom: 12,
-  }));
+    tiles,
+    minzoom: 0,
+    maxzoom: 12,
+  };
 }
 export function useLayer(): LayerProps {
   return {
