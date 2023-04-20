@@ -2,6 +2,7 @@ const forms = require('@tailwindcss/forms');
 const lineClamp = require('@tailwindcss/line-clamp');
 const typography = require('@tailwindcss/typography');
 const { fontFamily } = require('tailwindcss/defaultTheme');
+const animate = require('tailwindcss-animate');
 
 /**
  * @type {import('tailwindcss').Config}
@@ -16,7 +17,7 @@ module.exports = {
     './src/images/**/*.@(tsx|ts)',
     './src/svgs/**/*.@(tsx|ts)',
   ],
-  plugins: [forms, lineClamp, typography],
+  plugins: [animate, forms, lineClamp, typography],
   theme: {
     extend: {
       boxShadow: {

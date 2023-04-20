@@ -19,20 +19,20 @@ const LocationsList = ({ ...rest }) => {
   ('');
 
   return (
-    <>
-      <div className="relative flex w-full border-b border-gray-400 px-4">
+    <div className="no-scrollbar overflow-y-auto p-4">
+      <div className="relative flex w-full border-b border-gray-400">
         <Input
           // {...inputProps}
           ref={ref}
           // value={value}
           placeholder="Type name"
           type="search"
-          className="w-full truncate bg-transparent pl-5 font-sans leading-4 placeholder-gray-300 placeholder-opacity-50 focus:outline-none"
+          className="truncate border-none bg-transparent pl-4 font-sans leading-4 placeholder-gray-300 placeholder-opacity-50 focus:outline-none"
           onChange={(e) => console.log(e.target.value)}
         />
       </div>
-      <div className="my-6 flex w-full flex-1 space-x-2">
-        <Link href="" className="flex-1">
+      <div className="my-6 flex space-x-2">
+        <Link href="" className="w-[147px]">
           <div
             key={'currentLocation.id'}
             className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
@@ -42,7 +42,7 @@ const LocationsList = ({ ...rest }) => {
             </h3>
           </div>
         </Link>
-        <Link href="" className="flex-1">
+        <Link href="" className="w-[147px]">
           <div
             key={'currentLocation.id'}
             className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
@@ -52,7 +52,7 @@ const LocationsList = ({ ...rest }) => {
             </h3>
           </div>
         </Link>
-        <Link href="" className="flex-1">
+        <Link href="" className="w-[147px]">
           <div
             key={'currentLocation.id'}
             className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
@@ -77,7 +77,7 @@ const LocationsList = ({ ...rest }) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

@@ -33,7 +33,7 @@ const Place = () => {
                 <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
               </div>
             </DialogTrigger>
-            <DialogContent className="scroll-y h-[90vh] overflow-y-auto overflow-x-hidden rounded-[20px]">
+            <DialogContent className="h-[90vh] w-[540px] rounded-[20px]">
               <LocationsList />
             </DialogContent>
           </Dialog>

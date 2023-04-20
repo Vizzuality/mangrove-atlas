@@ -6391,6 +6391,7 @@ __metadata:
     svgo-loader: 3.0.3
     tailwind-merge: ^1.11.0
     tailwindcss: 3.2.7
+    tailwindcss-animate: ^1.0.5
     typescript: 4.9.4
     use-debounce: ^9.0.3
   languageName: unknown
@@ -9492,6 +9493,15 @@ __metadata:
   version: 1.12.0
   resolution: "tailwind-merge@npm:1.12.0"
   checksum: 5ef323eec1051c4aa9626e29498f6c058dbbb242ca8156aa298de41ada3eda05a8f5f1260a57112c155f63b2e94c4b4ccab5386d60fae54de07aac6d9dbc60e4
+  languageName: node
+  linkType: hard
+
+"tailwindcss-animate@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "tailwindcss-animate@npm:1.0.5"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 6b558f85a6af0780f018e1d23736d56dd59795f051df413bc2cf2fc2a021d6b1a3b78066f93e1045f3a39c11ee191c728db79e606d9a1def07fdf6a10f045312
   languageName: node
   linkType: hard
 

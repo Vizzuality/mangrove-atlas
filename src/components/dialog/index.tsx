@@ -42,18 +42,18 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'fixed top-10 left-[80px] z-[60] w-full bg-white p-6 transition-transform duration-100 will-change-transform data-[state=closed]:-translate-x-[50px] data-[state=open]:translate-x-0 sm:max-w-lg':
+        'fixed z-50 grid w-full gap-4 bg-white p-6 animate-in data-[state=open]:fade-in-90 data-[state=open]:slide-in-from-bottom-10 sm:max-w-lg sm:zoom-in-90 data-[state=open]:sm:slide-in-from-bottom-0':
           true,
         [className]: !!className,
       })}
       {...props}
     >
       {children}
+      <DialogPrimitive.Close className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+        <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
-    <DialogPrimitive.Close className="absolute top-16 left-[570px] z-50 flex h-11 w-16 cursor-pointer items-center justify-end rounded-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
-      <span className="sr-only">Close</span>
-    </DialogPrimitive.Close>
   </DialogPortal>
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;

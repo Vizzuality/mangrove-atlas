@@ -26,9 +26,9 @@ const Menu = () => {
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y h-[540px] overflow-y-auto overflow-x-hidden rounded-[20px]">
+          <DialogContent className="scroll-y h-[540px] rounded-[20px]">
             {!aboutSection && (
-              <div className="text-black/85 flex flex-col">
+              <div className="text-black/85 no-scrollbar flex flex-col overflow-y-auto">
                 <h2 className="pb-3 text-xl font-bold">Global Mangrove Watch</h2>
                 <button
                   className="pb-3 text-left text-2lg font-light"
@@ -65,7 +65,7 @@ const Menu = () => {
               </div>
             )}
             {aboutSection && (
-              <div className="font-sans">
+              <div className="no-scrollbar overflow-y-auto font-sans">
                 <h3 className="text-xl font-bold">About Global Mangrove Watch</h3>
                 <h4 className="py-6 text-2lg font-bold">
                   Monitoring to catalyse the action needed to protect and restore mangroves
