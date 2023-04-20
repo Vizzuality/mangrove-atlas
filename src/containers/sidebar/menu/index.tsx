@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useState } from 'react';
 
+import Image from 'next/image';
+
 import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
+
+import GMA_PNG from 'images/gma.png';
+import VIZZUALITY_PNG from 'images/vizzuality.png';
 
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
 
@@ -32,7 +37,7 @@ const Menu = () => {
                   About this tool
                 </button>
                 <p className="pb-3 text-left text-2lg font-light">Global Mangrove Alliance</p>
-                <div className="flex flex-col space-y-3 border-l pl-7">
+                <div className="mb-14 flex flex-col space-y-3 border-l pl-7">
                   {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
                     <a
                       key={id}
@@ -44,6 +49,18 @@ const Menu = () => {
                       {label}
                     </a>
                   ))}
+                </div>
+                <div className="flex h-20 items-center justify-between font-sans text-xs font-semibold uppercase">
+                  <div className="flex h-full flex-col justify-between">
+                    <p>Powered by</p>
+                    <Image alt="GMA" src={GMA_PNG} width={130} height={100} />
+                  </div>
+                  <div className="flex h-full flex-col items-end justify-between">
+                    <p>Designed by</p>
+                    <div className="flex h-full items-center">
+                      <Image alt="Vizzuality" src={VIZZUALITY_PNG} width={130} height={100} />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
