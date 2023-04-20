@@ -3,12 +3,11 @@ import React, { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Icon from 'components/icon';
+import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
 
-import { WIDGET_OPTIONS } from './constants';
+import Icon from 'components/icon';
 
 interface HoverMenuProps {
   className?: string;
@@ -16,7 +15,7 @@ interface HoverMenuProps {
   setIsOpen: (boolean) => void;
 }
 const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
-  const [category, setCategory] = useState(WIDGET_OPTIONS[0].id);
+  const [category, setCategory] = useState(CATEGORY_OPTIONS[0].id);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
@@ -71,14 +70,14 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
           variants={menuVariants}
         >
           <div
-            className={cx({
-              'text-black/85 fixed z-20 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
+            className={cn({
+              'text-black/85 fixed z-20 mt-6 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
                 true,
               [className]: !!className,
             })}
             onMouseLeave={() => setIsOpen(false)}
           >
-            {WIDGET_OPTIONS.map(({ id, label, icon }) => (
+            {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button
                 key={id}
                 className="flex cursor-pointer items-center space-x-3"
@@ -94,8 +93,8 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
                     icon={icon}
                     className={cn({
                       'h-8 w-8 stroke-none': true,
-                      'fill-white': category === id,
-                      'fill-brand-800': category !== id,
+                      'fill-current text-white': category === id,
+                      'fill-current text-brand-800': category !== id,
                     })}
                   />
                 </div>

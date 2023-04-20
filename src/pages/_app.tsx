@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
 
+import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
 
@@ -12,6 +13,14 @@ import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
+
+const OpenSansFont = Open_Sans({
+  weight: ['300', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'block',
+});
 
 type PageProps = {
   dehydratedState: unknown;
@@ -37,15 +46,24 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   }, [router.events, handleRouteChangeCompleted]);
 
   return (
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <MediaContextProvider disableDynamicMediaQueries>
-            <Component {...pageProps} />
-          </MediaContextProvider>
-        </Hydrate>
-      </QueryClientProvider>
-    </RecoilRoot>
+    <>
+      <style jsx global>
+        {`
+          :root {
+            --font-sans: ${OpenSansFont.style.fontFamily};
+          }
+        `}
+      </style>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <MediaContextProvider disableDynamicMediaQueries>
+              <Component {...pageProps} />
+            </MediaContextProvider>
+          </Hydrate>
+        </QueryClientProvider>
+      </RecoilRoot>
+    </>
   );
 };
 

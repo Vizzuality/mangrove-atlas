@@ -1,43 +1,113 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import * as React from 'react';
 
-import * as Dialog from '@radix-ui/react-dialog';
-import { Cross2Icon } from '@radix-ui/react-icons';
+import cn from 'lib/classnames';
 
-const DialogDemo = () => (
-  <Dialog.Root>
-    <Dialog.Trigger asChild>
-      <button className="text-violet11 shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none">
-        Edit profile
-      </button>
-    </Dialog.Trigger>
-    <Dialog.Portal>
-      <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
-      <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-0 left-5 max-h-[85vh] w-[90vw] max-w-[450px] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-        <Dialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
-          Edit profile
-        </Dialog.Title>
-        <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
-          Make changes to your profile here. Click save when you&apos;re done.
-        </Dialog.Description>
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-        <div className="mt-[25px] flex justify-end">
-          <Dialog.Close asChild>
-            <button className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none">
-              Save changes
-            </button>
-          </Dialog.Close>
-        </div>
-        <Dialog.Close asChild>
-          <button
-            className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
-            aria-label="Close"
-          >
-            <Cross2Icon />
-          </button>
-        </Dialog.Close>
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
+import Icon from 'components/icon';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+
+const Dialog = DialogPrimitive.Root;
+const DialogTrigger = DialogPrimitive.Trigger;
+const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
+  <DialogPrimitive.Portal className={className} {...props}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">
+      {children}
+    </div>
+  </DialogPrimitive.Portal>
 );
-
-export default DialogDemo;
+DialogPortal.displayName = DialogPrimitive.Portal.displayName;
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    className={cn({
+      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm': true,
+      [className]: !!className,
+    })}
+    {...props}
+    ref={ref}
+  />
+));
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn({
+        'fixed left-2 z-50 grid w-full gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 sm:max-w-lg':
+          true,
+        [className]: !!className,
+      })}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+        <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
+));
+DialogContent.displayName = DialogPrimitive.Content.displayName;
+const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn({
+      'flex flex-col space-y-2 text-center sm:text-left': true,
+      [className]: !!className,
+    })}
+    {...props}
+  />
+);
+DialogHeader.displayName = 'DialogHeader';
+const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn({
+      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2': true,
+      [className]: !!className,
+    })}
+    {...props}
+  />
+);
+DialogFooter.displayName = 'DialogFooter';
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn({ 'text-lg font-semibold text-slate-900': true, [className]: !!className })}
+    {...props}
+  />
+));
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn({
+      'text-sm text-slate-500': true,
+      [className]: !!className,
+    })}
+    {...props}
+  />
+));
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
+export {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+};

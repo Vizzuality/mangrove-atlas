@@ -1,12 +1,9 @@
-import { useState } from 'react';
-
 import Head from 'next/head';
 
-import HoverMenu from 'containers/hover-menu';
 import MapContainer from 'containers/map';
+import Sidebar from 'containers/sidebar';
 
 const Home: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
@@ -24,9 +21,9 @@ const Home: React.FC = () => {
       {isMobile && <FooterMenu />} */}
 
       <div
-        className="{cx(styles.vis, {
-            [styles.mobileView]: mapView && isMobile,
-          })}"
+        className="{cx(styles.vis, { [styles.mobileView]:
+            mapView && isMobile, })}
+          relative"
       >
         {/* <h1
           className="{cx(styles.printOnly, {
@@ -41,8 +38,8 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-
         <MapContainer />
+        <Sidebar />
       </div>
     </div>
   );
