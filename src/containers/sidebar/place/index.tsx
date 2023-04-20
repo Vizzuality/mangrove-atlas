@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import cn from 'lib/classnames';
 
-import HighlightedPlaces from 'containers/highlighted-places';
 import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
@@ -26,16 +25,15 @@ const Place = () => {
           </button>
           <Dialog>
             <DialogTrigger>
-              <button
+              <div
                 className={cn({
                   'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full': true,
                 })}
               >
                 <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
-              </button>
+              </div>
             </DialogTrigger>
-            <DialogContent className="scroll-y h-[540px] overflow-y-auto overflow-x-hidden rounded-[20px]">
-              <HighlightedPlaces />
+            <DialogContent className="scroll-y h-[90vh] overflow-y-auto overflow-x-hidden rounded-[20px]">
               <LocationsList />
             </DialogContent>
           </Dialog>
