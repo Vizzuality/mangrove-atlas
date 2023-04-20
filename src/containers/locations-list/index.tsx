@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 
 import Link from 'next/link';
 
+import { Input } from 'components/input';
+
 import * as locations from './constants.json';
 
 const { data } = locations;
@@ -19,7 +21,7 @@ const LocationsList = ({ ...rest }) => {
   return (
     <>
       <div className="relative flex w-full border-b border-gray-400 px-4">
-        <input
+        <Input
           // {...inputProps}
           ref={ref}
           // value={value}

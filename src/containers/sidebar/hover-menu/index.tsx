@@ -3,7 +3,6 @@ import React, { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
@@ -71,7 +70,7 @@ const HoverMenu = ({ className, isOpen, setIsOpen }: HoverMenuProps) => {
           variants={menuVariants}
         >
           <div
-            className={cx({
+            className={cn({
               'text-black/85 fixed z-20 mt-6 space-y-4 rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none':
                 true,
               [className]: !!className,
