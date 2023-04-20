@@ -128,6 +128,7 @@ export const CustomMap: FC<CustomMapProps> = ({
       }
     };
   }, [bounds, isFlying]);
+
   return (
     <div
       className={cx({

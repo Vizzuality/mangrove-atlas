@@ -8,11 +8,14 @@ import { GAPage } from 'lib/analytics/ga';
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
+import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
 import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
+
+import { MapProvider } from 'react-map-gl';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '700'],
@@ -54,14 +57,19 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
           }
         `}
       </style>
+
       <RecoilRoot>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <MediaContextProvider disableDynamicMediaQueries>
-              <Component {...pageProps} />
-            </MediaContextProvider>
-          </Hydrate>
-        </QueryClientProvider>
+        <RecoilURLSyncJSONNext location={{ part: 'queryParams' }}>
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <MediaContextProvider disableDynamicMediaQueries>
+                <MapProvider>
+                  <Component {...pageProps} />
+                </MapProvider>
+              </MediaContextProvider>
+            </Hydrate>
+          </QueryClientProvider>
+        </RecoilURLSyncJSONNext>
       </RecoilRoot>
     </>
   );

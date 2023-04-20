@@ -54,6 +54,9 @@ export function useLayers(year: number): LayerProps[] {
         'fill-color': '#06C4BD',
         'fill-opacity': 1,
       },
+      layout: {
+        visibility: 'visible',
+      },
     },
     {
       id: `habitat_extent_${year}_line`,
@@ -64,6 +67,9 @@ export function useLayers(year: number): LayerProps[] {
         'line-color': '#06C4BD',
         'line-width': ['interpolate', ['exponential', 0.7], ['zoom'], 0, 8, 12, 0],
         'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 20, 12, 0],
+      },
+      layout: {
+        visibility: 'visible',
       },
     },
   ];

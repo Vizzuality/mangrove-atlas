@@ -37,7 +37,7 @@ export function useMangroveBlueCarbon(
 
 export function useSource(): SourceProps {
   return {
-    id: 'toc_co2eha-1_2016_z0z12',
+    id: 'blue-carbon-source',
     type: 'raster',
     tiles: [
       'https://mangrove_atlas.storage.googleapis.com/tilesets/toc_co2eha-1_2016_z0z12/{z}/{x}/{y}.png',
@@ -48,7 +48,7 @@ export function useSource(): SourceProps {
 }
 export function useLayer(): LayerProps {
   return {
-    id: 'toc_co2eha-1_2016_z0z12',
+    id: 'blue-carbon-layer',
     type: 'raster',
   };
 }
