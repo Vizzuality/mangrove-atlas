@@ -24,7 +24,7 @@ const Category = () => {
                 onMouseEnter={() => setIsOpen(true)}
               >
                 {CATEGORY_OPTIONS.map(({ id, icon }) => (
-                  <button
+                  <div
                     key={id}
                     className={cn({
                       'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full':
@@ -32,7 +32,7 @@ const Category = () => {
                     })}
                   >
                     <Icon icon={icon} className="h-8 w-8 text-brand-800" />
-                  </button>
+                  </div>
                 ))}
               </div>
             </DialogTrigger>
