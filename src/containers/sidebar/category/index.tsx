@@ -25,7 +25,7 @@ const Category = () => {
         <Dialog open={isOpen}>
           <DialogTrigger>
             <div
-              className="flex w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800"
+              className="flex w-[60px] flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
               onMouseEnter={() => setIsOpen(true)}
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
@@ -50,7 +50,7 @@ const Category = () => {
           </DialogTrigger>
           <DialogContent
             onMouseLeave={() => setIsOpen(false)}
-            className="text-black/85 fixed z-50 mt-56 w-[335px] rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none"
+            className="text-black/85 fixed z-50 mt-64 w-[335px] rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none"
           >
             {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button
