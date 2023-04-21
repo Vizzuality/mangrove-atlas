@@ -1,6 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
+
+import { List } from 'react-virtualized';
 
 import Link from 'next/link';
+
+import { useLocations } from 'containers/datasets/locations/hooks';
 
 import {
   Command,
@@ -11,25 +15,35 @@ import {
   CommandItem,
 } from 'components/command';
 
-import * as locations from './constants.json';
-
-const { data } = locations;
-
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
   wdpa: 'WDPA',
 };
 
-const LocationsList = ({ ...rest }) => {
-  const ref = useRef();
-  ('');
+const LocationsList = () => {
+  const { data: locations } = useLocations();
 
+  const renderRow = ({ index, key }: { index: number; key: string }) => {
+    return (
+      <CommandItem key={key}>
+        <Link
+          className="flex h-8 w-full flex-1 items-center justify-between"
+          href={`/${locations[index].iso}`}
+        >
+          <p className="text-black/85 font-sans text-2lg">{locations[index].name}</p>
+          <span className="text-xs text-grey-800 text-opacity-90">
+            {locationNames[locations[index].location_type]}
+          </span>
+        </Link>
+      </CommandItem>
+    );
+  };
   return (
     <div className="no-scrollbar overflow-y-auto p-4">
       <div className="relative flex w-full">
         <Command>
-          <CommandInput placeholder="Type name..." />
+          <CommandInput placeholder="Type name..." className="border-none" />
           <div className="my-6 flex space-x-2">
             <Link href="" className="w-[147px]">
               <div
@@ -65,23 +79,15 @@ const LocationsList = ({ ...rest }) => {
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              <ul className="space-y-2 font-sans">
-                {data.map(({ id, iso, name, location_type }) => (
-                  <CommandItem key={id} className="flex w-full flex-1">
-                    <Link
-                      href={`/${iso}`}
-                      className="flex w-full flex-1 items-center justify-between"
-                    >
-                      <span className="text-xl leading-[30px]">{name}</span>
-                      {location_type && (
-                        <span className="text-xs text-grey-800 text-opacity-90">
-                          {locationNames[location_type]}
-                        </span>
-                      )}
-                    </Link>
-                  </CommandItem>
-                ))}
-              </ul>
+              <List
+                width={430}
+                height={800}
+                rowHeight={25}
+                rowRenderer={renderRow}
+                rowCount={locations.length}
+                overscanRowCount={3}
+                className="no-scrollbar"
+              />
             </CommandGroup>
           </CommandList>
         </Command>
