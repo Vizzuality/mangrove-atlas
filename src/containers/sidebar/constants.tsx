@@ -38,7 +38,7 @@ export const EXT_MENU_OPTIONS = [
 ];
 
 export const CATEGORY_OPTIONS = [
-  { id: 'summary', label: 'Summary', icon: STAR_SVG },
+  { id: 'distribution_and_change', label: 'Distribution & Change', icon: STAR_SVG },
   {
     id: 'restoration_and_conservation',
     label: 'Restoration & Conservation',
@@ -46,4 +46,5 @@ export const CATEGORY_OPTIONS = [
   },
   { id: 'climate_and_policy', label: 'Climate & Policy', icon: SUN_SVG },
   { id: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
+  { id: 'all_datasets', label: 'All datasets', icon: CHART_SVG },
 ];

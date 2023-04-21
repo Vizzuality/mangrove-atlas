@@ -33,9 +33,17 @@ const Category = () => {
                   key={id}
                   className={cn({
                     'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full': true,
+                    'bg-brand-800': category === id,
                   })}
                 >
-                  <Icon icon={icon} className="h-8 w-8 text-brand-800" />
+                  <Icon
+                    icon={icon}
+                    className={cn({
+                      'h-8 w-8 stroke-none': true,
+                      'fill-current text-white': category === id,
+                      'fill-current text-brand-800': category !== id,
+                    })}
+                  />
                 </div>
               ))}
             </div>
