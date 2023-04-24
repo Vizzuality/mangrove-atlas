@@ -42,42 +42,44 @@ const LocationsList = () => {
 
   return (
     <div className="no-scrollbar overflow-y-auto after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative flex w-full">
-        <Command>
-          <CommandInput placeholder="Type name..." className="border-none" />
-          <div className="my-6 flex space-x-2">
-            <Link href="" className="w-[147px]">
-              <div
-                key={'currentLocation.id'}
-                className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
-              >
-                <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                  Worldwide
-                </h3>
-              </div>
-            </Link>
-            <Link href="" className="w-[147px]">
-              <div
-                key={'currentLocation.id'}
-                className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
-              >
-                <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                  Worldwide
-                </h3>
-              </div>
-            </Link>
-            <Link href="" className="w-[147px]">
-              <div
-                key={'currentLocation.id'}
-                className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
-              >
-                <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                  Worldwide
-                </h3>
-              </div>
-            </Link>
+      <div className="relative flex">
+        <Command className="w-full">
+          <div className="fixed flex w-fit flex-col">
+            <CommandInput placeholder="Type name..." className="border-none" />
+            <div className="my-6 flex w-fit space-x-2">
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
+              </Link>
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
+              </Link>
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
+              </Link>
+            </div>
           </div>
-          <CommandList className="relative">
+          <CommandList className="relative mt-[300px]">
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               <List
