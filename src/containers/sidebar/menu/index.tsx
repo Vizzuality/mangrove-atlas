@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import GMA_PNG from 'images/gma.png';
@@ -26,9 +26,9 @@ const Menu = () => {
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-[540px] rounded-[20px]">
+          <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0">
             {!aboutSection && (
-              <div className="text-black/85 no-scrollbar flex flex-col overflow-y-auto">
+              <div className="text-black/85 flex flex-col py-10">
                 <h2 className="pb-3 text-xl font-bold">Global Mangrove Watch</h2>
                 <button
                   className="pb-3 text-left text-2lg font-light"
@@ -65,8 +65,8 @@ const Menu = () => {
               </div>
             )}
             {aboutSection && (
-              <div className="no-scrollbar overflow-y-auto font-sans">
-                <h3 className="text-xl font-bold">About Global Mangrove Watch</h3>
+              <div className="no-scrollbar overflow-y-auto pt-3 font-sans before:absolute before:top-0 before:left-0 before:h-10 before:w-full before:rounded-t-[20px] before:bg-gradient-to-b before:from-white/100 before:to-white/20 before:content-[''] after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:rounded-b-[20px] after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
+                <h3 className="pt-5 text-xl font-bold">About Global Mangrove Watch</h3>
                 <h4 className="py-6 text-2lg font-bold">
                   Monitoring to catalyse the action needed to protect and restore mangroves
                 </h4>
@@ -88,6 +88,7 @@ const Menu = () => {
                 <h4 className="py-6 text-2lg font-bold">Global Mangrove Watch Partners</h4>
               </div>
             )}
+            <DialogClose />
           </DialogContent>
         </Dialog>
       </div>

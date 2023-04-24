@@ -1,12 +1,19 @@
-import React, { useRef } from 'react';
+import React from 'react';
+
+import { List } from 'react-virtualized';
 
 import Link from 'next/link';
 
-import { Input } from 'components/input';
+import { useLocations } from 'containers/datasets/locations/hooks';
 
-import * as locations from './constants.json';
-
-const { data } = locations;
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from 'components/command';
 
 const locationNames = {
   worldwide: 'Worldwide',
@@ -14,71 +21,80 @@ const locationNames = {
   wdpa: 'WDPA',
 };
 
-const LocationsList = ({ ...rest }) => {
-  const ref = useRef();
-  ('');
+const LocationsList = () => {
+  const { data: locations } = useLocations();
+
+  const renderRow = ({ index, key }: { index: number; key: string }) => {
+    return (
+      <CommandItem key={key}>
+        <Link
+          className="flex h-8 w-full flex-1 items-center justify-between"
+          href={`/${locations[index].iso}`}
+        >
+          <p className="text-black/85 font-sans text-2lg">{locations[index].name}</p>
+          <span className="text-xs text-grey-800 text-opacity-90">
+            {locationNames[locations[index].location_type]}
+          </span>
+        </Link>
+      </CommandItem>
+    );
+  };
 
   return (
-    <div className="no-scrollbar overflow-y-auto p-4">
-      <div className="relative flex w-full border-b border-gray-400">
-        <Input
-          // {...inputProps}
-          ref={ref}
-          // value={value}
-          placeholder="Type name"
-          type="search"
-          className="truncate border-none bg-transparent pl-4 font-sans leading-4 placeholder-gray-300 placeholder-opacity-50 focus:outline-none"
-          onChange={(e) => console.log(e.target.value)}
-        />
-      </div>
-      <div className="my-6 flex space-x-2">
-        <Link href="" className="w-[147px]">
-          <div
-            key={'currentLocation.id'}
-            className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
-          >
-            <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-              Worldwide
-            </h3>
-          </div>
-        </Link>
-        <Link href="" className="w-[147px]">
-          <div
-            key={'currentLocation.id'}
-            className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
-          >
-            <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-              Worldwide
-            </h3>
-          </div>
-        </Link>
-        <Link href="" className="w-[147px]">
-          <div
-            key={'currentLocation.id'}
-            className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
-          >
-            <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-              Worldwide
-            </h3>
-          </div>
-        </Link>
-      </div>
-      {data && (
-        <ul className="space-y-2 font-sans">
-          {data.map(({ id, iso, name, location_type }) => (
-            <li key={id} className="flex w-full flex-1">
-              <Link href={`/${iso}`} className="flex w-full flex-1 items-center justify-between">
-                <span className="text-xl leading-[30px]">{name}</span>
-                {location_type && (
-                  <span className="text-xs text-grey-800 text-opacity-90">
-                    {locationNames[location_type]}
-                  </span>
-                )}
+    <div className="no-scrollbar overflow-y-auto after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
+      <div className="relative flex">
+        <Command className="w-full">
+          <div className="fixed z-20 flex w-fit flex-col bg-white">
+            <CommandInput placeholder="Type name..." className="border-none" />
+            <div className="my-6 flex w-fit space-x-2">
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
               </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
+              </Link>
+              <Link href="" className="w-[137px]">
+                <div
+                  key={'currentLocation.id'}
+                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
+                >
+                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
+                    Worldwide
+                  </h3>
+                </div>
+              </Link>
+            </div>
+          </div>
+          <CommandList className="top-10] absolute mt-[300px]">
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup>
+              <List
+                width={430}
+                height={800}
+                rowHeight={25}
+                rowRenderer={renderRow}
+                rowCount={locations.length}
+                overscanRowCount={3}
+                className="no-scrollbar"
+              />
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </div>
     </div>
   );
 };

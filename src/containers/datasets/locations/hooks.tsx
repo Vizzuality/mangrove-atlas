@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import API from 'services/api';
 
