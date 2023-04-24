@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
+import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
 
@@ -46,6 +47,7 @@ const MapContainer = () => {
         {() => <LayerManager />}
       </Map>
       <div className="absolute bottom-10 right-10">
+        <Legend />
         <BasemapSelector />
       </div>
     </div>

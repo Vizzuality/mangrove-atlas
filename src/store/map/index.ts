@@ -2,9 +2,9 @@ import { array, bool, dict, number, object, string } from '@recoiljs/refine';
 import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
-export const activeLayers = atom({
+export const activeLayersAtom = atom({
   key: 'active-layers',
-  default: ['extent', 'biomass'],
+  default: ['biomass', 'extent'],
   effects: [
     urlSyncEffect({
       refine: array(string()),

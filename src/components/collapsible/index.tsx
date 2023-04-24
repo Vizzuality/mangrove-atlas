@@ -14,7 +14,7 @@ interface Layer {
   label: string;
 }
 
-const CollapsibleDemo = ({ layers }: { layers: Layer[] }) => {
+const CollapsibleComponent = ({ layers }: { layers: Layer[] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLayers, setSelectedLayers] = useState<Layer[]>(layers);
 
@@ -77,4 +77,4 @@ const CollapsibleDemo = ({ layers }: { layers: Layer[] }) => {
   );
 };
 
-export default CollapsibleDemo;
+export default CollapsibleComponent;
