@@ -15,11 +15,6 @@ export const activeLayers = atom({
 export const basemapAtom = atom({
   key: 'basemap',
   default: 'light',
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
 });
 
 // export const layersSettings = atom({
