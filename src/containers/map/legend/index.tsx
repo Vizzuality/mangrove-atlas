@@ -34,11 +34,11 @@ const Legend = () => {
         activeLayers.map((layer) => (
           <div
             key={layer}
-            className="flex h-11 items-center justify-between rounded-md bg-white px-4 py-3 text-sm shadow-medium"
+            className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
           >
             <p className="text-xs font-semibold uppercase">{layer}</p>
             <button onClick={() => updateLayers(layer)}>
-              <Icon icon={REMOVE_SVG} className="h-4 w-4" />
+              <Icon icon={REMOVE_SVG} className="h-5 w-5" />
             </button>
           </div>
         ))}

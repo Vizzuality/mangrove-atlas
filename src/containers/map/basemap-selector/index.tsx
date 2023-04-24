@@ -6,7 +6,7 @@ import { basemapAtom } from 'store/map';
 
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 
-import { BASEMAPS } from 'containers/map/basemap-selector/constants';
+import BASEMAPS from 'containers/layers/basemaps';
 
 import darkThumb from 'images/thumbs/btn-dark@2x.png';
 import lightThumb from 'images/thumbs/btn-light@2x.png';
@@ -30,14 +30,14 @@ const BasemapSelector = () => {
         <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
         <div className="mt-1">{currentBasemap.name}</div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-2.5">
         {BASEMAPS.map(({ id, name }) => (
           <button
             key={id}
             type="button"
             data-basemap={id}
             className={cn({
-              'mr-2.5 h-[45px] w-[35px] overflow-hidden rounded-3xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
+              'h-[45px] w-[35px] overflow-hidden rounded-3xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
                 true,
               'border-2 border-brand-800 shadow-soft': currentBasemap.id === id,
             })}
