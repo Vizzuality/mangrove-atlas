@@ -26,9 +26,9 @@ const Menu = () => {
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-[540px] rounded-[20px] py-0">
+          <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0">
             {!aboutSection && (
-              <div className="text-black/85 no-scrollbar flex flex-col overflow-y-auto">
+              <div className="text-black/85 flex flex-col py-10">
                 <h2 className="pb-3 text-xl font-bold">Global Mangrove Watch</h2>
                 <button
                   className="pb-3 text-left text-2lg font-light"

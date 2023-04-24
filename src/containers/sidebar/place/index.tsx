@@ -25,7 +25,7 @@ const Place = () => {
                 <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
               </div>
             </DialogTrigger>
-            <DialogContent className="h-[90vh] w-[540px] rounded-[20px]">
+            <DialogContent className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0">
               <LocationsList />
               <DialogClose />
             </DialogContent>

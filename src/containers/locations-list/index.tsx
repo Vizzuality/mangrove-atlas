@@ -39,8 +39,9 @@ const LocationsList = () => {
       </CommandItem>
     );
   };
+
   return (
-    <div className="no-scrollbar overflow-y-auto p-4">
+    <div className="no-scrollbar overflow-y-auto after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
       <div className="relative flex w-full">
         <Command>
           <CommandInput placeholder="Type name..." className="border-none" />
@@ -76,7 +77,7 @@ const LocationsList = () => {
               </div>
             </Link>
           </div>
-          <CommandList>
+          <CommandList className="relative">
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               <List
