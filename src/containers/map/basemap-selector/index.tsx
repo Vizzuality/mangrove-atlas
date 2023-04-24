@@ -1,0 +1,48 @@
+import Image, { StaticImageData } from 'next/image';
+
+import cn from 'lib/classnames';
+
+import { BASEMAPS } from 'containers/map/basemap-selector/constants';
+
+import darkThumb from 'images/thumbs/btn-dark@2x.png';
+import lightThumb from 'images/thumbs/btn-light@2x.png';
+import satelliteThumb from 'images/thumbs/btn-satellite@2x.png';
+
+const THUMBS = {
+  light: lightThumb as StaticImageData,
+  dark: darkThumb as StaticImageData,
+  satellite: satelliteThumb as StaticImageData,
+};
+
+const currentBasemap = BASEMAPS.find((b) => b.id === 'light');
+
+const BasemapSelector = () => {
+  return (
+    <div className="flex w-[296px] items-center justify-between rounded-lg bg-white px-5 py-4 shadow-[0_4px_12px_0_rgba(168,168,168,0.25)]">
+      <div className="mr-[30px]">
+        <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
+        <div className="mt-1">{currentBasemap.name}</div>
+      </div>
+      <div className="flex items-center">
+        {BASEMAPS.map(({ id, name }) => (
+          <button
+            key={id}
+            type="button"
+            data-basemap={id}
+            className={cn({
+              'mr-2.5 h-[45px] w-[35px] overflow-hidden rounded-3xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
+                true,
+              'border-2 border-brand-800 shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
+                currentBasemap.id === id,
+            })}
+            onClick={() => console.log('change basemap')}
+          >
+            <Image src={THUMBS[id] as StaticImageData} alt={name} width={35} height={45} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default BasemapSelector;

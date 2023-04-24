@@ -2,11 +2,10 @@ import { useMemo } from 'react';
 
 import { basemap } from 'store/map';
 
-import { Cross2Icon } from '@radix-ui/react-icons';
-import cx from 'classnames';
 import { useRecoilValue } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
+import BasemapSelector from 'containers/map/basemap-selector';
 
 import Map from 'components/map';
 
@@ -46,6 +45,9 @@ const MapContainer = () => {
       >
         {() => <LayerManager />}
       </Map>
+      <div className="absolute bottom-10 right-10">
+        <BasemapSelector />
+      </div>
     </div>
   );
 };
