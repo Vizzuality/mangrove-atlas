@@ -44,7 +44,7 @@ const LocationsList = () => {
     <div className="no-scrollbar overflow-y-auto after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
       <div className="relative flex">
         <Command className="w-full">
-          <div className="fixed flex w-fit flex-col">
+          <div className="fixed z-20 flex w-fit flex-col bg-white">
             <CommandInput placeholder="Type name..." className="border-none" />
             <div className="my-6 flex w-fit space-x-2">
               <Link href="" className="w-[137px]">
@@ -79,7 +79,7 @@ const LocationsList = () => {
               </Link>
             </div>
           </div>
-          <CommandList className="relative mt-[300px]">
+          <CommandList className="top-10] absolute mt-[300px]">
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
               <List
