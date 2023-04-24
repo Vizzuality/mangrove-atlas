@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { basemap } from 'store/map';
+import { basemapAtom } from 'store/map';
 
 import { useRecoilValue } from 'recoil';
 
@@ -25,7 +25,7 @@ const DEFAULT_PROPS = {
 };
 
 const MapContainer = () => {
-  const bm = useRecoilValue(basemap);
+  const bm = useRecoilValue(basemapAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((basemap) => basemap.id === bm).url, [bm]);
   const mapView = true;
   const isMobile = false;
