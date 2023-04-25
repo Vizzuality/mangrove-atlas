@@ -1,4 +1,4 @@
-import { activeLayers } from 'store/map';
+import { activeLayersAtom } from 'store/map';
 
 import { useRecoilValue } from 'recoil';
 
@@ -14,7 +14,7 @@ type LayerManagerTypes = () => JSX.Element[];
 //   };
 // };
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeLayers);
+  const layers = useRecoilValue(activeLayersAtom);
   // const layersSettings = useRecoilValue(layersSettingsAtom);
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
   return (

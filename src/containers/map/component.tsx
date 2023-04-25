@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 
-import { basemap } from 'store/map';
+import { basemapAtom } from 'store/map';
 
-import { Cross2Icon } from '@radix-ui/react-icons';
-import cx from 'classnames';
 import { useRecoilValue } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
+import BasemapSelector from 'containers/map/basemap-selector';
+import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
 
@@ -26,7 +26,7 @@ const DEFAULT_PROPS = {
 };
 
 const MapContainer = () => {
-  const bm = useRecoilValue(basemap);
+  const bm = useRecoilValue(basemapAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((basemap) => basemap.id === bm).url, [bm]);
   const mapView = true;
   const isMobile = false;
@@ -46,6 +46,10 @@ const MapContainer = () => {
       >
         {() => <LayerManager />}
       </Map>
+      <div className="absolute bottom-10 right-10">
+        <Legend />
+        <BasemapSelector />
+      </div>
     </div>
   );
 };
