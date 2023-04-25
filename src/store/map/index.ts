@@ -1,5 +1,5 @@
 import { array, bool, dict, number, object, string } from '@recoiljs/refine';
-import { atom, useRecoilCallback, useRecoilValue } from 'recoil';
+import { atom, useRecoilCallback } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 export const activeLayersAtom = atom({

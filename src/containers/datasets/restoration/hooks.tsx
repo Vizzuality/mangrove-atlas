@@ -107,14 +107,15 @@ export function useSource(): SourceProps {
   return {
     type: 'vector',
     promoteId: 'ID',
+    url: 'https://studio.mapbox.com/tilesets/globalmangrovewatch.7rr6p3ir',
   };
 }
 export function useLayers(): LayerProps[] {
   return [
     {
-      id: 'restoration',
+      id: 'mangrove_restoration',
       type: 'fill',
-      source: 'restoration',
+      source: 'mangrove_restoration',
       'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
       paint: {
         'fill-color': [

@@ -26,8 +26,8 @@ const DEFAULT_PROPS = {
 };
 
 const MapContainer = () => {
-  const bm = useRecoilValue(basemapAtom);
-  const selectedBasemap = useMemo(() => BASEMAPS.find((basemap) => basemap.id === bm).url, [bm]);
+  const basemap = useRecoilValue(basemapAtom);
+  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
   const mapView = true;
   const isMobile = false;
   const { id, minZoom, maxZoom, initialViewState } = DEFAULT_PROPS;

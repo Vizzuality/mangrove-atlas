@@ -28,6 +28,9 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      spacing: {
+        7.5: '1.875rem',
+      },
       fontSize: {
         xxs: '0.625rem',
         '2lg': '1.188rem',
@@ -47,6 +50,9 @@ module.exports = {
       },
       width: {
         10.5: '2.625rem',
+      },
+      borderRadius: {
+        '2.5xl': '1.3rem',
       },
       keyframes: {
         overlayShow: {

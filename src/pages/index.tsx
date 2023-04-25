@@ -4,6 +4,7 @@ import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
+import WidgetsContainer from 'containers/widgets';
 
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
@@ -39,6 +40,7 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
+        <WidgetsContainer />
         <MapContainer />
         <Sidebar />
         <LanguageSelector />

@@ -63,7 +63,7 @@ function Widget({
             <CollapseButton />
             <WidgetControls
               name={name}
-              slug={slug}
+              id={slug}
               layerId={layerId}
               layersIds={layersIds}
               isActive={isActive}
