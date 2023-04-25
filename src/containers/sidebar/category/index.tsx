@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import { menuCategoryAtom } from 'store/menu';
+import { activeCategoryAtom } from 'store/sidebar';
 
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 
@@ -15,8 +15,8 @@ import Icon from 'components/icon';
 const Category = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const category = useRecoilValue(menuCategoryAtom);
-  const setCategory = useSetRecoilState(menuCategoryAtom);
+  const category = useRecoilValue(activeCategoryAtom);
+  const setCategory = useSetRecoilState(activeCategoryAtom);
 
   return (
     <div className="flex flex-col text-center">

@@ -6,6 +6,7 @@ import { LAYERS } from 'containers/datasets';
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
+
   // const layersSettings = useRecoilValue(layersSettingsAtom);
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
   const ProtectedAreasLayer = LAYERS['protected-areas'];
