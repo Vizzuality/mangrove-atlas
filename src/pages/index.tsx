@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Script from 'next/script';
 
 import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
@@ -13,6 +14,27 @@ const Home: React.FC = () => {
       <Head>
         <title>Welcome</title>
       </Head>
+      <Script id="transifex">
+        {`
+        window.liveSettings = {
+          api_key: "4de8143614ca4c0e94c872e31e771e37",
+          detectlang: true,
+          autocollect: true,
+          dynamic: true,
+          manual_init: false,
+          translate_urls: false
+        }`}
+      </Script>
+      <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
+      <Script id="transifex-load" strategy="lazyOnload">
+        {`
+          Transifex.live.onFetchLanguages(function (languages) {
+            Transifex.live.onTranslatePage(function (language_code) {
+              console.log(language_code);
+            });
+          })
+        `}
+      </Script>
       {/* <Link to={{ type: 'PAGE/APP' }}>
         <img className="{styles.logo}" src={'/logo.svg'} alt="mangrove-atlas" />
       </Link> */}

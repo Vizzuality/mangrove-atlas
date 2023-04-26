@@ -25,7 +25,7 @@ const nextConfig = {
     localeDetection: false,
   },
   publicRuntimeConfig: {
-    TxNativePublicToken: 'YOUR-PUBLIC-TX-NATIVE-TOKEN',
+    TxNativePublicToken: '4de8143614ca4c0e94c872e31e771e37',
   },
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],

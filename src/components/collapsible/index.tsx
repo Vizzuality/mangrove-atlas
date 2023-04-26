@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
-import cx from 'classnames';
+import cn from 'classnames';
 
 import Icon from 'components/icon';
 
@@ -48,7 +48,7 @@ const CollapsibleComponent = ({ layers }: { layers: Layer[] }) => {
         <Collapsible.Trigger asChild>
           <button className="flex h-11 w-11 items-center justify-center rounded-lg border bg-white shadow-light">
             <ChevronUpIcon
-              className={cx({
+              className={cn({
                 'h-4 w-4': true,
                 'rotate-180': isOpen,
               })}
