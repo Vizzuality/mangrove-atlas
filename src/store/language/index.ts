@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 export const languageAtom = atom({
-  key: 'language',
+  key: 'lan',
   default: 'en',
   effects: [
     urlSyncEffect({

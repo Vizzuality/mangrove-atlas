@@ -18,7 +18,10 @@ export const LanguageSelector = () => {
   const language = useRecoilValue(languageAtom);
   const setLanguage = useSetRecoilState(languageAtom);
 
-  const uiLanguages = useMemo(() => LANGUAGES.sort((a, b) => a.name.localeCompare(b.name)), []);
+  const uiLanguages = useMemo(
+    () => LANGUAGES.sort((x) => (x.locale === language ? -1 : 0)),
+    [language]
+  );
 
   const currentLan = useMemo(
     () => uiLanguages.find((lan) => lan.locale === language).name,
@@ -52,7 +55,10 @@ export const LanguageSelector = () => {
         {uiLanguages.map((lan) => (
           <SelectItem
             key={lan.locale}
-            className="flex h-11 justify-between px-5 text-xs"
+            className={cn({
+              'flex h-11 justify-between px-5 text-xs': true,
+              'hover:text-brand-800': lan.locale !== language,
+            })}
             value={lan.locale}
           >
             {lan.name}
