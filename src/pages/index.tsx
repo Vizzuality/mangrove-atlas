@@ -17,7 +17,7 @@ const Home: React.FC = () => {
       <Script id="transifex">
         {`
         window.liveSettings = {
-          api_key: "4de8143614ca4c0e94c872e31e771e37",
+          api_key: "%NEXT_PUBLIC_TRANSIFEX_API_KEY%",
           detectlang: true,
           autocollect: true,
           dynamic: true,
