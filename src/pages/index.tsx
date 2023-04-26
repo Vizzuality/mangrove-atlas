@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 
@@ -38,6 +39,7 @@ const Home: React.FC = () => {
           </p> */}
         <MapContainer />
         <Sidebar />
+        <LanguageSelector />
       </div>
     </div>
   );
