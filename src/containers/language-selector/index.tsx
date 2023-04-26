@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useMemo } from 'react';
 
 import { languageAtom } from 'store/language';
@@ -48,23 +49,22 @@ export const LanguageSelector = () => {
         <SelectValue placeholder={currentLan} />
       </SelectTrigger>
       <SelectContent className="items-left flex flex-col rounded-b-[20px] bg-white font-semibold uppercase text-black">
-        {uiLanguages.map((lan, ind) => (
+        {uiLanguages.map((lan) => (
           <SelectItem
             key={lan.locale}
             className="flex h-11 justify-between px-5 text-xs"
             value={lan.locale}
           >
-            <p>{lan.name}</p>
-            <Icon
-              icon={ARROW_DOWN_SVG}
-              className={cn({
-                'h-2 w-3 rotate-180 stroke-black stroke-2': true,
-                hidden: ind !== 0,
-                block: lan.locale == language,
-              })}
-            />
+            {lan.name}
           </SelectItem>
         ))}
+
+        <Icon
+          icon={ARROW_DOWN_SVG}
+          className={cn({
+            'absolute top-5 right-5 h-2 w-3 rotate-180 stroke-black stroke-2': true,
+          })}
+        />
       </SelectContent>
     </Select>
   );
