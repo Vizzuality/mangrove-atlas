@@ -30,7 +30,9 @@ export const LanguageSelector = () => {
   const onChangeLanguage = useCallback(
     (lan: string) => {
       setCookie('NEXT_LOCALE', `${lan}; path=/; max-age=31536000; secure`);
-      router.push({ pathname, query }, asPath, { locale: lan });
+      router
+        .push({ pathname, query }, asPath, { locale: lan })
+        .catch((e) => console.info('error', e));
     },
     [router, asPath, pathname, query]
   );
@@ -40,32 +42,34 @@ export const LanguageSelector = () => {
   }
 
   return (
-    <Select onValueChange={(value) => onChangeLanguage(value)}>
-      <SelectTrigger className="absolute -top-px right-10 flex w-44 rounded-b-[20px] bg-brand-800 px-5 font-sans text-xs font-semibold uppercase text-white">
-        <SelectValue placeholder={currentLan} />
-      </SelectTrigger>
-      <SelectContent className="items-left flex flex-col rounded-b-[20px] bg-white font-semibold uppercase text-black">
-        {uiLanguages.map((lan) => (
-          <SelectItem
-            key={lan.locale}
-            className={cn({
-              'flex h-11 justify-between px-5 text-xs': true,
-              'hover:text-brand-800': lan.locale !== locale,
-            })}
-            value={lan.locale}
-          >
-            {lan.name}
-          </SelectItem>
-        ))}
+    <div className="absolute -top-px right-10 w-44">
+      <Select onValueChange={(value) => onChangeLanguage(value)}>
+        <SelectTrigger className=" flex rounded-b-[20px] bg-brand-800 px-5 font-sans text-xs font-semibold uppercase text-white">
+          <SelectValue placeholder={currentLan} />
+        </SelectTrigger>
+        <SelectContent className="items-left flex flex-col rounded-b-[20px] bg-white font-semibold uppercase text-black">
+          {uiLanguages.map((lan) => (
+            <SelectItem
+              key={lan.locale}
+              className={cn({
+                'flex h-11 justify-between px-5 text-xs': true,
+                'hover:text-brand-800': lan.locale !== locale,
+              })}
+              value={lan.locale}
+            >
+              {lan.name}
+            </SelectItem>
+          ))}
 
-        <Icon
-          icon={ARROW_DOWN_SVG}
-          className={cn({
-            'absolute top-5 right-5 h-2 w-3 rotate-180 stroke-black stroke-2': true,
-          })}
-        />
-      </SelectContent>
-    </Select>
+          <Icon
+            icon={ARROW_DOWN_SVG}
+            className={cn({
+              'absolute top-5 right-5 h-2 w-3 rotate-180 stroke-black stroke-2': true,
+            })}
+          />
+        </SelectContent>
+      </Select>
+    </div>
   );
 };
 
