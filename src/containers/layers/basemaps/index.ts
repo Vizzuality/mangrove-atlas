@@ -2,7 +2,7 @@ const BASEMAPS = [
   {
     id: 'light',
     name: 'Light',
-    url: 'mapbox://styles/globalmangrovewatch/clgot0b6h00gb01qm7isnh8dv',
+    url: 'mapbox://styles/globalmangrovewatch/clgp5mmhi00id01r75mtg34ep',
   },
   {
     id: 'dark',

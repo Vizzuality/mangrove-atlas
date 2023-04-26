@@ -26,7 +26,7 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <Icon icon={ARROW_DOWN_SVG} className="h-1.5 w-2.5" />
+    <Icon icon={ARROW_DOWN_SVG} className="h-2 w-3 stroke-white stroke-2" />
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
@@ -39,7 +39,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'bg-popover relative -top-11 z-50 overflow-hidden animate-in fade-in-70 duration-300',
+        'bg-popover relative -top-11 z-50 overflow-hidden shadow-medium animate-in fade-in-70 duration-300',
         position === 'popper' && 'translate-y-1',
         className
       )}
@@ -79,7 +79,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'focus:bg-accent focus:text-accent-foreground relative flex w-full cursor-pointer select-none items-center outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'focus:bg-accent focus:text-accent-foreground relative w-full cursor-pointer items-center justify-between outline-none',
       className
     )}
     {...props}
