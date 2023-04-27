@@ -120,10 +120,12 @@ curl -X GET -G \
 3. For development run `npm install && npm run watch`.
 4. Open the browser and go to `http://localhost:8080/`
 
+warning note:there is a problem with node16 and openssl as a quickaround do: `export OPENSSL_CONF=/dev/null`
+
 Example request:  
 
 ``` bash
- curl --location -g --request POST 'https://localhost:8080?widgets[]=habitat-extent&widgets[]=net-change&widgets[]=tree-height&widgets[]=aboveground-biomass&widgets[]=blue-carbon' \
+ curl --location -g --request POST 'http://localhost:8080?widgets[]=habitat-extent&widgets[]=net-change&widgets[]=tree-height&widgets[]=aboveground-biomass&widgets[]=blue-carbon' \
 --header 'Content-Type: application/json' \
 --data-raw '{
  "geometry": {
@@ -176,13 +178,13 @@ Example response:
         "value": 823.5097862578755,
         "year": 1996
       },
-	  ...
+   ...
       {
         "indicator": "coastal_extent",
         "value": 823509.7862576442,
         "year": 1996
       },
-	  ...
+   ...
     ],
     "metadata": {}
   },
