@@ -53,7 +53,12 @@ class NetChangeCalculationsClass extends BaseCalculation {
           return ga.toDictionary()
           .combine(lo.toDictionary())
           .combine(ee.Dictionary({'year':year, 'net_change': net_change}));
-        })
+        }).insert(0, ee.Dictionary({
+          "gain": 0,
+          "loss": 0,
+          "net_change": 0,
+          "year": 1996
+      }))
   }
 }
 
