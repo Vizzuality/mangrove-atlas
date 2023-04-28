@@ -42,9 +42,9 @@ export const LanguageSelector = () => {
   }
 
   return (
-    <div className="absolute -top-px right-10 w-44">
+    <div className="absolute top-0 right-20 w-44">
       <Select onValueChange={(value) => onChangeLanguage(value)}>
-        <SelectTrigger className=" flex rounded-b-[20px] bg-brand-800 px-5 font-sans text-xs font-semibold uppercase text-white">
+        <SelectTrigger className="flex h-3 rounded-b-[20px] bg-brand-800 py-1 px-5 font-sans text-xs font-semibold uppercase text-white">
           <SelectValue placeholder={currentLan} />
         </SelectTrigger>
         <SelectContent className="items-left flex flex-col rounded-b-[20px] bg-white font-semibold uppercase text-black">

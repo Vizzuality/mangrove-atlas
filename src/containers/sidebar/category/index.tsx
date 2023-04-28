@@ -21,26 +21,25 @@ const Category = () => {
   return (
     <div className="flex flex-col text-center">
       <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
-      <div className="flex w-[60px] flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
+      <div className="relative flex w-10.5 flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <Dialog open={isOpen}>
           <DialogTrigger>
             <div
-              className="flex w-[60px] flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
+              className="relative flex w-10.5 flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
               onMouseEnter={() => setIsOpen(true)}
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
                 <div
                   key={id}
                   className={cn({
-                    'flex h-12 w-12 cursor-pointer items-center justify-center rounded-full': true,
-                    'bg-brand-800': category === id,
+                    'h-10.5 flex w-10.5 cursor-pointer items-center justify-center': true,
                   })}
                 >
                   <Icon
                     icon={icon}
                     className={cn({
-                      'h-8 w-8 stroke-none': true,
-                      'fill-current text-white': category === id,
+                      'h-8 w-8 rounded-full stroke-none': true,
+                      'bg-brand-800 fill-current text-white': category === id,
                       'fill-current text-brand-800': category !== id,
                     })}
                   />
@@ -50,7 +49,7 @@ const Category = () => {
           </DialogTrigger>
           <DialogContent
             onMouseLeave={() => setIsOpen(false)}
-            className="text-black/85 fixed z-50 mt-64 w-[335px] rounded-[30px] bg-white p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none"
+            className="text-black/85 fixed z-50 w-[335px] rounded-[30px]  p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none"
           >
             {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button
@@ -60,15 +59,14 @@ const Category = () => {
               >
                 <div
                   className={cn({
-                    'flex h-12 w-12 items-center justify-center rounded-full bg-white': true,
-                    'bg-brand-800': category === id,
+                    'h-10.5 flex w-10.5 items-center justify-center': true,
                   })}
                 >
                   <Icon
                     icon={icon}
                     className={cn({
                       'h-8 w-8 stroke-none': true,
-                      'fill-current text-white': category === id,
+                      'rounded-full bg-brand-800 fill-current text-white': category === id,
                       'fill-current text-brand-800': category !== id,
                     })}
                   />

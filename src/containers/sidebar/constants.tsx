@@ -49,3 +49,7 @@ export const CATEGORY_OPTIONS = [
   { id: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
   { id: 'all_datasets', label: 'All datasets', icon: ALL_SVG },
 ];
+
+export const STYLES = {
+  'icon-wrapper': 'flex h-10.5 w-10.5 flex-col items-center justify-center text-brand-800',
+};
