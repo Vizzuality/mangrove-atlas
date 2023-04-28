@@ -107,7 +107,7 @@ export function useSource(): SourceProps {
   return {
     type: 'vector',
     promoteId: 'ID',
-    url: 'https://studio.mapbox.com/tilesets/globalmangrovewatch.7rr6p3ir',
+    url: 'mapbox://globalmangrovewatch.7rr6p3ir',
   };
 }
 export function useLayers(): LayerProps[] {

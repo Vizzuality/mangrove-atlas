@@ -1,39 +1,4 @@
-import { useMemo } from 'react';
-
 import type { SourceProps, LayerProps } from 'react-map-gl';
-
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-
-import type { UseParamsOptions } from 'types/widget';
-
-import API from 'services/api';
-
-// widget data
-export function useMangroveProtectedAreas(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions = {}
-) {
-  const fetchMangroveProtectedAreas = () =>
-    API.request({
-      method: 'GET',
-      url: '/widgets/protected-areas',
-      params,
-    }).then((response) => response);
-
-  const query = useQuery(['protected-areas', params], fetchMangroveProtectedAreas, {
-    placeholderData: [],
-    select: (data) => ({
-      data,
-    }),
-    ...queryOptions,
-  });
-
-  return useMemo(() => {
-    return {
-      ...query,
-    } as typeof query;
-  }, [query]);
-}
 
 export function useSource(): SourceProps {
   return {

@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const currentLocation = atom({
+export const currentLocationAtom = atom({
   key: 'location',
   default: 'worldwide', // location_id
 });

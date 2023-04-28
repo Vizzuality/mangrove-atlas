@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   return (
     <div className="{cx([styles.printOnly_wrapper])} overflow-hidden">
       <Head>
-        <title>Welcome</title>
+        <title>Global Mangrove Watch</title>
       </Head>
       <TranslateScripts />
       {/* <Link to={{ type: 'PAGE/APP' }}>

@@ -1,4 +1,5 @@
 // import AlertsDownload from 'containers/datasets/alerts/download';
+
 import AlertsInfo from 'containers/datasets/alerts/info.mdx';
 import AlertsLayer from 'containers/datasets/alerts/layer';
 import BiomassInfo from 'containers/datasets/biomass/info.mdx';
@@ -13,19 +14,35 @@ import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download.mdx';
 import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
+import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';
 import HeightInfo from 'containers/datasets/height/info.mdx';
 import HeightLayer from 'containers/datasets/height/layer';
 // import HeightDownload from 'containers/datasets/height/download';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import MarketPotentialInfo from 'containers/datasets/market-potential/info.mdx';
+import NetChangeWidget from 'containers/datasets/net-change';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
 import ProtectedAreasLayer from 'containers/datasets/protected-areas/layer';
+import ProtectionWidget from 'containers/datasets/protection';
 import ProtectionInfo from 'containers/datasets/protection/info.mdx';
+import ProtectionLayer from 'containers/datasets/protection/layer';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
 import SpeciesInfo from 'containers/datasets/species/info.mdx';
+import SpeciesLayer from 'containers/datasets/species/layer';
+
+export const WIDGETS = {
+  mangrove_habitat_extent: HabitatExtentWidget,
+  mangrove_net_change: NetChangeWidget,
+  // mangrove_alerts: AlertsDownload,
+  // mangrove_biomass: BiomassDownload,
+  // mangrove_height: HeightDownload,
+  // mangrove_blue_carbon: BlueCarbonDownload
+  mangrove_protection: ProtectionWidget,
+};
+
 export const LAYERS = {
   'country-boundaries': CountryBoundariesLayer,
   'protected-areas': ProtectedAreasLayer,
@@ -36,6 +53,8 @@ export const LAYERS = {
   mangrove_blue_carbon: BlueCarbonLayer,
   mangrove_height: HeightLayer,
   mangrove_restoration: RestorationLayer,
+  mangrove_species: SpeciesLayer,
+  mangrove_protection: ProtectionLayer,
 };
 
 export const INFO = {
