@@ -45,6 +45,9 @@ module.exports = {
           800: '#00857F',
         },
       },
+      width: {
+        10.5: '2.625rem',
+      },
       keyframes: {
         overlayShow: {
           from: { opacity: 0 },

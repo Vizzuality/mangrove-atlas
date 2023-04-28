@@ -1,7 +1,9 @@
 import Head from 'next/head';
 
+import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
+import TranslateScripts from 'containers/translate-scripts';
 
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
@@ -12,6 +14,7 @@ const Home: React.FC = () => {
       <Head>
         <title>Welcome</title>
       </Head>
+      <TranslateScripts />
       {/* <Link to={{ type: 'PAGE/APP' }}>
         <img className="{styles.logo}" src={'/logo.svg'} alt="mangrove-atlas" />
       </Link> */}
@@ -38,6 +41,7 @@ const Home: React.FC = () => {
           </p> */}
         <MapContainer />
         <Sidebar />
+        <LanguageSelector />
       </div>
     </div>
   );

@@ -15,6 +15,18 @@ const withMDX = require('@next/mdx')({
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  i18n: {
+    // These are all the locales you want to support in
+    // your application
+    locales: ['en', 'fr', 'es'],
+    // This is the default locale you want to be used when visiting
+    // a non-locale prefixed path e.g. `/hello`
+    defaultLocale: 'en',
+    localeDetection: false,
+  },
+  publicRuntimeConfig: {
+    TxNativePublicToken: '4de8143614ca4c0e94c872e31e771e37',
+  },
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   // ? https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files

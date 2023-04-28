@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
+import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
@@ -19,10 +19,14 @@ const Menu = () => {
   return (
     <>
       <div className="w-full pb-1 text-center font-sans text-xxs text-white">Menu</div>
-      <div className="flex h-[60px] w-[60px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
+      <div className={`${STYLES['icon-wrapper']} `}>
         <Dialog>
           <DialogTrigger>
-            <div className="flex justify-center" onClick={() => setAboutSection(false)}>
+            <div
+              className="flex justify-center rounded-full bg-white p-1
+              "
+              onClick={() => setAboutSection(false)}
+            >
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
             </div>
           </DialogTrigger>
