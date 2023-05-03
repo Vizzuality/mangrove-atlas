@@ -17,7 +17,6 @@ const NetChange = () => {
     ...(!!location_id || (location_id !== 'worldwide' && { location_id })),
     year: currentYear,
   });
-  console.log(data2);
   return (
     <div>
       <p>

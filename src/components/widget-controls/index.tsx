@@ -5,11 +5,14 @@ import { atom, useRecoilCallback, useRecoilValue, useSetRecoilState } from 'reco
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
+import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';
 import Info from './info';
 
-const WidgetControls = ({ id }) => {
+type WidgetControlsType = Readonly<{ id: WidgetSlugType }>;
+
+const WidgetControls = ({ id }: WidgetControlsType) => {
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
   const isActive = activeWidgets.includes(id);
   const download = DOWNLOAD[id];

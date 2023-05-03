@@ -29,8 +29,14 @@ const widgets = [
     layersIds: ['alerts-heat'],
   },
   {
-    name: 'Mangrove Species',
-    slug: 'mangrove_species',
+    name: 'Mangrove Species Distribution',
+    slug: 'mangrove_species_distribution',
+    locationType: ['country', 'worldwide'],
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+  },
+  {
+    name: 'Mangrove Species Threatened',
+    slug: 'mangrove_species_threatened',
     locationType: ['country', 'worldwide'],
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
   },

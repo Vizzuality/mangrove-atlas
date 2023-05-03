@@ -2,13 +2,13 @@ import Legend from 'containers/legend';
 
 import Chart from 'components/chart';
 
-const HabitatExtentChart = ({ legend, config }) => {
+const NetChangeChart = ({ legend, config }) => {
   return (
-    <div className="flex flex-1 items-center justify-between">
+    <div className="">
       <Legend items={legend} />
       <Chart config={config} />
     </div>
   );
 };
 
-export default HabitatExtentChart;
+export default NetChangeChart;

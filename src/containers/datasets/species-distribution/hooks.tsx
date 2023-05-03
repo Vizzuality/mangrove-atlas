@@ -15,21 +15,26 @@ export function useMangroveSpecies(params: UseParamsOptions, queryOptions: UseQu
       method: 'GET',
       url: '/widgets/biodiversity',
       params,
-    }).then((response) => response);
+    }).then((response) => response.data);
 
   const query = useQuery(['biodiversity', params], fetchMangroveSpecies, {
     placeholderData: [],
-    select: (data) => ({
-      data,
-    }),
     ...queryOptions,
   });
+  const {
+    data: { data },
+  } = query;
+
+  const legend = [1, Math.ceil(data?.total / 2), data?.total];
 
   return useMemo(() => {
     return {
       ...query,
+      data,
+      total: data?.total,
+      legend,
     } as typeof query;
-  }, [query]);
+  }, [query, params]);
 }
 
 export function useSource(): SourceProps {
@@ -42,7 +47,7 @@ export function useSource(): SourceProps {
 
 export function useLayer(): LayerProps {
   const minValue = 0;
-  const maxValue = 15;
+  const maxValue = 51;
   return {
     id: 'Species_richness',
     'source-layer': 'Species_richness',
@@ -53,12 +58,12 @@ export function useLayer(): LayerProps {
         ['linear'],
         ['get', 'sp_count'],
         minValue,
-        'red',
+        '#F9FDB7',
         maxValue,
-        'blue',
+        '#205272',
       ],
-      'fill-outline-color': 'yellow',
-      'fill-opacity': 1,
+      'fill-outline-color': '#B6B7B1',
+      'fill-opacity': 0.5,
     },
     layout: {
       visibility: 'visible',

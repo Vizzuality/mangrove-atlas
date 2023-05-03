@@ -1,5 +1,4 @@
 const Legend = ({ items }) => {
-  console.log(items);
   return (
     <div>
       {items.map(({ color, label, value, unit }) => (

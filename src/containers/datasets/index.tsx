@@ -30,8 +30,11 @@ import ProtectionInfo from 'containers/datasets/protection/info.mdx';
 import ProtectionLayer from 'containers/datasets/protection/layer';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
-import SpeciesInfo from 'containers/datasets/species/info.mdx';
-import SpeciesLayer from 'containers/datasets/species/layer';
+import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
+import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
+import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
+import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
+import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
@@ -41,6 +44,8 @@ export const WIDGETS = {
   // mangrove_height: HeightDownload,
   // mangrove_blue_carbon: BlueCarbonDownload
   mangrove_protection: ProtectionWidget,
+  mangrove_species_distribution: SpeciesDistributionWidget,
+  mangrove_species_threatened: SpeciesThreatenedWidget,
 };
 
 export const LAYERS = {
@@ -53,14 +58,15 @@ export const LAYERS = {
   mangrove_blue_carbon: BlueCarbonLayer,
   mangrove_height: HeightLayer,
   mangrove_restoration: RestorationLayer,
-  mangrove_species: SpeciesLayer,
+  mangrove_species_distribution: SpeciesDistributionLayer,
   mangrove_protection: ProtectionLayer,
 };
 
 export const INFO = {
   mangrove_habitat_extent: HabitatExtentInfo,
   mangrove_habitat_change: HabitatChangeInfo,
-  mangrove_species: SpeciesInfo,
+  mangrove_species_distribution: SpeciesDistributionInfo,
+  mangrove_species_threatened: SpeciesThreatenedInfo,
   mangrove_protection: ProtectionInfo,
   mangrove_net_change: NetChangeInfo,
   mangrove_alerts: AlertsInfo,

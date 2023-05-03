@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { basemapAtom } from 'store/map';
 
@@ -31,6 +31,7 @@ const MapContainer = () => {
   const mapView = true;
   const isMobile = false;
   const { id, minZoom, maxZoom, initialViewState } = DEFAULT_PROPS;
+  const handleClick = useCallback((e) => console.log(e), []);
   return (
     <div className="relative h-screen w-full">
       <Map
@@ -42,7 +43,7 @@ const MapContainer = () => {
         // viewState={viewState}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         // onMapViewStateChange={handleViewState}
-        // onClick={handleClick}
+        onClick={handleClick}
       >
         {() => <LayerManager />}
       </Map>

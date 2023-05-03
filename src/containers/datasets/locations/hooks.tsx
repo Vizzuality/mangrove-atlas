@@ -1,21 +1,34 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { LngLatBounds, LngLat } from 'mapbox-gl';
 
 import API from 'services/api';
 
-import type { Location } from './types';
+type Bounds = {
+  type: 'polygon';
+  coordinates: LngLat[];
+};
+
+type Data = {
+  area_m2: number;
+  bounds: Bounds;
+  coast_length_m: number;
+  created_at: string;
+  id: number;
+  iso: string;
+  location_id: string;
+  location_type: 'country';
+  name: string;
+  perimeter_m: number;
+};
+
+type DataResponse = {
+  data: Data[];
+  metadata: unknown;
+};
 
 // widget data
-export function useLocations(
-  queryOptions: UseQueryOptions<
-    {
-      data: Location[];
-    },
-    unknown,
-    Location[],
-    string[]
-  > = {}
-) {
+export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
