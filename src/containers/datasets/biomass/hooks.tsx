@@ -61,7 +61,7 @@ export function useMangroveBiomass(
 
     const avgBiomassFiltered = data.metadata.avg_aboveground_biomass.find(
       ({ year }) => year === currentYear
-    ).value;
+    )?.value;
 
     const unit = data.metadata.units?.value;
 
@@ -95,7 +95,7 @@ export function useMangroveBiomass(
       config,
       isLoading,
     };
-  }, [query]);
+  }, [data]);
 }
 
 export function useSource(): SourceProps {
