@@ -6,6 +6,8 @@ import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
 
+import LocationTitle from 'components/location-title';
+
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
@@ -40,7 +42,9 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-        <WidgetsContainer />
+        <div>
+          <WidgetsContainer />
+        </div>
         <MapContainer />
         <Sidebar />
         <LanguageSelector />
