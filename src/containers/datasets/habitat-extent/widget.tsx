@@ -14,7 +14,7 @@ const HabitatExtent = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const { area, mangroveCoastCoveragePercentage, totalLength, legend, ChartData, config } =
+  const { area, mangroveCoastCoveragePercentage, totalLength, legend, config } =
     useMangroveHabitatExtent(
       {
         ...(!!location_id && { location_id }),
@@ -40,7 +40,7 @@ const HabitatExtent = () => {
             <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
             <span className="notranslate font-bold"> {totalLength} km</span> of the coastline.
           </p>
-          <HabitatExtentChart data={ChartData} legend={legend} tooltip={tooltip} config={config} />
+          <HabitatExtentChart legend={legend} tooltip={tooltip} config={config} />
         </>
       )}
     </div>

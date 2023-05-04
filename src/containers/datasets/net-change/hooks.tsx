@@ -8,6 +8,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
 import orderBy from 'lodash/orderBy';
+import { CartesianGridProps } from 'recharts';
 import { useRecoilValue } from 'recoil';
 
 import type { UseParamsOptions } from 'types/widget';
@@ -35,12 +36,35 @@ type DataResponse = {
   metadata: Metadata;
 };
 
-type NetChangeData = {
+type ChartData = {
   label: number;
   year: number;
-  netChange: number;
   gain: number;
   loss: number;
+};
+
+type chartBaseTypes = {
+  lines: {
+    netChange: {
+      stroke: string;
+      legend: string;
+      isAnimationActive: boolean;
+    };
+  };
+};
+
+type ChartConfig = {
+  type: string;
+  data: ChartData[];
+  cartesianGrid: CartesianGridProps;
+  chartBase: chartBaseTypes;
+};
+
+type NetChangeData = {
+  direction: string;
+  netChange: string;
+  isLoading: boolean;
+  config: ChartConfig;
 };
 
 export const numberFormat = format(',.2~f');
@@ -72,7 +96,6 @@ const getWidgetData = (data: Data[], unit = '') => {
       return {
         label: l.year,
         year: l.year,
-
         netChange:
           unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i],
         gain: l.year === firstYear ? 0 : unit === 'ha' ? l.gain * 100 : l.gain,
@@ -87,7 +110,7 @@ const getWidgetData = (data: Data[], unit = '') => {
 export function useMangroveNetChange(
   params: UseParamsOptions,
   queryOptions: UseQueryOptions<DataResponse>
-): NetChangeData[] {
+): NetChangeData {
   const fetchMangroveNetChange = () =>
     API.request({
       method: 'GET',
@@ -98,26 +121,28 @@ export function useMangroveNetChange(
   const query = useQuery(['net-change', params], fetchMangroveNetChange, {
     placeholderData: {
       data: [],
-      metadata: {},
+      metadata: null,
     },
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isLoading } = query;
 
   const startYearUi = useRecoilValue(netChangeStartYearAtom);
   const endYearUi = useRecoilValue(netChangeEndYearAtom);
-
   return useMemo(() => {
-    if (!data.metadata || !data.data.length) return null;
     const years = data.metadata?.year.sort();
     const unit = data.metadata?.units.net_change;
 
-    const startYear = years.includes(startYearUi) ? startYearUi : years[0];
-    const endYear = years.includes(endYearUi) ? endYearUi : years?.[years?.length - 1];
-    const DATA = getWidgetData(data.data, unit);
+    // const startYear = years.includes(startYearUi) ? startYearUi : years[0];
+    // const endYear = years.includes(endYearUi) ? endYearUi : years?.[years?.length - 1];
+    const DATA = getWidgetData(data.data, unit) || [];
+
+    const change = DATA[DATA.length - 1]?.netChange;
 
     const chartConfig = {
+      type: 'composed',
+      data: DATA,
       xAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
       },
@@ -136,19 +161,29 @@ export function useMangroveNetChange(
           offset: 35,
         },
       },
+      xKey: 'year',
       cartesianGrid: {
         vertical: false,
         strokeDasharray: '5 20',
       },
+      chartBase: {
+        lines: {
+          netChange: {
+            stroke: 'rgba(0,0,0,0.7)',
+            legend: 'Net change',
+            isAnimationActive: false,
+          },
+        },
+      },
     };
-    const direction = 50 > 0 ? 'increased' : 'decreased';
+    const direction = change > 0 ? 'increased' : 'decreased';
     return {
-      ...query,
-      ...DATA,
-      chartConfig,
+      isLoading,
+      config: chartConfig,
+      netChange: numberFormat(Math.abs(change)),
       direction,
     };
-  }, [query, data]);
+  }, [data, data.metadata, query]);
 }
 
 export function useSources(years): SourceProps[] {

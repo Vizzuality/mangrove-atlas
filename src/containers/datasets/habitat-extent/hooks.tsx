@@ -5,6 +5,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
+import { YAxisProps } from 'recharts';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -55,7 +56,7 @@ type TooltipData = {
   items: ChartData[];
 };
 
-type YKeysTypes = {
+type chartBaseTypes = {
   pies: {
     value: string;
   };
@@ -66,7 +67,7 @@ type ChartConfig = {
   data: ChartData[];
   tooltip: TooltipData;
   cartesianGrid: boolean;
-  yKeys: YKeysTypes;
+  chartBase: chartBaseTypes;
 };
 
 type ExtentData = {
@@ -102,8 +103,8 @@ export function useMangroveHabitatExtent(
   // TO DO - add year filter to API
   const query = useQuery(['habitat-extent', location_id], fetchHabitatExtent, {
     placeholderData: {
-      metadata: null,
       data: [],
+      metadata: null,
     },
     ...queryOptions,
   });
@@ -179,7 +180,7 @@ export function useMangroveHabitatExtent(
       data: ChartData,
       tooltip: TooltipData,
       cartesianGrid: false,
-      yKeys: {
+      chartBase: {
         pies: {
           value: 'habitat-extent',
         },

@@ -9,7 +9,7 @@ const SpeciesThreatenedChart = ({ data, legend, tooltip }) => {
     data,
     tooltip,
     cartesianGrid: false,
-    yKeys: {
+    chartBase: {
       pies: {
         value: {
           innerRadius: 60,
