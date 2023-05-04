@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
   return (
-    <div className="{cx([styles.printOnly_wrapper])}">
+    <div className="{cx([styles.printOnly_wrapper])} overflow-hidden">
       <Head>
         <title>Welcome</title>
       </Head>
