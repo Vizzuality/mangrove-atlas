@@ -2,35 +2,140 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { numberFormat } from 'lib/format';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
 import { years } from './constants';
+type Unit = {
+  value: string;
+};
+type BiomassIndicator = 'total' | '0-50' | '50-100' | '100-150' | '150-250' | '250-1500';
 
+type Data = { year: number; value: number; indicator: BiomassIndicator };
+
+type ChartData = {
+  label: BiomassIndicator;
+  value: number;
+  color: string;
+};
+type AboveGround = {
+  year: number;
+  value: number;
+};
+type Metadata = {
+  location_id: string;
+  note: null;
+  units: Unit;
+  year: number[];
+  avg_aboveground_biomass: AboveGround[];
+  total_aboveground_biomass: [];
+};
+
+type DataResponse = {
+  data: Data[];
+  metadata: Metadata;
+};
+type chartBaseTypes = {
+  pies: {
+    value: string;
+  };
+};
+
+type ChartConfig = {
+  type: string;
+  data: ChartData[];
+  chartBase: chartBaseTypes;
+};
+
+type BiomassData = {
+  mean: string;
+  unit: string;
+  year: number;
+  config: ChartConfig;
+};
+type ColorKeysTypes = {
+  [key: string]: string;
+};
+const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
+
+const getColorKeys = (data: Data[]) =>
+  data.reduce((acc, d, i) => {
+    return {
+      ...acc,
+      [d.indicator]: COLORS[i],
+    };
+  }, {} satisfies ColorKeysTypes);
 // widget data
-export function useMangroveBiomass(params: UseParamsOptions, queryOptions: UseQueryOptions = {}) {
+export function useMangroveBiomass(
+  params: UseParamsOptions,
+  queryOptions: UseQueryOptions<DataResponse>
+): BiomassData {
   const fetchMangroveBiomass = () =>
     API.request({
       method: 'GET',
       url: '/widgets/aboveground_biomass',
       params,
-    }).then((response) => response);
+    }).then((response: AxiosResponse<DataResponse>) => response.data);
 
   const query = useQuery(['aboveground_biomass', params], fetchMangroveBiomass, {
-    placeholderData: [],
-    select: (data) => ({
-      data,
-    }),
+    placeholderData: {
+      data: [],
+      metadata: {
+        avg_aboveground_biomass: [],
+        units: null,
+      },
+    },
+    // select: (data) => ({
+    //   data,
+    // }),
     ...queryOptions,
   });
+  const { data } = query;
 
   return useMemo(() => {
+    const currentYear = 2020;
+    const dataFiltered = data.data.filter(
+      ({ indicator, year }) => indicator !== 'total' && year === currentYear
+    );
+
+    const avgBiomassFiltered = data.metadata.avg_aboveground_biomass.filter(
+      ({ year }) => year === currentYear
+    ).value;
+
+    const unit = data.metadata.units?.value;
+
+    const colorKeys = getColorKeys(dataFiltered);
+    const ChartData = dataFiltered.map((d) => {
+      if (d.indicator !== 'total')
+        return {
+          label: d.indicator,
+          value: d.value,
+          color: colorKeys[d.indicator],
+        };
+    });
+
+    const config = {
+      type: 'pie',
+      data: ChartData,
+      // tooltip: TooltipData,
+      chartBase: {
+        pies: {
+          value: 'biomass',
+        },
+      },
+    };
     return {
-      ...query,
-    } as typeof query;
+      mean: numberFormat(avgBiomassFiltered),
+      unit,
+      year: currentYear,
+      config,
+    };
   }, [query]);
 }
 

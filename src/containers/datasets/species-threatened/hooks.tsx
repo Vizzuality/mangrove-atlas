@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import groupBy from 'lodash-es/groupBy';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import groupBy from 'lodash/groupBy';
 
 import type { UseParamsOptions } from 'types/widget';
 

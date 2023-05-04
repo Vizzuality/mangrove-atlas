@@ -2,12 +2,13 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import orderBy from 'lodash-es/orderBy';
+
 import { netChangeStartYearAtom, netChangeEndYearAtom } from 'store/widget';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
-import orderBy from 'lodash/orderBy';
 import { CartesianGridProps } from 'recharts';
 import { useRecoilValue } from 'recoil';
 

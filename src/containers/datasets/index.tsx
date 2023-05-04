@@ -4,6 +4,8 @@ import AlertsInfo from 'containers/datasets/alerts/info.mdx';
 import AlertsLayer from 'containers/datasets/alerts/layer';
 import BiomassInfo from 'containers/datasets/biomass/info.mdx';
 import BiomassLayer from 'containers/datasets/biomass/layer';
+import BiomassWidget from 'containers/datasets/biomass/widget';
+
 // import BiomassDownload from 'containers/datasets/biomass/download';
 // import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
 import BlueCarbonInfo from 'containers/datasets/blue-carbon/info.mdx';
@@ -40,7 +42,7 @@ export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_net_change: NetChangeWidget,
   // mangrove_alerts: AlertsDownload,
-  // mangrove_biomass: BiomassDownload,
+  mangrove_biomass: BiomassWidget,
   // mangrove_height: HeightDownload,
   // mangrove_blue_carbon: BlueCarbonDownload
   mangrove_protection: ProtectionWidget,

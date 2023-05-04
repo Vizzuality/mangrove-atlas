@@ -2,16 +2,14 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { numberFormat } from 'lib/format';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { format } from 'd3-format';
-import { YAxisProps } from 'recharts';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
-
-const numberFormat = format(',.2f');
 
 type Metadata = {
   location_id: string;
