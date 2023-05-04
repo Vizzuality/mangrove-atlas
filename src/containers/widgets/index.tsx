@@ -3,19 +3,22 @@ import WidgetsLayout from 'layouts/widgets';
 import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 
-import widgets from './constants';
+import { useWidgets } from './hooks';
 
-const WidgetsContainer: React.FC = () => (
-  <WidgetsLayout>
-    {widgets.map(({ slug, name }) => {
-      const Widget = WIDGETS[slug];
-      return (
-        <WidgetWrapper key={slug} title={name} id={slug}>
-          {WIDGETS[slug] && <Widget />}
-        </WidgetWrapper>
-      );
-    })}
-  </WidgetsLayout>
-);
+const WidgetsContainer: React.FC = () => {
+  const widgets = useWidgets();
+  return (
+    <WidgetsLayout>
+      {widgets.map(({ slug, name }) => {
+        const Widget = WIDGETS[slug];
+        return (
+          <WidgetWrapper key={slug} title={name} id={slug}>
+            {WIDGETS[slug] && <Widget />}
+          </WidgetWrapper>
+        );
+      })}
+    </WidgetsLayout>
+  );
+};
 
 export default WidgetsContainer;

@@ -6,7 +6,7 @@ const WidgetsLayout: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
   const { children } = props;
 
   return (
-    <div className="absolute left-[70px] z-[150]">
+    <div className="absolute left-[50px] z-[20]">
       {/* Content */}
       {children}
     </div>
