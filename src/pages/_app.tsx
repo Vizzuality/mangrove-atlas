@@ -1,23 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { MapProvider } from 'react-map-gl';
+
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
-import { RecoilURLSyncNext } from 'lib/recoil';
+import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
+import RecoilDevTools from 'lib/recoil/devtools';
 
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
-import qs from 'qs';
 import { RecoilRoot } from 'recoil';
-import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
 import { MediaContextProvider } from 'components/media-query';
 
 import 'styles/globals.css';
 import 'styles/mapbox.css';
-
-import { MapProvider } from 'react-map-gl';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '700'],
@@ -42,6 +41,14 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
     GAPage(url);
   }, []);
 
+  const serialize: Serialize = useCallback((x) => {
+    return x === undefined ? '' : JSON.stringify(x);
+  }, []);
+
+  const deserialize: Deserialize = useCallback((x: string): unknown => {
+    return JSON.parse(x);
+  }, []);
+
   useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChangeCompleted);
 
@@ -61,11 +68,12 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       </style>
 
       <RecoilRoot>
-        <RecoilURLSyncJSONNext
+        <RecoilURLSyncNext
           location={{ part: 'queryParams' }}
-          // serialize={qs.stringify}
-          // deserialize={qs.parse}
+          serialize={serialize}
+          deserialize={deserialize}
         >
+          {process.env.NODE_ENV === 'development' && <RecoilDevTools />}
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <MediaContextProvider disableDynamicMediaQueries>
@@ -75,7 +83,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
               </MediaContextProvider>
             </Hydrate>
           </QueryClientProvider>
-        </RecoilURLSyncJSONNext>
+        </RecoilURLSyncNext>
       </RecoilRoot>
     </>
   );

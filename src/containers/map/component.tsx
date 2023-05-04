@@ -1,8 +1,11 @@
 import { useCallback, useMemo } from 'react';
 
-import { basemapAtom } from 'store/map';
+import { ViewState } from 'react-map-gl';
+
+import { basemapAtom, mapAtom } from 'store/map';
 
 import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
@@ -12,7 +15,7 @@ import Map from 'components/map';
 
 import LayerManager from './layer-manager';
 
-const DEFAULT_PROPS = {
+export const DEFAULT_PROPS = {
   id: 'default',
   initialViewState: {
     longitude: 0,
@@ -27,11 +30,32 @@ const DEFAULT_PROPS = {
 
 const MapContainer = () => {
   const basemap = useRecoilValue(basemapAtom);
+  const [mapSettings, setMapSettings] = useRecoilState(mapAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
   const mapView = true;
   const isMobile = false;
-  const { id, minZoom, maxZoom, initialViewState } = DEFAULT_PROPS;
+  const { id, minZoom, maxZoom } = DEFAULT_PROPS;
   const handleClick = useCallback((e) => console.log(e), []);
+
+  const handleViewState = useCallback(
+    ({ latitude, longitude, zoom }: ViewState) => {
+      setMapSettings({
+        latitude,
+        longitude,
+        zoom,
+      });
+    },
+    [setMapSettings]
+  );
+
+  const initialViewState: Partial<ViewState> = useMemo(
+    () => ({
+      ...DEFAULT_PROPS.initialViewState,
+      ...mapSettings,
+    }),
+    [mapSettings]
+  );
+
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
@@ -40,9 +64,8 @@ const MapContainer = () => {
         minZoom={minZoom}
         maxZoom={maxZoom}
         initialViewState={initialViewState}
-        // viewState={viewState}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        // onMapViewStateChange={handleViewState}
+        onMapViewStateChange={handleViewState}
         onClick={handleClick}
       >
         {() => <LayerManager />}

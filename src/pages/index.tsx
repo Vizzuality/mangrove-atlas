@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
+import type { GetServerSideProps } from 'next';
+
 import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
@@ -51,6 +53,12 @@ const Home: React.FC = () => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {},
+  };
 };
 
 export default Home;

@@ -6739,8 +6739,7 @@ __metadata:
     react-virtualized: ^9.22.5
     recharts: ^2.5.0
     recoil: 0.7.7
-    recoil-sync: ^0.2.0
-    recoil-sync-next: 0.0.4
+    recoil-sync: 0.2.0
     shadcn-ui: ^0.1.1
     start-server-and-test: 1.12.1
     svg-sprite-loader: 6.0.11
@@ -8897,22 +8896,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recoil-sync-next@npm:0.0.4":
-  version: 0.0.4
-  resolution: "recoil-sync-next@npm:0.0.4"
-  peerDependencies:
-    "@recoiljs/refine": ^0.1.0
-    next: ^12.2.0 || ^13.0.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    recoil: ^0.7.4
-    recoil-sync: ^0.1.0 || ^0.2.0
-    transit-js: ^0.8.874
-  checksum: 97ae4c7a5dca59338ee1ec11a8133e7163a13d98b86eda569e9d6819b3e0c7bf5723be6eca1155fa37e6f98afde0c4043f6586c123db96f3d798102bdb18be1c
-  languageName: node
-  linkType: hard
-
-"recoil-sync@npm:^0.2.0":
+"recoil-sync@npm:0.2.0":
   version: 0.2.0
   resolution: "recoil-sync@npm:0.2.0"
   dependencies:
