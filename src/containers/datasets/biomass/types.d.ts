@@ -12,7 +12,7 @@ type ChartData = {
   color: string;
 };
 
-type AboveGround = {
+export type AboveGround = {
   year: number;
   value: number;
 };
@@ -41,9 +41,12 @@ type ChartConfig = {
   type: string;
   data: ChartData[];
   chartBase: chartBaseTypes;
+  tooltip: unknown;
+  legend: unknown;
 };
 
 export type BiomassData = {
+  isLoading: boolean;
   mean: string;
   unit: string;
   year: number;

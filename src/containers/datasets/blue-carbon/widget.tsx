@@ -14,15 +14,7 @@ const BlueCarbonWidget = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const {
-    agb,
-    toc,
-    soc,
-    config,
-    isLoading,
-    tooltip = [],
-    legend = [],
-  } = useMangroveBlueCarbon(
+  const { agb, toc, soc, config, isLoading } = useMangroveBlueCarbon(
     {
       ...(!!location_id && { location_id }),
       year: currentYear,
@@ -43,7 +35,7 @@ const BlueCarbonWidget = () => {
             upper 1m of soil.
           </p>
 
-          <BlueCarbonChart legend={legend} tooltip={tooltip} config={config} />
+          <BlueCarbonChart config={config} />
         </>
       )}
     </div>

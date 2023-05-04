@@ -49,6 +49,8 @@ type DataResponse = {
 type SpeciesData = {
   threatenedLegend: number | string;
   total: number;
+  isLoading: boolean;
+  tooltip?: unknown;
   chartData;
 };
 const getThreatened = (th: number, total: number) => {
@@ -80,7 +82,7 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
-  const { data } = query;
+  const { data, isLoading } = query;
 
   const DATA = useMemo(() => {
     const { data: speciesData } = data;
@@ -109,8 +111,8 @@ export function useMangroveSpecies(
 
   return useMemo(() => {
     return {
-      ...query,
       ...DATA,
+      isLoading,
     } satisfies SpeciesData;
   }, [query, DATA]);
 }

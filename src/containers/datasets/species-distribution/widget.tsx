@@ -20,16 +20,21 @@ const SpeciesDistribution = () => {
   const currentLocationId = useRecoilValue(currentLocationAtom);
   const { data: location } = useLocation(currentLocationId);
   const { name, location_id } = location;
-  const { total, legend, isLoading } = useMangroveSpecies({
-    location_id,
-  });
+  const { total, legend, isLoading } = useMangroveSpecies(
+    {
+      location_id,
+    },
+    {}
+  );
   const isWorldwide = location_id === 'worldwide';
   // const total = data?.total;
-  const ref = useRef();
+  const ref = useRef(null);
   const trianglePosition = (lineChartWidth * total) / 100 - 7; // substract icon size
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
-    setLineChartWidth(ref?.current?.offsetWidth);
+    if (ref && ref.current && ref.current.offsetWidth) {
+      setLineChartWidth(ref?.current?.offsetWidth);
+    }
   }, [ref]);
   return (
     <div>

@@ -14,21 +14,15 @@ const BiomassWidget = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const {
-    year,
-    mean,
-    unit,
-    config,
-    isLoading,
-    tooltip = [],
-    legend = [],
-  } = useMangroveBiomass(
+  const { year, mean, unit, config, isLoading } = useMangroveBiomass(
     {
       ...(!!location_id && { location_id }),
       year: currentYear,
     },
     {}
   );
+
+  const { tooltip, legend } = config;
 
   return (
     <div>
@@ -44,7 +38,7 @@ const BiomassWidget = () => {
             in <span className="font-bold"> {year}</span>.
           </p>
 
-          <BiomassChart legend={legend} tooltip={tooltip} config={config} />
+          <BiomassChart legend={legend} config={config} />
         </>
       )}
     </div>

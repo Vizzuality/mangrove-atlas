@@ -1,6 +1,7 @@
 import WidgetControls from 'components/widget-controls';
+import { WidgetSlugType } from 'types/widget';
 type WidgetLayoutProps = {
-  id: string;
+  id: WidgetSlugType;
   title: string;
   children: React.ReactNode;
 };

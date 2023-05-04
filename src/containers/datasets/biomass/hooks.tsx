@@ -39,10 +39,11 @@ export function useMangroveBiomass(
     placeholderData: {
       data: [],
       metadata: {
-        soc: null,
-        toc: null,
-        agb: null,
-        units: null,
+        avg_aboveground_biomass: [
+          {
+            value: null,
+          },
+        ],
       },
     },
     // select: (data) => ({
@@ -50,7 +51,7 @@ export function useMangroveBiomass(
     // }),
     ...queryOptions,
   });
-  const { data } = query;
+  const { data, isLoading } = query;
 
   return useMemo(() => {
     const currentYear = 2020;
@@ -58,7 +59,7 @@ export function useMangroveBiomass(
       ({ indicator, year }) => indicator !== 'total' && year === currentYear
     );
 
-    const avgBiomassFiltered = data.metadata.avg_aboveground_biomass.filter(
+    const avgBiomassFiltered = data.metadata.avg_aboveground_biomass.find(
       ({ year }) => year === currentYear
     ).value;
 
@@ -83,12 +84,16 @@ export function useMangroveBiomass(
           value: 'biomass',
         },
       },
+      tooltip: [],
+      legend: [],
     };
+
     return {
       mean: numberFormat(avgBiomassFiltered),
       unit,
       year: currentYear,
       config,
+      isLoading,
     };
   }, [query]);
 }

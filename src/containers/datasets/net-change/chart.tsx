@@ -2,7 +2,7 @@ import Legend from 'containers/legend';
 
 import Chart from 'components/chart';
 
-const NetChangeChart = ({ legend, config }) => {
+const NetChangeChart = ({ config }) => {
   return (
     <div className="">
       {/* <Legend items={legend} /> */}

@@ -38,14 +38,19 @@ export function useMangroveBlueCarbon(
   const query = useQuery(['blue-carbon', params], fetchMangroveBlueCarbon, {
     placeholderData: {
       data: [],
-      metadata: null,
+      metadata: {
+        soc: null,
+        toc: null,
+        agb: null,
+        units: null,
+      },
     },
     // select: (data) => ({
     //   data,
     // }),
     ...queryOptions,
   });
-  const { data } = query;
+  const { data, isLoading } = query;
   return useMemo(() => {
     const orderedData = orderBy(
       data.data.map((d) => ({
@@ -73,7 +78,7 @@ export function useMangroveBlueCarbon(
       },
     };
     return {
-      ...query,
+      isLoading,
       agb: numberFormat(agb / 1000000),
       toc: numberFormat(toc / 1000000),
       soc: numberFormat(soc / 1000000),

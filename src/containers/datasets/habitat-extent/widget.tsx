@@ -40,7 +40,7 @@ const HabitatExtent = () => {
             <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
             <span className="notranslate font-bold"> {totalLength} km</span> of the coastline.
           </p>
-          <HabitatExtentChart legend={legend} tooltip={tooltip} config={config} />
+          <HabitatExtentChart legend={legend} config={config} />
         </>
       )}
     </div>

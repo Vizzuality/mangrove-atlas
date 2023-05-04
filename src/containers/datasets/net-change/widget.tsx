@@ -14,14 +14,7 @@ const NetChangeWidget = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const {
-    isLoading,
-    netChange,
-    direction,
-    config,
-    legend = [],
-    tooltip = [],
-  } = useMangroveNetChange(
+  const { isLoading, netChange, direction, config } = useMangroveNetChange(
     {
       ...(!!location_id && { location_id }),
       year: currentYear,
@@ -40,7 +33,7 @@ const NetChangeWidget = () => {
             <span className="font-bold"> {netChange}</span> {'km² unit select'} between{' '}
             {'1996 start date select'}y{'2020 end date select'}.
           </p>
-          <NetChangeChart legend={legend} tooltip={tooltip} config={config} />
+          <NetChangeChart config={config} />
         </>
       )}
     </div>

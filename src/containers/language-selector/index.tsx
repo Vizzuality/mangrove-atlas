@@ -23,7 +23,7 @@ export const LanguageSelector = () => {
   );
 
   const currentLan = useMemo(
-    () => uiLanguages.find((lan) => lan.locale === locale).name,
+    () => uiLanguages.find((lan) => lan.locale === locale)?.name,
     [uiLanguages, locale]
   );
 

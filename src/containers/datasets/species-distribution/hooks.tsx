@@ -42,6 +42,7 @@ type DataResponse = {
 type SpeciesData = {
   total: number;
   legend: number[];
+  isLoading: boolean;
 };
 // widget data
 export function useMangroveSpecies(
@@ -64,7 +65,7 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
-  const { data } = query;
+  const { data, isLoading } = query;
 
   return useMemo(() => {
     const total = data.data.total;
@@ -72,6 +73,7 @@ export function useMangroveSpecies(
     return {
       total: total,
       legend,
+      isLoading,
     };
   }, [query, params]);
 }

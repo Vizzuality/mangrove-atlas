@@ -2,10 +2,10 @@ import Legend from 'containers/legend';
 
 import Chart from 'components/chart';
 
-const BiomassChart = ({ legend, config }) => {
+const BiomassChart = ({ config }) => {
   return (
     <div className="flex flex-1 items-center justify-between">
-      <Legend items={legend} />
+      {/* <Legend items={legend} /> */}
       <Chart config={config} />
     </div>
   );

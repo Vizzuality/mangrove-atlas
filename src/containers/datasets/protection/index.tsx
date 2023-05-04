@@ -13,10 +13,13 @@ const NetChange = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const { data: data2 } = useMangroveProtectedAreas({
-    ...(!!location_id || (location_id !== 'worldwide' && { location_id })),
-    year: currentYear,
-  });
+  const { data: data2 } = useMangroveProtectedAreas(
+    {
+      ...(!!location_id && { location_id }),
+      year: currentYear,
+    },
+    {}
+  );
   return (
     <div>
       <p>

@@ -52,6 +52,7 @@ export type BlueCarbon = {
   toc: string;
   agb: string;
   config: ChartConfig;
+  isLoading: boolean;
 };
 
 // export type ColorKeysTypes = {
