@@ -12,56 +12,8 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import { years } from './constants';
-type Unit = {
-  value: string;
-};
-type BiomassIndicator = 'total' | '0-50' | '50-100' | '100-150' | '150-250' | '250-1500';
+import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
-type Data = { year: number; value: number; indicator: BiomassIndicator };
-
-type ChartData = {
-  label: BiomassIndicator;
-  value: number;
-  color: string;
-};
-type AboveGround = {
-  year: number;
-  value: number;
-};
-type Metadata = {
-  location_id: string;
-  note: null;
-  units: Unit;
-  year: number[];
-  avg_aboveground_biomass: AboveGround[];
-  total_aboveground_biomass: [];
-};
-
-type DataResponse = {
-  data: Data[];
-  metadata: Metadata;
-};
-type chartBaseTypes = {
-  pies: {
-    value: string;
-  };
-};
-
-type ChartConfig = {
-  type: string;
-  data: ChartData[];
-  chartBase: chartBaseTypes;
-};
-
-type BiomassData = {
-  mean: string;
-  unit: string;
-  year: number;
-  config: ChartConfig;
-};
-type ColorKeysTypes = {
-  [key: string]: string;
-};
 const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
 const getColorKeys = (data: Data[]) =>
@@ -87,7 +39,9 @@ export function useMangroveBiomass(
     placeholderData: {
       data: [],
       metadata: {
-        avg_aboveground_biomass: [],
+        soc: null,
+        toc: null,
+        agb: null,
         units: null,
       },
     },

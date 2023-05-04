@@ -8,8 +8,10 @@ import BiomassWidget from 'containers/datasets/biomass/widget';
 
 // import BiomassDownload from 'containers/datasets/biomass/download';
 // import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
+
 import BlueCarbonInfo from 'containers/datasets/blue-carbon/info.mdx';
 import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
+import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
@@ -44,7 +46,7 @@ export const WIDGETS = {
   // mangrove_alerts: AlertsDownload,
   mangrove_biomass: BiomassWidget,
   // mangrove_height: HeightDownload,
-  // mangrove_blue_carbon: BlueCarbonDownload
+  mangrove_blue_carbon: BlueCarbonWidget,
   mangrove_protection: ProtectionWidget,
   mangrove_species_distribution: SpeciesDistributionWidget,
   mangrove_species_threatened: SpeciesThreatenedWidget,
