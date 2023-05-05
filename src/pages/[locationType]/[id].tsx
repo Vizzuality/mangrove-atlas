@@ -2,7 +2,7 @@ import type { GetServerSideProps } from 'next';
 
 import DesktopLayout from 'layouts/desktop';
 
-const Home = () => <DesktopLayout />;
+const LocationPage = () => <DesktopLayout />;
 
 export const getServerSideProps: GetServerSideProps = async () => {
   return {
@@ -10,4 +10,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-export default Home;
+export default LocationPage;
