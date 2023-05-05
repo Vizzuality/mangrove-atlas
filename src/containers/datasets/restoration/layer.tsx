@@ -7,7 +7,6 @@ import { useLayers, useSource } from './hooks';
 const MangrovesLayer = ({ beforeId }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers();
-
   if (!SOURCE || !LAYERS) return null;
   return (
     <Source {...SOURCE}>

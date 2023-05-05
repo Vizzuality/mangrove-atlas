@@ -4,7 +4,7 @@ export function useSource(): SourceProps {
   return {
     id: 'country-boundaries',
     type: 'vector',
-    url: 'mapbox://mangrove-atlas.8hyyoyq7',
+    url: 'mapbox://globalmangrovewatch.3v0yd8n1',
   };
 }
 
@@ -25,8 +25,8 @@ export function useLayers(): LayerProps[] {
       source: 'country-boundaries',
       'source-layer': 'gadm_eez_location_v3',
       paint: {
-        'fill-color': 'hsla(58, 78%, 58%, 0.2)',
-        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, 1, 8, 0],
+        'fill-color': 'hsla(58, 78%, 58%, 0.08)',
+        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 0],
       },
     },
   ];

@@ -16,7 +16,7 @@ export default {
       slug: "ecosystem_services",
       name: "Ecosystem Services",
     },
-    {
+    {                      
       slug: "all_datasets",
       name: "All datasets",
     },
@@ -149,7 +149,7 @@ export default {
     },
     {
       name: "Carbon Market Potential",
-      slug: "mangrove_investment_potential",
+      slug: "mangrove_market_potential",
       locationType: ["country"],
       categoryIds: ["all_datasets", "climate_and_policy"],
       layersIds: [],

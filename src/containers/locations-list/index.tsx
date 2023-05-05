@@ -31,7 +31,7 @@ const LocationsList = () => {
           className="flex h-8 w-full flex-1 items-center justify-between"
           href={`/${locations[index].iso}`}
         >
-          <p className="text-black/85 font-sans text-2lg">{locations[index].name}</p>
+          <p className="font-sans text-2lg text-black/85">{locations[index].name}</p>
           <span className="text-xs text-grey-800 text-opacity-90">
             {locationNames[locations[index].location_type]}
           </span>

@@ -1,23 +1,34 @@
-import { useMemo } from 'react';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { LngLatBounds, LngLat } from 'mapbox-gl';
 
 import API from 'services/api';
 
-import type { Location } from './types';
+type Bounds = {
+  type: 'polygon';
+  coordinates: LngLat[];
+};
+
+type Data = {
+  area_m2: number;
+  bounds: Bounds;
+  coast_length_m: number;
+  created_at: string;
+  id: number;
+  iso: string;
+  location_id: string;
+  location_type: 'country';
+  name: string;
+  perimeter_m: number;
+};
+
+type DataResponse = {
+  data: Data[];
+  metadata: unknown;
+};
 
 // widget data
-export function useLocations(
-  queryOptions: UseQueryOptions<
-    {
-      data: Location[];
-    },
-    unknown,
-    Location[],
-    string[]
-  > = {}
-) {
+export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
@@ -28,14 +39,14 @@ export function useLocations(
     placeholderData: {
       data: [],
     },
-    select: (data) => data.data,
+    select: (data) => data?.data,
     ...queryOptions,
   });
 
   return query;
 }
 
-export function useLocationIso(location, queryOptions = {}) {
+export function useLocation(location, queryOptions = {}) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
@@ -43,19 +54,11 @@ export function useLocationIso(location, queryOptions = {}) {
 
   const fetchLocations = () => API.request(config).then((response) => response.data);
 
-  const query = useQuery(['locations'], fetchLocations, {
-    placeholderData: [],
+  return useQuery(['locations', location], fetchLocations, {
+    placeholderData: { name: 'Worldwide', location_id: 'worldwide' },
     select: (data) => ({
-      data: data.data?.filter((d) => d.location_id === location)[0],
+      ...data?.data?.filter((d) => d.location_id === location)[0],
     }),
     ...queryOptions,
   });
-
-  const { data } = query;
-
-  return useMemo(() => {
-    return {
-      ...data,
-    };
-  }, [location]);
 }

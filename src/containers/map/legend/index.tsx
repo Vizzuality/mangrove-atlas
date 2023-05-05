@@ -1,32 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useEffect } from 'react';
 
-import { activeLayersAtom } from 'store/map';
+import { activeWidgetsAtom } from 'store/widget';
 
-import { useSetRecoilState, useRecoilState } from 'recoil';
+import { useSetRecoilState, useRecoilValue } from 'recoil';
+
+import { useActiveLayers } from 'containers/layers/hooks';
 
 import Icon from 'components/icon';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
 const Legend = () => {
-  const [activeLayers] = useRecoilState(activeLayersAtom);
-  const setActiveLayers = useSetRecoilState(activeLayersAtom);
+  const activeLayersSlugs = useRecoilValue(activeWidgetsAtom);
+  const setActiveLayers = useSetRecoilState(activeWidgetsAtom);
 
   useEffect(() => {
-    setActiveLayers(activeLayers);
-  }, [activeLayers, setActiveLayers]);
+    setActiveLayers(activeLayersSlugs);
+  }, [activeLayersSlugs, setActiveLayers]);
 
   const updateLayers = useCallback(
     (layer: string) => {
-      const updatedLayers = activeLayers.filter((l) => {
+      const updatedLayers = activeLayersSlugs.filter((l) => {
         return l !== layer;
       });
 
       setActiveLayers(updatedLayers);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayersSlugs, setActiveLayers]
   );
+  const activeLayers = useActiveLayers(activeLayersSlugs);
 
   return (
     <div className="mb-1 flex flex-col space-y-1">

@@ -1,6 +1,7 @@
 const forms = require('@tailwindcss/forms');
 const lineClamp = require('@tailwindcss/line-clamp');
 const typography = require('@tailwindcss/typography');
+const scrollBar = require('tailwind-scrollbar-hide');
 const { fontFamily } = require('tailwindcss/defaultTheme');
 const animate = require('tailwindcss-animate');
 
@@ -17,7 +18,7 @@ module.exports = {
     './src/images/**/*.@(tsx|ts)',
     './src/svgs/**/*.@(tsx|ts)',
   ],
-  plugins: [animate, forms, lineClamp, typography],
+  plugins: [animate, forms, lineClamp, typography, scrollBar],
   theme: {
     extend: {
       boxShadow: {
@@ -28,12 +29,16 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      spacing: {
+        7.5: '1.875rem',
+      },
       fontSize: {
         xxs: '0.625rem',
         '2lg': '1.188rem',
       },
       colors: {
         black: '#000000',
+        'black/85': 'rgba(0,0,0,85%)',
         grey: {
           100: '#D8D8D8',
           400: '#939393',
@@ -47,6 +52,9 @@ module.exports = {
       },
       width: {
         10.5: '2.625rem',
+      },
+      borderRadius: {
+        '2.5xl': '1.3rem',
       },
       keyframes: {
         overlayShow: {

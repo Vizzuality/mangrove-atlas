@@ -1,19 +1,53 @@
-import * as Switch from '@radix-ui/react-switch';
+import React, { ReactNode } from 'react';
 
-const SwitchDemo = ({ id }) => (
-  <form>
-    <div className="flex items-center">
-      <label className="sr-only pr-[15px] text-[15px] leading-none text-white" htmlFor={id}>
-        {id}
-      </label>
-      <Switch.Root
-        className="relative h-7 w-12 cursor-pointer rounded-full border-2 border-teal-800 border-opacity-20 outline-none data-[state=checked]:bg-teal-800"
-        id={id}
-      >
-        <Switch.Thumb className="bg-teal-0 block h-5 w-5 translate-x-0.5 rounded-full transition-transform will-change-transform duration-100 data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white" />
-      </Switch.Root>
-    </div>
-  </form>
+import cn from 'lib/classnames';
+
+import * as SwitchRadix from '@radix-ui/react-switch';
+
+type WrapperProps = Readonly<{
+  id: string;
+  children: ReactNode;
+  className?: string;
+}>;
+
+const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) => (
+  <SwitchRadix.Root
+    className={cn({
+      'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 outline-none data-[state=checked]:bg-brand-800':
+        true,
+      [className]: !!className,
+    })}
+    {...props}
+  >
+    {children}
+  </SwitchRadix.Root>
 );
 
-export default SwitchDemo;
+const SwitchThumb = ({ className }: SwitchRadix.SwitchThumbProps) => (
+  <SwitchRadix.Thumb
+    className={cn({
+      'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white':
+        true,
+      [className]: !!className,
+    })}
+  />
+);
+
+const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
+  <div className="flex items-center">
+    <label
+      className={cn({
+        'sr-only pr-[15px] text-[15px] leading-none text-white': true,
+        [className]: !!className,
+      })}
+      htmlFor={id}
+    >
+      {id}
+    </label>
+    {children}
+  </div>
+);
+SwitchRoot.displayName = SwitchRadix.Root.displayName;
+SwitchThumb.displayName = SwitchRadix.Thumb.displayName;
+
+export { SwitchThumb, SwitchRoot, SwitchWrapper };

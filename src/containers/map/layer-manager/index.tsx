@@ -1,22 +1,16 @@
-import { activeLayersAtom } from 'store/map';
+import { activeWidgetsAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
-type LayerManagerTypes = () => JSX.Element[];
-// {
-//   key: string;
-//   id: string;
-//   settings: {
-//     opacity: number;
-//     visibility: boolean;
-//     expand: boolean;
-//   };
-// };
+
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeLayersAtom);
+  const layers = useRecoilValue(activeWidgetsAtom);
+
   // const layersSettings = useRecoilValue(layersSettingsAtom);
   const LAYERS_FILTERED = layers.filter((layer) => !!LAYERS[layer]);
+  const ProtectedAreasLayer = LAYERS['protected-areas'];
+  const CountryBoundariesLayer = LAYERS['country-boundaries'];
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {
@@ -40,6 +34,10 @@ const LayerManagerContainer = () => {
           />
         );
       })}
+      {/* Countries layer */}
+      {<CountryBoundariesLayer id="country-boundaries-layer" />}
+      {/* Protected areas layer */}
+      {<ProtectedAreasLayer id="protected-areas-layer" />}
     </>
   );
 };

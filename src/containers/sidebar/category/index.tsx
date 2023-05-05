@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import { menuCategoryAtom } from 'store/menu';
+import { activeCategoryAtom } from 'store/sidebar';
 
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 
@@ -15,11 +15,11 @@ import Icon from 'components/icon';
 const Category = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const category = useRecoilValue(menuCategoryAtom);
-  const setCategory = useSetRecoilState(menuCategoryAtom);
+  const category = useRecoilValue(activeCategoryAtom);
+  const setCategory = useSetRecoilState(activeCategoryAtom);
 
   return (
-    <div className="flex flex-col text-center">
+    <div className="relative flex flex-col text-center">
       <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
       <div className="relative flex w-10.5 flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <Dialog open={isOpen}>
@@ -49,7 +49,7 @@ const Category = () => {
           </DialogTrigger>
           <DialogContent
             onMouseLeave={() => setIsOpen(false)}
-            className="text-black/85 fixed z-50 w-[335px] rounded-[30px]  p-1.5 pr-4 font-sans text-[19px] font-light focus:outline-none"
+            className="fixed z-50 mt-60 w-[335px] rounded-[30px] p-1.5  pr-4 font-sans text-[19px] font-light text-black/85 focus:outline-none"
           >
             {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button

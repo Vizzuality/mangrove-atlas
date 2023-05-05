@@ -4,9 +4,11 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
+import { RecoilURLSyncNext } from 'lib/recoil';
 
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import qs from 'qs';
 import { RecoilRoot } from 'recoil';
 import { RecoilURLSyncJSONNext } from 'recoil-sync-next';
 
@@ -59,7 +61,11 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       </style>
 
       <RecoilRoot>
-        <RecoilURLSyncJSONNext location={{ part: 'queryParams' }}>
+        <RecoilURLSyncJSONNext
+          location={{ part: 'queryParams' }}
+          // serialize={qs.stringify}
+          // deserialize={qs.parse}
+        >
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <MediaContextProvider disableDynamicMediaQueries>
