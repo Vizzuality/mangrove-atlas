@@ -13,7 +13,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
     <div className="min-h-min w-[540px] rounded-2xl bg-white px-10 pt-8 pb-11 shadow-lg">
       {/* Content */}
       <header className="flex items-center justify-between">
-        <h2 className="font-black/85 text-xs font-bold uppercase -tracking-tighter">{title}</h2>
+        <h2 className="text-xs font-bold uppercase -tracking-tighter text-black/85">{title}</h2>
         <WidgetControls id={id} />
       </header>
       {children}

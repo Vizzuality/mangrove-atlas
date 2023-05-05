@@ -1,12 +1,11 @@
 import Head from 'next/head';
+import Image from 'next/image';
 
 import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
-
-import LocationTitle from 'components/location-title';
 
 const Home: React.FC = () => {
   // const MAP_STYLE = useMemo(() => {
@@ -27,7 +26,7 @@ const Home: React.FC = () => {
       <div
         className="{cx(styles.vis, { [styles.mobileView]:
             mapView && isMobile, })}
-          relative"
+          relative h-screen w-screen"
       >
         {/* <h1
           className="{cx(styles.printOnly, {
@@ -42,11 +41,12 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-        <div>
-          <WidgetsContainer />
+        <div className="absolute top-0 left-0 z-50">
+          <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
         </div>
         <MapContainer />
         <Sidebar />
+        <WidgetsContainer />
         <LanguageSelector />
       </div>
     </div>

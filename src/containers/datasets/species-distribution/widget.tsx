@@ -41,12 +41,12 @@ const SpeciesDistribution = () => {
       {!isLoading && (
         <>
           {/* mangrove sentence styles, create constant */}
-          <p className="text-black/85 text-lg font-light">
+          <p className="text-lg font-light text-black/85">
             <span className="font-bold"> {name}</span> has{' '}
             <span className="font-bold">{total}</span> of mangroves distributed by country as map
             shows.
           </p>
-          <div className="text-black/85 relative w-full font-sans text-sm ">
+          <div className="relative w-full font-sans text-sm text-black/85 ">
             <p className="w-full text-end opacity-50">total species</p>
 
             <div

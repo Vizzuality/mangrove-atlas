@@ -31,7 +31,7 @@ const Legend = ({ items }: Legend) => {
                   onClick={() => handleCollapse(d.label)}
                 >
                   <span className="h-4 w-2 rounded-md" style={{ backgroundColor: d.color }} />
-                  <span className="font-black/85">{d.label}</span>
+                  <span className="text-black/85">{d.label}</span>
                   <Icon
                     icon={ARROW_SVG}
                     className={cn({ 'w-3 text-grey-400': true, 'rotate-180': !!collapse[d.label] })}

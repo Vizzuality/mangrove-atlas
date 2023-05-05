@@ -19,11 +19,7 @@ const Home: React.FC = () => {
       {/* {!isMobile && <DesktopLayout />}
       {isMobile && <MobileLayout />}
       {isMobile && <FooterMenu />} */}
-      <div
-        className="{cx(styles.vis, { [styles.mobileView]:
-            mapView && isMobile, })}
-          relative"
-      >
+      <div className="relative h-screen w-screen">
         {/* <h1
           className="{cx(styles.printOnly, {
               [styles._short]: location?.name.length < 10,
@@ -37,9 +33,9 @@ const Home: React.FC = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-        <WidgetsContainer />
         <MapContainer />
         <Sidebar />
+        <WidgetsContainer />
       </div>
     </div>
   );

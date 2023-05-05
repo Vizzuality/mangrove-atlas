@@ -6747,6 +6747,7 @@ __metadata:
     svgo: 3.0.2
     svgo-loader: 3.0.3
     tailwind-merge: ^1.11.0
+    tailwind-scrollbar-hide: ^1.1.7
     tailwindcss: 3.2.7
     tailwindcss-animate: ^1.0.5
     typescript: 4.9.4
@@ -9996,6 +9997,13 @@ __metadata:
   version: 1.12.0
   resolution: "tailwind-merge@npm:1.12.0"
   checksum: 5ef323eec1051c4aa9626e29498f6c058dbbb242ca8156aa298de41ada3eda05a8f5f1260a57112c155f63b2e94c4b4ccab5386d60fae54de07aac6d9dbc60e4
+  languageName: node
+  linkType: hard
+
+"tailwind-scrollbar-hide@npm:^1.1.7":
+  version: 1.1.7
+  resolution: "tailwind-scrollbar-hide@npm:1.1.7"
+  checksum: 2434a1db7a92fa91952ce4fbef7f80b83f121fa2fae27453cefc6030c06d368768e3172d3640ae6836fe4f813ed89b40c2f44b1f17756593ab4625259ef22a75
   languageName: node
   linkType: hard
 

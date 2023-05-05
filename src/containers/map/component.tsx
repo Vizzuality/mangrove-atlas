@@ -33,7 +33,7 @@ const MapContainer = () => {
   const { id, minZoom, maxZoom, initialViewState } = DEFAULT_PROPS;
   const handleClick = useCallback((e) => console.log(e), []);
   return (
-    <div className="relative h-screen w-full">
+    <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
         id={id}
         mapStyle={selectedBasemap}
