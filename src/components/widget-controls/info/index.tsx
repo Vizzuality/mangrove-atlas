@@ -11,7 +11,7 @@ const Info = ({ id }) => {
 
   if (!Info) return null;
   return (
-    <div className="flex h-[60px] w-[60px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
+    <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
         <DialogTrigger>
           <div className="flex justify-center">

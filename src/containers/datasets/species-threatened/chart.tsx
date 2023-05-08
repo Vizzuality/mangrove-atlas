@@ -20,7 +20,7 @@ const SpeciesThreatenedChart = ({ data, legend, tooltip }) => {
     },
   };
   return (
-    <div className="flex flex-1 items-center justify-between">
+    <div className="flex flex-1 items-center justify-between py-10">
       {<Legend items={legend} />}
       <Chart config={config} />
     </div>

@@ -49,7 +49,7 @@ const Category = () => {
           </DialogTrigger>
           <DialogContent
             onMouseLeave={() => setIsOpen(false)}
-            className="fixed z-50 mt-60 w-[335px] rounded-[30px] p-1.5  pr-4 font-sans text-[19px] font-light text-black/85 focus:outline-none"
+            className="fixed z-50 w-[335px] rounded-[30px] p-1.5  pr-4 font-sans text-[19px] font-light text-black/85 focus:outline-none"
           >
             {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
               <button

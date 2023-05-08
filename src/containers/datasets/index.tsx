@@ -37,6 +37,7 @@ import RestorationLayer from 'containers/datasets/restoration/layer';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
 import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
+import SpeciesLocation from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
@@ -50,6 +51,7 @@ export const WIDGETS = {
   mangrove_protection: ProtectionWidget,
   mangrove_species_distribution: SpeciesDistributionWidget,
   mangrove_species_threatened: SpeciesThreatenedWidget,
+  mangrove_species_location: SpeciesLocation,
 };
 
 export const LAYERS = {

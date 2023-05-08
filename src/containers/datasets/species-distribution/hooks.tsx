@@ -87,11 +87,11 @@ export function useSource(): SourceProps {
 }
 
 export function useLayer(): LayerProps {
-  const minValue = 0;
   const maxValue = 51;
   return {
     id: 'Species_richness',
     'source-layer': 'Species_richness',
+    // filter: ['==', 'sp_count', '<0'],
     type: 'fill',
     paint: {
       'fill-color': [
@@ -116,36 +116,7 @@ export function useLayer(): LayerProps {
         '#3B8793',
         40,
         '#2D6D82',
-        45,
-        '#205272',
-        65,
-        '#205272',
-      ],
-      'fill-outline-color': [
-        'interpolate',
-        ['linear'],
-        ['get', 'sp_count'],
-        0,
-        '#F9FDB7',
-        5,
-        '#E0F1B2',
-        10,
-        '#C7E6AC',
-        15,
-        '#B0DAA9',
-        20,
-        '#99CFA6',
-        25,
-        '#7CBCA2',
-        30,
-        '#59A29C',
-        35,
-        '#3B8793',
-        40,
-        '#2D6D82',
-        45,
-        '#205272',
-        65,
+        maxValue,
         '#205272',
       ],
       'fill-opacity': 0.5,

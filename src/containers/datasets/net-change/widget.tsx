@@ -26,7 +26,7 @@ const NetChangeWidget = () => {
     <div>
       {isLoading && <div>...loading</div>}
       {!isLoading && (
-        <>
+        <div>
           <p>
             The extent of mangroves in <span className="font-bold"> {name}</span> has{' '}
             <span className="font-bold"> {direction}</span> by{' '}
@@ -34,7 +34,7 @@ const NetChangeWidget = () => {
             {'1996 start date select'}y{'2020 end date select'}.
           </p>
           <NetChangeChart config={config} />
-        </>
+        </div>
       )}
     </div>
   );

@@ -84,12 +84,12 @@ const LocationsList = () => {
             <CommandGroup>
               <List
                 width={430}
-                height={800}
+                height={700}
                 rowHeight={25}
                 rowRenderer={renderRow}
                 rowCount={locations.length}
                 overscanRowCount={3}
-                className="no-scrollbar"
+                className="no-scrollbar overflow-hidden rounded-sm"
               />
             </CommandGroup>
           </CommandList>
