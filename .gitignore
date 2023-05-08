@@ -39,12 +39,7 @@ yarn-error.log*
 /cypress/videos
 
 # Yarn
-.yarn/*
-!.yarn/patches
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
+.yarn
 .pnp.*
 
 # typescript
