@@ -26,7 +26,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       }
       className={cn({
         'w-[540px] grow rounded-2xl border border-[#DADED0] bg-white px-10 pt-1 shadow-3xl': true,
-        '-mb-9': isCollapsed[id],
+        '-mb-4': isCollapsed[id],
       })}
     >
       {/* Content */}

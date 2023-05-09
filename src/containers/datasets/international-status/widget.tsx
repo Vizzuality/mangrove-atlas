@@ -42,7 +42,7 @@ const HabitatExtent = () => {
     hasNDCReductionTarget,
   } = useMangroveInternationalStatus(
     {
-      ...(!!location_id && { location_id: 2029 }),
+      ...(!!location_id && { location_id }),
       year: currentYear,
     },
     {}

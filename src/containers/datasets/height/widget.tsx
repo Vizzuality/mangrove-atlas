@@ -35,7 +35,7 @@ const NetChangeWidget = () => {
             </span>{' '}
             in <span className="font-bold"> {year}</span>.
           </p>
-          {/* <HeightChart config={config} /> */}
+          <HeightChart config={config} />
         </div>
       )}
     </div>

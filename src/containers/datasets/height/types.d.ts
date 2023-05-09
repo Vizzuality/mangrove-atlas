@@ -27,3 +27,7 @@ export type DataResponse = {
   data: Data[];
   metadata: Metadata;
 };
+
+export type ColorKeysTypes = {
+  [key: TreeHeightIndicator]: string;
+};
