@@ -15,6 +15,7 @@ type WidgetLayoutProps = {
 const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id } = props;
   const [isCollapsed, setIsCollapsed] = useState({});
+
   return (
     <motion.div
       animate={

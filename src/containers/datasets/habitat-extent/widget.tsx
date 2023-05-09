@@ -30,20 +30,18 @@ const HabitatExtent = () => {
       {isLoading ? (
         <div>...loading</div>
       ) : (
-        <>
-          <div>
-            <p>
-              The area of mangrove habitat in <span className="font-bold"> {name}</span> was{' '}
-              <span className="notranslate font-bold">{area} </span>
-              {'unitSelector'}
-              in
-              {'yearSelector'}, this represents a linear coverage of{' '}
-              <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
-              <span className="notranslate font-bold"> {totalLength} km</span> of the coastline.
-            </p>
-            <HabitatExtentChart legend={legend} config={config} />
-          </div>
-        </>
+        <div>
+          <p>
+            The area of mangrove habitat in <span className="font-bold"> {name}</span> was{' '}
+            <span className="notranslate font-bold">{area} </span>
+            {'unitSelector'}
+            in
+            {'yearSelector'}, this represents a linear coverage of{' '}
+            <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
+            <span className="notranslate font-bold"> {totalLength} km</span> of the coastline.
+          </p>
+          <HabitatExtentChart legend={legend} config={config} />
+        </div>
       )}
     </div>
   );

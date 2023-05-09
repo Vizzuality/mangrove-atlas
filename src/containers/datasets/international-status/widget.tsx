@@ -1,9 +1,17 @@
+import cn from 'lib/classnames';
+
 import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widget';
 
+import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
+
+import Icon from 'components/icon';
+import { Tooltip, TooltipTrigger, TooltipContent } from 'components/tooltip';
+
+import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 import { useMangroveInternationalStatus } from './hooks';
 
@@ -12,14 +20,6 @@ const HabitatExtent = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
-
-  const { data: InternationalStatusData, isLoading } = useMangroveInternationalStatus(
-    {
-      ...(!!location_id && { location_id }),
-      year: currentYear,
-    },
-    {}
-  );
 
   const {
     pledge_type,
@@ -40,42 +40,21 @@ const HabitatExtent = () => {
     ndcTargetSentence,
     hasNDCTarget,
     hasNDCReductionTarget,
-  } = data;
-  const apostrophe = name[name?.length - 1] === 's' ? "'" : "'s";
+  } = useMangroveInternationalStatus(
+    {
+      ...(!!location_id && { location_id: 2029 }),
+      year: currentYear,
+    },
+    {}
+  );
 
-  // .sentenceWrapper {
-  //   display: flex;
-  //   align-items: center;
-
-  //   &.interactive {
-  //     cursor: pointer;
-  //   }
-
-  //   .icon {
-  //     width: 15px;
-  //     height: 15px;
-  //     border: 2px solid rgba(#00857F, 0.2);
-  //     box-sizing: border-box;
-  //     border-radius: 15px;
-  //     margin-left: 5px;
-  //     margin-top: -10px;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-
-  //     svg {
-  //       width: 10px;
-  //       height: 10px;
-  //       fill: $primary;
-  //     }
-  //   }
-  // }
+  const apostrophe = name?.[name?.length - 1] === 's' ? "'" : "'s";
 
   return (
-    <div>
+    <div className="mb-10 h-full space-y-4">
       {pledge_type && (
-        <div>
-          <h3 className="text-brand-400">
+        <div className="space-y-4">
+          <h3 className="font-bold text-brand-800">
             Nationally Determined Contributions{' '}
             <a
               target="_blank"
@@ -87,29 +66,38 @@ const HabitatExtent = () => {
               (NDC)
             </a>
           </h3>
-          {/* <Tooltip
-            html={ndc_blurb ? <TooltipContent>{ndc_blurb}</TooltipContent> : null}
-            position="top-start"
-            arrow={true}
-            trigger="mouseenter"
-          >
-            <div className={cx("styles.sentenceWrapper", styles.interactive)}>
-              <p>
-                {name}
-                {apostrophe} NDC pledge contains {pledge_type}
-              </p>
-              <span className={styles.icon}>
-                <Icon name="info" title="info" />
-              </span>
-            </div>
-          </Tooltip> */}
+          <div className="flex items-start space-x-2">
+            <p>
+              {name}
+              {apostrophe} NDC pledge contains {pledge_type}
+            </p>
+            {!!ndc_blurb && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <button className="" aria-label="Info" type="button">
+                    <Icon icon={INFO_SVG} />
+                  </button>
+                </TooltipTrigger>
+
+                <TooltipPortal>
+                  <TooltipContent
+                    side="left"
+                    align="center"
+                    className="border-opacity-65 shadow-[0 4px 12px 0 rgba(168,168,168,0.25)] max-w-lg rounded-[20px] border-2 border-brand-800 p-5"
+                  >
+                    <div className="flex items-center space-x-2">{ndc_blurb}</div>
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
+            )}
+          </div>
         </div>
       )}
 
       {!pledge_type &&
         (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
-          <div>
-            <h3 className="text-brand-400">
+          <div className="space-y-4">
+            <h3 className="font-bold text-brand-800">
               Nationally Determined Contributions{' '}
               <a
                 target="_blank"
@@ -125,55 +113,47 @@ const HabitatExtent = () => {
         )}
 
       {(hasNDCTarget || hasNDCReductionTarget) && (
-        <div className={'styles.sentenceWrapper'}>
-          <p>
-            {`The GHG target`}{' '}
-            {!hasNDCReductionTarget && hasNDCTarget && (
-              <span>represents a reduction of {ndc_target}</span>
-            )}
-            {reductionTargetSentence}
-            {targetYearsSentence}
-            {ndcTargetSentence}
-          </p>
-        </div>
+        <p>
+          {`The GHG target`}{' '}
+          {!hasNDCReductionTarget && hasNDCTarget && (
+            <span>represents a reduction of {ndc_target}</span>
+          )}
+          {reductionTargetSentence}
+          {targetYearsSentence}
+          {ndcTargetSentence}
+        </p>
       )}
       {ndc_adaptation && ndc_mitigation && (
-        <div className={'styles.sentenceWrapper'}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-            {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-            NBS for mitigation and adaptation.
-          </p>
-        </div>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
+          NBS for mitigation and adaptation.
+        </p>
       )}
 
       {ndc_adaptation && !ndc_mitigation && (
-        <div className={'styles.sentenceWrapper'}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-            {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-            NBS for adaptation.
-          </p>
-        </div>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
+          NBS for adaptation.
+        </p>
       )}
 
       {!ndc_adaptation && ndc_mitigation && (
-        <div className={'styles.sentenceWrapper'}>
-          <p>
-            {name}
-            {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-            {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-            NBS for mitigation &apos.
-          </p>
-        </div>
+        <p>
+          {name}
+          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
+          NBS for mitigation &apos.
+        </p>
       )}
 
       {frel && fow && (
-        <div>
-          <h3 className="text-brand-400">Forest Reference Emission Levels</h3>
-          <div className={'styles.sentenceWrapper'}>
+        <div className="space-y-4">
+          <h3 className="font-bold text-brand-800">Forest Reference Emission Levels</h3>
+          <div className="space-y-4">
             <p>
               {name}
               {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({name}
@@ -182,20 +162,16 @@ const HabitatExtent = () => {
           </div>
         </div>
       )}
-      <div>
-        <h3 className="text-brand-400">IPCC Wetlands Supplement</h3>
+      <div className="space-y-4">
+        <h3 className="font-bold text-brand-800">IPCC Wetlands Supplement</h3>
         {ipcc_wetlands_suplement === 'has' ? (
-          <div className={'styles.sentenceWrapper'}>
-            <p>
-              {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
-            </p>
-          </div>
+          <p>
+            {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
+          </p>
         ) : (
-          <div className={'styles.sentenceWrapper'}>
-            <p>
-              There is no information as to whether {name} has implemented the wetlands supplement
-            </p>
-          </div>
+          <p>
+            There is no information as to whether {name} has implemented the wetlands supplement
+          </p>
         )}
       </div>
     </div>

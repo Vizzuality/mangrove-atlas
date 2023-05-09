@@ -1,21 +1,3 @@
-type Specie = Readonly<{
-  scientific_name: string;
-  iucn_url: string;
-}>;
-
-export type LegendItem = Readonly<{
-  value: number;
-  color: string;
-  label:
-    | 'Critically Endangered'
-    | 'Endangered'
-    | 'Vulnerable'
-    | 'Near Threatened'
-    | 'Least Concern'
-    | 'Data Deficient';
-  species: Specie[];
-}>;
-
 type Categories = Readonly<{
   cr: number;
   en: number;
@@ -26,7 +8,6 @@ type Categories = Readonly<{
 }>;
 
 type Category = 'cr' | 'en' | 'vu' | 'nt' | 'lc' | 'dd';
-
 type Specie = Readonly<{
   common_name: null | string;
   created_at: string;
@@ -37,10 +18,15 @@ type Specie = Readonly<{
   updated_at: string;
 }>;
 
-type Data = { total: number; threatened: number; categories: Categories; species: Specie[] };
+export type Data = {
+  total: number;
+  threatened: number;
+  categories: Categories;
+  species?: Specie[];
+};
 
 type Metadata = {
-  note: 'nº of species';
+  note: string;
   unit: null | string;
 };
 
@@ -50,15 +36,5 @@ export type DataResponse = {
 };
 
 export type SpeciesData = {
-  threatenedLegend: number | string;
-  total: number;
-  isLoading: boolean;
-  tooltip?: unknown;
-  chartData;
-};
-
-export type DataResponseSpeciesLocation = {
-  data: {
-    species: Specie[];
-  };
+  species: Specie[];
 };

@@ -1,27 +1,28 @@
-import { useMemo } from 'react';
-
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import type { QueryObserverOptions } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions, Data } from '@tanstack/react-query';
 
 import API from 'services/api';
 
-import type { SpeciesData, DataResponseSpeciesLocation } from './types';
+import type { DataResponse } from './types';
 
-export function useMangroveSpeciesLocation(
-  queryOptions?: UseQueryOptions<DataResponseSpeciesLocation>
-): SpeciesData {
+export function useMangroveSpeciesLocation<T = { data: DataResponse['data']['species'] }>(
+  queryOptions?: QueryObserverOptions<DataResponse, Error, T>
+) {
   const fetchMangroveSpecies = () =>
-    API.request({
+    API.request<DataResponse>({
       method: 'GET',
       url: '/widgets/biodiversity',
-    }).then((response: AxiosResponse<DataResponseSpeciesLocation>) => response.data);
+    }).then((response) => response.data);
 
   return useQuery(['biodiversity'], fetchMangroveSpecies, {
-    placeholderData: {
-      data: [],
-    },
+    // placeholderData: {
+    //   data: {
+    //     species: [],
+    //   },
+    //   metatada: {},
+    // } satisfies DataResponse & { data: Omit<DataResponse, 'data'> },
     select: ({ data }) => ({
       data: data.species,
     }),

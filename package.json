@@ -62,7 +62,6 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-map-gl": "^7.0.21",
-    "react-query": "^3.39.3",
     "react-virtualized": "^9.22.5",
     "recharts": "^2.5.0",
     "recoil": "0.7.7",

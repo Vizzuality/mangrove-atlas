@@ -21,9 +21,11 @@ import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
 import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';
 import HeightInfo from 'containers/datasets/height/info.mdx';
 import HeightLayer from 'containers/datasets/height/layer';
+import HeightWidget from 'containers/datasets/height/widget';
 // import HeightDownload from 'containers/datasets/height/download';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
+import InternationalStatusWidget from 'containers/datasets/international-status/widget';
 import MarketPotentialInfo from 'containers/datasets/market-potential/info.mdx';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
@@ -46,12 +48,13 @@ export const WIDGETS = {
   mangrove_net_change: NetChangeWidget,
   // mangrove_alerts: AlertsDownload,
   mangrove_biomass: BiomassWidget,
-  // mangrove_height: HeightDownload,
+  mangrove_height: HeightWidget,
   mangrove_blue_carbon: BlueCarbonWidget,
   mangrove_protection: ProtectionWidget,
   mangrove_species_distribution: SpeciesDistributionWidget,
   mangrove_species_threatened: SpeciesThreatenedWidget,
   mangrove_species_location: SpeciesLocation,
+  mangrove_international_status: InternationalStatusWidget,
 };
 
 export const LAYERS = {
