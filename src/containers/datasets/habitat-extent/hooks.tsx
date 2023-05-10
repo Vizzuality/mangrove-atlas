@@ -107,7 +107,7 @@ export function useMangroveHabitatExtent(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isLoading } = query;
 
   return useMemo(() => {
     const metadata = data.metadata;
@@ -196,6 +196,7 @@ export function useMangroveHabitatExtent(
       legend: LegendData,
       chartData: ChartData,
       config: chartConfig,
+      isLoading,
     } satisfies ExtentData;
   }, [year, data, unit]);
 }

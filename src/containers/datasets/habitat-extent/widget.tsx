@@ -14,7 +14,7 @@ const HabitatExtent = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const { area, mangroveCoastCoveragePercentage, totalLength, legend, config } =
+  const { area, mangroveCoastCoveragePercentage, totalLength, legend, config, isLoading } =
     useMangroveHabitatExtent(
       {
         ...(!!location_id && { location_id }),
@@ -23,13 +23,11 @@ const HabitatExtent = () => {
       {}
     );
 
-  const isLoading = false;
   const { tooltip } = config;
   return (
     <div>
-      {isLoading ? (
-        <div>...loading</div>
-      ) : (
+      {isLoading && <div>...loading</div>}
+      {!isLoading && (
         <div>
           <p>
             The area of mangrove habitat in <span className="font-bold"> {name}</span> was{' '}

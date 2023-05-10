@@ -32,34 +32,33 @@ export function useMangroveSpeciesLocation<T = { data: DataResponse['data']['spe
 
 export function useSource(): SourceProps {
   return {
-    id: 'Species_richness',
+    id: 'Species_location-source',
     type: 'vector',
     url: 'mapbox://globalmangrovewatch.bkpfnh68',
   };
 }
 
-export function useLayer(): LayerProps {
-  const minValue = 0;
-  const maxValue = 51;
-  return {
-    id: 'Species_richness',
-    'source-layer': 'Species_richness',
-    type: 'fill',
-    paint: {
-      'fill-color': [
-        'interpolate',
-        ['linear'],
-        ['get', 'sp_count'],
-        minValue,
-        '#F9FDB7',
-        maxValue,
-        '#205272',
-      ],
-      'fill-outline-color': '#B6B7B1',
-      'fill-opacity': 0.5,
+export function useLayer(): LayerProps[] {
+  return [
+    {
+      id: 'Species_location-layer-border',
+      'source-layer': 'Species_richness',
+      type: 'line',
+      paint: {
+        'line-color': '#00857F',
+        'line-width': 1.5,
+        'line-opacity': 1,
+      },
     },
-    layout: {
-      visibility: 'visible',
+    {
+      id: 'Species_location-layer',
+      'source-layer': 'Species_richness',
+      type: 'fill',
+      paint: {
+        'fill-pattern': 'pattern',
+        'fill-opacity': 0.5,
+        'fill-color': 'red',
+      },
     },
-  };
+  ];
 }

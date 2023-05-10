@@ -15,6 +15,7 @@ import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
+import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download.mdx';
 import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
@@ -39,12 +40,14 @@ import RestorationLayer from 'containers/datasets/restoration/layer';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
 import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
-import SpeciesLocation from 'containers/datasets/species-location/widget';
+import SpeciesLocationLayer from 'containers/datasets/species-location/layer';
+import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
+  mangrove_habitat_change: HabitatChangeWidget,
   mangrove_net_change: NetChangeWidget,
   // mangrove_alerts: AlertsDownload,
   mangrove_biomass: BiomassWidget,
@@ -53,7 +56,7 @@ export const WIDGETS = {
   mangrove_protection: ProtectionWidget,
   mangrove_species_distribution: SpeciesDistributionWidget,
   mangrove_species_threatened: SpeciesThreatenedWidget,
-  mangrove_species_location: SpeciesLocation,
+  mangrove_species_location: SpeciesLocationWidget,
   mangrove_international_status: InternationalStatusWidget,
 };
 
@@ -69,6 +72,7 @@ export const LAYERS = {
   mangrove_restoration: RestorationLayer,
   mangrove_species_distribution: SpeciesDistributionLayer,
   mangrove_protection: ProtectionLayer,
+  mangrove_species_location: SpeciesLocationLayer,
 };
 
 export const INFO = {

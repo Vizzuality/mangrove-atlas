@@ -19,16 +19,30 @@ export function useMangroveHabitatChange(
     }).then((response) => response);
 
   const query = useQuery(['country_ranking', params], fetchMangroveHabitatChange, {
-    placeholderData: [],
-    select: (data) => ({
-      data,
-    }),
+    placeholderData: {
+      data: [],
+      metadata: {
+        years: [],
+      },
+    },
+
     ...queryOptions,
   });
 
+  const { data } = query;
   return useMemo(() => {
+    const years = data.data.metadata?.years;
+    const unit = data.data.metadata?.units[0]?.value;
+    const chartData = data.data.data;
+    const defaultStartYear = data.data.metadata?.start_year;
+    const defaultEndYear = data.data.metadata?.end_year;
     return {
       ...query,
-    } as typeof query;
-  }, [query]);
+      years,
+      unit,
+      chartData,
+      defaultStartYear,
+      defaultEndYear,
+    };
+  }, [query, data]);
 }
