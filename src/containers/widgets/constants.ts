@@ -29,6 +29,12 @@ const widgets = [
     layersIds: ['alerts-heat'],
   },
   {
+    name: 'Species location',
+    slug: 'mangrove_species_location' satisfies WidgetSlugType,
+    locationType: ['country', 'worldwide'],
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+  },
+  {
     name: 'Mangrove Species Distribution',
     slug: 'mangrove_species_distribution' satisfies WidgetSlugType,
     locationType: ['country', 'worldwide'],

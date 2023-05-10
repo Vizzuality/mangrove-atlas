@@ -11,14 +11,14 @@ const Info = ({ id }) => {
 
   if (!Info) return null;
   return (
-    <div className="flex h-[60px] w-[60px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
+    <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
         <DialogTrigger>
           <div className="flex justify-center">
             <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="scroll-y top-24 h-[540px] rounded-[20px]">
+        <DialogContent className="scroll-y top-24 h-[90%] overflow-y-auto rounded-[20px] p-8">
           <Info />
         </DialogContent>
       </Dialog>

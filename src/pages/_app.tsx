@@ -18,6 +18,8 @@ import { MediaContextProvider } from 'components/media-query';
 import 'styles/globals.css';
 import 'styles/mapbox.css';
 
+import { TooltipProvider } from 'components/tooltip';
+
 const OpenSansFont = Open_Sans({
   weight: ['300', '700'],
   style: ['normal'],
@@ -78,7 +80,9 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
             <Hydrate state={pageProps.dehydratedState}>
               <MediaContextProvider disableDynamicMediaQueries>
                 <MapProvider>
-                  <Component {...pageProps} />
+                  <TooltipProvider delayDuration={200}>
+                    <Component {...pageProps} />
+                  </TooltipProvider>
                 </MapProvider>
               </MediaContextProvider>
             </Hydrate>

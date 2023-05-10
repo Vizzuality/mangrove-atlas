@@ -39,7 +39,7 @@ const SpeciesDistribution = () => {
   return (
     <div>
       {!isLoading && (
-        <>
+        <div className="pb-8">
           {/* mangrove sentence styles, create constant */}
           <p className="text-lg font-light text-black/85">
             <span className="font-bold"> {name}</span> has{' '}
@@ -75,7 +75,7 @@ const SpeciesDistribution = () => {
               ))}
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

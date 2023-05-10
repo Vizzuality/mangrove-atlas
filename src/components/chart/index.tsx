@@ -1,5 +1,6 @@
 import {
   PieChart,
+  BarChart,
   ComposedChart,
   Pie,
   Bar,
@@ -24,6 +25,7 @@ const DEFAULTVALUES = {
 
 const ChartsMap = new Map([
   ['pie', PieChart],
+  ['bar', BarChart],
   ['composed', ComposedChart],
 ]);
 const Chart = ({ config }) => {
@@ -95,8 +97,6 @@ const Chart = ({ config }) => {
         {yAxis && (
           <YAxis
             axisLine={false}
-            // tickSize={-50}
-            // mirror
             orientation={yAxis.orientation || 'left'}
             tickMargin={0}
             tickLine={false}

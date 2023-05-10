@@ -5,8 +5,8 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
-import NetChangeChart from './chart';
-import { useMangroveNetChange } from './hooks';
+import HeightChart from './chart';
+import { useMangroveHeight } from './hooks';
 
 const NetChangeWidget = () => {
   const currentLocationId = useRecoilValue(currentLocationAtom);
@@ -14,7 +14,7 @@ const NetChangeWidget = () => {
   const { data } = useLocation(currentLocationId);
   const { name, location_id } = data;
 
-  const { isLoading, netChange, direction, config } = useMangroveNetChange(
+  const { isLoading, mean, unit, year, config } = useMangroveHeight(
     {
       ...(!!location_id && { location_id }),
       year: currentYear,
@@ -28,12 +28,14 @@ const NetChangeWidget = () => {
       {!isLoading && (
         <div>
           <p>
-            The extent of mangroves in <span className="font-bold"> {name}</span> has{' '}
-            <span className="font-bold"> {direction}</span> by{' '}
-            <span className="font-bold"> {netChange}</span> {'km² unit select'} between{' '}
-            {'1996 start date select'}y{'2020 end date select'}.
+            Mean mangrove maximum canopy height in <span className="font-bold"> {name}</span> was{' '}
+            <span className="font-bold">
+              {' '}
+              {mean} {unit}
+            </span>{' '}
+            in <span className="font-bold"> {year}</span>.
           </p>
-          <NetChangeChart config={config} />
+          <HeightChart config={config} />
         </div>
       )}
     </div>

@@ -24,6 +24,7 @@ export type WidgetSlugType =
   | 'mangrove_restoration'
   | 'mangrove_species_distribution'
   | 'mangrove_species_threatened'
+  | 'mangrove_species_location'
   | 'mangrove_emissions_mitigation'
   | 'mangrove_international_status'
   | 'mangrove_investment_potential';

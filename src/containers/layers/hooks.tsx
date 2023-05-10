@@ -5,7 +5,6 @@ import compact from 'lodash-es/compact';
 import { LAYERS } from './constants';
 
 export function useActiveLayers(slugs) {
-  console.log(slugs);
   return useMemo(
     () =>
       compact(

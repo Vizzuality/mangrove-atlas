@@ -1,6 +1,21 @@
 import LayoutMdx from 'layouts/mdx';
 
-## {props.label}
+# Global mangrove canopy height for selected years between 1997 and 2020
+
+## Overview: 
+
+This data set shows the maximum and basal-weighted area canopy height (m) of mangrove habitat  in a specific location at different times. It is based on the global extent of mangroves for select years from 1996 to 2016 (<a href="https://www.mdpi.com/2072-4292/10/10/1669" target="_blank" rel="noopener noreferrer">Bunting et al. (2018)</a>) combined with the canopy height and allometric relationships of <a href="https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1665" target="_blank" rel="noopener noreferrer">Simard et al</a>. They measured AGB and canopy height at 331 plots between 26°S and 25°N. They used those measurements to create global and three regional allometric models relating AGB to basal area weighted height and maximum canopy height. To map AGB across the tropics, they applied the regional allometric models to a map of basal area weighted height. The map of basal area weighted height was derived from ground elevation from the Shuttle Radio Topography Mission (SRTM) (2000) and canopy elevation from ICESat/GLAS spaceborne lidar (2003–2009).
+
+## Reference: 
+
+Simard, M., T. Fatoyinbo, C. Smetanka, V.H. Rivera-monroy, E. Castaneda-mova, N. Thomas, and T. Van der stocken. (2019) Global Mangrove Distribution, Aboveground Biomass, and Canopy Height. ORNL DAAC, Oak Ridge, Tennessee, USA. [https://doi.org/10.3334/ORNLDAAC/1665](https://doi.org/10.3334/ORNLDAAC/1665)
+
+## Date of content
+
+1996, 2007, 2008, 2009, 2010, 2015, 2016
+
+## License:
+NASAs Earth Science program Data and Information Policy
 
 export default ({ children, ...props }) => (
   <LayoutMdx {...props}>

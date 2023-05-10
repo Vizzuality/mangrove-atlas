@@ -1,21 +1,34 @@
-import * as Tooltip from '@radix-ui/react-tooltip';
+import * as React from 'react';
 
-const TooltipDemo = ({ children, content }) => {
-  return (
-    <Tooltip.Provider>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            className="data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade select-none rounded-sm bg-grey-800 py-1 px-1.5 text-xs leading-none text-white shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]"
-            sideOffset={2}
-          >
-            {content}
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
-  );
-};
+import cn from 'lib/classnames';
 
-export default TooltipDemo;
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+
+const TooltipProvider = TooltipPrimitive.Provider;
+
+const Tooltip = ({ ...props }) => <TooltipPrimitive.Root {...props} />;
+Tooltip.displayName = TooltipPrimitive.Tooltip.displayName;
+
+const TooltipTrigger = TooltipPrimitive.Trigger;
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 0, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn({
+      'z-50 rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1':
+        true,
+      [className]: !!className,
+    })}
+    {...props}
+  />
+));
+
+const TooltipArrow = TooltipPrimitive.Arrow;
+
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipArrow, TooltipProvider };
