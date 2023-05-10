@@ -20,8 +20,6 @@ import 'styles/mapbox.css';
 
 import { TooltipProvider } from 'components/tooltip';
 
-import { TooltipProvider } from 'components/tooltip';
-
 const OpenSansFont = Open_Sans({
   weight: ['300', '700'],
   style: ['normal'],
