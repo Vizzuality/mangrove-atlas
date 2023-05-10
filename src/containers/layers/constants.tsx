@@ -24,7 +24,11 @@ export const LAYERS = [
     id: 'mangrove_protection',
   },
   {
-    name: 'Mangrove species distribution',
+    name: 'Species location',
+    id: 'mangrove_species_location',
+  },
+  {
+    name: 'Species distribution',
     id: 'mangrove_species_distribution',
   },
   {

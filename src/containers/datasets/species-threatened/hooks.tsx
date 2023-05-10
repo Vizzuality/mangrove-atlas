@@ -128,6 +128,7 @@ export function useSource(): SourceProps {
 export function useLayer(): LayerProps {
   const minValue = 0;
   const maxValue = 51;
+
   return {
     id: 'Species_richness',
     'source-layer': 'Species_richness',
@@ -142,8 +143,8 @@ export function useLayer(): LayerProps {
         maxValue,
         '#205272',
       ],
-      'fill-outline-color': '#B6B7B1',
-      'fill-opacity': 0.5,
+      'fill-outline-color': 'blue',
+      'fill-opacity': 1,
     },
     layout: {
       visibility: 'visible',

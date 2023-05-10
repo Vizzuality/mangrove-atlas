@@ -4,16 +4,18 @@ import type { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const MangrovesLayer = ({ beforeId }: LayerProps) => {
+const MangrovesSpeciesLocationLayer = ({ beforeId }: LayerProps) => {
   const SOURCE = useSource();
-  const LAYER = useLayer();
+  const LAYERS = useLayer();
 
-  if (!SOURCE || !LAYER) return null;
+  if (!SOURCE || !LAYERS) return null;
   return (
     <Source {...SOURCE}>
-      <Layer {...LAYER} beforeId={beforeId} />
+      {LAYERS.map((LAYER) => (
+        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+      ))}
     </Source>
   );
 };
 
-export default MangrovesLayer;
+export default MangrovesSpeciesLocationLayer;
