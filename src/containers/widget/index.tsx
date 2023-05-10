@@ -3,9 +3,13 @@ import { useState } from 'react';
 import cn from 'lib/classnames';
 
 import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
+
+import { getWidgetActive } from './selector';
+
 type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
@@ -14,7 +18,8 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id } = props;
-  const [isCollapsed, setIsCollapsed] = useState({});
+  const [isCollapsed, setIsCollapsed] = useState<Partial<Record<WidgetSlugType, boolean>>>({});
+  const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
   return (
     <motion.div
@@ -25,15 +30,16 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         }
       }
       className={cn({
-        'w-[540px] grow rounded-2xl border border-[#DADED0] bg-white px-10 pt-1 shadow-3xl': true,
-        '-mb-4': isCollapsed[id],
+        'w-[540px] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl': true,
+        '-mb-9': isCollapsed[id],
+        'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
       })}
     >
       {/* Content */}
       <header className="flex items-center justify-between">
         <h2
           onClick={() => setIsCollapsed({ ...isCollapsed, [id]: !isCollapsed[id] })}
-          className="flex-1 cursor-pointer py-6 text-xs font-bold uppercase -tracking-tighter text-black/85"
+          className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85"
         >
           {title}
         </h2>

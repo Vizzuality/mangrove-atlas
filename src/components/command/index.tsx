@@ -57,7 +57,7 @@ const CommandInput = forwardRef<
       ref={ref}
       {...props}
       className={cn({
-        'placeholder:text-foreground-muted flex h-11 w-full rounded-md bg-transparent py-3 text-2xl outline-none placeholder:text-2xl disabled:cursor-not-allowed disabled:opacity-50':
+        'placeholder:text-foreground-muted flex h-11 w-full rounded-md border-2 bg-transparent py-3 text-2xl outline-none placeholder:text-2xl focus:border-brand-800 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50':
           true,
         [className]: !!className,
       })}

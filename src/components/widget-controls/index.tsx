@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { activeWidgetsAtom } from 'store/widget';
 
 import { atom, useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -14,7 +16,7 @@ type WidgetControlsType = Readonly<{ id: WidgetSlugType }>;
 
 const WidgetControls = ({ id }: WidgetControlsType) => {
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
-  const isActive = activeWidgets.includes(id);
+  const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
   const download = DOWNLOAD[id];
   const info = INFO[id];
   const layer = LAYERS[id];
