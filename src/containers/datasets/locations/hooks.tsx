@@ -46,18 +46,19 @@ export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
   return query;
 }
 
-export function useLocation(location, queryOptions = {}) {
+export function useLocation(locationType, id, queryOptions = {}) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
   };
 
   const fetchLocations = () => API.request(config).then((response) => response.data);
-
-  return useQuery(['locations', location], fetchLocations, {
-    placeholderData: { name: 'Worldwide', location_id: 'worldwide' },
+  return useQuery(['locations'], fetchLocations, {
+    placeholderData: [],
     select: (data) => ({
-      ...data?.data?.filter((d) => d.location_id === location)[0],
+      ...data?.data?.find(
+        (d) => d.location_type === locationType && (d.location_id === id || d.iso === id)
+      ),
     }),
     ...queryOptions,
   });

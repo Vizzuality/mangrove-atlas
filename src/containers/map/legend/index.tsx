@@ -37,7 +37,7 @@ const Legend = () => {
         activeLayers.map((layer) => (
           <div
             key={layer}
-            className="shadow-medium flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm"
+            className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
           >
             <p className="text-xs font-semibold uppercase">{layer}</p>
             <button onClick={() => updateLayers(layer)}>

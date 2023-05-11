@@ -1,4 +1,5 @@
-import { currentLocationAtom } from 'store/location';
+import { useRouter } from 'next/router';
+
 import { widgetYearAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
@@ -9,10 +10,13 @@ import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent } from './hooks';
 
 const HabitatExtent = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
   const currentYear = useRecoilValue(widgetYearAtom);
-  const { data } = useLocation(currentLocationId);
-  const { name, location_id } = data;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
 
   const { area, mangroveCoastCoveragePercentage, totalLength, legend, config, isLoading } =
     useMangroveHabitatExtent(

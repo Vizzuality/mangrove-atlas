@@ -1,17 +1,21 @@
-import { currentLocationAtom } from 'store/location';
+import { useRouter } from 'next/router';
+
 import { widgetYearAtom } from 'store/widget';
 
-import { useRecoilValue, useSetRecoilState, useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import { useMangroveProtectedAreas } from './hooks';
 
-const NetChange = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
+const Protection = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
-  const { data } = useLocation(currentLocationId);
-  const { name, location_id } = data;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
 
   const { data: data2 } = useMangroveProtectedAreas(
     {
@@ -33,4 +37,4 @@ const NetChange = () => {
   );
 };
 
-export default NetChange;
+export default Protection;
