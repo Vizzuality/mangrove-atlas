@@ -1,27 +1,36 @@
-import { PlusIcon } from '@radix-ui/react-icons';
-import Tooltip from '@radix-ui/react-tooltip';
+'use client';
 
-const TooltipDemo = () => {
-  return (
-    <Tooltip.Provider>
-      <Tooltip.Root>
-        <Tooltip.Trigger asChild>
-          <button className="text-violet11 shadow-blackA7 hover:bg-violet3 inline-flex h-[35px] w-[35px] items-center justify-center rounded-full bg-white shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px] focus:shadow-black">
-            <PlusIcon />
-          </button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            className="data-[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-violet11 select-none rounded-[4px] bg-white px-[15px] py-[10px] text-[15px] leading-none shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]"
-            sideOffset={5}
-          >
-            Add to library
-            <Tooltip.Arrow className="fill-white" />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
-    </Tooltip.Provider>
-  );
-};
+import * as React from 'react';
 
-export default TooltipDemo;
+import cn from 'lib/classnames';
+
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
+
+const TooltipProvider = TooltipPrimitive.Provider;
+
+const Tooltip = ({ ...props }) => <TooltipPrimitive.Root {...props} />;
+Tooltip.displayName = TooltipPrimitive.Tooltip.displayName;
+
+const TooltipTrigger = TooltipPrimitive.Trigger;
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 0, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn({
+      'z-50 rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 shadow-md animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1':
+        true,
+      [className]: !!className,
+    })}
+    {...props}
+  />
+));
+
+const TooltipArrow = TooltipPrimitive.Arrow;
+
+TooltipContent.displayName = TooltipPrimitive.Content.displayName;
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipArrow, TooltipProvider };

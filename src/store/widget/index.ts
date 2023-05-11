@@ -27,3 +27,13 @@ export const netChangeEndYearAtom = atom({
   key: 'net-change-end-year',
   default: null,
 });
+
+export const useWidgetSettings = atom({
+  key: 'widgets-settings',
+  default: {
+    mangrove_habitat_extent: {
+      year: null,
+      unit: null,
+    },
+  },
+});

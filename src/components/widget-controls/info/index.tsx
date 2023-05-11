@@ -1,7 +1,7 @@
 import { INFO } from 'containers/datasets';
 import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
@@ -18,8 +18,9 @@ const Info = ({ id }) => {
             <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="scroll-y top-24 h-[90%] overflow-y-auto rounded-[20px] p-8">
+        <DialogContent className="scroll-y top-16 max-h-[90%] rounded-[20px]">
           <Info />
+          <DialogClose />
         </DialogContent>
       </Dialog>
     </div>

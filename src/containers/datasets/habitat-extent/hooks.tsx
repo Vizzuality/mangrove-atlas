@@ -4,6 +4,8 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { numberFormat } from 'lib/format';
 
+import { useWidgetSettings } from 'store/widget';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -80,6 +82,7 @@ type ExtentData = {
   chartData: ChartData[];
   config: ChartConfig;
 };
+const widgetSlug = 'habitat-extent';
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
@@ -101,7 +104,7 @@ export function useMangroveHabitatExtent(
   // TO DO - add year filter to API
   const { location_id, unit, year } = params;
 
-  const query = useQuery(['habitat-extent', location_id], fetchHabitatExtent, {
+  const query = useQuery([widgetSlug, location_id], fetchHabitatExtent, {
     placeholderData: {
       data: [],
       metadata: null,
@@ -128,6 +131,8 @@ export function useMangroveHabitatExtent(
     const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength;
     const nonMangrove = totalLength - mangroveCoastCoverage;
     const area = unit === 'ha' ? mangroveArea * 100 : mangroveArea;
+    const years = metadata?.year.sort();
+    // const year = useWidgetSettings(widgetSlug);
 
     const LegendData = [
       {
@@ -181,7 +186,7 @@ export function useMangroveHabitatExtent(
       cartesianGrid: false,
       chartBase: {
         pies: {
-          value: 'habitat-extent',
+          value: widgetSlug,
         },
       },
     };
@@ -197,6 +202,9 @@ export function useMangroveHabitatExtent(
       legend: LegendData,
       chartData: ChartData,
       config: chartConfig,
+      years,
+      startYear: years?.[0],
+      endYear: years?.[years.length - 1],
       isLoading,
     } satisfies ExtentData;
   }, [year, data, unit, location_id]);
