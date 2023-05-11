@@ -66,7 +66,7 @@ export function useMangroveBlueCarbon(
       color: COLORS[d.indicator],
     }));
 
-    const { agb, toc, soc } = data.metadata;
+    const { agb, toc, soc } = data?.metadata;
     const config = {
       type: 'pie',
       data: ChartData,

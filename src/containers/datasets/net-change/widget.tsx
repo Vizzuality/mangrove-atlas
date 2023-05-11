@@ -15,12 +15,12 @@ const NetChangeWidget = () => {
     query: { locationType, id },
   } = useRouter();
   const {
-    data: { name, id: location_id },
+    data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   const { isLoading, netChange, direction, config } = useMangroveNetChange(
     {
-      ...(!!location_id && { location_id }),
+      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
     },
     {}

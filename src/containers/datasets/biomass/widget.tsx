@@ -1,4 +1,5 @@
-import { currentLocationAtom } from 'store/location';
+import { useRouter } from 'next/router';
+
 import { widgetYearAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
@@ -9,14 +10,17 @@ import BiomassChart from './chart';
 import { useMangroveBiomass } from './hooks';
 
 const BiomassWidget = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
   const currentYear = useRecoilValue(widgetYearAtom);
-  const { data } = useLocation(currentLocationId);
-  const { name, location_id } = data;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
 
   const { year, mean, unit, config, isLoading } = useMangroveBiomass(
     {
-      ...(!!location_id && { location_id }),
+      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
     },
     {}
