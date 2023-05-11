@@ -1,8 +1,9 @@
+import { useRouter } from 'next/router';
+
 import { widgetYearAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
 
-import { useRouter } from 'next/router';
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import BlueCarbonChart from './chart';
@@ -15,12 +16,12 @@ const BlueCarbonWidget = () => {
     query: { locationType, id },
   } = useRouter();
   const {
-    data: { name, id: location_id },
+    data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   const { agb, toc, soc, config, isLoading } = useMangroveBlueCarbon(
     {
-      ...(!!location_id && { location_id }),
+      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
     },
     {}

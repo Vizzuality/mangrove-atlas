@@ -111,9 +111,9 @@ export function useMangroveHabitatExtent(
 
   const { data, isLoading } = query;
   return useMemo(() => {
-    const metadata = data?.metadata;
-    const dataByYear = data?.data?.filter(({ year: y }) => y === year);
-    const dataParsed = dataByYear?.reduce(
+    const metadata = data.metadata;
+    const dataByYear = data.data.filter(({ year: y }) => y === year);
+    const dataParsed = dataByYear.reduce(
       (acc, d) => ({
         ...acc,
         year: d.year,

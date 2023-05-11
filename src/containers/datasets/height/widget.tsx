@@ -1,7 +1,10 @@
+import { useRouter } from 'next/router';
+
+import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
-import { useRouter } from 'next/router';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import HeightChart from './chart';
@@ -13,12 +16,12 @@ const NetChangeWidget = () => {
     query: { locationType, id },
   } = useRouter();
   const {
-    data: { name, id: location_id },
+    data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   const { isLoading, mean, unit, year, config } = useMangroveHeight(
     {
-      ...(!!location_id && { location_id }),
+      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
     },
     {}

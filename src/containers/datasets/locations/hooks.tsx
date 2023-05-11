@@ -57,7 +57,9 @@ export function useLocation(locationType, id, queryOptions = {}) {
     placeholderData: [],
     select: (data) => ({
       ...data?.data?.find(
-        (d) => d.location_type === locationType && (d.location_id === id || d.iso === id)
+        (d) =>
+          (d.location_type === locationType && (d.location_id === id || d.iso === id)) ||
+          d.iso === 'WORLDWIDE'
       ),
     }),
     ...queryOptions,

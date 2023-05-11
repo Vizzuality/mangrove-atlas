@@ -31,8 +31,8 @@ export function useMangroveHabitatChange(
 
   const { data } = query;
   return useMemo(() => {
-    const years = data.data.metadata?.years;
-    const unit = data.data.metadata?.units[0]?.value;
+    const years = data?.data.metadata?.years;
+    const unit = data?.data.metadata?.units[0]?.value;
     const chartData = data.data.data;
     const defaultStartYear = data.data.metadata?.start_year;
     const defaultEndYear = data.data.metadata?.end_year;
