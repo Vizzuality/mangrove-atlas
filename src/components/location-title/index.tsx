@@ -1,6 +1,4 @@
-import { currentLocationAtom } from 'store/location';
-
-import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import LocationsList from 'containers/locations-list';
@@ -8,10 +6,12 @@ import LocationsList from 'containers/locations-list';
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 
 const LocationTitle = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
+  const {
+    query: { locationType, id },
+  } = useRouter();
   const {
     data: { name },
-  } = useLocation(currentLocationId);
+  } = useLocation(locationType, id);
 
   return (
     <>

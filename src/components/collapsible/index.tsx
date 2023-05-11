@@ -32,7 +32,7 @@ const CollapsibleComponent = ({ layers }: { layers: Layer[] }) => {
   return (
     <Collapsible.Root open={isOpen} onOpenChange={setIsOpen} className="w-[400px] space-y-2">
       <div className="flex w-full items-center justify-between">
-        <div className="shadow-light h-11  w-[88%] rounded-lg border bg-white py-3 px-4">
+        <div className="h-11 w-[88%]  rounded-lg border bg-white py-3 px-4 shadow-light">
           {(!isOpen || !selectedLayers.length) && (
             <p className="text-xs font-semibold uppercase">Layer</p>
           )}
@@ -46,7 +46,7 @@ const CollapsibleComponent = ({ layers }: { layers: Layer[] }) => {
           )}
         </div>
         <Collapsible.Trigger asChild>
-          <button className="shadow-light flex h-11 w-11 items-center justify-center rounded-lg border bg-white">
+          <button className="flex h-11 w-11 items-center justify-center rounded-lg border bg-white shadow-light">
             <ChevronUpIcon
               className={cn({
                 'h-4 w-4': true,
@@ -63,7 +63,7 @@ const CollapsibleComponent = ({ layers }: { layers: Layer[] }) => {
           return (
             <div
               key={l.id}
-              className="shadow-light flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm"
+              className="flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm shadow-light"
             >
               <p className="text-xs font-semibold uppercase">{l.label}</p>
               <button onClick={() => removeLayer(l.id)}>

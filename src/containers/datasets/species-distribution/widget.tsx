@@ -1,10 +1,8 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
 import cn from 'lib/classnames';
-
-import { currentLocationAtom } from 'store/location';
-
-import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -17,9 +15,12 @@ import { useMangroveSpecies } from './hooks';
 const SpeciesDistribution = () => {
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
-  const currentLocationId = useRecoilValue(currentLocationAtom);
-  const { data: location } = useLocation(currentLocationId);
-  const { name, location_id } = location;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
   const { total, legend, isLoading } = useMangroveSpecies(
     {
       location_id,

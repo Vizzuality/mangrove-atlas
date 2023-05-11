@@ -25,7 +25,7 @@ const BasemapSelector = () => {
   const currentBasemap = BASEMAPS.find((basemap) => basemap.id === basemapSelected);
 
   return (
-    <div className="shadow-medium flex w-[296px] items-center justify-between rounded-lg bg-white px-5 py-4">
+    <div className="flex w-[296px] items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium">
       <div className="mr-[30px]">
         <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
         <div className="mt-1">{currentBasemap.name}</div>
@@ -39,7 +39,7 @@ const BasemapSelector = () => {
             className={cn({
               'h-[45px] w-[35px] overflow-hidden rounded-3xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
                 true,
-              'shadow-soft border-2 border-brand-800': currentBasemap.id === id,
+              'border-2 border-brand-800 shadow-soft': currentBasemap.id === id,
             })}
             onClick={() => setBasemap(id)}
           >

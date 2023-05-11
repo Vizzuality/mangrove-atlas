@@ -1,13 +1,12 @@
 import cn from 'lib/classnames';
 
-import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widget';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
-
+import { useRouter } from 'next/router';
 import Icon from 'components/icon';
 import { Tooltip, TooltipTrigger, TooltipContent } from 'components/tooltip';
 
@@ -15,11 +14,14 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 import { useMangroveInternationalStatus } from './hooks';
 
-const HabitatExtent = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
+const InternationalStatus = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
-  const { data } = useLocation(currentLocationId);
-  const { name, location_id } = data;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
 
   const {
     pledge_type,
@@ -178,4 +180,4 @@ const HabitatExtent = () => {
   );
 };
 
-export default HabitatExtent;
+export default InternationalStatus;

@@ -86,10 +86,11 @@ export function useMangroveHabitatExtent(
   queryOptions: UseQueryOptions<DataResponse> // API
 ): ExtentData {
   const fetchHabitatExtent = (...args) => {
+    const { location_id } = params;
     return API.request({
       method: params.location_id === 'custom-area' ? 'POST' : 'GET',
       url: 'widgets/habitat_extent',
-      params,
+      params: { location_id },
     }).then((response: AxiosResponse<DataResponse>) => response.data);
     // API2.request({
   };
@@ -97,8 +98,9 @@ export function useMangroveHabitatExtent(
   //   url: 'widgets/habitat_extent',
   //   params,
   // }).then((response: AxiosResponse<DataResponse>) => response.data[slug]);
-  const { location_id, unit, year } = params;
   // TO DO - add year filter to API
+  const { location_id, unit, year } = params;
+
   const query = useQuery(['habitat-extent', location_id], fetchHabitatExtent, {
     placeholderData: {
       data: [],
@@ -108,10 +110,9 @@ export function useMangroveHabitatExtent(
   });
 
   const { data, isLoading } = query;
-
   return useMemo(() => {
-    const metadata = data.metadata;
-    const dataByYear = data.data?.filter(({ year: y }) => y === year);
+    const metadata = data?.metadata;
+    const dataByYear = data?.data?.filter(({ year: y }) => y === year);
     const dataParsed = dataByYear?.reduce(
       (acc, d) => ({
         ...acc,
@@ -198,7 +199,7 @@ export function useMangroveHabitatExtent(
       config: chartConfig,
       isLoading,
     } satisfies ExtentData;
-  }, [year, data, unit]);
+  }, [year, data, unit, location_id]);
 }
 
 export function useSource(): SourceProps {

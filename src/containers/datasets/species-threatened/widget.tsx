@@ -1,6 +1,4 @@
-import { currentLocationAtom } from 'store/location';
-
-import { useRecoilValue } from 'recoil';
+import { useRouter } from 'next/router';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -8,9 +6,12 @@ import SpeciesThreatenedChart from './chart';
 import { useMangroveSpecies } from './hooks';
 
 const SpeciesThreatened = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
-  const { data: location } = useLocation(currentLocationId);
-  const { name, location_id } = location;
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
   const { total, threatenedLegend, isLoading, chartData, tooltip } = useMangroveSpecies(
     {
       location_id,

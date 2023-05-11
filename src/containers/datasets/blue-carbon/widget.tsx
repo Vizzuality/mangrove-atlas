@@ -1,18 +1,22 @@
-import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widget';
 
 import { useRecoilValue } from 'recoil';
 
+import { useRouter } from 'next/router';
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import BlueCarbonChart from './chart';
 import { useMangroveBlueCarbon } from './hooks';
 
 const BlueCarbonWidget = () => {
-  const currentLocationId = useRecoilValue(currentLocationAtom);
   const currentYear = useRecoilValue(widgetYearAtom);
-  const { data } = useLocation(currentLocationId);
-  const { name, location_id } = data;
+
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: location_id },
+  } = useLocation(locationType, id);
 
   const { agb, toc, soc, config, isLoading } = useMangroveBlueCarbon(
     {

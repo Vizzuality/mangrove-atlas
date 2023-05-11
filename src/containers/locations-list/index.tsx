@@ -29,7 +29,7 @@ const LocationsList = () => {
       <CommandItem key={key}>
         <Link
           className="flex h-8 w-full flex-1 items-center justify-between"
-          href={`/${locations[index].iso}`}
+          href={`/${locations[index].location_type}/${locations[index].iso}`}
         >
           <p className="font-sans text-2lg text-black/85">{locations[index].name}</p>
           <span className="text-xs text-grey-800 text-opacity-90">
