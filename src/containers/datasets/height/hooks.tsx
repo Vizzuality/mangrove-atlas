@@ -73,6 +73,7 @@ export function useMangroveHeight(
       metadata: {
         year: [],
         avg_height: null,
+        units: null,
       },
     },
     select: (data) => {

@@ -1,19 +1,17 @@
-import React from 'react';
+import { useState } from 'react';
 
-import { List } from 'react-virtualized';
+import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 'react-virtualized';
 
 import Link from 'next/link';
 
+import { useSearch } from 'hooks/search';
+
 import { useLocations } from 'containers/datasets/locations/hooks';
 
-import {
-  Command,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-} from 'components/command';
+import HighlightedPlaces from 'components/highlighted-places';
+import Icon from 'components/icon';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const locationNames = {
   worldwide: 'Worldwide',
@@ -22,78 +20,85 @@ const locationNames = {
 };
 
 const LocationsList = () => {
+  const [searchValue, setSearchValue] = useState('');
   const { data: locations } = useLocations();
+  const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
+  const locationsToDisplay = searchValue === '' ? locations : searchResults;
+  const cache = new CellMeasurerCache({
+    fixedWidth: true,
+    defaultHeight: 100,
+  });
 
-  const renderRow = ({ index, key }: { index: number; key: string }) => {
+  const renderRow = ({
+    index,
+    key,
+    style,
+    parent,
+  }: {
+    index: number;
+    key: string;
+    style: Style;
+    parent: Parent;
+  }) => {
     return (
-      <CommandItem key={key}>
-        <Link
-          className="flex h-8 w-full flex-1 items-center justify-between"
-          href={`/${locations[index].location_type}/${locations[index].iso}`}
-        >
-          <p className="font-sans text-2lg text-black/85">{locations[index].name}</p>
-          <span className="text-xs text-grey-800 text-opacity-90">
-            {locationNames[locations[index].location_type]}
-          </span>
-        </Link>
-      </CommandItem>
+      <CellMeasurer key={key} parent={parent} cache={cache} columnIndex={0} rowIndex={index}>
+        {({ registerChild }) => (
+          <div style={style} ref={registerChild}>
+            <Link
+              className="flex h-full w-full flex-1 items-end justify-between pb-2"
+              href={`/${locationsToDisplay[index].location_type}/${
+                locationsToDisplay[index].location_type === 'country'
+                  ? locationsToDisplay[index].iso
+                  : locationsToDisplay[index].location_id
+              }`}
+            >
+              <p className="font-sans text-2lg text-black/85">{locationsToDisplay[index].name}</p>
+              <span className="text-xs text-grey-800 text-opacity-90">
+                {locationNames[locationsToDisplay[index].location_type]}
+              </span>
+            </Link>
+          </div>
+        )}
+      </CellMeasurer>
     );
   };
 
   return (
-    <div className="no-scrollbar overflow-y-auto after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative flex">
-        <Command className="w-full">
-          <div className="fixed z-20 flex w-fit flex-col bg-white">
-            <CommandInput placeholder="Type name..." className="border-none" />
-            <div className="my-6 flex w-fit space-x-2">
-              <Link href="" className="w-[137px]">
-                <div
-                  key={'currentLocation.id'}
-                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center"
-                >
-                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                    Worldwide
-                  </h3>
-                </div>
-              </Link>
-              <Link href="" className="w-[137px]">
-                <div
-                  key={'currentLocation.id'}
-                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/rufiji.jpg')] bg-cover bg-center"
-                >
-                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                    Worldwide
-                  </h3>
-                </div>
-              </Link>
-              <Link href="" className="w-[137px]">
-                <div
-                  key={'currentLocation.id'}
-                  className="h-52 w-full flex-1 rounded-[20px] bg-[url('/images/highlighted-places/saloum.png')] bg-cover bg-center"
-                >
-                  <h3 className="flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
-                    Worldwide
-                  </h3>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <CommandList className="top-10] absolute mt-[300px]">
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
-              <List
-                width={430}
-                height={700}
-                rowHeight={25}
-                rowRenderer={renderRow}
-                rowCount={locations.length}
-                overscanRowCount={3}
-                className="no-scrollbar overflow-hidden rounded-sm before:from-white/100 before:to-white/50 before:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-6 after:w-full after:bg-gradient-to-b after:from-white/60 after:to-white/100 after:content-['']"
-              />
-            </CommandGroup>
-          </CommandList>
-        </Command>
+    <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
+      <div className="relative">
+        <input
+          type="search"
+          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 opacity-50"
+          placeholder="Type name..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.currentTarget.value)}
+        />
+        {searchValue && (
+          <button
+            type="button"
+            className="absolute top-1/2 right-0 flex -translate-y-1/2 items-center"
+            onClick={() => setSearchValue('')}
+          >
+            <Icon icon={CLOSE_SVG} className="h-5 w-5  transform opacity-50" />
+          </button>
+        )}
+      </div>
+
+      <HighlightedPlaces />
+      <div className="relative h-full">
+        <AutoSizer>
+          {({ width, height }) => (
+            <List
+              width={width}
+              height={height}
+              deferredMeasurementCache={cache}
+              rowHeight={cache.rowHeight}
+              rowRenderer={renderRow}
+              rowCount={locationsToDisplay.length}
+              overscanRowCount={15}
+            />
+          )}
+        </AutoSizer>
       </div>
     </div>
   );
