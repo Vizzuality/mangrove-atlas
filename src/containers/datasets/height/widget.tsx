@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 
-import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';

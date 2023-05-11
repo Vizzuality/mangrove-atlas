@@ -18,7 +18,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { ExtentData, Indicator, RouterData } from './types';
+import type { ExtentData, Indicator } from './types';
 
 const unitOptions = ['km²', 'ha'];
 
@@ -33,7 +33,7 @@ export function useMangroveHabitatExtent(
   } = useRouter();
   const {
     data: { name, id: currentLocation, location_id },
-  }: RouterData = useLocation(locationType, id);
+  } = useLocation(locationType, id);
 
   const location = useMemo(() => {
     if (location_id === 'custom-area') return 'the area selected';

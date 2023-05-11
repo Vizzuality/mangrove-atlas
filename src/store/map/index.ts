@@ -1,10 +1,6 @@
-import { string, object, number } from '@recoiljs/refine';
+import { string, number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
-
-import { DEFAULT_VIEW_STATE } from 'components/map/constants';
-
-const { zoom, latitude, longitude } = DEFAULT_VIEW_STATE;
 
 export const basemapAtom = atom({
   key: 'basemap',
@@ -16,20 +12,20 @@ export const basemapAtom = atom({
   ],
 });
 
-export const mapAtom = atom({
-  key: 'map',
-  default: {
-    zoom,
-    latitude,
-    longitude,
-  },
+// ? this atom syncs the bounds of the URL with the initial view of the map, allowing
+// ? theinitializzation of the map with bounds from the URL
+export const URLboundsAtom = atom({
+  key: 'bounds',
+  default: null,
   effects: [
     urlSyncEffect({
-      refine: object({
-        zoom: number(),
-        latitude: number(),
-        longitude: number(),
-      }),
+      refine: array(array(number())),
     }),
   ],
+});
+
+// ? this atom sets internally the bounds of the map, not messing with the ones from the URL
+export const locationBoundsAtom = atom<[number, number, number, number]>({
+  key: 'locationBounds',
+  default: null,
 });

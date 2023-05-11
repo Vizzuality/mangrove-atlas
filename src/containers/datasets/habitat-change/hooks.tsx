@@ -43,7 +43,6 @@ export function useMangroveHabitatChange(
   });
 
   const { data } = query;
-  console.log(data);
   return useMemo(() => {
     const years = data?.metadata?.years;
     const unit = data?.metadata?.units?.[0]?.value || [];

@@ -1,5 +1,5 @@
 export type UseParamsOptions = Readonly<{
-  location_id?: string;
+  location_id?: string | number;
   year?: number;
   unit?: string;
 }>;

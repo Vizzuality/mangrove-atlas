@@ -18,7 +18,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   // * if no id is passed, react-map-gl will store the map reference in a 'default' key:
   // * https://github.com/visgl/react-map-gl/blob/ecb27c8d02db7dd09d8104e8c2011bda6aed4b6f/src/components/use-map.tsx#L18
   id = 'default',
-  mapboxAccessToken,
   children,
   className,
   viewState,

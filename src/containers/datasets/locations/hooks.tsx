@@ -1,29 +1,11 @@
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { LngLat } from 'mapbox-gl';
+import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
 
 import API from 'services/api';
 
-type Bounds = {
-  type: 'polygon';
-  coordinates: LngLat[];
-};
-
-type Data = {
-  area_m2: number;
-  bounds: Bounds;
-  coast_length_m: number;
-  created_at: string;
-  id: number;
-  iso: string;
-  location_id: string;
-  location_type: 'country';
-  name: string;
-  perimeter_m: number;
-};
+import type { Location } from './types';
 
 type DataResponse = {
-  data: Data[];
+  data: Location[];
   metadata: unknown;
 };
 
@@ -32,38 +14,36 @@ export const HIGHLIGHTED_PLACES = {
   saloum: '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
 };
 
-// widget data
-export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
-  const config: AxiosRequestConfig = {
+const fetchLocations = () =>
+  API.request<DataResponse>({
     method: 'GET',
     url: '/locations',
-  };
+  }).then((response) => response.data);
 
-  const fetchLocations = () => API.request(config).then((response) => response.data);
-  const query = useQuery(['locations'], fetchLocations, {
-    placeholderData: {
+export function useLocations<T = Location[]>(
+  queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
+) {
+  const queryClient = useQueryClient();
+  return useQuery(['locations'], fetchLocations, {
+    placeholderData: queryClient.getQueryData(['locations']) || {
       data: [],
+      metadata: null,
     },
-    select: (data) => data?.data,
     ...queryOptions,
   });
-
-  return query;
 }
 
 export function useLocation(
   locationType: string | string[],
   id: string | string[],
-  queryOptions: UseQueryOptions<DataResponse> = {}
+  queryOptions: UseQueryOptions<DataResponse, Error, Location> = {}
 ) {
-  const config: AxiosRequestConfig = {
-    method: 'GET',
-    url: '/locations',
-  };
-
-  const fetchLocations = () => API.request(config).then((response: AxiosResponse) => response.data);
+  const queryClient = useQueryClient();
   return useQuery(['locations'], fetchLocations, {
-    placeholderData: [],
+    placeholderData: queryClient.getQueryData(['locations']) || {
+      data: [],
+      metadata: null,
+    },
     select: (data) => ({
       ...data?.data?.find(
         (d) =>
@@ -75,15 +55,13 @@ export function useLocation(
   });
 }
 
-export function useHighlightedPlaces(queryOptions: UseQueryOptions<Location[]> = {}) {
-  const config: AxiosRequestConfig = {
-    method: 'GET',
-    url: '/locations',
-  };
-  const fetchLocations = () => API.request(config).then((response) => response.data);
+export function useHighlightedPlaces(
+  queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {}
+) {
   return useQuery(['locations'], fetchLocations, {
     placeholderData: {
       data: [],
+      metadata: null,
     },
     select: ({ data }) =>
       data?.filter((d) => Object.values(HIGHLIGHTED_PLACES).includes(d.location_id)),
