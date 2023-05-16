@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { activeWidgetsAtom } from 'store/widget';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useEffect } from 'react';
 
-import { activeWidgetsAtom } from 'store/widget';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 

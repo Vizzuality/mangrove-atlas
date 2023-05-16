@@ -1,4 +1,4 @@
-import { activeWidgetsAtom } from 'store/widget';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { selectorFamily } from 'recoil';
 

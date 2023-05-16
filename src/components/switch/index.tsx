@@ -13,7 +13,7 @@ type WrapperProps = Readonly<{
 const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) => (
   <SwitchRadix.Root
     className={cn({
-      'h-7.5 relative w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 outline-none data-[state=checked]:bg-brand-800':
+      'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 outline-none data-[state=checked]:bg-brand-800':
         true,
       [className]: !!className,
     })}

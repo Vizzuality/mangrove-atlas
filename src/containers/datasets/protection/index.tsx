@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { widgetYearAtom } from 'store/widget';
+import { widgetYearAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';
 

@@ -89,7 +89,7 @@ const LocationsList = () => {
                 rowRenderer={renderRow}
                 rowCount={locations.length}
                 overscanRowCount={3}
-                className="no-scrollbar overflow-hidden rounded-sm"
+                className="no-scrollbar overflow-hidden rounded-sm before:from-white/100 before:to-white/50 before:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-6 after:w-full after:bg-gradient-to-b after:from-white/60 after:to-white/100 after:content-['']"
               />
             </CommandGroup>
           </CommandList>
