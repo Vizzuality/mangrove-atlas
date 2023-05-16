@@ -16,7 +16,7 @@ import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
-import HabitatExtentDownload from 'containers/datasets/habitat-extent/download.mdx';
+import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';
 import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
 import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';

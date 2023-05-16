@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { widgetYearAtom } from 'store/widget';
+import { widgetYearAtom } from 'store/widgets';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
 import { useRecoilValue } from 'recoil';

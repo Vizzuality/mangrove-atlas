@@ -1,7 +1,6 @@
 import { DOWNLOAD } from 'containers/datasets';
-import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
@@ -18,8 +17,9 @@ const Download = ({ id }) => {
               <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-[540px] rounded-[20px]">
-            {DownloadInfo}
+          <DialogContent className="scroll-y top-24 rounded-[20px]">
+            <DownloadInfo />
+            <DialogClose />
           </DialogContent>
         </Dialog>
       </div>

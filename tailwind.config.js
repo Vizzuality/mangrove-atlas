@@ -31,6 +31,7 @@ module.exports = {
       fontSize: {
         xxs: '0.625rem',
         '2lg': '1.188rem',
+        '2.75xl': '1.688rem',
       },
       colors: {
         black: '#000000',

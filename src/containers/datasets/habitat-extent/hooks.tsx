@@ -2,96 +2,54 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import { numberFormat } from 'lib/format';
 
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
+
+import CustomTooltip from 'components/chart/tooltip';
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-type Metadata = {
-  location_id: string;
-  note: null;
-  total_area: number;
-  total_lenght: number;
-  units: Unit[];
-  year: number[];
-};
+import type { ExtentData, Indicator, RouterData } from './types';
 
-type DataResponse = {
-  data: Data[];
-  metadata: Metadata;
-};
-type Unit = {
-  habitat_extent_area: string;
-  linear_coverage: string;
-};
-type Indicator = {
-  year: number;
-  linear_coverage: number;
-  habitat_extent_area: number;
-};
+const unitOptions = ['km²', 'ha'];
 
-type Legend = {
-  label: string;
-  value: string | number;
-  unit: string;
-  color: string;
-};
-type Data = { year: number; value: number; indicator: 'habitat_extent_area' | 'linear_coverage' };
-
-type ChartData = {
-  label: string;
-  value: number | string;
-  color?: string;
-  unit?: string;
-};
-
-type TooltipData = {
-  title?: string;
-  items: ChartData[];
-};
-
-type chartBaseTypes = {
-  pies: {
-    value: string;
-  };
-};
-
-type ChartConfig = {
-  type: string;
-  data: ChartData[];
-  tooltip: TooltipData;
-  cartesianGrid: boolean;
-  chartBase: chartBaseTypes;
-};
-
-type ExtentData = {
-  metadata: Metadata;
-  area: string;
-  nonMangrove: string;
-  mangroveCoastCoveragePercentage: string;
-  totalLength: string;
-  years: number[]; // API improvement, change year to years as is an array
-  units: Unit[];
-  legend: Legend[];
-  chartData: ChartData[];
-  config: ChartConfig;
-};
+const widgetSlug = 'habitat-extent';
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
-  queryOptions: UseQueryOptions<DataResponse> // API
-): ExtentData {
-  const fetchHabitatExtent = (...args) => {
-    const { location_id } = params;
+  queryOptions: UseQueryOptions<ExtentData, unknown> = {} // API
+) {
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: currentLocation, location_id },
+  }: RouterData = useLocation(locationType, id);
+
+  const location = useMemo(() => {
+    if (location_id === 'custom-area') return 'the area selected';
+    if (location_id === 'worldwide') return 'the world';
+    else return name;
+  }, [location_id]);
+
+  const fetchHabitatExtent = () => {
     return API.request({
-      method: params.location_id === 'custom-area' ? 'POST' : 'GET',
+      method: 'GET',
       url: 'widgets/habitat_extent',
-      params: { location_id },
-    }).then((response: AxiosResponse<DataResponse>) => response.data);
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
+    }).then((response) => response.data);
     // API2.request({
   };
   //   method: 'POST',
@@ -99,20 +57,29 @@ export function useMangroveHabitatExtent(
   //   params,
   // }).then((response: AxiosResponse<DataResponse>) => response.data[slug]);
   // TO DO - add year filter to API
-  const { location_id, unit, year } = params;
 
-  const query = useQuery(['habitat-extent', location_id], fetchHabitatExtent, {
+  const query = useQuery([widgetSlug, location_id], fetchHabitatExtent, {
     placeholderData: {
       data: [],
-      metadata: null,
+      metadata: {
+        units: {
+          habitat_extent_area: null,
+          linear_coverage: null,
+        },
+      },
     },
     ...queryOptions,
   });
 
-  const { data, isLoading } = query;
-  return useMemo(() => {
+  const { data, isLoading, isFetched } = query;
+  const year = useRecoilValue(habitatExtentSettings);
+
+  const { unit } = params;
+  const DATA = useMemo(() => {
     const metadata = data.metadata;
-    const dataByYear = data.data.filter(({ year: y }) => y === year);
+    const years = metadata?.year?.sort();
+    const currentYear = year || years?.[years?.length - 1];
+    const dataByYear = data.data.filter(({ year: y }) => y === currentYear);
     const dataParsed = dataByYear.reduce(
       (acc, d) => ({
         ...acc,
@@ -121,18 +88,21 @@ export function useMangroveHabitatExtent(
       }),
       {} as Indicator
     );
+
     // API improvement - fix typo in length
     const totalLength = metadata?.total_lenght;
     const mangroveArea = dataParsed?.habitat_extent_area;
     const mangroveCoastCoverage = dataParsed?.linear_coverage;
     const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength;
     const nonMangrove = totalLength - mangroveCoastCoverage;
+    const defaultUnitLinearCoverage = metadata?.units?.linear_coverage;
     const area = unit === 'ha' ? mangroveArea * 100 : mangroveArea;
-
+    const nonMangroveArea = unit === 'ha' ? nonMangrove * 100 : nonMangrove;
+    const mangroveAreaLabel = `Coastline coverage in ${currentYear}`;
     const LegendData = [
       {
-        label: `Coastline coverage in ${year}`,
-        value: numberFormat(mangroveArea),
+        label: mangroveAreaLabel,
+        value: numberFormat(mangroveCoastCoverage),
         unit: 'km',
         color: '#06C4BD',
       },
@@ -144,22 +114,8 @@ export function useMangroveHabitatExtent(
       },
     ];
 
-    const mangroveAreaLabel = `Coastline coverage in ${year}`;
-
     const TooltipData = {
-      title: '',
-      items: [
-        {
-          label: mangroveAreaLabel,
-          value: numberFormat(mangroveArea),
-          unit,
-        },
-        {
-          label: 'Non mangroves',
-          value: numberFormat(nonMangrove),
-          unit,
-        },
-      ],
+      content: (properties) => <CustomTooltip {...properties} payload={properties?.payload[0]} />,
     };
 
     const ChartData = [
@@ -167,11 +123,27 @@ export function useMangroveHabitatExtent(
         label: mangroveAreaLabel,
         value: mangroveArea,
         color: '#06C4BD',
+        settings: [
+          { label: 'Coverage:', value: numberFormat(mangroveCoastCoverage), unit },
+          {
+            label: 'Percentage:',
+            value: numberFormat((mangroveCoastCoverage * 100) / totalLength),
+            unit: '%',
+          },
+        ],
       },
       {
         label: 'Non mangroves',
         value: nonMangrove,
         color: '#ECECEF',
+        settings: [
+          { label: 'Coverage:', value: numberFormat(nonMangrove), unit },
+          {
+            label: 'Percentage:',
+            value: numberFormat((nonMangrove * 100) / totalLength),
+            unit: '%',
+          },
+        ],
       },
     ];
     const chartConfig = {
@@ -181,7 +153,7 @@ export function useMangroveHabitatExtent(
       cartesianGrid: false,
       chartBase: {
         pies: {
-          value: 'habitat-extent',
+          value: widgetSlug,
         },
       },
     };
@@ -189,7 +161,7 @@ export function useMangroveHabitatExtent(
     return {
       metadata,
       area: numberFormat(area),
-      nonMangrove: numberFormat(nonMangrove),
+      nonMangrove: numberFormat(nonMangroveArea),
       mangroveCoastCoveragePercentage: numberFormat(mangroveCoastCoveragePercentage),
       totalLength: numberFormat(totalLength),
       years: metadata?.year, // API improvement, change year to years as is an array
@@ -197,9 +169,19 @@ export function useMangroveHabitatExtent(
       legend: LegendData,
       chartData: ChartData,
       config: chartConfig,
-      isLoading,
+      location,
+      defaultYear: currentYear,
+      unitOptions,
+      defaultUnitLinearCoverage,
     } satisfies ExtentData;
-  }, [year, data, unit, location_id]);
+  }, [data, isLoading, isFetched, unit, year]);
+
+  return useMemo(() => {
+    return {
+      ...query,
+      data: DATA,
+    } as typeof query;
+  }, [query, DATA]);
 }
 
 export function useSource(): SourceProps {

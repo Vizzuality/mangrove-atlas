@@ -4,7 +4,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
 
-import { netChangeStartYearAtom, netChangeEndYearAtom } from 'store/widget';
+import { netChangeStartYearAtom, netChangeEndYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
