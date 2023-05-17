@@ -20,7 +20,7 @@ type Metadata = {
   note: null;
   avg_height: AvgHeight[];
   units: { value: 'm' };
-  year: Unit;
+  year: number[];
 };
 
 export type DataResponse = {
