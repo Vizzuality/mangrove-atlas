@@ -71,7 +71,7 @@ export function useMangroveHabitatExtent(
     ...queryOptions,
   });
 
-  const { data, isLoading, isFetched } = query;
+  const { data } = query;
   const year = useRecoilValue(habitatExtentSettings);
 
   const { unit } = params;
@@ -97,8 +97,11 @@ export function useMangroveHabitatExtent(
     const nonMangrove = totalLength - mangroveCoastCoverage;
     const defaultUnitLinearCoverage = metadata?.units?.linear_coverage;
     const area = unit === 'ha' ? mangroveArea * 100 : mangroveArea;
-    const nonMangroveArea = unit === 'ha' ? nonMangrove * 100 : nonMangrove;
     const mangroveAreaLabel = `Coastline coverage in ${currentYear}`;
+
+    const coastlineCoverage = unit === 'ha' ? mangroveCoastCoverage * 100 : mangroveCoastCoverage;
+    const nonMangrovesCoverage = unit === 'ha' ? nonMangrove * 100 : nonMangrove;
+
     const LegendData = [
       {
         label: mangroveAreaLabel,
@@ -121,28 +124,28 @@ export function useMangroveHabitatExtent(
     const ChartData = [
       {
         label: mangroveAreaLabel,
-        value: mangroveArea,
+        value: coastlineCoverage,
         color: '#06C4BD',
         settings: [
-          { label: 'Coverage:', value: numberFormat(mangroveCoastCoverage), unit },
           {
             label: 'Percentage:',
-            value: numberFormat((mangroveCoastCoverage * 100) / totalLength),
+            value: numberFormat(mangroveCoastCoveragePercentage),
             unit: '%',
           },
+          { label: 'Coverage:', value: numberFormat(coastlineCoverage), unit },
         ],
       },
       {
         label: 'Non mangroves',
-        value: nonMangrove,
+        value: nonMangrovesCoverage,
         color: '#ECECEF',
         settings: [
-          { label: 'Coverage:', value: numberFormat(nonMangrove), unit },
           {
             label: 'Percentage:',
-            value: numberFormat((nonMangrove * 100) / totalLength),
+            value: numberFormat(100 - mangroveCoastCoveragePercentage),
             unit: '%',
           },
+          { label: 'Coverage:', value: numberFormat(nonMangrovesCoverage), unit },
         ],
       },
     ];
@@ -161,7 +164,7 @@ export function useMangroveHabitatExtent(
     return {
       metadata,
       area: numberFormat(area),
-      nonMangrove: numberFormat(nonMangroveArea),
+      nonMangrove: numberFormat(nonMangrove),
       mangroveCoastCoveragePercentage: numberFormat(mangroveCoastCoveragePercentage),
       totalLength: numberFormat(totalLength),
       years: metadata?.year, // API improvement, change year to years as is an array
@@ -174,7 +177,7 @@ export function useMangroveHabitatExtent(
       unitOptions,
       defaultUnitLinearCoverage,
     } satisfies ExtentData;
-  }, [data, isLoading, isFetched, unit, year]);
+  }, [data, unit, year]);
 
   return useMemo(() => {
     return {

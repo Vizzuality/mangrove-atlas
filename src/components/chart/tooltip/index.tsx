@@ -1,3 +1,4 @@
+import cn from 'lib/classnames';
 type TooltipProps = {
   payload: {
     payload: {
@@ -9,19 +10,26 @@ type TooltipProps = {
 
 const Tooltip: React.FC = ({ payload }: TooltipProps) => {
   if (!payload) return null;
-  const { settings, label } = payload?.payload;
-
+  const { settings, label, direction } = payload?.payload;
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
       {label && <p className="flex justify-center">{label}</p>}
-      {settings.map(({ label, value, unit }) => (
-        <p key={label} className="flex space-x-4">
-          <span className="font-bold">{label}</span>
-          <span>
-            {' '}
-            {value} {unit}
-          </span>
-        </p>
+      {settings.map(({ label, value, unit, color }) => (
+        <div className="flex flex-col">
+          <p
+            key={label}
+            className={cn({ 'flex space-x-4': true, 'flex-col': direction === 'vertical' })}
+          >
+            <span className="flex items-center space-x-2">
+              {color && <div className="h-4 w-2 rounded-full" style={{ backgroundColor: color }} />}
+              <span className="font-bold">{label}</span>
+            </span>
+            <span>
+              {' '}
+              {value} {unit}
+            </span>
+          </p>
+        </div>
       ))}
     </div>
   );
