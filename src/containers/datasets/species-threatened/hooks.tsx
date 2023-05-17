@@ -4,8 +4,12 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import groupBy from 'lodash-es/groupBy';
 
+import { useRouter } from 'next/router';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -49,6 +53,7 @@ type DataResponse = {
 type SpeciesData = {
   threatenedLegend: number | string;
   total: number;
+  location: string;
   isLoading: boolean;
   tooltip?: unknown;
   chartData;
@@ -65,14 +70,30 @@ const getThreatened = (th: number, total: number) => {
 };
 // widget data
 export function useMangroveSpecies(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions<DataResponse>
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {
+  const {
+    query: { locationType, id },
+  } = useRouter();
+  const {
+    data: { name, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
+
+  const location = useMemo(() => {
+    if (location_id === 'custom-area') return 'The area selected';
+    if (location_id === 'worldwide') return 'The world';
+    else return name;
+  }, [location_id]);
+
   const fetchMangroveSpecies = () =>
     API.request({
       method: 'GET',
       url: '/widgets/biodiversity',
-      params,
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
   const query = useQuery(['biodiversity', params], fetchMangroveSpecies, {
@@ -102,6 +123,7 @@ export function useMangroveSpecies(
     return {
       threatenedLegend,
       total,
+      location,
       chartData,
       tooltip: {
         content: (properties) => <CustomTooltip {...properties} />,

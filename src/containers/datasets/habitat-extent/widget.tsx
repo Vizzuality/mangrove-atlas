@@ -16,6 +16,7 @@ import Icon from 'components/icon';
 //   PopoverPortal,
 //   PopoverAnchor,
 // } from 'components/popover';
+import Loading from 'components/loading';
 import {
   Tooltip,
   TooltipContent,
@@ -33,7 +34,9 @@ const HabitatExtent = () => {
   const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
-  const { isLoading, data, isFetched } = useMangroveHabitatExtent({ unit: selectedUnitAreaExtent });
+  const { isLoading, data, isFetched, isPlaceholderData } = useMangroveHabitatExtent({
+    unit: selectedUnitAreaExtent,
+  });
 
   const {
     area,
@@ -56,10 +59,14 @@ const HabitatExtent = () => {
   );
 
   const year = widgetSettings;
+
   return (
     <div>
-      {isLoading && <div>...loading</div>}
-      {isFetched && (
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
         <div>
           <p className="text-lg font-light leading-7">
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
@@ -82,7 +89,9 @@ const HabitatExtent = () => {
                     align="center"
                     className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                   >
-                    <ul className={cn({ 'space-y-2': true })}>
+                    <ul
+                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                    >
                       {unitOptions?.map((u) => (
                         <li key={u}>
                           <button
@@ -157,7 +166,7 @@ const HabitatExtent = () => {
                   align="center"
                   className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                 >
-                  <ul className={cn({ 'space-y-2': true })}>
+                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
                     {years?.map((y) => (
                       <li key={y}>
                         <button

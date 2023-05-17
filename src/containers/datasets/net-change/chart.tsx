@@ -2,10 +2,11 @@ import Legend from 'containers/legend';
 
 import Chart from 'components/chart';
 
+import NetChangeLegend from './legend';
 const NetChangeChart = ({ config }) => {
   return (
-    <div className="">
-      {/* <Legend items={legend} /> */}
+    <div>
+      <NetChangeLegend />
       <Chart config={config} />
     </div>
   );

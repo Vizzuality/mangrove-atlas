@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 type Metadata = {
   location_id: string;
   note: null;
@@ -36,11 +38,17 @@ type ChartData = {
   value: number | string;
   color?: string;
   unit?: string;
+  settings?: {
+    label: string;
+    value: string;
+    unit: string;
+  }[];
 };
 
 type TooltipData = {
   title?: string;
-  items: ChartData[];
+  content?: (properties: unknown) => JSX.Element | ReactElement;
+  items?: ChartData[];
 };
 
 type chartBaseTypes = {
@@ -66,7 +74,6 @@ type RouterProps = {
 export type RouterData = { data: RouterProps };
 
 export type ExtentData = {
-  data: Data[];
   metadata: Metadata;
   area: string;
   nonMangrove: string;
@@ -77,9 +84,9 @@ export type ExtentData = {
   legend: Legend[];
   chartData: ChartData[];
   config: ChartConfig;
-  name: string;
   years: number[];
   defaultYear: number;
   unitOptions: string[];
   defaultUnitLinearCoverage: string;
+  location: string;
 };

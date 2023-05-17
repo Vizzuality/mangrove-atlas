@@ -34,8 +34,8 @@ const Chart = ({ config }) => {
     margin = {
       top: 20,
       right: 0,
-      left: 50,
-      bottom: 0,
+      left: 0,
+      bottom: 20,
     },
     padding = {
       top: 0,
@@ -80,15 +80,17 @@ const Chart = ({ config }) => {
 
         {xAxis && (
           <XAxis
+            type="number"
             dataKey={xKey || ''}
-            axisLine={false}
+            axisLine={true}
             tickLine={false}
-            tickCount={8}
+            tickCount={xAxis.tickCount || 5}
             tick={{
               dy: 8,
               fontSize: '12px',
               fill: 'rgba(0,0,0,0.54)',
               textShadow: '0 2 4 0 rgba(0,0,0,0.5)',
+              ...xAxis.tick,
             }}
             {...xAxis}
           />
@@ -100,14 +102,7 @@ const Chart = ({ config }) => {
             orientation={yAxis.orientation || 'left'}
             tickMargin={0}
             tickLine={false}
-            // tick={
-            //   // <ChartTick
-            //   //   dataMax={maxYValue}
-            //   //   unit={unit || ''}
-            //   //   unitFormat={unitFormat || ((value) => value)}
-            //   //   fill="#AAA"
-            //   // />
-            // }
+            label={'ha'}
             {...yAxis}
           />
         )}
