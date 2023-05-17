@@ -27,10 +27,10 @@ type DataResponse = {
   metadata: unknown;
 };
 
-export const HIGHLIGHTED_PLACES = [
-  '0edd0ebb-892b-5774-8ce5-08e0ba7136b1', // Rufiji,
-  '4a79230b-7ecb-58ae-ba0d-0f57faa2a104', // Saloum,
-];
+export const HIGHLIGHTED_PLACES = {
+  rufiji: '0edd0ebb-892b-5774-8ce5-08e0ba7136b1',
+  saloum: '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
+};
 
 // widget data
 export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
@@ -80,13 +80,13 @@ export function useHighlightedPlaces(queryOptions: UseQueryOptions<Location[]> =
     method: 'GET',
     url: '/locations',
   };
-
   const fetchLocations = () => API.request(config).then((response) => response.data);
   return useQuery(['locations'], fetchLocations, {
     placeholderData: {
       data: [],
     },
-    select: ({ data }) => data?.filter((d) => HIGHLIGHTED_PLACES.includes(d.location_id)),
+    select: ({ data }) =>
+      data?.filter((d) => Object.values(HIGHLIGHTED_PLACES).includes(d.location_id)),
     ...queryOptions,
   });
 }

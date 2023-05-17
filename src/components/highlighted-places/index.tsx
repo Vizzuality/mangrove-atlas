@@ -13,13 +13,14 @@ import {
 
 const HighlightedPlaces = () => {
   const { data } = useHighlightedPlaces();
+
   const {
     query: { locationType, id },
   } = useRouter();
   const {
     data: { location_id },
   } = useLocation(locationType, id);
-  const isHighlightedPlace = !!HIGHLIGHTED_PLACES.includes(location_id);
+  const isHighlightedPlace = Object.values(HIGHLIGHTED_PLACES).includes(location_id);
 
   return (
     <div className="flex justify-between space-x-6">
@@ -34,8 +35,8 @@ const HighlightedPlaces = () => {
               <div
                 className={cn({
                   'flex h-60 flex-1 rounded-[20px] bg-cover bg-center': true,
-                  'bg-rufiji': d.location_id === '0edd0ebb-892b-5774-8ce5-08e0ba7136b1',
-                  'bg-saloum': d.location_id === '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
+                  'bg-rufiji': HIGHLIGHTED_PLACES['rufiji'] === d.location_id,
+                  'bg-saloum': HIGHLIGHTED_PLACES['saloum'] === d.location_id,
                 })}
               >
                 <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
