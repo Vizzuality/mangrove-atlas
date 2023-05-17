@@ -75,6 +75,7 @@ export type RouterData = { data: RouterProps };
 
 export type ExtentData = {
   metadata: Metadata;
+  data: Data[];
   area: string;
   nonMangrove: string;
   mangroveCoastCoveragePercentage: string;

@@ -18,14 +18,13 @@ const HabitatExtent = () => {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
-  const { years, unit, chartData, defaultStartYear, defaultEndYear, config } =
-    useMangroveHabitatChange(
-      {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        year: currentYear,
-      },
-      {}
-    );
+  const { years, unit, chartData, defaultStartYear, defaultEndYear } = useMangroveHabitatChange(
+    {
+      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+      year: currentYear,
+    },
+    {}
+  );
 
   const isLoading = false;
   const numberOfCountries = 5;

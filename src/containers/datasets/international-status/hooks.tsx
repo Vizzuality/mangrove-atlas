@@ -15,7 +15,7 @@ import type { DataResponse, InternationalStatusTypes } from './types';
 export function useMangroveInternationalStatus(
   params: UseParamsOptions,
   queryOptions: UseQueryOptions<AxiosResponse<DataResponse>> = {}
-): InternationalStatusTypes {
+) {
   const fetchMangroveInternationalStatus = () =>
     API.request({
       method: 'GET',

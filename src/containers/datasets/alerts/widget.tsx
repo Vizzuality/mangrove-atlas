@@ -29,13 +29,13 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import AlertsChart from './chart';
 import { useAlerts } from './hooks';
 
-const AlertsChart = () => {
+const AlertsWidget = () => {
   const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
   const { isLoading, data, isFetched } = useAlerts({ unit: selectedUnitAreaExtent });
 
-  const { alerts, years, startDate, endDate } = data;
+  // const { alerts, years, startDate, endDate } = data;
 
   const handleClick = useCallback(
     (year) => {
@@ -43,14 +43,14 @@ const AlertsChart = () => {
     },
     [setWidgetSettings]
   );
-  const defaultYear = years[years.length - 1];
-  const year = widgetSettings;
+  // const defaultYear = years[years.length - 1];
+  // const year = widgetSettings;
   return (
     <div>
       {isLoading && <div>...loading</div>}
       {isFetched && (
         <div>
-          <p className="text-lg font-light leading-7">
+          {/* <p className="text-lg font-light leading-7">
             There were {alerts} mangrove disturbance alerts between
             <Tooltip>
               <TooltipTrigger asChild>
@@ -134,12 +134,12 @@ const AlertsChart = () => {
               </TooltipPortal>
             </Tooltip>
             .
-          </p>
-          <AlertsChart legend={legend} config={config} />
+          </p> */}
+          {/* <AlertsChart legend={legend} config={config} /> */}
         </div>
       )}
     </div>
   );
 };
 
-export default AlertsChart;
+export default AlertsWidget;

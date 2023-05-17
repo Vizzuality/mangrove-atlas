@@ -82,7 +82,6 @@ const Chart = ({ config }) => {
           <XAxis
             type="number"
             dataKey={xKey || ''}
-            axisLine={true}
             tickLine={false}
             tickCount={xAxis.tickCount || 5}
             tick={{
@@ -102,7 +101,6 @@ const Chart = ({ config }) => {
             orientation={yAxis.orientation || 'left'}
             tickMargin={0}
             tickLine={false}
-            label={'ha'}
             {...yAxis}
           />
         )}

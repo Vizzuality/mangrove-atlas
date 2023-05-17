@@ -176,7 +176,7 @@ export function useMangroveHabitatExtent(
       defaultYear: currentYear,
       unitOptions,
       defaultUnitLinearCoverage,
-    } satisfies ExtentData;
+    };
   }, [data, unit, year]);
 
   return useMemo(() => {

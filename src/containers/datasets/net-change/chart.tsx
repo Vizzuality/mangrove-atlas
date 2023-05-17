@@ -1,5 +1,3 @@
-import Legend from 'containers/legend';
-
 import Chart from 'components/chart';
 
 import NetChangeLegend from './legend';

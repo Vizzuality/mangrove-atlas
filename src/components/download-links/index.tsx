@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import cn from 'lib/classNames';
+import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
 

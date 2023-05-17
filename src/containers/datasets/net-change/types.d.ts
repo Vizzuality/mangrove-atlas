@@ -5,6 +5,14 @@ type Data = Readonly<{
   net_change: number;
   gain: number;
   loss: number;
+  config: ChartConfig;
+  location: string;
+  years: number[];
+  currentStartYear: number;
+  currentEndYear: number;
+  netChange: string;
+  direction: string;
+  unitOptions: string[];
 }>;
 
 type Metadata = Readonly<{
@@ -51,3 +59,9 @@ type NetChangeData = {
   isLoading: boolean;
   config: ChartConfig;
 };
+
+export type UseParamsOptions = Readonly<{
+  startYear: number;
+  endYear: number;
+  selectedUnit: string;
+}>;

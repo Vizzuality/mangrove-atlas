@@ -18,7 +18,7 @@ const LocationTitle = () => {
   } = useLocation(locationType, id);
 
   const [width, setWidth] = useState(null);
-  const titleRef = useRef();
+  const titleRef = useRef(null);
 
   useEffect(() => {
     const { width } = titleRef?.current.getBoundingClientRect();

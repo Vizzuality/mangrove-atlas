@@ -2,8 +2,9 @@ import cn from 'lib/classnames';
 type TooltipProps = {
   payload: {
     payload: {
-      settings: { label: string; value: number; unit: string }[];
+      settings: { label: string; value: number; unit: string; color?: string }[];
       label: string;
+      direction?: 'vertical' | 'horizontal';
     };
   };
 };
@@ -15,7 +16,7 @@ const Tooltip: React.FC = ({ payload }: TooltipProps) => {
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
       {label && <p className="flex justify-center">{label}</p>}
       {settings.map(({ label, value, unit, color }) => (
-        <div className="flex flex-col">
+        <div key="label" className="flex flex-col">
           <p
             key={label}
             className={cn({ 'flex space-x-4': true, 'flex-col': direction === 'vertical' })}

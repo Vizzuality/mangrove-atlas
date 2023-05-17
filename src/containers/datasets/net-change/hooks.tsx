@@ -13,11 +13,10 @@ import { format } from 'd3-format';
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
-import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { Data, DataResponse, NetChangeData } from './types';
+import { Data, DataResponse, UseParamsOptions } from './types';
 
 export const numberFormat = format(',.2~f');
 export const smallNumberFormat = format('.4~f');
@@ -77,7 +76,7 @@ const getWidgetData = (data: Data[], unit = '') => {
 export function useMangroveNetChange(
   params: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
-): NetChangeData {
+) {
   const {
     query: { locationType, id },
   } = useRouter();
@@ -179,7 +178,7 @@ export function useMangroveNetChange(
       unitOptions,
       ...query,
     };
-  }, [data, data.metadata, query, startYear, endYear, location]);
+  }, [data, query, startYear, endYear, location, selectedUnit]);
 }
 
 export function useSources(years): SourceProps[] {

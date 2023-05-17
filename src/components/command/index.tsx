@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { HTMLAttributes } from 'react';
 import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
 import cn from 'lib/classnames';
