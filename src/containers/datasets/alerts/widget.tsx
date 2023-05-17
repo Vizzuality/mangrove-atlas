@@ -1,21 +1,13 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
+import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
 import { useRecoilState } from 'recoil';
 
+import Chart from 'components/chart';
 import Icon from 'components/icon';
-// import {
-//   PopoverRoot,
-//   PopoverContent,
-//   PopoverClose,
-//   PopoverTrigger,
-//   PopoverArrow,
-//   PopoverPortal,
-//   PopoverAnchor,
-// } from 'components/popover';
 import Loading from 'components/loading';
 import {
   Tooltip,
@@ -28,27 +20,29 @@ import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
-import AlertsChart from './chart';
 import { useAlerts } from './hooks';
+import Legend from './legend';
 
 const AlertsWidget = () => {
-  const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
-  const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
+  const [startDate, setStartDate] = useRecoilState(alertsStartDate);
+  const [endDate, setEndDate] = useRecoilState(alertsEndDate);
 
-  const { isLoading, data, isFetched, isPlaceholderData } = useAlerts({
-    unit: selectedUnitAreaExtent,
-  });
+  const {
+    isLoading,
+    isFetched,
+    isPlaceholderData,
+    alertsTotal,
+    startDateOptions,
+    selectedStartDate,
+    endDateOptions,
+    selectedEndDate,
+    config,
+    configBrush,
+    fullData,
+    defaultStartDate,
+    defaultEndDate,
+  } = useAlerts(startDate, endDate);
 
-  // const { alerts, years, startDate, endDate } = data;
-
-  const handleClick = useCallback(
-    (year) => {
-      setWidgetSettings(year);
-    },
-    [setWidgetSettings]
-  );
-  // const defaultYear = years[years.length - 1];
-  // const year = widgetSettings;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -57,12 +51,13 @@ const AlertsWidget = () => {
       />
       {isFetched && !isLoading && (
         <div>
-          {/* <p className="text-lg font-light leading-7">
-            There were {alerts} mangrove disturbance alerts between
+          <p className="text-lg font-light leading-7">
+            There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
+            between{' '}
             <Tooltip>
               <TooltipTrigger asChild>
                 <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
-                  {startDate}
+                  {selectedStartDate?.label}
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
@@ -76,20 +71,21 @@ const AlertsWidget = () => {
                   align="center"
                   className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                 >
-                  <ul className={cn({ 'space-y-2': true })}>
-                    {years?.map((y) => (
-                      <li key={y}>
+                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
+                    {startDateOptions?.map((date) => (
+                      <li key={date?.label}>
                         <button
                           className={cn({
                             'font-bold': true,
-                            'hover:text-brand-800': year !== y,
-                            'opacity-50': year === y,
+                            'hover:text-brand-800':
+                              startDate?.value !== date?.value && date?.value < endDate?.value,
+                            'opacity-50': date?.value > endDate?.value,
                           })}
                           type="button"
-                          onClick={() => handleClick(y)}
-                          disabled={year === y}
+                          onClick={() => setStartDate(date)}
+                          disabled={date?.value > endDate?.value}
                         >
-                          {y || defaultYear}
+                          {date?.label || defaultStartDate?.label}
                         </button>
                       </li>
                     ))}
@@ -103,7 +99,7 @@ const AlertsWidget = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
-                  {endDate}
+                  {selectedEndDate?.label}
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
@@ -117,20 +113,23 @@ const AlertsWidget = () => {
                   align="center"
                   className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                 >
-                  <ul className={cn({ 'space-y-2': true })}>
-                    {years?.map((y) => (
-                      <li key={y}>
+                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
+                    {endDateOptions?.map((date) => (
+                      <li key={date?.label}>
                         <button
                           className={cn({
                             'font-bold': true,
-                            'hover:text-brand-800': year !== y,
-                            'opacity-50': year === y,
+                            'hover:text-brand-800':
+                              endDate?.value !== date?.value && date?.value > startDate?.value,
+                            'opacity-50': date?.value < startDate?.value,
                           })}
                           type="button"
-                          onClick={() => handleClick(y)}
-                          disabled={year === y}
+                          onClick={() => {
+                            return setEndDate(date);
+                          }}
+                          disabled={date?.value < startDate?.value}
                         >
-                          {y || defaultYear}
+                          {date?.label || defaultEndDate?.label}
                         </button>
                       </li>
                     ))}
@@ -141,10 +140,32 @@ const AlertsWidget = () => {
               </TooltipPortal>
             </Tooltip>
             .
-          </p> */}
-          {/* <AlertsChart legend={legend} config={config} /> */}
+          </p>
+          <Legend />
+          <Chart config={config} />
+          <Chart
+            config={{
+              ...configBrush,
+              onBrushEnd: ({ startIndex, endIndex }) => {
+                if (startIndex) setStartDate(fullData[startIndex]?.startDate);
+                if (endIndex) setEndDate(fullData[endIndex]?.endDate);
+              },
+              startIndex: configBrush?.customBrush?.startIndex,
+              endIndex: configBrush?.customBrush?.endIndex,
+            }}
+          />
         </div>
       )}
+      <div className="space-y-2">
+        <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
+        <p className="pt-6 font-sans text-lg font-light leading-7">
+          There are <span className="font-bold">32 </span>areas monitored in the world.
+        </p>
+        <div className="flex space-x-2">
+          <div className="text-brand-900 h-4 w-4 border-2 border-brand-800" />
+          <p className="text-sm font-normal">Monitored area</p>
+        </div>
+      </div>
     </div>
   );
 };

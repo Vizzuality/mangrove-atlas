@@ -11,6 +11,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
+import type { RouterData } from 'types/router';
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';

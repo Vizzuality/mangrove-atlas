@@ -17,7 +17,11 @@ import Tooltip from './tooltip';
 import type { UseParamsOptions } from './types';
 
 type DataResponse = {
-  data: [];
+  data: {
+    name: string;
+    iso: string;
+    value: number;
+  }[];
   metadata: {
     years: number[];
     start_year: number;
@@ -26,7 +30,7 @@ type DataResponse = {
   };
 };
 
-const widgetData = (data) =>
+const widgetData = (data: DataResponse) =>
   data?.data?.map((d) => ({
     name: d.name,
     iso: d.iso,

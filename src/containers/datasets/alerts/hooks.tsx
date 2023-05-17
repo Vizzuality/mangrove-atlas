@@ -1,46 +1,450 @@
 import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
+import { start } from 'repl';
 
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import sortBy from 'lodash-es/sortBy';
 
-import type { UseParamsOptions } from 'types/widget';
+import { useRouter } from 'next/router';
 
-import API from 'services/cloud-functions';
+import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
+
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { AxisType, ViewBox } from 'recharts/types/util/types';
+import { CartesianViewBox } from 'recharts/types/util/types';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
+
+import API_cloud_functions from 'services/cloud-functions';
+
+import Tooltip from './tooltip';
+import type { UseParamsOptions } from './types';
 
 // widget data
+const months = [
+  { label: 'January', value: 1, shortLabel: 'Jan' },
+  { label: 'February', value: 2, shortLabel: 'Feb' },
+  { label: 'March', value: 3, shortLabel: 'Mar' },
+  { label: 'April', value: 4, shortLabel: 'Apr' },
+  { label: 'May', value: 5, shortLabel: 'May' },
+  { label: 'June', value: 6, shortLabel: 'Jun' },
+  { label: 'July', value: 7, shortLabel: 'Jul' },
+  { label: 'August', value: 8, shortLabel: 'Aug' },
+  { label: 'September', value: 9, shortLabel: 'Sep' },
+  { label: 'October', value: 10, shortLabel: 'Oct' },
+  { label: 'November', value: 11, shortLabel: 'Nov' },
+  { label: 'December', value: 12, shortLabel: 'Dec' },
+];
 
-export function useAlerts(params: UseParamsOptions, queryOptions: UseQueryOptions = {}) {
+const monthsConversion = {
+  January: 'Jan',
+  February: 'Feb',
+  March: 'March',
+  April: 'April',
+  May: 'May',
+  June: 'June',
+  July: 'July',
+  August: 'Aug',
+  September: 'Sept',
+  October: 'Oct',
+  November: 'Nov',
+  December: 'Dec',
+};
+
+const getStops = () => {
+  const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];
+
+  const gradient = colorSchema.map((d, index) => ({
+    offset: `${(index / (colorSchema.length - 1)) * 100}%`,
+    stopColor: d,
+  }));
+  return gradient;
+};
+
+const getData = (data) =>
+  sortBy(
+    data?.map((d) => {
+      const year = Number(d.date.value.split('-', 1)[0]);
+      const month = months?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
+      const day = new Date(year, month.value, 0).getDate();
+
+      const lastDay = new Date(year, month.value, 0).getDate();
+
+      return {
+        ...d,
+        month,
+        year,
+        date: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+        end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+        start: d.date.value,
+        title: month.label,
+        name: `${monthsConversion[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
+          'en',
+          { year: '2-digit' }
+        )}`,
+        alerts: d.count,
+        label: `${month.label}, ${year}`,
+        startDate: {
+          label: `${month.label}, ${year}`,
+          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-01`,
+        },
+        endDate: {
+          label: `${month.label}, ${year}`,
+          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${lastDay}`,
+        },
+      };
+    }),
+    ['month']
+  );
+
+const TickSmall = ({ x, y, payload }) => {
+  const { value } = payload;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text
+        x={0}
+        y={0}
+        textAnchor="end"
+        fill="#3A3F59"
+        opacity={0.5}
+        transform="rotate(270)"
+        fontSize="8px"
+      >
+        {value}
+      </text>
+    </g>
+  );
+};
+
+const getTotal = (data) =>
+  data.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
+
+type DataResponse = {
+  data: {
+    date: { label: string; value: number };
+  };
+};
+
+export function useAlerts<T>(
+  startDate: { label: string; value: string },
+  endDate: { label: string; value: string },
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryResult<DataResponse[], T>
+) {
+  const setStartDate = useSetRecoilState(alertsStartDate);
+  const setEndDate = useSetRecoilState(alertsEndDate);
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { location_id },
+  } = useLocation(locationType, id);
+
   const fetchAlerts = () =>
-    API.request({
+    API_cloud_functions.request({
       method: 'GET',
       url: '/fetch-alerts',
-      params,
-    }).then((response) => response);
+      params: {
+        location_id,
+      },
+    }).then((response) => response.data);
 
   const query = useQuery(['alerts', params], fetchAlerts, {
     placeholderData: [],
-    select: (data) => ({
-      data,
-    }),
     ...queryOptions,
   });
 
+  const { data } = query;
+  const fullData = getData(data);
+  const startDateOptions = fullData.map((d) => d.startDate);
+  const endDateOptions = fullData.map((d) => d.endDate);
+
+  const defaultStartDate = startDateOptions[0];
+  const defaultEndDate = endDateOptions[endDateOptions.length - 1];
+
+  const selectedStartDate = startDate || defaultStartDate;
+  const selectedEndDate = endDate || defaultEndDate;
+
+  if (selectedEndDate) setEndDate(selectedEndDate);
+  if (selectedStartDate) setStartDate(selectedStartDate);
+  const dataFiltered = data.filter(
+    (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+  );
+
+  const chartData = getData(dataFiltered);
+
+  const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
+  const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
+
   return useMemo(() => {
+    const alertsTotal = getTotal(dataFiltered);
+
+    const config = {
+      data: chartData,
+      type: 'line',
+      dataKey: 'alerts',
+      height: 350,
+      cartesianGrid: {
+        vertical: false,
+        horizontal: false,
+      },
+      margin: { top: 50, right: 10, left: 10, bottom: 35 },
+      label: 'alerts',
+      // gradients: {
+      //   key: {
+      //     attributes: {
+      //       id: 'colorAlerts',
+      //       x1: 0,
+      //       y1: 0,
+      //       x2: 0,
+      //       y2: 1,
+      //     },
+      //     stops: getStops(),
+      //   },
+      // },
+      // patterns: {
+      //   diagonal: {
+      //     attributes: {
+      //       id: 'diagonal-stripe-1',
+      //       patternUnits: 'userSpaceOnUse',
+      //       patternTransform: 'rotate(-45)',
+      //       width: 4,
+      //       height: 6,
+      //     },
+      //     children: {
+      //       rect2: {
+      //         tag: 'rect',
+      //         x: 0,
+      //         y: 0,
+      //         width: 4,
+      //         height: 6,
+      //         transform: 'translate(0,0)',
+      //         fill: '#d2d2d2',
+      //       },
+      //       rect: {
+      //         tag: 'rect',
+      //         x: 0,
+      //         y: 0,
+      //         width: 3,
+      //         height: 6,
+      //         transform: 'translate(0,0)',
+      //         fill: '#fff',
+      //       },
+      //     },
+      //   },
+      // },
+      xKey: 'name',
+      chartBase: {
+        lines: {
+          alerts: {
+            stroke: 'url(#colorAlerts)',
+            strokeWidth: 2.5,
+            isAnimationActive: false,
+          },
+        },
+      },
+      xAxis: {
+        tick: TickSmall,
+        interval: 0,
+        type: 'category',
+      },
+      yAxis: {
+        tick: {
+          fontSize: 10,
+          fill: 'rgba(0,0,0,0.54)',
+        },
+
+        width: 40,
+        // tickFormatter: (value) => formatAxis(Math.round(value)),
+        interval: 0,
+        orientation: 'right',
+        value: 'alerts',
+        label: ({ viewBox }: { viewBox: CartesianViewBox }) => {
+          const { x, y } = viewBox;
+
+          return (
+            <g>
+              <text
+                x={x + 20}
+                y={y - 40}
+                className="recharts-text recharts-label-medium"
+                textAnchor="middle"
+                dominantBaseline="central"
+              >
+                <tspan
+                  alignmentBaseline="middle"
+                  fill="rgba(0,0,0,0.24)"
+                  stroke="rgba(0,0,0,0.24)"
+                  fontSize="12"
+                >
+                  Alerts
+                </tspan>
+              </text>
+              {/* <text x={x + 20} y={y - 50} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
+                <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="12">2022</tspan>
+              </text> */}
+            </g>
+          );
+        },
+        type: 'number',
+      },
+      // brush: {
+      //   margin: { top: 60, right: 0, left: 0, bottom: 0 },
+      //   startIndex,
+      //   endIndex,
+      // },
+      // customBrush: {
+      //   margin: { top: 60, right: 0, left: 15, bottom: 60 },
+      //   startIndex,
+      //   endIndex,
+      // },
+      tooltip: {
+        content: (properties) => {
+          return <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />;
+        },
+      },
+    };
+    const configBrush = {
+      data: fullData,
+      type: 'line',
+      dataKey: 'alerts',
+      height: 100,
+      cartesianGrid: {
+        vertical: false,
+        horizontal: false,
+      },
+      referenceAreas: [
+        {
+          x1: 0,
+          x2: 11,
+          y1: -100,
+          y2: 480,
+          fill: 'url(#diagonal-stripe-1) #000',
+        },
+        {
+          x1: startDate?.value,
+          x2: endDate?.value,
+          y1: -100,
+          y2: 480,
+          fill: '#fff',
+          fillOpacity: 1,
+        },
+      ],
+      margin: { top: 20, right: 40, left: 10, bottom: 5 },
+      gradients: {
+        key: {
+          attributes: {
+            id: 'colorAlerts',
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 1,
+          },
+          stops: getStops(),
+        },
+      },
+      patterns: {
+        diagonal: {
+          attributes: {
+            id: 'diagonal-stripe-1',
+            patternUnits: 'userSpaceOnUse',
+            patternTransform: 'rotate(-45)',
+            width: 4,
+            height: 6,
+          },
+          children: {
+            rect2: {
+              tag: 'rect',
+              x: 0,
+              y: 0,
+              width: 4,
+              height: 6,
+              transform: 'translate(0,0)',
+              fill: '#d2d2d2',
+            },
+            rect: {
+              tag: 'rect',
+              x: 0,
+              y: 0,
+              width: 3,
+              height: 6,
+              transform: 'translate(0,0)',
+              fill: '#fff',
+            },
+          },
+        },
+      },
+
+      xKey: 'name',
+      chartBase: {
+        lines: {
+          alerts: {
+            stroke: 'url(#colorAlerts)',
+            strokeWidth: 2.5,
+            isAnimationActive: false,
+          },
+        },
+      },
+      xAxis: {
+        tick: TickSmall,
+        interval: 0,
+        type: 'category',
+      },
+
+      tooltip: false,
+      customBrush: {
+        margin: { top: 60, right: 20, left: 15, bottom: 80 },
+        startIndex,
+        endIndex,
+      },
+    };
+
     return {
       ...query,
-    } as typeof query;
-  }, [query]);
+      config,
+      fullData,
+      configBrush,
+      selectedStartDate,
+      selectedEndDate,
+      startDateOptions,
+      endDateOptions,
+      dateOptions: startDateOptions,
+      alertsTotal,
+      chartData,
+      defaultStartDate,
+      defaultEndDate,
+    };
+  }, [query, startDate, endDate, data, startIndex, endIndex, selectedStartDate, selectedEndDate]);
 }
 
 // dataset layer
 export function useSource(): SourceProps {
+  const startDate = useRecoilValue(alertsStartDate);
+  const endDate = useRecoilValue(alertsEndDate);
+  console.log(startDate, endDate);
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { location_id },
+  } = useLocation(locationType, id);
+
   return {
     id: 'alerts',
     type: 'geojson',
-    data: 'https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?{{startDate}}{{endDate}}{{locationId}}',
+    data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
+      startDate?.value || ''
+    }&end_date=${endDate?.value || ''}${
+      location_id && location_id !== 'worldwide' ? '&location_id={{location_id}}' : ''
+    }`,
   };
 }
+
 export function useLayers(): LayerProps[] {
   return [
     {
@@ -115,5 +519,16 @@ export function useLayers(): LayerProps[] {
         'circle-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0.5, 0.7, 1],
       },
     },
+    // {
+    //   id: 'monitored-alerts',
+    //   type: 'symbol',
+
+    //   source: 'alerts',
+    //   minzoom: 0,
+    //   layout: {
+    //     'icon-image': 'marker',
+    //     'icon-size': 0.5,
+    //   },
+    // },
   ];
 }
