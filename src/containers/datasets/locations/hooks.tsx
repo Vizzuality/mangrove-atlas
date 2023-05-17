@@ -1,6 +1,6 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { LngLatBounds, LngLat } from 'mapbox-gl';
+import { LngLat } from 'mapbox-gl';
 
 import API from 'services/api';
 
@@ -27,7 +27,7 @@ type DataResponse = {
   metadata: unknown;
 };
 
-const HIGHLIGHTED_PLACES = [
+export const HIGHLIGHTED_PLACES = [
   '0edd0ebb-892b-5774-8ce5-08e0ba7136b1', // Rufiji,
   '4a79230b-7ecb-58ae-ba0d-0f57faa2a104', // Saloum,
 ];
@@ -51,13 +51,17 @@ export function useLocations(queryOptions: UseQueryOptions<DataResponse> = {}) {
   return query;
 }
 
-export function useLocation(locationType, id, queryOptions = {}) {
+export function useLocation(
+  locationType: string | string[],
+  id: string | string[],
+  queryOptions: UseQueryOptions<DataResponse> = {}
+) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
   };
 
-  const fetchLocations = () => API.request(config).then((response) => response.data);
+  const fetchLocations = () => API.request(config).then((response: AxiosResponse) => response.data);
   return useQuery(['locations'], fetchLocations, {
     placeholderData: [],
     select: (data) => ({
@@ -71,7 +75,7 @@ export function useLocation(locationType, id, queryOptions = {}) {
   });
 }
 
-export function useHighlightedPlaces(queryOptions = {}) {
+export function useHighlightedPlaces(queryOptions: UseQueryOptions<Location[]> = {}) {
   const config: AxiosRequestConfig = {
     method: 'GET',
     url: '/locations',
@@ -79,7 +83,9 @@ export function useHighlightedPlaces(queryOptions = {}) {
 
   const fetchLocations = () => API.request(config).then((response) => response.data);
   return useQuery(['locations'], fetchLocations, {
-    placeholderData: [],
+    placeholderData: {
+      data: [],
+    },
     select: ({ data }) => data?.filter((d) => HIGHLIGHTED_PLACES.includes(d.location_id)),
     ...queryOptions,
   });

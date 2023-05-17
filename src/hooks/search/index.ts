@@ -2,9 +2,7 @@ import { useMemo } from 'react';
 
 import Fuse from 'fuse.js';
 
-type Items = unknown[];
-
-export const useSearch = (items: Items[], search: string, fields: string[]) => {
+export const useSearch = <T = unknown>(items: T[], search: string, fields: string[]) => {
   const fuse =
     search &&
     search.length &&
@@ -16,10 +14,10 @@ export const useSearch = (items: Items[], search: string, fields: string[]) => {
       location: 0,
       distance: 300,
       minMatchCharLength: 1,
-    }) satisfies Fuse<Items>);
+    }) satisfies Fuse<T>);
 
   return useMemo(
     () => fuse && fuse.search(search).map((d) => d.item),
     [search, fuse]
-  ) satisfies Items[];
+  ) satisfies T[];
 };

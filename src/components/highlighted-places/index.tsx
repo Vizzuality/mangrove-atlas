@@ -3,12 +3,13 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useHighlightedPlaces, useLocation } from 'containers/datasets/locations/hooks';
+import cn from 'lib/classnames';
 
-const HIGHLIGHTED_PLACES_IMAGES = {
-  '0edd0ebb-892b-5774-8ce5-08e0ba7136b1': 'rufiji.jpg', //: RufijiImage,
-  '4a79230b-7ecb-58ae-ba0d-0f57faa2a104': 'saloum.png', //: SaloumImage,
-};
+import {
+  useHighlightedPlaces,
+  useLocation,
+  HIGHLIGHTED_PLACES,
+} from 'containers/datasets/locations/hooks';
 
 const HighlightedPlaces = () => {
   const { data } = useHighlightedPlaces();
@@ -18,7 +19,7 @@ const HighlightedPlaces = () => {
   const {
     data: { location_id },
   } = useLocation(locationType, id);
-  const isHighlightedPlace = !!HIGHLIGHTED_PLACES_IMAGES[location_id];
+  const isHighlightedPlace = !!HIGHLIGHTED_PLACES.includes(location_id);
 
   return (
     <div className="flex justify-between space-x-6">
@@ -31,10 +32,11 @@ const HighlightedPlaces = () => {
               className="flex flex-1"
             >
               <div
-                key={d.location_id}
-                className={`flex h-60 flex-1 rounded-[20px] bg-[url('/images/highlighted-places/${
-                  HIGHLIGHTED_PLACES_IMAGES[d.location_id]
-                }')] bg-cover bg-center`}
+                className={cn({
+                  'flex h-60 flex-1 rounded-[20px] bg-cover bg-center': true,
+                  'bg-rufiji': d.location_id === '0edd0ebb-892b-5774-8ce5-08e0ba7136b1',
+                  'bg-saloum': d.location_id === '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
+                })}
               >
                 <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
                   {d.name}

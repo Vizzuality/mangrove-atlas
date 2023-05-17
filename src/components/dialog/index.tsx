@@ -65,9 +65,11 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 DialogHeader.displayName = 'DialogHeader';
 
 const DialogClose = () => (
-  <DialogPrimitive.Close className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
-    <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
-    <span className="sr-only">Close</span>
+  <DialogPrimitive.Close asChild>
+    <div className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+      <span className="sr-only">Close</span>
+    </div>
   </DialogPrimitive.Close>
 );
 DialogClose.displayName = 'DialogClose';
