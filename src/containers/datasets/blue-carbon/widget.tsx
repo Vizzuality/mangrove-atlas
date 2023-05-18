@@ -6,6 +6,9 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
+import Loading from 'components/loading';
+import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+
 import BlueCarbonChart from './chart';
 import { useMangroveBlueCarbon } from './hooks';
 
@@ -21,7 +24,7 @@ const BlueCarbonWidget = () => {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
-  const { agb, toc, soc, config, isLoading } = useMangroveBlueCarbon(
+  const { agb, toc, soc, config, isLoading, isPlaceholderData, isFetched } = useMangroveBlueCarbon(
     {
       ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
@@ -29,11 +32,15 @@ const BlueCarbonWidget = () => {
     {}
   );
   const isAgbParsed = true;
+  const { legend } = config;
   return (
-    <div>
-      {isLoading && <div>...loading</div>}
-      {!isLoading && (
-        <>
+    <div className={WIDGET_CARD_WRAPER_STYLE}>
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
+        <div className="space-y-4">
           <p>
             Total organic carbon stored in <span className="font-bold"> {name}</span> mangroves is
             estimated at <span className="font-bold"> {toc}</span> Mt CO₂e with{' '}
@@ -41,9 +48,12 @@ const BlueCarbonWidget = () => {
             above-ground biomass and <span className="font-bold"> {soc}</span> Mt CO₂e stored in the
             upper 1m of soil.
           </p>
-
-          <BlueCarbonChart config={config} />
-        </>
+          <BlueCarbonChart config={config} legend={legend} />
+          <p className="text-sm italic">
+            Note: This information is based on an outdated GMW version. Please use for reference
+            only while we are in the process of updating this to the latest GMW version 3.
+          </p>
+        </div>
       )}
     </div>
   );

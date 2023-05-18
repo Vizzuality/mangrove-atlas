@@ -62,6 +62,7 @@ const getWidgetData = (data: Data[], unit = '') => {
             value: numberFormat(
               unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i]
             ),
+            variant: 'thin',
             unit,
           },
         ],
@@ -123,7 +124,7 @@ export function useMangroveNetChange(
     );
     const DATA = getWidgetData(dataFiltered, unit) || [];
     const TooltipData = {
-      content: (properties) => <CustomTooltip {...properties} payload={properties?.payload[0]} />,
+      content: (properties) => <CustomTooltip {...properties} />,
     };
 
     const change = DATA[DATA.length - 1]?.['Net change'];

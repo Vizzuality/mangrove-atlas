@@ -27,4 +27,4 @@ export type WidgetSlugType =
   | 'mangrove_species_location'
   | 'mangrove_emissions_mitigation'
   | 'mangrove_international_status'
-  | 'mangrove_investment_potential';
+  | 'mangrove_carbon_market_potential';

@@ -11,6 +11,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import Tooltip from './tooltip';
 import type { Data, DataResponse, ColorKeysTypes } from './types';
 
 const COLORS = ['#C9BB42', '#8BA205', '#428710', '#0A6624', '#103C1F'];
@@ -23,7 +24,7 @@ const getColorKeys = (data: Data[]) =>
     };
   }, {} satisfies ColorKeysTypes);
 
-const getData = (data: Data[], unit) => {
+const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
   if (!data || !data.length) return null;
   const barsValues = data?.map(({ value }) => value);
   const total = barsValues.reduce((previous, current) => current + previous);
@@ -33,21 +34,23 @@ const getData = (data: Data[], unit) => {
         ...acc,
         year: d.year,
         [`${d.indicator} ${unit}`]: (d.value / total) * 100,
+        label: d.indicator,
+        color: COLORS_BY_INDICATOR[d.indicator],
       }),
       {}
     ),
   ];
 };
 
-const getBars = (data: Data[], COLORs_BY_INDICATOR: ColorKeysTypes) =>
+const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
   data.reduce(
     (acc, d) => ({
       ...acc,
       [`${d.indicator} m`]: {
         stackId: 'bar',
         barSize: 60,
-        fill: COLORs_BY_INDICATOR[d.indicator],
-        stroke: COLORs_BY_INDICATOR[d.indicator],
+        fill: COLORS_BY_INDICATOR[d.indicator],
+        stroke: COLORS_BY_INDICATOR[d.indicator],
         isAnimationActive: false,
         indicator: Number(d.indicator.replace('-', '')),
       },
@@ -87,20 +90,40 @@ export function useMangroveHeight(
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year;
   const year = Math.max(...years);
-  const COLORs_BY_INDICATOR = getColorKeys(data?.data);
+  const COLORS_BY_INDICATOR = getColorKeys(data?.data);
 
-  const chartData = getData(data?.data, unit);
+  const chartData = getData(data?.data, unit, COLORS_BY_INDICATOR);
 
+  const bars = useMemo(() => getBars(data?.data, COLORS_BY_INDICATOR), [data?.data]);
+  const legendData = useMemo(
+    () =>
+      data?.data.map((d) => {
+        return {
+          label: d.indicator,
+          color: COLORS_BY_INDICATOR[d.indicator],
+        };
+      }),
+    [data?.data]
+  );
+
+  const TooltipData = {
+    content: (properties) => {
+      // return (
+      //   <CustomTooltip {...properties} payload={{ payload: { settings: [...ChartData] } }} />
+      // );
+
+      return <Tooltip {...properties} payload={properties.payload} />;
+    },
+  };
   const config = {
-    chartData,
     chartBase: {
       type: 'bar',
-      bars: getBars(data?.data, COLORs_BY_INDICATOR),
+      bars: bars,
     },
     data: chartData,
     xKey: 'year',
     yKeys: {
-      bars: getBars(data?.data, COLORs_BY_INDICATOR),
+      bars: bars,
     },
     xAxis: {
       tick: {
@@ -128,7 +151,7 @@ export function useMangroveHeight(
       },
       type: 'number',
     },
-
+    tooltip: TooltipData,
     cartesianAxis: {
       tick: false,
     },
@@ -140,6 +163,7 @@ export function useMangroveHeight(
       mean: numberFormat(mean),
       unit,
       year,
+      legend: legendData,
       config,
     };
   }, [query, data]);

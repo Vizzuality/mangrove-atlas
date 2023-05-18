@@ -64,6 +64,7 @@ export function useMangroveBlueCarbon(
       label: d.indicator,
       value: d.value,
       color: COLORS[d.indicator],
+      showValue: false,
     }));
 
     const { agb, toc, soc } = data?.metadata;
@@ -76,9 +77,13 @@ export function useMangroveBlueCarbon(
           value: 'blue-carbon',
         },
       },
+      legend: {
+        title: 'Total carbon density (t CO₂e / ha)',
+        items: ChartData,
+      },
     };
     return {
-      isLoading,
+      ...query,
       agb: numberFormat(agb / 1000000),
       toc: numberFormat(toc / 1000000),
       soc: numberFormat(soc / 1000000),

@@ -37,12 +37,6 @@ const Chart = ({ config }) => {
       left: 0,
       bottom: 20,
     },
-    padding = {
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 0,
-    },
     type = 'composed',
     height,
 
@@ -124,6 +118,9 @@ const Chart = ({ config }) => {
               {data.map((d, i) => (
                 <Cell key={`cell-${i}`} fill={d.color} />
               ))}
+              {pies[key].customLabel && (
+                <Label width={30} position="center" content={pies[key].customLabel} />
+              )}
             </Pie>
           ))}
         <Tooltip {...tooltip} />

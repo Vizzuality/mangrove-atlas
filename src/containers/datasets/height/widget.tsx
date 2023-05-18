@@ -20,7 +20,7 @@ const NetChangeWidget = () => {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
-  const { isLoading, mean, unit, year, config } = useMangroveHeight(
+  const { legend, isLoading, mean, unit, year, config } = useMangroveHeight(
     {
       ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
       year: currentYear,
@@ -28,6 +28,7 @@ const NetChangeWidget = () => {
     {}
   );
   if (isLoading) return null;
+
   return (
     <div>
       {isLoading && <div>...loading</div>}
@@ -41,7 +42,7 @@ const NetChangeWidget = () => {
             </span>{' '}
             in <span className="font-bold"> {year}</span>.
           </p>
-          <HeightChart config={config} />
+          <HeightChart config={config} legend={legend} />
         </div>
       )}
     </div>

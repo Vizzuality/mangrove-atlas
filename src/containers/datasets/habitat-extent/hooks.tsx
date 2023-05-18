@@ -120,7 +120,7 @@ export function useMangroveHabitatExtent(
     ];
 
     const TooltipData = {
-      content: (properties) => <CustomTooltip {...properties} payload={properties?.payload[0]} />,
+      content: (properties) => <CustomTooltip {...properties} />,
     };
 
     const ChartData = [

@@ -7,11 +7,12 @@ import BiomassLayer from 'containers/datasets/biomass/layer';
 import BiomassWidget from 'containers/datasets/biomass/widget';
 
 // import BiomassDownload from 'containers/datasets/biomass/download';
-// import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
-
+import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
 import BlueCarbonInfo from 'containers/datasets/blue-carbon/info.mdx';
 import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
 import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
+import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
+import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
@@ -27,7 +28,6 @@ import HeightWidget from 'containers/datasets/height/widget';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import InternationalStatusWidget from 'containers/datasets/international-status/widget';
-import MarketPotentialInfo from 'containers/datasets/market-potential/info.mdx';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
 import NetChangeWidget from 'containers/datasets/net-change/widget';
@@ -58,6 +58,7 @@ export const WIDGETS = {
   mangrove_species_threatened: SpeciesThreatenedWidget,
   mangrove_species_location: SpeciesLocationWidget,
   mangrove_international_status: InternationalStatusWidget,
+  mangrove_carbon_market_potential: CarbonMarketPotentialWidget,
 };
 
 export const LAYERS = {
@@ -88,7 +89,7 @@ export const INFO = {
   mangrove_height: HeightInfo,
   mangrove_blue_carbon: BlueCarbonInfo,
   mangrove_emissions_mitigation: EmissionsMitigationInfo,
-  mangrove_market_potential: MarketPotentialInfo,
+  mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
 };
 
@@ -98,5 +99,5 @@ export const DOWNLOAD = {
   // mangrove_alerts: AlertsDownload,
   // mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
-  // mangrove_blue_carbon: BlueCarbonDownload
+  mangrove_blue_carbon: BlueCarbonDownload,
 };

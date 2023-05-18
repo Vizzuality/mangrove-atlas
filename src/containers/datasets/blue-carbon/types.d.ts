@@ -53,6 +53,8 @@ export type BlueCarbon = {
   agb: string;
   config: ChartConfig;
   isLoading: boolean;
+  isPlaceholderData: boolean;
+  isFetched: boolean;
 };
 
 // export type ColorKeysTypes = {
