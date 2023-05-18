@@ -9,6 +9,8 @@ export type Data = { year: number; value: number; indicator: BiomassIndicator };
 type ChartData = {
   label: BiomassIndicator;
   value: number;
+  showValue: boolean; // legend
+  // valueFormatted: string;
   color: string;
 };
 
@@ -51,6 +53,7 @@ export type BiomassData = {
   unit: string;
   year: number;
   config: ChartConfig;
+  location: string;
 };
 
 export type ColorKeysTypes = {

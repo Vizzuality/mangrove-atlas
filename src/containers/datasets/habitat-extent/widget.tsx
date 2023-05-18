@@ -67,7 +67,7 @@ const HabitatExtent = () => {
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
-        <div>
+        <div className="space-y-4">
           <p className="text-lg font-light leading-7">
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
             <span className="notranslate font-bold">

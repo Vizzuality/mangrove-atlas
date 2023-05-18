@@ -96,7 +96,7 @@ const widgets = [
   },
   {
     name: 'Carbon Market Potential',
-    slug: 'mangrove_investment_potential' satisfies WidgetSlugType,
+    slug: 'mangrove_carbon_market_potential' satisfies WidgetSlugType,
     locationType: ['country'],
     categoryIds: ['all_datasets', 'climate_and_policy'],
     layersIds: [],
