@@ -113,16 +113,18 @@ const Chart = ({ config }) => {
           ))}
 
         {pies &&
-          Object.keys(pies).map((key) => (
-            <Pie key={key} data={data} dataKey={key} {...pies[key]} {...DEFAULTVALUES[type]}>
-              {data.map((d, i) => (
-                <Cell key={`cell-${i}`} fill={d.color} />
-              ))}
-              {pies[key].customLabel && (
-                <Label width={30} position="center" content={pies[key].customLabel} />
-              )}
-            </Pie>
-          ))}
+          Object.keys(pies).map((key) => {
+            return (
+              <Pie key={key} data={data} dataKey={key} {...pies[key]} {...DEFAULTVALUES[type]}>
+                {data.map((d, i) => (
+                  <Cell key={`cell-${i}`} fill={d.color} />
+                ))}
+                {pies[key].customLabel && (
+                  <Label width={30} position="center" content={pies[key].customLabel} />
+                )}
+              </Pie>
+            );
+          })}
         <Tooltip {...tooltip} />
       </Chart>
     </ResponsiveContainer>

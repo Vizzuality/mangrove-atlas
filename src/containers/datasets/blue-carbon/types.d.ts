@@ -35,28 +35,12 @@ export type DataResponse = {
   metadata: Metadata;
 };
 
-// type chartBaseTypes = {
-//   pies: {
-//     value: string;
-//   };
-// };
-
-// type ChartConfig = {
-//   type: string;
-//   data: ChartData[];
-//   chartBase: chartBaseTypes;
-// };
-
 export type BlueCarbon = {
+  data?: Data[];
   soc: string;
   toc: string;
   agb: string;
   config: ChartConfig;
-  isLoading: boolean;
-  isPlaceholderData: boolean;
-  isFetched: boolean;
+  location: string;
+  metadata?: Metadata;
 };
-
-// export type ColorKeysTypes = {
-//   [key: string]: string;
-// };
