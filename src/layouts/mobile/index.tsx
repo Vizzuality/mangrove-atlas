@@ -1,14 +1,14 @@
 import MapContainer from 'containers/map/component';
-import Sidebar from 'containers/sidebar';
+import Sidebar from 'containers/mobile/sidebar';
 
-const DesktopLayout = () => {
+const MobileLayout = () => {
   return (
     <div>
       <Sidebar />
 
-      <MapContainer />
+      {/* <MapContainer /> */}
     </div>
   );
 };
 
-export default DesktopLayout;
+export default MobileLayout;
