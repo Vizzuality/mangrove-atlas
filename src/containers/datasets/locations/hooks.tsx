@@ -33,6 +33,16 @@ export function useLocations<T = Location[]>(
   });
 }
 
+// export function useLocationName(locationType: LocationTypes, id: number) {
+//   const {
+//     data: { name, location_id },
+//   } = useLocation(locationType, id);
+
+//   if (location_id === 'custom-area') return 'the area selected';
+//   if (location_id === 'worldwide') return 'the world';
+//   else return name;
+// }
+
 export function useLocation(
   locationType: string | string[],
   id: string | string[],
@@ -68,3 +78,13 @@ export function useHighlightedPlaces(
     ...queryOptions,
   });
 }
+
+// export function useLocationName(locationType: LocationTypes, id: number) {
+//   const {
+//     data: { name, location_id },
+//   } = useLocation(locationType, id);
+
+//   if (location_id === 'custom-area') return 'the area selected';
+//   if (location_id === 'worldwide') return 'the world';
+//   else return name;
+// }

@@ -18,6 +18,8 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import { LocationTypes } from '../locations/types';
+
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
@@ -36,9 +38,12 @@ export function useMangroveBiomass(
   queryOptions?: UseQueryOptions<DataResponse>
 ): BiomassData {
   const currentYear = useRecoilValue(BiomassYearSettings);
+
   const {
-    query: { locationType, id },
+    query: { params: urlParams },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = urlParams?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);

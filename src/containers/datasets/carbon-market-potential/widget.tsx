@@ -11,6 +11,7 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from 'components/tooltip';
+import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -33,9 +34,12 @@ const CarbonMarketPotentialWidget = () => {
   const { location, units, labels, config, investibleBlueCarbonValue } = data;
 
   return (
-    <div>
-      {(isPlaceholderData || isLoading) && <Loading />}
-      {!isLoading && isFetched && (
+    <div className={WIDGET_CARD_WRAPER_STYLE}>
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
         <div>
           <p>
             The extent of investible blue carbon (ha) at{' '}
