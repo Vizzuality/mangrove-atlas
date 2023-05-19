@@ -30,3 +30,5 @@ jobs:
 
       - run: yarn install --immutable
       - run: yarn test
+        env:
+          NEXT_PUBLIC_API_URL: https://mangrove-atlas-api.herokuapp.com
