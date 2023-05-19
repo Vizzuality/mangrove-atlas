@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from 'react';
 
-import { ViewState } from 'react-map-gl';
 import { useMap } from 'react-map-gl';
 
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
 
+import type { LngLatBoundsLike } from 'mapbox-gl';
+import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue } from 'recoil';
 import { useRecoilState } from 'recoil';
 
@@ -13,6 +14,7 @@ import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
+import { WORLD_BOUNDS } from 'components/map/constants';
 import { CustomMapProps } from 'components/map/types';
 
 import LayerManager from './layer-manager';
@@ -39,13 +41,16 @@ const MapContainer = () => {
   const { default: map } = useMap();
 
   const handleViewState = useCallback(() => {
-    if (map) setURLBounds(map.getBounds().toArray());
+    if (map) {
+      setURLBounds(map.getBounds().toArray());
+    }
   }, [map, setURLBounds]);
 
-  const initialViewState: Partial<ViewState> = useMemo(
+  const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds && { bounds: URLBounds }),
+      bounds: WORLD_BOUNDS as LngLatBoundsLike,
+      ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
     }),
     [URLBounds]
   );

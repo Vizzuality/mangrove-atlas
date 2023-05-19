@@ -13,7 +13,7 @@ export const basemapAtom = atom({
 });
 
 // ? this atom syncs the bounds of the URL with the initial view of the map, allowing
-// ? theinitializzation of the map with bounds from the URL
+// ? the initialization of the map with bounds from the URL
 export const URLboundsAtom = atom({
   key: 'bounds',
   default: null,

@@ -74,8 +74,10 @@ export function useMangroveSpecies(
   queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {
   const {
-    query: { locationType, id },
+    query: { params: queryParams },
   } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);

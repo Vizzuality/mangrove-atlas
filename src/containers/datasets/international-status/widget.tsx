@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
 import { widgetYearAtom } from 'store/widgets';
 
 import { TooltipPortal } from '@radix-ui/react-tooltip';
@@ -19,8 +17,10 @@ import { useMangroveInternationalStatus } from './hooks';
 const InternationalStatus = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
   const {
-    query: { locationType, id },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = params?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);

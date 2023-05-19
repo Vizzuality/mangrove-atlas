@@ -29,8 +29,10 @@ export function useMangroveHabitatExtent(
   queryOptions: UseQueryOptions<ExtentData, unknown> = {} // API
 ) {
   const {
-    query: { locationType, id },
+    query: { params: queryParams },
   } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);
@@ -39,7 +41,7 @@ export function useMangroveHabitatExtent(
     if (location_id === 'custom-area') return 'the area selected';
     if (location_id === 'worldwide') return 'the world';
     else return name;
-  }, [location_id]);
+  }, [location_id, name]);
 
   const fetchHabitatExtent = () => {
     return API.request({

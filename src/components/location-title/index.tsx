@@ -11,8 +11,10 @@ import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/di
 
 const LocationTitle = () => {
   const {
-    query: { locationType, id },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = params?.[1];
   const {
     data: { name },
   } = useLocation(locationType, id);

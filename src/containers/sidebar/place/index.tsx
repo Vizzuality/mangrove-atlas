@@ -1,29 +1,28 @@
 import { useCallback, useState } from 'react';
 
+import { useMap } from 'react-map-gl';
+
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
-
-import { useSetRecoilState } from 'recoil';
 
 import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
-import { DEFAULT_VIEW_STATE } from 'components/map/constants';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 import GLOBE_SVG from 'svgs/sidebar/globe.svg?sprite';
-
-const { zoom, latitude, longitude } = DEFAULT_VIEW_STATE;
 
 import { STYLES } from '../constants';
 
 const Place = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { asPath, push } = useRouter();
+  const { asPath, replace } = useRouter();
+
+  const { default: map } = useMap();
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
@@ -36,10 +35,13 @@ const Place = () => {
   const handleWorldwideView = useCallback(async () => {
     const queryParams = asPath.split('?')[1];
 
-    await push(`/?${queryParams}`, null, { shallow: true });
+    await replace(`/?${queryParams}`, null);
 
-    // setMapView(DEFAULT_VIEW_STATE);
-  }, [asPath, push]);
+    map.flyTo({
+      center: [0, 20],
+      zoom: 2,
+    });
+  }, [asPath, replace, map]);
 
   return (
     <div className="flex flex-col space-y-2 text-center">

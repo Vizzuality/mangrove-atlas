@@ -36,7 +36,7 @@ const LocationsList = () => {
     defaultHeight: 100,
   });
 
-  const { asPath, push } = useRouter();
+  const { asPath, replace } = useRouter();
 
   const handleLocation = useCallback(
     async (location: Location) => {
@@ -45,11 +45,11 @@ const LocationsList = () => {
         location.location_type === 'country' ? location.iso : location.location_id
       }?${queryParams}`;
 
-      await push(url, null, { shallow: true });
+      await replace(url, null);
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
     },
-    [push, asPath, setLocationBounds]
+    [replace, asPath, setLocationBounds]
   );
 
   const renderRow = ({

@@ -16,8 +16,10 @@ const SpeciesDistribution = () => {
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
   const {
-    query: { locationType, id },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = params?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);

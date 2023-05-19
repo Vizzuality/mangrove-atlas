@@ -4,7 +4,7 @@ import API from 'services/api';
 
 import type { Location } from './types';
 
-type DataResponse = {
+export type DataResponse = {
   data: Location[];
   metadata: unknown;
 };
@@ -14,7 +14,7 @@ export const HIGHLIGHTED_PLACES = {
   saloum: '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
 };
 
-const fetchLocations = () =>
+export const fetchLocations = () =>
   API.request<DataResponse>({
     method: 'GET',
     url: '/locations',
