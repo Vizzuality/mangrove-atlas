@@ -13,10 +13,12 @@ import {
 
 const HighlightedPlaces = () => {
   const { data } = useHighlightedPlaces();
-
   const {
-    query: { locationType, id },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = params?.[1];
+
   const {
     data: { location_id },
   } = useLocation(locationType, id);

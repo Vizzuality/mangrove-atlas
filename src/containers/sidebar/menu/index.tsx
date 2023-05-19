@@ -23,8 +23,7 @@ const Menu = () => {
         <Dialog>
           <DialogTrigger>
             <div
-              className="flex justify-center rounded-full bg-white p-1
-              "
+              className="flex justify-center rounded-full bg-white p-1"
               onClick={() => setAboutSection(false)}
             >
               <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />

@@ -18,7 +18,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { ExtentData, Indicator, RouterData } from './types';
+import type { ExtentData, Indicator } from './types';
 
 const unitOptions = ['km²', 'ha'];
 
@@ -29,17 +29,19 @@ export function useMangroveHabitatExtent(
   queryOptions: UseQueryOptions<ExtentData, unknown> = {} // API
 ) {
   const {
-    query: { locationType, id },
+    query: { params: queryParams },
   } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const {
     data: { name, id: currentLocation, location_id },
-  }: RouterData = useLocation(locationType, id);
+  } = useLocation(locationType, id);
 
   const location = useMemo(() => {
     if (location_id === 'custom-area') return 'the area selected';
     if (location_id === 'worldwide') return 'the world';
     else return name;
-  }, [location_id]);
+  }, [location_id, name]);
 
   const fetchHabitatExtent = () => {
     return API.request({

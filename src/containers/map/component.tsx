@@ -1,9 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
-import { ViewState } from 'react-map-gl';
+import { useMap } from 'react-map-gl';
 
-import { basemapAtom, mapAtom } from 'store/map';
+import { useRouter } from 'next/router';
 
+import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
+
+import { useQueryClient } from '@tanstack/react-query';
+import type { LngLatBoundsLike } from 'mapbox-gl';
+import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue } from 'recoil';
 import { useRecoilState } from 'recoil';
 
@@ -12,6 +17,7 @@ import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
+import { CustomMapProps } from 'components/map/types';
 
 import LayerManager from './layer-manager';
 
@@ -30,31 +36,49 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = () => {
   const basemap = useRecoilValue(basemapAtom);
-  const [mapSettings, setMapSettings] = useRecoilState(mapAtom);
+  const locationBounds = useRecoilValue(locationBoundsAtom);
+  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
-  const mapView = true;
-  const isMobile = false;
   const { id, minZoom, maxZoom } = DEFAULT_PROPS;
-  const handleClick = useCallback((e) => console.log(e), []);
+  const { default: map } = useMap();
+  const {
+    query: { params },
+  } = useRouter();
+  const locationId = params?.[1];
+  const queryClient = useQueryClient();
 
-  const handleViewState = useCallback(
-    ({ latitude, longitude, zoom }: ViewState) => {
-      setMapSettings({
-        latitude,
-        longitude,
-        zoom,
-      });
-    },
-    [setMapSettings]
-  );
+  const handleViewState = useCallback(() => {
+    if (map) {
+      setURLBounds(map.getBounds().toArray());
+    }
+  }, [map, setURLBounds]);
 
-  const initialViewState: Partial<ViewState> = useMemo(
+  const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
-      ...mapSettings,
+      ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
+      ...(!URLBounds &&
+        locationId && {
+          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
+        }),
     }),
-    [mapSettings]
+    [URLBounds, locationId, queryClient]
   );
+
+  const bounds = useMemo<CustomMapProps['bounds']>(() => {
+    if (!locationBounds) return null;
+    return {
+      bbox: locationBounds,
+      options: {
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 540,
+        },
+      },
+    } satisfies CustomMapProps['bounds'];
+  }, [locationBounds]);
 
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
@@ -66,7 +90,7 @@ const MapContainer = () => {
         initialViewState={initialViewState}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMapViewStateChange={handleViewState}
-        onClick={handleClick}
+        bounds={bounds}
       >
         {() => <LayerManager />}
       </Map>

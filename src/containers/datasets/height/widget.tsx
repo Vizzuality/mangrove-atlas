@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 
-import { currentLocationAtom } from 'store/location';
 import { widgetYearAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';
@@ -13,8 +12,10 @@ import { useMangroveHeight } from './hooks';
 const NetChangeWidget = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
   const {
-    query: { locationType, id },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
+  const id = params?.[1];
   const {
     data: { name, id: currentLocation, location_id },
   } = useLocation(locationType, id);

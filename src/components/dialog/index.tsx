@@ -25,7 +25,7 @@ const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     className={cn({
-      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm': true,
+      'fixed inset-0 z-50 bg-black/70 backdrop-blur-sm': true,
       [className]: !!className,
     })}
     {...props}
@@ -64,12 +64,16 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogClose = () => (
+const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
   <DialogPrimitive.Close asChild>
-    <div className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">
+    <button
+      type="button"
+      className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+      onClick={onClose}
+    >
       <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
       <span className="sr-only">Close</span>
-    </div>
+    </button>
   </DialogPrimitive.Close>
 );
 DialogClose.displayName = 'DialogClose';

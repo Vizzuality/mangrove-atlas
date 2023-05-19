@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 'react-virtualized';
 
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { locationBoundsAtom } from 'store/map';
+
+import turfBbox from '@turf/bbox';
+import { useRecoilState } from 'recoil';
 
 import { useSearch } from 'hooks/search';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
+import { Location } from 'containers/datasets/locations/types';
 
 import HighlightedPlaces from 'components/highlighted-places';
 import Icon from 'components/icon';
@@ -19,15 +25,34 @@ const locationNames = {
   wdpa: 'WDPA',
 };
 
-const LocationsList = () => {
+const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
   const [searchValue, setSearchValue] = useState('');
-  const { data: locations } = useLocations();
+  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
   const cache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 100,
   });
+
+  const { asPath, replace } = useRouter();
+
+  const handleLocation = useCallback(
+    async (location: Location) => {
+      const queryParams = asPath.split('?')[1];
+      const url = `/${location.location_type}/${
+        location.location_type === 'country' ? location.iso : location.location_id
+      }?${queryParams}`;
+
+      await replace(url, null);
+
+      if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
+
+      if (onSelectLocation) onSelectLocation();
+    },
+    [replace, asPath, setLocationBounds, onSelectLocation]
+  );
 
   const renderRow = ({
     index,
@@ -44,19 +69,18 @@ const LocationsList = () => {
       <CellMeasurer key={key} parent={parent} cache={cache} columnIndex={0} rowIndex={index}>
         {({ registerChild }) => (
           <div style={style} ref={registerChild}>
-            <Link
+            <button
+              type="button"
               className="flex h-full w-full flex-1 items-end justify-between pb-2"
-              href={`/${locationsToDisplay[index].location_type}/${
-                locationsToDisplay[index].location_type === 'country'
-                  ? locationsToDisplay[index].iso
-                  : locationsToDisplay[index].location_id
-              }`}
+              onClick={() => {
+                handleLocation(locationsToDisplay[index]);
+              }}
             >
               <p className="font-sans text-2lg text-black/85">{locationsToDisplay[index].name}</p>
               <span className="text-xs text-grey-800 text-opacity-90">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
-            </Link>
+            </button>
           </div>
         )}
       </CellMeasurer>

@@ -65,14 +65,6 @@ type ChartConfig = {
   chartBase: chartBaseTypes;
 };
 
-type RouterProps = {
-  name: string;
-  id: string;
-  location_id: string;
-};
-
-export type RouterData = { data: RouterProps };
-
 export type ExtentData = {
   metadata: Metadata;
   data: Data[];

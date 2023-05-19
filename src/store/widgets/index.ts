@@ -17,13 +17,3 @@ export const widgetYearAtom = atom({
   key: 'year',
   default: 2019,
 });
-
-export const netChangeStartYearAtom = atom({
-  key: 'net-change-start-year',
-  default: null,
-});
-
-export const netChangeEndYearAtom = atom({
-  key: 'net-change-end-year',
-  default: null,
-});
