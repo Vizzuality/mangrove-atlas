@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import ALL_SVG from 'svgs/sidebar/all.svg?sprite';
 import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 import RELOAD_SVG from 'svgs/sidebar/reload.svg?sprite';

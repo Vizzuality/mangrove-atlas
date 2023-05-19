@@ -1,5 +1,5 @@
 import MapContainer from 'containers/map/component';
-import Sidebar from 'containers/mobile/sidebar';
+import Sidebar from 'containers/sidebar/mobile';
 
 const MobileLayout = () => {
   return (

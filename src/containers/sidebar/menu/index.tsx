@@ -17,16 +17,21 @@ const Menu = () => {
   const [aboutSection, setAboutSection] = useState<boolean>(false);
 
   return (
-    <>
-      <div className="w-full pb-1 text-center font-sans text-xxs text-white">Menu</div>
-      <div className={`${STYLES['icon-wrapper']} `}>
+    <div>
+      <div className="hidden w-full pb-1 text-center font-sans text-xxs text-white sm:block">
+        Menu
+      </div>
+      <div className={`${STYLES['icon-wrapper']}`}>
         <Dialog>
           <DialogTrigger>
             <div
-              className="flex justify-center rounded-full bg-white p-1"
+              className="flex justify-center rounded-full p-1 sm:bg-white"
               onClick={() => setAboutSection(false)}
             >
-              <Icon icon={MENU_SVG} className="h-8 w-8 text-brand-800" />
+              <Icon
+                icon={MENU_SVG}
+                className="h-8 w-10 stroke-white stroke-2 sm:w-8 sm:stroke-brand-800"
+              />
             </div>
           </DialogTrigger>
           <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0">
@@ -95,7 +100,8 @@ const Menu = () => {
           </DialogContent>
         </Dialog>
       </div>
-    </>
+      <div className="block w-full text-center font-sans text-xxs text-white sm:hidden">Menu</div>
+    </div>
   );
 };
 
