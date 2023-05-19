@@ -25,7 +25,7 @@ const locationNames = {
   wdpa: 'WDPA',
 };
 
-const LocationsList = () => {
+const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
   const [searchValue, setSearchValue] = useState('');
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const { data: locations } = useLocations({ select: ({ data }) => data });
@@ -48,8 +48,10 @@ const LocationsList = () => {
       await replace(url, null);
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
+
+      if (onSelectLocation) onSelectLocation();
     },
-    [replace, asPath, setLocationBounds]
+    [replace, asPath, setLocationBounds, onSelectLocation]
   );
 
   const renderRow = ({

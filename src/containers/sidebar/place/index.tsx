@@ -54,19 +54,23 @@ const Place = () => {
         >
           <Icon icon={GLOBE_SVG} className="h-8 w-8 fill-current text-brand-800" />
         </button>
-        <Dialog>
+        <Dialog open={isOpen}>
           <DialogTrigger>
-            <div className="flex cursor-pointer items-center justify-center rounded-full">
+            <button
+              onClick={openMenu}
+              type="button"
+              className="flex cursor-pointer items-center justify-center rounded-full"
+            >
               <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
-            </div>
+            </button>
           </DialogTrigger>
           <DialogContent
             className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0"
             onEscapeKeyDown={closeMenu}
             onInteractOutside={closeMenu}
           >
-            <LocationsList />
-            <DialogClose />
+            <LocationsList onSelectLocation={closeMenu} />
+            <DialogClose onClose={closeMenu} />
           </DialogContent>
         </Dialog>
         <button
