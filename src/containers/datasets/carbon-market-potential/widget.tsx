@@ -31,7 +31,6 @@ const CarbonMarketPotentialWidget = () => {
   });
 
   const { location, units, labels, config, investibleBlueCarbonValue } = data;
-  if (isLoading) return null;
 
   return (
     <div>

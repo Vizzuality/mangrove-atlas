@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { numberFormat, percentFormat } from 'lib/format';
 
-import { widgetYearAtom } from 'store/widgets';
+import { BiomassYearSettings } from 'store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -18,7 +18,6 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { years } from './constants';
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
@@ -36,7 +35,7 @@ export function useMangroveBiomass(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ): BiomassData {
-  const currentYear = useRecoilValue(widgetYearAtom);
+  const currentYear = useRecoilValue(BiomassYearSettings);
   const {
     query: { locationType, id },
   } = useRouter();
@@ -56,7 +55,7 @@ export function useMangroveBiomass(
       url: '/widgets/aboveground_biomass',
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        year: currentYear,
+        ...(!!currentYear && { year: currentYear }),
         ...params,
       },
       ...queryOptions,
@@ -78,13 +77,14 @@ export function useMangroveBiomass(
   const { data, isLoading } = query;
 
   return useMemo(() => {
-    const currentYear = 2020;
+    const years = data?.metadata.year;
+    const selectedYear = currentYear || years?.[years?.length - 1];
     const dataFiltered = data.data.filter(
-      ({ indicator, year }) => indicator !== 'total' && year === currentYear
+      ({ indicator, year }) => indicator !== 'total' && year === selectedYear
     );
 
     const avgBiomassFiltered = data?.metadata.avg_aboveground_biomass.find(
-      ({ year }) => year === currentYear
+      ({ year }) => year === selectedYear
     )?.value;
 
     const unit = data?.metadata.units?.value;
@@ -121,7 +121,7 @@ export function useMangroveBiomass(
     return {
       mean: numberFormat(avgBiomassFiltered),
       unit,
-      year: currentYear,
+      year: selectedYear,
       config,
       isLoading,
       location,
@@ -130,13 +130,17 @@ export function useMangroveBiomass(
 }
 
 export function useSource(): SourceProps {
-  const tiles = years.map<string>((year: number) => {
-    return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`;
-  });
+  const year = useRecoilValue(BiomassYearSettings);
+  // const tiles = years.map<string>((year: number) => {
+  //   return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`;
+  // });
+
   return {
     id: 'aboveground_biomass-source',
     type: 'raster',
-    tiles,
+    tiles: [
+      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`,
+    ],
     minzoom: 0,
     maxzoom: 12,
   };
