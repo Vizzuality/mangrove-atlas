@@ -6,10 +6,7 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -23,6 +20,7 @@ import type { ExtentData, Indicator } from './types';
 const unitOptions = ['km²', 'ha'];
 
 const widgetSlug = 'habitat-extent';
+
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
@@ -34,14 +32,8 @@ export function useMangroveHabitatExtent(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'the area selected';
-    if (location_id === 'worldwide') return 'the world';
-    else return name;
-  }, [location_id, name]);
 
   const fetchHabitatExtent = () => {
     return API.request({
@@ -74,9 +66,8 @@ export function useMangroveHabitatExtent(
   });
 
   const { data } = query;
-  const year = useRecoilValue(habitatExtentSettings);
 
-  const { unit } = params;
+  const { unit, year } = params;
   const DATA = useMemo(() => {
     const metadata = data.metadata;
     const years = metadata?.year?.sort();

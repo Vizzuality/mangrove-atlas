@@ -1,31 +1,17 @@
-import { useRouter } from 'next/router';
-
-import { widgetYearAtom } from 'store/widgets';
-
 import { TooltipPortal } from '@radix-ui/react-tooltip';
-import { useRecoilValue } from 'recoil';
-
-import { useLocation } from 'containers/datasets/locations/hooks';
 
 import Icon from 'components/icon';
+import Loading from 'components/loading';
 import { Tooltip, TooltipTrigger, TooltipContent } from 'components/tooltip';
+import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 import { useMangroveInternationalStatus } from './hooks';
 
 const InternationalStatus = () => {
-  const currentYear = useRecoilValue(widgetYearAtom);
   const {
-    query: { params },
-  } = useRouter();
-  const locationType = params?.[0];
-  const id = params?.[1];
-  const {
-    data: { name, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
-
-  const {
+    location,
     pledge_type,
     ndc_target,
     ndc_reduction_target,
@@ -44,140 +30,146 @@ const InternationalStatus = () => {
     ndcTargetSentence,
     hasNDCTarget,
     hasNDCReductionTarget,
-  } = useMangroveInternationalStatus(
-    {
-      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-      year: currentYear,
-    },
-    {}
-  );
+    isLoading,
+    isFetched,
+    isPlaceholderData,
+  } = useMangroveInternationalStatus();
 
-  const apostrophe = name?.[name?.length - 1] === 's' ? "'" : "'s";
+  const apostrophe = location?.[location?.length - 1] === 's' ? "'" : "'s";
 
   return (
-    <div className="mb-10 h-full space-y-4">
-      {pledge_type && (
-        <div className="space-y-4">
-          <h3 className="font-bold text-brand-800">
-            Nationally Determined Contributions{' '}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline"
-              href={!hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url}
-              title="ndc target"
-            >
-              (NDC)
-            </a>
-          </h3>
-          <div className="flex items-start space-x-2">
-            <p>
-              {name}
-              {apostrophe} NDC pledge contains {pledge_type}
-            </p>
-            {!!ndc_blurb && (
-              <Tooltip>
-                <TooltipTrigger>
-                  <button className="" aria-label="Info" type="button">
-                    <Icon icon={INFO_SVG} />
-                  </button>
-                </TooltipTrigger>
+    <div className={WIDGET_CARD_WRAPER_STYLE}>
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
+        <div className="mb-10 h-full space-y-4">
+          {pledge_type && (
+            <div className="space-y-4">
+              <h3 className="font-bold text-brand-800">
+                Nationally Determined Contributions{' '}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                  href={!hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url}
+                  title="ndc target"
+                >
+                  (NDC)
+                </a>
+              </h3>
+              <div className="flex items-start space-x-2">
+                <p>
+                  {location}
+                  {apostrophe} NDC pledge contains {pledge_type}
+                </p>
+                {!!ndc_blurb && (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <button className="" aria-label="Info" type="button">
+                        <Icon icon={INFO_SVG} />
+                      </button>
+                    </TooltipTrigger>
 
-                <TooltipPortal>
-                  <TooltipContent
-                    side="left"
-                    align="center"
-                    className="border-opacity-65 shadow-[0 4px 12px 0 rgba(168,168,168,0.25)] max-w-lg rounded-[20px] border-2 border-brand-800 p-5"
+                    <TooltipPortal>
+                      <TooltipContent
+                        side="left"
+                        align="center"
+                        className="border-opacity-65 shadow-[0 4px 12px 0 rgba(168,168,168,0.25)] max-w-lg rounded-[20px] border-2 border-brand-800 p-5"
+                      >
+                        <div className="flex items-center space-x-2">{ndc_blurb}</div>
+                      </TooltipContent>
+                    </TooltipPortal>
+                  </Tooltip>
+                )}
+              </div>
+            </div>
+          )}
+
+          {!pledge_type &&
+            (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
+              <div className="space-y-4">
+                <h3 className="font-bold text-brand-800">
+                  Nationally Determined Contributions{' '}
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                    href={!hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url}
+                    title="ndc target"
                   >
-                    <div className="flex items-center space-x-2">{ndc_blurb}</div>
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
+                    (NDC)
+                  </a>
+                </h3>
+              </div>
+            )}
+
+          {(hasNDCTarget || hasNDCReductionTarget) && (
+            <p>
+              {`The GHG target`}{' '}
+              {!hasNDCReductionTarget && hasNDCTarget && (
+                <span>represents a reduction of {ndc_target}</span>
+              )}
+              {reductionTargetSentence}
+              {targetYearsSentence}
+              {ndcTargetSentence}
+            </p>
+          )}
+          {ndc_adaptation && ndc_mitigation && (
+            <p>
+              {location}
+              {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+              {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
+              marine NBS for mitigation and adaptation.
+            </p>
+          )}
+
+          {ndc_adaptation && !ndc_mitigation && (
+            <p>
+              {location}
+              {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+              {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
+              marine NBS for adaptation.
+            </p>
+          )}
+
+          {!ndc_adaptation && ndc_mitigation && (
+            <p>
+              {location}
+              {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
+              {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
+              marine NBS for mitigation &apos.
+            </p>
+          )}
+
+          {frel && fow && (
+            <div className="space-y-4">
+              <h3 className="font-bold text-brand-800">Forest Reference Emission Levels</h3>
+              <div className="space-y-4">
+                <p>
+                  {location}
+                  {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({location}
+                  {apostrophe} mangroves are considered {fow}) .
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="space-y-4">
+            <h3 className="font-bold text-brand-800">IPCC Wetlands Supplement</h3>
+            {ipcc_wetlands_suplement === 'has' ? (
+              <p>
+                {location} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
+              </p>
+            ) : (
+              <p>
+                There is no information as to whether {location} has implemented the wetlands
+                supplement
+              </p>
             )}
           </div>
         </div>
       )}
-
-      {!pledge_type &&
-        (hasNDCTarget || hasNDCReductionTarget || ndc_adaptation || ndc_mitigation) && (
-          <div className="space-y-4">
-            <h3 className="font-bold text-brand-800">
-              Nationally Determined Contributions{' '}
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline"
-                href={!hasNDCTarget && !hasNDCReductionTarget ? null : ndc_target_url}
-                title="ndc target"
-              >
-                (NDC)
-              </a>
-            </h3>
-          </div>
-        )}
-
-      {(hasNDCTarget || hasNDCReductionTarget) && (
-        <p>
-          {`The GHG target`}{' '}
-          {!hasNDCReductionTarget && hasNDCTarget && (
-            <span>represents a reduction of {ndc_target}</span>
-          )}
-          {reductionTargetSentence}
-          {targetYearsSentence}
-          {ndcTargetSentence}
-        </p>
-      )}
-      {ndc_adaptation && ndc_mitigation && (
-        <p>
-          {name}
-          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-          NBS for mitigation and adaptation.
-        </p>
-      )}
-
-      {ndc_adaptation && !ndc_mitigation && (
-        <p>
-          {name}
-          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-          NBS for adaptation.
-        </p>
-      )}
-
-      {!ndc_adaptation && ndc_mitigation && (
-        <p>
-          {name}
-          {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
-          {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and marine
-          NBS for mitigation &apos.
-        </p>
-      )}
-
-      {frel && fow && (
-        <div className="space-y-4">
-          <h3 className="font-bold text-brand-800">Forest Reference Emission Levels</h3>
-          <div className="space-y-4">
-            <p>
-              {name}
-              {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({name}
-              {apostrophe} mangroves are considered {fow}) .
-            </p>
-          </div>
-        </div>
-      )}
-      <div className="space-y-4">
-        <h3 className="font-bold text-brand-800">IPCC Wetlands Supplement</h3>
-        {ipcc_wetlands_suplement === 'has' ? (
-          <p>
-            {name} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
-          </p>
-        ) : (
-          <p>
-            There is no information as to whether {name} has implemented the wetlands supplement
-          </p>
-        )}
-      </div>
     </div>
   );
 };

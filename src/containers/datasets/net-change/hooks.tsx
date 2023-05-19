@@ -84,14 +84,8 @@ export function useMangroveNetChange(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'the area selected';
-    if (location_id === 'worldwide') return 'the world';
-    else return name;
-  }, [location_id]);
 
   const { startYear, endYear, selectedUnit, ...restParams } = params;
   const fetchMangroveNetChange = () =>

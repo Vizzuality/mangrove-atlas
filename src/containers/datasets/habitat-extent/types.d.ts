@@ -77,7 +77,6 @@ export type ExtentData = {
   legend: Legend[];
   chartData: ChartData[];
   config: ChartConfig;
-  years: number[];
   defaultYear: number;
   unitOptions: string[];
   defaultUnitLinearCoverage: string;

@@ -15,6 +15,7 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
+import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';
@@ -32,9 +33,9 @@ import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
 import NetChangeWidget from 'containers/datasets/net-change/widget';
 import ProtectedAreasLayer from 'containers/datasets/protected-areas/layer';
-import ProtectionWidget from 'containers/datasets/protection';
 import ProtectionInfo from 'containers/datasets/protection/info.mdx';
 import ProtectionLayer from 'containers/datasets/protection/layer';
+import ProtectionWidget from 'containers/datasets/protection/widget';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
@@ -59,6 +60,7 @@ export const WIDGETS = {
   mangrove_species_location: SpeciesLocationWidget,
   mangrove_international_status: InternationalStatusWidget,
   mangrove_carbon_market_potential: CarbonMarketPotentialWidget,
+  mangrove_emissions_mitigation: EmissionsMitigationWidget,
 };
 
 export const LAYERS = {

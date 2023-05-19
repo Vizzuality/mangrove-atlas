@@ -16,6 +16,7 @@ import Icon from 'components/icon';
 //   PopoverPortal,
 //   PopoverAnchor,
 // } from 'components/popover';
+import Loading from 'components/loading';
 import {
   Tooltip,
   TooltipContent,
@@ -23,6 +24,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
+import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -33,7 +35,9 @@ const AlertsWidget = () => {
   const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
-  const { isLoading, data, isFetched } = useAlerts({ unit: selectedUnitAreaExtent });
+  const { isLoading, data, isFetched, isPlaceholderData } = useAlerts({
+    unit: selectedUnitAreaExtent,
+  });
 
   // const { alerts, years, startDate, endDate } = data;
 
@@ -46,9 +50,12 @@ const AlertsWidget = () => {
   // const defaultYear = years[years.length - 1];
   // const year = widgetSettings;
   return (
-    <div>
-      {isLoading && <div>...loading</div>}
-      {isFetched && (
+    <div className={WIDGET_CARD_WRAPER_STYLE}>
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
         <div>
           {/* <p className="text-lg font-light leading-7">
             There were {alerts} mangrove disturbance alerts between

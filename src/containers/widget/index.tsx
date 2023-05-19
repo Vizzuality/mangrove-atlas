@@ -23,15 +23,15 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
 
   return (
     <motion.div
-      animate={
-        {
-          // height: isCollapsed[id] ? 100,
-          // boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
-        }
-      }
+      animate={{
+        // marginBottom: isCollapsed[id] ? 0 : '-70px',
+        // marginTop: isCollapsed[id] ? 0 : '-3px',
+        boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
+      }}
       className={cn({
-        'w-[540px] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl': true,
-        '-mb-9': isCollapsed[id],
+        'h-fit-content w-[540px] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl':
+          true,
+        // '-mb-2': isCollapsed[id],
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
       })}
     >
@@ -45,7 +45,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         </h2>
         <WidgetControls id={id} />
       </header>
-      <div className={cn({ hidden: isCollapsed[id] })}>{children}</div>
+      {children}
     </motion.div>
   );
 };

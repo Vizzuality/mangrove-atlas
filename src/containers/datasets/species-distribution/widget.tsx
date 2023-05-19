@@ -1,12 +1,10 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from 'lib/classnames';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-
 import Icon from 'components/icon';
+import Loading from 'components/loading';
+import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 
@@ -15,21 +13,8 @@ import { useMangroveSpecies } from './hooks';
 const SpeciesDistribution = () => {
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = params?.[0];
-  const id = params?.[1];
-  const {
-    data: { name, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
-  const { total, legend, isLoading } = useMangroveSpecies(
-    {
-      ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-    },
-    {}
-  );
-  const isWorldwide = location_id === 'worldwide';
+  const { location, total, legend, isLoading, isFetched, isPlaceholderData } = useMangroveSpecies();
+  const isWorldwide = location === 'Worldwide';
   // const total = data?.total;
   const ref = useRef(null);
   const trianglePosition = (lineChartWidth * total) / 100 - 7; // substract icon size
@@ -40,12 +25,16 @@ const SpeciesDistribution = () => {
     }
   }, [ref]);
   return (
-    <div>
-      {!isLoading && (
+    <div className={WIDGET_CARD_WRAPER_STYLE}>
+      <Loading
+        visible={(isPlaceholderData || isLoading) && !isFetched}
+        iconClassName="flex w-10 h-10 m-auto my-10"
+      />
+      {isFetched && !isLoading && (
         <div className="pb-8">
           {/* mangrove sentence styles, create constant */}
           <p className="text-lg font-light text-black/85">
-            <span className="font-bold"> {name}</span> has{' '}
+            <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold">{total}</span> of mangroves distributed by country as map
             shows.
           </p>
