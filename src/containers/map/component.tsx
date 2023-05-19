@@ -2,8 +2,11 @@ import { useCallback, useMemo } from 'react';
 
 import { useMap } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
 
+import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue } from 'recoil';
@@ -14,7 +17,6 @@ import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
-import { WORLD_BOUNDS } from 'components/map/constants';
 import { CustomMapProps } from 'components/map/types';
 
 import LayerManager from './layer-manager';
@@ -39,6 +41,11 @@ const MapContainer = () => {
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
   const { id, minZoom, maxZoom } = DEFAULT_PROPS;
   const { default: map } = useMap();
+  const {
+    query: { params },
+  } = useRouter();
+  const locationId = params?.[1];
+  const queryClient = useQueryClient();
 
   const handleViewState = useCallback(() => {
     if (map) {
@@ -49,16 +56,27 @@ const MapContainer = () => {
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
-      bounds: WORLD_BOUNDS as LngLatBoundsLike,
       ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
+      ...(!URLBounds &&
+        locationId && {
+          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
+        }),
     }),
-    [URLBounds]
+    [URLBounds, locationId, queryClient]
   );
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {
     if (!locationBounds) return null;
     return {
       bbox: locationBounds,
+      options: {
+        padding: {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 540,
+        },
+      },
     } satisfies CustomMapProps['bounds'];
   }, [locationBounds]);
 

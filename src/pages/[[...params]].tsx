@@ -1,4 +1,5 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
+import turfBbox from '@turf/bbox';
 import type { GetServerSideProps } from 'next';
 
 import DesktopLayout from 'layouts/desktop';
@@ -16,6 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const locationType = ctx.params?.params?.[0];
   const locationId = ctx.params?.params?.[1];
   const queryState = queryClient.getQueryState(['locations']);
+  const URLBounds = ctx.query?.bounds;
 
   if (queryState?.status !== 'success') {
     await queryClient.prefetchQuery({
@@ -44,8 +46,19 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  if (!URLBounds && locationId) {
+    const location = locations.data.find(({ location_id, iso }) =>
+      [location_id, iso].includes(locationId)
+    );
+    if (location) {
+      queryClient.setQueryData(['location-bounds'], turfBbox(location.bounds));
+    }
+  }
+
   return {
-    props: {},
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
   };
 };
 
