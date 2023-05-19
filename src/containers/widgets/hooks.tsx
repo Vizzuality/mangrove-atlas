@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { activeCategoryAtom } from 'store/sidebar';
 
 import { useRecoilValue } from 'recoil';
@@ -10,8 +12,18 @@ import widgets from './constants';
 
 export function useWidgets(): WidgetTypes[] {
   const categorySelected = useRecoilValue(activeCategoryAtom);
+  const {
+    query: { locationType },
+  } = useRouter();
+
+  const currentLocation = (locationType as string) || 'worldwide';
+
   return useMemo(
-    () => widgets.filter(({ categoryIds }) => categoryIds.includes(categorySelected)),
+    () =>
+      widgets.filter(
+        ({ categoryIds, locationType }) =>
+          categoryIds.includes(categorySelected) && locationType.includes(currentLocation)
+      ),
     [categorySelected]
   );
 }

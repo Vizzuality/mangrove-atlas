@@ -17,8 +17,8 @@ import {
 
 const DEFAULTVALUES = {
   pie: {
-    innerRadius: 60,
-    outerRadius: 80,
+    innerRadius: 80,
+    outerRadius: 100,
     paddingAngle: 0.5,
   },
 };
@@ -39,7 +39,7 @@ const Chart = ({ config }) => {
     },
     type = 'composed',
     height,
-
+    width,
     layout = 'horizontal',
 
     stackOffset,
@@ -55,10 +55,11 @@ const Chart = ({ config }) => {
   const Chart = ChartsMap.get(type);
 
   return (
-    <ResponsiveContainer width="100%" height={250} className="flex-1">
+    <ResponsiveContainer width="100%" height={height || 250} className="w-full flex-1">
       <Chart
         stackOffset={stackOffset}
         height={height}
+        width={width}
         // viewBox={viewBox}
         data={data}
         layout={layout}

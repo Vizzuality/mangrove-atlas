@@ -1,55 +1,52 @@
+import orderBy from 'lodash-es/orderBy';
+
 import cn from 'lib/classnames';
+
 type TooltipProps = {
   payload: {
+    color: string;
+    name: string;
     payload: {
-      settings: {
-        label: string;
-        valueFormatted: string;
-        value: number;
-        unit: string;
-        color?: string;
-        variant?: string;
-      }[];
       label: string;
-      direction?: 'vertical' | 'horizontal';
-    };
+      valueFormatted: string;
+      value: number;
+      unit: string;
+      color?: string;
+      variant?: string;
+    }[];
   };
   active: boolean;
 };
 
 const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
   if (!active) return null;
-  // const direction = payload?.[0]?.payload?.direction;
-  // const label = payload?.[0]?.payload?.label;
-  // const items = payload?.[0]?.payload?.settings || [payload?.payload];
+
+  const sortedPayload = orderBy(payload, (d) => Number(d.dataKey.split('--', 1)), 'desc');
+
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
-      {/* {label && <p className="flex justify-center">{label}</p>} */}
-      {/* {items?.map(({ label, valueFormatted, value, unit, color, variant }) => (
-        <div key="label" className="flex flex-col">
-          <p
-            key={label}
-            className={cn({ 'flex space-x-4': true, 'flex-col': direction === 'vertical' })}
-          >
+      {sortedPayload?.map(({ color, name, payload, value }) => (
+        <div key="label" className="flex">
+          <p key={name} className={cn({ 'flex space-x-4': true })}>
             <span className="flex items-center space-x-2">
               {color && (
                 <div
                   className={cn({
                     'h-4 w-2 rounded-full': true,
-                    'w-[2.5px]': variant === 'thin',
                   })}
                   style={{ backgroundColor: color }}
                 />
               )}
-              {<span className="font-bold">{label}</span>}
+              {<span className="font-bold">{name}</span>}
             </span>
             <span>
               {' '}
-              {valueFormatted || value} {unit}
+              {value}
+              {payload?.[`percentage${name}`]} {'%'}
             </span>
           </p>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };
