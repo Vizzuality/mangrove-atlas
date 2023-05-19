@@ -107,14 +107,9 @@ export function useMangroveHeight(
   );
 
   const TooltipData = {
-    content: (properties) => {
-      // return (
-      //   <CustomTooltip {...properties} payload={{ payload: { settings: [...ChartData] } }} />
-      // );
-
-      return <Tooltip {...properties} payload={properties.payload} />;
-    },
+    content: (properties) => <Tooltip {...properties} payload={properties.payload} />,
   };
+
   const config = {
     chartBase: {
       type: 'bar',

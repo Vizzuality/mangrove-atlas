@@ -40,7 +40,7 @@ export function useMangroveBlueCarbon(
   const {
     data: { name, id: currentLocation, location_id },
   }: RouterData = useLocation(locationType, id);
-
+  console.log(currentLocation);
   const location = useMemo(() => {
     if (location_id === 'custom-area') return 'the area selected';
     if (location_id === 'worldwide') return 'the world';

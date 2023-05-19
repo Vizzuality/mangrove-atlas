@@ -20,13 +20,12 @@ type TooltipProps = {
 const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
   if (!active) return null;
 
-  const direction = payload?.[0]?.payload?.direction;
-  const label = payload?.[0]?.payload?.label;
-  const items = payload?.[0]?.payload?.settings || [payload?.payload];
+  const { settings, direction, label } = payload?.[0]?.payload;
+
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
       {label && <p className="flex justify-center">{label}</p>}
-      {/* {items?.map(({ label, valueFormatted, value, unit, color, variant }) => (
+      {settings?.map(({ label, valueFormatted, value, unit, color, variant }) => (
         <div key="label" className="flex flex-col">
           <p
             key={label}
@@ -50,7 +49,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
             </span>
           </p>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };

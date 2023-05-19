@@ -10,7 +10,6 @@ type ChartData = {
   label: BiomassIndicator;
   value: number;
   showValue: boolean; // legend
-  // valueFormatted: string;
   color: string;
 };
 
