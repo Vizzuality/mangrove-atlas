@@ -1,9 +1,14 @@
+import { BiomassYearSettings } from 'store/widgets/biomass';
+
+import { useRecoilState } from 'recoil';
+
 import BiomassChart from './chart';
 import { useMangroveBiomass } from './hooks';
 
 const BiomassWidget = () => {
-  const { year, mean, unit, config, isLoading, location } = useMangroveBiomass();
-
+  const [defaultYear, setYear] = useRecoilState(BiomassYearSettings);
+  const { year, mean, unit, config, isLoading, location } = useMangroveBiomass(defaultYear);
+  if (year !== defaultYear) setYear(year);
   const { legend } = config;
   return (
     <div>

@@ -91,7 +91,7 @@ const widgets = [
   {
     name: 'Mangrove International Status',
     slug: 'mangrove_international_status' satisfies WidgetSlugType,
-    locationType: ['custom', 'wdpa', 'country', 'worldwide'],
+    locationType: ['custom', 'wdpa', 'country'],
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
   {

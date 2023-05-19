@@ -29,16 +29,16 @@ const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
   const barsValues = data?.map(({ value }) => value);
   const total = barsValues.reduce((previous, current) => current + previous);
   return [
-    data.reduce(
-      (acc, d) => ({
+    data.reduce((acc, d) => {
+      const percentage = (d.value / total) * 100;
+      return {
         ...acc,
         year: d.year,
-        [`${d.indicator} ${unit}`]: (d.value / total) * 100,
+        [`${d.indicator} ${unit}`]: numberFormat(percentage),
         label: d.indicator,
         color: COLORS_BY_INDICATOR[d.indicator],
-      }),
-      {}
-    ),
+      };
+    }, {}),
   ];
 };
 
@@ -109,46 +109,50 @@ export function useMangroveHeight(
   const TooltipData = {
     content: (properties) => <Tooltip {...properties} payload={properties.payload} />,
   };
-
+  const dataMin = Math.min(...years);
+  const dataMax = Math.max(...years);
   const config = {
     chartBase: {
       type: 'bar',
       bars: bars,
     },
+    margin: {
+      top: 40,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    },
     data: chartData,
     xKey: 'year',
-    yKeys: {
-      bars: bars,
-    },
     xAxis: {
       tick: {
         fontSize: 12,
-        lineheight: 20,
+        lineHeight: 20,
         fill: 'rgba(0, 0, 0, 0.54)',
       },
       ticks: years,
-      interval: 0,
+      domain: [dataMin, dataMax],
     },
     yAxis: {
       tick: {
         fontSize: 12,
         fill: 'rgba(0,0,0,0.54)',
       },
-      width: 40,
-      // tickFormatter: (value) => Math.round(value),
-      domain: [0, 100],
+      tickNumber: 5,
+      width: 30,
       interval: 0,
       orientation: 'right',
       label: {
         value: '%',
         position: 'top',
         offset: 25,
+        fontSize: 12,
       },
-      type: 'number',
     },
     tooltip: TooltipData,
-    cartesianAxis: {
-      tick: false,
+    cartesianGrid: {
+      vertical: false,
+      strokeDasharray: '5 15',
     },
   };
 

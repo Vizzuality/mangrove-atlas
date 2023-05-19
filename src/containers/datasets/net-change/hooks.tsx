@@ -157,7 +157,7 @@ export function useMangroveNetChange(
       xKey: 'year',
       cartesianGrid: {
         vertical: false,
-        strokeDasharray: '5 20',
+        strokeDasharray: '5 15',
       },
       tooltip: TooltipData,
       chartBase: {

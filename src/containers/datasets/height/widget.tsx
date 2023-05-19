@@ -9,7 +9,7 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import HeightChart from './chart';
 import { useMangroveHeight } from './hooks';
 
-const NetChangeWidget = () => {
+const HeightWidget = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
   const {
     query: { params },
@@ -49,4 +49,4 @@ const NetChangeWidget = () => {
   );
 };
 
-export default NetChangeWidget;
+export default HeightWidget;
