@@ -1,7 +1,7 @@
 import Menu from 'containers/sidebar/menu';
 import CategoryMobile from 'containers/sidebar/mobile/category';
-
-import PlacesMobile from './places';
+import MapToggle from 'containers/sidebar/mobile/map-toggle';
+import PlacesMobile from 'containers/sidebar/mobile/places';
 
 const Sidebar = () => {
   return (
@@ -10,6 +10,7 @@ const Sidebar = () => {
         <Menu />
         <CategoryMobile />
         <PlacesMobile />
+        <MapToggle />
       </div>
     </div>
   );

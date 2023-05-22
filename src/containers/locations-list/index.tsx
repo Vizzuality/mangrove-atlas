@@ -110,7 +110,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             className="absolute top-1/2 right-0 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
-            <Icon icon={CLOSE_SVG} className="h-5 w-5  transform opacity-50" />
+            <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
           </button>
         )}
       </div>

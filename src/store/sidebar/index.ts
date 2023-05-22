@@ -11,3 +11,8 @@ export const activeCategoryAtom = atom<string>({
     }),
   ],
 });
+
+export const mapViewAtom = atom<boolean>({
+  key: 'map-view',
+  default: true,
+});
