@@ -42,7 +42,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'fixed left-0 z-50 grid w-full gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:max-w-lg':
+        'left-1/12 fixed z-50 grid w-10/12 gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:w-full md:max-w-lg':
           true,
         [className]: !!className,
       })}
@@ -68,10 +68,10 @@ const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+      className="absolute top-7.5 right-6 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:top-7 md:-right-10 md:border"
       onClick={onClose}
     >
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" />
       <span className="sr-only">Close</span>
     </button>
   </DialogPrimitive.Close>
