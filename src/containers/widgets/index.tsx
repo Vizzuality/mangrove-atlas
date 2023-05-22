@@ -7,7 +7,6 @@ import { useWidgets } from './hooks';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
-  console.log({ widgets });
   return (
     <WidgetsLayout>
       {widgets.map(({ slug, name }) => {

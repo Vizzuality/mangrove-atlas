@@ -1,13 +1,26 @@
+import { useState } from 'react';
+
 import cn from 'lib/classnames';
 
-import { widgetYearAtom } from 'store/widgets';
+import { habitatChangeStartYear, habitatChangeEndYear } from 'store/widgets/habitat-change';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
+import Chart from 'components/chart';
+import Icon from 'components/icon';
 import Loading from 'components/loading';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipArrow,
+  TooltipTrigger,
+  TooltipPortal,
+} from 'components/tooltip';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
-// import HabitatExtentChart from './chart';
+import TRIANGLE_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+
 import { useMangroveHabitatChange } from './hooks';
 
 const labelsForLayer = [
@@ -25,21 +38,21 @@ const labelsForLayer = [
   // }, TO - DO - add back when client fixes data for gain and loss
 ];
 const HabitatExtent = () => {
-  const currentYear = useRecoilValue(widgetYearAtom);
+  const [startYear, setStartYear] = useRecoilState<number>(habitatChangeStartYear);
+  const [endYear, setEndYear] = useRecoilState<number>(habitatChangeEndYear);
+  const [limit, setLimit] = useState<5 | 10>(5);
 
   const {
     location,
     years,
-    unit,
-    chartData,
-    defaultStartYear,
-    defaultEndYear,
+    config,
+    currentStartYear,
+    currentEndYear,
     isFetched,
     isPlaceholderData,
-  } = useMangroveHabitatChange();
+  } = useMangroveHabitatChange({ startYear, endYear, limit });
 
   const isLoading = false;
-  const numberOfCountries = 5;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -48,15 +61,110 @@ const HabitatExtent = () => {
       />
       {isFetched && !isLoading && (
         <div>
-          <p>
-            <span className="font-bold"> {location}</span> the {numberOfCountries} countries with
-            the largest net change in Mangrove habitat extent between
-            <span className="notranslate font-bold">{'1996 start year select'} </span>
-            and
-            <span className="notranslate font-bold">{'2020 end year select'} </span>
+          <p className="first-letter:uppercase">
+            <span className="font-bold first-letter:uppercase"> {location}</span> the {limit}{' '}
+            countries with the largest net change in Mangrove habitat extent between
+            <span className="notranslate font-bold">
+              {' '}
+              <Tooltip>
+                <TooltipTrigger>
+                  <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+                    {currentStartYear}
+                    <Icon
+                      icon={TRIANGLE_SVG}
+                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                    />
+                  </span>
+                </TooltipTrigger>
+
+                <TooltipPortal>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    className="rounded-[20x] bg-white  text-black/85 shadow-soft"
+                  >
+                    <ul
+                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                    >
+                      {years?.map((y) => (
+                        <li key={y}>
+                          <button
+                            className={cn({
+                              'font-bold': true,
+                              'text-brand-800': currentStartYear === y,
+                              'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
+                              'opacity-50':
+                                currentStartYear === y ||
+                                y > currentEndYear ||
+                                currentEndYear === y,
+                            })}
+                            type="button"
+                            onClick={() => setStartYear(y)}
+                            disabled={
+                              currentStartYear === y || y > currentEndYear || currentEndYear === y
+                            }
+                          >
+                            {y}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <TooltipArrow />
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>{' '}
+            </span>
+            and{' '}
+            <span className="notranslate font-bold">
+              <Tooltip>
+                <TooltipTrigger>
+                  <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+                    {currentEndYear}
+                    <Icon
+                      icon={TRIANGLE_SVG}
+                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                    />
+                  </span>
+                </TooltipTrigger>
+
+                <TooltipPortal>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    className="rounded-[20x] bg-white  text-black/85 shadow-soft"
+                  >
+                    <ul
+                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                    >
+                      {years?.map((y) => (
+                        <li key={y}>
+                          <button
+                            className={cn({
+                              'font-bold': true,
+                              'text-brand-800': currentEndYear === y,
+                              'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
+                              'opacity-50': y < currentStartYear || currentStartYear === y,
+                            })}
+                            type="button"
+                            onClick={() => setEndYear(y)}
+                            disabled={
+                              currentEndYear === y || y < currentStartYear || currentStartYear === y
+                            }
+                          >
+                            {y}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <TooltipArrow />
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>{' '}
+            </span>
             were:{' '}
           </p>
-
           <ul className="flex justify-end space-x-4 py-4">
             {labelsForLayer?.map((d) => (
               <li key={`item-${d.label}`} className="inline-flex items-center space-x-2">
@@ -70,8 +178,22 @@ const HabitatExtent = () => {
               </li>
             ))}
           </ul>
+          <Chart config={config} />
 
-          {/* <HabitatExtentChart legend={legend} config={config} /> */}
+          <button
+            type="button"
+            className="flex w-full items-center justify-center space-x-2 text-sm font-semibold text-brand-800"
+            onClick={() => setLimit(limit === 5 ? 10 : 5)}
+          >
+            <span>{limit === 5 ? 'Show 10' : 'Show 5'}</span>
+            <Icon
+              icon={ARROW_SVG}
+              className={cn({
+                'inline-block h-2 w-2 fill-current text-brand-800': true,
+                'rotate-180 transform ': limit === 10,
+              })}
+            />
+          </button>
         </div>
       )}
     </div>

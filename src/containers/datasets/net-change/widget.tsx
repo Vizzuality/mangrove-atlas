@@ -98,7 +98,7 @@ const NetChangeWidget = () => {
             </Tooltip>{' '}
             between{' '}
             <Tooltip>
-              <TooltipTrigger asChild>
+              <TooltipTrigger>
                 <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
                   {currentStartYear}
                   <Icon
@@ -115,35 +115,35 @@ const NetChangeWidget = () => {
                   className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                 >
                   <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {years?.map((u) => (
-                      <li key={u}>
+                    {years?.map((y) => (
+                      <li key={y}>
                         <button
                           className={cn({
                             'font-bold': true,
-                            'text-brand-800': currentStartYear === u,
-                            'hover:text-brand-800': currentStartYear !== u && u < currentEndYear,
+                            'text-brand-800': currentStartYear === y,
+                            'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
                             'opacity-50':
-                              currentStartYear === u || u > currentEndYear || currentEndYear === u,
+                              currentStartYear === y || y > currentEndYear || currentEndYear === y,
                           })}
                           type="button"
-                          onClick={() => setStartYear(u)}
+                          onClick={() => setStartYear(y)}
                           disabled={
-                            currentStartYear === u || u > currentEndYear || currentEndYear === u
+                            currentStartYear === y || y > currentEndYear || currentEndYear === y
                           }
                         >
-                          {u}
+                          {y}
                         </button>
                       </li>
                     ))}
                   </ul>
 
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
+                  <TooltipArrow />
                 </TooltipContent>
               </TooltipPortal>
             </Tooltip>{' '}
             and{' '}
             <Tooltip>
-              <TooltipTrigger asChild>
+              <TooltipTrigger>
                 <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
                   {currentEndYear}
                   <Icon
@@ -160,28 +160,28 @@ const NetChangeWidget = () => {
                   className="rounded-[20x] bg-white  text-black/85 shadow-soft"
                 >
                   <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {years?.map((u) => (
-                      <li key={u}>
+                    {years?.map((y) => (
+                      <li key={y}>
                         <button
                           className={cn({
                             'font-bold': true,
-                            'text-brand-800': currentEndYear === u,
-                            'hover:text-brand-800': currentEndYear !== u && u > currentStartYear,
-                            'opacity-50': u < currentStartYear || currentStartYear === u,
+                            'text-brand-800': currentEndYear === y,
+                            'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
+                            'opacity-50': y < currentStartYear || currentStartYear === y,
                           })}
                           type="button"
-                          onClick={() => setEndYear(u)}
+                          onClick={() => setEndYear(y)}
                           disabled={
-                            currentEndYear === u || u < currentStartYear || currentStartYear === u
+                            currentEndYear === y || y < currentStartYear || currentStartYear === y
                           }
                         >
-                          {u}
+                          {y}
                         </button>
                       </li>
                     ))}
                   </ul>
 
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
+                  <TooltipArrow />
                 </TooltipContent>
               </TooltipPortal>
             </Tooltip>
