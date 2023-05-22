@@ -12,6 +12,8 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 
+import { useGenericAnalysisData } from 'hooks/analysis';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
@@ -208,4 +210,8 @@ export function useLayer(): LayerProps {
     id: 'mangrove_canopy_height-v3-layer',
     type: 'raster',
   };
+}
+
+export function useAnalysis() {
+  return useGenericAnalysisData('mangrove_height');
 }

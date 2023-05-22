@@ -13,6 +13,7 @@ import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
+import DrawingToolWidget from 'containers/datasets/drawing-tool';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
@@ -45,6 +46,8 @@ import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
+import { WidgetSlugType } from 'types/widget';
+
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
@@ -60,7 +63,9 @@ export const WIDGETS = {
   mangrove_international_status: InternationalStatusWidget,
   mangrove_carbon_market_potential: CarbonMarketPotentialWidget,
   mangrove_emissions_mitigation: EmissionsMitigationWidget,
-};
+  mangrove_drawing_tool: DrawingToolWidget,
+  mangrove_restoration: null,
+} satisfies Record<WidgetSlugType, () => JSX.Element>;
 
 export const LAYERS = {
   'country-boundaries': CountryBoundariesLayer,

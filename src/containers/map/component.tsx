@@ -4,10 +4,13 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
+import turfBbox from '@turf/bbox';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -16,6 +19,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
+import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
 
 import Collapsible from 'components/collapsible';
@@ -24,6 +28,8 @@ import Controls from 'components/map/controls';
 import FullScreenControl from 'components/map/controls/fullscreen';
 import PitchReset from 'components/map/controls/pitch-reset';
 import ZoomControl from 'components/map/controls/zoom';
+import type { DrawControlProps } from 'components/map/drawing-tool';
+import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import { breakpoints } from 'styles/styles.config';
@@ -44,10 +50,13 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
-  const locationBounds = useRecoilValue(locationBoundsAtom);
+  const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
+    useRecoilState(drawingToolAtom);
+  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
 
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [, setAnalysisState] = useRecoilState(analysisAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 
@@ -58,6 +67,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const { [mapId]: map } = useMap();
   const {
     query: { params },
+    push,
+    asPath,
   } = useRouter();
   const locationId = params?.[1];
   const queryClient = useQueryClient();
@@ -89,11 +100,50 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           top: 0,
           right: 0,
           bottom: 0,
-          left: screenWidth >= breakpoints.md ? 540 : 0,
+          left: screenWidth >= breakpoints.md ? 620 : 0,
         },
       },
     } satisfies CustomMapProps['bounds'];
   }, [locationBounds, screenWidth]);
+
+  const handleCustomPolygon = useCallback(
+    (customPolygon) => {
+      const bbox = turfBbox(customPolygon);
+
+      if (bbox) {
+        setLocationBounds(bbox as typeof locationBounds);
+      }
+    },
+    [setLocationBounds]
+  );
+
+  const handleUserDrawing = useCallback(
+    async (evt: Parameters<DrawControlProps['onCreate']>[0]) => {
+      setDrawingToolState((prevDrawingToolState) => ({
+        ...prevDrawingToolState,
+        customGeojson: { type: 'FeatureCollection', features: evt.features },
+      }));
+
+      setAnalysisState((prevAnalysisState) => ({
+        ...prevAnalysisState,
+        enabled: true,
+      }));
+      const queryParams = asPath.split('?')[1];
+
+      await push(`/custom-area?${queryParams}`, null);
+    },
+    [setDrawingToolState, setAnalysisState, asPath, push]
+  );
+
+  const handleDrawingUpdate = useCallback(
+    (evt: Parameters<DrawControlProps['onUpdate']>[0]) => {
+      setDrawingToolState((prevDrawingToolState) => ({
+        ...prevDrawingToolState,
+        customGeojson: { type: 'FeatureCollection', features: evt.features },
+      }));
+    },
+    [setDrawingToolState]
+  );
 
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
@@ -110,6 +160,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         {() => (
           <>
             <LayerManager />
+            {(isDrawingToolEnabled || uploadedGeojson) && (
+              <DrawControl
+                onCreate={handleUserDrawing}
+                onUpdate={handleDrawingUpdate}
+                customPolygon={uploadedGeojson}
+                onSetCustomPolygon={handleCustomPolygon}
+              />
+            )}
             <Controls>
               <FullScreenControl />
               <ZoomControl mapId={mapId} />
@@ -124,9 +182,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-10">
+        <div className="absolute bottom-10 right-10 space-y-1">
+          {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
-
           <BasemapSelector />
         </div>
       </Media>

@@ -32,7 +32,7 @@ const BasemapSelector = ({ className }: { className?: string }) => {
       })}
     >
       <div className="mr-2 md:mr-[30px]">
-        <h3 className="m-0 whitespace-nowrap text-xs font-semibold uppercase leading-6">
+        <h3 className="m-0 whitespace-nowrap text-xs font-semibold uppercase leading-6 tracking-wide">
           Map style
         </h3>
         <div className="mt-1 whitespace-nowrap text-xs md:text-base">{currentBasemap.name}</div>

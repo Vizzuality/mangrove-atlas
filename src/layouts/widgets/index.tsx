@@ -1,9 +1,8 @@
-type WidgetLayoutProps = {
-  children: React.ReactNode;
-};
+import { PropsWithChildren } from 'react';
+
 import LocationTitle from 'components/location-title';
 
-const WidgetsLayout: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
+const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
 
   return (

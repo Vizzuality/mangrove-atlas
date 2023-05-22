@@ -11,6 +11,8 @@ import { formatMillion, numberFormat } from 'lib/format';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { PolarViewBox } from 'recharts/types/util/types';
 
+import { useGenericAnalysisData } from 'hooks/analysis';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
@@ -199,4 +201,8 @@ export function useLayer(): LayerProps {
     id: 'blue-carbon-layer',
     type: 'raster',
   };
+}
+
+export function useAnalysis() {
+  return useGenericAnalysisData('mangrove_blue_carbon');
 }

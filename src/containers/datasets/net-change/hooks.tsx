@@ -10,6 +10,8 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
 
+import { useGenericAnalysisData } from 'hooks/analysis';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
@@ -195,4 +197,8 @@ export function useLayer(): LayerProps {
     id: 'net-change-layer',
     type: 'raster',
   };
+}
+
+export function useAnalysis() {
+  return useGenericAnalysisData('mangrove_net_change');
 }

@@ -8,6 +8,7 @@ import BasemapSelector from 'containers/map/basemap-selector';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
+import { WidgetSlugType } from 'types/widget';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
@@ -15,13 +16,13 @@ const CollapsibleComponent = ({
   layers,
   setActiveWidgets,
 }: {
-  layers: readonly string[];
-  setActiveWidgets: (layers: string[]) => void;
+  layers: readonly WidgetSlugType[];
+  setActiveWidgets: (layers: WidgetSlugType[]) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const removeLayer = useCallback(
-    (layer: string) => {
+    (layer: WidgetSlugType) => {
       const updatedLayers = layers.filter((l) => {
         return l !== layer;
       });
@@ -62,7 +63,7 @@ const CollapsibleComponent = ({
       </div>
 
       <Collapsible.Content className="w-10/12 space-y-2">
-        {layers?.slice(1).map((l: string) => {
+        {layers?.slice(1).map((l) => {
           return (
             <div
               key={l}
