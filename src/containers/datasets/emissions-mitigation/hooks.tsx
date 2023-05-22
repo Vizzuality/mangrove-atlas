@@ -17,16 +17,21 @@ import API from 'services/api';
 import CustomTooltip from './tooltip';
 import type { DataResponse, UseParamsOptions, emissionsMitigationData, Data } from './types';
 
-const getData = ({ data }) => {
+interface DataBar {
+  category: DataResponse['data'][0]['category'];
+  [key: string]: number | DataResponse['data'][0]['category'];
+}
+
+const getData = ({ data }: DataResponse) => {
   const dataByCategory = groupBy(data, 'category');
   const bars = Object.values(dataByCategory);
 
-  return bars.map((d) =>
+  return bars.map<DataBar>((d) =>
     d.reduce((acc, r) => {
       acc.category = r.category;
       acc[r.indicator] = r.value;
       return acc;
-    }, {})
+    }, {} as DataBar)
   );
 };
 

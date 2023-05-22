@@ -187,14 +187,13 @@ export function useCarbonMarketPotential(
   const DATA = useMemo(
     () =>
       ({
-        data: chartData,
         location,
         labels,
         units,
         investibleBlueCarbonValue,
         config: CONFIG,
-      } satisfies CarbonMarketPotentialData),
-    [query.data]
+      } satisfies Omit<CarbonMarketPotentialData, 'data'>),
+    [CONFIG, investibleBlueCarbonValue, location]
   );
 
   return useMemo(() => {

@@ -18,7 +18,7 @@ export type Metadata = {
 };
 
 export type DataResponse = {
-  data: emissionsMitigationData;
+  data: Data[];
   metadata: Metadata;
 };
 
