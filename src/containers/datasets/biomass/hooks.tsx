@@ -130,6 +130,8 @@ export function useMangroveBiomass(
 
 export function useSource(): SourceProps {
   const year = useRecoilValue(BiomassYearSettings);
+
+  // TO - DO: update when client provides data for more years
   // const tiles = years.map<string>((year: number) => {
   //   return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`;
   // });

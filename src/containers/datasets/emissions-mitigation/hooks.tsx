@@ -21,20 +21,13 @@ const getData = ({ data }) => {
   const dataByCategory = groupBy(data, 'category');
   const bars = Object.values(dataByCategory);
 
-  return bars.reduce(
-    (acc, d) => [
-      ...acc,
-      d.reduce(
-        (acc2, r) => ({
-          category: r.category,
-          ...acc2,
-          [r.indicator]: r.value,
-        }),
-        {}
-      ),
-    ],
-    []
-  ) as Data[];
+  return bars.map((d) =>
+    d.reduce((acc, r) => {
+      acc.category = r.category;
+      acc[r.indicator] = r.value;
+      return acc;
+    }, {})
+  );
 };
 
 const getBars = (indicators, filteredIndicators) =>
