@@ -13,6 +13,7 @@ import {
   CartesianAxis,
   XAxis,
   YAxis,
+  ReferenceLine,
 } from 'recharts';
 
 const DEFAULTVALUES = {
@@ -50,7 +51,7 @@ const Chart = ({ config }) => {
     yAxis,
     chartBase,
     xKey,
-    yKeys,
+    referenceLines,
   } = config;
   const { pies, bars, lines } = chartBase;
   const Chart = ChartsMap.get(type);
@@ -125,6 +126,7 @@ const Chart = ({ config }) => {
               )}
             </Pie>
           ))}
+        {referenceLines && referenceLines.map((line) => <ReferenceLine key={line} {...line} />)}
         <Tooltip {...tooltip} />
       </Chart>
     </ResponsiveContainer>
