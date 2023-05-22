@@ -1,6 +1,7 @@
+import cn from 'lib/classnames';
+
 import { widgetYearAtom } from 'store/widgets';
 
-import { Imprima } from '@next/font/google';
 import { useRecoilValue } from 'recoil';
 
 import Loading from 'components/loading';
@@ -9,6 +10,20 @@ import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 // import HabitatExtentChart from './chart';
 import { useMangroveHabitatChange } from './hooks';
 
+const labelsForLayer = [
+  {
+    color: 'rgba(0,0,0,0.7)',
+    label: 'Net change',
+  },
+  // {
+  //   color: '#A6CB10',
+  //   label: 'Gain',
+  // },
+  // {
+  //   color: '#EB6240',
+  //   label: 'Loss',
+  // }, TO - DO - add back when client fixes data for gain and loss
+];
 const HabitatExtent = () => {
   const currentYear = useRecoilValue(widgetYearAtom);
 
@@ -41,6 +56,21 @@ const HabitatExtent = () => {
             <span className="notranslate font-bold">{'2020 end year select'} </span>
             were:{' '}
           </p>
+
+          <ul className="flex justify-end space-x-4 py-4">
+            {labelsForLayer?.map((d) => (
+              <li key={`item-${d.label}`} className="inline-flex items-center space-x-2">
+                <div
+                  className={cn({
+                    'h-2 w-4 rounded-r-md': true,
+                  })}
+                  style={{ backgroundColor: d.color }}
+                />
+                <span className="text-sm font-bold text-black/85">{d.label}</span>
+              </li>
+            ))}
+          </ul>
+
           {/* <HabitatExtentChart legend={legend} config={config} /> */}
         </div>
       )}
