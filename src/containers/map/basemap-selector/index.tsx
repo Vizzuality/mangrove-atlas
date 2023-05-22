@@ -18,14 +18,20 @@ const THUMBS = {
   satellite: satelliteThumb as StaticImageData,
 };
 
-const BasemapSelector = () => {
+const BasemapSelector = ({ className }: { className?: string }) => {
   const basemapSelected = useRecoilValue(basemapAtom);
   const setBasemap = useSetRecoilState(basemapAtom);
 
   const currentBasemap = BASEMAPS.find((basemap) => basemap.id === basemapSelected);
 
   return (
-    <div className="flex w-[296px] items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium">
+    <div
+      className={cn({
+        'flex w-full items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium':
+          true,
+        [className]: !!className,
+      })}
+    >
       <div className="mr-[30px]">
         <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
         <div className="mt-1">{currentBasemap.name}</div>

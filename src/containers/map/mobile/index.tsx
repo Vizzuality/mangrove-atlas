@@ -100,10 +100,6 @@ const MapContainerMobile = () => {
       <div className="absolute top-16 left-0 z-50">
         <Collapsible layers={activeWidgets as string[]} setActiveWidgets={setActiveWidgets} />
       </div>
-      {/* <div className="absolute bottom-10 right-10">
-        <Legend />
-        <BasemapSelector />
-      </div> */}
     </div>
   );
 };
