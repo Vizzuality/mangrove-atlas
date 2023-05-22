@@ -60,7 +60,7 @@ const CategoryMobile = () => {
         </DialogContent>
       </Dialog>
 
-      <div className="-mt-0.5 w-full font-sans text-xxs text-white">Category</div>
+      <div className="-mt-0.5 w-full font-sans text-xxs text-white">Categories</div>
     </div>
   );
 };

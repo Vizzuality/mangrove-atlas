@@ -17,7 +17,7 @@ const MapToggle = () => {
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
 
   return (
-    <div className="flex flex-col items-center justify-between">
+    <div className="flex flex-col items-center">
       <button
         className={cn({
           'mt-1 box-border flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white':
