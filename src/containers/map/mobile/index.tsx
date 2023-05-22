@@ -13,20 +13,15 @@ import { useRecoilValue } from 'recoil';
 import { useRecoilState } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
-import BasemapSelector from 'containers/map/basemap-selector';
-import Legend from 'containers/map/legend';
+// import BasemapSelector from 'containers/map/basemap-selector';
+import LayerManager from 'containers/map/layer-manager';
+// import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
-import Controls from 'components/map/controls';
-import FullScreenControl from 'components/map/controls/fullscreen';
-import PitchReset from 'components/map/controls/pitch-reset';
-import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
 
-import LayerManager from './layer-manager';
-
 export const DEFAULT_PROPS = {
-  id: 'default',
+  id: 'default-mobile',
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -38,13 +33,12 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const MapContainer = () => {
+const MapContainerMobile = () => {
   const basemap = useRecoilValue(basemapAtom);
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
   const { id, minZoom, maxZoom } = DEFAULT_PROPS;
-
   const { default: map } = useMap();
   const {
     query: { params },
@@ -97,24 +91,14 @@ const MapContainer = () => {
         onMapViewStateChange={handleViewState}
         bounds={bounds}
       >
-        {() => (
-          <>
-            <LayerManager />
-            <Controls>
-              <FullScreenControl />
-              <ZoomControl />
-              <PitchReset />
-            </Controls>
-          </>
-        )}
+        {() => <LayerManager />}
       </Map>
-
-      <div className="absolute bottom-10 right-10">
+      {/* <div className="absolute bottom-10 right-10">
         <Legend />
         <BasemapSelector />
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default MapContainer;
+export default MapContainerMobile;
