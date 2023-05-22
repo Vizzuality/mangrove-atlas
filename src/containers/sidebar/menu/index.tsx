@@ -18,19 +18,19 @@ const Menu = () => {
 
   return (
     <div>
-      <div className="hidden w-full pb-1 text-center font-sans text-xxs text-white sm:block">
+      <div className="hidden w-full pb-1 text-center font-sans text-xxs text-white md:block">
         Menu
       </div>
       <div className={`${STYLES['icon-wrapper']}`}>
         <Dialog>
           <DialogTrigger>
             <div
-              className="flex justify-center rounded-full p-1 sm:bg-white"
+              className="flex justify-center rounded-full p-1 md:bg-white"
               onClick={() => setAboutSection(false)}
             >
               <Icon
                 icon={MENU_SVG}
-                className="h-8 w-10 stroke-white stroke-2 sm:w-8 sm:stroke-brand-800"
+                className="h-8 w-10 stroke-white stroke-2 md:w-8 md:stroke-brand-800"
               />
             </div>
           </DialogTrigger>
@@ -100,7 +100,7 @@ const Menu = () => {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="block w-full text-center font-sans text-xxs text-white sm:hidden">Menu</div>
+      <div className="block w-full text-center font-sans text-xxs text-white md:hidden">Menu</div>
     </div>
   );
 };

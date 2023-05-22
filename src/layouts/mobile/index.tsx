@@ -1,4 +1,4 @@
-import MapContainer from 'containers/map/component';
+// import MapContainer from 'containers/map/component';
 import Sidebar from 'containers/sidebar/mobile';
 
 const MobileLayout = () => {

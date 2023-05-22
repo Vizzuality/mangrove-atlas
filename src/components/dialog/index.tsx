@@ -13,7 +13,7 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal className={className} {...props}>
-    <div className="fixed inset-0 top-0 z-50 flex h-full items-start justify-center sm:items-center">
+    <div className="fixed inset-0 top-0 z-50 flex h-full items-start justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -25,7 +25,7 @@ const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     className={cn({
-      'fixed inset-0 z-50 bg-brand-600/70 backdrop-blur-sm sm:bg-black/50': true,
+      'fixed inset-0 z-50 bg-brand-600/70 backdrop-blur-sm md:bg-black/50': true,
       [className]: !!className,
     })}
     {...props}
@@ -42,7 +42,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'fixed left-0 z-50 grid w-full gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 sm:left-18 sm:max-w-lg':
+        'fixed left-0 z-50 grid w-full gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:max-w-lg':
           true,
         [className]: !!className,
       })}
@@ -56,7 +56,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn({
-      'flex flex-col space-y-2 text-center sm:text-left': true,
+      'flex flex-col space-y-2 text-center md:text-left': true,
       [className]: !!className,
     })}
     {...props}
@@ -81,7 +81,7 @@ DialogClose.displayName = 'DialogClose';
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn({
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2': true,
+      'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
       [className]: !!className,
     })}
     {...props}
