@@ -18,8 +18,6 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { LocationTypes } from '../locations/types';
-
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
