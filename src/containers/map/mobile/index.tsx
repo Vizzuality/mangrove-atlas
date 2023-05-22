@@ -5,18 +5,20 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRecoilState } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 // import BasemapSelector from 'containers/map/basemap-selector';
 import LayerManager from 'containers/map/layer-manager';
-// import Legend from 'containers/map/legend';
 
+// import Legend from 'containers/map/legend';
+import Collapsible from 'components/collapsible';
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
 
@@ -37,6 +39,8 @@ const MapContainerMobile = () => {
   const basemap = useRecoilValue(basemapAtom);
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
+  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
   const { id, minZoom, maxZoom } = DEFAULT_PROPS;
   const { default: map } = useMap();
@@ -93,6 +97,9 @@ const MapContainerMobile = () => {
       >
         {() => <LayerManager />}
       </Map>
+      <div className="absolute top-16 left-0 z-50">
+        <Collapsible layers={activeWidgets as string[]} setActiveWidgets={setActiveWidgets} />
+      </div>
       {/* <div className="absolute bottom-10 right-10">
         <Legend />
         <BasemapSelector />
