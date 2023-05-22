@@ -1785,6 +1785,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash-es@npm:4.17.7":
+  version: 4.17.7
+  resolution: "@types/lodash-es@npm:4.17.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 4b1f39fd1d921311c37a846c0e0df9d1fa23e27448a6ad1efd7574e703abd2b2fa5e8f3b5037146000f167ba231d0d01e52747d902654151b4ceeff9f2a9b380
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:*":
+  version: 4.14.194
+  resolution: "@types/lodash@npm:4.14.194"
+  checksum: 113f34831c461469d91feca2dde737f88487732898b4d25e9eb23b087bb193985f864d1e1e0f3b777edc5022e460443588b6000a3b2348c966f72d17eedc35ea
+  languageName: node
+  linkType: hard
+
 "@types/mapbox-gl@npm:^2.6.0":
   version: 2.7.11
   resolution: "@types/mapbox-gl@npm:2.7.11"
@@ -3059,7 +3075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cmdk@npm:^0.2.0":
+"cmdk@npm:0.2.0":
   version: 0.2.0
   resolution: "cmdk@npm:0.2.0"
   dependencies:
@@ -3404,7 +3420,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-format@npm:1 - 3, d3-format@npm:^3.1.0":
+"d3-format@npm:1 - 3, d3-format@npm:3.1.0":
   version: 3.1.0
   resolution: "d3-format@npm:3.1.0"
   checksum: f345ec3b8ad3cab19bff5dead395bd9f5590628eb97a389b1dd89f0b204c7c4fc1d9520f13231c2c7cf14b7c9a8cf10f8ef15bde2befbab41454a569bd706ca2
@@ -4937,9 +4953,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:^10.12.3":
-  version: 10.12.12
-  resolution: "framer-motion@npm:10.12.12"
+"framer-motion@npm:10.12.3":
+  version: 10.12.3
+  resolution: "framer-motion@npm:10.12.3"
   dependencies:
     "@emotion/is-prop-valid": ^0.8.2
     tslib: ^2.4.0
@@ -4954,7 +4970,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 28ff7202b79833c0aa2fc412e64055b34f6405dc5b025eceb6fa737725f4005a2b29bec31011dd5c1c4cd44af2430b3d622e4a77a11a032e7b08e1e108456430
+  checksum: c292da47b5bcb313e3db2ffe19e61b3c76bf59f4a45dc72f62a3d9b33f58533d420aced47d5e9eb06be20be97651c937ae91aebb93d8bad6d0412c2768715956
   languageName: node
   linkType: hard
 
@@ -5038,7 +5054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fuse.js@npm:^6.6.2":
+"fuse.js@npm:6.6.2":
   version: 6.6.2
   resolution: "fuse.js@npm:6.6.2"
   checksum: 17ae758ce205276ebd88bd9c9f088a100be0b4896abac9f6b09847151269d1690f41d7f98ff5813d4a58973162dbd99d0072ce807020fee6f9de60170f6b08eb
@@ -5651,7 +5667,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"input@npm:^1.0.1":
+"input@npm:1.0.1":
   version: 1.0.1
   resolution: "input@npm:1.0.1"
   dependencies:
@@ -6541,7 +6557,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash-es@npm:^4.17.21":
+"lodash-es@npm:4.17.21":
   version: 4.17.21
   resolution: "lodash-es@npm:4.17.21"
   checksum: 05cbffad6e2adbb331a4e16fbd826e7faee403a1a04873b82b42c0f22090f280839f85b95393f487c1303c8a3d2a010048bf06151a6cbe03eee4d388fb0a12d2
@@ -6576,7 +6592,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.3.0, lodash@npm:^4.6.1":
+"lodash@npm:4.17.21, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.3.0, lodash@npm:^4.6.1":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -6697,6 +6713,7 @@ __metadata:
     "@turf/bbox": 6.5.0
     "@types/d3-format": ^3.0.1
     "@types/google.analytics": 0.0.42
+    "@types/lodash-es": 4.17.7
     "@types/node": 18.15.0
     "@types/react": 18.0.28
     "@types/react-dom": 18.0.11
@@ -6708,19 +6725,19 @@ __metadata:
     chroma-js: ^2.4.2
     classnames: ^2.3.2
     clsx: 1.2.1
-    cmdk: ^0.2.0
+    cmdk: 0.2.0
     cypress: 12.7.0
-    d3-format: ^3.1.0
+    d3-format: 3.1.0
     eslint: 8.32.0
     eslint-config-next: 13.1.2
     eslint-config-prettier: 8.6.0
     eslint-plugin-prettier: 4.2.1
-    framer-motion: ^10.12.3
-    fuse.js: ^6.6.2
+    framer-motion: 10.12.3
+    fuse.js: 6.6.2
     husky: 6.0.0
-    input: ^1.0.1
-    lodash: ^4.17.21
-    lodash-es: ^4.17.21
+    input: 1.0.1
+    lodash: 4.17.21
+    lodash-es: 4.17.21
     mapbox-gl: ^2.13.0
     next: ^13.4.3
     postcss: 8.4.21

@@ -13,10 +13,11 @@ import widgets from './constants';
 export function useWidgets(): WidgetTypes[] {
   const categorySelected = useRecoilValue(activeCategoryAtom);
   const {
-    query: { locationType },
+    query: { params },
   } = useRouter();
+  const locationType = params?.[0];
 
-  const currentLocation = (locationType as string) || 'worldwide';
+  const currentLocation = locationType || 'worldwide';
 
   return useMemo(
     () =>
@@ -24,6 +25,6 @@ export function useWidgets(): WidgetTypes[] {
         ({ categoryIds, locationType }) =>
           categoryIds.includes(categorySelected) && locationType.includes(currentLocation)
       ),
-    [categorySelected]
+    [categorySelected, currentLocation]
   );
 }
