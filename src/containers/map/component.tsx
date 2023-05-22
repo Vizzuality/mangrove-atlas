@@ -17,6 +17,10 @@ import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
+import Controls from 'components/map/controls';
+import FullScreenControl from 'components/map/controls/fullscreen';
+import PitchReset from 'components/map/controls/pitch-reset';
+import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
 
 import LayerManager from './layer-manager';
@@ -92,8 +96,18 @@ const MapContainer = () => {
         onMapViewStateChange={handleViewState}
         bounds={bounds}
       >
-        {() => <LayerManager />}
+        {() => (
+          <>
+            <LayerManager />
+            <Controls>
+              <FullScreenControl />
+              <ZoomControl />
+              <PitchReset />
+            </Controls>
+          </>
+        )}
       </Map>
+
       <div className="absolute bottom-10 right-10">
         <Legend />
         <BasemapSelector />

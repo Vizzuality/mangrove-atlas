@@ -1,110 +1,76 @@
-import { FC, useCallback, MouseEvent } from 'react';
+import { useCallback, MouseEvent } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { TooltipPortal } from '@radix-ui/react-tooltip';
-import cx from 'classnames';
+import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
-// import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from 'components/tooltip';
 
 import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
 
-import { CONTROL_BUTTON_STYLES } from '../constants';
+const COMMON_CLASSES =
+  'group bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none';
 
-import type { ZoomControlProps } from './types';
+const SVG_COMMON_CLASSES = 'h-5 w-5 group-disabled:fill-grey-75';
 
-export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProps) => {
-  const { default: mapRef } = useMap();
-  const zoom = mapRef?.getZoom();
-  const minZoom = mapRef?.getMinZoom();
-  const maxZoom = mapRef?.getMaxZoom();
+export const ZoomControl = ({ className }: { className?: string }) => {
+  const { default: map } = useMap();
+  const zoom = map?.getZoom();
+  const minZoom = map?.getMinZoom();
+  const maxZoom = map?.getMaxZoom();
 
   const increaseZoom = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      mapRef.zoomIn();
+      if (!map) return null;
+
+      map.zoomIn();
     },
-    [mapRef]
+    [map]
   );
 
   const decreaseZoom = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      mapRef.zoomOut();
+      if (!map) return null;
+
+      map.zoomOut();
     },
-    [mapRef]
+    [map]
   );
 
   return (
     <div
-      className={cx({
-        'flex flex-col space-y-0.5': true,
+      className={cn({
+        'inline-flex flex-col rounded-md shadow-md shadow-black/10': true,
         [className]: !!className,
       })}
     >
-      {/* <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            className={cx({
-              [CONTROL_BUTTON_STYLES.default]: true,
-              [CONTROL_BUTTON_STYLES.hover]: zoom !== maxZoom,
-              [CONTROL_BUTTON_STYLES.active]: zoom !== maxZoom,
-              [CONTROL_BUTTON_STYLES.disabled]: zoom === maxZoom,
-            })}
-            aria-label="Zoom in"
-            type="button"
-            disabled={zoom === maxZoom}
-            onClick={increaseZoom}
-          >
-            <Icon icon={ZOOM_IN_SVG} className="h-full w-full" />
-          </button>
-        </TooltipTrigger>
-
-        <TooltipPortal>
-          <TooltipContent
-            side="left"
-            align="center"
-            className="border-navy-500 bg-navy-500 rounded-none"
-          >
-            <div className="text-xxs text-white">Zoom in</div>
-
-            <TooltipArrow className="fill-navy-500" width={10} height={5} />
-          </TooltipContent>
-        </TooltipPortal>
-      </Tooltip>
-
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            className={cx({
-              [CONTROL_BUTTON_STYLES.default]: true,
-              [CONTROL_BUTTON_STYLES.hover]: zoom !== minZoom,
-              [CONTROL_BUTTON_STYLES.active]: zoom !== minZoom,
-              [CONTROL_BUTTON_STYLES.disabled]: zoom === minZoom,
-            })}
-            aria-label="Zoom out"
-            type="button"
-            disabled={zoom === minZoom}
-            onClick={decreaseZoom}
-          >
-            <Icon icon={ZOOM_OUT_SVG} className="h-full w-full" />
-          </button>
-        </TooltipTrigger>
-
-        <TooltipPortal>
-          <TooltipContent
-            side="left"
-            align="center"
-            className="border-navy-500 bg-navy-500 rounded-none"
-          >
-            <div className="text-xxs text-white">Zoom out</div>
-
-            <TooltipArrow className="fill-navy-500" width={10} height={5} />
-          </TooltipContent>
-        </TooltipPortal>
-      </Tooltip> */}
+      <button
+        className={cn({
+          [COMMON_CLASSES]: true,
+          'rounded-t-md': true,
+        })}
+        aria-label="Zoom in"
+        type="button"
+        disabled={zoom >= maxZoom}
+        onClick={increaseZoom}
+      >
+        <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} />
+      </button>
+      <button
+        className={cn({
+          [COMMON_CLASSES]: true,
+          'rounded-b-md': true,
+        })}
+        aria-label="Zoom out"
+        type="button"
+        disabled={zoom <= minZoom}
+        onClick={decreaseZoom}
+      >
+        <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} />
+      </button>
     </div>
   );
 };
