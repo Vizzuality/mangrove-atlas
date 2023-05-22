@@ -41,9 +41,16 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const handleLocation = useCallback(
     async (location: Location) => {
       const queryParams = asPath.split('?')[1];
-      const url = `/${location.location_type}/${
-        location.location_type === 'country' ? location.iso : location.location_id
-      }?${queryParams}`;
+
+      const locationType = location.location_type === 'worldwide' ? '/' : location.location_type;
+      const locationId =
+        location.location_type === 'worldwide'
+          ? ''
+          : location.location_type === 'country'
+          ? location.iso
+          : location.location_id;
+
+      const url = `/${locationType}/${locationId}?${queryParams}`;
 
       await replace(url, null);
 
