@@ -2,22 +2,46 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
+import { widgetYearAtom } from 'store/widgets';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import type { DataResponse, Data } from './types';
+
 // widget data
-export function useMangroveProtectedAreas(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions = {}
+export function useMangroveProtectedAreas<T>(
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<DataResponse, Error, T>
 ) {
+  const currentYear = useRecoilValue(widgetYearAtom);
+
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
   const fetchMangroveProtectedAreas = () =>
     API.request({
       method: 'GET',
       url: '/widgets/protected-areas',
-      params,
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        year: currentYear,
+        ...params,
+      },
+      ...queryOptions,
     }).then((response) => response.data);
 
   const query = useQuery(['protected-areas', params], fetchMangroveProtectedAreas, {
@@ -26,9 +50,14 @@ export function useMangroveProtectedAreas(
     ...queryOptions,
   });
 
+  const DATA = {
+    location,
+  } satisfies Data;
+
   return useMemo(() => {
     return {
       ...query,
+      data: DATA,
     } as typeof query;
   }, [query]);
 }

@@ -2,10 +2,17 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import { numberFormat } from 'lib/format';
+
+import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useRecoilValue } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -60,14 +67,28 @@ const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
 
 // widget data
 export function useMangroveHeight(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions<DataResponse>
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<DataResponse>
 ) {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
+  const currentYear = useRecoilValue(widgetYearAtom);
   const fetchMangroveHeight = () =>
     API.request({
       method: 'GET',
       url: '/widgets/tree_height',
-      params,
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        year: currentYear,
+        ...params,
+      },
+      ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
   const query = useQuery(['tree-height', params], fetchMangroveHeight, {
@@ -160,6 +181,7 @@ export function useMangroveHeight(
     return {
       ...query,
       mean: numberFormat(mean),
+      location,
       unit,
       year,
       legend: legendData,

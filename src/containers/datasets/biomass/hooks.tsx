@@ -18,8 +18,6 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { LocationTypes } from '../locations/types';
-
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
@@ -40,19 +38,13 @@ export function useMangroveBiomass(
   const currentYear = useRecoilValue(BiomassYearSettings);
 
   const {
-    query: { params: urlParams },
+    query: { params: queryParams },
   } = useRouter();
-  const locationType = params?.[0];
-  const id = urlParams?.[1];
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'the area selected';
-    if (location_id === 'worldwide') return 'the world';
-    else return name;
-  }, [location_id]);
 
   const fetchMangroveBiomass = () =>
     API.request({
@@ -79,7 +71,7 @@ export function useMangroveBiomass(
     },
     ...queryOptions,
   });
-  const { data, isLoading } = query;
+  const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {
     const years = data?.metadata.year;
@@ -130,6 +122,8 @@ export function useMangroveBiomass(
       config,
       isLoading,
       location,
+      isFetched,
+      isPlaceholderData,
     };
   }, [data]);
 }

@@ -17,7 +17,9 @@ const LocationTitle = () => {
   const id = params?.[1];
   const {
     data: { name },
-  } = useLocation(locationType, id);
+  } = useLocation(locationType, id, {
+    enabled: !!locationType && !!id,
+  });
 
   const [width, setWidth] = useState(null);
   const titleRef = useRef(null);
@@ -26,7 +28,6 @@ const LocationTitle = () => {
     const { width } = titleRef?.current.getBoundingClientRect();
     setWidth(width);
   }, [name]);
-
   return (
     <>
       <div className="flex flex-col text-center">
@@ -36,11 +37,11 @@ const LocationTitle = () => {
             <h1
               ref={titleRef}
               className={cn({
-                'inline-block py-10 text-6xl font-light text-black/85': true,
+                'inline-block py-10 text-6xl font-light text-black/85 first-letter:uppercase': true,
                 'text-2.75xl': width >= 540,
               })}
             >
-              {name}
+              {!!locationType ? name : 'Worldwide'}
             </h1>
           </DialogTrigger>
           <DialogContent className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0">

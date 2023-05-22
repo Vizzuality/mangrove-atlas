@@ -50,6 +50,7 @@ const Chart = ({ config }) => {
     yAxis,
     chartBase,
     xKey,
+    yKeys,
   } = config;
   const { pies, bars, lines } = chartBase;
   const Chart = ChartsMap.get(type);

@@ -1,13 +1,29 @@
+import { useState } from 'react';
+
+import Chart from 'components/chart';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
-import EmissionsMitigationChart from './chart';
 import { useMangroveEmissionsMitigation } from './hooks';
+import Legend from './legend';
 const EmissionsMitigationWidget = () => {
-  const { legend, isLoading, location, isPlaceholderData, isFetched, year, config } =
-    useMangroveEmissionsMitigation();
-  if (isLoading) return null;
+  const [filteredIndicators, setFilteredIndicators] = useState([]);
+  const { isLoading, data, isPlaceholderData, isFetched } = useMangroveEmissionsMitigation({
+    filteredIndicators,
+  });
 
+  const handleChartBars = (indicator, filteredIndicators, setFilteredIndicators) => {
+    const index = filteredIndicators.indexOf(indicator);
+    if (index === -1) {
+      setFilteredIndicators([...filteredIndicators, indicator]);
+    } else {
+      const filter = filteredIndicators.splice(index, 1);
+      const updatedIndicators = filteredIndicators.filter((indicator) => indicator !== filter);
+      setFilteredIndicators(updatedIndicators);
+    }
+  };
+  const { config, location } = data;
+  const { legend, ...restConfig } = config;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -18,10 +34,17 @@ const EmissionsMitigationWidget = () => {
         <div>
           <p>
             Emissions mitigation by area for mangrove and non-mangrove related interventions in the
-            world Mean mangrove maximum canopy height in{' '}
-            <span className="font-bold"> {location}</span> was{' '}
+            <span className="font-bold"> {location}</span>
           </p>
-          <EmissionsMitigationChart config={config} legend={legend} />
+          <div className="flex flex-1 items-center justify-between py-10">
+            <Chart config={restConfig} />
+            <Legend
+              items={legend}
+              onClick={handleChartBars}
+              filteredIndicators={filteredIndicators}
+              setFilteredIndicators={setFilteredIndicators}
+            />
+          </div>
         </div>
       )}
     </div>

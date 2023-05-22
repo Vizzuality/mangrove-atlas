@@ -31,10 +31,11 @@ import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent } from './hooks';
 
 const HabitatExtent = () => {
-  const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
+  const [year, setYear] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
   const { isLoading, data, isFetched, isPlaceholderData } = useMangroveHabitatExtent({
+    year,
     unit: selectedUnitAreaExtent,
   });
 
@@ -52,13 +53,11 @@ const HabitatExtent = () => {
   } = data;
 
   const handleClick = useCallback(
-    (year) => {
-      setWidgetSettings(year);
+    (y) => {
+      setYear(y);
     },
-    [setWidgetSettings]
+    [setYear]
   );
-
-  const year = widgetSettings;
 
   return (
     <div>

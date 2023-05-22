@@ -2,7 +2,7 @@ import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query
 
 import API from 'services/api';
 
-import type { Location } from './types';
+import type { Location, LocationTypes } from './types';
 
 export type DataResponse = {
   data: Location[];
@@ -33,19 +33,9 @@ export function useLocations<T = Location[]>(
   });
 }
 
-// export function useLocationName(locationType: LocationTypes, id: number) {
-//   const {
-//     data: { name, location_id },
-//   } = useLocation(locationType, id);
-
-//   if (location_id === 'custom-area') return 'the area selected';
-//   if (location_id === 'worldwide') return 'the world';
-//   else return name;
-// }
-
 export function useLocation(
-  locationType: string | string[],
-  id: string | string[],
+  locationType: LocationTypes,
+  id: string,
   queryOptions: UseQueryOptions<DataResponse, Error, Location> = {}
 ) {
   const queryClient = useQueryClient();
@@ -54,13 +44,23 @@ export function useLocation(
       data: [],
       metadata: null,
     },
-    select: (data) => ({
-      ...data?.data?.find(
-        (d) =>
+    select: (data) => {
+      const result = data?.data?.find((d) => {
+        return (
           (d.location_type === locationType && (d.location_id === id || d.iso === id)) ||
           d.iso === 'WORLDWIDE'
-      ),
-    }),
+        );
+      });
+
+      if (result) {
+        if (result.location_type === 'custom-area') {
+          result.name = 'the area selected';
+        } else if (result.location_type === 'worldwide') {
+          result.name = 'the world';
+        }
+      }
+      return result || null;
+    },
     ...queryOptions,
   });
 }
@@ -78,13 +78,3 @@ export function useHighlightedPlaces(
     ...queryOptions,
   });
 }
-
-// export function useLocationName(locationType: LocationTypes, id: number) {
-//   const {
-//     data: { name, location_id },
-//   } = useLocation(locationType, id);
-
-//   if (location_id === 'custom-area') return 'the area selected';
-//   if (location_id === 'worldwide') return 'the world';
-//   else return name;
-// }

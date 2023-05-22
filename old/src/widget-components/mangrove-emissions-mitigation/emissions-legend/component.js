@@ -8,7 +8,8 @@ const Legend = ({ groups, onClick, filteredIndicators, setFilteredIndicators }) 
   <div className={styles.widget_legend}>
     <ul className={styles.widget_legend_list}>
       {groups?.map((g) => (
-        <li
+        <button
+        type="button"
           key={g.label}
           onClick={() => onClick(g.label, filteredIndicators, setFilteredIndicators)}
           className={cx(styles.widget_legend_list_item, {
@@ -20,7 +21,7 @@ const Legend = ({ groups, onClick, filteredIndicators, setFilteredIndicators }) 
             className={styles.item_color}
           />
           <span className={styles.item_value}>{g.label}</span>
-        </li>
+        </button>
       ))}
     </ul>
   </div>

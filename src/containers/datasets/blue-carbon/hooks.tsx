@@ -12,7 +12,6 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
-import { RouterData } from 'containers/widgets/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -35,17 +34,13 @@ export function useMangroveBlueCarbon(
   queryOptions?: UseQueryOptions<BlueCarbon, unknown>
 ) {
   const {
-    query: { locationType, id },
+    query: { params: queryParams },
   } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
-  }: RouterData = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'the area selected';
-    if (location_id === 'worldwide') return 'the world';
-    else return name;
-  }, [location_id]);
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
 
   const fetchMangroveBlueCarbon = () =>
     API.request({

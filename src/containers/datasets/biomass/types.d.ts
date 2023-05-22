@@ -48,6 +48,8 @@ type ChartConfig = {
 
 export type BiomassData = {
   isLoading: boolean;
+  isFetched: boolean;
+  isPlaceholderData: boolean;
   mean: string;
   unit: string;
   year: number;

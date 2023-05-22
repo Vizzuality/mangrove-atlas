@@ -12,6 +12,9 @@ export type Data = {
   pledge_summary: string;
   pledge_type: string;
   target_years: string; // TO - DO change to number in API
+  isLoading: boolean;
+  isFetched: boolean;
+  isPlaceholderData: boolean;
 };
 
 type Metadata = {
@@ -25,9 +28,9 @@ export type DataResponse = {
 };
 
 export type InternationalStatusTypes = {
-  base_years: string; // TO - DO change to number in API
+  base_years?: string; // TO - DO change to number in API
   ipcc_wetlands_suplement: string;
-  ndc: boolean;
+  ndc?: boolean;
   ndc_adaptation: boolean;
   ndc_blurb: string;
   ndc_mitigation: boolean;
@@ -35,7 +38,7 @@ export type InternationalStatusTypes = {
   ndc_target: number;
   ndc_target_url: string;
   ndc_updated: boolean;
-  pledge_summary: string;
+  pledge_summary?: string;
   pledge_type: string;
   target_years: string;
   pledge_type: string;
@@ -47,4 +50,8 @@ export type InternationalStatusTypes = {
   ndcTargetSentence: string;
   hasNDCTarget: boolean;
   hasNDCReductionTarget: boolean;
+  location: string;
+  isLoading: boolean;
+  isFetched: boolean;
+  isPlaceholderData: boolean;
 };
