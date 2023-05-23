@@ -2,58 +2,41 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
-type Categories = Readonly<{
-  cr: number;
-  en: number;
-  vu: number;
-  nt: number;
-  lc: number;
-  dd: number;
-}>;
 
-type Category = 'cr' | 'en' | 'vu' | 'nt' | 'lc' | 'dd';
+import type { SpeciesData, DataResponse } from './types';
 
-type Specie = Readonly<{
-  common_name: null | string;
-  created_at: string;
-  id: number;
-  iucn_url: string;
-  red_list_cat: Category;
-  scientific_name: string;
-  updated_at: string;
-}>;
-
-type Data = { total: number; threatened: number; categories: Categories; species: Specie[] };
-
-type Metadata = {
-  note: 'nº of species';
-  unit: null | string;
-};
-type DataResponse = {
-  data: Data;
-  metadata: Metadata;
-};
-type SpeciesData = {
-  total: number;
-  legend: number[];
-  isLoading: boolean;
-};
 // widget data
 export function useMangroveSpecies(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions<DataResponse>
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
   const fetchMangroveSpecies = () =>
     API.request({
       method: 'GET',
       url: '/widgets/biodiversity',
-      params,
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
+      ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
   const query = useQuery(['biodiversity', params], fetchMangroveSpecies, {
@@ -65,15 +48,18 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
-  const { data, isLoading } = query;
+  const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {
     const total = data.data.total;
     const legend = [1, Math.ceil(total / 2), total];
     return {
+      location,
       total: total,
       legend,
       isLoading,
+      isFetched,
+      isPlaceholderData,
     };
   }, [query, params]);
 }

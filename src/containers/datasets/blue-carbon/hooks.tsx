@@ -4,16 +4,21 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
 
-import { numberFormat } from 'lib/format';
+import { useRouter } from 'next/router';
+
+import { formatMillion, numberFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
+import type { PolarViewBox } from 'recharts/types/util/types';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { DataResponse, BlueCarbon } from './types';
+import Tooltip from './tooltip';
+import type { BlueCarbon } from './types';
 
 const COLORS = {
   '0-700': '#EEB66B',
@@ -25,15 +30,28 @@ const COLORS = {
 
 // widget data
 export function useMangroveBlueCarbon(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions<DataResponse>
-): BlueCarbon {
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<BlueCarbon, unknown>
+) {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
+
   const fetchMangroveBlueCarbon = () =>
     API.request({
       method: 'GET',
       url: '/widgets/blue_carbon',
-      params,
-    }).then((response: AxiosResponse<DataResponse>) => response.data);
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
+      ...queryOptions,
+    }).then((response) => response.data);
 
   const query = useQuery(['blue-carbon', params], fetchMangroveBlueCarbon, {
     placeholderData: {
@@ -45,12 +63,10 @@ export function useMangroveBlueCarbon(
         units: null,
       },
     },
-    // select: (data) => ({
-    //   data,
-    // }),
     ...queryOptions,
   });
-  const { data, isLoading } = query;
+  const { data } = query;
+
   return useMemo(() => {
     const orderedData = orderBy(
       data.data.map((d) => ({
@@ -60,30 +76,110 @@ export function useMangroveBlueCarbon(
       'shortLabel'
     );
 
+    const total = orderedData.reduce(
+      (previous: number, current: { value: number }) => current.value + previous,
+      0
+    );
+
     const ChartData = orderedData.map((d) => ({
       label: d.indicator,
       value: d.value,
       color: COLORS[d.indicator],
+      showValue: false,
+      valueFormatted: formatMillion(d.value),
+      tooltipLabelValue: 'Carbon density',
+      tooltipLabelPercentage: 'Percentage',
+      percentage: numberFormat((d.value * 100) / total),
     }));
 
     const { agb, toc, soc } = data?.metadata;
     const config = {
       type: 'pie',
       data: ChartData,
-      // tooltip: TooltipData,
-      chartBase: {
-        pies: {
-          value: 'blue-carbon',
+      tooltip: {
+        content: (properties) => {
+          const { payload } = properties;
+          if (!payload.length) return null;
+          return <Tooltip {...properties} payload={properties.payload?.[0]?.payload?.payload} />;
         },
       },
+      chartBase: {
+        width: 30,
+        margin: {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        },
+        pies: {
+          innerRadius: 80,
+          outerRadius: 100,
+          y: {
+            // cy: '50%',
+            // cx: '50%',
+            value: 'blue-carbon',
+            dataKey: 'value',
+            customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
+              const { cx, cy } = viewBox;
+              return (
+                <g>
+                  <text
+                    x={cx}
+                    y={cy - 30}
+                    className="recharts-text recharts-label-medium"
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                  >
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
+                      Total
+                    </tspan>
+                  </text>
+                  <text
+                    x={cx}
+                    y={cy}
+                    className="recharts-text recharts-label-large"
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                  >
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
+                      {formatMillion(toc)}
+                    </tspan>
+                  </text>
+                  <text
+                    x={cx}
+                    y={cy + 30}
+                    className="recharts-text recharts-label-medium"
+                    textAnchor="middle"
+                    dominantBaseline="central"
+                  >
+                    <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
+                      Mt CO₂e
+                    </tspan>
+                  </text>
+                </g>
+              );
+            },
+          },
+        },
+      },
+      legend: {
+        title: 'Total carbon density (t CO₂e / ha)',
+        items: ChartData,
+      },
     };
-    return {
-      isLoading,
-      agb: numberFormat(agb / 1000000),
-      toc: numberFormat(toc / 1000000),
-      soc: numberFormat(soc / 1000000),
+
+    const DATA = {
+      agb: formatMillion(agb),
+      toc: formatMillion(toc),
+      soc: formatMillion(soc),
       config,
-    };
+      location,
+    } satisfies BlueCarbon;
+
+    return {
+      ...query,
+      data: DATA,
+    } as typeof query;
   }, [query]);
 }
 

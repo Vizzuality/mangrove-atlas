@@ -62,6 +62,7 @@ const getWidgetData = (data: Data[], unit = '') => {
             value: numberFormat(
               unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i]
             ),
+            variant: 'thin',
             unit,
           },
         ],
@@ -83,14 +84,8 @@ export function useMangroveNetChange(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'the area selected';
-    if (location_id === 'worldwide') return 'the world';
-    else return name;
-  }, [location_id]);
 
   const { startYear, endYear, selectedUnit, ...restParams } = params;
   const fetchMangroveNetChange = () =>
@@ -123,7 +118,7 @@ export function useMangroveNetChange(
     );
     const DATA = getWidgetData(dataFiltered, unit) || [];
     const TooltipData = {
-      content: (properties) => <CustomTooltip {...properties} payload={properties?.payload[0]} />,
+      content: (properties) => <CustomTooltip {...properties} />,
     };
 
     const change = DATA[DATA.length - 1]?.['Net change'];
@@ -156,7 +151,7 @@ export function useMangroveNetChange(
       xKey: 'year',
       cartesianGrid: {
         vertical: false,
-        strokeDasharray: '5 20',
+        strokeDasharray: '5 15',
       },
       tooltip: TooltipData,
       chartBase: {

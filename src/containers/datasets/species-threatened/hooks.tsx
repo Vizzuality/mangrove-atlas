@@ -55,6 +55,8 @@ type SpeciesData = {
   total: number;
   location: string;
   isLoading: boolean;
+  isFetched: boolean;
+  isPlaceholderData: boolean;
   tooltip?: unknown;
   chartData;
 };
@@ -79,14 +81,8 @@ export function useMangroveSpecies(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-
-  const location = useMemo(() => {
-    if (location_id === 'custom-area') return 'The area selected';
-    if (location_id === 'worldwide') return 'The world';
-    else return name;
-  }, [location_id]);
 
   const fetchMangroveSpecies = () =>
     API.request({
@@ -105,7 +101,7 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
-  const { data, isLoading } = query;
+  const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   const DATA = useMemo(() => {
     const { data: speciesData } = data;
@@ -137,6 +133,8 @@ export function useMangroveSpecies(
     return {
       ...DATA,
       isLoading,
+      isFetched,
+      isPlaceholderData,
     } satisfies SpeciesData;
   }, [query, DATA]);
 }

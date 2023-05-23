@@ -32,6 +32,9 @@ const getData = (data) => {
         hasLabel ? d.label : ''
       }`;
 
+
+  
+
       return {
         category: labelDisplayed,
         label: hasLabel ? d.label : null,
@@ -40,6 +43,16 @@ const getData = (data) => {
         description: d.description,
         percentage: d.percentage,
         tooltipValue: `${numberFormat(d.value)} ha`,
+        settings: [
+          { title: labelDisplayed },
+
+          {
+            label: 'Area',
+            value: numberFormat(d.value),
+            unit,
+          },
+          { label: 'Percentage', value: numberFormat(d.percentage), unit: '%' },
+        ],
       };
     }),
     'value',
@@ -135,22 +148,7 @@ export const CONFIG = {
                 style={{
                   flexDirection: 'column',
                   marginTop: '10px',
-                }}
-                payload={payload}
-                settings={[
-                  { title: 'category', key: 'category' },
-                  {
-                    label: 'Area',
-                    key: 'tooltipValue',
-                    position: '_column',
-                  },
-                  {
-                    label: 'Percentage',
-                    key: 'percentage',
-                    format: (value) => `${numberFormat(value)} %`,
-                    position: '_column',
-                  },
-                ]}
+                }}          
               />
             );
           },

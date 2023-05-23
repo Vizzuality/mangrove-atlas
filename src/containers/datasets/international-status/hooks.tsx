@@ -1,9 +1,16 @@
 import { useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { numberFormat } from 'lib/format';
+
+import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useRecoilValue } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -13,14 +20,29 @@ import type { DataResponse, InternationalStatusTypes } from './types';
 
 // widget data
 export function useMangroveInternationalStatus(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions<AxiosResponse<DataResponse>> = {}
-) {
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions<AxiosResponse<DataResponse>>
+): InternationalStatusTypes {
+  const currentYear = useRecoilValue(widgetYearAtom);
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
+
   const fetchMangroveInternationalStatus = () =>
     API.request({
       method: 'GET',
       url: '/widgets/international_status',
-      params,
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        year: currentYear,
+        ...params,
+      },
+      ...queryOptions,
     }).then((response) => response.data);
 
   const query = useQuery(['international-status', params], fetchMangroveInternationalStatus, {
@@ -40,6 +62,9 @@ export function useMangroveInternationalStatus(
           pledge_summary: null,
           pledge_type: null,
           target_years: null,
+          isLoading: null,
+          isFetching: null,
+          isPlaceholderData: null,
         },
       ],
       metadata: null,
@@ -48,7 +73,7 @@ export function useMangroveInternationalStatus(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {
     const {
@@ -78,6 +103,7 @@ export function useMangroveInternationalStatus(
     const ndcTargetSentence =
       !!ndc_target && `. This represents a reduction of ${ndc_target} Mt CO₂e/yr`;
     return {
+      location,
       pledge_type,
       ndc_target,
       ndc_reduction_target,
@@ -96,6 +122,9 @@ export function useMangroveInternationalStatus(
       ndcTargetSentence,
       hasNDCTarget,
       hasNDCReductionTarget,
+      isLoading,
+      isFetched,
+      isPlaceholderData,
     };
   }, [data]);
 }

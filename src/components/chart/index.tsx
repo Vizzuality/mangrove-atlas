@@ -13,12 +13,13 @@ import {
   CartesianAxis,
   XAxis,
   YAxis,
+  ReferenceLine,
 } from 'recharts';
 
 const DEFAULTVALUES = {
   pie: {
-    innerRadius: 60,
-    outerRadius: 80,
+    innerRadius: 80,
+    outerRadius: 100,
     paddingAngle: 0.5,
   },
 };
@@ -37,15 +38,9 @@ const Chart = ({ config }) => {
       left: 0,
       bottom: 20,
     },
-    padding = {
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 0,
-    },
     type = 'composed',
     height,
-
+    width,
     layout = 'horizontal',
 
     stackOffset,
@@ -56,15 +51,17 @@ const Chart = ({ config }) => {
     yAxis,
     chartBase,
     xKey,
+    referenceLines,
   } = config;
   const { pies, bars, lines } = chartBase;
   const Chart = ChartsMap.get(type);
 
   return (
-    <ResponsiveContainer width="100%" height={250} className="flex-1">
+    <ResponsiveContainer width="100%" height={height || 250} className="w-full flex-1">
       <Chart
         stackOffset={stackOffset}
         height={height}
+        width={width}
         // viewBox={viewBox}
         data={data}
         layout={layout}
@@ -124,8 +121,12 @@ const Chart = ({ config }) => {
               {data.map((d, i) => (
                 <Cell key={`cell-${i}`} fill={d.color} />
               ))}
+              {pies[key].customLabel && (
+                <Label width={30} position="center" content={pies[key].customLabel} />
+              )}
             </Pie>
           ))}
+        {referenceLines && referenceLines.map((line) => <ReferenceLine key={line} {...line} />)}
         <Tooltip {...tooltip} />
       </Chart>
     </ResponsiveContainer>

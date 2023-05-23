@@ -15,5 +15,5 @@ export const activeWidgetsAtom = atom({
 
 export const widgetYearAtom = atom({
   key: 'year',
-  default: 2019,
+  default: null,
 });

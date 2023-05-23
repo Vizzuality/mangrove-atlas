@@ -31,10 +31,11 @@ import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent } from './hooks';
 
 const HabitatExtent = () => {
-  const [widgetSettings, setWidgetSettings] = useRecoilState(habitatExtentSettings);
+  const [year, setYear] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
   const { isLoading, data, isFetched, isPlaceholderData } = useMangroveHabitatExtent({
+    year,
     unit: selectedUnitAreaExtent,
   });
 
@@ -52,13 +53,11 @@ const HabitatExtent = () => {
   } = data;
 
   const handleClick = useCallback(
-    (year) => {
-      setWidgetSettings(year);
+    (y) => {
+      setYear(y);
     },
-    [setWidgetSettings]
+    [setYear]
   );
-
-  const year = widgetSettings;
 
   return (
     <div>
@@ -67,7 +66,7 @@ const HabitatExtent = () => {
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
-        <div>
+        <div className="space-y-4">
           <p className="text-lg font-light leading-7">
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
             <span className="notranslate font-bold">

@@ -100,6 +100,7 @@ export const CONFIG = {
                 );
               }
             },
+            // TO - DO - put back when API gets correct data
             // loss: {
             //   barSize: 20,
             //   fill: '#EB6240',
