@@ -32,7 +32,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       className={cn({
         'md:h-fit-conten ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        '-mb-9': isCollapsed[id],
+        '-mb-3 md:-mb-9': isCollapsed[id],
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
         [className]: !!className,
       })}
