@@ -15,7 +15,7 @@ const CollapsibleComponent = ({
   layers,
   setActiveWidgets,
 }: {
-  layers: string[];
+  layers: readonly string[];
   setActiveWidgets: (layers: string[]) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);

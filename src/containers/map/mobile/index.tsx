@@ -97,8 +97,8 @@ const MapContainerMobile = () => {
       >
         {() => <LayerManager />}
       </Map>
-      <div className="absolute top-16 left-0 z-50">
-        <Collapsible layers={activeWidgets as string[]} setActiveWidgets={setActiveWidgets} />
+      <div className="absolute top-20 left-0 z-[80]">
+        <Collapsible layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
       </div>
     </div>
   );
