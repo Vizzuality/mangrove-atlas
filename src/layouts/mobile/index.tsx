@@ -18,7 +18,7 @@ const MobileLayout = () => {
         <Icon icon={LOGO_MOBILE_SVG} className="ml-4 mt-1.5 h-10 w-24" />
       </div>
       <Sidebar />
-      {mapView && <MapContainer />}
+      {mapView && <MapContainer id="default-mobile" />}
       {!mapView && <WidgetsContainer />}
     </div>
   );

@@ -44,7 +44,7 @@ const DesktopLayout = () => {
         <div className="absolute top-0 left-0 z-50">
           <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
         </div>
-        <MapContainer />
+        <MapContainer id="default-desktop" />
         <Sidebar />
         <WidgetsContainer />
         <LanguageSelector />

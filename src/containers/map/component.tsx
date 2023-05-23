@@ -29,7 +29,6 @@ import { Media } from 'components/media-query';
 import LayerManager from './layer-manager';
 
 export const DEFAULT_PROPS = {
-  id: 'default',
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -41,7 +40,7 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const MapContainer = () => {
+const MapContainer = ({ id }: { id: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
@@ -50,7 +49,8 @@ const MapContainer = () => {
   const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
-  const { id, minZoom, maxZoom } = DEFAULT_PROPS;
+
+  const { minZoom, maxZoom } = DEFAULT_PROPS;
 
   const { default: map } = useMap();
   const {
