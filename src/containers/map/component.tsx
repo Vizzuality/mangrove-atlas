@@ -13,6 +13,8 @@ import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRecoilState } from 'recoil';
 
+import { useScreenWidth } from 'hooks/media';
+
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
@@ -25,6 +27,7 @@ import PitchReset from 'components/map/controls/pitch-reset';
 import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
+import { breakpoints } from 'styles/styles.config';
 
 import LayerManager from './layer-manager';
 
@@ -51,6 +54,8 @@ const MapContainer = ({ id }: { id: string }) => {
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 
   const { minZoom, maxZoom } = DEFAULT_PROPS;
+
+  const screenWidth = useScreenWidth();
 
   const { default: map } = useMap();
   const {
@@ -86,11 +91,11 @@ const MapContainer = ({ id }: { id: string }) => {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 540,
+          left: screenWidth >= breakpoints.md ? 540 : 0,
         },
       },
     } satisfies CustomMapProps['bounds'];
-  }, [locationBounds]);
+  }, [locationBounds, screenWidth]);
 
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
