@@ -22,6 +22,7 @@ import TRIANGLE_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useMangroveHabitatChange } from './hooks';
+import { UseParamsOptions } from './types';
 
 const labelsForLayer = [
   {
@@ -38,9 +39,9 @@ const labelsForLayer = [
   // }, TO - DO - add back when client fixes data for gain and loss
 ];
 const HabitatExtent = () => {
-  const [startYear, setStartYear] = useRecoilState<number>(habitatChangeStartYear);
-  const [endYear, setEndYear] = useRecoilState<number>(habitatChangeEndYear);
-  const [limit, setLimit] = useState<5 | 10>(5);
+  const [startYear, setStartYear] = useRecoilState(habitatChangeStartYear);
+  const [endYear, setEndYear] = useRecoilState(habitatChangeEndYear);
+  const [limit, setLimit] = useState<UseParamsOptions['limit']>(5);
 
   const {
     location,
