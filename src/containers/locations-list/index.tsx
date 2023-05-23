@@ -85,7 +85,9 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 handleLocation(locationsToDisplay[index]);
               }}
             >
-              <p className="font-sans text-2lg text-black/85">{locationsToDisplay[index].name}</p>
+              <p className="text-left font-sans text-2lg text-black/85">
+                {locationsToDisplay[index].name}
+              </p>
               <span className="text-xs text-grey-800 text-opacity-90">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
