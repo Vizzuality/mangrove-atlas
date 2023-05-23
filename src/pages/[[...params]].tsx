@@ -9,7 +9,7 @@ import type { DataResponse } from 'containers/datasets/locations/hooks';
 
 const Home = () => <DesktopLayout />;
 
-const ALLOWED_LOCATION_TYPES = ['custom-area', 'wdpa', 'country'];
+const ALLOWED_LOCATION_TYPES = ['custom-area', 'wdpa', 'country', 'worldwide'];
 
 const queryClient = new QueryClient();
 
