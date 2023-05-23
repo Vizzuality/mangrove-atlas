@@ -2,7 +2,7 @@ import { GeoJSONSourceRaw } from 'react-map-gl';
 
 export interface Location {
   name: string;
-  location_type: string;
+  location_type: 'worldwide' | 'country' | 'wdpa';
   iso: string;
   location_id: string;
   bounds: GeoJSONSourceRaw;
