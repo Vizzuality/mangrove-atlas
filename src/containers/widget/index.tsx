@@ -14,10 +14,11 @@ type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
   children: React.ReactNode;
+  className?: string;
 };
 
 const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
-  const { children, title, id } = props;
+  const { children, title, id, className } = props;
   const [isCollapsed, setIsCollapsed] = useState<Partial<Record<WidgetSlugType, boolean>>>({});
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
@@ -29,10 +30,11 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
       }}
       className={cn({
-        'h-fit-content w-[540px] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl':
+        'md:h-fit-conten ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        // '-mb-2': isCollapsed[id],
+        '-mb-9': isCollapsed[id],
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
+        [className]: !!className,
       })}
     >
       {/* Content */}
