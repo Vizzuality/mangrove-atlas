@@ -2,7 +2,7 @@ import { mapViewAtom } from 'store/sidebar';
 
 import { useRecoilValue } from 'recoil';
 
-import MapContainerMobile from 'containers/map/mobile';
+import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar/mobile';
 import WidgetsContainer from 'containers/widgets';
 
@@ -18,7 +18,7 @@ const MobileLayout = () => {
         <Icon icon={LOGO_MOBILE_SVG} className="ml-4 mt-1.5 h-10 w-24" />
       </div>
       <Sidebar />
-      {mapView && <MapContainerMobile />}
+      {mapView && <MapContainer />}
       {!mapView && <WidgetsContainer />}
     </div>
   );
