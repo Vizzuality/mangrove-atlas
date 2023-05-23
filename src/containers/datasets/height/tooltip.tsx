@@ -1,4 +1,4 @@
-import orderBy from 'lodash-es/orderBy';
+import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -6,6 +6,8 @@ type TooltipProps = {
   payload: {
     color: string;
     name: string;
+    dataKey: string;
+    value: number;
     payload: {
       label: string;
       valueFormatted: string;
@@ -13,21 +15,29 @@ type TooltipProps = {
       unit: string;
       color?: string;
       variant?: string;
-    }[];
-  };
+    };
+  }[];
   active: boolean;
 };
 
-const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
-  if (!active) return null;
+const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
+  const sortedPayload = useMemo(
+    () =>
+      payload.sort((a, b) => {
+        if (Number(a.dataKey.split('-', 1)) >= Number(b.dataKey.split('-', 1))) return -1;
+        if (Number(a.dataKey.split('-', 1)) < Number(b.dataKey.split('-', 1))) return 1;
+        return 0;
+      }),
+    [payload]
+  );
 
-  const sortedPayload = orderBy(payload, (d) => Number(d.dataKey.split('--', 1)), 'desc');
+  if (!active) return null;
 
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
-      {sortedPayload?.map(({ color, name, payload, value }) => (
-        <div key="label" className="flex">
-          <p key={name} className={cn({ 'flex space-x-4': true })}>
+      {sortedPayload?.map(({ color, name, payload, value, dataKey }) => (
+        <div key={dataKey} className="flex">
+          <span className={cn({ 'flex space-x-4': true })}>
             <span className="flex items-center space-x-2">
               {color && (
                 <div
@@ -44,7 +54,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
               {value}
               {payload?.[`percentage${name}`]} {'%'}
             </span>
-          </p>
+          </span>
         </div>
       ))}
     </div>
