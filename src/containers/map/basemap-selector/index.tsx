@@ -32,11 +32,13 @@ const BasemapSelector = ({ className }: { className?: string }) => {
         [className]: !!className,
       })}
     >
-      <div className="mr-[30px]">
-        <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
-        <div className="mt-1">{currentBasemap.name}</div>
+      <div className="mr-2 md:mr-[30px]">
+        <h3 className="m-0 whitespace-nowrap text-xs font-semibold uppercase leading-6">
+          Map style
+        </h3>
+        <div className="mt-1 whitespace-nowrap text-xs md:text-base">{currentBasemap.name}</div>
       </div>
-      <div className="flex items-center space-x-2.5">
+      <div className="flex items-center space-x-2 md:space-x-2.5">
         {BASEMAPS.map(({ id, name }) => (
           <button
             key={id}
