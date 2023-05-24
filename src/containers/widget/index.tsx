@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { allWidgetsCollapsedAtom } from 'store/widgets';
+
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
@@ -22,6 +24,8 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
   const [isCollapsed, setIsCollapsed] = useState<Partial<Record<WidgetSlugType, boolean>>>({});
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
+  const allWidgetsCollapsed = useRecoilValue(allWidgetsCollapsedAtom);
+
   return (
     <motion.div
       animate={{
@@ -32,7 +36,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       className={cn({
         'md:h-fit-conten ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        '-mb-3 md:-mb-9': isCollapsed[id],
+        '-mb-3 md:-mb-9': isCollapsed[id] || allWidgetsCollapsed,
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
         [className]: !!className,
       })}
@@ -47,7 +51,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         </h2>
         <WidgetControls id={id} />
       </header>
-      {children}
+      {allWidgetsCollapsed && children}
     </motion.div>
   );
 };

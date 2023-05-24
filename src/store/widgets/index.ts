@@ -17,3 +17,8 @@ export const widgetYearAtom = atom({
   key: 'year',
   default: null,
 });
+
+export const allWidgetsCollapsedAtom = atom<boolean>({
+  key: 'widgets-collapsed',
+  default: false,
+});
