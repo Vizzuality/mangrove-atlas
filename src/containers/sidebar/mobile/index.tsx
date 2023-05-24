@@ -4,7 +4,7 @@ import Menu from 'containers/sidebar/menu';
 import CategoryMobile from 'containers/sidebar/mobile/category';
 import MapToggle from 'containers/sidebar/mobile/map-toggle';
 
-const PlacesMobile = dynamic(() => import('../../../containers/sidebar/mobile/places'), {
+const PlacesMobile = dynamic(() => import('containers/sidebar/mobile/places'), {
   ssr: false,
 });
 

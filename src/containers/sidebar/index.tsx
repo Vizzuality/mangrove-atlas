@@ -4,7 +4,7 @@ import Menu from 'containers/sidebar/menu';
 
 import Category from './category';
 
-const Place = dynamic(() => import('../../containers/sidebar/place'), {
+const Place = dynamic(() => import('containers/sidebar/place'), {
   ssr: false,
 });
 
