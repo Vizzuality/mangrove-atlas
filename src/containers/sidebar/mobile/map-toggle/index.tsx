@@ -5,16 +5,15 @@ import cn from 'lib/classnames';
 import { mapViewAtom } from 'store/sidebar';
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const MapToggle = () => {
-  const mapView = useRecoilValue(mapViewAtom);
-  const setMapView = useSetRecoilState(mapViewAtom);
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const [mapView, setMapView] = useRecoilState(mapViewAtom);
 
   return (
     <div className="flex flex-col items-center">

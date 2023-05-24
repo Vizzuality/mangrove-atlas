@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { activeCategoryAtom } from 'store/sidebar';
 
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
 
@@ -14,8 +14,7 @@ import Icon from 'components/icon';
 import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 
 const CategoryMobile = () => {
-  const category = useRecoilValue(activeCategoryAtom);
-  const setCategory = useSetRecoilState(activeCategoryAtom);
+  const [category, setCategory] = useRecoilState(activeCategoryAtom);
 
   return (
     <div className="relative">

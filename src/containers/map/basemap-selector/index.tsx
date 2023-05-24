@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
 
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 
@@ -19,8 +19,7 @@ const THUMBS = {
 };
 
 const BasemapSelector = ({ className }: { className?: string }) => {
-  const basemapSelected = useRecoilValue(basemapAtom);
-  const setBasemap = useSetRecoilState(basemapAtom);
+  const [basemapSelected, setBasemap] = useRecoilState(basemapAtom);
 
   const currentBasemap = BASEMAPS.find((basemap) => basemap.id === basemapSelected);
 

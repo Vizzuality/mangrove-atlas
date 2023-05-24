@@ -10,8 +10,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -48,8 +47,7 @@ const MapContainer = ({ id }: { id: string }) => {
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
 
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
-  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 

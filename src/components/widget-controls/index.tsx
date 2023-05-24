@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 
@@ -15,12 +15,13 @@ import Info from './info';
 type WidgetControlsType = Readonly<{ id: WidgetSlugType }>;
 
 const WidgetControls = ({ id }: WidgetControlsType) => {
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
+
   const download = DOWNLOAD[id];
   const info = INFO[id];
   const layer = LAYERS[id];
-  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
+
   const handleClick = () => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
     setActiveWidgets(widgetsUpdate);
