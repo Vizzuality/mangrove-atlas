@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useCallback, useState } from 'react';
 
 import * as Collapsible from '@radix-ui/react-collapsible';
@@ -6,6 +5,7 @@ import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cn from 'classnames';
 
 import BasemapSelector from 'containers/map/basemap-selector';
+import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
 
@@ -20,8 +20,6 @@ const CollapsibleComponent = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const formatLayerLabel = (label: string) => label.replace(/_/g, ' ');
-
   const removeLayer = useCallback(
     (layer: string) => {
       const updatedLayers = layers.filter((l) => {
@@ -32,6 +30,10 @@ const CollapsibleComponent = ({
     [layers, setActiveWidgets]
   );
 
+  const widgetName = (label) => {
+    return widgets.find((w) => w.slug === label).name;
+  };
+
   return (
     <Collapsible.Root open={isOpen} onOpenChange={setIsOpen} className="w-screen space-y-2 px-6">
       <div className="flex w-full items-center justify-between">
@@ -39,7 +41,7 @@ const CollapsibleComponent = ({
           {(!isOpen || !layers.length) && <p className="text-xs font-semibold uppercase">Layer</p>}
           {isOpen && !!layers.length && (
             <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase">{formatLayerLabel(layers[0])}</p>
+              <p className="text-xs font-semibold uppercase">{widgetName(layers[0])}</p>
               <button onClick={() => removeLayer(layers[0])}>
                 <Icon icon={REMOVE_SVG} className="h-4 w-4" />
               </button>
@@ -66,7 +68,7 @@ const CollapsibleComponent = ({
               key={l}
               className="flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm shadow-light"
             >
-              <p className="text-xs font-semibold uppercase">{formatLayerLabel(l)}</p>
+              <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
               <button onClick={() => removeLayer(l)}>
                 <Icon icon={REMOVE_SVG} className="h-4 w-4" />
               </button>
