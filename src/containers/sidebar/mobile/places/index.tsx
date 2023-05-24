@@ -21,13 +21,13 @@ const PlacesMobile = () => {
   return (
     <div className="flex flex-col space-y-1.5 text-center">
       <Dialog open={isOpen}>
-        <DialogTrigger>
-          <div
+        <DialogTrigger asChild>
+          <button
             onClick={openMenu}
             className="mt-1 flex cursor-pointer items-center justify-center rounded-full"
           >
             <Icon icon={GLASS_SVG} className="h-8 w-8 fill-white stroke-white" />
-          </div>
+          </button>
         </DialogTrigger>
         <DialogContent
           className="top-[2%] h-[96%] w-11/12 rounded-[20px] px-6 pt-10 pb-0"
