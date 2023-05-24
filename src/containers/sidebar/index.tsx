@@ -1,12 +1,7 @@
-import dynamic from 'next/dynamic';
-
 import Menu from 'containers/sidebar/menu';
 
 import Category from './category';
-
-const Place = dynamic(() => import('containers/sidebar/place'), {
-  ssr: false,
-});
+import Place from './place';
 
 const Sidebar = () => {
   return (
