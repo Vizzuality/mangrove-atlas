@@ -13,9 +13,11 @@ import { useSearch } from 'hooks/search';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 import { Location } from 'containers/datasets/locations/types';
+import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighted-places';
 
 import HighlightedPlaces from 'components/highlighted-places';
 import Icon from 'components/icon';
+import { Media } from 'components/media-query';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
@@ -83,7 +85,9 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 handleLocation(locationsToDisplay[index]);
               }}
             >
-              <p className="font-sans text-2lg text-black/85">{locationsToDisplay[index].name}</p>
+              <p className="text-left font-sans text-2lg text-black/85">
+                {locationsToDisplay[index].name}
+              </p>
               <span className="text-xs text-grey-800 text-opacity-90">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
@@ -110,12 +114,17 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             className="absolute top-1/2 right-0 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
-            <Icon icon={CLOSE_SVG} className="h-5 w-5  transform opacity-50" />
+            <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
           </button>
         )}
       </div>
 
-      <HighlightedPlaces />
+      <Media lessThan="md">
+        <HighlightedPlacesMobile />
+      </Media>
+      <Media greaterThanOrEqual="md">
+        <HighlightedPlaces />
+      </Media>
       <div className="relative h-full">
         <AutoSizer>
           {({ width, height }) => (

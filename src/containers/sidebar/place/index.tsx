@@ -56,13 +56,12 @@ const Place = () => {
         </button>
         <Dialog open={isOpen}>
           <DialogTrigger>
-            <button
+            <div
               onClick={openMenu}
-              type="button"
               className="flex cursor-pointer items-center justify-center rounded-full"
             >
               <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
-            </button>
+            </div>
           </DialogTrigger>
           <DialogContent
             className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0"

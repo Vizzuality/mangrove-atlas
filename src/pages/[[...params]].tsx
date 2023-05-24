@@ -3,11 +3,25 @@ import turfBbox from '@turf/bbox';
 import type { GetServerSideProps } from 'next';
 
 import DesktopLayout from 'layouts/desktop';
+import MobileLayout from 'layouts/mobile';
 
 import { fetchLocations } from 'containers/datasets/locations/hooks';
 import type { DataResponse } from 'containers/datasets/locations/hooks';
 
-const Home = () => <DesktopLayout />;
+import { Media } from 'components/media-query';
+
+const Home = () => {
+  return (
+    <>
+      <Media lessThan="md">
+        <MobileLayout />
+      </Media>
+      <Media greaterThanOrEqual="md">
+        <DesktopLayout />
+      </Media>
+    </>
+  );
+};
 
 const ALLOWED_LOCATION_TYPES = ['custom-area', 'wdpa', 'country', 'worldwide'];
 

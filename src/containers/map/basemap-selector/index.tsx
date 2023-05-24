@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
 
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 
@@ -18,19 +18,26 @@ const THUMBS = {
   satellite: satelliteThumb as StaticImageData,
 };
 
-const BasemapSelector = () => {
-  const basemapSelected = useRecoilValue(basemapAtom);
-  const setBasemap = useSetRecoilState(basemapAtom);
+const BasemapSelector = ({ className }: { className?: string }) => {
+  const [basemapSelected, setBasemap] = useRecoilState(basemapAtom);
 
   const currentBasemap = BASEMAPS.find((basemap) => basemap.id === basemapSelected);
 
   return (
-    <div className="flex w-[296px] items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium">
-      <div className="mr-[30px]">
-        <h3 className="m-0 text-xs font-semibold uppercase leading-6">Map style</h3>
-        <div className="mt-1">{currentBasemap.name}</div>
+    <div
+      className={cn({
+        'flex w-full items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium':
+          true,
+        [className]: !!className,
+      })}
+    >
+      <div className="mr-2 md:mr-[30px]">
+        <h3 className="m-0 whitespace-nowrap text-xs font-semibold uppercase leading-6">
+          Map style
+        </h3>
+        <div className="mt-1 whitespace-nowrap text-xs md:text-base">{currentBasemap.name}</div>
       </div>
-      <div className="flex items-center space-x-2.5">
+      <div className="flex items-center space-x-2 md:space-x-2.5">
         {BASEMAPS.map(({ id, name }) => (
           <button
             key={id}

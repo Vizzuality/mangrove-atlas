@@ -1,7 +1,7 @@
 import Menu from 'containers/sidebar/menu';
-import Place from 'containers/sidebar/place';
 
 import Category from './category';
+import Place from './place';
 
 const Sidebar = () => {
   return (

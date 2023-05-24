@@ -1,9 +1,7 @@
 export interface IconProps {
   icon: {
     id: string;
-    viewBox: string;
-    content: string;
-    node: SVGSymbolElement;
+    viewBox?: string;
   };
   className?: string;
   style?: unknown;

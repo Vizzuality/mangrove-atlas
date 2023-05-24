@@ -5,28 +5,32 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilValue } from 'recoil';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
+
+import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
 import Legend from 'containers/map/legend';
 
+import Collapsible from 'components/collapsible';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import FullScreenControl from 'components/map/controls/fullscreen';
 import PitchReset from 'components/map/controls/pitch-reset';
 import ZoomControl from 'components/map/controls/zoom';
 import { CustomMapProps } from 'components/map/types';
+import { Media } from 'components/media-query';
+import { breakpoints } from 'styles/styles.config';
 
 import LayerManager from './layer-manager';
 
 export const DEFAULT_PROPS = {
-  id: 'default',
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -38,12 +42,19 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const MapContainer = () => {
+const MapContainer = ({ id }: { id: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
+
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
-  const { id, minZoom, maxZoom } = DEFAULT_PROPS;
+
+  const { minZoom, maxZoom } = DEFAULT_PROPS;
+
+  const screenWidth = useScreenWidth();
+
   const { default: map } = useMap();
   const {
     query: { params },
@@ -78,11 +89,11 @@ const MapContainer = () => {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 540,
+          left: screenWidth >= breakpoints.md ? 540 : 0,
         },
       },
     } satisfies CustomMapProps['bounds'];
-  }, [locationBounds]);
+  }, [locationBounds, screenWidth]);
 
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
@@ -107,11 +118,18 @@ const MapContainer = () => {
           </>
         )}
       </Map>
+      <Media lessThan="md">
+        <div className="absolute top-20 left-0 z-[80]">
+          <Collapsible layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
+        </div>
+      </Media>
+      <Media greaterThanOrEqual="md">
+        <div className="absolute bottom-10 right-10">
+          <Legend />
 
-      <div className="absolute bottom-10 right-10">
-        <Legend />
-        <BasemapSelector />
-      </div>
+          <BasemapSelector />
+        </div>
+      </Media>
     </div>
   );
 };

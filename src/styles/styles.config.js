@@ -13,4 +13,11 @@ module.exports = {
     xl: '1280px',
     '2xl': '1536px',
   },
+  breakpoints: {
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
+    '2xl': 1536,
+  },
 };

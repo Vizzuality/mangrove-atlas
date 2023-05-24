@@ -13,7 +13,7 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal className={className} {...props}>
-    <div className="fixed inset-0 top-0 z-50 flex h-full items-start justify-center sm:items-center">
+    <div className="fixed inset-0 top-0 z-50 flex h-full items-start justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -25,7 +25,7 @@ const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     className={cn({
-      'fixed inset-0 z-50 bg-black/70 backdrop-blur-sm': true,
+      'fixed inset-0 z-50 bg-brand-600/70 backdrop-blur-sm md:bg-black/50': true,
       [className]: !!className,
     })}
     {...props}
@@ -42,7 +42,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'fixed left-18 z-50 grid w-full gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 sm:max-w-lg':
+        'left-1/12 fixed z-50 grid w-10/12 gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:w-full md:max-w-lg':
           true,
         [className]: !!className,
       })}
@@ -56,7 +56,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn({
-      'flex flex-col space-y-2 text-center sm:text-left': true,
+      'flex flex-col space-y-2 text-center md:text-left': true,
       [className]: !!className,
     })}
     {...props}
@@ -68,10 +68,10 @@ const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className="absolute top-7 -right-10 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] border bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+      className="absolute top-7.5 right-6 z-50 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:top-7 md:-right-10 md:border"
       onClick={onClose}
     >
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-5 w-5" />
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" />
       <span className="sr-only">Close</span>
     </button>
   </DialogPrimitive.Close>
@@ -81,7 +81,7 @@ DialogClose.displayName = 'DialogClose';
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn({
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2': true,
+      'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
       [className]: !!className,
     })}
     {...props}

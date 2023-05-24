@@ -33,9 +33,9 @@ module.exports = {
         18: '4.5rem',
       },
       fontSize: {
-        xxs: '0.625rem',
-        '2lg': '1.188rem',
-        '2.75xl': '1.688rem',
+        xxs: '0.625rem', // * 10px
+        '2lg': '1.188rem', // * 19px
+        '2.75xl': '1.688rem', // * 27px
       },
       colors: {
         black: '#000000',

@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { useActiveLayers } from 'containers/layers/hooks';
 
@@ -12,8 +12,7 @@ import Icon from 'components/icon';
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
 const Legend = () => {
-  const activeLayersSlugs = useRecoilValue(activeWidgetsAtom);
-  const setActiveLayers = useSetRecoilState(activeWidgetsAtom);
+  const [activeLayersSlugs, setActiveLayers] = useRecoilState(activeWidgetsAtom);
 
   useEffect(() => {
     setActiveLayers(activeLayersSlugs);

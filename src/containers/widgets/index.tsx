@@ -1,3 +1,5 @@
+import cn from 'lib/classnames';
+
 import WidgetsLayout from 'layouts/widgets';
 
 import { WIDGETS } from 'containers/datasets';
@@ -9,10 +11,17 @@ const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
   return (
     <WidgetsLayout>
-      {widgets.map(({ slug, name }) => {
+      {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];
         return (
-          <WidgetWrapper key={slug} title={name} id={slug}>
+          <WidgetWrapper
+            key={slug}
+            title={name}
+            id={slug}
+            className={cn({
+              [`z-[${40 + ind * 10}]`]: true,
+            })}
+          >
             {WIDGETS[slug] && <Widget />}
           </WidgetWrapper>
         );
