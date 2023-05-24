@@ -7,7 +7,7 @@ import type { ControlsProps } from './types';
 type ControlsPropsWithChildren = PropsWithChildren<ControlsProps>;
 
 export const Controls: FC<ControlsPropsWithChildren> = ({
-  className = 'absolute bottom-10 left-2',
+  className = 'absolute top-14 right-10',
   children,
 }: ControlsPropsWithChildren) => (
   <div
