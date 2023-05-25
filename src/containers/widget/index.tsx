@@ -24,10 +24,6 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const widgetsCollapsedChecker = widgetsCollapsed.map((w) => Object.values(w)[0]).some((w) => !!w);
-
-  console.log({ widgetsCollapsedChecker });
-
   const widgetToUpdated = widgetsCollapsed.find((w) => `${Object.keys(w)}` === id);
 
   const handleWidgetCollapsed = () => {
@@ -59,11 +55,9 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         [className]: !!className,
       })}
     >
-      {/* Content */}
       <header className="flex items-center justify-between">
         <h2
           onClick={handleWidgetCollapsed}
-          // onClick={() => setIsCollapsed({ ...isCollapsed, [id]: !isCollapsed[id] })}
           className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85"
         >
           {title}
