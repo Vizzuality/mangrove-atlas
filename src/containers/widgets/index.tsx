@@ -31,7 +31,7 @@ const WidgetsContainer: React.FC = () => {
   return (
     <WidgetsLayout>
       <button
-        className="mb-4 translate-x-44 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 md:ml-0"
+        className="mb-4 ml-[3%] rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 md:ml-0 md:translate-x-44"
         onClick={() => handleWidgetsCollapsed()}
       >
         {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
