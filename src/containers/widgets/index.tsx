@@ -1,6 +1,6 @@
 import cn from 'lib/classnames';
 
-import { allWidgetsCollapsedAtom } from 'store/widgets';
+import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
 
@@ -13,15 +13,27 @@ import { useWidgets } from './hooks';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
-  const [allWidgetsCollapsed, setAllWidgetsCollapsed] = useRecoilState(allWidgetsCollapsedAtom);
+  const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
+
+  const widgetsCollapsedChecker = widgetsCollapsed
+    .map((w) => Object.values(w)[0])
+    .every((w) => !!w);
+
+  const handleWidgetsCollapsed = () => {
+    const updateWidgetsCollapsed = widgetsCollapsed.map((w) => ({
+      [`${Object.keys(w)}`]: widgetsCollapsedChecker ? false : true,
+    }));
+
+    setWidgetsCollapsed(updateWidgetsCollapsed);
+  };
 
   return (
     <WidgetsLayout>
       <button
         className="ml-[3%] mb-4 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 md:ml-0"
-        onClick={() => setAllWidgetsCollapsed(!allWidgetsCollapsed)}
+        onClick={() => handleWidgetsCollapsed()}
       >
-        {allWidgetsCollapsed ? 'Collapse all widgets' : 'Expand all widgets'}
+        {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
       </button>
 
       {widgets.map(({ slug, name }, ind) => {

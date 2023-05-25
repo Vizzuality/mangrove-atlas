@@ -1,11 +1,9 @@
-import { useState } from 'react';
-
 import cn from 'lib/classnames';
 
-import { allWidgetsCollapsedAtom } from 'store/widgets';
+import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
@@ -21,10 +19,30 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className } = props;
-  const [isCollapsed, setIsCollapsed] = useState<Partial<Record<WidgetSlugType, boolean>>>({});
+
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
-  const allWidgetsCollapsed = useRecoilValue(allWidgetsCollapsedAtom);
+  const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
+
+  const widgetsCollapsedChecker = widgetsCollapsed
+    .map((w) => Object.values(w)[0])
+    .every((w) => !!w);
+
+  const handleWidgetCollapsed = () => {
+    const widgetToUpdated = widgetsCollapsed.find((w) => `${Object.keys(w)}` === id);
+
+    const updatedWidgetsCollapsed = widgetsCollapsed.map((w) => {
+      if (`${Object.keys(w)}` === id) {
+        return {
+          ...w,
+          [`${Object.keys(w)}`]: !Object.values(widgetToUpdated)[0],
+        };
+      }
+      return w;
+    });
+
+    setWidgetsCollapsed(updatedWidgetsCollapsed);
+  };
 
   return (
     <motion.div
@@ -36,7 +54,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       className={cn({
         'md:h-fit-conten ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        '-mb-3 md:-mb-9': isCollapsed[id] || allWidgetsCollapsed,
+        '-mb-3 md:-mb-9': !!widgetsCollapsed[id] || widgetsCollapsedChecker,
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
         [className]: !!className,
       })}
@@ -44,14 +62,15 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       {/* Content */}
       <header className="flex items-center justify-between">
         <h2
-          onClick={() => setIsCollapsed({ ...isCollapsed, [id]: !isCollapsed[id] })}
+          onClick={handleWidgetCollapsed}
+          // onClick={() => setIsCollapsed({ ...isCollapsed, [id]: !isCollapsed[id] })}
           className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85"
         >
           {title}
         </h2>
         <WidgetControls id={id} />
       </header>
-      {allWidgetsCollapsed && children}
+      {widgetsCollapsed && children}
     </motion.div>
   );
 };
