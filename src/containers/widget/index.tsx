@@ -24,13 +24,13 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const widgetsCollapsedChecker = widgetsCollapsed
-    .map((w) => Object.values(w)[0])
-    .every((w) => !!w);
+  const widgetsCollapsedChecker = widgetsCollapsed.map((w) => Object.values(w)[0]).some((w) => !!w);
+
+  console.log({ widgetsCollapsedChecker });
+
+  const widgetToUpdated = widgetsCollapsed.find((w) => `${Object.keys(w)}` === id);
 
   const handleWidgetCollapsed = () => {
-    const widgetToUpdated = widgetsCollapsed.find((w) => `${Object.keys(w)}` === id);
-
     const updatedWidgetsCollapsed = widgetsCollapsed.map((w) => {
       if (`${Object.keys(w)}` === id) {
         return {
@@ -54,7 +54,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       className={cn({
         'md:h-fit-conten ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-10 pt-4 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        '-mb-3 md:-mb-9': !!widgetsCollapsed[id] || widgetsCollapsedChecker,
+        '-mb-3 md:-mb-9': !Object.values(widgetToUpdated)[0],
         'ring-[2px] ring-inset ring-brand-800/30 ring-offset-4': isWidgetActive,
         [className]: !!className,
       })}
@@ -70,7 +70,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
         </h2>
         <WidgetControls id={id} />
       </header>
-      {widgetsCollapsed && children}
+      {!Object.values(widgetToUpdated)[0] && children}
     </motion.div>
   );
 };
