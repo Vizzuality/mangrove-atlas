@@ -25,7 +25,7 @@ const HabitatExtent = () => {
   const [year, setYear] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
 
-  const { isLoading, data, isFetched, isPlaceholderData } = useMangroveHabitatExtent({
+  const { isLoading, data, isFetched, isFetching } = useMangroveHabitatExtent({
     year,
     unit: selectedUnitAreaExtent,
   });
@@ -53,12 +53,9 @@ const HabitatExtent = () => {
   );
 
   return (
-    <div>
-      <Loading
-        visible={(isPlaceholderData || isLoading) && !isFetched}
-        iconClassName="flex w-10 h-10 m-auto my-10"
-      />
-      {isFetched && !isLoading && (
+    <>
+      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
+      {isFetched && (
         <div className="space-y-4">
           <p className="text-lg font-light leading-7">
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
@@ -192,7 +189,7 @@ const HabitatExtent = () => {
           <HabitatExtentChart legend={legend} config={config} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 

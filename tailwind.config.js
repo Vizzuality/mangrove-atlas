@@ -52,6 +52,9 @@ module.exports = {
           600: '#00AFA7',
           800: '#00857F',
         },
+        blue: {
+          400: '#7996F3',
+        },
       },
       boxShadow: {
         widget: 'rgba(0, 0, 0, 0.08) 0px 4px 12px 4px',
@@ -66,6 +69,9 @@ module.exports = {
       },
       borderRadius: {
         '2.5xl': '1.3rem',
+      },
+      opacity: {
+        15: '0.15',
       },
       keyframes: {
         overlayShow: {

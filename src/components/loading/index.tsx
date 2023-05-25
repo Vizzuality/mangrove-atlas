@@ -21,28 +21,26 @@ export const Loading: FC<LoadingProps> = ({
     animate: { opacity: 1 },
     exit: { opacity: 0 },
   };
-
+  if (!visible) return null;
   return (
     <AnimatePresence>
-      {visible && (
-        <motion.div
-          key="loading"
-          {...variants}
-          transition={transition}
-          className={cx({
-            'opacity-50': true,
-            [className]: !!className,
+      <motion.div
+        key="loading"
+        {...variants}
+        transition={transition}
+        className={cx({
+          'opacity-50': true,
+          [className]: !!className,
+        })}
+      >
+        <Icon
+          icon={LOADING_SVG}
+          className={cn({
+            ' text-brand-400 opacity-50': true,
+            [iconClassName]: !!iconClassName,
           })}
-        >
-          <Icon
-            icon={LOADING_SVG}
-            className={cn({
-              ' text-brand-400 opacity-50': true,
-              [iconClassName]: !!iconClassName,
-            })}
-          />
-        </motion.div>
-      )}
+        />
+      </motion.div>
     </AnimatePresence>
   );
 };
