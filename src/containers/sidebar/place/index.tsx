@@ -22,7 +22,7 @@ const Place = () => {
 
   const { asPath, replace } = useRouter();
 
-  const { default: map } = useMap();
+  const { ['default-desktop']: map } = useMap();
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
