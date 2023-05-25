@@ -15,12 +15,13 @@ const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const widgetsCollapsedChecker = widgetsCollapsed.map((w) => Object.values(w)[0]).some((w) => !!w);
+  const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
 
   const handleWidgetsCollapsed = () => {
-    const updateWidgetsCollapsed = widgetsCollapsed.map((w) => ({
-      [`${Object.keys(w)}`]: widgetsCollapsedChecker ? false : true,
-    }));
+    const updateWidgetsCollapsed = Object.keys(widgetsCollapsed).reduce((acc, key) => {
+      acc[key] = widgetsCollapsedChecker ? false : true;
+      return acc;
+    }, {});
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
   };

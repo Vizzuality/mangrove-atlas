@@ -22,23 +22,13 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
-  console.log({ isWidgetActive });
-
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const widgetToUpdated = widgetsCollapsed.find((w) => `${Object.keys(w)}` === id);
-
   const handleWidgetCollapsed = () => {
-    const updatedWidgetsCollapsed = widgetsCollapsed.map((w) => {
-      if (`${Object.keys(w)}` === id) {
-        return {
-          ...w,
-          [`${Object.keys(w)}`]: !Object.values(widgetToUpdated)[0],
-        };
-      }
-      return w;
-    });
-
+    const updatedWidgetsCollapsed = {
+      ...widgetsCollapsed,
+      [id]: !widgetsCollapsed[id],
+    };
     setWidgetsCollapsed(updatedWidgetsCollapsed);
   };
 
@@ -52,7 +42,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       className={cn({
         'md:h-fit-conten ml-[3%] mb-3 w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-3xl md:ml-0 md:w-[540px]':
           true,
-        '-mb-6': !!Object.values(widgetToUpdated)[0],
+        '-mb-6': !!widgetsCollapsed[id],
         [className]: !!className,
       })}
     >
@@ -72,7 +62,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
           <WidgetControls id={id} />
         </header>
 
-        {!Object.values(widgetToUpdated)[0] && children}
+        {!widgetsCollapsed[id] && children}
       </div>
     </motion.div>
   );

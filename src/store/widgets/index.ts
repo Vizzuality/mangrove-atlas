@@ -22,7 +22,9 @@ export const widgetYearAtom = atom({
 
 export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
-  default: widgets.map((widget) => ({
-    [widget.slug]: false,
-  })),
+  default: widgets.reduce((previousObject, currentObject) => {
+    return Object.assign(previousObject, {
+      [currentObject.slug]: false,
+    });
+  }, {}),
 });
