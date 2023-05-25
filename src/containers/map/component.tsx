@@ -42,7 +42,7 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const MapContainer = ({ id }: { id: string }) => {
+const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const locationBounds = useRecoilValue(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
@@ -55,7 +55,7 @@ const MapContainer = ({ id }: { id: string }) => {
 
   const screenWidth = useScreenWidth();
 
-  const { default: map } = useMap();
+  const { [mapId]: map } = useMap();
   const {
     query: { params },
   } = useRouter();
@@ -98,7 +98,7 @@ const MapContainer = ({ id }: { id: string }) => {
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
-        id={id}
+        id={mapId}
         mapStyle={selectedBasemap}
         minZoom={minZoom}
         maxZoom={maxZoom}
@@ -112,8 +112,8 @@ const MapContainer = ({ id }: { id: string }) => {
             <LayerManager />
             <Controls>
               <FullScreenControl />
-              <ZoomControl />
-              <PitchReset />
+              <ZoomControl mapId={mapId} />
+              <PitchReset mapId={mapId} />
             </Controls>
           </>
         )}
