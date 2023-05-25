@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import cn from 'lib/classnames';
 
 import { widgetsCollapsedAtom } from 'store/widgets';
@@ -17,14 +19,14 @@ const WidgetsContainer: React.FC = () => {
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
 
-  const handleWidgetsCollapsed = () => {
+  const handleWidgetsCollapsed = useCallback(() => {
     const updateWidgetsCollapsed = Object.keys(widgetsCollapsed).reduce((acc, key) => {
       acc[key] = widgetsCollapsedChecker ? false : true;
       return acc;
     }, {});
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  };
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
 
   return (
     <WidgetsLayout>

@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import cn from 'lib/classnames';
 
 import { widgetsCollapsedAtom } from 'store/widgets';
@@ -24,19 +26,19 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const handleWidgetCollapsed = () => {
+  const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
       ...widgetsCollapsed,
       [id]: !widgetsCollapsed[id],
     };
     setWidgetsCollapsed(updatedWidgetsCollapsed);
-  };
+  }, [id, widgetsCollapsed, setWidgetsCollapsed]);
 
   return (
     <motion.div
       animate={{
-        // marginBottom: isCollapsed[id] ? 0 : '-70px',
-        // marginTop: isCollapsed[id] ? 0 : '-3px',
+        // marginBottom: !widgetsCollapsed[id] ? 0 : '-270px',
+        // marginTop: widgetsCollapsed[id] ? 0 : '-3px',
         boxShadow: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
       }}
       className={cn({
