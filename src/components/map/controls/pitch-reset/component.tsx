@@ -8,8 +8,8 @@ import Icon from 'components/icon';
 
 import NAVIGATION_SVG from 'svgs/map/navigation.svg?sprite';
 
-export const PitchReset = ({ className }: { className?: string }) => {
-  const { default: map } = useMap();
+export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
+  const { [mapId]: map } = useMap();
 
   const pitch = map?.getPitch();
 
