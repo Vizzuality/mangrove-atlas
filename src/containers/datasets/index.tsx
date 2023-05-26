@@ -14,6 +14,9 @@ import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
+import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
+import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
+import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
@@ -52,6 +55,7 @@ export const WIDGETS = {
   mangrove_net_change: NetChangeWidget,
   // mangrove_alerts: AlertsDownload,
   mangrove_biomass: BiomassWidget,
+  mangrove_drivers_change: DriversChangeWidget,
   mangrove_height: HeightWidget,
   mangrove_blue_carbon: BlueCarbonWidget,
   mangrove_protection: ProtectionWidget,
@@ -71,6 +75,7 @@ export const LAYERS = {
   mangrove_alerts: AlertsLayer,
   mangrove_biomass: BiomassLayer,
   mangrove_blue_carbon: BlueCarbonLayer,
+  mangrove_drivers_change: DriversChangeLayer,
   mangrove_height: HeightLayer,
   mangrove_restoration: RestorationLayer,
   mangrove_species_distribution: SpeciesDistributionLayer,
@@ -79,20 +84,21 @@ export const LAYERS = {
 };
 
 export const INFO = {
+  mangrove_alerts: AlertsInfo,
+  mangrove_biomass: BiomassInfo,
+  mangrove_blue_carbon: BlueCarbonInfo,
+  mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
+  mangrove_drivers_change: DriversChangeInfo,
+  mangrove_emissions_mitigation: EmissionsMitigationInfo,
   mangrove_habitat_extent: HabitatExtentInfo,
   mangrove_habitat_change: HabitatChangeInfo,
+  mangrove_height: HeightInfo,
+  mangrove_international_status: InternationalStatusInfo,
+  mangrove_net_change: NetChangeInfo,
   mangrove_species_distribution: SpeciesDistributionInfo,
   mangrove_species_threatened: SpeciesThreatenedInfo,
   mangrove_protection: ProtectionInfo,
-  mangrove_net_change: NetChangeInfo,
-  mangrove_alerts: AlertsInfo,
   mangrove_restoration: RestorationInfo,
-  mangrove_biomass: BiomassInfo,
-  mangrove_height: HeightInfo,
-  mangrove_blue_carbon: BlueCarbonInfo,
-  mangrove_emissions_mitigation: EmissionsMitigationInfo,
-  mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
-  mangrove_international_status: InternationalStatusInfo,
 };
 
 export const DOWNLOAD = {
