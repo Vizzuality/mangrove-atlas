@@ -10,6 +10,7 @@ import WidgetsLayout from 'layouts/widgets';
 
 import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
+import NoData from 'containers/widgets/no-data';
 
 import { useWidgets } from './hooks';
 
@@ -52,6 +53,8 @@ const WidgetsContainer: React.FC = () => {
           </WidgetWrapper>
         );
       })}
+
+      {widgets.length === 0 && <NoData />}
     </WidgetsLayout>
   );
 };
