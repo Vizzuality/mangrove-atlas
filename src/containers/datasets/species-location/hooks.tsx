@@ -28,7 +28,7 @@ export function useMangroveSpeciesLocation<T>(
     }).then(({ data }) => data);
 
   return useQuery([QUERY_KEY], fetchMangroveSpecies, {
-    placeholderData: queryClient.getQueryData([QUERY_KEY]) || {
+    placeholderData: queryClient.getQueryData<DataResponse>([QUERY_KEY]) || {
       data: [],
     },
     ...queryOptions,
@@ -44,14 +44,14 @@ export function useSource(): SourceProps {
 }
 
 export function useLayer(): LayerProps[] {
-  const data = useRecoilValue<DataResponse['data'][number]>(SpeciesLocationState);
+  const data = useRecoilValue(SpeciesLocationState);
   const locationsIds = data?.location_ids;
   const { data: locations } = useLocations();
 
   const dataFiltered = useMemo(() => {
-    return locations?.data
-      ?.filter((location) => locationsIds.includes(location.id))
-      .map((location) => location.location_id) satisfies string[];
+    return locations.data
+      .filter((location) => locationsIds?.includes(location.id))
+      .map((location) => location.location_id);
   }, [locationsIds, locations]);
 
   return [

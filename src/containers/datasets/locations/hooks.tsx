@@ -1,7 +1,4 @@
-import { useMemo } from 'react';
-
 import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
-import { data } from 'cypress/types/jquery';
 
 import API from 'services/api';
 
@@ -23,7 +20,7 @@ export const fetchLocations = () =>
     url: '/locations',
   }).then((response) => response.data);
 
-export function useLocations<T = Location[]>(
+export function useLocations<T = DataResponse>(
   queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
 ) {
   const queryClient = useQueryClient();

@@ -51,7 +51,7 @@ const SpeciesLocation = () => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
     },
-    [species]
+    [species, setSpecie]
   );
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
