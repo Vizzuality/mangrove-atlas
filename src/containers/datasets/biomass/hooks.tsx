@@ -4,7 +4,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, percentFormat } from 'lib/format';
+import { numberFormat } from 'lib/format';
 
 import { BiomassYearSettings } from 'store/widgets/biomass';
 
@@ -91,7 +91,7 @@ export function useMangroveBiomass(
       label: d.indicator,
       value: d.value,
       showValue: false,
-      valueFormatted: percentFormat(d.value),
+      valueFormatted: `${numberFormat(d.value)} %`,
       color: colorKeys[d.indicator],
     }));
 
