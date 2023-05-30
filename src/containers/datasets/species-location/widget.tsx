@@ -1,7 +1,9 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
+
+import { SpeciesLocationState } from 'store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { getWidgetActive } from 'containers/widget/selector';
 
@@ -22,7 +24,9 @@ import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
 
 const SpeciesLocation = () => {
-  const [specieSelected, setSpecie] = useState<DataResponse['data'][number]>();
+  const [specieSelected, setSpecie] =
+    useRecoilState<DataResponse['data'][number]>(SpeciesLocationState);
+
   const {
     data: species,
     isLoading,
@@ -47,11 +51,10 @@ const SpeciesLocation = () => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
     },
-    [species]
+    [species, setSpecie]
   );
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
-
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -70,11 +73,9 @@ const SpeciesLocation = () => {
               Select one species from the list below to see where it&apos;s located.
             </p>
           )}
-          {isWidgetActive && (
+          {isWidgetActive && specieSelected && (
             <div className="mb-8 flex items-center space-x-2">
-              <svg width="6" height="12" xmlns="http://www.w3.org/2000/svg" className="rounded-lg">
-                <rect width="6" height="12" className="fill-brand-400" />
-              </svg>
+              <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
                 Countries where the specie is located
               </span>

@@ -20,7 +20,7 @@ export const fetchLocations = () =>
     url: '/locations',
   }).then((response) => response.data);
 
-export function useLocations<T = Location[]>(
+export function useLocations<T = DataResponse>(
   queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
 ) {
   const queryClient = useQueryClient();
