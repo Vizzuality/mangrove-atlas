@@ -63,6 +63,13 @@ const widgets = [
     layersIds: ['restoration'],
   },
   {
+    name: 'Mangrove Restoration Sites',
+    slug: 'mangrove_restoration_sites',
+    locationType: ['country', 'worldwide'],
+    categoryIds: ['all_datasets', 'restoration_and_conservation', 'ecosystem_services'],
+    layersIds: ['restoration_sites'],
+  },
+  {
     name: 'Mangrove biomass',
     slug: 'mangrove_biomass',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
