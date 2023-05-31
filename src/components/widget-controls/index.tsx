@@ -26,13 +26,14 @@ const WidgetControls = ({ id }: WidgetControlsType) => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
     setActiveWidgets(widgetsUpdate);
   };
+
   return (
     <div className="flex items-center space-x-2">
       {!!download && <Download id={id} />}
       {!!info && <Info id={id} />}
       {!!layer && (
         <SwitchWrapper id={id}>
-          <SwitchRoot onClick={handleClick} defaultChecked={isActive}>
+          <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>
