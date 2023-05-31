@@ -125,7 +125,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       </Media>
       <Media greaterThanOrEqual="md">
         <div className="absolute bottom-10 right-10">
-          <Legend />
+          <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
 
           <BasemapSelector />
         </div>
