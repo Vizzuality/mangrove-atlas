@@ -22,6 +22,7 @@ export type WidgetSlugType =
   | 'mangrove_blue_carbon'
   | 'mangrove_protection'
   | 'mangrove_restoration'
+  | 'mangrove_restoration_sites'
   | 'mangrove_species_distribution'
   | 'mangrove_species_threatened'
   | 'mangrove_species_location'

@@ -43,6 +43,9 @@ import ProtectionWidget from 'containers/datasets/protection/widget';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
 import RestorationWidget from 'containers/datasets/restoration/widget';
+import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
+import RestorationSitesLayer from 'containers/datasets/restoration-sites/info.mdx';
+import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
 import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
@@ -69,6 +72,7 @@ export const WIDGETS = {
   mangrove_international_status: InternationalStatusWidget,
   mangrove_carbon_market_potential: CarbonMarketPotentialWidget,
   mangrove_emissions_mitigation: EmissionsMitigationWidget,
+  mangrove_restoration_sites: RestorationSitesWidget,
   mangrove_restoration: RestorationWidget,
   mangrove_drawing_tool: DrawingToolWidget,
 } satisfies Record<WidgetSlugType, () => JSX.Element>;
@@ -87,6 +91,7 @@ export const LAYERS = {
   mangrove_species_distribution: SpeciesDistributionLayer,
   mangrove_protection: ProtectionLayer,
   mangrove_species_location: SpeciesLocationLayer,
+  mangrove_restoration_sites: RestorationSitesLayer,
 };
 
 export const INFO = {
@@ -105,6 +110,7 @@ export const INFO = {
   mangrove_emissions_mitigation: EmissionsMitigationInfo,
   mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
+  mangrove_restoration_sites: RestorationSitesInfo,
 };
 
 export const DOWNLOAD = {

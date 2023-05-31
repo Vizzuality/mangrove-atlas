@@ -2,7 +2,11 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { useRouter } from 'next/router';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -10,29 +14,69 @@ import API from 'services/api';
 
 // widget data
 export function useMangroveRestorationSites(
-  params: UseParamsOptions,
-  queryOptions: UseQueryOptions = {}
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions
 ) {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
   const fetchMangroveRestorationSites = () =>
     API.request({
       method: 'GET',
-      url: '/dashboards/sites',
-      params,
+      url: '/widgets/sites',
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
     }).then((response) => response);
 
-  const query = useQuery(['restoration-sites', params], fetchMangroveRestorationSites, {
-    placeholderData: [],
-    select: (data) => ({
-      data,
+  return useQuery(['restoration-sites', params, currentLocation], fetchMangroveRestorationSites, {
+    select: ({ data }) => ({
+      ...data,
+      location,
     }),
     ...queryOptions,
   });
+}
 
-  return useMemo(() => {
-    return {
-      ...query,
-    } as typeof query;
-  }, [query]);
+export function useMangroveRestorationSitesFilters(
+  params?: UseParamsOptions,
+  queryOptions?: UseQueryOptions
+) {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
+  const {
+    data: { name: location, id: currentLocation, location_id },
+  } = useLocation(locationType, id);
+  const fetchMangroveRestorationSitesFilters = () =>
+    API.request({
+      method: 'GET',
+      url: '/widgets/sites_filters',
+      params: {
+        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...params,
+      },
+    }).then((response) => response);
+
+  return useQuery(
+    ['restoration-sites', params, currentLocation],
+    fetchMangroveRestorationSitesFilters,
+    {
+      select: ({ data }) => ({
+        ...data,
+        location,
+      }),
+      ...queryOptions,
+    }
+  );
 }
 
 // const _restorationSites = [
