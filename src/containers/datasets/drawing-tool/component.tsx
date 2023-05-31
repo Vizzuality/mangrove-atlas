@@ -80,47 +80,78 @@ const WidgetDrawingTool = () => {
           <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
         </button>
         <span className="flex justify-center">or</span>
-        {true ? (
-          <div
-            {...getRootProps()}
-            className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-dashed border-brand-800 bg-brand-400/10 py-5"
-          >
-            <input {...getInputProps()} />
-            <div className="pointer-events-none flex items-center space-x-2">
-              <span className="text-brand-800">
-                <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />
-              </span>
-              <label id="label-file-upload" htmlFor="input-file-upload">
-                <div>
-                  <span className="block font-semibold text-brand-800">Browse shapefile</span>
-                  <span>(Click or drag-and-drop file)</span>
-                </div>
-              </label>
-            </div>
+        <div
+          {...getRootProps()}
+          className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-dashed border-brand-800 bg-brand-400/10 py-5"
+        >
+          <input {...getInputProps()} />
+          <div className="pointer-events-none flex items-center space-x-2">
+            <span className="text-brand-800">
+              <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />
+            </span>
+            <label id="label-file-upload" htmlFor="input-file-upload">
+              <div>
+                <span className="block font-semibold text-brand-800">Browse shapefile</span>
+                <span>(Click or drag-and-drop file)</span>
+              </div>
+            </label>
           </div>
-        ) : (
-          <div>
-            {/* {acceptedFileItems} */}
-            <span>Upload shapefile</span>
-          </div>
-        )}
+        </div>
       </div>
       <div>
         <span className="block text-sm">
           Learn more about{' '}
           <Dialog>
             <DialogTrigger>
-              <span>supported file formats</span>
+              <span className="text-brand-800 underline">supported file formats</span>
             </DialogTrigger>
-            <DialogContent className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0">
-              <div className="bg-red">some content</div>
+            <DialogContent className="top-24 rounded-[20px] px-10">
+              <div className="space-y-4">
+                <h3 className="font-bold">Analysis of a custom area:</h3>
+                <span className="text-lg">Draw or upload a custom shape</span>
+                <h3 className="font-bold">Analysis:</h3>
+                <p className="text-lg">
+                  Be aware to draw or upload a minimum size area in order to ensure enough data for
+                  the analysis. The recommended maximum file size is 10MB. Anything larger than that
+                  may not work properly.
+                </p>
+                <h3 className="font-bold">List of supported file formats:</h3>
+                <ul className="list-disc pl-5">
+                  <li>
+                    <a
+                      className="text-sm text-brand-800 hover:underline"
+                      href="https://geojson.org"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      geoJSON (.json, .geojson)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="text-sm text-brand-800 hover:underline"
+                      href="https://www.geopackage.org/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      geoPackage (.gpkg)
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="text-sm text-brand-800 hover:underline"
+                      href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      .zip with the following file formats .shp, .shx, .dbf and .prj
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <DialogClose />
             </DialogContent>
           </Dialog>
-          {/* <Info slug="drawingToolAlert" icon={false}>
-
-        </Info> */}
-          {/* // todo: ask for URL for terms of service link */}
           <span className="block text-sm">
             By uploading data you agree to the{' '}
             <a className="text-brand-800 underline" href="">

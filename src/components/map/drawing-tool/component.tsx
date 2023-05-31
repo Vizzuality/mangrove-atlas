@@ -10,7 +10,6 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 
 export type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
   position?: ControlPosition;
-
   onCreate?: (event: { features: GeoJSON.Feature[] }) => void;
   onUpdate?: (event: { features: GeoJSON.Feature[]; action: string }) => void;
   onDelete?: (event: { features: GeoJSON.Feature[] }) => void;
@@ -53,7 +52,6 @@ export const DrawControl = (props: DrawControlProps) => {
   const { onSetCustomPolygon, customPolygon } = props;
 
   useEffect(() => {
-    console.log(drawRef);
     if (!customPolygon) {
       drawRef.changeMode('draw_polygon');
     }

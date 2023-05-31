@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
@@ -12,8 +14,11 @@ import REMOVE_SVG from 'svgs/remove.svg?sprite';
 export const DeleteDrawingButton = () => {
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
+  const { replace, asPath } = useRouter();
 
-  const handleDeleteDrawing = useCallback(() => {
+  const handleDeleteDrawing = useCallback(async () => {
+    const queryParams = asPath.split('?')[1];
+
     setDrawingToolState((prevDrawingState) => ({
       ...prevDrawingState,
       enabled: false,
@@ -23,7 +28,9 @@ export const DeleteDrawingButton = () => {
     }));
 
     resetAnalysisState();
-  }, [setDrawingToolState, resetAnalysisState]);
+
+    await replace(`/?${queryParams}`, null);
+  }, [setDrawingToolState, resetAnalysisState, replace, asPath]);
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md bg-brand-800 px-6 py-3 shadow-medium">

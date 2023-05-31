@@ -42,7 +42,7 @@ const Category = () => {
   return (
     <div
       className={cn({
-        '"relative text-center" flex flex-col': true,
+        'relative flex flex-col text-center': true,
         'pointer-events-none opacity-50': isDrawingToolWidgetVisible,
       })}
     >
@@ -56,7 +56,7 @@ const Category = () => {
       <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
       <div className="relative flex flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <DropdownMenu.Root open={isOpen}>
-          <DropdownMenu.Trigger>
+          <DropdownMenu.Trigger asChild>
             <div
               className="relative flex w-11 flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
               onMouseOver={openMenu}

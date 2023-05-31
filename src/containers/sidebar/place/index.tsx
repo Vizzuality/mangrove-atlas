@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -9,7 +9,7 @@ import cn from 'lib/classnames';
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
 import LocationsList from 'containers/locations-list';
 
@@ -26,15 +26,17 @@ import { STYLES } from '../constants';
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const Place = () => {
-  const setDrawingToolWidget = useSetRecoilState(drawingToolAtom);
-  const [{ enabled: isAnalysisEnabled }, setAnalysisState] = useRecoilState(analysisAtom);
+  const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
   const [isOpen, setIsOpen] = useState(false);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
-
+  const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const resetAnalysisState = useResetRecoilState(analysisAtom);
+  const resetDrawingState = useResetRecoilState(drawingToolAtom);
+  const { ['default-desktop']: map } = useMap();
   const { asPath, replace } = useRouter();
 
-  const { ['default-desktop']: map } = useMap();
+  const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
@@ -45,28 +47,28 @@ const Place = () => {
   }, []);
 
   const handleWorldwideView = useCallback(async () => {
-    const queryParams = asPath.split('?')[1];
-
     await replace(`/?${queryParams}`, null);
+
+    resetDrawingState();
+    resetAnalysisState();
 
     map.flyTo({
       center: [0, 20],
       zoom: 2,
     });
-  }, [asPath, replace, map]);
+  }, [replace, map, queryParams, resetAnalysisState, resetDrawingState]);
 
-  const handleDrawingToolView = useCallback(() => {
-    setDrawingToolWidget((drawingToolState) => ({
+  const handleDrawingToolView = useCallback(async () => {
+    setDrawingToolState((drawingToolState) => ({
       ...drawingToolState,
       showWidget: true,
       enabled: false,
     }));
 
-    setAnalysisState((prevAnalysisState) => ({
-      ...prevAnalysisState,
-      enabled: false,
-    }));
-  }, [setDrawingToolWidget, setAnalysisState]);
+    resetAnalysisState();
+
+    await replace(`/custom-area?${queryParams}`, null);
+  }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   const openAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(true);
@@ -80,14 +82,25 @@ const Place = () => {
     setSkipAnalysisAlert(!skipAnalysisAlert);
   }, [skipAnalysisAlert]);
 
-  const handleResetPage = useCallback(() => {
+  const handleResetPage = useCallback(async () => {
     if (skipAnalysisAlert) {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
 
-    // todo: handle rest of updates (URL change to /, reset analysis and drawing tools states)
+    resetDrawingState();
+    resetAnalysisState();
+
+    await replace(`/?${queryParams}`, null);
+
     closeAnalysisAlertModal();
-  }, [skipAnalysisAlert, closeAnalysisAlertModal]);
+  }, [
+    queryParams,
+    skipAnalysisAlert,
+    replace,
+    closeAnalysisAlertModal,
+    resetDrawingState,
+    resetAnalysisState,
+  ]);
 
   useEffect(() => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
@@ -136,11 +149,11 @@ const Place = () => {
       </div>
       <Dialog open={isAnalysisAlertOpen}>
         <DialogContent
-          className="space-y-6 rounded-[20px] p-10 md:left-auto"
+          className="space-y-5 rounded-[20px] p-10 md:left-auto"
           onEscapeKeyDown={closeAnalysisAlertModal}
           onInteractOutside={closeAnalysisAlertModal}
         >
-          <div className="space-y-6">
+          <div className="space-y-5">
             <div className="flex justify-end">
               <button type="button" onClick={closeAnalysisAlertModal}>
                 <Icon icon={CLOSE_SVG} className="h-8 w-8" />
