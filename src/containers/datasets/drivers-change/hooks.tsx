@@ -4,8 +4,6 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { percentFormat } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
@@ -18,8 +16,6 @@ import type {
   ColorKeysTypes,
 } from 'containers/datasets/drivers-change/types';
 import { useLocation } from 'containers/datasets/locations/hooks';
-
-import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
@@ -34,7 +30,6 @@ const getColorKeys = (data: Data[]) =>
   }, {} satisfies ColorKeysTypes);
 
 export function useMangroveDriversChange(
-  params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ): DriversChangeData {
   const {
@@ -52,12 +47,11 @@ export function useMangroveDriversChange(
       url: '/widgets/drivers_of_change',
       params: {
         location_id: currentLocation,
-        ...params,
       },
       ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
-  const query = useQuery(['drivers_of_change', params], fetchMangroveDriversChange, {
+  const query = useQuery(['drivers_of_change', currentLocation], fetchMangroveDriversChange, {
     placeholderData: {
       data: [],
       metadata: null,

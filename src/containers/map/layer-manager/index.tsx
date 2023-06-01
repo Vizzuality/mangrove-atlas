@@ -27,7 +27,7 @@ const LayerManagerContainer = () => {
               visibility: false,
               expand: false,
             }}
-            beforeId={beforeId}
+            // beforeId={beforeId}
           />
         );
       })}
