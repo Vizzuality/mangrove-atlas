@@ -65,9 +65,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const screenWidth = useScreenWidth();
 
   const { [mapId]: map } = useMap();
-  if (map && map.isStyleLoaded()) {
-    console.log(map?.getStyle());
-  }
+
   const {
     query: { params },
     push,
