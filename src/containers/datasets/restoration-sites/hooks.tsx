@@ -67,7 +67,7 @@ export function useMangroveRestorationSitesFilters(
     }).then((response) => response);
 
   return useQuery(
-    ['restoration-sites', params, currentLocation],
+    ['restoration-sites-filters', params, currentLocation],
     fetchMangroveRestorationSitesFilters,
     {
       select: ({ data }) => ({
