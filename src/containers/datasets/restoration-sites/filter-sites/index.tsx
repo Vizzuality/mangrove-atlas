@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import cn from 'lib/classnames';
 
 import { RestorationSitesFilters } from 'store/widgets/restoration-sites';
@@ -22,9 +24,15 @@ import { useMangroveRestorationSitesFilters } from '../hooks';
 import { BUTTON_STYLES } from '../widget';
 
 const FilterSites = () => {
-  const [filters, setFilters] = useRecoilState(RestorationSitesFilters);
+  const [filters, setFilters] = useState(null);
   const { isFetching, isFetched, data } = useMangroveRestorationSitesFilters();
-  console.log(data, isFetched);
+  console.log(filters);
+
+  const handleFiltersChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
@@ -36,7 +44,7 @@ const FilterSites = () => {
               Clear all
             </button>
           </header>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-2 gap-5 py-10">
             {Object.keys(data.data).map((key) => (
               <Tooltip key="key">
                 <TooltipTrigger asChild>
@@ -62,28 +70,38 @@ const FilterSites = () => {
                     className="rounded-[20x] bg-white  text-black shadow-soft"
                   >
                     <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                      className={cn({
+                        'flex flex-col items-start justify-start space-y-2 overflow-y-auto scrollbar-hide':
+                          true,
+                      })}
                     >
-                      {data.data?.[key]?.map((u) => (
-                        <Checkbox key={u}>
-                          <CheckboxRoot>
-                            <CheckboxIndicator />
-                          </CheckboxRoot>
-                          <CheckboxLabel>
-                            <li>
-                              <button
-                                className={cn({
-                                  'font-bold text-black': true,
-                                })}
-                                type="button"
-                                // onClick={() => setUnitAreaExtent(u)}
-                              >
-                                {u}
-                              </button>
-                            </li>
-                          </CheckboxLabel>
-                        </Checkbox>
-                      ))}
+                      <Checkbox className="flex flex-col space-y-4">
+                        {data.data?.[key]?.map((u) => (
+                          <div key={u} className="flex items-center">
+                            <CheckboxRoot
+                              name={u}
+                              value={u}
+                              checked={[filters[key]?.includes(u)]}
+                              onCheckedChange={handleFiltersChange}
+                            >
+                              <CheckboxIndicator className="last:pb-0" />
+                            </CheckboxRoot>
+                            <CheckboxLabel className="text-sm">
+                              <li>
+                                <button
+                                  className={cn({
+                                    'font-bold text-black': true,
+                                  })}
+                                  type="button"
+                                  // onClick={() => setUnitAreaExtent(u)}
+                                >
+                                  {u}
+                                </button>
+                              </li>
+                            </CheckboxLabel>
+                          </div>
+                        ))}
+                      </Checkbox>
                     </ul>
 
                     <TooltipArrow className=" fill-white" width={10} height={5} />

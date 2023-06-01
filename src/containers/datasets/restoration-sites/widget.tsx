@@ -15,7 +15,7 @@ const RestorationSitesWidget = () => {
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
-        <div className="space-y-4">
+        <div className="space-y-8">
           <p>
             There are <span className="font-bold">{data.data.length}</span> restoration sites in{' '}
             {data.location}.
@@ -26,7 +26,7 @@ const RestorationSitesWidget = () => {
                 Filter sites
               </button>
             </DialogTrigger>
-            <DialogContent className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0">
+            <DialogContent className="h-fit-content rounded-[20px] p-10">
               <FilterSites />
               <DialogClose />
             </DialogContent>

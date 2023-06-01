@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import cn from 'lib/classnames';
 
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
 
-const CheckboxRoot = ({ className, children, ...props }) => (
+type CheckboxProps = {
+  className?: string;
+  children?: ReactNode | string | number;
+  onCheckedChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  value: string | number;
+  props?: any;
+};
+
+const CheckboxRoot = ({ className, children, ...props }: CheckboxProps) => (
   <CheckboxRadix.Root className={className} {...props}>
-    <div className="shadow-blackA7 hover:bg-violet3 flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-[4px] bg-white shadow-[0_2px_10px] outline-none focus:shadow-[0_0_0_2px_black]">
+    <div className="hover:bg-violet3 flex h-[20px] w-[20px] appearance-none items-center justify-center rounded-[4px] border border-brand-800/70 bg-white outline-none focus:shadow-[0_0_0_2px_black]">
       {children}
     </div>
   </CheckboxRadix.Root>
 );
 
-const CheckboxIndicator = ({ className, children, ...props }) => (
+const CheckboxIndicator = ({ className, children, ...props }: CheckboxProps) => (
   <CheckboxRadix.Indicator className={className} {...props}>
     {children}
 
@@ -21,7 +30,13 @@ const CheckboxIndicator = ({ className, children, ...props }) => (
   </CheckboxRadix.Indicator>
 );
 
-const CheckboxLabel = ({ className, children }) => (
+const CheckboxLabel = ({
+  className,
+  children,
+}: {
+  className: string;
+  children?: ReactNode | string | number;
+}) => (
   <label
     className={cn({
       'pl-[15px] text-[15px] leading-none text-white': true,
@@ -33,11 +48,9 @@ const CheckboxLabel = ({ className, children }) => (
   </label>
 );
 
-const Checkbox = ({ children, className, props }) => (
-  <form {...props}>
-    <div className={cn({ 'flex w-[500px] items-center': true, [className]: !!className })}>
-      {children}
-    </div>
+const Checkbox = ({ children, className, props }: CheckboxProps) => (
+  <form {...props} className=" p-5">
+    <div className={cn({ 'flex items-start': true, [className]: !!className })}>{children}</div>
   </form>
 );
 
