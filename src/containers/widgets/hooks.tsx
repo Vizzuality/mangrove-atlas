@@ -16,7 +16,6 @@ export function useWidgets(): WidgetTypes[] {
     query: { params },
   } = useRouter();
   const locationType = params?.[0];
-
   const currentLocation = locationType || 'worldwide';
 
   return useMemo(

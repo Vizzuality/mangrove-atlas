@@ -1,4 +1,4 @@
-import { createElement, ReactElement } from 'react';
+import { createElement } from 'react';
 
 import {
   PieChart,
@@ -240,7 +240,15 @@ const Chart = ({ config }) => {
           {pies &&
             Object.keys(pies).map((key) => {
               return (
-                <Pie key={key} data={data} dataKey={key} {...pies[key]} {...DEFAULTVALUES[type]}>
+                <Pie
+                  key={key}
+                  data={data}
+                  dataKey={key}
+                  startAngle={90}
+                  endAngle={-270}
+                  {...pies[key]}
+                  {...DEFAULTVALUES[type]}
+                >
                   {data.map((d, i) => (
                     <Cell key={`cell-${i}`} fill={d.color} />
                   ))}

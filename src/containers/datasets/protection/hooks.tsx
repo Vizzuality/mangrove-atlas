@@ -87,13 +87,14 @@ export function useMangroveProtectedAreas(
       ...queryOptions,
     }).then((response) => response.data);
   const getChartData = (data) => {
-    const protectedPercentage = (data.protected_area / data.total_area) * 100;
-    const nonProtectedPercentage = data.total_area - data.protected_area;
+    const protectedPercentage = (data.protected_area * 100) / data.total_area;
+    const nonProtectedPercentage = 100 - protectedPercentage;
 
     return [
       {
         indicator: 'protected',
         value: data.protected_area,
+        valueFormatted: numberFormat(data.protected_area),
         color: getColor(protectedPercentage),
         percentage: numberFormat(protectedPercentage),
         unit,
@@ -101,6 +102,7 @@ export function useMangroveProtectedAreas(
       {
         indicator: 'unprotected',
         value: data.total_area - data.protected_area,
+        valueFormatted: numberFormat(data.total_area - data.protected_area),
         color: '#ECECEF',
         percentage: numberFormat(nonProtectedPercentage),
         unit,
@@ -122,8 +124,8 @@ export function useMangroveProtectedAreas(
       ...data?.metadata,
       units,
       location,
-      protectedPercentage: numberFormat((data.protected_area / data.total_area) * 100),
-      nonProtectedPercentage: numberFormat(data.total_area - data.protected_area),
+      protectedPercentage: numberFormat((data.protected_area * 100) / data.total_area),
+      nonProtectedPercentage: numberFormat(100 - (data.protected_area * 100) / data.total_area),
       protectedArea:
         unit === 'ha'
           ? numberFormat(data?.data[0]?.protected_area)
