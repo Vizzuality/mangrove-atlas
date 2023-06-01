@@ -24,7 +24,7 @@ const MeanRestoration = () => {
           <p>
             The mean restoration potential score for{' '}
             <span className="font-bold"> {data.location}</span> is{' '}
-            {data.restoration_potential_score}
+            <span className="font-bold">{data.restoration_potential_score}</span>
           </p>
           <div className="flex flex-1 items-center space-y-2">
             <OverviewChart restoration_potential_score={data.restoration_potential_score} />

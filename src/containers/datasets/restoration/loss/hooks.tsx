@@ -74,7 +74,7 @@ export function useMangroveDegradationAndLoss(
       },
     }).then((response) => response.data);
 
-  return useQuery(['degradation-and-loss', params], fetchMangroveDegradationAndLoss, {
+  return useQuery(['degradation-and-loss', params, location_id], fetchMangroveDegradationAndLoss, {
     select: ({ data, metadata }) => ({
       ...metadata,
       ...data,
