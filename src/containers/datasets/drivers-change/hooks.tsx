@@ -43,7 +43,7 @@ export function useMangroveDriversChange(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name: location, id: currentLocation, location_id },
+    data: { name: location, id: currentLocation },
   } = useLocation(locationType, id);
 
   const fetchMangroveDriversChange = () =>
@@ -51,7 +51,7 @@ export function useMangroveDriversChange(
       method: 'GET',
       url: '/widgets/drivers_of_change',
       params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        location_id: currentLocation,
         ...params,
       },
       ...queryOptions,
@@ -108,7 +108,7 @@ export function useMangroveDriversChange(
       isFetched,
       isPlaceholderData,
     };
-  }, [data, location]);
+  }, [data, isLoading, isFetched, isPlaceholderData, location]);
 }
 
 export function useSource(): SourceProps {

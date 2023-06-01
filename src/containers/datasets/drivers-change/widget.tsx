@@ -11,23 +11,25 @@ const DriversChangeWidget = () => {
 
   const { legend } = config;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
-      <Loading
-        visible={(isPlaceholderData || isLoading) && !isFetched}
-        iconClassName="flex w-10 h-10 m-auto my-10"
-      />
-      {isFetched && !isLoading && (
-        <>
-          <p>
-            The primary driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
-            between 2000 and 2016 was
-            <span className="font-bold"> {primaryDrivers[primaryDriver]}</span>.
-          </p>
+    primaryDriver && (
+      <div className={WIDGET_CARD_WRAPER_STYLE}>
+        <Loading
+          visible={(isPlaceholderData || isLoading) && !isFetched}
+          iconClassName="flex w-10 h-10 m-auto my-10"
+        />
+        {isFetched && !isLoading && (
+          <>
+            <p>
+              The primary driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
+              between 2000 and 2016 was
+              <span className="font-bold"> {primaryDrivers[primaryDriver]}</span>.
+            </p>
 
-          <DriversChangeChart legend={legend} config={config} />
-        </>
-      )}
-    </div>
+            <DriversChangeChart legend={legend} config={config} />
+          </>
+        )}
+      </div>
+    )
   );
 };
 
