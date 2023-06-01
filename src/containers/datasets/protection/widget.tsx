@@ -25,7 +25,7 @@ const Protection = () => {
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
-        <div>
+        <div className="space-y-4">
           <p>
             Mangroves found in protected areas in{' '}
             <span className="font-bold">{data.location} </span> in{' '}
