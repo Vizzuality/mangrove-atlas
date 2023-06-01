@@ -7,5 +7,5 @@ export const variables = {
 };
 
 export const primaryDrivers = {
-  NPC: 'Non-Productive Conversion',
+  NPC: 'non-productive conversion',
 };

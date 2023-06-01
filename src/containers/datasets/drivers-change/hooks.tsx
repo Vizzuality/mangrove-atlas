@@ -87,7 +87,7 @@ export function useMangroveDriversChange(
       dataKey: 'value',
       chartBase: {
         pies: {
-          value: 'biomass',
+          value: '',
         },
       },
       tooltip: {
@@ -115,7 +115,7 @@ export function useMangroveDriversChange(
 export function useSource(): SourceProps {
   return {
     type: 'vector',
-    promoteId: 'ID',
+    id: 'main_loss_drivers',
     url: 'mapbox://globalmangrovewatch.4nuggpul',
   };
 }
@@ -131,7 +131,7 @@ export function useLayers(): LayerProps[] {
         'fill-color': [
           'interpolate',
           ['linear'],
-          ['get', 'Rest_Score'],
+          ['get', 'commodities_pct'],
           20,
           '#f9ddda',
           40,
@@ -143,22 +143,22 @@ export function useLayers(): LayerProps[] {
           100,
           '#224294',
         ],
-        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.6],
-        'fill-outline-color': [
-          'interpolate',
-          ['linear'],
-          ['get', 'Rest_Score'],
-          20,
-          '#f9ddda',
-          40,
-          '#ffadad',
-          60,
-          '#ce78b3',
-          80,
-          '#8478ce',
-          100,
-          '#224294',
-        ],
+        // 'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.6],
+        // 'fill-outline-color': [
+        //   'interpolate',
+        //   ['linear'],
+        //   ['get', 'Rest_Score'],
+        //   20,
+        //   '#f9ddda',
+        //   40,
+        //   '#ffadad',
+        //   60,
+        //   '#ce78b3',
+        //   80,
+        //   '#8478ce',
+        //   100,
+        //   '#224294',
+        // ],
       },
     },
   ];
