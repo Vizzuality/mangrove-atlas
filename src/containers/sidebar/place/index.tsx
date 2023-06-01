@@ -67,7 +67,7 @@ const Place = () => {
 
     resetAnalysisState();
 
-    await replace(`/custom-area?${queryParams}`, null);
+    await replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   const openAnalysisAlertModal = useCallback(() => {

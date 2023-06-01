@@ -130,7 +130,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }));
       const queryParams = asPath.split('?')[1];
 
-      await push(`/custom-area?${queryParams}`, null);
+      await push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
     [setDrawingToolState, setAnalysisState, asPath, push]
   );

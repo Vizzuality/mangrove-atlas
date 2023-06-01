@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -15,10 +15,9 @@ export const DeleteDrawingButton = () => {
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const { replace, asPath } = useRouter();
+  const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
   const handleDeleteDrawing = useCallback(async () => {
-    const queryParams = asPath.split('?')[1];
-
     setDrawingToolState((prevDrawingState) => ({
       ...prevDrawingState,
       enabled: false,
@@ -29,8 +28,8 @@ export const DeleteDrawingButton = () => {
 
     resetAnalysisState();
 
-    await replace(`/?${queryParams}`, null);
-  }, [setDrawingToolState, resetAnalysisState, replace, asPath]);
+    await replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+  }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md bg-brand-800 px-6 py-3 shadow-medium">
