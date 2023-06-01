@@ -134,7 +134,7 @@ export function useLayers(): LayerProps[] {
       'source-layer': 'main_loss_drivers',
       paint: {
         'fill-color': ['match', ['get', 'primary_driver'], ...COLORS, '#ccc'],
-        'fill-opacity': 0.75,
+        'fill-opacity': 0.65,
       },
     },
     {
