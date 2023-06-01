@@ -1,1 +1,11 @@
-export const years = [1996, 2007, 2008, 2009, 2010, 2015, 2016, 2017, 2018, 2019, 2020];
+export const variables = {
+  erosion_pct: 'Erosion',
+  episodic_disturbances_pct: 'Episodic Disturbances',
+  commodities_pct: 'Commodities',
+  npc_pct: 'Non-Productive Conversion',
+  settlement_pct: 'Settlement',
+};
+
+export const primaryDrivers = {
+  NPC: 'Non-Productive Conversion',
+};

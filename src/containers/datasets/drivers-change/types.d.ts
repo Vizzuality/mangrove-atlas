@@ -2,20 +2,20 @@ type Unit = {
   value: string;
 };
 
-type BiomassIndicator = 'total' | '0-50' | '50-100' | '100-150' | '150-250' | '250-1500';
+type DriversChangeVariable =
+  | 'erosion_pct'
+  | 'episodic_disturbances_pct'
+  | 'commodities_pct'
+  | 'npc_pct'
+  | 'settlement_pct';
 
-export type Data = { year: number; value: number; indicator: BiomassIndicator };
+export type Data = { primary_driver: string; value: number; variable: DriversChangeVariable };
 
 type ChartData = {
-  label: BiomassIndicator;
+  label: string;
   value: number;
   showValue: boolean; // legend
   color: string;
-};
-
-export type AboveGround = {
-  year: number;
-  value: number;
 };
 
 type Metadata = {
@@ -47,12 +47,10 @@ type ChartConfig = {
 };
 
 export type DriversChangeData = {
+  primaryDriver: string;
   isLoading: boolean;
   isFetched: boolean;
   isPlaceholderData: boolean;
-  mean: string;
-  unit: string;
-  year: number;
   config: ChartConfig;
   location: string;
 };

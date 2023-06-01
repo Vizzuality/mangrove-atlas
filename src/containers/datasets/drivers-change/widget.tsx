@@ -1,19 +1,14 @@
-//!TODO: store
-import { BiomassYearSettings } from 'store/widgets/biomass';
-
-import { useRecoilState } from 'recoil';
-
 import DriversChangeChart from 'containers/datasets/drivers-change/chart';
+import { primaryDrivers } from 'containers/datasets/drivers-change/constants';
 import { useMangroveDriversChange } from 'containers/datasets/drivers-change/hooks';
 
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 const DriversChangeWidget = () => {
-  const [defaultYear, setYear] = useRecoilState(BiomassYearSettings);
-  const { year, mean, unit, config, isLoading, location, isFetched, isPlaceholderData } =
-    useMangroveDriversChange(defaultYear);
-  if (year !== defaultYear) setYear(year);
+  const { primaryDriver, config, isLoading, location, isFetched, isPlaceholderData } =
+    useMangroveDriversChange();
+
   const { legend } = config;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
@@ -24,12 +19,9 @@ const DriversChangeWidget = () => {
       {isFetched && !isLoading && (
         <>
           <p>
-            THE PRIMARY driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
-            between 200 and 2016 was{' '}
-            <span className="font-bold">
-              {mean} {unit}
-            </span>{' '}
-            in <span className="font-bold"> {year}</span>.
+            The primary driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
+            between 2000 and 2016 was
+            <span className="font-bold"> {primaryDrivers[primaryDriver]}</span>.
           </p>
 
           <DriversChangeChart legend={legend} config={config} />

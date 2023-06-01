@@ -9,6 +9,7 @@ import { percentFormat } from 'lib/format';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
+import { variables } from 'containers/datasets/drivers-change/constants';
 import Tooltip from 'containers/datasets/drivers-change/tooltip';
 import type {
   DataResponse,
@@ -22,16 +23,16 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
+const COLORS = ['#52BCA3', '#CC61B0', '#5D69B1', '#2F8AC4', '#DAA51B'];
 
 const getColorKeys = (data: Data[]) =>
   data?.reduce((acc, d, i) => {
     return {
       ...acc,
-      [d.indicator]: COLORS[i],
+      [d.variable]: COLORS[i],
     };
   }, {} satisfies ColorKeysTypes);
-// widget data
+
 export function useMangroveDriversChange(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
@@ -68,25 +69,16 @@ export function useMangroveDriversChange(
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {
-    const years = data?.metadata?.year;
-    const selectedYear = years?.[years?.length - 1];
-    const dataFiltered = data?.data.filter(
-      ({ indicator, year }) => indicator !== 'total' && year === selectedYear
-    );
+    const colorKeys = getColorKeys(data?.data);
 
-    // const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
-    //   ({ year }) => year === selectedYear
-    // )?.value;
+    const primaryDriver = data?.data?.find((d) => d.primary_driver)?.primary_driver;
 
-    const unit = data?.metadata?.units?.value;
-
-    const colorKeys = getColorKeys(dataFiltered);
-    const ChartData = dataFiltered?.map((d) => ({
-      label: d.indicator,
+    const ChartData = data?.data?.map((d) => ({
+      label: variables[d.variable],
       value: d.value,
-      showValue: false,
+      showValue: true,
       valueFormatted: percentFormat(d.value),
-      color: colorKeys[d.indicator],
+      color: colorKeys[d.variable],
     }));
 
     const config = {
@@ -104,22 +96,20 @@ export function useMangroveDriversChange(
         },
       },
       legend: {
-        title: 'Aboveground biomass density (t / ha)',
+        title: '',
         items: ChartData,
       },
     };
 
     return {
-      mean: null,
-      unit,
-      year: selectedYear,
       config,
+      primaryDriver,
       isLoading,
       location,
       isFetched,
       isPlaceholderData,
     };
-  }, [data]);
+  }, [data, isLoading, isFetched, isPlaceholderData, location]);
 }
 
 export function useSource(): SourceProps {
