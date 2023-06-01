@@ -39,7 +39,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
         >
           <div
             style={{ backgroundColor: color }}
-            className="my-0.5 mr-2.5 h-4 w-2 rounded-md text-sm"
+            className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
           />
           <div className="flex flex-col items-start text-sm">
             <p className="font-bold">{label}</p>

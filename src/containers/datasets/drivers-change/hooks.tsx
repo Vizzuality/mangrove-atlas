@@ -23,7 +23,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-const COLORS = ['#52BCA3', '#CC61B0', '#5D69B1', '#2F8AC4', '#DAA51B'];
+const COLORS = ['#CC61B0', '#5D69B1', '#DAA51B', '#52BCA3', '#2F8AC4'];
 
 const getColorKeys = (data: Data[]) =>
   data?.reduce((acc, d, i) => {
@@ -52,7 +52,6 @@ export function useMangroveDriversChange(
       url: '/widgets/drivers_of_change',
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        // ...(!!location_id && location_id === 'worldwide' && { location_id: 2029 }),
         ...params,
       },
       ...queryOptions,
@@ -77,7 +76,7 @@ export function useMangroveDriversChange(
       label: variables[d.variable],
       value: d.value,
       showValue: true,
-      valueFormatted: percentFormat(d.value),
+      valueFormatted: d.value.toFixed(2) + '%',
       color: colorKeys[d.variable],
     }));
 
@@ -109,7 +108,7 @@ export function useMangroveDriversChange(
       isFetched,
       isPlaceholderData,
     };
-  }, [data, isLoading, isFetched, isPlaceholderData, location]);
+  }, [data, location]);
 }
 
 export function useSource(): SourceProps {
