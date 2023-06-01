@@ -1,12 +1,15 @@
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
+import { numberFormat } from 'lib/format';
+
 import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
@@ -15,14 +18,52 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { DataResponse, Data } from './types';
+import CustomTooltip from './tooltip';
+import type { DataResponse } from './types';
 
+const COLORS = {
+  '0% - 20%': '#CF597E',
+  '20% - 40%': '#EEB479',
+  '40% - 60%': '#E9E29C',
+  '60% - 80%': '#9CCB86',
+  '80% - 100%': '#009392',
+};
+
+const getColor = (percentage) => {
+  let color;
+  switch (true) {
+    case percentage <= 20:
+      color = COLORS['0% - 20%'];
+      break;
+    case percentage <= 40 && percentage > 20:
+      color = COLORS['20% - 40%'];
+      break;
+    case percentage <= 60 && percentage > 40:
+      color = COLORS['40% - 60%'];
+      break;
+    case percentage <= 80 && percentage > 60:
+      color = COLORS['60% - 80%'];
+      break;
+    case percentage <= 100 && percentage > 80:
+      color = COLORS['80% - 100%'];
+      break;
+    default:
+      color = '#ECECEF';
+      break;
+  }
+  return color;
+};
+
+type ProtectionType = {
+  location: string;
+};
 // widget data
-export function useMangroveProtectedAreas<T>(
+export function useMangroveProtectedAreas(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, T>
+  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
 ) {
   const currentYear = useRecoilValue(widgetYearAtom);
+  const units = ['ha', 'km²'];
 
   const {
     query: { params: queryParams },
@@ -32,34 +73,124 @@ export function useMangroveProtectedAreas<T>(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+
+  const { unit, ...restParams } = params;
   const fetchMangroveProtectedAreas = () =>
     API.request({
       method: 'GET',
       url: '/widgets/protected-areas',
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        year: currentYear,
-        ...params,
+        unit,
+        ...restParams,
       },
       ...queryOptions,
     }).then((response) => response.data);
+  const getChartData = (data) => {
+    const protectedPercentage = (data.protected_area / data.total_area) * 100;
+    const nonProtectedPercentage = data.total_area - data.protected_area;
 
-  const query = useQuery(['protected-areas', params], fetchMangroveProtectedAreas, {
-    placeholderData: [],
-    //  select: (data) => data,
+    return [
+      {
+        indicator: 'protected',
+        value: data.protected_area,
+        color: getColor(protectedPercentage),
+        percentage: numberFormat(protectedPercentage),
+        unit,
+      },
+      {
+        indicator: 'unprotected',
+        value: data.total_area - data.protected_area,
+        color: '#ECECEF',
+        percentage: numberFormat(nonProtectedPercentage),
+        unit,
+      },
+    ];
+  };
+
+  const getLegendData = useCallback(
+    () =>
+      Object.keys(COLORS).map((key) => ({
+        label: key,
+        color: COLORS[key],
+      })),
+    [location, unit, currentYear]
+  );
+  return useQuery(['protected-areas', restParams], fetchMangroveProtectedAreas, {
+    select: (data) => ({
+      ...data?.data[0],
+      ...data?.metadata,
+      units,
+      location,
+      protectedPercentage: numberFormat((data.protected_area / data.total_area) * 100),
+      nonProtectedPercentage: numberFormat(data.total_area - data.protected_area),
+      protectedArea:
+        unit === 'ha'
+          ? numberFormat(data?.data[0]?.protected_area)
+          : numberFormat(data?.data[0]?.protected_area / 100),
+      totalArea:
+        unit === 'ha'
+          ? numberFormat(data?.data[0]?.total_area)
+          : numberFormat(data?.data[0]?.total_area / 100),
+      currentYear: 2020,
+      config: {
+        type: 'pie',
+        totalArea: data?.data?.total_area,
+        data: getChartData(data?.data[0]),
+        chartBase: {
+          type: 'pie',
+          pies: {
+            y: {
+              value: 'protected',
+              dataKey: 'value',
+
+              customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
+                const { cx, cy } = viewBox;
+                return (
+                  <g>
+                    <text
+                      x={cx}
+                      y={cy - 10}
+                      className="recharts-text recharts-label-large"
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                    >
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
+                        {numberFormat(
+                          (data?.data?.[0].protected_area * 100) / data?.data?.[0].total_area
+                        )}{' '}
+                        %
+                      </tspan>
+                    </text>
+                    <text
+                      x={cx}
+                      y={cy + 15}
+                      className="recharts-text recharts-label-medium"
+                      textAnchor="middle"
+                      dominantBaseline="central"
+                    >
+                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
+                        Mangrove protected
+                      </tspan>
+                    </text>
+                  </g>
+                );
+              },
+            },
+          },
+        },
+        tooltip: {
+          content: (properties) => {
+            const { active, payload } = properties;
+            if (!active) return null;
+            return <CustomTooltip {...properties} payload={payload[0].payload} />;
+          },
+        },
+      },
+      legend: getLegendData(),
+    }),
     ...queryOptions,
   });
-
-  const DATA = {
-    location,
-  } satisfies Data;
-
-  return useMemo(() => {
-    return {
-      ...query,
-      data: DATA,
-    } as typeof query;
-  }, [query]);
 }
 
 export function useSource(): SourceProps {
@@ -108,7 +239,7 @@ export function useLayers(): LayerProps[] {
           1,
           '#009392',
         ],
-        'fill-opacity': 0.5,
+        'fill-opacity': 0.7,
       },
     },
   ];

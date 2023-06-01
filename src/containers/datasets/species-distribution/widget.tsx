@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from 'react';
+import { createRef, useState, useLayoutEffect } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -16,7 +16,7 @@ const SpeciesDistribution = () => {
   const { location, total, legend, isLoading, isFetched, isPlaceholderData } = useMangroveSpecies();
   const isWorldwide = location === 'Worldwide';
   // const total = data?.total;
-  const ref = useRef(null);
+  const ref = createRef<HTMLDivElement>();
   const trianglePosition = (lineChartWidth * total) / 100 - 7; // substract icon size
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
@@ -33,7 +33,7 @@ const SpeciesDistribution = () => {
       {isFetched && !isLoading && (
         <div className="pb-8">
           {/* mangrove sentence styles, create constant */}
-          <p className="text-lg font-light text-black/85">
+          <p className="text-lg font-light text-black/85 first-letter:uppercase">
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold">{total}</span> of mangroves distributed by country as map
             shows.
