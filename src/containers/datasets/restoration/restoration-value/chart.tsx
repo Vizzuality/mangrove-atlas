@@ -46,7 +46,7 @@ const RestorationValueChart = ({ data }: { data: Data }) => {
     },
   };
   return (
-    <div className="flex w-full flex-1 items-center justify-between pb-10">
+    <div className="grid grid-cols-2 items-center pb-10">
       <Legend items={config.data} />
       <Chart config={config} />
     </div>

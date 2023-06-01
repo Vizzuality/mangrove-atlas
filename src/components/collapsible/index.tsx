@@ -32,7 +32,7 @@ const CollapsibleComponent = ({
   );
 
   const widgetName = (label) => {
-    return widgets.find((w) => w.slug === label);
+    return widgets.find((w) => w.slug === label).name;
   };
 
   return (

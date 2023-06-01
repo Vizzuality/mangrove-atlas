@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { numberFormat } from 'lib/format';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 
@@ -11,7 +13,7 @@ import API from 'services/api';
 
 import type { Data, DataResponse } from './types';
 
-const getLossData = (data) => {
+const getLossData = (data, unit) => {
   const lossData = data.filter(
     ({ indicator }) => indicator !== 'lost_area' && indicator !== 'mangrove_area'
   );
@@ -22,7 +24,11 @@ const getLossData = (data) => {
     {
       indicator: 'total_loss',
       label: 'Total area loss',
-      children: lossData,
+      children: lossData.map((l) => ({
+        ...l,
+        valueFormatted: numberFormat(l.value),
+        unit,
+      })),
     },
   ];
   const indicators = dataParsed[0].children?.map((d) => d.indicator);
@@ -73,7 +79,7 @@ export function useMangroveDegradationAndLoss(
       ...metadata,
       ...data,
       location,
-      chartData: getLossData(data),
+      chartData: getLossData(data, metadata.units.degraded_area),
       unit: metadata.units.degraded_area,
       main_loss_driver: metadata.main_loss_driver || 'Commodities',
     }),

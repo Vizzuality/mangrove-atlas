@@ -60,7 +60,7 @@ const InternationalStatus = () => {
                 </a>
               </h3>
               <div className="flex items-start space-x-2">
-                <p>
+                <p className="first-letter:uppercase">
                   {location}
                   {apostrophe} NDC pledge contains {pledge_type}
                 </p>
@@ -117,7 +117,7 @@ const InternationalStatus = () => {
             </p>
           )}
           {ndc_adaptation && ndc_mitigation && (
-            <p>
+            <p className="first-letter:uppercase">
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -126,7 +126,7 @@ const InternationalStatus = () => {
           )}
 
           {ndc_adaptation && !ndc_mitigation && (
-            <p>
+            <p className="first-letter:uppercase">
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -135,7 +135,7 @@ const InternationalStatus = () => {
           )}
 
           {!ndc_adaptation && ndc_mitigation && (
-            <p>
+            <p className="first-letter:uppercase">
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -147,7 +147,7 @@ const InternationalStatus = () => {
             <div className="space-y-4">
               <h3 className="font-bold text-brand-800">Forest Reference Emission Levels</h3>
               <div className="space-y-4">
-                <p>
+                <p className="first-letter:uppercase">
                   {location}
                   {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({location}
                   {apostrophe} mangroves are considered {fow}) .
@@ -158,7 +158,7 @@ const InternationalStatus = () => {
           <div className="space-y-4">
             <h3 className="font-bold text-brand-800">IPCC Wetlands Supplement</h3>
             {ipcc_wetlands_suplement === 'has' ? (
-              <p>
+              <p className="first-letter:uppercase">
                 {location} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
               </p>
             ) : (
