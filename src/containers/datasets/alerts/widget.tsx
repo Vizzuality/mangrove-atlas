@@ -158,7 +158,7 @@ const AlertsWidget = () => {
       )}
       <div className="space-y-2">
         <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
-        <p className="pt-6 font-sans text-lg font-light leading-7">
+        <p className="items-center pt-6 font-sans text-lg font-light leading-7">
           There are <span className="font-bold">32 </span>areas monitored in the world.
         </p>
         <div className="flex space-x-2">

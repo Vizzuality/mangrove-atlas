@@ -152,7 +152,7 @@ export function useAlerts<T>(
       },
     }).then((response) => response.data);
 
-  const query = useQuery(['alerts', params], fetchAlerts, {
+  const query = useQuery(['alerts', params, location_id], fetchAlerts, {
     placeholderData: [],
     ...queryOptions,
   });
@@ -424,7 +424,7 @@ export function useAlerts<T>(
 export function useSource(): SourceProps {
   const startDate = useRecoilValue(alertsStartDate);
   const endDate = useRecoilValue(alertsEndDate);
-  console.log(startDate, endDate);
+
   const {
     query: { params: queryParams },
   } = useRouter();
