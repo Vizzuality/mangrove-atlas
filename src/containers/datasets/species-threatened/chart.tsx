@@ -5,7 +5,6 @@ import Legend from './legend';
 const SpeciesThreatenedChart = ({ data, legend, tooltip }) => {
   const config = {
     type: 'pie',
-
     data,
     tooltip,
     cartesianGrid: false,
@@ -21,7 +20,7 @@ const SpeciesThreatenedChart = ({ data, legend, tooltip }) => {
   };
   return (
     <div className="flex flex-1 items-center justify-between py-10">
-      {<Legend items={legend} />}
+      <Legend items={legend} />
       <Chart config={config} />
     </div>
   );

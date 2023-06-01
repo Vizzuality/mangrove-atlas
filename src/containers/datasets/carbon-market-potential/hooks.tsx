@@ -9,7 +9,6 @@ import { numberFormat } from 'lib/format';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
-import type { RouterData } from 'containers/widgets/types';
 
 import API from 'services/api';
 

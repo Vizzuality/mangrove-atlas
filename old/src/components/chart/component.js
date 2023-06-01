@@ -157,6 +157,7 @@ class Chart extends PureComponent {
             data={data}
             layout={layout}
             margin={margin}
+            onBrushEnd={onBrushEnd}
             padding={padding}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -349,7 +350,7 @@ class Chart extends PureComponent {
             width="100%"
             height={height - 28}
             margin={margin}
-            onBrushEnd={onBrushEnd}
+      
             {...brush}
           />
         )}

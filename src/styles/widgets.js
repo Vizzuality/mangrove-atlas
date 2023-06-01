@@ -1,1 +1,1 @@
-export const WIDGET_CARD_WRAPER_STYLE = 'pt-4 pb-10';
+export const WIDGET_CARD_WRAPER_STYLE = 'pt-4 pb-10 font-light text-black/85 space-y-4';

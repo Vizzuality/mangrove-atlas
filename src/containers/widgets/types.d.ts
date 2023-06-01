@@ -30,6 +30,9 @@ type ChartConfig = {
   tooltip: TooltipData;
   cartesianGrid: boolean;
   chartBase: chartBaseTypes;
+  onBrushEnd?: () => void;
+  startIndex?: number;
+  endIndex?: number;
 };
 
 type RouterProps = {
