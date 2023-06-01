@@ -103,6 +103,13 @@ const widgets = [
     layersIds: [],
   },
   {
+    name: 'Drivers of change',
+    slug: 'mangrove_drivers_change' satisfies WidgetSlugType,
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    // layersIds: ['extent'],
+  },
+  {
     name: 'Draw or upload an area',
     slug: 'mangrove_drawing_tool',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],

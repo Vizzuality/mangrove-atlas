@@ -4,13 +4,10 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, percentFormat } from 'lib/format';
-
-import { BiomassYearSettings } from 'store/widgets/biomass';
+import { percentFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { useRecoilValue } from 'recoil';
 
 import Tooltip from 'containers/datasets/drivers-change/tooltip';
 import type {
@@ -28,7 +25,7 @@ import API from 'services/api';
 const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
 const getColorKeys = (data: Data[]) =>
-  data.reduce((acc, d, i) => {
+  data?.reduce((acc, d, i) => {
     return {
       ...acc,
       [d.indicator]: COLORS[i],
@@ -39,8 +36,6 @@ export function useMangroveDriversChange(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ): DriversChangeData {
-  const currentYear = useRecoilValue(BiomassYearSettings);
-
   const {
     query: { params: queryParams },
   } = useRouter();
@@ -55,8 +50,8 @@ export function useMangroveDriversChange(
       method: 'GET',
       url: '/widgets/drivers_of_change',
       params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        ...(!!currentYear && { year: currentYear }),
+        // ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...(!!location_id && location_id === 'worldwide' && { location_id: 2029 }),
         ...params,
       },
       ...queryOptions,
@@ -65,33 +60,28 @@ export function useMangroveDriversChange(
   const query = useQuery(['drivers_of_change', params], fetchMangroveDriversChange, {
     placeholderData: {
       data: [],
-      metadata: {
-        avg_aboveground_biomass: [
-          {
-            value: null,
-          },
-        ],
-      },
+      metadata: null,
     },
     ...queryOptions,
   });
+
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {
-    const years = data?.metadata.year;
-    const selectedYear = currentYear || years?.[years?.length - 1];
-    const dataFiltered = data.data.filter(
+    const years = data?.metadata?.year;
+    const selectedYear = years?.[years?.length - 1];
+    const dataFiltered = data?.data.filter(
       ({ indicator, year }) => indicator !== 'total' && year === selectedYear
     );
 
-    const avgBiomassFiltered = data?.metadata.avg_aboveground_biomass.find(
-      ({ year }) => year === selectedYear
-    )?.value;
+    // const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
+    //   ({ year }) => year === selectedYear
+    // )?.value;
 
-    const unit = data?.metadata.units?.value;
+    const unit = data?.metadata?.units?.value;
 
     const colorKeys = getColorKeys(dataFiltered);
-    const ChartData = dataFiltered.map((d) => ({
+    const ChartData = dataFiltered?.map((d) => ({
       label: d.indicator,
       value: d.value,
       showValue: false,
@@ -120,7 +110,7 @@ export function useMangroveDriversChange(
     };
 
     return {
-      mean: numberFormat(avgBiomassFiltered),
+      mean: null,
       unit,
       year: selectedYear,
       config,
@@ -133,26 +123,53 @@ export function useMangroveDriversChange(
 }
 
 export function useSource(): SourceProps {
-  const year = useRecoilValue(BiomassYearSettings);
-
-  // TO - DO: update when client provides data for more years
-  // const tiles = years.map<string>((year: number) => {
-  //   return `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`;
-  // });
-
   return {
-    id: 'aboveground_biomass-source',
-    type: 'raster',
-    tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/mangrove_aboveground_biomass-v3/${year}/{z}/{x}/{y}.png`,
-    ],
-    minzoom: 0,
-    maxzoom: 12,
+    type: 'vector',
+    promoteId: 'ID',
+    url: 'mapbox://globalmangrovewatch.4nuggpul',
   };
 }
-export function useLayer(): LayerProps {
-  return {
-    id: 'aboveground_biomass-layer',
-    type: 'raster',
-  };
+
+export function useLayers(): LayerProps[] {
+  return [
+    {
+      id: 'mangrove_drivers_change',
+      type: 'fill',
+      source: 'main_loss_drivers',
+      'source-layer': 'main_loss_drivers',
+      paint: {
+        'fill-color': [
+          'interpolate',
+          ['linear'],
+          ['get', 'Rest_Score'],
+          20,
+          '#f9ddda',
+          40,
+          '#ffadad',
+          60,
+          '#ce78b3',
+          80,
+          '#8478ce',
+          100,
+          '#224294',
+        ],
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.6],
+        'fill-outline-color': [
+          'interpolate',
+          ['linear'],
+          ['get', 'Rest_Score'],
+          20,
+          '#f9ddda',
+          40,
+          '#ffadad',
+          60,
+          '#ce78b3',
+          80,
+          '#8478ce',
+          100,
+          '#224294',
+        ],
+      },
+    },
+  ];
 }

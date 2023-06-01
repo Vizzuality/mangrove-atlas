@@ -28,4 +28,5 @@ export type WidgetSlugType =
   | 'mangrove_emissions_mitigation'
   | 'mangrove_international_status'
   | 'mangrove_carbon_market_potential'
-  | 'mangrove_drawing_tool';
+  | 'mangrove_drawing_tool'
+  | 'mangrove_drivers_change';

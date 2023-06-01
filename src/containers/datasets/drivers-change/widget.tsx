@@ -24,7 +24,7 @@ const DriversChangeWidget = () => {
       {isFetched && !isLoading && (
         <>
           <p>
-            The primary driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
+            THE PRIMARY driver of mangrove loss <span className="font-bold"> {location}</span>{' '}
             between 200 and 2016 was{' '}
             <span className="font-bold">
               {mean} {unit}
