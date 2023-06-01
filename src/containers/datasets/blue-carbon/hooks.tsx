@@ -8,19 +8,23 @@ import { useRouter } from 'next/router';
 
 import { formatMillion, numberFormat } from 'lib/format';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { PolarViewBox } from 'recharts/types/util/types';
+import { useRecoilValue } from 'recoil';
 
-import { useGenericAnalysisData } from 'hooks/analysis';
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
-import type { BlueCarbon } from './types';
+import type { BlueCarbon, DataResponse } from './types';
 
 const COLORS = {
   '0-700': '#EEB66B',
@@ -33,7 +37,7 @@ const COLORS = {
 // widget data
 export function useMangroveBlueCarbon(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<BlueCarbon, unknown>
+  queryOptions?: UseQueryOptions<DataResponse>
 ) {
   const {
     query: { params: queryParams },
@@ -43,9 +47,25 @@ export function useMangroveBlueCarbon(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const geojson = customGeojson || uploadedGeojson;
 
-  const fetchMangroveBlueCarbon = () =>
-    API.request({
+  const fetchMangroveBlueCarbon = () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_blue_carbon',
+        },
+      }).then(({ data }) => data['mangrove_blue_carbon']);
+    }
+
+    return API.request<DataResponse>({
       method: 'GET',
       url: '/widgets/blue_carbon',
       params: {
@@ -54,8 +74,9 @@ export function useMangroveBlueCarbon(
       },
       ...queryOptions,
     }).then((response) => response.data);
+  };
 
-  const query = useQuery(['blue-carbon', params], fetchMangroveBlueCarbon, {
+  const query = useQuery(['blue-carbon', params, geojson], fetchMangroveBlueCarbon, {
     placeholderData: {
       data: [],
       metadata: {
@@ -181,7 +202,7 @@ export function useMangroveBlueCarbon(
     return {
       ...query,
       data: DATA,
-    } as typeof query;
+    } as typeof query & { data: typeof DATA };
   }, [query]);
 }
 
@@ -201,8 +222,4 @@ export function useLayer(): LayerProps {
     id: 'blue-carbon-layer',
     type: 'raster',
   };
-}
-
-export function useAnalysis() {
-  return useGenericAnalysisData('mangrove_blue_carbon');
 }

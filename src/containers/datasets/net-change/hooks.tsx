@@ -6,17 +6,21 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
+import { useRecoilValue } from 'recoil';
 
-import { useGenericAnalysisData } from 'hooks/analysis';
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
 import { Data, DataResponse, UseParamsOptions } from './types';
 
@@ -88,10 +92,26 @@ export function useMangroveNetChange(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const geojson = customGeojson || uploadedGeojson;
 
   const { startYear, endYear, selectedUnit, ...restParams } = params;
-  const fetchMangroveNetChange = () =>
-    API.request({
+  const fetchMangroveNetChange = () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_net_change',
+        },
+      }).then(({ data }) => data['mangrove_net_change']);
+    }
+
+    return API.request({
       method: 'GET',
       url: '/widgets/net_change',
       params: {
@@ -99,8 +119,9 @@ export function useMangroveNetChange(
         ...restParams,
       },
     }).then((response: AxiosResponse<DataResponse>) => response.data);
+  };
 
-  const query = useQuery(['net-change', restParams], fetchMangroveNetChange, {
+  const query = useQuery(['net-change', restParams, geojson], fetchMangroveNetChange, {
     placeholderData: {
       data: [],
       metadata: null,
@@ -197,8 +218,4 @@ export function useLayer(): LayerProps {
     id: 'net-change-layer',
     type: 'raster',
   };
-}
-
-export function useAnalysis() {
-  return useGenericAnalysisData('mangrove_net_change');
 }

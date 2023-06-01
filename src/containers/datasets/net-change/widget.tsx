@@ -19,14 +19,12 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
-import { useAnalysis, useMangroveNetChange } from './hooks';
+import { useMangroveNetChange } from './hooks';
 
 const NetChangeWidget = () => {
   const [selectedUnit, setUnit] = useState('km²');
   const [startYear, setStartYear] = useRecoilState(netChangeStartYear);
   const [endYear, setEndYear] = useRecoilState(netChangeEndYear);
-  const { data: analysisData } = useAnalysis();
-
   const {
     isLoading,
     netChange,

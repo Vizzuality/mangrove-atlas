@@ -19,7 +19,7 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
-import { useAnalysis, useMangroveHabitatExtent } from './hooks';
+import { useMangroveHabitatExtent } from './hooks';
 
 const HabitatExtent = () => {
   const [year, setYear] = useRecoilState(habitatExtentSettings);
@@ -29,8 +29,6 @@ const HabitatExtent = () => {
     year,
     unit: selectedUnitAreaExtent,
   });
-
-  const { data: analysisData } = useAnalysis();
 
   const {
     area,

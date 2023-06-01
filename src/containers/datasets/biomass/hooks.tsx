@@ -13,7 +13,7 @@ import { BiomassYearSettings } from 'store/widgets/biomass';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
-import { useGenericAnalysisData } from 'hooks/analysis';
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -55,7 +55,7 @@ export function useMangroveBiomass(
 
   const fetchMangroveBiomass = useCallback(async () => {
     if (isAnalysisEnabled) {
-      return AnalysisAPI.request({
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
         method: 'post',
         url: '/analysis',
         data: {
@@ -64,7 +64,7 @@ export function useMangroveBiomass(
         params: {
           'widgets[]': 'mangrove_biomass',
         },
-      }).then(({ data }) => data);
+      }).then(({ data }) => data['mangrove_biomass']);
     }
 
     return API.request<DataResponse>({
@@ -88,12 +88,6 @@ export function useMangroveBiomass(
           },
         ],
       },
-    },
-    select: (data) => {
-      if (isAnalysisEnabled) {
-        return data['mangrove_biomass'];
-      }
-      return data;
     },
     ...queryOptions,
   });
@@ -175,8 +169,4 @@ export function useLayer(): LayerProps {
     id: 'aboveground_biomass-layer',
     type: 'raster',
   };
-}
-
-export function useAnalysis(queryOptions?: UseQueryOptions<DataResponse>) {
-  return useGenericAnalysisData('mangrove_biomass', queryOptions);
 }

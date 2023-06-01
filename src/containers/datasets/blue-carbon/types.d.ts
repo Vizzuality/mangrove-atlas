@@ -8,7 +8,7 @@ type Units = {
 type BlueCarbonIndicator = '0-700' | '700-1400' | '1400-2100' | '2100-2800' | '2800-3500';
 
 export type Data = {
-  year: number;
+  year?: number;
   value: number;
   indicator: BlueCarbonIndicator;
 };
