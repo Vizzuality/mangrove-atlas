@@ -14,7 +14,7 @@ const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   return (
     <Source {...SOURCE}>
       {LAYERS.map((LAYER) => (
-        <Layer key={id} id={id} {...LAYER} beforeId={beforeId} />
+        <Layer key={id} id={`${id}-${LAYER.id}`} {...LAYER} beforeId={beforeId} />
       ))}
     </Source>
   );

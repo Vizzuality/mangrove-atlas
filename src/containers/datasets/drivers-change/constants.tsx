@@ -8,4 +8,8 @@ export const variables = {
 
 export const primaryDrivers = {
   NPC: 'non-productive conversion',
+  Erosion: 'erosion',
+  Settlement: 'settlement',
+  'Episodic Disturbances': 'episodic disturbances',
+  Commodities: 'commodities',
 };
