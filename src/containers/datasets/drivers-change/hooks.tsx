@@ -120,7 +120,21 @@ export function useSource(): SourceProps {
   };
 }
 
+const VARIABLES = [
+  { id: 'erosion_pct', color: '#CC61B0' },
+  { id: 'episodic_disturbances_pct', color: '#5D69B1' },
+  { id: 'commodities_pct', color: '#DAA51B' },
+  { id: 'npc_pct', color: '#52BCA3' },
+  { id: 'settlement_pct', color: '#2F8AC4' },
+];
+
 export function useLayers(): LayerProps[] {
+  const COLORS = VARIABLES.map(({ id: i, color }) => {
+    return [i, color];
+  }).flat();
+
+  console.log({ COLORS });
+
   return [
     {
       id: 'mangrove_drivers_change',
@@ -128,21 +142,10 @@ export function useLayers(): LayerProps[] {
       source: 'main_loss_drivers',
       'source-layer': 'main_loss_drivers',
       paint: {
-        'fill-color': [
-          'interpolate',
-          ['linear'],
-          ['get', 'commodities_pct'],
-          20,
-          '#f9ddda',
-          40,
-          '#ffadad',
-          60,
-          '#ce78b3',
-          80,
-          '#8478ce',
-          100,
-          '#224294',
-        ],
+        'fill-color': ['interpolate', ['linear'], ['get', 'variable'], ...COLORS, '#ccc'],
+
+        // 'fill-color': ['interpolate', ['linear'], ['get', 'variable'], 0, 0, 6, 1],
+        'fill-opacity': 0.5,
         // 'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.6],
         // 'fill-outline-color': [
         //   'interpolate',
