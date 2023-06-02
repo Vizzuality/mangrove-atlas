@@ -5,7 +5,7 @@ import cx from 'classnames';
 import styles from './style.module.scss';
 
 // components
-import RestorationDataGroup from '../restoration-data-group';
+import RestorationDataGroup from '../../restoration-data-group';
 
 const RestorationInfo = ({ data, isOpen, handleClick }) => {
   const {
