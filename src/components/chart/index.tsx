@@ -42,81 +42,6 @@ const ChartsMap = new Map([
   ['composed', ComposedChart],
 ]);
 
-// type Legend = {
-//   label: string;
-//   value: string | number;
-//   unit: string;
-//   color: string;
-// };
-// type ChartData = any;
-
-// type TooltipData = {
-//   title?: string;
-//   content?: (properties: unknown) => JSX.Element | ReactElement;
-//   items?: ChartData[];
-// };
-// type chartBaseTypes = {
-//   pies: {
-//     value: {
-//       innerRadius: number;
-//       outerRadius: number;
-//       paddingAngle: number;
-//     };
-//   };
-// };
-
-// type ChartConfig = {
-//   data: ChartData[];
-//   tooltip: TooltipData;
-//   cartesianGrid: boolean;
-//   chartBase: chartBaseTypes;
-//   onBrushEnd?: () => void;
-//   startIndex?: number;
-//   endIndex?: number;
-// };
-
-// type ChartTypes = {
-//   onBrushEnd?: () => void;
-//   startIndex?: number;
-//   endIndex?: number;
-// };
-
-// interface PieChartProps extends PieProps {
-//   type: 'pie';
-//   chartBase: chartBaseTypes;
-//   config: any;
-// }
-
-// type LineConfig = LineProps;
-
-// interface LineChartProps extends ChartTypes {
-//   type: 'line'; // change to CurveType
-//   chartBase: chartBaseTypes;
-//   config: LineConfig;
-// }
-
-// interface BarChartProps extends BarProps, ChartTypes {
-//   type: 'bar';
-//   chartBase: chartBaseTypes;
-//   config: any;
-// }
-
-// interface TreeMapChartProps extends Tree, ChartTypes {
-//   type: 'composed';
-//   chartBase: chartBaseTypes;
-//   config: any;
-// }
-
-// export declare type OptionalId<T> = T extends {
-//   id: string;
-// }
-//   ? Omit<T, 'id'> & {
-//       id?: string;
-//     }
-//   : T;
-
-// export type AnyChart = PieChartProps | BarChartProps | LineChartProps | TreeMapChartProps;
-
 const Chart = ({ config }) => {
   const {
     data,
@@ -130,7 +55,6 @@ const Chart = ({ config }) => {
     height,
     width,
     layout = 'horizontal',
-
     stackOffset,
     tooltip,
     cartesianGrid,

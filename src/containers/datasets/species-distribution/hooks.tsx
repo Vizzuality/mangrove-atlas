@@ -48,7 +48,7 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
-  const { data, isLoading, isFetched, isPlaceholderData } = query;
+  const { data } = query;
 
   return useMemo(() => {
     const total = data.data.total;
@@ -57,11 +57,9 @@ export function useMangroveSpecies(
       location,
       total: total,
       legend,
-      isLoading,
-      isFetched,
-      isPlaceholderData,
+      ...query,
     };
-  }, [query, params]);
+  }, [query, params, data]);
 }
 
 export function useSource(): SourceProps {

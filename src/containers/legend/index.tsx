@@ -4,27 +4,33 @@ type Item = {
   showValue?: boolean;
   color: string;
   label: string;
-  value: number;
+  value?: number;
   unit?: string;
   valueFormatted?: string;
 };
 
 type LegendTypes = {
   title?: string;
+  subtitle?: string;
   items: Item[];
   variant?: 'horizontal' | 'vertical';
 };
 
-const Legend = ({ title, items, variant = 'vertical' }: LegendTypes) => {
+const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) => {
   return (
     <div
       className={cn({
-        'flex w-full justify-between py-2': variant === 'horizontal',
+        'flex w-full justify-between py-2 text-black/85': variant === 'horizontal',
         'space-y-2': variant === 'vertical',
       })}
     >
       {title && (
         <h3 className="flex max-w-[120px] flex-col justify-center text-sm font-bold">{title}</h3>
+      )}
+      {subtitle && (
+        <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold opacity-30">
+          {subtitle}
+        </h2>
       )}
       {items.map(({ showValue = true, color, label, valueFormatted, value, unit }) => (
         <div

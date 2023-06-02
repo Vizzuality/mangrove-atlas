@@ -127,7 +127,7 @@ export function useMangroveSpecies(
         content: (properties) => <CustomTooltip {...properties} />,
       },
     };
-  }, [data]);
+  }, [data, location]);
 
   return useMemo(() => {
     return {
@@ -136,7 +136,7 @@ export function useMangroveSpecies(
       isFetched,
       isPlaceholderData,
     } satisfies SpeciesData;
-  }, [query, DATA]);
+  }, [DATA, isLoading, isFetched, isPlaceholderData]);
 }
 
 export function useSource(): SourceProps {
