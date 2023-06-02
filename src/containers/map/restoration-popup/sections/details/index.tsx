@@ -2,7 +2,15 @@ import cn from 'lib/classnames';
 
 import Detail from 'containers/map/restoration-popup/detail';
 
-const Details = ({ data, isOpen, handleClick }) => {
+const Details = ({
+  data,
+  isOpen,
+  handleClick,
+}: {
+  data: Record<string, any>;
+  isOpen: boolean;
+  handleClick: () => void;
+}) => {
   const {
     Tidal_range,
     Tidal_range1,

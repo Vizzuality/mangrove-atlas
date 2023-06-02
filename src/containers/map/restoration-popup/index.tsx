@@ -6,8 +6,9 @@ import { restorationPopUpAtom } from 'store/map';
 
 import { useRecoilState } from 'recoil';
 
-import Details from 'containers/map/restoration-popup/details';
-import RestorationScores from 'containers/map/restoration-popup/restoration-scores';
+import Details from 'containers/map/restoration-popup/sections/details';
+import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';
+import RestorationScores from 'containers/map/restoration-popup/sections/restoration-scores';
 
 const PopupRestoration = () => {
   const [open, setOpen] = useState('');
@@ -55,7 +56,7 @@ const PopupRestoration = () => {
       onClose={removePopUp}
       className="c-restoration-popup"
     >
-      <div className="w-fit-content h-96">
+      <div className="w-fit-content">
         <div className="relative flex max-w-[460px] flex-col items-start bg-white">
           <RestorationScores
             data={popupInfo}
@@ -67,12 +68,11 @@ const PopupRestoration = () => {
             isOpen={open === 'details'}
             handleClick={() => handleClick('details')}
           />
-          {/*
-         <EcosystemServicesInfo
-           data={this.state.popupInfo}
-           isOpen={open === 'ecosystem'}
-           handleClick={() => handleClick('ecosystem')}
-         /> */}
+          <EcosystemServices
+            data={popupInfo}
+            isOpen={open === 'ecosystem'}
+            handleClick={() => handleClick('ecosystem')}
+          />
         </div>
       </div>
     </Popup>
