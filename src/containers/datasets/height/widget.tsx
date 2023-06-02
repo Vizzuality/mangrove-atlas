@@ -2,11 +2,14 @@ import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import HeightChart from './chart';
-import { useMangroveHeight } from './hooks';
+import { useAnalysis, useMangroveHeight } from './hooks';
 
 const HeightWidget = () => {
   const { location, legend, isLoading, mean, unit, year, config, isPlaceholderData, isFetched } =
     useMangroveHeight();
+
+  const { data: analysisData } = useAnalysis();
+
   if (isLoading) return null;
 
   return (

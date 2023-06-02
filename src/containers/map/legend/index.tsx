@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
+import { WidgetSlugType } from 'types/widget';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
@@ -10,8 +11,8 @@ const Legend = ({
   layers,
   setActiveWidgets,
 }: {
-  layers: readonly string[];
-  setActiveWidgets: (layers: string[]) => void;
+  layers: readonly WidgetSlugType[];
+  setActiveWidgets: (layers: WidgetSlugType[]) => void;
 }) => {
   const removeLayer = useCallback(
     (layer: string) => {
@@ -28,7 +29,7 @@ const Legend = ({
   };
 
   return (
-    <div className="mb-1 flex flex-col space-y-1">
+    <div className="flex flex-col space-y-1">
       {!!layers.length &&
         layers.map((l) => (
           <div

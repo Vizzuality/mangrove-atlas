@@ -32,6 +32,16 @@ const nextConfig = {
   // ? https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files
   output: 'standalone',
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: '/custom-area',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
+
   /** @param {import('webpack').Configuration} config */
   webpack(config) {
     config.module.rules.push({

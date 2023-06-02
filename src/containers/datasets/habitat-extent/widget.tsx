@@ -7,15 +7,6 @@ import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
-// import {
-//   PopoverRoot,
-//   PopoverContent,
-//   PopoverClose,
-//   PopoverTrigger,
-//   PopoverArrow,
-//   PopoverPortal,
-//   PopoverAnchor,
-// } from 'components/popover';
 import Loading from 'components/loading';
 import {
   Tooltip,
@@ -28,7 +19,7 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
-import { useMangroveHabitatExtent } from './hooks';
+import { useAnalysis, useMangroveHabitatExtent } from './hooks';
 
 const HabitatExtent = () => {
   const [year, setYear] = useRecoilState(habitatExtentSettings);
@@ -38,6 +29,8 @@ const HabitatExtent = () => {
     year,
     unit: selectedUnitAreaExtent,
   });
+
+  const { data: analysisData } = useAnalysis();
 
   const {
     area,

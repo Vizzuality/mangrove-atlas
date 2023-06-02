@@ -11,9 +11,12 @@ import { useMangroveBiomass } from './hooks';
 const BiomassWidget = () => {
   const [defaultYear, setYear] = useRecoilState(BiomassYearSettings);
   const { year, mean, unit, config, isLoading, location, isFetched, isPlaceholderData } =
-    useMangroveBiomass(defaultYear);
+    useMangroveBiomass();
+
   if (year !== defaultYear) setYear(year);
+
   const { legend } = config;
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading

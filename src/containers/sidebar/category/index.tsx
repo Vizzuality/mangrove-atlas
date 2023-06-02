@@ -1,7 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
 import { activeCategoryAtom } from 'store/sidebar';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
@@ -13,8 +14,10 @@ import Icon from 'components/icon';
 
 const Category = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
+
+  const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
@@ -24,8 +27,25 @@ const Category = () => {
     setIsOpen(false);
   }, []);
 
+  const handleCategory = useCallback(
+    (evt: MouseEvent<HTMLButtonElement>) => {
+      setCategory(evt.currentTarget.dataset.category);
+      setDrawingToolState((prevDrawingToolState) => ({
+        ...prevDrawingToolState,
+        showWidget: false,
+      }));
+      closeMenu();
+    },
+    [setDrawingToolState, setCategory, closeMenu]
+  );
+
   return (
-    <div className="relative flex flex-col text-center">
+    <div
+      className={cn({
+        'relative flex flex-col text-center': true,
+        'pointer-events-none opacity-50': isDrawingToolWidgetVisible,
+      })}
+    >
       <div
         className={cn({
           'inset pointer-events-none fixed top-0 left-0 z-50 h-full w-full bg-black/70 opacity-0 transition-opacity':
@@ -36,7 +56,7 @@ const Category = () => {
       <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
       <div className="relative flex flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <DropdownMenu.Root open={isOpen}>
-          <DropdownMenu.Trigger>
+          <DropdownMenu.Trigger asChild>
             <div
               className="relative flex w-11 flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
               onMouseOver={openMenu}
@@ -81,10 +101,8 @@ const Category = () => {
                       key={id}
                       type="button"
                       className="flex cursor-pointer items-center space-x-3"
-                      onClick={() => {
-                        setCategory(id);
-                        closeMenu();
-                      }}
+                      data-category={id}
+                      onClick={handleCategory}
                     >
                       <div
                         className={cn({

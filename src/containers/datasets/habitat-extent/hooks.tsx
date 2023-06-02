@@ -8,6 +8,8 @@ import { numberFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
+import { useGenericAnalysisData } from 'hooks/analysis';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
@@ -219,4 +221,8 @@ export function useLayers(year: number): LayerProps[] {
       },
     },
   ];
+}
+
+export function useAnalysis() {
+  return useGenericAnalysisData('mangrove_habitat_extent');
 }

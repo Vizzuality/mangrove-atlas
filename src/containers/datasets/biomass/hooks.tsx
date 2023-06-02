@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
@@ -6,24 +6,27 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
 import { BiomassYearSettings } from 'store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
+
+import { useGenericAnalysisData } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
 const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
-const getColorKeys = (data: Data[]) =>
+const getColorKeys = (data: Data[] = []) =>
   data.reduce((acc, d, i) => {
     return {
       ...acc,
@@ -36,6 +39,8 @@ export function useMangroveBiomass(
   queryOptions?: UseQueryOptions<DataResponse>
 ): BiomassData {
   const currentYear = useRecoilValue(BiomassYearSettings);
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
 
   const {
     query: { params: queryParams },
@@ -46,8 +51,23 @@ export function useMangroveBiomass(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
-  const fetchMangroveBiomass = () =>
-    API.request({
+  const geojson = customGeojson || uploadedGeojson;
+
+  const fetchMangroveBiomass = useCallback(async () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_biomass',
+        },
+      }).then(({ data }) => data);
+    }
+
+    return API.request<DataResponse>({
       method: 'GET',
       url: '/widgets/aboveground_biomass',
       params: {
@@ -55,10 +75,10 @@ export function useMangroveBiomass(
         ...(!!currentYear && { year: currentYear }),
         ...params,
       },
-      ...queryOptions,
-    }).then((response: AxiosResponse<DataResponse>) => response.data);
+    }).then(({ data }) => data);
+  }, [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params]);
 
-  const query = useQuery(['aboveground_biomass', params], fetchMangroveBiomass, {
+  const query = useQuery(['aboveground_biomass', params, geojson], fetchMangroveBiomass, {
     placeholderData: {
       data: [],
       metadata: {
@@ -69,6 +89,12 @@ export function useMangroveBiomass(
         ],
       },
     },
+    select: (data) => {
+      if (isAnalysisEnabled) {
+        return data['mangrove_biomass'];
+      }
+      return data;
+    },
     ...queryOptions,
   });
   const { data, isLoading, isFetched, isPlaceholderData } = query;
@@ -76,18 +102,16 @@ export function useMangroveBiomass(
   return useMemo(() => {
     const years = data?.metadata.year;
     const selectedYear = currentYear || years?.[years?.length - 1];
-    const dataFiltered = data.data.filter(
-      ({ indicator, year }) => indicator !== 'total' && year === selectedYear
-    );
+    const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
 
-    const avgBiomassFiltered = data?.metadata.avg_aboveground_biomass.find(
+    const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
       ({ year }) => year === selectedYear
     )?.value;
 
     const unit = data?.metadata.units?.value;
 
     const colorKeys = getColorKeys(dataFiltered);
-    const ChartData = dataFiltered.map((d) => ({
+    const ChartData = dataFiltered?.map((d) => ({
       label: d.indicator,
       value: d.value,
       showValue: false,
@@ -151,4 +175,8 @@ export function useLayer(): LayerProps {
     id: 'aboveground_biomass-layer',
     type: 'raster',
   };
+}
+
+export function useAnalysis(queryOptions?: UseQueryOptions<DataResponse>) {
+  return useGenericAnalysisData('mangrove_biomass', queryOptions);
 }
