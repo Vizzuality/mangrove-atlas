@@ -120,20 +120,31 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const handleUserDrawing = useCallback(
     async (evt: Parameters<DrawControlProps['onCreate']>[0]) => {
+      const customGeojson: GeoJSON.FeatureCollection = {
+        type: 'FeatureCollection',
+        features: evt.features,
+      };
       setDrawingToolState((prevDrawingToolState) => ({
         ...prevDrawingToolState,
-        customGeojson: { type: 'FeatureCollection', features: evt.features },
+        customGeojson,
       }));
 
       setAnalysisState((prevAnalysisState) => ({
         ...prevAnalysisState,
         enabled: true,
       }));
+
+      const bbox = turfBbox(customGeojson);
+
+      if (bbox) {
+        setLocationBounds(bbox as typeof locationBounds);
+      }
+
       const queryParams = asPath.split('?')[1];
 
       await push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
-    [setDrawingToolState, setAnalysisState, asPath, push]
+    [setDrawingToolState, setAnalysisState, asPath, push, setLocationBounds]
   );
 
   const handleDrawingUpdate = useCallback(
