@@ -75,4 +75,9 @@
 .c-brush .brush--svg .handle circle {
   pointer-events: none;
 }
-/*# sourceMappingURL=styles.css.map */
+
+.mapboxgl-popup-content {
+  border-radius: 12px !important;
+  border-top-right-radius: 0 !important;
+  padding: 0 !important;
+}

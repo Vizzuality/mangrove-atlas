@@ -32,7 +32,7 @@ export const locationBoundsAtom = atom<[number, number, number, number]>({
 
 export const restorationPopUpAtom = atom<{
   popup: number[];
-  popupInfo: Record<string, unknown>;
+  popupInfo: Record<string, string | number>;
   popUpPosition: { x: number; y: number };
 }>({
   key: 'restoration-popup',

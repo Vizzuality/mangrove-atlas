@@ -6,7 +6,7 @@ import { restorationPopUpAtom } from 'store/map';
 
 import { useRecoilState } from 'recoil';
 
-import RestorationInfo from 'containers/map/restoration-popup/restoration-info';
+import RestorationScores from 'containers/map/restoration-popup/restoration-scores';
 
 const PopupRestoration = () => {
   const [open, setOpen] = useState('');
@@ -54,8 +54,8 @@ const PopupRestoration = () => {
       onClose={removePopUp}
     >
       <div className="w-fit-content h-96">
-        <div className="relative flex max-w-[460px] flex-col items-start rounded-3xl bg-white">
-          <RestorationInfo
+        <div className="relative flex w-[440px] max-w-[460px] flex-col items-start bg-white">
+          <RestorationScores
             data={popupInfo}
             isOpen={open === 'restoration'}
             handleClick={() => handleClick('restoration')}

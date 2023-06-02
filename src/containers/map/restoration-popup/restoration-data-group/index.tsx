@@ -8,14 +8,14 @@ const RestorationDataGroup = ({
   unit,
 }: {
   label: string;
-  value: number;
+  value: string | number;
   pct?: string;
   unit?: string;
 }) => {
   return (
     <div className="flex flex-col pr-6 pb-6 font-sans text-sm text-black/85">
-      <div className="">{label}</div>
-      <div className="font-bold">
+      <div className="whitespace-nowrap font-light">{label}</div>
+      <div className="font-semibold">
         {typeof value === 'number' ? numberFormat(value) : value} {!!value && !!unit && unit}{' '}
         {!!pct && `(${pct}%)`}
         {!value && value !== 0 && '-'}

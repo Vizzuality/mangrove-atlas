@@ -140,7 +140,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   }, [bounds, isFlying]);
 
   const onClickHandler = (e) => {
-    // !TODO: leer IDs del layer manager
     const restorationData = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_restoration'
     )?.properties;
