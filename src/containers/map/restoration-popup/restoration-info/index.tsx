@@ -1,5 +1,7 @@
 import cn from 'lib/classnames';
 
+import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
+
 const RestorationInfo = ({ data, isOpen, handleClick }) => {
   const { Class, Max_Area_20_ha, Area_loss_ha, Rest_Area_Loss, Loss_Driver, Rest_Score } = data;
 
@@ -17,8 +19,8 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
         </span>
         <span className="text-3xl text-brand-800">{isOpen ? '-' : '+'}</span>
       </div>
-      {/* <div className={styles.section}>
-        <div className={styles.group}>
+      <div className="w-full">
+        <div className="flex grow items-center justify-between">
           <RestorationDataGroup label="Mangrove type" value={Class} />
           <RestorationDataGroup
             label="Max mangrove area 1996 - 2020"
@@ -26,26 +28,15 @@ const RestorationInfo = ({ data, isOpen, handleClick }) => {
             unit="ha"
           />
         </div>
-        <div className={styles.group}>
-          <RestorationDataGroup
-            label="Area of Loss"
-            value={Area_loss_ha}
-            unit="ha"
-          />
-          <RestorationDataGroup
-            label="Restorable Area"
-            value={Rest_Area_Loss}
-            unit="ha"
-          />
-          <RestorationDataGroup
-            label="Primary Loss Driver"
-            value={Loss_Driver}
-          />
+        <div className="flex grow items-start justify-between">
+          <RestorationDataGroup label="Area of Loss" value={Area_loss_ha} unit="ha" />
+          <RestorationDataGroup label="Restorable Area" value={Rest_Area_Loss} unit="ha" />
+          <RestorationDataGroup label="Primary Loss Driver" value={Loss_Driver} />
         </div>
-      </div> */}
+      </div>
       <div className="w-full">
         <h4 className="text-xs">Restoration potential score</h4>
-        <div className="flex flex-1 items-center justify-between">
+        <div className="flex grow items-center justify-between">
           <div className="h-6 w-full bg-slate-100">
             <div className="relative h-full w-full bg-gradient-to-r from-[#f9ddda] via-[#ffadad] via-[#ce78b3] via-[#8478ce] to-[#224294]">
               <span
