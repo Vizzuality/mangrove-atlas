@@ -4,7 +4,13 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
+import {
+  RestorationSitesMapFilters,
+  RestorationSitesFiltersApplication,
+} from 'store/widgets/restoration-sites';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -25,6 +31,9 @@ export function useMangroveRestorationSites(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+  const mapFilters = useRecoilValue(RestorationSitesMapFilters);
+  const filtersPending = useRecoilValue(RestorationSitesFiltersApplication);
+
   const fetchMangroveRestorationSites = () =>
     API.request({
       method: 'GET',
@@ -32,16 +41,21 @@ export function useMangroveRestorationSites(
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         ...params,
+        ...(filtersPending && { ...mapFilters }),
       },
     }).then((response) => response);
 
-  return useQuery(['restoration-sites', params, currentLocation], fetchMangroveRestorationSites, {
-    select: ({ data }) => ({
-      ...data,
-      location,
-    }),
-    ...queryOptions,
-  });
+  return useQuery(
+    ['restoration-sites', mapFilters, currentLocation, filtersPending],
+    fetchMangroveRestorationSites,
+    {
+      select: ({ data }) => ({
+        ...data,
+        location,
+      }),
+      ...queryOptions,
+    }
+  );
 }
 
 export function useMangroveRestorationSitesFilters(
@@ -67,7 +81,7 @@ export function useMangroveRestorationSitesFilters(
     }).then((response) => response);
 
   return useQuery(
-    ['restoration-sites-filters', params, currentLocation],
+    ['restoration-sites-filters', currentLocation],
     fetchMangroveRestorationSitesFilters,
     {
       select: ({ data }) => ({
@@ -78,6 +92,9 @@ export function useMangroveRestorationSitesFilters(
     }
   );
 }
+
+export const useEmptyFilters = (filters: { [key: string]: string[] }) =>
+  Object.values(filters).every((value) => value.length === 0);
 
 // const _restorationSites = [
 //   {

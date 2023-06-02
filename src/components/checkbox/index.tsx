@@ -5,16 +5,23 @@ import cn from 'lib/classnames';
 import * as CheckboxRadix from '@radix-ui/react-checkbox';
 import { CheckIcon } from '@radix-ui/react-icons';
 
-type CheckboxProps = {
+type CheckboxRootProps = {
   className?: string;
   children?: ReactNode | string | number;
   onCheckedChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  name: string;
-  value: string | number;
+  name?: string;
+  value?: string | number;
+  props?: any;
+  checked?: boolean;
+};
+
+type CheckboxProps = {
+  className?: string;
+  children?: ReactNode | string | number;
   props?: any;
 };
 
-const CheckboxRoot = ({ className, children, ...props }: CheckboxProps) => (
+const CheckboxRoot = ({ className, children, ...props }: CheckboxRootProps) => (
   <CheckboxRadix.Root className={className} {...props}>
     <div className="hover:bg-violet3 flex h-[20px] w-[20px] appearance-none items-center justify-center rounded-[4px] border border-brand-800/70 bg-white outline-none focus:shadow-[0_0_0_2px_black]">
       {children}
