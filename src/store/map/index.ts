@@ -29,3 +29,19 @@ export const locationBoundsAtom = atom<[number, number, number, number]>({
   key: 'locationBounds',
   default: null,
 });
+
+export const restorationPopUpAtom = atom<{
+  popup: number[];
+  popupInfo: Record<string, unknown>;
+  popUpPosition: { x: number; y: number };
+}>({
+  key: 'restoration-popup',
+  default: {
+    popup: [],
+    popupInfo: {},
+    popUpPosition: {
+      x: null,
+      y: null,
+    },
+  },
+});

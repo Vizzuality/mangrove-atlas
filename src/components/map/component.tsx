@@ -5,8 +5,10 @@ import { useEffect, useState, useCallback, FC } from 'react';
 
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
+import { restorationPopUpAtom } from 'store/map';
+
 import cx from 'classnames';
-import { Layer } from 'mapbox-gl';
+import { useRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
 // * If you plan to use Mapbox (and not a fork):
@@ -52,6 +54,8 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
+  const [restorationPopUp, setRestorationPopUp] = useRecoilState(restorationPopUpAtom);
 
   /**
    * CALLBACKS
@@ -141,12 +145,11 @@ export const CustomMap: FC<CustomMapProps> = ({
       organizations: organizations ? JSON.parse(organizations) : [],
     };
 
-    // this.setState({
-    //   ...this.state,
-    //   popup: [event?.lngLat[0], event?.lngLat[1]],
-    //   popupInfo: propertiesWithOrganizationNamesParsed,
-    //   popupFeatureType: "restoration-sites",
-    // });
+    setRestorationPopUp({
+      ...restorationPopUp,
+      popup: [event?.lngLat[0], event?.lngLat[1]],
+      popupInfo: propertiesWithOrganizationNamesParsed,
+    });
   };
 
   const onClickHandler = (e) => {
@@ -158,20 +161,22 @@ export const CustomMap: FC<CustomMapProps> = ({
       setRestorationSitePopUpState(e);
     }
 
-    // const restorationData = e?.features.find(({ layer }) => layer.id === 'restoration')?.properties;
+    // !TODO: leer del layer manager
+    const restorationData = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove_restoration'
+    )?.properties;
 
-    // if (restorationData) {
-    //   this.setState({
-    //     ...this.state,
-    //     popup: [e?.lngLat[0], e?.lngLat[1]],
-    //     popupInfo: restorationData,
-    //     popUpPosition: {
-    //       x: e.center.x,
-    //       y: e.center.y,
-    //     },
-
-    // });
-    // }
+    if (restorationData) {
+      setRestorationPopUp({
+        ...restorationPopUp,
+        popup: [e?.lngLat[0], e?.lngLat[1]],
+        popupInfo: restorationData,
+        popUpPosition: {
+          x: e.center.x,
+          y: e.center.y,
+        },
+      });
+    }
   };
 
   return (
