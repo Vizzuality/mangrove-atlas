@@ -30,6 +30,7 @@ export function useMangroveEcosystemServices(
   const {
     data: { id: currentLocation, location_id },
   } = useLocation(locationType, id);
+
   const fetchMangroveEcosystemServices = () =>
     API.request({
       method: 'GET',

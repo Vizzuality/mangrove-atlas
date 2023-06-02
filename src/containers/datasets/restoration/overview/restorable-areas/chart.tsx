@@ -53,7 +53,7 @@ const RestorableAreasChart = ({ data }) => {
   };
 
   return (
-    <div className="grid flex-1 grid-cols-2 items-center pb-10">
+    <div className="grid w-full flex-1 grid-cols-2 items-center pb-10">
       <Legend items={chartData} />
       <Chart config={config} />
     </div>
