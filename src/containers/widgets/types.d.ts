@@ -34,11 +34,3 @@ type ChartConfig = {
   startIndex?: number;
   endIndex?: number;
 };
-
-type RouterProps = {
-  name: string;
-  id: string;
-  location_id: string;
-};
-
-export type RouterData = { data: RouterProps };

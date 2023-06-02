@@ -6,19 +6,21 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
 import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 
-import { useGenericAnalysisData } from 'hooks/analysis';
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import type { UseParamsOptions } from 'types/widget';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
 import type { Data, DataResponse, ColorKeysTypes } from './types';
@@ -80,9 +82,26 @@ export function useMangroveHeight(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
   const currentYear = useRecoilValue(widgetYearAtom);
-  const fetchMangroveHeight = () =>
-    API.request({
+  const geojson = customGeojson || uploadedGeojson;
+
+  const fetchMangroveHeight = () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_height',
+        },
+      }).then(({ data }) => data['mangrove_height']);
+    }
+
+    return API.request({
       method: 'GET',
       url: '/widgets/tree_height',
       params: {
@@ -92,8 +111,9 @@ export function useMangroveHeight(
       },
       ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
+  };
 
-  const query = useQuery(['tree-height', params], fetchMangroveHeight, {
+  const query = useQuery(['tree-height', params, geojson], fetchMangroveHeight, {
     placeholderData: {
       data: [],
       metadata: {
@@ -101,9 +121,6 @@ export function useMangroveHeight(
         avg_height: null,
         units: null,
       },
-    },
-    select: (data) => {
-      return data;
     },
     ...queryOptions,
   });
@@ -210,8 +227,4 @@ export function useLayer(): LayerProps {
     id: 'mangrove_canopy_height-v3-layer',
     type: 'raster',
   };
-}
-
-export function useAnalysis() {
-  return useGenericAnalysisData('mangrove_height');
 }

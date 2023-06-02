@@ -6,19 +6,22 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
-import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
 
-import { useGenericAnalysisData } from 'hooks/analysis';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import CustomTooltip from 'components/chart/tooltip';
-import type { RouterData } from 'types/router';
 import type { UseParamsOptions } from 'types/widget';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
-import type { ExtentData, Indicator } from './types';
+import type { ExtentData, Indicator, DataResponse } from './types';
 
 const unitOptions = ['km²', 'ha'];
 
@@ -27,7 +30,7 @@ const widgetSlug = 'habitat-extent';
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
-  queryOptions: UseQueryOptions<ExtentData, unknown> = {} // API
+  queryOptions: UseQueryOptions<ExtentData> = {}
 ) {
   const {
     query: { params: queryParams },
@@ -37,8 +40,24 @@ export function useMangroveHabitatExtent(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const geojson = customGeojson || uploadedGeojson;
 
   const fetchHabitatExtent = () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_extent',
+        },
+      }).then(({ data }) => data['mangrove_extent']);
+    }
+
     return API.request({
       method: 'GET',
       url: 'widgets/habitat_extent',
@@ -47,15 +66,9 @@ export function useMangroveHabitatExtent(
         ...params,
       },
     }).then((response) => response.data);
-    // API2.request({
   };
-  //   method: 'POST',
-  //   url: 'widgets/habitat_extent',
-  //   params,
-  // }).then((response: AxiosResponse<DataResponse>) => response.data[slug]);
-  // TO DO - add year filter to API
 
-  const query = useQuery([widgetSlug, location_id], fetchHabitatExtent, {
+  const query = useQuery([widgetSlug, location_id, geojson], fetchHabitatExtent, {
     placeholderData: {
       data: [],
       metadata: {
@@ -221,8 +234,4 @@ export function useLayers(year: number): LayerProps[] {
       },
     },
   ];
-}
-
-export function useAnalysis() {
-  return useGenericAnalysisData('mangrove_habitat_extent');
 }

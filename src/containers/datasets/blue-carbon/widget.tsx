@@ -2,11 +2,10 @@ import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import BlueCarbonChart from './chart';
-import { useAnalysis, useMangroveBlueCarbon } from './hooks';
+import { useMangroveBlueCarbon } from './hooks';
 
 const BlueCarbonWidget = () => {
   const { data, isLoading, isPlaceholderData, isFetched } = useMangroveBlueCarbon();
-  const { data: analysisData } = useAnalysis();
   const { location, agb, toc, soc, config } = data;
   const { legend } = config;
   return (

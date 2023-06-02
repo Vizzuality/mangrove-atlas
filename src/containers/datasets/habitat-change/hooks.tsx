@@ -5,13 +5,19 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
+
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Rectangle, TooltipProps } from 'recharts';
 import { CartesianViewBox } from 'recharts/types/util/types';
+import { useRecoilValue } from 'recoil';
+
+import type { AnalysisResponse } from 'hooks/analysis';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
-import API from 'services/api';
+import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
 import type { UseParamsOptions } from './types';
@@ -51,8 +57,26 @@ export function useMangroveHabitatChange(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
   const { startYear, endYear, limit } = params;
-  const fetchMangroveHabitatChange = () =>
-    API.request({
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+
+  const geojson = customGeojson || uploadedGeojson;
+
+  const fetchMangroveHabitatChange = () => {
+    if (isAnalysisEnabled) {
+      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+        method: 'post',
+        url: '/analysis',
+        data: {
+          geometry: geojson,
+        },
+        params: {
+          'widgets[]': 'mangrove_habitat_change',
+        },
+      }).then(({ data }) => data['mangrove_habitat_change']);
+    }
+
+    return API.request({
       method: 'GET',
       url: '/widgets/country_ranking',
       params: {
@@ -63,15 +87,20 @@ export function useMangroveHabitatChange(
       },
       ...queryOptions,
     }).then((response) => response.data);
+  };
 
-  const query = useQuery(['country_ranking', params, location_id], fetchMangroveHabitatChange, {
-    placeholderData: {
-      data: [],
-      metadata: null,
-    },
+  const query = useQuery(
+    ['country_ranking', params, location_id, geojson],
+    fetchMangroveHabitatChange,
+    {
+      placeholderData: {
+        data: [],
+        metadata: null,
+      },
 
-    ...queryOptions,
-  });
+      ...queryOptions,
+    }
+  );
 
   const { data } = query;
   return useMemo(() => {
