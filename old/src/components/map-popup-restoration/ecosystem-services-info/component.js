@@ -6,7 +6,7 @@ import cx from 'classnames';
 import styles from './style.module.scss';
 
 // components
-import RestorationDataGroup from '../../restoration-data-group';
+import RestorationDataGroup from '../restoration-data-group';
 
 const EcosystemServicesInfo = ({ data, isOpen, handleClick }) => {
   const {

@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import RestorationInfo from './sections/restoration-info';
-import RestorationDetailsInfo from './sections/restoration-details-info';
-import EcosystemServicesInfo from './sections/ecosystem-services-info';
+import RestorationInfo from './restoration-info';
+import RestorationDetailsInfo from './restoration-details-info';
+import EcosystemServicesInfo from './ecosystem-services-info';
 
 import style from './style.module.scss';
 
