@@ -6,7 +6,7 @@ import { restorationPopUpAtom } from 'store/map';
 
 import { useRecoilState } from 'recoil';
 
-import RestorationInfo from 'components/map/restoration-popup/restoration-info';
+import RestorationInfo from 'containers/map/restoration-popup/restoration-info';
 
 const PopupRestoration = () => {
   const [open, setOpen] = useState('');

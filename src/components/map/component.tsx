@@ -18,7 +18,7 @@ import { useDebouncedCallback } from 'use-debounce';
 // * 3) if you installed v2: provide the token to the map through the `mapboxAccessToken` property
 // * 4) remove `mapLib` property
 
-import RestorationPopup from 'components/map/restoration-popup';
+import RestorationPopup from 'containers/map/restoration-popup';
 
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
