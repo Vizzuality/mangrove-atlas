@@ -22,14 +22,11 @@ const LayerManagerContainer = () => {
           <LayerComponent
             key={layer}
             id={`${layer}-layer`}
-            settings={
-              // layersSettings[layer] ??
-              {
-                opacity: 1,
-                visibility: false,
-                expand: false,
-              }
-            }
+            settings={{
+              opacity: 1,
+              visibility: false,
+              expand: false,
+            }}
             // beforeId={beforeId}
           />
         );

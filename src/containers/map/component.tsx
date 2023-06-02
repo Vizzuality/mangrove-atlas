@@ -65,6 +65,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const screenWidth = useScreenWidth();
 
   const { [mapId]: map } = useMap();
+
   const {
     query: { params },
     push,

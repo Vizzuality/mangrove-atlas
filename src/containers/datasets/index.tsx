@@ -6,6 +6,7 @@ import BiomassDownload from 'containers/datasets/biomass/download';
 import BiomassInfo from 'containers/datasets/biomass/info.mdx';
 import BiomassLayer from 'containers/datasets/biomass/layer';
 import BiomassWidget from 'containers/datasets/biomass/widget';
+// import BiomassDownload from 'containers/datasets/biomass/download';
 import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
 import BlueCarbonInfo from 'containers/datasets/blue-carbon/info.mdx';
 import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
@@ -14,6 +15,9 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 import CountryBoundariesLayer from 'containers/datasets/country/layer';
 import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
+import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
+import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
+import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
@@ -55,6 +59,7 @@ export const WIDGETS = {
   mangrove_net_change: NetChangeWidget,
   mangrove_alerts: AlertsWidget,
   mangrove_biomass: BiomassWidget,
+  mangrove_drivers_change: DriversChangeWidget,
   mangrove_height: HeightWidget,
   mangrove_blue_carbon: BlueCarbonWidget,
   mangrove_protection: ProtectionWidget,
@@ -76,6 +81,7 @@ export const LAYERS = {
   mangrove_alerts: AlertsLayer,
   mangrove_biomass: BiomassLayer,
   mangrove_blue_carbon: BlueCarbonLayer,
+  mangrove_drivers_change: DriversChangeLayer,
   mangrove_height: HeightLayer,
   mangrove_restoration: RestorationLayer,
   mangrove_species_distribution: SpeciesDistributionLayer,
@@ -89,6 +95,7 @@ export const INFO = {
   mangrove_species_distribution: SpeciesDistributionInfo,
   mangrove_species_threatened: SpeciesThreatenedInfo,
   mangrove_protection: ProtectionInfo,
+  mangrove_drivers_change: DriversChangeInfo,
   mangrove_net_change: NetChangeInfo,
   mangrove_alerts: AlertsInfo,
   mangrove_restoration: RestorationInfo,

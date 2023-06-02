@@ -100,7 +100,13 @@ const widgets = [
     slug: 'mangrove_carbon_market_potential',
     locationType: ['country'],
     categoryIds: ['all_datasets', 'climate_and_policy'],
-    layersIds: [],
+  },
+  {
+    name: 'Drivers of change',
+    slug: 'mangrove_drivers_change',
+    locationType: ['custom-area', 'wdpa', 'country'],
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    layersIds: ['extent'],
   },
   {
     name: 'Draw or upload an area',
