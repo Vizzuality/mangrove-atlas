@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect, useState, useCallback, FC } from 'react';
 
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
 import cx from 'classnames';
+import { Layer } from 'mapbox-gl';
 import { useDebouncedCallback } from 'use-debounce';
 
 // * If you plan to use Mapbox (and not a fork):
@@ -128,6 +132,48 @@ export const CustomMap: FC<CustomMapProps> = ({
     };
   }, [bounds, isFlying]);
 
+  const setRestorationSitePopUpState = (event) => {
+    const siteFromEvent = event.features[0];
+    const { organizations } = siteFromEvent.properties;
+
+    const propertiesWithOrganizationNamesParsed = {
+      ...siteFromEvent.properties,
+      organizations: organizations ? JSON.parse(organizations) : [],
+    };
+
+    // this.setState({
+    //   ...this.state,
+    //   popup: [event?.lngLat[0], event?.lngLat[1]],
+    //   popupInfo: propertiesWithOrganizationNamesParsed,
+    //   popupFeatureType: "restoration-sites",
+    // });
+  };
+
+  const onClickHandler = (e) => {
+    const getFeatureLayerById = (layerId) => e.features?.find(({ layer }) => layer.id === layerId);
+
+    const isClickFromRestorationLayer = getFeatureLayerById('mangrove_restoration');
+
+    if (isClickFromRestorationLayer) {
+      setRestorationSitePopUpState(e);
+    }
+
+    // const restorationData = e?.features.find(({ layer }) => layer.id === 'restoration')?.properties;
+
+    // if (restorationData) {
+    //   this.setState({
+    //     ...this.state,
+    //     popup: [e?.lngLat[0], e?.lngLat[1]],
+    //     popupInfo: restorationData,
+    //     popUpPosition: {
+    //       x: e.center.x,
+    //       y: e.center.y,
+    //     },
+
+    // });
+    // }
+  };
+
   return (
     <div
       className={cx({
@@ -145,6 +191,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
+        onClick={onClickHandler}
         {...mapboxProps}
         {...localViewState}
       >

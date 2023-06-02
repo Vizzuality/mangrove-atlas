@@ -50,6 +50,16 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
+const interactiveLayerIds = [
+  'selected-eez-land-v2-201410',
+  'selected-wdpa-polygons',
+  'cons-hotspots',
+  'restoration',
+  'restoration-sites',
+  'restoration-sites-clusters',
+  'mangrove_restoration',
+];
+
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
@@ -159,6 +169,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
+  const onClickHandler = ({ event }) => {
+    const { features } = event;
+    const country = features?.find((feat) => feat.layer.id === 'selected-eez-land-v2-201410');
+    const wdpa = features?.find((feat) => feat.layer.id === 'selected-wdpa-polygons');
+
+    // popupCloseHandler();
+  };
+
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
@@ -170,6 +188,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMapViewStateChange={handleViewState}
         bounds={bounds}
+        interactiveLayerIds={interactiveLayerIds}
       >
         {() => (
           <>
