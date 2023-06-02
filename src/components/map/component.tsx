@@ -8,6 +8,7 @@ import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-g
 import { restorationPopUpAtom } from 'store/map';
 
 import cx from 'classnames';
+import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
@@ -16,6 +17,8 @@ import { useDebouncedCallback } from 'use-debounce';
 // * 2) install Mapbox v1/v2 (v2 requires token)
 // * 3) if you installed v2: provide the token to the map through the `mapboxAccessToken` property
 // * 4) remove `mapLib` property
+
+import RestorationPopup from 'components/map/restoration-popup';
 
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
@@ -136,32 +139,8 @@ export const CustomMap: FC<CustomMapProps> = ({
     };
   }, [bounds, isFlying]);
 
-  const setRestorationSitePopUpState = (event) => {
-    const siteFromEvent = event.features[0];
-    const { organizations } = siteFromEvent.properties;
-
-    const propertiesWithOrganizationNamesParsed = {
-      ...siteFromEvent.properties,
-      organizations: organizations ? JSON.parse(organizations) : [],
-    };
-
-    setRestorationPopUp({
-      ...restorationPopUp,
-      popup: [event?.lngLat[0], event?.lngLat[1]],
-      popupInfo: propertiesWithOrganizationNamesParsed,
-    });
-  };
-
   const onClickHandler = (e) => {
-    const getFeatureLayerById = (layerId) => e.features?.find(({ layer }) => layer.id === layerId);
-
-    const isClickFromRestorationLayer = getFeatureLayerById('mangrove_restoration');
-
-    if (isClickFromRestorationLayer) {
-      setRestorationSitePopUpState(e);
-    }
-
-    // !TODO: leer del layer manager
+    // !TODO: leer IDs del layer manager
     const restorationData = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_restoration'
     )?.properties;
@@ -169,11 +148,11 @@ export const CustomMap: FC<CustomMapProps> = ({
     if (restorationData) {
       setRestorationPopUp({
         ...restorationPopUp,
-        popup: [e?.lngLat[0], e?.lngLat[1]],
+        popup: [e?.lngLat.lat, e?.lngLat.lng],
         popupInfo: restorationData,
         popUpPosition: {
-          x: e.center.x,
-          y: e.center.y,
+          x: e.point.x,
+          y: e.point.y,
         },
       });
     }
@@ -201,6 +180,9 @@ export const CustomMap: FC<CustomMapProps> = ({
         {...localViewState}
       >
         {!!mapRef && loaded && children(mapRef.getMap())}
+        {!!restorationPopUp.popup.length && !isEmpty(restorationPopUp.popupInfo) ? (
+          <RestorationPopup />
+        ) : null}
       </ReactMapGL>
     </div>
   );

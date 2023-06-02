@@ -50,15 +50,7 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const interactiveLayerIds = [
-  'selected-eez-land-v2-201410',
-  'selected-wdpa-polygons',
-  'cons-hotspots',
-  'restoration',
-  'restoration-sites',
-  'restoration-sites-clusters',
-  'mangrove_restoration',
-];
+const interactiveLayerIds = ['mangrove_restoration'];
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
