@@ -13,3 +13,5 @@ export const primaryDrivers = {
   'Episodic Disturbances': 'episodic disturbances',
   Commodities: 'commodities',
 };
+
+export const COLORS = ['#CC61B0', '#5D69B1', '#DAA51B', '#52BCA3', '#2F8AC4'];

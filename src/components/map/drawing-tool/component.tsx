@@ -38,12 +38,6 @@ export const DrawControl = (props: DrawControlProps) => {
       props.onDelete && map.on('draw.delete', props.onDelete);
       props.onModeChange && map.on('draw.modechange', props.onModeChange);
     },
-    ({ map }) => {
-      props.onCreate && map.off('draw.create', props.onCreate);
-      props.onUpdate && map.off('draw.update', props.onUpdate);
-      props.onDelete && map.off('draw.delete', props.onDelete);
-      props.onModeChange && map.off('draw.modechange', props.onModeChange);
-    },
     {
       position: props.position,
     }

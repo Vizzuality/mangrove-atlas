@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-import { variables } from 'containers/datasets/drivers-change/constants';
+import { variables, COLORS } from 'containers/datasets/drivers-change/constants';
 import Tooltip from 'containers/datasets/drivers-change/tooltip';
 import type {
   DataResponse,
@@ -18,8 +18,6 @@ import type {
 import { useLocation } from 'containers/datasets/locations/hooks';
 
 import API from 'services/api';
-
-const COLORS = ['#CC61B0', '#5D69B1', '#DAA51B', '#52BCA3', '#2F8AC4'];
 
 const getColorKeys = (data: Data[]) =>
   data?.reduce((acc, d, i) => {

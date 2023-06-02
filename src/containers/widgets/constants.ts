@@ -103,7 +103,7 @@ const widgets = [
   },
   {
     name: 'Drivers of change',
-    slug: 'mangrove_drivers_change' satisfies WidgetSlugType,
+    slug: 'mangrove_drivers_change',
     locationType: ['custom-area', 'wdpa', 'country'],
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: ['extent'],
