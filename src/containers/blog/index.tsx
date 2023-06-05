@@ -7,11 +7,10 @@ import Icon from 'components/icon';
 
 import NEWS_SVG from 'svgs/ui/news.svg?sprite';
 
+import Post from './post';
+
 export const Blog = () => {
   const { data } = useBlogPosts();
-
-  // const parser = new DOMParser();
-  // const doc = parser.parseFromString(item?.yoast_head, 'text/html');
 
   return (
     <Dialog>
@@ -35,17 +34,15 @@ export const Blog = () => {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0 font-sans">
-        <h3 className="text-3xl font-light">News</h3>
-        {data.map((post) => (
-          <div key={post.id} className="h-fit w-full rounded-[20px] border border-slate-100 p-1">
-            <div className="itens-center flex w-fit rounded-2xl bg-brand-400 py-1 px-2 text-xs font-semibold uppercase text-white">
-              Story
-            </div>
-            <h5 className="text-2lg font-light">{post.title.rendered}</h5>
+      <DialogContent className="scroll-y top-4 h-[96vh] rounded-[20px] px-10 py-0 font-sans">
+        <div className="no-scrollbar overflow-y-auto">
+          <h3 className="text-3xl font-light">News</h3>
+          <div className="flex flex-col space-y-4">
+            {data.map((post) => (
+              <Post key={post.id} post={post} />
+            ))}
           </div>
-        ))}
-
+        </div>
         <DialogClose />
       </DialogContent>
     </Dialog>

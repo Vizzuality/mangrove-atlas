@@ -11,7 +11,12 @@ type Posts = {
   };
 };
 
-export function useBlogPosts(): UseQueryResult<Posts[]> {
+type Tags = {
+  id: number;
+  name: string;
+};
+
+export function useBlogPosts(): UseQueryResult<Posts[], unknown> {
   const fetchBlogPosts = () =>
     BlogAPI.request({
       method: 'GET',
@@ -19,6 +24,20 @@ export function useBlogPosts(): UseQueryResult<Posts[]> {
     }).then((response: AxiosResponse<Posts[]>) => response.data);
 
   const query = useQuery(['blog-posts'], fetchBlogPosts, {
+    placeholderData: [],
+  });
+
+  return query;
+}
+
+export function usePostTags({ id }: { id: number }): UseQueryResult<Tags[], unknown> {
+  const fetchPostTags = () =>
+    BlogAPI.request({
+      method: 'GET',
+      url: `/wp-json/wp/v2/tags?post=${id}`,
+    }).then((response: AxiosResponse<Tags[]>) => response.data);
+
+  const query = useQuery(['post-tags', id], fetchPostTags, {
     placeholderData: [],
   });
 
