@@ -39,7 +39,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
               )}
               {<span className="font-bold">{label}</span>}
             </span>
-            <span>
+            <span className="whitespace-nowrap">
               {' '}
               {valueFormatted || value} {unit}
             </span>

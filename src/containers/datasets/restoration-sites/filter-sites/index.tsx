@@ -1,16 +1,10 @@
-import { useState, useEffect, SetStateAction, Dispatch } from 'react';
-
-import { isEmpty } from 'lodash-es/inEmpty';
+import { SetStateAction, Dispatch } from 'react';
 
 import cn from 'lib/classnames';
 
-import {
-  RestorationSitesFilters,
-  RestorationSitesMapFilters,
-  RestorationSitesFiltersApplication,
-} from 'store/widgets/restoration-sites';
+import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { Checkbox, CheckboxIndicator, CheckboxRoot, CheckboxLabel } from 'components/checkbox';
 import Icon from 'components/icon';
@@ -26,67 +20,60 @@ import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
-import { useMangroveRestorationSitesFilters, useEmptyFilters } from '../hooks';
+import type { DataSites } from '../types';
 import { BUTTON_STYLES } from '../widget';
 
 type FilterSitesProps = {
   open: boolean;
   onChangeModalVisibility: Dispatch<SetStateAction<boolean>>;
   filters: { [key: string]: string[] };
+  data: DataSites[];
   setFilters: Dispatch<SetStateAction<{ [key: string]: string[] }>>;
+  isFetching: boolean;
+  isFetched: boolean;
+  filterKeys: { [key: string]: string[] };
 };
-const FilterSites = ({ filters, setFilters, onChangeModalVisibility, open }: FilterSitesProps) => {
-  const { isFetching, isFetched, data } = useMangroveRestorationSitesFilters();
-  const [areFiltersPending, setFiltersPending] = useRecoilState<boolean>(
-    RestorationSitesFiltersApplication
-  );
-
-  const [mapFilters, setMapFilters] = useRecoilState<{ [key: string]: string[] }>(
-    RestorationSitesMapFilters
-  );
-  useEffect(() => {
-    if (data?.data && isEmpty(filters)) {
-      const filterKeys = Object.keys(data.data).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
-      setFilters(filterKeys);
-    }
-    setTimeout(() => {
-      setFiltersPending(false);
-    }, 90000);
-  }, [areFiltersPending]);
-
+const FilterSites = ({
+  filters,
+  setFilters,
+  data,
+  onChangeModalVisibility,
+  open,
+  isFetching,
+  isFetched,
+  filterKeys,
+}: FilterSitesProps) => {
+  const setMapFilters = useSetRecoilState<{ [key: string]: string[] }>(RestorationSitesMapFilters);
   const handleFiltersChange = (slug: string, key: string) => {
-    setFilters((prevFilters) => {
-      const filtersCopy = { ...prevFilters };
-      if (key in filtersCopy) {
-        const array = filtersCopy[key];
+    const filtersCopy = { ...filters };
+    if (key in filtersCopy) {
+      const array = filtersCopy[key];
 
-        if (array.includes(slug)) {
-          filtersCopy[key] = array.filter((item) => item !== slug);
-        } else {
-          filtersCopy[key] = [...array, slug];
-        }
+      if (array.includes(slug)) {
+        filtersCopy[key] = array.filter((item) => item !== slug);
+      } else {
+        filtersCopy[key] = [...array, slug];
       }
-
-      return filtersCopy;
-    });
+    }
+    return setFilters(filtersCopy);
   };
 
-  const areFiltersEmpty = useEmptyFilters(filters);
+  const areFiltersEmpty = Object.values(filters).every((value) => value.length === 0);
 
   const handleFiltersApplication = () => {
     onChangeModalVisibility(!open);
-    setFiltersPending(true);
     setMapFilters(filters);
   };
 
   const resetFilters = () => {
-    setMapFilters({});
-    setFilters({});
+    setMapFilters(filterKeys);
+    setFilters(filterKeys);
   };
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-      {isFetched && data && (
+      {isFetched && (
         <div className="space-y-4">
           <header className="flex justify-between">
             <h3 className="font-sans text-3xl font-light text-black/85">Filter Sites</h3>
@@ -99,7 +86,7 @@ const FilterSites = ({ filters, setFilters, onChangeModalVisibility, open }: Fil
             </button>
           </header>
           <div className="grid grid-cols-2 gap-4 py-10">
-            {Object.keys(data.data).map((key) => (
+            {Object.keys(data).map((key) => (
               <Tooltip key="key">
                 <TooltipTrigger asChild>
                   <div
@@ -137,12 +124,12 @@ const FilterSites = ({ filters, setFilters, onChangeModalVisibility, open }: Fil
                       })}
                     >
                       <Checkbox className="flex flex-col space-y-4">
-                        {data.data?.[key]?.map((u) => (
+                        {data?.[key]?.map((u) => (
                           <div key={u} className="flex items-center">
                             <CheckboxRoot
                               name={u}
                               value={u}
-                              checked={filters[key]?.includes(u)}
+                              checked={filters?.[key]?.includes(u)}
                               onCheckedChange={() => handleFiltersChange(u, key)}
                             >
                               <CheckboxIndicator className="text-brand-800 last:pb-0" />
@@ -163,7 +150,7 @@ const FilterSites = ({ filters, setFilters, onChangeModalVisibility, open }: Fil
                       </Checkbox>
                     </ul>
 
-                    <TooltipArrow className=" fill-white" width={10} height={5} />
+                    <TooltipArrow className="fill-white" width={10} height={5} />
                   </TooltipContent>
                 </TooltipPortal>
               </Tooltip>

@@ -8,7 +8,7 @@ import { CheckIcon } from '@radix-ui/react-icons';
 type CheckboxRootProps = {
   className?: string;
   children?: ReactNode | string | number;
-  onCheckedChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onCheckedChange?: (checked: CheckboxRadix.CheckedState) => void;
   name?: string;
   value?: string | number;
   props?: any;

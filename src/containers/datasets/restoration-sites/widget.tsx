@@ -1,38 +1,74 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import isEmpty from 'lodash-es/isEmpty';
 
 import cn from 'lib/classnames';
 
-import { RestorationSitesFilters } from 'store/widgets/restoration-sites';
+import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
-
 import FilterSites from './filter-sites';
-import { useMangroveRestorationSites, useEmptyFilters } from './hooks';
+import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
+import SelectedFilters from './selected-filters';
 
 export const BUTTON_STYLES = 'rounded-[20px] py-1 px-4 text-sm font-semibold';
+
 const RestorationSitesWidget = () => {
+  // filters component state to avoid refetch on every selection
   const [filters, setFilters] = useState<{ [key: string]: string[] }>({});
+
+  // global filters state to update query
+  const setMapFilters = useSetRecoilState<{ [key: string]: string[] }>(RestorationSitesMapFilters);
+
   const [open, setOpen] = useState(false);
 
+  // fetch data and filters
   const { isFetching, isFetched, data } = useMangroveRestorationSites();
-  console.log(isFetching);
-  const areFiltersEmpty = useEmptyFilters(filters);
+  const {
+    isFetching: isFetchingFilters,
+    isFetched: isFetchedFilters,
+    data: filtersData,
+  } = useMangroveRestorationSitesFilters();
+
+  const areFiltersEmpty = Object.values(filters).every((value) => value.length === 0);
   const totalLength = Object.values(filters).reduce((acc, array) => acc + array.length, 0);
   const areFiltersSelected = totalLength > 0;
+  const filterKeys =
+    filtersData?.data &&
+    Object.keys(filtersData?.data).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
+
+  useEffect(() => {
+    if (filtersData?.data && isEmpty(filters)) {
+      setFilters(filterKeys);
+    }
+  }, [filtersData]);
+
+  const filtersSelected = Object.keys(filters).filter((key) => !!filters[key].length);
+
+  const handleRemoveFilter = (key: string, slug: string) => {
+    const filtersCopy = { ...filters };
+    const array = filtersCopy[key];
+
+    if (array?.includes(slug)) {
+      filtersCopy[key] = array.filter((item) => item !== slug);
+    }
+
+    setFilters(filtersCopy);
+    setMapFilters(filtersCopy);
+  };
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
-      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
+      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />
       {isFetched && data && (
         <div className="space-y-8">
           <p>
-            There are <span className="font-bold">{data.data.length}</span> restoration sites in{' '}
+            There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
             {data.location}
             {!areFiltersEmpty && ' that match your criteria'}.
           </p>
@@ -58,39 +94,36 @@ const RestorationSitesWidget = () => {
                   )}
                 </button>
               </DialogTrigger>
-              <button className="text-brand-800 underline" onClick={() => setFilters({})}>
+              <button
+                className="text-brand-800 underline"
+                onClick={() => {
+                  setMapFilters(filterKeys);
+                  setFilters(filterKeys);
+                }}
+              >
                 Clear all
               </button>
             </div>
             <DialogContent className="h-fit-content w-[580px] rounded-[20px] p-10">
-              <FilterSites open={open} onChangeModalVisibility={setOpen} />
+              <FilterSites
+                open={open}
+                onChangeModalVisibility={setOpen}
+                filters={filters}
+                data={filtersData?.data}
+                setFilters={setFilters}
+                isFetching={isFetchingFilters}
+                isFetched={isFetchedFilters}
+                filterKeys={filterKeys}
+              />
               <DialogClose />
             </DialogContent>
           </Dialog>
           {areFiltersSelected && (
-            <div>
-              {Object.values(filters).map(
-                (filter) =>
-                  filter.length > 0 && (
-                    <div className="bg-red-500">
-                      <button
-                        type="button"
-                        className={cn({
-                          [BUTTON_STYLES]: true,
-                          ' flex items-center space-x-2 overflow-hidden text-ellipsis whitespace-nowrap bg-[#00857f26] py-10 text-sm text-black/85':
-                            true,
-                        })}
-                      >
-                        <div>
-                          <Icon icon={CLOSE_SVG} className="mr-1 block h-3 w-3" />
-                        </div>
-
-                        <p className="whitespace overflow-hidden text-ellipsis">{filter}</p>
-                      </button>
-                    </div>
-                  )
-              )}
-            </div>
+            <SelectedFilters
+              filters={filters}
+              handleRemoveFilter={handleRemoveFilter}
+              filtersSelected={filtersSelected}
+            />
           )}
         </div>
       )}

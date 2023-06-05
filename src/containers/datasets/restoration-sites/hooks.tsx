@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
@@ -18,10 +16,12 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import type { Data, DataResponse, DataFilters } from './types';
+
 // widget data
 export function useMangroveRestorationSites(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
   const {
     query: { params: queryParams },
@@ -43,14 +43,14 @@ export function useMangroveRestorationSites(
         ...params,
         ...(filtersPending && { ...mapFilters }),
       },
-    }).then((response) => response);
+    }).then((response) => response.data);
 
   return useQuery(
     ['restoration-sites', mapFilters, currentLocation, filtersPending],
     fetchMangroveRestorationSites,
     {
       select: ({ data }) => ({
-        ...data,
+        data,
         location,
       }),
       ...queryOptions,
@@ -60,7 +60,7 @@ export function useMangroveRestorationSites(
 
 export function useMangroveRestorationSitesFilters(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions
+  queryOptions?: UseQueryOptions<DataResponse, Error, DataFilters>
 ) {
   const {
     query: { params: queryParams },
@@ -68,7 +68,7 @@ export function useMangroveRestorationSitesFilters(
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
   const {
-    data: { name: location, id: currentLocation, location_id },
+    data: { id: currentLocation, location_id },
   } = useLocation(locationType, id);
   const fetchMangroveRestorationSitesFilters = () =>
     API.request({
@@ -78,97 +78,46 @@ export function useMangroveRestorationSitesFilters(
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         ...params,
       },
-    }).then((response) => response);
+    }).then((response) => response.data);
 
   return useQuery(
     ['restoration-sites-filters', currentLocation],
     fetchMangroveRestorationSitesFilters,
     {
       select: ({ data }) => ({
-        ...data,
-        location,
+        data,
       }),
       ...queryOptions,
     }
   );
 }
 
-export const useEmptyFilters = (filters: { [key: string]: string[] }) =>
-  Object.values(filters).every((value) => value.length === 0);
-
-// const _restorationSites = [
-//   {
-//     site_centroid: {
-//       type: 'Polygon',
-//       coordinates: [
-//         [
-//           [100.0, 0.0],
-//           [101.0, 0.0],
-//           [101.0, 1.0],
-//           [100.0, 1.0],
-//           [100.0, 0.0],
-//         ],
-//       ],
-//     },
-//     landscape_name: 'site 1',
-//     organizations: 'site 1',
-//     site_name: 'site 1',
-//   },
-//   {
-//     site_centroid: { type: 'Point', coordinates: [102.0, 0.5] },
-//     landscape_name: 'site 2',
-//     organizations: 'site 2',
-//     site_name: 'site 2',
-//   },
-// ];
 export function useSource(): SourceProps {
+  const { data } = useMangroveRestorationSites();
+  const total = data?.data?.length;
+  console.log(total);
+  const restorationSiteFeatures = data.data
+    .filter((site) => !!site.site_centroid)
+    .map(({ site_centroid, landscape_name, organizations, site_name }) => {
+      if (site_centroid) {
+        return {
+          geometry: JSON.parse(site_centroid),
+          properties: {
+            landscape_name,
+            organizations,
+            site_name,
+            total,
+          },
+        };
+      }
+    });
+
   return {
     id: 'restoration-sites',
     type: 'geojson',
     data: {
       type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: { type: 'Point', coordinates: [102.0, 0.5] },
-          properties: { prop0: 'value0' },
-        },
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: [
-              [102.0, 0.0],
-              [103.0, 1.0],
-              [104.0, 0.0],
-              [105.0, 1.0],
-            ],
-          },
-          properties: {
-            prop0: 'value0',
-            prop1: 0.0,
-          },
-        },
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Polygon',
-            coordinates: [
-              [
-                [100.0, 0.0],
-                [101.0, 0.0],
-                [101.0, 1.0],
-                [100.0, 1.0],
-                [100.0, 0.0],
-              ],
-            ],
-          },
-          properties: {
-            prop0: 'value0',
-            prop1: { this: 'that' },
-          },
-        },
-      ],
+      features: restorationSiteFeatures,
     },
     cluster: true,
   };
@@ -176,26 +125,12 @@ export function useSource(): SourceProps {
 export function useLayer(): LayerProps[] {
   return [
     {
-      id: 'restoration-sites-cluster-count',
-      type: 'symbol',
-      source: 'restoration-sites',
-      filter: ['has', 'point_count'],
-      layout: {
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 16,
-      },
-      paint: {
-        'text-color': '#fff',
-      },
-    },
-    {
       id: 'restoration-sites-clusters',
       type: 'circle',
       source: 'restoration-sites',
       filter: ['has', 'point_count'],
       paint: {
-        'circle-color': '#00AFA7',
+        'circle-color': '#00857F',
         'circle-stroke-width': 1,
         'circle-stroke-color': '#00857F',
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 500, 40],
@@ -208,10 +143,24 @@ export function useLayer(): LayerProps[] {
       source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-color': '#00AFA7',
+        'circle-color': '#00857F',
         'circle-radius': 5,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#00857F',
+      },
+    },
+    {
+      id: 'restoration-sites-cluster-count',
+      type: 'symbol',
+      source: 'restoration-sites',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+        'text-size': 16,
+      },
+      paint: {
+        'text-color': '#fff',
       },
     },
   ];

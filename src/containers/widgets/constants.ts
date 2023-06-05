@@ -64,7 +64,7 @@ const widgets = [
   },
   {
     name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_restoration_sites' satisfies WidgetSlugType,
+    slug: 'mangrove_restoration_sites',
     locationType: ['country', 'worldwide'],
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'ecosystem_services'],
     layersIds: ['restoration_sites'],

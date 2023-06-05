@@ -44,7 +44,7 @@ import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
 import RestorationWidget from 'containers/datasets/restoration/widget';
 import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
-import RestorationSitesLayer from 'containers/datasets/restoration-sites/info.mdx';
+import RestorationSitesLayer from 'containers/datasets/restoration-sites/layer';
 import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
