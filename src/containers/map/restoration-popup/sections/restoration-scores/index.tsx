@@ -1,5 +1,7 @@
 import cn from 'lib/classnames';
 
+import type { RestorationPopUp } from 'store/map';
+
 import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
 
 const RestorationScores = ({
@@ -7,7 +9,7 @@ const RestorationScores = ({
   isOpen,
   handleClick,
 }: {
-  data: Record<string, any>;
+  data: RestorationPopUp;
   isOpen: boolean;
   handleClick: () => void;
 }) => {

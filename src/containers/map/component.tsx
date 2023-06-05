@@ -161,14 +161,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
-  const onClickHandler = ({ event }) => {
-    const { features } = event;
-    const country = features?.find((feat) => feat.layer.id === 'selected-eez-land-v2-201410');
-    const wdpa = features?.find((feat) => feat.layer.id === 'selected-wdpa-polygons');
-
-    // popupCloseHandler();
-  };
-
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map

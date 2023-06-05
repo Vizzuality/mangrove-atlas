@@ -57,6 +57,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [cursor, setCursor] = useState<string>('auto');
 
   const [restorationPopUp, setRestorationPopUp] = useRecoilState(restorationPopUpAtom);
 
@@ -139,6 +140,9 @@ export const CustomMap: FC<CustomMapProps> = ({
     };
   }, [bounds, isFlying]);
 
+  const onMouseEnter = useCallback(() => setCursor('pointer'), []);
+  const onMouseLeave = useCallback(() => setCursor('auto'), []);
+
   const onClickHandler = (e) => {
     const restorationData = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_restoration'
@@ -166,6 +170,7 @@ export const CustomMap: FC<CustomMapProps> = ({
     >
       <ReactMapGL
         id={id}
+        cursor={cursor}
         initialViewState={initialViewState}
         dragPan={!isFlying && dragPan}
         dragRotate={!isFlying && dragRotate}
@@ -175,6 +180,8 @@ export const CustomMap: FC<CustomMapProps> = ({
         onMove={handleMapMove}
         onLoad={handleMapLoad}
         onClick={onClickHandler}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
         {...mapboxProps}
         {...localViewState}
       >

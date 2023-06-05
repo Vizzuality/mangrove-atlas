@@ -51,10 +51,10 @@ const PopupRestoration = () => {
   return (
     <Popup
       anchor={anchor()}
-      longitude={popup[0] || null}
-      latitude={popup[1] || null}
+      longitude={popup[1] || null}
+      latitude={popup[0] || null}
       onClose={removePopUp}
-      className="c-restoration-popup "
+      className="c-restoration-popup"
     >
       <div className="w-fit-content">
         <div className="relative flex max-w-[460px] flex-col items-start rounded-[20px] bg-white">

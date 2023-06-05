@@ -1,5 +1,7 @@
 import cn from 'lib/classnames';
 
+import type { RestorationPopUp } from 'store/map';
+
 import Detail from 'containers/map/restoration-popup/detail';
 
 const Details = ({
@@ -7,7 +9,7 @@ const Details = ({
   isOpen,
   handleClick,
 }: {
-  data: Record<string, any>;
+  data: RestorationPopUp;
   isOpen: boolean;
   handleClick: () => void;
 }) => {
@@ -23,7 +25,7 @@ const Details = ({
     Flow_Group,
     Flow_Group1,
     Med_Patch,
-    Med_Patch1,
+    Med_Patch_1,
     Contig_Group,
     Contig_Group1,
   } = data;
@@ -56,7 +58,7 @@ const Details = ({
         <Detail label="Future SLR" pct={Future_SLR1} value={Future_SLR} />
         <Detail label="Timing of loss" pct={Time_Loss1} value={Time_Loss} />
         <Detail label="Hydrological disturbance" pct={Flow_Group1} value={Flow_Group} />
-        <Detail label="Patch size and number" pct={Med_Patch1} value={Med_Patch} />
+        <Detail label="Patch size and number" pct={Med_Patch_1} value={Med_Patch} />
         <Detail label="Patch connectivity" pct={Contig_Group1} value={Contig_Group} unit="%" />
       </div>
     </div>
