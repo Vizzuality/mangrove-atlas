@@ -76,7 +76,7 @@ export function useMangroveBlueCarbon(
     }).then((response) => response.data);
   };
 
-  const query = useQuery(['blue-carbon', params, geojson], fetchMangroveBlueCarbon, {
+  const query = useQuery(['blue-carbon', params, geojson, location_id], fetchMangroveBlueCarbon, {
     placeholderData: {
       data: [],
       metadata: {

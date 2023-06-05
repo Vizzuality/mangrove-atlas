@@ -45,33 +45,37 @@ export function useMangroveInternationalStatus(
       ...queryOptions,
     }).then((response) => response.data);
 
-  const query = useQuery(['international-status', params], fetchMangroveInternationalStatus, {
-    placeholderData: {
-      data: [
-        {
-          base_years: null, // TO - DO change to number in API
-          ipcc_wetlands_suplement: null,
-          ndc: null,
-          ndc_adaptation: null,
-          ndc_blurb: null,
-          ndc_mitigation: null,
-          ndc_reduction_target: null,
-          ndc_target: null,
-          ndc_target_url: null,
-          ndc_updated: null,
-          pledge_summary: null,
-          pledge_type: null,
-          target_years: null,
-          isLoading: null,
-          isFetching: null,
-          isPlaceholderData: null,
-        },
-      ],
-      metadata: null,
-    },
+  const query = useQuery(
+    ['international-status', params, location_id],
+    fetchMangroveInternationalStatus,
+    {
+      placeholderData: {
+        data: [
+          {
+            base_years: null, // TO - DO change to number in API
+            ipcc_wetlands_suplement: null,
+            ndc: null,
+            ndc_adaptation: null,
+            ndc_blurb: null,
+            ndc_mitigation: null,
+            ndc_reduction_target: null,
+            ndc_target: null,
+            ndc_target_url: null,
+            ndc_updated: null,
+            pledge_summary: null,
+            pledge_type: null,
+            target_years: null,
+            isLoading: null,
+            isFetching: null,
+            isPlaceholderData: null,
+          },
+        ],
+        metadata: null,
+      },
 
-    ...queryOptions,
-  });
+      ...queryOptions,
+    }
+  );
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
