@@ -87,6 +87,8 @@ Here's a step by step guide on how to address vulnerabilities found in productio
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
 | STORYBOOK_MAPBOX_API_TOKEN  | Mapbox token for storybook. |    |
 | NEXT_PUBLIC_GA_TRACKING_ID  | Google Analytics tracking ID. If you're working with an Google Analytics 4 property, you have a Measurement ID instead of a Tracking ID. |    |
+| NEXT_PUBLIC_BLOG_API_URL  | URL of the API for Wordpress content. |    |
+
 
 
 

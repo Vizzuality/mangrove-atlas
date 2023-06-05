@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
-import ExploreBanner from 'containers/blog/explore-banner';
+import Blog from 'containers/blog';
 import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
@@ -48,7 +48,7 @@ const DesktopLayout = () => {
         <MapContainer mapId="default-desktop" />
         <Sidebar />
         <WidgetsContainer />
-        <ExploreBanner />
+        <Blog />
         <LanguageSelector />
       </div>
     </div>
