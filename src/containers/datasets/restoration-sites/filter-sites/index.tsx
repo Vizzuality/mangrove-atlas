@@ -17,12 +17,12 @@ import { BUTTON_STYLES } from '../widget';
 type FilterSitesProps = {
   open: boolean;
   onChangeModalVisibility: Dispatch<SetStateAction<boolean>>;
-  filters: { [key: string]: string[] };
+  filters: { [key: string]: string[] | number[] };
   data: DataSites[];
-  setFilters: Dispatch<SetStateAction<{ [key: string]: string[] }>>;
+  setFilters: Dispatch<SetStateAction<{ [key: string]: string[] | number[] }>>;
   isFetching: boolean;
   isFetched: boolean;
-  filterKeys: { [key: string]: string[] };
+  filterKeys: { [key: string]: string[] | number[] };
 };
 const FilterSites = ({
   filters,
@@ -34,25 +34,8 @@ const FilterSites = ({
   isFetched,
   filterKeys,
 }: FilterSitesProps) => {
-  // const [filterValues, setFilterValues] = useState<{ [key: string]: string[] }>({});
-  const setMapFilters = useSetRecoilState<{ [key: string]: string[] }>(RestorationSitesMapFilters);
-  // const handleFiltersChange = (slug: string, key: string) => {
-  //   const filtersCopy = { ...filters };
-  //   if (key in filtersCopy) {
-  //     const array = filtersCopy[key];
-
-  //     if (array.includes(slug)) {
-  //       filtersCopy[key] = array.filter((item) => item !== slug);
-  //     } else {
-  //       filtersCopy[key] = [...array, slug];
-  //     }
-  //   }
-  //   return setFilters(filtersCopy);
-  // };
-
-  const areFiltersEmpty = useMemo(
-    () => Object.values(filters).every((value) => value.length === 0),
-    [filters]
+  const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
+    RestorationSitesMapFilters
   );
 
   const handleFiltersApplication = () => {
@@ -67,10 +50,16 @@ const FilterSites = ({
 
   const selectFilters = useMemo(() => {
     return Object.keys(data)?.map((key) => ({
-      name: key,
+      id: key,
+      name: key.replaceAll('_', ' '),
       options: data[key]?.map((value) => ({ label: value, value })),
     }));
   }, [data]);
+
+  const areFiltersEmpty = useMemo(
+    () => Object.values(filters).every((value) => value.length === 0),
+    [filters]
+  );
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
@@ -88,16 +77,17 @@ const FilterSites = ({
             </button>
           </header>
           <div className="grid grid-cols-2 gap-4 py-10">
-            {selectFilters.map(({ name, options }) => (
+            {selectFilters.map(({ name, id, options }) => (
               <MultiSelect
-                key={name}
-                id={name}
+                key={id}
+                id={id}
+                name={name}
                 size="s"
                 placeholder={name}
                 options={options}
-                values={filters[name] || []}
+                values={filters[id] || []}
                 onChange={(values) => {
-                  console.log(values);
+                  setFilters({ ...filters, [id]: values });
                 }}
               />
             ))}
