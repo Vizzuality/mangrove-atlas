@@ -35,7 +35,7 @@ export function useMangroveEcosystemServices(
         ...params,
       },
     }).then((response) => response.data);
-  return useQuery(['ecosystem-services', params], fetchMangroveEcosystemServices, {
+  return useQuery(['ecosystem-services', params, location_id], fetchMangroveEcosystemServices, {
     select: ({ data, metadata }) => ({
       ...data,
       ...metadata,
