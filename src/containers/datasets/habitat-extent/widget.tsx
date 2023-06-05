@@ -2,9 +2,11 @@ import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { analysisAtom } from 'store/analysis';
 import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 
-import { useRecoilState } from 'recoil';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -19,16 +21,38 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
-import { useMangroveHabitatExtent } from './hooks';
+import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 
 const HabitatExtent = () => {
   const [year, setYear] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
+  const [isCanceled, setIsCanceled] = useState(false);
 
-  const { isLoading, data, isFetched, isFetching } = useMangroveHabitatExtent({
-    year,
-    unit: selectedUnitAreaExtent,
-  });
+  const queryClient = useQueryClient();
+
+  const handleQueryCancellation = useCallback(() => {
+    setIsCanceled(true);
+  }, []);
+
+  const { data, isFetching, isError, refetch } = useMangroveHabitatExtent(
+    { year, unit: selectedUnitAreaExtent },
+    { enabled: !isCanceled },
+    handleQueryCancellation
+  );
+
+  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+
+  const handleCancelAnalysis = useCallback(async () => {
+    await queryClient.cancelQueries({
+      predicate: ({ queryKey }) => queryKey.includes(widgetSlug),
+      fetchStatus: 'fetching',
+    });
+  }, [queryClient]);
+
+  const handleTryAgain = useCallback(async () => {
+    await refetch();
+    setIsCanceled(false);
+  }, [refetch]);
 
   const {
     area,
@@ -52,8 +76,31 @@ const HabitatExtent = () => {
 
   return (
     <>
-      <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-      {isFetched && (
+      <div className="flex flex-col items-center space-y-4">
+        <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
+        {isAnalysisRunning && isFetching && !isCanceled && (
+          <button
+            type="button"
+            onClick={handleCancelAnalysis}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Cancel analysis
+          </button>
+        )}
+      </div>
+      {(isCanceled || isError) && !isFetching && (
+        <div className="flex flex-col items-center space-y-4">
+          <p>An error occurred while fetching the data. You can try again.</p>
+          <button
+            type="button"
+            onClick={handleTryAgain}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+      {data && !isFetching && !isError && !isCanceled && (
         <div className="space-y-4">
           <p className="text-lg font-light leading-7">
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}

@@ -1,3 +1,5 @@
+import type { QueryObserverBaseResult } from '@tanstack/react-query';
+
 type Unit = {
   value: string;
 };
@@ -47,9 +49,9 @@ type ChartConfig = {
 };
 
 export type BiomassData = {
-  isLoading: boolean;
-  isFetched: boolean;
-  isPlaceholderData: boolean;
+  isFetching: QueryObserverBaseResult['isFetching'];
+  isError: QueryObserverBaseResult['isError'];
+  refetch: QueryObserverBaseResult['refetch'];
   mean: string;
   unit: string;
   year: number;
