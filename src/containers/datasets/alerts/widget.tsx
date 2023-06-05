@@ -1,12 +1,18 @@
+import { useMemo, useEffect } from 'react';
+
 import cn from 'lib/classnames';
 
+import { basemapContextualAtom, basemapContextualVisualMonthlyDateAtom } from 'store/map-settings';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
 import { useRecoilState } from 'recoil';
 
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+
 import Chart from 'components/chart';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import SuggestedLayers from 'components/suggested-layers';
 import {
   Tooltip,
   TooltipContent,
@@ -20,7 +26,7 @@ import {
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
@@ -28,7 +34,16 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
+  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
+  const isActive = useMemo(
+    () => basemapContextualSelected.includes('planet_medres_visual_monthly'),
+    [basemapContextualSelected]
+  );
 
+  const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(
+    '45d01564-c099-42d8-b8f2-a0851accf3e7'
+  );
+  const [date, setDate] = useRecoilState(basemapContextualVisualMonthlyDateAtom);
   const {
     isLoading,
     isFetched,
@@ -44,6 +59,12 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
   } = useAlerts(startDate, endDate);
+
+  useEffect(() => {
+    if (!date?.value) {
+      setDate(dates?.[dates?.length - 1]);
+    }
+  }, [dates]);
 
   if (!fullData.length) return null;
 
@@ -169,6 +190,60 @@ const AlertsWidget = () => {
           <div className="text-brand-900 h-4 w-4 border-2 border-brand-800" />
           <p className="text-sm font-normal">Monitored area</p>
         </div>
+      </div>
+      <div>
+        <SuggestedLayers
+          name="Planet Satellite Imagery"
+          id="planet_medres_visual_monthly"
+          description="We recommend you to use Planet Satellite Imagery to validate the alerts."
+        >
+          {isActive && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
+                  <p className="first-line:after">
+                    Period: <span className="text-sm font-bold">{date.label}</span>
+                  </p>
+                  <Icon
+                    icon={ARROW_SVG}
+                    className={cn({
+                      '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold':
+                        true,
+                    })}
+                  />
+                </div>
+              </TooltipTrigger>
+
+              <TooltipPortal>
+                <TooltipContent
+                  side="top"
+                  align="center"
+                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
+                >
+                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
+                    {dates?.map((d) => (
+                      <li key={d.value}>
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'hover:text-brand-800': true,
+                          })}
+                          type="button"
+                          onClick={() => setDate(d)}
+                          // disabled={date?.value < value}
+                        >
+                          {d.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <TooltipArrow className=" fill-white" width={10} height={5} />
+                </TooltipContent>
+              </TooltipPortal>
+            </Tooltip>
+          )}
+        </SuggestedLayers>
       </div>
     </div>
   );

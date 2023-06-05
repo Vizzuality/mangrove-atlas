@@ -1,11 +1,12 @@
 import { useMemo, useCallback } from 'react';
 
 import { interactiveLayerIdsAtom } from 'store/map';
+import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { LAYERS } from 'containers/datasets';
+import { LAYERS, BASEMAPS } from 'containers/datasets';
 
 import type { LayerProps } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
@@ -21,17 +22,18 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
-
+  const basemaps = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(
     () => [
       ...layers
         .filter((layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer])
         .reverse(),
+      ...basemaps,
       // ? the habitat extent layer is a special case where, if enabled, it will be placed always at the bottom of the layer stack we handle
       ...(layers.includes('mangrove_habitat_extent') ? ['mangrove_habitat_extent'] : []),
     ],
-    [layers]
+    [layers, basemaps]
   );
 
   const handleAdd = useCallback(
@@ -53,7 +55,7 @@ const LayerManagerContainer = () => {
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {
-        const LayerComponent = LAYERS[layer];
+        const LayerComponent = LAYERS[layer] || BASEMAPS[layer];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
 
         return (

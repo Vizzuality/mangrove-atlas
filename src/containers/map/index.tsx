@@ -15,6 +15,7 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
+import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -64,7 +65,10 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
-  const basemap = useRecoilValue(basemapAtom);
+  const basemapStored = useRecoilValue(basemapAtom);
+  const basemapContextualSelected = useRecoilValue(basemapContextualAtom);
+
+  const basemap = !!basemapContextualSelected.length ? 'light' : basemapStored;
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
 
   const [

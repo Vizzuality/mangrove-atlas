@@ -48,4 +48,8 @@ export const LAYERS = [
     name: 'Custom analysis',
     id: 'custom-area',
   },
+  {
+    name: 'Layer name second',
+    id: 'mangrove_layer_name_second',
+  },
 ];

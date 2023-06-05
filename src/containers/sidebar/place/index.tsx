@@ -9,6 +9,7 @@ import cn from 'lib/classnames';
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
+import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
@@ -42,6 +43,7 @@ const Place = () => {
   const [placeOption, savePlaceOption] = useState('worldwide');
 
   const { [`default-desktop-${isPrintingId}`]: map } = useMap();
+  const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const { asPath, replace } = useRouter();
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
@@ -58,8 +60,7 @@ const Place = () => {
   const handleWorldwideView = useCallback(() => {
     resetDrawingState();
     resetAnalysisState();
-
-    replace(`/?${queryParams}`, null);
+    resetMapSettingsState();
 
     map.flyTo({
       center: [0, 20],
@@ -75,6 +76,7 @@ const Place = () => {
     }));
 
     resetAnalysisState();
+    resetMapSettingsState();
     resetMapCursor();
     savePlaceOption('area');
 
@@ -100,6 +102,7 @@ const Place = () => {
 
     resetDrawingState();
     resetAnalysisState();
+    resetMapSettingsState();
 
     replace(`/?${queryParams}`, null);
 

@@ -3,8 +3,9 @@ import Image, { StaticImageData } from 'next/image';
 import cn from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
+import { basemapContextualAtom } from 'store/map-settings';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import BASEMAPS from 'containers/layers/basemaps';
 
@@ -19,10 +20,11 @@ const THUMBS = {
 };
 
 const BasemapSelector = ({ className }: { className?: string }) => {
-  const [basemapSelected, setBasemap] = useRecoilState(basemapAtom);
+  const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
+  const basemapContextualSelected = useRecoilValue(basemapContextualAtom);
 
+  const basemapSelected = !!basemapContextualSelected.length ? 'light' : basemapStored;
   const currentBasemap = BASEMAPS.find((basemap) => basemap.id === basemapSelected);
-
   return (
     <div
       className={cn({

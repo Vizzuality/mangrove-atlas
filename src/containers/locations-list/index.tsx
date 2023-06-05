@@ -5,9 +5,10 @@ import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 
 import { useRouter } from 'next/router';
 
 import { locationBoundsAtom } from 'store/map';
+import { mapSettingsAtom } from 'store/map-settings';
 
 import turfBbox from '@turf/bbox';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import { useSearch } from 'hooks/search';
 
@@ -30,6 +31,7 @@ const locationNames = {
 const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
   const [searchValue, setSearchValue] = useState('');
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
@@ -59,6 +61,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
       onSelectLocation();
+      if (onSelectLocation) onSelectLocation();
+      resetMapSettingsState();
     },
     [replace, asPath, setLocationBounds, onSelectLocation]
   );

@@ -7,7 +7,7 @@ import { LayerProps } from 'types/layers';
 import { years } from './constants';
 import { useLayer, useSources } from './hooks';
 
-export const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
+export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCES = useSources(years);
   const LAYER = useLayer({ id });
 
@@ -24,4 +24,4 @@ export const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   );
 };
 
-export default MangrovesLayer;
+export default NetChangeLayer;

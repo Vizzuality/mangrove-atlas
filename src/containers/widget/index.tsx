@@ -1,4 +1,4 @@
-import React, { useCallback, ReactElement } from 'react';
+import React, { useCallback, ReactElement, FC } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -19,9 +19,10 @@ type WidgetLayoutProps = {
   title: string;
   children: ChildrenType | null;
   className?: string;
+  contextualLayersIds?: string[];
 };
 
-const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
+const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
   const { children, title, id, className } = props;
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
@@ -46,7 +47,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
     },
   };
 
-  if (Boolean(children.type() === null)) return null;
+  // if (Boolean(children.type() === null)) return null;
 
   return (
     <AnimatePresence>

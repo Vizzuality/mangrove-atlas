@@ -13,7 +13,16 @@ import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
 import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
-import CountryBoundariesLayer from 'containers/datasets/country/layer';
+
+// contextual layers
+import PlanetInfo from 'containers/datasets/contextual-layers/basemaps-planet/analytic/info.mdx';
+import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
+import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
+import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
+import LayerNameContentSecond from 'containers/datasets/contextual-layers/layer-name-second';
+import LayerNameInfoSecond from 'containers/datasets/contextual-layers/layer-name-second/info.mdx';
+import LayerNameLayerSecond from 'containers/datasets/contextual-layers/layer-name-second/layer';
+import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
 import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
 import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
@@ -38,7 +47,6 @@ import NationalDashboardWidget from 'containers/datasets/national-dashboard/widg
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
 import NetChangeWidget from 'containers/datasets/net-change/widget';
-import ProtectedAreasLayer from 'containers/datasets/protected-areas/layer';
 import ProtectionInfo from 'containers/datasets/protection/info.mdx';
 import ProtectionLayer from 'containers/datasets/protection/layer';
 import ProtectionWidget from 'containers/datasets/protection/widget';
@@ -56,6 +64,7 @@ import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
+import BasemapsContextualMapSettings from 'components/contextual-basemaps';
 import { WidgetSlugType } from 'types/widget';
 
 export const WIDGETS = {
@@ -78,11 +87,11 @@ export const WIDGETS = {
   mangrove_restoration: RestorationWidget,
   mangrove_drawing_tool: DrawingToolWidget,
   mangrove_national_dashboard: NationalDashboardWidget,
+  mangrove_layer_name_second: LayerNameContentSecond,
+  mangrove_contextual_basemaps: BasemapsContextualMapSettings,
 } satisfies Record<WidgetSlugType, () => JSX.Element>;
 
 export const LAYERS = {
-  'country-boundaries': CountryBoundariesLayer,
-  'protected-areas': ProtectedAreasLayer,
   mangrove_habitat_extent: HabitatExtentLayer,
   mangrove_net_change: NetChangeLayer,
   mangrove_alerts: AlertsLayer,
@@ -94,6 +103,10 @@ export const LAYERS = {
   mangrove_species_distribution: SpeciesDistributionLayer,
   mangrove_protection: ProtectionLayer,
   mangrove_species_location: SpeciesLocationLayer,
+  // contextual layers
+  'country-boundaries': CountryBoundariesLayer,
+  'protected-areas': ProtectedAreasLayer,
+  mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
 };
 
@@ -113,6 +126,8 @@ export const INFO = {
   mangrove_emissions_mitigation: EmissionsMitigationInfo,
   mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
+  planet: PlanetInfo,
+  mangrove_layer_name_second: LayerNameInfoSecond,
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
 };
@@ -124,4 +139,9 @@ export const DOWNLOAD = {
   mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
   mangrove_blue_carbon: BlueCarbonDownload,
+};
+
+export const BASEMAPS = {
+  planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
+  planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
 };
