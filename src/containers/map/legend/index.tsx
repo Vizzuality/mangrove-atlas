@@ -25,7 +25,7 @@ const Legend = ({
   );
 
   const widgetName = (label) => {
-    return widgets.find((w) => w.slug === label).name;
+    return widgets.find((w) => w.slug === label)?.name;
   };
 
   return (
