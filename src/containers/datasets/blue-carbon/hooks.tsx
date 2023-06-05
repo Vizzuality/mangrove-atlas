@@ -12,6 +12,7 @@ import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
@@ -26,6 +27,8 @@ import API, { AnalysisAPI } from 'services/api';
 import Tooltip from './tooltip';
 import type { BlueCarbon, DataResponse } from './types';
 
+export const widgetSlug = 'blue-carbon';
+
 const COLORS = {
   '0-700': '#EEB66B',
   '700-1400': '#E68518',
@@ -37,7 +40,8 @@ const COLORS = {
 // widget data
 export function useMangroveBlueCarbon(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
+  onCancel?: () => void
 ) {
   const {
     query: { params: queryParams },
@@ -51,9 +55,9 @@ export function useMangroveBlueCarbon(
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchMangroveBlueCarbon = () => {
+  const fetchMangroveBlueCarbon = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+      return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
         method: 'post',
         url: '/analysis',
         data: {
@@ -62,7 +66,13 @@ export function useMangroveBlueCarbon(
         params: {
           'widgets[]': 'mangrove_blue_carbon',
         },
-      }).then(({ data }) => data['mangrove_blue_carbon']);
+        signal,
+      })
+        .then(({ data }) => data['mangrove_blue_carbon'])
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
     }
 
     return API.request<DataResponse>({
@@ -76,7 +86,7 @@ export function useMangroveBlueCarbon(
     }).then((response) => response.data);
   };
 
-  const query = useQuery(['blue-carbon', params, geojson, location_id], fetchMangroveBlueCarbon, {
+  const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveBlueCarbon, {
     placeholderData: {
       data: [],
       metadata: {

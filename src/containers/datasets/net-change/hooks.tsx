@@ -10,6 +10,7 @@ import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
 import { useRecoilValue } from 'recoil';
@@ -27,6 +28,8 @@ import { Data, DataResponse, UseParamsOptions } from './types';
 export const numberFormat = format(',.2~f');
 export const smallNumberFormat = format('.4~f');
 export const formatAxis = format(',.0d');
+
+export const widgetSlug = 'net-change';
 
 const unitOptions = ['km²', 'ha'];
 
@@ -82,7 +85,8 @@ const getWidgetData = (data: Data[], unit = '') => {
 // widget data
 export function useMangroveNetChange(
   params: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
+  onCancel?: () => void
 ) {
   const {
     query: { params: queryParams },
@@ -97,9 +101,9 @@ export function useMangroveNetChange(
   const geojson = customGeojson || uploadedGeojson;
 
   const { startYear, endYear, selectedUnit, ...restParams } = params;
-  const fetchMangroveNetChange = () => {
+  const fetchMangroveNetChange = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+      return AnalysisAPI.request<AnalysisResponse<DataResponse | AxiosError>>({
         method: 'post',
         url: '/analysis',
         data: {
@@ -108,7 +112,13 @@ export function useMangroveNetChange(
         params: {
           'widgets[]': 'mangrove_net_change',
         },
-      }).then(({ data }) => data['mangrove_net_change']);
+        signal,
+      })
+        .then(({ data }) => data['mangrove_net_change'])
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
     }
 
     return API.request({
@@ -121,7 +131,7 @@ export function useMangroveNetChange(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery(['net-change', restParams, geojson, location_id], fetchMangroveNetChange, {
+  const query = useQuery([widgetSlug, restParams, geojson, location_id], fetchMangroveNetChange, {
     placeholderData: {
       data: [],
       metadata: null,
