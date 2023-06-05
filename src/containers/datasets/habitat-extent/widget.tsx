@@ -97,7 +97,7 @@ const HabitatExtent = () => {
                       ))}
                     </ul>
 
-                    <TooltipArrow className=" fill-white" width={10} height={5} />
+                    <TooltipArrow className="fill-white" width={10} height={5} />
                   </TooltipContent>
                 </TooltipPortal>
               </Tooltip>

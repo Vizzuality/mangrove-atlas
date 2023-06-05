@@ -24,9 +24,11 @@ export const widgetYearAtom = atom<number>({
 
 export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
-  default: widgets.reduce((previousObject, currentObject) => {
-    return Object.assign(previousObject, {
-      [currentObject.slug]: false,
-    });
-  }, {}),
+  default: widgets
+    .filter(({ slug }) => slug !== 'mangrove_drawing_tool')
+    .reduce((previousObject, currentObject) => {
+      return Object.assign(previousObject, {
+        [currentObject.slug]: false,
+      });
+    }, {}),
 });

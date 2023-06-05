@@ -60,7 +60,7 @@ const WidgetDrawingTool = () => {
     <div
       className={cn({
         [WIDGET_CARD_WRAPER_STYLE]: true,
-        'space-y-4': true,
+        'space-y-4 pb-0': true,
       })}
     >
       <div className="space-y-4">
@@ -71,8 +71,9 @@ const WidgetDrawingTool = () => {
           type="button"
           onClick={handleDrawingMode}
           className={cn({
-            'flex w-full items-center justify-center space-x-2  rounded-lg border-2 border-brand-800/10 py-5 font-semibold text-brand-800 transition-colors':
+            'flex h-[88px] w-full items-center justify-center space-x-2 rounded-lg border-2 border-brand-800/10 py-5 font-semibold text-brand-800 transition-colors':
               true,
+            'hover:bg-brand-400/10': !isDrawingToolEnabled,
             'bg-brand-800 text-white': isDrawingToolEnabled,
           })}
         >
@@ -82,7 +83,7 @@ const WidgetDrawingTool = () => {
         <span className="flex justify-center">or</span>
         <div
           {...getRootProps()}
-          className="flex w-full cursor-pointer items-center justify-center rounded-lg border border-dashed border-brand-800 bg-brand-400/10 py-5"
+          className="flex h-[88px] w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-brand-800 bg-brand-400/10 py-5"
         >
           <input {...getInputProps()} />
           <div className="pointer-events-none flex items-center space-x-2">
