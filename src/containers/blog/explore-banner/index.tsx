@@ -1,0 +1,33 @@
+import cn from 'classnames';
+
+import Icon from 'components/icon';
+
+import NEWS_SVG from 'svgs/ui/news.svg?sprite';
+
+export const ExploreBanner = () => {
+  return (
+    <div className="absolute top-72 left-20 z-50 h-12 w-[540px] rounded-2xl bg-brand-800">
+      <div className="flex h-full items-center justify-between px-4">
+        <div className="flex items-center space-x-4">
+          <Icon
+            icon={NEWS_SVG}
+            className={cn({
+              'h-7 w-7 fill-white': true,
+            })}
+          />
+          <p className="font-sans text-sm text-white">
+            Stay updated with the latest mangrove news!
+          </p>
+        </div>
+        <button
+          className="flex items-center rounded-2xl bg-white px-6 py-1 font-sans text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white"
+          onClick={() => console.log('Explore')}
+        >
+          Explore Now
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ExploreBanner;
