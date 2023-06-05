@@ -80,3 +80,9 @@
   display: none !important;
 }
 
+.c-restoration-popup .mapboxgl-popup-tip {
+  border-left-color: #00857F !important;
+  border-width: 10px !important;
+}
+
+
