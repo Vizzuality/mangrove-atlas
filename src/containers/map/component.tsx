@@ -4,6 +4,8 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
+import cn from 'lib/classnames';
+
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
@@ -169,7 +171,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
-            <Controls>
+            <Controls
+              className={cn({
+                'absolute top-36 right-6': true,
+                'top-14 right-10': screenWidth >= breakpoints.md,
+              })}
+            >
               <FullScreenControl />
               <ZoomControl mapId={mapId} />
               <PitchReset mapId={mapId} />

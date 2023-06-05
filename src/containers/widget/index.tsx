@@ -59,7 +59,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       >
         <div
           className={cn({
-            'rounded-2xl border-2 border-transparent px-9 pt-3 pb-5': true,
+            'rounded-2xl border-2 border-transparent px-9 py-3': true,
             'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
           })}
         >
