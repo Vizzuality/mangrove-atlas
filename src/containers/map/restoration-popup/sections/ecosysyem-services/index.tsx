@@ -50,7 +50,11 @@ const EcosystemServices = ({
               open: { opacity: 1, height: 'auto' },
               collapsed: { opacity: 0, height: 0 },
             }}
-            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            transition={{
+              duration: 0.8,
+              ease: [0.04, 0.62, 0.23, 0.98],
+              opacity: { delay: 0.1 },
+            }}
           >
             <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
               <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
