@@ -81,9 +81,16 @@
 }
 
 .c-restoration-popup .mapboxgl-popup-tip {
-  border-left-color: #00857F !important;
-  border-right-color: #00857F !important;
   border-width: 10px !important;
 }
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: #00857F !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: #00857F !important;
+}
+
 
 
