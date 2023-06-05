@@ -94,7 +94,7 @@ export function useMangroveSpecies(
       },
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
-  const query = useQuery(['biodiversity', params], fetchMangroveSpecies, {
+  const query = useQuery(['biodiversity', params, location_id], fetchMangroveSpecies, {
     placeholderData: {
       metadata: null,
       data: null,

@@ -78,19 +78,23 @@ export function useMangroveBiomass(
     }).then(({ data }) => data);
   }, [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params]);
 
-  const query = useQuery(['aboveground_biomass', params, geojson], fetchMangroveBiomass, {
-    placeholderData: {
-      data: [],
-      metadata: {
-        avg_aboveground_biomass: [
-          {
-            value: null,
-          },
-        ],
+  const query = useQuery(
+    ['aboveground_biomass', params, geojson, location_id],
+    fetchMangroveBiomass,
+    {
+      placeholderData: {
+        data: [],
+        metadata: {
+          avg_aboveground_biomass: [
+            {
+              value: null,
+            },
+          ],
+        },
       },
-    },
-    ...queryOptions,
-  });
+      ...queryOptions,
+    }
+  );
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   return useMemo(() => {

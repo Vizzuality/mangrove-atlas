@@ -113,7 +113,7 @@ export function useMangroveHeight(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery(['tree-height', params, geojson], fetchMangroveHeight, {
+  const query = useQuery(['tree-height', params, geojson, location_id], fetchMangroveHeight, {
     placeholderData: {
       data: [],
       metadata: {
