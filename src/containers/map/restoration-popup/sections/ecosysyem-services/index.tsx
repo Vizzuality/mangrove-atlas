@@ -2,6 +2,8 @@ import cn from 'lib/classnames';
 
 import type { RestorationPopUp } from 'store/map';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
 
 const EcosystemServices = ({
@@ -37,21 +39,37 @@ const EcosystemServices = ({
           {isOpen ? '-' : '+'}
         </span>
       </div>
-      <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
-        <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
-        <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.section
+            key="content"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+          >
+            <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
+              <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
+              <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
 
-        <RestorationDataGroup
-          label="Commercial invert catch
+              <RestorationDataGroup
+                label="Commercial invert catch
              enhancement value"
-          value={Fish_Score_Inv}
-        />
-        <RestorationDataGroup
-          label="Commercial fish catch
+                value={Fish_Score_Inv}
+              />
+              <RestorationDataGroup
+                label="Commercial fish catch
              enhancement value"
-          value={Fish_Score}
-        />
-      </div>
+                value={Fish_Score}
+              />
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

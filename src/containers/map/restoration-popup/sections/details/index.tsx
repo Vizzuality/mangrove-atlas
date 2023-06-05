@@ -2,6 +2,8 @@ import cn from 'lib/classnames';
 
 import type { RestorationPopUp } from 'store/map';
 
+import { AnimatePresence, motion } from 'framer-motion';
+
 import Detail from 'containers/map/restoration-popup/detail';
 
 const Details = ({
@@ -51,16 +53,36 @@ const Details = ({
           {isOpen ? '-' : '+'}
         </span>
       </div>
-
-      <div className="flex w-full grow flex-col items-center justify-between">
-        <Detail label="Tidal range" pct={Tidal_range1} value={Tidal_range} />
-        <Detail label="Antecedent SLR" pct={Ant_SLR1} value={Ant_SLR} />
-        <Detail label="Future SLR" pct={Future_SLR1} value={Future_SLR} />
-        <Detail label="Timing of loss" pct={Time_Loss1} value={Time_Loss} />
-        <Detail label="Hydrological disturbance" pct={Flow_Group1} value={Flow_Group} />
-        <Detail label="Patch size and number" pct={Med_Patch_1} value={Med_Patch} />
-        <Detail label="Patch connectivity" pct={Contig_Group1} value={Contig_Group} unit="%" />
-      </div>
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.section
+            key="content"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+          >
+            <div className="flex w-full grow flex-col items-center justify-between">
+              <Detail label="Tidal range" pct={Tidal_range1} value={Tidal_range} />
+              <Detail label="Antecedent SLR" pct={Ant_SLR1} value={Ant_SLR} />
+              <Detail label="Future SLR" pct={Future_SLR1} value={Future_SLR} />
+              <Detail label="Timing of loss" pct={Time_Loss1} value={Time_Loss} />
+              <Detail label="Hydrological disturbance" pct={Flow_Group1} value={Flow_Group} />
+              <Detail label="Patch size and number" pct={Med_Patch_1} value={Med_Patch} />
+              <Detail
+                label="Patch connectivity"
+                pct={Contig_Group1}
+                value={Contig_Group}
+                unit="%"
+              />
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
