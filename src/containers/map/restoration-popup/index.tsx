@@ -54,10 +54,10 @@ const PopupRestoration = () => {
       longitude={popup[0] || null}
       latitude={popup[1] || null}
       onClose={removePopUp}
-      className="c-restoration-popup"
+      className="c-restoration-popup "
     >
       <div className="w-fit-content">
-        <div className="relative flex max-w-[460px] flex-col items-start bg-white">
+        <div className="relative flex max-w-[460px] flex-col items-start rounded-[20px] bg-white">
           <RestorationScores
             data={popupInfo}
             isOpen={open === 'restoration'}

@@ -15,34 +15,40 @@ const EcosystemServices = ({
   return (
     <div
       className={cn({
-        'box-border flex w-full cursor-pointer flex-col items-start p-6 font-sans': true,
-        'max-h-[72px] w-full overflow-hidden': !isOpen,
+        'box-border flex w-full cursor-pointer flex-col items-start border-t border-slate-100 px-6 pt-6 font-sans':
+          true,
+        'max-h-[84px] w-full overflow-hidden': !isOpen,
       })}
     >
-      <div className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
-        <span className="text-xxs">
-          <h3>ECOSYSTEM SERVICES</h3>
-          <p>for restored mangroves</p>
+      <div className="mb-6 flex w-full items-center justify-between" onClick={handleClick}>
+        <div className="space-y-0.5">
+          <h3 className="m-0 text-sm font-semibold">ECOSYSTEM SERVICES</h3>
+          <p className="text-xs font-light">for restored mangroves</p>
+        </div>
+        <span
+          className={cn({
+            'text-brand-800': true,
+            'text-5xl': isOpen,
+            'text-3xl': !isOpen,
+          })}
+        >
+          {isOpen ? '-' : '+'}
         </span>
-        <span className="text-3xl text-brand-800">{isOpen ? '-' : '+'}</span>
       </div>
-      <div className="w-full">
-        <div className="flex grow items-center justify-between">
-          <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
-          <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
-        </div>
-        <div className="flex grow items-center justify-between">
-          <RestorationDataGroup
-            label="Commercial invert catch
+      <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
+        <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
+        <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
+
+        <RestorationDataGroup
+          label="Commercial invert catch
              enhancement value"
-            value={Fish_Score_Inv}
-          />
-          <RestorationDataGroup
-            label="Commercial fish catch
+          value={Fish_Score_Inv}
+        />
+        <RestorationDataGroup
+          label="Commercial fish catch
              enhancement value"
-            value={Fish_Score}
-          />
-        </div>
+          value={Fish_Score}
+        />
       </div>
     </div>
   );

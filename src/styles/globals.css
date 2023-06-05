@@ -76,12 +76,6 @@
   pointer-events: none;
 }
 
-.c-restoration-popup .mapboxgl-popup-content {
-  border-radius: 12px !important;
-  border-top-right-radius: 0 !important;
-  padding: 0 !important;
-}
-
 .c-restoration-popup .mapboxgl-popup-close-button {
   display: none !important;
 }

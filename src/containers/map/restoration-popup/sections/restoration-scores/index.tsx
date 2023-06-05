@@ -17,7 +17,8 @@ const RestorationScores = ({
   return (
     <div
       className={cn({
-        'box-border flex w-full cursor-pointer flex-col items-start p-6 font-sans': true,
+        'box-border flex w-full cursor-pointer flex-col items-start border-t border-slate-100 p-6 font-sans':
+          true,
         'max-h-[72px] w-full overflow-hidden': !isOpen,
       })}
     >
@@ -25,7 +26,15 @@ const RestorationScores = ({
         <span>
           <h3 className="m-0 text-sm font-semibold">RESTORATION SCORES</h3>
         </span>
-        <span className="text-3xl text-brand-800">{isOpen ? '-' : '+'}</span>
+        <span
+          className={cn({
+            'text-brand-800': true,
+            'text-5xl': isOpen,
+            'text-3xl': !isOpen,
+          })}
+        >
+          {isOpen ? '-' : '+'}
+        </span>
       </div>
       <div className="w-full">
         <div className="flex grow items-center justify-between">

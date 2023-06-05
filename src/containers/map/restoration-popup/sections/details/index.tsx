@@ -30,7 +30,8 @@ const Details = ({
   return (
     <div
       className={cn({
-        'box-border flex w-full cursor-pointer flex-col items-start p-6 font-sans': true,
+        'box-border flex w-full cursor-pointer flex-col items-start border-t border-slate-100 p-6 font-sans':
+          true,
         'max-h-[72px] w-full overflow-hidden': !isOpen,
       })}
     >
@@ -38,7 +39,15 @@ const Details = ({
         <span className="m-0 text-sm font-semibold">
           <h3>DETAILS</h3>
         </span>
-        <span className="text-3xl text-brand-800">{isOpen ? '-' : '+'}</span>
+        <span
+          className={cn({
+            'text-brand-800': true,
+            'text-5xl': isOpen,
+            'text-3xl': !isOpen,
+          })}
+        >
+          {isOpen ? '-' : '+'}
+        </span>
       </div>
 
       <div className="flex w-full grow flex-col items-center justify-between">
