@@ -38,7 +38,7 @@ export function useMangroveRestoration(
       },
     }).then((response) => response.data);
 
-  return useQuery(['restoration-potential', params], fetchMangroveRestoration, {
+  return useQuery(['restoration-potential', params, location_id], fetchMangroveRestoration, {
     select: ({ data, metadata }) => ({
       ...metadata,
       ...data,

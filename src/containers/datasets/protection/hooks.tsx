@@ -118,7 +118,7 @@ export function useMangroveProtectedAreas(
       })),
     [location, unit, currentYear]
   );
-  return useQuery(['protected-areas', restParams], fetchMangroveProtectedAreas, {
+  return useQuery(['protected-areas', restParams, location_id], fetchMangroveProtectedAreas, {
     select: (data) => ({
       ...data?.data[0],
       ...data?.metadata,

@@ -121,7 +121,7 @@ export function useMangroveNetChange(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery(['net-change', restParams, geojson], fetchMangroveNetChange, {
+  const query = useQuery(['net-change', restParams, geojson, location_id], fetchMangroveNetChange, {
     placeholderData: {
       data: [],
       metadata: null,
