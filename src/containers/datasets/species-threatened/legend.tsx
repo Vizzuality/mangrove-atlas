@@ -24,7 +24,7 @@ const Legend = ({ items }: Legend) => {
             <li key={`item-${d.color}`}>
               <div
                 className="overflow-y-scroll pr-2"
-                style={{ maxHeight: collapse[d.label] ? 85 : 20 }}
+                style={{ maxHeight: !!collapse[d.label] ? 85 : 20 }}
               >
                 <button
                   className="flex items-center space-x-2"
@@ -34,7 +34,10 @@ const Legend = ({ items }: Legend) => {
                   <span className="whitespace-nowrap text-black/85">{d.label}</span>
                   <Icon
                     icon={ARROW_SVG}
-                    className={cn({ 'w-3 text-grey-400': true, 'rotate-180': !!collapse[d.label] })}
+                    className={cn({
+                      'w-3 text-grey-400': true,
+                      'rotate-180': !!collapse[d.label],
+                    })}
                   />
                 </button>
 
