@@ -28,7 +28,14 @@ export const ExploreBanner = () => {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0">
+      <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0 font-sans">
+        <h3 className="text-3xl font-light">News</h3>
+        <div className="h-fit w-full rounded-[20px] border border-slate-100 p-1">
+          <div className="itens-center flex w-fit rounded-2xl bg-brand-400 py-1 px-2 text-xs font-semibold uppercase text-white">
+            Story
+          </div>
+          <h5 className="text-2lg font-light">Mangroves in 2022</h5>
+        </div>
         <DialogClose />
       </DialogContent>
     </Dialog>
