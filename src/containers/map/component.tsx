@@ -192,7 +192,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   };
 
   const removePopup = () => {
-    setRestorationPopUp(null);
+    setRestorationPopUp({
+      popup: [],
+      popupInfo: null,
+      popUpPosition: {
+        x: null,
+        y: null,
+      },
+    });
   };
 
   return (
