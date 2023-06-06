@@ -87,7 +87,6 @@ export function useLayer(): LayerProps[] {
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],
       paint: {
         'fill-pattern': 'pattern',
-        'fill-color': 'red',
         'fill-opacity': 0.5,
       },
     },

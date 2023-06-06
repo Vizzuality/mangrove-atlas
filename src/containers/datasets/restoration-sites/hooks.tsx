@@ -94,8 +94,7 @@ export function useMangroveRestorationSitesFilters(
 
 export function useSource(): SourceProps {
   const { data } = useMangroveRestorationSites();
-  const total = data?.data?.length;
-  console.log(total);
+
   const restorationSiteFeatures = data.data
     .filter((site) => !!site.site_centroid)
     .map(({ site_centroid, landscape_name, organizations, site_name }) => {
@@ -106,7 +105,6 @@ export function useSource(): SourceProps {
             landscape_name,
             organizations,
             site_name,
-            total,
           },
         };
       }

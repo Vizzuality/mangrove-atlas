@@ -56,9 +56,7 @@ const CheckboxLabel = ({
 );
 
 const Checkbox = ({ children, className, props }: CheckboxProps) => (
-  <form {...props} className=" p-5">
-    <div className={cn({ 'flex items-start': true, [className]: !!className })}>{children}</div>
-  </form>
+  <div className={cn({ 'flex items-start': true, [className]: !!className })}>{children}</div>
 );
 
 CheckboxRoot.displayName = CheckboxRadix.Root.displayName;

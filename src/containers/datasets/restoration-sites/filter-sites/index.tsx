@@ -1,4 +1,5 @@
-import { SetStateAction, Dispatch } from 'react';
+import { SetStateAction, Dispatch, useState } from 'react';
+import React from 'react';
 
 import cn from 'lib/classnames';
 
@@ -10,6 +11,7 @@ import { Checkbox, CheckboxIndicator, CheckboxRoot, CheckboxLabel } from 'compon
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import {
+  TooltipProvider,
   Tooltip,
   TooltipContent,
   TooltipArrow,
@@ -43,6 +45,15 @@ const FilterSites = ({
   isFetched,
   filterKeys,
 }: FilterSitesProps) => {
+  const dropdownDefaultState = Object.keys(filterKeys)?.reduce(
+    (acc, value) => ({
+      ...acc,
+      [value]: false,
+    }),
+    {}
+  );
+  const [openDropdown, setDropdownVisibility] = useState(dropdownDefaultState);
+
   const setMapFilters = useSetRecoilState<{ [key: string]: string[] }>(RestorationSitesMapFilters);
   const handleFiltersChange = (slug: string, key: string) => {
     const filtersCopy = { ...filters };
@@ -87,73 +98,77 @@ const FilterSites = ({
           </header>
           <div className="grid grid-cols-2 gap-4 py-10">
             {Object.keys(data).map((key) => (
-              <Tooltip key="key">
-                <TooltipTrigger asChild>
-                  <div
-                    className={cn({
-                      [BUTTON_STYLES]: true,
-                      'first-line:after relative flex cursor-pointer items-center justify-between border border-brand-800 border-opacity-70 px-2.5':
-                        true,
-                    })}
-                  >
-                    <div className="flex space-x-2">
-                      <p className="first-letter:uppercase">{key.replaceAll('_', ' ')}</p>
-                      {filters?.[key]?.length > 0 && (
-                        <span className="rounded-full bg-brand-800 px-2 text-[10px] font-bold text-white">
-                          {filters?.[key]?.length}
-                        </span>
-                      )}
-                    </div>
-                    <Icon
-                      icon={ARROW_SVG}
-                      className="h-2.5 w-2.5 -translate-x-1/2 stroke-brand-800 font-bold"
-                    />
-                  </div>
-                </TooltipTrigger>
-
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-[20x] bg-white  text-black shadow-soft"
-                  >
-                    <ul
+              <TooltipProvider key={key}>
+                <Tooltip open={openDropdown[key]}>
+                  <TooltipTrigger>
+                    <div
                       className={cn({
-                        'flex flex-col items-start justify-start space-y-2 overflow-y-auto scrollbar-hide':
+                        [BUTTON_STYLES]: true,
+                        'first-line:after relative flex cursor-pointer items-center justify-between border border-brand-800 border-opacity-70 px-2.5':
                           true,
                       })}
+                      onClick={() =>
+                        setDropdownVisibility({ ...openDropdown, [key]: !openDropdown[key] })
+                      }
                     >
-                      <Checkbox className="flex flex-col space-y-4">
-                        {data?.[key]?.map((u) => (
-                          <div key={u} className="flex items-center">
-                            <CheckboxRoot
-                              name={u}
-                              value={u}
-                              checked={filters?.[key]?.includes(u)}
-                              onCheckedChange={() => handleFiltersChange(u, key)}
-                            >
-                              <CheckboxIndicator className="text-brand-800 last:pb-0" />
-                            </CheckboxRoot>
-                            <CheckboxLabel className="text-sm">
-                              <li>
-                                <button
-                                  className="font-bold text-black"
-                                  type="button"
-                                  onClick={() => handleFiltersChange(u, key)}
-                                >
-                                  {u}
-                                </button>
-                              </li>
-                            </CheckboxLabel>
-                          </div>
-                        ))}
-                      </Checkbox>
-                    </ul>
+                      <div className="flex space-x-2">
+                        <p className="first-letter:uppercase">{key.replaceAll('_', ' ')}</p>
+                        {filters?.[key]?.length > 0 && (
+                          <span className="rounded-full bg-brand-800 px-2 text-[10px] font-bold text-white">
+                            {filters?.[key]?.length}
+                          </span>
+                        )}
+                      </div>
+                      <Icon
+                        icon={ARROW_SVG}
+                        className="h-2.5 w-2.5 -translate-x-1/2 stroke-brand-800 font-bold"
+                      />
+                    </div>
+                  </TooltipTrigger>
 
-                    <TooltipArrow className="fill-white" width={10} height={5} />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
+                  <TooltipPortal>
+                    <TooltipContent
+                      side="bottom"
+                      align="center"
+                      className="h-[200px] overflow-y-scroll rounded-[20x] text-black shadow-soft"
+                    >
+                      <ul
+                        className={cn({
+                          'pointer-events-auto flex h-full flex-col space-y-2 p-5': true,
+                        })}
+                      >
+                        <Checkbox className="flex flex-col space-y-4">
+                          {data?.[key]?.map((u) => (
+                            <div key={u} className="flex items-center">
+                              <CheckboxRoot
+                                name={u}
+                                value={u}
+                                checked={filters?.[key]?.includes(u)}
+                                onCheckedChange={() => handleFiltersChange(u, key)}
+                              >
+                                <CheckboxIndicator className="text-brand-800 last:pb-0" />
+                              </CheckboxRoot>
+                              <CheckboxLabel className="text-sm">
+                                <li>
+                                  <button
+                                    className="font-bold text-black"
+                                    type="button"
+                                    onClick={() => handleFiltersChange(u, key)}
+                                  >
+                                    {u}
+                                  </button>
+                                </li>
+                              </CheckboxLabel>
+                            </div>
+                          ))}
+                        </Checkbox>
+                      </ul>
+
+                      <TooltipArrow className="fill-white" />
+                    </TooltipContent>
+                  </TooltipPortal>
+                </Tooltip>
+              </TooltipProvider>
             ))}
           </div>
           <div className="flex w-full justify-end">

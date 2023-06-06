@@ -1,5 +1,3 @@
-import { useCallback, useEffect, useState } from 'react';
-
 import cn from 'lib/classnames';
 
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';

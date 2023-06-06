@@ -66,7 +66,7 @@ const RestorationSitesWidget = () => {
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />
       {isFetched && data && (
-        <div className="space-y-8">
+        <div className="relative space-y-8">
           <p>
             There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
             {data.location}
