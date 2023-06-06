@@ -10,6 +10,7 @@ import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -25,12 +26,13 @@ import type { ExtentData, Indicator, DataResponse } from './types';
 
 const unitOptions = ['km²', 'ha'];
 
-const widgetSlug = 'habitat-extent';
+export const widgetSlug = 'habitat-extent';
 
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
-  queryOptions: UseQueryOptions<ExtentData> = {}
+  queryOptions: UseQueryOptions<ExtentData> = {},
+  onCancel?: () => void
 ) {
   const {
     query: { params: queryParams },
@@ -44,9 +46,9 @@ export function useMangroveHabitatExtent(
   const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchHabitatExtent = () => {
+  const fetchHabitatExtent = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+      return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
         method: 'post',
         url: '/analysis',
         data: {
@@ -55,10 +57,16 @@ export function useMangroveHabitatExtent(
         params: {
           'widgets[]': 'mangrove_extent',
         },
-      }).then(({ data }) => data['mangrove_extent']);
+        signal,
+      })
+        .then(({ data }) => data['mangrove_extent'])
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
     }
 
-    return API.request({
+    return API.request<DataResponse>({
       method: 'GET',
       url: 'widgets/habitat_extent',
       params: {

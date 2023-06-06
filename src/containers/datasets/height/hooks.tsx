@@ -11,6 +11,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 
@@ -24,6 +25,8 @@ import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
 import type { Data, DataResponse, ColorKeysTypes } from './types';
+
+export const widgetSlug = 'tree-height';
 
 const COLORS = ['#C9BB42', '#8BA205', '#428710', '#0A6624', '#103C1F'];
 
@@ -72,7 +75,8 @@ const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
 // widget data
 export function useMangroveHeight(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
+  onCancel?: () => void
 ) {
   const {
     query: { params: queryParams },
@@ -87,9 +91,9 @@ export function useMangroveHeight(
   const currentYear = useRecoilValue(widgetYearAtom);
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchMangroveHeight = () => {
+  const fetchMangroveHeight = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
+      return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
         method: 'post',
         url: '/analysis',
         data: {
@@ -98,7 +102,13 @@ export function useMangroveHeight(
         params: {
           'widgets[]': 'mangrove_height',
         },
-      }).then(({ data }) => data['mangrove_height']);
+        signal,
+      })
+        .then(({ data }) => data['mangrove_height'])
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
     }
 
     return API.request({
@@ -113,7 +123,7 @@ export function useMangroveHeight(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery(['tree-height', params, geojson, location_id], fetchMangroveHeight, {
+  const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveHeight, {
     placeholderData: {
       data: [],
       metadata: {

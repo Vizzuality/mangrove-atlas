@@ -11,6 +11,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { BiomassYearSettings } from 'store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -24,6 +25,8 @@ import API, { AnalysisAPI } from 'services/api';
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
 
+export const widgetSlug = 'aboveground_biomass';
+
 const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
 const getColorKeys = (data: Data[] = []) =>
@@ -36,7 +39,8 @@ const getColorKeys = (data: Data[] = []) =>
 // widget data
 export function useMangroveBiomass(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
+  onCancel?: () => void
 ): BiomassData {
   const currentYear = useRecoilValue(BiomassYearSettings);
   const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
@@ -53,49 +57,54 @@ export function useMangroveBiomass(
 
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchMangroveBiomass = useCallback(async () => {
-    if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse>>({
-        method: 'post',
-        url: '/analysis',
-        data: {
-          geometry: geojson,
-        },
+  const fetchMangroveBiomass = useCallback(
+    async ({ signal }: { signal?: AbortSignal }) => {
+      if (isAnalysisEnabled) {
+        return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
+          method: 'post',
+          url: '/analysis',
+          data: {
+            geometry: geojson,
+          },
+          params: {
+            'widgets[]': 'mangrove_biomass',
+          },
+          signal,
+        })
+          .then(({ data }) => data['mangrove_biomass'])
+          .catch((err: CanceledError<unknown> | AxiosError) => {
+            if (err.code === 'ERR_CANCELED') onCancel?.();
+            return err;
+          });
+      }
+
+      return API.request<DataResponse>({
+        method: 'GET',
+        url: '/widgets/aboveground_biomass',
         params: {
-          'widgets[]': 'mangrove_biomass',
+          ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+          ...(!!currentYear && { year: currentYear }),
+          ...params,
         },
-      }).then(({ data }) => data['mangrove_biomass']);
-    }
-
-    return API.request<DataResponse>({
-      method: 'GET',
-      url: '/widgets/aboveground_biomass',
-      params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        ...(!!currentYear && { year: currentYear }),
-        ...params,
-      },
-    }).then(({ data }) => data);
-  }, [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params]);
-
-  const query = useQuery(
-    ['aboveground_biomass', params, geojson, location_id],
-    fetchMangroveBiomass,
-    {
-      placeholderData: {
-        data: [],
-        metadata: {
-          avg_aboveground_biomass: [
-            {
-              value: null,
-            },
-          ],
-        },
-      },
-      ...queryOptions,
-    }
+      }).then(({ data }) => data);
+    },
+    [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params, onCancel]
   );
-  const { data, isLoading, isFetched, isPlaceholderData } = query;
+
+  const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveBiomass, {
+    placeholderData: {
+      data: [],
+      metadata: {
+        avg_aboveground_biomass: [
+          {
+            value: null,
+          },
+        ],
+      },
+    },
+    ...queryOptions,
+  });
+  const { data, isError, isFetching, refetch } = query;
 
   return useMemo(() => {
     const years = data?.metadata.year;
@@ -142,12 +151,12 @@ export function useMangroveBiomass(
       unit,
       year: selectedYear,
       config,
-      isLoading,
       location,
-      isFetched,
-      isPlaceholderData,
+      isFetching,
+      isError,
+      refetch,
     };
-  }, [data]);
+  }, [data, isFetching, isError, refetch, currentYear, location]);
 }
 
 export function useSource(): SourceProps {

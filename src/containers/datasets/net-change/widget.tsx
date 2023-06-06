@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { analysisAtom } from 'store/analysis';
 import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
-import { useRecoilState } from 'recoil';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -19,37 +21,82 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
-import { useMangroveNetChange } from './hooks';
+import { useMangroveNetChange, widgetSlug } from './hooks';
 
 const NetChangeWidget = () => {
+  const queryClient = useQueryClient();
   const [selectedUnit, setUnit] = useState('km²');
   const [startYear, setStartYear] = useRecoilState(netChangeStartYear);
   const [endYear, setEndYear] = useRecoilState(netChangeEndYear);
+  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const [isCanceled, setIsCanceled] = useState(false);
+
+  const handleQueryCancellation = useCallback(() => {
+    setIsCanceled(true);
+  }, []);
+
+  const handleCancelAnalysis = useCallback(async () => {
+    await queryClient.cancelQueries({
+      predicate: ({ queryKey }) => queryKey.includes(widgetSlug),
+      fetchStatus: 'fetching',
+    });
+  }, [queryClient]);
+
   const {
-    isLoading,
     netChange,
     direction,
     config,
     location,
     unitOptions,
     years,
-    isFetched,
-    isPlaceholderData,
+    data,
+    isFetching,
     currentEndYear,
     currentStartYear,
-  } = useMangroveNetChange({
-    selectedUnit,
-    startYear,
-    endYear,
-  });
+    refetch,
+    isError,
+  } = useMangroveNetChange(
+    {
+      selectedUnit,
+      startYear,
+      endYear,
+    },
+    { enabled: !isCanceled },
+    handleQueryCancellation
+  );
+
+  const handleTryAgain = useCallback(async () => {
+    setIsCanceled(false);
+    await refetch();
+  }, [refetch]);
 
   return (
     <div>
-      <Loading
-        visible={isPlaceholderData || isLoading}
-        iconClassName="flex w-10 h-10 m-auto my-10"
-      />
-      {isFetched && !isLoading && (
+      <div className="flex flex-col items-center space-y-4">
+        <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
+        {isAnalysisRunning && isFetching && !isCanceled && (
+          <button
+            type="button"
+            onClick={handleCancelAnalysis}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Cancel analysis
+          </button>
+        )}
+      </div>
+      {(isCanceled || isError) && !isFetching && (
+        <div className="flex flex-col items-center space-y-4">
+          <p>An error occurred while fetching the data. You can try again.</p>
+          <button
+            type="button"
+            onClick={handleTryAgain}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+      {data && !isFetching && !isError && !isCanceled && (
         <div>
           <p>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}
