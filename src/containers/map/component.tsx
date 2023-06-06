@@ -50,6 +50,8 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
+const interactiveLayerIds = ['mangrove_restoration'];
+
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
@@ -170,6 +172,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMapViewStateChange={handleViewState}
         bounds={bounds}
+        interactiveLayerIds={interactiveLayerIds}
       >
         {() => (
           <>

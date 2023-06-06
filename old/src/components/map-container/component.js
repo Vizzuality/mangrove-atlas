@@ -72,7 +72,6 @@ export const MapContainer = ({
     currentLayers.includes(id)
   );
 
-
   function popupCloseHandler() {
     removePopup();
   }

@@ -75,4 +75,32 @@
 .c-brush .brush--svg .handle circle {
   pointer-events: none;
 }
-/*# sourceMappingURL=styles.css.map */
+
+.c-restoration-popup .mapboxgl-popup-close-button {
+  display: none !important;
+}
+
+.c-restoration-popup .mapboxgl-popup-tip {
+  border-width: 10px !important;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: #00857F !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: #00857F !important;
+}
+
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #00857F !important;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #00857F !important;
+}
+
+
+
+
+
