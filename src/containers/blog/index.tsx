@@ -5,6 +5,9 @@ import Image, { StaticImageData } from 'next/image';
 import cn from 'classnames';
 
 import { useBlogPosts } from 'hooks/blog';
+import type { Post } from 'hooks/blog/types';
+
+import PostComponent from 'containers/blog/post';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
@@ -13,13 +16,9 @@ import placeholderPost from 'images/blog/placeholder-post.png';
 
 import NEWS_SVG from 'svgs/ui/news.svg?sprite';
 
-import Post from './post';
-
 export const Blog = () => {
   const { data } = useBlogPosts();
-  const [postInfo, setPostInfo] = useState(null);
-
-  console.log({ postInfo });
+  const [postInfo, setPostInfo] = useState<Post | null>(null);
 
   return (
     <Dialog>
@@ -51,7 +50,7 @@ export const Blog = () => {
               <div className="flex flex-col space-y-4">
                 {data.map((post) => (
                   <button key={post.id} onClick={() => setPostInfo(post)}>
-                    <Post post={post} />
+                    <PostComponent post={post} />
                   </button>
                 ))}
               </div>
