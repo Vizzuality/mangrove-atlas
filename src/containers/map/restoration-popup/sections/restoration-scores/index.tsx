@@ -1,10 +1,10 @@
 import cn from 'lib/classnames';
 
-import type { RestorationPopUp } from 'store/map';
-
 import { AnimatePresence, motion } from 'framer-motion';
 
 import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
+
+import type { RestorationPopUp } from 'types/map';
 
 const RestorationScores = ({
   data,

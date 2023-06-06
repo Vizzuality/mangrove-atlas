@@ -1,10 +1,10 @@
 import cn from 'lib/classnames';
 
-import type { RestorationPopUp } from 'store/map';
-
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Detail from 'containers/map/restoration-popup/detail';
+
+import type { RestorationPopUp } from 'types/map';
 
 const Details = ({
   data,

@@ -2,23 +2,30 @@ import { useCallback, useState } from 'react';
 
 import { Popup } from 'react-map-gl';
 
-import { restorationPopUpAtom } from 'store/map';
-
-import { useRecoilState } from 'recoil';
-
 import Details from 'containers/map/restoration-popup/sections/details';
 import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';
 import RestorationScores from 'containers/map/restoration-popup/sections/restoration-scores';
 
-const PopupRestoration = () => {
+import type { RestorationPopUp } from 'types/map';
+
+const PopupRestoration = ({
+  restorationPopUpInfo,
+  setRestorationPopUp,
+}: {
+  restorationPopUpInfo: {
+    popup: number[];
+    popupInfo: RestorationPopUp;
+    popUpPosition: { x: number; y: number };
+  };
+  setRestorationPopUp: (restorationPopUpInfo) => void;
+}) => {
   const [open, setOpen] = useState('');
-  const [restorationPopUp, setRestorationPopUp] = useRecoilState(restorationPopUpAtom);
 
   const {
     popUpPosition: { x, y },
     popup,
     popupInfo,
-  } = restorationPopUp;
+  } = restorationPopUpInfo;
 
   const popUpWidth = 440;
   const sidebarWidth = 630;
@@ -36,7 +43,7 @@ const PopupRestoration = () => {
 
   const removePopUp = () => {
     setRestorationPopUp({
-      ...restorationPopUp,
+      ...restorationPopUpInfo,
       popup: [],
     });
   };
@@ -56,24 +63,22 @@ const PopupRestoration = () => {
       onClose={removePopUp}
       className="c-restoration-popup"
     >
-      <div className="w-fit-content">
-        <div className="relative flex w-[460px] flex-col items-start rounded-[20px] bg-white">
-          <RestorationScores
-            data={popupInfo}
-            isOpen={open === 'restoration'}
-            handleClick={() => handleClick('restoration')}
-          />
-          <Details
-            data={popupInfo}
-            isOpen={open === 'details'}
-            handleClick={() => handleClick('details')}
-          />
-          <EcosystemServices
-            data={popupInfo}
-            isOpen={open === 'ecosystem'}
-            handleClick={() => handleClick('ecosystem')}
-          />
-        </div>
+      <div className="relative flex w-[460px] flex-col items-start rounded-[20px] bg-white">
+        <RestorationScores
+          data={popupInfo}
+          isOpen={open === 'restoration'}
+          handleClick={() => handleClick('restoration')}
+        />
+        <Details
+          data={popupInfo}
+          isOpen={open === 'details'}
+          handleClick={() => handleClick('details')}
+        />
+        <EcosystemServices
+          data={popupInfo}
+          isOpen={open === 'ecosystem'}
+          handleClick={() => handleClick('ecosystem')}
+        />
       </div>
     </Popup>
   );

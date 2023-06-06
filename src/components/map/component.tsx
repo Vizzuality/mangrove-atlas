@@ -5,11 +5,8 @@ import { useEffect, useState, useCallback, FC } from 'react';
 
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
-import { restorationPopUpAtom } from 'store/map';
-
 import cx from 'classnames';
 import { isEmpty } from 'lodash-es';
-import { useRecoilState } from 'recoil';
 import { useDebouncedCallback } from 'use-debounce';
 
 // * If you plan to use Mapbox (and not a fork):
@@ -59,7 +56,14 @@ export const CustomMap: FC<CustomMapProps> = ({
   const [loaded, setLoaded] = useState(false);
   const [cursor, setCursor] = useState<string>('auto');
 
-  const [restorationPopUp, setRestorationPopUp] = useRecoilState(restorationPopUpAtom);
+  const [restorationPopUp, setRestorationPopUp] = useState({
+    popup: [],
+    popupInfo: null,
+    popUpPosition: {
+      x: null,
+      y: null,
+    },
+  });
 
   /**
    * CALLBACKS
@@ -186,8 +190,11 @@ export const CustomMap: FC<CustomMapProps> = ({
         {...localViewState}
       >
         {!!mapRef && loaded && children(mapRef.getMap())}
-        {!!restorationPopUp.popup.length && !isEmpty(restorationPopUp.popupInfo) ? (
-          <RestorationPopup />
+        {!!restorationPopUp?.popup.length && !isEmpty(restorationPopUp?.popupInfo) ? (
+          <RestorationPopup
+            restorationPopUpInfo={restorationPopUp}
+            setRestorationPopUp={setRestorationPopUp}
+          />
         ) : null}
       </ReactMapGL>
     </div>
