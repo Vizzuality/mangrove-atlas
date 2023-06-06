@@ -36,6 +36,7 @@ import type { DrawControlProps } from 'components/map/drawing-tool';
 import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
+import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 
 import LayerManager from './layer-manager';
@@ -190,6 +191,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   };
 
+  const removePopup = () => {
+    setRestorationPopUp(null);
+  };
+
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
@@ -226,10 +231,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               <PitchReset mapId={mapId} />
             </Controls>
             {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
-              <RestorationPopup
-                restorationPopUpInfo={restorationPopUp}
-                setRestorationPopUp={setRestorationPopUp}
-              />
+              <Popup
+                popUpPosition={restorationPopUp.popUpPosition}
+                longitude={restorationPopUp.popup[1]}
+                latitude={restorationPopUp.popup[0]}
+                onClose={removePopup}
+              >
+                <RestorationPopup restorationPopUpInfo={restorationPopUp} />
+              </Popup>
             ) : null}
           </>
         )}
