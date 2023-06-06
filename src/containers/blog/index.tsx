@@ -43,13 +43,17 @@ export const Blog = () => {
           </div>
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y top-4 h-[96vh] rounded-[20px] px-10 pt-10 font-sans">
+      <DialogContent className="scroll-y h-[96vh] rounded-[20px] px-10 py-0 font-sans md:max-w-xl">
         {!postInfo && (
-          <div className="no-scrollbar overflow-y-auto">
+          <div className="no-scrollbar overflow-y-auto pt-10">
             <h3 className="pb-6 text-3xl font-light">News</h3>
             <div className="flex flex-col space-y-4">
               {data.map((post) => (
-                <button key={post.id} onClick={() => setPostInfo(post)}>
+                <button
+                  key={post.id}
+                  className="flex h-fit w-full rounded-[20px] border border-slate-100 p-1 transition duration-300 hover:border-slate-400"
+                  onClick={() => setPostInfo(post)}
+                >
                   <PostComponent post={post} />
                 </button>
               ))}
@@ -68,7 +72,10 @@ export const Blog = () => {
               }}
               transition={{ duration: 0.4 }}
             >
-              <button className="absolute top-6 z-20" onClick={() => setPostInfo(null)}>
+              <button
+                className="absolute top-4 left-4 z-20 rounded-[20px] bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
+                onClick={() => setPostInfo(null)}
+              >
                 Back to News
               </button>
               <Image
@@ -76,7 +83,7 @@ export const Blog = () => {
                 className="absolute top-0 left-0 h-[240px] w-full rounded-t-[20px] object-cover"
                 src={placeholderPost as StaticImageData}
               />
-              <h3 className="mt-[240px] font-sans text-3xl font-light text-black/85">
+              <h3 className="mt-[270px] font-sans text-3xl font-light text-black/85">
                 {postInfo.title.rendered}
               </h3>
             </motion.div>

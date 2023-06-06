@@ -8,7 +8,7 @@ export const Post = ({ post }: { post: { id: number; title: { rendered: string }
   const { data } = usePostTags({ id: post.id });
 
   return (
-    <div key={post.id} className="flex h-fit w-full rounded-[20px] border border-slate-100 p-1">
+    <div className="flex">
       <Image
         alt={post.title.rendered}
         className="h-[114px] w-28 rounded-2xl object-cover"
