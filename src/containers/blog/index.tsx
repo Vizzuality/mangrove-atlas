@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 
 import cn from 'classnames';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { useBlogPosts } from 'hooks/blog';
 import type { Post } from 'hooks/blog/types';
@@ -43,21 +44,30 @@ export const Blog = () => {
         </div>
       </DialogTrigger>
       <DialogContent className="scroll-y top-4 h-[96vh] rounded-[20px] px-10 pt-10 font-sans">
-        <div className="no-scrollbar overflow-y-auto">
-          {!postInfo && (
-            <>
-              <h3 className="pb-6 text-3xl font-light">News</h3>
-              <div className="flex flex-col space-y-4">
-                {data.map((post) => (
-                  <button key={post.id} onClick={() => setPostInfo(post)}>
-                    <PostComponent post={post} />
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
+        {!postInfo && (
+          <div className="no-scrollbar overflow-y-auto">
+            <h3 className="pb-6 text-3xl font-light">News</h3>
+            <div className="flex flex-col space-y-4">
+              {data.map((post) => (
+                <button key={post.id} onClick={() => setPostInfo(post)}>
+                  <PostComponent post={post} />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        <AnimatePresence>
           {postInfo && (
-            <div>
+            <motion.div
+              className="no-scrollbar overflow-y-auto"
+              initial="hidden"
+              animate="displayed"
+              variants={{
+                hidden: { opacity: 0 },
+                displayed: { opacity: 1 },
+              }}
+              transition={{ duration: 0.4 }}
+            >
               <button className="absolute top-6 z-20" onClick={() => setPostInfo(null)}>
                 Back to News
               </button>
@@ -69,9 +79,9 @@ export const Blog = () => {
               <h3 className="mt-[240px] font-sans text-3xl font-light text-black/85">
                 {postInfo.title.rendered}
               </h3>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </AnimatePresence>
         <DialogClose onClose={() => setPostInfo(null)} />
       </DialogContent>
     </Dialog>
