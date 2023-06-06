@@ -92,5 +92,15 @@
   border-left-color: #00857F !important;
 }
 
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  border-bottom-color: #00857F !important;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  border-top-color: #00857F !important;
+}
+
+
+
 
 
