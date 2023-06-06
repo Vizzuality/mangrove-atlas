@@ -43,7 +43,7 @@ const DesktopLayout = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-        <div className="absolute top-0 left-0 z-50">
+        <div className="absolute top-0 left-0 z-10">
           <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
         </div>
         <MapContainer mapId="default-desktop" />

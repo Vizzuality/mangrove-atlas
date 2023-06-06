@@ -1,67 +1,33 @@
-import React, { ReactNode } from 'react';
+import * as React from 'react';
 
 import cn from 'lib/classnames';
 
-import * as CheckboxRadix from '@radix-ui/react-checkbox';
-import { CheckIcon } from '@radix-ui/react-icons';
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
-type CheckboxRootProps = {
-  className?: string;
-  children?: ReactNode | string | number;
-  onCheckedChange?: (checked: CheckboxRadix.CheckedState) => void;
-  name?: string;
-  value?: string | number;
-  props?: any;
-  checked?: boolean;
-};
+import Icon from 'components/icon';
 
-type CheckboxProps = {
-  className?: string;
-  children?: ReactNode | string | number;
-  props?: any;
-};
+import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
-const CheckboxRoot = ({ className, children, ...props }: CheckboxRootProps) => (
-  <CheckboxRadix.Root className={className} {...props}>
-    <div className="hover:bg-violet3 flex h-[20px] w-[20px] appearance-none items-center justify-center rounded-[4px] border border-brand-800/70 bg-white outline-none focus:shadow-[0_0_0_2px_black]">
-      {children}
-    </div>
-  </CheckboxRadix.Root>
-);
-
-const CheckboxIndicator = ({ className, children, ...props }: CheckboxProps) => (
-  <CheckboxRadix.Indicator className={className} {...props}>
-    {children}
-
-    {!children && <CheckIcon />}
-  </CheckboxRadix.Indicator>
-);
-
-const CheckboxLabel = ({
-  className,
-  children,
-}: {
-  className: string;
-  children?: ReactNode | string | number;
-}) => (
-  <label
+const Checkbox = React.forwardRef<
+  React.ElementRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <CheckboxPrimitive.Root
+    ref={ref}
     className={cn({
-      'pl-[15px] text-[15px] leading-none text-white': true,
+      'peer h-4 w-4 shrink-0 rounded border-2  border-brand-800/50 focus:outline-none focus:ring-2 focus:ring-brand-400  focus:ring-offset-2 focus:ring-offset-brand-800 disabled:cursor-not-allowed disabled:opacity-50':
+        true,
       [className]: !!className,
     })}
-    htmlFor="c1"
+    {...props}
   >
-    {children}
-  </label>
-);
+    <CheckboxPrimitive.Indicator
+      className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
+    >
+      <Icon icon={CHECK_SVG} className="h-full w-full " />
+    </CheckboxPrimitive.Indicator>
+  </CheckboxPrimitive.Root>
+));
+Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 
-const Checkbox = ({ children, className, props }: CheckboxProps) => (
-  <div className={cn({ 'flex items-start': true, [className]: !!className })}>{children}</div>
-);
-
-CheckboxRoot.displayName = CheckboxRadix.Root.displayName;
-CheckboxIndicator.displayName = CheckboxRadix.Indicator.displayName;
-CheckboxLabel.displayName = 'CheckboxLabel';
-Checkbox.displayName = 'Checkbox';
-
-export { CheckboxRoot, CheckboxIndicator, CheckboxLabel, Checkbox };
+export { Checkbox };
