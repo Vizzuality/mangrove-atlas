@@ -1,10 +1,21 @@
+import Image, { StaticImageData } from 'next/image';
+
 import { usePostTags } from 'hooks/blog';
+
+import placeholderPost from 'images/blog/placeholder-post.png';
 
 export const Post = ({ post }: { post: { id: number; title: { rendered: string } } }) => {
   const { data } = usePostTags({ id: post.id });
 
   return (
-    <div key={post.id} className="h-fit w-full rounded-[20px] border border-slate-100 p-1">
+    <div key={post.id} className="flex h-fit w-full rounded-[20px] border border-slate-100 p-1">
+      <Image
+        alt={post.title.rendered}
+        className="h-[114px] w-28 rounded-2xl object-cover"
+        src={placeholderPost as StaticImageData}
+        width={112}
+        height={114}
+      />
       <div className="flex flex-col space-y-2.5 p-4">
         <div className="flex flex-wrap gap-2">
           {data?.map((tag, i) => {
@@ -18,7 +29,7 @@ export const Post = ({ post }: { post: { id: number; title: { rendered: string }
             );
           })}
         </div>
-        <h5 className="text-2lg font-light">{post.title.rendered}</h5>
+        <h5 className="text-left text-2lg font-light">{post.title.rendered}</h5>
       </div>
     </div>
   );
