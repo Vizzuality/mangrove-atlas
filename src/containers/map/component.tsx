@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -13,6 +13,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
+import { isEmpty } from 'lodash-es';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -23,6 +24,7 @@ import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
+import RestorationPopup from 'containers/map/restoration-popup';
 
 import Collapsible from 'components/collapsible';
 import Map from 'components/map';
@@ -61,6 +63,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
+
+  const [restorationPopUp, setRestorationPopUp] = useState({
+    popup: [],
+    popupInfo: null,
+    popUpPosition: {
+      x: null,
+      y: null,
+    },
+  });
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 
@@ -161,6 +172,24 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
+  const onClickHandler = (e) => {
+    const restorationData = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove_restoration'
+    )?.properties;
+
+    if (restorationData) {
+      setRestorationPopUp({
+        ...restorationPopUp,
+        popup: [e?.lngLat.lat, e?.lngLat.lng],
+        popupInfo: restorationData,
+        popUpPosition: {
+          x: e.point.x,
+          y: e.point.y,
+        },
+      });
+    }
+  };
+
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen">
       <Map
@@ -173,6 +202,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         onMapViewStateChange={handleViewState}
         bounds={bounds}
         interactiveLayerIds={interactiveLayerIds}
+        onClick={onClickHandler}
       >
         {() => (
           <>
@@ -195,6 +225,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               <ZoomControl mapId={mapId} />
               <PitchReset mapId={mapId} />
             </Controls>
+            {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
+              <RestorationPopup
+                restorationPopUpInfo={restorationPopUp}
+                setRestorationPopUp={setRestorationPopUp}
+              />
+            ) : null}
           </>
         )}
       </Map>
