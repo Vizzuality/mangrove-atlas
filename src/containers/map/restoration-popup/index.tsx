@@ -60,22 +60,24 @@ const PopupRestoration = ({
       onClose={removePopUp}
       className="c-restoration-popup"
     >
-      <div className="relative flex w-[460px] flex-col items-start rounded-[20px] bg-white">
-        <RestorationScores
-          data={popupInfo}
-          isOpen={open === 'restoration'}
-          handleClick={() => handleClick('restoration')}
-        />
-        <Details
-          data={popupInfo}
-          isOpen={open === 'details'}
-          handleClick={() => handleClick('details')}
-        />
-        <EcosystemServices
-          data={popupInfo}
-          isOpen={open === 'ecosystem'}
-          handleClick={() => handleClick('ecosystem')}
-        />
+      <div className="w-fit-content">
+        <div className="relative flex flex-col items-start rounded-[20px] bg-white">
+          <RestorationScores
+            data={popupInfo}
+            isOpen={open === 'restoration'}
+            handleClick={() => handleClick('restoration')}
+          />
+          <Details
+            data={popupInfo}
+            isOpen={open === 'details'}
+            handleClick={() => handleClick('details')}
+          />
+          <EcosystemServices
+            data={popupInfo}
+            isOpen={open === 'ecosystem'}
+            handleClick={() => handleClick('ecosystem')}
+          />
+        </div>
       </div>
     </Popup>
   );
