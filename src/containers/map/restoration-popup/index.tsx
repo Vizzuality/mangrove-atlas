@@ -42,10 +42,7 @@ const PopupRestoration = ({
   );
 
   const removePopUp = () => {
-    setRestorationPopUp({
-      ...restorationPopUpInfo,
-      popup: [],
-    });
+    setRestorationPopUp({});
   };
 
   const anchor = () => {

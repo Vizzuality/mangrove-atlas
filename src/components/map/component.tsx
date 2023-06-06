@@ -187,7 +187,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         {...localViewState}
       >
         {!!mapRef && loaded && children(mapRef.getMap())}
-        {!!restorationPopUp?.popup.length && !isEmpty(restorationPopUp?.popupInfo) ? (
+        {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
           <RestorationPopup
             restorationPopUpInfo={restorationPopUp}
             setRestorationPopUp={setRestorationPopUp}
