@@ -13,6 +13,8 @@ import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
+import { Media } from 'components/media-query';
+
 import { useWidgets } from './hooks';
 
 const WidgetsContainer: React.FC = () => {
@@ -46,7 +48,7 @@ const WidgetsContainer: React.FC = () => {
           {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
         </button>
       )}
-      {blogBanner && <Blog setBlogBanner={setBlogBanner} />}
+      <Media greaterThanOrEqual="md">{blogBanner && <Blog setBlogBanner={setBlogBanner} />}</Media>
 
       {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];
