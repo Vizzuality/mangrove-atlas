@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import Head from 'next/head';
 import Image from 'next/image';
 
+import Blog from 'containers/blog';
 import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
@@ -8,6 +11,7 @@ import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
 
 const DesktopLayout = () => {
+  const [blogBanner, setBlogBanner] = useState(true);
   // const MAP_STYLE = useMemo(() => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
@@ -47,6 +51,7 @@ const DesktopLayout = () => {
         <MapContainer mapId="default-desktop" />
         <Sidebar />
         <WidgetsContainer />
+        {blogBanner && <Blog setBlogBanner={setBlogBanner} />}
         <LanguageSelector />
       </div>
     </div>

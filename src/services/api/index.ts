@@ -10,4 +10,9 @@ export const AnalysisAPI = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+export const BlogAPI = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BLOG_API_URL,
+  headers: { 'Content-Type': 'application/json' },
+});
+
 export default API;
