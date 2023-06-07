@@ -25,7 +25,7 @@ const RestorableAreasChart = ({ data }) => {
     {
       label: `Mangrove area in ${year}`,
       color: '#ECECEF',
-      percentage: numberFormat(100 - nonProtectedPercentage),
+      percentage: numberFormat(nonProtectedPercentage),
       unit: mangroveAreaUnit,
       value: mangrove_area_extent - restorable_area,
       valueFormatted: numberFormat(mangrove_area_extent),
