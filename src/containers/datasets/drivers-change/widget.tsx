@@ -6,10 +6,13 @@ import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 
 const DriversChangeWidget = () => {
-  const { primaryDriver, config, isLoading, location, isFetched, isPlaceholderData } =
+  const { noData, primaryDriver, config, isLoading, location, isFetched, isPlaceholderData } =
     useMangroveDriversChange();
 
   const { legend } = config;
+
+  if (noData) return null;
+
   return (
     primaryDriver && (
       <div className={WIDGET_CARD_WRAPER_STYLE}>

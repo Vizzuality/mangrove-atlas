@@ -39,7 +39,7 @@ const getColorKeys = (data: Data[]) =>
   }, {} satisfies ColorKeysTypes);
 
 const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
-  if (!data || !data.length) return null;
+  if (!data || !data?.length) return null;
   const barsValues = data?.map(({ value }) => value);
   const total = barsValues.reduce((previous, current) => current + previous);
   return [
@@ -136,6 +136,8 @@ export function useMangroveHeight(
   });
 
   const { data } = query;
+  const noData = !data?.data?.length;
+
   const mean = data?.metadata?.avg_height?.[0].value;
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year;
@@ -215,6 +217,7 @@ export function useMangroveHeight(
       year,
       legend: legendData,
       config,
+      noData,
     };
   }, [query, data]);
 }

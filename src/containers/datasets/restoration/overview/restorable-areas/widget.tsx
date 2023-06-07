@@ -8,7 +8,7 @@ import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
 import RestorableAreasChart from './chart';
 const RestorableAreas = () => {
   const { isLoading, isFetched, isFetching, data } = useMangroveRestoration();
-
+  if (!data) return null;
   return (
     <div
       className={cn({

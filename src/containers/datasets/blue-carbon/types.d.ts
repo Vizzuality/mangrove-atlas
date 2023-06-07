@@ -43,4 +43,5 @@ export type BlueCarbon = {
   config: ChartConfig;
   location: string;
   metadata?: Metadata;
+  noData: boolean;
 };

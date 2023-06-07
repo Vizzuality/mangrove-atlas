@@ -20,7 +20,7 @@ import { useMangroveProtectedAreas } from './hooks';
 const Protection = () => {
   const [selectedUnit, setUnit] = useState('ha');
   const { data, isFetched, isFetching } = useMangroveProtectedAreas({ unit: selectedUnit });
-
+  if (!data?.length) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />

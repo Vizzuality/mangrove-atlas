@@ -10,6 +10,7 @@ import OverviewChart from './chart';
 const MeanRestoration = () => {
   const { isLoading, data, isFetched, isFetching, isError } = useMangroveRestoration();
 
+  if (!data) return null;
   return (
     <div
       className={cn({

@@ -75,13 +75,17 @@ export function useMangroveSpecies(
   const { data } = query;
   const { data: worldwideData } = worldwideQuery;
 
+  const noData = !data?.data?.total;
+
   return useMemo(() => {
     const total = data.data.total;
     const worldwideTotal = worldwideData.data.total;
     const legend = [1, Math.ceil(worldwideTotal / 2), worldwideTotal];
     return {
+      noData,
       location,
       total: total,
+      worldwideTotal,
       legend,
       ...query,
     };

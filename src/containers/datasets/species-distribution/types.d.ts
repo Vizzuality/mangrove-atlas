@@ -30,8 +30,10 @@ export type DataResponse = {
   metadata: Metadata;
 };
 export type SpeciesData = {
+  noData: boolean;
   location: string;
   total: number;
+  worldwideTotal: number;
   legend: number[];
   isLoading: boolean;
   isFetched: boolean;

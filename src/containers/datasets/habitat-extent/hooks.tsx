@@ -91,6 +91,8 @@ export function useMangroveHabitatExtent(
 
   const { data } = query;
 
+  const noData = !data?.data?.length;
+
   const { unit, year } = params;
   const DATA = useMemo(() => {
     const metadata = data.metadata;
@@ -193,6 +195,7 @@ export function useMangroveHabitatExtent(
       defaultYear: currentYear,
       unitOptions,
       defaultUnitLinearCoverage,
+      noData,
     };
   }, [data, unit, year]);
 

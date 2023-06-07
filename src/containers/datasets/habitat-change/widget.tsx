@@ -51,9 +51,11 @@ const HabitatExtent = () => {
     currentEndYear,
     isFetched,
     isPlaceholderData,
+    noData,
   } = useMangroveHabitatChange({ startYear, endYear, limit });
 
   const isLoading = false;
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading

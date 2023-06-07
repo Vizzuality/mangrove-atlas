@@ -28,7 +28,7 @@ const HeightWidget = () => {
     });
   }, [queryClient]);
 
-  const { location, legend, isFetching, isError, data, mean, unit, year, config, refetch } =
+  const { noData, location, legend, isFetching, isError, data, mean, unit, year, config, refetch } =
     useMangroveHeight({}, { enabled: !isCanceled }, handleQueryCancellation);
 
   const handleTryAgain = useCallback(async () => {
@@ -36,6 +36,7 @@ const HeightWidget = () => {
     setIsCanceled(false);
   }, [refetch]);
 
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
