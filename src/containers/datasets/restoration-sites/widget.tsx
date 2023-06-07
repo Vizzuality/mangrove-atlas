@@ -11,12 +11,11 @@ import { useSetRecoilState } from 'recoil';
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import { BUTTON_STYLES } from 'styles/widgets';
 
 import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
 import SelectedFilters from './selected-filters';
-
-export const BUTTON_STYLES = 'rounded-3xl py-1 px-4 text-sm font-semibold';
 
 const RestorationSitesWidget = () => {
   // filters component state to avoid refetch on every selection

@@ -123,3 +123,16 @@ body {
 .txlive-langselector-list > li:hover {
   @apply  !text-black/85 !bg-white;
 }
+
+
+@media print {
+  @page {
+    size: landscape;
+  }
+
+  body {
+    width: 260mm; /* A4 width in millimeters */
+    height: 210mm; /* A4 height in millimeters */
+    margin: 0 auto;
+  }
+}

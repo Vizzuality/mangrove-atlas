@@ -15,12 +15,12 @@ import API from 'services/api';
 const Home = () => {
   return (
     <>
-      <Media lessThan="md">
+      {/* <Media lessThan="md">
         <MobileLayout />
       </Media>
-      <Media greaterThanOrEqual="md">
-        <DesktopLayout />
-      </Media>
+      <Media greaterThanOrEqual="md"> */}
+      <DesktopLayout />
+      {/* </Media> */}
     </>
   );
 };

@@ -1,10 +1,9 @@
 import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
+import { BUTTON_STYLES } from 'styles/widgets';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
-
-import { BUTTON_STYLES } from '../widget';
 
 type SelectedFiltersProps = {
   filters: { [key: string]: string[] | number[] };

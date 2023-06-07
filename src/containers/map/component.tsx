@@ -273,7 +273,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   return (
-    <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={mapRef}>
+    <div
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-screen print:w-screen"
+      ref={mapRef}
+    >
       <Map
         id={mapId}
         mapStyle={selectedBasemap}
@@ -301,7 +304,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             )}
             <Controls
               className={cn({
-                'absolute top-36 right-6': true,
+                'absolute top-36 right-6 print:hidden': true,
                 'right-10 top-18': screenWidth >= breakpoints.md,
               })}
             >
@@ -323,12 +326,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         )}
       </Map>
       <Media lessThan="md">
-        <div className="absolute top-20 left-0 z-[80]">
+        <div className="absolute top-20 left-0 z-[80] print:hidden">
           <Collapsible layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-10 space-y-1">
+        <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
           <BasemapSelector />

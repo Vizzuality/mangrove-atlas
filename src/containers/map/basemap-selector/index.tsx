@@ -26,7 +26,7 @@ const BasemapSelector = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn({
-        'flex w-full items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium':
+        'flex w-full items-center justify-between rounded-lg bg-white px-5 py-4 shadow-medium print:hidden':
           true,
         [className]: !!className,
       })}

@@ -37,7 +37,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 print:hidden">
       {!!download && <Download id={id} content={download} />}
       {!!info && <Info id={id} content={info} />}
       {!!layer && (

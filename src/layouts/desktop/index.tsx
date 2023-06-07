@@ -11,7 +11,7 @@ const DesktopLayout = () => {
   //   return BASEMAPS.find((b) => b.value === basemap)?.url || mapStyle;
   // }, [basemap, mapStyle]);
   return (
-    <div className="{cx([styles.printOnly_wrapper])} overflow-hidden">
+    <div className="overflow-hidden print:overflow-visible">
       <Head>
         <title>Global Mangrove Watch</title>
       </Head>
@@ -22,11 +22,7 @@ const DesktopLayout = () => {
       {/* {!isMobile && <DesktopLayout />}
       {isMobile && <MobileLayout />}
       {isMobile && <FooterMenu />} */}
-      <div
-        className="{cx(styles.vis, { [styles.mobileView]:
-            mapView && isMobile, })}
-          relative h-screen w-screen"
-      >
+      <div className="relative h-screen w-screen">
         {/* <h1
           className="{cx(styles.printOnly, {
               [styles._short]: location?.name.length < 10,
@@ -40,7 +36,7 @@ const DesktopLayout = () => {
         {/* <p className="{styles.printOnly}">
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p> */}
-        <div className="absolute top-0 left-0 z-10">
+        <div className="absolute top-0 left-0 z-10 print:hidden">
           <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
         </div>
         <MapContainer mapId="default-desktop" />
