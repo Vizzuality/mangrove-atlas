@@ -10,25 +10,16 @@ import type { RestorationPopUp } from 'types/map';
 
 const PopupRestoration = ({
   restorationPopUpInfo,
-  setRestorationPopUp,
 }: {
   restorationPopUpInfo: {
     popup: number[];
     popupInfo: RestorationPopUp;
     popUpPosition: { x: number; y: number };
   };
-  setRestorationPopUp: (restorationPopUpInfo) => void;
 }) => {
   const [open, setOpen] = useState('');
 
-  const {
-    popUpPosition: { x, y },
-    popup,
-    popupInfo,
-  } = restorationPopUpInfo;
-
-  const popUpWidth = 440;
-  const sidebarWidth = 630;
+  const { popupInfo } = restorationPopUpInfo;
 
   const handleClick = useCallback(
     (id: string) => {
@@ -41,45 +32,36 @@ const PopupRestoration = ({
     [open]
   );
 
-  const removePopUp = () => {
-    setRestorationPopUp({});
-  };
-
-  const anchor = () => {
-    if (x < sidebarWidth + popUpWidth) return 'left';
-    else if (y - popUpWidth < 0) return 'top';
-    else if (x - popUpWidth > popUpWidth) return 'right';
-    else return 'bottom';
-  };
+  // const removePopUp = () => {
+  //   setRestorationPopUp({});
+  // };
 
   return (
-    <Popup
-      anchor={anchor()}
-      longitude={popup[1] || null}
-      latitude={popup[0] || null}
-      onClose={removePopUp}
-      className="c-restoration-popup"
-    >
-      <div className="w-fit-content">
-        <div className="relative flex flex-col items-start rounded-[20px] bg-white">
-          <RestorationScores
-            data={popupInfo}
-            isOpen={open === 'restoration'}
-            handleClick={() => handleClick('restoration')}
-          />
-          <Details
-            data={popupInfo}
-            isOpen={open === 'details'}
-            handleClick={() => handleClick('details')}
-          />
-          <EcosystemServices
-            data={popupInfo}
-            isOpen={open === 'ecosystem'}
-            handleClick={() => handleClick('ecosystem')}
-          />
-        </div>
-      </div>
-    </Popup>
+    // <Popup
+    //   anchor={anchor()}
+    //   longitude={popup[1] || null}
+    //   latitude={popup[0] || null}
+    //   onClose={removePopUp}
+    //   className=""
+    // >
+    <div className="c-restoration-popup relative flex w-[460px] flex-col items-start rounded-[20px] bg-white">
+      <RestorationScores
+        data={popupInfo}
+        isOpen={open === 'restoration'}
+        handleClick={() => handleClick('restoration')}
+      />
+      <Details
+        data={popupInfo}
+        isOpen={open === 'details'}
+        handleClick={() => handleClick('details')}
+      />
+      <EcosystemServices
+        data={popupInfo}
+        isOpen={open === 'ecosystem'}
+        handleClick={() => handleClick('ecosystem')}
+      />
+    </div>
+    // </Popup>
   );
 };
 

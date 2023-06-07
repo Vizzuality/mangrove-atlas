@@ -3,7 +3,6 @@ import { useEffect, useState, useCallback, FC } from 'react';
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
 import cx from 'classnames';
-import { isEmpty } from 'lodash-es';
 import { useDebouncedCallback } from 'use-debounce';
 
 // * If you plan to use Mapbox (and not a fork):
@@ -11,8 +10,6 @@ import { useDebouncedCallback } from 'use-debounce';
 // * 2) install Mapbox v1/v2 (v2 requires token)
 // * 3) if you installed v2: provide the token to the map through the `mapboxAccessToken` property
 // * 4) remove `mapLib` property
-
-import RestorationPopup from 'containers/map/restoration-popup';
 
 import { DEFAULT_VIEW_STATE } from './constants';
 import type { CustomMapProps } from './types';
@@ -52,15 +49,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [cursor, setCursor] = useState<string>('auto');
-
-  const [restorationPopUp, setRestorationPopUp] = useState({
-    popup: [],
-    popupInfo: null,
-    popUpPosition: {
-      x: null,
-      y: null,
-    },
-  });
 
   /**
    * CALLBACKS
@@ -144,24 +132,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   const onMouseEnter = useCallback(() => setCursor('pointer'), []);
   const onMouseLeave = useCallback(() => setCursor('auto'), []);
 
-  const onClickHandler = (e) => {
-    const restorationData = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration'
-    )?.properties;
-
-    if (restorationData) {
-      setRestorationPopUp({
-        ...restorationPopUp,
-        popup: [e?.lngLat.lat, e?.lngLat.lng],
-        popupInfo: restorationData,
-        popUpPosition: {
-          x: e.point.x,
-          y: e.point.y,
-        },
-      });
-    }
-  };
-
   return (
     <div
       className={cx({
@@ -180,19 +150,12 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        onClick={onClickHandler}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         {...mapboxProps}
         {...localViewState}
       >
         {!!mapRef && loaded && children(mapRef.getMap())}
-        {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
-          <RestorationPopup
-            restorationPopUpInfo={restorationPopUp}
-            setRestorationPopUp={setRestorationPopUp}
-          />
-        ) : null}
       </ReactMapGL>
     </div>
   );
