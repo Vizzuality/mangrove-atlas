@@ -235,7 +235,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             <Controls
               className={cn({
                 'absolute top-36 right-6': true,
-                'top-14 right-10': screenWidth >= breakpoints.md,
+                'right-10 top-18': screenWidth >= breakpoints.md,
               })}
             >
               <FullScreenControl />
