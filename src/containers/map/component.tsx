@@ -14,7 +14,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
-import type { LngLatBoundsLike } from 'mapbox-gl';
+import type { LngLatBoundsLike, MapLayerMouseEvent } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
@@ -38,6 +38,7 @@ import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
+import type { RestorationPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
 
@@ -65,7 +66,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
 
-  const [restorationPopUp, setRestorationPopUp] = useState({
+  const [restorationPopUp, setRestorationPopUp] = useState<{
+    popup: number[];
+    popupInfo: RestorationPopUp;
+    popUpPosition: { x: number; y: number };
+  }>({
     popup: [],
     popupInfo: null,
     popUpPosition: {
