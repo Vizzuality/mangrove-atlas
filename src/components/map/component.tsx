@@ -48,7 +48,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [cursor, setCursor] = useState<string>('auto');
+  const [cursor, setCursor] = useState<string>('drag');
 
   /**
    * CALLBACKS
@@ -130,7 +130,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   }, [bounds, isFlying]);
 
   const onMouseEnter = useCallback(() => setCursor('pointer'), []);
-  const onMouseLeave = useCallback(() => setCursor('auto'), []);
+  const onMouseLeave = useCallback(() => setCursor('drag'), []);
 
   return (
     <div
