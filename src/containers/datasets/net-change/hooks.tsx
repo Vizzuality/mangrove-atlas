@@ -40,7 +40,7 @@ const getFormat = (v) => {
 };
 
 const getWidgetData = (data: Data[], unit = '') => {
-  if (!data.length) return null;
+  if (!data?.length) return null;
   const firstYear = Math.min(...data.map((d) => d.year));
   const netChangeValues = data.map((d) => d.net_change);
   netChangeValues.shift();
@@ -141,6 +141,8 @@ export function useMangroveNetChange(
 
   const { data } = query;
 
+  const noData = !data?.data?.length;
+
   return useMemo(() => {
     const years = data.metadata?.year.sort();
     const unit = selectedUnit || data.metadata?.units.net_change;
@@ -206,6 +208,7 @@ export function useMangroveNetChange(
       netChange: numberFormat(Math.abs(change)),
       direction,
       unitOptions,
+      noData,
       ...query,
     };
   }, [data, query, startYear, endYear, location, selectedUnit]);

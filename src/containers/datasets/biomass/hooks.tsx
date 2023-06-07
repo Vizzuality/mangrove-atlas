@@ -105,6 +105,7 @@ export function useMangroveBiomass(
     ...queryOptions,
   });
   const { data, isError, isFetching, refetch } = query;
+  const noData = !data?.data?.length;
 
   return useMemo(() => {
     const years = data?.metadata.year;
@@ -150,6 +151,7 @@ export function useMangroveBiomass(
       mean: numberFormat(avgBiomassFiltered),
       unit,
       year: selectedYear,
+      noData,
       config,
       location,
       isFetching,

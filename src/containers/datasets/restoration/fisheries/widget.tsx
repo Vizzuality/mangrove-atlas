@@ -12,17 +12,19 @@ import SHRIMP_SVG from 'svgs/fisheries/shrimp.svg?sprite';
 
 import { useMangroveEcosystemServices } from './hooks';
 
+const INDICATOR_ICONS = {
+  shrimp: SHRIMP_SVG,
+  fish: FISH_SVG,
+  crab: CRAB_SVG,
+  bivalve: BIVALVE_SVG,
+};
+
 const PotentialBenefitsToFisheries = () => {
   const { isFetched, isFetching, data } = useMangroveEcosystemServices({
     slug: 'fisheries',
   });
 
-  const INDICATOR_ICONS = {
-    shrimp: SHRIMP_SVG,
-    fish: FISH_SVG,
-    crab: CRAB_SVG,
-    bivalve: BIVALVE_SVG,
-  };
+  if (!data?.length) return null;
   return (
     <div
       className={cn({

@@ -76,6 +76,8 @@ export function useMangroveHabitatChange(
   });
 
   const { data } = query;
+  const noData = !data?.data?.length;
+
   return useMemo(() => {
     const years = data?.metadata?.years;
     const unit = data?.metadata?.units?.[0]?.value || [];
@@ -253,6 +255,7 @@ export function useMangroveHabitatChange(
       currentStartYear,
       currentEndYear,
       config: CONFIG,
+      noData,
     };
   }, [query, data]);
 }

@@ -47,6 +47,7 @@ type ChartConfig = {
 };
 
 export type DriversChangeData = {
+  noData: boolean;
   primaryDriver: string;
   isLoading: boolean;
   isFetched: boolean;

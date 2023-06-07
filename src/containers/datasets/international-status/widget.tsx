@@ -33,10 +33,11 @@ const InternationalStatus = () => {
     isLoading,
     isFetched,
     isPlaceholderData,
+    noData,
   } = useMangroveInternationalStatus();
 
   const apostrophe = location?.[location?.length - 1] === 's' ? "'" : "'s";
-
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading

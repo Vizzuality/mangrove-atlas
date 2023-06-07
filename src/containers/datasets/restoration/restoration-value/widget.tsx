@@ -7,6 +7,8 @@ const RestorationValue = () => {
   const { isFetched, isFetching, data } = useMangroveEcosystemServices({
     slug: 'restoration-value',
   });
+
+  if (!data || !data?.length) return null;
   return (
     <div className="relative">
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />

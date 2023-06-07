@@ -13,17 +13,28 @@ import { useMangroveSpecies } from './hooks';
 const SpeciesDistribution = () => {
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
-  const { location, total, legend, isLoading, isFetched, isPlaceholderData } = useMangroveSpecies();
+  const {
+    noData,
+    location,
+    total,
+    legend,
+    worldwideTotal,
+    isLoading,
+    isFetched,
+    isPlaceholderData,
+  } = useMangroveSpecies();
   const isWorldwide = location === 'Worldwide';
   // const total = data?.total;
   const ref = createRef<HTMLDivElement>();
-  const trianglePosition = (lineChartWidth * total) / 100 - 7; // substract icon size
+  const trianglePosition = (total * lineChartWidth) / worldwideTotal - 11; // substract icon size
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
   }, [ref]);
+
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -35,8 +46,8 @@ const SpeciesDistribution = () => {
           {/* mangrove sentence styles, create constant */}
           <p className="text-lg font-light text-black/85 first-letter:uppercase">
             <span className="font-bold"> {location}</span> has{' '}
-            <span className="font-bold">{total}</span> of mangroves distributed by country as map
-            shows.
+            <span className="font-bold">{total}</span> species of mangroves distributed by country
+            as map shows.
           </p>
           <div className="relative w-full font-sans text-sm text-black/85 ">
             <p className="w-full text-end opacity-50">total species</p>

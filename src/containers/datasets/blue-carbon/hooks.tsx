@@ -99,6 +99,7 @@ export function useMangroveBlueCarbon(
     ...queryOptions,
   });
   const { data } = query;
+  const noData = !data?.data?.length;
 
   return useMemo(() => {
     const orderedData = orderBy(
@@ -207,6 +208,7 @@ export function useMangroveBlueCarbon(
       soc: formatMillion(soc),
       config,
       location,
+      noData,
     } satisfies BlueCarbon;
 
     return {

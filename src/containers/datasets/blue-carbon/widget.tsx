@@ -37,7 +37,9 @@ const BlueCarbonWidget = () => {
     setIsCanceled(false);
   }, [refetch]);
 
-  const { location, agb, toc, soc, config } = data;
+  const { location, agb, toc, soc, config, noData } = data;
+
+  if (noData) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>

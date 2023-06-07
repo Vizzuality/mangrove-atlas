@@ -55,6 +55,8 @@ const SpeciesLocation = () => {
   );
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
+
+  if (!species.length) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading

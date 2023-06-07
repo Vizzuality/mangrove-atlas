@@ -81,4 +81,5 @@ export type ExtentData = {
   unitOptions: string[];
   defaultUnitLinearCoverage: string;
   location: string;
+  noData: boolean;
 };

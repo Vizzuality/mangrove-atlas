@@ -57,6 +57,7 @@ export type BiomassData = {
   year: number;
   config: ChartConfig;
   location: string;
+  noData: boolean;
 };
 
 export type ColorKeysTypes = {

@@ -78,6 +78,7 @@ export function useMangroveInternationalStatus(
   );
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
+  const noData = !Object.values(!data?.data?.[0]).length;
 
   return useMemo(() => {
     const {

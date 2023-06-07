@@ -22,11 +22,8 @@ const BiomassWidget = () => {
     setIsCanceled(true);
   }, []);
 
-  const { year, mean, unit, config, isFetching, location, refetch, isError } = useMangroveBiomass(
-    {},
-    { enabled: !isCanceled },
-    handleQueryCancellation
-  );
+  const { year, mean, unit, config, isFetching, location, refetch, isError, noData } =
+    useMangroveBiomass({}, { enabled: !isCanceled }, handleQueryCancellation);
 
   if (year !== defaultYear) setYear(year);
 
@@ -44,6 +41,7 @@ const BiomassWidget = () => {
 
   const { legend } = config;
 
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">

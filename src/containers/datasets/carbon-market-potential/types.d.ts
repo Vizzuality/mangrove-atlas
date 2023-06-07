@@ -23,6 +23,7 @@ export type Data = {
 };
 
 export type CarbonMarketPotentialData = {
+  noData: boolean;
   data: Data[];
   location: string;
   labels: string[];

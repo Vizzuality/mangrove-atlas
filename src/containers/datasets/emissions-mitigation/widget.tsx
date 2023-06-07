@@ -22,8 +22,11 @@ const EmissionsMitigationWidget = () => {
       setFilteredIndicators(updatedIndicators);
     }
   };
-  const { config, location } = data;
+  const { config, location, noData } = data;
   const { legend, ...restConfig } = config;
+
+  if (noData) return null;
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading

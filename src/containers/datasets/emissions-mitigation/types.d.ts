@@ -8,6 +8,7 @@ export type Data = {
 export type emissionsMitigationData = {
   config: Config;
   location: string;
+  noData: boolean;
 };
 
 export type Metadata = {

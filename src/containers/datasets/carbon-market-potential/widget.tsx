@@ -31,7 +31,9 @@ const CarbonMarketPotentialWidget = () => {
     label,
   });
 
-  const { location, units, labels, config, investibleBlueCarbonValue } = data;
+  const { noData, location, units, labels, config, investibleBlueCarbonValue } = data;
+
+  if (noData) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>

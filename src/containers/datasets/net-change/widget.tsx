@@ -55,6 +55,7 @@ const NetChangeWidget = () => {
     currentStartYear,
     refetch,
     isError,
+    noData,
   } = useMangroveNetChange(
     {
       selectedUnit,
@@ -70,6 +71,7 @@ const NetChangeWidget = () => {
     await refetch();
   }, [refetch]);
 
+  if (noData) return null;
   return (
     <div>
       <div className="flex flex-col items-center space-y-4">

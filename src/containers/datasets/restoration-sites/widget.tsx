@@ -60,6 +60,8 @@ const RestorationSitesWidget = () => {
     setMapFilters({ ...filters, [key]: updatedFilters });
   };
 
+  if (!data.data?.length) return null;
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />

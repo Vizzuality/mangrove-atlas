@@ -129,6 +129,7 @@ export function useMangroveEmissionsMitigation(
   });
 
   const { data } = query;
+  const noData = !data?.data?.length;
 
   const DATA = useMemo(() => {
     const COLOR_RAMP = chroma
@@ -209,6 +210,7 @@ export function useMangroveEmissionsMitigation(
 
     return {
       location,
+      noData,
       config,
     } satisfies emissionsMitigationData;
   }, [query, data]);

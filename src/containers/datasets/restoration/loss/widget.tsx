@@ -46,6 +46,7 @@ const CustomizedContent = (props: TreemapNode & { data: ChartData[] }) => {
 const LossWidget = () => {
   const { data, isFetched, isFetching } = useMangroveDegradationAndLoss();
 
+  if (!data) return null;
   const config = {
     width: 175,
     height: 175,

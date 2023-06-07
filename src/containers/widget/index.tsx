@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import React, { useCallback, ReactElement } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -15,11 +15,11 @@ import { getWidgetActive } from './selector';
 type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
-  children: React.ReactNode;
+  children: ReactElement | null;
   className?: string;
 };
 
-const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
+const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
   const { children, title, id, className } = props;
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
@@ -42,6 +42,8 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps) =>
       marginBottom: '12px',
     },
   };
+
+  if (Boolean(children.type() === null)) return null;
 
   return (
     <AnimatePresence>

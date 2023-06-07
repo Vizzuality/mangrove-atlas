@@ -65,6 +65,7 @@ const HabitatExtent = () => {
     unitOptions,
     config,
     defaultUnitLinearCoverage,
+    noData,
   } = data;
 
   const handleClick = useCallback(
@@ -73,6 +74,8 @@ const HabitatExtent = () => {
     },
     [setYear]
   );
+
+  if (noData) return null;
 
   return (
     <>
