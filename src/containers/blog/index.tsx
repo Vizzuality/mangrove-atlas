@@ -24,7 +24,7 @@ export const Blog = ({ setBlogBanner }: { setBlogBanner: (blogBanner: boolean) =
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <div className="relative z-20 my-2 h-12 w-[540px] rounded-2xl bg-brand-800">
           <div className="flex h-full items-center justify-between px-4">
             <div className="flex items-center space-x-4">
