@@ -43,7 +43,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
           />
           <div className="flex flex-col items-start text-sm">
             <p className="font-bold">{label}</p>
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 whitespace-nowrap">
               {showValue && <p>{valueFormatted || value}</p>}
               {showValue && unit && <p>{unit}</p>}
             </div>

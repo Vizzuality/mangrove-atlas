@@ -13,7 +13,7 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal className={className} {...props}>
-    <div className="fixed inset-0 top-0 z-50 flex h-full items-start justify-center md:items-center">
+    <div className="fixed inset-0 top-0 z-20 flex h-full items-start justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -22,14 +22,12 @@ DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
+>(({ className }) => (
+  <div
     className={cn({
-      'fixed inset-0 z-50 bg-brand-600/70 backdrop-blur-sm md:bg-black/50': true,
+      'fixed inset-0 bg-brand-600/70 backdrop-blur-sm md:bg-black/50': true,
       [className]: !!className,
     })}
-    {...props}
-    ref={ref}
   />
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
@@ -42,7 +40,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'left-1/12 fixed z-50 grid w-10/12 gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:w-full md:max-w-lg':
+        'left-1/12 fixed grid w-10/12 gap-4 bg-white p-6 animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96 md:left-18 md:w-full md:max-w-[540px]':
           true,
         [className]: !!className,
       })}

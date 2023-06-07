@@ -19,13 +19,17 @@ const CHART_COLORS = {
 
 const RestorationValueChart = ({ data }: { data: Data }) => {
   const { unit, chartData } = data;
-  const parsedData = chartData?.map(({ indicator, value }) => ({
-    label: CHART_LABELS[indicator],
-    color: CHART_COLORS[indicator],
-    unit,
-    value,
-    valueFormatted: numberFormat(value),
-  }));
+  const total = chartData.reduce((acc, { value }) => acc + value, 0);
+  const parsedData = chartData?.map(({ indicator, value }) => {
+    return {
+      label: CHART_LABELS[indicator],
+      color: CHART_COLORS[indicator],
+      unit,
+      value,
+      valueFormatted: numberFormat(value),
+      percentage: numberFormat((value * 100) / total),
+    };
+  });
 
   const config = {
     type: 'pie',

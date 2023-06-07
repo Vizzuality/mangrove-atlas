@@ -26,7 +26,7 @@ const PopoverTrigger = ({ className, children, ...props }: PopoverRadix.PopoverT
 const PopoverContent = ({ className, children, ...props }: PopoverRadix.PopoverContentProps) => (
   <PopoverRadix.Content
     className={cn({
-      'rounded-[20x] bg-white  text-black/85 shadow-soft outline-none data-[state=checked]:bg-brand-800':
+      'rounded-[20px] bg-white  text-black/85 shadow-soft outline-none data-[state=checked]:bg-brand-800':
         true,
       [className]: !!className,
     })}

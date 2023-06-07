@@ -18,6 +18,7 @@ const LayerManagerContainer = () => {
         // We need to define where do we want to put the layer
         // We want to put it before the custom-layers transparent backgrond
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
+
         return (
           <LayerComponent
             key={layer}
