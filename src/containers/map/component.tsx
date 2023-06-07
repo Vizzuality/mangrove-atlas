@@ -14,7 +14,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
-import type { LngLatBoundsLike, MapLayerMouseEvent } from 'mapbox-gl';
+import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
