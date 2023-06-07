@@ -7,7 +7,7 @@ import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 import { BUTTON_STYLES } from '../widget';
 
 type SelectedFiltersProps = {
-  filters: { [key: string]: string[] };
+  filters: { [key: string]: string[] | number[] };
   filtersSelected: string[];
   handleRemoveFilter: (filter: string, value: string) => void;
 };

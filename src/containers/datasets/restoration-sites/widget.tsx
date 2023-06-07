@@ -6,7 +6,7 @@ import cn from 'lib/classnames';
 
 import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
-import { useSetRecoilState } from 'recoil';
+import { SetRecoilState, useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Loading from 'components/loading';
@@ -20,10 +20,12 @@ export const BUTTON_STYLES = 'rounded-[20px] py-1 px-4 text-sm font-semibold';
 
 const RestorationSitesWidget = () => {
   // filters component state to avoid refetch on every selection
-  const [filters, setFilters] = useState<{ [key: string]: string[] }>({});
+  const [filters, setFilters] = useState<{ [key: string]: string[] | number[] }>({});
 
   // global filters state to update query
-  const setMapFilters = useSetRecoilState<{ [key: string]: string[] }>(RestorationSitesMapFilters);
+  const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
+    RestorationSitesMapFilters
+  );
 
   const [open, setOpen] = useState(false);
 
@@ -51,15 +53,11 @@ const RestorationSitesWidget = () => {
   const filtersSelected = Object.keys(filters).filter((key) => !!filters[key].length);
 
   const handleRemoveFilter = (key: string, slug: string) => {
-    const filtersCopy = { ...filters };
-    const array = filtersCopy[key];
+    const filterToUpdate = filters[key] as string[];
+    const updatedFilters: string[] = filterToUpdate?.filter((item) => item !== slug);
 
-    if (array?.includes(slug)) {
-      filtersCopy[key] = array.filter((item) => item !== slug);
-    }
-
-    setFilters(filtersCopy);
-    setMapFilters(filtersCopy);
+    setFilters({ ...filters, [key]: updatedFilters });
+    setMapFilters({ ...filters, [key]: updatedFilters });
   };
 
   return (

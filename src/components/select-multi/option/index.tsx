@@ -30,7 +30,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
       {({ active: a, selected: s, disabled: d }) => (
         <div
           className={cx({
-            'flex cursor-pointer select-none items-start space-x-2 py-2 pl-5 pr-4': true,
+            'flex cursor-pointer select-none items-start space-x-2 px-5 py-2': true,
             [THEME[theme].item.base]: true,
             [THEME[theme].item.active]: a,
             [THEME[theme].item.selected]: s,
