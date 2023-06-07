@@ -8,10 +8,10 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(): LayerProps[] {
+export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   return [
     {
-      id: 'selected-wdpa-polygons',
+      id,
       type: 'fill',
       source: 'composite',
       'source-layer': 'wdpaclientjuly2022',
@@ -23,7 +23,7 @@ export function useLayers(): LayerProps[] {
       },
     },
     {
-      id: 'selected-wdpa-polygons-border',
+      id: `${id}-border`,
       type: 'line',
       source: 'composite',
       'source-layer': 'wdpaclientjuly2022',
@@ -34,7 +34,7 @@ export function useLayers(): LayerProps[] {
       },
     },
     {
-      id: 'selected-wdpa-polygons-label',
+      id: `${id}-label`,
       type: 'symbol',
       metadata: {
         'mapbox:group': '1f4439315750c8010c95dfe168ea659a',

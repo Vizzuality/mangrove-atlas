@@ -177,9 +177,9 @@ export function useSource(): SourceProps {
     maxzoom: 12,
   };
 }
-export function useLayer(): LayerProps {
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
   return {
-    id: 'aboveground_biomass-layer',
+    id,
     type: 'raster',
   };
 }

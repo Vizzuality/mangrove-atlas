@@ -4,9 +4,9 @@ import type { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const MangrovesLayer = ({ beforeId }: LayerProps) => {
+const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
-  const LAYERS = useLayer();
+  const LAYERS = useLayer({ id });
 
   if (!SOURCE || !LAYERS) return null;
   return (

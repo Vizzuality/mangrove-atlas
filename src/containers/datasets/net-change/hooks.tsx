@@ -211,7 +211,7 @@ export function useMangroveNetChange(
   }, [data, query, startYear, endYear, location, selectedUnit]);
 }
 
-export function useSources(years): SourceProps[] {
+export function useSources(years: number[]): SourceProps[] {
   return years.map((year) => ({
     id: `net-change-${year}`,
     type: 'raster',
@@ -223,9 +223,9 @@ export function useSources(years): SourceProps[] {
     maxZoom: 12,
   }));
 }
-export function useLayer(): LayerProps {
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
   return {
-    id: 'net-change-layer',
+    id,
     type: 'raster',
   };
 }

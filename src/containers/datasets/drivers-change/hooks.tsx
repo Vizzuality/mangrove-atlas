@@ -111,7 +111,7 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(): LayerProps[] {
+export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const PRIMARY_DRIVERS = [
     { id: 'Erosion', color: '#CC61B0' },
     { id: 'Episodic Disturbances', color: '#5D69B1' },
@@ -126,7 +126,7 @@ export function useLayers(): LayerProps[] {
 
   return [
     {
-      id: 'mangrove_drivers_change',
+      id,
       type: 'fill',
       source: 'main_loss_drivers',
       'source-layer': 'main_loss_drivers',
@@ -136,7 +136,7 @@ export function useLayers(): LayerProps[] {
       },
     },
     {
-      id: 'mangrove_drivers_change-line',
+      id: `${id}-line`,
       type: 'line',
       source: 'main_loss_drivers',
       'source-layer': 'main_loss_drivers',

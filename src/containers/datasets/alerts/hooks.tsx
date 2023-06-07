@@ -444,19 +444,22 @@ export function useSources(): SourceProps[] {
       data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
         startDate?.value || ''
       }&end_date=${endDate?.value || ''}${
-        location_id && location_id !== 'worldwide' ? '&location_id={{location_id}}' : ''
+        location_id && location_id !== 'worldwide' ? `&location_id=${location_id}` : ''
       }`,
     },
   ];
 }
 
-export function useLayers(): { 'alerts-heatmap': LayerProps[]; 'monitored-alerts': LayerProps[] } {
+export function useLayers({ id }: { id: LayerProps['id'] }): {
+  'alerts-heatmap': LayerProps[];
+  'monitored-alerts': LayerProps[];
+} {
   return {
     'alerts-heatmap': [
       {
-        id: 'alerts-style-heat',
+        id,
         type: 'heatmap',
-        source: 'alerts',
+        source: 'alerts-heatmap',
         maxzoom: 12,
         paint: {
           // Increase the heatmap weight based on frequency and property magnitude
@@ -493,7 +496,7 @@ export function useLayers(): { 'alerts-heatmap': LayerProps[]; 'monitored-alerts
         },
       },
       {
-        id: 'alerts-style-point',
+        id: `${id}-points`,
         type: 'circle',
         source: 'alerts',
         minzoom: 0,
@@ -528,7 +531,7 @@ export function useLayers(): { 'alerts-heatmap': LayerProps[]; 'monitored-alerts
     ],
     'monitored-alerts': [
       {
-        id: 'monitored-alerts',
+        id: `${id}-line`,
         type: 'line',
         source: 'monitored-alerts',
         'source-layer': 'alert_region_tiles',
@@ -536,17 +539,6 @@ export function useLayers(): { 'alerts-heatmap': LayerProps[]; 'monitored-alerts
         paint: {
           'line-color': '#00857F',
           'line-width': 1,
-        },
-      },
-      {
-        id: 'monitored-alerts',
-        type: 'fill',
-        source: 'monitored-alerts',
-        'source-layer': 'alert_region_tiles',
-        minzoom: 0,
-        paint: {
-          'fill-color': '#00857F',
-          'fill-outline-color': '#00857F',
         },
       },
     ],

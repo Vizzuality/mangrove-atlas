@@ -119,10 +119,10 @@ export function useSource(): SourceProps {
     cluster: true,
   };
 }
-export function useLayer(): LayerProps[] {
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
   return [
     {
-      id: 'restoration-sites-clusters',
+      id: `${id}-clusters`,
       type: 'circle',
       source: 'restoration-sites',
       filter: ['has', 'point_count'],
@@ -135,7 +135,7 @@ export function useLayer(): LayerProps[] {
     },
 
     {
-      id: 'restoration-sites',
+      id,
       type: 'circle',
       source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
@@ -147,7 +147,7 @@ export function useLayer(): LayerProps[] {
       },
     },
     {
-      id: 'restoration-sites-cluster-count',
+      id: `${id}-cluster-count`,
       type: 'symbol',
       source: 'restoration-sites',
       filter: ['has', 'point_count'],

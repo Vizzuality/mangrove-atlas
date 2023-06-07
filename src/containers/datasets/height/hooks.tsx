@@ -232,9 +232,9 @@ export function useSource(years: number[]): SourceProps {
     maxzoom: 12,
   };
 }
-export function useLayer(): LayerProps {
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
   return {
-    id: 'mangrove_canopy_height-v3-layer',
+    id,
     type: 'raster',
   };
 }
