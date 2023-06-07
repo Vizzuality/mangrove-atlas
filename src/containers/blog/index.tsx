@@ -25,7 +25,7 @@ export const Blog = ({ setBlogBanner }: { setBlogBanner: (blogBanner: boolean) =
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="absolute top-72 left-20 z-20 h-12 w-[540px] rounded-2xl bg-brand-800">
+        <div className="relative z-20 my-2 h-12 w-[540px] rounded-2xl bg-brand-800">
           <div className="flex h-full items-center justify-between px-4">
             <div className="flex items-center space-x-4">
               <Icon
@@ -52,7 +52,7 @@ export const Blog = ({ setBlogBanner }: { setBlogBanner: (blogBanner: boolean) =
           <div className="no-scrollbar overflow-y-auto pt-10">
             <h3 className="pb-6 text-3xl font-light">News</h3>
             <div className="flex flex-col space-y-4">
-              {data.map((post) => (
+              {data?.map((post) => (
                 <button
                   key={post.id}
                   className="flex h-fit w-full rounded-[20px] border border-slate-100 p-1 transition duration-300 hover:border-slate-400"

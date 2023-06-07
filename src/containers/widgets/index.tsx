@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 
 import WidgetsLayout from 'layouts/widgets';
 
+import Blog from 'containers/blog';
 import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
@@ -16,6 +17,8 @@ import { useWidgets } from './hooks';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
+  const [blogBanner, setBlogBanner] = useState(true);
+
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
@@ -34,7 +37,7 @@ const WidgetsContainer: React.FC = () => {
       {widgets.length > 1 && (
         <button
           className={cn({
-            'mb-20 ml-[3%] w-48 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+            'mb-10 ml-[3%] w-48 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
               true,
             'border-white bg-white text-brand-800': widgetsCollapsedChecker,
           })}
@@ -43,6 +46,8 @@ const WidgetsContainer: React.FC = () => {
           {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
         </button>
       )}
+      {blogBanner && <Blog setBlogBanner={setBlogBanner} />}
+
       {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];
         return (

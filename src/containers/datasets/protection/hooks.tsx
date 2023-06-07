@@ -22,11 +22,11 @@ import CustomTooltip from './tooltip';
 import type { DataResponse } from './types';
 
 const COLORS = {
-  '0% - 20%': '#CF597E',
-  '20% - 40%': '#EEB479',
-  '40% - 60%': '#E9E29C',
-  '60% - 80%': '#9CCB86',
-  '80% - 100%': '#009392',
+  '0% - 20%': 'rgba(207, 89, 126, 0.7)',
+  '20% - 40%': 'rgba(238, 180, 121, 0.7)',
+  '40% - 60%': 'rgba(233, 226, 156, 0.7)',
+  '60% - 80%': 'rgba(156, 203, 134, 0.7)',
+  '80% - 100%': 'rgba(0, 147, 146, 0.7)',
 };
 
 const getColor = (percentage) => {
@@ -246,51 +246,3 @@ export function useLayers(): LayerProps[] {
     },
   ];
 }
-
-//   {
-//     id: 'selected-wdpa-polygons',
-//     type: 'fill',
-//     source: 'composite',
-//     'source-layer': 'wdpaclientjuly2022',
-//     layout: {},
-//     paint: {
-//       'fill-color': '#286ce2',
-//       'fill-outline-color': 'hsla(0, 0%, 0%, 0)',
-//       'fill-opacity': 0.1,
-//     },
-//   },
-//   {
-//     id: 'selected-wdpa-polygons-border',
-//     type: 'line',
-//     source: 'composite',
-//     'source-layer': 'wdpaclientjuly2022',
-//     layout: {},
-//     paint: {
-//       'line-color': '#286ce2',
-//       'line-opacity': 0.3,
-//     },
-//   },
-//   {
-//     id: 'selected-wdpa-polygons-label',
-//     type: 'symbol',
-//     metadata: {
-//       'mapbox:group': '1f4439315750c8010c95dfe168ea659a',
-//     },
-//     source: 'composite',
-//     'source-layer': 'wdpaclientjuly2022',
-//     layout: {
-//       'text-field': ['to-string', ['get', 'NAME']],
-//       'text-size': 10,
-//       'text-letter-spacing': 0.1,
-//       'text-line-height': 1,
-//       'text-max-width': 5,
-//       'symbol-placement': 'line',
-//     },
-//     paint: {
-//       'text-color': 'hsl(218, 76%, 61%)',
-//       'text-halo-color': 'hsla(0, 0%, 1%, 0.45)',
-//       'text-halo-width': 0.5,
-//       'text-halo-blur': 0,
-//       'text-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0, 7, 1],
-//     },
-//   },
