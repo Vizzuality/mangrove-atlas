@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
-import { start } from 'repl';
 
 import sortBy from 'lodash-es/sortBy';
 
@@ -10,7 +9,6 @@ import { useRouter } from 'next/router';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { AxisType, ViewBox } from 'recharts/types/util/types';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 

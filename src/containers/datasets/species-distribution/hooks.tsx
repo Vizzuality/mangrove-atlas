@@ -39,6 +39,16 @@ export function useMangroveSpecies(
       ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
+  const fetchMangroveSpeciesWorlwide = () =>
+    API.request({
+      method: 'GET',
+      url: '/widgets/biodiversity',
+      params: {
+        ...params,
+      },
+      ...queryOptions,
+    }).then((response: AxiosResponse<DataResponse>) => response.data);
+
   const query = useQuery(['biodiversity', params, location_id], fetchMangroveSpecies, {
     placeholderData: {
       metadata: null,
@@ -48,11 +58,27 @@ export function useMangroveSpecies(
     },
     ...queryOptions,
   });
+  const worldwideQuery = useQuery(
+    ['biodiversity-worlwdide', params],
+    fetchMangroveSpeciesWorlwide,
+    {
+      placeholderData: {
+        metadata: null,
+        data: {
+          total: null,
+        },
+      },
+      ...queryOptions,
+    }
+  );
+
   const { data } = query;
+  const { data: worldwideData } = worldwideQuery;
 
   return useMemo(() => {
     const total = data.data.total;
-    const legend = [1, Math.ceil(total / 2), total];
+    const worldwideTotal = worldwideData.data.total;
+    const legend = [1, Math.ceil(worldwideTotal / 2), worldwideTotal];
     return {
       location,
       total: total,
