@@ -8,10 +8,10 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(): LayerProps[] {
+export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   return [
     {
-      id: 'selected-eez-land-v2-201410-line',
+      id: `${id}-line`,
       type: 'line',
       source: 'country-boundaries',
       'source-layer': 'gadm_eez_location_v3',
@@ -20,7 +20,7 @@ export function useLayers(): LayerProps[] {
       },
     },
     {
-      id: 'selected-eez-land-v2-201410',
+      id,
       type: 'fill',
       source: 'country-boundaries',
       'source-layer': 'gadm_eez_location_v3',

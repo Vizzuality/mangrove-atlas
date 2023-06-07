@@ -96,11 +96,12 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(): LayerProps[] {
+export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const maxValue = 51;
+
   return [
     {
-      id: 'Species_richness',
+      id,
       'source-layer': 'Species_richness',
       // filter: ['==', 'sp_count', '<0'],
       type: 'fill',
@@ -159,7 +160,7 @@ export function useLayers(): LayerProps[] {
       },
     },
     {
-      id: 'Species_location-layer-border',
+      id: `${id}-border`,
       'source-layer': 'Species_richness',
       type: 'line',
       paint: {

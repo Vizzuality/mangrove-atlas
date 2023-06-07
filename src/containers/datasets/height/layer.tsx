@@ -5,14 +5,14 @@ import type { LayerProps } from 'types/layers';
 import { years } from './constants';
 import { useLayer, useSource } from './hooks';
 
-const MangrovesLayer = ({ beforeId }: LayerProps) => {
+const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource(years);
-  const LAYER = useLayer();
+  const LAYER = useLayer({ id });
 
   if (!SOURCE || !LAYER) return null;
   return (
     <Source {...SOURCE}>
-      <Layer {...LAYER} beforeId={beforeId} />
+      <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
     </Source>
   );
 };

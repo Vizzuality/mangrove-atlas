@@ -212,10 +212,10 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(year: number): LayerProps[] {
+export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }): LayerProps[] {
   return [
     {
-      id: `habitat_extent_${year}`,
+      id,
       type: 'fill',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,
@@ -228,7 +228,7 @@ export function useLayers(year: number): LayerProps[] {
       },
     },
     {
-      id: `habitat_extent_${year}_line`,
+      id: `${id}_line`,
       type: 'line',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,

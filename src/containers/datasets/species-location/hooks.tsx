@@ -57,7 +57,7 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayer(): LayerProps[] {
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const data = useRecoilValue(SpeciesLocationState);
   const locationsIds = data?.location_ids;
   const { data: locations } = useLocations();
@@ -70,7 +70,7 @@ export function useLayer(): LayerProps[] {
 
   return [
     {
-      id: 'Species_location-layer-border',
+      id: `${id}-border`,
       'source-layer': 'Species_richness',
       type: 'line',
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],
@@ -81,7 +81,7 @@ export function useLayer(): LayerProps[] {
       },
     },
     {
-      id: 'Species_location-layer',
+      id,
       'source-layer': 'Species_richness',
       type: 'fill',
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],

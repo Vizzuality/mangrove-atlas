@@ -7,9 +7,9 @@ import { LayerProps } from 'types/layers';
 import { years } from './constants';
 import { useLayer, useSources } from './hooks';
 
-export const MangrovesLayer = ({ beforeId }: LayerProps) => {
+export const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCES = useSources(years);
-  const LAYER = useLayer();
+  const LAYER = useLayer({ id });
 
   if (!SOURCES || !LAYER) return null;
 
@@ -17,7 +17,7 @@ export const MangrovesLayer = ({ beforeId }: LayerProps) => {
     <>
       {SOURCES.map((SOURCE) => (
         <Source key={SOURCE.id} {...SOURCE}>
-          <Layer {...LAYER} beforeId={beforeId} />
+          <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
         </Source>
       ))}
     </>

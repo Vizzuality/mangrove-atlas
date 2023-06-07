@@ -203,10 +203,10 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers(): LayerProps[] {
+export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   return [
     {
-      id: 'protection-layer',
+      id,
       source: 'protected-areas',
       'source-layer': 'protected_area_pct',
       type: 'fill',
