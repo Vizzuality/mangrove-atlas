@@ -12,10 +12,12 @@ import { WidgetSlugType } from 'types/widget';
 
 import { getWidgetActive } from './selector';
 
+type ChildrenType = ReactElement<any> & { type?: () => null };
+
 type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
-  children: ReactElement | null;
+  children: ChildrenType | null;
   className?: string;
 };
 

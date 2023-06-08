@@ -130,6 +130,7 @@ export function useMangroveInternationalStatus(
       isLoading,
       isFetched,
       isPlaceholderData,
+      noData,
     };
   }, [data]);
 }
