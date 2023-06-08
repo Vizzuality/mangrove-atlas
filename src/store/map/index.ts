@@ -30,7 +30,7 @@ export const locationBoundsAtom = atom<[number, number, number, number]>({
   default: null,
 });
 
-export const interactiveIdsAtom = atom<string[]>({
+export const interactiveLayerIdsAtom = atom<string[]>({
   key: 'interactiveIds',
   default: [],
 });

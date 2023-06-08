@@ -8,7 +8,7 @@ import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
-import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
+import { basemapAtom, URLboundsAtom, locationBoundsAtom, interactiveLayerIdsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -54,10 +54,9 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const interactiveLayerIds = ['mangrove_restoration-layer'];
-
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
+  const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);

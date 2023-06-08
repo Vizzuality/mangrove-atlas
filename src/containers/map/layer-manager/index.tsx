@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { interactiveIdsAtom } from 'store/map';
+import { interactiveLayerIdsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -18,7 +18,7 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
-  const [interactiveIds, setInteractiveIds] = useRecoilState(interactiveIdsAtom);
+  const [interactiveLayerIds, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(
     () => [
       ...layers
@@ -29,14 +29,15 @@ const LayerManagerContainer = () => {
     ],
     [layers]
   );
-  const handleAdd = (styleIds) => {
-    const updatedIds = [...interactiveIds, styleIds];
-    setInteractiveIds(updatedIds);
+
+  const handleAdd = ([styleIds]) => {
+    const updatedIds = [...interactiveLayerIds, styleIds];
+    setInteractiveLayerIds(updatedIds);
   };
 
-  const handleRemove = (styleIds) => {
-    const updatedIds = interactiveIds.filter((id) => id === styleIds);
-    setInteractiveIds(updatedIds);
+  const handleRemove = ([styleIds]) => {
+    const updatedIds = interactiveLayerIds.filter((id) => id === styleIds);
+    setInteractiveLayerIds(updatedIds);
   };
 
   return (
