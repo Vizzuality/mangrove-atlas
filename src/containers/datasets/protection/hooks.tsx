@@ -6,11 +6,8 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
-import { widgetYearAtom } from 'store/widgets';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { PolarViewBox } from 'recharts/types/util/types';
-import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 
@@ -62,7 +59,6 @@ export function useMangroveProtectedAreas(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
 ) {
-  const currentYear = useRecoilValue(widgetYearAtom);
   const units = ['ha', 'km²'];
 
   const {
@@ -116,7 +112,7 @@ export function useMangroveProtectedAreas(
         label: key,
         color: COLORS[key],
       })),
-    [location, unit, currentYear]
+    []
   );
   return useQuery(['protected-areas', restParams, location_id], fetchMangroveProtectedAreas, {
     select: (data) => ({
@@ -124,8 +120,6 @@ export function useMangroveProtectedAreas(
       ...data?.metadata,
       units,
       location,
-      protectedPercentage: numberFormat((data.protected_area * 100) / data.total_area),
-      nonProtectedPercentage: numberFormat(100 - (data.protected_area * 100) / data.total_area),
       protectedArea:
         unit === 'ha'
           ? numberFormat(data?.data[0]?.protected_area)
@@ -212,33 +206,29 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       type: 'fill',
       paint: {
         'fill-color': [
-          'interpolate',
-          ['linear'],
+          'step',
           ['get', 'pct_protected'],
-          0,
-          '#CF597E',
+          '#cf597e',
+          0.2,
+          '#eeb479',
           0.4,
-          '#EEB479',
+          '#e9e29c',
           0.6,
-          '#E9E29C',
+          '#9ccb86',
           0.8,
-          '#9CCB86',
-          1,
           '#009392',
         ],
         'fill-outline-color': [
-          'interpolate',
-          ['linear'],
+          'step',
           ['get', 'pct_protected'],
-          0,
-          '#CF597E',
+          '#cf597e',
+          0.2,
+          '#eeb479',
           0.4,
-          '#EEB479',
+          '#e9e29c',
           0.6,
-          '#E9E29C',
+          '#9ccb86',
           0.8,
-          '#9CCB86',
-          1,
           '#009392',
         ],
         'fill-opacity': 0.7,
