@@ -155,16 +155,16 @@ export function useMangroveNetChange(
     };
 
     const change = DATA[DATA.length - 1]?.['Net change'];
+
     const chartConfig = {
       type: 'composed',
       data: DATA,
       margin: { top: 40, right: 20, bottom: 20, left: 0 },
+      referenceLines: [{ y: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }],
       xAxis: {
+        type: 'category',
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
-        domain: [startYear, endYear],
-        tickCount: 8,
-        label: { value: unit, position: 'bottom', offset: 35 },
-        interval: 'preserveStartEnd',
+        interval: 'equidistantPreserveStart',
       },
       yAxis: {
         tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },

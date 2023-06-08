@@ -77,7 +77,7 @@ const SpeciesLocation = () => {
             <div className="mb-8 flex items-center space-x-2">
               <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
-                Countries where the specie is located
+                Countries where the species is located
               </span>
             </div>
           )}
