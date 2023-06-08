@@ -10,6 +10,8 @@ import { Layer } from '@deck.gl/core/typed';
 export type LayerProps = {
   id?: string;
   beforeId?: string;
+  onAdd?: (ids: string[]) => void;
+  onRemove?: (ids: string[]) => void;
   zIndex?: number;
   // settings?: Partial<S>;
 };

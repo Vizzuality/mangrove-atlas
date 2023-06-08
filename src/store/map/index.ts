@@ -29,3 +29,8 @@ export const locationBoundsAtom = atom<[number, number, number, number]>({
   key: 'locationBounds',
   default: null,
 });
+
+export const interactiveIdsAtom = atom<string[]>({
+  key: 'interactiveIds',
+  default: [],
+});
