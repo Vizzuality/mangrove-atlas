@@ -15,12 +15,21 @@ else
 HAS_CONDA=True
 endif
 
+ifdef (,$(shell docker-compose --version))
+DOCKER_CMD=docker-compose
+else
+DOCKER_CMD=docker compose
+endif
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 ## Initiate Docker compose and build services:
+up-all:
+	$(DOCKER_CMD) build && $(DOCKER_CMD) up
+
 up:
-	docker-compose build && docker-compose up
+	$(DOCKER_CMD) up module_data-notebooks --build
 
 ## init the github hooks set up https://pre-commit.com/ and test them.
 init-prehooks: init-git
