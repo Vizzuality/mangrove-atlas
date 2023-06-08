@@ -60,7 +60,7 @@ const RestorationSitesWidget = () => {
     setMapFilters({ ...filters, [key]: updatedFilters });
   };
 
-  if (!data.data?.length) return null;
+  if (!filtersData) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>

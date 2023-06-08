@@ -15,7 +15,6 @@ export type Data = {
   isLoading: boolean;
   isFetched: boolean;
   isPlaceholderData: boolean;
-  noData: boolean;
 };
 
 type Metadata = {
@@ -55,4 +54,5 @@ export type InternationalStatusTypes = {
   isLoading: boolean;
   isFetched: boolean;
   isPlaceholderData: boolean;
+  noData: boolean;
 };
