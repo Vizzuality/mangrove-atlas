@@ -17,7 +17,6 @@ const BiomassWidget = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
   const queryClient = useQueryClient();
-
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);
   }, []);
@@ -41,7 +40,7 @@ const BiomassWidget = () => {
 
   const { legend } = config;
 
-  if (noData) return null;
+  if (noData && !isAnalysisRunning) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">

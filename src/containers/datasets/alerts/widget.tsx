@@ -1,8 +1,10 @@
 import cn from 'lib/classnames';
 
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom } from 'store/drawing-tool';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Chart from 'components/chart';
 import Icon from 'components/icon';
@@ -24,7 +26,8 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-
+  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
   const {
     isLoading,
     isFetched,
@@ -39,9 +42,13 @@ const AlertsWidget = () => {
     fullData,
     defaultStartDate,
     defaultEndDate,
-  } = useAlerts(startDate, endDate);
+  } = useAlerts(startDate, endDate, null, {
+    ...(isAnalysisRunning && {
+      geometry: customGeojson || uploadedGeojson,
+    }),
+  });
 
-  if (!fullData.length) return null;
+  if (!fullData.length && !isAnalysisRunning) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
