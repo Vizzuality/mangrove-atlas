@@ -6,6 +6,7 @@ import sortBy from 'lodash-es/sortBy';
 
 import { useRouter } from 'next/router';
 
+import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
@@ -17,7 +18,7 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import API_cloud_functions from 'services/cloud-functions';
 
 import Tooltip from './tooltip';
-import type { UseParamsOptions } from './types';
+import type { UseParamsOptions, DataParams, DataResponse } from './types';
 
 // widget data
 const months = [
@@ -116,18 +117,13 @@ const TickSmall = ({ x, y, payload }) => {
 };
 
 const getTotal = (data) =>
-  data.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
-
-type DataResponse = {
-  data: {
-    date: { label: string; value: number };
-  };
-};
+  data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
 
 export function useAlerts<T>(
   startDate: { label: string; value: string },
   endDate: { label: string; value: string },
   params?: UseParamsOptions,
+  dataParams?: DataParams,
   queryOptions?: UseQueryResult<DataResponse[], T>
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
@@ -140,15 +136,23 @@ export function useAlerts<T>(
   const {
     data: { location_id },
   } = useLocation(locationType, id);
+  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
   const fetchAlerts = () =>
-    API_cloud_functions.request({
-      method: 'GET',
-      url: '/fetch-alerts',
-      params: {
-        location_id,
-      },
-    }).then((response) => response.data);
+    isAnalysisRunning
+      ? API_cloud_functions.request({
+          method: 'POST',
+          url: '/fetch-alerts',
+          data: dataParams,
+        }).then((response) => response.data)
+      : API_cloud_functions.request({
+          method: 'GET',
+          url: '/fetch-alerts',
+          params: {
+            location_id,
+            ...params,
+          },
+        }).then((response) => response.data);
 
   const query = useQuery(['alerts', params, location_id], fetchAlerts, {
     placeholderData: [],
@@ -168,7 +172,7 @@ export function useAlerts<T>(
 
   if (selectedEndDate) setEndDate(selectedEndDate);
   if (selectedStartDate) setStartDate(selectedStartDate);
-  const dataFiltered = data.filter(
+  const dataFiltered = data?.filter(
     (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
   );
 

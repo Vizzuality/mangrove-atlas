@@ -14,7 +14,7 @@ import API from 'services/api';
 import type { Data, DataResponse } from './types';
 
 const getLossData = (data, unit) => {
-  const lossData = data.filter(
+  const lossData = data?.filter(
     ({ indicator }) => indicator !== 'lost_area' && indicator !== 'mangrove_area'
   );
 

@@ -39,7 +39,7 @@ const BlueCarbonWidget = () => {
 
   const { location, agb, toc, soc, config, noData } = data;
 
-  if (noData) return null;
+  if (noData && !isAnalysisRunning) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>

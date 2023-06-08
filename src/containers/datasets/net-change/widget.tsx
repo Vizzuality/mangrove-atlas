@@ -29,6 +29,7 @@ const NetChangeWidget = () => {
   const [startYear, setStartYear] = useRecoilState(netChangeStartYear);
   const [endYear, setEndYear] = useRecoilState(netChangeEndYear);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+
   const [isCanceled, setIsCanceled] = useState(false);
 
   const handleQueryCancellation = useCallback(() => {
@@ -71,7 +72,7 @@ const NetChangeWidget = () => {
     await refetch();
   }, [refetch]);
 
-  if (noData) return null;
+  if (noData && !isAnalysisRunning) return null;
   return (
     <div>
       <div className="flex flex-col items-center space-y-4">
