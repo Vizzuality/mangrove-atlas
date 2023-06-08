@@ -189,8 +189,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   };
 
   const onClickHandler = (e) => {
-    const restorationData = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration-layer'
+    const restorationData = e?.features.find(({ layer }) =>
+      interactiveLayerIds.includes(layer.id)
     )?.properties;
 
     if (restorationData) {
