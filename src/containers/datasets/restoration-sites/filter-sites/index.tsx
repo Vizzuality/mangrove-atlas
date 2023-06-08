@@ -42,7 +42,6 @@ const FilterSites = ({
 
   const handleFiltersApplication = () => {
     onChangeModalVisibility(!open);
-    console.log(filters);
     setMapFilters(filters);
   };
 

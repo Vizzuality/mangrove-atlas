@@ -126,7 +126,7 @@ const Chart = ({ config }) => {
               type="number"
               dataKey={xKey || ''}
               tickLine={false}
-              tickCount={xAxis.tickCount || 5}
+              tickCount={5}
               tick={{
                 dy: 8,
                 fontSize: '12px',
