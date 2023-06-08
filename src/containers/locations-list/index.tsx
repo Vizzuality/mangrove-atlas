@@ -80,7 +80,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           <div style={style} ref={registerChild}>
             <button
               type="button"
-              className="flex h-full w-full flex-1 items-end justify-between pb-2"
+              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl  hover:bg-brand-800 hover:bg-opacity-10"
               onClick={() => {
                 handleLocation(locationsToDisplay[index]);
               }}
