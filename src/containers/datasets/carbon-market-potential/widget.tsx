@@ -35,6 +35,8 @@ const CarbonMarketPotentialWidget = () => {
 
   if (noData) return null;
 
+  const { legend } = config;
+
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <Loading
@@ -127,7 +129,7 @@ const CarbonMarketPotentialWidget = () => {
               </TooltipPortal>
             </Tooltip>
           </p>
-          <CarbonMarketPotentialChart config={config} />
+          <CarbonMarketPotentialChart legend={legend} config={config} />
         </div>
       )}
     </div>

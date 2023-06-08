@@ -99,7 +99,7 @@ export function useCarbonMarketPotential(
       const labelDisplayed = `${CATEGORY_DICTIONARY[d.category]} ${hasLabel ? d.label : ''}`;
       return {
         category: labelDisplayed,
-        label: hasLabel ? d.label : null,
+        label: d.label,
         value: d.value,
         color: COLORS[d.category],
         description: d.description,
@@ -121,57 +121,58 @@ export function useCarbonMarketPotential(
   const CONFIG = {
     type: 'pie',
     data: chartData,
+    dataKey: 'value',
     chartBase: {
       pies: {
         y: {
           value: 'carbon-market-potential',
           dataKey: 'percentage',
           labelLine: false,
-          label: (props) => {
-            const {
-              cx,
-              cy,
-              midAngle,
-              endAngle,
-              outerRadius,
-              category,
-              percentage,
-              index,
-            }: ChartLabelProps = props;
-            const RADIAN = Math.PI / 180;
-            const sin = Math.sin(-RADIAN * midAngle);
-            const cos = Math.cos(-RADIAN * midAngle);
-            const mx = cx + outerRadius * cos;
-            const my = cy + outerRadius * sin;
-            const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
-            const ey = my;
-            const heightMargin = percentage < 5 ? 16 : 6;
-            const top = endAngle < cy ? 6 : 0;
-            return (
-              <g>
-                <foreignObject
-                  x={ex + (cos >= 0 ? 1 : -6)}
-                  y={ey - heightMargin * index - top}
-                  height="30px"
-                  width="125px"
-                >
-                  <div
-                    style={{
-                      marginTop: 5,
-                      marginBottom: 5,
-                      display: 'flex',
-                      color: '#A5A5A5',
-                      lineHeight: '10px',
-                      width: '100%',
-                      fontSize: '11px',
-                    }}
-                  >
-                    {category}
-                  </div>
-                </foreignObject>
-              </g>
-            );
-          },
+          // label: (props) => {
+          //   const {
+          //     cx,
+          //     cy,
+          //     midAngle,
+          //     endAngle,
+          //     outerRadius,
+          //     category,
+          //     percentage,
+          //     index,
+          //   }: ChartLabelProps = props;
+          //   const RADIAN = Math.PI / 180;
+          //   const sin = Math.sin(-RADIAN * midAngle);
+          //   const cos = Math.cos(-RADIAN * midAngle);
+          //   const mx = cx + outerRadius * cos;
+          //   const my = cy + outerRadius * sin;
+          //   const ex = mx + (cos >= 0 ? 1 : -1) * 12 - (cos >= 0 ? 0 : 130);
+          //   const ey = my;
+          //   const heightMargin = percentage < 5 ? 16 : 6;
+          //   const top = endAngle < cy ? 6 : 0;
+          //   return (
+          //     <g>
+          //       <foreignObject
+          //         x={ex + (cos >= 0 ? 1 : -6)}
+          //         y={ey - heightMargin * index - top}
+          //         height="30px"
+          //         width="125px"
+          //       >
+          //         <div
+          //           style={{
+          //             marginTop: 5,
+          //             marginBottom: 5,
+          //             display: 'flex',
+          //             color: '#A5A5A5',
+          //             lineHeight: '10px',
+          //             width: '100%',
+          //             fontSize: '11px',
+          //           }}
+          //         >
+          //           {category}
+          //         </div>
+          //       </foreignObject>
+          //     </g>
+          //   );
+          // },
         },
       },
     },
@@ -182,7 +183,13 @@ export function useCarbonMarketPotential(
         return <Tooltip {...properties} settings={payload?.[0]?.payload?.settings} />;
       },
     },
+    legend: {
+      title: '',
+      items: chartData,
+    },
   };
+
+  console.log({ CONFIG });
 
   const DATA = useMemo(
     () =>

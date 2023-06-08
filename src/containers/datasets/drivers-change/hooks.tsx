@@ -93,6 +93,8 @@ export function useMangroveDriversChange(
       },
     };
 
+    console.log({ config });
+
     return {
       noData,
       config,
