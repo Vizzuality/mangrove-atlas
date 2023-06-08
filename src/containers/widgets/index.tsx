@@ -23,7 +23,6 @@ const WidgetsContainer: React.FC = () => {
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  console.log(widgetsCollapsed);
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
 
   const handleWidgetsCollapsed = useCallback(() => {

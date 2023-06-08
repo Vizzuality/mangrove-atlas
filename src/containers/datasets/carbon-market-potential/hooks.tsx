@@ -189,8 +189,6 @@ export function useCarbonMarketPotential(
     },
   };
 
-  console.log({ CONFIG });
-
   const DATA = useMemo(
     () =>
       ({
