@@ -31,6 +31,7 @@ const Popup = ({
       longitude={longitude || null}
       latitude={latitude || null}
       onClose={onClose}
+      closeOnClick={false}
       className="c-restoration-popup"
     >
       {children}

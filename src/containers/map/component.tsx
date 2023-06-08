@@ -54,7 +54,7 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const interactiveLayerIds = ['mangrove_restoration'];
+const interactiveLayerIds = ['mangrove_restoration-layer'];
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
@@ -180,7 +180,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const onClickHandler = (e) => {
     const restorationData = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration'
+      ({ layer }) => layer.id === 'mangrove_restoration-layer'
     )?.properties;
 
     if (restorationData) {
