@@ -177,6 +177,17 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
+  const removePopup = () => {
+    setRestorationPopUp({
+      popup: [],
+      popupInfo: null,
+      popUpPosition: {
+        x: null,
+        y: null,
+      },
+    });
+  };
+
   const onClickHandler = (e) => {
     const restorationData = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_restoration-layer'
@@ -193,17 +204,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         },
       });
     }
-  };
-
-  const removePopup = () => {
-    setRestorationPopUp({
-      popup: [],
-      popupInfo: null,
-      popUpPosition: {
-        x: null,
-        y: null,
-      },
-    });
+    if (!restorationData) {
+      removePopup();
+    }
   };
 
   return (
