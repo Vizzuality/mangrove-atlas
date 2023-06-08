@@ -147,7 +147,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   const handleUserDrawing = useCallback(
-    async (evt: Parameters<DrawControlProps['onCreate']>[0]) => {
+    (evt: Parameters<DrawControlProps['onCreate']>[0]) => {
       const customGeojson: GeoJSON.FeatureCollection = {
         type: 'FeatureCollection',
         features: evt.features,
@@ -170,7 +170,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       const queryParams = asPath.split('?')[1];
 
-      await push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+      push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
     [setDrawingToolState, setAnalysisState, asPath, push, setLocationBounds]
   );

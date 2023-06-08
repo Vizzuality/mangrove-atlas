@@ -17,7 +17,7 @@ export const DeleteDrawingButton = () => {
   const { replace, asPath } = useRouter();
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
-  const handleDeleteDrawing = useCallback(async () => {
+  const handleDeleteDrawing = useCallback(() => {
     setDrawingToolState((prevDrawingState) => ({
       ...prevDrawingState,
       enabled: false,
@@ -28,7 +28,7 @@ export const DeleteDrawingButton = () => {
 
     resetAnalysisState();
 
-    await replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+    replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   return (

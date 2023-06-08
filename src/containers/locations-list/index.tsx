@@ -41,7 +41,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const { asPath, replace } = useRouter();
 
   const handleLocation = useCallback(
-    async (location: Location) => {
+    (location: Location) => {
       const queryParams = asPath.split('?')[1];
 
       const locationType = location.location_type === 'worldwide' ? '/' : location.location_type;
@@ -54,7 +54,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
       const url = `/${locationType}/${locationId}?${queryParams}`;
 
-      await replace(url, null);
+      replace(url, null);
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
