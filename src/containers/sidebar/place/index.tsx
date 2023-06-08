@@ -46,11 +46,11 @@ const Place = () => {
     setIsOpen(false);
   }, []);
 
-  const handleWorldwideView = useCallback(async () => {
-    await replace(`/?${queryParams}`, null);
-
+  const handleWorldwideView = useCallback(() => {
     resetDrawingState();
     resetAnalysisState();
+
+    replace(`/?${queryParams}`, null);
 
     map.flyTo({
       center: [0, 20],
@@ -58,7 +58,7 @@ const Place = () => {
     });
   }, [replace, map, queryParams, resetAnalysisState, resetDrawingState]);
 
-  const handleDrawingToolView = useCallback(async () => {
+  const handleDrawingToolView = useCallback(() => {
     setDrawingToolState((drawingToolState) => ({
       ...drawingToolState,
       showWidget: true,
@@ -67,7 +67,7 @@ const Place = () => {
 
     resetAnalysisState();
 
-    await replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+    replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   const openAnalysisAlertModal = useCallback(() => {
@@ -82,7 +82,7 @@ const Place = () => {
     setSkipAnalysisAlert(!skipAnalysisAlert);
   }, [skipAnalysisAlert]);
 
-  const handleResetPage = useCallback(async () => {
+  const handleResetPage = useCallback(() => {
     if (skipAnalysisAlert) {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
@@ -90,7 +90,7 @@ const Place = () => {
     resetDrawingState();
     resetAnalysisState();
 
-    await replace(`/?${queryParams}`, null);
+    replace(`/?${queryParams}`, null);
 
     closeAnalysisAlertModal();
   }, [
