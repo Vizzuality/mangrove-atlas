@@ -45,7 +45,7 @@ const InternationalStatus = () => {
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
-        <div className="mb-10 h-full space-y-4">
+        <div className="h-full space-y-4">
           {pledge_type && (
             <div className="space-y-4">
               <h3 className="font-bold text-brand-800">
@@ -165,7 +165,7 @@ const InternationalStatus = () => {
             ) : (
               <p>
                 There is no information as to whether {location} has implemented the wetlands
-                supplement
+                supplement.
               </p>
             )}
           </div>
