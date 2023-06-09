@@ -102,7 +102,7 @@ const Category = () => {
               onMouseLeave={closeMenu}
               onEscapeKeyDown={closeMenu}
               onInteractOutside={closeMenu}
-              className="z-50 rounded-[26px] bg-white p-1.5 font-sans text-[19px] font-light text-black/85 shadow-md animate-in duration-300 focus:outline-none data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96"
+              className="z-50 min-w-[350px] rounded-[26px] bg-white p-1.5 font-sans text-2lg font-light text-black/85 shadow-md animate-in duration-300 focus:outline-none data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96"
               align="start"
               side="right"
               sideOffset={-44}
@@ -123,19 +123,21 @@ const Category = () => {
                     >
                       <div
                         className={cn({
-                          'h-10.5 flex w-11 items-center justify-center': true,
+                          'flex h-11 w-11 items-center justify-center': true,
                         })}
                       >
                         <Icon
                           icon={icon}
                           className={cn({
-                            'h-8 w-8 stroke-none': true,
+                            'h-9 w-9 stroke-none p-1': true,
                             'rounded-full bg-brand-800 fill-current text-white': category === id,
                             'fill-current text-brand-800': category !== id,
                           })}
                         />
                       </div>
-                      <p className="whitespace-nowrap">{label}</p>
+                      <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300 hover:font-semibold">
+                        {label}
+                      </p>
                     </button>
                   </li>
                 ))}
