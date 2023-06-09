@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -8,7 +8,7 @@ import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
-import { basemapAtom, URLboundsAtom, locationBoundsAtom } from 'store/map';
+import { basemapAtom, URLboundsAtom, locationBoundsAtom, interactiveLayerIdsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -17,6 +17,7 @@ import { isEmpty } from 'lodash-es';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
+import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -54,10 +55,10 @@ export const DEFAULT_PROPS = {
   maxZoom: 20,
 };
 
-const interactiveLayerIds = ['mangrove_restoration'];
-
 const MapContainer = ({ mapId }: { mapId: string }) => {
+  const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
+  const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
@@ -78,6 +79,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       y: null,
     },
   });
+
+  const handleClickOutside = () => {
+    removePopup();
+  };
+
+  useOnClickOutside(mapRef, handleClickOutside);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 
@@ -178,9 +185,20 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
+  const removePopup = () => {
+    setRestorationPopUp({
+      popup: [],
+      popupInfo: null,
+      popUpPosition: {
+        x: null,
+        y: null,
+      },
+    });
+  };
+
   const onClickHandler = (e) => {
-    const restorationData = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration'
+    const restorationData = e?.features.find(({ layer }) =>
+      interactiveLayerIds.includes(layer.id)
     )?.properties;
 
     if (restorationData) {
@@ -194,21 +212,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         },
       });
     }
-  };
-
-  const removePopup = () => {
-    setRestorationPopUp({
-      popup: [],
-      popupInfo: null,
-      popUpPosition: {
-        x: null,
-        y: null,
-      },
-    });
+    if (!restorationData) {
+      removePopup();
+    }
   };
 
   return (
-    <div className="absolute top-0 left-0 z-0 h-screen w-screen">
+    <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={mapRef}>
       <Map
         id={mapId}
         mapStyle={selectedBasemap}

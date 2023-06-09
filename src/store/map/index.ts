@@ -1,3 +1,5 @@
+import type { LayerProps } from 'react-map-gl';
+
 import { string, number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
@@ -28,4 +30,9 @@ export const URLboundsAtom = atom({
 export const locationBoundsAtom = atom<[number, number, number, number]>({
   key: 'locationBounds',
   default: null,
+});
+
+export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>({
+  key: 'interactiveIds',
+  default: [],
 });

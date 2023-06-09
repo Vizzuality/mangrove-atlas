@@ -1,11 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
+import { interactiveLayerIdsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
 
+import type { LayerProps } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
 const ProtectedAreasLayer = LAYERS['protected-areas'];
@@ -17,6 +19,7 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
+  const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(
     () => [
       ...layers
@@ -28,13 +31,37 @@ const LayerManagerContainer = () => {
     [layers]
   );
 
+  const handleAdd = useCallback(
+    (styleIds: LayerProps['id'][]) => {
+      setInteractiveLayerIds((prevInteractiveIds) => [...prevInteractiveIds, ...styleIds]);
+    },
+    [setInteractiveLayerIds]
+  );
+
+  const handleRemove = useCallback(
+    (styleIds: LayerProps['id'][]) => {
+      setInteractiveLayerIds((prevInteractiveIds) => [
+        ...prevInteractiveIds.filter((id) => !styleIds.includes(id)),
+      ]);
+    },
+    [setInteractiveLayerIds]
+  );
+
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
 
-        return <LayerComponent key={layer} id={`${layer}-layer`} beforeId={beforeId} />;
+        return (
+          <LayerComponent
+            key={layer}
+            id={`${layer}-layer`}
+            beforeId={beforeId}
+            onAdd={handleAdd}
+            onRemove={handleRemove}
+          />
+        );
       })}
 
       {/* Countries layer */}
