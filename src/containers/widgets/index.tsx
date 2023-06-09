@@ -55,7 +55,7 @@ const WidgetsContainer: React.FC = () => {
       {widgets.length > 1 && (
         <button
           className={cn({
-            'rounded-4xl mb-10 ml-[3%] w-48 border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
               true,
             'border-white bg-white text-brand-800': widgetsCollapsedChecker,
           })}

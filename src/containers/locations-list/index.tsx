@@ -100,10 +100,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   return (
     <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative px-4">
+      <div className="relative px-10">
         <input
           type="search"
-          className="w-full flex-1 border-none bg-transparent px-8 text-3xl text-black/85 caret-brand-800 opacity-50"
+          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:outline-none"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -111,7 +111,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         {searchValue && (
           <button
             type="button"
-            className="absolute top-1/2 right-0 flex -translate-y-1/2 items-center"
+            className="absolute top-1/2 right-14 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
             <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
