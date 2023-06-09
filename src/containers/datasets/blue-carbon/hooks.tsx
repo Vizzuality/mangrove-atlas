@@ -120,8 +120,7 @@ export function useMangroveBlueCarbon(
       value: d.value,
       color: COLORS[d.indicator],
       showValue: false,
-      valueFormatted: formatMillion(d.value),
-      tooltipLabelValue: 'Carbon density',
+      valueFormatted: numberFormat(d.value),
       tooltipLabelPercentage: 'Percentage',
       percentage: numberFormat((d.value * 100) / total),
     }));
@@ -176,7 +175,7 @@ export function useMangroveBlueCarbon(
                     dominantBaseline="central"
                   >
                     <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
-                      {formatMillion(toc)}
+                      {numberFormat(toc / 1000000)}
                     </tspan>
                   </text>
                   <text
