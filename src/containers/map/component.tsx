@@ -81,7 +81,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   });
 
   const handleClickOutside = () => {
-    console.log('handleClickOutside');
     removePopup();
   };
 
