@@ -100,7 +100,7 @@ export function useCarbonMarketPotential(
       return {
         category: labelDisplayed,
         label: d.label,
-        value: d.value,
+        value: `${d.value} ${unit}`,
         color: COLORS[d.category],
         description: d.description,
         percentage: d.percentage,
