@@ -18,7 +18,7 @@ const Info = ({ id }) => {
             <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="left-18 top-16 max-h-[90%] rounded-[20px]">
+        <DialogContent className="left-18 top-16 max-h-[90%] rounded-3xl">
           <Info />
           <DialogClose />
         </DialogContent>

@@ -73,6 +73,10 @@ module.exports = {
       opacity: {
         15: '0.15',
       },
+      rounded: {
+        '3xl': '1.25rem', // 20px
+        '4xl': '1.5rem', // 24px
+      },
       keyframes: {
         overlayShow: {
           from: { opacity: 0 },

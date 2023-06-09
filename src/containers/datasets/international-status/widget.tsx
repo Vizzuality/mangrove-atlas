@@ -75,7 +75,7 @@ const InternationalStatus = () => {
                       <TooltipContent
                         side="left"
                         align="center"
-                        className="border-opacity-65 shadow-[0 4px 12px 0 rgba(168,168,168,0.25)] max-w-lg rounded-[20px] border-2 border-brand-800 p-5"
+                        className="border-opacity-65 shadow-[0 4px 12px 0 rgba(168,168,168,0.25)] max-w-lg rounded-3xl border-2 border-brand-800 p-5"
                       >
                         <div className="flex items-center space-x-2">{ndc_blurb}</div>
                       </TooltipContent>

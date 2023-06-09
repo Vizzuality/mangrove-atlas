@@ -30,7 +30,7 @@ const PlacesMobile = () => {
           </button>
         </DialogTrigger>
         <DialogContent
-          className="top-[2%] h-[96%] w-11/12 rounded-[20px] px-6 pt-10 pb-0"
+          className="top-[2%] h-[96%] w-11/12 rounded-3xl px-6 pt-10 pb-0"
           onEscapeKeyDown={closeMenu}
           onInteractOutside={closeMenu}
         >

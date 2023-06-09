@@ -16,7 +16,7 @@ import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
 import SelectedFilters from './selected-filters';
 
-export const BUTTON_STYLES = 'rounded-[20px] py-1 px-4 text-sm font-semibold';
+export const BUTTON_STYLES = 'rounded-3xl py-1 px-4 text-sm font-semibold';
 
 const RestorationSitesWidget = () => {
   // filters component state to avoid refetch on every selection
@@ -105,7 +105,7 @@ const RestorationSitesWidget = () => {
                 </button>
               )}
             </div>
-            <DialogContent className="h-fit-content w-[580px] rounded-[20px] p-10">
+            <DialogContent className="h-fit-content w-[580px] rounded-3xl p-10">
               <FilterSites
                 open={open}
                 onChangeModalVisibility={setOpen}

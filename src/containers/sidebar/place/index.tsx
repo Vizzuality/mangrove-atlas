@@ -165,7 +165,7 @@ const Place = () => {
             </button>
           </DialogTrigger>
           <DialogContent
-            className="h-[90vh] w-[540px] rounded-[20px] px-0 pt-10 pb-0"
+            className="h-[90vh] w-[540px] rounded-3xl px-0 pt-10 pb-0"
             onEscapeKeyDown={closeMenu}
             onInteractOutside={closeMenu}
           >
@@ -192,7 +192,7 @@ const Place = () => {
       </div>
       <Dialog open={isAnalysisAlertOpen}>
         <DialogContent
-          className="space-y-5 rounded-[20px] p-10 md:left-auto"
+          className="space-y-5 rounded-3xl p-10 md:left-auto"
           onEscapeKeyDown={closeAnalysisAlertModal}
           onInteractOutside={closeAnalysisAlertModal}
         >

@@ -89,7 +89,7 @@ const SpeciesLocation = () => {
             <div className="w-full pt-8">
               <CommandInput
                 placeholder="Search species..."
-                className="w-full rounded-[20px] border-brand-400 text-sm placeholder:text-sm placeholder:text-black/85"
+                className="w-full rounded-3xl border-brand-400 text-sm placeholder:text-sm placeholder:text-black/85"
               />
             </div>
             <CommandList className="relative mt-2">
