@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
 
@@ -17,21 +18,29 @@ import { Media } from 'components/media-query';
 
 import { useWidgets } from './hooks';
 
+const LOCAL_STORAGE_KEY = 'mangroves_blog';
+
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
-  const [closedBlogBanner, setClosedBlogBanner] = useState<boolean>(false);
 
-  const closeBlogBanner = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    localStorage.setItem('blog', 'closed');
-    setClosedBlogBanner(true);
-  }, []);
+  const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
+  const [isBlogActive, setBlogActive] = useState(false);
+
+  const closeBlogBanner = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+
+      setBlogStorage(String(false));
+      setBlogActive(false);
+    },
+    [setBlogStorage]
+  );
 
   useEffect(() => {
-    if (localStorage.getItem('blog')) {
-      setClosedBlogBanner(true);
+    if (!blogStorage) {
+      setBlogActive(true);
     }
-  }, []);
+  }, [blogStorage, setBlogActive]);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
@@ -64,8 +73,9 @@ const WidgetsContainer: React.FC = () => {
           {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
         </button>
       )}
+
       <Media greaterThanOrEqual="md">
-        {!closedBlogBanner && <Blog closeBlogBanner={closeBlogBanner} />}
+        {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
       </Media>
 
       {widgets.map(({ slug, name }, ind) => {

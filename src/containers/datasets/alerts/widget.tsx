@@ -69,7 +69,7 @@ const AlertsWidget = () => {
                 <TooltipContent
                   side="bottom"
                   align="center"
-                  className="rounded-3xl] bg-white  text-black/85 shadow-soft"
+                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
                 >
                   <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
                     {startDateOptions?.map((date) => (
@@ -111,7 +111,7 @@ const AlertsWidget = () => {
                 <TooltipContent
                   side="bottom"
                   align="center"
-                  className="rounded-3xl] bg-white  text-black/85 shadow-soft"
+                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
                 >
                   <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
                     {endDateOptions?.map((date) => (
