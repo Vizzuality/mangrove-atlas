@@ -74,8 +74,7 @@ const HabitatExtent = () => {
     },
     [setYear]
   );
-
-  if (noData && !isAnalysisRunning) return null;
+  if (noData) return null;
 
   return (
     <>

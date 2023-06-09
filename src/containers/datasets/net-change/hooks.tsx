@@ -141,7 +141,8 @@ export function useMangroveNetChange(
 
   const { data } = query;
 
-  const noData = !data?.data?.length;
+  const noData =
+    !data?.data?.length || data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0;
 
   return useMemo(() => {
     const years = data.metadata?.year.sort();

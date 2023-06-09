@@ -38,9 +38,7 @@ const WidgetList = ({
       setPrintingMode(false);
       window.print();
     }
-  }, [printMode, setPrintingMode]);
-
-  return (
+  }, [printMode, setPrintingMode]);  return (
     <div
       key={category}
       className={cx(styles.widgets, {

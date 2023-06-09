@@ -90,8 +90,8 @@ export function useMangroveHabitatExtent(
   });
 
   const { data } = query;
-
-  const noData = !data?.data?.length;
+  const noData =
+    !data?.data?.length || data?.data?.reduce((acc, value) => acc + value.value, 0) === 0;
 
   const { unit, year } = params;
   const DATA = useMemo(() => {

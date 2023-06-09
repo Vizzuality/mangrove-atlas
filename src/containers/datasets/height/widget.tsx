@@ -36,7 +36,7 @@ const HeightWidget = () => {
     setIsCanceled(false);
   }, [refetch]);
 
-  if (noData && !isAnalysisRunning) return null;
+  if (noData) return null;
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
