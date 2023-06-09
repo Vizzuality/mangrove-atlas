@@ -16,12 +16,12 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { DataResponse, InternationalStatusTypes } from './types';
+import type { DataResponse, InternationalStatusTypes, Data } from './types';
 
 // widget data
 export function useMangroveInternationalStatus(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<AxiosResponse<DataResponse>>
+  queryOptions?: UseQueryOptions<DataResponse, Error, { data: Data[] }>
 ): InternationalStatusTypes {
   const currentYear = useRecoilValue(widgetYearAtom);
   const {
@@ -78,7 +78,7 @@ export function useMangroveInternationalStatus(
   );
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
-  const noData = !Object.values(!data?.data?.[0]).length;
+  const noData = !data.data?.length;
 
   return useMemo(() => {
     const {
@@ -96,6 +96,7 @@ export function useMangroveInternationalStatus(
       fow,
       ndc_blurb,
     } = data?.data?.[0] || {};
+
     const hasNDCTarget = !!ndc_target && ndc_target > 0;
     const hasNDCReductionTarget = !!ndc_reduction_target && ndc_reduction_target > 0;
     const targetYears = target_years?.length > 4 ? 's' : '';
@@ -132,5 +133,5 @@ export function useMangroveInternationalStatus(
       isPlaceholderData,
       noData,
     };
-  }, [data]);
+  }, [data, isFetched, isLoading]);
 }

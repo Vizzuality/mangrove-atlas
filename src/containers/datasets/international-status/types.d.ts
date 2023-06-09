@@ -15,6 +15,9 @@ export type Data = {
   isLoading: boolean;
   isFetched: boolean;
   isPlaceholderData: boolean;
+  frel: number;
+  year_frel: string;
+  fow: number;
 };
 
 type Metadata = {
