@@ -8,8 +8,8 @@ const CustomTooltip = (data) => {
   return (
     <div className="space-y-2 rounded-2xl bg-white p-4 text-sm shadow-lg">
       <p className="first-letter:uppercase">{indicator}</p>
-      <div className="flex items-center space-x-2 whitespace-nowrap">
-        <div className="h-3 w-0.5" style={{ backgroundColor: legendData.color }} />
+      <div className="flex max-w-[180px] items-start space-x-2">
+        <div className="h-4 w-0.5 " style={{ backgroundColor: legendData.color }} />
         <p className="font-bold">{legendData.label}</p>
       </div>
       <p className="pl-3 text-xs">
