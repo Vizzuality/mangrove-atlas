@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 import { interactiveLayerIdsAtom } from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { LAYERS } from 'containers/datasets';
 
+import type { LayerProps } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
 const ProtectedAreasLayer = LAYERS['protected-areas'];
@@ -18,7 +19,7 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
-  const [interactiveLayerIds, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
+  const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(
     () => [
       ...layers
@@ -30,15 +31,21 @@ const LayerManagerContainer = () => {
     [layers]
   );
 
-  const handleAdd = ([styleIds]) => {
-    const updatedIds = [...interactiveLayerIds, styleIds];
-    setInteractiveLayerIds(updatedIds);
-  };
+  const handleAdd = useCallback(
+    (styleIds: LayerProps['id'][]) => {
+      setInteractiveLayerIds((prevInteractiveIds) => [...prevInteractiveIds, ...styleIds]);
+    },
+    [setInteractiveLayerIds]
+  );
 
-  const handleRemove = ([styleIds]) => {
-    const updatedIds = interactiveLayerIds.filter((id) => id === styleIds);
-    setInteractiveLayerIds(updatedIds);
-  };
+  const handleRemove = useCallback(
+    (styleIds: LayerProps['id'][]) => {
+      setInteractiveLayerIds((prevInteractiveIds) => [
+        ...prevInteractiveIds.filter((id) => !styleIds.includes(id)),
+      ]);
+    },
+    [setInteractiveLayerIds]
+  );
 
   return (
     <>

@@ -14,8 +14,7 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
     const ids = LAYERS.map((layer) => layer.id);
     onAdd(ids);
     return () => onRemove(ids);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [LAYERS, onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;
 
