@@ -77,7 +77,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     return (
       <CellMeasurer key={key} parent={parent} cache={cache} columnIndex={0} rowIndex={index}>
         {({ registerChild }) => (
-          <div style={style} ref={registerChild}>
+          <div style={style} ref={registerChild} className="no-scrollbar">
             <button
               type="button"
               className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl  hover:bg-brand-800 hover:bg-opacity-10"
@@ -85,7 +85,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 handleLocation(locationsToDisplay[index]);
               }}
             >
-              <p className="text-left font-sans text-2lg text-black/85">
+              <p className="text-left font-sans text-2lg font-light text-black/85">
                 {locationsToDisplay[index].name}
               </p>
               <span className="text-xs text-grey-800 text-opacity-90">
@@ -100,10 +100,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   return (
     <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative">
+      <div className="relative px-4">
         <input
           type="search"
-          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 opacity-50"
+          className="w-full flex-1 border-none bg-transparent px-8 text-3xl text-black/85 caret-brand-800 opacity-50"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -125,7 +125,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       <Media greaterThanOrEqual="md">
         <HighlightedPlaces />
       </Media>
-      <div className="relative h-full">
+      <div className="relative h-full px-2">
         <AutoSizer>
           {({ width, height }) => (
             <List
@@ -136,6 +136,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               rowRenderer={renderRow}
               rowCount={locationsToDisplay.length}
               overscanRowCount={15}
+              className="no-scrollbar"
             />
           )}
         </AutoSizer>

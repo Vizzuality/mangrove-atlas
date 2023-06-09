@@ -165,7 +165,7 @@ const Place = () => {
             </button>
           </DialogTrigger>
           <DialogContent
-            className="h-[90vh] w-[540px] rounded-[20px] px-10 pt-10 pb-0"
+            className="h-[90vh] w-[540px] rounded-[20px] px-0 pt-10 pb-0"
             onEscapeKeyDown={closeMenu}
             onInteractOutside={closeMenu}
           >
