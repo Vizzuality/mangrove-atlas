@@ -48,7 +48,7 @@ const AlertsWidget = () => {
     }),
   });
 
-  if (!fullData.length && !isAnalysisRunning) return null;
+  if (!fullData.length) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>
