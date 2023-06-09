@@ -28,13 +28,16 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const Place = () => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
-  const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
   const resetMapCursor = useResetRecoilState(mapCursorAtom);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
+  const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
+  const [placeOption, savePlaceOption] = useState('worldwide');
+
   const { ['default-desktop']: map } = useMap();
   const { asPath, replace } = useRouter();
 
@@ -109,26 +112,56 @@ const Place = () => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
   }, []);
 
+  const handleOnClickWorldwide = useCallback(() => {
+    if (isAnalysisEnabled && !skipAnalysisAlert) {
+      openAnalysisAlertModal();
+    } else {
+      handleWorldwideView();
+    }
+    savePlaceOption('worldwide');
+  }, [handleWorldwideView, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
+
+  const handleOnClickSearch = useCallback(() => {
+    if (isAnalysisEnabled && !skipAnalysisAlert) {
+      openAnalysisAlertModal();
+    } else {
+      openMenu();
+    }
+    savePlaceOption('search');
+  }, [openMenu, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
+
   return (
     <div className="flex flex-col space-y-2 text-center">
       <span className="font-sans text-xxs leading-[10px] text-white">Place</span>
-      <div className={`${STYLES['icon-wrapper']} space-y-4 rounded-full bg-white py-1`}>
+      <div className={`${STYLES['icon-wrapper']} space-y-2.5 rounded-full bg-white pb-1`}>
         <button
           type="button"
-          className="flex cursor-pointer items-center justify-center rounded-full"
-          onClick={
-            isAnalysisEnabled && !skipAnalysisAlert ? openAnalysisAlertModal : handleWorldwideView
-          }
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full"
+          onClick={handleOnClickWorldwide}
         >
-          <Icon icon={GLOBE_SVG} className="h-8 w-8 fill-current text-brand-800" />
+          <Icon
+            icon={GLOBE_SVG}
+            className={cn({
+              'h-9 w-9 rounded-full p-1': true,
+              'bg-brand-800 fill-current text-white': placeOption === 'worldwide',
+              'fill-current text-brand-800': placeOption !== 'worldwide',
+            })}
+          />
         </button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button
-              onClick={isAnalysisEnabled && !skipAnalysisAlert ? openAnalysisAlertModal : openMenu}
+              onClick={handleOnClickSearch}
               className="flex cursor-pointer items-center justify-center rounded-full"
             >
-              <Icon icon={GLASS_SVG} className="h-8 w-8 fill-current text-brand-800" />
+              <Icon
+                icon={GLASS_SVG}
+                className={cn({
+                  'h-9 w-9 rounded-full p-1': true,
+                  'bg-brand-800 fill-current text-white': placeOption === 'search',
+                  'fill-current text-brand-800': placeOption !== 'search',
+                })}
+              />
             </button>
           </DialogTrigger>
           <DialogContent
@@ -147,7 +180,14 @@ const Place = () => {
           })}
           onClick={handleDrawingToolView}
         >
-          <Icon icon={AREA_SVG} className="h-8 w-8 fill-current text-brand-800" />
+          <Icon
+            icon={AREA_SVG}
+            className={cn({
+              'h-9 w-9 rounded-full p-1': true,
+              'bg-brand-800 fill-current text-white': placeOption === 'area',
+              'fill-current text-brand-800': placeOption !== 'area',
+            })}
+          />
         </button>
       </div>
       <Dialog open={isAnalysisAlertOpen}>

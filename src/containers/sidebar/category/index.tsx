@@ -75,7 +75,7 @@ const Category = () => {
         <DropdownMenu.Root open={isOpen}>
           <DropdownMenu.Trigger asChild>
             <div
-              className="relative flex w-11 flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
+              className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
               onMouseOver={openMenu}
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
@@ -88,7 +88,7 @@ const Category = () => {
                   <Icon
                     icon={icon}
                     className={cn({
-                      'h-8 w-8 rounded-full stroke-none': true,
+                      'h-9 w-9 rounded-full stroke-none p-1': true,
                       'bg-brand-800 fill-current text-white': category === id,
                       'fill-current text-brand-800': category !== id,
                     })}
