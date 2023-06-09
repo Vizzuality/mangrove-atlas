@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -17,6 +17,7 @@ import { isEmpty } from 'lodash-es';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
+import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -55,6 +56,7 @@ export const DEFAULT_PROPS = {
 };
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
+  const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
@@ -77,6 +79,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       y: null,
     },
   });
+
+  const handleClickOutside = () => {
+    console.log('handleClickOutside');
+    removePopup();
+  };
+
+  useOnClickOutside(mapRef, handleClickOutside);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
 
@@ -210,7 +219,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   };
 
   return (
-    <div className="absolute top-0 left-0 z-0 h-screen w-screen">
+    <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={mapRef}>
       <Map
         id={mapId}
         mapStyle={selectedBasemap}
