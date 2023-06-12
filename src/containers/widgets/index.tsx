@@ -14,8 +14,6 @@ import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
-import { Media } from 'components/media-query';
-
 import { useWidgets } from './hooks';
 
 const LOCAL_STORAGE_KEY = 'mangroves_blog';

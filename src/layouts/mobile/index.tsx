@@ -13,8 +13,8 @@ import LOGO_MOBILE_SVG from 'svgs/logo-mobile.svg?sprite';
 const MobileLayout = () => {
   const mapView = useRecoilValue(mapViewAtom);
   return (
-    <div className="h-full bg-brand-400">
-      <div className="fixed top-0 -left-0.5 z-40 h-24 w-full bg-[url('/images/mobile-header.svg')] bg-contain bg-no-repeat">
+    <div>
+      <div className="fixed top-0 -left-0.5 z-20 h-24 w-full bg-[url('/images/mobile-header.svg')] bg-contain bg-no-repeat">
         <Icon icon={LOGO_MOBILE_SVG} className="ml-4 mt-1.5 h-10 w-24" />
       </div>
       <Sidebar />
