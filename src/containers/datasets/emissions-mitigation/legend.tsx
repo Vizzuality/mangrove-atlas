@@ -1,3 +1,5 @@
+import orderBy from 'lodash-es/orderBy';
+
 import cn from 'lib/classnames';
 
 type Item = {
@@ -17,9 +19,10 @@ type LegendTypes = {
 };
 
 const Legend = ({ items, onClick, filteredIndicators, setFilteredIndicators }: LegendTypes) => {
+  const sortedItems = orderBy(items, ['category', 'order'], ['asc', 'desc']);
   return (
     <div className="ml-6 flex w-full max-w-[40%] flex-col text-black/85">
-      {items.map(({ color, label }) => (
+      {sortedItems.map(({ color, label }) => (
         <button
           type="button"
           key={label}

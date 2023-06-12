@@ -16,23 +16,14 @@ type TooltipProps = {
 };
 
 const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
-  const sortedPayload = useMemo(
-    () =>
-      payload.sort((a, b) => {
-        if (Number(a.dataKey) >= Number(b.dataKey)) return -1;
-        if (Number(a.dataKey) < Number(b.dataKey)) return 1;
-        return 0;
-      }),
-    [payload]
-  );
-
   if (!active) return null;
 
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
       <p className="flex justify-center">{payload[0]?.payload?.category}</p>
 
-      {sortedPayload?.map(({ color, name, dataKey }) => (
+      {/* recharts organic order is from bottom to top for the stacked bars and from top to bottom in tooltip, using reverse to show tooltip values from bottom to top */}
+      {payload.reverse()?.map(({ color, name, dataKey }) => (
         <p key={dataKey} className={cn({ 'flex space-x-4': true })}>
           {color && (
             <span

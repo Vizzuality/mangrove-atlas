@@ -14,8 +14,6 @@ const InternationalStatus = () => {
     location,
     pledge_type,
     ndc_target,
-    ndc_reduction_target,
-    target_years,
     ndc_target_url,
     ndc_updated,
     ndc_mitigation,
