@@ -25,7 +25,7 @@ export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="relative z-20 my-2 h-12 w-[540px] rounded-2xl bg-brand-800">
+        <div className="relative z-20 my-2 ml-[3%] h-12 w-[94%] rounded-2xl bg-brand-800 md:ml-0 lg:w-[540px]">
           <div className="flex h-full items-center justify-between px-4">
             <div className="flex items-center space-x-4">
               <Icon
@@ -34,11 +34,11 @@ export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
                   'h-7 w-7 fill-white': true,
                 })}
               />
-              <p className="font-sans text-sm text-white">
+              <p className="font-sans text-xs text-white lg:text-sm">
                 Stay updated with the latest mangrove news!
               </p>
             </div>
-            <button className="flex items-center rounded-2xl bg-white px-6 py-1 font-sans text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white">
+            <button className="flex items-center rounded-2xl bg-white px-3 py-1 font-sans text-xs text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white md:px-6 lg:text-sm">
               Explore Now
             </button>
             <button onClick={(e) => closeBlogBanner(e)}>

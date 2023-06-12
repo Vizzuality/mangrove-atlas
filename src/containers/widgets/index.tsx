@@ -74,9 +74,7 @@ const WidgetsContainer: React.FC = () => {
         </button>
       )}
 
-      <Media greaterThanOrEqual="md">
-        {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
-      </Media>
+      {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
 
       {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];
