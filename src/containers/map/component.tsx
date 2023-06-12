@@ -105,8 +105,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const handleViewState = useCallback(() => {
     if (map) {
       setURLBounds(map.getBounds().toArray());
+      setLocationBounds(null);
     }
-  }, [map, setURLBounds]);
+  }, [map, setURLBounds, setLocationBounds]);
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
@@ -122,14 +123,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {
     if (!locationBounds) return null;
+
     return {
       bbox: locationBounds,
       options: {
         padding: {
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: screenWidth >= breakpoints.md ? 620 : 0,
+          top: 50,
+          right: 20,
+          bottom: 50,
+          left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
         },
       },
     } satisfies CustomMapProps['bounds'];
