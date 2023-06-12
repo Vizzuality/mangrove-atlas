@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 
 import groupBy from 'lodash-es/groupBy';
+import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
@@ -22,7 +23,7 @@ interface DataBar {
   [key: string]: number | DataResponse['data'][0]['category'];
 }
 
-const getData = ({ data }: DataResponse) => {
+const getData = (data) => {
   const dataByCategory = groupBy(data, 'category');
   const bars = Object.values(dataByCategory);
 
@@ -59,6 +60,8 @@ const getLegendPayload = (data) =>
   data?.map((d) => ({
     label: Object.keys(d)[0],
     color: Object.values(d)[0],
+    order: d.order,
+    category: d.category,
   }));
 
 const LabelContent = () => (
@@ -130,20 +133,20 @@ export function useMangroveEmissionsMitigation(
 
   const { data } = query;
   const noData = !data?.data?.length;
-
   const DATA = useMemo(() => {
     const COLOR_RAMP = chroma
       .scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9'])
       .colors(data?.data?.length || 0);
-
+    const orderedData = orderBy(data?.data, ['category'], ['asc']);
     const indicators =
-      (data &&
-        data?.data?.length &&
-        data?.data?.map((d, i) => ({
-          [d.indicator]: COLOR_RAMP[i],
-        }))) ||
-      ([] satisfies Data[]);
-    const chartData = getData(data);
+      orderedData?.map((d, i) => ({
+        [d.indicator]: COLOR_RAMP[i],
+        category: d.category,
+        order: `${i}-${d.category}`,
+      })) || ([] satisfies Data[]);
+
+    const chartData = getData(orderedData);
+
     const legendPayload = getLegendPayload(indicators);
     const config = {
       chartBase: {
