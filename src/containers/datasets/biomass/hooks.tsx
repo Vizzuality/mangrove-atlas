@@ -119,11 +119,12 @@ export function useMangroveBiomass(
     const unit = data?.metadata.units?.value;
 
     const colorKeys = getColorKeys(dataFiltered);
+    const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);
     const ChartData = dataFiltered?.map((d) => ({
       label: d.indicator,
-      value: d.value,
+      value: (d.value * 100) / total,
       showValue: false,
-      valueFormatted: `${numberFormat(d.value)} %`,
+      valueFormatted: `${numberFormat((d.value * 100) / total)} %`,
       color: colorKeys[d.indicator],
     }));
 
