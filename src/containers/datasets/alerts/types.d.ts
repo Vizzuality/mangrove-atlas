@@ -7,10 +7,7 @@ export type UseParamsOptions = {
 };
 
 export type DataParams = {
-  geometry: {
-    type: 'FeatureCollection';
-    features: Feature<Geometry, { [name: string]: any }>[];
-  };
+  geometry: GeoJsonTypes['Geometry'];
 };
 
 export type DataResponse = {

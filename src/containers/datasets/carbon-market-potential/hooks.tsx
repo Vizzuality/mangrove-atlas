@@ -80,7 +80,7 @@ export function useCarbonMarketPotential(
     {
       placeholderData: {
         data: [],
-        metadata: null,
+        metadata: { unit: null },
       },
       ...queryOptions,
     }
@@ -103,6 +103,7 @@ export function useCarbonMarketPotential(
         value: d.value,
         color: COLORS[d.category],
         description: d.description,
+        unit: data?.metadata.unit,
         percentage: d.percentage,
         settings: [
           { title: labelDisplayed },
@@ -145,15 +146,14 @@ export function useCarbonMarketPotential(
   };
 
   const DATA = useMemo(
-    () =>
-      ({
-        noData,
-        location,
-        labels,
-        units,
-        investibleBlueCarbonValue,
-        config: CONFIG,
-      } satisfies Omit<CarbonMarketPotentialData, 'data'>),
+    () => ({
+      noData,
+      location,
+      labels,
+      units,
+      investibleBlueCarbonValue,
+      config: CONFIG,
+    }),
     [CONFIG, investibleBlueCarbonValue, location]
   );
 

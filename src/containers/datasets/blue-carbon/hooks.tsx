@@ -103,7 +103,7 @@ export function useMangroveBlueCarbon(
 
   return useMemo(() => {
     const orderedData = orderBy(
-      data.data.map((d) => ({
+      data?.data?.map((d) => ({
         ...d,
         shortLabel: Number(d.indicator.split('-', 1)[0]),
       })),
