@@ -14,13 +14,14 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
-import type { LngLatBoundsLike } from 'mapbox-gl';
+import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
 
+import type { DataResponse as LocationResponse } from 'containers/datasets/locations/hooks';
 import BASEMAPS from 'containers/layers/basemaps';
 import BasemapSelector from 'containers/map/basemap-selector';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
@@ -101,6 +102,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   } = useRouter();
   const locationId = params?.[1];
   const queryClient = useQueryClient();
+  const queryParams = asPath.split('?')[1];
 
   const handleViewState = useCallback(() => {
     if (map) {
@@ -170,11 +172,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      const queryParams = asPath.split('?')[1];
-
       push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
-    [setDrawingToolState, setAnalysisState, asPath, push, setLocationBounds]
+    [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
   );
 
   const handleDrawingUpdate = useCallback(
@@ -198,23 +198,53 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     });
   };
 
-  const onClickHandler = (e) => {
-    const restorationData = e?.features.find(({ layer }) =>
-      interactiveLayerIds.includes(layer.id)
-    )?.properties;
+  const handleClickLocation = useCallback(
+    (locationFeature: MapboxGeoJSONFeature) => {
+      const locations = queryClient.getQueryData<LocationResponse>(['locations']);
+      const {
+        properties: { location_idn },
+      } = locationFeature;
 
-    if (restorationData) {
+      const location = locations.data?.find((l) => l.location_id === location_idn);
+
+      if (location) {
+        const bbox = turfBbox(location.bounds);
+
+        if (bbox) {
+          setLocationBounds(bbox as typeof locationBounds);
+        }
+
+        push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      }
+    },
+    [queryClient, setLocationBounds, push, queryParams]
+  );
+
+  const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
+    const locationFeature = e?.features.find(
+      ({ layer }) => layer.id === 'country-boundaries-layer'
+    );
+
+    const restorationFeature = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove_restoration-layer'
+    );
+
+    if (locationFeature && !restorationFeature) {
+      handleClickLocation(locationFeature);
+    }
+
+    if (restorationFeature) {
       setRestorationPopUp({
         ...restorationPopUp,
         popup: [e?.lngLat.lat, e?.lngLat.lng],
-        popupInfo: restorationData,
+        popupInfo: restorationFeature.properties as RestorationPopUp,
         popUpPosition: {
           x: e.point.x,
           y: e.point.y,
         },
       });
     }
-    if (!restorationData) {
+    if (!restorationFeature) {
       removePopup();
     }
   };

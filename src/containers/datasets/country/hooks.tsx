@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
 export function useSource(): SourceProps {
@@ -9,25 +11,28 @@ export function useSource(): SourceProps {
 }
 
 export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
-  return [
-    {
-      id: `${id}-line`,
-      type: 'line',
-      source: 'country-boundaries',
-      'source-layer': 'gadm_eez_location_v3',
-      paint: {
-        'line-color': 'hsl(58, 66%, 47%)',
+  return useMemo(
+    () => [
+      {
+        id: `${id}-line`,
+        type: 'line',
+        source: 'country-boundaries',
+        'source-layer': 'gadm_eez_location_v3',
+        paint: {
+          'line-color': 'hsl(58, 66%, 47%)',
+        },
       },
-    },
-    {
-      id,
-      type: 'fill',
-      source: 'country-boundaries',
-      'source-layer': 'gadm_eez_location_v3',
-      paint: {
-        'fill-color': 'hsla(58, 78%, 58%, 0.08)',
-        'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 0],
+      {
+        id,
+        type: 'fill',
+        source: 'country-boundaries',
+        'source-layer': 'gadm_eez_location_v3',
+        paint: {
+          'fill-color': 'hsla(58, 78%, 58%, 0.08)',
+          'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 0],
+        },
       },
-    },
-  ];
+    ],
+    [id]
+  );
 }

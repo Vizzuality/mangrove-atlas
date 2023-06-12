@@ -65,7 +65,14 @@ const LayerManagerContainer = () => {
       })}
 
       {/* Countries layer */}
-      {<CountryBoundariesLayer id="country-boundaries-layer" beforeId="Country" />}
+      {
+        <CountryBoundariesLayer
+          id="country-boundaries-layer"
+          beforeId="Country"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
+      }
       {/* Protected areas layer */}
       {<ProtectedAreasLayer id="protected-areas-layer" beforeId="Country" />}
     </>

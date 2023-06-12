@@ -30,6 +30,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   scrollZoom,
   doubleClickZoom,
   onLoad,
+  onMouseMove,
   ...mapboxProps
 }: CustomMapProps) => {
   /**
@@ -48,7 +49,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [cursor, setCursor] = useState<string>('drag');
+  const [cursor, setCursor] = useState<'pointer' | 'grab'>('grab');
 
   /**
    * CALLBACKS
@@ -91,7 +92,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
 
   const handleMapLoad = useCallback(
-    (e) => {
+    (e: Parameters<CustomMapProps['onLoad']>[0]) => {
       setLoaded(true);
 
       if (onLoad) {
@@ -134,8 +135,13 @@ export const CustomMap: FC<CustomMapProps> = ({
     };
   }, [bounds, isFlying]);
 
-  const onMouseEnter = useCallback(() => setCursor('pointer'), []);
-  const onMouseLeave = useCallback(() => setCursor('drag'), []);
+  const handleMouseMove = useCallback(
+    (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
+      setCursor(evt.features?.length ? 'pointer' : 'grab');
+      onMouseMove?.(evt);
+    },
+    [onMouseMove]
+  );
 
   return (
     <div
@@ -155,8 +161,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
+        onMouseMove={handleMouseMove}
         {...mapboxProps}
         {...localViewState}
       >
