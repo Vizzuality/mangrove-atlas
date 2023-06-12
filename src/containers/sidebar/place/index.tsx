@@ -49,6 +49,7 @@ const Place = () => {
 
   const closeMenu = useCallback(() => {
     setIsOpen(false);
+    savePlaceOption(null);
   }, []);
 
   const handleWorldwideView = useCallback(() => {
@@ -72,6 +73,7 @@ const Place = () => {
 
     resetAnalysisState();
     resetMapCursor();
+    savePlaceOption('area');
 
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [setDrawingToolState, resetAnalysisState, resetMapCursor, replace, queryParams]);
