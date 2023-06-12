@@ -86,7 +86,7 @@ export function useCarbonMarketPotential(
     }
   );
   const { isLoading, isFetched, isPlaceholderData, data } = query;
-  const noData = !data?.data?.length;
+  const noData = isFetched && !data?.data?.length;
 
   const investibleBlueCarbonValue = useMemo(
     () => data?.data?.find((d) => d.label === label)?.value,

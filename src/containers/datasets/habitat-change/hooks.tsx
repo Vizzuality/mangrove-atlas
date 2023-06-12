@@ -9,8 +9,6 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Rectangle } from 'recharts';
 import { CartesianViewBox } from 'recharts/types/util/types';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-
 import API from 'services/api';
 
 import Tooltip from './tooltip';
@@ -42,22 +40,12 @@ export function useMangroveHabitatChange(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0];
-  const id = queryParams?.[1];
-  const {
-    data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
   const { startYear, endYear, limit } = params;
-
   const fetchMangroveHabitatChange = () => {
     return API.request({
       method: 'GET',
       url: '/widgets/country_ranking',
       params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         start_year: startYear,
         end_year: endYear,
         limit,
@@ -66,7 +54,7 @@ export function useMangroveHabitatChange(
     }).then((response) => response.data);
   };
 
-  const query = useQuery(['country_ranking', params, location_id], fetchMangroveHabitatChange, {
+  const query = useQuery(['country_ranking', params], fetchMangroveHabitatChange, {
     placeholderData: {
       data: [],
       metadata: null,
@@ -250,7 +238,6 @@ export function useMangroveHabitatChange(
       ...query,
       years,
       unit,
-      location,
       chartData,
       currentStartYear,
       currentEndYear,

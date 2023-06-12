@@ -135,10 +135,10 @@ export function useMangroveHeight(
     ...queryOptions,
   });
 
-  const { data } = query;
-  const noData = !data?.data?.length;
+  const { data, isFetched } = query;
+  const noData = isFetched && !data?.data?.length;
 
-  const mean = data?.metadata?.avg_height?.[0].value;
+  const mean = data?.metadata?.avg_height?.[0]?.value;
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year;
   const year = Math.max(...years);

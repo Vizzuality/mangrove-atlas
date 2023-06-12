@@ -139,10 +139,12 @@ export function useMangroveNetChange(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isFetched } = query;
 
   const noData =
-    !data?.data?.length || data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0;
+    location_id === 'custom-area'
+      ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
+      : isFetched && !data?.data?.length;
 
   return useMemo(() => {
     const years = data.metadata?.year.sort();

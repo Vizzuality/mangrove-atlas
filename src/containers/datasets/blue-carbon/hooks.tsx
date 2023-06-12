@@ -48,6 +48,7 @@ export function useMangroveBlueCarbon(
   } = useRouter();
   const locationType = queryParams?.[0];
   const id = queryParams?.[1];
+
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
@@ -98,8 +99,8 @@ export function useMangroveBlueCarbon(
     },
     ...queryOptions,
   });
-  const { data } = query;
-  const noData = !data?.data?.length;
+  const { data, isFetched } = query;
+  const noData = isFetched && !data?.data?.length;
 
   return useMemo(() => {
     const orderedData = orderBy(

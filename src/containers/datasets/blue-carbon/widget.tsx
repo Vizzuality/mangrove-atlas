@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { analysisAtom } from 'store/analysis';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -12,6 +14,11 @@ import BlueCarbonChart from './chart';
 import { useMangroveBlueCarbon, widgetSlug } from './hooks';
 
 const BlueCarbonWidget = () => {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0];
+  const id = queryParams?.[1];
   const [isCanceled, setIsCanceled] = useState(false);
   const queryClient = useQueryClient();
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
@@ -39,7 +46,7 @@ const BlueCarbonWidget = () => {
 
   const { location, agb, toc, soc, config, noData } = data;
 
-  if (noData && !isAnalysisRunning) return null;
+  if (noData) return null;
 
   return (
     <div className={WIDGET_CARD_WRAPER_STYLE}>

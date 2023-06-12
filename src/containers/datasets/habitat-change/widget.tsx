@@ -43,16 +43,8 @@ const HabitatExtent = () => {
   const [endYear, setEndYear] = useRecoilState(habitatChangeEndYear);
   const [limit, setLimit] = useState<UseParamsOptions['limit']>(5);
 
-  const {
-    location,
-    years,
-    config,
-    currentStartYear,
-    currentEndYear,
-    isFetched,
-    isPlaceholderData,
-    noData,
-  } = useMangroveHabitatChange({ startYear, endYear, limit });
+  const { years, config, currentStartYear, currentEndYear, isFetched, isPlaceholderData, noData } =
+    useMangroveHabitatChange({ startYear, endYear, limit });
 
   const isLoading = false;
   if (noData) return null;
@@ -65,8 +57,8 @@ const HabitatExtent = () => {
       {isFetched && !isLoading && (
         <div>
           <p className="first-letter:uppercase">
-            <span className="font-bold first-letter:uppercase"> {location}</span> the {limit}{' '}
-            countries with the largest net change in Mangrove habitat extent between
+            Worldwide the {limit} countries with the largest net change in Mangrove habitat extent
+            between
             <span className="notranslate font-bold">
               {' '}
               <Tooltip>

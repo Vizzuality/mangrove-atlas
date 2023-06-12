@@ -31,6 +31,7 @@ const Details = ({
     Contig_Group,
     Contig_Group1,
   } = data;
+
   return (
     <div
       className={cn({

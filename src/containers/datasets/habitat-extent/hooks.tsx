@@ -89,9 +89,11 @@ export function useMangroveHabitatExtent(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isFetched } = query;
   const noData =
-    !data?.data?.length || data?.data?.reduce((acc, value) => acc + value.value, 0) === 0;
+    location_id === 'custom-area'
+      ? isFetched && data?.data?.reduce((acc, value) => acc + value.value, 0) === 0
+      : isFetched && !data?.data?.length;
 
   const { unit, year } = params;
   const DATA = useMemo(() => {
