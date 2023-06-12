@@ -39,12 +39,20 @@ export function useLocation(
   queryOptions: UseQueryOptions<DataResponse, Error, Location> = {}
 ) {
   const queryClient = useQueryClient();
+
   return useQuery(['locations'], fetchLocations, {
     placeholderData: queryClient.getQueryData(['locations']) || {
       data: [],
       metadata: null,
     },
     select: (data) => {
+      if (locationType === 'custom-area')
+        return {
+          name: 'the area selected',
+          id: 'custom-area',
+          location_id: 'custom-area',
+          location_type: 'custom-area',
+        };
       const result = data?.data?.find((d) => {
         return (
           (d.location_type === locationType && (d.location_id === id || d.iso === id)) ||
@@ -52,12 +60,8 @@ export function useLocation(
         );
       });
 
-      if (result) {
-        if (result.location_type === 'custom-area') {
-          result.name = 'the area selected';
-        } else if (result.location_type === 'worldwide') {
-          result.name = 'the world';
-        }
+      if (result.location_type === 'worldwide') {
+        result.name = 'the world';
       }
       return result || null;
     },
