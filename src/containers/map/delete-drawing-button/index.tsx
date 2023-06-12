@@ -35,7 +35,7 @@ export const DeleteDrawingButton = () => {
     <div className="flex h-11 items-center justify-between rounded-md bg-brand-800 px-6 py-3 shadow-medium">
       <p className="text-xs font-semibold uppercase tracking-wide text-white">Delete custom area</p>
       <button onClick={handleDeleteDrawing}>
-        <Icon icon={REMOVE_SVG} className="h-5 w-5" />
+        <Icon icon={REMOVE_SVG} className="h-5 w-5 text-white" />
       </button>
     </div>
   );

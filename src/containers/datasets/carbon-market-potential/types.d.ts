@@ -20,6 +20,7 @@ export type Data = {
   category: CarbonMarketPotentialIndicator;
   label: string;
   description: string;
+  metadata?: { units: string };
 };
 
 export type CarbonMarketPotentialData = {
@@ -30,6 +31,7 @@ export type CarbonMarketPotentialData = {
   units: Unit[];
   config: Config;
   investibleBlueCarbonValue: number;
+  metadata: { unit: string };
 };
 
 export type ChartLabelProps = {
@@ -46,7 +48,7 @@ export type ChartLabelProps = {
 type Metadata = {
   location_id: string;
   note: string;
-  units: string;
+  unit: string;
 };
 
 export type DataResponse = {
