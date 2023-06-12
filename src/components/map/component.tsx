@@ -30,7 +30,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   scrollZoom,
   doubleClickZoom,
   onLoad,
-  onMouseMove,
   ...mapboxProps
 }: CustomMapProps) => {
   /**
@@ -49,7 +48,6 @@ export const CustomMap: FC<CustomMapProps> = ({
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [cursor, setCursor] = useState<'pointer' | 'grab'>('grab');
 
   /**
    * CALLBACKS
@@ -135,14 +133,6 @@ export const CustomMap: FC<CustomMapProps> = ({
     };
   }, [bounds, isFlying]);
 
-  const handleMouseMove = useCallback(
-    (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
-      setCursor(evt.features?.length ? 'pointer' : 'grab');
-      onMouseMove?.(evt);
-    },
-    [onMouseMove]
-  );
-
   return (
     <div
       className={cx({
@@ -152,7 +142,6 @@ export const CustomMap: FC<CustomMapProps> = ({
     >
       <ReactMapGL
         id={id}
-        cursor={cursor}
         initialViewState={initialViewState}
         dragPan={!isFlying && dragPan}
         dragRotate={!isFlying && dragRotate}
@@ -161,7 +150,6 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        onMouseMove={handleMouseMove}
         {...mapboxProps}
         {...localViewState}
       >

@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useDropzone } from 'react-dropzone';
 
@@ -6,6 +6,7 @@ import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
+import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -22,6 +23,7 @@ const WidgetDrawingTool = () => {
   const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const { enabled: isDrawingToolEnabled } = drawingToolState;
   const setAnalysisState = useSetRecoilState(analysisAtom);
+  const setMapCursor = useSetRecoilState(mapCursorAtom);
 
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     multiple: false,
@@ -55,6 +57,10 @@ const WidgetDrawingTool = () => {
   }, [setDrawingToolState, isDrawingToolEnabled]);
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
+
+  useEffect(() => {
+    setMapCursor(isDrawingToolEnabled ? 'crosshair' : 'grab');
+  }, [setMapCursor, isDrawingToolEnabled]);
 
   return (
     <div
