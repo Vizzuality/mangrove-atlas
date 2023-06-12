@@ -8,6 +8,7 @@ import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
+import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
@@ -33,6 +34,7 @@ const Place = () => {
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
+  const resetMapCursor = useResetRecoilState(mapCursorAtom);
   const { ['default-desktop']: map } = useMap();
   const { asPath, replace } = useRouter();
 
@@ -66,9 +68,10 @@ const Place = () => {
     }));
 
     resetAnalysisState();
+    resetMapCursor();
 
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
-  }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
+  }, [setDrawingToolState, resetAnalysisState, resetMapCursor, replace, queryParams]);
 
   const openAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(true);

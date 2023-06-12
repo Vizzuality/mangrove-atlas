@@ -8,7 +8,13 @@ import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
-import { basemapAtom, URLboundsAtom, locationBoundsAtom, interactiveLayerIdsAtom } from 'store/map';
+import {
+  basemapAtom,
+  URLboundsAtom,
+  locationBoundsAtom,
+  interactiveLayerIdsAtom,
+  mapCursorAtom,
+} from 'store/map';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -60,10 +66,18 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-  const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
-    useRecoilState(drawingToolAtom);
+  const [
+    {
+      enabled: isDrawingToolEnabled,
+      showWidget: isDrawingToolVisible,
+      uploadedGeojson,
+      customGeojson,
+    },
+    setDrawingToolState,
+  ] = useRecoilState(drawingToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
+  const [cursor, setCursor] = useRecoilState(mapCursorAtom);
 
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
@@ -249,6 +263,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   };
 
+  const handleMouseMove = useCallback(
+    (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
+      if (!isDrawingToolVisible) {
+        setCursor(evt.features?.length ? 'pointer' : 'grab');
+      }
+    },
+    [setCursor, isDrawingToolVisible]
+  );
+
   return (
     <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={mapRef}>
       <Map
@@ -260,8 +283,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMapViewStateChange={handleViewState}
         bounds={bounds}
-        interactiveLayerIds={interactiveLayerIds}
+        interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
         onClick={onClickHandler}
+        onMouseMove={handleMouseMove}
+        cursor={cursor}
       >
         {() => (
           <>
