@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -19,7 +19,19 @@ import { useWidgets } from './hooks';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
-  const [blogBanner, setBlogBanner] = useState(true);
+  const [closedBlogBanner, setClosedBlogBanner] = useState<boolean>(false);
+
+  const closeBlogBanner = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    localStorage.setItem('blog', 'closed');
+    setClosedBlogBanner(true);
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem('blog')) {
+      setClosedBlogBanner(true);
+    }
+  }, []);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
@@ -52,7 +64,9 @@ const WidgetsContainer: React.FC = () => {
           {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
         </button>
       )}
-      <Media greaterThanOrEqual="md">{blogBanner && <Blog setBlogBanner={setBlogBanner} />}</Media>
+      <Media greaterThanOrEqual="md">
+        {!closedBlogBanner && <Blog closeBlogBanner={closeBlogBanner} />}
+      </Media>
 
       {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];

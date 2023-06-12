@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 
@@ -18,7 +18,7 @@ import placeholderPost from 'images/blog/placeholder-post.png';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 import NEWS_SVG from 'svgs/ui/news.svg?sprite';
 
-export const Blog = ({ setBlogBanner }: { setBlogBanner: (blogBanner: boolean) => void }) => {
+export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
   const { data } = useBlogPosts();
   const [postInfo, setPostInfo] = useState<Post | null>(null);
 
@@ -41,7 +41,7 @@ export const Blog = ({ setBlogBanner }: { setBlogBanner: (blogBanner: boolean) =
             <button className="flex items-center rounded-2xl bg-white px-6 py-1 font-sans text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white">
               Explore Now
             </button>
-            <button onClick={() => setBlogBanner(false)}>
+            <button onClick={(e) => closeBlogBanner(e)}>
               <Icon icon={CLOSE_SVG} className="h-4 w-4 fill-white" />
             </button>
           </div>
