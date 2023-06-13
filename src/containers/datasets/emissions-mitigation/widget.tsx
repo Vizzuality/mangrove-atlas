@@ -37,7 +37,7 @@ const EmissionsMitigationWidget = () => {
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             Emissions mitigation by area for mangrove and non-mangrove related interventions in the
-            <span className="font-bold"> {location}</span>
+            <span className="font-bold"> {location}</span>.
           </p>
           <div className="flex flex-1 items-center justify-between py-10">
             <Chart config={restConfig} />

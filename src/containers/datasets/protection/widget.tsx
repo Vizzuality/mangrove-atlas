@@ -77,7 +77,7 @@ const Protection = () => {
                 </TooltipPortal>
               </Tooltip>
             </span>{' '}
-            out of a total <span className="font-bold">{data.totalArea} </span>
+            out of a total <span className="font-bold">{data.totalArea}</span>{' '}
             <Tooltip>
               <TooltipTrigger>
                 <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
@@ -88,7 +88,7 @@ const Protection = () => {
                   />
                 </span>
               </TooltipTrigger>
-
+              .
               <TooltipPortal>
                 <TooltipContent
                   side="bottom"

@@ -91,6 +91,7 @@ const LossWidget = () => {
                 ? `${data?.main_loss_driver} (rice, shrimp, and oil palm cultivation)`
                 : data?.main_loss_driver}
             </span>
+            .
           </p>
           <LossChart config={config} legend={config.legend} />
           {!isFetching && (
