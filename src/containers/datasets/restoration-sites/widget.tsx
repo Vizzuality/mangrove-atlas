@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import isEmpty from 'lodash-es/isEmpty';
 
@@ -48,7 +48,7 @@ const RestorationSitesWidget = () => {
     if (filtersData?.data && isEmpty(filters)) {
       setFilters(filterKeys);
     }
-  }, [filtersData]);
+  }, [filtersData, filterKeys, filters]);
 
   const filtersSelected = Object.keys(filters).filter((key) => !!filters[key].length);
 
@@ -59,6 +59,11 @@ const RestorationSitesWidget = () => {
     setFilters({ ...filters, [key]: updatedFilters });
     setMapFilters({ ...filters, [key]: updatedFilters });
   };
+
+  const handleClearAll = useCallback(() => {
+    setMapFilters(filterKeys);
+    setFilters(filterKeys);
+  }, [setMapFilters, filterKeys]);
 
   if (!filtersData) return null;
 
@@ -94,15 +99,11 @@ const RestorationSitesWidget = () => {
                   )}
                 </button>
               </DialogTrigger>
-              <button
-                className="text-brand-800 underline"
-                onClick={() => {
-                  setMapFilters(filterKeys);
-                  setFilters(filterKeys);
-                }}
-              >
-                Clear all
-              </button>
+              {areFiltersSelected && (
+                <button className="text-brand-800 underline" onClick={handleClearAll}>
+                  Clear all
+                </button>
+              )}
             </div>
             <DialogContent className="h-fit-content w-[580px] rounded-[20px] p-10">
               <FilterSites
