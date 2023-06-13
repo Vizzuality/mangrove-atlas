@@ -76,13 +76,14 @@ const SpeciesLocation = () => {
             </p>
           )}
           {isWidgetActive && specieSelected && (
-            <div className="flex items-center space-x-2">
-              <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/small-pattern.svg')] bg-center text-sm" />
+            <div className="mb-8 flex items-center space-x-2">
+              <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/species-location/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
                 Countries where the species is located
               </span>
             </div>
           )}
+
           <div className="h-1 border-b border-dashed border-brand-400 border-opacity-50" />
 
           <Command className="w-full">
