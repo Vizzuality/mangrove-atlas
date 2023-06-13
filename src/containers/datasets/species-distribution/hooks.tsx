@@ -107,7 +107,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
     {
       id,
       'source-layer': 'Species_richness',
-      // filter: ['==', 'sp_count', '<0'],
+      filter: ['has', 'sp_count'],
       type: 'fill',
       paint: {
         'fill-color': [

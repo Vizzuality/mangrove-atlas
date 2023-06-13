@@ -17,6 +17,7 @@ import {
   TooltipPortal,
 } from 'components/tooltip';
 import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -58,7 +59,7 @@ const AlertsWidget = () => {
       />
       {isFetched && !isLoading && (
         <div>
-          <p className="text-lg font-light leading-7">
+          <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
             <Tooltip>

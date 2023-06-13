@@ -25,7 +25,7 @@ const SpeciesThreatened = () => {
       />
       {isFetched && !isLoading && (
         <div>
-          <p className="text-lg font-light text-black/85">
+          <p className="font-sans text-lg font-light text-black/85 first-letter:uppercase">
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {total}</span> species of mangroves. Of them,{' '}
             <span className="font-bold">{threatenedLegend}</span> are considered threatened by the
