@@ -41,8 +41,7 @@ const Category = () => {
 
     updateWidgetsCollapsed[lastWidgetSlug] = false;
     setWidgetsCollapsed(updateWidgetsCollapsed);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
+  }, [lastWidgetSlug]);
 
   const handleCategory = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
