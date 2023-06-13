@@ -14,7 +14,7 @@ import { useUploadFile } from 'hooks/analysis';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import UPLOAD_SVG from 'svgs/upload.svg?sprite';
@@ -65,7 +65,7 @@ const WidgetDrawingTool = () => {
   return (
     <div
       className={cn({
-        [WIDGET_CARD_WRAPER_STYLE]: true,
+        [WIDGET_CARD_WRAPPER_STYLE]: true,
         'space-y-4 pb-0': true,
       })}
     >

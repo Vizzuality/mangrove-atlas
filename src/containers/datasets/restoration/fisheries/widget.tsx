@@ -3,7 +3,7 @@ import { numberFormat } from 'lib/format';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import BIVALVE_SVG from 'svgs/fisheries/bivalve.svg?sprite';
 import CRAB_SVG from 'svgs/fisheries/crab.svg?sprite';
@@ -28,7 +28,7 @@ const PotentialBenefitsToFisheries = () => {
   return (
     <div
       className={cn({
-        [WIDGET_CARD_WRAPER_STYLE]: true,
+        [WIDGET_CARD_WRAPPER_STYLE]: true,
         relative: true,
       })}
     >
@@ -36,7 +36,7 @@ const PotentialBenefitsToFisheries = () => {
       {isFetched && data && (
         <div className="space-y-4">
           <h3 className="text-xs uppercase">potential benefits to fisheries</h3>
-          <p>
+          <p className={WIDGET_SENTENCE_STYLE}>
             Mangrove restoration enhanced the production of new individuals for commercial purposes:{' '}
           </p>
           <div className="grid flex-1 grid-cols-2 flex-col items-center space-y-2 pb-10">
