@@ -1,21 +1,27 @@
-import { useCallback, useState, MouseEvent } from 'react';
+import { useCallback, useState, MouseEvent, useMemo, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
 import { activeCategoryAtom } from 'store/sidebar';
+import { widgetsCollapsedAtom } from 'store/widgets';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useRecoilState } from 'recoil';
 
 import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
+import { useWidgets } from 'containers/widgets/hooks';
 
 import Icon from 'components/icon';
 
 const Category = () => {
+  const widgets = useWidgets();
   const [isOpen, setIsOpen] = useState(false);
   const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
+  const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
+
+  const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
@@ -26,6 +32,17 @@ const Category = () => {
   const closeMenu = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  useEffect(() => {
+    const updateWidgetsCollapsed = Object.keys(widgetsCollapsed).reduce((acc, key) => {
+      acc[key] = true;
+      return acc;
+    }, {});
+
+    updateWidgetsCollapsed[lastWidgetSlug] = false;
+    setWidgetsCollapsed(updateWidgetsCollapsed);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category]);
 
   const handleCategory = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
