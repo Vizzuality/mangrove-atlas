@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import BiomassChart from './chart';
 import { useMangroveBiomass, widgetSlug } from './hooks';
@@ -42,7 +42,7 @@ const BiomassWidget = () => {
 
   if (noData) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
@@ -57,7 +57,9 @@ const BiomassWidget = () => {
       </div>
       {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
-          <p>An error occurred while fetching the data. You can try again.</p>
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
           <button
             type="button"
             onClick={handleTryAgain}
@@ -69,7 +71,7 @@ const BiomassWidget = () => {
       )}
       {mean && !isFetching && !isError && !isCanceled && (
         <>
-          <p>
+          <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove aboveground biomass density in{' '}
             <span className="font-bold"> {location}</span> was{' '}
             <span className="font-bold">

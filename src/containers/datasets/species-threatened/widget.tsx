@@ -1,5 +1,5 @@
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import SpeciesThreatenedChart from './chart';
 import { useMangroveSpecies } from './hooks';
@@ -18,14 +18,14 @@ const SpeciesThreatened = () => {
 
   if (!chartData) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
         <div>
-          <p className="font-sans text-lg font-light text-black/85 first-letter:uppercase">
+          <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {total}</span> species of mangroves. Of them,{' '}
             <span className="font-bold">{threatenedLegend}</span> are considered threatened by the

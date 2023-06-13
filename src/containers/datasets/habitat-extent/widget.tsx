@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -77,7 +78,7 @@ const HabitatExtent = () => {
   if (noData) return null;
 
   return (
-    <>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
@@ -92,7 +93,9 @@ const HabitatExtent = () => {
       </div>
       {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
-          <p>An error occurred while fetching the data. You can try again.</p>
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
           <button
             type="button"
             onClick={handleTryAgain}
@@ -104,7 +107,7 @@ const HabitatExtent = () => {
       )}
       {data && !isFetching && !isError && !isCanceled && (
         <div className="space-y-4">
-          <p className="text-lg font-light leading-7">
+          <p className={WIDGET_SENTENCE_STYLE}>
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
             <span className="notranslate font-bold">
               {area}{' '}
@@ -236,7 +239,7 @@ const HabitatExtent = () => {
           <HabitatExtentChart legend={legend} config={config} />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

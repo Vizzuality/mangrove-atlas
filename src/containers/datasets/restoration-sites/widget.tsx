@@ -10,7 +10,7 @@ import { SetRecoilState, useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
@@ -63,11 +63,11 @@ const RestorationSitesWidget = () => {
   if (!filtersData) return null;
 
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />
       {isFetched && data && (
         <div className="relative space-y-8">
-          <p>
+          <p className={WIDGET_SENTENCE_STYLE}>
             There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
             {data.location}
             {!areFiltersEmpty && ' that match your criteria'}.

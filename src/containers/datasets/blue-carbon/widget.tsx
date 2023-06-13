@@ -2,23 +2,20 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import cn from 'lib/classnames';
+
 import { analysisAtom } from 'store/analysis';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import BlueCarbonChart from './chart';
 import { useMangroveBlueCarbon, widgetSlug } from './hooks';
 
 const BlueCarbonWidget = () => {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0];
-  const id = queryParams?.[1];
   const [isCanceled, setIsCanceled] = useState(false);
   const queryClient = useQueryClient();
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
@@ -49,7 +46,7 @@ const BlueCarbonWidget = () => {
   if (noData) return null;
 
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
@@ -64,7 +61,9 @@ const BlueCarbonWidget = () => {
       </div>
       {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
-          <p>An error occurred while fetching the data. You can try again.</p>
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
           <button
             type="button"
             onClick={handleTryAgain}
@@ -76,7 +75,7 @@ const BlueCarbonWidget = () => {
       )}
       {data && !isFetching && !isError && !isCanceled && (
         <div className="space-y-4">
-          <p>
+          <p className={WIDGET_SENTENCE_STYLE}>
             Total organic carbon stored in <span className="font-bold"> {location}</span> mangroves
             is estimated at <span className="font-bold"> {toc}t CO₂e</span> with{' '}
             <span className="font-bold"> {agb}t CO₂e</span> stored in above-ground biomass and{' '}

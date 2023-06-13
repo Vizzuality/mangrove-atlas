@@ -18,7 +18,7 @@ import {
 import Loading from 'components/loading';
 import RadioGroupItem from 'components/radio-group/radio-group-item';
 import type { RadioOption } from 'components/radio-group/types';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
@@ -58,7 +58,7 @@ const SpeciesLocation = () => {
 
   if (!species.length) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
@@ -66,17 +66,17 @@ const SpeciesLocation = () => {
       {isFetched && !isLoading && (
         <>
           {specieSelected ? (
-            <p className="pb-10 text-lg font-light text-black/85">
+            <p className={`${WIDGET_SENTENCE_STYLE}, pb-4`}>
               <span className="font-bold">{specieSelected.scientific_name}</span> is located in{' '}
               <span className="font-bold">{totalLocations}</span> countries.
             </p>
           ) : (
-            <p className="pb-10 text-lg font-light text-black/85">
+            <p className={'pb-4 text-lg font-light text-black/85'}>
               Select one species from the list below to see where it&apos;s located.
             </p>
           )}
           {isWidgetActive && specieSelected && (
-            <div className="mb-8 flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
                 Countries where the species is located

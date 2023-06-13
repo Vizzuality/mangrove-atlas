@@ -17,6 +17,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -75,7 +76,7 @@ const NetChangeWidget = () => {
   if (noData) return null;
 
   return (
-    <div>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
@@ -90,7 +91,9 @@ const NetChangeWidget = () => {
       </div>
       {(isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
-          <p>An error occurred while fetching the data. You can try again.</p>
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
           <button
             type="button"
             onClick={handleTryAgain}
@@ -102,7 +105,7 @@ const NetChangeWidget = () => {
       )}
       {data && !isFetching && !isError && !isCanceled && (
         <div>
-          <p>
+          <p className={WIDGET_SENTENCE_STYLE}>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {direction}</span> by{' '}
             <span className="font-bold"> {netChange}</span>{' '}

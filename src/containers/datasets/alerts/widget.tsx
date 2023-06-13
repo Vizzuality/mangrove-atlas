@@ -1,10 +1,8 @@
 import cn from 'lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import Chart from 'components/chart';
 import Icon from 'components/icon';
@@ -16,8 +14,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
-import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -27,8 +24,7 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+
   const {
     isLoading,
     isFetched,
@@ -43,16 +39,12 @@ const AlertsWidget = () => {
     fullData,
     defaultStartDate,
     defaultEndDate,
-  } = useAlerts(startDate, endDate, null, {
-    ...(isAnalysisRunning && {
-      geometry: customGeojson || uploadedGeojson,
-    }),
-  });
+  } = useAlerts(startDate, endDate);
 
   if (!fullData.length) return null;
 
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"

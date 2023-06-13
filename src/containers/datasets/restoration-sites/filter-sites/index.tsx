@@ -11,7 +11,7 @@ import { useSetRecoilState } from 'recoil';
 
 import Loading from 'components/loading';
 import MultiSelect from 'components/select-multi';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import type { DataSites } from '../types';
 import { BUTTON_STYLES } from '../widget';
@@ -64,7 +64,7 @@ const FilterSites = ({
   );
 
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && (
         <div className="space-y-4">

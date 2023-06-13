@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 
@@ -36,7 +36,7 @@ const SpeciesDistribution = () => {
 
   if (noData) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
@@ -44,7 +44,7 @@ const SpeciesDistribution = () => {
       {isFetched && !isLoading && (
         <div className="pb-8">
           {/* mangrove sentence styles, create constant */}
-          <p className="text-lg font-light text-black/85 first-letter:uppercase">
+          <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold">{total}</span> species of mangroves distributed by country
             as map shows.

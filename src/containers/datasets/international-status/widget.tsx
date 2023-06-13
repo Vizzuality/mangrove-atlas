@@ -3,7 +3,7 @@ import { TooltipPortal } from '@radix-ui/react-tooltip';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Tooltip, TooltipTrigger, TooltipContent } from 'components/tooltip';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
@@ -37,7 +37,7 @@ const InternationalStatus = () => {
   const apostrophe = location?.[location?.length - 1] === 's' ? "'" : "'s";
   if (noData) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
@@ -59,7 +59,7 @@ const InternationalStatus = () => {
                 </a>
               </h3>
               <div className="flex items-start space-x-2">
-                <p className="first-letter:uppercase">
+                <p className={WIDGET_SENTENCE_STYLE}>
                   {location}
                   {apostrophe} NDC pledge contains {pledge_type}
                 </p>
@@ -105,7 +105,7 @@ const InternationalStatus = () => {
             )}
 
           {(hasNDCTarget || hasNDCReductionTarget) && (
-            <p>
+            <p className={WIDGET_SENTENCE_STYLE}>
               {`The GHG target`}{' '}
               {!hasNDCReductionTarget && hasNDCTarget && (
                 <span>represents a reduction of {ndc_target}</span>
@@ -116,7 +116,7 @@ const InternationalStatus = () => {
             </p>
           )}
           {ndc_adaptation && ndc_mitigation && (
-            <p className="first-letter:uppercase">
+            <p className={WIDGET_SENTENCE_STYLE}>
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -125,7 +125,7 @@ const InternationalStatus = () => {
           )}
 
           {ndc_adaptation && !ndc_mitigation && (
-            <p className="first-letter:uppercase">
+            <p className={WIDGET_SENTENCE_STYLE}>
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -134,7 +134,7 @@ const InternationalStatus = () => {
           )}
 
           {!ndc_adaptation && ndc_mitigation && (
-            <p className="first-letter:uppercase">
+            <p className={WIDGET_SENTENCE_STYLE}>
               {location}
               {apostrophe} {ndc_updated ? 'updated' : 'first'} NDC pledge{' '}
               {!ndc_adaptation && !ndc_mitigation ? "doesn't include" : 'includes'} coastal and
@@ -146,7 +146,7 @@ const InternationalStatus = () => {
             <div className="space-y-4">
               <h3 className="font-bold text-brand-800">Forest Reference Emission Levels</h3>
               <div className="space-y-4">
-                <p className="first-letter:uppercase">
+                <p className={WIDGET_SENTENCE_STYLE}>
                   {location}
                   {apostrophe} {year_frel} FREL is {frel} Mt CO₂e/yr ({location}
                   {apostrophe} mangroves are considered {fow}) .
@@ -157,11 +157,11 @@ const InternationalStatus = () => {
           <div className="space-y-4">
             <h3 className="font-bold text-brand-800">IPCC Wetlands Supplement</h3>
             {ipcc_wetlands_suplement === 'has' ? (
-              <p className="first-letter:uppercase">
+              <p className={WIDGET_SENTENCE_STYLE}>
                 {location} {ipcc_wetlands_suplement} implemented the IPCC Wetlands Supplement.
               </p>
             ) : (
-              <p>
+              <p className={WIDGET_SENTENCE_STYLE}>
                 There is no information as to whether {location} has implemented the wetlands
                 supplement.
               </p>

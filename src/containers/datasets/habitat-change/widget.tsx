@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
-import { WIDGET_CARD_WRAPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import TRIANGLE_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
@@ -49,14 +49,14 @@ const HabitatExtent = () => {
   const isLoading = false;
   if (noData) return null;
   return (
-    <div className={WIDGET_CARD_WRAPER_STYLE}>
+    <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
         <div>
-          <p className="first-letter:uppercase">
+          <p className={WIDGET_SENTENCE_STYLE}>
             Worldwide the {limit} countries with the largest net change in Mangrove habitat extent
             between
             <span className="notranslate font-bold">
