@@ -1,8 +1,6 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
 import React from 'react';
 
-import isEmpty from 'lodash-es/isEmpty';
-
 import cn from 'lib/classnames';
 
 import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
