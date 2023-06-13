@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  background-color: #00C5BD;
+}
+
 @-webkit-keyframes autofill {
   0%,
   100% {
