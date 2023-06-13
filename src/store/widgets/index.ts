@@ -6,8 +6,6 @@ import widgets from 'containers/widgets/constants';
 
 import { WidgetSlugType } from 'types/widget';
 
-const widgetsNotCollapsed = ['mangrove_drivers_change', 'mangrove_drawing_tool'];
-
 export const activeWidgetsAtom = atom<WidgetSlugType[]>({
   key: 'active',
   default: ['mangrove_habitat_extent'],
@@ -26,11 +24,9 @@ export const widgetYearAtom = atom<number>({
 
 export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
-  default: widgets
-    .filter(({ slug }) => !widgetsNotCollapsed.includes(slug))
-    .reduce((previousObject, currentObject) => {
-      return Object.assign(previousObject, {
-        [currentObject.slug]: false,
-      });
-    }, {}),
+  default: widgets.reduce((previousObject, currentObject) => {
+    return Object.assign(previousObject, {
+      [currentObject.slug]: false,
+    });
+  }, {}),
 });

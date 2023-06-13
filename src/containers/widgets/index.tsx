@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -23,6 +23,8 @@ const WidgetsContainer: React.FC = () => {
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
+  const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
+
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
 
   const handleWidgetsCollapsed = useCallback(() => {
@@ -31,8 +33,10 @@ const WidgetsContainer: React.FC = () => {
       return acc;
     }, {});
 
+    updateWidgetsCollapsed[lastWidgetSlug] = false;
+
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);
 
   return (
     <WidgetsLayout>
