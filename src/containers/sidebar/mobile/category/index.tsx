@@ -34,7 +34,7 @@ const CategoryMobile = () => {
               {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
                 <button
                   key={id}
-                  className="flex cursor-pointer items-center space-x-3"
+                  className="group flex cursor-pointer items-center space-x-3"
                   onClick={() => setCategory(id)}
                 >
                   <div
@@ -45,9 +45,9 @@ const CategoryMobile = () => {
                     <Icon
                       icon={icon}
                       className={cn({
-                        'h-11 w-12 stroke-none p-1': true,
-                        'rounded-full bg-brand-800 fill-current text-white': category === id,
-                        'fill-current text-brand-800': category !== id,
+                        'h-11 w-12 rounded-full stroke-none p-1': true,
+                        'bg-brand-800 fill-current text-white': category === id,
+                        'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
                       })}
                     />
                   </div>

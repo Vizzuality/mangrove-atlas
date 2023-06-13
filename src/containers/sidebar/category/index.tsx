@@ -117,7 +117,7 @@ const Category = () => {
                     <button
                       key={id}
                       type="button"
-                      className="flex cursor-pointer items-center space-x-3"
+                      className="group flex cursor-pointer items-center space-x-3"
                       data-category={id}
                       onClick={handleCategory}
                     >
@@ -129,13 +129,14 @@ const Category = () => {
                         <Icon
                           icon={icon}
                           className={cn({
-                            'h-9 w-9 stroke-none p-1': true,
-                            'rounded-full bg-brand-800 fill-current text-white': category === id,
-                            'fill-current text-brand-800': category !== id,
+                            'h-9 w-9 rounded-full stroke-none p-1': true,
+                            'bg-brand-800 fill-current text-white': category === id,
+                            'fill-current text-brand-800 group-hover:bg-brand-800/15':
+                              category !== id,
                           })}
                         />
                       </div>
-                      <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300 hover:font-semibold">
+                      <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300">
                         {label}
                       </p>
                     </button>
