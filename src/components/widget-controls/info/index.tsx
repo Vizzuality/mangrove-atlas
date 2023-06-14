@@ -1,15 +1,14 @@
 import { INFO } from 'containers/datasets';
-import { EXT_MENU_OPTIONS } from 'containers/sidebar/constants';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
-const Info = ({ id }) => {
+const Info = ({ id, content }) => {
   const Info = INFO[id];
 
-  if (!Info) return null;
+  if (!Info && !content) return null;
   return (
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
@@ -19,7 +18,9 @@ const Info = ({ id }) => {
           </div>
         </DialogTrigger>
         <DialogContent className="left-18 top-16 max-h-[90%] rounded-3xl">
-          <Info />
+          {/* Supports external content or look by id for static info about widgets */}
+          {id && <Info />}
+          {content && <p>{content}</p>}
           <DialogClose />
         </DialogContent>
       </Dialog>

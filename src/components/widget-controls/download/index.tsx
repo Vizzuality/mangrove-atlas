@@ -5,25 +5,25 @@ import Icon from 'components/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
 
-const Download = ({ id }) => {
+const Download = ({ id, content }) => {
   const DownloadInfo = DOWNLOAD[id];
+
+  if (!DownloadInfo && !content) return null;
   return (
-    <>
-      <div className="w-full pb-1 text-center font-sans text-xxs text-white">Download</div>
-      <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
-        <Dialog>
-          <DialogTrigger>
-            <div className="flex justify-center">
-              <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
-            </div>
-          </DialogTrigger>
-          <DialogContent className="scroll-y top-24 rounded-3xl">
-            <DownloadInfo />
-            <DialogClose />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </>
+    <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
+      <Dialog>
+        <DialogTrigger>
+          <div className="flex justify-center">
+            <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
+          </div>
+        </DialogTrigger>
+        <DialogContent className="scroll-y top-24 rounded-3xl">
+          {id && <DownloadInfo />}
+          {content && <p>{content}</p>}
+          <DialogClose />
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 };
 

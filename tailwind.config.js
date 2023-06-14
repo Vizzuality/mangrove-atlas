@@ -75,6 +75,9 @@ module.exports = {
       opacity: {
         15: '0.15',
       },
+      letterSpacing: {
+        2.5: '0.625rem',
+      },
       keyframes: {
         overlayShow: {
           from: { opacity: 0 },

@@ -43,7 +43,6 @@ const SpeciesDistribution = () => {
       />
       {isFetched && !isLoading && (
         <div className="pb-8">
-          {/* mangrove sentence styles, create constant */}
           <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold">{total}</span> species of mangroves distributed by country

@@ -115,6 +115,13 @@ const widgets = [
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: ['extent'],
   },
+  // {
+  //   name: 'National dashboard',
+  //   slug: 'mangrove_national_dashboard',
+  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+  //   categoryIds: ['all_datasets', 'distribution_and_change'],
+  //   layersIds: [''],
+  // },
   {
     name: 'Draw or upload an area',
     slug: 'mangrove_drawing_tool',

@@ -12,15 +12,24 @@ import type { WidgetSlugType } from 'types/widget';
 import Download from './download';
 import Info from './info';
 
-type WidgetControlsType = Readonly<{ id: WidgetSlugType }>;
+type ContentType = {
+  info: string;
+  download: string;
+  layer?: string;
+};
 
-const WidgetControls = ({ id }: WidgetControlsType) => {
+type WidgetControlsType = Readonly<{
+  id?: WidgetSlugType;
+  content?: ContentType;
+}>;
+
+const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
 
-  const download = DOWNLOAD[id];
-  const info = INFO[id];
-  const layer = LAYERS[id];
+  const download = DOWNLOAD[id] || content?.download;
+  const info = INFO[id] || content?.info;
+  const layer = LAYERS[id] || content?.layer;
 
   const handleClick = () => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
@@ -29,8 +38,8 @@ const WidgetControls = ({ id }: WidgetControlsType) => {
 
   return (
     <div className="flex items-center space-x-2">
-      {!!download && <Download id={id} />}
-      {!!info && <Info id={id} />}
+      {!!download && <Download id={id} content={download} />}
+      {!!info && <Info id={id} content={info} />}
       {!!layer && (
         <SwitchWrapper id={id}>
           <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
