@@ -75,7 +75,7 @@ const Category = () => {
         <DropdownMenu.Root open={isOpen}>
           <DropdownMenu.Trigger asChild>
             <div
-              className="relative flex w-11 flex-col items-center justify-center space-y-3 rounded-full bg-white py-1 text-brand-800"
+              className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
               onMouseOver={openMenu}
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
@@ -88,7 +88,7 @@ const Category = () => {
                   <Icon
                     icon={icon}
                     className={cn({
-                      'h-8 w-8 rounded-full stroke-none': true,
+                      'h-9 w-9 rounded-full stroke-none p-1': true,
                       'bg-brand-800 fill-current text-white': category === id,
                       'fill-current text-brand-800': category !== id,
                     })}
@@ -102,7 +102,7 @@ const Category = () => {
               onMouseLeave={closeMenu}
               onEscapeKeyDown={closeMenu}
               onInteractOutside={closeMenu}
-              className="z-50 rounded-[26px] bg-white p-1.5 font-sans text-[19px] font-light text-black/85 shadow-md animate-in duration-300 focus:outline-none data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96"
+              className="z-50 min-w-[350px] rounded-[26px] bg-white p-1.5 font-sans text-2lg font-light text-black/85 shadow-md animate-in duration-300 focus:outline-none data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-left-0 data-[state=open]:slide-in-from-left-96"
               align="start"
               side="right"
               sideOffset={-44}
@@ -117,25 +117,28 @@ const Category = () => {
                     <button
                       key={id}
                       type="button"
-                      className="flex cursor-pointer items-center space-x-3"
+                      className="group flex cursor-pointer items-center space-x-3"
                       data-category={id}
                       onClick={handleCategory}
                     >
                       <div
                         className={cn({
-                          'h-10.5 flex w-11 items-center justify-center': true,
+                          'flex h-11 w-11 items-center justify-center': true,
                         })}
                       >
                         <Icon
                           icon={icon}
                           className={cn({
-                            'h-8 w-8 stroke-none': true,
-                            'rounded-full bg-brand-800 fill-current text-white': category === id,
-                            'fill-current text-brand-800': category !== id,
+                            'h-9 w-9 rounded-full stroke-none p-1': true,
+                            'bg-brand-800 fill-current text-white': category === id,
+                            'fill-current text-brand-800 group-hover:bg-brand-800/15':
+                              category !== id,
                           })}
                         />
                       </div>
-                      <p className="whitespace-nowrap">{label}</p>
+                      <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300">
+                        {label}
+                      </p>
                     </button>
                   </li>
                 ))}

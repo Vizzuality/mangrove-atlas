@@ -40,7 +40,7 @@ const HighlightedPlacesMobile = () => {
             >
               <div
                 className={cn({
-                  'flex h-24 flex-1 flex-col space-y-1.5 rounded-[20px] border py-5 px-6': true,
+                  'flex h-24 flex-1 flex-col space-y-1.5 rounded-3xl border py-5 px-6': true,
                 })}
               >
                 <h3 className="flex h-full font-sans text-2lg font-bold text-black/85">{d.name}</h3>
@@ -55,7 +55,7 @@ const HighlightedPlacesMobile = () => {
       {isHighlightedPlace && (
         <Link href="/" className="flex flex-1">
           <div
-            className={`flex h-60 flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
+            className={`flex h-60 flex-1 rounded-3xl bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
           >
             <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
               Worldwide

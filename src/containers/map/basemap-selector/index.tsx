@@ -44,7 +44,7 @@ const BasemapSelector = ({ className }: { className?: string }) => {
             type="button"
             data-basemap={id}
             className={cn({
-              'h-[45px] w-[35px] overflow-hidden rounded-3xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
+              'h-[45px] w-[35px] overflow-hidden rounded-4xl bg-transparent bg-cover bg-center p-0 transition-all duration-500 ease-in-out hover:shadow-[0_2px_5px_0_rgba(7,127,172,0.43)]':
                 true,
               'border-2 border-brand-800 shadow-soft': currentBasemap.id === id,
             })}

@@ -1,10 +1,11 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
 
@@ -13,13 +14,31 @@ import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
-import { Media } from 'components/media-query';
-
 import { useWidgets } from './hooks';
+
+const LOCAL_STORAGE_KEY = 'mangroves_blog';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
-  const [blogBanner, setBlogBanner] = useState(true);
+
+  const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
+  const [isBlogActive, setBlogActive] = useState(false);
+
+  const closeBlogBanner = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+
+      setBlogStorage(String(false));
+      setBlogActive(false);
+    },
+    [setBlogStorage]
+  );
+
+  useEffect(() => {
+    if (!blogStorage) {
+      setBlogActive(true);
+    }
+  }, [blogStorage, setBlogActive]);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
@@ -43,7 +62,7 @@ const WidgetsContainer: React.FC = () => {
       {widgets.length > 1 && (
         <button
           className={cn({
-            'mb-10 ml-[3%] w-48 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
               true,
             'border-white bg-white text-brand-800': widgetsCollapsedChecker,
           })}
@@ -52,7 +71,8 @@ const WidgetsContainer: React.FC = () => {
           {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
         </button>
       )}
-      <Media greaterThanOrEqual="md">{blogBanner && <Blog setBlogBanner={setBlogBanner} />}</Media>
+
+      {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
 
       {widgets.map(({ slug, name }, ind) => {
         const Widget = WIDGETS[slug];

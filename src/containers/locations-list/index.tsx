@@ -80,12 +80,12 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           <div style={style} ref={registerChild}>
             <button
               type="button"
-              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl  hover:bg-brand-800 hover:bg-opacity-10"
+              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10"
               onClick={() => {
                 handleLocation(locationsToDisplay[index]);
               }}
             >
-              <p className="text-left font-sans text-2lg text-black/85">
+              <p className="text-left font-sans text-2lg font-light text-black/85">
                 {locationsToDisplay[index].name}
               </p>
               <span className="text-xs text-grey-800 text-opacity-90">
@@ -99,11 +99,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative">
+    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
+      <div className="relative px-1 pt-0.5 md:px-0">
         <input
           type="search"
-          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 opacity-50"
+          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-grey-75 focus:outline-none focus:ring-1 focus:ring-grey-75"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -111,7 +111,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         {searchValue && (
           <button
             type="button"
-            className="absolute top-1/2 right-0 flex -translate-y-1/2 items-center"
+            className="absolute top-1/2 right-14 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
             <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
@@ -136,6 +136,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               rowRenderer={renderRow}
               rowCount={locationsToDisplay.length}
               overscanRowCount={15}
+              className="no-scrollbar"
             />
           )}
         </AutoSizer>

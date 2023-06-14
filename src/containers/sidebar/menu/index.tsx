@@ -34,7 +34,7 @@ const Menu = () => {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-[555px] rounded-[20px] px-10 py-0">
+          <DialogContent className="scroll-y top-24 h-[555px] rounded-3xl px-10 py-0">
             {!aboutSection && (
               <div className="flex flex-col py-10 text-black/85">
                 <h2 className="pb-3 text-xl font-bold">Global Mangrove Watch</h2>

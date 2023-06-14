@@ -36,7 +36,7 @@ const HighlightedPlaces = () => {
             >
               <div
                 className={cn({
-                  'flex h-60 flex-1 rounded-[20px] bg-cover bg-center': true,
+                  'flex h-60 flex-1 rounded-3xl bg-cover bg-center': true,
                   'bg-rufiji': HIGHLIGHTED_PLACES['rufiji'] === d.location_id,
                   'bg-saloum': HIGHLIGHTED_PLACES['saloum'] === d.location_id,
                 })}
@@ -51,7 +51,7 @@ const HighlightedPlaces = () => {
       {isHighlightedPlace && (
         <Link href="/" className="flex flex-1">
           <div
-            className={`flex h-60 flex-1 rounded-[20px] bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
+            className={`flex h-60 flex-1 rounded-3xl bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
           >
             <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
               Worldwide

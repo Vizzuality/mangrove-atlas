@@ -112,7 +112,7 @@ const WidgetDrawingTool = () => {
             <DialogTrigger>
               <span className="text-brand-800 underline">supported file formats</span>
             </DialogTrigger>
-            <DialogContent className="top-24 rounded-[20px] px-10">
+            <DialogContent className="top-24 rounded-3xl px-10">
               <div className="space-y-4">
                 <h3 className="font-bold">Analysis of a custom area:</h3>
                 <span className="text-lg">Draw or upload a custom shape</span>
