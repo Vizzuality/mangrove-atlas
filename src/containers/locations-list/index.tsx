@@ -77,10 +77,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     return (
       <CellMeasurer key={key} parent={parent} cache={cache} columnIndex={0} rowIndex={index}>
         {({ registerChild }) => (
-          <div style={style} ref={registerChild} className="no-scrollbar md:px-6">
+          <div style={style} ref={registerChild}>
             <button
               type="button"
-              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl  hover:bg-brand-800 hover:bg-opacity-10"
+              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10"
               onClick={() => {
                 handleLocation(locationsToDisplay[index]);
               }}
@@ -99,8 +99,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative pt-0.5 md:mx-10">
+    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:px-10 md:pt-0">
+      <div className="relative px-1 pt-0.5 md:px-0">
         <input
           type="search"
           className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-grey-75 focus:outline-none focus:ring-1 focus:ring-grey-75"
@@ -125,7 +125,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       <Media greaterThanOrEqual="md">
         <HighlightedPlaces />
       </Media>
-      <div className="relative h-full px-2">
+      <div className="relative h-full">
         <AutoSizer>
           {({ width, height }) => (
             <List

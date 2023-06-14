@@ -25,7 +25,7 @@ const HighlightedPlaces = () => {
   const isHighlightedPlace = Object.values(HIGHLIGHTED_PLACES).includes(location_id);
 
   return (
-    <div className="flex justify-between space-x-6 px-10">
+    <div className="flex justify-between space-x-6">
       {data.map((d) => {
         if (location_id !== d.location_id)
           return (
