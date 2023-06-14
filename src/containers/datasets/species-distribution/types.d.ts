@@ -24,6 +24,7 @@ type Data = { total: number; threatened: number; categories: Categories; species
 type Metadata = {
   note: 'nº of species';
   unit: null | string;
+  worldwide_total: number;
 };
 export type DataResponse = {
   data: Data;
