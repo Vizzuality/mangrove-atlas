@@ -26,7 +26,12 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
       {label && <p className="flex justify-center">{label}</p>}
       {settings?.map(({ label, valueFormatted, value, unit, color, variant }) => (
         <div key={label} className="flex flex-col">
-          <p className={cn({ 'flex space-x-4': true, 'flex-col': direction === 'vertical' })}>
+          <p
+            className={cn({
+              'flex items-center justify-center space-x-4': true,
+              'flex-col': direction === 'vertical',
+            })}
+          >
             <span className="flex items-center space-x-2">
               {color && (
                 <div
@@ -37,9 +42,9 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
                   style={{ backgroundColor: color }}
                 />
               )}
-              {<span className="font-bold">{label}</span>}
+              {<span className="text-xs font-bold">{label}</span>}
             </span>
-            <span className="whitespace-nowrap">
+            <span className="whitespace-nowrap text-xs">
               {' '}
               {valueFormatted || value} {unit}
             </span>
