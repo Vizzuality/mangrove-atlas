@@ -65,7 +65,7 @@ export function useMangroveSpecies(
       legend,
       ...query,
     };
-  }, [query, params, data]);
+  }, [query, data, location, noData, worldwideData]);
 }
 
 export function useSource(): SourceProps {
