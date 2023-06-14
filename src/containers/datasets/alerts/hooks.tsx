@@ -14,6 +14,7 @@ import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API_cloud_functions from 'services/cloud-functions';
 
@@ -131,7 +132,7 @@ export function useAlerts<T>(
   const {
     query: { params: queryParams },
   } = useRouter();
-  const locationType = queryParams?.[0];
+  const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
     data: { location_id },
@@ -430,7 +431,7 @@ export function useSources(): SourceProps[] {
   const {
     query: { params: queryParams },
   } = useRouter();
-  const locationType = queryParams?.[0];
+  const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
     data: { location_id },

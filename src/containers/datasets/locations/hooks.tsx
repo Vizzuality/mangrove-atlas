@@ -20,6 +20,12 @@ export const fetchLocations = () =>
     url: '/locations',
   }).then((response) => response.data);
 
+export const fetchLocation = (locationId: Location['location_id']) =>
+  API.request<{ data: DataResponse['data'][0] }>({
+    method: 'GET',
+    url: `/locations/${locationId}`,
+  }).then((response) => response.data);
+
 export function useLocations<T = DataResponse>(
   queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
 ) {
@@ -35,35 +41,28 @@ export function useLocations<T = DataResponse>(
 
 export function useLocation(
   locationType: LocationTypes,
-  id: string,
-  queryOptions: UseQueryOptions<DataResponse, Error, Location> = {}
+  id: Location['location_id'],
+  queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
 ) {
-  const queryClient = useQueryClient();
+  const _id = ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
-  return useQuery(['locations'], fetchLocations, {
-    placeholderData: queryClient.getQueryData(['locations']) || {
-      data: [],
-      metadata: null,
-    },
-    select: (data) => {
-      if (locationType === 'custom-area')
+  return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
+    placeholderData: { data: {} as DataResponse['data'][0] },
+
+    select: ({ data }) => {
+      if (locationType === 'custom-area') {
         return {
           name: 'the area selected',
           id: 'custom-area',
           location_id: 'custom-area',
           location_type: 'custom-area',
         };
-      const result = data?.data?.find((d) => {
-        return (
-          (d.location_type === locationType && (d.location_id === id || d.iso === id)) ||
-          d.iso === 'WORLDWIDE'
-        );
-      });
-
-      if (result.location_type === 'worldwide') {
-        result.name = 'the world';
       }
-      return result || null;
+
+      if (data.location_type === 'worldwide') {
+        data.name = 'the world';
+      }
+      return data;
     },
     ...queryOptions,
   });
@@ -72,8 +71,10 @@ export function useLocation(
 export function useHighlightedPlaces(
   queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {}
 ) {
-  return useQuery(['locations'], fetchLocations, {
-    placeholderData: {
+  const queryClient = useQueryClient();
+
+  return useQuery(['highlighted-locations'], fetchLocations, {
+    placeholderData: queryClient.getQueryData(['locations']) || {
       data: [],
       metadata: null,
     },

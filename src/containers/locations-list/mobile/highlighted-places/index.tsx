@@ -10,13 +10,14 @@ import {
   useLocation,
   HIGHLIGHTED_PLACES,
 } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 
 const HighlightedPlacesMobile = () => {
   const { data } = useHighlightedPlaces();
   const {
     query: { params },
   } = useRouter();
-  const locationType = params?.[0];
+  const locationType = params?.[0] as LocationTypes;
   const id = params?.[1];
 
   const {

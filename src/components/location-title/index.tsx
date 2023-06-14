@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
@@ -13,7 +14,7 @@ const LocationTitle = () => {
   const {
     query: { params },
   } = useRouter();
-  const locationType = params?.[0];
+  const locationType = params?.[0] as LocationTypes;
   const id = params?.[1];
   const {
     data: { name },

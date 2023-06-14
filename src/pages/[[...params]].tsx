@@ -10,6 +10,8 @@ import type { DataResponse } from 'containers/datasets/locations/hooks';
 
 import { Media } from 'components/media-query';
 
+import API from 'services/api';
+
 const Home = () => {
   return (
     <>
@@ -23,50 +25,55 @@ const Home = () => {
   );
 };
 
-const ALLOWED_LOCATION_TYPES = ['custom-area', 'wdpa', 'country', 'worldwide'];
+const ALLOWED_LOCATION_TYPES = ['custom-area'];
 
 const queryClient = new QueryClient();
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const locationType = ctx.params?.params?.[0];
   const locationId = ctx.params?.params?.[1];
-  const queryState = queryClient.getQueryState(['locations']);
   const URLBounds = ctx.query?.bounds;
 
-  if (queryState?.status !== 'success') {
-    await queryClient.prefetchQuery({
-      queryKey: ['locations'],
-      queryFn: fetchLocations,
-    });
+  if (locationId) {
+    try {
+      const response = await API.get<{ data: DataResponse['data'][0] }>(`/locations/${locationId}`);
+      if (response.status === 200) {
+        queryClient.setQueryData(['location', locationType, locationId], {
+          data: response.data.data,
+        });
+
+        if (!URLBounds) {
+          queryClient.setQueryData(['location-bounds'], turfBbox(response.data.data.bounds));
+        }
+
+        return {
+          props: {
+            dehydratedState: dehydrate(queryClient),
+          },
+        };
+      } else {
+        return {
+          notFound: true,
+        };
+      }
+    } catch (e) {
+      return {
+        notFound: true,
+      };
+    }
   }
 
-  const locations = queryClient.getQueryData<DataResponse>(['locations']);
-
-  const ALLOWED_LOCATIONS = [
-    ...new Set(
-      locations.data
-        .map(({ location_id, iso }) => [location_id, iso])
-        .map((ids) => [...ids])
-        .flat(1)
-    ),
-  ];
-
-  if (
-    (locationType && !ALLOWED_LOCATION_TYPES.includes(locationType)) ||
-    (locationId && !ALLOWED_LOCATIONS.includes(locationId))
-  ) {
+  if (locationType && !ALLOWED_LOCATION_TYPES.includes(locationType)) {
     return {
       notFound: true,
     };
   }
 
-  if (!URLBounds && locationId) {
-    const location = locations.data.find(({ location_id, iso }) =>
-      [location_id, iso].includes(locationId)
-    );
-    if (location) {
-      queryClient.setQueryData(['location-bounds'], turfBbox(location.bounds));
-    }
+  if (queryClient.getQueryState(['locations'])?.status !== 'success') {
+    queryClient.prefetchQuery({
+      queryKey: ['locations'],
+      queryFn: fetchLocations,
+    });
   }
 
   return {
