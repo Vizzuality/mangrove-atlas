@@ -6,7 +6,7 @@ import cn from 'lib/classnames';
 
 import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
-import { SetRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Loading from 'components/loading';

@@ -7,7 +7,6 @@ import { numberFormat } from 'lib/format';
 import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';

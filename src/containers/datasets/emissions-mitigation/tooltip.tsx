@@ -1,7 +1,5 @@
-import { useMemo } from 'react';
-
 import cn from 'lib/classnames';
-
+import { numberFormat } from 'lib/format';
 type TooltipProps = {
   payload: {
     name: string;
@@ -25,7 +23,7 @@ const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
 
       {/* recharts organic order is from bottom to top for the stacked bars and from top to bottom in tooltip, using reverse to show tooltip values from bottom to top */}
       {payload.reverse()?.map(({ color, name, dataKey, value }) => (
-        <p key={dataKey} className={cn({ 'flex justify-between space-x-4': true })}>
+        <p key={dataKey} className={cn({ 'flex items-end justify-between space-x-4': true })}>
           <span className="flex flex-1 space-x-2">
             <span
               className={cn({
@@ -33,9 +31,9 @@ const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
               })}
               style={{ backgroundColor: color }}
             />
-            {<span className="whitespace-nowrap font-bold">{name}</span>}
+            {<span className="min-w-[200px] flex-wrap font-bold">{name}</span>}
           </span>
-          {<span>{value}</span>}
+          {<span>{numberFormat(value)}</span>}
         </p>
       ))}
     </div>

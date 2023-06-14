@@ -173,23 +173,13 @@ export function useMangroveEmissionsMitigation(
         left: 25,
         bottom: 20,
       },
-
-      referenceLines: [
-        {
-          y: 0,
-          stroke: 'black',
-          strokeDasharray: 'solid',
-          fill: 'black',
-          opacity: '1',
-          label: null,
-        },
-      ],
       xAxis: {
         tick: {
           fontSize: 12,
           lineheight: 20,
           fill: 'rgba(0, 0, 0, 0.54)',
         },
+        axisLine: false,
         interval: 0,
         label: {
           content: LabelXAxis,
@@ -211,7 +201,7 @@ export function useMangroveEmissionsMitigation(
       },
       cartesianGrid: {
         vertical: false,
-        strokeDasharray: '5 15',
+        strokeDasharray: '5 5',
       },
       legend: legendPayload,
       tooltip: {

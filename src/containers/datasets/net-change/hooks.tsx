@@ -214,7 +214,7 @@ export function useMangroveNetChange(
       noData,
       ...query,
     };
-  }, [data, query, startYear, endYear, location, selectedUnit]);
+  }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
 
 export function useSources(years: number[]): SourceProps[] {
