@@ -23,7 +23,7 @@ export const EXT_MENU_OPTIONS = [
   {
     id: 'news',
     label: 'News',
-    href: 'https://www.mangrovealliance.org/news',
+    section: 'news',
   },
   {
     id: 'resources',
