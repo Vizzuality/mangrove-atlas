@@ -25,7 +25,7 @@ export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="relative z-20 my-2 ml-[3%] h-12 w-[94%] rounded-2xl bg-brand-800 md:ml-0 lg:w-[540px]">
+        <div className="relative my-2 ml-[3%] h-12 w-[94%] rounded-2xl bg-brand-800 md:ml-0 lg:w-[540px]">
           <div className="flex h-full items-center justify-between px-4">
             <div className="flex items-center space-x-2 sm:space-x-4">
               <Icon

@@ -99,7 +99,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:px-10 md:pt-0">
+    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
       <div className="relative px-1 pt-0.5 md:px-0">
         <input
           type="search"
