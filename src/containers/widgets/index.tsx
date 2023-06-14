@@ -34,6 +34,7 @@ const WidgetsContainer: React.FC = () => {
     }, {});
 
     updateWidgetsCollapsed[lastWidgetSlug] = false;
+    updateWidgetsCollapsed['mangrove_drawing_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
   }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);

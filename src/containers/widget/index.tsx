@@ -32,6 +32,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
     const updatedWidgetsCollapsed = {
       ...widgetsCollapsed,
       [id]: !widgetsCollapsed[id],
+      ['mangrove_drawing_tool']: false,
     };
     setWidgetsCollapsed(updatedWidgetsCollapsed);
   }, [id, widgetsCollapsed, setWidgetsCollapsed]);

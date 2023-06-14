@@ -26,7 +26,9 @@ export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
   default: widgets.reduce((previousObject, currentObject) => {
     return Object.assign(previousObject, {
+      ...previousObject,
       [currentObject.slug]: false,
+      mangrove_drawing_tool: false,
     });
   }, {}),
 });

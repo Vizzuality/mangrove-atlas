@@ -20,8 +20,18 @@ import type { DataResponse, UseParamsOptions, emissionsMitigationData, Data } fr
 
 interface DataBar {
   category: DataResponse['data'][0]['category'];
+  indicator: DataResponse['data'][0]['category'];
   [key: string]: number | DataResponse['data'][0]['category'];
 }
+const COLORS = {
+  'reduce mangrove loss': '#79D09A',
+  'mangrove restoration': '#3EA3A1',
+  'reforestation (tropics)': '#FBD07E',
+  'reduce peatland degradation and conversion': '#FF98B1',
+  'reduce deforestation': '#C57CF2',
+  'grassland and savanna fire mgmt': '#74C5FF',
+  'forest management (global)': '#7287F9',
+};
 
 const getData = (data) => {
   const dataByCategory = groupBy(data, 'category');
@@ -140,8 +150,9 @@ export function useMangroveEmissionsMitigation(
     const orderedData = orderBy(data?.data, ['category'], ['asc']);
     const indicators =
       orderedData?.map((d, i) => ({
-        [d.indicator]: COLOR_RAMP[i],
+        [d.indicator]: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
         category: d.category,
+        color: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
         order: `${i}-${d.category}`,
       })) || ([] satisfies Data[]);
 
