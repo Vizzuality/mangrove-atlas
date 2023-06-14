@@ -4,11 +4,11 @@ python-dotenv>=0.5.1
 
 # external tools requirements
 tqdm == 4.62.3
-pandas == 1.2.2
-geopandas == 0.10.2
+pandas
+geopandas
 simpledbf
 psycopg2
-matplotlib == 3.3.4
+matplotlib
 earthengine-api
 gcsfs
 s3fs
