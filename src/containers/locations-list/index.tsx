@@ -100,10 +100,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   return (
     <div className="no-scrollbar space-y-4 overflow-hidden after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-      <div className="relative md:mx-10">
+      <div className="relative pt-0.5 md:mx-10">
         <input
           type="search"
-          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:outline-none"
+          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-grey-75 focus:outline-none focus:ring-1 focus:ring-grey-75"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
