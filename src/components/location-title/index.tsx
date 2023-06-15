@@ -9,6 +9,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
+import { LOCATIONS_DIALOG_STYLES } from 'styles/locations';
 
 const LocationTitle = () => {
   const {
@@ -57,7 +58,7 @@ const LocationTitle = () => {
             {locationName}
           </h1>
         </DialogTrigger>
-        <DialogContent className="h-[90vh] w-[540px] rounded-3xl px-10 pt-10 pb-0">
+        <DialogContent className={LOCATIONS_DIALOG_STYLES}>
           <LocationsList />
           <DialogClose />
         </DialogContent>
