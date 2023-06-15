@@ -42,7 +42,7 @@ const Tooltip: FC = ({ active, payload: data }: TooltipProps) => {
             {<span className="font-bold">{label}</span>}
           </span>
         </p>
-        <p className={cn({ 'flex space-x-4': true })}>
+        <p className="flex space-x-4 text-xs">
           <span className="font-bold">{tooltipLabelPercentage}</span>
           <span> {percentage}%</span>
         </p>

@@ -150,11 +150,11 @@ export function useMangroveHabitatExtent(
         color: '#06C4BD',
         settings: [
           {
-            label: 'Percentage:',
+            label: 'Percentage',
             value: numberFormat(mangroveCoastCoveragePercentage),
             unit: '%',
           },
-          { label: 'Coverage:', value: numberFormat(coastlineCoverage), unit },
+          { label: 'Coverage', value: numberFormat(coastlineCoverage), unit },
         ],
       },
       {
