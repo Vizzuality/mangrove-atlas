@@ -33,7 +33,7 @@ class BlueCarbonCalculationsClass extends BaseCalculation {
             ...reducerOpt,
             reducer: reducers
           })
-    const from = ee.List(['abg_co2e', 'soc_co2e','total_co2e'])
+    const from = ee.List(['agb_co2e', 'soc_co2e','total_co2e'])
     const to = ee.List(['agb', 'soc', 'toc'])
     const totals = image.select(from).reduceRegion({
       ...reducerOpt,
