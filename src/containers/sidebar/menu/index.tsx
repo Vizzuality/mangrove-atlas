@@ -51,7 +51,9 @@ const Menu = () => {
           >
             {section === 'main' && (
               <div className="flex flex-col py-10 font-sans text-black/85">
-                <h2 className="pb-8 text-3xl font-light">Global Mangrove Watch</h2>
+                <h2 className="pb-8 pt-10 text-2xl font-light md:pt-0 md:text-3xl">
+                  Global Mangrove Watch
+                </h2>
                 <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
                   <button onClick={() => section && setSection('about')}>About this tool</button>
                   <button onClick={() => section && setSection('news')}>News</button>
