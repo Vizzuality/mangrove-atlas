@@ -58,7 +58,7 @@ export const DEFAULT_PROPS = {
     pitch: 0,
     bearing: 0,
   },
-  minZoom: 2,
+  minZoom: 1,
   maxZoom: 20,
 };
 
