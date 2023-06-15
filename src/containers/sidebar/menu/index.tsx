@@ -15,6 +15,7 @@ import Icon from 'components/icon';
 import GMA_PNG from 'images/gma.png';
 
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
+import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 const Menu = () => {
   const [openSubmenu, setOpenSubmenu] = useState(false);
@@ -60,28 +61,49 @@ const Menu = () => {
                   </a>
                   <button onClick={() => section && setSection('news')}>News</button>
                 </div>
-                <div className="space-y-3 pb-6">
+                <div className="space-y-4 pb-6">
                   <p className="text-xs font-bold uppercase">Powered by</p>
-                  <button onClick={handleOpenSubmenu}>
-                    <p className="pb-3 text-left text-2lg font-light">Global Mangrove Alliance</p>
+                  <button onClick={handleOpenSubmenu} className="flex items-start space-x-4">
+                    <p className="pb-3 text-left text-2lg font-light leading-3">
+                      Global Mangrove Alliance
+                    </p>
+                    <Icon
+                      icon={ARROW_SVG}
+                      className={cn({
+                        'h-3 w-3 stroke-current': true,
+                        'rotate-180 transform': openSubmenu,
+                        'rotate-0 transform': !openSubmenu,
+                      })}
+                    />
                   </button>
                 </div>
-                {openSubmenu && (
-                  <div className="mb-14 flex flex-col space-y-3 border-l pl-7">
-                    {EXT_MENU_OPTIONS.map(({ id, label, href, section }) => (
-                      <a
-                        key={id}
-                        className="cursor-pointer text-2lg font-light"
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={() => section && setSection(section)}
-                      >
-                        {label}
-                      </a>
-                    ))}
-                  </div>
-                )}
+                <AnimatePresence>
+                  {openSubmenu && (
+                    <motion.div
+                      className="mb-14 flex flex-col space-y-3 border-l pl-7"
+                      initial="hidden"
+                      animate="displayed"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        displayed: { opacity: 1 },
+                      }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {EXT_MENU_OPTIONS.map(({ id, label, href, section }) => (
+                        <a
+                          key={id}
+                          className="cursor-pointer text-2lg font-light"
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => section && setSection(section)}
+                        >
+                          {label}
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
               </div>
