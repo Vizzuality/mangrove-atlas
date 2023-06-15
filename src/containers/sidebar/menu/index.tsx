@@ -2,6 +2,10 @@ import { useCallback, useState } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 
+import cn from 'lib/classnames';
+
+import { AnimatePresence, motion } from 'framer-motion';
+
 import BlogContent from 'containers/blog/content';
 import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
 
@@ -36,7 +40,13 @@ const Menu = () => {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-fit rounded-3xl px-10 py-0">
+          <DialogContent
+            className={cn({
+              'scroll-y top-[2%] rounded-3xl font-sans md:top-[5vh] md:max-w-xl': true,
+              'h-fit px-10 py-0': section === 'main',
+              'h-[96%] px-10 pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news',
+            })}
+          >
             {section === 'main' && (
               <div className="flex flex-col py-10 font-sans text-black/85">
                 <h2 className="pb-8 text-3xl font-light">Global Mangrove Watch</h2>
@@ -76,12 +86,22 @@ const Menu = () => {
                 <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
               </div>
             )}
-
-            {section === 'news' && (
-              <div className="no-scrollbar overflow-y-auto pt-3 font-sans">
-                <BlogContent />
-              </div>
-            )}
+            <AnimatePresence>
+              {section === 'news' && (
+                <motion.div
+                  className="no-scrollbar overflow-y-auto pt-3 font-sans"
+                  initial="hidden"
+                  animate="displayed"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    displayed: { opacity: 1 },
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <BlogContent />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <DialogClose />
           </DialogContent>
         </Dialog>
