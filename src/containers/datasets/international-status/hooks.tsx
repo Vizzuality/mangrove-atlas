@@ -10,6 +10,7 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -26,7 +27,7 @@ export function useMangroveInternationalStatus(
   const {
     query: { params: queryParams },
   } = useRouter();
-  const locationType = queryParams?.[0];
+  const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
