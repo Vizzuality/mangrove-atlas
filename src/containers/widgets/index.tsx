@@ -98,9 +98,6 @@ const WidgetsContainer: React.FC = () => {
               title={name}
               id={slug}
               className={cn({
-                'mb-10 ml-[3%] w-48 rounded-3xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44 print:hidden':
-                  true,
-                'border-white bg-white text-brand-800': widgetsCollapsedChecker,
                 'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid': true,
               })}
             >
