@@ -130,7 +130,7 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_height',
   'mangrove_biomass',
   'mangrove_alerts',
-  //  'mangrove_blue_carbon',  // todo:  put back when API calculations get fixed
+  'mangrove_blue_carbon',
 ];
 
 export default widgets;
