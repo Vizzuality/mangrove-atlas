@@ -104,7 +104,9 @@ body {
   border-top-color: #00857F !important;
 }
 
-
+.txlive-langselector {
+  @apply !top-0 !right-28 !bottom-auto !left-auto;
+}
 
 
 
