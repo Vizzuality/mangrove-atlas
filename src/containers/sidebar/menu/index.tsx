@@ -1,20 +1,28 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
+import cn from 'lib/classnames';
+
+import { AnimatePresence, motion } from 'framer-motion';
+
+import BlogContent from 'containers/blog/content';
 import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
+import About from 'containers/sidebar/menu/about';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import GMA_PNG from 'images/gma.png';
-import VIZZUALITY_PNG from 'images/vizzuality.png';
 
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
+import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 const Menu = () => {
-  const [aboutSection, setAboutSection] = useState<boolean>(false);
+  const [openSubmenu, setOpenSubmenu] = useState(false);
+  const [section, setSection] = useState('main');
+
+  const handleOpenSubmenu = useCallback(() => setOpenSubmenu(!openSubmenu), [openSubmenu]);
 
   return (
     <div>
@@ -26,7 +34,7 @@ const Menu = () => {
           <DialogTrigger>
             <div
               className="flex justify-center rounded-full p-1 md:bg-white"
-              onClick={() => setAboutSection(false)}
+              onClick={() => setSection('main')}
             >
               <Icon
                 icon={MENU_SVG}
@@ -34,68 +42,100 @@ const Menu = () => {
               />
             </div>
           </DialogTrigger>
-          <DialogContent className="scroll-y top-24 h-[555px] rounded-3xl px-10 py-0">
-            {!aboutSection && (
-              <div className="flex flex-col py-10 text-black/85">
-                <h2 className="pb-3 text-xl font-bold">Global Mangrove Watch</h2>
-                <button
-                  className="pb-3 text-left text-2lg font-light"
-                  onClick={() => setAboutSection(true)}
-                >
-                  About this tool
-                </button>
-                <p className="pb-3 text-left text-2lg font-light">Global Mangrove Alliance</p>
-                <div className="mb-14 flex flex-col space-y-3 border-l pl-7">
-                  {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
-                    <a
-                      key={id}
-                      className="text-2lg font-light"
-                      href={href}
-                      target="_blank"
-                      rel="noreferrer"
+          <DialogContent
+            className={cn({
+              'scroll-y top-[2%] rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl': true,
+              'h-fit py-0': section === 'main',
+              'h-[96%] pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
+            })}
+          >
+            {section === 'main' && (
+              <div className="flex flex-col py-10 font-sans text-black/85">
+                <h2 className="pb-8 pt-10 text-2xl font-light md:pt-0 md:text-3xl">
+                  Global Mangrove Watch
+                </h2>
+                <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
+                  <button onClick={() => section && setSection('about')}>About this tool</button>
+                  <button onClick={() => section && setSection('news')}>News</button>
+                </div>
+                <div className="space-y-4 pb-6">
+                  <p className="text-xs font-bold uppercase">Powered by</p>
+                  <button onClick={handleOpenSubmenu} className="flex items-start space-x-4">
+                    <p className="pb-3 text-left text-2lg font-light leading-3">
+                      Global Mangrove Alliance
+                    </p>
+                    <Icon
+                      icon={ARROW_SVG}
+                      className={cn({
+                        'h-3 w-3 stroke-current': true,
+                        'rotate-180 transform': openSubmenu,
+                        'rotate-0 transform': !openSubmenu,
+                      })}
+                    />
+                  </button>
+                </div>
+                <AnimatePresence>
+                  {openSubmenu && (
+                    <motion.div
+                      className="mb-14 flex flex-col space-y-3 border-l pl-7"
+                      initial="hidden"
+                      animate="displayed"
+                      variants={{
+                        hidden: { opacity: 0 },
+                        displayed: { opacity: 1 },
+                      }}
+                      transition={{ duration: 0.4 }}
                     >
-                      {label}
-                    </a>
-                  ))}
-                </div>
-                <div className="flex h-20 items-center justify-between font-sans text-xs font-semibold uppercase">
-                  <div className="flex h-full flex-col justify-between">
-                    <p>Powered by</p>
-                    <Image alt="GMA" src={GMA_PNG} width={130} height={100} />
-                  </div>
-                  <div className="flex h-full flex-col items-end justify-between">
-                    <p>Designed by</p>
-                    <div className="flex h-full items-center">
-                      <Image alt="Vizzuality" src={VIZZUALITY_PNG} width={130} height={100} />
-                    </div>
-                  </div>
-                </div>
+                      {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
+                        <a
+                          key={id}
+                          className="cursor-pointer text-2lg font-light"
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {label}
+                        </a>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
               </div>
             )}
-            {aboutSection && (
-              <div className="no-scrollbar overflow-y-auto pt-3 font-sans before:absolute before:top-0 before:left-0 before:h-10 before:w-full before:rounded-t-[20px] before:bg-gradient-to-b before:from-white/100 before:to-white/20 before:content-[''] after:absolute after:bottom-0 after:left-0 after:h-10 after:w-full after:rounded-b-[20px] after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-['']">
-                <h3 className="pt-5 text-xl font-bold">About Global Mangrove Watch</h3>
-                <h4 className="py-6 text-2lg font-bold">
-                  Monitoring to catalyse the action needed to protect and restore mangroves
-                </h4>
-                <p className="pb-5 text-2lg font-light">
-                  Thriving mangroves are key to the health of nature and effective climate action.
-                  Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
-                  data and tools for monitoring mangroves necessary for this. It gives universal
-                  access to near real-time information on where and what changes there are to
-                  mangroves across the world, and highlights why they are valuable.
-                </p>
-                <p className="pb-5 text-2lg font-light">
-                  With hi-res information on topography, soil conditions and hydrology, Global
-                  Mangrove Watch gives coastal and park managers, conservationists, policymakers and
-                  practitioners the evidence needed to respond to illegal logging, pinpoint the
-                  causes of local mangrove loss and track restoration progress. It is a tool that
-                  can help mangroves be central to climate mitigation, adaptation and sustainable
-                  development plans and policies.
-                </p>
-                <h4 className="py-6 text-2lg font-bold">Global Mangrove Watch Partners</h4>
-              </div>
-            )}
+            <AnimatePresence>
+              {section === 'about' && (
+                <motion.div
+                  className="no-scrollbar overflow-y-auto font-sans"
+                  initial="hidden"
+                  animate="displayed"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    displayed: { opacity: 1 },
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <About />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {section === 'news' && (
+                <motion.div
+                  className="no-scrollbar overflow-y-auto pt-3 font-sans"
+                  initial="hidden"
+                  animate="displayed"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    displayed: { opacity: 1 },
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <BlogContent />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <DialogClose />
           </DialogContent>
         </Dialog>
