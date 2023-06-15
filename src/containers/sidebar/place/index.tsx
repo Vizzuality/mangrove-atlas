@@ -16,6 +16,7 @@ import LocationsList from 'containers/locations-list';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
+import { LOCATIONS_DIALOG_STYLES } from 'styles/locations';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
@@ -167,7 +168,7 @@ const Place = () => {
             </button>
           </DialogTrigger>
           <DialogContent
-            className="h-[90vh] w-[540px] rounded-3xl px-0 pt-10 pb-0"
+            className={LOCATIONS_DIALOG_STYLES}
             onEscapeKeyDown={closeMenu}
             onInteractOutside={closeMenu}
           >
