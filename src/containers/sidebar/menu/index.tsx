@@ -15,6 +15,10 @@ import Icon from 'components/icon';
 
 import GMA_PNG from 'images/gma.png';
 
+import ABERYSTWYTH_SVG from 'svgs/partners/aberystwyth.svg?sprite';
+import NATURE_CONSERVANCY_SVG from 'svgs/partners/nature.svg?sprite';
+import SOLO_SVG from 'svgs/partners/solo.svg?sprite';
+import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -77,7 +81,7 @@ const Menu = () => {
                 <AnimatePresence>
                   {openSubmenu && (
                     <motion.div
-                      className="mb-14 flex flex-col space-y-3 border-l pl-7"
+                      className="mb-14 flex flex-col space-y-4"
                       initial="hidden"
                       animate="displayed"
                       variants={{
@@ -86,17 +90,26 @@ const Menu = () => {
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
-                        <a
-                          key={id}
-                          className="cursor-pointer text-2lg font-light"
-                          href={href}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {label}
-                        </a>
-                      ))}
+                      <div className="flex flex-col space-y-3 border-l pl-7">
+                        {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
+                          <a
+                            key={id}
+                            className="cursor-pointer text-2lg font-light"
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {label}
+                          </a>
+                        ))}
+                      </div>
+
+                      <div className="flex w-full items-center justify-between">
+                        <Icon icon={ABERYSTWYTH_SVG} className="w-28" />
+                        <Icon icon={SOLO_SVG} className="w-28" />
+                        <Icon icon={WETLANDS_SVG} className="w-28" />
+                        <Icon icon={NATURE_CONSERVANCY_SVG} className="w-28" />
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
