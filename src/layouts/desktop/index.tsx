@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
 
-import LanguageSelector from 'containers/language-selector';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
@@ -47,7 +46,6 @@ const DesktopLayout = () => {
         <MapContainer mapId="default-desktop" />
         <Sidebar />
         <WidgetsContainer />
-        <LanguageSelector />
       </div>
     </div>
   );
