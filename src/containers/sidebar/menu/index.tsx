@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import BlogContent from 'containers/blog/content';
 import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
+import About from 'containers/sidebar/menu/about';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
@@ -43,22 +44,16 @@ const Menu = () => {
           </DialogTrigger>
           <DialogContent
             className={cn({
-              'scroll-y top-[2%] rounded-3xl font-sans md:top-[5vh] md:max-w-xl': true,
-              'h-fit px-10 py-0': section === 'main',
-              'h-[96%] px-10 pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news',
+              'scroll-y top-[2%] rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl': true,
+              'h-fit py-0': section === 'main',
+              'h-[96%] pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
             })}
           >
             {section === 'main' && (
               <div className="flex flex-col py-10 font-sans text-black/85">
                 <h2 className="pb-8 text-3xl font-light">Global Mangrove Watch</h2>
                 <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
-                  <a
-                    href="https://www.mangrovealliance.org/about-us"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    About
-                  </a>
+                  <button onClick={() => section && setSection('about')}>About this tool</button>
                   <button onClick={() => section && setSection('news')}>News</button>
                 </div>
                 <div className="space-y-4 pb-6">
@@ -89,14 +84,13 @@ const Menu = () => {
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      {EXT_MENU_OPTIONS.map(({ id, label, href, section }) => (
+                      {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
                         <a
                           key={id}
                           className="cursor-pointer text-2lg font-light"
                           href={href}
                           target="_blank"
                           rel="noreferrer"
-                          onClick={() => section && setSection(section)}
                         >
                           {label}
                         </a>
@@ -108,6 +102,22 @@ const Menu = () => {
                 <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
               </div>
             )}
+            <AnimatePresence>
+              {section === 'about' && (
+                <motion.div
+                  className="no-scrollbar overflow-y-auto font-sans"
+                  initial="hidden"
+                  animate="displayed"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    displayed: { opacity: 1 },
+                  }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <About />
+                </motion.div>
+              )}
+            </AnimatePresence>
             <AnimatePresence>
               {section === 'news' && (
                 <motion.div
