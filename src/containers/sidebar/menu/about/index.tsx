@@ -1,6 +1,13 @@
+import Image, { StaticImageData } from 'next/image';
+
+import CONVENED_PNG from 'images/partners/convened.png';
+import DONORS_PNG from 'images/partners/donors.png';
+import SUPPORTED_PNG from 'images/partners/supported.png';
+import VIZZUALITY_PNG from 'images/vizzuality.png';
+
 const About = () => {
   return (
-    <div className="pt-10 font-sans text-2lg font-light leading-8 text-black/85">
+    <div className="py-10 font-sans text-2lg font-light leading-8 text-black/85">
       <h2 className="py-6 text-3xl font-bold">About Global Mangrove Watch</h2>
       <h3 className="pb-6 text-xl font-bold leading-8">
         Monitoring to catalyse the action needed to protect and restore mangroves
@@ -56,7 +63,53 @@ const About = () => {
           <span className="font-semibold text-brand-800">Mangrove Alliance</span>
         </p>
 
-        <p>Convened by</p>
+        <div className="space-y-6">
+          <div>
+            <p>Convened by</p>
+            <Image
+              src={CONVENED_PNG as StaticImageData}
+              alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International"
+            />
+          </div>
+          <div>
+            <p>Supported by</p>
+            <Image
+              src={SUPPORTED_PNG as StaticImageData}
+              alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography"
+            />
+          </div>
+
+          <div>
+            <p>Donors</p>
+            <Image
+              src={DONORS_PNG as StaticImageData}
+              alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation"
+            />
+          </div>
+
+          <div>
+            <p>Designed by:</p>
+            <a
+              href="https://www.vizzuality.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="m-10"
+            >
+              <Image src={VIZZUALITY_PNG as StaticImageData} alt="vizzuality" width={200} />
+            </a>
+          </div>
+        </div>
+
+        <h3 className="py-6 text-xl font-bold leading-8">Disclaimer</h3>
+        <p>
+          THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE
+          PROVIDED ON AN “AS IS” BASIS AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER
+          EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES,
+          STATUTORY, EXPRESS OR IMPLIED, INCLUDING IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS
+          FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. ACTUAL CONDITIONS MAY DIFFER FROM
+          MAPS AND INFORMATION PROVIDED BY THE SERVICES. WE DO NOT WARRANT THAT THE CONTENT OR
+          SERVICES WILL BE ERROR FREE, ACCURATE OR WITHOUT INTERRUPTION.
+        </p>
       </div>
     </div>
   );
