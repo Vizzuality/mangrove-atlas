@@ -104,7 +104,22 @@ body {
   border-top-color: #00857F !important;
 }
 
+.txlive-langselector {
+  @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans;
+}
 
+.txlive-langselector-list {
+  @apply !bottom-auto !left-0 !right-auto !top-0 !bg-white !rounded-b-3xl !text-brand-800 ;
+}  
 
+.txlive-langselector-marker {
+  @apply !absolute !right-6 !rotate-180;
+}
 
+.txlive-langselector-toggle {
+  @apply !border-0 !pr-10;
+}
 
+.txlive-langselector-list > li:hover {
+  @apply  !text-black/85 !bg-white;
+}

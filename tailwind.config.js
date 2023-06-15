@@ -66,6 +66,7 @@ module.exports = {
       width: {
         7.5: '1.875rem',
         10.5: '2.625rem',
+        22: '5.5rem',
       },
       borderRadius: {
         '3xl': '1.25rem', // 20px
