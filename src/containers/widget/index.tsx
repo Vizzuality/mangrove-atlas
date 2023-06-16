@@ -80,8 +80,8 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
           <div
             className={cn({
               hidden: widgetsCollapsed[id],
-              'display-block': !widgetsCollapsed[id],
-              'last-of-type:display-block': true, //prevent last widget to collapse
+              block: !widgetsCollapsed[id],
+              'last-of-type:block': true, //prevent last widget to collapse
             })}
           >
             {children}
