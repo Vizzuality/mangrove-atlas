@@ -100,10 +100,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   return (
     <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
-      <div className="relative px-1 pt-0.5 md:px-0">
+      <div className="relative box-border w-full px-2 pt-0.5 md:px-0">
         <input
           type="search"
-          className="w-full flex-1 border-none bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-grey-75 focus:outline-none focus:ring-1 focus:ring-grey-75"
+          className="relative mx-1 box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2  focus:border-grey-75 focus:outline-none focus:ring-transparent"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -111,7 +111,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         {searchValue && (
           <button
             type="button"
-            className="absolute top-1/2 right-14 flex -translate-y-1/2 items-center"
+            className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
             <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
