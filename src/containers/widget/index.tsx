@@ -77,8 +77,15 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
             </h2>
             <WidgetControls id={id} />
           </header>
-
-          {!widgetsCollapsed[id] && children}
+          <div
+            className={cn({
+              hidden: widgetsCollapsed[id],
+              'display-block': !widgetsCollapsed[id],
+              'last-of-type:display-block': true, //prevent last widget to collapse
+            })}
+          >
+            {children}
+          </div>
         </div>
       </motion.div>
     </AnimatePresence>
