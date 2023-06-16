@@ -58,7 +58,7 @@ const LocationTitle = () => {
             {locationName}
           </h1>
         </DialogTrigger>
-        <DialogContent className={LOCATIONS_DIALOG_STYLES}>
+        <DialogContent className={`${LOCATIONS_DIALOG_STYLES} h-[90vh] w-[540px]`}>
           <LocationsList />
           <DialogClose />
         </DialogContent>
