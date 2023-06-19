@@ -22,7 +22,7 @@ export const widgetYearAtom = atom<number>({
   default: null,
 });
 
-export const widgetsCollapsedAtom = atom({
+export const widgetsCollapsedAtom = atom<Record<string, boolean>>({
   key: 'widgets-collapsed',
   default: widgets.reduce((previousObject, currentObject) => {
     return Object.assign(previousObject, {

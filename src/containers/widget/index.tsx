@@ -46,6 +46,19 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
     },
   };
 
+  const widgetContentVariants = {
+    collapsed: {
+      display: 'none',
+      height: 0,
+      opacity: 0,
+    },
+    expanded: {
+      display: 'block',
+      height: 'auto',
+      opacity: 1,
+    },
+  };
+
   if (Boolean(children.type() === null)) return null;
 
   return (
@@ -77,7 +90,12 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
             </h2>
             <WidgetControls id={id} />
           </header>
-          <div
+          <motion.div
+            initial={false}
+            variants={widgetContentVariants}
+            animate={widgetsCollapsed[id] ? 'collapsed' : 'expanded'}
+            exit="expanded"
+            transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
             className={cn({
               hidden: widgetsCollapsed[id],
               block: !widgetsCollapsed[id],
@@ -85,7 +103,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
             })}
           >
             {children}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </AnimatePresence>
