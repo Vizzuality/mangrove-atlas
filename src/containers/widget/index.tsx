@@ -95,7 +95,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
             variants={widgetContentVariants}
             animate={widgetsCollapsed[id] ? 'collapsed' : 'expanded'}
             exit="expanded"
-            transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
+            transition={{ type: 'spring', bounce: 0, duration: 0.8, opacity: { delay: 0.2 } }}
             className={cn({
               hidden: widgetsCollapsed[id],
               block: !widgetsCollapsed[id],
