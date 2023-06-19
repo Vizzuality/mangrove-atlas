@@ -178,7 +178,9 @@ const HabitatExtent = () => {
               </li>
             ))}
           </ul>
-          <Chart config={config} />
+          <div className="w-full print:scale-x-90 print:transform">
+            <Chart config={config} />
+          </div>
 
           <button
             type="button"

@@ -4,10 +4,7 @@ import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
-import { widgetYearAtom } from 'store/widgets';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -23,7 +20,6 @@ export function useMangroveInternationalStatus(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, { data: Data[] }>
 ): InternationalStatusTypes {
-  const currentYear = useRecoilValue(widgetYearAtom);
   const {
     query: { params: queryParams },
   } = useRouter();
@@ -39,7 +35,6 @@ export function useMangroveInternationalStatus(
       url: '/widgets/international_status',
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        year: currentYear,
         ...params,
       },
       ...queryOptions,

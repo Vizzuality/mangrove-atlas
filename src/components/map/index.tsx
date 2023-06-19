@@ -136,7 +136,7 @@ export const CustomMap: FC<CustomMapProps> = ({
   return (
     <div
       className={cx({
-        'relative z-0 h-screen w-full': true,
+        'relative z-0 h-screen w-full print:h-[90vh]': true,
         [className]: !!className,
       })}
     >

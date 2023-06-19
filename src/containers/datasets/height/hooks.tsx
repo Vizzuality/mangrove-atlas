@@ -8,7 +8,6 @@ import { numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
-import { widgetYearAtom } from 'store/widgets';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -89,7 +88,6 @@ export function useMangroveHeight(
   } = useLocation(locationType, id);
   const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
-  const currentYear = useRecoilValue(widgetYearAtom);
   const geojson = customGeojson || uploadedGeojson;
 
   const fetchMangroveHeight = ({ signal }: { signal?: AbortSignal }) => {
@@ -117,7 +115,6 @@ export function useMangroveHeight(
       url: '/widgets/tree_height',
       params: {
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        year: currentYear,
         ...params,
       },
       ...queryOptions,

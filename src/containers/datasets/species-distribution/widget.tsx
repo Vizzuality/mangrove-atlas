@@ -42,19 +42,20 @@ const SpeciesDistribution = () => {
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
       {isFetched && !isLoading && (
-        <div className="pb-8">
+        <div className="w-full pb-8">
+          {/* mangrove sentence styles, create constant */}
           <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold">{total}</span> species of mangroves distributed by country
             as map shows.
           </p>
-          <div className="relative w-full font-sans text-sm text-black/85 ">
+          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85 ">
             <p className="w-full text-end opacity-50">total species</p>
 
             <div
               ref={ref}
               className={cn({
-                'relative  h-7 w-full': true,
+                'relative h-7 w-full': true,
                 'my-2.5': isWorldwide,
                 'mt-8 mb-2.5': !isWorldwide,
               })}

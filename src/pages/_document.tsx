@@ -15,6 +15,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <style type="text/css" dangerouslySetInnerHTML={{ __html: mediaStyles }} />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
         </Head>
         <body>
           <Main />

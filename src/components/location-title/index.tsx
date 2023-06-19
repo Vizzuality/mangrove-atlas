@@ -44,7 +44,7 @@ const LocationTitle = () => {
   }, [name]);
 
   return (
-    <div className="flex flex-col text-center">
+    <div className="flex flex-col text-center print:hidden">
       <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
       <Dialog>
         <DialogTrigger>

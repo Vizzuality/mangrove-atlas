@@ -6,6 +6,7 @@ const Home: React.FC = () => (
   <div>
     <Head>
       <title>Privacy policy</title>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
     </Head>
     <TranslateScripts />
     <h1>Privacy policy</h1>

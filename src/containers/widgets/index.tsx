@@ -2,9 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { printModeState } from 'store/print-mode';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -22,6 +23,7 @@ const LOCAL_STORAGE_KEY = 'mangroves_blog';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
+  const setPrintingMode = useSetRecoilState(printModeState);
 
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
@@ -67,9 +69,13 @@ const WidgetsContainer: React.FC = () => {
 
   const onClickDownload = useCallback(() => {
     setWidgetsCollapsed(expandedWidgets);
+    setPrintingMode(true);
     setTimeout(() => {
       window.print();
-    });
+    }, 2000);
+    setTimeout(() => {
+      setPrintingMode(false);
+    }, 4000);
   }, [expandedWidgets]);
 
   return (

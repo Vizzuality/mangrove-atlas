@@ -1,6 +1,9 @@
+import { printModeState } from 'store/print-mode';
+
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import type { GetServerSideProps } from 'next';
+import { useRecoilValue } from 'recoil';
 
 import DesktopLayout from 'layouts/desktop';
 import MobileLayout from 'layouts/mobile';
@@ -13,14 +16,15 @@ import { Media } from 'components/media-query';
 import API from 'services/api';
 
 const Home = () => {
+  const isPrintingMode = useRecoilValue(printModeState);
   return (
     <>
-      <Media lessThan="md">
-        <MobileLayout />
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <DesktopLayout />
-      </Media>
+      {!isPrintingMode && (
+        <Media lessThan="md">
+          <MobileLayout />
+        </Media>
+      )}
+      <DesktopLayout />
     </>
   );
 };

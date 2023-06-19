@@ -47,6 +47,10 @@ body {
     scrollbar-width: none;
   }
 
+  .print {
+    display: none
+  }
+
 }
 .recharts-brush-texts {
   display: none
@@ -105,7 +109,7 @@ body {
 }
 
 .txlive-langselector {
-  @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans;
+  @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans !print;
 }
 
 .txlive-langselector-list {

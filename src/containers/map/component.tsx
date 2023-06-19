@@ -66,6 +66,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
+
   const [
     {
       enabled: isDrawingToolEnabled,
@@ -274,7 +275,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   return (
     <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-screen print:w-screen"
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
       ref={mapRef}
     >
       <Map
@@ -290,6 +291,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
         cursor={cursor}
+        preserveDrawingBuffer
       >
         {() => (
           <>
