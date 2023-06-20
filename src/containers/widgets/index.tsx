@@ -84,6 +84,7 @@ const WidgetsContainer: React.FC = () => {
             id={slug}
             className={cn({
               [`z-[${40 + ind * 10}]`]: true,
+              'last-of-type:block': true, //prevent last widget to collapse
             })}
           >
             {WIDGETS[slug] && <Widget />}
