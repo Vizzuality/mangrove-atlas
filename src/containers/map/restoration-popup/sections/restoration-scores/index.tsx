@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
 
+import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 
 const RestorationScores = ({
@@ -29,7 +30,7 @@ const RestorationScores = ({
     >
       <div className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
         <span>
-          <h3 className="m-0 text-sm font-semibold">RESTORATION SCORES</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SCORES</h3>
         </span>
         <span
           className={cn({

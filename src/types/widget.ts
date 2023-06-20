@@ -30,6 +30,7 @@ export type WidgetSlugType =
   | 'mangrove_international_status'
   | 'mangrove_carbon_market_potential'
   | 'mangrove_drivers_change'
+  | 'mangrove_national_dashboard'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =

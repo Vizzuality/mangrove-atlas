@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import RestorationDataGroup from 'containers/map/restoration-popup/restoration-data-group';
 
+import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 
 const EcosystemServices = ({
@@ -26,7 +27,7 @@ const EcosystemServices = ({
     >
       <div className="mb-6 flex w-full items-center justify-between" onClick={handleClick}>
         <div className="space-y-0.5">
-          <h3 className="m-0 text-sm font-semibold">ECOSYSTEM SERVICES</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>ECOSYSTEM SERVICES</h3>
           <p className="text-xs font-light">for restored mangroves</p>
         </div>
         <span

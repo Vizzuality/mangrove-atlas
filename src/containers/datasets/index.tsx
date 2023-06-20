@@ -33,6 +33,8 @@ import HeightWidget from 'containers/datasets/height/widget';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import InternationalStatusWidget from 'containers/datasets/international-status/widget';
+import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
+import NationalDashboardWidget from 'containers/datasets/national-dashboard/widget';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
 import NetChangeWidget from 'containers/datasets/net-change/widget';
@@ -75,6 +77,7 @@ export const WIDGETS = {
   mangrove_restoration_sites: RestorationSitesWidget,
   mangrove_restoration: RestorationWidget,
   mangrove_drawing_tool: DrawingToolWidget,
+  mangrove_national_dashboard: NationalDashboardWidget,
 } satisfies Record<WidgetSlugType, () => JSX.Element>;
 
 export const LAYERS = {
@@ -111,6 +114,7 @@ export const INFO = {
   mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
   mangrove_restoration_sites: RestorationSitesInfo,
+  mangrove_national_dashboard: NationalDashboardInfo,
 };
 
 export const DOWNLOAD = {
