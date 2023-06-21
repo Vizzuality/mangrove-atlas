@@ -110,10 +110,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const { [mapId]: map } = useMap();
 
-  if (map?.isStyleLoaded()) {
-    console.log('map', map.getStyle());
-  }
-
   const {
     query: { params },
     push,
