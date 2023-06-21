@@ -12,7 +12,7 @@ import {
 } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 
-const HighlightedPlaces = () => {
+const HighlightedPlaces = ({ onSelectLocation }: { onSelectLocation: () => void }) => {
   const { data } = useHighlightedPlaces();
   const {
     query: { params },
@@ -23,6 +23,7 @@ const HighlightedPlaces = () => {
   const {
     data: { location_id },
   } = useLocation(locationType, id);
+
   const isHighlightedPlace = Object.values(HIGHLIGHTED_PLACES).includes(location_id);
 
   return (
@@ -35,29 +36,31 @@ const HighlightedPlaces = () => {
               href={`/${d.location_type}/${d.location_id}`}
               className="flex flex-1"
             >
-              <div
+              <button
                 className={cn({
                   'flex h-60 flex-1 rounded-3xl bg-cover bg-center': true,
                   'bg-rufiji': HIGHLIGHTED_PLACES['rufiji'] === d.location_id,
                   'bg-saloum': HIGHLIGHTED_PLACES['saloum'] === d.location_id,
                 })}
+                onClick={onSelectLocation}
               >
                 <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
                   {d.name}
                 </h3>
-              </div>
+              </button>
             </Link>
           );
       })}
       {isHighlightedPlace && (
         <Link href="/" className="flex flex-1">
-          <div
+          <button
             className={`flex h-60 flex-1 rounded-3xl bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
+            onClick={onSelectLocation}
           >
             <h3 className="m-auto flex h-full items-end justify-center pb-4 text-end font-sans text-sm font-bold text-white">
               Worldwide
             </h3>
-          </div>
+          </button>
         </Link>
       )}
     </div>
