@@ -156,6 +156,7 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'text-field': ['get', 'point_count_abbreviated'],
         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
         'text-size': 16,
+        'text-allow-overlap': true,
       },
       paint: {
         'text-color': '#fff',
