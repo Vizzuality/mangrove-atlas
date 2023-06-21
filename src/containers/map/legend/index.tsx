@@ -29,7 +29,7 @@ const Legend = ({
   };
 
   return (
-    <div className="flex flex-col space-y-1">
+    <div className="flex flex-col space-y-1 print:hidden">
       {!!layers.length &&
         layers.map((l) => (
           <div

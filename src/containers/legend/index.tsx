@@ -33,10 +33,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
         </h2>
       )}
       {items.map(({ showValue = true, color, label, valueFormatted, value, unit }) => (
-        <div
-          key={label}
-          className={cn({ 'flex items-start': true, 'flex-1': variant === 'horizontal' })}
-        >
+        <div key={label} className={cn({ 'flex items-start': true })}>
           <div
             style={{ backgroundColor: color }}
             className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"

@@ -9,8 +9,9 @@ import cn from 'lib/classnames';
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
+import { printModeState } from 'store/print-mode';
 
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
 import LocationsList from 'containers/locations-list';
 
@@ -34,12 +35,14 @@ const Place = () => {
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
   const resetMapCursor = useResetRecoilState(mapCursorAtom);
 
+  const isPrintingMode = useRecoilValue(printModeState);
+  const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
   const [isOpen, setIsOpen] = useState(false);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
   const [placeOption, savePlaceOption] = useState('worldwide');
 
-  const { ['default-desktop']: map } = useMap();
+  const { [`default-desktop-${isPrintingId}`]: map } = useMap();
   const { asPath, replace } = useRouter();
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);

@@ -6,7 +6,7 @@ const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
 
   return (
-    <div className="h-full bg-brand-400 py-20 scrollbar-hide md:absolute md:top-0 md:left-20 md:w-[550px] md:overflow-y-auto md:bg-transparent">
+    <div className="h-full bg-red-400 py-20 scrollbar-hide md:absolute md:top-0 md:left-16 md:w-[550px] md:overflow-y-auto md:bg-transparent print:bg-transparent">
       <LocationTitle />
       {children}
     </div>

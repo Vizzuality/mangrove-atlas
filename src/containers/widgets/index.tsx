@@ -2,9 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
+import { printModeState } from 'store/print-mode';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -14,12 +16,16 @@ import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
+import { BUTTON_STYLES } from 'styles/widgets';
+
 import { useWidgets } from './hooks';
 
 const LOCAL_STORAGE_KEY = 'mangroves_blog';
 
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
+  const setPrintingMode = useSetRecoilState(printModeState);
+  const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
 
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
@@ -56,14 +62,30 @@ const WidgetsContainer: React.FC = () => {
     updateWidgetsCollapsed['mangrove_drawing_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
+
+  const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
+    acc[key] = false;
+    return acc;
+  }, {});
+
+  const onClickDownload = useCallback(() => {
+    setWidgetsCollapsed(expandedWidgets);
+    setPrintingMode(true);
+    setTimeout(() => {
+      window.print();
+    }, 2000);
+    setTimeout(() => {
+      setPrintingMode(false);
+    }, 4000);
+  }, [expandedWidgets]);
 
   return (
     <WidgetsLayout>
       {widgets.length > 1 && (
         <button
           className={cn({
-            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44 print:hidden':
               true,
             'border-white bg-white text-brand-800': widgetsCollapsedChecker,
           })}
@@ -75,24 +97,40 @@ const WidgetsContainer: React.FC = () => {
 
       {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
 
-      {widgets.map(({ slug, name }, ind) => {
-        const Widget = WIDGETS[slug];
-        return (
-          <WidgetWrapper
-            key={slug}
-            title={name}
-            id={slug}
-            className={cn({
-              [`z-[${40 + ind * 10}]`]: true,
-              'last-of-type:block': true, //prevent last widget to collapse
-            })}
-          >
-            {WIDGETS[slug] && <Widget />}
-          </WidgetWrapper>
-        );
-      })}
+      <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
+        {widgets.map(({ slug, name }) => {
+          const Widget = WIDGETS[slug];
+          return (
+            <WidgetWrapper
+              key={slug}
+              title={name}
+              id={slug}
+              className={cn({
+                'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid': true,
+              })}
+            >
+              {WIDGETS[slug] && <Widget />}
+            </WidgetWrapper>
+          );
+        })}
+      </div>
 
       {widgets.length === 0 && <NoData />}
+      {!!widgets.length ? (
+        <div className="flex w-full py-4 print:hidden">
+          <button
+            className={cn({
+              [BUTTON_STYLES]: true,
+              'm-auto bg-brand-800 text-white': true,
+              hidden: showWidget && !customGeojson && !uploadedGeojson,
+            })}
+            disabled={showWidget && !customGeojson && !uploadedGeojson}
+            onClick={onClickDownload}
+          >
+            Download report as PDF
+          </button>
+        </div>
+      ) : null}
     </WidgetsLayout>
   );
 };

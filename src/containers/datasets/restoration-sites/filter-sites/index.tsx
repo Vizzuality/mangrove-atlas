@@ -9,10 +9,9 @@ import { useSetRecoilState } from 'recoil';
 
 import Loading from 'components/loading';
 import MultiSelect from 'components/select-multi';
-import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataSites } from '../types';
-import { BUTTON_STYLES } from '../widget';
 
 type FilterSitesProps = {
   open: boolean;

@@ -17,11 +17,6 @@ export const activeWidgetsAtom = atom<WidgetSlugType[]>({
   ],
 });
 
-export const widgetYearAtom = atom<number>({
-  key: 'year',
-  default: null,
-});
-
 export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
   default: widgets.reduce((previousObject, currentObject) => {

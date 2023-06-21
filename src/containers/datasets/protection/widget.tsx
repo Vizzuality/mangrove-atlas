@@ -11,7 +11,12 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import {
+  WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SENTENCE_STYLE,
+  WIDGET_SELECT_STYLES,
+  WIDGET_SELECT_ARROW_STYLES,
+} from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -36,11 +41,11 @@ const Protection = () => {
               {data.protectedArea}{' '}
               <Tooltip>
                 <TooltipTrigger>
-                  <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {selectedUnit}
                     <Icon
                       icon={ARROW_SVG}
-                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                      className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     />
                   </span>
                 </TooltipTrigger>
@@ -80,12 +85,9 @@ const Protection = () => {
             out of a total <span className="font-bold">{data.totalArea}</span>{' '}
             <Tooltip>
               <TooltipTrigger>
-                <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
-                  />
+                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
               </TooltipTrigger>
               .

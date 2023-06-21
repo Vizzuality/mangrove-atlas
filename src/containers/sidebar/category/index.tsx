@@ -42,7 +42,7 @@ const Category = () => {
     updateWidgetsCollapsed[lastWidgetSlug || 'mangrove_drawing_tool'] = false;
     setWidgetsCollapsed(updateWidgetsCollapsed);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category]);
+  }, [category, lastWidgetSlug]);
 
   const handleCategory = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
