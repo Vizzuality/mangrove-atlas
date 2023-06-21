@@ -2,10 +2,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
 import { printModeState } from 'store/print-mode';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -24,6 +25,7 @@ const LOCAL_STORAGE_KEY = 'mangroves_blog';
 const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
   const setPrintingMode = useSetRecoilState(printModeState);
+  const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
 
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
@@ -120,7 +122,9 @@ const WidgetsContainer: React.FC = () => {
             className={cn({
               [BUTTON_STYLES]: true,
               'm-auto bg-brand-800 text-white': true,
+              hidden: showWidget && !customGeojson && !uploadedGeojson,
             })}
+            disabled={showWidget && !customGeojson && !uploadedGeojson}
             onClick={onClickDownload}
           >
             Download report as PDF
