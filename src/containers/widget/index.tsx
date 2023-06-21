@@ -71,7 +71,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
           <header className="flex items-center justify-between">
             <h2
               onClick={handleWidgetCollapsed}
-              className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85"
+              className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
             >
               {title}
             </h2>
