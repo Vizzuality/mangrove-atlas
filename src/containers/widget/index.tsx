@@ -57,7 +57,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
         exit="expanded"
         transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         className={cn({
-          'md:h-fit-content ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
+          'md:h-fit-content group ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
             true,
           [className]: !!className,
         })}
@@ -79,6 +79,7 @@ const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): n
           </header>
           <div
             className={cn({
+              'group-last-of-type:block': true,
               hidden: widgetsCollapsed[id],
               block: !widgetsCollapsed[id],
             })}
