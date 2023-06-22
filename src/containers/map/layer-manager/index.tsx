@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
 import type { LayerProps } from 'types/layers';
-import { WidgetSlugType } from 'types/widget';
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
@@ -22,19 +22,23 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
-  const basemaps = useRecoilValue(basemapContextualAtom);
+  const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
-  const LAYERS_FILTERED = useMemo(
-    () => [
-      ...layers
-        .filter((layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer])
-        .reverse(),
-      ...basemaps,
-      // ? the habitat extent layer is a special case where, if enabled, it will be placed always at the bottom of the layer stack we handle
-      ...(layers.includes('mangrove_habitat_extent') ? ['mangrove_habitat_extent'] : []),
-    ],
-    [layers, basemaps]
-  );
+  const LAYERS_FILTERED: (WidgetSlugType | ContextualBasemapsId)[] = useMemo(() => {
+    const filteredLayers: (WidgetSlugType | ContextualBasemapsId)[] = layers
+      .filter((layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer])
+      .reverse();
+
+    if (!!basemap) {
+      filteredLayers.push(basemap);
+    }
+
+    if (layers.includes('mangrove_habitat_extent')) {
+      filteredLayers.push('mangrove_habitat_extent');
+    }
+
+    return filteredLayers;
+  }, [layers, basemap]);
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {

@@ -76,7 +76,6 @@ const CollapsibleComponent = ({
             </div>
           );
         })}
-        <BasemapSelector />
       </Collapsible.Content>
     </Collapsible.Root>
   );

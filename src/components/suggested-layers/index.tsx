@@ -7,29 +7,23 @@ import { basemapContextualAtom } from 'store/map-settings';
 import { useRecoilState } from 'recoil';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import { ContextualBasemapsIds } from 'types/widget';
+import { ContextualBasemapsId } from 'types/widget';
 
 import lightThumb from 'images/thumbs/light.png';
 
 type SuggestionTypes = {
   name: string;
-  id: ContextualBasemapsIds;
+  id: ContextualBasemapsId;
   description: string;
   children: ReactElement;
 };
 
 const SuggestedLayers = ({ children, name, id, description }: SuggestionTypes) => {
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
-  const isActive = useMemo(
-    () => basemapContextualSelected.includes(id),
-    [basemapContextualSelected, id]
-  );
+  const isActive = useMemo(() => basemapContextualSelected === id, [basemapContextualSelected, id]);
 
   const handleClick = () => {
-    const contextualsUpdate = isActive
-      ? basemapContextualSelected.filter((w) => w !== id)
-      : [...basemapContextualSelected, id];
-    setBasemapContextual(contextualsUpdate);
+    setBasemapContextual(id);
   };
 
   return (

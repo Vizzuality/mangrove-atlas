@@ -43,6 +43,4 @@ export type AnalysisWidgetSlug =
   | 'mangrove_biomass'
   | 'mangrove_blue_carbon';
 
-export type ContextualBasemapsIds =
-  | 'planet_medres_visual_monthly'
-  | 'planet_medres_visual_analytic';
+export type ContextualBasemapsId = 'planet_medres_visual_monthly' | 'planet_medres_visual_analytic';

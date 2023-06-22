@@ -28,9 +28,8 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
 
+import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { DataResponse as LocationResponse } from 'containers/datasets/locations/hooks';
-import BASEMAPS from 'containers/layers/basemaps';
-import BasemapSelector from 'containers/map/basemap-selector';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
@@ -65,10 +64,7 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
-  const basemapStored = useRecoilValue(basemapAtom);
-  const basemapContextualSelected = useRecoilValue(basemapContextualAtom);
-
-  const basemap = !!basemapContextualSelected.length ? 'light' : basemapStored;
+  const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
 
   const [
@@ -340,7 +336,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
-          <BasemapSelector />
         </div>
       </Media>
     </div>

@@ -36,7 +36,7 @@ const AlertsWidget = () => {
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
   const isActive = useMemo(
-    () => basemapContextualSelected.includes('planet_medres_visual_monthly'),
+    () => basemapContextualSelected === 'planet_medres_visual_monthly',
     [basemapContextualSelected]
   );
 

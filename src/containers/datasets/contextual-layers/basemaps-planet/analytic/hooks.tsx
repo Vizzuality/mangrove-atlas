@@ -1,12 +1,27 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-export function useSource(): SourceProps {
-  const date = '2023-05';
+import { basemapContextualAnalyticMonthlyDateAtom } from 'store/map-settings';
+
+import { useRecoilValue } from 'recoil';
+
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+
+export function useSource(): SourceProps & { key: string } {
+  const date = useRecoilValue(basemapContextualAnalyticMonthlyDateAtom);
+  const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(
+    '45d01564-c099-42d8-b8f2-a0851accf3e7'
+  );
+  const selectedDate = date.value || dates?.[dates?.length - 1]?.value;
+
   return {
     id: 'planet_medres_analytic_monthly',
-    // id: 'be1f8e5e-6a29-4d27-8542-1fdb664fd78e',
+    key: `planet_medres_analytic_monthly-${date.label}`,
     type: 'raster',
-    tiles: [`/planet/planet_medres_normalized_analytic_${date}_mosaic/gmap/{z}/{x}/{y}`],
+    tiles: [
+      `/planet/planet_medres_normalized_analytic_${encodeURIComponent(
+        selectedDate
+      )}_mosaic/gmap/{z}/{x}/{y}`,
+    ],
     minzoom: 0,
     maxzoom: 12,
   };
