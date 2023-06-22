@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import LocationTitle from 'components/location-title';
+import LocationTitle from 'containers/location-title';
 
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
