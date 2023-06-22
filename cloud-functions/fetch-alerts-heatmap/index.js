@@ -56,7 +56,6 @@ const serializeToGeoJSON = (data) => ({
  * @param {Date} endDate
  */
 const alertsJob = async (
-  locationId,
   startDate = "2020-01-01",
   endDate = new Date().toISOString().split("T")[0]
 ) => {
@@ -69,7 +68,7 @@ const alertsJob = async (
   const options = {
     query: makeQuery(startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
-    location: "global",
+    location: "US",
   };
 
   // Run the query as a job
@@ -90,7 +89,7 @@ exports.fetchAlertsHeatmap = (req, res) => {
   // Get data and return a JSON
   async function fetch() {
     const { location_id, start_date, end_date } = req.query;
-    const result = await alertsJob(location_id, start_date, end_date);
+    const result = await alertsJob(start_date, end_date);
     res.json(result);
   }
 
