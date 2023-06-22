@@ -58,7 +58,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
-      if (onSelectLocation) onSelectLocation();
+      onSelectLocation();
     },
     [replace, asPath, setLocationBounds, onSelectLocation]
   );
@@ -100,10 +100,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   return (
     <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
-      <div className="relative box-border w-full px-2 pt-0.5 md:px-0">
+      <div className="relative box-border w-full px-1 pt-0.5">
         <input
           type="search"
-          className="relative mx-1 box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2  focus:border-grey-75 focus:outline-none focus:ring-transparent"
+          className="relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2 focus:border-grey-75 focus:outline-none focus:ring-transparent"
           placeholder="Type name..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -123,7 +123,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         <HighlightedPlacesMobile />
       </Media>
       <Media greaterThanOrEqual="md">
-        <HighlightedPlaces />
+        <HighlightedPlaces onSelectLocation={onSelectLocation} />
       </Media>
       <div className="relative h-full">
         <AutoSizer>

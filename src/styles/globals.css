@@ -114,7 +114,7 @@ body {
 
 .txlive-langselector-list {
   @apply !bottom-auto !left-0 !right-auto !top-0 !bg-white !rounded-b-3xl !text-brand-800 ;
-}  
+}
 
 .txlive-langselector-marker {
   @apply !absolute !right-6 !rotate-180;

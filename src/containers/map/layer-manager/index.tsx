@@ -12,13 +12,16 @@ import { WidgetSlugType } from 'types/widget';
 
 const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
+const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 
 const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
   'mangrove_habitat_extent',
+  'mangrove_restoration_sites',
 ] satisfies WidgetSlugType[];
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
+
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(
     () => [
@@ -64,7 +67,6 @@ const LayerManagerContainer = () => {
         );
       })}
 
-      {/* Countries layer */}
       {
         <CountryBoundariesLayer
           id="country-boundaries-layer"
@@ -73,8 +75,12 @@ const LayerManagerContainer = () => {
           onRemove={handleRemove}
         />
       }
-      {/* Protected areas layer */}
+
       {<ProtectedAreasLayer id="protected-areas-layer" beforeId="Country" />}
+
+      {layers.includes('mangrove_restoration_sites') && (
+        <RestorationSitesLayer id="mangrove-restoration-sites-layer" />
+      )}
     </>
   );
 };

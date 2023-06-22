@@ -116,6 +116,7 @@ const WidgetsContainer: React.FC = () => {
       </div>
 
       {widgets.length === 0 && <NoData />}
+
       {!!widgets.length ? (
         <div className="flex w-full py-4 print:hidden">
           <button
