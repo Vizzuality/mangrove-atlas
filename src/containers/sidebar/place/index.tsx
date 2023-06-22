@@ -13,11 +13,10 @@ import { printModeState } from 'store/print-mode';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
-import LocationsList from 'containers/locations-list';
+import LocationDialogContent from 'containers/location-dialog-content';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
+import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
-import { LOCATIONS_DIALOG_STYLES } from 'styles/locations';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
@@ -170,14 +169,8 @@ const Place = () => {
               />
             </button>
           </DialogTrigger>
-          <DialogContent
-            className={`${LOCATIONS_DIALOG_STYLES} h-[90vh] w-[540px]`}
-            onEscapeKeyDown={closeMenu}
-            onInteractOutside={closeMenu}
-          >
-            <LocationsList onSelectLocation={closeMenu} />
-            <DialogClose onClose={closeMenu} />
-          </DialogContent>
+
+          <LocationDialogContent close={closeMenu} />
         </Dialog>
         <button
           type="button"
