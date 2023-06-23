@@ -17,30 +17,34 @@ import Icon from 'components/icon';
 import Info from 'components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
+import analyticThumb from 'images/thumbs/analytic.png';
 import darkThumb from 'images/thumbs/btn-dark@2x.png';
 import lightThumb from 'images/thumbs/btn-light@2x.png';
 import satelliteThumb from 'images/thumbs/btn-satellite@2x.png';
+import visualThumb from 'images/thumbs/visual.png';
 
 const THUMBS = {
   light: lightThumb as StaticImageData,
   dark: darkThumb as StaticImageData,
   satellite: satelliteThumb as StaticImageData,
+  planet_medres_analytic_monthly: analyticThumb as StaticImageData,
+  planet_medres_visual_monthly: visualThumb as StaticImageData,
 };
 
 import TICK_SVG from 'svgs/ui/tick.svg?sprite';
 
-import { ContextualBasemapsId } from 'types/widget';
+import { ContextualBasemapsId, MosaicId } from 'types/widget';
 
 import DateSelect from './date-select';
 
 type CardBasemapContextualProps = {
-  id: BasemapId & ContextualBasemapsId;
-  mosaic_id: string;
+  id: BasemapId | ContextualBasemapsId;
+  mosaic_id?: MosaicId;
   type: 'contextual' | 'basemap';
   name: string;
   description?: string;
   thumb?: string;
-  children?: ReactElement;
+  children?: boolean | ReactElement;
 };
 
 const CardBasemapContextual = ({
@@ -61,12 +65,13 @@ const CardBasemapContextual = ({
 
   const handleClick = () => {
     if (type === 'contextual') {
-      const updatedContextualBasemap = basemapContextualSelected === id ? null : id;
+      const updatedContextualBasemap =
+        basemapContextualSelected === id ? null : (id as ContextualBasemapsId);
       setBasemapContextual(updatedContextualBasemap);
     }
 
     if (type === 'basemap') {
-      setBasemap(id);
+      setBasemap(id as BasemapId);
     }
   };
   return (
@@ -76,7 +81,7 @@ const CardBasemapContextual = ({
           {name}
         </h2>
 
-        {!!info && <Info id={id} />}
+        {!!info && <Info id={id} content={false} />}
       </div>
 
       <div className={`${WIDGET_CARD_WRAPPER_STYLE} flex`}>
@@ -84,12 +89,11 @@ const CardBasemapContextual = ({
           type="button"
           onClick={handleClick}
           className={cn({
-            [`relative mr-24 h-24 w-24 rounded-lg border-4 border-opacity-100 bg-cover bg-center shadow-sm`]:
-              true,
-            ' border-brand-800': isActive,
+            [`relative mr-10 h-24 w-24 shrink-0 rounded-xl bg-cover bg-center shadow-sm`]: true,
+            'border-4 border-brand-800': isActive,
           })}
         >
-          <Image src={THUMBS[id] as StaticImageData} alt={name} fill />
+          <Image src={THUMBS[id]} alt={name} fill className="rounded-lg" />
 
           <Checkbox
             className={cn({
@@ -110,7 +114,7 @@ const CardBasemapContextual = ({
       </div>
       {children && isActive && (
         <div className="pb-10">
-          <DateSelect id={mosaic_id} />
+          <DateSelect mosaic_id={mosaic_id} id={id} />
         </div>
       )}
     </div>

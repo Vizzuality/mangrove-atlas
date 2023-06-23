@@ -1,4 +1,4 @@
-import { array, string } from '@recoiljs/refine';
+import { string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 

@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import { ContextualBasemapsId } from 'types/widget';
 
-import lightThumb from 'images/thumbs/light.png';
+import visualThumb from 'images/thumbs/visual.png';
 
 type SuggestionTypes = {
   name: string;
@@ -23,7 +23,8 @@ const SuggestedLayers = ({ children, name, id, description }: SuggestionTypes) =
   const isActive = useMemo(() => basemapContextualSelected === id, [basemapContextualSelected, id]);
 
   const handleClick = () => {
-    setBasemapContextual(id);
+    const updatedContextualBasemap = basemapContextualSelected === id ? null : id;
+    setBasemapContextual(updatedContextualBasemap);
   };
 
   return (
@@ -33,7 +34,7 @@ const SuggestedLayers = ({ children, name, id, description }: SuggestionTypes) =
           width={42}
           height={42}
           className="rounded-2xl"
-          src={lightThumb as StaticImageData}
+          src={visualThumb as StaticImageData}
           alt={name}
         />
         <p className="text-sm">{description}</p>

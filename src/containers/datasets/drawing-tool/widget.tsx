@@ -20,8 +20,8 @@ import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import UPLOAD_SVG from 'svgs/upload.svg?sprite';
 
 const WidgetDrawingTool = () => {
-  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
-  const { enabled: isDrawingToolEnabled } = drawingToolState;
+  const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  // const { enabled: isDrawingToolEnabled } = drawingToolState;
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 

@@ -2,9 +2,10 @@ import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 
@@ -13,10 +14,15 @@ import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 import { STYLES } from '../constants';
 
 const MapSettings = () => {
-  const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
+  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
 
+  const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
+
+  const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
+  const resetDrawingToolState = useResetRecoilState(drawingToolAtom);
   const handleMapSettingsView = useCallback(async () => {
     setMapViewState(true);
+    resetDrawingToolState();
   }, []);
 
   return (
@@ -26,10 +32,12 @@ const MapSettings = () => {
         <button
           type="button"
           className={cn({
-            'flex cursor-pointer items-center justify-center rounded-full': true,
+            'flex items-center justify-center rounded-full': true,
             'bg-brand-800': mapSettings,
+            'cursor-not-allowed opacity-50': !!isDrawingToolWidgetVisible,
           })}
           onClick={handleMapSettingsView}
+          disabled={mapSettings || !!isDrawingToolWidgetVisible}
         >
           <Icon
             icon={MAP_SETTINGS_SVG}

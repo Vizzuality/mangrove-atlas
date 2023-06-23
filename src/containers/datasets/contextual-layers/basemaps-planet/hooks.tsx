@@ -1,6 +1,8 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
+import { MosaicId } from 'types/widget';
+
 import { PlanetAPI } from 'services/api';
 interface UseParamsOptions {
   name_contains: 'Visual Biannual' | 'Analytic Biannual' | 'Visual Monthly' | 'Visual Biannual';
@@ -14,7 +16,7 @@ const getDates = (data) => {
 };
 
 export function useMosaicsFromSeriesPlanetSatelliteBasemaps(
-  id: string,
+  id: MosaicId,
   paramsOptions?: UseParamsOptions,
   queryOptions?: UseQueryOptions<{
     links: { [key: string]: string | number };

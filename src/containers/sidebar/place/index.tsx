@@ -61,12 +61,13 @@ const Place = () => {
     resetDrawingState();
     resetAnalysisState();
     resetMapSettingsState();
+    handleResetPage();
 
     map.flyTo({
       center: [0, 20],
       zoom: 2,
     });
-  }, [replace, map, queryParams, resetAnalysisState, resetDrawingState]);
+  }, [map, resetAnalysisState, resetDrawingState, resetMapSettingsState]);
 
   const handleDrawingToolView = useCallback(() => {
     setDrawingToolState((drawingToolState) => ({

@@ -1,11 +1,23 @@
-export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
+import { ContextualBasemapsId, MosaicId } from 'types/widget';
+
+type ContextualLayersTypes = Array<{
+  id: ContextualBasemapsId;
+  type: 'contextual';
+  mosaic_id: MosaicId;
+  name: string;
+  basemap_type: 'Visual' | 'Analytic';
+  monitoring_frequency: 'Monthly' | 'Biannual';
+  description: string;
+  children?: boolean;
+}>;
+export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES: ContextualLayersTypes = [
   {
     id: 'planet_medres_visual_monthly',
     type: 'contextual',
     mosaic_id: '45d01564-c099-42d8-b8f2-a0851accf3e7',
     name: 'PS Tropical Visual Monthly Monitoring',
     basemap_type: 'Visual',
-    period: 'Monthly',
+    monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
     children: true,
   },
@@ -13,7 +25,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   //   id: 'b55b46db-40cc-4432-b4dd-705ac40b2a16',
   //   name: 'PS Tropical Visual Biannual Archive',
   //   basemap_type: 'Visual',
-  //   period: 'Biannual',
+  //   monitoring_frequency: 'Biannual',
   //   description: 'Biannual hight resolution basemaps (tropics)',
   // },
   {
@@ -22,7 +34,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
     mosaic_id: 'be1f8e5e-6a29-4d27-8542-1fdb664fd78e',
     name: 'PS Tropical Normalized Analytic Monthly Monitoring',
     basemap_type: 'Analytic',
-    period: 'Monthly',
+    monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
     children: true,
   },
@@ -30,7 +42,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   //   id: '1725ab80-8e12-4b3c-9c25-99550eb466e4',
   //   name: 'PS Tropical Normalized Analytic Biannual Archive',
   //   basemap_type: 'Analytic',
-  //   period: 'Biannual',
+  //   monitoring_frequency: 'Biannual',
   //   description: 'Biannual hight resolution basemaps (tropics)',
   // },
 ];

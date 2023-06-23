@@ -3,9 +3,11 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { basemapContextualVisualMonthlyDateAtom } from 'store/map-settings';
+import { basemapContextualAnalyticMonthlyDateAtom } from 'store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
+import { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import Icon from 'components/icon';
@@ -16,12 +18,23 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
+import { ContextualBasemapsId, MosaicId } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
-const DateSelect = ({ id }) => {
-  const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(id);
-  const [date, setDate] = useRecoilState(basemapContextualVisualMonthlyDateAtom);
+const DateSelect = ({
+  id,
+  mosaic_id,
+}: {
+  id: ContextualBasemapsId | BasemapId;
+  mosaic_id: MosaicId;
+}) => {
+  const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
+  const datesState =
+    id === 'planet_medres_visual_monthly'
+      ? basemapContextualVisualMonthlyDateAtom
+      : basemapContextualAnalyticMonthlyDateAtom;
+  const [date, setDate] = useRecoilState(datesState);
   const selectedDate = useMemo(() => date || dates?.[dates.length - 1], [date]);
   return (
     <Tooltip>
