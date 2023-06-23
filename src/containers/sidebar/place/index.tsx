@@ -16,7 +16,7 @@ import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue 
 
 import LocationDialogContent from 'containers/location-dialog-content';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogPortal, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
@@ -37,7 +37,7 @@ const Place = () => {
 
   const isPrintingMode = useRecoilValue(printModeState);
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-  const [isOpen, setIsOpen] = useState(false);
+  const [locationsModalIsOpen, setLocationsModalIsOpen] = useState(false);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
   const [placeOption, savePlaceOption] = useState('worldwide');
@@ -48,14 +48,17 @@ const Place = () => {
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
-  const openMenu = useCallback(() => {
-    if (!isOpen) setIsOpen(true);
-  }, [isOpen]);
+  const openLocationsModal = useCallback(() => {
+    if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
+  }, [locationsModalIsOpen]);
 
   const closeMenu = useCallback(() => {
-    setIsOpen(false);
+    if (!isAnalysisAlertOpen) {
+      setLocationsModalIsOpen(false);
+    }
+
     savePlaceOption(null);
-  }, []);
+  }, [isAnalysisAlertOpen]);
 
   const handleWorldwideView = useCallback(() => {
     resetDrawingState();
@@ -86,7 +89,8 @@ const Place = () => {
 
   const openAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(true);
-  }, [setAnalysisAlert]);
+    openLocationsModal();
+  }, [setAnalysisAlert, openLocationsModal]);
 
   const closeAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(false);
@@ -134,10 +138,10 @@ const Place = () => {
     if (isAnalysisEnabled && !skipAnalysisAlert) {
       openAnalysisAlertModal();
     } else {
-      openMenu();
+      openLocationsModal();
     }
     savePlaceOption('search');
-  }, [openMenu, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
+  }, [openLocationsModal, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
 
   return (
     <div className="flex flex-col space-y-2 text-center">
@@ -157,7 +161,7 @@ const Place = () => {
             })}
           />
         </button>
-        <Dialog open={isOpen}>
+        <Dialog open={locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
@@ -194,47 +198,48 @@ const Place = () => {
         </button>
       </div>
       <Dialog open={isAnalysisAlertOpen}>
-        <DialogContent
-          className="space-y-5 rounded-3xl p-10 md:left-auto"
-          onEscapeKeyDown={closeAnalysisAlertModal}
-          onInteractOutside={closeAnalysisAlertModal}
-        >
-          <div className="space-y-5">
-            <div className="flex justify-end">
-              <button type="button" onClick={closeAnalysisAlertModal}>
-                <Icon icon={CLOSE_SVG} className="h-8 w-8" />
-              </button>
-            </div>
-            <h3 className="text-3xl">Reset the page and delete area</h3>
-            <div className="space-y-2">
-              <p>
-                If you reset the page,{' '}
-                <span className="font-semibold">your custom area will be deleted</span>. Are you
-                sure that you want to reset the page?
-              </p>
-              <div className="flex items-center space-x-2">
-                <input type="checkbox" name="do-not-ask" onChange={handleCheckbox} />
-                <label htmlFor="modal">Don&apos;t ask me again.</label>
+        <DialogPortal className="z-50">
+          <DialogContent
+            className="space-y-5 rounded-3xl p-10 md:left-auto"
+            onEscapeKeyDown={closeAnalysisAlertModal}
+          >
+            <div className="space-y-5">
+              <div className="flex justify-end">
+                <button type="button" onClick={closeAnalysisAlertModal}>
+                  <Icon icon={CLOSE_SVG} className="h-8 w-8" />
+                </button>
+              </div>
+              <h3 className="text-3xl">Reset the page and delete area</h3>
+              <div className="space-y-2">
+                <p>
+                  If you reset the page,{' '}
+                  <span className="font-semibold">your custom area will be deleted</span>. Are you
+                  sure that you want to reset the page?
+                </p>
+                <div className="flex items-center space-x-2">
+                  <input type="checkbox" name="do-not-ask" onChange={handleCheckbox} />
+                  <label htmlFor="modal">Don&apos;t ask me again.</label>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-center justify-center space-x-5">
-            <button
-              type="button"
-              onClick={closeAnalysisAlertModal}
-              className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleResetPage}
-              className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
-            >
-              Reset page
-            </button>
-          </div>
-        </DialogContent>
+            <div className="flex items-center justify-center space-x-5">
+              <button
+                type="button"
+                onClick={closeAnalysisAlertModal}
+                className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleResetPage}
+                className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
+              >
+                Reset page
+              </button>
+            </div>
+          </DialogContent>
+        </DialogPortal>
       </Dialog>
     </div>
   );

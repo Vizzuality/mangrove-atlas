@@ -148,7 +148,7 @@ export function useMangroveNetChange(
       : isFetched && !data?.data?.length;
 
   return useMemo(() => {
-    const years = data.metadata?.year.sort();
+    const years = data?.metadata?.year.sort();
     const unit = selectedUnit || data.metadata?.units.net_change;
     const currentStartYear = startYear || years?.[0];
     const currentEndYear = endYear || years?.[years?.length - 1];
