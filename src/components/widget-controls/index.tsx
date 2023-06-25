@@ -42,7 +42,13 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
       {!!download && <Download id={id} content={download} />}
       {!!info && <Info id={id} content={info} />}
       {!!layer && (
-        <Helper className={{ button: 'bottom-1', tooltip: 'bottom-12 w-96' }} message="This">
+        <Helper
+          className={{
+            button: 'bottom-1',
+            tooltip: '-left-12 bottom-6 w-44',
+          }}
+          message="This is is a message to inform the user about the layer."
+        >
           <SwitchWrapper id={id}>
             <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
               <SwitchThumb />

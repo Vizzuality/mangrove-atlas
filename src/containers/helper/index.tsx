@@ -21,7 +21,7 @@ export const Helper = ({
       <div className="relative">
         <button
           className={cn({
-            'absolute z-[100] flex h-5 w-5 items-center justify-center': true,
+            'absolute flex h-5 w-5 items-center justify-center': true,
             [className.button]: !!className.button,
           })}
           onClick={() => setShowOverlay(true)}
@@ -37,11 +37,20 @@ export const Helper = ({
           {showOverlay && (
             <div
               className={cn({
-                'absolute bottom-6 left-0 z-[100] h-fit w-56 rounded-md bg-white p-5': true,
+                'absolute bottom-6 left-0 z-[100] h-fit w-56 rounded-md bg-white p-3 ': true,
                 [className.tooltip]: !!className.tooltip,
               })}
             >
-              <p className="font-sans text-black/85">{message}</p>
+              <p className="text-left font-sans text-sm font-light text-black/85">{message}</p>
+              <svg
+                className="absolute left-0 top-full h-2.5 w-full rounded text-white"
+                x="0px"
+                y="0px"
+                viewBox="0 0 255 255"
+                xmlSpace="preserve"
+              >
+                <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
+              </svg>
             </div>
           )}
         </button>
@@ -54,7 +63,13 @@ export const Helper = ({
         )}
       </div>
 
-      <div className="z-[80]">{children}</div>
+      <div
+        className={cn({
+          'z-[80]': showOverlay,
+        })}
+      >
+        {children}
+      </div>
     </>
   );
 };
