@@ -1,37 +1,60 @@
 import { useState } from 'react';
 
-import { createPortal } from 'react-dom';
+import cn from 'lib/classnames';
 
-export const Helper = ({ children }) => {
+export const Helper = ({
+  children,
+  className,
+  message,
+}: {
+  children: React.ReactNode;
+  className?: {
+    button?: string;
+    tooltip?: string;
+  };
+  message?: string;
+}) => {
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
 
   return (
     <>
-      <div className="absolute z-20">
+      <div className="relative">
         <button
-          className="relative flex h-5 w-5 items-center justify-center"
+          className={cn({
+            'absolute z-[100] flex h-5 w-5 items-center justify-center': true,
+            [className.button]: !!className.button,
+          })}
           onClick={() => setShowOverlay(true)}
         >
-          <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50"></span>
-          <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />
-        </button>
-      </div>
-      {children}
+          {!showOverlay && (
+            <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50" />
+          )}
 
-      {createPortal(
-        showOverlay && (
-          <div
-            className="fixed inset-0 top-0 z-[1000] flex h-full w-full bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowOverlay(false)}
-          >
-            <div className="h-fit rounded bg-white p-5">
-              <h3>This is a helper dialog</h3>
-              <p>Information for help</p>
+          {!showOverlay && (
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />
+          )}
+
+          {showOverlay && (
+            <div
+              className={cn({
+                'absolute bottom-6 left-0 z-[100] h-fit w-56 rounded-md bg-white p-5': true,
+                [className.tooltip]: !!className.tooltip,
+              })}
+            >
+              <p className="font-sans text-black/85">{message}</p>
             </div>
-          </div>
-        ),
-        document.body
-      )}
+          )}
+        </button>
+
+        {showOverlay && (
+          <div
+            className="fixed inset-0 top-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowOverlay(false)}
+          ></div>
+        )}
+      </div>
+
+      <div className="z-[80]">{children}</div>
     </>
   );
 };

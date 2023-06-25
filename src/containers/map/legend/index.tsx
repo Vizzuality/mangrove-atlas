@@ -34,7 +34,7 @@ const Legend = ({
         layers.map((l) => (
           <div
             key={l}
-            className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
+            className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
           >
             <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
             <button onClick={() => removeLayer(l)}>
