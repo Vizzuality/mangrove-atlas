@@ -306,13 +306,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             )}
             <Controls
               className={cn({
-                'absolute top-28 right-6 print:hidden': true,
+                'absolute top-6 right-6 print:hidden': true,
                 'top-28 right-10': screenWidth >= breakpoints.md,
               })}
             >
-              <FullScreenControl />
-              <ZoomControl mapId={mapId} />
-              <PitchReset mapId={mapId} />
+              <GuideSwitcher />
+              <div className="flex flex-col space-y-2 pt-1">
+                <FullScreenControl />
+                <ZoomControl mapId={mapId} />
+                <PitchReset mapId={mapId} />
+              </div>
             </Controls>
             {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
               <Popup
@@ -336,9 +339,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
-        </div>
-        <div className="absolute top-8 right-5 ">
-          <GuideSwitcher />
         </div>
       </Media>
     </div>
