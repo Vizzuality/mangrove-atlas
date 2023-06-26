@@ -47,18 +47,18 @@ export const Helper = ({
             })}
             onClick={() => setPopOver(true)}
           >
-            {!popOver && (
+            {!popOver && isActive && (
               <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50" />
             )}
 
-            {!popOver && (
+            {!popOver && isActive && (
               <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />
             )}
 
             {popOver && (
               <div
                 className={cn({
-                  'absolute bottom-6 left-0 z-[100] h-fit w-56 cursor-default rounded-md bg-white p-3':
+                  'absolute bottom-6 left-0 z-[9000] h-fit w-56 cursor-default rounded-md bg-white p-3':
                     true,
                   [className.tooltip]: !!className.tooltip,
                 })}

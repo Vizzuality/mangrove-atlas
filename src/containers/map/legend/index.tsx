@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import Helper from 'containers/guide/helper';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
