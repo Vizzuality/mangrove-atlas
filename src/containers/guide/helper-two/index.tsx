@@ -6,7 +6,7 @@ import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-export const Helper = ({
+export const HelperTwo = ({
   children,
   className,
   message,
@@ -63,22 +63,16 @@ export const Helper = ({
 
           {popOver && (
             <div
-              className="fixed inset-0 z-[10] flex h-full w-full bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
               onClick={() => setPopOver(false)}
             ></div>
           )}
         </div>
       )}
 
-      <div
-        className={cn({
-          'z-[80]': popOver && isActive,
-        })}
-      >
-        {children}
-      </div>
+      {(!isActive || !popOver) && <div>{children}</div>}
     </div>
   );
 };
 
-export default Helper;
+export default HelperTwo;

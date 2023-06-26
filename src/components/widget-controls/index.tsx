@@ -36,7 +36,6 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
     setActiveWidgets(widgetsUpdate);
   };
-  console.log({ id });
 
   const HELPER_ID = id === 'mangrove_net_change';
 
