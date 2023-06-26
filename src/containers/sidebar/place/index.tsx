@@ -95,6 +95,11 @@ const Place = () => {
     setAnalysisAlert(false);
   }, [setAnalysisAlert]);
 
+  const handleCancelResetPage = useCallback(() => {
+    closeAnalysisAlertModal();
+    setLocationsModalIsOpen(false);
+  }, [closeAnalysisAlertModal]);
+
   const handleCheckbox = useCallback(() => {
     setSkipAnalysisAlert(!skipAnalysisAlert);
   }, [skipAnalysisAlert]);
@@ -224,7 +229,7 @@ const Place = () => {
             <div className="flex items-center justify-center space-x-5">
               <button
                 type="button"
-                onClick={closeAnalysisAlertModal}
+                onClick={handleCancelResetPage}
                 className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
               >
                 Cancel
