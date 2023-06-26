@@ -14,27 +14,25 @@ export const Helper = ({
   };
   message?: string;
 }) => {
-  const [showOverlay, setShowOverlay] = useState<boolean>(false);
+  const [popOver, setPopOver] = useState<boolean>(false);
 
   return (
-    <>
-      <div className="relative">
+    <div>
+      <div className="helper relative">
         <button
           className={cn({
             'absolute flex h-5 w-5 items-center justify-center': true,
             [className.button]: !!className.button,
           })}
-          onClick={() => setShowOverlay(true)}
+          onClick={() => setPopOver(true)}
         >
-          {!showOverlay && (
+          {!popOver && (
             <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50" />
           )}
 
-          {!showOverlay && (
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />
-          )}
+          {!popOver && <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />}
 
-          {showOverlay && (
+          {popOver && (
             <div
               className={cn({
                 'absolute bottom-6 left-0 z-[100] h-fit w-56 rounded-md bg-white p-3 ': true,
@@ -55,22 +53,22 @@ export const Helper = ({
           )}
         </button>
 
-        {showOverlay && (
+        {popOver && (
           <div
             className="fixed inset-0 top-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowOverlay(false)}
+            onClick={() => setPopOver(false)}
           ></div>
         )}
       </div>
 
       <div
         className={cn({
-          'z-[80]': showOverlay,
+          'z-[80]': popOver,
         })}
       >
         {children}
       </div>
-    </>
+    </div>
   );
 };
 
