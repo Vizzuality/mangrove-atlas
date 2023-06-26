@@ -12,7 +12,6 @@ import API from 'services/api';
 import type { Data, DataResponse } from './types';
 
 // widget data
-
 type UseParamsOptions = {
   slug: 'fisheries' | 'restoration-value';
 };

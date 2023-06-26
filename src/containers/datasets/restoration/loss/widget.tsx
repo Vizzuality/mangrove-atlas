@@ -4,7 +4,11 @@ import { numberFormat } from 'lib/format';
 import { TreemapNode } from 'recharts/types/util/types';
 
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import {
+  WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SENTENCE_STYLE,
+  WIDGET_SUBTITLE_STYLE,
+} from 'styles/widgets';
 
 import LossChart from './chart';
 import { useMangroveDegradationAndLoss } from './hooks';
@@ -82,7 +86,7 @@ const LossWidget = () => {
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
         <div className="space-y-4">
-          <h3 className="text-xs">MANGROVE LOSS</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>MANGROVE LOSS</h3>
           <p className={WIDGET_SENTENCE_STYLE}>
             The main restorable loss driver in
             <span className="font-bold"> {data?.location}</span> is{' '}

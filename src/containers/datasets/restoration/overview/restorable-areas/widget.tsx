@@ -3,7 +3,11 @@ import cn from 'lib/classnames';
 import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
 
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import {
+  WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SENTENCE_STYLE,
+  WIDGET_SUBTITLE_STYLE,
+} from 'styles/widgets';
 
 import RestorableAreasChart from './chart';
 const RestorableAreas = () => {
@@ -19,7 +23,7 @@ const RestorableAreas = () => {
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isLoading && (
         <div className="space-y-4">
-          <h3 className="text-xs">RESTORABLE MANGROVE AREA</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORABLE MANGROVE AREA</h3>
           <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold first-letter:uppercase"> {data.location}</span> restorable
             mangrove areas represent{' '}

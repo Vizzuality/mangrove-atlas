@@ -41,7 +41,6 @@ const ChartsMap = new Map([
   ['line', LineChart],
   ['composed', ComposedChart],
 ]);
-
 const Chart = ({ config }) => {
   const {
     data,
@@ -71,13 +70,19 @@ const Chart = ({ config }) => {
     onBrushEnd,
     startIndex,
     endIndex,
+    dataKey,
   } = config;
 
-  const { pies, bars, lines } = chartBase;
+  const { pies, bars, lines, bar } = chartBase;
   const Chart = ChartsMap.get(type);
+
   return (
     <div className="relative h-full w-full">
-      <ResponsiveContainer width="100%" height={height || 250} className="relative w-full flex-1">
+      <ResponsiveContainer
+        width={width || '100%'}
+        height={height || 250}
+        className="relative w-full flex-1"
+      >
         <Chart
           stackOffset={stackOffset}
           height={height}
@@ -147,14 +152,17 @@ const Chart = ({ config }) => {
               {...yAxis}
             />
           )}
+          {bar && <Bar dataKey={dataKey} {...bar} />}
           {bars &&
-            Object.keys(bars).map((key) => (
-              <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
-                {!!bars[key].label && <Label {...bars[key].label} />}
-                {bars[key].itemColor &&
-                  data.map((item) => <Cell key={`c_${item.color}`} fill={item.color} />)}
-              </Bar>
-            ))}
+            Object.keys(bars).map((key) => {
+              return (
+                <Bar key={key} dataKey={key} dot={false} {...bars[key]}>
+                  {!!bars[key].label && <Label {...bars[key].label} />}
+                  {bars[key].itemColor &&
+                    data.map((item) => <Cell key={`c_${item.color}`} fill={item.color} />)}
+                </Bar>
+              );
+            })}
 
           {lines &&
             Object.keys(lines).map((key) => (

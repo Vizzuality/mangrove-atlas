@@ -131,6 +131,17 @@ const widgets = [
   //   layersIds: [''],
   // },
   {
+    name: 'Coastal protection',
+    slug: 'mangrove_flood_protection',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    layersIds: [
+      'mangrove_coastal_protection_area',
+      'mangrove_coastal_protection_population',
+      'mangrove_coastal_protection_stock',
+    ],
+  },
+  {
     name: 'Draw or upload an area',
     slug: 'mangrove_drawing_tool',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
