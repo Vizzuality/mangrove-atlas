@@ -306,7 +306,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             )}
             <Controls
               className={cn({
-                'absolute top-6 right-6 print:hidden': true,
+                'absolute top-6 right-6 items-center print:hidden': true,
                 'top-28 right-10': screenWidth >= breakpoints.md,
               })}
             >

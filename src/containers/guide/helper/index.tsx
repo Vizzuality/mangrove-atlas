@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState, PropsWithChildren, useEffect } from 'react';
+
+import { createPortal } from 'react-dom';
 
 import cn from 'lib/classnames';
 
@@ -10,16 +12,25 @@ export const Helper = ({
   children,
   className,
   message,
-}: {
-  children: React.ReactNode;
+}: PropsWithChildren<{
   className?: {
     button?: string;
     tooltip?: string;
   };
   message?: string;
-}) => {
+}>) => {
+  const childrenRef = useRef<HTMLDivElement>(null);
   const isActive = useRecoilValue(activeGuideAtom);
   const [popOver, setPopOver] = useState<boolean>(false);
+  const [childrenPosition, saveChildrenPosition] = useState(null);
+
+  useEffect(() => {
+    const { top, left } = childrenRef.current?.getBoundingClientRect();
+    saveChildrenPosition({
+      top,
+      left,
+    });
+  }, [childrenRef]);
 
   return (
     <div>
@@ -29,6 +40,7 @@ export const Helper = ({
             className={cn({
               'absolute flex h-5 w-5 items-center justify-center': true,
               [className.button]: !!className.button,
+              'pointer-events-none': popOver,
             })}
             onClick={() => setPopOver(true)}
           >
@@ -43,7 +55,8 @@ export const Helper = ({
             {popOver && (
               <div
                 className={cn({
-                  'absolute bottom-6 left-0 z-[100] h-fit w-56 rounded-md bg-white p-3 ': true,
+                  'absolute bottom-6 left-0 z-[100] h-fit w-56 cursor-default rounded-md bg-white p-3':
+                    true,
                   [className.tooltip]: !!className.tooltip,
                 })}
               >
@@ -60,23 +73,30 @@ export const Helper = ({
               </div>
             )}
           </button>
-
-          {popOver && (
-            <div
-              className="fixed inset-0 z-[10] flex h-full w-full bg-black/50 backdrop-blur-sm"
-              onClick={() => setPopOver(false)}
-            ></div>
-          )}
         </div>
       )}
 
-      <div
-        className={cn({
-          'z-[80]': popOver && isActive,
-        })}
-      >
-        {children}
-      </div>
+      <div ref={childrenRef}>{children}</div>
+
+      {typeof window !== 'undefined' &&
+        popOver &&
+        createPortal(
+          <div
+            className="fixed inset-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
+            onClick={() => setPopOver(false)}
+          >
+            <div
+              className="pointer-events-none absolute cursor-default"
+              style={{
+                top: childrenPosition?.top,
+                left: childrenPosition?.left,
+              }}
+            >
+              {children}
+            </div>
+          </div>,
+          document?.body
+        )}
     </div>
   );
 };
