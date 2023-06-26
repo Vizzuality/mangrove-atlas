@@ -13,7 +13,6 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useContextualLayer } from 'containers/datasets/contextual-layers/hooks';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 
@@ -426,8 +425,6 @@ export function useAlerts<T>(
 
 // dataset layer
 export function useSources(): SourceProps[] {
-  const contextualLayersIds = useContextualLayer('mangrove_alerts');
-
   const startDate = useRecoilValue(alertsStartDate);
   const endDate = useRecoilValue(alertsEndDate);
 

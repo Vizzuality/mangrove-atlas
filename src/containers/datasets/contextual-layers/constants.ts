@@ -1,4 +1,4 @@
-import { ContextualBasemapsId, MosaicId } from 'types/widget';
+import type { ContextualBasemapsId, MosaicId } from 'types/widget';
 
 type ContextualLayersTypes = Array<{
   id: ContextualBasemapsId;
@@ -8,9 +8,8 @@ type ContextualLayersTypes = Array<{
   basemap_type: 'Visual' | 'Analytic';
   monitoring_frequency: 'Monthly' | 'Biannual';
   description: string;
-  children?: boolean;
 }>;
-export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES: ContextualLayersTypes = [
+export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   {
     id: 'planet_medres_visual_monthly',
     type: 'contextual',
@@ -19,7 +18,6 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES: ContextualLayersTypes =
     basemap_type: 'Visual',
     monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
-    children: true,
   },
   // {
   //   id: 'b55b46db-40cc-4432-b4dd-705ac40b2a16',
@@ -36,7 +34,6 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES: ContextualLayersTypes =
     basemap_type: 'Analytic',
     monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
-    children: true,
   },
   // {
   //   id: '1725ab80-8e12-4b3c-9c25-99550eb466e4',
@@ -45,5 +42,5 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES: ContextualLayersTypes =
   //   monitoring_frequency: 'Biannual',
   //   description: 'Biannual hight resolution basemaps (tropics)',
   // },
-];
+] satisfies ContextualLayersTypes;
 // TO - DO - Check use case for periodic basemaps

@@ -12,7 +12,7 @@ import { WidgetSlugType } from 'types/widget';
 
 import { getWidgetActive } from './selector';
 
-type ChildrenType = ReactElement<any> & { type?: () => null };
+type ChildrenType = ReactElement & { type?: () => null };
 
 type WidgetLayoutProps = {
   id: WidgetSlugType;
@@ -47,7 +47,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
     },
   };
 
-  // if (Boolean(children.type() === null)) return null;
+  if (Boolean(children.type() === null)) return null;
 
   return (
     <AnimatePresence>

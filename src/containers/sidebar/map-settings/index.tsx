@@ -34,10 +34,10 @@ const MapSettings = () => {
           className={cn({
             'flex items-center justify-center rounded-full': true,
             'bg-brand-800': mapSettings,
-            'cursor-not-allowed opacity-50': !!isDrawingToolWidgetVisible,
+            'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
           })}
           onClick={handleMapSettingsView}
-          disabled={mapSettings || !!isDrawingToolWidgetVisible}
+          disabled={mapSettings || isDrawingToolWidgetVisible}
         >
           <Icon
             icon={MAP_SETTINGS_SVG}

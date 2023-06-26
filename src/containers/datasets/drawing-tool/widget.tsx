@@ -21,7 +21,7 @@ import UPLOAD_SVG from 'svgs/upload.svg?sprite';
 
 const WidgetDrawingTool = () => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
-  // const { enabled: isDrawingToolEnabled } = drawingToolState;
+
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 

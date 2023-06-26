@@ -7,7 +7,7 @@ import { basemapContextualAtom } from 'store/map-settings';
 import { useRecoilState } from 'recoil';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import { ContextualBasemapsId } from 'types/widget';
+import type { ContextualBasemapsId } from 'types/widget';
 
 import visualThumb from 'images/thumbs/visual.png';
 

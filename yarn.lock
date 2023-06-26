@@ -3907,7 +3907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^2.30.0":
+"date-fns@npm:2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
   dependencies:
@@ -7032,7 +7032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.3.0, lodash@npm:^4.6.1":
+"lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.3.0, lodash@npm:^4.6.1":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -7175,7 +7175,7 @@ __metadata:
     cmdk: 0.2.0
     cypress: 12.7.0
     d3-format: 3.1.0
-    date-fns: ^2.30.0
+    date-fns: 2.30.0
     eslint: 8.32.0
     eslint-config-next: 13.1.2
     eslint-config-prettier: 8.6.0
@@ -7184,7 +7184,6 @@ __metadata:
     fuse.js: 6.6.2
     husky: 6.0.0
     input: 1.0.1
-    lodash: 4.17.21
     lodash-es: 4.17.21
     mapbox-gl: ^2.13.0
     next: ^13.4.3

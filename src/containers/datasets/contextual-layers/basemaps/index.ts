@@ -7,7 +7,7 @@ type BasemapTypes = {
   url: string;
 };
 
-const BASEMAPS: BasemapTypes[] = [
+const BASEMAPS = [
   {
     id: 'light',
     type: 'basemap',
@@ -26,6 +26,6 @@ const BASEMAPS: BasemapTypes[] = [
     name: 'Satellite',
     url: 'mapbox://styles/globalmangrovewatch/clgntsbf800e401qqh065bi11',
   },
-];
+] satisfies BasemapTypes[];
 
 export default BASEMAPS;

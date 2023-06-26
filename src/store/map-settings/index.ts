@@ -2,7 +2,7 @@ import { string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
-import { ContextualBasemapsId } from 'types/widget';
+import type { ContextualBasemapsId } from 'types/widget';
 
 export const mapSettingsAtom = atom<boolean>({
   key: 'map-settings',

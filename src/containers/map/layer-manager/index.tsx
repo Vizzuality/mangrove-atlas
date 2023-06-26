@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
 import type { LayerProps } from 'types/layers';
-import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];

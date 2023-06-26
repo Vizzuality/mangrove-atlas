@@ -34,7 +34,7 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
+  const [basemapContextualSelected] = useRecoilState(basemapContextualAtom);
   const isActive = useMemo(
     () => basemapContextualSelected === 'planet_medres_visual_monthly',
     [basemapContextualSelected]

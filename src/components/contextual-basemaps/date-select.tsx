@@ -7,7 +7,7 @@ import { basemapContextualAnalyticMonthlyDateAtom } from 'store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
-import { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import Icon from 'components/icon';
@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
   TooltipPortal,
 } from 'components/tooltip';
-import { ContextualBasemapsId, MosaicId } from 'types/widget';
+import type { ContextualBasemapsId, MosaicId } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
