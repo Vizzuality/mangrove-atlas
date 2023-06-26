@@ -5,7 +5,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useRecoilState } from 'recoil';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
-import Helper from 'containers/helper';
+import Helper from 'containers/guide/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import type { WidgetSlugType } from 'types/widget';

@@ -10,6 +10,7 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
+import GuideSwitcher from 'containers/guide/switcher';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
@@ -60,12 +61,19 @@ const DesktopLayout = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p>
         )}
+
         <div className="absolute top-0 left-0 z-10 print:hidden">
           <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
         </div>
+
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
+
         <Sidebar />
+
         <WidgetsContainer />
+        <div className="absolute top-8 right-9 z-10">
+          <GuideSwitcher />
+        </div>
       </div>
     </div>
   );
