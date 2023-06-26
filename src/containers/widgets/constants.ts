@@ -28,6 +28,7 @@ const widgets = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['alerts-heat'],
+    contextualLayersIds: ['45d01564-c099-42d8-b8f2-a0851accf3e7'],
   },
   {
     name: 'Species location',
@@ -127,8 +128,20 @@ const widgets = [
     slug: 'mangrove_drawing_tool',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: [],
-    layersIds: [],
   },
+  {
+    name: 'Map Style',
+    slug: 'mangrove_contextual_basemaps',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: [],
+  },
+  // {
+  //   name: 'Layer name',
+  //   slug: 'mangrove_layer_name_second',
+  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+  //   categoryIds: [],
+  //   layersIds: ['layer_name_second'],
+  // },
 ] satisfies WidgetTypes[];
 
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
@@ -138,6 +151,11 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_biomass',
   'mangrove_alerts',
   'mangrove_blue_carbon',
+];
+
+export const MAP_SETTINGS_SLUGS: string[] = [
+  'mangrove_contextual_basemaps',
+  'mangrove_layer_name_second',
 ];
 
 export default widgets;

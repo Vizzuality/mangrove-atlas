@@ -230,6 +230,7 @@ export function useSources(years: number[]): SourceProps[] {
     maxZoom: 12,
   }));
 }
+
 export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
   return {
     id,

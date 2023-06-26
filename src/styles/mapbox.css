@@ -628,3 +628,11 @@
       display: none;
     }
   }
+
+  .mapboxgl-ctrl-attrib-inner {
+    position: absolute !important;
+    display: flex !important;
+    white-space: nowrap !important;
+    bottom: -15px !important;
+    right: 0px !important;
+  }

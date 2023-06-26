@@ -10,6 +10,7 @@ export type WidgetTypes = {
   locationType: string[];
   categoryIds: string[];
   layersIds?: string[];
+  contextualLayersIds?: string[];
 };
 
 export type WidgetSlugType =
@@ -31,6 +32,8 @@ export type WidgetSlugType =
   | 'mangrove_carbon_market_potential'
   | 'mangrove_drivers_change'
   | 'mangrove_national_dashboard'
+  | 'mangrove_layer_name_second'
+  | 'mangrove_contextual_basemaps'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =
@@ -39,3 +42,10 @@ export type AnalysisWidgetSlug =
   | 'mangrove_height'
   | 'mangrove_biomass'
   | 'mangrove_blue_carbon';
+
+export type ContextualBasemapsId =
+  | 'planet_medres_visual_monthly'
+  | 'planet_medres_analytic_monthly';
+export type MosaicId =
+  | '45d01564-c099-42d8-b8f2-a0851accf3e7'
+  | 'be1f8e5e-6a29-4d27-8542-1fdb664fd78e';

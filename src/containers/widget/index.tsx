@@ -1,4 +1,4 @@
-import React, { useCallback, ReactElement } from 'react';
+import React, { useCallback, ReactElement, FC } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -12,16 +12,17 @@ import { WidgetSlugType } from 'types/widget';
 
 import { getWidgetActive } from './selector';
 
-type ChildrenType = ReactElement<any> & { type?: () => null };
+type ChildrenType = ReactElement & { type?: () => null };
 
 type WidgetLayoutProps = {
   id: WidgetSlugType;
   title: string;
   children: ChildrenType | null;
   className?: string;
+  contextualLayersIds?: string[];
 };
 
-const WidgetWrapper: React.FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
+const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
   const { children, title, id, className } = props;
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));

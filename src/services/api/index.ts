@@ -15,4 +15,9 @@ export const BlogAPI = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+export const PlanetAPI = axios.create({
+  baseURL: '/planet-api',
+  headers: { 'Content-Type': 'application/json' },
+});
+
 export default API;

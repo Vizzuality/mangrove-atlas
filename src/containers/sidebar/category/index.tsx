@@ -20,7 +20,6 @@ const Category = () => {
   const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
-
   const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;

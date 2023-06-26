@@ -14,18 +14,19 @@ type LegendTypes = {
   subtitle?: string;
   items: Item[];
   variant?: 'horizontal' | 'vertical';
+  unit?: string;
 };
 
-const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) => {
+const Legend = ({ title, subtitle, items, variant = 'vertical', unit }: LegendTypes) => {
   return (
     <div
       className={cn({
         'flex w-full justify-between py-2 text-black/85': variant === 'horizontal',
-        'space-y-2': variant === 'vertical',
+        'flex flex-col space-y-2': variant === 'vertical',
       })}
     >
       {title && (
-        <h3 className="flex max-w-[120px] flex-col justify-center text-sm font-bold">{title}</h3>
+        <h3 className="block max-w-[120px] flex-col justify-center text-sm font-bold">{title}</h3>
       )}
       {subtitle && (
         <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold opacity-30">

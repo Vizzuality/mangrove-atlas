@@ -4,7 +4,9 @@ import { string, number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
-export const basemapAtom = atom({
+import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+
+export const basemapAtom = atom<BasemapId>({
   key: 'basemap',
   default: 'light',
   effects: [

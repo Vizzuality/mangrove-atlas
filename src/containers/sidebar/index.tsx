@@ -1,6 +1,7 @@
 import Menu from 'containers/sidebar/menu';
 
 import Category from './category';
+import MapSettings from './map-settings';
 import Place from './place';
 
 const Sidebar = () => {
@@ -10,6 +11,7 @@ const Sidebar = () => {
         <div>
           <Menu />
         </div>
+        <MapSettings />
         <Place />
         <Category />
       </div>

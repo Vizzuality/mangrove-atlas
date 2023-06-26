@@ -4,7 +4,6 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cn from 'classnames';
 
-import BasemapSelector from 'containers/map/basemap-selector';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
@@ -76,7 +75,6 @@ const CollapsibleComponent = ({
             </div>
           );
         })}
-        <BasemapSelector />
       </Collapsible.Content>
     </Collapsible.Root>
   );

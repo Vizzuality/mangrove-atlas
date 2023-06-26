@@ -41,7 +41,21 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      // planet APi to get tiles
+      {
+        source: '/planet/:path*',
+        destination: `https://tiles.planet.com/basemaps/v1/planet-tiles/:path*?api_key=${process.env.NEXT_PUBLIC_PLANET_API_KEY}`,
+      },
 
+      // Planet API get mosaics
+      {
+        source: '/planet-api/:path*',
+        destination: `https://api.planet.com/basemaps/v1/:path*?api_key=${process.env.NEXT_PUBLIC_PLANET_API_KEY}`,
+      },
+    ];
+  },
   /** @param {import('webpack').Configuration} config */
   webpack(config) {
     config.module.rules.push({
