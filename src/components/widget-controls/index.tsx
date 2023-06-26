@@ -36,6 +36,9 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
     setActiveWidgets(widgetsUpdate);
   };
+  console.log({ id });
+
+  const HELPER_ID = id === 'mangrove_net_change';
 
   return (
     <div className="flex items-center space-x-2 print:hidden">
@@ -44,10 +47,10 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
       {!!layer && (
         <Helper
           className={{
-            button: '-bottom-2 z-[20]',
-            tooltip: '-left-20 bottom-6 w-44',
+            button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-[20]' : 'hidden',
+            tooltip: '-left-[66px] bottom-6 w-28',
           }}
-          message="This is is a message to inform the user about the layer"
+          message="Toggle layer"
         >
           <SwitchWrapper id={id}>
             <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
