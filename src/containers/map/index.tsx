@@ -15,7 +15,6 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -30,6 +29,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { DataResponse as LocationResponse } from 'containers/datasets/locations/hooks';
+import GuideSwitcher from 'containers/guide/switcher';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
@@ -306,7 +306,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             )}
             <Controls
               className={cn({
-                'absolute top-36 right-6 print:hidden': true,
+                'absolute top-28 right-6 print:hidden': true,
                 'top-28 right-10': screenWidth >= breakpoints.md,
               })}
             >
@@ -336,6 +336,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
+        </div>
+        <div className="absolute top-8 right-5 ">
+          <GuideSwitcher />
         </div>
       </Media>
     </div>

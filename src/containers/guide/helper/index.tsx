@@ -63,7 +63,7 @@ export const Helper = ({
 
           {popOver && (
             <div
-              className="fixed inset-0 top-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
               onClick={() => setPopOver(false)}
             ></div>
           )}
