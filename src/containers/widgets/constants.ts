@@ -135,13 +135,13 @@ const widgets = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: [],
   },
-  {
-    name: 'Layer name',
-    slug: 'mangrove_layer_name_second',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
-    layersIds: ['layer_name_second'],
-  },
+  // {
+  //   name: 'Layer name',
+  //   slug: 'mangrove_layer_name_second',
+  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+  //   categoryIds: [],
+  //   layersIds: ['layer_name_second'],
+  // },
 ] satisfies WidgetTypes[];
 
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [

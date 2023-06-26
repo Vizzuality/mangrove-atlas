@@ -15,7 +15,6 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 
 // contextual layers
-import PlanetInfo from 'containers/datasets/contextual-layers/basemaps-planet/analytic/info.mdx';
 import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
 import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
@@ -126,7 +125,6 @@ export const INFO = {
   mangrove_emissions_mitigation: EmissionsMitigationInfo,
   mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
-  planet: PlanetInfo,
   mangrove_layer_name_second: LayerNameInfoSecond,
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
