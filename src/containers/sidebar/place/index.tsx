@@ -55,9 +55,8 @@ const Place = () => {
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
+      savePlaceOption(null);
     }
-
-    savePlaceOption(null);
   }, [isAnalysisAlertOpen]);
 
   const handleWorldwideView = useCallback(() => {
@@ -161,7 +160,7 @@ const Place = () => {
             })}
           />
         </button>
-        <Dialog open={locationsModalIsOpen}>
+        <Dialog open={placeOption === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
