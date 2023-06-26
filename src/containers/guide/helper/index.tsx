@@ -22,7 +22,10 @@ export const Helper = ({
   const childrenRef = useRef<HTMLDivElement>(null);
   const isActive = useRecoilValue(activeGuideAtom);
   const [popOver, setPopOver] = useState<boolean>(false);
-  const [childrenPosition, saveChildrenPosition] = useState(null);
+  const [childrenPosition, saveChildrenPosition] = useState<Record<string, number>>({
+    top: null,
+    left: null,
+  });
 
   useEffect(() => {
     const { top, left } = childrenRef.current?.getBoundingClientRect();
