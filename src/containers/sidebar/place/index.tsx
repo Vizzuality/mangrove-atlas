@@ -109,6 +109,10 @@ const Place = () => {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
 
+    if (placeOption === 'worldwide') {
+      handleWorldwideView();
+    }
+
     resetDrawingState();
     resetAnalysisState();
     resetMapSettingsState();
@@ -119,10 +123,12 @@ const Place = () => {
   }, [
     queryParams,
     skipAnalysisAlert,
+    placeOption,
     replace,
     closeAnalysisAlertModal,
     resetDrawingState,
     resetAnalysisState,
+    handleWorldwideView,
   ]);
 
   useEffect(() => {
