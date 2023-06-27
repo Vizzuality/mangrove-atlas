@@ -33,7 +33,7 @@ export const Helper = ({
       top,
       left,
     });
-  }, [childrenRef]);
+  }, [childrenRef, popOver]);
 
   return (
     <div>
