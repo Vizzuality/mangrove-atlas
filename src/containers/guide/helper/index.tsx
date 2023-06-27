@@ -27,6 +27,7 @@ export const Helper = ({
     left: null,
   });
 
+  console.log({ childrenPosition });
   useEffect(() => {
     const { top, left } = childrenRef.current?.getBoundingClientRect();
     saveChildrenPosition({
@@ -64,7 +65,7 @@ export const Helper = ({
         popOver &&
         createPortal(
           <div
-            className="fixed inset-0 flex h-full w-full bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-40 flex h-full w-full bg-black/50 backdrop-blur-sm"
             onClick={() => setPopOver(false)}
           >
             <div
@@ -76,33 +77,32 @@ export const Helper = ({
             >
               {children}
             </div>
+            {popOver && isActive && (
+              <div
+                style={{
+                  top: childrenPosition?.top - 80,
+                  left: childrenPosition?.left,
+                }}
+                className={cn({
+                  'fixed z-[60] h-fit w-56 cursor-default rounded-md bg-white p-3': true,
+                  [className.tooltip]: !!className.tooltip,
+                })}
+              >
+                <p className="text-left font-sans text-sm font-light text-black/85">{message}</p>
+                <svg
+                  className="absolute left-0 top-full h-2.5 w-full rounded text-white"
+                  x="0px"
+                  y="0px"
+                  viewBox="0 0 255 255"
+                  xmlSpace="preserve"
+                >
+                  <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
+                </svg>
+              </div>
+            )}
           </div>,
           document?.body
         )}
-
-      {popOver && isActive && (
-        <div
-          style={{
-            top: childrenPosition?.top - 60,
-            left: childrenPosition?.left - 100,
-          }}
-          className={cn({
-            'absolute z-[9000] h-fit w-56 cursor-default rounded-md bg-white p-3': true,
-            [className.tooltip]: !!className.tooltip,
-          })}
-        >
-          <p className="text-left font-sans text-sm font-light text-black/85">{message}</p>
-          <svg
-            className="absolute left-0 top-full h-2.5 w-full rounded text-white"
-            x="0px"
-            y="0px"
-            viewBox="0 0 255 255"
-            xmlSpace="preserve"
-          >
-            <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-          </svg>
-        </div>
-      )}
     </div>
   );
 };
