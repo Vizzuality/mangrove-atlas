@@ -47,8 +47,9 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
         <Helper
           className={{
             button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-[20]' : 'hidden',
-            tooltip: '-left-[66px] bottom-6 w-28',
+            tooltip: 'w-28',
           }}
+          tooltipPosition={{ top: 60, left: 42 }}
           message="Toggle layer"
         >
           <SwitchWrapper id={id}>

@@ -39,8 +39,9 @@ const Legend = ({
             key={l}
             className={{
               button: l === HELPER_ID ? '-bottom-3.5 -left-1.5 z-[20]' : 'hidden',
-              tooltip: 'left-0 bottom-16 w-[236px]',
+              tooltip: 'w-[236px]',
             }}
+            tooltipPosition={{ top: 80, left: 0 }}
             message="List of legends seen on the map. You can close them directly here"
           >
             <div className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">

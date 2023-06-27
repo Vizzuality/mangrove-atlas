@@ -11,11 +11,16 @@ import { useRecoilValue } from 'recoil';
 export const Helper = ({
   children,
   className,
+  tooltipPosition,
   message,
 }: PropsWithChildren<{
   className?: {
     button?: string;
     tooltip?: string;
+  };
+  tooltipPosition?: {
+    top: number;
+    left: number;
   };
   message?: string;
 }>) => {
@@ -27,7 +32,6 @@ export const Helper = ({
     left: null,
   });
 
-  console.log({ childrenPosition });
   useEffect(() => {
     const { top, left } = childrenRef.current?.getBoundingClientRect();
     saveChildrenPosition({
@@ -80,8 +84,8 @@ export const Helper = ({
             {popOver && isActive && (
               <div
                 style={{
-                  top: childrenPosition?.top - 80,
-                  left: childrenPosition?.left,
+                  top: childrenPosition?.top - tooltipPosition.top,
+                  left: childrenPosition?.left - tooltipPosition.left,
                 }}
                 className={cn({
                   'fixed z-[60] h-fit w-56 cursor-default rounded-md bg-white p-3': true,
