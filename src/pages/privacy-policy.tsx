@@ -8,9 +8,9 @@ const Home: React.FC = () => (
       <title>Privacy policy</title>
       <meta name="viewport" content="width=device-width,initial-scale=1" />
     </Head>
-    <div className="print:hidden">
-      <TranslateScripts />
-    </div>
+
+    <TranslateScripts />
+
     <h1>Privacy policy</h1>
   </div>
 );

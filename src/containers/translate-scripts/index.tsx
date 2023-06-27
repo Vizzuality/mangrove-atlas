@@ -2,20 +2,13 @@ import React from 'react';
 
 import Script from 'next/script';
 
-import { printModeState } from 'store/print-mode';
-
-import { useRecoilValue } from 'recoil';
-
 const TranslateScripts = () => {
-  const isPrintingMode = useRecoilValue(printModeState);
-
   return (
-    !isPrintingMode && (
-      <>
-        <Script
-          id="transifex-live-settings"
-          dangerouslySetInnerHTML={{
-            __html: `
+    <>
+      <Script
+        id="transifex-live-settings"
+        dangerouslySetInnerHTML={{
+          __html: `
           window.liveSettings = {
             api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}',
             detectlang: true,
@@ -24,11 +17,10 @@ const TranslateScripts = () => {
             manual_init: false,
             translate_urls: false,
           }`,
-          }}
-        />
-        <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
-      </>
-    )
+        }}
+      />
+      <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
+    </>
   );
 };
 
