@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -19,19 +17,6 @@ import WidgetsContainer from 'containers/widgets';
 
 const DesktopLayout = () => {
   const isPrintingMode = useRecoilValue(printModeState);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (isPrintingMode) {
-        const langSelector = document.querySelector('#tx-live-lang-container');
-        langSelector?.classList.add('hidden-langselector');
-      }
-      if (!isPrintingMode) {
-        const langSelector = document.querySelector('#tx-live-lang-container');
-        langSelector?.classList.remove('hidden-langselector');
-      }
-    }
-  }, [isPrintingMode]);
 
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
   const {
