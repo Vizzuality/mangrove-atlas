@@ -40,7 +40,9 @@ const DesktopLayout = () => {
         <meta name="og:type" content="website" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
-      <TranslateScripts />
+      <div className="print:hidden">
+        <TranslateScripts />
+      </div>
 
       <div className="relative h-screen w-screen">
         {isPrintingMode && (
