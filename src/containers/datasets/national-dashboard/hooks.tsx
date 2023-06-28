@@ -1,10 +1,11 @@
-import type { VectorSource, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import flatten from 'lodash-es/flatten';
 
 import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import chroma from 'chroma-js';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -13,6 +14,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import { COLORS } from './constants';
 import type { Data, DataResponse } from './types';
 // widget data
 
@@ -45,9 +47,8 @@ export function useNationalDashboard(
   });
 }
 
-export function useSource(): VectorSource {
+export function useSource(settings): SourceProps {
   const { data } = useNationalDashboard();
-
   const sources = flatten(
     data?.data?.map(({ sources }) =>
       flatten(
@@ -58,16 +59,24 @@ export function useSource(): VectorSource {
         )
       )
     )
-  )[0];
+  ) satisfies string[];
+  const colorsScale = chroma.scale(COLORS).colors(sources.length);
+  const color = sources.map((index) => colorsScale(index));
 
   return {
     id: 'national-dashboard-source',
     type: 'vector',
-    url: sources,
+    url: sources[0],
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  settings,
+}: {
+  id: LayerProps['id'];
+  settings: unknown;
+}): LayerProps[] {
   return [
     {
       id,

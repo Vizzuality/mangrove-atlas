@@ -31,71 +31,73 @@ type IndicatorSourceTypes = {
   color: string;
 };
 
-const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorSourceTypes) => (
-  <div key={source} className="flex flex-1 items-start justify-between space-x-2 py-4">
-    {
-      <span
-        style={{ backgroundColor: color }}
-        className="mt-1 w-2 shrink-0 rounded-md pt-4 first-letter:h-4"
-      />
-    }
-    <span className="max-w-[180px]">{source}</span>
-    {years.length === 1 && <span>{years[0]}</span>}
-    {years.length < 1 && (
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
-            {'year'}
-            <Icon
-              icon={ARROW_SVG}
-              className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
-            />
-          </span>
-        </TooltipTrigger>
+const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorSourceTypes) => {
+  return (
+    <div key={source} className="flex flex-1 items-start justify-between space-x-2 py-4">
+      {
+        <span
+          style={{ backgroundColor: color }}
+          className="mt-1 w-2 shrink-0 rounded-md pt-4 first-letter:h-4"
+        />
+      }
+      <span className="max-w-[180px]">{source}</span>
+      {years.length === 1 && <span>{years[0]}</span>}
+      {years.length < 1 && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+              {'year'}
+              <Icon
+                icon={ARROW_SVG}
+                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+              />
+            </span>
+          </TooltipTrigger>
 
-        <TooltipPortal>
-          <TooltipContent
-            side="bottom"
-            align="center"
-            className="rounded-3xl bg-white text-black/85 shadow-soft"
-          >
-            <ul
-              className={cn({
-                'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true,
-              })}
+          <TooltipPortal>
+            <TooltipContent
+              side="bottom"
+              align="center"
+              className="rounded-3xl bg-white text-black/85 shadow-soft"
             >
-              {years?.map((u) => (
-                <li key={u}>
-                  <button
-                    className={cn({
-                      'font-bold': true,
-                    })}
-                    type="button"
-                    // onClick={() => setUnitAreaExtent(u)}
-                    // disabled={selectedUnitAreaExtent === u}
-                  >
-                    {u}
-                  </button>
-                </li>
-              ))}
-            </ul>
+              <ul
+                className={cn({
+                  'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true,
+                })}
+              >
+                {years?.map((u) => (
+                  <li key={u}>
+                    <button
+                      className={cn({
+                        'font-bold': true,
+                      })}
+                      type="button"
+                      // onClick={() => setYear(u)}
+                      // disabled={selectedYear === u}
+                    >
+                      {u}
+                    </button>
+                  </li>
+                ))}
+              </ul>
 
-            <TooltipArrow className="fill-white" width={10} height={5} />
-          </TooltipContent>
-        </TooltipPortal>
-      </Tooltip>
-    )}
-    {dataSource?.value && <span>{dataSource.value}</span>}
-    {unit && <span>{LABEL_UNITS[unit] || unit}</span>}
+              <TooltipArrow className="fill-white" width={10} height={5} />
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
+      )}
+      {dataSource?.value && <span>{dataSource.value}</span>}
+      {unit && <span>{LABEL_UNITS[unit] || unit}</span>}
 
-    <WidgetControls
-      content={{
-        layer: `national-dashboard-${dataSource.download_link}`,
-        download: dataSource.download_link,
-        info: dataSource.layer_info,
-      }}
-    />
-  </div>
-);
+      <WidgetControls
+        content={{
+          layer: `national-dashboard-${dataSource.download_link}`,
+          download: dataSource.download_link,
+          info: dataSource.layer_info,
+        }}
+      />
+    </div>
+  );
+};
 
 export default IndicatorSources;
