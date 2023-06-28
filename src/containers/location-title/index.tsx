@@ -4,6 +4,10 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
+import { analysisAlertAtom, analysisAtom } from 'store/analysis';
+
+import { useRecoilState } from 'recoil';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationDialogContent from 'containers/location-dialog-content';
@@ -21,18 +25,22 @@ const LocationTitle = () => {
   } = useLocation(locationType, id, {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
+  const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
-  }, [isOpen]);
+    if (isAnalysisEnabled) setAnalysisAlert(true);
+  }, [isOpen, isAnalysisEnabled, setAnalysisAlert]);
 
   const closeMenu = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+    if (!isAnalysisAlertOpen) setIsOpen(false);
+  }, [isAnalysisAlertOpen]);
 
   const locationName = useMemo(() => {
     if (locationType === 'custom-area') {
