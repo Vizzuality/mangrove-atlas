@@ -1,4 +1,6 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { VectorSource, LayerProps } from 'react-map-gl';
+
+import flatten from 'lodash-es/flatten';
 
 import { useRouter } from 'next/router';
 
@@ -7,14 +9,12 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 
+import type { UseParamsOptions } from 'types/widget';
+
 import API from 'services/api';
 
 import type { Data, DataResponse } from './types';
-
 // widget data
-type UseParamsOptions = {
-  slug: 'fisheries' | 'restoration-value';
-};
 
 export function useNationalDashboard(
   params?: UseParamsOptions,
@@ -45,11 +45,25 @@ export function useNationalDashboard(
   });
 }
 
-export function useSource(): SourceProps {
+export function useSource(): VectorSource {
+  const { data } = useNationalDashboard();
+
+  const sources = flatten(
+    data?.data?.map(({ sources }) =>
+      flatten(
+        sources.map(({ data_source }) =>
+          data_source.map(({ layer_link }, index) =>
+            index === 0 ? `mapbox://${layer_link}` : layer_link
+          )
+        )
+      )
+    )
+  )[0];
+
   return {
-    id: 'protection-source',
+    id: 'national-dashboard-source',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.2took1l0',
+    url: sources,
   };
 }
 

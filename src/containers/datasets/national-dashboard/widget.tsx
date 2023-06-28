@@ -1,3 +1,5 @@
+import flatten from 'lodash-es/flatten';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
@@ -9,6 +11,7 @@ import OtherResources from './other-resources';
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
   if (!data?.data.length) return null;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />

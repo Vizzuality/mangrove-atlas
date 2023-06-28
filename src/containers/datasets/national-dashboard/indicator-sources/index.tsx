@@ -57,7 +57,7 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
           <TooltipContent
             side="bottom"
             align="center"
-            className="rounded-[20x] bg-white text-black/85 shadow-soft"
+            className="rounded-3xl bg-white text-black/85 shadow-soft"
           >
             <ul
               className={cn({
@@ -90,7 +90,7 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
 
     <WidgetControls
       content={{
-        layer: dataSource.layer_link,
+        layer: `national-dashboard-${dataSource.download_link}`,
         download: dataSource.download_link,
         info: dataSource.layer_info,
       }}
