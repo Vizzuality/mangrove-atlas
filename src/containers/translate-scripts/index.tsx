@@ -14,9 +14,9 @@ const TranslateScripts = () => {
       const langSelector = document.querySelector('#tx-live-lang-container');
 
       if (isPrintingMode) {
-       langSelector?.classList.add('hidden-langselector');
+        langSelector?.classList.add('hidden-langselector');
       }
-      
+
       if (!isPrintingMode) {
         langSelector?.classList.remove('hidden-langselector');
       }
