@@ -133,7 +133,7 @@ const widgets = [
   {
     name: 'Coastal protection',
     slug: 'mangrove_flood_protection',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['custom-area', 'wdpa', 'country'],
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: [
       'mangrove_coastal_protection_area',

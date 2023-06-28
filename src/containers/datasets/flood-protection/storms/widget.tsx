@@ -1,10 +1,15 @@
-import { useMemo, createRef, useState, useLayoutEffect } from 'react';
+import { useMemo, useRef, useState, useLayoutEffect, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
 import { activeWidgetsAtom } from 'store/widgets';
-import { floodPeriodAtom } from 'store/widgets/flood-protection';
+import {
+  floodAreaPeriodAtom,
+  floodPopulationPeriodAtom,
+  floodStockPeriodAtom,
+} from 'store/widgets/flood-protection';
 
+import { set } from 'date-fns';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
@@ -28,6 +33,7 @@ import { WidgetSlugType } from 'types/widget';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 
+import type { FloodProtectionPeriodId } from '../types';
 import type { FloodProtectionIndicatorId } from '../types';
 
 import FloodProtectionChart from './chart';
@@ -37,7 +43,41 @@ import { useMangrovesFloodProtection } from './hooks';
 const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId }) => {
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
-  const [selectedPeriod, setPeriod] = useRecoilState(floodPeriodAtom);
+  const [selectedAreaPeriod, setAreaPeriod] = useRecoilState(floodAreaPeriodAtom);
+
+  const [selectedPopulationPeriod, setPopulationPeriod] = useRecoilState(floodPopulationPeriodAtom);
+
+  const [selectedStockPeriod, setStockPeriod] = useRecoilState(floodStockPeriodAtom);
+
+  const selectedPeriod = useMemo<FloodProtectionPeriodId>(() => {
+    let selected: FloodProtectionPeriodId;
+    switch (true) {
+      case indicator === 'population':
+        selected = selectedPopulationPeriod;
+        break;
+      case indicator === 'stock':
+        selected = selectedStockPeriod;
+        break;
+      default:
+        selected = selectedAreaPeriod;
+        break;
+    }
+    return selected;
+  }, [indicator, selectedAreaPeriod, selectedPopulationPeriod, selectedStockPeriod]);
+
+  const handlePeriod = useCallback(
+    (period: FloodProtectionPeriodId) => {
+      if (indicator === 'area') {
+        setAreaPeriod(period);
+      } else if (indicator === 'population') {
+        setPopulationPeriod(period);
+      } else if (indicator === 'stock') {
+        setStockPeriod(period);
+      }
+    },
+    [indicator, setAreaPeriod, setPopulationPeriod, setStockPeriod]
+  );
+
   const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {
     indicator,
   });
@@ -52,17 +92,21 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     setActiveWidgets(widgetsUpdate);
   };
 
-  const ref = createRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>();
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
   }, [ref.current]);
+
   if (!data || !data?.data?.length) return null;
+
   const { periods, max, min, selectedValue, location } = data;
   const isWorldwide = location === 'Worldwide';
-  const trianglePosition = (selectedValue * lineChartWidth) / max - 11; // substract icon size
+  const trianglePositionPerc = (Number(selectedValue) * 100) / max; // substract icon size
+  const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100;
+
   const getBackground = (indicator) => {
     let background;
     switch (true) {
@@ -127,12 +171,12 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                       <li key={period}>
                         <button
                           className={cn({
-                            'font-bold ': true,
+                            'font-bold': true,
                             'hover:text-brand-800': period !== selectedPeriod,
-                            'opacity-50': period > selectedPeriod,
+                            'opacity-50': period === selectedPeriod,
                           })}
                           type="button"
-                          onClick={() => setPeriod(period)}
+                          onClick={() => handlePeriod(period)}
                           disabled={period === selectedPeriod}
                         >
                           {LABELS[period]}
@@ -141,7 +185,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                     ))}
                   </ul>
 
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
+                  <TooltipArrow className="fill-white" width={10} height={5} />
                 </TooltipContent>
               </TooltipPortal>
             </Tooltip>{' '}

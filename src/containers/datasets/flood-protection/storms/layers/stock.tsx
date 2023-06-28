@@ -1,9 +1,11 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { floodPeriodAtom } from 'store/widgets/flood-protection';
+import { floodStockPeriodAtom } from 'store/widgets/flood-protection';
 
 import { useRecoilValue } from 'recoil';
+
+import { useMangrovesFloodProtection } from '../hooks';
 
 export function useSource(): SourceProps {
   return {
@@ -14,9 +16,13 @@ export function useSource(): SourceProps {
 }
 
 export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
-  const min = 0;
-  const max = 11300000;
-  const period = useRecoilValue(floodPeriodAtom);
+  const period = useRecoilValue(floodStockPeriodAtom);
+  const { data } = useMangrovesFloodProtection(period, {
+    indicator: 'stock',
+  });
+
+  if (!data || !data?.data?.length) return null;
+  const { max, min } = data;
   return [
     {
       id,

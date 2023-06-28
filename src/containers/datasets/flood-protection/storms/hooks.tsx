@@ -1,5 +1,3 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
-
 import { useRouter } from 'next/router';
 
 import { numberFormat, formatMillion } from 'lib/format';
@@ -12,7 +10,12 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, FloodProtectionPeriodId } from '../types';
+import type {
+  Data,
+  DataResponse,
+  FloodProtectionIndicatorId,
+  FloodProtectionPeriodId,
+} from '../types';
 
 import { LABELS, UNITS_LABELS } from './constants';
 import Tooltip from './tooltip';
@@ -22,62 +25,46 @@ type UseParamsOptions = {
   indicator: 'area' | 'population' | 'stock';
 };
 
-const fakeData = [
-  {
-    indicator: 'stock',
-    period: 'annual',
-    periodFormatted: 'annual',
-    value: 600,
-    annual: 600,
-    color: 'red',
-  },
-  {
-    indicator: 'stock',
-    period: '25_year',
-    periodFormatted: '25-year',
-    value: 2000,
-    '25-year': 2000,
-    color: 'red',
-  },
-  {
-    indicator: 'stock',
-    period: '100_year',
-    periodFormatted: '100-year',
-    value: 21000,
-    '100-year': 21000,
-    color: 'red',
-  },
-];
-
 const GRADIENTS_BY_INDICATOR = {
   area: ['#F3E0F7', '#E4C7F1', '#D1AFE8', '#AB91CF', '#9F82CE', '#826DBA', '#63589F'],
   population: ['#FFC6C4', '#F4A3A8', '#E38191', '#CC607D', '#AD466C', '#8B3058', '#672044'],
   stock: ['#D1EEEA', '#A8DBD9', '#85C4C9', '#68ABB8', '#4F90A6', '#3B738F', '#2A5674'],
 };
 
-const getColor = (data, selectedPeriod, indicator) => {
+const getColor = (data, selectedPeriod, indicator, metadata) => {
+  const { min, max } = metadata;
   const indicatorData = data.filter((d) => d.period === selectedPeriod)[0];
   const { value } = indicatorData;
-  const colorScale = chroma.scale(GRADIENTS_BY_INDICATOR[indicator]).domain([0, 2000]);
+  const colorScale = chroma.scale(GRADIENTS_BY_INDICATOR[indicator]).domain([min, max]);
   return colorScale(value);
 };
 
-const getBars = (data, selectedPeriod, metadata, indicator) =>
-  data.map((d) => ({
+const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId) => {
+  if (indicator === 'population') {
+    const roundedValue = Math.round(value);
+    return roundedValue > 1000000 ? formatMillion(roundedValue) : roundedValue;
+  }
+  return value > 1000000 ? formatMillion(value) : numberFormat(value);
+};
+
+const getBars = (data, selectedPeriod, metadata, indicator) => {
+  const color = getColor(data, selectedPeriod, indicator, metadata);
+  return data.map((d) => ({
     ...d,
     barSize: 40,
-    fill: d.period === selectedPeriod ? getColor(data, selectedPeriod, indicator) : '#E1E1E1',
+    fill: d.period === selectedPeriod ? color : '#E1E1E1',
     isAnimationActive: false,
     value: d.value,
     period: LABELS[d.period],
-    color: d.period === selectedPeriod ? getColor(data, selectedPeriod, indicator) : '#E1E1E1',
+    color: d.period === selectedPeriod ? color : '#E1E1E1',
     [LABELS[d.period]]: d.value,
     showValue: true,
     label: d.period,
     labelFormatted: LABELS[d.period],
-    valueFormatted: d.value > 1000000 ? formatMillion(d.value) : numberFormat(d.value),
+    valueFormatted: getFormattedValue(d.value, indicator),
     unit: UNITS_LABELS[metadata.unit],
   }));
+};
 
 export function useMangrovesFloodProtection(
   selectedPeriod: FloodProtectionPeriodId,
@@ -97,17 +84,19 @@ export function useMangrovesFloodProtection(
       method: 'GET',
       url: '/widgets/flood_protection',
       params: {
-        ...(!!location_id ? { location_id: 'worldwide' } : { location_id: currentLocation }),
+        ...(!!location_id && { location_id: currentLocation }),
         ...params,
       },
     }).then((response) => response.data);
   return useQuery(['flood-protection', params, location_id], fetchMangrovesFloodProtection, {
     select: (data) => {
-      const ChartData = getBars(fakeData, selectedPeriod, data.metadata, params.indicator);
-      const selectedValue = ChartData.find((d) => d.label === selectedPeriod).value;
+      const ChartData = getBars(data.data, selectedPeriod, data.metadata, params.indicator);
+      const selectedValue = ChartData.find((d) => d.label === selectedPeriod).valueFormatted;
       const TooltipData = {
         content: (properties) => <Tooltip {...properties} />,
       };
+      const min = getFormattedValue(data.metadata.min, params.indicator);
+      const max = getFormattedValue(data.metadata.max, params.indicator);
       return {
         data: ChartData,
         config: {
@@ -126,7 +115,7 @@ export function useMangrovesFloodProtection(
             bar: ChartData,
           },
           data: ChartData,
-          xKey: 'periodFormatted',
+          xKey: 'period',
           xAxis: {
             type: 'category',
             tick: {
@@ -156,6 +145,7 @@ export function useMangrovesFloodProtection(
               fontSize: 12,
               fill: 'rgba(0,0,0,0.54)',
             },
+            tickFormatter: (value) => getFormattedValue(value, params.indicator),
             tickNumber: 5,
             width: 30,
             interval: 0,
@@ -169,8 +159,8 @@ export function useMangrovesFloodProtection(
         },
         selectedValue,
         ...data.metadata,
-        min: 600,
-        max: 21000,
+        min,
+        max,
         location,
       };
     },
