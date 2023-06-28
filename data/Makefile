@@ -8,6 +8,7 @@ PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = data
+DOCKER_VERSION = $(shell docker --version)
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -15,7 +16,7 @@ else
 HAS_CONDA=True
 endif
 
-ifdef (,$(shell docker-compose --version))
+ifdef (,DOCKER_VERSION)
 DOCKER_CMD=docker-compose
 else
 DOCKER_CMD=docker compose
