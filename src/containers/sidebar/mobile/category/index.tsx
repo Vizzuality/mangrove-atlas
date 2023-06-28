@@ -2,6 +2,7 @@ import React from 'react';
 
 import cn from 'lib/classnames';
 
+import { mapSettingsAtom } from 'store/map-settings';
 import { activeCategoryAtom } from 'store/sidebar';
 
 import { useRecoilState } from 'recoil';
@@ -15,6 +16,12 @@ import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 
 const CategoryMobile = () => {
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
+  const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
+
+  const handleClick = (id: string) => {
+    if (mapSettings) setMapSettings(false);
+    setCategory(id);
+  };
 
   return (
     <div className="relative">
@@ -35,7 +42,7 @@ const CategoryMobile = () => {
                 <button
                   key={id}
                   className="group flex cursor-pointer items-center space-x-3"
-                  onClick={() => setCategory(id)}
+                  onClick={() => handleClick(id)}
                 >
                   <div
                     className={cn({

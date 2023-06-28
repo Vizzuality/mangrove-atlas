@@ -12,6 +12,10 @@ import WidgetControls from 'components/widget-controls';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
+const LABEL_UNITS = {
+  km2: 'km²',
+};
+
 type DataSourceTypes = {
   value: number;
   layer_link: string;
@@ -28,9 +32,14 @@ type IndicatorSourceTypes = {
 };
 
 const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorSourceTypes) => (
-  <div key={source} className="flex flex-1 items-center justify-between py-4">
-    {<span style={{ backgroundColor: color }} className="h-4 w-2 shrink-0 rounded-md" />}
-    <span>{source}</span>
+  <div key={source} className="flex flex-1 items-start justify-between space-x-2 py-4">
+    {
+      <span
+        style={{ backgroundColor: color }}
+        className="mt-1 w-2 shrink-0 rounded-md pt-4 first-letter:h-4"
+      />
+    }
+    <span className="max-w-[180px]">{source}</span>
     {years.length === 1 && <span>{years[0]}</span>}
     {years.length < 1 && (
       <Tooltip>
@@ -48,7 +57,7 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
           <TooltipContent
             side="bottom"
             align="center"
-            className="rounded-[20x] bg-white  text-black/85 shadow-soft"
+            className="rounded-[20x] bg-white text-black/85 shadow-soft"
           >
             <ul
               className={cn({
@@ -77,7 +86,7 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
       </Tooltip>
     )}
     {dataSource?.value && <span>{dataSource.value}</span>}
-    {unit && <span>{unit}</span>}
+    {unit && <span>{LABEL_UNITS[unit] || unit}</span>}
 
     <WidgetControls
       content={{

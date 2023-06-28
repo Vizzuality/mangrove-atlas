@@ -32,6 +32,7 @@ export type WidgetSlugType =
   | 'mangrove_carbon_market_potential'
   | 'mangrove_drivers_change'
   | 'mangrove_national_dashboard'
+  | 'mangrove_fisheries'
   | 'mangrove_layer_name_second'
   | 'mangrove_contextual_basemaps'
   | 'mangrove_drawing_tool';

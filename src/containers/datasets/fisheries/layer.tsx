@@ -4,9 +4,10 @@ import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
-const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
+const MangrovesFisheriesLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({ id });
+
   if (!SOURCE || !LAYERS) return null;
   return (
     <Source {...SOURCE}>
@@ -17,4 +18,4 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   );
 };
 
-export default MangrovesNationalDashboardLayer;
+export default MangrovesFisheriesLayer;

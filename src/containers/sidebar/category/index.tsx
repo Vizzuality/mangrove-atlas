@@ -3,6 +3,7 @@ import { useCallback, useState, MouseEvent, useMemo, useEffect } from 'react';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
+import { mapSettingsAtom } from 'store/map-settings';
 import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
@@ -21,6 +22,7 @@ const Category = () => {
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
   const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
+  const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
@@ -45,6 +47,7 @@ const Category = () => {
 
   const handleCategory = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
+      if (mapSettings) setMapSettings(false);
       setCategory(evt.currentTarget.dataset.category);
       setDrawingToolState((prevDrawingToolState) => ({
         ...prevDrawingToolState,
@@ -52,7 +55,7 @@ const Category = () => {
       }));
       closeMenu();
     },
-    [setDrawingToolState, setCategory, closeMenu]
+    [setDrawingToolState, setCategory, closeMenu, mapSettings, setMapSettings]
   );
 
   return (
