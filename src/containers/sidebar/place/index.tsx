@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
+import { analysisAlertAtom, analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
@@ -32,6 +32,7 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 const Place = () => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
   const [placeSection, savePlaceSection] = useRecoilState(placeSectionAtom);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
@@ -40,7 +41,7 @@ const Place = () => {
   const isPrintingMode = useRecoilValue(printModeState);
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useState(false);
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
+
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
 
   const { [`default-desktop-${isPrintingId}`]: map } = useMap();

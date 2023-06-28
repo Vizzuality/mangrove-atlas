@@ -9,3 +9,8 @@ export const analysisAtom = atom<{
     enabled: false,
   },
 });
+
+export const analysisAlertAtom = atom<boolean>({
+  key: 'analysis-alert',
+  default: false,
+});
