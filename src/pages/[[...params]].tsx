@@ -74,6 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   if (queryClient.getQueryState(['locations'])?.status !== 'success') {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     queryClient.prefetchQuery({
       queryKey: ['locations'],
       queryFn: fetchLocations,

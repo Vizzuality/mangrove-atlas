@@ -10,7 +10,7 @@ import { locationsModalAtom } from 'store/locations';
 import { printModeState } from 'store/print-mode';
 import { placeSectionAtom } from 'store/sidebar';
 
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogPortal, DialogContent } from 'components/dialog';
 import Icon from 'components/icon';
@@ -22,11 +22,11 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 const AnalysisAlert = () => {
   const { asPath, replace } = useRouter();
 
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
-  const [placeSection, savePlaceSection] = useRecoilState(placeSectionAtom);
-  const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
-  const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
+  const placeSection = useRecoilValue(placeSectionAtom);
   const isPrintingMode = useRecoilValue(printModeState);
+  const setLocationsModalIsOpen = useSetRecoilState(locationsModalAtom);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
+  const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
 
@@ -44,6 +44,7 @@ const AnalysisAlert = () => {
     resetDrawingState();
     resetAnalysisState();
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/?${queryParams}`, null);
 
     map.flyTo({
@@ -64,6 +65,7 @@ const AnalysisAlert = () => {
     resetDrawingState();
     resetAnalysisState();
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/?${queryParams}`, null);
 
     setAnalysisAlert(false);
@@ -80,7 +82,7 @@ const AnalysisAlert = () => {
 
   const handleCheckbox = useCallback(() => {
     setSkipAnalysisAlert(!skipAnalysisAlert);
-  }, [skipAnalysisAlert]);
+  }, [skipAnalysisAlert, setSkipAnalysisAlert]);
 
   return (
     <>

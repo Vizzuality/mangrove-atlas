@@ -65,8 +65,9 @@ const Place = () => {
   const handleWorldwideView = useCallback(() => {
     resetDrawingState();
     resetAnalysisState();
-    resetMapSettingsState();
-    handleResetPage();
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    replace(`/?${queryParams}`, null);
 
     map.flyTo({
       center: [0, 20],
@@ -86,6 +87,7 @@ const Place = () => {
     resetMapCursor();
     savePlaceSection('area');
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [
     setDrawingToolState,
