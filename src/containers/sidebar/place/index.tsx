@@ -11,6 +11,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
+import { placeSectionAtom } from 'store/sidebar';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
@@ -30,6 +31,7 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const Place = () => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
+  const [placeSection, savePlaceSection] = useRecoilState(placeSectionAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
@@ -40,7 +42,6 @@ const Place = () => {
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useState(false);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useState(false);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useState(false);
-  const [placeOption, savePlaceOption] = useState('worldwide');
 
   const { [`default-desktop-${isPrintingId}`]: map } = useMap();
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
@@ -55,7 +56,7 @@ const Place = () => {
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
-      savePlaceOption(null);
+      savePlaceSection(null);
     }
   }, [isAnalysisAlertOpen]);
 
@@ -81,7 +82,7 @@ const Place = () => {
     resetAnalysisState();
     resetMapSettingsState();
     resetMapCursor();
-    savePlaceOption('area');
+    savePlaceSection('area');
 
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
   }, [setDrawingToolState, resetAnalysisState, resetMapCursor, replace, queryParams]);
@@ -109,7 +110,7 @@ const Place = () => {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
 
-    if (placeOption === 'worldwide') {
+    if (placeSection === 'worldwide') {
       handleWorldwideView();
     }
 
@@ -123,7 +124,7 @@ const Place = () => {
   }, [
     queryParams,
     skipAnalysisAlert,
-    placeOption,
+    placeSection,
     replace,
     closeAnalysisAlertModal,
     resetDrawingState,
@@ -141,7 +142,7 @@ const Place = () => {
     } else {
       handleWorldwideView();
     }
-    savePlaceOption('worldwide');
+    savePlaceSection('worldwide');
   }, [handleWorldwideView, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
 
   const handleOnClickSearch = useCallback(() => {
@@ -150,7 +151,7 @@ const Place = () => {
     } else {
       openLocationsModal();
     }
-    savePlaceOption('search');
+    savePlaceSection('search');
   }, [openLocationsModal, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
 
   return (
@@ -166,12 +167,12 @@ const Place = () => {
             icon={GLOBE_SVG}
             className={cn({
               'h-9 w-9 rounded-full p-1': true,
-              'bg-brand-800 fill-current text-white': placeOption === 'worldwide',
-              'fill-current text-brand-800': placeOption !== 'worldwide',
+              'bg-brand-800 fill-current text-white': placeSection === 'worldwide',
+              'fill-current text-brand-800': placeSection !== 'worldwide',
             })}
           />
         </button>
-        <Dialog open={placeOption === 'search' && locationsModalIsOpen}>
+        <Dialog open={placeSection === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
@@ -181,8 +182,8 @@ const Place = () => {
                 icon={GLASS_SVG}
                 className={cn({
                   'h-9 w-9 rounded-full p-1': true,
-                  'bg-brand-800 fill-current text-white': placeOption === 'search',
-                  'fill-current text-brand-800': placeOption !== 'search',
+                  'bg-brand-800 fill-current text-white': placeSection === 'search',
+                  'fill-current text-brand-800': placeSection !== 'search',
                 })}
               />
             </button>
@@ -201,8 +202,8 @@ const Place = () => {
             icon={AREA_SVG}
             className={cn({
               'h-9 w-9 rounded-full p-1': true,
-              'bg-brand-800 fill-current text-white': placeOption === 'area',
-              'fill-current text-brand-800': placeOption !== 'area',
+              'bg-brand-800 fill-current text-white': placeSection === 'area',
+              'fill-current text-brand-800': placeSection !== 'area',
             })}
           />
         </button>
