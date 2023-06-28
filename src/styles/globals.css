@@ -108,8 +108,13 @@ body {
   border-top-color: #00857F !important;
 }
 
+
 .txlive-langselector {
   @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans;
+}
+
+.hidden-langselector {
+  @apply !hidden;
 }
 
 .txlive-langselector-list {
