@@ -11,11 +11,12 @@ const TranslateScripts = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const langSelector = document.querySelector('#tx-live-lang-container');
-      if (isPrintingMode) 
+      if (isPrintingMode) {
+        const langSelector = document.querySelector('#tx-live-lang-container');
         langSelector?.classList.add('hidden-langselector');
       }
       if (!isPrintingMode) {
+        const langSelector = document.querySelector('#tx-live-lang-container');
         langSelector?.classList.remove('hidden-langselector');
       }
     }
