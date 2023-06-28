@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -16,15 +16,15 @@ import { placeSectionAtom } from 'store/sidebar';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
+import AnalysisAlert from 'containers/alert';
 import LocationDialogContent from 'containers/location-dialog-content';
 
-import { Dialog, DialogPortal, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 import GLOBE_SVG from 'svgs/sidebar/globe.svg?sprite';
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import { STYLES } from '../constants';
 
@@ -53,14 +53,14 @@ const Place = () => {
 
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
-  }, [locationsModalIsOpen]);
+  }, [locationsModalIsOpen, setLocationsModalIsOpen]);
 
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
       savePlaceSection(null);
     }
-  }, [isAnalysisAlertOpen]);
+  }, [isAnalysisAlertOpen, setLocationsModalIsOpen, savePlaceSection]);
 
   const handleWorldwideView = useCallback(() => {
     resetDrawingState();
@@ -87,7 +87,14 @@ const Place = () => {
     savePlaceSection('area');
 
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
-  }, [setDrawingToolState, resetAnalysisState, resetMapCursor, replace, queryParams]);
+  }, [
+    setDrawingToolState,
+    resetAnalysisState,
+    resetMapCursor,
+    replace,
+    queryParams,
+    savePlaceSection,
+  ]);
 
   const openAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(true);
@@ -97,15 +104,6 @@ const Place = () => {
   const closeAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(false);
   }, [setAnalysisAlert]);
-
-  const handleCancelResetPage = useCallback(() => {
-    closeAnalysisAlertModal();
-    setLocationsModalIsOpen(false);
-  }, [closeAnalysisAlertModal]);
-
-  const handleCheckbox = useCallback(() => {
-    setSkipAnalysisAlert(!skipAnalysisAlert);
-  }, [skipAnalysisAlert]);
 
   const handleResetPage = useCallback(() => {
     if (skipAnalysisAlert) {
@@ -136,7 +134,7 @@ const Place = () => {
 
   useEffect(() => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
-  }, []);
+  }, [setSkipAnalysisAlert]);
 
   const handleOnClickWorldwide = useCallback(() => {
     if (isAnalysisEnabled && !skipAnalysisAlert) {
@@ -145,7 +143,13 @@ const Place = () => {
       handleWorldwideView();
     }
     savePlaceSection('worldwide');
-  }, [handleWorldwideView, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
+  }, [
+    handleWorldwideView,
+    isAnalysisEnabled,
+    skipAnalysisAlert,
+    openAnalysisAlertModal,
+    savePlaceSection,
+  ]);
 
   const handleOnClickSearch = useCallback(() => {
     if (isAnalysisEnabled && !skipAnalysisAlert) {
@@ -154,7 +158,13 @@ const Place = () => {
       openLocationsModal();
     }
     savePlaceSection('search');
-  }, [openLocationsModal, isAnalysisEnabled, skipAnalysisAlert, openAnalysisAlertModal]);
+  }, [
+    openLocationsModal,
+    isAnalysisEnabled,
+    skipAnalysisAlert,
+    openAnalysisAlertModal,
+    savePlaceSection,
+  ]);
 
   return (
     <div className="flex flex-col space-y-2 text-center">
@@ -210,50 +220,7 @@ const Place = () => {
           />
         </button>
       </div>
-      <Dialog open={isAnalysisAlertOpen}>
-        <DialogPortal className="z-50">
-          <DialogContent
-            className="space-y-5 rounded-3xl p-10 md:left-auto"
-            onEscapeKeyDown={closeAnalysisAlertModal}
-          >
-            <div className="space-y-5">
-              <div className="flex justify-end">
-                <button type="button" onClick={closeAnalysisAlertModal}>
-                  <Icon icon={CLOSE_SVG} className="h-8 w-8" />
-                </button>
-              </div>
-              <h3 className="text-3xl">Reset the page and delete area</h3>
-              <div className="space-y-2">
-                <p>
-                  If you reset the page,{' '}
-                  <span className="font-semibold">your custom area will be deleted</span>. Are you
-                  sure that you want to reset the page?
-                </p>
-                <div className="flex items-center space-x-2">
-                  <input type="checkbox" name="do-not-ask" onChange={handleCheckbox} />
-                  <label htmlFor="modal">Don&apos;t ask me again.</label>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center justify-center space-x-5">
-              <button
-                type="button"
-                onClick={handleCancelResetPage}
-                className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleResetPage}
-                className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
-              >
-                Reset page
-              </button>
-            </div>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog>
+      <AnalysisAlert />
     </div>
   );
 };
