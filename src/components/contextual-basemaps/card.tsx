@@ -43,6 +43,7 @@ type CardBasemapContextualProps = {
   name: string;
   description?: string;
   thumb?: string;
+  hasDropdown?: boolean;
 };
 
 const CardBasemapContextual = ({
@@ -51,6 +52,7 @@ const CardBasemapContextual = ({
   type,
   name,
   description,
+  hasDropdown,
 }: CardBasemapContextualProps) => {
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
@@ -109,7 +111,7 @@ const CardBasemapContextual = ({
           {description && <p>{description}</p>}
         </div>
       </div>
-      {isActive && (
+      {isActive && hasDropdown && (
         <div className="pb-10">
           <DateSelect mosaic_id={mosaic_id} id={id} />
         </div>

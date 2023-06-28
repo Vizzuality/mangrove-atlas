@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -36,6 +36,13 @@ const DateSelect = ({
       : basemapContextualAnalyticMonthlyDateAtom;
   const [date, setDate] = useRecoilState(datesState);
   const selectedDate = useMemo(() => date || dates?.[dates.length - 1], [date]);
+
+  useEffect(() => {
+    if (!date?.value) {
+      setDate(dates?.[dates?.length - 1]);
+    }
+  }, [dates]);
+
   return (
     <Tooltip>
       <TooltipTrigger asChild>
