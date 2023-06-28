@@ -1,14 +1,14 @@
 export const LAYERS = [
   {
-    name: 'Coastal protection area',
+    name: 'Coastal protection: area',
     id: 'mangrove_coastal_protection_area',
   },
   {
-    name: 'Coastal protection population',
+    name: 'Coastal protection: population',
     id: 'mangrove_coastal_protection_population',
   },
   {
-    name: 'Coastal protection stock',
+    name: 'Coastal protection: stock',
     id: 'mangrove_coastal_protection_stock',
   },
   {

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import Helper from 'containers/guide/helper';
-import widgets from 'containers/widgets/constants';
+import { LAYERS } from 'containers/layers/constants';
 
 import Icon from 'components/icon';
 import { WidgetSlugType } from 'types/widget';
@@ -25,8 +25,8 @@ const Legend = ({
     [layers, setActiveWidgets]
   );
 
-  const widgetName = (label) => {
-    return widgets.find((w) => w.slug === label)?.name;
+  const layerName = (label) => {
+    return LAYERS.find((w) => w.id === label)?.name;
   };
 
   const HELPER_ID = 'mangrove_habitat_extent';
@@ -44,8 +44,8 @@ const Legend = ({
             tooltipPosition={{ top: 80, left: 0 }}
             message="List of legends seen on the map. You can close them directly here"
           >
-            <div className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
-              <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
+            <div className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
+              <p className="text-xs font-semibold uppercase">{layerName(l)}</p>
               <button onClick={() => removeLayer(l)}>
                 <Icon icon={REMOVE_SVG} className="h-5 w-5" />
               </button>
