@@ -109,7 +109,7 @@ body {
 }
 
 .txlive-langselector {
-  @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans !print;
+  @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans;
 }
 
 .txlive-langselector-list {

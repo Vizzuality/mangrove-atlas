@@ -9,6 +9,13 @@ const widgets = [
     layersIds: ['extent'],
   },
   {
+    name: 'National dashboard',
+    slug: 'mangrove_national_dashboard',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    layersIds: [''],
+  },
+  {
     name: 'Mangrove net change',
     slug: 'mangrove_net_change',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -117,8 +124,8 @@ const widgets = [
     layersIds: ['extent'],
   },
   // {
-  //   name: 'National dashboard',
-  //   slug: 'mangrove_national_dashboard',
+  //   name: 'Mangrove fisheries',
+  //   slug: 'mangrove_fisheries',
   //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
   //   categoryIds: ['all_datasets', 'distribution_and_change'],
   //   layersIds: [''],

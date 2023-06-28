@@ -5,7 +5,7 @@ import { urlSyncEffect } from 'recoil-sync';
 import type { ContextualBasemapsId } from 'types/widget';
 
 export const mapSettingsAtom = atom<boolean>({
-  key: 'map-settings',
+  key: 'map-settings-open',
   default: false,
 });
 

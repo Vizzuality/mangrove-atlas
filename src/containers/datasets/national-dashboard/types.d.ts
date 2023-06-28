@@ -1,41 +1,25 @@
-type Categories = Readonly<{
-  cr: number;
-  en: number;
-  vu: number;
-  nt: number;
-  lc: number;
-  dd: number;
-}>;
+type DataSource = {
+  download_link: string;
+  layer_info: string;
+  layer_link: string;
+  value: number;
+  year: number;
+};
+type Source = {
+  data_source: DataSource[];
+  source: string;
+  unit: string;
+  years: number[];
+};
 
-type Category = 'cr' | 'en' | 'vu' | 'nt' | 'lc' | 'dd';
-
-type Specie = Readonly<{
-  common_name: null | string;
-  created_at: string;
-  id: number;
-  iucn_url: string;
-  red_list_cat: Category;
-  scientific_name: string;
-  updated_at: string;
-}>;
-
-type Data = { total: number; threatened: number; categories: Categories; species: Specie[] };
+type Data = { indicator: string; sources: Source[] };
 
 type Metadata = {
-  note: 'nº of species';
-  unit: null | string;
+  locations_id: string;
+  note: string;
+  other_resources: unknown[];
 };
 export type DataResponse = {
   data: Data;
   metadata: Metadata;
-};
-export type SpeciesData = {
-  noData: boolean;
-  location: string;
-  total: number;
-  worldwideTotal: number;
-  legend: number[];
-  isLoading: boolean;
-  isFetched: boolean;
-  isPlaceholderData: boolean;
 };

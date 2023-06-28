@@ -28,6 +28,7 @@ import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
+import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';
@@ -42,6 +43,7 @@ import HeightWidget from 'containers/datasets/height/widget';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import InternationalStatusWidget from 'containers/datasets/international-status/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
+import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
 import NationalDashboardWidget from 'containers/datasets/national-dashboard/widget';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
@@ -88,6 +90,7 @@ export const WIDGETS = {
   mangrove_national_dashboard: NationalDashboardWidget,
   mangrove_layer_name_second: LayerNameContentSecond,
   mangrove_contextual_basemaps: BasemapsContextualMapSettings,
+  mangrove_fisheries: FisheriesWidget,
 } satisfies Record<WidgetSlugType, () => JSX.Element>;
 
 export const LAYERS = {
@@ -107,6 +110,7 @@ export const LAYERS = {
   'protected-areas': ProtectedAreasLayer,
   mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
+  mangrove_national_dashboard: NationalDashboardLayer,
 };
 
 export const INFO = {

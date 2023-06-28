@@ -8,6 +8,7 @@ type ContextualLayersTypes = Array<{
   basemap_type: 'Visual' | 'Analytic';
   monitoring_frequency: 'Monthly' | 'Biannual';
   description: string;
+  hasDropdown: boolean;
 }>;
 export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   {
@@ -18,6 +19,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
     basemap_type: 'Visual',
     monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
+    hasDropdown: true,
   },
   // {
   //   id: 'b55b46db-40cc-4432-b4dd-705ac40b2a16',
@@ -34,6 +36,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
     basemap_type: 'Analytic',
     monitoring_frequency: 'Monthly',
     description: 'Monthly hight resolution basemaps (tropics)',
+    hasDropdown: true,
   },
   // {
   //   id: '1725ab80-8e12-4b3c-9c25-99550eb466e4',
