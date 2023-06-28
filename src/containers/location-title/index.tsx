@@ -4,10 +4,13 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { analysisAlertAtom, analysisAtom } from 'store/analysis';
+import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
+import { locationsModalAtom } from 'store/locations';
+import { placeSectionAtom } from 'store/sidebar';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationDialogContent from 'containers/location-dialog-content';
@@ -26,17 +29,16 @@ const LocationTitle = () => {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
 
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
+
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
+  const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
+  const skipAnalysisAlert = useRecoilValue(skipAnalysisAlertAtom);
+  const savePlaceSection = useSetRecoilState(placeSectionAtom);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-
-  const openMenu = useCallback(() => {
-    if (!isOpen) setIsOpen(true);
-    if (isAnalysisEnabled) setAnalysisAlert(true);
-  }, [isOpen, isAnalysisEnabled, setAnalysisAlert]);
 
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) setIsOpen(false);
@@ -59,26 +61,50 @@ const LocationTitle = () => {
     setWidth(width);
   }, [name]);
 
+  const openLocationsModal = useCallback(() => {
+    if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
+  }, [locationsModalIsOpen, setLocationsModalIsOpen]);
+
+  const handleOnClickTitle = useCallback(() => {
+    if (isAnalysisEnabled && !skipAnalysisAlert) {
+      setAnalysisAlert(true);
+      openLocationsModal();
+    } else {
+      openLocationsModal();
+    }
+    savePlaceSection('search');
+  }, [
+    openLocationsModal,
+    isAnalysisEnabled,
+    skipAnalysisAlert,
+    savePlaceSection,
+    setAnalysisAlert,
+  ]);
+
   return (
-    <div className="flex flex-col text-center print:hidden">
-      <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
-      <Dialog open={isOpen}>
-        <DialogTrigger asChild>
-          <button onClick={openMenu}>
-            <h1
-              ref={titleRef}
-              className={cn({
-                'inline-block py-10 text-6xl font-light text-black/85 first-letter:uppercase': true,
-                'text-2.75xl': width >= 540,
-              })}
-            >
-              {locationName}
-            </h1>
-          </button>
-        </DialogTrigger>
-        <LocationDialogContent close={closeMenu} />
-      </Dialog>
-    </div>
+    <>
+      <div className="flex flex-col text-center print:hidden">
+        <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
+        <Dialog open={isOpen}>
+          <DialogTrigger asChild>
+            <button onClick={handleOnClickTitle}>
+              <h1
+                ref={titleRef}
+                className={cn({
+                  'inline-block py-10 text-6xl font-light text-black/85 first-letter:uppercase':
+                    true,
+                  'text-2.75xl': width >= 540,
+                })}
+              >
+                {locationName}
+              </h1>
+            </button>
+          </DialogTrigger>
+          <LocationDialogContent close={closeMenu} />
+        </Dialog>
+      </div>
+      <AnalysisAlert />
+    </>
   );
 };
 
