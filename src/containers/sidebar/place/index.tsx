@@ -73,7 +73,7 @@ const Place = () => {
       center: [0, 20],
       zoom: 2,
     });
-  }, [map, resetAnalysisState, resetDrawingState, resetMapSettingsState]);
+  }, [map, resetAnalysisState, resetDrawingState, replace, queryParams]);
 
   const handleDrawingToolView = useCallback(() => {
     setDrawingToolState((drawingToolState) => ({
@@ -96,43 +96,13 @@ const Place = () => {
     replace,
     queryParams,
     savePlaceSection,
+    resetMapSettingsState,
   ]);
 
   const openAnalysisAlertModal = useCallback(() => {
     setAnalysisAlert(true);
     openLocationsModal();
   }, [setAnalysisAlert, openLocationsModal]);
-
-  const closeAnalysisAlertModal = useCallback(() => {
-    setAnalysisAlert(false);
-  }, [setAnalysisAlert]);
-
-  const handleResetPage = useCallback(() => {
-    if (skipAnalysisAlert) {
-      window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
-    }
-
-    if (placeSection === 'worldwide') {
-      handleWorldwideView();
-    }
-
-    resetDrawingState();
-    resetAnalysisState();
-    resetMapSettingsState();
-
-    replace(`/?${queryParams}`, null);
-
-    closeAnalysisAlertModal();
-  }, [
-    queryParams,
-    skipAnalysisAlert,
-    placeSection,
-    replace,
-    closeAnalysisAlertModal,
-    resetDrawingState,
-    resetAnalysisState,
-    handleWorldwideView,
-  ]);
 
   useEffect(() => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
