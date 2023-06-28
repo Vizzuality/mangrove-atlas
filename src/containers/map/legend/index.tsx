@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import Helper from 'containers/guide/helper';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
@@ -28,19 +29,28 @@ const Legend = ({
     return widgets.find((w) => w.slug === label)?.name;
   };
 
+  const HELPER_ID = 'mangrove_habitat_extent';
+
   return (
     <div className="flex flex-col space-y-1 print:hidden">
       {!!layers.length &&
         layers.map((l) => (
-          <div
+          <Helper
             key={l}
-            className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
+            className={{
+              button: l === HELPER_ID ? '-bottom-3.5 -left-1.5 z-[20]' : 'hidden',
+              tooltip: 'w-[236px]',
+            }}
+            tooltipPosition={{ top: 80, left: 0 }}
+            message="List of legends seen on the map. You can close them directly here"
           >
-            <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
-            <button onClick={() => removeLayer(l)}>
-              <Icon icon={REMOVE_SVG} className="h-5 w-5" />
-            </button>
-          </div>
+            <div className="flex h-11 items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
+              <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
+              <button onClick={() => removeLayer(l)}>
+                <Icon icon={REMOVE_SVG} className="h-5 w-5" />
+              </button>
+            </div>
+          </Helper>
         ))}
     </div>
   );

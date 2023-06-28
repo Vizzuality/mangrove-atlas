@@ -10,10 +10,14 @@ type WrapperProps = Readonly<{
   className?: string;
 }>;
 
+interface SwitchThumbProps extends SwitchRadix.SwitchThumbProps {
+  icon?: React.ReactNode;
+}
+
 const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) => (
   <SwitchRadix.Root
     className={cn({
-      'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 outline-none data-[state=checked]:bg-brand-800':
+      'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 bg-white outline-none data-[state=checked]:bg-brand-800':
         true,
       [className]: !!className,
     })}
@@ -23,14 +27,18 @@ const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) 
   </SwitchRadix.Root>
 );
 
-const SwitchThumb = ({ className }: SwitchRadix.SwitchThumbProps) => (
+const SwitchThumb = ({ className, icon }: SwitchThumbProps) => (
   <SwitchRadix.Thumb
     className={cn({
-      'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white':
+      'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
         true,
       [className]: !!className,
     })}
-  />
+  >
+    {icon && (
+      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold ">?</div>
+    )}
+  </SwitchRadix.Thumb>
 );
 
 const SwitchWrapper = ({ id, children, className }: WrapperProps) => (

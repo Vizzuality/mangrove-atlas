@@ -15,7 +15,6 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -30,6 +29,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { DataResponse as LocationResponse } from 'containers/datasets/locations/hooks';
+import GuideSwitcher from 'containers/guide/switcher';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
@@ -306,13 +306,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             )}
             <Controls
               className={cn({
-                'absolute top-36 right-6 print:hidden': true,
-                'right-10 top-18': screenWidth >= breakpoints.md,
+                'absolute top-6 right-6 items-center print:hidden': true,
+                'top-28 right-10': screenWidth >= breakpoints.md,
               })}
             >
-              <FullScreenControl />
-              <ZoomControl mapId={mapId} />
-              <PitchReset mapId={mapId} />
+              <GuideSwitcher />
+              <div className="flex flex-col space-y-2 pt-1">
+                <FullScreenControl />
+                <ZoomControl mapId={mapId} />
+                <PitchReset mapId={mapId} />
+              </div>
             </Controls>
             {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
               <Popup

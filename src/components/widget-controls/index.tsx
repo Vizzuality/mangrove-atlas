@@ -5,6 +5,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useRecoilState } from 'recoil';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
+import Helper from 'containers/guide/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import type { WidgetSlugType } from 'types/widget';
@@ -36,16 +37,27 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     setActiveWidgets(widgetsUpdate);
   };
 
+  const HELPER_ID = id === 'mangrove_net_change';
+
   return (
     <div className="flex items-center space-x-2 print:hidden">
       {!!download && <Download id={id} content={download} />}
       {!!info && <Info id={id} content={info} />}
       {!!layer && (
-        <SwitchWrapper id={id}>
-          <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
-            <SwitchThumb />
-          </SwitchRoot>
-        </SwitchWrapper>
+        <Helper
+          className={{
+            button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-[20]' : 'hidden',
+            tooltip: 'w-28',
+          }}
+          tooltipPosition={{ top: 60, left: 42 }}
+          message="Toggle layer"
+        >
+          <SwitchWrapper id={id}>
+            <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
+              <SwitchThumb />
+            </SwitchRoot>
+          </SwitchWrapper>
+        </Helper>
       )}
     </div>
   );
