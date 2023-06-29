@@ -1,4 +1,4 @@
-import { useMemo, ReactElement } from 'react';
+import { useMemo } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 

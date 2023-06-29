@@ -17,7 +17,7 @@ type LegendTypes = {
   unit?: string;
 };
 
-const Legend = ({ title, subtitle, items, variant = 'vertical', unit }: LegendTypes) => {
+const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) => {
   return (
     <div
       className={cn({
