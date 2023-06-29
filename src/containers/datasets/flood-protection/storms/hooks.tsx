@@ -44,7 +44,7 @@ const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId)
     const roundedValue = Math.round(value);
     return roundedValue > 1000000 ? formatMillion(roundedValue) : roundedValue;
   }
-  return value > 1000000 ? formatMillion(value) : numberFormat(value);
+  return value > 1000000 ? formatMillion(value) : value % 2 === 0 ? value : numberFormat(value);
 };
 
 const getBars = (data, selectedPeriod, metadata, indicator) => {
@@ -55,12 +55,12 @@ const getBars = (data, selectedPeriod, metadata, indicator) => {
     fill: d.period === selectedPeriod ? color : '#E1E1E1',
     isAnimationActive: false,
     value: d.value,
-    period: LABELS[d.period],
+    period: LABELS[d.period].short,
     color: d.period === selectedPeriod ? color : '#E1E1E1',
     [LABELS[d.period]]: d.value,
     showValue: true,
     label: d.period,
-    labelFormatted: LABELS[d.period],
+    labelFormatted: LABELS[d.period].short,
     valueFormatted: getFormattedValue(d.value, indicator),
     unit: UNITS_LABELS[metadata.unit],
   }));
@@ -91,12 +91,12 @@ export function useMangrovesFloodProtection(
   return useQuery(['flood-protection', params, location_id], fetchMangrovesFloodProtection, {
     select: (data) => {
       const ChartData = getBars(data.data, selectedPeriod, data.metadata, params.indicator);
-      const selectedValue = ChartData.find((d) => d.label === selectedPeriod).valueFormatted;
+      const selectedValue = ChartData.find((d) => d.label === selectedPeriod).value;
       const TooltipData = {
         content: (properties) => <Tooltip {...properties} />,
       };
-      const min = getFormattedValue(data.metadata.min, params.indicator);
-      const max = getFormattedValue(data.metadata.max, params.indicator);
+      const min = data.metadata.min;
+      const max = data.metadata.max;
       return {
         data: ChartData,
         config: {
@@ -106,7 +106,7 @@ export function useMangrovesFloodProtection(
           margin: {
             top: 40,
             bottom: 0,
-            left: 20,
+            left: 25,
             right: 40,
           },
           chartBase: {
@@ -162,6 +162,7 @@ export function useMangrovesFloodProtection(
         min,
         max,
         location,
+        getFormattedValue,
       };
     },
     ...queryOptions,

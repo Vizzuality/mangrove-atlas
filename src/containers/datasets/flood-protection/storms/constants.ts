@@ -1,7 +1,16 @@
 export const LABELS = {
-  annual: 'annual',
-  '25_year': '25-year',
-  '100_year': '100-year',
+  annual: {
+    short: 'annual',
+    large: 'annually',
+  },
+  '25_year': {
+    short: '25-year',
+    large: 'once every 25 years',
+  },
+  '100_year': {
+    short: '100-year',
+    large: 'once every 100 years',
+  },
 };
 
 export const UNITS_LABELS = {

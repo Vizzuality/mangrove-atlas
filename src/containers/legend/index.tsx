@@ -35,26 +35,29 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
         </h2>
       )}
       {items.map(
-        ({ showValue = true, color, label, labelFormatted, valueFormatted, value, unit }) => (
-          <div key={label} className={cn({ 'flex items-start': true })}>
-            <div
-              style={{ backgroundColor: color }}
-              className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
-            />
-            <div className="flex flex-col items-start text-sm">
-              <p className={cn({ 'font-bold': !showValue })}>{labelFormatted || label}</p>
-              <div className="flex space-x-2 whitespace-nowrap">
-                {showValue && unit && (unit === '$' || unit === 'usd') && (
-                  <p className="font-bold">{unit}</p>
-                )}
-                {showValue && <p className="font-bold">{valueFormatted || value}</p>}
-                {showValue && unit && unit !== '$' && unit === 'usd' && (
-                  <p className="font-bold">{unit}</p>
-                )}
+        ({ showValue = true, color, label, labelFormatted, valueFormatted, value, unit }) => {
+          console.log(unit);
+          return (
+            <div key={label} className={cn({ 'flex items-start': true })}>
+              <div
+                style={{ backgroundColor: color }}
+                className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
+              />
+              <div className="flex flex-col items-start text-sm">
+                <p className={cn({ 'font-bold': !showValue })}>{labelFormatted || label}</p>
+                <div className="flex space-x-2 whitespace-nowrap">
+                  {showValue && unit && (unit === '$' || unit === 'usd') && (
+                    <p className="font-bold">{unit}</p>
+                  )}
+                  {showValue && <p className="font-bold">{valueFormatted || value}</p>}
+                  {showValue && unit && unit !== '$' && unit !== 'usd' && (
+                    <p className="font-bold">{unit}</p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        )
+          );
+        }
       )}
     </div>
   );

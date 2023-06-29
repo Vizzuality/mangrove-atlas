@@ -9,7 +9,7 @@ import {
   floodStockPeriodAtom,
 } from 'store/widgets/flood-protection';
 
-import { set } from 'date-fns';
+import { SelectValue } from '@radix-ui/react-select';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
@@ -102,10 +102,13 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
 
   if (!data || !data?.data?.length) return null;
 
-  const { periods, max, min, selectedValue, location } = data;
+  const { periods, max, min, selectedValue, location, getFormattedValue } = data;
   const isWorldwide = location === 'Worldwide';
-  const trianglePositionPerc = (Number(selectedValue) * 100) / max; // substract icon size
+  const maxValue = getFormattedValue(max, indicator);
+  const minValue = getFormattedValue(min, indicator);
+  const trianglePositionPerc = (selectedValue * 100) / max; // substract icon size
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100;
+  const value = getFormattedValue(selectedValue, indicator);
 
   const getBackground = (indicator) => {
     let background;
@@ -148,11 +151,11 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
           </header>
           <p className={WIDGET_SENTENCE_STYLE}>
             In <span className="font-bold first-letter:uppercase"> {data.location}</span>, mangroves
-            protect against intense storms that occur once every{' '}
+            protect against <span className="font-bold">intense</span> storms that occur{' '}
             <Tooltip>
               <TooltipTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {LABELS[selectedPeriod]}
+                  {LABELS[selectedPeriod].large}
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
@@ -179,7 +182,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                           onClick={() => handlePeriod(period)}
                           disabled={period === selectedPeriod}
                         >
-                          {LABELS[period]}
+                          {LABELS[period].short}
                         </button>
                       </li>
                     ))}
@@ -189,19 +192,23 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                 </TooltipContent>
               </TooltipPortal>
             </Tooltip>{' '}
-            {indicator === 'area' && 'an area of' && (
-              <span className="font-bold">
-                {selectedValue} km<sup>2</sup>.
+            {indicator === 'area' && (
+              <span>
+                an area of
+                <span className="font-bold">
+                  {' '}
+                  {value} km<sup>2</sup>.
+                </span>
               </span>
             )}
             {indicator === 'population' && (
               <span>
-                to <span className="font-bold">{selectedValue}</span> individuals
+                to <span className="font-bold">{value}</span> individuals
               </span>
             )}
             {indicator === 'stock' && (
               <span>
-                built capital worth <span className="font-bold">$ {selectedValue}</span>.
+                built capital worth <span className="font-bold">$ {value}</span>.
               </span>
             )}
           </p>
@@ -231,7 +238,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
               )}
             </div>
             <div className="flex w-full justify-between text-sm text-black/85">
-              {[min, max].map((l) => (
+              {[minValue, maxValue].map((l) => (
                 <p key={l}>{l}</p>
               ))}
             </div>
