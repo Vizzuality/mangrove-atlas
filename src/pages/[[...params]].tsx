@@ -8,7 +8,6 @@ import { useRecoilValue } from 'recoil';
 import DesktopLayout from 'layouts/desktop';
 import MobileLayout from 'layouts/mobile';
 
-import { fetchLocations } from 'containers/datasets/locations/hooks';
 import type { DataResponse } from 'containers/datasets/locations/hooks';
 
 import { Media } from 'components/media-query';
@@ -71,14 +70,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       notFound: true,
     };
-  }
-
-  if (queryClient.getQueryState(['locations'])?.status !== 'success') {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    queryClient.prefetchQuery({
-      queryKey: ['locations'],
-      queryFn: fetchLocations,
-    });
   }
 
   return {

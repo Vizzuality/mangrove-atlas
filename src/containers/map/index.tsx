@@ -28,7 +28,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
-import type { DataResponse as LocationResponse } from 'containers/datasets/locations/hooks';
+import { useLocations } from 'containers/datasets/locations/hooks';
 import GuideSwitcher from 'containers/guide/switcher';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
@@ -66,6 +66,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
+
+  const { data: locations } = useLocations();
 
   const [
     {
@@ -125,6 +127,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       setLocationBounds(null);
     }
   }, [map, setURLBounds, setLocationBounds]);
+
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
@@ -215,7 +218,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const handleClickLocation = useCallback(
     (locationFeature: MapboxGeoJSONFeature) => {
-      const locations = queryClient.getQueryData<LocationResponse>(['locations']);
       const {
         properties: { location_idn },
       } = locationFeature;
@@ -232,7 +234,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
       }
     },
-    [queryClient, setLocationBounds, push, queryParams]
+    [setLocationBounds, push, queryParams, locations]
   );
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
