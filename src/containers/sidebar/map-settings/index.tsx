@@ -14,7 +14,7 @@ import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 import { STYLES } from '../constants';
 
 const MapSettings = () => {
-  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  const drawingToolState = useRecoilValue(drawingToolAtom);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
