@@ -36,7 +36,6 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
       )}
       {items.map(
         ({ showValue = true, color, label, labelFormatted, valueFormatted, value, unit }) => {
-          console.log(unit);
           return (
             <div key={label} className={cn({ 'flex items-start': true })}>
               <div

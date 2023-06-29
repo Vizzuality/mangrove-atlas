@@ -233,7 +233,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                 <Icon
                   icon={TRIANGLE_SVG}
                   className="absolute -top-7 h-5 w-5"
-                  style={{ left: !!trianglePosition && trianglePosition }}
+                  style={{ left: trianglePosition * 100 }}
                 />
               )}
             </div>
