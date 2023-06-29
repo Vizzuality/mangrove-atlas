@@ -39,6 +39,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           max,
           '#2A5674',
         ],
+        'fill-opacity': 0.8,
       },
     },
   ];

@@ -38,6 +38,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           max,
           '#63589F',
         ],
+        'fill-opacity': 0.7,
         'fill-outline-color': [
           'interpolate',
           ['linear'],
