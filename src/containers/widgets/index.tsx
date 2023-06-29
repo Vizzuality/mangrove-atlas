@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
+import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
@@ -26,7 +27,7 @@ const WidgetsContainer: React.FC = () => {
   const widgets = useWidgets();
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
-
+  const mapSettings = useRecoilValue(mapSettingsAtom);
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
 
@@ -117,7 +118,7 @@ const WidgetsContainer: React.FC = () => {
 
       {widgets.length === 0 && <NoData />}
 
-      {!!widgets.length ? (
+      {!!widgets.length && !mapSettings ? (
         <div className="flex w-full py-4 print:hidden">
           <button
             className={cn({

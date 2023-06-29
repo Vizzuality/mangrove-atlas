@@ -1,4 +1,4 @@
-import { useMemo, ReactElement } from 'react';
+import { useMemo } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 
@@ -75,7 +75,7 @@ const CardBasemapContextual = ({
   return (
     <div className="w-full border-b-2 border-dashed border-b-brand-800 border-opacity-50 last-of-type:border-none">
       <div className="flex w-full items-center justify-between">
-        <h2 className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
+        <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold uppercase -tracking-tighter text-black/85">
           {name}
         </h2>
 
@@ -112,7 +112,7 @@ const CardBasemapContextual = ({
         </div>
       </div>
       {isActive && hasDropdown && (
-        <div className="pb-10">
+        <div className="pb-4">
           <DateSelect mosaic_id={mosaic_id} id={id} />
         </div>
       )}

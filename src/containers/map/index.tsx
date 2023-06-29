@@ -128,7 +128,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   }, [map, setURLBounds, setLocationBounds]);
 
-
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
@@ -309,7 +308,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             <Controls
               className={cn({
                 'absolute top-6 right-6 items-center print:hidden': true,
-                'top-28 right-10': screenWidth >= breakpoints.md,
+                'top-12 right-10': screenWidth >= breakpoints.md,
               })}
             >
               <GuideSwitcher />

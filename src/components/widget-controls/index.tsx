@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
+import { useWidgets } from 'containers/widgets/hooks';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import type { WidgetSlugType } from 'types/widget';
@@ -27,6 +28,7 @@ type WidgetControlsType = Readonly<{
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
+  const widgets = useWidgets();
 
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
@@ -37,7 +39,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     setActiveWidgets(widgetsUpdate);
   };
 
-  const HELPER_ID = id === 'mangrove_net_change';
+  const HELPER_ID = id === widgets[0].slug;
 
   return (
     <div className="flex items-center space-x-2 print:hidden">

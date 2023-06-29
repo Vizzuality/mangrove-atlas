@@ -14,7 +14,7 @@ import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 import { STYLES } from '../constants';
 
 const MapSettings = () => {
-  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  const drawingToolState = useRecoilValue(drawingToolAtom);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
@@ -42,7 +42,7 @@ const MapSettings = () => {
           <Icon
             icon={MAP_SETTINGS_SVG}
             className={cn({
-              'h-8 w-8 fill-current text-brand-800': true,
+              'h-9 w-9 fill-current p-1 text-brand-800': true,
               'text-white': mapSettings,
             })}
           />
