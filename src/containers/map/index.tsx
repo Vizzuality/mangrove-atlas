@@ -128,7 +128,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   }, [map, setURLBounds, setLocationBounds]);
 
-  // console.log(map.getStyle().layers);
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
