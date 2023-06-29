@@ -107,7 +107,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
   const maxValue = getFormattedValue(max, indicator);
   const minValue = getFormattedValue(min, indicator);
   const trianglePositionPerc = (selectedValue * 100) / max; // substract icon size
-  const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100;
+  const trianglePosition = lineChartWidth * trianglePositionPerc;
   const value = getFormattedValue(selectedValue, indicator);
 
   const getBackground = (indicator) => {
@@ -233,7 +233,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                 <Icon
                   icon={TRIANGLE_SVG}
                   className="absolute -top-7 h-5 w-5"
-                  style={{ left: trianglePosition * 100 }}
+                  style={{ left: trianglePosition }}
                 />
               )}
             </div>
