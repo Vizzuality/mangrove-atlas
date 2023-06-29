@@ -3,7 +3,11 @@ import cn from 'lib/classnames';
 import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
 
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import {
+  WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SENTENCE_STYLE,
+  WIDGET_SUBTITLE_STYLE,
+} from 'styles/widgets';
 
 import OverviewChart from './chart';
 
@@ -21,7 +25,7 @@ const MeanRestoration = () => {
       <Loading visible={isLoading || isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isError && data && (
         <div className="space-y-4">
-          <h3 className="text-xs">OVERVIEW</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>OVERVIEW</h3>
           <p className={WIDGET_SENTENCE_STYLE}>
             The mean restoration potential score for{' '}
             <span className="font-bold"> {data.location}</span> is{' '}

@@ -29,6 +29,11 @@ import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
+import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
+import FloodProtectionAreaLayer from 'containers/datasets/flood-protection/storms/layers/area';
+import FloodProtectionPopulationLayer from 'containers/datasets/flood-protection/storms/layers/population';
+import FloodProtectionStockLayer from 'containers/datasets/flood-protection/storms/layers/stock';
+import FloodProtectionWidget from 'containers/datasets/flood-protection/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';
@@ -88,10 +93,11 @@ export const WIDGETS = {
   mangrove_restoration: RestorationWidget,
   mangrove_drawing_tool: DrawingToolWidget,
   mangrove_national_dashboard: NationalDashboardWidget,
+  mangrove_flood_protection: FloodProtectionWidget,
   mangrove_layer_name_second: LayerNameContentSecond,
   mangrove_contextual_basemaps: BasemapsContextualMapSettings,
   mangrove_fisheries: FisheriesWidget,
-} satisfies Record<WidgetSlugType, () => JSX.Element>;
+} satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
   mangrove_habitat_extent: HabitatExtentLayer,
@@ -111,6 +117,9 @@ export const LAYERS = {
   mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
   mangrove_national_dashboard: NationalDashboardLayer,
+  mangrove_coastal_protection_area: FloodProtectionAreaLayer,
+  mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
+  mangrove_coastal_protection_stock: FloodProtectionStockLayer,
 };
 
 export const INFO = {
@@ -132,6 +141,7 @@ export const INFO = {
   mangrove_layer_name_second: LayerNameInfoSecond,
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
+  mangrove_flood_protection: FloodProtectionInfo,
 };
 
 export const DOWNLOAD = {

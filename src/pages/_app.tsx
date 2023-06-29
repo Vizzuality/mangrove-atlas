@@ -77,7 +77,6 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
           }
         `}
       </style>
-
       <RecoilRoot>
         <RecoilURLSyncNext
           location={{ part: 'queryParams' }}

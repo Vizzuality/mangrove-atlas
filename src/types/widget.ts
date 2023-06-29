@@ -35,6 +35,10 @@ export type WidgetSlugType =
   | 'mangrove_fisheries'
   | 'mangrove_layer_name_second'
   | 'mangrove_contextual_basemaps'
+  | 'mangrove_flood_protection'
+  | 'mangrove_coastal_protection_area'
+  | 'mangrove_coastal_protection_population'
+  | 'mangrove_coastal_protection_stock'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =

@@ -1,5 +1,9 @@
 import Loading from 'components/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import {
+  WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SENTENCE_STYLE,
+  WIDGET_SUBTITLE_STYLE,
+} from 'styles/widgets';
 
 import RestorationValueChart from './chart';
 import { useMangroveEcosystemServices } from './hooks';
@@ -15,7 +19,7 @@ const RestorationValue = () => {
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
         <div className="space-y-4">
-          <h3 className="text-xs">RESTORATION VALUE</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION VALUE</h3>
           <p className={WIDGET_SENTENCE_STYLE}>
             The restoration of mangroves in{' '}
             <span className="font-bold first-letter:uppercase"> {data.location}</span> would
