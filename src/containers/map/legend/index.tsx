@@ -1,5 +1,12 @@
 import { useCallback } from 'react';
 
+import flatten from 'lodash-es/flatten';
+import isEmpty from 'lodash-es/isEmpty';
+
+import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
+
+import { useRecoilValue } from 'recoil';
+
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 
@@ -34,24 +41,28 @@ const Legend = ({
   return (
     <div className="flex flex-col space-y-1 print:hidden">
       {!!layers.length &&
-        layers.map((l) => (
-          <Helper
-            key={l}
-            className={{
-              button: l === HELPER_ID ? '-bottom-3.5 -left-1.5 z-[20]' : 'hidden',
-              tooltip: 'w-[236px]',
-            }}
-            tooltipPosition={{ top: 80, left: 0 }}
-            message="List of legends seen on the map. You can close them directly here"
-          >
-            <div className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
-              <p className="text-xs font-semibold uppercase">{layerName(l)}</p>
-              <button onClick={() => removeLayer(l)}>
-                <Icon icon={REMOVE_SVG} className="h-5 w-5" />
-              </button>
-            </div>
-          </Helper>
-        ))}
+        layers.map((l) => {
+          const layerNameToDisplay = layerName(l);
+          if (layerNameToDisplay === undefined) return null;
+          return (
+            <Helper
+              key={l}
+              className={{
+                button: l === HELPER_ID ? '-bottom-3.5 -left-1.5 z-[20]' : 'hidden',
+                tooltip: 'w-[236px]',
+              }}
+              tooltipPosition={{ top: 80, left: 0 }}
+              message="List of legends seen on the map. You can close them directly here"
+            >
+              <div className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
+                <p className="text-xs font-semibold uppercase">{layerNameToDisplay}</p>
+                <button onClick={() => removeLayer(l)}>
+                  <Icon icon={REMOVE_SVG} className="h-5 w-5" />
+                </button>
+              </div>
+            </Helper>
+          );
+        })}
     </div>
   );
 };

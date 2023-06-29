@@ -1,7 +1,7 @@
 export const COLORS = ['#ECDA9A', '#00C5BD', '#FFADAD'];
 
-export const DATASOURCES = {
-  'globalmangrovewatch.atkcyrph': 'polygonAUS_mangrove_cover_2022',
+export const DATA_SOURCES = {
+  'globalmangrovewatch.atkcyrph': 'AUS_mangrove_cover_2022',
   'globalmangrovewatch.3nw6ym2a': 'MangroveExtent2020KenyaFinalQAv2',
   'globalmangrovewatch.35tuojsj': 'MangroveExtent2020MozambiqueFinalQAv2',
   'globalmangrovewatch.dk6v2gg1': 'car_mangroves',

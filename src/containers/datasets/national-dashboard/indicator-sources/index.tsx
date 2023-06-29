@@ -1,6 +1,14 @@
+import { useMemo, useCallback } from 'react';
+
 import cn from 'lib/classnames';
 
+import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
+import { activeWidgetsAtom } from 'store/widgets';
+
+import { useRecoilState } from 'recoil';
+
 import Icon from 'components/icon';
+import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import {
   Tooltip,
   TooltipArrow,
@@ -9,8 +17,11 @@ import {
   TooltipTrigger,
 } from 'components/tooltip';
 import WidgetControls from 'components/widget-controls';
+import { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+
+import { DATA_SOURCES } from '../constants';
 
 const LABEL_UNITS = {
   km2: 'km²',
@@ -24,14 +35,44 @@ type DataSourceTypes = {
 };
 
 type IndicatorSourceTypes = {
+  id: string;
   source: string;
   years: number[];
   unit: string;
   dataSource: DataSourceTypes;
   color: string;
+  location: string | string[];
 };
 
 const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorSourceTypes) => {
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(
+    nationalDashboardSettingsAtom
+  );
+
+  const layerId = `national_dashboard_source_${
+    DATA_SOURCES[dataSource.layer_link]
+  }` as WidgetSlugType;
+
+  const isActive = useMemo(
+    () => activeWidgets.includes(layerId),
+    [activeWidgets, dataSource.layer_link]
+  );
+  const handleClick = useCallback(
+    (id) => {
+      const widgetsCheck = isActive
+        ? activeWidgets.filter((w) => w !== id)
+        : [...activeWidgets, id];
+      setNationalDashboardLayersSettings({
+        ...nationalDashboardSettings,
+        [id]: color[0],
+      });
+      console.log(id);
+      setActiveWidgets(widgetsCheck);
+    },
+    [activeWidgets]
+  );
+
   return (
     <div key={source} className="flex flex-1 items-start justify-between space-x-2 py-4">
       {
@@ -88,14 +129,18 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
       )}
       {dataSource?.value && <span>{dataSource.value}</span>}
       {unit && <span>{LABEL_UNITS[unit] || unit}</span>}
-
       <WidgetControls
         content={{
-          layer: `national-dashboard-${dataSource.download_link}`,
           download: dataSource.download_link,
           info: dataSource.layer_info,
         }}
       />
+
+      <SwitchWrapper id="mangrove_national_dashboard_layer">
+        <SwitchRoot onClick={() => handleClick(layerId)} checked={isActive}>
+          <SwitchThumb />
+        </SwitchRoot>
+      </SwitchWrapper>
     </div>
   );
 };

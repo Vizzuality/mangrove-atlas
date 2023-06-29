@@ -23,3 +23,7 @@ export type DataResponse = {
   data: Data;
   metadata: Metadata;
 };
+
+export type Settings = {
+  source: string;
+};

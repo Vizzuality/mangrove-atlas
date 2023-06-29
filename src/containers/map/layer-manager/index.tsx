@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
 
-import { interactiveLayerIdsAtom } from 'store/map';
+import { interactiveLayerIdsAtom, layersSettingsAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -22,6 +22,8 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED: (WidgetSlugType | ContextualBasemapsId)[] = useMemo(() => {
@@ -55,7 +57,7 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
-
+  console.log(LAYERS_FILTERED);
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {
@@ -66,6 +68,7 @@ const LayerManagerContainer = () => {
           <LayerComponent
             key={layer}
             id={`${layer}-layer`}
+            layersSettings={layersSettings?.[layer]}
             beforeId={beforeId}
             onAdd={handleAdd}
             onRemove={handleRemove}

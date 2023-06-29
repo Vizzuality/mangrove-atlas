@@ -48,7 +48,12 @@ import HeightWidget from 'containers/datasets/height/widget';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import InternationalStatusWidget from 'containers/datasets/international-status/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
-import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
+import NationalDashboardLayerAustralia from 'containers/datasets/national-dashboard/layers/australia';
+import NationalDashboardLayerCAR from 'containers/datasets/national-dashboard/layers/haiti';
+import NationalDashboardLayerKenya from 'containers/datasets/national-dashboard/layers/kenya';
+import NationalDashboardLayerMadagascar from 'containers/datasets/national-dashboard/layers/madagascar';
+import NationalDashboardLayerMozambique from 'containers/datasets/national-dashboard/layers/mozambique';
+import NationalDashboardLayerTanzania from 'containers/datasets/national-dashboard/layers/tanzania';
 import NationalDashboardWidget from 'containers/datasets/national-dashboard/widget';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
@@ -116,10 +121,15 @@ export const LAYERS = {
   'protected-areas': ProtectedAreasLayer,
   mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
-  mangrove_national_dashboard: NationalDashboardLayer,
   mangrove_coastal_protection_area: FloodProtectionAreaLayer,
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
+  national_dashboard_source_MangroveExtent2020KenyaFinalQAv2: NationalDashboardLayerKenya,
+  national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2: NationalDashboardLayerMozambique,
+  national_dashboard_source_car_mangroves: NationalDashboardLayerCAR,
+  national_dashboard_source_MangroveExtent2020TanzaniaFinalQAv2: NationalDashboardLayerTanzania,
+  national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3: NationalDashboardLayerMadagascar,
+  national_dashboard_source_AUS_mangrove_cover_2022: NationalDashboardLayerAustralia,
 };
 
 export const INFO = {

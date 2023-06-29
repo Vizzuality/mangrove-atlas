@@ -45,12 +45,14 @@ const NationalDashboard = () => {
 
                   return (
                     <IndicatorSources
+                      id={source}
                       key={source}
                       source={source}
                       years={years}
                       unit={unit}
                       dataSource={dataSource}
                       color={color}
+                      location={data.location}
                     />
                   );
                 })}

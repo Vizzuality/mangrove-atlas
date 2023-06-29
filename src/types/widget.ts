@@ -39,6 +39,12 @@ export type WidgetSlugType =
   | 'mangrove_coastal_protection_area'
   | 'mangrove_coastal_protection_population'
   | 'mangrove_coastal_protection_stock'
+  | 'national_dashboard_source_AUS_mangrove_cover_2022'
+  | 'national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2'
+  | 'national_dashboard_source_MangroveExtent2020KenyaFinalQAv2'
+  | 'national_dashboard_source_car_mangroves'
+  | 'national_dashboard_source_MangroveExtent2020TanzaniaFinalQAv2'
+  | 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =

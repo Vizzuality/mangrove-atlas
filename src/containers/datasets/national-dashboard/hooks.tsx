@@ -1,11 +1,11 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import flatten from 'lodash-es/flatten';
+import isEmpty from 'lodash-es/isEmpty';
 
 import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import chroma from 'chroma-js';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -14,10 +14,9 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import { COLORS } from './constants';
-import type { Data, DataResponse } from './types';
-// widget data
+import type { Data, DataResponse, Settings } from './types';
 
+// widget data
 export function useNationalDashboard(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, Data>
@@ -28,7 +27,7 @@ export function useNationalDashboard(
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
-    data: { id: currentLocation, location_id },
+    data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   const fetchMangroveNationalDashboard = () =>
@@ -42,29 +41,24 @@ export function useNationalDashboard(
     }).then((response) => response.data);
 
   return useQuery(['national_dashboard', params, location_id], fetchMangroveNationalDashboard, {
-    select: (data) => data,
+    select: (data) => ({
+      ...data,
+      location: location_id,
+    }),
     ...queryOptions,
   });
 }
 
-export function useSource(settings): SourceProps {
-  const { data } = useNationalDashboard();
-  const sources = flatten(
-    data?.data?.map(({ sources }) =>
-      flatten(
-        sources.map(({ data_source }) =>
-          data_source.map(({ layer_link }, index) =>
-            index === 0 ? `mapbox://${layer_link}` : layer_link
-          )
-        )
-      )
-    )
-  ) satisfies string[];
-  const colorsScale = chroma.scale(COLORS).colors(sources.length);
-  const color = sources.map((index) => colorsScale(index));
+export function useSource({ settings }: { settings: Settings[] }): SourceProps {
+  const sources =
+    !!settings &&
+    !isEmpty(settings) &&
+    Object.values(settings).map((setting, index) =>
+      index === 0 ? `mapbox://${setting.source}` : setting.source
+    );
 
   return {
-    id: 'national-dashboard-source',
+    id: 'national-dashboard-sources',
     type: 'vector',
     url: sources[0],
   };
@@ -77,41 +71,17 @@ export function useLayers({
   id: LayerProps['id'];
   settings: unknown;
 }): LayerProps[] {
-  return [
-    {
-      id,
-      source: 'protected-areas',
-      'source-layer': 'MangroveExtent2020TanzaniaFinalQAv2',
+  if (!settings) return null;
+
+  return flatten(
+    Object.values(settings).map((setting) => ({
+      id: `${id}-setting.source_layer`,
+      source: 'national-dashboard-source',
+      'source-layer': setting.source_layer,
       type: 'fill',
       paint: {
-        'fill-color': [
-          'interpolate',
-          ['linear'],
-          '#cf597e',
-          0.2,
-          '#eeb479',
-          0.4,
-          '#e9e29c',
-          0.6,
-          '#9ccb86',
-          0.8,
-          '#009392',
-        ],
-        'fill-outline-color': [
-          'step',
-          ['linear'],
-          '#cf597e',
-          0.2,
-          '#eeb479',
-          0.4,
-          '#e9e29c',
-          0.6,
-          '#9ccb86',
-          0.8,
-          '#009392',
-        ],
-        'fill-opacity': 0.7,
+        'fill-color': setting.color,
       },
-    },
-  ];
+    }))
+  );
 }

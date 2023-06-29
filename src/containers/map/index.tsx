@@ -125,6 +125,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (map) {
       setURLBounds(map.getBounds().toArray());
       setLocationBounds(null);
+      console.log(map.getStyle(), '*******************');
     }
   }, [map, setURLBounds, setLocationBounds]);
 
