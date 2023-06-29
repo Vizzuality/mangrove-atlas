@@ -29,7 +29,7 @@ const Legend = ({
     return widgets.find((w) => w.slug === label)?.name;
   };
 
-  const HELPER_ID = 'mangrove_habitat_extent';
+  const HELPER_ID = layers[0];
 
   return (
     <div className="flex flex-col space-y-1 print:hidden">
