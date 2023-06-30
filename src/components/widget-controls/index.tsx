@@ -1,14 +1,19 @@
 import { useMemo } from 'react';
 
+import cn from 'lib/classnames';
+
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
+
+import { useScreenWidth } from 'hooks/media';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import { useWidgets } from 'containers/widgets/hooks';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
+import { breakpoints } from 'styles/styles.config';
 import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';
@@ -26,6 +31,7 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
+  const screenWidth = useScreenWidth();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
   const widgets = useWidgets();
@@ -42,7 +48,12 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const HELPER_ID = id === widgets[0].slug;
 
   return (
-    <div className="flex items-center space-x-2 print:hidden">
+    <div
+      className={cn({
+        'flex items-center space-x-2': true,
+        'print:hidden': screenWidth >= breakpoints.lg,
+      })}
+    >
       {!!download && <Download id={id} content={download} />}
       {!!info && <Info id={id} content={info} />}
       {!!layer && (

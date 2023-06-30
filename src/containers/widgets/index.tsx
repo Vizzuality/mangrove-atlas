@@ -27,8 +27,6 @@ const LOCAL_STORAGE_KEY = 'mangroves_blog';
 const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
 
-  console.log({ screenWidth });
-
   const widgets = useWidgets();
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
@@ -85,8 +83,6 @@ const WidgetsContainer: React.FC = () => {
       setPrintingMode(false);
     }, 4000);
   }, [expandedWidgets]);
-
-  console.log(widgets.length);
 
   return (
     <WidgetsLayout>
