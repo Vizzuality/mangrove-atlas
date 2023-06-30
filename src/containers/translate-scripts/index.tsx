@@ -15,11 +15,14 @@ const TranslateScripts = () => {
     if (typeof window !== 'undefined') {
       const langSelector = document.querySelector('#tx-live-lang-container');
 
-      if (isPrintingMode && window.screen.width > breakpoints.lg) {
+      if (isPrintingMode && window.screen.width > breakpoints.md) {
         langSelector?.classList.add('hidden-langselector');
       }
 
-      if (!isPrintingMode || window.screen.width < breakpoints.lg) {
+      if (!isPrintingMode) {
+        langSelector?.classList.remove('hidden-langselector');
+      }
+      if (window.screen.width < breakpoints.md) {
         langSelector?.classList.remove('hidden-langselector');
       }
     }
