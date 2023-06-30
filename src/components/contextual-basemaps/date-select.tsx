@@ -48,7 +48,7 @@ const DateSelect = ({
       <TooltipTrigger asChild>
         <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
           <p className="first-line:after">
-            Period: <span className="text-sm font-bold">{selectedDate.label}</span>
+            Period: <span className="text-sm font-bold">{selectedDate?.label}</span>
           </p>
           <Icon
             icon={ARROW_SVG}
