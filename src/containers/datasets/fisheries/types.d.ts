@@ -1,5 +1,8 @@
 export type Data = {
-  location: string;
+  category: string;
+  indicator: string;
+  value: number;
+  year: number;
 };
 
 type Metadata = unknown;
