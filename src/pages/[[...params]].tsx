@@ -23,7 +23,9 @@ const Home = () => {
           <MobileLayout />
         </Media>
       )}
-      <DesktopLayout />
+      <Media greaterThanOrEqual="md">
+        <DesktopLayout />
+      </Media>
     </>
   );
 };
