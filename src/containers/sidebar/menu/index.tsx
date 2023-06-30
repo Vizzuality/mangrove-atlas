@@ -10,7 +10,7 @@ import BlogContent from 'containers/blog/content';
 import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
 import About from 'containers/sidebar/menu/about';
 
-import { Dialog, DialogContent, DialogClose, DialogTrigger, DialogPortal } from 'components/dialog';
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 import { Media } from 'components/media-query';
 
