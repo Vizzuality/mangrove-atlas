@@ -112,6 +112,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const { [mapId]: map } = useMap();
 
+  /// console.log('------>', map.getStyle().layers);
+
   const {
     query: { params },
     push,
