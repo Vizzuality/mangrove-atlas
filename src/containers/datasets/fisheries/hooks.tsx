@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
@@ -21,25 +19,6 @@ import type { DataResponse, Data } from './types';
 
 const COLORS = ['#FCDE9C', '#FAA476', '#F0746E', '#E34F6F', '#B9257A', '#7C1D6F'];
 
-const getChartDataFiltered = (array) => {
-  const updated = [];
-
-  for (const element of array) {
-    const value = 100 - element.value;
-
-    const modifiedObject = {
-      ...element,
-      value: value,
-      category: null,
-      label: null,
-      color: '#ECECEF',
-    };
-
-    updated.push(element, modifiedObject);
-  }
-
-  return updated;
-};
 const getColorKeys = (data) =>
   data.reduce(
     (acc, d, index) => ({
@@ -53,36 +32,12 @@ type ProtectionType = {
   location: string;
 };
 
-const getCategory = (value) => {
-  let category;
-  switch (true) {
-    case value > 0 && value <= 50:
-      category = '0 - 50';
-      break;
-    case value > 50 && value <= 200:
-      category = '>50 - 200';
-      break;
-    case value > 200 && value <= 700:
-      category = '>200 - 700';
-      break;
-    case value > 700 && value <= 2000:
-      category = '>700 - 2000';
-      break;
-    case value > 2000:
-      category = '>2000';
-      break;
-    default:
-      category = '>2000';
-      break;
-  }
-  return category;
-};
 // widget data
 export function useMangroveFisheries(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
 ) {
-  const getChartData = (data: Data[], colorKeys, min, max) => {
+  const getChartData = (data: Data[], colorKeys, unit) => {
     const total = data?.reduce((acc, d) => acc + d.value, 0);
     return data?.map((d) => {
       const percentage = (d.value * 100) / total;
@@ -93,8 +48,7 @@ export function useMangroveFisheries(
         showValue: false,
         valueFormatted: `${numberFormat(percentage)} %`,
         color: colorKeys[d.category],
-        min,
-        max,
+        unit,
       };
     });
   };
@@ -130,17 +84,14 @@ export function useMangroveFisheries(
       const unit = data?.metadata?.unit;
       const categories = dataFiltered?.map((d) => d.category);
       const colorKeys = getColorKeys(categories);
-      const category = getCategory(median);
-      const dataWithColors = getChartData(dataFiltered, colorKeys, rangeMin, rangeMax);
-
-      const dataToShow = dataWithColors.filter((d) => d.category === category);
+      const dataWithColors = getChartData(dataFiltered, colorKeys, unit);
 
       return {
         ...data?.data,
         ...data?.metadata,
         config: {
           type: 'pie',
-          data: getChartDataFiltered(dataToShow),
+          data: dataWithColors,
           legend: dataWithColors,
           chartBase: {
             type: 'pie',
@@ -151,6 +102,7 @@ export function useMangroveFisheries(
 
                 customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
                   const { cx, cy } = viewBox;
+                  if (!median) return null;
                   return (
                     <g>
                       <text

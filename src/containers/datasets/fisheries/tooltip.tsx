@@ -1,16 +1,21 @@
 type TooltipProps = {
   payload: {
-    min: number;
-    max: number;
+    category: string;
+    unit: number;
+    valueFormatted: number;
   };
 };
 
 const CustomTooltip = ({ payload }: TooltipProps) => {
-  const { min, max } = payload;
-  console.log(payload);
+  const { category, unit, valueFormatted } = payload;
   return (
     <div className="space-y-2 rounded-2xl bg-white p-4 text-sm shadow-lg">
-      <p className="pl-3 text-xs">{`min: ${min} - max: ${max}`}</p>
+      <p className="pl-3 text-xs">
+        <span className="font-bold">
+          {category} {unit}:
+        </span>{' '}
+        {valueFormatted}
+      </p>
     </div>
   );
 };
