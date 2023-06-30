@@ -10,8 +10,9 @@ import BlogContent from 'containers/blog/content';
 import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
 import About from 'containers/sidebar/menu/about';
 
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogContent, DialogClose, DialogTrigger, DialogPortal } from 'components/dialog';
 import Icon from 'components/icon';
+import { Media } from 'components/media-query';
 
 import GMA_PNG from 'images/gma.png';
 
@@ -46,16 +47,19 @@ const Menu = () => {
               />
             </div>
           </DialogTrigger>
+
           <DialogContent
             className={cn({
-              'scroll-y top-[2%] rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl': true,
+              'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl': true,
               'h-fit py-0': section === 'main',
               'h-[96%] pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
+              'md:translate-0 translate-y-1/3': !openSubmenu,
+              'md:translate-0 translate-y-10': openSubmenu,
             })}
           >
             {section === 'main' && (
               <div className="flex flex-col py-10 font-sans text-black/85">
-                <h2 className="pb-8 pt-10 text-2xl font-light md:pt-0 md:text-3xl">
+                <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
                   Global Mangrove Watch
                 </h2>
                 <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
@@ -81,7 +85,7 @@ const Menu = () => {
                 <AnimatePresence>
                   {openSubmenu && (
                     <motion.div
-                      className="mb-14 flex flex-col space-y-4"
+                      className="mb-4 flex flex-col space-y-4 md:mb-14"
                       initial="hidden"
                       animate="displayed"
                       variants={{
@@ -90,11 +94,11 @@ const Menu = () => {
                       }}
                       transition={{ duration: 0.4 }}
                     >
-                      <div className="flex flex-col space-y-3 border-l pl-7">
+                      <div className="flex flex-col space-y-2 border-l pl-7 md:space-y-3">
                         {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
                           <a
                             key={id}
-                            className="cursor-pointer text-2lg font-light"
+                            className="cursor-pointer text-lg font-light md:text-2lg"
                             href={href}
                             target="_blank"
                             rel="noreferrer"
@@ -104,17 +108,21 @@ const Menu = () => {
                         ))}
                       </div>
 
-                      <div className="flex w-full items-center justify-between">
-                        <Icon icon={ABERYSTWYTH_SVG} className="w-28" />
-                        <Icon icon={SOLO_SVG} className="w-28" />
-                        <Icon icon={WETLANDS_SVG} className="w-28" />
-                        <Icon icon={NATURE_CONSERVANCY_SVG} className="w-28" />
+                      <div className="grid w-full grid-cols-2 items-center justify-between md:grid-cols-4">
+                        <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" />
+                        <Icon icon={SOLO_SVG} className="w-22 md:w-28" />
+                        <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" />
+                        <Icon icon={NATURE_CONSERVANCY_SVG} className="w-22 md:w-28" />
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-
-                <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
+                <Media lessThan="md">
+                  <Image alt="GMA" src={GMA_PNG as StaticImageData} width={100} height={50} />
+                </Media>
+                <Media greaterThanOrEqual="md">
+                  <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
+                </Media>
               </div>
             )}
             <AnimatePresence>
