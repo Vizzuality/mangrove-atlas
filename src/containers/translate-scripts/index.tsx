@@ -6,6 +6,8 @@ import { printModeState } from 'store/print-mode';
 
 import { useRecoilValue } from 'recoil';
 
+import { breakpoints } from 'styles/styles.config';
+
 const TranslateScripts = () => {
   const isPrintingMode = useRecoilValue(printModeState);
 
@@ -13,11 +15,11 @@ const TranslateScripts = () => {
     if (typeof window !== 'undefined') {
       const langSelector = document.querySelector('#tx-live-lang-container');
 
-      if (isPrintingMode) {
+      if (isPrintingMode && window.screen.width > breakpoints.lg) {
         langSelector?.classList.add('hidden-langselector');
       }
 
-      if (!isPrintingMode) {
+      if (!isPrintingMode || window.screen.width < breakpoints.lg) {
         langSelector?.classList.remove('hidden-langselector');
       }
     }
