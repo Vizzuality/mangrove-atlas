@@ -106,8 +106,8 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
   const isWorldwide = location === 'Worldwide';
   const maxValue = getFormattedValue(max, indicator);
   const minValue = getFormattedValue(min, indicator);
-  const trianglePositionPerc = (selectedValue * 100) / max; // substract icon size
-  const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100;
+  const trianglePositionPerc = (selectedValue * 100) / max;
+  const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
   const value = getFormattedValue(selectedValue, indicator);
 
   const getBackground = (indicator) => {

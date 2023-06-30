@@ -1,12 +1,16 @@
-import { activeGuideAtom } from 'store/guide';
+import cn from 'lib/classnames';
 
-import { useRecoilState } from 'recoil';
+import { activeGuideAtom } from 'store/guide';
+import { basemapAtom } from 'store/map';
+
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 
 export const GuideSwitcher = () => {
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
   const handleClick = () => setIsActive(!isActive);
+  const basemap = useRecoilValue(basemapAtom);
   return (
     <div>
       <SwitchWrapper id="guide">
@@ -14,7 +18,13 @@ export const GuideSwitcher = () => {
           <SwitchThumb icon="?" />
         </SwitchRoot>
       </SwitchWrapper>
-      <p className="max-w-[50px] pt-1.5 text-center font-sans text-xxs font-bold leading-3 text-black/85">
+      <p
+        className={cn({
+          'max-w-[50px] pt-1.5 text-center font-sans text-[10px] font-bold leading-3': true,
+          'text-black/85': basemap === 'light',
+          'text-white': basemap === 'dark' || basemap === 'satellite',
+        })}
+      >
         Activate guide
       </p>
     </div>
