@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <>
       {!isPrintingMode && screenWidth < breakpoints.md && <MobileLayout />}
-      {screenWidth > breakpoints.md && <DesktopLayout />}
+      {screenWidth >= breakpoints.md && <DesktopLayout />}
     </>
   );
 };
