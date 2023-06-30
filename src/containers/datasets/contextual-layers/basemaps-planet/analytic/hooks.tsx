@@ -15,7 +15,7 @@ export function useSource(): SourceProps & { key: string } {
 
   return {
     id: 'planet_medres_analytic_monthly',
-    key: `planet_medres_analytic_monthly-${date.label}`,
+    key: `planet_medres_analytic_monthly-${date?.label}`,
     type: 'raster',
     tiles: [
       `/planet/planet_medres_normalized_analytic_${encodeURIComponent(
