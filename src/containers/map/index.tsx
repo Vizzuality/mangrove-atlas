@@ -63,7 +63,6 @@ export const DEFAULT_PROPS = {
 };
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
-  console.log({ mapId });
   const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
