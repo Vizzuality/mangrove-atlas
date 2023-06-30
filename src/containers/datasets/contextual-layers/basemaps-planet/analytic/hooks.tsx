@@ -11,7 +11,7 @@ export function useSource(): SourceProps & { key: string } {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(
     '45d01564-c099-42d8-b8f2-a0851accf3e7'
   );
-  const selectedDate = date.value || dates?.[dates?.length - 1]?.value;
+  const selectedDate = date?.value || dates?.[dates?.length - 1]?.value;
 
   return {
     id: 'planet_medres_analytic_monthly',
