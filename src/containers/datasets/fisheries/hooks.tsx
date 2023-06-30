@@ -17,53 +17,87 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import CustomTooltip from './tooltip';
-import type { DataResponse } from './types';
+import type { DataResponse, Data } from './types';
 
-const COLORS = {
-  '0 - 100': '#FCDE9C',
-  '100 - 500': '#FAA476',
-  '500 - 1500': '#F0746E',
-  '1500 - 5000': '#E34F6F',
-  '5000 - 10000': '#B9257A',
-  '> 10000': '#7C1D6F',
-};
+const COLORS = ['#FCDE9C', '#FAA476', '#F0746E', '#E34F6F', '#B9257A', '#7C1D6F'];
 
-const getColor = (percentage) => {
-  let color;
-  switch (true) {
-    case percentage <= 20:
-      color = COLORS['0 - 100'];
-      break;
-    case percentage <= 40 && percentage > 20:
-      color = COLORS['100 - 500'];
-      break;
-    case percentage <= 60 && percentage > 40:
-      color = COLORS['500 - 1500'];
-      break;
-    case percentage <= 80 && percentage > 60:
-      color = COLORS['1500 - 5000'];
-      break;
-    case percentage <= 100 && percentage > 80:
-      color = COLORS['5000 - 10000'];
-      break;
-    case percentage > 10000:
-      color = COLORS['> 10000'];
-    default:
-      color = '#ECECEF';
-      break;
+const getChartDataFiltered = (array) => {
+  const updated = [];
+
+  for (const element of array) {
+    const value = 100 - element.value;
+
+    const modifiedObject = {
+      ...element,
+      value: value,
+      category: null,
+      label: null,
+      color: '#ECECEF',
+    };
+
+    updated.push(element, modifiedObject);
   }
-  return color;
+
+  return updated;
 };
+const getColorKeys = (data) =>
+  data.reduce(
+    (acc, d, index) => ({
+      ...acc,
+      [d]: COLORS[index],
+    }),
+    []
+  );
 
 type ProtectionType = {
   location: string;
+};
+
+const getCategory = (value) => {
+  let category;
+  switch (true) {
+    case value > 0 && value <= 50:
+      category = '0 - 50';
+      break;
+    case value > 50 && value <= 200:
+      category = '>50 - 200';
+      break;
+    case value > 200 && value <= 700:
+      category = '>200 - 700';
+      break;
+    case value > 700 && value <= 2000:
+      category = '>700 - 2000';
+      break;
+    case value > 2000:
+      category = '>2000';
+      break;
+    default:
+      category = '>2000';
+      break;
+  }
+  return category;
 };
 // widget data
 export function useMangroveFisheries(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
 ) {
-  const units = ['ha', 'km²'];
+  const getChartData = (data: Data[], colorKeys, min, max) => {
+    const total = data?.reduce((acc, d) => acc + d.value, 0);
+    return data?.map((d) => {
+      const percentage = (d.value * 100) / total;
+      return {
+        ...d,
+        label: d.category,
+        value: percentage,
+        showValue: false,
+        valueFormatted: `${numberFormat(percentage)} %`,
+        color: colorKeys[d.category],
+        min,
+        max,
+      };
+    });
+  };
 
   const {
     query: { params: queryParams },
@@ -84,101 +118,83 @@ export function useMangroveFisheries(
       },
       ...queryOptions,
     }).then((response) => response.data);
-  const getChartData = (data) => {
-    const protectedPercentage = (data.protected_area * 100) / data.total_area;
-    const nonProtectedPercentage = 100 - protectedPercentage;
 
-    return [
-      {
-        indicator: 'protected',
-        value: data.protected_area,
-        valueFormatted: numberFormat(data.protected_area),
-        color: getColor(protectedPercentage),
-        percentage: numberFormat(protectedPercentage),
-      },
-      {
-        indicator: 'unprotected',
-        value: data.total_area - data.protected_area,
-        valueFormatted: numberFormat(data.total_area - data.protected_area),
-        color: '#ECECEF',
-        percentage: numberFormat(nonProtectedPercentage),
-      },
-    ];
-  };
-
-  const getLegendData = useCallback(
-    () =>
-      Object.keys(COLORS).map((key) => ({
-        label: key,
-        color: COLORS[key],
-      })),
-    []
-  );
   return useQuery(['fisheries', location_id], fetchMangroveFisheries, {
-    select: (data) => ({
-      ...data?.data[0],
-      ...data?.metadata,
-      units,
-      location,
-      protectedArea: numberFormat(data?.data[0]?.protected_area),
-      totalArea: numberFormat(data?.data[0]?.total_area),
-      currentYear: 2020,
-      config: {
-        type: 'pie',
-        totalArea: data?.data?.total_area,
-        data: getChartData(data?.data[0]),
-        chartBase: {
-          type: 'pie',
-          pies: {
-            y: {
-              value: 'protected',
-              dataKey: 'value',
+    select: (data) => {
+      const dataFiltered = data?.data?.filter(
+        (d) => d.category !== 'median' && d.category !== 'range_max' && d.category !== 'range_min'
+      );
+      const median = data?.data?.find((d) => d.category === 'median')?.value;
+      const rangeMax = data?.data?.find((d) => d.category === 'range_max')?.value;
+      const rangeMin = data?.data?.find((d) => d.category === 'range_min')?.value;
+      const unit = data?.metadata?.unit;
+      const categories = dataFiltered?.map((d) => d.category);
+      const colorKeys = getColorKeys(categories);
+      const category = getCategory(median);
+      const dataWithColors = getChartData(dataFiltered, colorKeys, rangeMin, rangeMax);
 
-              customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
-                const { cx, cy } = viewBox;
-                return (
-                  <g>
-                    <text
-                      x={cx}
-                      y={cy - 10}
-                      className="recharts-text recharts-label-large"
-                      textAnchor="middle"
-                      dominantBaseline="central"
-                    >
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
-                        {numberFormat(
-                          (data?.data?.[0].protected_area * 100) / data?.data?.[0].total_area
-                        )}{' '}
-                        %
-                      </tspan>
-                    </text>
-                    <text
-                      x={cx}
-                      y={cy + 15}
-                      className="recharts-text recharts-label-medium"
-                      textAnchor="middle"
-                      dominantBaseline="central"
-                    >
-                      <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
-                        Mangrove protected
-                      </tspan>
-                    </text>
-                  </g>
-                );
+      const dataToShow = dataWithColors.filter((d) => d.category === category);
+
+      return {
+        ...data?.data,
+        ...data?.metadata,
+        config: {
+          type: 'pie',
+          data: getChartDataFiltered(dataToShow),
+          legend: dataWithColors,
+          chartBase: {
+            type: 'pie',
+            pies: {
+              y: {
+                value: 'value',
+                dataKey: 'value',
+
+                customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
+                  const { cx, cy } = viewBox;
+                  return (
+                    <g>
+                      <text
+                        x={cx}
+                        y={cy - 10}
+                        className="recharts-text recharts-label-large"
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                      >
+                        <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
+                          {median}
+                        </tspan>
+                      </text>
+                      <text
+                        x={cx}
+                        y={cy + 15}
+                        className="recharts-text recharts-label-medium"
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                      >
+                        <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
+                          {unit}
+                        </tspan>
+                      </text>
+                    </g>
+                  );
+                },
               },
             },
           },
-        },
-        tooltip: {
-          content: (properties) => {
-            const { active, payload } = properties;
-            if (!active) return null;
-            return <CustomTooltip {...properties} payload={payload[0].payload} />;
+          tooltip: {
+            content: (properties) => {
+              const { active, payload } = properties;
+              if (!active) return null;
+              return <CustomTooltip {...properties} payload={payload[0].payload} />;
+            },
           },
         },
-      },
-      legend: getLegendData(),
-    }),
+        median,
+        rangeMax,
+        rangeMin,
+        location,
+      };
+    },
     ...queryOptions,
   });
 }

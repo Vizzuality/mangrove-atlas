@@ -123,13 +123,13 @@ const widgets = [
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: ['extent'],
   },
-  // {
-  //   name: 'Mangrove fisheries',
-  //   slug: 'mangrove_fisheries',
-  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-  //   categoryIds: ['all_datasets', 'distribution_and_change'],
-  //   layersIds: [''],
-  // },
+  {
+    name: 'Mangrove fisheries',
+    slug: 'mangrove_fisheries',
+    locationType: ['custom-area', 'wdpa', 'country'],
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    layersIds: [''],
+  },
   {
     name: 'Coastal protection',
     slug: 'mangrove_flood_protection',
