@@ -36,6 +36,7 @@ const Place = () => {
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
+  const setMapViewState = useSetRecoilState(mapSettingsAtom);
 
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
@@ -109,6 +110,7 @@ const Place = () => {
   }, [setSkipAnalysisAlert]);
 
   const handleOnClickWorldwide = useCallback(() => {
+    setMapViewState(false);
     if (isAnalysisEnabled && !skipAnalysisAlert) {
       openAnalysisAlertModal();
     } else {
