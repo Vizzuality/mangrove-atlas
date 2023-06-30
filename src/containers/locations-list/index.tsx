@@ -4,12 +4,15 @@ import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 
 
 import { useRouter } from 'next/router';
 
+import cn from 'lib/classnames';
+
 import { locationBoundsAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 
 import turfBbox from '@turf/bbox';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
+import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
@@ -19,6 +22,7 @@ import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighte
 import HighlightedPlaces from 'components/highlighted-places';
 import Icon from 'components/icon';
 import { Media } from 'components/media-query';
+import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
@@ -29,6 +33,7 @@ const locationNames = {
 };
 
 const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
+  const screenWidth = useScreenWidth();
   const [searchValue, setSearchValue] = useState('');
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
@@ -84,7 +89,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           <div style={style} ref={registerChild}>
             <button
               type="button"
-              className="flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10 print:hidden"
+              className={cn({
+                'flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10':
+                  true,
+                'print:hidden': screenWidth >= breakpoints.lg,
+              })}
               onClick={() => {
                 handleLocation(locationsToDisplay[index]);
               }}
