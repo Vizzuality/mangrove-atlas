@@ -21,8 +21,9 @@ const Category = () => {
   const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
-  const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
   const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
+
+  const lastWidgetSlug = useMemo(() => widgets.at(-1)?.slug, [widgets]);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
@@ -91,8 +92,8 @@ const Category = () => {
                     icon={icon}
                     className={cn({
                       'h-9 w-9 rounded-full stroke-none p-1': true,
-                      'bg-brand-800 fill-current text-white': category === id,
-                      'fill-current text-brand-800': category !== id,
+                      'bg-brand-800 fill-current text-white': category === id && !mapSettings,
+                      'fill-current text-brand-800': category !== id || mapSettings,
                     })}
                   />
                 </div>

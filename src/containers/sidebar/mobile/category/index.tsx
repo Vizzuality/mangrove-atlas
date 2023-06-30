@@ -18,7 +18,7 @@ const CategoryMobile = () => {
   const [category, setCategory] = useRecoilState(activeCategoryAtom);
   const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
 
-  const handleClick = (id: string) => {
+  const handleClick = (id) => {
     if (mapSettings) setMapSettings(false);
     setCategory(id);
   };
