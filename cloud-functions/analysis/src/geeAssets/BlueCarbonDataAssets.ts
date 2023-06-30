@@ -7,7 +7,7 @@ export interface IHansenDataAsset extends IDataAsset {
 
 export const BlueCarbonDataAsset: IHansenDataAsset = {
   assetPath: {
-    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_total_co2e_1996--2016"
+    default: "projects/global-mangrove-watch/mangrove-properties/mangrove_blue_carbon-v2_1"
   },
   numYears: 1,
   getEEAsset(){
