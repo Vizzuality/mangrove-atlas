@@ -17,7 +17,7 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
-  Brush as BrushRecharts,
+  // Brush as BrushRecharts,
   // LineProps,
   // BarProps,
   // TreemapProps,
@@ -192,7 +192,7 @@ const Chart = ({ config }) => {
             })}
           {referenceLines && referenceLines.map((line) => <ReferenceLine key={line} {...line} />)}
           {tooltip && <Tooltip {...tooltip} />}
-          {brush && (
+          {/* {brush && (
             <BrushRecharts
               data={data}
               width="100%"
@@ -201,7 +201,7 @@ const Chart = ({ config }) => {
               {...brush}
               alwaysShowText={false}
             />
-          )}
+          )} */}
         </Chart>
       </ResponsiveContainer>
       {customBrush && (
