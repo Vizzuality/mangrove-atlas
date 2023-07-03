@@ -15,6 +15,8 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 
 // contextual layers
+import AllenCoralReefWidget from 'containers/datasets/contextual-layers/allen-coral-reef';
+import AllenCoralReefLayer from 'containers/datasets/contextual-layers/allen-coral-reef/layer';
 import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
 import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
@@ -98,6 +100,7 @@ export const WIDGETS = {
   mangrove_layer_name_second: LayerNameContentSecond,
   mangrove_contextual_basemaps: BasemapsContextualMapSettings,
   mangrove_fisheries: FisheriesWidget,
+  mangrove_allen_coral_reef: AllenCoralReefWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
@@ -122,6 +125,7 @@ export const LAYERS = {
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
   mangrove_national_dashboard_layer: NationalDashboardLayer,
   mangrove_fisheries: FisheriesLayer,
+  mangrove_allen_coral_reef: AllenCoralReefLayer,
 };
 
 export const INFO = {

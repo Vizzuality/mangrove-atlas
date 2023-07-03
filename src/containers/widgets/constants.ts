@@ -160,6 +160,13 @@ const widgets = [
   //   categoryIds: [],
   //   layersIds: ['layer_name_second'],
   // },
+  {
+    name: 'Allen coral reef',
+    slug: 'mangrove_allen_coral_reef',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: [],
+    layersIds: ['allen_coral_reef'],
+  },
 ] satisfies WidgetTypes[];
 
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
@@ -174,6 +181,7 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
 export const MAP_SETTINGS_SLUGS: string[] = [
   'mangrove_contextual_basemaps',
   'mangrove_layer_name_second',
+  'mangrove_allen_coral_reef',
 ];
 
 export default widgets;
