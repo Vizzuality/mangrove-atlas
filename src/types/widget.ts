@@ -47,6 +47,8 @@ export type WidgetSlugType =
   | 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3'
   | 'mangrove_national_dashboard_layer'
   | 'mangrove_allen_coral_reef'
+  | 'mangrove_tidal_flats'
+  | 'mangrove_global_tidal_wetland_change'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =

@@ -164,8 +164,22 @@ const widgets = [
     name: 'Allen coral reef',
     slug: 'mangrove_allen_coral_reef',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
+    categoryIds: ['contextual_layers'],
     layersIds: ['allen_coral_reef'],
+  },
+  {
+    name: 'Tidal flats',
+    slug: 'mangrove_tidal_flats',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+    layersIds: ['tidal_flats'],
+  },
+  {
+    name: 'Global tidal wetland change',
+    slug: 'mangrove_global_tidal_wetland_change',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+    layersIds: ['global_tidal_wetland_change'],
   },
 ] satisfies WidgetTypes[];
 
@@ -182,6 +196,8 @@ export const MAP_SETTINGS_SLUGS: string[] = [
   'mangrove_contextual_basemaps',
   'mangrove_layer_name_second',
   'mangrove_allen_coral_reef',
+  'mangrove_tidal_flats',
+  'mangrove_global_tidal_wetland_change',
 ];
 
 export default widgets;
