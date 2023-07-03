@@ -8,7 +8,7 @@ import { printModeState } from 'store/print-mode';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { useLocalStorage } from 'usehooks-ts';
+import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
 
@@ -17,6 +17,7 @@ import { WIDGETS } from 'containers/datasets';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
+import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
@@ -24,6 +25,8 @@ import { useWidgets } from './hooks';
 const LOCAL_STORAGE_KEY = 'mangroves_blog';
 
 const WidgetsContainer: React.FC = () => {
+  const { width: screenWidth } = useWindowSize();
+
   const widgets = useWidgets();
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
@@ -86,9 +89,10 @@ const WidgetsContainer: React.FC = () => {
       {widgets.length > 1 && (
         <button
           className={cn({
-            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44 print:hidden':
+            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
               true,
             'border-white bg-white text-brand-800': widgetsCollapsedChecker,
+            'print:hidden': screenWidth >= breakpoints.md,
           })}
           onClick={() => handleWidgetsCollapsed()}
         >
@@ -98,23 +102,39 @@ const WidgetsContainer: React.FC = () => {
 
       {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
 
-      <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
-        {widgets.map(({ slug, name }) => {
-          const Widget = WIDGETS[slug];
-          return (
-            <WidgetWrapper
-              key={slug}
-              title={name}
-              id={slug}
-              className={cn({
-                'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid': true,
-              })}
-            >
-              {WIDGETS[slug] && <Widget />}
-            </WidgetWrapper>
-          );
-        })}
-      </div>
+      {screenWidth < breakpoints.md && (
+        <div>
+          {widgets.map(({ slug, name }) => {
+            const Widget = WIDGETS[slug];
+            return (
+              <WidgetWrapper key={slug} title={name} id={slug}>
+                {WIDGETS[slug] && <Widget />}
+              </WidgetWrapper>
+            );
+          })}
+        </div>
+      )}
+
+      {screenWidth >= breakpoints.md && (
+        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
+          {widgets.map(({ slug, name }) => {
+            const Widget = WIDGETS[slug];
+            return (
+              <WidgetWrapper
+                key={slug}
+                title={name}
+                id={slug}
+                className={cn({
+                  'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
+                    true,
+                })}
+              >
+                {WIDGETS[slug] && <Widget />}
+              </WidgetWrapper>
+            );
+          })}
+        </div>
+      )}
 
       {widgets.length === 0 && <NoData />}
 

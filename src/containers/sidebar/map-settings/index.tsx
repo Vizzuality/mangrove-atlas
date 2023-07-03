@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom, placeSectionAtom } from 'store/sidebar';
+import { placeSectionAtom } from 'store/sidebar';
 
 import { useRecoilState, useResetRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -18,7 +18,6 @@ const MapSettings = () => {
   const drawingToolState = useRecoilValue(drawingToolAtom);
   const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
   const savePlaceSection = useSetRecoilState(placeSectionAtom);
-  const setCategory = useSetRecoilState(activeCategoryAtom);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 

@@ -4,26 +4,26 @@ import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import type { GetServerSideProps } from 'next';
 import { useRecoilValue } from 'recoil';
+import { useWindowSize } from 'usehooks-ts';
 
 import DesktopLayout from 'layouts/desktop';
 import MobileLayout from 'layouts/mobile';
 
 import type { DataResponse } from 'containers/datasets/locations/hooks';
 
-import { Media } from 'components/media-query';
+import { breakpoints } from 'styles/styles.config';
 
 import API from 'services/api';
 
 const Home = () => {
   const isPrintingMode = useRecoilValue(printModeState);
+
+  const { width: screenWidth } = useWindowSize();
+
   return (
     <>
-      {!isPrintingMode && (
-        <Media lessThan="md">
-          <MobileLayout />
-        </Media>
-      )}
-      <DesktopLayout />
+      {!isPrintingMode && screenWidth < breakpoints.md && <MobileLayout />}
+      {screenWidth >= breakpoints.md && <DesktopLayout />}
     </>
   );
 };

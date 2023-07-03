@@ -332,7 +332,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         )}
       </Map>
       <Media lessThan="md">
-        <div className="absolute top-20 left-0 z-[80] print:hidden">
+        <div className="absolute top-20 left-0 z-[80]">
           <Collapsible layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
         </div>
       </Media>

@@ -34,34 +34,32 @@ const CategoryMobile = () => {
             />
           </div>
         </DialogTrigger>
-        <DialogContent className="fixed z-50 w-full bg-transparent font-sans text-black/85 focus:outline-none">
-          <div className="translate-x-1/12 translate-y-1/2">
-            <h3 className="mb-1 text-center text-xs font-semibold text-white">Categories</h3>
-            <div className="space-y-6 rounded-[30px] bg-white p-1.5 pr-4 text-2lg font-light">
-              {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
-                <button
-                  key={id}
-                  className="group flex cursor-pointer items-center space-x-3"
-                  onClick={() => handleClick(id)}
+        <DialogContent className="scroll-y h-fit translate-y-1/3 rounded-3xl bg-transparent font-sans">
+          <h3 className="mb-1 text-center text-xs font-semibold text-white">Categories</h3>
+          <div className="space-y-6 rounded-[30px] bg-white p-2.5 pr-4 text-2lg font-light">
+            {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
+              <button
+                key={id}
+                className="group flex cursor-pointer items-center space-x-3"
+                onClick={() => handleClick(id)}
+              >
+                <div
+                  className={cn({
+                    'h-10.5 flex w-10.5 items-center justify-center': true,
+                  })}
                 >
-                  <div
+                  <Icon
+                    icon={icon}
                     className={cn({
-                      'h-10.5 flex w-10.5 items-center justify-center': true,
+                      'h-11 w-12 rounded-full stroke-none p-1': true,
+                      'bg-brand-800 fill-current text-white': category === id,
+                      'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
                     })}
-                  >
-                    <Icon
-                      icon={icon}
-                      className={cn({
-                        'h-11 w-12 rounded-full stroke-none p-1': true,
-                        'bg-brand-800 fill-current text-white': category === id,
-                        'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
-                      })}
-                    />
-                  </div>
-                  <p className="whitespace-nowrap">{label}</p>
-                </button>
-              ))}
-            </div>
+                  />
+                </div>
+                <p className="whitespace-nowrap">{label}</p>
+              </button>
+            ))}
           </div>
         </DialogContent>
       </Dialog>
