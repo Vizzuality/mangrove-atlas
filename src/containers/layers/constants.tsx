@@ -101,7 +101,7 @@ export const LAYERS = [
   },
   {
     name: 'Global intertidal wetland change',
-    id: 'mangrove_global_intertidal_wetland_change',
+    id: 'mangrove_global_tidal_wetland_change',
   },
   {
     name: 'Tidal flats',

@@ -34,13 +34,16 @@ const THUMBS = {
   satellite: satelliteThumb as StaticImageData,
   planet_medres_analytic_monthly: analyticThumb as StaticImageData,
   planet_medres_visual_monthly: visualThumb as StaticImageData,
+  mangrove_tidal_flats: '/images/thumbs/contextual/tidal_flats.png',
+  mangrove_allen_coral_reef: '/images/thumbs/contextual/allen_coral_reef.png',
+  mangrove_global_tidal_wetland_change: '/images/thumbs/contextual/global_tidal_wetland_change.png',
 };
 
 type CardBasemapContextualProps = {
   id: BasemapId | ContextualBasemapsId;
   mosaic_id?: MosaicId;
   type: 'contextual' | 'basemap';
-  name: string;
+  name?: string;
   description?: string;
   thumb?: string;
   hasDropdown?: boolean;
@@ -73,11 +76,13 @@ const CardBasemapContextual = ({
     }
   };
   return (
-    <div className="w-full border-b-2 border-dashed border-b-brand-800 border-opacity-50 last-of-type:border-none">
+    <div className="flex flex-1 flex-col border-b-2 border-dashed border-b-brand-800 border-opacity-50 last-of-type:border-none">
       <div className="flex w-full items-center justify-between">
-        <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold uppercase -tracking-tighter text-black/85">
-          {name}
-        </h2>
+        {name && (
+          <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold uppercase -tracking-tighter text-black/85">
+            {name}
+          </h2>
+        )}
 
         {!!info && <Info id={id} content={false} />}
       </div>

@@ -8,6 +8,27 @@ const widgets = [
     categoryIds: [],
   },
   {
+    name: 'Allen coral reef',
+    slug: 'mangrove_allen_coral_reef',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+    layersIds: ['allen_coral_reef'],
+  },
+  {
+    name: 'Tidal flats',
+    slug: 'mangrove_tidal_flats',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+    layersIds: ['tidal_flats'],
+  },
+  {
+    name: 'Global tidal wetland change',
+    slug: 'mangrove_global_tidal_wetland_change',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+    layersIds: ['global_tidal_wetland_change'],
+  },
+  {
     name: 'Mangrove habitat extent',
     slug: 'mangrove_habitat_extent',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -160,27 +181,6 @@ const widgets = [
   //   categoryIds: [],
   //   layersIds: ['layer_name_second'],
   // },
-  {
-    name: 'Allen coral reef',
-    slug: 'mangrove_allen_coral_reef',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: ['contextual_layers'],
-    layersIds: ['allen_coral_reef'],
-  },
-  {
-    name: 'Tidal flats',
-    slug: 'mangrove_tidal_flats',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: ['contextual_layers'],
-    layersIds: ['tidal_flats'],
-  },
-  {
-    name: 'Global tidal wetland change',
-    slug: 'mangrove_global_tidal_wetland_change',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: ['contextual_layers'],
-    layersIds: ['global_tidal_wetland_change'],
-  },
 ] satisfies WidgetTypes[];
 
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [

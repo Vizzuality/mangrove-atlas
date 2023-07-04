@@ -59,6 +59,10 @@ export type AnalysisWidgetSlug =
   | 'mangrove_blue_carbon';
 
 export type ContextualBasemapsId =
+  | 'mangrove_allen_coral_reef'
+  | 'mangrove_salt_marsh_data'
+  | 'mangrove_global_tidal_wetland_change'
+  | 'mangrove_tidal_flats'
   | 'planet_medres_visual_monthly'
   | 'planet_medres_analytic_monthly';
 export type MosaicId =

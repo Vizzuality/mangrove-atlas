@@ -24,7 +24,7 @@ export function useWidgets(): WidgetTypes[] {
   const locationType = params?.[0];
   const currentLocation = locationType || 'worldwide';
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
-  console.log(activeWidgets);
+
   return useMemo(() => {
     if (isAnalysisRunning) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
@@ -38,18 +38,10 @@ export function useWidgets(): WidgetTypes[] {
       return widgets.filter(({ slug }) => MAP_SETTINGS_SLUGS.includes(slug));
     }
 
-    console.log(
-      widgets,
-      activeWidgets,
-      'esto',
-      widgets.every((elem) => activeWidgets.includes(elem.slug))
-    );
     return widgets.filter(
-      ({ categoryIds, locationType }) =>
-        console.log(categoryIds.includes('contextual_layers')) ||
+      ({ slug, categoryIds, locationType }) =>
         (categoryIds.includes(categorySelected) && locationType.includes(currentLocation)) ||
-        (categoryIds.includes('contextual_layers') &&
-          widgets.some((elem) => activeWidgets.includes(elem.slug)))
+        (categoryIds.includes('contextual_layers') && activeWidgets.includes(slug))
     );
   }, [
     categorySelected,
