@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
@@ -60,7 +62,12 @@ const DesktopLayout = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p>
         )}
-
+        <Link
+          href="/"
+          className="pointer-events-auto absolute top-0 left-0 z-50 cursor-pointer print:hidden"
+        >
+          <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
+        </Link>
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
 
         <Sidebar />
