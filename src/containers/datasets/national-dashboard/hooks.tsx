@@ -14,7 +14,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, Settings } from './types';
+import type { Data, DataResponse, NationalDashboardLayerSettingsTypes } from './types';
 
 // widget data
 export function useNationalDashboard(
@@ -49,13 +49,17 @@ export function useNationalDashboard(
   });
 }
 
-export function useSource({ settings }: { settings: Settings[] }): SourceProps {
+export function useSource({
+  settings,
+}: {
+  settings: NationalDashboardLayerSettingsTypes;
+}): SourceProps {
   const sources =
     !!settings &&
     !isEmpty(settings) &&
-    Object.values(settings).map((setting, index) =>
+    (Object.values(settings).map((setting, index) =>
       index === 0 ? `mapbox://${setting.source}` : setting.source
-    );
+    ) satisfies string[]);
 
   return {
     id: 'national-dashboard-sources',
@@ -69,7 +73,7 @@ export function useLayers({
   settings,
 }: {
   id: LayerProps['id'];
-  settings: unknown;
+  settings: NationalDashboardLayerSettingsTypes;
 }): LayerProps[] {
   const {
     query: { params: queryParams },
@@ -77,7 +81,7 @@ export function useLayers({
   const locationType = queryParams?.[0] as LocationTypes;
   const locationId = queryParams?.[1];
   const {
-    data: { location_id, id: currentLocationId },
+    data: { id: currentLocationId },
   } = useLocation(locationType, locationId);
   if (!settings) return null;
 

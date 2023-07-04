@@ -24,6 +24,14 @@ export type DataResponse = {
   metadata: Metadata;
 };
 
-export type Settings = {
+type Settings = {
   source: string;
+  locationId: number;
+  name: string;
+  source_layer: string;
+  color: string;
+};
+
+export type NationalDashboardLayerSettingsTypes = {
+  [key: string]: Settings;
 };

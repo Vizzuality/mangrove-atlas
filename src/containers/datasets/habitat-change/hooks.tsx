@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';
 
@@ -88,12 +87,11 @@ export function useMangroveHabitatChange(
     const maxValue = numberFormat(Math.max(...chartData.map((d) => Math.abs(d.net_change))));
 
     const getDomainX = () => {
-      let domainX = [];
       if (allPositives.length === chartData.length) {
-        domainX = [0, maxValue];
+        return [0, maxValue];
       }
       if (!allPositives.length) {
-        domainX = [-maxValue, 0];
+        return [-maxValue, 0];
       } else return [-maxValue, Number(maxValue)];
     };
     const domainX = getDomainX();

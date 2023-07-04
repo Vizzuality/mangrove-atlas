@@ -88,7 +88,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
 
   const handleClick = () => {
-    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
+    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [id, ...activeWidgets];
     setActiveWidgets(widgetsUpdate);
   };
 

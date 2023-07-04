@@ -18,7 +18,7 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   return (
     <Source {...SOURCE}>
       {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} />
+        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
       ))}
     </Source>
   );

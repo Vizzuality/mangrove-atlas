@@ -1,16 +1,11 @@
 import { useMemo, useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from 'lib/classnames';
 
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
-
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import Icon from 'components/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
@@ -73,7 +68,7 @@ const IndicatorSource = ({
       setActiveLayer(!isActiveLayer);
       const widgetsCheck = isActive
         ? activeWidgets.filter((w) => w !== id)
-        : [...activeWidgets, id];
+        : [id, ...activeWidgets];
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
         [id]: {

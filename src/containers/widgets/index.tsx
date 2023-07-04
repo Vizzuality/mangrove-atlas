@@ -82,7 +82,7 @@ const WidgetsContainer: React.FC = () => {
     setTimeout(() => {
       setPrintingMode(false);
     }, 4000);
-  }, [expandedWidgets]);
+  }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
 
   return (
     <WidgetsLayout>
