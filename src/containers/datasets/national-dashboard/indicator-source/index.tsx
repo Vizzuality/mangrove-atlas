@@ -1,4 +1,6 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
@@ -6,6 +8,9 @@ import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import Icon from 'components/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
@@ -17,7 +22,6 @@ import {
   TooltipTrigger,
 } from 'components/tooltip';
 import WidgetControls from 'components/widget-controls';
-import { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -44,31 +48,45 @@ type IndicatorSourceTypes = {
   location: string | string[];
 };
 
-const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorSourceTypes) => {
+const IndicatorSource = ({
+  source,
+  years,
+  unit,
+  dataSource,
+  color,
+  location,
+}: IndicatorSourceTypes) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(
     nationalDashboardSettingsAtom
   );
 
-  const layerId = `national_dashboard_source_${
-    DATA_SOURCES[dataSource.layer_link]
-  }` as WidgetSlugType;
+  const [isActiveLayer, setActiveLayer] = useState(false);
 
   const isActive = useMemo(
-    () => activeWidgets.includes(layerId),
+    () => activeWidgets.includes('mangrove_national_dashboard_layer') && isActiveLayer,
     [activeWidgets, dataSource.layer_link]
   );
+
   const handleClick = useCallback(
     (id) => {
+      setActiveLayer(!isActiveLayer);
       const widgetsCheck = isActive
         ? activeWidgets.filter((w) => w !== id)
         : [...activeWidgets, id];
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
-        [id]: color[0],
+        [id]: {
+          name: source,
+          source: dataSource.layer_link,
+          source_layer: DATA_SOURCES[dataSource.layer_link],
+          color: color[0],
+          locationId: location,
+          active: isActiveLayer,
+        },
       });
-      console.log(id);
-      setActiveWidgets(widgetsCheck);
+      const widgetsUpdate = new Set(widgetsCheck);
+      setActiveWidgets([...widgetsUpdate]);
     },
     [activeWidgets]
   );
@@ -137,7 +155,10 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
       />
 
       <SwitchWrapper id="mangrove_national_dashboard_layer">
-        <SwitchRoot onClick={() => handleClick(layerId)} checked={isActive}>
+        <SwitchRoot
+          onClick={() => handleClick('mangrove_national_dashboard_layer')}
+          checked={isActive}
+        >
           <SwitchThumb />
         </SwitchRoot>
       </SwitchWrapper>
@@ -145,4 +166,4 @@ const IndicatorSources = ({ source, years, unit, dataSource, color }: IndicatorS
   );
 };
 
-export default IndicatorSources;
+export default IndicatorSource;

@@ -27,7 +27,7 @@ export function useNationalDashboard(
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
-    data: { name: location, id: currentLocation, location_id },
+    data: { id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   const fetchMangroveNationalDashboard = () =>
@@ -43,7 +43,7 @@ export function useNationalDashboard(
   return useQuery(['national_dashboard', params, location_id], fetchMangroveNationalDashboard, {
     select: (data) => ({
       ...data,
-      location: location_id,
+      location: currentLocation,
     }),
     ...queryOptions,
   });
@@ -71,17 +71,27 @@ export function useLayers({
   id: LayerProps['id'];
   settings: unknown;
 }): LayerProps[] {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const locationId = queryParams?.[1];
+  const {
+    data: { location_id, id: currentLocationId },
+  } = useLocation(locationType, locationId);
   if (!settings) return null;
 
   return flatten(
-    Object.values(settings).map((setting) => ({
-      id: `${id}-setting.source_layer`,
-      source: 'national-dashboard-source',
-      'source-layer': setting.source_layer,
-      type: 'fill',
-      paint: {
-        'fill-color': setting.color,
-      },
-    }))
+    Object.values(settings)
+      .filter((s) => s.locationId === currentLocationId)
+      .map((setting) => ({
+        id: `${id}-setting.source_layer`,
+        source: 'national-dashboard-sources',
+        'source-layer': setting.source_layer,
+        type: 'fill',
+        paint: {
+          'fill-color': setting.color,
+        },
+      }))
   );
 }

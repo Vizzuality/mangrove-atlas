@@ -36,12 +36,10 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({ id, color });
   if (!SOURCE || !LAYERS) return null;
-
+  console.log(beforeId);
   return (
     <Source {...SOURCE}>
-      {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      ))}
+      {LAYERS.map((LAYER) => beforeId && <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />)}
     </Source>
   );
 };

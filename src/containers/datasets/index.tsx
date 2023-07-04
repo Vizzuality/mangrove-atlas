@@ -48,6 +48,7 @@ import HeightWidget from 'containers/datasets/height/widget';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import InternationalStatusWidget from 'containers/datasets/international-status/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
+import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
 import NationalDashboardLayerAustralia from 'containers/datasets/national-dashboard/layers/australia';
 import NationalDashboardLayerCAR from 'containers/datasets/national-dashboard/layers/haiti';
 import NationalDashboardLayerKenya from 'containers/datasets/national-dashboard/layers/kenya';
@@ -130,6 +131,7 @@ export const LAYERS = {
   national_dashboard_source_MangroveExtent2020TanzaniaFinalQAv2: NationalDashboardLayerTanzania,
   national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3: NationalDashboardLayerMadagascar,
   national_dashboard_source_AUS_mangrove_cover_2022: NationalDashboardLayerAustralia,
+  mangrove_national_dashboard_layer: NationalDashboardLayer,
 };
 
 export const INFO = {

@@ -7,7 +7,7 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets
 
 import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
-import IndicatorSources from './indicator-sources';
+import IndicatorSource from './indicator-source';
 import OtherResources from './other-resources';
 
 const NationalDashboard = () => {
@@ -44,7 +44,7 @@ const NationalDashboard = () => {
                   const color = colorsScale.filter((c, i) => i === index);
 
                   return (
-                    <IndicatorSources
+                    <IndicatorSource
                       id={source}
                       key={source}
                       source={source}
