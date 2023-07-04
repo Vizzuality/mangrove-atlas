@@ -9,7 +9,6 @@ import {
   floodStockPeriodAtom,
 } from 'store/widgets/flood-protection';
 
-import { SelectValue } from '@radix-ui/react-select';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
@@ -149,69 +148,118 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
               </SwitchWrapper>
             </div>
           </header>
-          <p className={WIDGET_SENTENCE_STYLE}>
-            In <span className="font-bold first-letter:uppercase"> {data.location}</span>, mangroves
-            protect against <span className="font-bold">intense</span> storms that occur{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {LABELS[selectedPeriod].large}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                  />
-                </span>
-              </TooltipTrigger>
+          {(indicator === 'population' || indicator === 'stock') && (
+            <p className={WIDGET_SENTENCE_STYLE}>
+              In <span className="font-bold first-letter:uppercase"> {data.location}</span>,
+              mangroves protect against <span className="font-bold">intense</span> storms that occur{' '}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                    {LABELS[selectedPeriod].large}
+                    <Icon
+                      icon={ARROW_SVG}
+                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    />
+                  </span>
+                </TooltipTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {periods?.map((period) => (
-                      <li key={period}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': period !== selectedPeriod,
-                            'opacity-50': period === selectedPeriod,
-                          })}
-                          type="button"
-                          onClick={() => handlePeriod(period)}
-                          disabled={period === selectedPeriod}
-                        >
-                          {LABELS[period].short}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                <TooltipPortal>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
+                  >
+                    <ul
+                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                    >
+                      {periods?.map((period) => (
+                        <li key={period}>
+                          <button
+                            className={cn({
+                              'font-bold': true,
+                              'hover:text-brand-800': period !== selectedPeriod,
+                              'opacity-50': period === selectedPeriod,
+                            })}
+                            type="button"
+                            onClick={() => handlePeriod(period)}
+                            disabled={period === selectedPeriod}
+                          >
+                            {LABELS[period].short}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
 
-                  <TooltipArrow className="fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>{' '}
-            {indicator === 'area' && (
-              <span>
-                an area of
-                <span className="font-bold">
-                  {' '}
-                  {value} km<sup>2</sup>.
+                    <TooltipArrow className="fill-white" width={10} height={5} />
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>{' '}
+              {indicator === 'population' && (
+                <span>
+                  to <span className="font-bold">{value}</span> individuals
                 </span>
-              </span>
-            )}
-            {indicator === 'population' && (
-              <span>
-                to <span className="font-bold">{value}</span> individuals
-              </span>
-            )}
-            {indicator === 'stock' && (
-              <span>
-                built capital worth <span className="font-bold">$ {value}</span>.
-              </span>
-            )}
-          </p>
+              )}
+              {indicator === 'stock' && (
+                <span>
+                  built capital worth <span className="font-bold">$ {value}</span>.
+                </span>
+              )}
+            </p>
+          )}
+          {indicator === 'area' && (
+            <p>
+              In <span className="font-bold first-letter:uppercase"> {data.location}</span>,
+              mangroves are expected to protect{' '}
+              <span className="font-bold">
+                {' '}
+                {value} km<sup>2</sup>
+              </span>{' '}
+              during a{' '}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                    {LABELS[selectedPeriod].area}
+                    <Icon
+                      icon={ARROW_SVG}
+                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    />
+                  </span>
+                </TooltipTrigger>
+
+                <TooltipPortal>
+                  <TooltipContent
+                    side="bottom"
+                    align="center"
+                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
+                  >
+                    <ul
+                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
+                    >
+                      {periods?.map((period) => (
+                        <li key={period}>
+                          <button
+                            className={cn({
+                              'font-bold': true,
+                              'hover:text-brand-800': period !== selectedPeriod,
+                              'opacity-50': period === selectedPeriod,
+                            })}
+                            type="button"
+                            onClick={() => handlePeriod(period)}
+                            disabled={period === selectedPeriod}
+                          >
+                            {LABELS[period].area}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <TooltipArrow className="fill-white" width={10} height={5} />
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>{' '}
+              .
+            </p>
+          )}
           <div className="flex flex-1 flex-col items-center space-y-2">
             <FloodProtectionChart data={data.config} />
           </div>
