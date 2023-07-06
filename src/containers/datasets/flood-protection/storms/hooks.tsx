@@ -125,7 +125,7 @@ export function useMangrovesFloodProtection(
             },
           },
           yAxis: {
-            label: (props) => {
+            label: () => {
               return (
                 <g>
                   <text

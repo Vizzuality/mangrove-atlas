@@ -49,7 +49,7 @@ const getData = (data) => {
 
 const getBars = (indicators, filteredIndicators) =>
   indicators?.reduce(
-    (acc, indicator, i) => ({
+    (acc, indicator) => ({
       ...acc,
       [Object.keys(indicator)[0]]: {
         stackId: 'bar',

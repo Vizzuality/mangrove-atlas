@@ -57,7 +57,7 @@ export const Helper = ({
             onClick={() => setPopOver(true)}
           >
             {!popOver && isActive && (
-              <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50" />
+              <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-800 opacity-20" />
             )}
 
             {!popOver && isActive && (
