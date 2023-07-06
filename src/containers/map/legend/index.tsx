@@ -77,9 +77,18 @@ const Legend = ({
               {l !== 'mangrove_national_dashboard_layer' && (
                 <div className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
                   <p className="text-xs font-semibold uppercase">{layerNameToDisplay}</p>
-                  <button onClick={() => removeLayer(l)}>
-                    <Icon icon={REMOVE_SVG} className="h-5 w-5" />
-                  </button>
+                  <Helper
+                    className={{
+                      button: '-bottom-2 left-2 z-[20]',
+                      tooltip: 'w-fit-content',
+                    }}
+                    tooltipPosition={{ top: 100, left: 150 }}
+                    message="layers on the map can be switched off here (same as toggle on widget)"
+                  >
+                    <button onClick={() => removeLayer(l)}>
+                      <Icon icon={REMOVE_SVG} className="h-5 w-5" />
+                    </button>
+                  </Helper>
                 </div>
               )}
               {l === 'mangrove_national_dashboard_layer' && nationalDashboardLayerName && (

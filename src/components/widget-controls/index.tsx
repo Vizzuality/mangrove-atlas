@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -31,6 +32,7 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
+  const { showWidget } = useRecoilValue(drawingToolAtom);
   const screenWidth = useScreenWidth();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
@@ -54,16 +56,28 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
         'print:hidden': screenWidth >= breakpoints.lg,
       })}
     >
-      {!!download && <Download id={id} content={download} />}
-      {!!info && <Info id={id} content={info} />}
+      <Helper
+        className={{
+          button: !showWidget ? '-bottom-3.5 -right-1.5' : 'hidden',
+          tooltip: 'w-28',
+        }}
+        tooltipPosition={{ top: -40, left: 42 }}
+        message="Click one of these to find background information about a layer/widget, to download data or to toggle a layer on and off on the map"
+      >
+        <div className="flex items-center space-x-2">
+          {!!download && <Download id={id} content={download} />}
+          {!!info && <Info id={id} content={info} />}
+        </div>
+      </Helper>
+
       {!!layer && (
         <Helper
           className={{
-            button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-[20]' : 'hidden',
-            tooltip: 'w-28',
+            button: HELPER_ID ? '-bottom-3.5 -right-1.5' : 'hidden',
+            tooltip: 'w-fit-content',
           }}
-          tooltipPosition={{ top: 60, left: 42 }}
-          message="Toggle layer"
+          tooltipPosition={{ top: -40, left: 42 }}
+          message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
         >
           <SwitchWrapper id={id}>
             <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
