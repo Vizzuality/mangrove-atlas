@@ -125,6 +125,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (map) {
       setURLBounds(map.getBounds().toArray());
       setLocationBounds(null);
+      console.log(map.getStyle()?.layers, '*******************');
     }
   }, [map, setURLBounds, setLocationBounds]);
 
@@ -281,6 +282,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     >
       <Map
         id={mapId}
+        reuseMaps
         mapStyle={selectedBasemap}
         minZoom={minZoom}
         maxZoom={maxZoom}

@@ -51,7 +51,10 @@ export const LAYERS = [
     name: 'Mangrove change',
     id: 'mangrove_net_change',
   },
-
+  {
+    name: 'Mangrove drivers of change',
+    id: 'mangrove_drivers_change',
+  },
   {
     name: 'Mangrove extent',
     id: 'mangrove_habitat_extent',
@@ -63,5 +66,29 @@ export const LAYERS = [
   {
     name: 'Layer name second',
     id: 'mangrove_layer_name_second',
+  },
+  {
+    name: 'Digital Earth Australia',
+    id: 'national_dashboard_source_AUS_mangrove_cover_2022',
+  },
+  {
+    name: 'Save Our Mangroves Now project',
+    id: 'national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2',
+  },
+  {
+    name: 'Save Our Mangroves Now project',
+    id: 'national_dashboard_source_MangroveExtent2020KenyaFinalQAv2',
+  },
+  {
+    name: 'TNC',
+    id: 'national_dashboard_source_car_mangroves',
+  },
+  {
+    name: 'Save Our Mangroves Now project',
+    id: 'national_dashboard_source_MangroveExtent2020TanzaniaFinalQAv2',
+  },
+  {
+    name: 'Save Our Mangroves Now project',
+    id: 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3',
   },
 ];

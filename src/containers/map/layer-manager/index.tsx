@@ -1,6 +1,8 @@
 import { useMemo, useCallback } from 'react';
 
-import { interactiveLayerIdsAtom } from 'store/map';
+import { Layer } from 'react-map-gl';
+
+import { interactiveLayerIdsAtom, layersSettingsAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -22,12 +24,14 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeWidgetsAtom);
+  const layersSettings = useRecoilValue(layersSettingsAtom);
+
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED: (WidgetSlugType | ContextualBasemapsId)[] = useMemo(() => {
-    const filteredLayers: (WidgetSlugType | ContextualBasemapsId)[] = layers
-      .filter((layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer])
-      .reverse();
+    const filteredLayers: (WidgetSlugType | ContextualBasemapsId)[] = layers.filter(
+      (layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
+    );
 
     if (!!basemap) {
       filteredLayers.push(basemap);
@@ -59,13 +63,28 @@ const LayerManagerContainer = () => {
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
+
+        return (
+          <Layer
+            id={`${layer}-bg`}
+            key={`${layer}-bg`}
+            type="background"
+            layout={{ visibility: 'none' }}
+            beforeId={beforeId}
+          />
+        );
+      })}
+
+      {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer] || BASEMAPS[layer];
-        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-layer`;
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
         return (
           <LayerComponent
+            id={layer}
             key={layer}
-            id={`${layer}-layer`}
+            layersSettings={layersSettings?.[layer]}
             beforeId={beforeId}
             onAdd={handleAdd}
             onRemove={handleRemove}

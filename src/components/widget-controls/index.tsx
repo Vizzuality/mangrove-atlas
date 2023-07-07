@@ -41,7 +41,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = () => {
-    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [...activeWidgets, id];
+    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [id, ...activeWidgets];
     setActiveWidgets(widgetsUpdate);
   };
 

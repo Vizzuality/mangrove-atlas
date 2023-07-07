@@ -7196,7 +7196,7 @@ __metadata:
     react-map-gl: ^7.0.21
     react-virtualized: 9.22.5
     recharts: ^2.5.0
-    recoil: 0.7.7
+    recoil: ^0.7.7
     recoil-sync: 0.2.0
     start-server-and-test: 1.12.1
     svg-sprite-loader: 6.0.11
@@ -9275,7 +9275,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recoil@npm:0.7.7":
+"recoil@npm:^0.7.7":
   version: 0.7.7
   resolution: "recoil@npm:0.7.7"
   dependencies:

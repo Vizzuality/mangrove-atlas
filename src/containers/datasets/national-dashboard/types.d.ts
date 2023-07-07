@@ -23,3 +23,15 @@ export type DataResponse = {
   data: Data;
   metadata: Metadata;
 };
+
+type Settings = {
+  source: string;
+  locationId: number;
+  name: string;
+  source_layer: string;
+  color: string;
+};
+
+export type NationalDashboardLayerSettingsTypes = {
+  [key: string]: Settings;
+};

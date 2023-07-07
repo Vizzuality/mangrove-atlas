@@ -34,7 +34,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
           {subtitle}
         </h2>
       )}
-      {items.map(
+      {items?.map(
         ({ showValue = true, color, label, labelFormatted, valueFormatted, value, unit }) => {
           return (
             <div key={label} className={cn({ 'flex items-start': true })}>

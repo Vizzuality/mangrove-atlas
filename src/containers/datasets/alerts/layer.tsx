@@ -9,6 +9,9 @@ const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
   const LAYERS = useLayers({ id });
 
   if (!SOURCES || !LAYERS) return null;
+
+  console.log(beforeId);
+
   return SOURCES.map((SOURCE) => (
     <Source key={SOURCE.id} {...SOURCE}>
       {LAYERS[SOURCE.id].map((LAYER) => (

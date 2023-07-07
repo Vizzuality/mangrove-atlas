@@ -117,10 +117,10 @@ export const LAYERS = {
   'protected-areas': ProtectedAreasLayer,
   mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
-  mangrove_national_dashboard: NationalDashboardLayer,
   mangrove_coastal_protection_area: FloodProtectionAreaLayer,
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
+  mangrove_national_dashboard_layer: NationalDashboardLayer,
   mangrove_fisheries: FisheriesLayer,
 };
 

@@ -1,14 +1,33 @@
+import flatten from 'lodash-es/flatten';
+
+import chroma from 'chroma-js';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
-import IndicatorSources from './indicator-sources';
+import IndicatorSource from './indicator-source';
 import OtherResources from './other-resources';
 
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
   if (!data?.data.length) return null;
+  const sources = flatten(
+    data?.data?.map(({ sources }) =>
+      flatten(
+        sources.map(({ data_source }) =>
+          data_source.map(({ layer_link }, index) =>
+            index === 0 ? `mapbox://${layer_link}` : layer_link
+          )
+        )
+      )
+    )
+  );
+  const colorsScale = chroma
+    .scale(COLORS)
+    .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
@@ -22,16 +41,18 @@ const NationalDashboard = () => {
                   const dataSource = data_source.filter(
                     (d) => d.year === years[years.length - 1]
                   )[0];
-                  const color = COLORS[index];
+                  const color = colorsScale.filter((c, i) => i === index);
 
                   return (
-                    <IndicatorSources
+                    <IndicatorSource
+                      id={source}
                       key={source}
                       source={source}
                       years={years}
                       unit={unit}
                       dataSource={dataSource}
                       color={color}
+                      location={data.location}
                     />
                   );
                 })}
