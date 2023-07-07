@@ -67,7 +67,6 @@ const AlertsWidget = () => {
   }, [dates]);
 
   if (!fullData.length) return null;
-
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

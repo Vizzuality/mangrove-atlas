@@ -32,15 +32,22 @@ export default class Brush extends PureComponent {
   state = {
     ready: false,
     animate: false,
-    brushSelection: null,
+    brushSelection: [
+      [0, 0],
+      [null, null],
+    ],
   };
 
   componentDidMount() {
     const { margin, data, startIndex, endIndex } = this.props;
     const { width, height } = this.svg.getBoundingClientRect();
+
+    const defaultWidth = width !== 0 ? width : 454;
+    const defaultHeight = height !== 0 ? height : 72;
+
     this.scale = scaleLinear()
       .domain([0, data.length - 1])
-      .rangeRound([margin.left, width - margin.right]);
+      .rangeRound([margin.left, defaultWidth - margin.right]);
 
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
@@ -51,7 +58,7 @@ export default class Brush extends PureComponent {
       animate: false,
       brushSelection: [
         [this.scale(start), margin.top],
-        [this.scale(end), height - margin.bottom],
+        [this.scale(end), defaultHeight - margin.bottom],
       ],
     });
   }
@@ -66,7 +73,7 @@ export default class Brush extends PureComponent {
       .domain([0, data.length - 1])
       .rangeRound([margin.left, width - margin.right]);
 
-    if (startIndex !== prevStartIndex || endIndex !== prevEndIndex) {
+    if (startIndex !== prevStartIndex || (endIndex !== prevEndIndex && width !== 0)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         brushSelection: [
@@ -80,7 +87,6 @@ export default class Brush extends PureComponent {
   _renderBackground() {
     const { margin } = this.props;
     const { width, height } = this.svg.getBoundingClientRect();
-
     return (
       <React.Fragment>
         <rect
@@ -101,6 +107,7 @@ export default class Brush extends PureComponent {
     const { margin, maximumGap, minimumGap, onBrushEnd } = this.props;
     const { animate, brushSelection } = this.state;
     const ts = brushSelection;
+
     const [[x0, y0], [x1, y1]] = ts || [
       [0, 0],
       [0, 0],
@@ -166,12 +173,13 @@ export default class Brush extends PureComponent {
   }
 
   render() {
-    const { width, height } = this.props;
+    const { width, height, startIndex, endIndex } = this.props;
     const { ready } = this.state;
 
     return (
       <div className="c-brush">
         <svg
+          key={`${startIndex}-${endIndex}`}
           className="brush--svg"
           width={width}
           height={height}
