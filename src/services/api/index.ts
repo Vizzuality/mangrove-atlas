@@ -20,4 +20,9 @@ export const PlanetAPI = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+export const ClimateWatchAPI = axios.create({
+  baseURL: 'https://www.climatewatchdata.org/api/v1',
+  headers: { 'Content-Type': 'application/json' },
+});
+
 export default API;

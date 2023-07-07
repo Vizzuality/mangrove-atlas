@@ -48,15 +48,18 @@ const Category = () => {
 
   const handleCategory = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
-      if (mapSettings) setMapSettings(false);
       setCategory(evt.currentTarget.dataset.category);
+
+      if (mapSettings) setMapSettings(false);
       setDrawingToolState((prevDrawingToolState) => ({
         ...prevDrawingToolState,
         showWidget: false,
       }));
+
+      console.log('handleCategory', evt.currentTarget.dataset.category);
       closeMenu();
     },
-    [setDrawingToolState, setCategory, closeMenu, mapSettings, setMapSettings]
+    [setDrawingToolState, closeMenu, mapSettings, setCategory, setMapSettings]
   );
 
   return (
