@@ -153,48 +153,19 @@ export function useMangroveFisheries(
 
 export function useSource(): SourceProps {
   return {
-    id: 'fisheries-source',
-    type: 'vector',
-    url: 'mapbox://globalmangrovewatch.0i6otzu4',
+    id: 'allen-coral-reef',
+    type: 'raster',
+    tiles: [
+      'https://mangrove_atlas.storage.googleapis.com/staging/tilesets/fishing_intensity_mangroves/{z}/{x}/{y}.png',
+    ],
+    minzoom: 0,
+    maxzoom: 12,
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
-  return [
-    {
-      id,
-      source: 'fisheries-source',
-      'source-layer': 'protected_area_pct',
-      type: 'fill',
-      paint: {
-        'fill-color': [
-          'interpolate',
-          ['linear'],
-          '#cf597e',
-          0.2,
-          '#eeb479',
-          0.4,
-          '#e9e29c',
-          0.6,
-          '#9ccb86',
-          0.8,
-          '#009392',
-        ],
-        'fill-outline-color': [
-          'interpolate',
-          ['linear'],
-          '#cf597e',
-          0.2,
-          '#eeb479',
-          0.4,
-          '#e9e29c',
-          0.6,
-          '#9ccb86',
-          0.8,
-          '#009392',
-        ],
-        'fill-opacity': 0.7,
-      },
-    },
-  ];
+export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
+  return {
+    id,
+    type: 'raster',
+  };
 }
