@@ -91,4 +91,20 @@ export const LAYERS = [
     name: 'Save Our Mangroves Now project',
     id: 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3',
   },
+  {
+    name: 'Allen coral reef',
+    id: 'mangrove_allen_coral_reef',
+  },
+  {
+    name: 'Salt marsh data',
+    id: 'mangrove_salt_marsh_data',
+  },
+  {
+    name: 'Global intertidal wetland change',
+    id: 'mangrove_global_tidal_wetland_change',
+  },
+  {
+    name: 'Tidal flats',
+    id: 'mangrove_tidal_flats',
+  },
 ];

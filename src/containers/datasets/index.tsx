@@ -15,13 +15,19 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 
 // contextual layers
+import AllenCoralReefWidget from 'containers/datasets/contextual-layers/allen-coral-reef';
+import AllenCoralReefLayer from 'containers/datasets/contextual-layers/allen-coral-reef/layer';
 import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
 import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
+import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layers/global-tidal-wetland-change';
+import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
 import LayerNameContentSecond from 'containers/datasets/contextual-layers/layer-name-second';
 import LayerNameInfoSecond from 'containers/datasets/contextual-layers/layer-name-second/info.mdx';
 import LayerNameLayerSecond from 'containers/datasets/contextual-layers/layer-name-second/layer';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
+import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats';
+import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
 import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
 import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
@@ -73,7 +79,6 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 
 import BasemapsContextualMapSettings from 'components/contextual-basemaps';
 import { WidgetSlugType } from 'types/widget';
-
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
@@ -98,6 +103,9 @@ export const WIDGETS = {
   mangrove_layer_name_second: LayerNameContentSecond,
   mangrove_contextual_basemaps: BasemapsContextualMapSettings,
   mangrove_fisheries: FisheriesWidget,
+  mangrove_allen_coral_reef: AllenCoralReefWidget,
+  mangrove_tidal_flats: TidalFlatsWidget,
+  mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
@@ -122,6 +130,9 @@ export const LAYERS = {
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
   mangrove_national_dashboard_layer: NationalDashboardLayer,
   mangrove_fisheries: FisheriesLayer,
+  mangrove_allen_coral_reef: AllenCoralReefLayer,
+  mangrove_tidal_flats: TidalFlatsLayer,
+  mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeLayer,
 };
 
 export const INFO = {

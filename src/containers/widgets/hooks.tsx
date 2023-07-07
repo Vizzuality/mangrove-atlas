@@ -6,13 +6,13 @@ import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { activeCategoryAtom } from 'store/sidebar';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';
 
 import type { WidgetTypes } from 'types/widget';
 
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
-
 export function useWidgets(): WidgetTypes[] {
   const categorySelected = useRecoilValue(activeCategoryAtom);
   const { showWidget: isDrawingWidgetVisible } = useRecoilValue(drawingToolAtom);
@@ -23,6 +23,7 @@ export function useWidgets(): WidgetTypes[] {
   } = useRouter();
   const locationType = params?.[0];
   const currentLocation = locationType || 'worldwide';
+  const activeWidgets = useRecoilValue(activeWidgetsAtom);
 
   return useMemo(() => {
     if (isAnalysisRunning) {
@@ -38,8 +39,9 @@ export function useWidgets(): WidgetTypes[] {
     }
 
     return widgets.filter(
-      ({ categoryIds, locationType }) =>
-        categoryIds.includes(categorySelected) && locationType.includes(currentLocation)
+      ({ slug, categoryIds, locationType }) =>
+        (categoryIds.includes(categorySelected) && locationType.includes(currentLocation)) ||
+        (categoryIds.includes('contextual_layers') && activeWidgets.includes(slug))
     );
   }, [
     categorySelected,
@@ -47,5 +49,6 @@ export function useWidgets(): WidgetTypes[] {
     isDrawingWidgetVisible,
     isAnalysisRunning,
     isMapSettingsVisible,
+    activeWidgets,
   ]);
 }
