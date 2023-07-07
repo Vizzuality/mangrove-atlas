@@ -29,6 +29,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import { useLocations } from 'containers/datasets/locations/hooks';
+import Helper from 'containers/guide/helper';
 import GuideSwitcher from 'containers/guide/switcher';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
@@ -307,6 +308,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
+
             <Controls
               className={cn({
                 'absolute top-6 right-6 items-center print:hidden': true,
@@ -314,11 +316,21 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               })}
             >
               <GuideSwitcher />
-              <div className="flex flex-col space-y-2 pt-1">
-                <FullScreenControl />
-                <ZoomControl mapId={mapId} />
-                <PitchReset mapId={mapId} />
-              </div>
+
+              <Helper
+                className={{
+                  button: 'top-1 left-8 z-[20]',
+                  tooltip: 'w-fit-content',
+                }}
+                tooltipPosition={{ top: -4, left: 250 }}
+                message="use these buttons to go full-screen, zoom in/out or reset the bearing"
+              >
+                <div className="flex flex-col space-y-2 pt-1">
+                  <FullScreenControl />
+                  <ZoomControl mapId={mapId} />
+                  <PitchReset mapId={mapId} />
+                </div>
+              </Helper>
             </Controls>
             {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
               <Popup

@@ -2,6 +2,12 @@ import { WidgetTypes } from 'types/widget';
 
 const widgets = [
   {
+    name: 'Map Style',
+    slug: 'mangrove_contextual_basemaps',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: [],
+  },
+  {
     name: 'Mangrove habitat extent',
     slug: 'mangrove_habitat_extent',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -144,12 +150,6 @@ const widgets = [
   {
     name: 'Draw or upload an area',
     slug: 'mangrove_drawing_tool',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
-  },
-  {
-    name: 'Map Style',
-    slug: 'mangrove_contextual_basemaps',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: [],
   },

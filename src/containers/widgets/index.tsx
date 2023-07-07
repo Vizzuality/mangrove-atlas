@@ -14,6 +14,7 @@ import WidgetsLayout from 'layouts/widgets';
 
 import Blog from 'containers/blog';
 import { WIDGETS } from 'containers/datasets';
+import Helper from 'containers/guide/helper';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
@@ -87,19 +88,29 @@ const WidgetsContainer: React.FC = () => {
   return (
     <WidgetsLayout>
       {widgets.length > 1 && (
-        <button
-          className={cn({
-            'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
-              true,
-            'border-white bg-white text-brand-800': widgetsCollapsedChecker,
-            'print:hidden': screenWidth >= breakpoints.md,
-          })}
-          onClick={() => handleWidgetsCollapsed()}
-        >
-          {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
-        </button>
+        <div className="flex w-full py-4 print:hidden">
+          <Helper
+            className={{
+              button: '-bottom-2.5 -right-[170px] z-[20]',
+              tooltip: 'w-fit-content',
+            }}
+            tooltipPosition={{ top: -50, left: -160 }}
+            message="Expand or collapse all widgets"
+          >
+            <button
+              className={cn({
+                'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+                  true,
+                'border-white bg-white text-brand-800': widgetsCollapsedChecker,
+                'print:hidden': screenWidth >= breakpoints.md,
+              })}
+              onClick={() => handleWidgetsCollapsed()}
+            >
+              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
+            </button>
+          </Helper>
+        </div>
       )}
-
       {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />}
 
       {screenWidth < breakpoints.md && (
@@ -139,18 +150,29 @@ const WidgetsContainer: React.FC = () => {
       {widgets.length === 0 && <NoData />}
 
       {!!widgets.length && !mapSettings ? (
-        <div className="flex w-full py-4 print:hidden">
-          <button
-            className={cn({
-              [BUTTON_STYLES]: true,
-              'm-auto bg-brand-800 text-white': true,
-              hidden: showWidget && !customGeojson && !uploadedGeojson,
-            })}
-            disabled={showWidget && !customGeojson && !uploadedGeojson}
-            onClick={onClickDownload}
+        <div className="flex w-full justify-center py-4 print:hidden">
+          <Helper
+            className={{
+              button: '-bottom-2.5 -right-0',
+              tooltip: 'w-fit-content',
+            }}
+            tooltipPosition={{ top: 100, left: 10 }}
+            message="use this button to download the current map view and associated widgets as a pdf file"
           >
-            Download report as PDF
-          </button>
+            <div>
+              <button
+                className={cn({
+                  [BUTTON_STYLES]: true,
+                  'm-auto bg-brand-800 text-white': true,
+                  hidden: showWidget && !customGeojson && !uploadedGeojson,
+                })}
+                disabled={showWidget && !customGeojson && !uploadedGeojson}
+                onClick={onClickDownload}
+              >
+                Download report as PDF
+              </button>
+            </div>
+          </Helper>
         </div>
       ) : null}
     </WidgetsLayout>

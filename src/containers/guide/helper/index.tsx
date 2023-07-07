@@ -17,10 +17,12 @@ export const Helper = ({
   className?: {
     button?: string;
     tooltip?: string;
+    active?: string;
   };
   tooltipPosition?: {
     top: number;
-    left: number;
+    left?: number;
+    right?: number;
   };
   message?: string;
 }>) => {
@@ -30,13 +32,15 @@ export const Helper = ({
   const [childrenPosition, saveChildrenPosition] = useState<Record<string, number>>({
     top: null,
     left: null,
+    right: null,
   });
 
   useEffect(() => {
-    const { top, left } = childrenRef.current?.getBoundingClientRect();
+    const { top, left, right } = childrenRef.current?.getBoundingClientRect();
     saveChildrenPosition({
       top,
       left,
+      right,
     });
   }, [childrenRef, popOver]);
 
@@ -53,7 +57,7 @@ export const Helper = ({
             onClick={() => setPopOver(true)}
           >
             {!popOver && isActive && (
-              <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-400 opacity-50" />
+              <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-800 opacity-20" />
             )}
 
             {!popOver && isActive && (
@@ -73,7 +77,11 @@ export const Helper = ({
             onClick={() => setPopOver(false)}
           >
             <div
-              className="pointer-events-none absolute cursor-default"
+              className={cn({
+                'pointer-events-none absolute cursor-default': true,
+                [className.button]: !!className.button,
+                [className.active]: isActive,
+              })}
               style={{
                 top: childrenPosition?.top,
                 left: childrenPosition?.left,
@@ -92,8 +100,10 @@ export const Helper = ({
                   [className.tooltip]: !!className.tooltip,
                 })}
               >
-                <p className="text-left font-sans text-sm font-light text-black/85">{message}</p>
-                <svg
+                <p className="text-left font-sans text-sm font-light text-black/85 first-letter:uppercase">
+                  {message}
+                </p>
+                {/* <svg
                   className="absolute left-0 top-full h-2.5 w-full rounded text-white"
                   x="0px"
                   y="0px"
@@ -101,7 +111,7 @@ export const Helper = ({
                   xmlSpace="preserve"
                 >
                   <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-                </svg>
+                </svg> */}
               </div>
             )}
           </div>,

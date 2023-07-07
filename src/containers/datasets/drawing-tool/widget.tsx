@@ -12,6 +12,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { useUploadFile } from 'hooks/analysis';
 
+import Helper from 'containers/guide/helper';
+
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
@@ -73,37 +75,58 @@ const WidgetDrawingTool = () => {
         <span>
           Upload or draw in the map the area you want to analyze through on-the-fly calculations.
         </span>
-        <button
-          type="button"
-          onClick={handleDrawingMode}
-          className={cn({
-            'flex h-[88px] w-full items-center justify-center space-x-2 rounded-lg border-2 border-brand-800/10 py-5 font-semibold text-brand-800 transition-colors':
-              true,
-            'hover:bg-brand-400/10': !isDrawingToolEnabled,
-            'bg-brand-800 text-white': isDrawingToolEnabled,
-          })}
+
+        <Helper
+          className={{
+            button: '-bottom-2.5 -right-0',
+            tooltip: 'w-fit-content',
+            active: 'max-w-[454px]',
+          }}
+          tooltipPosition={{ top: -100, left: -100 }}
+          message="draw a polygon on the map. Just click to start drawing and double click to stop"
         >
-          <Icon icon={AREA_SVG} className="h-8 w-8" />
-          <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
-        </button>
+          <button
+            type="button"
+            onClick={handleDrawingMode}
+            className={cn({
+              'flex h-[88px] w-full items-center justify-center space-x-2 rounded-lg border-2 border-brand-800/10 py-5 font-semibold text-brand-800 transition-colors':
+                true,
+              'hover:bg-brand-400/10': !isDrawingToolEnabled,
+              'bg-brand-800 text-white': isDrawingToolEnabled,
+            })}
+          >
+            <Icon icon={AREA_SVG} className="h-8 w-8" />
+            <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
+          </button>
+        </Helper>
         <span className="flex justify-center">or</span>
-        <div
-          {...getRootProps()}
-          className="flex h-[88px] w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-brand-800 bg-brand-400/10 py-5"
+        <Helper
+          className={{
+            button: '-bottom-2.5 -right-0',
+            tooltip: 'w-fit-content',
+            active: 'max-w-[454px]',
+          }}
+          tooltipPosition={{ top: -100, left: -100 }}
+          message="use this to upload an existing GIS file"
         >
-          <input {...getInputProps()} />
-          <div className="pointer-events-none flex items-center space-x-2">
-            <span className="text-brand-800">
-              <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />
-            </span>
-            <label id="label-file-upload" htmlFor="input-file-upload">
-              <div>
-                <span className="block font-semibold text-brand-800">Browse shapefile</span>
-                <span>(Click or drag-and-drop file)</span>
-              </div>
-            </label>
+          <div
+            {...getRootProps()}
+            className="flex h-[88px] w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-brand-800 bg-brand-400/10 py-5"
+          >
+            <input {...getInputProps()} />
+            <div className="pointer-events-none flex items-center space-x-2">
+              <span className="text-brand-800">
+                <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />
+              </span>
+              <label id="label-file-upload" htmlFor="input-file-upload">
+                <div>
+                  <span className="block font-semibold text-brand-800">Browse shapefile</span>
+                  <span>(Click or drag-and-drop file)</span>
+                </div>
+              </label>
+            </div>
           </div>
-        </div>
+        </Helper>
       </div>
       <div>
         <span className="block text-sm">

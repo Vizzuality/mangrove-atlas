@@ -17,6 +17,7 @@ import { placeSectionAtom } from 'store/sidebar';
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
 import AnalysisAlert from 'containers/alert';
+import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 
 import { Dialog, DialogTrigger } from 'components/dialog';
@@ -144,34 +145,52 @@ const Place = () => {
     <div className="flex flex-col space-y-2 text-center">
       <span className="font-sans text-xxs leading-[10px] text-white">Place</span>
       <div className={`${STYLES['icon-wrapper']} space-y-2.5 rounded-full bg-white pb-1`}>
-        <button
-          type="button"
-          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full"
-          onClick={handleOnClickWorldwide}
+        <Helper
+          className={{
+            button: '-bottom-3.5 -right-1.5 z-[20]',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: -40, left: -50 }}
+          message="use this button to go back to the worldwide overview"
         >
-          <Icon
-            icon={GLOBE_SVG}
-            className={cn({
-              'h-9 w-9 rounded-full p-1': true,
-              'bg-brand-800 fill-current text-white': placeSection === 'worldwide',
-              'fill-current text-brand-800': placeSection !== 'worldwide',
-            })}
-          />
-        </button>
+          <button
+            type="button"
+            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full"
+            onClick={handleOnClickWorldwide}
+          >
+            <Icon
+              icon={GLOBE_SVG}
+              className={cn({
+                'h-9 w-9 rounded-full p-1': true,
+                'bg-brand-800 fill-current text-white': placeSection === 'worldwide',
+                'fill-current text-brand-800': placeSection !== 'worldwide',
+              })}
+            />
+          </button>
+        </Helper>
         <Dialog open={placeSection === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
               className="flex cursor-pointer items-center justify-center rounded-full"
             >
-              <Icon
-                icon={GLASS_SVG}
-                className={cn({
-                  'h-9 w-9 rounded-full p-1': true,
-                  'bg-brand-800 fill-current text-white': placeSection === 'search',
-                  'fill-current text-brand-800': placeSection !== 'search',
-                })}
-              />
+              <Helper
+                className={{
+                  button: '-bottom-3.5 left-7 z-[20]',
+                  tooltip: 'w-fit-content',
+                }}
+                tooltipPosition={{ top: -40, left: -50 }}
+                message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
+              >
+                <Icon
+                  icon={GLASS_SVG}
+                  className={cn({
+                    'h-9 w-9 rounded-full p-1': true,
+                    'bg-brand-800 fill-current text-white': placeSection === 'search',
+                    'fill-current text-brand-800': placeSection !== 'search',
+                  })}
+                />
+              </Helper>
             </button>
           </DialogTrigger>
 
@@ -184,14 +203,23 @@ const Place = () => {
           })}
           onClick={handleDrawingToolView}
         >
-          <Icon
-            icon={AREA_SVG}
-            className={cn({
-              'h-9 w-9 rounded-full p-1': true,
-              'bg-brand-800 fill-current text-white': placeSection === 'area',
-              'fill-current text-brand-800': placeSection !== 'area',
-            })}
-          />
+          <Helper
+            className={{
+              button: '-bottom-3.5 left-7 z-[20]',
+              tooltip: 'w-fit-content',
+            }}
+            tooltipPosition={{ top: -40, left: -50 }}
+            message="use this function to calculate statistics for your own custom area of interest"
+          >
+            <Icon
+              icon={AREA_SVG}
+              className={cn({
+                'h-9 w-9 rounded-full p-1': true,
+                'bg-brand-800 fill-current text-white': placeSection === 'area',
+                'fill-current text-brand-800': placeSection !== 'area',
+              })}
+            />
+          </Helper>
         </button>
       </div>
       <AnalysisAlert />

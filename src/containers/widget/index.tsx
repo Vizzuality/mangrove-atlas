@@ -2,10 +2,14 @@ import React, { useCallback, ReactElement, FC } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom } from 'store/drawing-tool';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
+
+import Helper from 'containers/guide/helper';
+import { useWidgets } from 'containers/widgets/hooks';
 
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
@@ -24,10 +28,13 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
   const { children, title, id, className } = props;
+  const { showWidget } = useRecoilValue(drawingToolAtom);
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
+  const widgets = useWidgets();
+  const HELPER_ID = widgets[0].slug;
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
@@ -69,13 +76,22 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
             'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
           })}
         >
-          <header className="flex items-center justify-between">
-            <h2
-              onClick={handleWidgetCollapsed}
-              className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
+          <header className="flex items-center justify-between ">
+            <Helper
+              className={{
+                button: HELPER_ID === id && !showWidget ? '-bottom-7.5 -right-6 z-[20]' : 'hidden',
+                tooltip: 'w-fit-content',
+              }}
+              tooltipPosition={{ top: 60, left: 0 }}
+              message="Click to expand/collapse widgets"
             >
-              {title}
-            </h2>
+              <h2
+                onClick={handleWidgetCollapsed}
+                className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
+              >
+                {title}
+              </h2>
+            </Helper>
             <WidgetControls id={id} />
           </header>
           <div

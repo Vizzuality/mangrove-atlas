@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
+import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
 import { placeSectionAtom } from 'store/sidebar';
 
@@ -13,6 +14,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
+import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 
 import { Dialog, DialogTrigger } from 'components/dialog';
@@ -57,7 +59,7 @@ const LocationTitle = () => {
   }, [locationType, name]);
 
   useEffect(() => {
-    const { width } = titleRef?.current.getBoundingClientRect();
+    const { width } = titleRef?.current?.getBoundingClientRect();
     setWidth(width);
   }, [name]);
 
@@ -81,23 +83,34 @@ const LocationTitle = () => {
     setAnalysisAlert,
   ]);
 
+  const isGuideActive = useRecoilValue(activeGuideAtom);
+
   return (
     <>
       <div className="flex flex-col text-center print:hidden">
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
-            <button onClick={handleOnClickTitle}>
-              <h1
-                ref={titleRef}
+            <button onClick={handleOnClickTitle} disabled={isGuideActive}>
+              <div
                 className={cn({
                   'inline-block py-10 text-6xl font-light text-black/85 first-letter:uppercase':
                     true,
                   'text-2.75xl': width >= 540,
                 })}
               >
-                {locationName}
-              </h1>
+                <Helper
+                  className={{
+                    button: 'locations-title' ? '-bottom-2.5 right-10 z-[150]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                    active: 'text-6xl',
+                  }}
+                  tooltipPosition={{ top: -70, left: -40 }}
+                  message="This shows the name of the area selected. This can be a country, a protected area, the world or your own custom area. Use this button to search for a country or a protected area. Countries can also be selected by clicking on the map"
+                >
+                  <h1 ref={titleRef}>{locationName}</h1>
+                </Helper>
+              </div>
             </button>
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
