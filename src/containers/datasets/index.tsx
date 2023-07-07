@@ -28,6 +28,7 @@ import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
+import FisheriesLayer from 'containers/datasets/fisheries/layer';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
 import FloodProtectionAreaLayer from 'containers/datasets/flood-protection/storms/layers/area';
@@ -120,6 +121,7 @@ export const LAYERS = {
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
   mangrove_national_dashboard_layer: NationalDashboardLayer,
+  mangrove_fisheries: FisheriesLayer,
 };
 
 export const INFO = {
