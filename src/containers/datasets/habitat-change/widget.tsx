@@ -9,13 +9,7 @@ import { useRecoilState } from 'recoil';
 import Chart from 'components/chart';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -66,8 +60,9 @@ const HabitatExtent = () => {
             between
             <span className="notranslate font-bold">
               {' '}
-              <Tooltip>
-                <TooltipTrigger>
+              <Popover>
+                <PopoverTrigger>
+                  {' '}
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {currentStartYear}
                     <Icon
@@ -75,50 +70,38 @@ const HabitatExtent = () => {
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     />
                   </span>
-                </TooltipTrigger>
-
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {years?.map((y) => (
-                        <li key={y}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'text-brand-800': currentStartYear === y,
-                              'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
-                              'opacity-50':
-                                currentStartYear === y ||
-                                y > currentEndYear ||
-                                currentEndYear === y,
-                            })}
-                            type="button"
-                            onClick={() => setStartYear(y)}
-                            disabled={
-                              currentStartYear === y || y > currentEndYear || currentEndYear === y
-                            }
-                          >
-                            {y}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>{' '}
+                </PopoverTrigger>
+                <PopoverContent>
+                  {' '}
+                  <ul className="z-20 max-h-56 space-y-2">
+                    {years?.map((y) => (
+                      <li key={y} className="last-of-type:pb-4">
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'text-brand-800': currentStartYear === y,
+                            'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
+                            'opacity-50':
+                              currentStartYear === y || y > currentEndYear || currentEndYear === y,
+                          })}
+                          type="button"
+                          onClick={() => setStartYear(y)}
+                          disabled={
+                            currentStartYear === y || y > currentEndYear || currentEndYear === y
+                          }
+                        >
+                          {y}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>{' '}
             </span>
             and{' '}
             <span className="notranslate font-bold">
-              <Tooltip>
-                <TooltipTrigger>
+              <Popover>
+                <PopoverTrigger>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {currentEndYear}
                     <Icon
@@ -126,42 +109,32 @@ const HabitatExtent = () => {
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     />
                   </span>
-                </TooltipTrigger>
+                </PopoverTrigger>
 
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {years?.map((y) => (
-                        <li key={y}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'text-brand-800': currentEndYear === y,
-                              'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
-                              'opacity-50': y < currentStartYear || currentStartYear === y,
-                            })}
-                            type="button"
-                            onClick={() => setEndYear(y)}
-                            disabled={
-                              currentEndYear === y || y < currentStartYear || currentStartYear === y
-                            }
-                          >
-                            {y}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>{' '}
+                <PopoverContent>
+                  <ul className="max-h-56 space-y-2">
+                    {years?.map((y) => (
+                      <li key={y} className="last-of-type:pb-4">
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'text-brand-800': currentEndYear === y,
+                            'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
+                            'opacity-50': y < currentStartYear || currentStartYear === y,
+                          })}
+                          type="button"
+                          onClick={() => setEndYear(y)}
+                          disabled={
+                            currentEndYear === y || y < currentStartYear || currentStartYear === y
+                          }
+                        >
+                          {y}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>{' '}
             </span>
             were:{' '}
           </p>

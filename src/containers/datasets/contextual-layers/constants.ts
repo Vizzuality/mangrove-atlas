@@ -2,7 +2,7 @@ import type { ContextualBasemapsId, MosaicId } from 'types/widget';
 
 type ContextualLayersTypes = Array<{
   id: ContextualBasemapsId;
-  type: 'contextual';
+  type: 'contextual-basemap';
   mosaic_id: MosaicId;
   name: string;
   basemap_type: 'Visual' | 'Analytic';
@@ -13,7 +13,7 @@ type ContextualLayersTypes = Array<{
 export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   {
     id: 'planet_medres_visual_monthly',
-    type: 'contextual',
+    type: 'contextual-basemap',
     mosaic_id: '45d01564-c099-42d8-b8f2-a0851accf3e7',
     name: 'PS Tropical Visual Monthly Monitoring',
     basemap_type: 'Visual',
@@ -30,7 +30,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   // },
   {
     id: 'planet_medres_analytic_monthly',
-    type: 'contextual',
+    type: 'contextual-basemap',
     mosaic_id: 'be1f8e5e-6a29-4d27-8542-1fdb664fd78e',
     name: 'PS Tropical Normalized Analytic Monthly Monitoring',
     basemap_type: 'Analytic',

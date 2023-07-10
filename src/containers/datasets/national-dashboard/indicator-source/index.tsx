@@ -8,14 +8,8 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from 'components/tooltip';
 import WidgetControls from 'components/widget-controls';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
@@ -97,8 +91,8 @@ const IndicatorSource = ({
       <span className="max-w-[180px]">{source}</span>
       {years.length === 1 && <span>{years[0]}</span>}
       {years.length < 1 && (
-        <Tooltip>
-          <TooltipTrigger asChild>
+        <Popover>
+          <PopoverTrigger asChild>
             <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
               {'year'}
               <Icon
@@ -106,39 +100,27 @@ const IndicatorSource = ({
                 className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
               />
             </span>
-          </TooltipTrigger>
+          </PopoverTrigger>
 
-          <TooltipPortal>
-            <TooltipContent
-              side="bottom"
-              align="center"
-              className="rounded-3xl bg-white text-black/85 shadow-soft"
-            >
-              <ul
-                className={cn({
-                  'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true,
-                })}
-              >
-                {years?.map((u) => (
-                  <li key={u}>
-                    <button
-                      className={cn({
-                        'font-bold': true,
-                      })}
-                      type="button"
-                      // onClick={() => setYear(u)}
-                      // disabled={selectedYear === u}
-                    >
-                      {u}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-
-              <TooltipArrow className="fill-white" width={10} height={5} />
-            </TooltipContent>
-          </TooltipPortal>
-        </Tooltip>
+          <PopoverContent>
+            <ul className="max-h-56 space-y-2">
+              {years?.map((u) => (
+                <li key={u} className="last-of-type:pb-4">
+                  <button
+                    className={cn({
+                      'font-bold': true,
+                    })}
+                    type="button"
+                    // onClick={() => setYear(u)}
+                    // disabled={selectedYear === u}
+                  >
+                    {u}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </PopoverContent>
+        </Popover>
       )}
       {dataSource?.value && <span>{dataSource.value}</span>}
       {unit && <span>{LABEL_UNITS[unit] || unit}</span>}

@@ -56,6 +56,10 @@ export const LAYERS = [
     id: 'mangrove_drivers_change',
   },
   {
+    name: 'Mangrove fisheries',
+    id: 'mangrove_fisheries',
+  },
+  {
     name: 'Mangrove extent',
     id: 'mangrove_habitat_extent',
   },

@@ -1,8 +1,5 @@
 import { useCallback } from 'react';
 
-import flatten from 'lodash-es/flatten';
-import isEmpty from 'lodash-es/isEmpty';
-
 import { useRouter } from 'next/router';
 
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
@@ -11,7 +8,6 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-import { useNationalDashboard } from 'containers/datasets/national-dashboard/hooks';
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 

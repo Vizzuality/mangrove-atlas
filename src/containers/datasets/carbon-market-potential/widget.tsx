@@ -4,13 +4,7 @@ import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -52,8 +46,8 @@ const CarbonMarketPotentialWidget = () => {
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             The extent of investible blue carbon (ha) at{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {label}
                   <Icon
@@ -61,75 +55,59 @@ const CarbonMarketPotentialWidget = () => {
                     className={`${`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} print:hidden`}
                   />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {labels?.map((l) => (
-                      <li key={l}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': label !== l,
-                            'opacity-50': label === l,
-                          })}
-                          type="button"
-                          onClick={() => setLabel(l)}
-                          disabled={label === l}
-                        >
-                          {l}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className="fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>{' '}
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {labels?.map((l) => (
+                    <li key={l} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': label !== l,
+                          'opacity-50': label === l,
+                        })}
+                        type="button"
+                        onClick={() => setLabel(l)}
+                        disabled={label === l}
+                      >
+                        {l}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>{' '}
             in <span className="font-bold"> {location}</span> is {investibleBlueCarbonValue}{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {unit.label}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {units?.map((u) => (
-                      <li key={u.label}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': unit !== u,
-                            'opacity-50': unit === u,
-                          })}
-                          type="button"
-                          onClick={() => setUnit(u)}
-                          disabled={unit === u}
-                        >
-                          {u.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {units?.map((u) => (
+                    <li key={u.label} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': unit !== u,
+                          'opacity-50': unit === u,
+                        })}
+                        type="button"
+                        onClick={() => setUnit(u)}
+                        disabled={unit === u}
+                      >
+                        {u.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
           </p>
           <CarbonMarketPotentialChart legend={legend} config={config} />
         </div>

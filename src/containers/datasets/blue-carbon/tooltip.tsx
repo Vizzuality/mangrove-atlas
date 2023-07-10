@@ -5,10 +5,8 @@ type TooltipProps = {
   payload: {
     title: string;
     label: string;
-    valueFormatted: string;
     color: string;
     percentage: number;
-    tooltipLabelValue: string;
     tooltipLabelPercentage: string;
   };
   active: boolean;
@@ -16,15 +14,7 @@ type TooltipProps = {
 
 const Tooltip: FC = ({ active, payload: data }: TooltipProps) => {
   if (!active) return null;
-  const {
-    label,
-    title,
-    valueFormatted,
-    color,
-    percentage,
-    tooltipLabelValue,
-    tooltipLabelPercentage,
-  } = data;
+  const { label, title, color, percentage, tooltipLabelPercentage } = data;
   return (
     <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
       <div key={label} className="flex flex-col space-y-2">

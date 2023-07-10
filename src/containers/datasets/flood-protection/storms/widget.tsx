@@ -13,14 +13,8 @@ import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/switch';
-import {
-  Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from 'components/tooltip';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -152,8 +146,8 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
             <p className={WIDGET_SENTENCE_STYLE}>
               In <span className="font-bold first-letter:uppercase"> {data.location}</span>,
               mangroves protect against <span className="font-bold">intense</span> storms that occur{' '}
-              <Tooltip>
-                <TooltipTrigger asChild>
+              <Popover>
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {LABELS[selectedPeriod].large}
                     <Icon
@@ -161,39 +155,29 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                       className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
                     />
                   </span>
-                </TooltipTrigger>
+                </PopoverTrigger>
 
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {periods?.map((period) => (
-                        <li key={period}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'hover:text-brand-800': period !== selectedPeriod,
-                              'opacity-50': period === selectedPeriod,
-                            })}
-                            type="button"
-                            onClick={() => handlePeriod(period)}
-                            disabled={period === selectedPeriod}
-                          >
-                            {LABELS[period].short}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow className="fill-white" width={10} height={5} />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>{' '}
+                <PopoverContent>
+                  <ul className="max-h-56 space-y-2">
+                    {periods?.map((period) => (
+                      <li key={period} className="last-of-type:pb-4">
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'hover:text-brand-800': period !== selectedPeriod,
+                            'opacity-50': period === selectedPeriod,
+                          })}
+                          type="button"
+                          onClick={() => handlePeriod(period)}
+                          disabled={period === selectedPeriod}
+                        >
+                          {LABELS[period].short}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>{' '}
               {indicator === 'population' && (
                 <span>
                   to <span className="font-bold">{value}</span> individuals
@@ -215,8 +199,8 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                 {value} km<sup>2</sup>
               </span>{' '}
               during a{' '}
-              <Tooltip>
-                <TooltipTrigger asChild>
+              <Popover>
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {LABELS[selectedPeriod].area}
                     <Icon
@@ -224,39 +208,29 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                       className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
                     />
                   </span>
-                </TooltipTrigger>
+                </PopoverTrigger>
 
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {periods?.map((period) => (
-                        <li key={period}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'hover:text-brand-800': period !== selectedPeriod,
-                              'opacity-50': period === selectedPeriod,
-                            })}
-                            type="button"
-                            onClick={() => handlePeriod(period)}
-                            disabled={period === selectedPeriod}
-                          >
-                            {LABELS[period].area}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow className="fill-white" width={10} height={5} />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>{' '}
+                <PopoverContent>
+                  <ul className="max-h-56 space-y-2">
+                    {periods?.map((period) => (
+                      <li key={period} className="last-of-type:pb-4">
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'hover:text-brand-800': period !== selectedPeriod,
+                            'opacity-50': period === selectedPeriod,
+                          })}
+                          type="button"
+                          onClick={() => handlePeriod(period)}
+                          disabled={period === selectedPeriod}
+                        >
+                          {LABELS[period].area}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>{' '}
               .
             </p>
           )}
@@ -286,7 +260,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
               )}
             </div>
             <div className="flex w-full justify-between text-sm text-black/85">
-              {[minValue, maxValue].map((l) => (
+              {['low', 'high'].map((l) => (
                 <p key={l}>{l}</p>
               ))}
             </div>

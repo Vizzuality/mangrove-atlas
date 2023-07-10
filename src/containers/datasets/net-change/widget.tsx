@@ -10,13 +10,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -114,126 +108,102 @@ const NetChangeWidget = () => {
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}
             <span className="font-bold"> {direction}</span> by{' '}
             <span className="font-bold"> {netChange}</span>{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {unitOptions?.map((u) => (
-                      <li key={u}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': selectedUnit !== u,
-                            'opacity-50': selectedUnit === u,
-                          })}
-                          type="button"
-                          onClick={() => setUnit(u)}
-                          disabled={selectedUnit === u}
-                        >
-                          {u}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>{' '}
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {unitOptions?.map((u) => (
+                    <li key={u} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': selectedUnit !== u,
+                          'opacity-50': selectedUnit === u,
+                        })}
+                        type="button"
+                        onClick={() => setUnit(u)}
+                        disabled={selectedUnit === u}
+                      >
+                        {u}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>{' '}
             between{' '}
-            <Tooltip>
-              <TooltipTrigger>
+            <Popover>
+              <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentStartYear}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {years?.map((y) => (
-                      <li key={y}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'text-brand-800': currentStartYear === y,
-                            'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
-                            'opacity-50':
-                              currentStartYear === y || y > currentEndYear || currentEndYear === y,
-                          })}
-                          type="button"
-                          onClick={() => setStartYear(y)}
-                          disabled={
-                            currentStartYear === y || y > currentEndYear || currentEndYear === y
-                          }
-                        >
-                          {y}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>{' '}
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {years?.map((y) => (
+                    <li key={y} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'text-brand-800': currentStartYear === y,
+                          'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
+                          'opacity-50':
+                            currentStartYear === y || y > currentEndYear || currentEndYear === y,
+                        })}
+                        type="button"
+                        onClick={() => setStartYear(y)}
+                        disabled={
+                          currentStartYear === y || y > currentEndYear || currentEndYear === y
+                        }
+                      >
+                        {y}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>{' '}
             and{' '}
-            <Tooltip>
-              <TooltipTrigger>
+            <Popover>
+              <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentEndYear}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {years?.map((y) => (
-                      <li key={y}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'text-brand-800': currentEndYear === y,
-                            'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
-                            'opacity-50': y < currentStartYear || currentStartYear === y,
-                          })}
-                          type="button"
-                          onClick={() => setEndYear(y)}
-                          disabled={
-                            currentEndYear === y || y < currentStartYear || currentStartYear === y
-                          }
-                        >
-                          {y}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {years?.map((y) => (
+                    <li key={y} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'text-brand-800': currentEndYear === y,
+                          'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
+                          'opacity-50': y < currentStartYear || currentStartYear === y,
+                        })}
+                        type="button"
+                        onClick={() => setEndYear(y)}
+                        disabled={
+                          currentEndYear === y || y < currentStartYear || currentStartYear === y
+                        }
+                      >
+                        {y}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
             .
           </p>
 

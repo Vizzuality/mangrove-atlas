@@ -14,6 +14,26 @@ body {
   }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 3px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #F3F5F5;
+  border-radius: 20px !important;
+  width: 3px;
+  padding-top: 10px !important;
+  margin: 12px 0 !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #CDD0D0;
+  border-radius: 20px !important;
+}
+
 @layer base {
   input[type='search']::-webkit-search-decoration,
   input[type='search']::-webkit-search-cancel-button,
@@ -47,9 +67,14 @@ body {
     scrollbar-width: none;
   }
 
+  .scroll-thin::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
   .print {
     display: none
   }
+
 
 }
 .recharts-brush-texts {
@@ -132,7 +157,6 @@ body {
 .txlive-langselector-list > li:hover {
   @apply  !text-black/85 !bg-white;
 }
-
 
 @media print {
   @page {
