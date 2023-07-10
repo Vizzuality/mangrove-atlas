@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
+import Helper from 'containers/guide/helper';
 import MapContainer from 'containers/map';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
@@ -41,8 +42,18 @@ const DesktopLayout = () => {
         <meta name="og:type" content="website" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
       </Head>
-
-      <TranslateScripts />
+      <div className="absolute right-0 z-[1000] h-10 w-10">
+        <Helper
+          className={{
+            button: 'top-1 right-[100px]',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: -40, left: 260 }}
+          message="Choose your preferred language here. There is a choice between English, French and Spanish"
+        >
+          <TranslateScripts />
+        </Helper>
+      </div>
 
       <div className="relative h-screen w-screen">
         {isPrintingMode && (
