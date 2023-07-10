@@ -22,6 +22,7 @@ import Tooltip from './tooltip';
 
 type UseParamsOptions = {
   location_id?: string;
+  period: FloodProtectionPeriodId;
   indicator: 'area' | 'population' | 'stock';
 };
 
@@ -67,7 +68,6 @@ const getBars = (data, selectedPeriod, metadata, indicator) => {
 };
 
 export function useMangrovesFloodProtection(
-  selectedPeriod: FloodProtectionPeriodId,
   params: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
@@ -79,6 +79,8 @@ export function useMangrovesFloodProtection(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
+
+  const selectedPeriod = params.period || 'annual';
   const fetchMangrovesFloodProtection = () =>
     API.request({
       method: 'GET',

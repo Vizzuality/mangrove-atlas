@@ -6,7 +6,6 @@ import cn from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
 
@@ -43,7 +42,7 @@ const THUMBS = {
 type CardBasemapContextualProps = {
   id: BasemapId | ContextualBasemapsId | WidgetSlugType;
   mosaic_id?: MosaicId;
-  type: 'contextual-basemap' | 'basemap' | 'contextual-layer';
+  type: 'contextual-basemap' | 'basemap';
   name?: string;
   description?: string;
   thumb?: string;
@@ -58,24 +57,15 @@ const CardBasemapContextual = ({
   description,
   hasDropdown,
 }: CardBasemapContextualProps) => {
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
-
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
 
   const isActive = useMemo(() => {
-    if (type === 'contextual-layer') return activeWidgets.includes(id as WidgetSlugType);
     if (type === 'contextual-basemap') return basemapContextualSelected === id;
     if (type === 'basemap') return basemapStored === id;
-  }, [basemapContextualSelected, basemapStored, activeWidgets, type, id]);
+  }, [basemapContextualSelected, basemapStored, type, id]);
   const info = INFO[id];
   const handleClick = () => {
-    if (type === 'contextual-layer') {
-      const widgetsUpdate = isActive
-        ? activeWidgets.filter((w) => w !== id)
-        : ([id, ...activeWidgets] as WidgetSlugType[]);
-      setActiveWidgets(widgetsUpdate);
-    }
     if (type === 'contextual-basemap') {
       const updatedContextualBasemap = basemapContextualSelected === id ? null : id;
       setBasemapContextual(updatedContextualBasemap as ContextualBasemapsId);

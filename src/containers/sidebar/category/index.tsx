@@ -56,7 +56,6 @@ const Category = () => {
         showWidget: false,
       }));
 
-      console.log('handleCategory', evt.currentTarget.dataset.category);
       closeMenu();
     },
     [setDrawingToolState, closeMenu, mapSettings, setCategory, setMapSettings]

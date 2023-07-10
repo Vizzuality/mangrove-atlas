@@ -71,7 +71,8 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     [indicator, setAreaPeriod, setPopulationPeriod, setStockPeriod]
   );
 
-  const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {
+  const { isFetched, isFetching, data } = useMangrovesFloodProtection({
+    period: selectedPeriod,
     indicator,
   });
 
