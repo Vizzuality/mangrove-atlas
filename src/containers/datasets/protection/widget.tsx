@@ -4,13 +4,7 @@ import cn from 'lib/classnames';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -39,8 +33,8 @@ const Protection = () => {
             <span className="font-bold">{data.currentYear} </span> represented{' '}
             <span className="font-bold">
               {data.protectedArea}{' '}
-              <Tooltip>
-                <TooltipTrigger>
+              <Popover>
+                <PopoverTrigger>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {selectedUnit}
                     <Icon
@@ -48,58 +42,11 @@ const Protection = () => {
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     />
                   </span>
-                </TooltipTrigger>
-
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {data.units?.map((u) => (
-                        <li key={u}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'text-brand-800': selectedUnit === u,
-                              'hover:text-brand-800': selectedUnit !== u,
-                              'opacity-50': selectedUnit === u,
-                            })}
-                            type="button"
-                            onClick={() => setUnit(u)}
-                          >
-                            {u}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
-            </span>{' '}
-            out of a total <span className="font-bold">{data.totalArea}</span>{' '}
-            <Tooltip>
-              <TooltipTrigger>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {selectedUnit}
-                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
-                </span>
-              </TooltipTrigger>
-              .
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <ul className="max-h-56 space-y-2">
                     {data.units?.map((u) => (
-                      <li key={u}>
+                      <li key={u} className="last-of-type:pb-4">
                         <button
                           className={cn({
                             'font-bold': true,
@@ -115,11 +62,39 @@ const Protection = () => {
                       </li>
                     ))}
                   </ul>
-
-                  <TooltipArrow />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+                </PopoverContent>
+              </Popover>
+            </span>{' '}
+            out of a total <span className="font-bold">{data.totalArea}</span>{' '}
+            <Popover>
+              <PopoverTrigger>
+                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  {selectedUnit}
+                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
+                </span>
+              </PopoverTrigger>
+              .
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {data.units?.map((u) => (
+                    <li key={u} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'text-brand-800': selectedUnit === u,
+                          'hover:text-brand-800': selectedUnit !== u,
+                          'opacity-50': selectedUnit === u,
+                        })}
+                        type="button"
+                        onClick={() => setUnit(u)}
+                      >
+                        {u}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
           </p>
           <ProtectionChart config={data.config} legend={data.legend} />
           <p className="text-sm italic">
