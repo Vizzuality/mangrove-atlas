@@ -8,7 +8,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 import { useMangroveInternationalStatus } from './hooks';
-
 const InternationalStatus = () => {
   const {
     location,
