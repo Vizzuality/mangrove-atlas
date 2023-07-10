@@ -4,7 +4,7 @@ import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 const LayerNameContent = () => {
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
-      <CardBasemapContextual id="mangrove_allen_coral_reef" type="contextual" />
+      <CardBasemapContextual id="mangrove_allen_coral_reef" type="contextual-layer" />
     </div>
   );
 };

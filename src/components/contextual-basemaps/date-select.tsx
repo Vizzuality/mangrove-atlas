@@ -12,7 +12,7 @@ import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
-import type { ContextualBasemapsId, MosaicId } from 'types/widget';
+import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -20,7 +20,7 @@ const DateSelect = ({
   id,
   mosaic_id,
 }: {
-  id: ContextualBasemapsId | BasemapId;
+  id: ContextualBasemapsId | BasemapId | WidgetSlugType;
   mosaic_id: MosaicId;
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
