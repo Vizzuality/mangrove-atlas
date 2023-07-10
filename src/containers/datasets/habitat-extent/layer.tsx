@@ -9,7 +9,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({ year, id });
   if (!SOURCE || !LAYERS) return null;
-  
+
   return (
     <Source key={SOURCE.id} {...SOURCE}>
       {LAYERS.map((LAYER) => (

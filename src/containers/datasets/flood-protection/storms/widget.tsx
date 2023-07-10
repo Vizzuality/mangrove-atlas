@@ -91,7 +91,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
-  }, [ref.current]);
+  }, [ref]);
 
   if (!data || !data?.data?.length) return null;
 
