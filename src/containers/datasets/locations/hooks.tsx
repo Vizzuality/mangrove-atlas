@@ -54,6 +54,7 @@ export function useLocation(
         return {
           name: 'the area selected',
           id: 'custom-area',
+          iso: 'custom-area',
           location_id: 'custom-area',
           location_type: 'custom-area',
         };

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Detail from 'containers/map/restoration-popup/detail';
 
+import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 
 const Details = ({
@@ -42,7 +43,7 @@ const Details = ({
     >
       <div className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
         <span className="m-0 text-sm font-semibold">
-          <h3>DETAILS</h3>
+          <h3 className={WIDGET_SUBTITLE_STYLE}>DETAILS</h3>
         </span>
         <span
           className={cn({
