@@ -10,13 +10,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -116,8 +110,8 @@ const HabitatExtent = () => {
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
             <span className="notranslate font-bold">
               {area}{' '}
-              <Tooltip>
-                <TooltipTrigger asChild>
+              <Popover>
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {selectedUnitAreaExtent}
                     <Icon
@@ -125,39 +119,29 @@ const HabitatExtent = () => {
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     />
                   </span>
-                </TooltipTrigger>
+                </PopoverTrigger>
 
-                <TooltipPortal>
-                  <TooltipContent
-                    side="bottom"
-                    align="center"
-                    className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                  >
-                    <ul
-                      className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}
-                    >
-                      {unitOptions?.map((u) => (
-                        <li key={u}>
-                          <button
-                            className={cn({
-                              'font-bold': true,
-                              'hover:text-brand-800': selectedUnitAreaExtent !== u,
-                              'opacity-50': selectedUnitAreaExtent === u,
-                            })}
-                            type="button"
-                            onClick={() => setUnitAreaExtent(u)}
-                            disabled={selectedUnitAreaExtent === u}
-                          >
-                            {u}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <TooltipArrow className="fill-white" width={10} height={5} />
-                  </TooltipContent>
-                </TooltipPortal>
-              </Tooltip>
+                <PopoverContent>
+                  <ul className="max-h-56 space-y-2">
+                    {unitOptions?.map((u) => (
+                      <li key={u} className="last-of-type:pb-4">
+                        <button
+                          className={cn({
+                            'font-bold': true,
+                            'hover:text-brand-800': selectedUnitAreaExtent !== u,
+                            'opacity-50': selectedUnitAreaExtent === u,
+                          })}
+                          type="button"
+                          onClick={() => setUnitAreaExtent(u)}
+                          disabled={selectedUnitAreaExtent === u}
+                        >
+                          {u}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </PopoverContent>
+              </Popover>
             </span>{' '}
             in{' '}
             {/* <PopoverRoot modal={false} open={true}>
@@ -193,43 +177,35 @@ const HabitatExtent = () => {
                 </PopoverContent>
               </PopoverPortal>
             </PopoverRoot> */}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {year || defaultYear}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {years?.map((y) => (
-                      <li key={y}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': year !== y,
-                            'opacity-50': year === y,
-                          })}
-                          type="button"
-                          onClick={() => handleClick(y)}
-                          disabled={year === y}
-                        >
-                          {y || defaultYear}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {years?.map((y) => (
+                    <li key={y} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': year !== y,
+                          'opacity-50': year === y,
+                        })}
+                        type="button"
+                        onClick={() => handleClick(y)}
+                        disabled={year === y}
+                      >
+                        {y || defaultYear}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
             , this represents a linear coverage of{' '}
             <span className="font-bold">{mangroveCoastCoveragePercentage}%</span> of the
             <span className="notranslate font-bold">

@@ -155,7 +155,7 @@ const widgets = [
     slug: 'mangrove_fisheries',
     locationType: ['custom-area', 'wdpa', 'country'],
     categoryIds: ['all_datasets', 'distribution_and_change'],
-    layersIds: [''],
+    layersIds: ['mangrove_fisheries'],
   },
   {
     name: 'Coastal protection',

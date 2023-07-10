@@ -11,14 +11,8 @@ import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import Icon from 'components/icon';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
-import type { ContextualBasemapsId, MosaicId } from 'types/widget';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
+import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -26,7 +20,7 @@ const DateSelect = ({
   id,
   mosaic_id,
 }: {
-  id: ContextualBasemapsId | BasemapId;
+  id: ContextualBasemapsId | BasemapId | WidgetSlugType;
   mosaic_id: MosaicId;
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
@@ -44,8 +38,8 @@ const DateSelect = ({
   }, [dates]);
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <Popover>
+      <PopoverTrigger asChild>
         <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
           <p className="first-line:after">
             Period: <span className="text-sm font-bold">{selectedDate?.label}</span>
@@ -57,35 +51,27 @@ const DateSelect = ({
             })}
           />
         </div>
-      </TooltipTrigger>
+      </PopoverTrigger>
 
-      <TooltipPortal>
-        <TooltipContent
-          side="top"
-          align="center"
-          className="rounded-3xl bg-white p-4 text-black/85 shadow-soft"
-        >
-          <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-            {dates?.map((d) => (
-              <li key={d.value}>
-                <button
-                  className={cn({
-                    'font-bold': true,
-                    'hover:text-brand-800': true,
-                  })}
-                  type="button"
-                  onClick={() => setDate(d)}
-                >
-                  {d.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          <TooltipArrow className=" fill-white" width={10} height={5} />
-        </TooltipContent>
-      </TooltipPortal>
-    </Tooltip>
+      <PopoverContent>
+        <ul className="max-h-56 space-y-2">
+          {dates?.map((d) => (
+            <li key={d.value}>
+              <button
+                className={cn({
+                  'font-bold': true,
+                  'hover:text-brand-800': true,
+                })}
+                type="button"
+                onClick={() => setDate(d)}
+              >
+                {d.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </PopoverContent>
+    </Popover>
   );
 };
 

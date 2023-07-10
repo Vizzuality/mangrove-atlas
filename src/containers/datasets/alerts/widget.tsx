@@ -12,14 +12,8 @@ import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets
 import Chart from 'components/chart';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import SuggestedLayers from 'components/suggested-layers';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipArrow,
-  TooltipTrigger,
-  TooltipPortal,
-} from 'components/tooltip';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -78,8 +72,8 @@ const AlertsWidget = () => {
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedStartDate?.label}
                   <Icon
@@ -87,41 +81,33 @@ const AlertsWidget = () => {
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
                   />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {startDateOptions?.map((date) => (
-                      <li key={date?.label}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800':
-                              startDate?.value !== date?.value && date?.value < endDate?.value,
-                            'opacity-50': date?.value > endDate?.value,
-                          })}
-                          type="button"
-                          onClick={() => setStartDate(date)}
-                          disabled={date?.value > endDate?.value}
-                        >
-                          {date?.label || defaultStartDate?.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>{' '}
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {startDateOptions?.map((date) => (
+                    <li key={date?.label} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800':
+                            startDate?.value !== date?.value && date?.value < endDate?.value,
+                          'opacity-50': date?.value > endDate?.value,
+                        })}
+                        type="button"
+                        onClick={() => setStartDate(date)}
+                        disabled={date?.value > endDate?.value}
+                      >
+                        {date?.label || defaultStartDate?.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>{' '}
             and{' '}
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedEndDate?.label}
                   <Icon
@@ -129,40 +115,32 @@ const AlertsWidget = () => {
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
                   />
                 </span>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="bottom"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {endDateOptions?.map((date) => (
-                      <li key={date?.label}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800':
-                              endDate?.value !== date?.value && date?.value > startDate?.value,
-                            'opacity-50': date?.value < startDate?.value,
-                          })}
-                          type="button"
-                          onClick={() => {
-                            return setEndDate(date);
-                          }}
-                          disabled={date?.value < startDate?.value}
-                        >
-                          {date?.label || defaultEndDate?.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {endDateOptions?.map((date) => (
+                    <li key={date?.label} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800':
+                            endDate?.value !== date?.value && date?.value > startDate?.value,
+                          'opacity-50': date?.value < startDate?.value,
+                        })}
+                        type="button"
+                        onClick={() => {
+                          return setEndDate(date);
+                        }}
+                        disabled={date?.value < startDate?.value}
+                      >
+                        {date?.label || defaultEndDate?.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
             .
           </p>
           <Legend />
@@ -197,8 +175,8 @@ const AlertsWidget = () => {
           description="We recommend you to use Planet Satellite Imagery to validate the alerts."
         >
           {isActive && (
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
                   <p className="first-line:after">
                     Period: <span className="text-sm font-bold">{date?.label}</span>
@@ -211,36 +189,28 @@ const AlertsWidget = () => {
                     })}
                   />
                 </div>
-              </TooltipTrigger>
+              </PopoverTrigger>
 
-              <TooltipPortal>
-                <TooltipContent
-                  side="top"
-                  align="center"
-                  className="rounded-3xl bg-white  text-black/85 shadow-soft"
-                >
-                  <ul className={cn({ 'max-h-56 space-y-2 overflow-y-auto scrollbar-hide': true })}>
-                    {dates?.map((d) => (
-                      <li key={d.value}>
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': true,
-                          })}
-                          type="button"
-                          onClick={() => setDate(d)}
-                          // disabled={date?.value < value}
-                        >
-                          {d.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <TooltipArrow className=" fill-white" width={10} height={5} />
-                </TooltipContent>
-              </TooltipPortal>
-            </Tooltip>
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {dates?.map((d) => (
+                    <li key={d.value} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': true,
+                        })}
+                        type="button"
+                        onClick={() => setDate(d)}
+                        // disabled={date?.value < value}
+                      >
+                        {d.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>
           )}
         </SuggestedLayers>
       </div>

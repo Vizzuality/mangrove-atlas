@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
+import { mapSettingsAtom } from 'store/map-settings';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -33,6 +34,7 @@ type WidgetControlsType = Readonly<{
 
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const { showWidget } = useRecoilValue(drawingToolAtom);
+  const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const screenWidth = useScreenWidth();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
@@ -58,7 +60,8 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     >
       <Helper
         className={{
-          button: !showWidget ? '-bottom-3.5 -right-1.5' : 'hidden',
+          button:
+            !showWidget && !isMapSettingsOpen && HELPER_ID ? '-bottom-3.5 -right-1.5' : 'hidden',
           tooltip: 'w-28',
         }}
         tooltipPosition={{ top: -40, left: 42 }}
