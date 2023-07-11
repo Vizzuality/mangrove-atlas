@@ -124,7 +124,8 @@ export function useMangroveFisheries(
                         dominantBaseline="central"
                       >
                         <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
-                          {unit}
+                          {/* {unit} */}
+                          fisher/days
                         </tspan>
                       </text>
                     </g>

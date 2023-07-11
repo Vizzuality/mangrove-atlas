@@ -13,7 +13,6 @@ import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
 import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
-
 // contextual layers
 import AllenCoralReefWidget from 'containers/datasets/contextual-layers/allen-coral-reef';
 import AllenCoralReefLayer from 'containers/datasets/contextual-layers/allen-coral-reef/layer';
@@ -34,6 +33,7 @@ import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
+import FisheriesInfo from 'containers/datasets/fisheries/info.mdx';
 import FisheriesLayer from 'containers/datasets/fisheries/layer';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
@@ -155,6 +155,7 @@ export const INFO = {
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
   mangrove_flood_protection: FloodProtectionInfo,
+  mangrove_fisheries: FisheriesInfo,
 };
 
 export const DOWNLOAD = {
