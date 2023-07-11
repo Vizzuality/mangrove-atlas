@@ -17,8 +17,7 @@ export function useSource(): SourceProps {
 
 export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const period = useRecoilValue(floodPopulationPeriodAtom);
-  const { data } = useMangrovesFloodProtection({
-    period,
+  const { data } = useMangrovesFloodProtection(period, {
     indicator: 'population',
   });
 

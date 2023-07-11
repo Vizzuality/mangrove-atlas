@@ -71,8 +71,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     [indicator, setAreaPeriod, setPopulationPeriod, setStockPeriod]
   );
 
-  const { isFetched, isFetching, data } = useMangrovesFloodProtection({
-    period: selectedPeriod,
+  const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {
     indicator,
   });
 
@@ -98,7 +97,6 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
 
   const { periods, max, selectedValue, location, getFormattedValue } = data;
   const isWorldwide = location === 'Worldwide';
-
   const trianglePositionPerc = (selectedValue * 100) / max;
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
   const value = getFormattedValue(selectedValue, indicator);
@@ -124,6 +122,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     }
     return background;
   };
+
   return (
     <div className={`${WIDGET_CARD_WRAPPER_STYLE} relative`}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
