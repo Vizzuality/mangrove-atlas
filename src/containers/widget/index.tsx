@@ -11,6 +11,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import Helper from 'containers/guide/helper';
 import { useWidgets } from 'containers/widgets/hooks';
 
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
@@ -24,10 +25,11 @@ type WidgetLayoutProps = {
   children: ChildrenType | null;
   className?: string;
   contextualLayersIds?: string[];
+  applicability?: string;
 };
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
-  const { children, title, id, className } = props;
+  const { children, title, id, className, applicability } = props;
   const { showWidget } = useRecoilValue(drawingToolAtom);
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
@@ -65,7 +67,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
         exit="expanded"
         transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         className={cn({
-          'md:h-fit-content group ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
+          'md:h-fit-content z-2 group ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
             true,
           [className]: !!className,
         })}
@@ -103,6 +105,26 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
           >
             {children}
           </div>
+          <p
+            className={cn({
+              'text-center text-sm text-black/85': true,
+              hidden: widgetsCollapsed[id],
+              block: !widgetsCollapsed[id],
+            })}
+          >
+            <span className="font-normal">Data applicability:</span>{' '}
+            <span className="font-light">{applicability}.</span>{' '}
+            <Dialog>
+              <DialogTrigger>
+                <div className="flex justify-center text-brand-800 underline">Learn more</div>
+              </DialogTrigger>
+              <DialogContent className="scroll-y top-24 rounded-3xl">
+                <h2>Data applicability</h2>
+                <p>info coming soon</p>
+                <DialogClose />
+              </DialogContent>
+            </Dialog>
+          </p>
         </div>
       </motion.div>
     </AnimatePresence>
