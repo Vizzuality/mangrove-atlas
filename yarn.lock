@@ -1241,6 +1241,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@playwright/test@npm:^1.35.1":
+  version: 1.35.1
+  resolution: "@playwright/test@npm:1.35.1"
+  dependencies:
+    "@types/node": "*"
+    fsevents: 2.3.2
+    playwright-core: 1.35.1
+  dependenciesMeta:
+    fsevents:
+      optional: true
+  bin:
+    playwright: cli.js
+  checksum: 3509d2f2c7397f9b0d4f49088cab8625f17d186f7e9b3389ddebf7c52ee8aae6407eab48f66b300b7bf6a33f6e3533fd5951e72bfdb001b68838af98596d5a53
+  languageName: node
+  linkType: hard
+
 "@probe.gl/env@npm:3.6.0, @probe.gl/env@npm:^3.5.0":
   version: 3.6.0
   resolution: "@probe.gl/env@npm:3.6.0"
@@ -6117,7 +6133,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@npm:~2.3.2":
+"fsevents@npm:2.3.2, fsevents@npm:~2.3.2":
   version: 2.3.2
   resolution: "fsevents@npm:2.3.2"
   dependencies:
@@ -6127,7 +6143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
+"fsevents@patch:fsevents@2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
@@ -7953,6 +7969,7 @@ __metadata:
     "@mdx-js/react": 2.3.0
     "@next/font": ^13.3.0
     "@next/mdx": 13.2.4
+    "@playwright/test": ^1.35.1
     "@radix-ui/react-accordion": ^1.1.1
     "@radix-ui/react-checkbox": ^1.0.4
     "@radix-ui/react-collapsible": ^1.0.2
@@ -9523,6 +9540,15 @@ __metadata:
   version: 2.3.0
   resolution: "pify@npm:2.3.0"
   checksum: 9503aaeaf4577acc58642ad1d25c45c6d90288596238fb68f82811c08104c800e5a7870398e9f015d82b44ecbcbef3dc3d4251a1cbb582f6e5959fe09884b2ba
+  languageName: node
+  linkType: hard
+
+"playwright-core@npm:1.35.1":
+  version: 1.35.1
+  resolution: "playwright-core@npm:1.35.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 179abc0051f00474e528935b507fa8cedc986b2803b020d7679878ba28cdd7036ad5a779792aad2ad281f8dc625eb1d2fb77663cb8de0d20c7ffbda7c18febdd
   languageName: node
   linkType: hard
 
