@@ -115,10 +115,10 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth < breakpoints.md && (
         <div>
-          {widgets.map(({ slug, name }) => {
+          {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
-              <WidgetWrapper key={slug} title={name} id={slug}>
+              <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
                 {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
             );
@@ -128,13 +128,14 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth >= breakpoints.md && (
         <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
-          {widgets.map(({ slug, name }) => {
+          {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper
                 key={slug}
                 title={name}
                 id={slug}
+                applicability={applicability}
                 className={cn({
                   'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
                     true,

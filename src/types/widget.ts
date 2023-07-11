@@ -8,6 +8,7 @@ export type WidgetTypes = {
   name: string;
   slug: WidgetSlugType;
   locationType: string[];
+  applicability?: string;
   categoryIds: string[];
   layersIds?: string[];
   contextualLayersIds?: string[];
