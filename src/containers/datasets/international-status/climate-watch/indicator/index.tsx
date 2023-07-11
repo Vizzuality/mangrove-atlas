@@ -10,7 +10,7 @@ import {
 type IndicatorTypes = {
   label: string;
   value: string;
-  check: boolean;
+  check: 'Yes' | 'No';
   info: string;
 };
 
@@ -43,7 +43,9 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
     </div>
 
     {value && <p>{value}</p>}
-    {!value && <Icon icon={check ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" />}
+    {!!check && (
+      <Icon icon={check?.toLowerCase() === 'yes' ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" />
+    )}
   </div>
 );
 

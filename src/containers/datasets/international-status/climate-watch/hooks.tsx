@@ -40,19 +40,22 @@ export function useClimateWatchNDCS(
     }).then((response: AxiosResponse['data']) => response.data);
   return useQuery(['climate-watch-ndcs', params, iso, indicators], fetchClimateWatchNDCS, {
     select: ({ indicators }: { indicators: Indicator[] }) => {
-      return {
-        ...indicators,
-        emissions: indicators?.find(({ slug }) => slug === 'M_TarA4'),
-        emisssions_perc: indicators?.find(({ slug }) => slug === 'M_TarB1'),
-
-        mitigation: indicators?.find(({ slug }) => slug === 'mitigation_contribution_type'),
-
-        type_of_mitigation: indicators?.find(({ slug }) => slug === 'mitigation_contribution_type'),
-        adaptation: indicators?.find(({ slug }) => slug === 'adaptation'),
-        base_years: indicators?.find(({ slug }) => slug === 'base_years'),
-        target_years: indicators?.find(({ slug }) => slug === 'M_TarYr'),
-        updated_status: indicators?.find(({ slug }) => slug === 'updated_status'),
-      };
+      return indicators?.reduce((acc, value) => {
+        console.log(value);
+        return {
+          ...acc,
+          iso,
+          [value.slug]: {
+            info: `${value?.name}. ${!!value?.description ? value?.description : ''}`,
+            [iso]: value.locations[iso].find(
+              ({ document_slug }) =>
+                document_slug === 'second_ndc' ||
+                document_slug === 'revised_first_ndc' ||
+                document_slug === 'first_ndc'
+            ),
+          },
+        };
+      }, {});
     },
     ...queryOptions,
   });
@@ -90,7 +93,10 @@ export function useClimateWatchNDCSCountriesDocs(
     select: (data) => {
       return {
         ...data,
-        hasNDC: data?.data?.[iso]?.find(({ slug }) => slug === 'first_ndc').is_ndc,
+        update: data?.data?.[iso]?.find(
+          ({ slug }) =>
+            slug === 'second_ndc' || slug === 'revised_first_ndc' || slug === 'first_ndc'
+        ),
       };
     },
     ...queryOptions,
