@@ -37,10 +37,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# Test with Cypress
-/cypress/screenshots
-/cypress/videos
-
 # Yarn
 .yarn/*
 !.yarn/releases
