@@ -8,7 +8,7 @@ const widgets = [
     categoryIds: [],
   },
   {
-    name: 'Allen coral reef',
+    name: 'Allen coral atlas',
     slug: 'mangrove_allen_coral_reef',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers'],

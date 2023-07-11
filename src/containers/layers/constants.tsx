@@ -96,7 +96,7 @@ export const LAYERS = [
     id: 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3',
   },
   {
-    name: 'Allen coral reef',
+    name: 'Allen coral atlas',
     id: 'mangrove_allen_coral_reef',
   },
   {

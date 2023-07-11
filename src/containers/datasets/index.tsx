@@ -15,6 +15,7 @@ import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potenti
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
 // contextual layers
 import AllenCoralReefWidget from 'containers/datasets/contextual-layers/allen-coral-reef';
+import AllenCoralReefInfo from 'containers/datasets/contextual-layers/allen-coral-reef/info.mdx';
 import AllenCoralReefLayer from 'containers/datasets/contextual-layers/allen-coral-reef/layer';
 import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
@@ -156,6 +157,7 @@ export const INFO = {
   mangrove_national_dashboard: NationalDashboardInfo,
   mangrove_flood_protection: FloodProtectionInfo,
   mangrove_fisheries: FisheriesInfo,
+  mangrove_allen_coral_reef: AllenCoralReefInfo,
 };
 
 export const DOWNLOAD = {
