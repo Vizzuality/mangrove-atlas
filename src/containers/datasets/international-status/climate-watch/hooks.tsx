@@ -10,13 +10,24 @@ import type { UseParamsOptions } from 'types/widget';
 
 import { ClimateWatchAPI } from 'services/api';
 
-import type { DataResponse, DataResponseDocuments, Indicator, IndicatorsParams } from './types';
+import type {
+  DataResponse,
+  DataResponseDocuments,
+  Indicator,
+  IndicatorsParams,
+  Data,
+} from './types';
 
+type Value = {
+  description: string;
+  slug: string;
+  locations: Location[];
+};
 // widget data
 export function useClimateWatchNDCS(
   indicators: IndicatorsParams,
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Indicator[]>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
   const {
     query: { params: queryParams },
@@ -39,20 +50,22 @@ export function useClimateWatchNDCS(
       ...queryOptions,
     }).then((response: AxiosResponse['data']) => response.data);
   return useQuery(['climate-watch-ndcs', params, iso, indicators], fetchClimateWatchNDCS, {
-    select: ({ indicators }: { indicators: Indicator[] }) => {
-      return {
-        ...indicators,
-        emissions: indicators?.find(({ slug }) => slug === 'M_TarA4'),
-        emisssions_perc: indicators?.find(({ slug }) => slug === 'M_TarB1'),
-
-        mitigation: indicators?.find(({ slug }) => slug === 'mitigation_contribution_type'),
-
-        type_of_mitigation: indicators?.find(({ slug }) => slug === 'mitigation_contribution_type'),
-        adaptation: indicators?.find(({ slug }) => slug === 'adaptation'),
-        base_years: indicators?.find(({ slug }) => slug === 'base_years'),
-        target_years: indicators?.find(({ slug }) => slug === 'M_TarYr'),
-        updated_status: indicators?.find(({ slug }) => slug === 'updated_status'),
-      };
+    select: ({ indicators }) => {
+      return indicators?.reduce((acc, value) => {
+        return {
+          ...acc,
+          iso,
+          [value.slug]: {
+            info: !!value?.description ? value?.description : value?.name,
+            [iso]: value.locations[iso].find(
+              ({ document_slug }) =>
+                document_slug === 'second_ndc' ||
+                document_slug === 'revised_first_ndc' ||
+                document_slug === 'first_ndc'
+            ),
+          },
+        };
+      }, {});
     },
     ...queryOptions,
   });
@@ -60,11 +73,7 @@ export function useClimateWatchNDCS(
 
 export function useClimateWatchNDCSCountriesDocs(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<
-    DataResponseDocuments,
-    Error,
-    DataResponseDocuments & { hasNDC: boolean }
-  >
+  queryOptions?: UseQueryOptions<DataResponseDocuments, Error>
 ) {
   const {
     query: { params: queryParams },
@@ -90,7 +99,10 @@ export function useClimateWatchNDCSCountriesDocs(
     select: (data) => {
       return {
         ...data,
-        hasNDC: data?.data?.[iso]?.find(({ slug }) => slug === 'first_ndc').is_ndc,
+        update: data?.data?.[iso]?.find(
+          ({ slug }) =>
+            slug === 'second_ndc' || slug === 'revised_first_ndc' || slug === 'first_ndc'
+        ),
       };
     },
     ...queryOptions,

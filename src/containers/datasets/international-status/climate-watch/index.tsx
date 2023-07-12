@@ -5,7 +5,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets
 
 import { useClimateWatchNDCS, useClimateWatchNDCSCountriesDocs } from './hooks';
 import Indicator from './indicator';
-import { IndicatorsParams } from './types';
 const ClimateWatchNationalDashboard = () => {
   const { isFetched, isFetching, data } = useClimateWatchNDCS({
     indicators: [
@@ -21,58 +20,65 @@ const ClimateWatchNationalDashboard = () => {
     ],
   });
 
+  const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs();
+
+  const update = dataDocuments?.update;
   const Indicators = [
     {
       label: 'Emissions reduction <sup>(1)</sup>',
-      value: 'a maximum of 42.5 MtCO2e by 2030',
+      value: data?.M_TarA1?.[data.iso].value || data?.M_TarA5?.[data.iso].value || '-',
       check: false,
-      info: 'info',
+      info:
+        data?.M_TarA1?.info ||
+        data?.M_TarA5?.info ||
+        'emissions reduction in absolute value (compared to base year or to baseline scenario)',
     },
     {
       label: 'Emissions reduction <sup>(1)</sup> (%)',
-      value: 'at least -55%',
+      value: data?.M_TarA2?.[data.iso].value || data?.M_TarB1?.[data.iso].value || '-',
       check: false,
-      info: 'info',
+      info:
+        data?.M_TarA2?.info ||
+        data?.M_TarB1?.info ||
+        '% of emissions reduction (compared to base year or to baseline scenario)',
     },
     {
       label: 'Mitigation',
-      value: null,
-      check: true,
-      info: 'info',
+      value: false,
+      check: data?.mitigation_contribution_type?.[data.iso].value,
+      info: data?.mitigation_contribution_type?.info || 'NDC contains Mitigation?',
     },
     {
       label: 'Type of mitigation pledge',
-      value: 'a GHG target and actions',
+      value: data?.mitigation_contribution_type?.[data.iso].value,
       check: false,
-      info: 'info',
+      info: 'Type of mitigation pledge',
     },
     {
       label: 'Adaptation',
-      value: null,
-      check: false,
-      info: 'info',
+      value: false,
+      check: data?.adaptation?.[data.iso]?.value,
+      info: 'NDC contains Adaptation?',
     },
     {
       label: 'Base year/s',
-      value: '2025 and 2030',
+      value: data?.M_TarA4?.[data.iso]?.value,
       check: false,
-      info: 'info',
+      info: data?.M_TarA4?.info || 'NDC base year/s',
     },
     {
       label: 'Target year/s',
-      value: '2030',
+      value: data?.M_TarYr?.[data.iso].value || '-',
       check: false,
-      info: 'info',
+      info: data?.M_TarYr?.info || '',
     },
     {
       label: 'Update status',
-      value: 'first NDC',
+      value: update?.long_name,
       check: false,
-      info: 'info',
+      info: update?.description,
     },
   ];
-
-  const { data: data2 } = useClimateWatchNDCSCountriesDocs();
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -93,7 +99,7 @@ const ClimateWatchNationalDashboard = () => {
               </Link>
             </p>
           </div>
-          <p>Lorem ipsum dolor sit amet consectetur. Lectus et quam tempus morbi.</p>
+          {data.widgetIntroduction && <p>{data.widgetIntroduction}</p>}
           <div className="space-y-5">
             {Indicators.map(({ label, value, info, check }, index) => (
               <Indicator key={label} label={label} value={value} info={info} check={check} />

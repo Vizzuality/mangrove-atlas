@@ -10,7 +10,7 @@ import {
 type IndicatorTypes = {
   label: string;
   value: string;
-  check: boolean;
+  check: 'Yes' | 'No';
   info: string;
 };
 
@@ -32,7 +32,7 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
             <TooltipContent
               side="bottom"
               align="center"
-              className="rounded-3xl bg-white p-4 text-black/85 shadow-soft"
+              className="rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
             >
               {info}
               <TooltipArrow className=" fill-white" width={10} height={5} />
@@ -43,7 +43,9 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
     </div>
 
     {value && <p>{value}</p>}
-    {!value && <Icon icon={check ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" />}
+    {!!check && (
+      <Icon icon={check?.toLowerCase() === 'yes' ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" />
+    )}
   </div>
 );
 
