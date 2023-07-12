@@ -2,7 +2,7 @@ import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 const GlobalTidalWetlandChangeContent = () => (
   <div className={WIDGET_CARD_WRAPPER_STYLE}>
-    <p>This layer contains maps of the global extent of tidal wetlands and their change..</p>
+    <p>This layer contains maps of the global extent of tidal wetlands and their change.</p>
     <div className="flex space-x-6">
       <div className="flex">
         <div className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md bg-[#B7E6A5] text-sm" />

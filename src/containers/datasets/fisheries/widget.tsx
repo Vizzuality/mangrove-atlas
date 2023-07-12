@@ -6,6 +6,8 @@ import { useMangroveFisheries } from './hooks';
 const Fisheries = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
+  if (!data || !data.length) return null;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />

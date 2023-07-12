@@ -58,7 +58,9 @@ const PotentialBenefitsToFisheries = () => {
                 </div>
                 <div className="flex flex-col text-sm">
                   <span className="first-letter:uppercase">{indicator}</span>
-                  <span className="font-bold">{!!value ? numberFormat(value) : '-'}</span>
+                  <span className="font-bold">
+                    {!!value ? numberFormat(Math.round(value)) : '-'}
+                  </span>
                 </div>
               </div>
             ))}{' '}

@@ -141,98 +141,48 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
               </SwitchWrapper>
             </div>
           </header>
-          {(indicator === 'population' || indicator === 'stock') && (
-            <p className={WIDGET_SENTENCE_STYLE}>
-              In <span className="font-bold first-letter:uppercase"> {data.location}</span>,
-              mangroves protect against <span className="font-bold">intense</span> storms that occur{' '}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                    {LABELS[selectedPeriod].large}
-                    <Icon
-                      icon={ARROW_SVG}
-                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                    />
-                  </span>
-                </PopoverTrigger>
-
-                <PopoverContent>
-                  <ul className="max-h-56 space-y-2">
-                    {periods?.map((period) => (
-                      <li key={period} className="last-of-type:pb-4">
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': period !== selectedPeriod,
-                            'opacity-50': period === selectedPeriod,
-                          })}
-                          type="button"
-                          onClick={() => handlePeriod(period)}
-                          disabled={period === selectedPeriod}
-                        >
-                          {LABELS[period].short}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </PopoverContent>
-              </Popover>{' '}
-              {indicator === 'population' && (
-                <span>
-                  to <span className="font-bold">{value}</span> individuals
+          <p className={WIDGET_SENTENCE_STYLE}>
+            In <span className="font-bold first-letter:uppercase"> {data.location}</span>, mangroves
+            are expected to protect{' '}
+            <span className="font-bold">
+              {' '}
+              {value} km<sup>2</sup>
+            </span>{' '}
+            during a{' '}
+            <Popover>
+              <PopoverTrigger asChild>
+                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  {LABELS[selectedPeriod].short}
+                  <Icon
+                    icon={ARROW_SVG}
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                  />
                 </span>
-              )}
-              {indicator === 'stock' && (
-                <span>
-                  built capital worth <span className="font-bold">$ {value}</span>.
-                </span>
-              )}
-            </p>
-          )}
-          {indicator === 'area' && (
-            <p>
-              In <span className="font-bold first-letter:uppercase"> {data.location}</span>,
-              mangroves are expected to protect{' '}
-              <span className="font-bold">
-                {' '}
-                {value} km<sup>2</sup>
-              </span>{' '}
-              during a{' '}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                    {LABELS[selectedPeriod].area}
-                    <Icon
-                      icon={ARROW_SVG}
-                      className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                    />
-                  </span>
-                </PopoverTrigger>
+              </PopoverTrigger>
 
-                <PopoverContent>
-                  <ul className="max-h-56 space-y-2">
-                    {periods?.map((period) => (
-                      <li key={period} className="last-of-type:pb-4">
-                        <button
-                          className={cn({
-                            'font-bold': true,
-                            'hover:text-brand-800': period !== selectedPeriod,
-                            'opacity-50': period === selectedPeriod,
-                          })}
-                          type="button"
-                          onClick={() => handlePeriod(period)}
-                          disabled={period === selectedPeriod}
-                        >
-                          {LABELS[period].area}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </PopoverContent>
-              </Popover>{' '}
-              .
-            </p>
-          )}
+              <PopoverContent>
+                <ul className="max-h-56 space-y-2">
+                  {periods?.map((period) => (
+                    <li key={period} className="last-of-type:pb-4">
+                      <button
+                        className={cn({
+                          'font-bold': true,
+                          'hover:text-brand-800': period !== selectedPeriod,
+                          'opacity-50': period === selectedPeriod,
+                        })}
+                        type="button"
+                        onClick={() => handlePeriod(period)}
+                        disabled={period === selectedPeriod}
+                      >
+                        {LABELS[period].large}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </PopoverContent>
+            </Popover>{' '}
+            .
+          </p>
           <div className="flex flex-1 flex-col items-center space-y-2">
             <FloodProtectionChart data={data.config} />
           </div>

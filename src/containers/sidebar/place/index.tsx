@@ -215,7 +215,7 @@ const Place = () => {
               icon={AREA_SVG}
               className={cn({
                 'h-9 w-9 rounded-full p-1': true,
-                'bg-brand-800 fill-current text-white': placeSection === 'area',
+                'cursor-not-allowed bg-brand-800 fill-current text-white': placeSection === 'area',
                 'fill-current text-brand-800': placeSection !== 'area',
               })}
             />
