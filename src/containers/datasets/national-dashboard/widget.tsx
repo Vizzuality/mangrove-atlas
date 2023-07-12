@@ -32,11 +32,11 @@ const NationalDashboard = () => {
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
-        <div className="space-y-4">
+        <div className="space-y-2">
           <section>
             {data?.data?.map(({ indicator, sources }, index) => (
               <div key={indicator}>
-                <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3>
+                {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
                 {sources.map(({ source, years, unit, data_source }) => {
                   const dataSource = data_source.filter(
                     (d) => d.year === years[years.length - 1]
@@ -44,16 +44,24 @@ const NationalDashboard = () => {
                   const color = colorsScale.filter((c, i) => i === index);
 
                   return (
-                    <IndicatorSource
-                      id={source}
-                      key={source}
-                      source={source}
-                      years={years}
-                      unit={unit}
-                      dataSource={dataSource}
-                      color={color}
-                      location={data.location}
-                    />
+                    <>
+                      <div className="grid grid-cols-4 text-sm font-normal">
+                        <h5>Source</h5>
+                        <h5 className="ml-2">Year</h5>
+                        <h5 className="ml-2">Extent</h5>
+                      </div>
+
+                      <IndicatorSource
+                        id={source}
+                        key={source}
+                        source={source}
+                        years={years}
+                        unit={unit}
+                        dataSource={dataSource}
+                        color={color}
+                        location={data.location}
+                      />
+                    </>
                   );
                 })}
               </div>

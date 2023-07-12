@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, useState } from 'react';
+import { createRef, useLayoutEffect, useState } from 'react';
 
 import type { Data } from 'containers/datasets/restoration/overview/types';
 import Legend from 'containers/legend';
@@ -12,14 +12,16 @@ import MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS from './constants';
 const RestorationOverviewChart = ({
   restoration_potential_score, // restorationData?.restoration_potential_score
 }: Partial<Data>) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = createRef<HTMLDivElement>();
   const [lineChartWidth, setLineChartWidth] = useState(0);
 
   const trianglePosition = (lineChartWidth * restoration_potential_score) / 100 - 7; // substract icon size
 
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
-    setLineChartWidth(ref?.current?.offsetWidth);
+    if (ref && ref.current && ref.current.offsetWidth) {
+      setLineChartWidth(ref?.current?.offsetWidth);
+    }
   }, [ref]);
 
   return (

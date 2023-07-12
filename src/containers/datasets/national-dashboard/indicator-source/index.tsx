@@ -81,64 +81,70 @@ const IndicatorSource = ({
   );
 
   return (
-    <div key={source} className="flex flex-1 items-start justify-between space-x-2 py-4">
-      {
-        <span
-          style={{ backgroundColor: color }}
-          className="mt-1 w-2 shrink-0 rounded-md pt-4 first-letter:h-4"
-        />
-      }
-      <span className="max-w-[180px]">{source}</span>
-      {years.length === 1 && <span>{years[0]}</span>}
-      {years.length < 1 && (
-        <Popover>
-          <PopoverTrigger asChild>
-            <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
-              {'year'}
-              <Icon
-                icon={ARROW_SVG}
-                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
-              />
-            </span>
-          </PopoverTrigger>
+    <div key={source} className="grid grid-cols-4 justify-between space-x-2 py-4">
+      <div className="col-span-1 flex space-x-2">
+        <div style={{ backgroundColor: color }} className="mt-1 h-4 w-2 shrink-0 rounded-md pt-4" />
 
-          <PopoverContent>
-            <ul className="max-h-56 space-y-2">
-              {years?.map((u) => (
-                <li key={u} className="last-of-type:pb-4">
-                  <button
-                    className={cn({
-                      'font-bold': true,
-                    })}
-                    type="button"
-                    // onClick={() => setYear(u)}
-                    // disabled={selectedYear === u}
-                  >
-                    {u}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </PopoverContent>
-        </Popover>
+        <span className="max-w-[180px]">{source}</span>
+      </div>
+      <div className="col-span-1 flex">
+        {years.length === 1 && <span>{years[0]}</span>}
+        {years.length < 1 && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+                {'year'}
+                <Icon
+                  icon={ARROW_SVG}
+                  className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                />
+              </span>
+            </PopoverTrigger>
+
+            <PopoverContent>
+              <ul className="max-h-56 space-y-2">
+                {years?.map((u) => (
+                  <li key={u} className="last-of-type:pb-4">
+                    <button
+                      className={cn({
+                        'font-bold': true,
+                      })}
+                      type="button"
+                      // onClick={() => setYear(u)}
+                      // disabled={selectedYear === u}
+                    >
+                      {u}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </PopoverContent>
+          </Popover>
+        )}
+      </div>
+      {dataSource?.value && (
+        <span>
+          {dataSource.value}
+          {unit && <span> {LABEL_UNITS[unit] || unit}</span>}
+        </span>
       )}
-      {dataSource?.value && <span>{dataSource.value}</span>}
-      {unit && <span>{LABEL_UNITS[unit] || unit}</span>}
-      <WidgetControls
-        content={{
-          download: dataSource.download_link,
-          info: dataSource.layer_info,
-        }}
-      />
+      <div className="col-span-1 flex space-x-2">
+        <WidgetControls
+          content={{
+            download: dataSource.download_link,
+            info: dataSource.layer_info,
+          }}
+        />
 
-      <SwitchWrapper id="mangrove_national_dashboard_layer">
-        <SwitchRoot
-          onClick={() => handleClick('mangrove_national_dashboard_layer')}
-          checked={isActive}
-        >
-          <SwitchThumb />
-        </SwitchRoot>
-      </SwitchWrapper>
+        <SwitchWrapper id="mangrove_national_dashboard_layer">
+          <SwitchRoot
+            onClick={() => handleClick('mangrove_national_dashboard_layer')}
+            checked={isActive}
+          >
+            <SwitchThumb />
+          </SwitchRoot>
+        </SwitchWrapper>
+      </div>
     </div>
   );
 };

@@ -105,26 +105,28 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
           >
             {children}
           </div>
-          <p
-            className={cn({
-              'text-center text-sm text-black/85': true,
-              hidden: widgetsCollapsed[id],
-              block: !widgetsCollapsed[id],
-            })}
-          >
-            <span className="font-normal">Data applicability:</span>{' '}
-            <span className="font-light">{applicability}.</span>{' '}
-            <Dialog>
-              <DialogTrigger>
-                <div className="flex justify-center text-brand-800 underline">Learn more</div>
-              </DialogTrigger>
-              <DialogContent className="scroll-y top-24 rounded-3xl">
-                <h2>Data applicability</h2>
-                <p>info coming soon</p>
-                <DialogClose />
-              </DialogContent>
-            </Dialog>
-          </p>
+          {applicability && (
+            <p
+              className={cn({
+                'text-center text-sm text-black/85': true,
+                hidden: widgetsCollapsed[id],
+                block: !widgetsCollapsed[id],
+              })}
+            >
+              <span className="font-normal">Data applicability:</span>{' '}
+              <span className="font-light">{applicability}.</span>{' '}
+              <Dialog>
+                <DialogTrigger>
+                  <div className="flex justify-center text-brand-800 underline">Learn more</div>
+                </DialogTrigger>
+                <DialogContent className="scroll-y top-24 rounded-3xl">
+                  <h2>Data applicability</h2>
+                  <p>info coming soon</p>
+                  <DialogClose />
+                </DialogContent>
+              </Dialog>
+            </p>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>

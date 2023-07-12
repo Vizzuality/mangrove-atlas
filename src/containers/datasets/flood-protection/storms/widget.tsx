@@ -96,10 +96,9 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
 
   if (!data || !data?.data?.length) return null;
 
-  const { periods, max, min, selectedValue, location, getFormattedValue } = data;
+  const { periods, max, selectedValue, location, getFormattedValue } = data;
   const isWorldwide = location === 'Worldwide';
-  const maxValue = getFormattedValue(max, indicator);
-  const minValue = getFormattedValue(min, indicator);
+
   const trianglePositionPerc = (selectedValue * 100) / max;
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
   const value = getFormattedValue(selectedValue, indicator);

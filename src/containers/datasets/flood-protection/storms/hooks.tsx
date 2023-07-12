@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { numberFormat, formatMillion } from 'lib/format';
+import { numberFormat, formatMillion, formatAxis } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
@@ -43,7 +43,7 @@ const getColor = (data, selectedPeriod, indicator, metadata) => {
 const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId) => {
   if (indicator === 'population') {
     const roundedValue = Math.round(value);
-    return roundedValue > 1000000 ? formatMillion(roundedValue) : roundedValue;
+    return roundedValue > 1000000 ? formatMillion(roundedValue) : formatAxis(roundedValue);
   }
   return value > 1000000 ? formatMillion(value) : value % 2 === 0 ? value : numberFormat(value);
 };

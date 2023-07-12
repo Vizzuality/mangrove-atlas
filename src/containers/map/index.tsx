@@ -67,7 +67,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-
   const { data: locations } = useLocations();
 
   const [
