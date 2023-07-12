@@ -14,7 +14,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
     () =>
       [
         {
-          id,
+          id: `${id}-layer`,
           type: 'fill',
           source: 'mangrove_restoration',
           'source-layer': 'MOW_Global_Mangrove_Restoration_202212',

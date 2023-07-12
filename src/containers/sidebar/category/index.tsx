@@ -58,7 +58,7 @@ const Category = () => {
 
       closeMenu();
     },
-    [setDrawingToolState, closeMenu, mapSettings, setCategory, setMapSettings]
+    [setDrawingToolState, closeMenu, mapSettings, setMapSettings, setCategory]
   );
 
   return (

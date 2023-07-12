@@ -59,7 +59,7 @@ const DateSelect = ({
       <PopoverContent>
         <ul className="max-h-56 space-y-2">
           {orderedDates?.map((d) => (
-            <li key={d.value} className="last-of-type:pb-4">
+            <li key={d.value} className="whitespace-nowrap last-of-type:pb-4">
               <button
                 className="font-bold hover:text-brand-800"
                 type="button"

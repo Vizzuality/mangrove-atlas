@@ -242,7 +242,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     );
 
     const restorationFeature = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration-layer'
+      ({ layer }) => layer.id === 'mangrove-restoration-layer'
     );
 
     if (locationFeature && !restorationFeature) {

@@ -16,3 +16,12 @@ test('get started link', async ({ page }) => {
   // Expects the URL to contain intro.
   await expect(page).toHaveURL(/.*intro/);
 });
+
+test('activate layer', async ({ page }) => {
+  await page.goto('/');
+  await page.getByTestId('mangrove_extent').click();
+
+  const layerSwitch = page.getByTestId('mangrove_extent');
+  await expect(layerSwitch).toHaveAttribute('data-state', 'checked');
+  await expect(page).toHaveURL(/.*?active=\[mangrove_extent\]/);
+});
