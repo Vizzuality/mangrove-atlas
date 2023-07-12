@@ -10,13 +10,24 @@ import type { UseParamsOptions } from 'types/widget';
 
 import { ClimateWatchAPI } from 'services/api';
 
-import type { DataResponse, DataResponseDocuments, Indicator, IndicatorsParams } from './types';
+import type {
+  DataResponse,
+  DataResponseDocuments,
+  Indicator,
+  IndicatorsParams,
+  Data,
+} from './types';
 
+type Value = {
+  description: string;
+  slug: string;
+  locations: Location[];
+};
 // widget data
 export function useClimateWatchNDCS(
   indicators: IndicatorsParams,
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Indicator[]>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
   const {
     query: { params: queryParams },
@@ -39,14 +50,13 @@ export function useClimateWatchNDCS(
       ...queryOptions,
     }).then((response: AxiosResponse['data']) => response.data);
   return useQuery(['climate-watch-ndcs', params, iso, indicators], fetchClimateWatchNDCS, {
-    select: ({ indicators }: { indicators: Indicator[] }) => {
+    select: ({ indicators }) => {
       return indicators?.reduce((acc, value) => {
-        console.log(value);
         return {
           ...acc,
           iso,
           [value.slug]: {
-            info: `${value?.name}. ${!!value?.description ? value?.description : ''}`,
+            info: !!value?.description ? value?.description : value?.name,
             [iso]: value.locations[iso].find(
               ({ document_slug }) =>
                 document_slug === 'second_ndc' ||
@@ -63,11 +73,7 @@ export function useClimateWatchNDCS(
 
 export function useClimateWatchNDCSCountriesDocs(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<
-    DataResponseDocuments,
-    Error,
-    DataResponseDocuments & { hasNDC: boolean }
-  >
+  queryOptions?: UseQueryOptions<DataResponseDocuments, Error>
 ) {
   const {
     query: { params: queryParams },

@@ -5,7 +5,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets
 
 import { useClimateWatchNDCS, useClimateWatchNDCSCountriesDocs } from './hooks';
 import Indicator from './indicator';
-import { IndicatorsParams } from './types';
 const ClimateWatchNationalDashboard = () => {
   const { isFetched, isFetching, data } = useClimateWatchNDCS({
     indicators: [
@@ -21,11 +20,9 @@ const ClimateWatchNationalDashboard = () => {
     ],
   });
 
-  const {
-    data: { update },
-  } = useClimateWatchNDCSCountriesDocs();
-  console.log(data, update);
-  console.log(data);
+  const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs();
+
+  const update = dataDocuments?.update;
   const Indicators = [
     {
       label: 'Emissions reduction <sup>(1)</sup>',
@@ -77,9 +74,9 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Update status',
-      value: update.long_name,
+      value: update?.long_name,
       check: false,
-      info: update.description,
+      info: update?.description,
     },
   ];
 

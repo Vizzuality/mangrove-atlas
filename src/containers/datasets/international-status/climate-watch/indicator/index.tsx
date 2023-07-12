@@ -32,7 +32,7 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
             <TooltipContent
               side="bottom"
               align="center"
-              className="rounded-3xl bg-white p-4 text-black/85 shadow-soft"
+              className="rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
             >
               {info}
               <TooltipArrow className=" fill-white" width={10} height={5} />

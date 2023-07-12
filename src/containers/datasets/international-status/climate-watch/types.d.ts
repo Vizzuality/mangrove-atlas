@@ -19,14 +19,16 @@ export type Data = {
   year_frel: string;
   fow: number;
 };
+type Location = {
+  document_slug: 'revised_first_ndc' | 'second_ndc' | 'first_ndc';
+  group_index: number;
+  label_id: number;
+  value: 'Yes' | 'No';
+};
 
-type Indicator = {
-  category_ids: number[];
-  grouping_indicator: boolean;
-  id: number;
-  labels: {
-    [key: number]: value;
-  };
+export type Indicator = {
+  description: string;
+  locations: { [key: string]: Location[] };
 
   name: string;
   slug: string;
