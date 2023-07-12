@@ -1,3 +1,5 @@
+import { useMemo, useCallback } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { numberFormat, formatMillion, formatAxis } from 'lib/format';
@@ -33,7 +35,7 @@ const GRADIENTS_BY_INDICATOR = {
 };
 
 const getColor = (data, selectedPeriod, indicator, metadata) => {
-  const { min, max } = metadata;
+  const { min, max } = metadata.limits[selectedPeriod];
   const indicatorData = data.filter((d) => d.period === selectedPeriod)[0];
   const { value } = indicatorData;
   const colorScale = chroma.scale(GRADIENTS_BY_INDICATOR[indicator]).domain([min, max]);
@@ -46,25 +48,6 @@ const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId)
     return roundedValue > 1000000 ? formatMillion(roundedValue) : formatAxis(roundedValue);
   }
   return value > 1000000 ? formatMillion(value) : value % 2 === 0 ? value : numberFormat(value);
-};
-
-const getBars = (data, selectedPeriod, metadata, indicator) => {
-  const color = getColor(data, selectedPeriod, indicator, metadata);
-  return data.map((d) => ({
-    ...d,
-    barSize: 40,
-    fill: d.period === selectedPeriod ? color : '#E1E1E1',
-    isAnimationActive: false,
-    value: d.value,
-    period: LABELS[d.period].short,
-    color: d.period === selectedPeriod ? color : '#E1E1E1',
-    [LABELS[d.period]]: d.value,
-    showValue: true,
-    label: d.period,
-    labelFormatted: LABELS[d.period].short,
-    valueFormatted: getFormattedValue(d.value, indicator),
-    unit: UNITS_LABELS[metadata.unit],
-  }));
 };
 
 export function useMangrovesFloodProtection(
@@ -81,7 +64,29 @@ export function useMangrovesFloodProtection(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
-  const selectedPeriod = period || 'annual';
+  const selectedPeriod = useMemo(() => period || 'annual', [period]);
+
+  const getBars = useCallback(
+    (data, selectedPeriod, metadata, indicator) => {
+      const color = getColor(data, selectedPeriod, indicator, metadata);
+      return data.map((d) => ({
+        ...d,
+        barSize: 40,
+        fill: d.period === selectedPeriod ? color : '#E1E1E1',
+        isAnimationActive: false,
+        value: d.value,
+        period: LABELS[d.period].axis,
+        color: d.period === selectedPeriod ? color : '#E1E1E1',
+        [LABELS[d.period]]: d.value,
+        showValue: true,
+        label: d.period,
+        labelFormatted: LABELS[d.period].axis,
+        valueFormatted: getFormattedValue(d.value, indicator),
+        unit: UNITS_LABELS[metadata.unit],
+      }));
+    },
+    [selectedPeriod]
+  );
   const fetchMangrovesFloodProtection = () =>
     API.request({
       method: 'GET',

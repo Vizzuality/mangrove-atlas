@@ -65,7 +65,7 @@ const Category = () => {
     <div
       className={cn({
         'relative flex flex-col text-center': true,
-        'pointer-events-none opacity-50': isDrawingToolWidgetVisible,
+        'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
       })}
     >
       <div
@@ -79,15 +79,18 @@ const Category = () => {
       <div className="relative flex flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <DropdownMenu.Root open={isOpen}>
           <DropdownMenu.Trigger asChild>
-            <div
+            <button
+              type="button"
               className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
-              onMouseOver={openMenu}
+              onMouseOver={isDrawingToolWidgetVisible ? null : openMenu}
+              disabled={isDrawingToolWidgetVisible}
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
                 <div
                   key={id}
                   className={cn({
                     'flex cursor-pointer items-center justify-center': true,
+                    'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
                   })}
                 >
                   <Icon
@@ -100,7 +103,7 @@ const Category = () => {
                   />
                 </div>
               ))}
-            </div>
+            </button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content

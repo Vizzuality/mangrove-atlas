@@ -116,7 +116,7 @@ export function useMangroveFisheries(
                         dominantBaseline="central"
                       >
                         <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
-                          {median}
+                          {formatAxis(median)}
                         </tspan>
                       </text>
                       <text
@@ -128,7 +128,7 @@ export function useMangroveFisheries(
                       >
                         <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="14">
                           {/* {unit} */}
-                          fisher/days
+                          fisher days
                         </tspan>
                       </text>
                     </g>
