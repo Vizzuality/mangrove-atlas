@@ -1,10 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { SpeciesLocationState } from 'store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
+import { useLocation } from 'containers/datasets/locations/hooks';
+import { LocationTypes } from 'containers/datasets/locations/types';
 import { getWidgetActive } from 'containers/widget/selector';
 
 import {
@@ -24,6 +28,14 @@ import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
 
 const SpeciesLocation = () => {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const id = queryParams?.[1];
+  const {
+    data: { name: location },
+  } = useLocation(locationType, id);
   const [specieSelected, setSpecie] =
     useRecoilState<DataResponse['data'][number]>(SpeciesLocationState);
 
@@ -71,10 +83,11 @@ const SpeciesLocation = () => {
               <span className="font-bold">{totalLocations}</span> countries.
             </p>
           ) : (
-            <p className={'pb-4 text-lg font-light text-black/85'}>
-              Select one species from the list below to see where it&apos;s located.
+            <p className="pb-4 text-lg font-light text-black/85">
+              Select one species from the list below to see where it&apos;s located.{' '}
             </p>
           )}
+
           {isWidgetActive && specieSelected && (
             <div className="mb-8 flex items-center space-x-2">
               <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/species-location/small-pattern.svg')] bg-center text-sm" />
@@ -85,9 +98,13 @@ const SpeciesLocation = () => {
           )}
 
           <div className="h-1 border-b border-dashed border-brand-400 border-opacity-50" />
-
+          {location !== 'worldwide' && (
+            <p>
+              Species list is filtered by <span className="font-bold">{location}</span>
+            </p>
+          )}
           <Command className="w-full">
-            <div className="w-full pt-8">
+            <div className="w-full pt-6">
               <CommandInput
                 placeholder="Search species..."
                 className="w-full rounded-3xl border-brand-400 text-sm placeholder:text-sm placeholder:text-black/85"

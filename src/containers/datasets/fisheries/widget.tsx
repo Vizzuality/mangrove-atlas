@@ -16,8 +16,8 @@ const Fisheries = () => {
             !!data.median && (
               <p className={WIDGET_SENTENCE_STYLE}>
                 In <span className="font-bold">{data.location} </span>, the median mangrove fishing
-                intensity (1) is <span className="font-bold">{data.median} days</span> (ranging from{' '}
-                {data.rangeMin} to {data.rangeMax}).
+                intensity <sup>(1)</sup> is <span className="font-bold">{data.median} days</span>{' '}
+                (ranging from {data.rangeMin} to {data.rangeMax}).
               </p>
             )}
           <FisheriesChart config={data.config} />

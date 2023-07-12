@@ -21,7 +21,7 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   return (
     <Source {...SOURCE}>
       {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+        <Layer key={LAYER.id} {...LAYER} beforeId={'Country'} />
       ))}
     </Source>
   );

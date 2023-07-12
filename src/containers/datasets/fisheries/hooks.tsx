@@ -2,7 +2,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
+import { numberFormat, formatAxis } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { PolarViewBox } from 'recharts/types/util/types';
@@ -79,8 +79,11 @@ export function useMangroveFisheries(
         (d) => d.category !== 'median' && d.category !== 'range_max' && d.category !== 'range_min'
       );
       const median = data?.data?.find((d) => d.category === 'median')?.value;
-      const rangeMax = data?.data?.find((d) => d.category === 'range_max')?.value;
-      const rangeMin = data?.data?.find((d) => d.category === 'range_min')?.value;
+      const medianFormatted = median === 0 ? formatAxis(median) : median;
+      const max = data?.data?.find((d) => d.category === 'range_max')?.value;
+      const rangeMax = max === 0 ? max : formatAxis(max);
+      const min = data?.data?.find((d) => d.category === 'range_min')?.value;
+      const rangeMin = min === 0 ? min : formatAxis(min);
       const unit = data?.metadata?.unit;
       const categories = dataFiltered?.map((d) => d.category);
       const colorKeys = getColorKeys(categories);
@@ -142,7 +145,7 @@ export function useMangroveFisheries(
             },
           },
         },
-        median,
+        median: medianFormatted,
         rangeMax,
         rangeMin,
         location,

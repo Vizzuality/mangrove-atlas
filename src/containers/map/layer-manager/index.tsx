@@ -79,7 +79,6 @@ const LayerManagerContainer = () => {
       {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer] || BASEMAPS[layer];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
-
         return (
           <LayerComponent
             id={layer}

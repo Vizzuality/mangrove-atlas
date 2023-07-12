@@ -70,7 +70,7 @@ const widgets = [
     contextualLayersIds: ['45d01564-c099-42d8-b8f2-a0851accf3e7'],
   },
   {
-    name: 'Species location',
+    name: 'Species location by country',
     slug: 'mangrove_species_location',
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',
@@ -86,7 +86,7 @@ const widgets = [
     layersIds: ['species-distribution'],
   },
   {
-    name: 'Mangrove Species Threatened',
+    name: 'Mangrove species by Red List status',
     slug: 'mangrove_species_threatened',
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',

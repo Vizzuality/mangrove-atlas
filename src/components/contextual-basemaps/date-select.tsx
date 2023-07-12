@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import { basemapContextualVisualMonthlyDateAtom } from 'store/map-settings';
 import { basemapContextualAnalyticMonthlyDateAtom } from 'store/map-settings';
 
+import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
@@ -37,6 +38,8 @@ const DateSelect = ({
     }
   }, [dates]);
 
+  const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -55,13 +58,10 @@ const DateSelect = ({
 
       <PopoverContent>
         <ul className="max-h-56 space-y-2">
-          {dates?.map((d) => (
-            <li key={d.value}>
+          {orderedDates?.map((d) => (
+            <li key={d.value} className="last-of-type:pb-4">
               <button
-                className={cn({
-                  'font-bold': true,
-                  'hover:text-brand-800': true,
-                })}
+                className="font-bold hover:text-brand-800"
                 type="button"
                 onClick={() => setDate(d)}
               >

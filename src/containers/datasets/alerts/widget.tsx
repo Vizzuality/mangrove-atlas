@@ -10,6 +10,7 @@ import { useRecoilState } from 'recoil';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import Chart from 'components/chart';
+import DateSelect from 'components/contextual-basemaps/date-select';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -175,42 +176,12 @@ const AlertsWidget = () => {
           description="We recommend you to use Planet Satellite Imagery to validate the alerts."
         >
           {isActive && (
-            <Popover>
-              <PopoverTrigger asChild>
-                <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
-                  <p className="first-line:after">
-                    Period: <span className="text-sm font-bold">{date?.label}</span>
-                  </p>
-                  <Icon
-                    icon={ARROW_SVG}
-                    className={cn({
-                      '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold':
-                        true,
-                    })}
-                  />
-                </div>
-              </PopoverTrigger>
-
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
-                  {dates?.map((d) => (
-                    <li key={d.value} className="last-of-type:pb-4">
-                      <button
-                        className={cn({
-                          'font-bold': true,
-                          'hover:text-brand-800': true,
-                        })}
-                        type="button"
-                        onClick={() => setDate(d)}
-                        // disabled={date?.value < value}
-                      >
-                        {d.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </PopoverContent>
-            </Popover>
+            <div className="pb-4">
+              <DateSelect
+                mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
+                id="planet_medres_visual_monthly"
+              />
+            </div>
           )}
         </SuggestedLayers>
       </div>
