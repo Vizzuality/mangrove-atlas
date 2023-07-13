@@ -16,12 +16,16 @@ import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
+type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
+
 const Legend = ({
   layers,
   setActiveWidgets,
 }: {
   layers: readonly (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
-  setActiveWidgets: (layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area')[]) => void;
+  setActiveWidgets: (
+    layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[]
+  ) => void;
 }) => {
   const {
     query: { params },

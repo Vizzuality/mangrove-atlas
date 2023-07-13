@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { numberFormat } from 'lib/format';
 
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 import { activeWidgetsAtom } from 'store/widgets';
@@ -124,11 +125,11 @@ const IndicatorSource = ({
       </div>
       {dataSource?.value && (
         <span>
-          {dataSource.value}
+          {numberFormat(dataSource.value)}
           {unit && <span> {LABEL_UNITS[unit] || unit}</span>}
         </span>
       )}
-      <div className="col-span-1 flex space-x-2">
+      <div className="col-span-1 flex justify-end space-x-2">
         <WidgetControls
           content={{
             download: dataSource.download_link,

@@ -4,6 +4,7 @@ import cn from 'lib/classnames';
 
 import { activeWidgetsAtom } from 'store/widgets';
 
+import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
 import type {
@@ -71,7 +72,10 @@ const FloodProtection = ({
     }
   }, [ref, ref.current]);
 
+  if (!data || isEmpty(data)) return null;
+
   const { periods, max, selectedValue, location, getFormattedValue } = data;
+
   const isWorldwide = location === 'Worldwide';
   const trianglePositionPerc = (selectedValue * 100) / max;
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
