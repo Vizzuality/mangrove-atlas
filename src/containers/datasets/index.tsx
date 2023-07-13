@@ -37,11 +37,11 @@ import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/
 import FisheriesInfo from 'containers/datasets/fisheries/info.mdx';
 import FisheriesLayer from 'containers/datasets/fisheries/layer';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
+import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
 import FloodProtectionAreaLayer from 'containers/datasets/flood-protection/storms/layers/area';
 import FloodProtectionPopulationLayer from 'containers/datasets/flood-protection/storms/layers/population';
 import FloodProtectionStockLayer from 'containers/datasets/flood-protection/storms/layers/stock';
-import FloodProtectionWidget from 'containers/datasets/flood-protection/widget';
 import HabitatChangeInfo from 'containers/datasets/habitat-change/info.mdx';
 import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';

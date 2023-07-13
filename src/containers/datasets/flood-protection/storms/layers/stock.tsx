@@ -5,7 +5,7 @@ import { floodStockPeriodAtom } from 'store/widgets/flood-protection';
 
 import { useRecoilValue } from 'recoil';
 
-import { useMangrovesFloodProtection } from '../hooks';
+import { useMangrovesFloodProtection } from 'containers/datasets/flood-protection/hooks';
 
 export function useSource(): SourceProps {
   return {
