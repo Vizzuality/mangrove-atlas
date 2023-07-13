@@ -53,6 +53,7 @@ import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import LayerManager from './layer-manager';
 
+type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 export const DEFAULT_PROPS = {
   initialViewState: {
     longitude: 0,
@@ -87,11 +88,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
 
-  const activeOrdered = LAYERS_ORDER.filter((el) => {
-    return activeWidgets.some((f) => {
-      return f === el;
-    });
-  }) as (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
+  const nationalDshboardLayers = activeWidgets.filter((el) =>
+    el.includes('mangrove_national_dashboard')
+  );
+  const activeOrdered = [
+    ...nationalDshboardLayers,
+    ...LAYERS_ORDER.filter((el) => activeWidgets.some((f) => f === el)),
+  ] as (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[];
+
   const [restorationPopUp, setRestorationPopUp] = useState<{
     popup: number[];
     popupInfo: RestorationPopUp;

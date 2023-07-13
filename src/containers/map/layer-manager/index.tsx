@@ -34,6 +34,8 @@ const LayerManagerContainer = () => {
     });
   }) satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
 
+  const nationaDashboardLayers = layers.filter((l) => l.includes('mangrove_national_dashboard'));
+
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const LAYERS_FILTERED = useMemo(() => {
@@ -72,10 +74,12 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
+  const LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS = [...nationaDashboardLayers, ...LAYERS_FILTERED];
   return (
     <>
-      {LAYERS_FILTERED.map((layer, i) => {
-        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
+      {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
+        const beforeId =
+          i === 0 ? 'custom-layers' : `${LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS[i - 1]}-bg`;
 
         return (
           <Layer
@@ -88,9 +92,10 @@ const LayerManagerContainer = () => {
         );
       })}
 
-      {LAYERS_FILTERED.map((layer, i) => {
+      {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
         const LayerComponent = LAYERS[layer] || BASEMAPS[layer];
-        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
+        const beforeId =
+          i === 0 ? 'custom-layers' : `${LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS[i - 1]}-bg`;
         return (
           <LayerComponent
             id={layer}
