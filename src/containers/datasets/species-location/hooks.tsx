@@ -15,7 +15,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API from 'services/api';
 
-import type { DataResponse, Specie } from './types';
+import type { DataResponse } from './types';
 
 const QUERY_KEY = 'species-location';
 
@@ -39,7 +39,7 @@ export function useMangroveSpeciesLocation<T>(
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
-    data: { name: location, id: currentLocation, location_id },
+    data: { id: currentLocation, location_id },
   } = useLocation(locationType, id);
 
   return useQuery([QUERY_KEY, location_id], fetchMangroveSpecies, {

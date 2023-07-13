@@ -63,7 +63,6 @@ const Chart = ({ config }) => {
     chartBase,
     xKey,
     referenceLines,
-    brush,
     customBrush,
     patterns,
     gradients,
