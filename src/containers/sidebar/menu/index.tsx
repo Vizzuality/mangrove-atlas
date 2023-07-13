@@ -44,7 +44,9 @@ const Menu = () => {
         <div className={`${STYLES['icon-wrapper']}`}>
           <Dialog>
             <DialogTrigger>
-              <div
+              <button
+                data-testid="menu-button"
+                type="button"
                 className="flex justify-center rounded-full p-1 md:bg-white"
                 onClick={() => setSection('main')}
               >
@@ -52,10 +54,11 @@ const Menu = () => {
                   icon={MENU_SVG}
                   className="h-8 w-10 stroke-white stroke-2 md:w-8 md:stroke-brand-800"
                 />
-              </div>
+              </button>
             </DialogTrigger>
 
             <DialogContent
+              data-testid="menu-content"
               className={cn({
                 'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl':
                   true,
