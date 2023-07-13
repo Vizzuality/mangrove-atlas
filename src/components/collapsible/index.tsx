@@ -7,7 +7,7 @@ import cn from 'classnames';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
-import { WidgetSlugType } from 'types/widget';
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
@@ -15,13 +15,13 @@ const CollapsibleComponent = ({
   layers,
   setActiveWidgets,
 }: {
-  layers: readonly WidgetSlugType[];
-  setActiveWidgets: (layers: WidgetSlugType[]) => void;
+  layers: readonly (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
+  setActiveWidgets: (layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area')[]) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const removeLayer = useCallback(
-    (layer: WidgetSlugType) => {
+    (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
       const updatedLayers = layers.filter((l) => {
         return l !== layer;
       });

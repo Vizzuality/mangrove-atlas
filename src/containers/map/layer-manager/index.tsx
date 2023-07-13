@@ -9,6 +9,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
+import { LAYERS_ORDER } from 'containers/layers/constants';
 
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
@@ -19,20 +20,30 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 
 const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
-  'mangrove_habitat_extent',
+  // 'mangrove_habitat_extent',
   'mangrove_restoration_sites',
   'mangrove_restoration',
 ] satisfies WidgetSlugType[];
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeWidgetsAtom);
+  const layers = useRecoilValue(activeWidgetsAtom) as (
+    | WidgetSlugType
+    | ContextualBasemapsId
+    | 'custom-area'
+  )[];
   const layersSettings = useRecoilValue(layersSettingsAtom);
+  const layersOrdered = LAYERS_ORDER.filter((el) => {
+    return layers.some((f) => {
+      return f === el;
+    });
+  }) satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
 
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
-  const LAYERS_FILTERED: (WidgetSlugType | ContextualBasemapsId)[] = useMemo(() => {
-    const filteredLayers: (WidgetSlugType | ContextualBasemapsId)[] = layers.filter(
-      (layer) => !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
+  const LAYERS_FILTERED = useMemo(() => {
+    const filteredLayers = layersOrdered.filter(
+      (layer: WidgetSlugType & ContextualBasemapsId & 'custom-area') =>
+        !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
     );
 
     if (!!basemap) {
@@ -47,7 +58,7 @@ const LayerManagerContainer = () => {
       filteredLayers.push('mangrove_restoration');
     }
 
-    return filteredLayers;
+    return filteredLayers satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
   }, [layers, basemap]);
 
   const handleAdd = useCallback(
@@ -65,7 +76,6 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
-
   return (
     <>
       {LAYERS_FILTERED.map((layer, i) => {

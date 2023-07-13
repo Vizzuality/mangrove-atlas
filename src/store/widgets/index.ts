@@ -4,9 +4,7 @@ import { urlSyncEffect } from 'recoil-sync';
 
 import widgets from 'containers/widgets/constants';
 
-import { WidgetSlugType } from 'types/widget';
-
-export const activeWidgetsAtom = atom<WidgetSlugType[]>({
+export const activeWidgetsAtom = atom({
   key: 'active',
   default: ['mangrove_habitat_extent'],
   effects: [

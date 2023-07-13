@@ -1,3 +1,5 @@
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+
 export const LAYERS = [
   {
     name: 'Coastal protection: area',
@@ -25,7 +27,7 @@ export const LAYERS = [
   },
   {
     name: 'Mangrove Restoration Sites',
-    id: 'mangrove_restoration-sites',
+    id: 'mangrove_restoration_sites',
   },
   {
     name: 'Mangrove restoration',
@@ -112,3 +114,29 @@ export const LAYERS = [
     id: 'mangrove_tidal_flats',
   },
 ];
+
+export const LAYERS_ORDER = [
+  'planet_medres_visual_monthly',
+  'planet_medres_analytic_monthly',
+  'mangrove_salt_marsh_data',
+  'mangrove_tidal_flats',
+  'mangrove_global_tidal_wetland_change',
+  'mangrove_allen_coral_reef',
+  'mangrove_coastal_protection_stock',
+  'mangrove_coastal_protection_population',
+  'mangrove_coastal_protection_area',
+  'mangrove_fisheries',
+  'mangrove_drivers_change',
+  'mangrove_blue_carbon',
+  'mangrove_height',
+  'mangrove_biomass',
+  'mangrove_protection',
+  'mangrove_restoration_sites',
+  'mangrove_species_distribution',
+  'mangrove_species_location',
+  'mangrove_alerts',
+  'mangrove_net_change',
+  'mangrove_habitat_extent',
+  'custom-area',
+  'mangrove_restoration',
+] satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];

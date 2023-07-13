@@ -31,6 +31,7 @@ import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import { useLocations } from 'containers/datasets/locations/hooks';
 import Helper from 'containers/guide/helper';
 import GuideSwitcher from 'containers/guide/switcher';
+import { LAYERS_ORDER } from 'containers/layers/constants';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
@@ -48,6 +49,7 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp } from 'types/map';
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import LayerManager from './layer-manager';
 
@@ -85,6 +87,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
 
+  const activeOrdered = LAYERS_ORDER.filter((el) => {
+    return activeWidgets.some((f) => {
+      return f === el;
+    });
+  }) as (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
   const [restorationPopUp, setRestorationPopUp] = useState<{
     popup: number[];
     popupInfo: RestorationPopUp;
@@ -345,13 +352,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       </Map>
       <Media lessThan="md">
         <div className="absolute top-20 left-0 z-[80]">
-          <Collapsible layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
+          <Collapsible layers={activeOrdered} setActiveWidgets={setActiveWidgets} />
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
         <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
-          <Legend layers={activeWidgets} setActiveWidgets={setActiveWidgets} />
+          <Legend layers={activeOrdered} setActiveWidgets={setActiveWidgets} />
         </div>
       </Media>
     </div>
