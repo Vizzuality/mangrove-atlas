@@ -12,7 +12,7 @@ import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 
 import Icon from 'components/icon';
-import { WidgetSlugType } from 'types/widget';
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import REMOVE_SVG from 'svgs/remove.svg?sprite';
 
@@ -20,8 +20,8 @@ const Legend = ({
   layers,
   setActiveWidgets,
 }: {
-  layers: readonly WidgetSlugType[];
-  setActiveWidgets: (layers: WidgetSlugType[]) => void;
+  layers: readonly (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
+  setActiveWidgets: (layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area')[]) => void;
 }) => {
   const {
     query: { params },
