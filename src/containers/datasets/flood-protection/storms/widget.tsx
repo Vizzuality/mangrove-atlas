@@ -93,12 +93,18 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     }
   }, [ref]);
 
+  const selectedValue = data?.selectedValue;
+  const max = data?.max;
+  const trianglePositionPerc = useMemo(() => (selectedValue * 100) / max, [selectedValue, max]);
+  const trianglePosition = useMemo(
+    () => (lineChartWidth * trianglePositionPerc) / 100 - 11,
+    [lineChartWidth, trianglePositionPerc]
+  ); // -11 to subtract icon size;
+
   if (!data || !data?.data?.length) return null;
 
-  const { periods, max, selectedValue, location, getFormattedValue } = data;
+  const { periods, location, getFormattedValue } = data;
   const isWorldwide = location === 'Worldwide';
-  const trianglePositionPerc = (selectedValue * 100) / max;
-  const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
   const value = getFormattedValue(selectedValue, indicator);
 
   const getBackground = (indicator) => {
