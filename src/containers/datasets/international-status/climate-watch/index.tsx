@@ -21,7 +21,6 @@ const ClimateWatchNationalDashboard = () => {
   });
 
   const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs();
-
   const update = dataDocuments?.update;
   const Indicators = [
     {
@@ -45,7 +44,8 @@ const ClimateWatchNationalDashboard = () => {
     {
       label: 'Mitigation',
       value: false,
-      check: data?.mitigation_contribution_type?.[data.iso].value,
+      check:
+        !!data?.M_TarA1 || !!data?.M_TarA5 || !!data?.M_TarB1 || !!data?.M_TarA2 ? 'yes' : 'no',
       info: data?.mitigation_contribution_type?.info || 'NDC contains Mitigation?',
     },
     {

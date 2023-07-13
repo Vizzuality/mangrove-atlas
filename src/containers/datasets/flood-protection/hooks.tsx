@@ -1,5 +1,7 @@
 import { useMemo, useCallback } from 'react';
 
+import compact from 'lodash-es/compact';
+
 import { useRouter } from 'next/router';
 
 import { numberFormat, formatMillion, formatAxis } from 'lib/format';
@@ -12,15 +14,14 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API from 'services/api';
 
+import { LABELS, UNITS_LABELS } from './constants';
+import Tooltip from './tooltip';
 import type {
   Data,
   DataResponse,
   FloodProtectionIndicatorId,
   FloodProtectionPeriodId,
-} from '../types';
-
-import { LABELS, UNITS_LABELS } from './constants';
-import Tooltip from './tooltip';
+} from './types';
 
 type UseParamsOptions = {
   period?: FloodProtectionPeriodId;
@@ -65,7 +66,6 @@ export function useMangrovesFloodProtection(
   } = useLocation(locationType, id);
 
   const selectedPeriod = useMemo(() => period || 'annual', [period]);
-
   const getBars = useCallback(
     (data, selectedPeriod, metadata, indicator) => {
       const color = getColor(data, selectedPeriod, indicator, metadata);
@@ -77,7 +77,7 @@ export function useMangrovesFloodProtection(
         value: d.value,
         period: LABELS[d.period].axis,
         color: d.period === selectedPeriod ? color : '#E1E1E1',
-        [LABELS[d.period]]: d.value,
+        [d.period]: d.value,
         showValue: true,
         label: d.period,
         labelFormatted: LABELS[d.period].axis,
@@ -103,10 +103,14 @@ export function useMangrovesFloodProtection(
       const TooltipData = {
         content: (properties) => <Tooltip {...properties} />,
       };
+
       const min = data.metadata.limits[selectedPeriod].min;
       const max = data.metadata.limits[selectedPeriod].max;
 
+      const indicatorValues = compact(data?.data?.map((d) => d.value));
+
       return {
+        indicatorValues,
         data: ChartData,
         config: {
           type: 'bar',
