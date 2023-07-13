@@ -171,6 +171,7 @@ export function useMangrovesFloodProtection(
         min,
         max,
         location,
+        trianglePositionPerc: (selectedValue * 100) / max,
         getFormattedValue,
       };
     },

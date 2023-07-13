@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('Menu', async ({ page }) => {
   await page.goto('/');
   await page.getByTestId('menu_button').click();
-  // await page.getByTestId('menu_content').toBeVisible();
+  await expect(page.getByTestId('menu_content')).toBeVisible();
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
