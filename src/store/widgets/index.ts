@@ -4,7 +4,9 @@ import { urlSyncEffect } from 'recoil-sync';
 
 import widgets from 'containers/widgets/constants';
 
-export const activeWidgetsAtom = atom({
+import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+
+export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>({
   key: 'active',
   default: ['mangrove_habitat_extent'],
   effects: [

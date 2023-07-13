@@ -85,7 +85,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
     setActiveWidgets(widgetsUpdate);
   };
 
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   // fires synchronously after all DOM mutations.
   useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth) {

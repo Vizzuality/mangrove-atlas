@@ -26,11 +26,7 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 ] satisfies WidgetSlugType[];
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeWidgetsAtom) as (
-    | WidgetSlugType
-    | ContextualBasemapsId
-    | 'custom-area'
-  )[];
+  const layers = useRecoilValue(activeWidgetsAtom);
   const layersSettings = useRecoilValue(layersSettingsAtom);
   const layersOrdered = LAYERS_ORDER.filter((el) => {
     return layers.some((f) => {
