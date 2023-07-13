@@ -150,12 +150,6 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
                 {value} km<sup>2</sup>
               </span>
             )}
-            {indicator === 'area' && (
-              <span className="font-bold">
-                {' '}
-                {value} km<sup>2</sup>{' '}
-              </span>
-            )}
             {indicator === 'population' && <span className="font-bold"> {value} individuals </span>}
             {indicator === 'stock' && <span className="font-bold"> ${value} </span>}
             during {selectedPeriod === 'annual' ? 'an' : 'a'}{' '}
