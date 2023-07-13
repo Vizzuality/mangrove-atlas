@@ -36,7 +36,7 @@ const Menu = () => {
           tooltip: 'w-fit-content',
         }}
         tooltipPosition={{ top: -10, left: -60 }}
-        message="use this button to go back to the worldwide overview"
+        message="main menu"
       >
         <div className="hidden w-full pb-1 text-center font-sans text-xxs text-white md:block">
           Menu

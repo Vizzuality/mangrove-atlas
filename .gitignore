@@ -37,10 +37,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-# Test with Cypress
-/cypress/screenshots
-/cypress/videos
-
 # Yarn
 .yarn/*
 !.yarn/releases
@@ -51,3 +47,6 @@ tsconfig.tsbuildinfo
 
 # storybook
 /storybook-static/
+/test-results/
+/playwright-report/
+/playwright/.cache/

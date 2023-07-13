@@ -144,11 +144,21 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
           <p className={WIDGET_SENTENCE_STYLE}>
             In <span className="font-bold first-letter:uppercase"> {data.location}</span>, mangroves
             are expected to protect{' '}
-            <span className="font-bold">
-              {' '}
-              {value} km<sup>2</sup>
-            </span>{' '}
-            during a{' '}
+            {indicator === 'area' && (
+              <span className="font-bold">
+                {' '}
+                {value} km<sup>2</sup>
+              </span>
+            )}
+            {indicator === 'area' && (
+              <span className="font-bold">
+                {' '}
+                {value} km<sup>2</sup>{' '}
+              </span>
+            )}
+            {indicator === 'population' && <span className="font-bold"> {value} individuals </span>}
+            {indicator === 'stock' && <span className="font-bold"> ${value} </span>}
+            during {selectedPeriod === 'annual' ? 'an' : 'a'}{' '}
             <Popover>
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
@@ -163,7 +173,7 @@ const FloodProtection = ({ indicator }: { indicator: FloodProtectionIndicatorId 
               <PopoverContent>
                 <ul className="max-h-56 space-y-2">
                   {periods?.map((period) => (
-                    <li key={period} className="last-of-type:pb-4">
+                    <li key={period}>
                       <button
                         className={cn({
                           'font-bold': true,

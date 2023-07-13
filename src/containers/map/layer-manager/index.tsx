@@ -13,6 +13,7 @@ import { LAYERS, BASEMAPS } from 'containers/datasets';
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
+const RestorationLayer = LAYERS['mangrove_restoration'];
 const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
@@ -20,6 +21,7 @@ const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
   'mangrove_habitat_extent',
   'mangrove_restoration_sites',
+  'mangrove_restoration',
 ] satisfies WidgetSlugType[];
 
 const LayerManagerContainer = () => {
@@ -39,6 +41,10 @@ const LayerManagerContainer = () => {
 
     if (layers.includes('mangrove_habitat_extent')) {
       filteredLayers.push('mangrove_habitat_extent');
+    }
+
+    if (layers.includes('mangrove_restoration')) {
+      filteredLayers.push('mangrove_restoration');
     }
 
     return filteredLayers;
@@ -104,6 +110,15 @@ const LayerManagerContainer = () => {
 
       {layers.includes('mangrove_restoration_sites') && (
         <RestorationSitesLayer id="mangrove-restoration-sites-layer" />
+      )}
+
+      {layers.includes('mangrove_restoration') && (
+        <RestorationLayer
+          id="mangrove-restoration"
+          beforeId="country-boundaries-layer"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
       )}
     </>
   );

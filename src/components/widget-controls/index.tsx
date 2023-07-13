@@ -83,7 +83,12 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
           message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
         >
           <SwitchWrapper id={id}>
-            <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
+            <SwitchRoot
+              data-testid={id}
+              onClick={handleClick}
+              defaultChecked={isActive}
+              checked={isActive}
+            >
               <SwitchThumb />
             </SwitchRoot>
           </SwitchWrapper>

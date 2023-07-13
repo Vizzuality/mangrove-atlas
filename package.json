@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "check-types": "tsc",
-    "test": "start-server-and-test 'yarn dev' 3000 'yarn cypress:run'",
+    "test": "playwright test",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "postinstall": "husky install"
@@ -59,7 +59,6 @@
     "chroma-js": "^2.4.2",
     "classnames": "^2.3.2",
     "cmdk": "0.2.0",
-    "cypress": "12.7.0",
     "d3-format": "3.1.0",
     "date-fns": "2.30.0",
     "framer-motion": "10.12.3",
@@ -87,6 +86,7 @@
     "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.35.1",
     "@types/geojson": "7946.0.10",
     "@types/google.analytics": "0.0.42",
     "@types/mapbox-gl": "2.7.11",

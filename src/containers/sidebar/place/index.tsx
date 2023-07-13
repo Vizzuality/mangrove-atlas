@@ -124,6 +124,7 @@ const Place = () => {
     skipAnalysisAlert,
     openAnalysisAlertModal,
     savePlaceSection,
+    setMapViewState,
   ]);
 
   const handleOnClickSearch = useCallback(() => {

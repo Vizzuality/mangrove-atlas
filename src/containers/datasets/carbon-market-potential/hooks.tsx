@@ -14,7 +14,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import API from 'services/api';
 
 import Tooltip from './tooltip';
-import type { CarbonMarketPotentialData, UseParamsOptions, ChartLabelProps, Unit } from './types';
+import type { CarbonMarketPotentialData, UseParamsOptions, Unit } from './types';
 
 const labels = ['at $5/ton', 'at $10/ton'];
 
@@ -155,7 +155,7 @@ export function useCarbonMarketPotential(
       investibleBlueCarbonValue,
       config: CONFIG,
     }),
-    [CONFIG, investibleBlueCarbonValue, location]
+    [CONFIG, investibleBlueCarbonValue, location, noData]
   );
 
   return useMemo(() => {
@@ -165,5 +165,5 @@ export function useCarbonMarketPotential(
       isPlaceholderData,
       data: DATA,
     } as typeof query;
-  }, [query, DATA]);
+  }, [DATA, isLoading, isFetched, isPlaceholderData]);
 }

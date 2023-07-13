@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import * as SwitchRadix from '@radix-ui/react-switch';
 
 type WrapperProps = Readonly<{
+  'data-testid'?: string;
   id: string;
   children: ReactNode;
   className?: string;
