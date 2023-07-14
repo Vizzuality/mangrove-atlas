@@ -33,7 +33,7 @@ This platform is built upon [Vizzuality's scaffold project](https://github.com/V
 
 In order to start modifying the app, please make sure to correctly configure your workstation:
 
-1. Make sure you you have [Node.js](https://nodejs.org/en/) installed
+1. Make sure you have [Node.js](https://nodejs.org/en/) installed
 2. (Optional) Install [NVM](https://github.com/nvm-sh/nvm) to manage your different Node.js versions
 3. (Optional) Use [Visual Studio Code](https://code.visualstudio.com/) as a text editor to benefit from automatic type checking
 4. Configure your text editor with the [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), [EditorConfig](https://editorconfig.org/), [Tailwind CSS](https://tailwindcss.com/docs/plugins) (recommended) and [Headwind](https://github.com/heybourn/headwind) (recommended) plugins
@@ -55,20 +55,20 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Contribution rules
 
-Please, **create a PR** for any improvement or feature you want to add. Try to not commit directly anything on the `main` branch.
+Please, **create a PR** for any improvement or feature you want to add. Try not to commit anything directly on the `main` branch.
 
 ## Vulnerability mitigation
 
 [Dependabot's vulnerability security alerts](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) are configured in this repository and are displayed to the administrators.
 
-When vulnerabilities are detected, a warning message is displayed at the top of the repository. The list of alerts can be found in the Dependabot alerts page.
+When vulnerabilities are detected, a warning message is displayed at the top of the repository. The list of alerts can be found on the Dependabot alerts page.
 
-Here's a step by step guide on how to address vulnerabilities found in production code:
+Here's a step-by-step guide on how to address vulnerabilities found in production code:
 
 1. Go to the Dependabot alerts page and locate the front-end vulnerability to address
 2. Identify if the vulnerability affects production code:
 	- To do so run `yarn npm audit --recursive --environment production`
-	- If the dependency is _not_ listed by this command, then the vulnerability only affects development code. You can dismiss the alert on GitHub as “Vulnerable code is not actually used” in the top right corner of the vulnerability page.
+	- If the dependency is _not_ listed by this command, then the vulnerability only affects the development code. You can dismiss the alert on GitHub as “Vulnerable code is not actually used” in the top right corner of the vulnerability page.
 	- If the dependency _is_ listed, follow the steps below.
 3. On the vulnerability page, click the “Create Dependabot security update” button
 	- This will create a Pull Request with a fix for the vulnerability. If GitHub can generate this PR, then you can merge and the security alert will disappear.
@@ -80,15 +80,14 @@ Here's a step by step guide on how to address vulnerabilities found in productio
 
 ## Env variables
 
-| Variable name           | Description                                                             |  Default value                      |
-|-------------------------|-------------------------------------------------------------------------|------------------------------------:|
-
-| NEXT_PUBLIC_API_URL  | URL of the API for widgets Data. | http://localhost:3000   |
-| NEXT_PUBLIC_ANALYSIS_API_URL  | URL of the API for Analysis tool. | http://localhost:3000   |
-| NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
-| NEXT_PUBLIC_PLANET_API_KEY  | URL of the Planet API. |    |
-| NEXT_PUBLIC_BASE_URL  | Based URL of the project. |    |
-| NEXT_PUBLIC_BLOG_API_URL  | URL of the Transifex API. |    |
-| NEXT_PUBLIC_BLOG_API_URL  | URL of the API for Wordpress content. |    |
+| Variable name                 | Description                                                             |  Default value                      |
+|-------------------------------|-------------------------------------------------------------------------|------------------------------------:|
+| NEXT_PUBLIC_API_URL           | URL of the API for widgets Data. 										  | http://localhost:3000   			|
+| NEXT_PUBLIC_ANALYSIS_API_URL  | URL of the API for the Analysis tool. 								  | http://localhost:3000               |
+| NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. 														  |    									|
+| NEXT_PUBLIC_PLANET_API_KEY    | URL of the Planet API. 		       									  |    								    |
+| NEXT_PUBLIC_BASE_URL  	    | Based URL of the project. 											  |    								    |
+| NEXT_PUBLIC_BLOG_API_URL  	| URL of the Transifex API. 											  |    								    |
+| NEXT_PUBLIC_BLOG_API_URL  	| URL of the API for WordPress content. 								  |    									|
 
 
