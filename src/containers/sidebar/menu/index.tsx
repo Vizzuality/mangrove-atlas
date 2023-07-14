@@ -167,7 +167,7 @@ const Menu = () => {
                     <BlogContent />
                   </motion.div>
                 )}
-              </AnimatePresence> TO-DO back when client approves it*/}
+              </AnimatePresence> */}
               <DialogClose />
             </DialogContent>
           </Dialog>

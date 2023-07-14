@@ -111,7 +111,7 @@ const WidgetsContainer: React.FC = () => {
           </Helper>
         </div>
       )}
-      {/* {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />} TO-DO back when client approves it */}
+      {/* {isBlogActive && <Blog closeBlogBanner={closeBlogBanner} />} */}
 
       {screenWidth < breakpoints.md && (
         <div>

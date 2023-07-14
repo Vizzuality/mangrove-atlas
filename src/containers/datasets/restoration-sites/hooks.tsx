@@ -128,23 +128,23 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
       source: 'restoration-sites',
       filter: ['has', 'point_count'],
       paint: {
-        'circle-color': '##CC61B0',
+        'circle-color': '#CC61B0',
         'circle-stroke-width': 1,
-        'circle-stroke-color': '##CC61B0',
-        'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 500, 40],
+        'circle-stroke-color': '#CC61B0',
+        'circle-radius': ['step', ['get', 'point_count'], 10, 100, 20, 500, 30],
       },
     },
 
     {
-      id,
+      id: `${id}-clusters-points`,
       type: 'circle',
       source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-color': '##CC61B0',
+        'circle-color': '#CC61B0',
         'circle-radius': 5,
         'circle-stroke-width': 1,
-        'circle-stroke-color': '##CC61B0',
+        'circle-stroke-color': '#CC61B0',
       },
     },
     {
@@ -155,11 +155,11 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
       layout: {
         'text-field': ['get', 'point_count_abbreviated'],
         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-        'text-size': 16,
-        'text-allow-overlap': true,
+        'text-size': 12,
+        // 'text-allow-overlap': true,
       },
       paint: {
-        'text-color': '#fff',
+        'text-color': '#ffffff',
       },
     },
   ];
