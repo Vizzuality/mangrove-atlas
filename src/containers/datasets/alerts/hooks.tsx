@@ -453,7 +453,7 @@ export function useSources(): SourceProps[] {
     {
       id: 'alerts-tiles',
       type: 'vector',
-      data: `http://localhost:8080?x={x}&y={y}&z={z}&start_date=2020-01-01&end_date=2023-07-14`,
+      url: `http://localhost:8080?x={x}&y={y}&z={z}&start_date=2020-01-01&end_date=2023-07-14`,
     },
   ];
 }
