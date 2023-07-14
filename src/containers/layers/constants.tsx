@@ -2,6 +2,10 @@ import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 export const LAYERS = [
   {
+    name: 'Iucn ecoregion',
+    id: 'mangrove_iucn_ecoregion',
+  },
+  {
     name: 'Coastal protection: area',
     id: 'mangrove_coastal_protection_area',
   },
@@ -81,22 +85,7 @@ export const LAYERS = [
     name: 'Save Our Mangroves Now project',
     id: 'national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2',
   },
-  {
-    name: 'Save Our Mangroves Now project',
-    id: 'national_dashboard_source_MangroveExtent2020KenyaFinalQAv2',
-  },
-  {
-    name: 'TNC',
-    id: 'national_dashboard_source_car_mangroves',
-  },
-  {
-    name: 'Save Our Mangroves Now project',
-    id: 'national_dashboard_source_MangroveExtent2020TanzaniaFinalQAv2',
-  },
-  {
-    name: 'Save Our Mangroves Now project',
-    id: 'national_dashboard_source_MangroveExtent2020MadagascarFinalQAv3',
-  },
+
   {
     name: 'Allen coral atlas',
     id: 'mangrove_allen_coral_reef',
@@ -139,4 +128,5 @@ export const LAYERS_ORDER = [
   'mangrove_habitat_extent',
   'custom-area',
   'mangrove_restoration',
+  'mangrove_iucn_ecoregion',
 ] satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];

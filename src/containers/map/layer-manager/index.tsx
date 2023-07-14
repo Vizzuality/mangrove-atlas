@@ -18,11 +18,13 @@ const RestorationLayer = LAYERS['mangrove_restoration'];
 const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
+const IucnEcoregionLayer = LAYERS['mangrove_iucn_ecoregion'];
 
 const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
   // 'mangrove_habitat_extent',
   'mangrove_restoration_sites',
   'mangrove_restoration',
+  'mangrove_iucn_ecoregion',
 ] satisfies WidgetSlugType[];
 
 const LayerManagerContainer = () => {
@@ -75,6 +77,7 @@ const LayerManagerContainer = () => {
     [setInteractiveLayerIds]
   );
   const LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS = [...nationaDashboardLayers, ...LAYERS_FILTERED];
+
   return (
     <>
       {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
@@ -126,6 +129,15 @@ const LayerManagerContainer = () => {
       {layers.includes('mangrove_restoration') && (
         <RestorationLayer
           id="mangrove-restoration"
+          beforeId="country-boundaries-layer"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
+      )}
+
+      {layers.includes('mangrove_iucn_ecoregion') && (
+        <IucnEcoregionLayer
+          id="mangrove-iucn-ecoregion"
           beforeId="country-boundaries-layer"
           onAdd={handleAdd}
           onRemove={handleRemove}

@@ -9,6 +9,16 @@ const Download = ({ id, content }) => {
   const DownloadInfo = DOWNLOAD[id];
 
   if (!DownloadInfo && !content) return null;
+
+  const markdownParser = (text) => {
+    const toHTML = text
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
+      .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
+      .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
+    return toHTML.trim(); // using trim method to remove whitespace
+  };
   return (
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
@@ -17,10 +27,20 @@ const Download = ({ id, content }) => {
             <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="scroll-y left-18 top-16 h-[90%] rounded-3xl">
+        <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit translate-y-8 rounded-3xl">
           <div className="no-scrollbar overflow-y-auto">
             {id && <DownloadInfo />}
-            {content && <p>{content}</p>}
+            {content && !id && (
+              <div className="p-4">
+                <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
+                <div className="space-y-2">
+                  <div
+                    className="prose py-4"
+                    dangerouslySetInnerHTML={{ __html: markdownParser(content) }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <DialogClose />
         </DialogContent>

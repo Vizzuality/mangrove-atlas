@@ -33,6 +33,7 @@ import Helper from 'containers/guide/helper';
 import GuideSwitcher from 'containers/guide/switcher';
 import { LAYERS_ORDER } from 'containers/layers/constants';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
+import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
@@ -48,7 +49,7 @@ import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
-import type { RestorationPopUp } from 'types/map';
+import type { RestorationPopUp, PopUpKey } from 'types/map';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import LayerManager from './layer-manager';
@@ -97,6 +98,18 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   ] as (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[];
 
   const [restorationPopUp, setRestorationPopUp] = useState<{
+    popup: number[];
+    popupInfo: RestorationPopUp;
+    popUpPosition: { x: number; y: number };
+  }>({
+    popup: [],
+    popupInfo: null,
+    popUpPosition: {
+      x: null,
+      y: null,
+    },
+  });
+  const [iucnEcoregionPopUp, setIucnEcoregionPopUp] = useState<{
     popup: number[];
     popupInfo: RestorationPopUp;
     popUpPosition: { x: number; y: number };
@@ -215,15 +228,25 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
-  const removePopup = () => {
-    setRestorationPopUp({
-      popup: [],
-      popupInfo: null,
-      popUpPosition: {
-        x: null,
-        y: null,
-      },
-    });
+  const removePopup = (key?: PopUpKey) => {
+    if (!key || key === 'restoration')
+      setRestorationPopUp({
+        popup: [],
+        popupInfo: null,
+        popUpPosition: {
+          x: null,
+          y: null,
+        },
+      });
+    if (!key || key === 'ecoregion')
+      setIucnEcoregionPopUp({
+        popup: [],
+        popupInfo: null,
+        popUpPosition: {
+          x: null,
+          y: null,
+        },
+      });
   };
 
   const handleClickLocation = useCallback(
@@ -256,7 +279,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'mangrove-restoration-layer'
     );
 
-    if (locationFeature && !restorationFeature) {
+    const iucnEcoregionFeature = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove-iucn-ecoregion-layer'
+    );
+
+    if (locationFeature && !restorationFeature && !iucnEcoregionFeature) {
       handleClickLocation(locationFeature);
     }
 
@@ -272,8 +299,19 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       });
     }
     if (!restorationFeature) {
-      removePopup();
+      removePopup('restoration');
     }
+
+    if (iucnEcoregionFeature)
+      setIucnEcoregionPopUp({
+        popup: [e?.lngLat.lat, e?.lngLat.lng],
+        popupInfo: iucnEcoregionFeature.properties as RestorationPopUp,
+        popUpPosition: {
+          x: e.point.x,
+          y: e.point.y,
+        },
+      });
+    if (!iucnEcoregionFeature) removePopup('ecoregion');
   };
 
   const handleMouseMove = useCallback(
@@ -346,9 +384,19 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 popUpPosition={restorationPopUp.popUpPosition}
                 longitude={restorationPopUp.popup[1]}
                 latitude={restorationPopUp.popup[0]}
-                onClose={removePopup}
+                onClose={() => removePopup('restoration')}
               >
                 <RestorationPopup restorationPopUpInfo={restorationPopUp} />
+              </Popup>
+            ) : null}
+            {!!iucnEcoregionPopUp.popup?.length && !isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
+              <Popup
+                popUpPosition={restorationPopUp.popUpPosition}
+                longitude={restorationPopUp.popup[1]}
+                latitude={restorationPopUp.popup[0]}
+                onClose={() => removePopup('ecoregion')}
+              >
+                <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
               </Popup>
             ) : null}
           </>

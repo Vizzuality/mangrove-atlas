@@ -2,6 +2,7 @@ import cn from 'lib/classnames';
 
 type Item = {
   showValue?: boolean;
+  highlightValue?: boolean;
   color: string;
   label: string;
   labelFormatted?: string;
@@ -35,7 +36,16 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
         </h2>
       )}
       {items?.map(
-        ({ showValue = true, color, label, labelFormatted, valueFormatted, value, unit }) => {
+        ({
+          showValue = true,
+          color,
+          label,
+          labelFormatted,
+          valueFormatted,
+          value,
+          unit,
+          highlightValue = true,
+        }) => {
           return (
             <div key={label} className={cn({ 'flex items-start': true })}>
               <div
@@ -43,7 +53,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
                 className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
               />
               <div className="flex flex-col items-start text-sm">
-                <p className={cn({ 'font-bold': !showValue })}>{labelFormatted || label}</p>
+                <p className={cn({ 'font-bold': highlightValue })}>{labelFormatted || label}</p>
                 <div className="flex space-x-2 whitespace-nowrap">
                   {showValue && unit && (unit === '$' || unit === 'usd') && (
                     <p className="font-bold">{unit}</p>
