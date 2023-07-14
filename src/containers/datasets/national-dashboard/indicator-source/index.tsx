@@ -23,9 +23,10 @@ const LABEL_UNITS = {
 
 type DataSourceTypes = {
   value: number;
-  layer_link: string;
+  layer_link: `globalmangrovewatch.${string}`;
   download_link: string;
   layer_info: string;
+  source_layer: string;
 };
 
 type IndicatorSourceTypes = {
@@ -57,7 +58,6 @@ const IndicatorSource = ({
     () => activeWidgets.includes('mangrove_national_dashboard_layer') && isActiveLayer,
     [activeWidgets, dataSource.layer_link]
   );
-
   const handleClick = useCallback(
     (id) => {
       setActiveLayer(!isActiveLayer);
@@ -69,7 +69,7 @@ const IndicatorSource = ({
         [id]: {
           name: source,
           source: dataSource.layer_link,
-          source_layer: DATA_SOURCES[dataSource.layer_link],
+          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
           color: color[0],
           locationId: location,
           active: isActiveLayer,

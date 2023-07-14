@@ -123,12 +123,6 @@ const FloodProtection = ({
             {indicator === 'area' && (
               <span className="font-bold">
                 {' '}
-                {value} km<sup>2</sup>
-              </span>
-            )}
-            {indicator === 'area' && (
-              <span className="font-bold">
-                {' '}
                 {value} km<sup>2</sup>{' '}
               </span>
             )}
