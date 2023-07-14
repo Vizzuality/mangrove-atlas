@@ -1,45 +1,46 @@
-# Front end scaffold
+# Mangrove Atlas
 
-This is a project template which could be used to the creation of new projects. Some of the features included are:
+## Table of Contents
 
-- Based on [Next.js](https://nextjs.org/)
-- [Tailwind](https://tailwindcss.com/) as CSS Framework
+1. [Installation & development](#installation--development)
+2. [Deployment](#deployment)
+3. [Good practices & Style guide](#good-practices--style-guide)
+
+## Installation & development
+
+Requirements:
+
+* NodeJs v18
+* Yarn
+
+## Project implementation
+
+This platform is built upon [Vizzuality's scaffold project](https://github.com/Vizzuality/front-end-scaffold) and it's using the following resources:
+
+- [React](https://reactjs.org/) as a UI library
+- [Next.js](https://nextjs.org/) as a framework
+- [Tailwind CSS](https://tailwindcss.com/) as a styles framework
 - Reusable components such as forms, modals, icons, and other most use components
-- Authentication based on [Next-Auth](https://next-auth.js.org/) already implemented
-- [Redux](https://redux.js.org/) and [Redux-Toolkit](https://redux-toolkit.js.org/)
+- [Recoil](https://recoiljs.org/) 
 - [Typescript](https://www.typescriptlang.org/) already configured
 - git workflow and hooks
 - editorconfig and code style based on [Airbnb](https://github.com/airbnb/javascript)
-- [Storybook](https://storybook.js.org/) also available and configured
 
-## Getting Started
+## Quick start
 
-Check our [documentation](https://front-end-scaffold-docs.vercel.app/?path=/story/intro--page).
+In order to start modifying the app, please make sure to correctly configure your workstation:
 
-### Quick start
+1. Make sure you you have [Node.js](https://nodejs.org/en/) installed
+2. (Optional) Install [NVM](https://github.com/nvm-sh/nvm) to manage your different Node.js versions
+3. (Optional) Use [Visual Studio Code](https://code.visualstudio.com/) as a text editor to benefit from automatic type checking
+4. Configure your text editor with the [Prettier](https://prettier.io/), [ESLint](https://eslint.org/), [EditorConfig](https://editorconfig.org/), [Tailwind CSS](https://tailwindcss.com/docs/plugins) (recommended) and [Headwind](https://github.com/heybourn/headwind) (recommended) plugins
+5. (Optional) Configure your editor to “format [code] on save” with ESLint and Prettier **(1)**
+6. Use the correct Node.js version for this app by running `nvm use`; if you didn't install NVM (step 2), then manually install the Node.js version described in `.nvmrc`
+7. Install the dependencies: `yarn`
+8. Run the server: `yarn dev`
 
-First, run the development server:
+You can access a hot-reloaded version of the app on [http://localhost:3000](http://localhost:3000).
 
-```bash
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about this project, take a look at the following resources:
-
-- [Blogin internal post](https://vizzuality.blogin.co/posts/a-scaffold-to-rule-all-of-them-135768) - communication to Vizzuality
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [Standardization guidelines](https://vizzuality.github.io/frontismos/docs/guidelines/standardization/) - a set of agreements and conventions.
 
 ## Deploy on Vercel
 
@@ -76,19 +77,15 @@ Here's a step by step guide on how to address vulnerabilities found in productio
 
 ## Env variables
 
-
 | Variable name           | Description                                                             |  Default value                      |
 |-------------------------|-------------------------------------------------------------------------|------------------------------------:|
-| NEXTAUTH_SECRET         |  Key used to encrypt the NextAuth.js JWT, and to hash email verification tokens. Do not forget to add a secret. NextAuth can handle without it in development mode,  but it won't in production! [https://next-auth.js.org/configuration/options#secret](https://next-auth.js.org/configuration/options#secret) |  |
-| NEXTAUTH_URL            |  Needed by the next-auth library for [handling auth requests and callbacks](https://next-auth.js.org/configuration/options#nextauth_url). Set the environment variable to the canonical URL of your site. Not needed in Vercel deploys.   |  |
-| NEXT_PUBLIC_API_URL  | URL of the API. | http://localhost:3000   |
-| STORYBOOK_API_URL  | URL of the API for storybook. |    |
+
+| NEXT_PUBLIC_API_URL  | URL of the API for widgets Data. | http://localhost:3000   |
+| NEXT_PUBLIC_ANALYSIS_API_URL  | URL of the API for Analysis tool. | http://localhost:3000   |
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. |    |
-| STORYBOOK_MAPBOX_API_TOKEN  | Mapbox token for storybook. |    |
-| NEXT_PUBLIC_GA_TRACKING_ID  | Google Analytics tracking ID. If you're working with an Google Analytics 4 property, you have a Measurement ID instead of a Tracking ID. |    |
+| NEXT_PUBLIC_PLANET_API_KEY  | URL of the Planet API. |    |
+| NEXT_PUBLIC_BASE_URL  | Based URL of the project. |    |
+| NEXT_PUBLIC_BLOG_API_URL  | URL of the Transifex API. |    |
 | NEXT_PUBLIC_BLOG_API_URL  | URL of the API for Wordpress content. |    |
-
-
-
 
 
