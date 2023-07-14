@@ -29,7 +29,6 @@ const links = [
 
 test('test menu links', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'Close' }).click();
 
   const menuButton = page.getByTestId('menu-button');
   await menuButton.click();
