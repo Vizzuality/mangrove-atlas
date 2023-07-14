@@ -42,7 +42,7 @@ const Legend = ({ items }: Legend) => {
                 </button>
 
                 {
-                  <ul className="overflow-y-scroll py-1 pl-4 font-bold italic text-brand-800 underline">
+                  <ul className="py-1 pl-4 font-bold italic text-brand-800 underline">
                     {d?.species.map((s) => (
                       <a
                         key={s?.scientific_name}
