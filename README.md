@@ -1,5 +1,8 @@
 # Mangrove Atlas
 
+![Screenshot 2023-07-14 at 08 48 02](https://github.com/Vizzuality/mangrove-atlas/assets/33252015/8fa99ca2-16d4-4563-92e0-2c063edfe6b6)
+
+
 ## Table of Contents
 
 1. [Installation & development](#installation--development)
