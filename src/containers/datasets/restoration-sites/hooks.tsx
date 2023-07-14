@@ -128,9 +128,9 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
       source: 'restoration-sites',
       filter: ['has', 'point_count'],
       paint: {
-        'circle-color': '#00857F',
+        'circle-color': '##CC61B0',
         'circle-stroke-width': 1,
-        'circle-stroke-color': '#00857F',
+        'circle-stroke-color': '##CC61B0',
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 500, 40],
       },
     },
@@ -141,10 +141,10 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
       source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-color': '#00857F',
+        'circle-color': '##CC61B0',
         'circle-radius': 5,
         'circle-stroke-width': 1,
-        'circle-stroke-color': '#00857F',
+        'circle-stroke-color': '##CC61B0',
       },
     },
     {
