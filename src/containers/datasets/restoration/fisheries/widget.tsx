@@ -1,5 +1,5 @@
 import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
+import { formatAxis } from 'lib/format';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -58,9 +58,7 @@ const PotentialBenefitsToFisheries = () => {
                 </div>
                 <div className="flex flex-col text-sm">
                   <span className="first-letter:uppercase">{indicator}</span>
-                  <span className="font-bold">
-                    {!!value ? numberFormat(Math.round(value)) : '-'}
-                  </span>
+                  <span className="font-bold">{!!value ? formatAxis(Math.round(value)) : '-'}</span>
                 </div>
               </div>
             ))}{' '}
