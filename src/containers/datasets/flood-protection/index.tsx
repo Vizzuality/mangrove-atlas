@@ -42,21 +42,21 @@ const MangrovesFloodProtection = () => {
       <div className="relative pb-4">
         <div className="absolute top-0 -left-10 -right-10 border-2 border-b border-brand-800/30" />
       </div>
-      {dataArea && (
+      {dataArea?.indicatorValues?.length && (
         <FloodProtection
           indicator="area"
           selectedPeriod={selectedAreaPeriod}
           setPeriod={setAreaPeriod}
         />
       )}
-      {dataStock && (
+      {dataStock?.indicatorValues?.length && (
         <FloodProtection
           indicator="population"
           selectedPeriod={selectedPopulationPeriod}
           setPeriod={setPopulationPeriod}
         />
       )}
-      {dataPopulation && (
+      {dataPopulation?.indicatorValues?.length && (
         <FloodProtection
           indicator="stock"
           selectedPeriod={selectedStockPeriod}
