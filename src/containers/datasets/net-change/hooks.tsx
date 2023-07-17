@@ -152,7 +152,7 @@ export function useMangroveNetChange(
     const unit = selectedUnit || data.metadata?.units.net_change;
     const currentStartYear = startYear || years?.[0];
     const currentEndYear = endYear || years?.[years?.length - 1];
-    const dataFiltered = data.data?.filter(
+    const dataFiltered = data?.data?.filter(
       (d) => d.year >= currentStartYear && d.year <= currentEndYear
     );
     const DATA = getWidgetData(dataFiltered, unit) || [];

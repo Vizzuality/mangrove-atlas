@@ -1,0 +1,27 @@
+import LayoutMdx from 'layouts/mdx';
+
+
+Other than the National Dashboards, datasets on Global Mangrove Watch have been developed at a global scale; therefore, there are limitations around data resolution and scale that should be accounted for when interpreting data at a local level.
+
+### Global: 
+
+Data values aggregated to worldwide totals are available and spatial data are visible on the map when zoomed to a global scale. 
+              
+### National:
+
+Data values are aggregated to national totals and spatial data are visible on the map at a national scale. Data available at the national scale only may not be appropriate or available for interpretation at the local level.
+                    
+### Sub-national: 
+
+Data values are queryable at the subnational scale through the Custom Area drawing tool, and spatial data are visible on the map when zoomed in beyond the national scale. Please take time to understand the metadata and methodology behind the data to avoid misinterpreting data at very fine scales.
+
+### Local: 
+
+Data are visible and applicable at a very fine scale (~1 ha). Please take time to understand the metadata and methodology behind the data to avoid misinterpreting data at very fine scales.
+           
+
+export default ({ children, ...props }) => (
+  <LayoutMdx {...props}>
+    {children}
+  </LayoutMdx>
+);

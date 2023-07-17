@@ -18,7 +18,7 @@ const Info = ({ id, content }) => {
           </div>
         </DialogTrigger>
         <DialogContent className="left-18 top-16 max-h-[90%] rounded-3xl">
-          <div className="max-h-[90%] overflow-y-auto">
+          <div className="max-h-[90%] overflow-y-scroll">
             {/* Supports external content or look by id for static info about widgets */}
             {id && <Info />}
             {content && <p>{content}</p>}
