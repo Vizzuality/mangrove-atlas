@@ -31,8 +31,19 @@ const tileToBBOX = (tile) => {
   return [w, s, e, n];
 };
 
+const proyectX = (lon) => {
+  return lon / 360 + 0.5;
+};
+const proyectY = (lat) => {
+  const sin = Math.sin((lat * Math.PI) / 180);
+  const y2 = 0.5 - (0.25 * Math.log((1 + sin) / (1 - sin))) / Math.PI;
+  return y2 < 0 ? 0 : y2 > 1 ? 1 : y2;
+};
+
 const transformPoint = (x, y, extent, z2, tx, ty) => {
-  return [Math.round(extent * (x * z2 - tx)), Math.round(extent * (y * z2 - ty))];
+  const pX = x * Math.pow(2, z2) - tx;
+  const pY = y * Math.pow(2, z2) - ty;
+  return [Math.round(pX * extent), Math.round(pY * extent)];
 };
 
 const makeTileQuery = (startDate, endDate, bBox) => {
@@ -68,8 +79,8 @@ const getData = async (startDate, endDate, bBox) => {
 // This is a simplier version of code adapted from https://github.com/mapbox/geojson-vt/blob/main/src/tile.js
 // It is used to generate a vector tile from a geojson of points. If in the future we want to use lines or polygons
 // we should replace this code with the original one.
-const createTile = (data, z, tx, ty, bBox) => {
-  const [minX, minY, maxX, maxY] = bBox;
+const createTile = (data, z, tx, ty) => {
+  // const [minX, minY, maxX, maxY] = bBox;
   const tile = {
     version: 2,
     name: 'points',
@@ -81,10 +92,10 @@ const createTile = (data, z, tx, ty, bBox) => {
     x: tx,
     y: ty,
     z,
-    minX,
-    minY,
-    maxX,
-    maxY,
+    minX: 2,
+    minY: 1,
+    maxX: -1,
+    maxY: 0,
     transformed: true,
     extent: 4096,
   };
@@ -97,15 +108,20 @@ const createTile = (data, z, tx, ty, bBox) => {
 
 const addTileFeature = (tile, row) => {
   // geometry: transformPoint(row.longitude, row.latitude, tile.extent, tile.z, tile.x, tile.y),
+  const x = proyectX(row.longitude);
+  const y = proyectY(row.latitude);
   const tileFeature = {
     id: row.id,
-    geometry: transformPoint(row.longitude, row.latitude, tile.extent, tile.z, tile.x, tile.y),
+    geometry: [transformPoint(x, y, tile.extent, tile.z, tile.x, tile.y)],
     type: 1,
-    tags: { scr5_obs_date: row.scr5_obs_date.value },
+    tags: null,
   };
   tile.features.push(tileFeature);
   tile.numPoints++;
-  tile.numSimplified++;
+  tile.minX = Math.min(tile.minX, x);
+  tile.minY = Math.min(tile.minY, y);
+  tile.maxX = Math.max(tile.maxX, x);
+  tile.maxY = Math.max(tile.maxY, y);
 };
 
 // TODO: This is a very simple implementation of the MVT serialization. We should use a library
@@ -130,18 +146,18 @@ const alertsJob = async (
   endDate = new Date().toISOString().split('T')[0]
 ) => {
   // First try to get data from cache in order to reduce costs
-  // const cacheKey = `_${startDate}_${endDate}_${z}_${x}_${y}`;
-  // if (cache[cacheKey]) {
-  //   console.log(`Rensponse from cache ${cacheKey}`);
-  //   return cache[cacheKey];
-  // }
+  const cacheKey = `_${startDate}_${endDate}_${z}_${x}_${y}`;
+  if (cache[cacheKey]) {
+    console.log(`Rensponse from cache ${cacheKey}`);
+    return cache[cacheKey];
+  }
   const bBox = tileToBBOX([x, y, z]);
 
   const rows = await getData(startDate, endDate, bBox);
 
-  const result = createTile(rows, z, x, y, bBox);
+  const result = createTile(rows, z, x, y);
   // Store in cache
-  // cache[cacheKey] = result;
+  cache[cacheKey] = serializeMVT(result);
 
   return serializeMVT(result);
 };

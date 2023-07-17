@@ -453,7 +453,9 @@ export function useSources(): SourceProps[] {
     {
       id: 'alerts-tiles',
       type: 'vector',
-      tiles: ['http://localhost:8080?x={x}&y={y}&z={z}&start_date=2020-01-01&end_date=2023-07-14'],
+      tiles: [ `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
+        startDate?.value || ''
+      }&end_date=${endDate?.value || ''}` ],
       minzoom: 10,
       maxzoom: 14,
     },
@@ -497,7 +499,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
           // Adjust the heatmap radius by zoom level
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
           // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 12, 0],
+          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 11, 0.5],
         },
       },
     ],
@@ -508,9 +510,9 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
         source: 'alerts-tiles',
         'source-layer': 'geojsonLayer',
         minzoom: 10,
-        maxzoom: 14,
+        maxzoom: 18,
         paint: {
-          'circle-radius': 10,
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 18, 2],
           'circle-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-width': 1,

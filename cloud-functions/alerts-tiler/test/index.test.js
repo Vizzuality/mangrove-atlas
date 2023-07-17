@@ -35,7 +35,7 @@ describe('functions_fetchAlertsTiler_http', () => {
 
     const tileResult = new VectorTile(mocks.res.send.getCall(0).args[0]);
 
-    // console.log(mocks.res.send.getCall(0).args[0]);
+    console.log(mocks.res.send.getCall(0).args[0]);
     // assert.strictEqual(mocks.res.send.calledOnceWith('Hello World!'), true);
   });
 });
