@@ -453,9 +453,11 @@ export function useSources(): SourceProps[] {
     {
       id: 'alerts-tiles',
       type: 'vector',
-      tiles: [ `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
-        startDate?.value || ''
-      }&end_date=${endDate?.value || ''}` ],
+      tiles: [
+        `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
+          startDate?.value || ''
+        }&end_date=${endDate?.value || ''}`,
+      ],
       minzoom: 10,
       maxzoom: 14,
     },
