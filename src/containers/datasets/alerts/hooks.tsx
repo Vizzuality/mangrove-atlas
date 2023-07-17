@@ -448,15 +448,25 @@ export function useSources(): SourceProps[] {
       type: 'geojson',
       data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
         startDate?.value || ''
-      }&end_date=${endDate?.value || ''}${
-        location_id && location_id !== 'worldwide' ? `&location_id=${location_id}` : ''
-      }`,
+      }&end_date=${endDate?.value || ''}`,
+    },
+    {
+      id: 'alerts-tiles',
+      type: 'vector',
+      tiles: [
+        `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
+          startDate?.value || ''
+        }&end_date=${endDate?.value || ''}`,
+      ],
+      minzoom: 10,
+      maxzoom: 14,
     },
   ];
 }
 
 export function useLayers({ id }: { id: LayerProps['id'] }): {
   'alerts-heatmap': LayerProps[];
+  'alerts-tiles': LayerProps[];
   'monitored-alerts': LayerProps[];
 } {
   return {
@@ -465,7 +475,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
         id,
         type: 'heatmap',
         source: 'alerts-heatmap',
-        maxzoom: 12,
+        maxzoom: 10,
         paint: {
           // Increase the heatmap weight based on frequency and property magnitude
           'heatmap-weight': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 6, 1],
@@ -491,80 +501,25 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
           // Adjust the heatmap radius by zoom level
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
           // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 12, 0],
+          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 11, 0.5],
         },
       },
+    ],
+    'alerts-tiles': [
       {
         id: `${id}-points`,
         type: 'circle',
-        source: 'alerts',
-        minzoom: 0,
+        source: 'alerts-tiles',
+        'source-layer': 'geojsonLayer',
+        minzoom: 10,
+        maxzoom: 18,
         paint: {
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            7,
-            ['interpolate', ['linear'], ['get', 'count'], 1, 1, 6, 4],
-            16,
-            ['interpolate', ['linear'], ['get', 'count'], 1, 2, 6, 30],
-          ],
-          'circle-color': [
-            'interpolate',
-            ['linear'],
-            ['get', 'count'],
-            0,
-            'rgba(255, 255, 255, 1)',
-            5,
-            'rgba(255, 194, 0, 1)',
-            10,
-            'rgba(235, 68, 68, 1)',
-            100,
-            'rgba(199, 43, 214, 1)',
-          ],
-          'circle-stroke-color': [
-            'interpolate',
-            ['linear'],
-            ['heatmap-density'],
-            0,
-            'rgba(255, 255, 255, 0)',
-            0.1,
-            'rgba(255, 194, 0, 1)',
-            0.5,
-            'rgba(235, 68, 68, 1)',
-            1,
-            'rgba(199, 43, 214, 1)',
-          ],
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 18, 2],
+          'circle-color': 'rgba(255, 194, 0, 1)',
+          'circle-stroke-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-width': 1,
           'circle-blur': 0.5,
           'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, 0.7],
-        },
-      },
-      {
-        id: `${id}-count`,
-        type: 'symbol',
-        source: 'alerts',
-        layout: {
-          'text-field': ['get', 'count'],
-          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-          'text-size': 8,
-          'text-allow-overlap': true,
-        },
-        paint: {
-          'text-color': [
-            'interpolate',
-            ['linear'],
-            ['get', 'count'],
-            0,
-            'rgba(255, 255, 255, 1)',
-            5,
-            'rgba(255, 194, 0, 1)',
-            10,
-            'rgba(235, 68, 68, 1)',
-            100,
-            'rgba(199, 43, 214, 1)',
-          ],
-          'text-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, 1],
         },
       },
     ],

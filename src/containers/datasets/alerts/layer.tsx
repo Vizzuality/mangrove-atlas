@@ -7,6 +7,8 @@ import { useLayers, useSources } from './hooks';
 const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCES = useSources();
   const LAYERS = useLayers({ id });
+  console.log('SOURCES', SOURCES);
+  console.log('LAYERS', LAYERS);
 
   if (!SOURCES || !LAYERS) return null;
 

@@ -1,4 +1,4 @@
 node_modules
 build
-*/credentials.json
+credentials.json
 .env
