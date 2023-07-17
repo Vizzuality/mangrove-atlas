@@ -57,7 +57,7 @@ const LayerManagerContainer = () => {
     }
 
     return filteredLayers satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
-  }, [layers, basemap]);
+  }, [layers, basemap, layersOrdered]);
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
