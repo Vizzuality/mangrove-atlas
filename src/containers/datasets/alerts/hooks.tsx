@@ -453,13 +453,16 @@ export function useSources(): SourceProps[] {
     {
       id: 'alerts-tiles',
       type: 'vector',
-      url: `http://localhost:8080?x={x}&y={y}&z={z}&start_date=2020-01-01&end_date=2023-07-14`,
+      tiles: ['http://localhost:8080?x={x}&y={y}&z={z}&start_date=2020-01-01&end_date=2023-07-14'],
+      minzoom: 10,
+      maxzoom: 14,
     },
   ];
 }
 
 export function useLayers({ id }: { id: LayerProps['id'] }): {
   'alerts-heatmap': LayerProps[];
+  'alerts-tiles': LayerProps[];
   'monitored-alerts': LayerProps[];
 } {
   return {
@@ -468,7 +471,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
         id,
         type: 'heatmap',
         source: 'alerts-heatmap',
-        maxzoom: 12,
+        maxzoom: 10,
         paint: {
           // Increase the heatmap weight based on frequency and property magnitude
           'heatmap-weight': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 6, 1],
@@ -497,15 +500,19 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
           'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 12, 0],
         },
       },
+    ],
+    'alerts-tiles': [
       {
         id: `${id}-points`,
         type: 'circle',
         source: 'alerts-tiles',
+        'source-layer': 'geojsonLayer',
         minzoom: 10,
+        maxzoom: 14,
         paint: {
           'circle-radius': 10,
-          'circle-color': 'rgba(255, 255, 255, 1)',
-          'circle-stroke-color': 'rgba(255, 255, 255, 1)',
+          'circle-color': 'rgba(255, 194, 0, 1)',
+          'circle-stroke-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-width': 1,
           'circle-blur': 0.5,
           'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, 0.7],

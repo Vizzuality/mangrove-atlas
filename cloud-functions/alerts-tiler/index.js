@@ -1,8 +1,10 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 const axios = require('axios').default;
+
 const http = require('http');
 const https = require('https');
-const Pbf = require('pbf');
+
+const vtpbf = require('vt-pbf');
 
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
@@ -86,6 +88,7 @@ const createTile = (data, z, tx, ty, bBox) => {
     transformed: true,
     extent: 4096,
   };
+
   for (const row of data) {
     addTileFeature(tile, row);
   }
@@ -93,6 +96,7 @@ const createTile = (data, z, tx, ty, bBox) => {
 };
 
 const addTileFeature = (tile, row) => {
+  // geometry: transformPoint(row.longitude, row.latitude, tile.extent, tile.z, tile.x, tile.y),
   const tileFeature = {
     id: row.id,
     geometry: transformPoint(row.longitude, row.latitude, tile.extent, tile.z, tile.x, tile.y),
@@ -106,10 +110,8 @@ const addTileFeature = (tile, row) => {
 
 // TODO: This is a very simple implementation of the MVT serialization. We should use a library
 const serializeMVT = (tileData) => {
-  const pbf = new Pbf();
-  const VectorTile = tileData.write(pbf);
-  pbf.finish();
-  return VectorTile;
+  var buff = vtpbf.fromGeojsonVt({ geojsonLayer: tileData });
+  return buff;
 };
 
 /**
@@ -128,20 +130,20 @@ const alertsJob = async (
   endDate = new Date().toISOString().split('T')[0]
 ) => {
   // First try to get data from cache in order to reduce costs
-  const cacheKey = `_${startDate}_${endDate}_${z}_${x}_${y}`;
-  if (cache[cacheKey]) {
-    console.log(`Rensponse from cache ${cacheKey}`);
-    return cache[cacheKey];
-  }
+  // const cacheKey = `_${startDate}_${endDate}_${z}_${x}_${y}`;
+  // if (cache[cacheKey]) {
+  //   console.log(`Rensponse from cache ${cacheKey}`);
+  //   return cache[cacheKey];
+  // }
   const bBox = tileToBBOX([x, y, z]);
 
   const rows = await getData(startDate, endDate, bBox);
 
   const result = createTile(rows, z, x, y, bBox);
   // Store in cache
-  cache[cacheKey] = result;
+  // cache[cacheKey] = result;
 
-  return result;
+  return serializeMVT(result);
 };
 
 /**
@@ -158,11 +160,12 @@ exports.fetchAlertsTiler = (req, res) => {
     const { start_date, end_date, z, x, y } = req.query;
 
     if (z < minZoom || z > maxZoom)
-      throw new Error(`z should be in the ${minZoom}-${maxZoon} range`);
+      throw new Error(`z should be in the ${minZoom}-${maxZoom} range`);
 
     const result = await alertsJob(parseInt(x), parseInt(y), parseInt(z), start_date, end_date);
 
-    res.json(result);
+    // res.send(result);
+    res.end(result);
   }
 
   // Set CORS headers for preflight requests
@@ -170,6 +173,7 @@ exports.fetchAlertsTiler = (req, res) => {
   // and caches preflight response for 3600s
   res.set('Access-Control-Allow-Origin', '*');
   res.set('mime-type', 'application/vnd.mapbox-vector-tile');
+  res.set('Content-Type', 'application/x-protobuf');
 
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
