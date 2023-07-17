@@ -29,7 +29,7 @@ jobs:
       uses: 'google-github-actions/deploy-cloud-functions@v0.10.1'
       with:
         name: 'alerts-tiler'
-        runtime: 'nodejs10'
+        runtime: 'nodejs18'
         entry_point: 'fetchAlertsTiler'
         memory_mb: '256'
         region: 'us-central1'
