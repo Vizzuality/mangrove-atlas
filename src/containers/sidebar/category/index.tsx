@@ -64,13 +64,13 @@ const Category = () => {
   return (
     <div
       className={cn({
-        'relative flex flex-col text-center': true,
+        'relative flex max-w-[45px] flex-col text-center': true,
         'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
       })}
     >
       <div
         className={cn({
-          'inset pointer-events-none fixed top-0 left-0 z-50 h-full w-full bg-black/70 opacity-0 transition-opacity':
+          'inset w-fit-content pointer-events-none absolute top-0 left-0 z-50 h-full bg-black/70 opacity-0 transition-opacity':
             true,
           'opacity-1': isOpen,
         })}

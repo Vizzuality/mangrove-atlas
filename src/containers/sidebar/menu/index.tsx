@@ -32,13 +32,13 @@ const Menu = () => {
     <div className="relative">
       <Helper
         className={{
-          button: '-bottom-10 -right-1.5 z-[20]',
+          button: '-bottom-10 -right-1.5',
           tooltip: 'w-fit-content',
         }}
         tooltipPosition={{ top: -10, left: -60 }}
         message="main menu"
       >
-        <div className="hidden w-full pb-1 text-center font-sans text-xxs text-white md:block">
+        <div className="w-full max-w-[45px] pb-1 text-center font-sans text-xxs text-white md:block">
           Menu
         </div>
         <div className={`${STYLES['icon-wrapper']}`}>

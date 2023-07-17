@@ -96,7 +96,7 @@ export const Helper = ({
                   left: childrenPosition?.left - tooltipPosition.left,
                 }}
                 className={cn({
-                  'fixed z-[60] h-fit w-56 cursor-default rounded-md bg-white p-3': true,
+                  'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-3': true,
                   [className.tooltip]: !!className.tooltip,
                 })}
               >

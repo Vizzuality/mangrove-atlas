@@ -4,7 +4,7 @@ const INFO = [
   {
     id: 17,
     title: 'Mangrove Alerts',
-    href: false,
+    href: 'https://storage.googleapis.com/mangrove_atlas/deforestation-alerts/Downloads/gmw_alerts_latest.gpkg',
     description: false,
   },
 ];

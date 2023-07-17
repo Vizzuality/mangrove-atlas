@@ -15,6 +15,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/di
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
+import Info from './info.mdx';
 import { getWidgetActive } from './selector';
 
 type ChildrenType = ReactElement & { type?: () => null };
@@ -119,9 +120,10 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
                 <DialogTrigger>
                   <div className="flex justify-center text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="scroll-y top-24 rounded-3xl">
-                  <h2>Data applicability</h2>
-                  <p>info coming soon</p>
+                <DialogContent className="top-24 rounded-3xl">
+                  {/* <h2>Data applicability</h2> */}
+                  <Info />
+
                   <DialogClose />
                 </DialogContent>
               </Dialog>
