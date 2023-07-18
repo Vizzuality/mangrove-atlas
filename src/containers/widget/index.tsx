@@ -109,7 +109,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
           {applicability && (
             <p
               className={cn({
-                'text-center text-sm text-black/85': true,
+                'flex whitespace-nowrap text-center text-sm text-black/85': true,
                 hidden: widgetsCollapsed[id],
                 block: !widgetsCollapsed[id],
               })}
@@ -118,12 +118,12 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
               <span className="font-light">{applicability}.</span>{' '}
               <Dialog>
                 <DialogTrigger asChild>
-                  <div className="flex justify-center text-brand-800 underline">Learn more</div>
+                  <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="top-24 rounded-3xl">
-                  {/* <h2>Data applicability</h2> */}
-                  <Info />
-
+                <DialogContent className="top-[5vh] rounded-3xl">
+                  <div className="max-h-[93%] overflow-y-auto">
+                    <Info />
+                  </div>
                   <DialogClose />
                 </DialogContent>
               </Dialog>

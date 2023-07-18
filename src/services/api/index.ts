@@ -11,8 +11,12 @@ export const AnalysisAPI = axios.create({
 });
 
 export const BlogAPI = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BLOG_API_URL,
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: '/blog',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Cache-Control': 'max-age=3600',
+  },
 });
 
 export const PlanetAPI = axios.create({
