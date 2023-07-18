@@ -21,12 +21,16 @@ import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
 import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
 import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layers/global-tidal-wetland-change';
+import GlobalTidalWetlandChangeDownload from 'containers/datasets/contextual-layers/global-tidal-wetland-change/download';
+import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/global-tidal-wetland-change/info.mdx';
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
 import LayerNameContentSecond from 'containers/datasets/contextual-layers/layer-name-second';
 import LayerNameInfoSecond from 'containers/datasets/contextual-layers/layer-name-second/info.mdx';
 import LayerNameLayerSecond from 'containers/datasets/contextual-layers/layer-name-second/layer';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
 import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats';
+import TidalFlatsDownload from 'containers/datasets/contextual-layers/tidal-flats/download';
+import TidalFlatsInfo from 'containers/datasets/contextual-layers/tidal-flats/info.mdx';
 import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
 import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
@@ -158,6 +162,8 @@ export const INFO = {
   mangrove_flood_protection: FloodProtectionInfo,
   mangrove_fisheries: FisheriesInfo,
   mangrove_allen_coral_reef: AllenCoralReefInfo,
+  mangrove_tidal_flats: TidalFlatsInfo,
+  mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeInfo,
 };
 
 export const DOWNLOAD = {
@@ -167,6 +173,8 @@ export const DOWNLOAD = {
   mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
   mangrove_blue_carbon: BlueCarbonDownload,
+  mangrove_tidal_flats: TidalFlatsDownload,
+  mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeDownload,
 };
 
 export const BASEMAPS = {

@@ -18,7 +18,7 @@ const Download = ({ id, content }) => {
           </div>
         </DialogTrigger>
         <DialogContent className="top-24 rounded-3xl">
-          <div className="max-h-[90%] overflow-y-auto">
+          <div className="h-fit overflow-y-auto">
             {id && <DownloadInfo />}
             {content && <p>{content}</p>}
           </div>
