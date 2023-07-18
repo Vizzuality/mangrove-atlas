@@ -1,3 +1,5 @@
+import cn from 'lib/classnames';
+
 import Loading from 'components/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
@@ -12,10 +14,15 @@ const RestorationValue = () => {
   const { isFetched, isFetching, data } = useMangroveEcosystemServices({
     slug: 'restoration-value',
   });
+  if (!data) return null;
 
-  if (!data || !data?.length) return null;
   return (
-    <div className={WIDGET_CARD_WRAPPER_STYLE}>
+    <div
+      className={cn({
+        [WIDGET_CARD_WRAPPER_STYLE]: true,
+        relative: true,
+      })}
+    >
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
         <div className="space-y-4">
