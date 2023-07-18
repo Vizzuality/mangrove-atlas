@@ -61,9 +61,9 @@ const HabitatExtent = () => {
             <span className="notranslate font-bold">
               {' '}
               <Popover>
-                <PopoverTrigger>
-                  {' '}
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                    {' '}
                     {currentStartYear}
                     <Icon
                       icon={TRIANGLE_SVG}
@@ -101,7 +101,7 @@ const HabitatExtent = () => {
             and{' '}
             <span className="notranslate font-bold">
               <Popover>
-                <PopoverTrigger>
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {currentEndYear}
                     <Icon

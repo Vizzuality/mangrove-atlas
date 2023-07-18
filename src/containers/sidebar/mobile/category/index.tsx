@@ -26,7 +26,7 @@ const CategoryMobile = () => {
   return (
     <div className="relative">
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger asChild>
           <div className="h-10.5 relative flex w-10.5 cursor-pointer items-center justify-center">
             <Icon
               icon={CHART_SVG}

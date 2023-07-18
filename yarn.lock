@@ -2343,18 +2343,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:4.26.1":
-  version: 4.26.1
-  resolution: "@tanstack/query-core@npm:4.26.1"
-  checksum: c7bc751d7d08ce27dd7262aa75a263808b128902b8f3a5dd1ff9b1dfda6511af965388bcdb7d8130bdf10756c1d583f527ead274b1d3e4f4db29c83260b416b0
+"@tanstack/query-core@npm:4.29.25":
+  version: 4.29.25
+  resolution: "@tanstack/query-core@npm:4.29.25"
+  checksum: 5287e278cf0ef781c5bd238842243adc4430a43ffc9bee1963131726c5bdf6a67d38e122f45c3375232d05c5a335b1309026ce4252647bb3e4710b70bcebdbf5
   languageName: node
   linkType: hard
 
-"@tanstack/react-query@npm:4.26.1":
-  version: 4.26.1
-  resolution: "@tanstack/react-query@npm:4.26.1"
+"@tanstack/react-query@npm:4.29.25":
+  version: 4.29.25
+  resolution: "@tanstack/react-query@npm:4.29.25"
   dependencies:
-    "@tanstack/query-core": 4.26.1
+    "@tanstack/query-core": 4.29.25
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
@@ -2365,7 +2365,7 @@ __metadata:
       optional: true
     react-native:
       optional: true
-  checksum: 3b43a5acc84841364c08ed7c7d0f495008214f1f39b7fb073a95a53528ce40b4841dbc407070b4c0082d73990277bbcf9bc88df40217e70c226be4931efaa081
+  checksum: e0ae4cbe1d8f691d488bc1c68df3df12d1ed093796eb879842ef8d4d388d07cebbdd7ab6174481d624dc133326895a53a5442864bb27ffcc0db5f4f40d7f827f
   languageName: node
   linkType: hard
 
@@ -7351,7 +7351,7 @@ __metadata:
     "@tailwindcss/forms": 0.5.3
     "@tailwindcss/line-clamp": 0.4.2
     "@tailwindcss/typography": 0.5.9
-    "@tanstack/react-query": 4.26.1
+    "@tanstack/react-query": 4.29.25
     "@turf/bbox": 6.5.0
     "@types/d3-format": ^3.0.1
     "@types/geojson": 7946.0.10

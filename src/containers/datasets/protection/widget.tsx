@@ -34,7 +34,7 @@ const Protection = () => {
             <span className="font-bold">
               {data.protectedArea}{' '}
               <Popover>
-                <PopoverTrigger>
+                <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {selectedUnit}
                     <Icon
@@ -67,7 +67,7 @@ const Protection = () => {
             </span>{' '}
             out of a total <span className="font-bold">{data.totalArea}</span>{' '}
             <Popover>
-              <PopoverTrigger>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />

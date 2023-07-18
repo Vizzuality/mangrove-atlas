@@ -43,7 +43,7 @@ const Menu = () => {
         </div>
         <div className={`${STYLES['icon-wrapper']}`}>
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild>
               <button
                 data-testid="menu-button"
                 type="button"

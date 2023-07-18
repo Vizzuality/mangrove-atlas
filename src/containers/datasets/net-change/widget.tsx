@@ -139,7 +139,7 @@ const NetChangeWidget = () => {
             </Popover>{' '}
             between{' '}
             <Popover>
-              <PopoverTrigger>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentStartYear}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
@@ -173,7 +173,7 @@ const NetChangeWidget = () => {
             </Popover>{' '}
             and{' '}
             <Popover>
-              <PopoverTrigger>
+              <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentEndYear}
                   <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
