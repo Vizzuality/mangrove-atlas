@@ -63,9 +63,8 @@ const Menu = () => {
                 'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5vh] md:max-w-xl':
                   true,
                 'h-fit py-0': section === 'main',
-                'h-[96%] pt-10 pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
-                'md:translate-0 translate-y-1/3': !openSubmenu,
-                'md:translate-0 translate-y-10': openSubmenu,
+                'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
+                'md:translate-0 translate-y-10': true,
               })}
             >
               {section === 'main' && (
@@ -152,7 +151,7 @@ const Menu = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-              {/* <AnimatePresence>
+              <AnimatePresence>
                 {section === 'news' && (
                   <motion.div
                     className="no-scrollbar overflow-y-auto pt-3 font-sans"
@@ -167,7 +166,7 @@ const Menu = () => {
                     <BlogContent />
                   </motion.div>
                 )}
-              </AnimatePresence> */}
+              </AnimatePresence>
               <DialogClose />
             </DialogContent>
           </Dialog>

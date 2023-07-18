@@ -54,6 +54,12 @@ const nextConfig = {
         source: '/planet-api/:path*',
         destination: `https://api.planet.com/basemaps/v1/:path*?api_key=${process.env.NEXT_PUBLIC_PLANET_API_KEY}`,
       },
+
+      // Wetlands Blog
+      {
+        source: '/blog/:path*',
+        destination: `https://www.wetlands.org/:path*`,
+      },
     ];
   },
   /** @param {import('webpack').Configuration} config */
