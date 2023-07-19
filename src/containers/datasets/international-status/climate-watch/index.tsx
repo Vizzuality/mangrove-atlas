@@ -25,7 +25,10 @@ const ClimateWatchNationalDashboard = () => {
   const Indicators = [
     {
       label: 'Emissions reduction <sup>(1)</sup>',
-      value: data?.M_TarA1?.[data.iso].value || data?.M_TarA5?.[data.iso].value || '-',
+      value:
+        data?.M_TarA1?.[data.iso].value.replace('MtCO2', 'MtCO²') ||
+        data?.M_TarA5?.[data.iso].value.replace('MtCO2', 'MtCO²') ||
+        '-',
       check: false,
       info:
         data?.M_TarA1?.info ||
@@ -46,13 +49,13 @@ const ClimateWatchNationalDashboard = () => {
       value: false,
       check:
         !!data?.M_TarA1 || !!data?.M_TarA5 || !!data?.M_TarB1 || !!data?.M_TarA2 ? 'yes' : 'no',
-      info: data?.mitigation_contribution_type?.info || 'NDC contains Mitigation?',
+      info: 'NDC contains Mitigation?',
     },
     {
       label: 'Type of mitigation pledge',
       value: data?.mitigation_contribution_type?.[data.iso].value,
       check: false,
-      info: 'Type of mitigation pledge',
+      info: 'Indicates whether a country has a GHG emissions target, a non-GHG target or both',
     },
     {
       label: 'Adaptation',
@@ -64,7 +67,7 @@ const ClimateWatchNationalDashboard = () => {
       label: 'Base year/s',
       value: data?.M_TarA4?.[data.iso]?.value,
       check: false,
-      info: data?.M_TarA4?.info || 'NDC base year/s',
+      info: 'Year/s against which emission targets are measured against',
     },
     {
       label: 'Target year/s',
@@ -76,7 +79,7 @@ const ClimateWatchNationalDashboard = () => {
       label: 'Update status',
       value: update?.long_name,
       check: false,
-      info: update?.description,
+      info: "Indicates whether this is the country's first NDC or whether it has been updated",
     },
   ];
 
@@ -101,10 +104,11 @@ const ClimateWatchNationalDashboard = () => {
           </div>
           {data.widgetIntroduction && <p>{data.widgetIntroduction}</p>}
           <div className="space-y-5">
-            {Indicators.map(({ label, value, info, check }, index) => (
+            {Indicators.map(({ label, value, info, check }) => (
               <Indicator key={label} label={label} value={value} info={info} check={check} />
             ))}
           </div>
+          {<p className="pt-6 text-sm">(1) Compared to base year or to baseline scenario.</p>}
         </>
       )}
     </div>
