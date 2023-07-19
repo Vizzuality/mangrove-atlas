@@ -10,19 +10,8 @@ import type { UseParamsOptions } from 'types/widget';
 
 import { ClimateWatchAPI } from 'services/api';
 
-import type {
-  DataResponse,
-  DataResponseDocuments,
-  Indicator,
-  IndicatorsParams,
-  Data,
-} from './types';
+import type { DataResponse, DataResponseDocuments, IndicatorsParams, Data } from './types';
 
-type Value = {
-  description: string;
-  slug: string;
-  locations: Location[];
-};
 // widget data
 export function useClimateWatchNDCS(
   indicators: IndicatorsParams,
