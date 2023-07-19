@@ -3,15 +3,17 @@ type Specie = Readonly<{
   iucn_url: string;
 }>;
 
+export type Category =
+  | 'Critically Endangered'
+  | 'Endangered'
+  | 'Vulnerable'
+  | 'Near Threatened'
+  | 'Least Concern'
+  | 'Data Deficient';
+
 export type LegendItem = Readonly<{
   value: number;
   color: string;
-  label:
-    | 'Critically Endangered'
-    | 'Endangered'
-    | 'Vulnerable'
-    | 'Near Threatened'
-    | 'Least Concern'
-    | 'Data Deficient';
+  label: Category;
   species: Specie[];
 }>;
