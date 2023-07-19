@@ -151,7 +151,7 @@ const Menu = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-              {/* <AnimatePresence>
+              <AnimatePresence>
                 {section === 'news' && (
                   <motion.div
                     className="no-scrollbar overflow-y-auto pt-3 font-sans"
@@ -166,7 +166,7 @@ const Menu = () => {
                     <BlogContent />
                   </motion.div>
                 )}
-              </AnimatePresence> */}
+              </AnimatePresence>
               <DialogClose />
             </DialogContent>
           </Dialog>
