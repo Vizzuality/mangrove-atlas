@@ -204,9 +204,9 @@ export function useMangroveBlueCarbon(
     };
 
     const DATA = {
-      agb: formatMillion(agb),
-      toc: formatMillion(toc),
-      soc: formatMillion(soc),
+      agb: numberFormat(agb / 1000000),
+      toc: numberFormat(toc / 1000000),
+      soc: numberFormat(soc / 1000000),
       config,
       location,
       noData,
