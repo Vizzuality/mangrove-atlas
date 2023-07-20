@@ -36,14 +36,16 @@ const widgets = [
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
     layersIds: ['extent'],
   },
-  // {
-  //   name: 'National dashboard',
-  //   slug: 'mangrove_national_dashboard',
-  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-  //   applicability: 'National and Sub-National',
-  //   categoryIds: ['all_datasets', 'distribution_and_change'],
-  //   layersIds: [''],
-  // },
+  {
+    ...(process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && {
+      name: 'National dashboard',
+      slug: 'mangrove_national_dashboard',
+      locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+      applicability: 'National and Sub-National',
+      categoryIds: ['all_datasets', 'distribution_and_change'],
+      layersIds: [''],
+    }),
+  },
   {
     name: 'Mangrove net change',
     slug: 'mangrove_net_change',
@@ -107,14 +109,16 @@ const widgets = [
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['restoration'],
   },
-  // {
-  //   name: 'Mangrove Restoration Sites',
-  //   slug: 'mangrove_restoration_sites',
-  //   locationType: ['country', 'worldwide'],
-  //   applicability: 'Global, National, and Sub-National',
-  //   categoryIds: ['all_datasets', 'restoration_and_conservation'],
-  //   layersIds: ['restoration_sites'],
-  // },
+  {
+    ...(process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && {
+      name: 'Mangrove Restoration Sites',
+      slug: 'mangrove_restoration_sites',
+      locationType: ['country', 'worldwide'],
+      applicability: 'Global, National, and Sub-National',
+      categoryIds: ['all_datasets', 'restoration_and_conservation'],
+      layersIds: ['restoration_sites'],
+    }),
+  },
   {
     name: 'Mangrove biomass',
     slug: 'mangrove_biomass',

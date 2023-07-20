@@ -2,6 +2,9 @@
 
 ![Screenshot 2023-07-14 at 08 48 02](https://github.com/Vizzuality/mangrove-atlas/assets/33252015/8fa99ca2-16d4-4563-92e0-2c063edfe6b6)
 
+## Overview
+
+Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.
 
 ## Table of Contents
 
@@ -87,7 +90,7 @@ Here's a step-by-step guide on how to address vulnerabilities found in productio
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. 														  |    									|
 | NEXT_PUBLIC_PLANET_API_KEY    | URL of the Planet API. 		       									  |    								    |
 | NEXT_PUBLIC_BASE_URL  	    | Based URL of the project. 											  |    								    |
-| NEXT_PUBLIC_BLOG_API_URL  	| URL of the Transifex API. 											  |    								    |
+| NEXT_PUBLIC_TRANSIFEX_API_KEY | URL of the Transifex API. 											  |    								    |
 | NEXT_PUBLIC_BLOG_API_URL  	| URL of the API for WordPress content. 								  |    									|
 
 
