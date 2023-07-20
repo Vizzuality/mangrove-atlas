@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-  if (locationType && !ALLOWED_LOCATION_TYPES.includes(locationType)) {
+  if (locationType && !ALLOWED_LOCATION_TYPES?.includes(locationType)) {
     return {
       notFound: true,
     };

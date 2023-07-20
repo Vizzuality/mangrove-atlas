@@ -88,11 +88,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
 
-  const nationalDshboardLayers = activeWidgets.filter((el) =>
-    el.includes('mangrove_national_dashboard')
+  const nationalDashboardLayers = activeWidgets.filter((el) =>
+    el?.includes('mangrove_national_dashboard')
   );
   const activeOrdered = [
-    ...nationalDshboardLayers,
+    ...nationalDashboardLayers,
     ...LAYERS_ORDER.filter((el) => activeWidgets.some((f) => f === el)),
   ] as (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[];
 

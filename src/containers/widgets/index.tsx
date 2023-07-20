@@ -55,7 +55,7 @@ const WidgetsContainer: React.FC = () => {
 
   const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
 
-  const widgetsCollapsedChecker = Object.values(widgetsCollapsed).includes(true);
+  const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);
 
   const handleWidgetsCollapsed = useCallback(() => {
     const updateWidgetsCollapsed = Object.keys(widgetsCollapsed).reduce((acc, key) => {
