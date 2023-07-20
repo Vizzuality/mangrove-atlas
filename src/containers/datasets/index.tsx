@@ -75,6 +75,7 @@ import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
 import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
+import SpeciesLocationInfo from 'containers/datasets/species-location/info.mdx';
 import SpeciesLocationLayer from 'containers/datasets/species-location/layer';
 import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
@@ -162,6 +163,7 @@ export const INFO = {
   mangrove_allen_coral_reef: AllenCoralReefInfo,
   mangrove_tidal_flats: TidalFlatsInfo,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeInfo,
+  mangrove_species_location: SpeciesLocationInfo,
 };
 
 export const DOWNLOAD = {

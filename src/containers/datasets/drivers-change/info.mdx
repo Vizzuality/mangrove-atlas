@@ -1,21 +1,29 @@
 import LayoutMdx from 'layouts/mdx';
 
 # Mangrove drivers of change
+
 ## Overview:
 
-Pending
+This dataset provides estimates of the extent of mangrove loss, land cover change, and its anthropogenic or climatic drivers in three time periods: 2000-2005, 2005-2010, and 2010-2016. Landsat-based Normalized Difference Vegetation Index (NDVI) anomalies were used to determine loss extent in each period. The drivers of mangrove loss were determined by examining land cover changes using a random forest machine learning technique that considered change from mangrove to wet soil, dry soil, and water at each loss pixel. A series of decision trees used several global-scale land-use datasets to identify the ultimate driver of the mangrove loss. Loss drivers include commodity production (agriculture, aquaculture), settlement, erosion, extreme climatic events, and non-productive conversion. Maps of loss extent per period, mangrove land cover changes, and loss drivers are provided for each of 39 mangrove holding nations.
 
-## Reference:
 
-Pending
+## Reference 1 (paper): 
+
+<a href="https://onlinelibrary.wiley.com/doi/10.1111/gcb.15275" target="_blank" rel="noopener noreferrer">Goldberg, L.; Lagomasino, D.; Thomas, N.; Fatoyinbo, T. Global declines in human-driven mangrove loss. Glob. Chang. Biol. 2020, 26, 5844–5855</a>
+
+## Reference 2 (data): 
+
+<a href="https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1768" target="_blank" rel="noopener noreferrer">Goldberg, L., D. Lagomasino, N. Thomas, and T. Fatoyinbo. 2022. Global Mangrove Loss Extent, Land Cover Change, and Loss Drivers, 2000-2016. ORNL DAAC, Oak Ridge, Tennessee, USA.</a>
+
+## Reference 3 (more info): <a href="https://www.mangrovelossdrivers.app/" target="_blank" rel="noopener noreferrer">Mangrove Loss Drivers App</a>
 
 ## Date of content':
 
-Pending
+2000 - 2016
 
 ## License:
 
-Pending
+<a href="https://www.earthdata.nasa.gov/learn/use-data/data-use-policy" target="_blank" rel="noopener noreferrer">EOSDIS Data Use Policy</a>
 
 
 export default ({ children, ...props }) => (
@@ -23,3 +31,5 @@ export default ({ children, ...props }) => (
     {children}
   </LayoutMdx>
 );
+
+

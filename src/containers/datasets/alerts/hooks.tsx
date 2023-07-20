@@ -6,6 +6,8 @@ import sortBy from 'lodash-es/sortBy';
 
 import { useRouter } from 'next/router';
 
+import { formatAxis } from 'lib/format';
+
 import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
@@ -415,7 +417,7 @@ export function useAlerts<T>(
       startDateOptions,
       endDateOptions,
       dateOptions: startDateOptions,
-      alertsTotal,
+      alertsTotal: formatAxis(alertsTotal),
       chartData,
       defaultStartDate,
       defaultEndDate,
