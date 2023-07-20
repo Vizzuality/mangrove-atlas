@@ -17,8 +17,8 @@ const Download = ({ id, content }) => {
             <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="top-24 rounded-3xl">
-          <div className="h-fit overflow-y-auto">
+        <DialogContent className="scroll-y left-18 top-16 h-[90%] rounded-3xl">
+          <div className="no-scrollbar overflow-y-auto">
             {id && <DownloadInfo />}
             {content && <p>{content}</p>}
           </div>

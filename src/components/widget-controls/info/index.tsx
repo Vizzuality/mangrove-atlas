@@ -18,7 +18,7 @@ const Info = ({ id, content }) => {
           </div>
         </DialogTrigger>
         <DialogContent className="scroll-y left-18 top-16 h-[90%] rounded-3xl">
-          <div className="no-scrollbar overflow-y-auto ">
+          <div className="no-scrollbar max-h-fit overflow-y-auto ">
             {/* Supports external content or look by id for static info about widgets */}
             {id && <Info />}
             {content && <p>{content}</p>}
