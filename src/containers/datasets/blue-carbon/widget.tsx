@@ -77,9 +77,9 @@ const BlueCarbonWidget = () => {
         <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             Total organic carbon stored in <span className="font-bold"> {location}</span> mangroves
-            is estimated at <span className="font-bold"> {toc}t CO₂e</span> with{' '}
-            <span className="font-bold"> {agb}t CO₂e</span> stored in above-ground biomass and{' '}
-            <span className="font-bold"> {soc}t CO₂e</span> stored in the upper 1m of soil.
+            is estimated at <span className="font-bold"> {toc}</span> Mt CO₂e with{' '}
+            <span className="font-bold"> {agb}</span> Mt CO₂e stored in above-ground biomass and{' '}
+            <span className="font-bold"> {soc}</span> Mt CO₂e stored in the upper 1m of soil.
           </p>
           <BlueCarbonChart config={config} legend={config.legend} />
           <p className="text-sm italic">

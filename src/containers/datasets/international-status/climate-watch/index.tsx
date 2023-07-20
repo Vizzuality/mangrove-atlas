@@ -26,8 +26,8 @@ const ClimateWatchNationalDashboard = () => {
     {
       label: 'Emissions reduction <sup>(1)</sup>',
       value:
-        data?.M_TarA1?.[data.iso].value.replace('MtCO2', 'MtCO²') ||
-        data?.M_TarA5?.[data.iso].value.replace('MtCO2', 'MtCO²') ||
+        data?.M_TarA1?.[data.iso].value.replace('MtCO2', 'MtCO₂') ||
+        data?.M_TarA5?.[data.iso].value.replace('MtCO2', 'MtCO₂') ||
         '-',
       check: false,
       info:
