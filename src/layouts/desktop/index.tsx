@@ -35,7 +35,10 @@ const DesktopLayout = () => {
     <div className="overflow-hidden print:overflow-visible">
       <Head>
         <title>Global Mangrove Watch</title>
-        <meta name="description" content="" />
+        <meta
+          name="description"
+          content="Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable."
+        />
 
         <meta name="og:title" content="Global Mangrove Watch" />
         <meta name="og:description" content="" />
