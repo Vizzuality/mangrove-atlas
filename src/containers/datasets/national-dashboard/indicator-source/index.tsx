@@ -82,7 +82,7 @@ const IndicatorSource = ({
   );
 
   return (
-    <div key={source} className="grid grid-cols-4 justify-between space-x-2 py-4">
+    <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">
       <div className="col-span-1 flex space-x-2">
         <div style={{ backgroundColor: color }} className="mt-1 h-4 w-2 shrink-0 rounded-md pt-4" />
 

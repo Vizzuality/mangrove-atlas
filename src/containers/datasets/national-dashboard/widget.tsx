@@ -74,7 +74,7 @@ const NationalDashboard = () => {
             ) && (
               <section>
                 <h3 className={WIDGET_SUBTITLE_STYLE}>OTHER RESOURCES</h3>
-                {data?.metadata?.other_resourcess.map(({ name, description, link }) => (
+                {data?.metadata?.other_resources.map(({ name, description, link }) => (
                   <OtherResources key={link} name={name} description={description} link={link} />
                 ))}
               </section>

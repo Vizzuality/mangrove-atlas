@@ -7,7 +7,7 @@ type OtherResourcesTypes = {
 };
 
 const OtherResources = ({ name, description, link }: OtherResourcesTypes) => (
-  <div className="flex flex-1 items-center justify-between py-4">
+  <div className="flex flex-1 items-start justify-between py-4">
     {<p>{name}</p>}
 
     <WidgetControls
