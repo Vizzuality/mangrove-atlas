@@ -87,7 +87,7 @@ Here's a step-by-step guide on how to address vulnerabilities found in productio
 | NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. 														  |    									|
 | NEXT_PUBLIC_PLANET_API_KEY    | URL of the Planet API. 		       									  |    								    |
 | NEXT_PUBLIC_BASE_URL  	    | Based URL of the project. 											  |    								    |
-| NEXT_PUBLIC_BLOG_API_URL  	| URL of the Transifex API. 											  |    								    |
+| NEXT_PUBLIC_TRANSIFEX_API_KEY | URL of the Transifex API. 											  |    								    |
 | NEXT_PUBLIC_BLOG_API_URL  	| URL of the API for WordPress content. 								  |    									|
 
 
