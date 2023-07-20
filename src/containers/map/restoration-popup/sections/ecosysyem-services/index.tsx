@@ -58,8 +58,8 @@ const EcosystemServices = ({
             }}
           >
             <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
-              <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO2e" />
-              <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO2e" />
+              <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO₂e" />
+              <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO₂e" />
 
               <RestorationDataGroup
                 label="Commercial invert catch
