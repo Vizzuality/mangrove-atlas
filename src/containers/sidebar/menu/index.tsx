@@ -151,7 +151,7 @@ const Menu = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-              {/* {process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
+              {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
                 <AnimatePresence>
                   {section === 'news' && (
                     <motion.div
@@ -168,7 +168,7 @@ const Menu = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              )} */}
+              )}
               <DialogClose />
             </DialogContent>
           </Dialog>
