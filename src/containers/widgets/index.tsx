@@ -111,9 +111,9 @@ const WidgetsContainer: React.FC = () => {
           </Helper>
         </div>
       )}
-      {/* {isBlogActive && process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
+      {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
-      )} */}
+      )}
 
       {screenWidth < breakpoints.md && (
         <div>
