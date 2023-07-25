@@ -17,7 +17,7 @@ import API from 'services/api';
 import CustomTooltip from './tooltip';
 import type { DataResponse, Data } from './types';
 
-const COLORS = ['#FAC484', '#F3E79B', '#F0746E', '#B9257A', '#701A64'];
+const COLORS = ['#F3E79B', '#FAC484', '#F0746E', '#B9257A', '#701A64'];
 
 const getColorKeys = (data) =>
   data.reduce(
