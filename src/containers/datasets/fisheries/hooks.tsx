@@ -17,7 +17,7 @@ import API from 'services/api';
 import CustomTooltip from './tooltip';
 import type { DataResponse, Data } from './types';
 
-const COLORS = ['#FAC484', '#F3E79B', '#F0746E', '#B9257A', '#701A64'];
+const COLORS = ['#F3E79B', '#FAC484', '#F0746E', '#B9257A', '#701A64'];
 
 const getColorKeys = (data) =>
   data.reduce(
@@ -85,7 +85,8 @@ export function useMangroveFisheries(
       const min = data?.data?.find((d) => d.category === 'range_min')?.value;
       const rangeMin = min === 0 ? min : formatAxis(min);
       const unit = data?.metadata?.unit;
-      const categories = dataFiltered?.map((d) => d.category);
+      const categories = dataFiltered?.map((d) => d.category).sort();
+
       const colorKeys = getColorKeys(categories);
       const dataWithColors = getChartData(dataFiltered, colorKeys, unit);
 
