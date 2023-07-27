@@ -57,6 +57,9 @@ import HeightWidget from 'containers/datasets/height/widget';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
 import InternationalStatusWidget from 'containers/datasets/international-status';
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
+import IUCNEcoregionInfo from 'containers/datasets/iucn-ecoregion/info.mdx';
+import IUCNEcoregionLayer from 'containers/datasets/iucn-ecoregion/layer';
+import IUCNEcoregionWidget from 'containers/datasets/iucn-ecoregion/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
 import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
 import NationalDashboardWidget from 'containers/datasets/national-dashboard/widget';
@@ -110,6 +113,7 @@ export const WIDGETS = {
   mangrove_allen_coral_reef: AllenCoralReefWidget,
   mangrove_tidal_flats: TidalFlatsWidget,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
+  mangrove_iucn_ecoregion: IUCNEcoregionWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
@@ -132,6 +136,7 @@ export const LAYERS = {
   mangrove_coastal_protection_area: FloodProtectionAreaLayer,
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
   mangrove_coastal_protection_stock: FloodProtectionStockLayer,
+  mangrove_iucn_ecoregion: IUCNEcoregionLayer,
   mangrove_national_dashboard_layer: NationalDashboardLayer,
   mangrove_fisheries: FisheriesLayer,
   mangrove_allen_coral_reef: AllenCoralReefLayer,
@@ -159,6 +164,7 @@ export const INFO = {
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
   mangrove_flood_protection: FloodProtectionInfo,
+  mangrove_iucn_ecoregion: IUCNEcoregionInfo,
   mangrove_fisheries: FisheriesInfo,
   mangrove_allen_coral_reef: AllenCoralReefInfo,
   mangrove_tidal_flats: TidalFlatsInfo,

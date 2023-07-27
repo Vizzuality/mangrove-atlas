@@ -37,3 +37,5 @@ export type RestorationPopUp = {
   Time_Loss1: number;
   Type: string;
 };
+
+export type PopUpKey = 'restoration' | 'ecoregion';
