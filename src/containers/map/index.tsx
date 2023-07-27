@@ -28,6 +28,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
+import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 import { useLocations } from 'containers/datasets/locations/hooks';
 import Helper from 'containers/guide/helper';
 import GuideSwitcher from 'containers/guide/switcher';
@@ -111,7 +112,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   });
   const [iucnEcoregionPopUp, setIucnEcoregionPopUp] = useState<{
     popup: number[];
-    popupInfo: RestorationPopUp;
+    popupInfo: IUCNEcoregionPopUpInfo;
     popUpPosition: { x: number; y: number };
   }>({
     popup: [],
@@ -305,7 +306,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (iucnEcoregionFeature)
       setIucnEcoregionPopUp({
         popup: [e?.lngLat.lat, e?.lngLat.lng],
-        popupInfo: iucnEcoregionFeature.properties as RestorationPopUp,
+        popupInfo: iucnEcoregionFeature.properties as IUCNEcoregionPopUpInfo,
         popUpPosition: {
           x: e.point.x,
           y: e.point.y,

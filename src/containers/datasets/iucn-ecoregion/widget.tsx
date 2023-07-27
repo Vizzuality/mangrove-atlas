@@ -17,8 +17,8 @@ const IUCNEcoregions = () => {
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             According to the IUCN evaluation, there are{' '}
-            <span className="font-bold"> {data.total}</span> marine ecoregions classified under
-            vulnerable status.
+            <span className="font-bold"> {data.ecoregion_total}</span> marine ecoregions classified
+            under vulnerable status.
           </p>
           <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
           <IUCNEcoregionsChart config={data?.config} />

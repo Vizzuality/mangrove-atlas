@@ -1,25 +1,7 @@
 import cn from 'lib/classnames';
 
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
-import type { CategoryIds } from 'containers/datasets/iucn-ecoregion/types';
-type IUCNEcoregionPopUpInfo = {
-  Region: 'string';
-  distribution_of_biotic_processes_1?: CategoryIds;
-  distribution_of_biotic_processes_2?: CategoryIds;
-  distribution_of_biotic_processes_3?: CategoryIds;
-  environmental_degradation_1?: CategoryIds;
-  environmental_degradation_2?: CategoryIds;
-  environmental_degradation_3?: CategoryIds;
-  overall_assessment: CategoryIds;
-  quantitative_risk_analysis_1?: CategoryIds;
-  reduction_in_geographic_distribution_1?: CategoryIds;
-  reduction_in_geographic_distribution_2?: CategoryIds;
-  reduction_in_geographic_distribution_3?: CategoryIds;
-  restricted_geographic_distribution_1?: CategoryIds;
-  restricted_geographic_distribution_2?: CategoryIds;
-  restricted_geographic_distribution_3?: CategoryIds;
-  unit_name: string;
-};
+import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 const legendItems = [

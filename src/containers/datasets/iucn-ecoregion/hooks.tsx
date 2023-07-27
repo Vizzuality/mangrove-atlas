@@ -12,71 +12,7 @@ import { COLORS, LABELS } from './constants';
 import CustomTooltip from './tooltip';
 import type { CategoryIds } from './types';
 
-const FAKE_DATA = {
-  data: [
-    {
-      indicator: 'ce',
-      value: 10,
-      category: 'ce',
-      color: COLORS['ce'],
-    },
-    {
-      indicator: 'en',
-      value: 20,
-      color: COLORS['en'],
-      category: 'en',
-    },
-    {
-      indicator: 'vu',
-      value: 30,
-      color: COLORS['vu'],
-      category: 'vu',
-    },
-    {
-      indicator: 'nt',
-      value: 10,
-      color: COLORS['nt'],
-      category: 'nt',
-    },
-    {
-      indicator: 'lc',
-      value: 20,
-      color: COLORS['lc'],
-      category: 'lc',
-    },
-    {
-      indicator: 'dd',
-      value: 10,
-      color: COLORS['dd'],
-      category: 'dd',
-    } satisfies Data[],
-  ],
-  metadata: {
-    total: 2,
-    reports: [
-      {
-        name: 'RLE Mangroves of the Sunda Shelf.pdf',
-        url: '',
-      },
-      {
-        name: 'RLE Mangroves of the Western Coral Triangle.pdf',
-        url: '',
-      },
-      {
-        name: 'RLE Mangroves of the Andaman.pdf',
-        url: '',
-      },
-      {
-        name: 'RLE Mangroves of the South China Sea.pdf',
-        url: '',
-      },
-    ],
-  },
-};
-
-type ColorKey = {
-  [key: CategoryIds]: string;
-};
+type ColorKey = CategoryIds[];
 
 type Data = {
   indicator: CategoryIds;
@@ -99,7 +35,7 @@ const getColorKeys = (data: Data[]) =>
   data.reduce(
     (acc, d) => ({
       ...acc,
-      [d.indicator]: COLORS[d.indicator],
+      [d.category]: COLORS[d.category],
     }),
     []
   );
@@ -111,12 +47,12 @@ const getChartData = (data: Data[], colorKeys: ColorKey[]) => {
 
     return {
       ...d,
-      label: LABELS[d.indicator],
+      label: LABELS[d.category],
       value: percentage,
       showValue: false,
       highlightValue: false,
       valueFormatted: formatAxis(percentage),
-      color: colorKeys[d.indicator],
+      color: colorKeys[d.category],
     };
   });
 };
@@ -135,30 +71,18 @@ export function useMangroveEcoregions(
   const fetchMangroveIUCNEcoregions = () =>
     API.request({
       method: 'GET',
-      url: '/widgets/biodiversity',
+      url: '/widgets/ecoregions',
       params: {
         ...params,
       },
-    }).then((response) => FAKE_DATA);
+    }).then((response) => response.data);
 
   return useQuery(['iucn-ecoregion', params], fetchMangroveIUCNEcoregions, {
     select: ({ data, metadata }) => {
       const colorKeys = getColorKeys(data);
-
-      // const ChartData = FAKE_DATA?.map((d) => ({
-      //   label: d.indicator,
-      //   value: (d.value * 100) / total,
-      //   showValue: false,
-      //   valueFormatted: `${numberFormat((d.value * 100) / total)} %`,
-      //   color: colorKeys[d.indicator],
-      // }));
-
       const dataWithColors = getChartData(data, colorKeys);
 
       return {
-        // data: FAKE_DATA,
-        // ...data?.data,
-        // ...data?.metadata,
         ...metadata,
         config: {
           type: 'pie',
