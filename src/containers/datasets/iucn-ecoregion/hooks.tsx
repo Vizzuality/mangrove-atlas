@@ -40,6 +40,29 @@ const getColorKeys = (data: Data[]) =>
     []
   );
 
+const REPORTS = [
+  {
+    name: 'RLE Mangroves of the Sunda Shelf (pdf)',
+
+    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983082/RLE.Mangroves.of.the.Sunda.Shelf.pdf',
+  },
+  {
+    name: 'RLE Mangroves of the Western Coral Triangle (pdf)',
+
+    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983083/RLE.Mangroves.of.the.Western.Coral.Triangle.pdf',
+  },
+  {
+    name: 'RLE Mangroves of the Andaman (pdf)',
+
+    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983084/RLE.Mangroves.of.the.Andaman.pdf',
+  },
+  {
+    name: 'RLE Mangroves of the South China Sea (pdf)',
+
+    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983085/RLE.Mangroves.of.the.South.China.Sea.pdf',
+  },
+];
+
 const getChartData = (data: Data[], colorKeys: ColorKey[]) => {
   const total = data?.reduce((acc, d) => acc + d.value, 0);
   return data?.map((d) => {
@@ -84,6 +107,7 @@ export function useMangroveEcoregions(
 
       return {
         ...metadata,
+        reports: metadata?.reports.length ? metadata?.reports : REPORTS,
         config: {
           type: 'pie',
           data: dataWithColors,
