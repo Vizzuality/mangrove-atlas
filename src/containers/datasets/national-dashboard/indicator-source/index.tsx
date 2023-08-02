@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
@@ -36,7 +36,9 @@ type IndicatorSourceTypes = {
   unit: string;
   dataSource: DataSourceTypes;
   color: string;
-  location: string | string[];
+  location: number;
+  yearSelected: number;
+  setYearSelected: (year: number) => void;
 };
 
 const IndicatorSource = ({
@@ -46,17 +48,18 @@ const IndicatorSource = ({
   dataSource,
   color,
   location,
+  yearSelected,
+  setYearSelected,
 }: IndicatorSourceTypes) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(
     nationalDashboardSettingsAtom
   );
-
   const [isActiveLayer, setActiveLayer] = useState(false);
 
   const isActive = useMemo(
     () => activeWidgets.includes('mangrove_national_dashboard_layer') && isActiveLayer,
-    [activeWidgets, dataSource.layer_link]
+    [activeWidgets, dataSource?.layer_link]
   );
   const handleClick = useCallback(
     (id) => {
@@ -64,22 +67,41 @@ const IndicatorSource = ({
       const widgetsCheck = isActive
         ? activeWidgets.filter((w) => w !== id)
         : [id, ...activeWidgets];
+
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
-        [id]: {
+        mangrove_national_dashboard_layer: {
           name: source,
           source: dataSource.layer_link,
           source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
           color: color[0],
           locationId: location,
           active: isActiveLayer,
+          year: yearSelected,
         },
       });
       const widgetsUpdate = new Set(widgetsCheck);
       setActiveWidgets([...widgetsUpdate]);
     },
-    [activeWidgets]
+    [activeWidgets, yearSelected]
   );
+
+  useEffect(() => {
+    if (yearSelected && isActiveLayer) {
+      setNationalDashboardLayersSettings({
+        ...nationalDashboardSettings,
+        mangrove_national_dashboard_layer: {
+          name: source,
+          source: dataSource.layer_link,
+          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+          color: color[0],
+          locationId: location,
+          active: isActiveLayer,
+          year: yearSelected,
+        },
+      });
+    }
+  }, [yearSelected]);
 
   return (
     <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">
@@ -90,11 +112,11 @@ const IndicatorSource = ({
       </div>
       <div className="col-span-1 flex">
         {years.length === 1 && <span>{years[0]}</span>}
-        {years.length < 1 && (
+        {years.length > 1 && (
           <Popover>
             <PopoverTrigger asChild>
               <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
-                {'year'}
+                {yearSelected}
                 <Icon
                   icon={ARROW_SVG}
                   className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
@@ -111,8 +133,8 @@ const IndicatorSource = ({
                         'font-bold': true,
                       })}
                       type="button"
-                      // onClick={() => setYear(u)}
-                      // disabled={selectedYear === u}
+                      onClick={() => setYearSelected(u)}
+                      disabled={yearSelected === u}
                     >
                       {u}
                     </button>
@@ -132,8 +154,8 @@ const IndicatorSource = ({
       <div className="col-span-1 flex justify-end space-x-2">
         <WidgetControls
           content={{
-            download: dataSource.download_link,
-            info: dataSource.layer_info,
+            download: dataSource?.download_link,
+            info: dataSource?.layer_info,
           }}
         />
 

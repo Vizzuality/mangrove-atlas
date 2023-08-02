@@ -30,6 +30,8 @@ type Settings = {
   name: string;
   source_layer: string;
   color: string;
+  active: boolean;
+  year: year;
 };
 
 export type NationalDashboardLayerSettingsTypes = {
