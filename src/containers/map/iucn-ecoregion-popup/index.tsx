@@ -19,7 +19,7 @@ const legendItems = [
 const FAKE_DATA_POP_UP = [
   {
     label: 'Reduction in geographic distribution',
-    tags: ['Historical (1750)', 'Past 50y (1970)', 'Future (¹)'],
+    tags: ['Historical (1750)', 'Past 50 years (1970)', 'Future (¹)'],
     data: 'reduction_in_geographic_distribution',
   },
   {
@@ -34,7 +34,7 @@ const FAKE_DATA_POP_UP = [
   },
   {
     label: 'Distribution of biotic processes',
-    tags: ['Historical (1750)', 'Past 50y (1970)', 'Future (¹)'],
+    tags: ['Historical (1750)', 'Past 50 years (1970)', 'Future (¹)'],
     data: 'distribution_of_biotic_processes',
   },
   {
