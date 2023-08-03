@@ -128,7 +128,7 @@ const LayerManagerContainer = () => {
 
       {layers.includes('mangrove_restoration') && (
         <RestorationLayer
-          id="mangrove-restoration"
+          id="mangrove_restoration"
           beforeId="country-boundaries-layer"
           onAdd={handleAdd}
           onRemove={handleRemove}
