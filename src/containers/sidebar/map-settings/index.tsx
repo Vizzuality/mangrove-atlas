@@ -41,6 +41,7 @@ const MapSettings = () => {
           })}
           onClick={handleMapSettingsView}
           disabled={mapSettings || isDrawingToolWidgetVisible}
+          data-testid="map-settings-button"
         >
           <Icon
             icon={MAP_SETTINGS_SVG}
