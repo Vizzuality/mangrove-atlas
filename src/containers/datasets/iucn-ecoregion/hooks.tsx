@@ -146,11 +146,11 @@ export function useSource(): SourceProps {
 export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const OVERALL_ASSESMENT = {
     CE: '#EE4D5A',
-    EN: '#F97B57',
     VU: '#F3AD6A',
     NT: '#ECDA9A',
     LC: '#B4DCAA',
     DD: '#ECECEF',
+    EN: '#F97B57',
   };
   const COLORS = Object.keys(OVERALL_ASSESMENT).reduce(
     (acc, value) => [...acc, [value, OVERALL_ASSESMENT[value]]].flat(),
@@ -165,7 +165,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       type: 'fill',
       paint: {
         'fill-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
-        'fill-opacity': 0.65,
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.55],
       },
     },
     {
@@ -175,7 +175,8 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       type: 'line',
       paint: {
         'line-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
-        'line-width': 1.5,
+        'line-width': 1.75,
+        'line-offset': -0.3,
       },
     },
   ];

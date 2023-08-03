@@ -73,7 +73,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const { data: locations } = useLocations();
-
   const [
     {
       enabled: isDrawingToolEnabled,
@@ -277,7 +276,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     );
 
     const restorationFeature = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove-restoration-layer'
+      ({ layer }) => layer.id === 'mangrove_restoration-layer'
     );
 
     const iucnEcoregionFeature = e?.features.find(
@@ -324,6 +323,46 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setCursor, isDrawingToolVisible]
   );
 
+  let hoveredStateId = null;
+  const onHover = (e) => {
+    const restorationData = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove_restoration-layer'
+    );
+
+    if (restorationData) {
+      if (hoveredStateId !== null) {
+        map.setFeatureState(
+          {
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: hoveredStateId,
+          },
+          { hover: false }
+        );
+      }
+
+      hoveredStateId = restorationData?.id;
+      map.setFeatureState(
+        {
+          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+          source: 'mangrove_restoration',
+          id: hoveredStateId,
+        },
+        { hover: true }
+      );
+    }
+  };
+
+  const onLeave = (e) => {
+    if (hoveredStateId !== null) {
+      map.setFeatureState(
+        { sourceLayer: 'null', source: 'restoration', id: null },
+        { hover: false }
+      );
+    }
+    hoveredStateId = null;
+  };
+
   return (
     <div
       className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
@@ -342,6 +381,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
+        onMouseEnter={onHover}
+        onMouseLeave={onLeave}
         cursor={cursor}
         preserveDrawingBuffer
       >

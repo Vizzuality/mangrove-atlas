@@ -29,7 +29,7 @@ const FAKE_DATA_POP_UP = [
   },
   {
     label: 'Environmental degradation',
-    tags: ['Extent of occurrence', 'Area of occupancy', 'Threat locations <5'],
+    tags: ['Historical (1750)', 'Past 50 years (1970)', 'Future (¹)'],
     data: 'environmental_degradation',
   },
   {

@@ -20,6 +20,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'source-layer': 'gadm_eez_location_v3',
         paint: {
           'line-color': 'hsl(58, 66%, 47%)',
+          'line-opacity': 0.7,
         },
       },
       {
