@@ -5,6 +5,7 @@ import { Popup as PopupReactMapGL } from 'react-map-gl';
 const Popup = ({
   children,
   popUpPosition,
+  popUpWidth,
   longitude,
   latitude,
   onClose,
@@ -13,9 +14,9 @@ const Popup = ({
   longitude: number;
   latitude: number;
   popUpPosition: { x: number; y: number };
+  popUpWidth: number;
   onClose: () => void;
 }) => {
-  const popUpWidth = 440;
   const sidebarWidth = 630;
 
   const anchor = () => {

@@ -424,6 +424,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             {!!restorationPopUp?.popup?.length && !isEmpty(restorationPopUp?.popupInfo) ? (
               <Popup
                 popUpPosition={restorationPopUp.popUpPosition}
+                popUpWidth={440}
                 longitude={restorationPopUp.popup[1]}
                 latitude={restorationPopUp.popup[0]}
                 onClose={() => removePopup('restoration')}
@@ -433,9 +434,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             ) : null}
             {!!iucnEcoregionPopUp.popup?.length && !isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
               <Popup
-                popUpPosition={restorationPopUp.popUpPosition}
-                longitude={restorationPopUp.popup[1]}
-                latitude={restorationPopUp.popup[0]}
+                popUpPosition={iucnEcoregionPopUp.popUpPosition}
+                popUpWidth={500}
+                longitude={iucnEcoregionPopUp.popup[1]}
+                latitude={iucnEcoregionPopUp.popup[0]}
                 onClose={() => removePopup('ecoregion')}
               >
                 <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
