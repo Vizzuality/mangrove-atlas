@@ -7381,7 +7381,8 @@ __metadata:
     lodash-es: 4.17.21
     mapbox-gl: ^2.13.0
     next: ^13.4.3
-    popover: ^2.4.1
+    playwright: 1.36.2
+    popover: 2.4.1
     postcss: 8.4.21
     prettier: 2.8.3
     prettier-plugin-tailwindcss: 0.2.1
@@ -8892,7 +8893,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"popover@npm:^2.4.1":
+"playwright-core@npm:1.36.2":
+  version: 1.36.2
+  resolution: "playwright-core@npm:1.36.2"
+  bin:
+    playwright-core: cli.js
+  checksum: 2193ce802ef93c28b9b5e11a0b1d7b60778c686015659978d1cbf0eb9cda2cdc85ec5575b887c1346e9d161cc2805bf27638d76a2f7f857dffeae968e6ceffcd
+  languageName: node
+  linkType: hard
+
+"playwright@npm:1.36.2":
+  version: 1.36.2
+  resolution: "playwright@npm:1.36.2"
+  dependencies:
+    playwright-core: 1.36.2
+  bin:
+    playwright: cli.js
+  checksum: 5876b65a0f1303e45f99c7d120706af0ab808efd5d89c514741584ff1060408b62148ae2790c2e6527642f2b8f49db682710b87d3df7b3ba510e8e847e6041ef
+  languageName: node
+  linkType: hard
+
+"popover@npm:2.4.1":
   version: 2.4.1
   resolution: "popover@npm:2.4.1"
   dependencies:
