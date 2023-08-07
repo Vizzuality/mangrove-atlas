@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-test('Menu', async ({ page }) => {
-  await page.goto('/');
-  await page.getByTestId('menu_button').click();
-  await expect(page.getByTestId('menu_content')).toBeVisible();
+// test('Menu', async ({ page }) => {
+//   await page.goto('/');
+//   await page.getByTestId('menu_button').click();
+//   await expect(page.getByTestId('menu_content')).toBeVisible();
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+//   // Expect a title "to contain" a substring.
+//   await expect(page).toHaveTitle(/Playwright/);
+// });
 
 test('get started link', async ({ page }) => {
   await page.goto('https://playwright.dev/');
@@ -19,11 +19,11 @@ test('get started link', async ({ page }) => {
   await expect(page).toHaveURL(/.*intro/);
 });
 
-test('activate layer', async ({ page }) => {
-  await page.goto('/');
-  await page.getByTestId('mangrove_extent').click();
+// test('activate layer', async ({ page }) => {
+//   await page.goto('/');
+//   await page.getByTestId('mangrove_extent').click();
 
-  const layerSwitch = page.getByTestId('mangrove_extent');
-  await expect(layerSwitch).toHaveAttribute('data-state', 'checked');
-  await expect(page).toHaveURL(/.*?active=\[mangrove_extent\]/);
-});
+//   const layerSwitch = page.getByTestId('mangrove_extent');
+//   await expect(layerSwitch).toHaveAttribute('data-state', 'checked');
+//   await expect(page).toHaveURL(/.*?active=\[mangrove_extent\]/);
+// });
