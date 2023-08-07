@@ -15,7 +15,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
-      - run: echo ${{steps.waitForVercelPreviewDeployment.outputs.url}}
   test:
     needs: test_setup
     name: Test
