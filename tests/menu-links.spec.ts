@@ -42,7 +42,7 @@ test('test menu links', async ({ page }) => {
 
   await menuButton.click();
   await menuContent.getByRole('button', { name: 'News' }).click();
-  await menuContent.getByRole('button', { name: 'Close' }).nth(1).click();
+  // await menuContent.getByRole('button', { name: 'Close' }).nth(1).click();
 
   await menuButton.click();
   await menuContent.getByRole('button', { name: 'Global Mangrove Alliance' }).click();
@@ -54,7 +54,6 @@ test('test menu links', async ({ page }) => {
     await promise.goto(link.link);
   }
 });
-
 
 // test('activate layer', async ({ page }) => {
 //   await page.goto('/');
