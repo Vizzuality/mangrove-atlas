@@ -54,3 +54,13 @@ test('test menu links', async ({ page }) => {
     await promise.goto(link.link);
   }
 });
+
+
+// test('activate layer', async ({ page }) => {
+//   await page.goto('/');
+//   await page.getByTestId('mangrove_extent').click();
+
+//   const layerSwitch = page.getByTestId('mangrove_extent');
+//   await expect(layerSwitch).toHaveAttribute('data-state', 'checked');
+//   await expect(page).toHaveURL(/.*?active=\[mangrove_extent\]/);
+// });
