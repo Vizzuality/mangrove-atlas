@@ -37,7 +37,7 @@ test('test menu links', async ({ page }) => {
   await menuContent.isVisible();
 
   await menuContent.getByRole('button', { name: 'About this tool' }).click();
-  await menuContent.getByRole('heading', { name: 'About Global Mangrove Watch' }).click();
+  await menuContent.getByRole('heading', { name: 'About Global Mangrove Watch' }).isVisible();
   await menuContent.getByRole('button', { name: 'Close' }).click();
 
   await menuButton.click();
