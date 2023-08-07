@@ -5,7 +5,7 @@ export function useSource(): SourceProps {
     id: 'global_tidal_wetland_change',
     type: 'raster',
     tiles: [
-      'https://mangrove_atlas.storage.googleapis.com/staging/tilesets/global_tidal_wetland_change/{z}/{x}/{y}.png',
+      'https://mangrove_atlas.storage.googleapis.com/staging/tilesets/global_tidal_wetland_change_1_2/{z}/{x}/{y}.png',
     ],
     minzoom: 0,
     maxzoom: 12,
