@@ -75,7 +75,10 @@ const Legend = ({
               message="List of legends seen on the map. You can close them directly here"
             >
               {l !== 'mangrove_national_dashboard_layer' && (
-                <div className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium">
+                <div
+                  data-testid={`layer-legend-${l}`}
+                  className="flex h-11 min-w-[270px] items-center justify-between rounded-md bg-white px-6 py-3 text-sm shadow-medium"
+                >
                   <p className="text-xs font-semibold uppercase">{layerNameToDisplay}</p>
                   <Helper
                     className={{

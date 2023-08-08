@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 import type {
   FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
-} from 'containers/datasets/flood-protection//types';
+} from 'containers/datasets/flood-protection/types';
 import CoastalProtection from 'containers/datasets/flood-protection/coastal-protection';
 
 import Icon from 'components/icon';
@@ -111,7 +111,12 @@ const FloodProtection = ({
             <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3>
             <div className="flex items-start space-x-2">
               <SwitchWrapper id="planet_medres_visual_monthly">
-                <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
+                <SwitchRoot
+                  data-testid={id}
+                  onClick={handleClick}
+                  defaultChecked={isActive}
+                  checked={isActive}
+                >
                   <SwitchThumb />
                 </SwitchRoot>
               </SwitchWrapper>

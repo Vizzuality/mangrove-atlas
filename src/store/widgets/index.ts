@@ -12,7 +12,7 @@ export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | '
   effects: [
     urlSyncEffect({
       refine: array(string()),
-      history: 'push',
+      history: 'replace',
     }),
   ],
 });
