@@ -78,6 +78,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
             'rounded-2xl border-2 border-transparent px-9 py-3': true,
             'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
           })}
+          data-testid={`widget-${id}`}
         >
           <header className="flex items-center justify-between ">
             <Helper
