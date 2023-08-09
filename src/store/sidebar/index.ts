@@ -1,16 +1,26 @@
-import { string } from '@recoiljs/refine';
-import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
+import { useRouter } from 'next/router';
+
+import { atom, useSetRecoilState } from 'recoil';
 
 export const activeCategoryAtom = atom<string>({
   key: 'category',
   default: 'distribution_and_change',
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
 });
+
+export const useSetActiveCategory = () => {
+  const { replace, pathname, query } = useRouter();
+  const setActiveCategory = useSetRecoilState(activeCategoryAtom);
+  return async (newValue: string) => {
+    setActiveCategory(newValue);
+    await replace({
+      pathname,
+      query: {
+        ...query,
+        category: `"${newValue}"`,
+      },
+    });
+  };
+};
 
 export const mapViewAtom = atom<boolean>({
   key: 'map-view',
