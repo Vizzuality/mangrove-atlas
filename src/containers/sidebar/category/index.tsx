@@ -4,11 +4,11 @@ import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom } from 'store/sidebar';
+import { activeCategoryAtom, useSetActiveCategory } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
 import { useWidgets } from 'containers/widgets/hooks';
@@ -19,7 +19,8 @@ const Category = () => {
   const widgets = useWidgets();
   const [isOpen, setIsOpen] = useState(false);
   const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
-  const [category, setCategory] = useRecoilState(activeCategoryAtom);
+  const category = useRecoilValue(activeCategoryAtom);
+  const setCategory = useSetActiveCategory();
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
   const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
 
@@ -47,8 +48,8 @@ const Category = () => {
   }, [category, lastWidgetSlug]);
 
   const handleCategory = useCallback(
-    (evt: MouseEvent<HTMLButtonElement>) => {
-      setCategory(evt.currentTarget.dataset.category);
+    async (evt: MouseEvent<HTMLButtonElement>) => {
+      await setCategory(evt.currentTarget.dataset.category);
 
       if (mapSettings) setMapSettings(false);
       setDrawingToolState((prevDrawingToolState) => ({
