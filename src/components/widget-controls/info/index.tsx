@@ -17,8 +17,8 @@ const Info = ({ id, content }) => {
             <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" />
           </div>
         </DialogTrigger>
-        <DialogContent className="scroll-y left-18 top-16 h-[90%] rounded-3xl">
-          <div className="no-scrollbar max-h-fit overflow-y-auto ">
+        <DialogContent className="scroll-y h-[90%] translate-y-8 rounded-3xl">
+          <div className="no-scrollbar  overflow-y-auto ">
             {/* Supports external content or look by id for static info about widgets */}
             {id && <Info />}
             {content && <p>{content}</p>}

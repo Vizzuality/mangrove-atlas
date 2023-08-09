@@ -4,7 +4,7 @@ import MapToggle from 'containers/sidebar/mobile/map-toggle';
 
 import PlacesMobile from './places';
 
-const Sidebar = () => {
+const SidebarMobile = () => {
   return (
     <div className="fixed -bottom-0.5 z-50 h-36 w-full bg-[url('/images/mobile-sidebar-bg.svg')] bg-cover bg-no-repeat">
       <div className="item-center px-auto mt-20 flex h-full w-full justify-center space-x-10">
@@ -17,4 +17,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarMobile;

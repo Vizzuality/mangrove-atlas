@@ -41,6 +41,7 @@ export type WidgetSlugType =
   | 'mangrove_coastal_protection_population'
   | 'mangrove_coastal_protection_stock'
   | 'mangrove_national_dashboard_layer'
+  | 'mangrove_iucn_ecoregion'
   | 'mangrove_allen_coral_reef'
   | 'mangrove_tidal_flats'
   | 'mangrove_salt_marsh_data'

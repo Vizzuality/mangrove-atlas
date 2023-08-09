@@ -37,7 +37,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Emissions reduction <sup>(1)</sup> (%)',
-      value: data?.M_TarA2?.[data.iso].value || data?.M_TarB1?.[data.iso].value || '-',
+      value: data?.M_TarA2?.[data.iso]?.value || data?.M_TarB1?.[data.iso]?.value || '-',
       check: false,
       info:
         data?.M_TarA2?.info ||
@@ -53,7 +53,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Type of mitigation pledge',
-      value: data?.mitigation_contribution_type?.[data.iso].value,
+      value: data?.mitigation_contribution_type?.[data.iso]?.value,
       check: false,
       info: 'Indicates whether a country has a GHG emissions target, a non-GHG target or both',
     },
@@ -71,7 +71,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Target year/s',
-      value: data?.M_TarYr?.[data.iso].value || '-',
+      value: data?.M_TarYr?.[data.iso]?.value || '-',
       check: false,
       info: data?.M_TarYr?.info || '',
     },

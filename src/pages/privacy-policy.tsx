@@ -1,12 +1,13 @@
 import Head from 'next/head';
 
+import MetaTags from 'containers/meta-tags';
 import TranslateScripts from 'containers/translate-scripts';
 
 const Home: React.FC = () => (
   <div>
     <Head>
       <title>Privacy policy</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1" />
+      <MetaTags title="Global Mangrove Watch | Privacy policy" description="Privacy policy" />
     </Head>
 
     <TranslateScripts />

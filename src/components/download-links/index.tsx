@@ -26,11 +26,12 @@ const Download = ({ info }) => {
                 <Icon
                   icon={ARROW_SVG}
                   className={cn({
+                    'h-3 w-3 font-bold': true,
                     'rotate-180 transform': isCollapsed[id],
                     hidden: !description,
                   })}
                 />
-                <h3 className={cn({ 'ml-6': !description })}>{title}</h3>
+                <h3 className={cn({ 'ml-6': description })}>{title}</h3>
               </div>
               {href && (
                 <a
@@ -43,7 +44,7 @@ const Download = ({ info }) => {
                 </a>
               )}
             </div>
-            <p className={cn({ hidden: true, block: isCollapsed[id] })}>{description}</p>
+            <p className={cn({ hidden: true, 'block py-4': isCollapsed[id] })}>{description}</p>
             <p>{license}</p>
           </div>
         ))}

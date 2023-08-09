@@ -192,6 +192,14 @@ const widgets_prod = [
     ],
   },
   {
+    name: 'IUCN Ecoregion assesment',
+    slug: 'mangrove_iucn_ecoregion',
+    locationType: ['worldwide'],
+    applicability: 'Global',
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['ecoregion'],
+  },
+  {
     name: 'Draw or upload an area',
     slug: 'mangrove_drawing_tool',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],

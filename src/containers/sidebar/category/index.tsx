@@ -10,7 +10,7 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useRecoilState } from 'recoil';
 
-import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
+import CATEGORY_OPTIONS from 'containers/sidebar/constants';
 import { useWidgets } from 'containers/widgets/hooks';
 
 import Icon from 'components/icon';
@@ -84,6 +84,7 @@ const Category = () => {
               className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
               onMouseOver={isDrawingToolWidgetVisible ? null : openMenu}
               disabled={isDrawingToolWidgetVisible}
+              data-testid="show-categories-button"
             >
               {CATEGORY_OPTIONS.map(({ id, icon }) => (
                 <div
@@ -92,6 +93,7 @@ const Category = () => {
                     'flex cursor-pointer items-center justify-center': true,
                     'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
                   })}
+                  data-isactive={category === id && !mapSettings}
                 >
                   <Icon
                     icon={icon}
@@ -121,9 +123,8 @@ const Category = () => {
             >
               <ul className="flex h-full flex-col justify-between">
                 {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
-                  <li key={id}>
+                  <li key={label}>
                     <button
-                      key={id}
                       type="button"
                       className="group flex cursor-pointer items-center space-x-3"
                       data-category={id}

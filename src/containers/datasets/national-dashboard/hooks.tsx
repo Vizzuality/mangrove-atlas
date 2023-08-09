@@ -60,7 +60,6 @@ export function useSource({
     (Object.values(settings).map((setting, index) =>
       index === 0 ? `mapbox://${setting.source}` : setting.source
     ) satisfies string[]);
-
   return {
     id: 'national-dashboard-sources',
     type: 'vector',
@@ -90,6 +89,7 @@ export function useLayers({
       .filter((s) => s.locationId === currentLocationId)
       .map((setting) => ({
         id: `${id}-setting.source_layer`,
+        key: `${setting.source_layer}`,
         source: 'national-dashboard-sources',
         'source-layer': setting.source_layer,
         type: 'fill',
