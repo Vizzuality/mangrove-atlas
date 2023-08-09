@@ -98,6 +98,8 @@ const WidgetsContainer: React.FC = () => {
             message="Expand or collapse all widgets"
           >
             <button
+              type="button"
+              data-testid="expand-collapse-button"
               className={cn({
                 'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
                   true,
