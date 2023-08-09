@@ -21,6 +21,7 @@ _Link to the related task manager tickets_
 ## Checklist before submitting
 
 - [ ] Meaningful commits and code rebased on `develop`.
+- [ ] Update CHANGELOG
 - [ ] If this PR adds feature that should be tested for regressions when
       deploying to staging/production, please add brief testing instructions
       to the deploy checklist 
