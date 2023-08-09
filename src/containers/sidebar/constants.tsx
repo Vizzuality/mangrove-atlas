@@ -37,7 +37,7 @@ export const EXT_MENU_OPTIONS = [
   },
 ];
 
-export const CATEGORY_OPTIONS = [
+const CATEGORY_OPTIONS = [
   { id: 'distribution_and_change', label: 'Distribution & Change', icon: STAR_SVG },
   {
     id: 'restoration_and_conservation',
@@ -52,3 +52,5 @@ export const CATEGORY_OPTIONS = [
 export const STYLES = {
   'icon-wrapper': 'flex h-10.5 w-10.5 flex-col items-center justify-center text-brand-800',
 };
+
+export default CATEGORY_OPTIONS;

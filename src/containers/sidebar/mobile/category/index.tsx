@@ -7,7 +7,7 @@ import { activeCategoryAtom } from 'store/sidebar';
 
 import { useRecoilState } from 'recoil';
 
-import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
+import CATEGORY_OPTIONS from 'containers/sidebar/constants';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';

@@ -1,15 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-import WIDGETS from '../src/containers/widgets/constants';
-
-export const CATEGORY_OPTIONS = [
+import WIDGETS from 'containers/widgets/constants';
+const CATEGORY_OPTIONS = [
   'distribution_and_change',
   'restoration_and_conservation',
   'climate_and_policy',
   'ecosystem_services',
   'all_datasets',
 ];
-
 const DEFAULT_LOCATION = 'worldwide';
 
 test.beforeEach(async ({ page }) => {
