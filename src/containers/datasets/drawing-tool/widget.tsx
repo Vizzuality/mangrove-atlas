@@ -94,6 +94,7 @@ const WidgetDrawingTool = () => {
               'hover:bg-brand-400/10': !isDrawingToolEnabled,
               'bg-brand-800 text-white': isDrawingToolEnabled,
             })}
+            data-testid="start-drawing-button"
           >
             <Icon icon={AREA_SVG} className="h-8 w-8" />
             <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
@@ -113,7 +114,7 @@ const WidgetDrawingTool = () => {
             {...getRootProps()}
             className="flex h-[88px] w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-brand-800 bg-brand-400/10 py-5"
           >
-            <input {...getInputProps()} />
+            <input data-testid="shapefile-upload" {...getInputProps()} />
             <div className="pointer-events-none flex items-center space-x-2">
               <span className="text-brand-800">
                 <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />

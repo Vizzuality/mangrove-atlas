@@ -158,6 +158,7 @@ const Place = () => {
             type="button"
             className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full"
             onClick={handleOnClickWorldwide}
+            data-testid="worldwide-button"
           >
             <Icon
               icon={GLOBE_SVG}
@@ -174,6 +175,7 @@ const Place = () => {
             <button
               onClick={handleOnClickSearch}
               className="flex cursor-pointer items-center justify-center rounded-full"
+              data-testid="search-button"
             >
               <Helper
                 className={{
@@ -203,6 +205,7 @@ const Place = () => {
             'h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full': true,
           })}
           onClick={handleDrawingToolView}
+          data-testid="drawing-tool-button"
         >
           <Helper
             className={{
