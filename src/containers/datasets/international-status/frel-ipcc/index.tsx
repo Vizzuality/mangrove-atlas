@@ -1,32 +1,14 @@
-import { TooltipPortal } from '@radix-ui/react-tooltip';
-
-import Icon from 'components/icon';
 import Loading from 'components/loading';
-import { Tooltip, TooltipTrigger, TooltipContent } from 'components/tooltip';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
-
-import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 import { useMangroveInternationalStatus } from './hooks';
 const InternationalStatus = () => {
   const {
     location,
-    pledge_type,
-    ndc_target,
-    ndc_target_url,
-    ndc_updated,
-    ndc_mitigation,
-    ndc_adaptation,
     ipcc_wetlands_suplement,
     frel,
     year_frel,
     fow,
-    ndc_blurb,
-    reductionTargetSentence,
-    targetYearsSentence,
-    ndcTargetSentence,
-    hasNDCTarget,
-    hasNDCReductionTarget,
     isLoading,
     isFetched,
     isPlaceholderData,
