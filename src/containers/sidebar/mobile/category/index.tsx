@@ -3,9 +3,9 @@ import React from 'react';
 import cn from 'lib/classnames';
 
 import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom } from 'store/sidebar';
+import { activeCategoryAtom, useSetActiveCategory } from 'store/sidebar';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/sidebar/constants';
 
@@ -15,12 +15,13 @@ import Icon from 'components/icon';
 import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 
 const CategoryMobile = () => {
-  const [category, setCategory] = useRecoilState(activeCategoryAtom);
+  const category = useRecoilValue(activeCategoryAtom);
+  const setCategory = useSetActiveCategory();
   const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
 
-  const handleClick = (id) => {
+  const handleClick = async (id) => {
     if (mapSettings) setMapSettings(false);
-    setCategory(id);
+    await setCategory(id);
   };
 
   return (
