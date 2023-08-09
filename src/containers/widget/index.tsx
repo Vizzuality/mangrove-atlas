@@ -99,6 +99,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | 
             <WidgetControls id={id} />
           </header>
           <div
+            data-testid={`widget-${id}-content`}
             className={cn({
               'group-last-of-type:block': true,
               hidden: widgetsCollapsed[id],

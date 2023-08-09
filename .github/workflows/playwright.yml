@@ -1,7 +1,7 @@
 name: Playwright Tests
 on:
   pull_request:
-    branches: [ develop, develop-v2 ]
+    branches: [ develop ]
 jobs:
   test_setup:
     name: Test setup
@@ -14,7 +14,7 @@ jobs:
         id: waitForVercelPreviewDeployment
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 600
+          max_timeout: 700
   test:
     needs: test_setup
     name: Test

@@ -10,7 +10,7 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { CATEGORY_OPTIONS } from 'containers/sidebar/constants';
+import CATEGORY_OPTIONS from 'containers/sidebar/constants';
 import { useWidgets } from 'containers/widgets/hooks';
 
 import Icon from 'components/icon';
