@@ -82,6 +82,7 @@ const HabitatExtent = () => {
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
           <button
+            aria-label="cancel analysis"
             type="button"
             onClick={handleCancelAnalysis}
             className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
@@ -96,6 +97,7 @@ const HabitatExtent = () => {
             An error occurred while fetching the data. You can try again.
           </p>
           <button
+            aria-label="Retry analysis"
             type="button"
             onClick={handleTryAgain}
             className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
@@ -126,6 +128,7 @@ const HabitatExtent = () => {
                     {unitOptions?.map((u) => (
                       <li key={u} className="last-of-type:pb-4">
                         <button
+                          aria-label="select unit"
                           className={cn({
                             'font-bold': true,
                             'hover:text-brand-800': selectedUnitAreaExtent !== u,
@@ -190,6 +193,7 @@ const HabitatExtent = () => {
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
+                        aria-label="select year"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800': year !== y,

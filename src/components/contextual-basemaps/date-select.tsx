@@ -63,7 +63,9 @@ const DateSelect = ({
               <button
                 className="font-bold hover:text-brand-800"
                 type="button"
+                role="button"
                 onClick={() => setDate(d)}
+                aria-label={`Select date ${d.label}`}
               >
                 {d.label}
               </button>

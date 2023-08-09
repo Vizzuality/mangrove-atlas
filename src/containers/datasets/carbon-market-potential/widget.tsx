@@ -92,6 +92,7 @@ const CarbonMarketPotentialWidget = () => {
                   {units?.map((u) => (
                     <li key={u.label} className="last-of-type:pb-4">
                       <button
+                        aria-label="set unit"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800': unit !== u,

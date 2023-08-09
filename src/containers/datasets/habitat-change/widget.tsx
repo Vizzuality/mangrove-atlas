@@ -77,6 +77,7 @@ const HabitatExtent = () => {
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
+                          aria-label="Select start year"
                           className={cn({
                             'font-bold': true,
                             'text-brand-800': currentStartYear === y,
@@ -116,6 +117,7 @@ const HabitatExtent = () => {
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
+                          aria-label="select end year"
                           className={cn({
                             'font-bold': true,
                             'text-brand-800': currentEndYear === y,
@@ -156,6 +158,7 @@ const HabitatExtent = () => {
           </div>
 
           <button
+            aria-label="set number of countries to show"
             type="button"
             className="flex w-full items-center justify-center space-x-2 text-sm font-semibold text-brand-800"
             onClick={() => setLimit(limit === 5 ? 10 : 5)}

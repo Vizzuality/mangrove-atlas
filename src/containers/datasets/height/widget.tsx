@@ -43,6 +43,7 @@ const HeightWidget = () => {
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
         {isAnalysisRunning && isFetching && !isCanceled && (
           <button
+            aria-label="Cancel analysis"
             type="button"
             onClick={handleCancelAnalysis}
             className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
@@ -57,6 +58,7 @@ const HeightWidget = () => {
             An error occurred while fetching the data. You can try again.
           </p>
           <button
+            aria-label="Try again"
             type="button"
             onClick={handleTryAgain}
             className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"

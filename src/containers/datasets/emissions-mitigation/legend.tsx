@@ -24,6 +24,7 @@ const Legend = ({ items, onClick, filteredIndicators, setFilteredIndicators }: L
     <div className="ml-6 flex w-full max-w-[40%] flex-col text-black/85">
       {sortedItems.map(({ color, label }) => (
         <button
+          aria-label="Legend button"
           type="button"
           key={label}
           className={cn({
