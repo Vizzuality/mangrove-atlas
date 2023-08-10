@@ -68,6 +68,7 @@ const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
       type="button"
       className="absolute top-7 right-6 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[10px] bg-white hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:top-7 md:-right-10 md:border"
       onClick={onClose}
+      aria-label="close dialog"
     >
       <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" />
       <span className="sr-only">Close</span>

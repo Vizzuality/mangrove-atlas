@@ -145,6 +145,7 @@ const FloodProtection = ({
                   {periods?.map((period) => (
                     <li key={period}>
                       <button
+                        aria-label="Select period"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800': period !== selectedPeriod,

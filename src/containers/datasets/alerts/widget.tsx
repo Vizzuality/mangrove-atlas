@@ -89,6 +89,7 @@ const AlertsWidget = () => {
                   {startDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
+                        aria-label="Select start date"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800':
@@ -123,6 +124,7 @@ const AlertsWidget = () => {
                   {endDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
+                        aria-label="Select end date"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800':

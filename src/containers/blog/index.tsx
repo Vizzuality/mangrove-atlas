@@ -25,10 +25,13 @@ export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
                 Stay updated with the latest mangrove news!
               </p>
             </div>
-            <button className="flex items-center rounded-2xl bg-white py-1 px-2 font-sans text-xxs text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white sm:px-3 sm:text-xs md:px-6 lg:text-sm">
+            <button
+              aria-label="Explore blog"
+              className="flex items-center rounded-2xl bg-white py-1 px-2 font-sans text-xxs text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-transparent hover:text-white sm:px-3 sm:text-xs md:px-6 lg:text-sm"
+            >
               Explore Now
             </button>
-            <button onClick={(e) => closeBlogBanner(e)}>
+            <button onClick={(e) => closeBlogBanner(e)} aria-label="close blog">
               <Icon icon={CLOSE_SVG} className="h-4 w-4 fill-white" />
             </button>
           </div>

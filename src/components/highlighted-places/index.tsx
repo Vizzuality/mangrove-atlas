@@ -37,6 +37,7 @@ const HighlightedPlaces = ({ onSelectLocation }: { onSelectLocation: () => void 
               className="flex flex-1"
             >
               <button
+                aria-label={`navigate to highlighted place - ${d.name}`}
                 className={cn({
                   'flex h-60 flex-1 rounded-3xl bg-cover bg-center': true,
                   'bg-rufiji': HIGHLIGHTED_PLACES['rufiji'] === d.location_id,
@@ -54,6 +55,7 @@ const HighlightedPlaces = ({ onSelectLocation }: { onSelectLocation: () => void 
       {isHighlightedPlace && (
         <Link href="/" className="flex flex-1">
           <button
+            aria-label="Navigate to worldwide"
             className={`flex h-60 flex-1 rounded-3xl bg-[url('/images/highlighted-places/worldwide.jpg')] bg-cover bg-center`}
             onClick={onSelectLocation}
           >

@@ -86,6 +86,7 @@ const WidgetDrawingTool = () => {
           message="draw a polygon on the map. Just click to start drawing and double click to stop"
         >
           <button
+            aria-label="Start drawing on the map"
             type="button"
             onClick={handleDrawingMode}
             className={cn({

@@ -129,6 +129,7 @@ const IndicatorSource = ({
                 {years?.map((u) => (
                   <li key={u} className="last-of-type:pb-4">
                     <button
+                      aria-label="set year"
                       className={cn({
                         'font-bold': true,
                       })}
