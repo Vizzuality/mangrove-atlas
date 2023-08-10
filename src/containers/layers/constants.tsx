@@ -91,10 +91,6 @@ export const LAYERS = [
     id: 'mangrove_allen_coral_reef',
   },
   {
-    name: 'Salt marsh data',
-    id: 'mangrove_salt_marsh_data',
-  },
-  {
     name: 'Global intertidal wetland change',
     id: 'mangrove_global_tidal_wetland_change',
   },
@@ -103,7 +99,7 @@ export const LAYERS = [
     id: 'mangrove_tidal_flats',
   },
   {
-    name: 'Salt marsh ',
+    name: 'Global Tidal Marsh Distribution',
     id: 'mangrove_salt_marsh',
   },
 ];
