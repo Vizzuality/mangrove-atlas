@@ -44,7 +44,7 @@ export type WidgetSlugType =
   | 'mangrove_iucn_ecoregion'
   | 'mangrove_allen_coral_reef'
   | 'mangrove_tidal_flats'
-  | 'mangrove_salt_marsh_data'
+  | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
   | 'mangrove_drawing_tool';
 
@@ -57,7 +57,7 @@ export type AnalysisWidgetSlug =
 
 export type ContextualBasemapsId =
   | 'mangrove_allen_coral_reef'
-  | 'mangrove_salt_marsh_data'
+  | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
   | 'mangrove_tidal_flats'
   | 'planet_medres_visual_monthly'

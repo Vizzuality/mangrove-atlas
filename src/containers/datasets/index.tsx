@@ -27,6 +27,9 @@ import LayerNameContentSecond from 'containers/datasets/contextual-layers/layer-
 import LayerNameInfoSecond from 'containers/datasets/contextual-layers/layer-name-second/info.mdx';
 import LayerNameLayerSecond from 'containers/datasets/contextual-layers/layer-name-second/layer';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
+import SaltMarshWidget from 'containers/datasets/contextual-layers/salt-marsh';
+import SaltMarshInfo from 'containers/datasets/contextual-layers/salt-marsh/info.mdx';
+import SaltMarshLayer from 'containers/datasets/contextual-layers/salt-marsh/layer';
 import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats';
 import TidalFlatsInfo from 'containers/datasets/contextual-layers/tidal-flats/info.mdx';
 import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
@@ -114,6 +117,7 @@ export const WIDGETS = {
   mangrove_tidal_flats: TidalFlatsWidget,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
   mangrove_iucn_ecoregion: IUCNEcoregionWidget,
+  mangrove_salt_marsh: SaltMarshWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
@@ -142,6 +146,7 @@ export const LAYERS = {
   mangrove_allen_coral_reef: AllenCoralReefLayer,
   mangrove_tidal_flats: TidalFlatsLayer,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeLayer,
+  mangrove_salt_marsh: SaltMarshLayer,
 };
 
 export const INFO = {
@@ -170,6 +175,7 @@ export const INFO = {
   mangrove_tidal_flats: TidalFlatsInfo,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeInfo,
   mangrove_species_location: SpeciesLocationInfo,
+  mangrove_salt_marsh: SaltMarshInfo,
 };
 
 export const DOWNLOAD = {
