@@ -75,8 +75,15 @@ const DesktopLayout = () => {
         <Link
           href="/"
           className="pointer-events-auto absolute top-0 left-0 z-50 cursor-pointer print:hidden"
+          data-testid="desktop-logo-link"
         >
-          <Image width={220} height={100} src="/images/logo.svg" alt="Global Mangrove Watch" />
+          <Image
+            data-testid="desktop-logo"
+            width={220}
+            height={100}
+            src="/images/logo.svg"
+            alt="Global Mangrove Watch"
+          />
         </Link>
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
 
