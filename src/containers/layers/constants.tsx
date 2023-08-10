@@ -102,12 +102,16 @@ export const LAYERS = [
     name: 'Tidal flats',
     id: 'mangrove_tidal_flats',
   },
+  {
+    name: 'Salt marsh ',
+    id: 'mangrove_salt_marsh',
+  },
 ];
 
 export const LAYERS_ORDER = [
   'planet_medres_visual_monthly',
   'planet_medres_analytic_monthly',
-  'mangrove_salt_marsh_data',
+  'mangrove_salt_marsh',
   'mangrove_tidal_flats',
   'mangrove_global_tidal_wetland_change',
   'mangrove_allen_coral_reef',
