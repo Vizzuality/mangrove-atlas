@@ -34,6 +34,14 @@ const widgets_prod = [
     layersIds: ['allen_coral_reef'],
   },
   {
+    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
+      name: 'Salt Marsh',
+      slug: 'mangrove_salt_marsh',
+      locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+      categoryIds: ['contextual_layers'],
+    }),
+  },
+  {
     name: 'Tidal flats',
     slug: 'mangrove_tidal_flats',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -205,13 +213,6 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: [],
   },
-  // {
-  //   name: 'Layer name',
-  //   slug: 'mangrove_layer_name_second',
-  //   locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-  //   categoryIds: [],
-  //   layersIds: ['layer_name_second'],
-  // },
 ] satisfies WidgetTypes[];
 
 const widgets =
@@ -233,6 +234,7 @@ export const MAP_SETTINGS_SLUGS: string[] = [
   'mangrove_allen_coral_reef',
   'mangrove_tidal_flats',
   'mangrove_global_tidal_wetland_change',
+  'mangrove_salt_marsh',
 ];
 
 export default widgets;

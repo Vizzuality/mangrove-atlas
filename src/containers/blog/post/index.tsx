@@ -1,10 +1,16 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { usePostTags } from 'hooks/blog';
 
-import placeholderPost from 'images/blog/placeholder-post.png';
-
-export const Post = ({ post }: { post: { id: number; title: { rendered: string } } }) => {
+export const Post = ({
+  post,
+}: {
+  post: {
+    id: number;
+    title: { rendered: string };
+    yoast_head_json: { og_image: { url: string }[] };
+  };
+}) => {
   const { data } = usePostTags({ id: post.id });
 
   return (
@@ -12,7 +18,7 @@ export const Post = ({ post }: { post: { id: number; title: { rendered: string }
       <Image
         alt={post.title.rendered}
         className="h-[114px] w-28 rounded-2xl object-cover"
-        src={placeholderPost as StaticImageData}
+        src={post.yoast_head_json.og_image[0].url}
         width={112}
         height={114}
       />
@@ -22,7 +28,7 @@ export const Post = ({ post }: { post: { id: number; title: { rendered: string }
             return (
               <div
                 key={i}
-                className="itens-center flex w-fit whitespace-nowrap rounded-2xl bg-brand-400 py-1 px-3 text-xs font-semibold uppercase text-white"
+                className="flex w-fit items-center whitespace-nowrap rounded-2xl bg-brand-400 py-1 px-3 text-xs font-semibold uppercase text-white"
               >
                 {tag.name}
               </div>

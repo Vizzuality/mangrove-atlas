@@ -4,6 +4,14 @@ export type Post = {
   title: {
     rendered: string;
   };
+  yoast_head_json: {
+    og_image: {
+      url: string;
+    }[];
+  };
+  content: {
+    rendered: string;
+  };
 };
 
 export type Tag = {

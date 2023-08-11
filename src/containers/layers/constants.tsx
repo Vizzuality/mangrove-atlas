@@ -91,10 +91,6 @@ export const LAYERS = [
     id: 'mangrove_allen_coral_reef',
   },
   {
-    name: 'Salt marsh data',
-    id: 'mangrove_salt_marsh_data',
-  },
-  {
     name: 'Global intertidal wetland change',
     id: 'mangrove_global_tidal_wetland_change',
   },
@@ -102,12 +98,16 @@ export const LAYERS = [
     name: 'Tidal flats',
     id: 'mangrove_tidal_flats',
   },
+  {
+    name: 'Global Tidal Marsh Distribution',
+    id: 'mangrove_salt_marsh',
+  },
 ];
 
 export const LAYERS_ORDER = [
   'planet_medres_visual_monthly',
   'planet_medres_analytic_monthly',
-  'mangrove_salt_marsh_data',
+  'mangrove_salt_marsh',
   'mangrove_tidal_flats',
   'mangrove_global_tidal_wetland_change',
   'mangrove_allen_coral_reef',

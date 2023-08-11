@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -34,13 +33,10 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <Head>
-        <title>Global Mangrove Watch</title>
-        <MetaTags
-          title="Global Mangrove Watch"
-          description="Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable."
-        />
-      </Head>
+      <MetaTags
+        title="Global Mangrove Watch"
+        description="Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable."
+      />
       <div className="absolute right-0 z-[1000] h-10 w-10">
         <Helper
           className={{
