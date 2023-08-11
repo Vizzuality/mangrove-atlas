@@ -21,7 +21,6 @@ const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 const IucnEcoregionLayer = LAYERS['mangrove_iucn_ecoregion'];
 
 const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
-  'mangrove_habitat_extent',
   'mangrove_restoration_sites',
   'mangrove_restoration',
   'mangrove_iucn_ecoregion',
@@ -48,14 +47,6 @@ const LayerManagerContainer = () => {
 
     if (!!basemap) {
       filteredLayers.push(basemap);
-    }
-
-    if (layers.includes('mangrove_habitat_extent')) {
-      filteredLayers.push('mangrove_habitat_extent');
-    }
-
-    if (layers.includes('mangrove_restoration')) {
-      filteredLayers.push('mangrove_restoration');
     }
 
     return filteredLayers satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
