@@ -26,15 +26,21 @@ Unreleased
 
 ### Added
 
+- Blog content and images
+
  # test
     - Expand / collapse widgets interactivity
     - Menu categories interactivity
+    - Drawing tool flow
 
 ### Changed
 - Gobal Tidal Wetland Change layer
+- Categories added to url with router instead of recoil
+
 
 ### Fixed
  - IUCN Ecoregion tooltip position
+ - Duplicated layers for extent and restoration
 
 
 ### Removed
