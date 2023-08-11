@@ -57,7 +57,7 @@ export const BlogContent = () => {
             transition={{ duration: 0.4 }}
           >
             <button
-              className="absolute top-4 left-4 z-20 rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
+              className="absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
               onClick={() => setPostInfo(null)}
             >
               Back to News

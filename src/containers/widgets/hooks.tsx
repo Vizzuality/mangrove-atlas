@@ -24,6 +24,7 @@ export function useWidgets(): WidgetTypes[] {
   const locationType = params?.[0];
   const currentLocation = locationType || 'worldwide';
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
+
   return useMemo(() => {
     if (isAnalysisRunning) {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -44,10 +44,10 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [id, ...activeWidgets];
     setActiveWidgets(widgetsUpdate);
-  };
+  }, [id, isActive, setActiveWidgets, activeWidgets]);
 
   const HELPER_ID = id === widgets[0].slug;
 
