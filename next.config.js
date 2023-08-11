@@ -41,6 +41,16 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.wetlands.org',
+        port: '',
+        pathname: '/wp-content/uploads/**',
+      },
+    ],
+  },
   async rewrites() {
     return [
       // planet APi to get tiles

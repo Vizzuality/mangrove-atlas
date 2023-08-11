@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -10,8 +10,6 @@ import type { Post } from 'hooks/blog/types';
 import PostComponent from 'containers/blog/post';
 
 import { DialogClose } from 'components/dialog';
-
-import placeholderPost from 'images/blog/placeholder-post.png';
 
 export const BlogContent = () => {
   const { data } = useBlogPosts();
@@ -67,11 +65,17 @@ export const BlogContent = () => {
             <Image
               alt={postInfo.title.rendered}
               className="absolute top-0 left-0 h-[240px] w-full rounded-t-[20px] object-cover"
-              src={placeholderPost as StaticImageData}
+              src={postInfo.yoast_head_json.og_image[0].url}
+              width={112}
+              height={240}
             />
             <h3 className="mt-[270px] font-sans text-3xl font-light text-black/85">
               {postInfo.title.rendered}
             </h3>
+            <div
+              className="prose py-4"
+              dangerouslySetInnerHTML={{ __html: postInfo.content.rendered }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
