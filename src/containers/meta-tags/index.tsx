@@ -14,7 +14,6 @@ const MetaTags: React.FC<MetaTagsProps> = ({ title, description }: MetaTagsProps
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
 
-    <meta name="robots" content="noindex" />
     <meta name="og:title" content="Global Mangrove Watch" />
     <meta
       name="og:description"
