@@ -52,6 +52,7 @@ const DateSelect = ({
             className={cn({
               '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold': true,
             })}
+            description="Arrow"
           />
         </div>
       </PopoverTrigger>
@@ -63,7 +64,9 @@ const DateSelect = ({
               <button
                 className="font-bold hover:text-brand-800"
                 type="button"
+                role="button"
                 onClick={() => setDate(d)}
+                aria-label={`Select date ${d.label}`}
               >
                 {d.label}
               </button>

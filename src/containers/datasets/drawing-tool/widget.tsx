@@ -86,6 +86,7 @@ const WidgetDrawingTool = () => {
           message="draw a polygon on the map. Just click to start drawing and double click to stop"
         >
           <button
+            aria-label="Start drawing on the map"
             type="button"
             onClick={handleDrawingMode}
             className={cn({
@@ -96,7 +97,7 @@ const WidgetDrawingTool = () => {
             })}
             data-testid="start-drawing-button"
           >
-            <Icon icon={AREA_SVG} className="h-8 w-8" />
+            <Icon icon={AREA_SVG} className="h-8 w-8" description="Draw polygon" />
             <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
           </button>
         </Helper>
@@ -117,7 +118,11 @@ const WidgetDrawingTool = () => {
             <input data-testid="shapefile-upload" {...getInputProps()} />
             <div className="pointer-events-none flex items-center space-x-2">
               <span className="text-brand-800">
-                <Icon icon={UPLOAD_SVG} className="h-8 w-8 fill-brand-800" />
+                <Icon
+                  icon={UPLOAD_SVG}
+                  className="h-8 w-8 fill-brand-800"
+                  description="upload geometry"
+                />
               </span>
               <label id="label-file-upload" htmlFor="input-file-upload">
                 <div>
@@ -129,66 +134,65 @@ const WidgetDrawingTool = () => {
           </div>
         </Helper>
       </div>
-      <div>
+
+      <div className="block text-sm">
+        Learn more about{' '}
+        <Dialog>
+          <DialogTrigger asChild>
+            <span className="text-brand-800 underline">supported file formats</span>
+          </DialogTrigger>
+          <DialogContent className="top-24 rounded-3xl px-10">
+            <div className="space-y-4">
+              <h3 className="font-bold">Analysis of a custom area:</h3>
+              <span className="text-lg">Draw or upload a custom shape</span>
+              <h3 className="font-bold">Analysis:</h3>
+              <p className="text-lg">
+                Be aware to draw or upload a minimum size area in order to ensure enough data for
+                the analysis. The recommended maximum file size is 10MB. Anything larger than that
+                may not work properly.
+              </p>
+              <h3 className="font-bold">List of supported file formats:</h3>
+              <ul className="list-disc pl-5">
+                <li>
+                  <a
+                    className="text-sm text-brand-800 hover:underline"
+                    href="https://geojson.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    geoJSON (.json, .geojson)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-sm text-brand-800 hover:underline"
+                    href="https://www.geopackage.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    geoPackage (.gpkg)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="text-sm text-brand-800 hover:underline"
+                    href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    .zip with the following file formats .shp, .shx, .dbf and .prj
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <DialogClose />
+          </DialogContent>
+        </Dialog>
         <span className="block text-sm">
-          Learn more about{' '}
-          <Dialog>
-            <DialogTrigger asChild>
-              <span className="text-brand-800 underline">supported file formats</span>
-            </DialogTrigger>
-            <DialogContent className="top-24 rounded-3xl px-10">
-              <div className="space-y-4">
-                <h3 className="font-bold">Analysis of a custom area:</h3>
-                <span className="text-lg">Draw or upload a custom shape</span>
-                <h3 className="font-bold">Analysis:</h3>
-                <p className="text-lg">
-                  Be aware to draw or upload a minimum size area in order to ensure enough data for
-                  the analysis. The recommended maximum file size is 10MB. Anything larger than that
-                  may not work properly.
-                </p>
-                <h3 className="font-bold">List of supported file formats:</h3>
-                <ul className="list-disc pl-5">
-                  <li>
-                    <a
-                      className="text-sm text-brand-800 hover:underline"
-                      href="https://geojson.org"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      geoJSON (.json, .geojson)
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-sm text-brand-800 hover:underline"
-                      href="https://www.geopackage.org/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      geoPackage (.gpkg)
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      className="text-sm text-brand-800 hover:underline"
-                      href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      .zip with the following file formats .shp, .shx, .dbf and .prj
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <DialogClose />
-            </DialogContent>
-          </Dialog>
-          <span className="block text-sm">
-            By uploading data you agree to the{' '}
-            <a className="text-brand-800 underline" href="">
-              Terms of Service
-            </a>
-          </span>
+          By uploading data you agree to the{' '}
+          <a className="text-brand-800 underline" href="">
+            Terms of Service
+          </a>
         </span>
       </div>
     </div>

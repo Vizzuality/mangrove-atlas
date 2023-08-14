@@ -120,6 +120,7 @@ const IndicatorSource = ({
                 <Icon
                   icon={ARROW_SVG}
                   className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                  description="Arrow"
                 />
               </span>
             </PopoverTrigger>
@@ -129,6 +130,7 @@ const IndicatorSource = ({
                 {years?.map((u) => (
                   <li key={u} className="last-of-type:pb-4">
                     <button
+                      aria-label="set year"
                       className={cn({
                         'font-bold': true,
                       })}

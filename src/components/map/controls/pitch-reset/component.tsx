@@ -34,7 +34,11 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
         onClick={resetMapPitch}
         disabled={pitch === 0}
       >
-        <Icon icon={NAVIGATION_SVG} className="h-5 w-5 group-disabled:fill-grey-75" />
+        <Icon
+          icon={NAVIGATION_SVG}
+          className="h-5 w-5 group-disabled:fill-grey-75"
+          description="Pitch reset"
+        />
       </button>
     </div>
   );

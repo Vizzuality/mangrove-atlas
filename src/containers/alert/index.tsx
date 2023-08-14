@@ -94,8 +94,12 @@ const AnalysisAlert = () => {
           >
             <div className="space-y-5">
               <div className="flex justify-end">
-                <button type="button" onClick={() => setAnalysisAlert(false)}>
-                  <Icon icon={CLOSE_SVG} className="h-8 w-8" />
+                <button
+                  type="button"
+                  onClick={() => setAnalysisAlert(false)}
+                  aria-label="Reset analysis"
+                >
+                  <Icon icon={CLOSE_SVG} className="h-8 w-8" description="Close" />
                 </button>
               </div>
               <h3 className="text-3xl">Reset the page and delete area</h3>
@@ -113,6 +117,7 @@ const AnalysisAlert = () => {
             </div>
             <div className="flex items-center justify-center space-x-5">
               <button
+                aria-label="Cancel reset page"
                 type="button"
                 onClick={handleCancelResetPage}
                 className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
@@ -120,6 +125,7 @@ const AnalysisAlert = () => {
                 Cancel
               </button>
               <button
+                aria-label="Reset page"
                 type="button"
                 onClick={handleResetPage}
                 className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"

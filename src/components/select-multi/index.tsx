@@ -132,6 +132,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     'h-3.5 w-3.5 shrink-0 fill-current text-brand-800': true,
                     'rotate-180 delay-200': open,
                   })}
+                  description="Arrow"
                 />
                 {/* <span className="pointer-events-none relative flex items-center space-x-2">
                   <Loading

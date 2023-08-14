@@ -68,6 +68,7 @@ const HabitatExtent = () => {
                     <Icon
                       icon={TRIANGLE_SVG}
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      description="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -77,6 +78,7 @@ const HabitatExtent = () => {
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
+                          aria-label="Select start year"
                           className={cn({
                             'font-bold': true,
                             'text-brand-800': currentStartYear === y,
@@ -107,6 +109,7 @@ const HabitatExtent = () => {
                     <Icon
                       icon={TRIANGLE_SVG}
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      description="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -116,6 +119,7 @@ const HabitatExtent = () => {
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
+                          aria-label="select end year"
                           className={cn({
                             'font-bold': true,
                             'text-brand-800': currentEndYear === y,
@@ -156,6 +160,7 @@ const HabitatExtent = () => {
           </div>
 
           <button
+            aria-label="set number of countries to show"
             type="button"
             className="flex w-full items-center justify-center space-x-2 text-sm font-semibold text-brand-800"
             onClick={() => setLimit(limit === 5 ? 10 : 5)}
@@ -167,6 +172,7 @@ const HabitatExtent = () => {
                 'inline-block h-2 w-2 fill-current text-brand-800': true,
                 'rotate-180 transform ': limit === 10,
               })}
+              description="Arrow"
             />
           </button>
         </div>

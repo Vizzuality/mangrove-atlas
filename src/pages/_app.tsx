@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { MapProvider } from 'react-map-gl';
 
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { GAPage } from 'lib/analytics/ga';
@@ -70,6 +71,9 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=1024" />
+      </Head>
       <style jsx global>
         {`
           :root {

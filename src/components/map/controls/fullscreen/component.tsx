@@ -49,6 +49,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
         <Icon
           icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
           className="h-5 w-5 group-disabled:fill-grey-75"
+          description="Fullscreen"
         />
       </button>
     </div>

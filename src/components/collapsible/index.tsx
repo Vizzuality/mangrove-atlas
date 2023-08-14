@@ -9,7 +9,7 @@ import widgets from 'containers/widgets/constants';
 import Icon from 'components/icon';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-import REMOVE_SVG from 'svgs/remove.svg?sprite';
+import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
 const CollapsibleComponent = ({
   layers,
@@ -42,14 +42,17 @@ const CollapsibleComponent = ({
           {isOpen && !!layers.length && (
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold uppercase">{widgetName(layers[0])}</p>
-              <button onClick={() => removeLayer(layers[0])}>
-                <Icon icon={REMOVE_SVG} className="h-4 w-4" />
+              <button onClick={() => removeLayer(layers[0])} aria-label="remove-layer">
+                <Icon icon={REMOVE_SVG} className="h-4 w-4" description="Cross" />
               </button>
             </div>
           )}
         </div>
         <Collapsible.Trigger asChild>
-          <button className="flex h-11 w-11 items-center justify-center rounded-lg border bg-white shadow-light">
+          <button
+            aria-label="toggle collapsible component"
+            className="flex h-11 w-11 items-center justify-center rounded-lg border bg-white shadow-light"
+          >
             <ChevronUpIcon
               className={cn({
                 'h-4 w-4': true,
@@ -69,8 +72,8 @@ const CollapsibleComponent = ({
               className="flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm shadow-light"
             >
               <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
-              <button onClick={() => removeLayer(l)}>
-                <Icon icon={REMOVE_SVG} className="h-4 w-4" />
+              <button aria-label="remove-layer" onClick={() => removeLayer(l)}>
+                <Icon icon={REMOVE_SVG} className="h-4 w-4" description="Cross" />
               </button>
             </div>
           );

@@ -31,6 +31,7 @@ const MapToggle = () => {
             className={cn({
               'h-5 w-5 fill-brand-800': true,
             })}
+            description="Close"
           />
         )}
         {!mapView && <p className="font-sans text-sm text-white">{activeWidgets.length}</p>}

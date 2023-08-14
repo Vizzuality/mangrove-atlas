@@ -33,6 +33,7 @@ export const BlogContent = () => {
             <div className="flex flex-col space-y-4">
               {data?.map((post) => (
                 <button
+                  aria-label={`navigate to post - ${post.title.rendered}`}
                   key={post.id}
                   className="flex h-fit w-full rounded-3xl border border-slate-100 p-1 transition duration-300 hover:border-slate-400"
                   onClick={() => setPostInfo(post)}

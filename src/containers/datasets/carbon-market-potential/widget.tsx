@@ -53,6 +53,7 @@ const CarbonMarketPotentialWidget = () => {
                   <Icon
                     icon={ARROW_SVG}
                     className={`${`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} print:hidden`}
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -83,7 +84,11 @@ const CarbonMarketPotentialWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {unit.label}
-                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
+                  <Icon
+                    icon={ARROW_SVG}
+                    className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    description="Arrow"
+                  />
                 </span>
               </PopoverTrigger>
 
@@ -92,6 +97,7 @@ const CarbonMarketPotentialWidget = () => {
                   {units?.map((u) => (
                     <li key={u.label} className="last-of-type:pb-4">
                       <button
+                        aria-label="set unit"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800': unit !== u,

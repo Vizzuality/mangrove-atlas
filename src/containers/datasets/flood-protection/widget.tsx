@@ -136,6 +136,7 @@ const FloodProtection = ({
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -145,6 +146,7 @@ const FloodProtection = ({
                   {periods?.map((period) => (
                     <li key={period}>
                       <button
+                        aria-label="Select period"
                         className={cn({
                           'font-bold': true,
                           'hover:text-brand-800': period !== selectedPeriod,
@@ -185,6 +187,7 @@ const FloodProtection = ({
                   icon={TRIANGLE_SVG}
                   className="absolute -top-7 h-5 w-5"
                   style={{ left: trianglePosition }}
+                  description="Arrow"
                 />
               )}
             </div>

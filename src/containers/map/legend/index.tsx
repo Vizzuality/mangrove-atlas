@@ -14,7 +14,7 @@ import { LAYERS } from 'containers/layers/constants';
 import Icon from 'components/icon';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-import REMOVE_SVG from 'svgs/remove.svg?sprite';
+import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
 type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 
@@ -85,8 +85,8 @@ const Legend = ({
                     tooltipPosition={{ top: 100, left: 150 }}
                     message="layers on the map can be switched off here (same as toggle on widget)"
                   >
-                    <button onClick={() => removeLayer(l)}>
-                      <Icon icon={REMOVE_SVG} className="h-5 w-5" />
+                    <button type="button" onClick={() => removeLayer(l)} aria-label="Remove layer">
+                      <Icon icon={REMOVE_SVG} className="h-5 w-5" description="Remove layer" />
                     </button>
                   </Helper>
                 </div>

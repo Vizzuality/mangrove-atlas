@@ -5,4 +5,5 @@ export interface IconProps {
   };
   className?: string;
   style?: unknown;
+  description?: string;
 }
