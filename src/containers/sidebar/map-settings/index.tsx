@@ -49,6 +49,7 @@ const MapSettings = () => {
               'h-9 w-9 fill-current p-1 text-brand-800': true,
               'text-white': mapSettings,
             })}
+            description="Map settings"
           />
         </button>
       </div>

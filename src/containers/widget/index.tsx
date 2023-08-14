@@ -29,7 +29,7 @@ type WidgetLayoutProps = {
   applicability?: string;
 };
 
-const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps): null | any => {
+const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability } = props;
   const { showWidget } = useRecoilValue(drawingToolAtom);
 

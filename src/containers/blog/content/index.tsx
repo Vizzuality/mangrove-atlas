@@ -33,7 +33,7 @@ export const BlogContent = () => {
             <div className="flex flex-col space-y-4">
               {data?.map((post) => (
                 <button
-                  aria-labek={`navigate to post - ${post.title.rendered}`}
+                  aria-label={`navigate to post - ${post.title.rendered}`}
                   key={post.id}
                   className="flex h-fit w-full rounded-3xl border border-slate-100 p-1 transition duration-300 hover:border-slate-400"
                   onClick={() => setPostInfo(post)}
@@ -58,14 +58,9 @@ export const BlogContent = () => {
             transition={{ duration: 0.4 }}
           >
             <button
-<<<<<<< HEAD
               type="button"
               aria-label="back to news"
               className="absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
-=======
-              aria-label="back to news"
-              className="absolute top-4 left-4 z-20 rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
->>>>>>> 151febd9 (wip tags)
               onClick={() => setPostInfo(null)}
             >
               Back to News

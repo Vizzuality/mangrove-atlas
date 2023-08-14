@@ -51,14 +51,11 @@ const Legend = ({ items }: Legend) => {
                     })}
                   >
                     {d?.species.map((s) => (
-                      <a
-                        key={s?.scientific_name}
-                        href={s.iucn_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <li>{s?.scientific_name}</li>
-                      </a>
+                      <li key={s?.scientific_name}>
+                        <a href={s.iucn_url} target="_blank" rel="noopener noreferrer">
+                          {s?.scientific_name}
+                        </a>
+                      </li>
                     ))}
                   </ul>
                 }

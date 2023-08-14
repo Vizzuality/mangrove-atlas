@@ -23,9 +23,7 @@ const Download = ({ id, content }) => {
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
         <DialogTrigger asChild>
-          <div className="flex justify-center">
-            <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" />
-          </div>
+          <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" description="Download" />
         </DialogTrigger>
         <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit translate-y-8 rounded-3xl">
           <div className="no-scrollbar overflow-y-auto">

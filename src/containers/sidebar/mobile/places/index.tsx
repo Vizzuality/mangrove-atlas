@@ -26,7 +26,11 @@ const PlacesMobile = () => {
             onClick={openMenu}
             className="mt-1 flex cursor-pointer items-center justify-center rounded-full"
           >
-            <Icon icon={GLASS_SVG} className="h-8 w-8 fill-white stroke-white" />
+            <Icon
+              icon={GLASS_SVG}
+              className="h-8 w-8 fill-white stroke-white"
+              description="Glass"
+            />
           </button>
         </DialogTrigger>
         <DialogContent

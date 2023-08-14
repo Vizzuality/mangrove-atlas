@@ -25,7 +25,7 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
       {info && (
         <Tooltip>
           <TooltipTrigger>
-            <Icon icon={INFO_SVG} className="h-5 w-5" />
+            <Icon icon={INFO_SVG} className="h-5 w-5" description="Info" />
           </TooltipTrigger>
 
           <TooltipPortal>
@@ -44,7 +44,11 @@ const Indicator = ({ label, value, check, info }: IndicatorTypes) => (
 
     {value && <p>{value}</p>}
     {!!check && (
-      <Icon icon={check?.toLowerCase() === 'yes' ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" />
+      <Icon
+        icon={check?.toLowerCase() === 'yes' ? CHECK_SVG : UNCHECK_SVG}
+        className="h-5 w-5"
+        description="Check"
+      />
     )}
   </div>
 );

@@ -57,7 +57,7 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
         disabled={zoom >= maxZoom}
         onClick={increaseZoom}
       >
-        <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} />
+        <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} description="Zoom-in" />
       </button>
       <button
         className={cn({
@@ -69,7 +69,7 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
         disabled={zoom <= minZoom}
         onClick={decreaseZoom}
       >
-        <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} />
+        <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} description="Zoom-out" />
       </button>
     </div>
   );

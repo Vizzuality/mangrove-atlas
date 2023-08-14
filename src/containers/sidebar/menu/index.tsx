@@ -53,6 +53,7 @@ const Menu = () => {
                 <Icon
                   icon={MENU_SVG}
                   className="h-8 w-10 stroke-white stroke-2 md:w-8 md:stroke-brand-800"
+                  description="Menu"
                 />
               </button>
             </DialogTrigger>
@@ -89,6 +90,7 @@ const Menu = () => {
                           'rotate-180 transform': openSubmenu,
                           'rotate-0 transform': !openSubmenu,
                         })}
+                        description="Arrow"
                       />
                     </button>
                   </div>
@@ -119,10 +121,22 @@ const Menu = () => {
                         </div>
 
                         <div className="grid w-full grid-cols-2 items-center justify-between md:grid-cols-4">
-                          <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" />
-                          <Icon icon={SOLO_SVG} className="w-22 md:w-28" />
-                          <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" />
-                          <Icon icon={NATURE_CONSERVANCY_SVG} className="w-22 md:w-28" />
+                          <Icon
+                            icon={ABERYSTWYTH_SVG}
+                            className="w-22 md:w-28"
+                            description="ABERYSTWYTH"
+                          />
+                          <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
+                          <Icon
+                            icon={WETLANDS_SVG}
+                            className="w-22 md:w-28"
+                            description="Wetlands"
+                          />
+                          <Icon
+                            icon={NATURE_CONSERVANCY_SVG}
+                            className="w-22 md:w-28"
+                            description="NATURE_CONSERVANCY"
+                          />
                         </div>
                       </motion.div>
                     )}

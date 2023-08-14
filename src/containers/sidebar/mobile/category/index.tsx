@@ -32,6 +32,7 @@ const CategoryMobile = () => {
             <Icon
               icon={CHART_SVG}
               className="mt-1 h-8 w-8 rounded-full fill-current stroke-none text-white"
+              description="chart"
             />
           </div>
         </DialogTrigger>
@@ -56,6 +57,7 @@ const CategoryMobile = () => {
                       'bg-brand-800 fill-current text-white': category === id,
                       'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
                     })}
+                    description={category}
                   />
                 </div>
                 <p className="whitespace-nowrap">{label}</p>

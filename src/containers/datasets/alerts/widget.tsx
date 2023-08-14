@@ -80,6 +80,7 @@ const AlertsWidget = () => {
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -115,6 +116,7 @@ const AlertsWidget = () => {
                   <Icon
                     icon={ARROW_SVG}
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>

@@ -30,6 +30,7 @@ const Download = ({ info }) => {
                     'rotate-180 transform': isCollapsed[id],
                     hidden: !description,
                   })}
+                  description="Download"
                 />
                 <h3 className={cn({ 'ml-6': description })}>{title}</h3>
               </div>

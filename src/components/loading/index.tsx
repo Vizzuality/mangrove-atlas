@@ -39,6 +39,7 @@ export const Loading: FC<LoadingProps> = ({
             ' text-brand-400 opacity-50': true,
             [iconClassName]: !!iconClassName,
           })}
+          description="Loading..."
         />
       </motion.div>
     </AnimatePresence>
