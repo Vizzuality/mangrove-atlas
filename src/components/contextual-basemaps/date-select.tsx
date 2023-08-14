@@ -52,6 +52,7 @@ const DateSelect = ({
             className={cn({
               '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold': true,
             })}
+            description="Arrow"
           />
         </div>
       </PopoverTrigger>

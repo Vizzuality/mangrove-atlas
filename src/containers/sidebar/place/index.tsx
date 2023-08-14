@@ -167,6 +167,7 @@ const Place = () => {
                 'bg-brand-800 fill-current text-white': placeSection === 'worldwide',
                 'fill-current text-brand-800': placeSection !== 'worldwide',
               })}
+              description="Globe"
             />
           </button>
         </Helper>
@@ -192,6 +193,7 @@ const Place = () => {
                     'bg-brand-800 fill-current text-white': placeSection === 'search',
                     'fill-current text-brand-800': placeSection !== 'search',
                   })}
+                  description="Glass"
                 />
               </Helper>
             </button>
@@ -222,6 +224,7 @@ const Place = () => {
                 'cursor-not-allowed bg-brand-800 fill-current text-white': placeSection === 'area',
                 'fill-current text-brand-800': placeSection !== 'area',
               })}
+              description="Area"
             />
           </Helper>
         </button>

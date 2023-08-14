@@ -24,7 +24,7 @@ import lightThumb from 'images/thumbs/btn-light@2x.png';
 import satelliteThumb from 'images/thumbs/btn-satellite@2x.png';
 import visualThumb from 'images/thumbs/visual.png';
 
-import TICK_SVG from 'svgs/ui/tick.svg?sprite';
+import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 import DateSelect from './date-select';
 
@@ -106,7 +106,11 @@ const CardBasemapContextual = ({
             checked={isActive}
           >
             <CheckboxIndicator className="text-white">
-              <Icon icon={TICK_SVG} className="h-full w-full fill-current text-white" />
+              <Icon
+                icon={CHECK_SVG}
+                className="h-full w-full fill-current text-white"
+                description="Checkmark"
+              />
             </CheckboxIndicator>
           </Checkbox>
         </button>

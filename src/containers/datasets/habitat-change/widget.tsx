@@ -68,6 +68,7 @@ const HabitatExtent = () => {
                     <Icon
                       icon={TRIANGLE_SVG}
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      description="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -108,6 +109,7 @@ const HabitatExtent = () => {
                     <Icon
                       icon={TRIANGLE_SVG}
                       className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      description="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -170,6 +172,7 @@ const HabitatExtent = () => {
                 'inline-block h-2 w-2 fill-current text-brand-800': true,
                 'rotate-180 transform ': limit === 10,
               })}
+              description="Arrow"
             />
           </button>
         </div>

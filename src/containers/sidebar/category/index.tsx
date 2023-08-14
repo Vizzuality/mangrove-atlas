@@ -103,6 +103,7 @@ const Category = () => {
                       'bg-brand-800 fill-current text-white': category === id && !mapSettings,
                       'fill-current text-brand-800': category !== id || mapSettings,
                     })}
+                    description={category}
                   />
                 </div>
               ))}
@@ -144,6 +145,7 @@ const Category = () => {
                             'fill-current text-brand-800 group-hover:bg-brand-800/15':
                               category !== id,
                           })}
+                          description={category}
                         />
                       </div>
                       <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300">

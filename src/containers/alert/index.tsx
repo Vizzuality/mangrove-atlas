@@ -99,7 +99,7 @@ const AnalysisAlert = () => {
                   onClick={() => setAnalysisAlert(false)}
                   aria-label="Reset analysis"
                 >
-                  <Icon icon={CLOSE_SVG} className="h-8 w-8" />
+                  <Icon icon={CLOSE_SVG} className="h-8 w-8" description="Close" />
                 </button>
               </div>
               <h3 className="text-3xl">Reset the page and delete area</h3>

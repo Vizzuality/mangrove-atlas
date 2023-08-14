@@ -70,7 +70,7 @@ const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
       onClick={onClose}
       aria-label="close dialog"
     >
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" />
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" description="Cross" />
       <span className="sr-only">Close</span>
     </button>
   </DialogPrimitive.Close>

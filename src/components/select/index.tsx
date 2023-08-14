@@ -27,7 +27,7 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <Icon icon={ARROW_DOWN_SVG} className="h-2 w-3 stroke-white stroke-2" />
+    <Icon icon={ARROW_DOWN_SVG} className="h-2 w-3 stroke-white stroke-2" description="Arrow" />
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;

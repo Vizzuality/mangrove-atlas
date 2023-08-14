@@ -27,7 +27,7 @@ const CheckboxIndicator = ({
 <CheckboxPrimitive.Indicator
   className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
 >
-  <Icon icon={CHECK_SVG} className="h-full w-full " />
+  <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
 </CheckboxPrimitive.Indicator>;
 
 const Checkbox = React.forwardRef<
@@ -49,7 +49,7 @@ const Checkbox = React.forwardRef<
       <CheckboxPrimitive.Indicator
         className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
       >
-        <Icon icon={CHECK_SVG} className="h-full w-full " />
+        <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
       </CheckboxPrimitive.Indicator>
     )}
   </CheckboxPrimitive.Root>

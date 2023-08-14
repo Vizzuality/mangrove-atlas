@@ -9,7 +9,7 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 
-import REMOVE_SVG from 'svgs/remove.svg?sprite';
+import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
 export const DeleteDrawingButton = () => {
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
