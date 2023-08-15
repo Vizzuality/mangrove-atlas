@@ -1,6 +1,25 @@
 import { WidgetTypes } from 'types/widget';
 
-const widgets = [
+const widgets_dev = [
+  {
+    name: 'National dashboard',
+    slug: 'mangrove_national_dashboard',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    applicability: 'National and Sub-National',
+    categoryIds: ['all_datasets', 'distribution_and_change'],
+    layersIds: [''],
+  },
+  {
+    name: 'Mangrove Restoration Sites',
+    slug: 'mangrove_restoration_sites',
+    locationType: ['country', 'worldwide'],
+    applicability: 'Global, National, and Sub-National',
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['restoration_sites'],
+  },
+] satisfies WidgetTypes[];
+
+const widgets_prod = [
   {
     name: 'Map Style',
     slug: 'mangrove_contextual_basemaps',
@@ -43,16 +62,6 @@ const widgets = [
     applicability: 'Global, National, Sub-National, and Local',
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
     layersIds: ['extent'],
-  },
-  {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'National dashboard',
-      slug: 'mangrove_national_dashboard',
-      locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-      applicability: 'National and Sub-National',
-      categoryIds: ['all_datasets', 'distribution_and_change'],
-      layersIds: [''],
-    }),
   },
   {
     name: 'Mangrove net change',
@@ -116,16 +125,6 @@ const widgets = [
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['restoration'],
-  },
-  {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'Mangrove Restoration Sites',
-      slug: 'mangrove_restoration_sites',
-      locationType: ['country', 'worldwide'],
-      applicability: 'Global, National, and Sub-National',
-      categoryIds: ['all_datasets', 'restoration_and_conservation'],
-      layersIds: ['restoration_sites'],
-    }),
   },
   {
     name: 'Mangrove biomass',
@@ -216,6 +215,10 @@ const widgets = [
   },
 ] satisfies WidgetTypes[];
 
+const widgets =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+    ? [...widgets_dev, ...widgets_prod]
+    : widgets_prod;
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_habitat_extent',
   'mangrove_net_change',
