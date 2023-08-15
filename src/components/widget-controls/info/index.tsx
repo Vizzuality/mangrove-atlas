@@ -12,7 +12,7 @@ const Info = ({ id, content }) => {
   return (
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
-        <DialogTrigger asChild>
+        <DialogTrigger>
           <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" description="Info" />
         </DialogTrigger>
         <DialogContent className="scroll-y h-[90%] translate-y-8 rounded-3xl">
