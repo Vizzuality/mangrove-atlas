@@ -10,6 +10,7 @@ import DesktopLayout from 'layouts/desktop';
 import MobileLayout from 'layouts/mobile';
 
 import type { DataResponse } from 'containers/datasets/locations/hooks';
+import MetaTags from 'containers/meta-tags';
 
 import { breakpoints } from 'styles/styles.config';
 
@@ -22,6 +23,10 @@ const Home = () => {
 
   return (
     <>
+      <MetaTags
+        title="Global Mangrove Watch"
+        description="Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable."
+      />
       {!isPrintingMode && screenWidth < breakpoints.md && <MobileLayout />}
       {screenWidth >= breakpoints.md && <DesktopLayout />}
     </>

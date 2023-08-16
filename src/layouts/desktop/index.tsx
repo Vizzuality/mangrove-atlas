@@ -12,7 +12,6 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import MapContainer from 'containers/map';
-import MetaTags from 'containers/meta-tags';
 import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
@@ -33,10 +32,6 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <MetaTags
-        title="Global Mangrove Watch"
-        description="Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable."
-      />
       <div className="absolute right-0 z-[1000] h-10 w-10">
         <Helper
           className={{
