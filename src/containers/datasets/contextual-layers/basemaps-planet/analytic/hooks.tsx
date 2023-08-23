@@ -24,7 +24,7 @@ export function useSource(): SourceProps & { key: string } {
       )}_mosaic/gmap/{z}/{x}/{y}`,
     ],
     minzoom: 0,
-    maxzoom: 12,
+    maxzoom: 20,
   };
 }
 

@@ -5,6 +5,7 @@ import { MapProvider } from 'react-map-gl';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 
 import { GAPage } from 'lib/analytics/ga';
 import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
@@ -81,6 +82,15 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
           }
         `}
       </style>
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+        `}
+      </Script>
       <RecoilRoot>
         <RecoilURLSyncNext
           location={{ part: 'queryParams' }}
