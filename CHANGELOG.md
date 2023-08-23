@@ -26,6 +26,19 @@ Unreleased
 
 ### Added
 
+
+### Changed
+
+
+### Fixed
+
+
+### Removed
+
+Released 23/08/2023
+
+### Added
+
 - Blog content and images
 
  # test
@@ -36,6 +49,8 @@ Unreleased
 ### Changed
 - Gobal Tidal Wetland Change layer
 - Categories added to url with router instead of recoil
+- Google Analytics tag
+- Max Zoom level in planet Imagery contextual layers
 
 
 ### Fixed
