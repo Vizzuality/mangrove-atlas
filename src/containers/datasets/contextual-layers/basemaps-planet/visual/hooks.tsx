@@ -21,7 +21,7 @@ export function useSource(): SourceProps & { key: string } {
       `/planet/planet_medres_visual_${encodeURIComponent(selectedDate)}_mosaic/gmap/{z}/{x}/{y}`,
     ],
     minzoom: 0,
-    maxzoom: 12,
+    maxzoom: 20,
   };
 }
 
