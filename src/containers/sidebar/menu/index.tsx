@@ -61,8 +61,7 @@ const Menu = () => {
             <DialogContent
               data-testid="menu-content"
               className={cn({
-                'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[10vh] md:max-w-xl':
-                  true,
+                'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5%] md:max-w-xl': true,
                 'h-fit py-0': section === 'main',
                 'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
                 'md:translate-0 translate-y-10': true,
@@ -75,7 +74,9 @@ const Menu = () => {
                   </h2>
                   <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
                     <button onClick={() => section && setSection('about')}>About this tool</button>
-                    <button onClick={() => section && setSection('news')}>News</button>
+                    {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
+                      <button onClick={() => section && setSection('news')}>News</button>
+                    )}
                   </div>
                   <div className="space-y-4 pb-6">
                     <p className="text-xs font-bold uppercase">Powered by</p>
