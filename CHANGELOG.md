@@ -51,6 +51,7 @@ Released 23/08/2023
 - Categories added to url with router instead of recoil
 - Google Analytics tag
 - Max Zoom level in planet Imagery contextual layers
+- Blog post modal height
 
 
 ### Fixed
@@ -59,7 +60,6 @@ Released 23/08/2023
 
 
 ### Removed
-
 
 
 Released 26/07/2023

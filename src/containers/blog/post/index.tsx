@@ -14,7 +14,7 @@ export const Post = ({
   const { data } = usePostTags({ id: post.id });
 
   return (
-    <div className="flex">
+    <div className="flex items-center">
       <Image
         alt={post.title.rendered}
         className="h-[114px] w-28 rounded-2xl object-cover"

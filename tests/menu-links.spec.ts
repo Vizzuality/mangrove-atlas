@@ -56,7 +56,6 @@ test('test menu links', async ({ page }) => {
   }
 });
 
-
 // test('activate layer', async ({ page }) => {
 //   await page.goto('/');
 //   await page.getByTestId('mangrove_extent').click();
