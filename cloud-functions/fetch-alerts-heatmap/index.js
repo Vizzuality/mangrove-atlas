@@ -1,8 +1,8 @@
-const { BigQuery } = require("@google-cloud/bigquery");
-const axios = require("axios").default;
-const reverse = require("turf-reverse");
-const http = require("http");
-const https = require("https");
+const { BigQuery } = require('@google-cloud/bigquery');
+const axios = require('axios').default;
+const reverse = require('turf-reverse');
+const http = require('http');
+const https = require('https');
 
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
@@ -30,16 +30,16 @@ const makeQuery = (startDate, endDate) => {
 };
 
 const serializeToGeoJSON = (data) => ({
-  type: "FeatureCollection",
-  name: "deforestation-alerts",
+  type: 'FeatureCollection',
+  name: 'deforestation-alerts',
   features: data.map((d) => ({
-    type: "Feature",
+    type: 'Feature',
     properties: {
       count: d.count,
       intensity: d.count / d.max,
     },
     geometry: {
-      type: "Point",
+      type: 'Point',
       coordinates: [d.longitude, d.latitude],
     },
   })),
@@ -56,8 +56,8 @@ const serializeToGeoJSON = (data) => ({
  * @param {Date} endDate
  */
 const alertsJob = async (
-  startDate = "2020-01-01",
-  endDate = new Date().toISOString().split("T")[0]
+  startDate = '2019-01-01',
+  endDate = new Date().toISOString().split('T')[0]
 ) => {
   // First try to get data from cache in order to reduce costs
   const cacheKey = `_${startDate}_${endDate}`;
@@ -68,7 +68,7 @@ const alertsJob = async (
   const options = {
     query: makeQuery(startDate, endDate),
     // Location must match that of the dataset(s) referenced in the query.
-    location: "US",
+    location: 'US',
   };
 
   // Run the query as a job
@@ -96,14 +96,14 @@ exports.fetchAlertsHeatmap = (req, res) => {
   // Set CORS headers for preflight requests
   // Allows GETs from any origin with the Content-Type header
   // and caches preflight response for 3600s
-  res.set("Access-Control-Allow-Origin", "*");
+  res.set('Access-Control-Allow-Origin', '*');
 
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
-    res.set("Access-Control-Allow-Methods", "GET");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-    res.set("Access-Control-Max-Age", "3600");
-    res.status(204).send("");
+    res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.set('Access-Control-Max-Age', '3600');
+    res.status(204).send('');
   } else {
     fetch();
   }

@@ -142,7 +142,7 @@ const alertsJob = async (
   x,
   y,
   z,
-  startDate = '2020-01-01',
+  startDate = '2019-01-01',
   endDate = new Date().toISOString().split('T')[0]
 ) => {
   // First try to get data from cache in order to reduce costs
