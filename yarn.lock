@@ -7508,6 +7508,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-dropzone: 14.2.3
+    react-icons: 4.11.0
     react-map-gl: ^7.0.21
     react-virtualized: 9.22.5
     recharts: ^2.5.0
@@ -9483,6 +9484,15 @@ __metadata:
   peerDependencies:
     react: ">= 16.8 || 18.0.0"
   checksum: 174b744d5ca898cf3d84ec1aeb6cef5211c446697e45dc8ece8287a03d291f8d07253206d5a1247ef156fd385d65e7de666d4d5c2986020b8543b8f2434e8b40
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:4.11.0":
+  version: 4.11.0
+  resolution: "react-icons@npm:4.11.0"
+  peerDependencies:
+    react: "*"
+  checksum: 7b8b80bbe2dabcc54b6c2129b7761a04b19caebe24389adc7683478ef41212b9ca0b53c63abcc06b3c01b94c84855ec5142b4c357e19c4aaaad9a4db23a3c485
   languageName: node
   linkType: hard
 
