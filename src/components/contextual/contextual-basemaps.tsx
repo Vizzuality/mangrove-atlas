@@ -1,5 +1,4 @@
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
-import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 import Helper from 'containers/guide/helper';
 
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
@@ -22,9 +21,6 @@ const BasemapsContextualMapSettings = () => {
           <CardBasemapContextual key={basemap.id} {...basemap} />
         ))}
       </Helper>
-      {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map((basemap) => (
-        <CardBasemapContextual key={basemap.id} {...basemap} />
-      ))}
     </div>
   );
 };

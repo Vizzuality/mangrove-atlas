@@ -34,7 +34,6 @@ export type WidgetSlugType =
   | 'mangrove_drivers_change'
   | 'mangrove_national_dashboard'
   | 'mangrove_fisheries'
-  | 'mangrove_layer_name_second'
   | 'mangrove_contextual_basemaps'
   | 'mangrove_flood_protection'
   | 'mangrove_coastal_protection_area'
@@ -46,6 +45,7 @@ export type WidgetSlugType =
   | 'mangrove_tidal_flats'
   | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
+  | 'mangrove_contextual_layers'
   | 'mangrove_drawing_tool';
 
 export type AnalysisWidgetSlug =

@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import { mapSettingsAtom } from 'store/map-settings';
 import { activeCategoryAtom, useSetActiveCategory } from 'store/sidebar';
 
+import { VscLayers } from 'react-icons/vsc';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/sidebar/constants';
@@ -50,15 +51,26 @@ const CategoryMobile = () => {
                     'h-10.5 flex w-10.5 items-center justify-center': true,
                   })}
                 >
-                  <Icon
-                    icon={icon}
-                    className={cn({
-                      'h-11 w-12 rounded-full stroke-none p-1': true,
-                      'bg-brand-800 fill-current text-white': category === id,
-                      'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
-                    })}
-                    description={category}
-                  />
+                  {id === 'contextual_layers' && (
+                    <VscLayers
+                      className={cn({
+                        'h-11 w-12 rounded-full stroke-none p-1': true,
+                        'bg-brand-800 fill-current text-white': category === id,
+                        'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
+                      })}
+                    />
+                  )}
+                  {id !== 'contextual_layers' && (
+                    <Icon
+                      icon={icon}
+                      className={cn({
+                        'h-11 w-12 rounded-full stroke-none p-1': true,
+                        'bg-brand-800 fill-current text-white': category === id,
+                        'fill-current text-brand-800 group-hover:bg-brand-800/15': category !== id,
+                      })}
+                      description={category}
+                    />
+                  )}
                 </div>
                 <p className="whitespace-nowrap">{label}</p>
               </button>

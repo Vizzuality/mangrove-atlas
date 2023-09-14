@@ -46,6 +46,7 @@ const CATEGORY_OPTIONS = [
   },
   { id: 'climate_and_policy', label: 'Climate & Policy', icon: SUN_SVG },
   { id: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
+  { id: 'contextual_layers', label: 'Contextual layers', icon: SUN_SVG },
   { id: 'all_datasets', label: 'All datasets', icon: ALL_SVG },
 ];
 

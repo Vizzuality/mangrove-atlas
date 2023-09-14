@@ -23,9 +23,6 @@ import CountryBoundariesLayer from 'containers/datasets/contextual-layers/countr
 import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layers/global-tidal-wetland-change';
 import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/global-tidal-wetland-change/info.mdx';
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
-import LayerNameContentSecond from 'containers/datasets/contextual-layers/layer-name-second';
-import LayerNameInfoSecond from 'containers/datasets/contextual-layers/layer-name-second/info.mdx';
-import LayerNameLayerSecond from 'containers/datasets/contextual-layers/layer-name-second/layer';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
 import SaltMarshWidget from 'containers/datasets/contextual-layers/salt-marsh';
 import SaltMarshInfo from 'containers/datasets/contextual-layers/salt-marsh/info.mdx';
@@ -87,7 +84,8 @@ import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
-import BasemapsContextualMapSettings from 'components/contextual-basemaps';
+import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
+import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
@@ -110,8 +108,8 @@ export const WIDGETS = {
   mangrove_drawing_tool: DrawingToolWidget,
   mangrove_national_dashboard: NationalDashboardWidget,
   mangrove_flood_protection: FloodProtectionWidget,
-  mangrove_layer_name_second: LayerNameContentSecond,
   mangrove_contextual_basemaps: BasemapsContextualMapSettings,
+  mangrove_contextual_layers: BasemapsContextualLayers,
   mangrove_fisheries: FisheriesWidget,
   mangrove_allen_coral_reef: AllenCoralReefWidget,
   mangrove_tidal_flats: TidalFlatsWidget,
@@ -135,7 +133,6 @@ export const LAYERS = {
   // contextual layers
   'country-boundaries': CountryBoundariesLayer,
   'protected-areas': ProtectedAreasLayer,
-  mangrove_layer_name_second: LayerNameLayerSecond,
   mangrove_restoration_sites: RestorationSitesLayer,
   mangrove_coastal_protection_area: FloodProtectionAreaLayer,
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
@@ -165,7 +162,6 @@ export const INFO = {
   mangrove_emissions_mitigation: EmissionsMitigationInfo,
   mangrove_carbon_market_potential: CarbonMarketPotentialInfo,
   mangrove_international_status: InternationalStatusInfo,
-  mangrove_layer_name_second: LayerNameInfoSecond,
   mangrove_restoration_sites: RestorationSitesInfo,
   mangrove_national_dashboard: NationalDashboardInfo,
   mangrove_flood_protection: FloodProtectionInfo,
