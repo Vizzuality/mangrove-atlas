@@ -209,7 +209,7 @@ const widgets_prod = [
       slug: 'mangrove_iucn_ecoregion',
       locationType: ['worldwide'],
       applicability: 'Global',
-      categoryIds: ['all_datasets', 'restoration_and_conservation'],
+      categoryIds: ['all_datasets', 'distribution_and_change'],
       layersIds: ['ecoregion'],
     }),
   },
