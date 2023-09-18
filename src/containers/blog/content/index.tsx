@@ -20,7 +20,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {!postInfo && (
           <motion.div
-            className="no-scrollbar overflow-y-auto pt-10"
+            className="no-scrollbar overflow-y-auto px-10 pt-10"
             initial="hidden"
             animate="displayed"
             variants={{
@@ -48,7 +48,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {postInfo && (
           <motion.div
-            className="no-scrollbar overflow-y-auto"
+            className="no-scrollbar overflow-y-auto overflow-x-visible"
             initial="hidden"
             animate="displayed"
             variants={{
@@ -57,26 +57,29 @@ export const BlogContent = () => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <button
-              type="button"
-              aria-label="back to news"
-              className="absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
-              onClick={() => setPostInfo(null)}
-            >
-              Back to News
-            </button>
-            <Image
-              alt={postInfo.title.rendered}
-              className="absolute top-0 left-0 h-[240px] w-full rounded-t-[20px] object-cover"
-              src={postInfo.yoast_head_json.og_image[0].url}
-              width={112}
-              height={240}
-            />
-            <h3 className="mt-[270px] font-sans text-3xl font-light text-black/85">
+            <div className="relative">
+              <button
+                type="button"
+                aria-label="back to news"
+                className="absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
+                onClick={() => setPostInfo(null)}
+              >
+                Back to News
+              </button>
+              <div className="relative h-[240px] w-full overflow-visible rounded-t-3xl">
+                <Image
+                  alt={postInfo.title.rendered}
+                  className="absolute top-0 -left-10 h-[240px] w-[100px] rounded-t-3xl object-cover"
+                  src={postInfo.yoast_head_json.og_image[0].url}
+                  fill={true}
+                />
+              </div>
+            </div>
+            <h3 className="mt-10 px-10 font-sans text-3xl font-light text-black/85">
               {postInfo.title.rendered}
             </h3>
             <div
-              className="prose py-4"
+              className="prose p-10 py-4"
               dangerouslySetInnerHTML={{ __html: postInfo.content.rendered }}
             />
           </motion.div>

@@ -74,11 +74,11 @@ const Menu = () => {
                   </h2>
                   <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
                     <button onClick={() => section && setSection('about')}>About this tool</button>
-                    {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
+                    {/* {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
                       <button onClick={() => section && setSection('news')}>News</button>
-                    )}
+                    )} */}
                   </div>
-                  <div className="space-y-4 pb-6">
+                  {/* <div className="space-y-4 pb-6">
                     <p className="text-xs font-bold uppercase">Powered by</p>
                     <button onClick={handleOpenSubmenu} className="flex items-start space-x-4">
                       <p className="pb-3 text-left text-2lg font-light leading-3">
@@ -94,52 +94,48 @@ const Menu = () => {
                         description="Arrow"
                       />
                     </button>
-                  </div>
+                  </div> */}
                   <AnimatePresence>
                     {openSubmenu && (
-                      <motion.div
-                        className="mb-4 flex flex-col space-y-4 md:mb-14"
-                        initial="hidden"
-                        animate="displayed"
-                        variants={{
-                          hidden: { opacity: 0 },
-                          displayed: { opacity: 1 },
-                        }}
-                        transition={{ duration: 0.4 }}
-                      >
-                        <div className="flex flex-col space-y-2 border-l pl-7 md:space-y-3">
-                          {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
-                            <a
-                              key={id}
-                              className="cursor-pointer text-lg font-light md:text-2lg"
-                              href={href}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {label}
-                            </a>
-                          ))}
-                        </div>
+                      // <motion.div
+                      //   className="mb-4 flex flex-col space-y-4 md:mb-14"
+                      //   initial="hidden"
+                      //   animate="displayed"
+                      //   variants={{
+                      //     hidden: { opacity: 0 },
+                      //     displayed: { opacity: 1 },
+                      //   }}
+                      //   transition={{ duration: 0.4 }}
+                      // >
+                      //   <div className="flex flex-col space-y-2 border-l pl-7 md:space-y-3">
+                      //     {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
+                      //       <a
+                      //         key={id}
+                      //         className="cursor-pointer text-lg font-light md:text-2lg"
+                      //         href={href}
+                      //         target="_blank"
+                      //         rel="noreferrer"
+                      //       >
+                      //         {label}
+                      //       </a>
+                      //     ))}
+                      //   </div>
 
-                        <div className="grid w-full grid-cols-2 items-center justify-between md:grid-cols-4">
-                          <Icon
-                            icon={ABERYSTWYTH_SVG}
-                            className="w-22 md:w-28"
-                            description="ABERYSTWYTH"
-                          />
-                          <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
-                          <Icon
-                            icon={WETLANDS_SVG}
-                            className="w-22 md:w-28"
-                            description="Wetlands"
-                          />
-                          <Icon
-                            icon={NATURE_CONSERVANCY_SVG}
-                            className="w-22 md:w-28"
-                            description="NATURE_CONSERVANCY"
-                          />
-                        </div>
-                      </motion.div>
+                      <div className="grid w-full grid-cols-2 items-center justify-between md:grid-cols-4">
+                        <Icon
+                          icon={ABERYSTWYTH_SVG}
+                          className="w-22 md:w-28"
+                          description="ABERYSTWYTH"
+                        />
+                        <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
+                        <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
+                        <Icon
+                          icon={NATURE_CONSERVANCY_SVG}
+                          className="w-22 md:w-28"
+                          description="NATURE_CONSERVANCY"
+                        />
+                      </div>
+                      // </motion.div>
                     )}
                   </AnimatePresence>
                   <Media lessThan="md">
