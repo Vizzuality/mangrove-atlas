@@ -17,7 +17,7 @@ const IUCNEcoregions = () => {
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             According to the IUCN evaluation, there are{' '}
-            <span className="font-bold"> {data.ecoregion_total}</span> marine ecoregions classified
+            <span className="font-bold"> {data.ecoregion_total}</span> marine provinces classified
             under vulnerable status.
           </p>
           <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
@@ -31,7 +31,7 @@ const IUCNEcoregions = () => {
             <DialogContent className="scroll-y left-18 top-16 max-h-fit rounded-3xl">
               <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
                 <h2 className="font-sans text-2xl font-light text-black/85">
-                  IUCN Ecoregion Assesment
+                  IUCN Ecosystem Red List Assesment
                 </h2>
                 <h4 className="py-4 text-sm font-bold ">Associated reports</h4>
                 <ul className="text-light space-y-4 text-sm text-brand-800 underline">

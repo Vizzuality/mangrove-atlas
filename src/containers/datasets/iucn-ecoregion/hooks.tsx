@@ -44,22 +44,22 @@ const REPORTS = [
   {
     name: 'RLE Mangroves of the Sunda Shelf (pdf)',
 
-    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983082/RLE.Mangroves.of.the.Sunda.Shelf.pdf',
+    url: 'https://ecoevorxiv.org/repository/view/5866/',
   },
   {
     name: 'RLE Mangroves of the Western Coral Triangle (pdf)',
 
-    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983083/RLE.Mangroves.of.the.Western.Coral.Triangle.pdf',
+    url: 'https://ecoevorxiv.org/repository/view/5867/',
   },
   {
     name: 'RLE Mangroves of the Andaman (pdf)',
 
-    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983084/RLE.Mangroves.of.the.Andaman.pdf',
+    url: 'https://ecoevorxiv.org/repository/view/5862/',
   },
   {
     name: 'RLE Mangroves of the South China Sea (pdf)',
 
-    url: 'https://github.com/Vizzuality/mangrove-atlas/files/11983085/RLE.Mangroves.of.the.South.China.Sea.pdf',
+    url: 'https://ecoevorxiv.org/repository/view/5865/',
   },
 ];
 
@@ -102,8 +102,9 @@ export function useMangroveEcoregions(
 
   return useQuery(['iucn-ecoregion', params], fetchMangroveIUCNEcoregions, {
     select: ({ data, metadata }) => {
-      const colorKeys = getColorKeys(data);
-      const dataWithColors = getChartData(data, colorKeys);
+      const dataFiltered = data?.filter((d) => d.category !== 'nt');
+      const colorKeys = getColorKeys(dataFiltered);
+      const dataWithColors = getChartData(dataFiltered, colorKeys);
 
       return {
         ...metadata,
@@ -146,8 +147,7 @@ export function useSource(): SourceProps {
 export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
   const OVERALL_ASSESMENT = {
     CE: '#EE4D5A',
-    VU: '#F3AD6A',
-    NT: '#ECDA9A',
+    VU: '#ECDA9A',
     LC: '#B4DCAA',
     DD: '#ECECEF',
     EN: '#F97B57',
