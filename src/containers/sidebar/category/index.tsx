@@ -8,6 +8,7 @@ import { activeCategoryAtom, useSetActiveCategory } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { VscLayers } from 'react-icons/vsc';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/sidebar/constants';
@@ -96,15 +97,29 @@ const Category = () => {
                   })}
                   data-isactive={category === id && !mapSettings}
                 >
-                  <Icon
-                    icon={icon}
-                    className={cn({
-                      'h-9 w-9 rounded-full stroke-none p-1': true,
-                      'bg-brand-800 fill-current text-white': category === id && !mapSettings,
-                      'fill-current text-brand-800': category !== id || mapSettings,
-                    })}
-                    description={category}
-                  />
+                  {id === 'contextual_layers' && (
+                    <VscLayers
+                      className={cn({
+                        'h-9 w-9 rounded-full fill-current stroke-none p-1 hover:text-brand-800':
+                          true,
+                        'bg-brand-800 fill-current text-white':
+                          category === 'contextual_layers' && !mapSettings,
+                        'fill-current text-brand-800':
+                          category !== 'contextual_layers' || mapSettings,
+                      })}
+                    />
+                  )}
+                  {id !== 'contextual_layers' && (
+                    <Icon
+                      icon={icon}
+                      className={cn({
+                        'h-9 w-9 rounded-full stroke-none p-1': true,
+                        'bg-brand-800 fill-current text-white': category === id && !mapSettings,
+                        'fill-current text-brand-800': category !== id || mapSettings,
+                      })}
+                      description={category}
+                    />
+                  )}
                 </div>
               ))}
             </button>
@@ -137,16 +152,28 @@ const Category = () => {
                           'flex h-11 w-11 items-center justify-center': true,
                         })}
                       >
-                        <Icon
-                          icon={icon}
-                          className={cn({
-                            'h-9 w-9 rounded-full stroke-none p-1': true,
-                            'bg-brand-800 fill-current text-white': category === id,
-                            'fill-current text-brand-800 group-hover:bg-brand-800/15':
-                              category !== id,
-                          })}
-                          description={category}
-                        />
+                        {id === 'contextual_layers' && (
+                          <VscLayers
+                            className={cn({
+                              'h-9 w-9 rounded-full stroke-none p-1': true,
+                              'bg-brand-800 fill-current text-white': category === id,
+                              'fill-current text-brand-800 group-hover:bg-brand-800/15':
+                                category !== id,
+                            })}
+                          />
+                        )}
+                        {id !== 'contextual_layers' && (
+                          <Icon
+                            icon={icon}
+                            className={cn({
+                              'h-9 w-9 rounded-full stroke-none p-1': true,
+                              'bg-brand-800 fill-current text-white': category === id,
+                              'fill-current text-brand-800 group-hover:bg-brand-800/15':
+                                category !== id,
+                            })}
+                            description={category}
+                          />
+                        )}
                       </div>
                       <p className="whitespace-nowrap font-sans text-black/85 transition-all duration-300">
                         {label}

@@ -27,6 +27,12 @@ const widgets_prod = [
     categoryIds: [],
   },
   {
+    name: 'Planet Satellite',
+    slug: 'mangrove_contextual_layers',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+  },
+  {
     name: 'Allen coral atlas',
     slug: 'mangrove_allen_coral_reef',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -230,13 +236,6 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_blue_carbon',
 ];
 
-export const MAP_SETTINGS_SLUGS: string[] = [
-  'mangrove_contextual_basemaps',
-  'mangrove_layer_name_second',
-  'mangrove_allen_coral_reef',
-  'mangrove_tidal_flats',
-  'mangrove_global_tidal_wetland_change',
-  'mangrove_salt_marsh',
-];
+export const MAP_SETTINGS_SLUGS: string[] = ['mangrove_contextual_basemaps'];
 
 export default widgets;
