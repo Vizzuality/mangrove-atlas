@@ -21,7 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed -->
 
-
 Unreleased
 
 ### Added
@@ -34,6 +33,27 @@ Unreleased
 
 
 ### Removed
+
+
+Released 25/09/2023
+
+### Added
+
+- Blog post tags
+
+
+### Changed
+
+- Access to Blog (news) moved from main menu to sidebar
+
+
+### Fixed
+
+- Blurry images in blog section
+
+### Removed
+
+- Link to subsections in Global Mangrove Alliance
 
 Released 23/08/2023
 

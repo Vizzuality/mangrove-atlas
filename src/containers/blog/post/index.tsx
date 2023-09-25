@@ -14,14 +14,15 @@ export const Post = ({
   const { data } = usePostTags({ id: post.id });
 
   return (
-    <div className="flex items-center">
-      <Image
-        alt={post.title.rendered}
-        className="h-[114px] w-28 rounded-2xl object-cover"
-        src={post.yoast_head_json.og_image[0].url}
-        width={112}
-        height={114}
-      />
+    <div className="relative flex items-center">
+      <div className="relative h-[114px] w-[112px] shrink-0">
+        <Image
+          alt={post.title.rendered}
+          className="absolute top-0 left-0  h-[114px] w-[112px] rounded-2xl object-cover"
+          src={post.yoast_head_json.og_image[0].url}
+          fill={true}
+        />
+      </div>
       <div className="flex flex-col space-y-2.5 p-4">
         <div className="flex flex-wrap gap-2">
           {data?.map((tag, i) => {

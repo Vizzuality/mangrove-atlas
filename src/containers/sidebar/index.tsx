@@ -5,6 +5,7 @@ import Menu from 'containers/sidebar/menu';
 
 import Category from './category';
 import MapSettings from './map-settings';
+import News from './news';
 import Place from './place';
 const HELPER_ID = 'menu-categories';
 
@@ -17,6 +18,7 @@ const Sidebar = () => (
       <div>
         <Menu />
       </div>
+      <News />
       <MapSettings />
       <Place />
       <Helper
