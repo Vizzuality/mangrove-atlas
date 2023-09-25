@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { useBlogPosts } from 'hooks/blog';
+import { useBlogPosts, usePostTags } from 'hooks/blog';
 import type { Post } from 'hooks/blog/types';
 
 import PostComponent from 'containers/blog/post';
@@ -13,8 +13,9 @@ import { DialogClose } from 'components/dialog';
 
 export const BlogContent = () => {
   const { data } = useBlogPosts();
-  const [postInfo, setPostInfo] = useState<Post | null>(null);
 
+  const [postInfo, setPostInfo] = useState<Post | null>(null);
+  const { data: dataTags } = usePostTags({ id: postInfo?.id });
   return (
     <>
       <AnimatePresence>
@@ -61,8 +62,11 @@ export const BlogContent = () => {
               <button
                 type="button"
                 aria-label="back to news"
-                className="absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
-                onClick={() => setPostInfo(null)}
+                className="pointer-events-all absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  return setPostInfo(null);
+                }}
               >
                 Back to News
               </button>
@@ -74,6 +78,16 @@ export const BlogContent = () => {
                   fill={true}
                 />
               </div>
+            </div>
+            <div className="px-10 py-4">
+              {dataTags?.map((tag, i) => (
+                <div
+                  key={i}
+                  className="flex w-fit items-center whitespace-nowrap rounded-2xl bg-brand-400 py-1 px-3 text-xs font-semibold uppercase text-white"
+                >
+                  {tag.name}
+                </div>
+              ))}
             </div>
             <h3 className="mt-10 px-10 font-sans text-3xl font-light text-black/85">
               {postInfo.title.rendered}

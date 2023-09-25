@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import BlogContent from 'containers/blog/content';
 import Helper from 'containers/guide/helper';
-import { EXT_MENU_OPTIONS, STYLES } from 'containers/sidebar/constants';
+import { STYLES } from 'containers/sidebar/constants';
 import About from 'containers/sidebar/menu/about';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
@@ -22,7 +22,7 @@ import NATURE_CONSERVANCY_SVG from 'svgs/partners/nature.svg?sprite';
 import SOLO_SVG from 'svgs/partners/solo.svg?sprite';
 import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+
 const Menu = () => {
   const [openSubmenu, setOpenSubmenu] = useState(false);
   const [section, setSection] = useState('main');
@@ -78,66 +78,33 @@ const Menu = () => {
                       <button onClick={() => section && setSection('news')}>News</button>
                     )} */}
                   </div>
-                  {/* <div className="space-y-4 pb-6">
+                  <div className="space-y-4 pb-6">
                     <p className="text-xs font-bold uppercase">Powered by</p>
-                    <button onClick={handleOpenSubmenu} className="flex items-start space-x-4">
-                      <p className="pb-3 text-left text-2lg font-light leading-3">
-                        Global Mangrove Alliance
-                      </p>
-                      <Icon
-                        icon={ARROW_SVG}
-                        className={cn({
-                          'h-3 w-3 stroke-current': true,
-                          'rotate-180 transform': openSubmenu,
-                          'rotate-0 transform': !openSubmenu,
-                        })}
-                        description="Arrow"
-                      />
-                    </button>
-                  </div> */}
-                  <AnimatePresence>
-                    {openSubmenu && (
-                      // <motion.div
-                      //   className="mb-4 flex flex-col space-y-4 md:mb-14"
-                      //   initial="hidden"
-                      //   animate="displayed"
-                      //   variants={{
-                      //     hidden: { opacity: 0 },
-                      //     displayed: { opacity: 1 },
-                      //   }}
-                      //   transition={{ duration: 0.4 }}
-                      // >
-                      //   <div className="flex flex-col space-y-2 border-l pl-7 md:space-y-3">
-                      //     {EXT_MENU_OPTIONS.map(({ id, label, href }) => (
-                      //       <a
-                      //         key={id}
-                      //         className="cursor-pointer text-lg font-light md:text-2lg"
-                      //         href={href}
-                      //         target="_blank"
-                      //         rel="noreferrer"
-                      //       >
-                      //         {label}
-                      //       </a>
-                      //     ))}
-                      //   </div>
+                    <a
+                      href="https://www.mangrovealliance.org/"
+                      className="pb-3 text-left text-2lg font-light leading-3"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Global Mangrove Alliance
+                    </a>
+                  </div>
 
-                      <div className="grid w-full grid-cols-2 items-center justify-between md:grid-cols-4">
-                        <Icon
-                          icon={ABERYSTWYTH_SVG}
-                          className="w-22 md:w-28"
-                          description="ABERYSTWYTH"
-                        />
-                        <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
-                        <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
-                        <Icon
-                          icon={NATURE_CONSERVANCY_SVG}
-                          className="w-22 md:w-28"
-                          description="NATURE_CONSERVANCY"
-                        />
-                      </div>
-                      // </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <div className="grid w-full grid-cols-2 items-center justify-between py-6 md:grid-cols-4">
+                    <Icon
+                      icon={ABERYSTWYTH_SVG}
+                      className="w-22 md:w-28"
+                      description="ABERYSTWYTH"
+                    />
+                    <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
+                    <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
+                    <Icon
+                      icon={NATURE_CONSERVANCY_SVG}
+                      className="w-22 md:w-28"
+                      description="NATURE_CONSERVANCY"
+                    />
+                  </div>
+
                   <Media lessThan="md">
                     <Image alt="GMA" src={GMA_PNG as StaticImageData} width={100} height={50} />
                   </Media>
