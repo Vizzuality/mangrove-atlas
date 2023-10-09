@@ -116,7 +116,6 @@ const WidgetsContainer: React.FC = () => {
       {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
       )}
-
       {screenWidth < breakpoints.md && (
         <div>
           {widgets.map(({ slug, name, applicability }) => {
