@@ -5,7 +5,7 @@ on:
 jobs:
   test_setup:
     name: Test setup
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       preview_url: ${{ steps.waitForVercelPreviewDeployment.outputs.url }}
     steps:
@@ -19,16 +19,16 @@ jobs:
     needs: test_setup
     name: Test
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 18
+        node-version-file: '.nvmrc'
     - name: Install dependencies
-      run: yarn
+      run: yarn install --immutable
     - name: Install Playwright Browsers
-      run: yarn playwright install --with-deps
+      run: yarn playwright install --with-deps chromium firefox webkit
     - name: Run Playwright tests
       run: yarn playwright test
       env:
