@@ -145,7 +145,11 @@ const widgets_prod = [
   {
     name: 'Mangrove Blue Carbon',
     slug: 'mangrove_blue_carbon',
-    locationType: ['custom-area', 'country', 'worldwide'],
+    locationType: [
+      // 'custom-area',
+      'country',
+      'worldwide',
+    ],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'climate_and_policy', 'ecosystem_services'],
     layersIds: ['carbon'],
@@ -227,7 +231,7 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_height',
   'mangrove_biomass',
   'mangrove_alerts',
-  'mangrove_blue_carbon',
+  // 'mangrove_blue_carbon',
 ];
 
 export const MAP_SETTINGS_SLUGS: string[] = [
