@@ -23,6 +23,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
 
+import { years } from './constants';
 import type { ExtentData, Indicator, DataResponse } from './types';
 
 const unitOptions = ['km²', 'ha'];
@@ -219,9 +220,10 @@ export function useSource(): SourceProps {
 }
 
 export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }): LayerProps[] {
+  console.log(year);
   return [
     {
-      id,
+      id: `${id}_${year}`,
       type: 'fill',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,
@@ -234,7 +236,7 @@ export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }):
       },
     },
     {
-      id: `${id}_line`,
+      id: `${id}_${year}`,
       type: 'line',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,

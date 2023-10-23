@@ -40,12 +40,10 @@ const widgets_prod = [
     layersIds: ['allen_coral_reef'],
   },
   {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'Salt Marsh',
-      slug: 'mangrove_salt_marsh',
-      locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-      categoryIds: ['contextual_layers'],
-    }),
+    name: 'Salt Marsh',
+    slug: 'mangrove_salt_marsh',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
   },
   {
     name: 'Tidal flats',
