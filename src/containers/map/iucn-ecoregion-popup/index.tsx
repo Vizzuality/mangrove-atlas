@@ -48,21 +48,21 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => (
   <div
     className={cn({
       [WIDGET_CARD_WRAPPER_STYLE]: true,
-      'min-w-[500px] space-x-2 p-5 pt-0': true,
+      'w-full min-w-[500px] space-x-2 rounded-2xl bg-white p-5 pt-0': true,
     })}
   >
     <header className="flex w-full items-center justify-between">
       <h2 className="cursor-pointer whitespace-nowrap py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
         ECOSYSTEM ASSESMENT
       </h2>
-      <a
+      {/* <a
         href=""
         target="_blank"
         rel="noopener noreferrer"
         className="whitespace-nowrap text-sm text-brand-800 underline"
       >
         Province Description (PDF)
-      </a>
+      </a> */}
     </header>
     <ul className="flex space-x-2 text-sm">
       {legendItems.map(({ color, label }) => (
