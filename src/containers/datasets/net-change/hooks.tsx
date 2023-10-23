@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
+import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -217,10 +218,18 @@ export function useMangroveNetChange(
     };
   }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
+export function useSources(): SourceProps[] {
+  const startYear = useRecoilValue(netChangeStartYear);
+  const endYear = useRecoilValue(netChangeEndYear);
+  const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
+    startYear,
+    endYear,
+  });
 
-export function useSources(years: number[]): SourceProps[] {
-  return years.map((year) => ({
-    id: `net-change-${year}`,
+  const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
+
+  return filteredYears?.map((year) => ({
+    id: `net-change-${filteredYears[0]} - ${filteredYears[filteredYears.length - 1]}`,
     type: 'raster',
     tiles: [
       `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,

@@ -4,15 +4,13 @@ import { Source, Layer } from 'react-map-gl';
 
 import { LayerProps } from 'types/layers';
 
-import { years } from './constants';
 import { useLayer, useSources } from './hooks';
 
 export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
-  const SOURCES = useSources(years);
+  const SOURCES = useSources();
   const LAYER = useLayer({ id });
 
   if (!SOURCES || !LAYER) return null;
-
   return (
     <>
       {SOURCES.map((SOURCE) => (
