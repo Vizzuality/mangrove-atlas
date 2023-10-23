@@ -18,7 +18,7 @@ const Sidebar = () => (
       <div>
         <Menu />
       </div>
-      <News />
+      {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && <News />}
       <MapSettings />
       <Place />
       <Helper

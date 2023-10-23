@@ -65,7 +65,7 @@ const DesktopLayout = () => {
         )}
         <Link
           href="/"
-          className="w-[220px]h-[90px]pointer-events-auto absolute top-0 left-0 z-50 cursor-pointer print:hidden"
+          className="pointer-events-auto absolute top-0 left-0 z-50 h-[90px] w-[220px] cursor-pointer print:hidden"
           data-testid="desktop-logo-link"
         >
           <Image
