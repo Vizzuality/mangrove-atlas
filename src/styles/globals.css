@@ -17,6 +17,7 @@ body {
 /* width */
 ::-webkit-scrollbar {
   width: 3px !important;
+  scrollbar-width: 3px !important;
 }
 
 
@@ -63,11 +64,16 @@ body {
     display: none;
   }
 
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 
+  ::-webkit-scrollbar {
+    width: 0.5rem !important;
+  }
+  
   .scroll-thin::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -170,3 +176,9 @@ body {
     margin: 0 auto;
   }
 }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary) var(--primary);
+  }

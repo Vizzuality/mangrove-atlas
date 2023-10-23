@@ -27,6 +27,12 @@ const widgets_prod = [
     categoryIds: [],
   },
   {
+    name: 'Planet Satellite',
+    slug: 'mangrove_contextual_layers',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
+  },
+  {
     name: 'Allen coral atlas',
     slug: 'mangrove_allen_coral_reef',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -34,12 +40,10 @@ const widgets_prod = [
     layersIds: ['allen_coral_reef'],
   },
   {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'Salt Marsh',
-      slug: 'mangrove_salt_marsh',
-      locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-      categoryIds: ['contextual_layers'],
-    }),
+    name: 'Salt Marsh',
+    slug: 'mangrove_salt_marsh',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers'],
   },
   {
     name: 'Tidal flats',
@@ -209,7 +213,7 @@ const widgets_prod = [
       slug: 'mangrove_iucn_ecoregion',
       locationType: ['worldwide'],
       applicability: 'Global',
-      categoryIds: ['all_datasets', 'restoration_and_conservation'],
+      categoryIds: ['all_datasets', 'distribution_and_change'],
       layersIds: ['ecoregion'],
     }),
   },
@@ -234,13 +238,6 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   // 'mangrove_blue_carbon',
 ];
 
-export const MAP_SETTINGS_SLUGS: string[] = [
-  'mangrove_contextual_basemaps',
-  'mangrove_layer_name_second',
-  'mangrove_allen_coral_reef',
-  'mangrove_tidal_flats',
-  'mangrove_global_tidal_wetland_change',
-  'mangrove_salt_marsh',
-];
+export const MAP_SETTINGS_SLUGS: string[] = ['mangrove_contextual_basemaps'];
 
 export default widgets;

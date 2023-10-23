@@ -74,10 +74,6 @@ export const LAYERS = [
     id: 'custom-area',
   },
   {
-    name: 'Layer name second',
-    id: 'mangrove_layer_name_second',
-  },
-  {
     name: 'Digital Earth Australia',
     id: 'national_dashboard_source_AUS_mangrove_cover_2022',
   },

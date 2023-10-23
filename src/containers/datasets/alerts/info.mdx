@@ -4,7 +4,7 @@ import LayoutMdx from 'layouts/mdx';
 
 ## Overview:
 
-This data set shows a heatmap representing points were there is high confidence of a change in mangrove forest cover. Note this is an experimental layer, presently only available for Africa, under going validation, and will be updated in the future. Changes in mangrove coverage were identified using a combination of USGS Landsat 8 (LS8), ESA Sentinel-1 (S1) and ESA Sentinel-2 (S2) data. For the optical S2 and LS8 sensors, only scenes where cloud cover is less than 20 % were used. In general scenes were avalaible about every 14-16 days. However, for the optical sensors, cloud cover can substantially reduce data availability in some regions. Potential change features were identified within pixels masked by the 2016 GMW mangrove extent layer; where NDVI values were < 0.2, and backscatering values were < -18 dB for the VV and < -23 dB for the VH polarisation channels, respectively. To combine the scene based potential change features and to filter false positives a scoring system was used where pixels were scored based on the number of times they have been identified as a change. Where S1 identifies a change 1 is added to the score, if LS8 or S2 identify a change then 2 is added to the score. Changes identified within the LS8 and S2 sensors were considered to be more reliable and less frequent (due to cloud cover). If no change was identified for a pixel, which was previously identified as a change, and has a score > 0, then 1 was removed from the score. If the score has a value of 5 or greater then the pixel was deemed to be a ‘True’ change.  The score cannot go below 0 or above 5. Processing was undertaken on a 20 m pixel grid, and then resampled to 60 m for presentation.
+This data set shows a heatmap representing points were there is high confidence of a loss of mangrove forest cover. This layer has a spatial resolution of 20 m and is updated on a monthly basis. The analysis is undertaken using Sentinel-2 imagery and updated on a monthly basis. The mangrove loss alert system is based on optimised normalised difference vegetation index (NDVI) thresholds used to identify mangrove losses and a temporal scoring system to filter false positives. The mangrove loss alert system was found to have an estimated overall accuracy of 92.1%, with the alert commission and omission estimated to be 10.4% and 20.6%, respectively. 
 
 ## DataLink: 
 
@@ -12,7 +12,7 @@ More info available soon
     
 ## Reference:
 
-Bunting et al., (2020). In Prep. Code is available at https://github.com/globalmangrovewatch/gmw_monitoring_demo
+Bunting, P.; Hilarides, L.; Rosenqvist, A.; Lucas, R.M.; Kuto, E.; Gueye, Y.; Ndiaye, L. Global Mangrove Watch: Monthly Alerts of Mangrove Loss for Africa. Remote Sens. 2023, 15, 2050. <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.3390/rs15082050">https://doi.org/10.3390/rs15082050</a>
 
 ## Date of content:
 

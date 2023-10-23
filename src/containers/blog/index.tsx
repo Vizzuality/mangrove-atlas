@@ -36,7 +36,7 @@ export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
           </button>
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y top-[5%] h-[96%] w-11/12 rounded-3xl px-6 pt-10 pb-0 font-sans md:top-auto md:h-[90vh] md:max-w-xl md:py-0 md:px-10">
+      <DialogContent className="scroll-y top-[5%] h-[96%] w-11/12 rounded-3xl px-0 pt-10 pb-0 font-sans md:top-auto md:h-[90vh] md:max-w-xl md:py-0">
         <BlogContent />
       </DialogContent>
     </Dialog>

@@ -65,13 +65,12 @@ const DesktopLayout = () => {
         )}
         <Link
           href="/"
-          className="pointer-events-auto absolute top-0 left-0 z-50 cursor-pointer print:hidden"
+          className="w-[220px]h-[90px]pointer-events-auto absolute top-0 left-0 z-50 cursor-pointer print:hidden"
           data-testid="desktop-logo-link"
         >
           <Image
             data-testid="desktop-logo"
-            width={220}
-            height={100}
+            fill={true}
             src="/images/logo.svg"
             alt="Global Mangrove Watch"
           />

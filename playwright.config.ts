@@ -9,10 +9,27 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
+const PORT = process.env.PORT || 3000;
+
 export default defineConfig({
   testDir: 'tests',
+  outputDir: 'test-results',
+  timeout: 60000,
+  globalTimeout: 60000,
+  expect: {
+    timeout: 60000,
+  },
+  /* Run your local dev server before starting the tests */
+  webServer: process.env.CI
+    ? undefined
+    : {
+        command: process.env.CI ? 'yarn build && yarn start' : 'yarn dev',
+        url: `http://localhost:${PORT}`,
+        reuseExistingServer: !process.env.CI,
+        timeout: 300000,
+      },
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: !process.env.CI,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -20,15 +37,15 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['list'], ['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
-    baseURL: process.env.PLAYWRIGHT_TEST_BASE_URL || 'http://localhost:3000',
+    baseURL: process.env.CI ? process.env.PLAYWRIGHT_TEST_BASE_URL : `http://localhost:${PORT}`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    navigationTimeout: 60000,
   },
 
   /* Configure projects for major browsers */
@@ -67,12 +84,4 @@ export default defineConfig({
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
   ],
-
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    // command: process.env.CI ? 'yarn build && yarn start' : 'yarn dev',
-    command: 'yarn dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
 });

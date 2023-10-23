@@ -61,7 +61,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => (
         rel="noopener noreferrer"
         className="whitespace-nowrap text-sm text-brand-800 underline"
       >
-        Ecoregional assesment (PDF)
+        Province Description (PDF)
       </a>
     </header>
     <ul className="flex space-x-2 text-sm">
