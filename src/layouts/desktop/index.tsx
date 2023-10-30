@@ -63,18 +63,6 @@ const DesktopLayout = () => {
             Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
           </p>
         )}
-        <Link
-          href="/"
-          className="pointer-events-auto absolute top-0 left-0 z-50 h-[90px] w-[220px] cursor-pointer print:hidden"
-          data-testid="desktop-logo-link"
-        >
-          <Image
-            data-testid="desktop-logo"
-            fill={true}
-            src="/images/logo.svg"
-            alt="Global Mangrove Watch"
-          />
-        </Link>
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
 
         <Sidebar />
