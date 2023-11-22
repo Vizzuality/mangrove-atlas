@@ -220,10 +220,9 @@ export function useSource(): SourceProps {
 }
 
 export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }): LayerProps[] {
-  console.log(year);
   return [
     {
-      id: `${id}_${year}`,
+      id: `${id}_${year}_line`,
       type: 'fill',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,
@@ -236,7 +235,7 @@ export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }):
       },
     },
     {
-      id: `${id}_${year}`,
+      id: `${id}_${year}_fill`,
       type: 'line',
       source: 'habitat_extent',
       'source-layer': `mng_mjr_${year}`,

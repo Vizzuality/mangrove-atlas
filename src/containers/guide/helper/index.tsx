@@ -15,6 +15,7 @@ export const Helper = ({
   message,
 }: PropsWithChildren<{
   className?: {
+    container?: string;
     button?: string;
     tooltip?: string;
     active?: string;
@@ -45,7 +46,7 @@ export const Helper = ({
   }, [childrenRef, popOver]);
 
   return (
-    <div>
+    <div className={cn({ [className.container]: !!className.container })}>
       {isActive && (
         <div className="relative">
           <button
@@ -67,7 +68,9 @@ export const Helper = ({
         </div>
       )}
 
-      <div ref={childrenRef}>{children}</div>
+      <div ref={childrenRef} className={cn({ [className.container]: !!className.container })}>
+        {children}
+      </div>
 
       {typeof window !== 'undefined' &&
         popOver &&
