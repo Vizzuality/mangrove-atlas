@@ -37,7 +37,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
   const widgets = useWidgets();
-  const HELPER_ID = widgets[0].slug;
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
@@ -58,7 +57,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   };
 
   if (Boolean(children.type() === null)) return null;
-
+  const filteredWidgets = widgets.find((w) => w.slug !== 'mangrove_national_dashboard');
+  const HELPER_ID =
+    id === 'mangrove_national_dashboard' ? 'mangrove_national_dashboard' : filteredWidgets?.slug;
   return (
     <AnimatePresence>
       <motion.div
@@ -83,10 +84,11 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           <header className="flex items-center justify-between ">
             <Helper
               className={{
-                button: HELPER_ID === id && !showWidget ? '-bottom-7.5 -right-6 z-[20]' : 'hidden',
+                container: 'w-full',
+                button: HELPER_ID === id && !showWidget ? '-top-0 -right-4 z-[20]' : 'hidden',
                 tooltip: 'w-fit-content',
               }}
-              tooltipPosition={{ top: 60, left: 0 }}
+              tooltipPosition={{ top: 40, left: 0 }}
               message="Click to expand/collapse widgets"
             >
               <h2

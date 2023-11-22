@@ -116,20 +116,20 @@ const WidgetsContainer: React.FC = () => {
       {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
       )}
-      {screenWidth < breakpoints.md && (
+      {screenWidth > 0 && screenWidth < breakpoints.md && (
         <div>
-          {widgets.map(({ slug, name, applicability }) => {
+          {widgets.map(({ slug, name, applicability }, index) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
-                {WIDGETS[slug] && <Widget />}
+                {WIDGETS[slug] && <Widget index={index} />}
               </WidgetWrapper>
             );
           })}
         </div>
       )}
 
-      {screenWidth >= breakpoints.md && (
+      {screenWidth > 0 && screenWidth >= breakpoints.md && (
         <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
           {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
