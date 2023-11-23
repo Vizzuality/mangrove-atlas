@@ -353,7 +353,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   };
 
-  const onLeave = (e) => {
+  const onLeave = () => {
     if (hoveredStateId !== null) {
       map.setFeatureState(
         { sourceLayer: 'null', source: 'restoration', id: null },
