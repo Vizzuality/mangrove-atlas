@@ -24,10 +24,8 @@ import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
 import MENU_SVG from 'svgs/sidebar/menu.svg?sprite';
 
 const Menu = () => {
-  const [openSubmenu, setOpenSubmenu] = useState(false);
   const [section, setSection] = useState('main');
 
-  const handleOpenSubmenu = useCallback(() => setOpenSubmenu(!openSubmenu), [openSubmenu]);
   return (
     <div className="relative">
       <Helper

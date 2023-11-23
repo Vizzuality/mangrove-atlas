@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import diacritics from 'diacritics';
 import Fuse from 'fuse.js';
 
