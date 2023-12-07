@@ -175,9 +175,9 @@ const AlertsWidget = () => {
       </div>
       <div>
         <SuggestedLayers
-          name="Planet Satellite Imagery"
+          name="Planet-NICFI Satellite Imagery"
           id="planet_medres_visual_monthly"
-          description="We recommend you to use Planet Satellite Imagery to validate the alerts."
+          description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
         >
           {isActive && (
             <div className="pb-4">

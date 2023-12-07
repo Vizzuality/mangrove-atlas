@@ -27,7 +27,7 @@ const widgets_prod = [
     categoryIds: [],
   },
   {
-    name: 'Planet Satellite',
+    name: 'Planet-NICFI Satellite Imagery',
     slug: 'mangrove_contextual_layers',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers'],
