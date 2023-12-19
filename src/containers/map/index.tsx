@@ -314,54 +314,56 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!iucnEcoregionFeature) removePopup('ecoregion');
   };
 
+  let hoveredStateId = null;
   const handleMouseMove = useCallback(
     (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
       if (!isDrawingToolVisible) {
         setCursor(evt.features?.length ? 'pointer' : 'grab');
       }
-    },
-    [setCursor, isDrawingToolVisible]
-  );
 
-  let hoveredStateId = null;
-  const onHover = (e) => {
-    const restorationData = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration-layer'
-    );
+      const restorationData = evt?.features.find(
+        ({ layer }) => layer.id === 'mangrove_restoration-layer'
+      );
 
-    if (restorationData) {
-      if (hoveredStateId !== null) {
-        map.setFeatureState(
+      // *ON MOUSE ENTER
+      if (restorationData) {
+        if (hoveredStateId !== null && map) {
+          map?.setFeatureState(
+            {
+              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+              source: 'jsx-source-0',
+              id: hoveredStateId,
+            },
+            { hover: false }
+          );
+        }
+
+        hoveredStateId = restorationData?.id;
+        map?.setFeatureState(
           {
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
+            source: 'jsx-source-0',
+            id: hoveredStateId,
+          },
+          { hover: true }
+        );
+      }
+
+      // *ON MOUSE LEAVE
+      if (!restorationData && map) {
+        map?.setFeatureState(
+          {
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'jsx-source-0',
             id: hoveredStateId,
           },
           { hover: false }
         );
+        hoveredStateId = null;
       }
-
-      hoveredStateId = restorationData?.id;
-      map.setFeatureState(
-        {
-          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-          source: 'mangrove_restoration',
-          id: hoveredStateId,
-        },
-        { hover: true }
-      );
-    }
-  };
-
-  const onLeave = (e) => {
-    if (hoveredStateId !== null) {
-      map.setFeatureState(
-        { sourceLayer: 'null', source: 'restoration', id: null },
-        { hover: false }
-      );
-    }
-    hoveredStateId = null;
-  };
+    },
+    [setCursor, isDrawingToolVisible, map]
+  );
 
   return (
     <div
@@ -381,8 +383,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
-        onMouseEnter={onHover}
-        onMouseLeave={onLeave}
         cursor={cursor}
         preserveDrawingBuffer
       >
