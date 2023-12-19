@@ -17,13 +17,9 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
-  // Brush as BrushRecharts,
-  // LineProps,
-  // BarProps,
-  // TreemapProps,
-  // Tree,
-  // PieProps,
 } from 'recharts';
+import type { CartesianGridProps, CartesianAxisProps, XAxisProps } from 'recharts/types';
+import type { LayoutType } from 'recharts/types/util/types';
 
 import Brush from './brush';
 
@@ -41,6 +37,7 @@ const ChartsMap = new Map([
   ['line', LineChart],
   ['composed', ComposedChart],
 ]);
+
 const Chart = ({ config }) => {
   const {
     data,
@@ -74,6 +71,8 @@ const Chart = ({ config }) => {
 
   const { pies, bars, lines, bar } = chartBase;
   const Chart = ChartsMap.get(type);
+
+  if (!width) return null;
 
   return (
     <div className="relative h-full w-full">

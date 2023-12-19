@@ -59,7 +59,7 @@ const AlertsWidget = () => {
     if (!date?.value) {
       setDate(dates?.[dates?.length - 1]);
     }
-  }, [dates]);
+  }, [dates, date?.value, setDate]);
 
   if (!fullData.length) return null;
   return (
