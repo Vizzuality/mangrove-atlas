@@ -92,7 +92,7 @@ export default class Brush extends PureComponent {
         <rect
           x={margin.left}
           y={margin.top}
-          width={width - margin.left - margin.right}
+          width={width ? width - margin.left - margin.right : 0}
           height={height - margin.bottom - margin.top}
           fill="#FFF"
           fillOpacity="0"

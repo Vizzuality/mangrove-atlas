@@ -23,6 +23,7 @@ import CountryBoundariesLayer from 'containers/datasets/contextual-layers/countr
 import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layers/global-tidal-wetland-change';
 import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/global-tidal-wetland-change/info.mdx';
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
+import PlanetSatelliteBasemapInfo from 'containers/datasets/contextual-layers/planet/info.mdx';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
 import SaltMarshWidget from 'containers/datasets/contextual-layers/salt-marsh';
 import SaltMarshInfo from 'containers/datasets/contextual-layers/salt-marsh/info.mdx';
@@ -172,6 +173,7 @@ export const INFO = {
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeInfo,
   mangrove_species_location: SpeciesLocationInfo,
   mangrove_salt_marsh: SaltMarshInfo,
+  mangrove_contextual_layers: PlanetSatelliteBasemapInfo,
 };
 
 export const DOWNLOAD = {
