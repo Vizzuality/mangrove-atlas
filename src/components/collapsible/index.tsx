@@ -3,9 +3,9 @@ import { useCallback, useState } from 'react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cn from 'classnames';
+import { Visibility } from 'mapbox-gl';
 
 import { LAYERS } from 'containers/layers/constants';
-import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
@@ -31,7 +31,7 @@ const CollapsibleComponent = ({
     [layers, setActiveLayers]
   );
 
-  const layerName = (label: { id: string; opacity: string }): string => {
+  const layerName = (label: { id: string; opacity: string; visibility: Visibility }): string => {
     const layer = LAYERS.find((w) => w.id === label.id);
     return layer ? layer.name : '';
   };

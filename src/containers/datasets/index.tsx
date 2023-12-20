@@ -1,15 +1,18 @@
 import AlertsDownload from 'containers/datasets/alerts/download';
 import AlertsInfo from 'containers/datasets/alerts/info.mdx';
 import AlertsLayer from 'containers/datasets/alerts/layer';
+import AlertsMapLegend from 'containers/datasets/alerts/map-legend';
 import AlertsWidget from 'containers/datasets/alerts/widget';
 import BiomassDownload from 'containers/datasets/biomass/download';
 import BiomassInfo from 'containers/datasets/biomass/info.mdx';
 import BiomassLayer from 'containers/datasets/biomass/layer';
+import BiomassMapLegend from 'containers/datasets/biomass/map-legend';
 import BiomassWidget from 'containers/datasets/biomass/widget';
 // import BiomassDownload from 'containers/datasets/biomass/download';
 import BlueCarbonDownload from 'containers/datasets/blue-carbon/download';
 import BlueCarbonInfo from 'containers/datasets/blue-carbon/info.mdx';
 import BlueCarbonLayer from 'containers/datasets/blue-carbon/layer';
+import BlueCarbonMapLegend from 'containers/datasets/blue-carbon/map-legend';
 import BlueCarbonWidget from 'containers/datasets/blue-carbon/widget';
 import CarbonMarketPotentialInfo from 'containers/datasets/carbon-market-potential/info.mdx';
 import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-potential/widget';
@@ -17,28 +20,34 @@ import CarbonMarketPotentialWidget from 'containers/datasets/carbon-market-poten
 import AllenCoralReefWidget from 'containers/datasets/contextual-layers/allen-coral-reef';
 import AllenCoralReefInfo from 'containers/datasets/contextual-layers/allen-coral-reef/info.mdx';
 import AllenCoralReefLayer from 'containers/datasets/contextual-layers/allen-coral-reef/layer';
+import AllenCoralReefMapLegend from 'containers/datasets/contextual-layers/allen-coral-reef/map-legend';
 import PlanetSatelliteBasemapAnalyticLayer from 'containers/datasets/contextual-layers/basemaps-planet/analytic/layer';
 import PlanetSatelliteBasemapVisualLayer from 'containers/datasets/contextual-layers/basemaps-planet/visual/layer';
 import CountryBoundariesLayer from 'containers/datasets/contextual-layers/country/layer';
 import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layers/global-tidal-wetland-change';
 import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/global-tidal-wetland-change/info.mdx';
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
+import GlobalTidalWetlandChangeMapLegend from 'containers/datasets/contextual-layers/global-tidal-wetland-change/map-legend';
 import PlanetSatelliteBasemapInfo from 'containers/datasets/contextual-layers/planet/info.mdx';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
 import SaltMarshWidget from 'containers/datasets/contextual-layers/salt-marsh';
 import SaltMarshInfo from 'containers/datasets/contextual-layers/salt-marsh/info.mdx';
 import SaltMarshLayer from 'containers/datasets/contextual-layers/salt-marsh/layer';
+import SaltMarshMapLegend from 'containers/datasets/contextual-layers/salt-marsh/map-legend';
 import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats';
 import TidalFlatsInfo from 'containers/datasets/contextual-layers/tidal-flats/info.mdx';
 import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
+import TidalFlatsMapLegend from 'containers/datasets/contextual-layers/tidal-flats/map-legend';
 import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
 import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
+import DriversChangeMapLegend from 'containers/datasets/drivers-change/map-legend';
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
 import FisheriesInfo from 'containers/datasets/fisheries/info.mdx';
 import FisheriesLayer from 'containers/datasets/fisheries/layer';
+import FisheriesMapLegend from 'containers/datasets/fisheries/map-legend';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
@@ -50,9 +59,11 @@ import HabitatChangeWidget from 'containers/datasets/habitat-change/widget';
 import HabitatExtentDownload from 'containers/datasets/habitat-extent/download';
 import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
+import HabitatExtentMapLegend from 'containers/datasets/habitat-extent/map-legend';
 import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';
 import HeightInfo from 'containers/datasets/height/info.mdx';
 import HeightLayer from 'containers/datasets/height/layer';
+import HeightMapLegend from 'containers/datasets/height/map-legend';
 import HeightWidget from 'containers/datasets/height/widget';
 // import HeightDownload from 'containers/datasets/height/download';
 // import NetChangeDownload from 'containers/datasets/net-change/download';
@@ -66,21 +77,26 @@ import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer
 import NationalDashboardWidget from 'containers/datasets/national-dashboard/widget';
 import NetChangeInfo from 'containers/datasets/net-change/info.mdx';
 import NetChangeLayer from 'containers/datasets/net-change/layer';
+import NetChangeMapLegend from 'containers/datasets/net-change/map-legend';
 import NetChangeWidget from 'containers/datasets/net-change/widget';
 import ProtectionInfo from 'containers/datasets/protection/info.mdx';
 import ProtectionLayer from 'containers/datasets/protection/layer';
+import ProtectionMapLegend from 'containers/datasets/protection/map-legend';
 import ProtectionWidget from 'containers/datasets/protection/widget';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
+import RestorationMapLegend from 'containers/datasets/restoration/map-legend';
 import RestorationWidget from 'containers/datasets/restoration/widget';
 import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
 import RestorationSitesLayer from 'containers/datasets/restoration-sites/layer';
 import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
+import SpeciesDistributionMapLegend from 'containers/datasets/species-distribution/map-legend';
 import SpeciesDistributionWidget from 'containers/datasets/species-distribution/widget';
 import SpeciesLocationInfo from 'containers/datasets/species-location/info.mdx';
 import SpeciesLocationLayer from 'containers/datasets/species-location/layer';
+import SpeciesLocationtMapLegend from 'containers/datasets/species-location/map-legend';
 import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
@@ -88,6 +104,7 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
+
 export const WIDGETS = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
@@ -145,6 +162,25 @@ export const LAYERS = {
   mangrove_tidal_flats: TidalFlatsLayer,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeLayer,
   mangrove_salt_marsh: SaltMarshLayer,
+};
+
+export const MAP_LEGENDS = {
+  mangrove_habitat_extent: HabitatExtentMapLegend,
+  mangrove_net_change: NetChangeMapLegend,
+  mangrove_species_location: SpeciesLocationtMapLegend,
+  mangrove_species_distribution: SpeciesDistributionMapLegend,
+  mangrove_protection: ProtectionMapLegend,
+  mangrove_restoration: RestorationMapLegend,
+  mangrove_biomass: BiomassMapLegend,
+  mangrove_height: HeightMapLegend,
+  mangrove_blue_carbon: BlueCarbonMapLegend,
+  mangrove_drivers_change: DriversChangeMapLegend,
+  mangrove_fisheries: FisheriesMapLegend,
+  mangrove_alerts: AlertsMapLegend,
+  mangrove_allen_coral_reef: AllenCoralReefMapLegend,
+  mangrove_salt_marsh: SaltMarshMapLegend,
+  mangrove_tidal_flats: TidalFlatsMapLegend,
+  mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
 };
 
 export const INFO = {

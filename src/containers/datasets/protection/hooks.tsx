@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { numberFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { Visibility } from 'mapbox-gl';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
@@ -198,7 +199,15 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   return [
     {
       id,
@@ -232,7 +241,10 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           0.8,
           '#009392',
         ],
-        'fill-opacity': 0.7,
+        'fill-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
   ];

@@ -16,8 +16,8 @@ import { useWidgets } from 'containers/widgets/hooks';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import { breakpoints } from 'styles/styles.config';
+import { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
-import type { ContextualBasemapsId } from 'types/widget';
 
 import Download from './download';
 import Info from './info';
@@ -40,6 +40,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+
   const widgets = useWidgets();
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
@@ -48,10 +49,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
       ? activeLayers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1' }, ...activeLayers] as {
-          id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
-          opacity: string;
-        }[]);
+      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 

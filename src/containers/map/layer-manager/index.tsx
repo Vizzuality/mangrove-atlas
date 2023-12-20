@@ -2,8 +2,6 @@ import { useMemo, useCallback } from 'react';
 
 import { Layer } from 'react-map-gl';
 
-import { orderByAttribute } from 'lib/utils';
-
 import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom, layersSettingsAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
@@ -11,7 +9,6 @@ import { basemapContextualAtom } from 'store/map-settings';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
-import { LAYERS_ORDER } from 'containers/layers/constants';
 
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
@@ -27,7 +24,6 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
   'mangrove_restoration',
   'mangrove_iucn_ecoregion',
 ] satisfies WidgetSlugType[];
-type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeLayersAtom);
@@ -42,8 +38,7 @@ const LayerManagerContainer = () => {
     .filter((l) => l?.id?.includes('mangrove_national_dashboard'))
     .map((l) => l.id);
 
-  const ordered = orderByAttribute(LAYERS_ORDER, layers);
-  const activeLayersIds = ordered.map((l) => l.id);
+  const activeLayersIds = layers.map((l) => l.id);
 
   const allLayersOrdered = [...nationalDashboardLayerIds, ...activeLayersIds];
 

@@ -12,6 +12,7 @@ import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -466,7 +467,15 @@ export function useSources(): SourceProps[] {
   ];
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): {
   'alerts-heatmap': LayerProps[];
   'alerts-tiles': LayerProps[];
   'monitored-alerts': LayerProps[];
@@ -503,7 +512,10 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
           // Adjust the heatmap radius by zoom level
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
           // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 11, 0.5],
+          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 11, opacity],
+        },
+        layout: {
+          visibility,
         },
       },
     ],
@@ -521,7 +533,10 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
           'circle-stroke-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-width': 1,
           'circle-blur': 0.5,
-          'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, 0.7],
+          'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, opacity],
+        },
+        layout: {
+          visibility,
         },
       },
     ],
@@ -534,7 +549,11 @@ export function useLayers({ id }: { id: LayerProps['id'] }): {
         minzoom: 0,
         paint: {
           'line-color': '#00857F',
+          'line-opacity': opacity,
           'line-width': 1,
+        },
+        layout: {
+          visibility,
         },
       },
     ],

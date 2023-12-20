@@ -67,7 +67,7 @@ const IndicatorSource = ({
       setActiveLayer(!isActiveLayer);
       const widgetsCheck = isActive
         ? activeLayers.filter((w) => w.id !== id)
-        : [{ id, opacity: '1' }, ...activeLayers];
+        : [{ id, opacity: '1', visibility: 'visible' }, ...activeLayers];
 
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
@@ -81,7 +81,7 @@ const IndicatorSource = ({
           year: yearSelected,
         },
       });
-      const widgetsUpdate = new Set(widgetsCheck);
+      const widgetsUpdate = new Set(widgetsCheck) as any;
       setActiveLayers([...widgetsUpdate]);
     },
     [activeLayers, yearSelected]

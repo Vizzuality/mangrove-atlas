@@ -13,6 +13,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import { Visibility } from 'mapbox-gl';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
@@ -230,9 +231,23 @@ export function useSource(): SourceProps {
     maxzoom: 12,
   };
 }
-export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
+export function useLayer({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps {
   return {
     id,
     type: 'raster',
+    paint: {
+      'raster-opacity': opacity,
+    },
+    layout: {
+      visibility,
+    },
   };
 }

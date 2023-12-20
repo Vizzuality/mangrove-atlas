@@ -1491,6 +1491,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-collection@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@radix-ui/react-collection@npm:1.0.3"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/react-compose-refs": 1.0.1
+    "@radix-ui/react-context": 1.0.1
+    "@radix-ui/react-primitive": 1.0.3
+    "@radix-ui/react-slot": 1.0.2
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: acfbc9b0b2c553d343c22f02c9f098bc5cfa99e6e48df91c0d671855013f8b877ade9c657b7420a7aa523b5aceadea32a60dd72c23b1291f415684fb45d00cff
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-compose-refs@npm:1.0.0":
   version: 1.0.0
   resolution: "@radix-ui/react-compose-refs@npm:1.0.0"
@@ -2162,6 +2185,36 @@ __metadata:
     react: ^16.8 || ^17.0 || ^18.0
     react-dom: ^16.8 || ^17.0 || ^18.0
   checksum: 884b00af83bea49caf887955187113421c2418729095113ebb4fcf831c264e0ac8596745533a722afae5bc45c822dc568c537cd0dfd14e0d2a3b66b7475d9445
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-slider@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@radix-ui/react-slider@npm:1.1.2"
+  dependencies:
+    "@babel/runtime": ^7.13.10
+    "@radix-ui/number": 1.0.1
+    "@radix-ui/primitive": 1.0.1
+    "@radix-ui/react-collection": 1.0.3
+    "@radix-ui/react-compose-refs": 1.0.1
+    "@radix-ui/react-context": 1.0.1
+    "@radix-ui/react-direction": 1.0.1
+    "@radix-ui/react-primitive": 1.0.3
+    "@radix-ui/react-use-controllable-state": 1.0.1
+    "@radix-ui/react-use-layout-effect": 1.0.1
+    "@radix-ui/react-use-previous": 1.0.1
+    "@radix-ui/react-use-size": 1.0.1
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0
+    react-dom: ^16.8 || ^17.0 || ^18.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 2b774f23d90549aa688ee2e500c5325a91ea92db7a5ef245bdf7b5c709078433e6853d4ad84b1367cf701d0f54906979db51baa21e5154b439dde03a365ed270
   languageName: node
   linkType: hard
 
@@ -3128,6 +3181,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"add@npm:^2.0.6":
+  version: 2.0.6
+  resolution: "add@npm:2.0.6"
+  checksum: e2d23d40494565dfed4acd65e478570c444db5ac6c053551ed429c39ea0f2c99d83df63e7befec936df601827d2254d06a2fb6f7dcfd2022e810b25eab818b8c
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6, agent-base@npm:^6.0.2":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -3567,6 +3627,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bean@npm:*":
+  version: 1.0.15
+  resolution: "bean@npm:1.0.15"
+  checksum: 406c3b0bb1b1e58350254324ace4cca75a4f370a89be40c7f60f7c7d1f7b9d4bf80e0a41f531eff5b6dd69b421b99d56ed84d878549adc68de9ce0091cc76f04
+  languageName: node
+  linkType: hard
+
 "big-integer@npm:^1.6.44":
   version: 1.6.51
   resolution: "big-integer@npm:1.6.51"
@@ -3614,6 +3681,13 @@ __metadata:
   version: 3.7.2
   resolution: "bluebird@npm:3.7.2"
   checksum: 869417503c722e7dc54ca46715f70e15f4d9c602a423a02c825570862d12935be59ed9c7ba34a9b31f186c017c23cac6b54e35446f8353059c101da73eac22ef
+  languageName: node
+  linkType: hard
+
+"bonzo@npm:*":
+  version: 2.0.0
+  resolution: "bonzo@npm:2.0.0"
+  checksum: c39a8f4ea4a24a1cef8840e67f6d19b5f19a799c72bde81bda813c01ef4d216a0c3b817199eb03d6e990f7eb5e5f0c7bf3922dfcde4f5d0fbddda87b926e7bd8
   languageName: node
   linkType: hard
 
@@ -4889,7 +4963,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"domready@npm:1.0.8":
+"domready@npm:*, domready@npm:1.0.8":
   version: 1.0.8
   resolution: "domready@npm:1.0.8"
   checksum: 5b0ee86650226e09f65c89b61d15fcfcda5925931dfffab5e9b82bf8ba96637286605fde1ac4addee19717bf7e486d4b49683e6f99038927560412113d96fde0
@@ -4953,6 +5027,13 @@ __metadata:
   version: 1.4.454
   resolution: "electron-to-chromium@npm:1.4.454"
   checksum: 26a756485b442be04a640b8733c3e0d1ad9630541e56906332b1a5f25ec0027647561ec98d0d2a5069a1aae3875c9751c6d1c6cb9ef400b2beabedc36da14ba1
+  languageName: node
+  linkType: hard
+
+"emile@npm:*":
+  version: 1.0.5
+  resolution: "emile@npm:1.0.5"
+  checksum: a44cacadf3148598e301f5e7bd013e1068d80691770b5a8c04354db63aa1c0995e52a702c2001538a3e0f256ad9a90fcd35337ff051be9649a3f4a0c177704ed
   languageName: node
   linkType: hard
 
@@ -7262,6 +7343,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jeesh@npm:*":
+  version: 0.0.6
+  resolution: "jeesh@npm:0.0.6"
+  dependencies:
+    bean: "*"
+    bonzo: "*"
+    domready: "*"
+    qwery: "*"
+  checksum: 4082d60aa5d9e53eff1df335e1da87002d1ea0ddceefb989f0384939443456f54adb52a08b0afb69e0a8e2c7d2e5c232fb495fae2d3959f8d244a4a2fa3ceb4d
+  languageName: node
+  linkType: hard
+
 "joi@npm:^17.3.0":
   version: 17.9.2
   resolution: "joi@npm:17.9.2"
@@ -7687,6 +7780,7 @@ __metadata:
     "@radix-ui/react-radio-group": 1.1.2
     "@radix-ui/react-scroll-area": ^1.0.4
     "@radix-ui/react-select": ^1.2.1
+    "@radix-ui/react-slider": ^1.1.2
     "@radix-ui/react-switch": ^1.0.2
     "@radix-ui/react-toggle": ^1.0.2
     "@radix-ui/react-tooltip": ^1.0.5
@@ -7704,6 +7798,7 @@ __metadata:
     "@types/react": 18.0.28
     "@types/react-dom": 18.0.11
     "@typescript-eslint/eslint-plugin": 5.48.2
+    add: ^2.0.6
     assert: 2.0.0
     autoprefixer: 10.4.14
     axios: 1.6.0
@@ -7739,6 +7834,7 @@ __metadata:
     recoil-sync: 0.2.0
     shadcn-ui: latest
     sharp: ^0.32.6
+    slider: ^1.0.4
     start-server-and-test: 1.12.1
     svg-sprite-loader: 6.0.11
     svgo: 3.0.2
@@ -9654,6 +9750,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qwery@npm:*":
+  version: 4.0.0
+  resolution: "qwery@npm:4.0.0"
+  checksum: 0cb94d293300c78147be601bc157aac4054752907c532df77919c5abdc83ad415c176cfe3761e421914bb8a54d19a16a4e7b24d74cb62cdae19f93d5b3d77889
+  languageName: node
+  linkType: hard
+
 "rc@npm:^1.2.7":
   version: 1.2.8
   resolution: "rc@npm:1.2.8"
@@ -10487,6 +10590,16 @@ __metadata:
   version: 4.0.0
   resolution: "slash@npm:4.0.0"
   checksum: da8e4af73712253acd21b7853b7e0dbba776b786e82b010a5bfc8b5051a1db38ed8aba8e1e8f400dd2c9f373be91eb1c42b66e91abb407ff42b10feece5e1d2d
+  languageName: node
+  linkType: hard
+
+"slider@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "slider@npm:1.0.4"
+  dependencies:
+    emile: "*"
+    jeesh: "*"
+  checksum: e70d814cdecf9b40b4d09939b864c345b58690d1045b62447d3847af4807967904ab8cf2d73b633b9c5c3aded85efdd11fb49d7a2c985877e9861500c340b7bd
   languageName: node
   linkType: hard
 

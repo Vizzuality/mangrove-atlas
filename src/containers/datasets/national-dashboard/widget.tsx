@@ -45,6 +45,7 @@ const NationalDashboard = () => {
                 {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
                 {sources.map(({ source, years, unit, data_source }) => {
                   const dataSource = data_source.find((d) => d.year === currentYear);
+                  console.log({ dataSource });
                   const color = colorsScale.filter((c, i) => i === index);
                   return (
                     <>

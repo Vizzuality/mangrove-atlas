@@ -45,7 +45,16 @@ type ChartConfig = {
   data: ChartData[];
   chartBase: chartBaseTypes;
   tooltip: unknown;
-  legend: unknown;
+  legend: {
+    title: string;
+    items: {
+      color: string;
+      label: string;
+      showValue: boolean;
+      value: number;
+      valueFormatted: string;
+    }[];
+  };
 };
 
 export type BiomassData = {

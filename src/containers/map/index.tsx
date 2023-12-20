@@ -455,9 +455,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
+        <div className="absolute bottom-10 right-6 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
-          <Legend layers={activeOrdered} />
+          <Legend />
         </div>
       </Media>
     </div>

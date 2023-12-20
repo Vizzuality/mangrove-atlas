@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { Visibility } from 'mapbox-gl';
+
 export function useSource(): SourceProps {
   return {
     type: 'vector',
@@ -9,7 +11,15 @@ export function useSource(): SourceProps {
     url: 'mapbox://globalmangrovewatch.7rr6p3ir',
   };
 }
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   return useMemo(
     () =>
       [
@@ -34,7 +44,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
               100,
               '#224294',
             ],
-            'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.6],
+            'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity],
             'fill-outline-color': [
               'interpolate',
               ['linear'],
@@ -51,8 +61,11 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
               '#224294',
             ],
           },
+          layout: {
+            visibility,
+          },
         },
       ] satisfies LayerProps[],
-    [id]
+    [id, opacity, visibility]
   );
 }
