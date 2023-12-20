@@ -11,6 +11,7 @@ export const useSearch = <T = unknown>(items: T[], search: string, fields: strin
       keys: fields,
       shouldSort: true,
       includeMatches: true,
+      threshold: 0.3,
       location: 0,
       distance: 300,
       minMatchCharLength: 1,
