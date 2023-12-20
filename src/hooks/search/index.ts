@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import diacritics from 'diacritics';
 import Fuse from 'fuse.js';
 
@@ -10,7 +11,7 @@ export const useSearch = <T = unknown>(items: T[], search: string, fields: strin
       keys: fields,
       shouldSort: true,
       includeMatches: true,
-      threshold: 0.1,
+      threshold: 0.3,
       location: 0,
       distance: 300,
       minMatchCharLength: 1,
@@ -18,6 +19,7 @@ export const useSearch = <T = unknown>(items: T[], search: string, fields: strin
 
   return useMemo(
     () => fuse && fuse.search(diacritics.remove(search)).map((d) => d.item),
+
     [search, fuse]
   ) satisfies T[];
 };
