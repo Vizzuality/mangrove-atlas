@@ -5,9 +5,11 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
+import { orderByAttribute } from 'lib/utils';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
+import { activeLayersAtom } from 'store/layers';
 import {
   basemapAtom,
   URLboundsAtom,
@@ -87,14 +89,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
 
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
 
-  const nationalDashboardLayers = activeWidgets.filter((el) =>
-    el?.includes('mangrove_national_dashboard')
+  const nationalDashboardLayers = activeLayers?.filter(
+    (el) => el.id === 'mangrove_national_dashboard'
   );
+
   const activeOrdered = [
     ...nationalDashboardLayers,
-    ...LAYERS_ORDER.filter((el) => activeWidgets.some((f) => f === el)),
+    ...orderByAttribute(LAYERS_ORDER, activeLayers),
   ] as (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[];
 
   const [restorationPopUp, setRestorationPopUp] = useState<{
@@ -454,7 +458,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       <Media greaterThanOrEqual="md">
         <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
-          <Legend layers={activeOrdered} setActiveWidgets={setActiveWidgets} />
+          <Legend layers={activeOrdered} setActiveLayers={setActiveLayers} />
         </div>
       </Media>
     </div>

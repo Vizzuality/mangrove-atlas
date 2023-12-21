@@ -20,10 +20,10 @@ type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 
 const Legend = ({
   layers,
-  setActiveWidgets,
+  setActiveLayers,
 }: {
   layers: readonly (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
-  setActiveWidgets: (
+  setActiveLayers: (
     layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area' & NationalDashboardLayer)[]
   ) => void;
 }) => {
@@ -40,15 +40,15 @@ const Legend = ({
   const settings = useRecoilValue(nationalDashboardSettingsAtom);
   const nationalDashboardLayerName =
     settings && Object.values(settings).filter((s) => s.locationId === locationId)[0]?.name;
-
+  console.log(layers, 'layers');
   const removeLayer = useCallback(
     (layer: string) => {
       const updatedLayers = layers.filter((l) => {
         return l !== layer;
       });
-      setActiveWidgets(updatedLayers);
+      setActiveLayers(updatedLayers);
     },
-    [layers, setActiveWidgets]
+    [layers, setActiveLayers]
   );
 
   const layerName = (label) => {
