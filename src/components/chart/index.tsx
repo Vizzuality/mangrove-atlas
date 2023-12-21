@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, useMemo } from 'react';
 
 import {
   PieChart,
@@ -71,8 +71,6 @@ const Chart = ({ config }) => {
 
   const { pies, bars, lines, bar } = chartBase;
   const Chart = ChartsMap.get(type);
-
-  if (!width) return null;
 
   return (
     <div className="relative h-full w-full">
