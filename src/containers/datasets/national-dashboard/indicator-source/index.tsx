@@ -3,6 +3,7 @@ import { useMemo, useCallback, useState, useEffect } from 'react';
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
 
+import { activeLayersAtom } from 'store/layers';
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -52,21 +53,23 @@ const IndicatorSource = ({
   setYearSelected,
 }: IndicatorSourceTypes) => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const activeLayersIds = activeLayers.map((l) => l.id);
   const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(
     nationalDashboardSettingsAtom
   );
   const [isActiveLayer, setActiveLayer] = useState(false);
 
   const isActive = useMemo(
-    () => activeWidgets.includes('mangrove_national_dashboard_layer') && isActiveLayer,
-    [activeWidgets, dataSource?.layer_link]
+    () => activeLayersIds.includes('mangrove_national_dashboard_layer') && isActiveLayer,
+    [activeLayersIds, isActiveLayer, dataSource?.layer_link]
   );
   const handleClick = useCallback(
     (id) => {
       setActiveLayer(!isActiveLayer);
       const widgetsCheck = isActive
-        ? activeWidgets.filter((w) => w !== id)
-        : [id, ...activeWidgets];
+        ? activeLayers.filter((w) => w.id !== id)
+        : [{ id, opacity: '1' }, ...activeLayers];
 
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
@@ -81,9 +84,9 @@ const IndicatorSource = ({
         },
       });
       const widgetsUpdate = new Set(widgetsCheck);
-      setActiveWidgets([...widgetsUpdate]);
+      setActiveLayers([...widgetsUpdate]);
     },
-    [activeWidgets, yearSelected]
+    [activeLayers, yearSelected]
   );
 
   useEffect(() => {
