@@ -9,7 +9,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';
-import { getWidgetActive } from 'containers/widget/selector';
+import { getLayerActive } from 'containers/widget/selector';
 
 import {
   Command,
@@ -23,6 +23,7 @@ import Loading from 'components/loading';
 import RadioGroupItem from 'components/radio-group/radio-group-item';
 import type { RadioOption } from 'components/radio-group/types';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
@@ -47,7 +48,7 @@ const SpeciesLocation = () => {
   } = useMangroveSpeciesLocation({
     select: ({ data }) => data,
   });
-  const isWidgetActive = useRecoilValue(getWidgetActive('mangrove_species_location'));
+  const isLayerActive = useRecoilValue(getLayerActive('mangrove_species_location'));
 
   const specieOptions = useMemo(
     () =>
@@ -88,7 +89,7 @@ const SpeciesLocation = () => {
             </p>
           )}
 
-          {isWidgetActive && specieSelected && (
+          {isLayerActive && specieSelected && (
             <div className="mb-8 flex items-center space-x-2">
               <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/species-location/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">

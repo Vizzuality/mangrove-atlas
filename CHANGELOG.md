@@ -28,6 +28,7 @@ Unreleased
 
 ### Changed
 
+- New params to URL. Layer and widget id stored in URL independently
 
 ### Fixed
 

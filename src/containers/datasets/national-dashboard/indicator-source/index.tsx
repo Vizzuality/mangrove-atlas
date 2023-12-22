@@ -5,7 +5,6 @@ import { numberFormat } from 'lib/format';
 
 import { activeLayersAtom } from 'store/layers';
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
 
@@ -52,7 +51,6 @@ const IndicatorSource = ({
   yearSelected,
   setYearSelected,
 }: IndicatorSourceTypes) => {
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(

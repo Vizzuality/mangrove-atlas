@@ -16,13 +16,13 @@ import Icon from 'components/icon';
 
 import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
-const Legend = () => {
+const Legend = ({ layers }) => {
   const {
     query: { params },
   } = useRouter();
   const locationType = params?.[0] as LocationTypes;
   const id = params?.[1];
-  const [layers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const {
     data: { id: locationId },

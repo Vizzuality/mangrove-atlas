@@ -1,13 +1,20 @@
-export const orderByAttribute = (
-  orderedListIds: string[],
-  list: { id: string; opacity: string }[]
-) =>
-  list.sort((a, b) => {
-    const indexA = orderedListIds.indexOf(a.id);
-    const indexB = orderedListIds.indexOf(b.id);
+import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
+export function orderByAttribute(
+  layerIds: (WidgetSlugType | ContextualBasemapsId | 'custom-area')[],
+  layers: { id: string; opacity: string }[]
+) {
+  const index = layerIds.reduce((map, id, index) => {
+    map[id] = index;
+    return map;
+  }, {});
+
+  const copyOfLayers = [...layers];
+
+  return copyOfLayers.sort((a, b) => {
+    const indexA = (index[a.id] ?? Number.MAX_VALUE) as number;
+    const indexB = (index[b.id] ?? Number.MAX_VALUE) as number;
 
     return indexA - indexB;
   });
+}
