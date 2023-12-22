@@ -2,8 +2,8 @@ import React from 'react';
 
 import cn from 'lib/classnames';
 
+import { activeLayersAtom } from 'store/layers';
 import { mapViewAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -12,7 +12,7 @@ import Icon from 'components/icon';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const MapToggle = () => {
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const activeLayers = useRecoilValue(activeLayersAtom);
   const [mapView, setMapView] = useRecoilState(mapViewAtom);
 
   return (
@@ -34,7 +34,7 @@ const MapToggle = () => {
             description="Close"
           />
         )}
-        {!mapView && <p className="font-sans text-sm text-white">{activeWidgets.length}</p>}
+        {!mapView && <p className="font-sans text-sm text-white">{activeLayers.length}</p>}
       </button>
       <div className="text-center font-sans text-xxs text-white">Map</div>
     </div>

@@ -2,9 +2,11 @@ import { useMemo, useCallback } from 'react';
 
 import { Layer } from 'react-map-gl';
 
+import { orderByAttribute } from 'lib/utils';
+
+import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom, layersSettingsAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -25,22 +27,28 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
   'mangrove_restoration',
   'mangrove_iucn_ecoregion',
 ] satisfies WidgetSlugType[];
+type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeWidgetsAtom);
+  const layers = useRecoilValue(activeLayersAtom);
+  const layersIds = layers.map((l) => l.id);
   const layersSettings = useRecoilValue(layersSettingsAtom);
-  const layersOrdered = LAYERS_ORDER.filter((el) => {
-    return layers.some((f) => {
-      return f === el;
-    });
-  }) satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
 
-  const nationaDashboardLayers = layers.filter((l) => l.includes('mangrove_national_dashboard'));
+  const nationaDashboardLayers = layersIds.filter((l) => l.includes('mangrove_national_dashboard'));
 
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
+  const nationalDashboardLayerIds = layers
+    .filter((l) => l?.id?.includes('mangrove_national_dashboard'))
+    .map((l) => l.id);
+
+  const ordered = orderByAttribute(LAYERS_ORDER, layers);
+  const activeLayersIds = ordered.map((l) => l.id);
+
+  const allLayersOrdered = [...nationalDashboardLayerIds, ...activeLayersIds];
+
   const LAYERS_FILTERED = useMemo(() => {
-    const filteredLayers = layersOrdered.filter(
+    const filteredLayers = allLayersOrdered.filter(
       (layer: WidgetSlugType & ContextualBasemapsId & 'custom-area') =>
         !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
     );
@@ -49,8 +57,8 @@ const LayerManagerContainer = () => {
       filteredLayers.push(basemap);
     }
 
-    return filteredLayers satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
-  }, [layers, basemap, layersOrdered]);
+    return filteredLayers;
+  }, [allLayersOrdered, basemap]);
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
@@ -113,11 +121,11 @@ const LayerManagerContainer = () => {
 
       {<ProtectedAreasLayer id="protected-areas-layer" beforeId="Country" />}
 
-      {layers.includes('mangrove_restoration_sites') && (
+      {layersIds.includes('mangrove_restoration_sites') && (
         <RestorationSitesLayer id="mangrove-restoration-sites-layer" />
       )}
 
-      {layers.includes('mangrove_restoration') && (
+      {layersIds.includes('mangrove_restoration') && (
         <RestorationLayer
           id="mangrove_restoration"
           beforeId="country-boundaries-layer"
@@ -126,9 +134,9 @@ const LayerManagerContainer = () => {
         />
       )}
 
-      {layers.includes('mangrove_iucn_ecoregion') && (
+      {layersIds.includes('mangrove_iucn_ecoregion') && (
         <IucnEcoregionLayer
-          id="mangrove-iucn-ecoregion"
+          id="mangrove-iucn-ecoregion-layer"
           beforeId="country-boundaries-layer"
           onAdd={handleAdd}
           onRemove={handleRemove}

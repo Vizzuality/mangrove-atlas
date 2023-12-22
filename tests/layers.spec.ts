@@ -66,8 +66,8 @@ test.describe('Can activate wordwise layers in widgets', () => {
     ({ categoryIds, locationType, layersIds, slug }) =>
       categoryIds?.includes(ALL_DATASETS_CATEGORY) &&
       locationType?.includes(WORDWIDE_LOCATION) &&
-      layersIds?.length &&
-      slug !== 'mangrove_iucn_ecoregion' // REMOVE THIS LINE WHEN THE LAYER URL BUG IS FIXED
+      layersIds?.length
+    // slug !== 'mangrove_iucn_ecoregion' // REMOVE THIS LINE WHEN THE LAYER URL BUG IS FIXED
   );
   for (const widget of widgetsWithLayers) {
     test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {

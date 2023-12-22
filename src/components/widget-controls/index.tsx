@@ -3,8 +3,8 @@ import { useMemo, useCallback } from 'react';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
+import { activeLayersAtom } from 'store/layers';
 import { mapSettingsAtom } from 'store/map-settings';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -17,6 +17,7 @@ import { useWidgets } from 'containers/widgets/hooks';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import { breakpoints } from 'styles/styles.config';
 import type { WidgetSlugType } from 'types/widget';
+import type { ContextualBasemapsId } from 'types/widget';
 
 import Download from './download';
 import Info from './info';
@@ -36,18 +37,23 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const { showWidget } = useRecoilValue(drawingToolAtom);
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const screenWidth = useScreenWidth();
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
-  const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
+  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const activeLayersIds = activeLayers.map((l) => l.id);
+  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
   const widgets = useWidgets();
-
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
-    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [id, ...activeWidgets];
-    setActiveWidgets(widgetsUpdate);
-  }, [id, isActive, setActiveWidgets, activeWidgets]);
+    const layersUpdate = isActive
+      ? activeLayers.filter((w) => w.id !== id)
+      : ([{ id, opacity: '1' }, ...activeLayers] as {
+          id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+          opacity: string;
+        }[]);
+    setActiveLayers(layersUpdate);
+  }, [isActive, activeLayers, setActiveLayers, id]);
 
   const HELPER_ID = id === widgets[0].slug;
 

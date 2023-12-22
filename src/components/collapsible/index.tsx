@@ -4,6 +4,7 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cn from 'classnames';
 
+import { LAYERS } from 'containers/layers/constants';
 import widgets from 'containers/widgets/constants';
 
 import Icon from 'components/icon';
@@ -13,10 +14,10 @@ import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
 const CollapsibleComponent = ({
   layers,
-  setActiveWidgets,
+  setActiveLayers,
 }: {
   layers: readonly (WidgetSlugType & ContextualBasemapsId & 'custom-area')[];
-  setActiveWidgets: (layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area')[]) => void;
+  setActiveLayers: (layers: (WidgetSlugType & ContextualBasemapsId & 'custom-area')[]) => void;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,13 +26,14 @@ const CollapsibleComponent = ({
       const updatedLayers = layers.filter((l) => {
         return l !== layer;
       });
-      setActiveWidgets(updatedLayers);
+      setActiveLayers(updatedLayers);
     },
-    [layers, setActiveWidgets]
+    [layers, setActiveLayers]
   );
 
-  const widgetName = (label) => {
-    return widgets.find((w) => w.slug === label)?.name;
+  const layerName = (label: { id: string; opacity: string }): string => {
+    const layer = LAYERS.find((w) => w.id === label.id);
+    return layer ? layer.name : '';
   };
 
   return (
@@ -41,7 +43,7 @@ const CollapsibleComponent = ({
           {(!isOpen || !layers.length) && <p className="text-xs font-semibold uppercase">Layer</p>}
           {isOpen && !!layers.length && (
             <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase">{widgetName(layers[0])}</p>
+              <p className="text-xs font-semibold uppercase">{layerName(layers[0])}</p>
               <button onClick={() => removeLayer(layers[0])} aria-label="remove-layer">
                 <Icon icon={REMOVE_SVG} className="h-4 w-4" description="Cross" />
               </button>
@@ -71,7 +73,7 @@ const CollapsibleComponent = ({
               key={l}
               className="flex h-11 items-center justify-between rounded-md border bg-white px-4 py-3 text-sm shadow-light"
             >
-              <p className="text-xs font-semibold uppercase">{widgetName(l)}</p>
+              <p className="text-xs font-semibold uppercase">{layerName(l)}</p>
               <button aria-label="remove-layer" onClick={() => removeLayer(l)}>
                 <Icon icon={REMOVE_SVG} className="h-4 w-4" description="Cross" />
               </button>

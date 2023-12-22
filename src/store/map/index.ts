@@ -45,7 +45,7 @@ export const mapCursorAtom = atom<'grab' | 'pointer' | 'crosshair'>({
 });
 
 export const layersSettingsAtom = atom({
-  key: 'layers',
+  key: 'layers-settings',
   default: null,
   effects: [
     urlSyncEffect({

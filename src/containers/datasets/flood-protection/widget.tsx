@@ -2,16 +2,16 @@ import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
-import { activeWidgetsAtom } from 'store/widgets';
+import { activeLayersAtom } from 'store/layers';
 
 import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
+import CoastalProtection from 'containers/datasets/flood-protection/coastal-protection';
 import type {
   FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
 } from 'containers/datasets/flood-protection/types';
-import CoastalProtection from 'containers/datasets/flood-protection/coastal-protection';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -24,6 +24,7 @@ import {
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
 import { WidgetSlugType } from 'types/widget';
+import type { ContextualBasemapsId } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
@@ -56,12 +57,18 @@ const FloodProtection = ({
 
   const id = `mangrove_coastal_protection_${indicator}` satisfies WidgetSlugType;
 
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
-  const isActive = useMemo(() => activeWidgets.includes(id), [activeWidgets, id]);
+  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const activeLayersIds = activeLayers.map((l) => l.id);
+  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
 
   const handleClick = () => {
-    const widgetsUpdate = isActive ? activeWidgets.filter((w) => w !== id) : [id, ...activeWidgets];
-    setActiveWidgets(widgetsUpdate);
+    const layersUpdate = isActive
+      ? activeLayers.filter((w) => w.id !== id)
+      : ([{ id, opacity: '1' }, ...activeLayers] as {
+          id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+          opacity: string;
+        }[]);
+    setActiveLayers(layersUpdate);
   };
 
   const ref = useRef<HTMLDivElement>(null);
