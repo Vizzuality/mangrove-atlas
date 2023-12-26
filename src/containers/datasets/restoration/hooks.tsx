@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 
 export function useSource(): SourceProps {
   return {

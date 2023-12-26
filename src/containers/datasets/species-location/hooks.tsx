@@ -8,7 +8,7 @@ import { SpeciesLocationState } from 'store/widgets/species-location';
 
 import { useQuery, QueryClient } from '@tanstack/react-query';
 import type { QueryObserverOptions } from '@tanstack/react-query';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useLocations, useLocation } from 'containers/datasets/locations/hooks';

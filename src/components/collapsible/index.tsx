@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import cn from 'classnames';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 
 import { LAYERS } from 'containers/layers/constants';
 

@@ -1,7 +1,9 @@
 import { useMangroveBiomass } from './hooks';
 
 const BiomassMapLegend = () => {
-  const { config } = useMangroveBiomass();
+  const { config, unit } = useMangroveBiomass();
+
+  console.log(unit);
 
   return (
     <div className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60">
@@ -14,7 +16,7 @@ const BiomassMapLegend = () => {
             />
             <div className="flex flex-col items-start text-sm">
               <p>
-                {label} <span className="text-xs">tons/ha</span>
+                {label} <span className="text-xs">{unit}</span>
               </p>
             </div>
           </div>

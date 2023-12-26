@@ -1,5 +1,5 @@
 import { array, object, string, stringLiterals } from '@recoiljs/refine';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 

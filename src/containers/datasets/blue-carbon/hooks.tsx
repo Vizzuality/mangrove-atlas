@@ -6,14 +6,14 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
-import { formatMillion, numberFormat } from 'lib/format';
+import { numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 

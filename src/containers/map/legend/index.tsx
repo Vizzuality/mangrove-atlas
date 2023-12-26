@@ -171,9 +171,8 @@ const Legend = () => {
                     >
                       <div className="flex w-full items-center justify-between">
                         <div className="flex space-x-2">
-                          <button type="button" onClick={() => console.log('order layer')}>
-                            <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
-                          </button>
+                          <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
+
                           <p className="text-xs font-semibold uppercase tracking-wider text-black/85">
                             {l.id === 'mangrove_national_dashboard_layer' &&
                             nationalDashboardLayerName

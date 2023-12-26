@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 
 import { variables, COLORS } from 'containers/datasets/drivers-change/constants';
 import Tooltip from 'containers/datasets/drivers-change/tooltip';

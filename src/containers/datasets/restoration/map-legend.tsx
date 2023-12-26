@@ -2,8 +2,8 @@ const RestorationMapLegend = () => {
   return (
     <div className="w-[260px]">
       <div className="flex  justify-between text-black/85">
-        <p>0</p>
-        <p>100</p>
+        <p>0%</p>
+        <p>100%</p>
       </div>
       <div className="flex  justify-between text-black/85"></div>
       <div

@@ -1,4 +1,4 @@
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 

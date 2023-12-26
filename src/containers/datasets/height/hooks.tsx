@@ -12,7 +12,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';

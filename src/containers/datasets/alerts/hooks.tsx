@@ -12,7 +12,7 @@ import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 

@@ -8,7 +8,7 @@ const Slider = ({ defaultValue, max = 1, step = 0.1, onValueChange, className })
   const [currentValue, setCurrentValue] = useState(defaultValue);
 
   return (
-    <form>
+    <>
       <SliderPrimitive.Root
         className={cn({
           'relative flex h-4 w-full touch-none select-none items-center': true,
@@ -30,7 +30,7 @@ const Slider = ({ defaultValue, max = 1, step = 0.1, onValueChange, className })
           <p className="absolute bottom-3 text-xs text-black/40">{currentValue}</p>
         </SliderPrimitive.Thumb>
       </SliderPrimitive.Root>
-    </form>
+    </>
   );
 };
 
