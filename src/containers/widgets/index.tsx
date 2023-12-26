@@ -96,8 +96,8 @@ const WidgetsContainer: React.FC = () => {
 
   return (
     <WidgetsLayout>
-      <div className="flex w-full justify-start space-x-6 py-4 print:hidden">
-        {/* {widgets.length > 1 && (
+      <div className="flex grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
+        {widgets.length > 1 && (
           <Helper
             className={{
               button: '-bottom-2.5 -right-[170px] z-[20]',
@@ -110,9 +110,9 @@ const WidgetsContainer: React.FC = () => {
               type="button"
               data-testid="expand-collapse-button"
               className={cn({
-                'w-full rounded-4xl border-2 border-black border-opacity-20 bg-green-900 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+                'h-7 w-full rounded-4xl border-2 border-black border-opacity-20 bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0':
                   true,
-                'border-white bg-white text-brand-800': widgetsCollapsedChecker,
+                'bg-white': widgetsCollapsedChecker,
                 'print:hidden': screenWidth >= breakpoints.md,
               })}
               onClick={() => handleWidgetsCollapsed()}
@@ -120,7 +120,7 @@ const WidgetsContainer: React.FC = () => {
               {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
             </button>
           </Helper>
-        )} */}
+        )}
         <Helper
           className={{
             // button: '-bottom-2.5 -right-[170px] z-[20]',
@@ -130,19 +130,19 @@ const WidgetsContainer: React.FC = () => {
           message="Triggers deck to configure widgets"
         >
           <Dialog>
-            <DialogTrigger>
+            <DialogTrigger asChild className="md:translate-x-0">
               <button
                 type="button"
                 data-testid="configure-widgets-button"
                 className={cn({
-                  'w-full rounded-4xl border-2 border-opacity-20 bg-white px-4 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0 md:translate-x-44 print:hidden':
+                  'flex h-7 w-full items-center justify-center rounded-4xl border-2 border-opacity-20 bg-white py-1 px-4 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0 print:hidden':
                     true,
                 })}
               >
                 Configure widgets
               </button>
             </DialogTrigger>
-            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit translate-y-8 space-y-8 rounded-3xl">
+            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
               {/* <div className="no-scrollbar overflow-y-auto"> */}
               <h2 className="font-black/85 text-3xl font-light leading-10">
                 Widgets deck settings
