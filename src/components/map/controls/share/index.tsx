@@ -14,7 +14,7 @@ export const Share = ({ className }: { className?: string }) => {
     >
       <button
         className={cn({
-          'group flex h-11 w-11 items-center justify-center rounded-full bg-white disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+          'group flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
             true,
         })}
         aria-label="Toggle share"
@@ -23,7 +23,7 @@ export const Share = ({ className }: { className?: string }) => {
       >
         <Icon
           icon={SHARE_SVG}
-          className="h-5 w-5 bg-white group-hover:opacity-50 group-disabled:fill-grey-75"
+          className="h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75"
           description="Share"
         />
       </button>

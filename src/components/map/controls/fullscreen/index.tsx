@@ -39,7 +39,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
     >
       <button
         className={cn({
-          'group flex h-11 w-11 items-center justify-center rounded-full bg-white disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+          'group flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
             true,
           'bg-brand-600': isFullScreen,
         })}
@@ -50,7 +50,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
         <Icon
           icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
           className={cn({
-            'h-5 w-5 bg-white group-hover:opacity-50 group-disabled:fill-grey-75': true,
+            'h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75': true,
             'bg-brand-600': isFullScreen,
           })}
           description="Fullscreen"
