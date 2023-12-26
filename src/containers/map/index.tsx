@@ -42,8 +42,10 @@ import RestorationPopup from 'containers/map/restoration-popup';
 import Collapsible from 'components/collapsible';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
+import BasemapSettingsControl from 'components/map/controls/basemap-settings';
 import FullScreenControl from 'components/map/controls/fullscreen';
 import PitchReset from 'components/map/controls/pitch-reset';
+import ShareControl from 'components/map/controls/share';
 import ZoomControl from 'components/map/controls/zoom';
 import type { DrawControlProps } from 'components/map/drawing-tool';
 import DrawControl from 'components/map/drawing-tool';
@@ -403,8 +405,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
             <Controls
               className={cn({
-                'absolute top-6 right-6 items-center print:hidden': true,
-                'top-12 right-10': screenWidth >= breakpoints.md,
+                'absolute bottom-6 right-6 items-center print:hidden': true,
+                'bottom-12 right-10': screenWidth >= breakpoints.md,
               })}
             >
               <GuideSwitcher />
@@ -419,6 +421,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               >
                 <div className="flex flex-col space-y-2 pt-1">
                   <FullScreenControl />
+                  <ShareControl />
+                  <BasemapSettingsControl />
                   <ZoomControl mapId={mapId} />
                   <PitchReset mapId={mapId} />
                 </div>
@@ -455,7 +459,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-10 space-y-1 print:hidden">
+        <div className="absolute bottom-10 right-32 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend layers={activeOrdered} />
         </div>
