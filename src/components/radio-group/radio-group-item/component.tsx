@@ -1,11 +1,17 @@
+import cn from 'lib/classnames';
+
 import * as RadioGroup from '@radix-ui/react-radio-group';
 
 import type { RadioOption } from '../types';
 
-const RadioGroupItem = ({ option }: { option: RadioOption }) => (
-  <>
+const RadioGroupItem = ({ option, className }: { option: RadioOption; className?: string }) => (
+  <div className="flex items-center ">
     <RadioGroup.Item
-      className="h-5 w-5 rounded-full border-2 border-brand-400/20 bg-white data-[state=checked]:border-brand-800"
+      className={cn({
+        'h-5 w-5 items-center justify-center rounded-full border-2 border-brand-400/20 bg-white data-[state=checked]:border-brand-800':
+          true,
+        [className]: !!className,
+      })}
       value={option.value}
       id={option.value}
     >
@@ -14,7 +20,7 @@ const RadioGroupItem = ({ option }: { option: RadioOption }) => (
     <label className="cursor-pointer pl-3 text-sm leading-none" htmlFor={option.value}>
       {option.label}
     </label>
-  </>
+  </div>
 );
 
 export default RadioGroupItem;

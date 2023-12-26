@@ -38,16 +38,15 @@ export const EXT_MENU_OPTIONS = [
 ];
 
 const CATEGORY_OPTIONS = [
-  { id: 'distribution_and_change', label: 'Distribution & Change', icon: STAR_SVG },
+  { value: 'distribution_and_change', label: 'Distribution & Change' },
   {
-    id: 'restoration_and_conservation',
+    value: 'restoration_and_conservation',
     label: 'Restoration & Conservation',
-    icon: RELOAD_SVG,
   },
-  { id: 'climate_and_policy', label: 'Climate & Policy', icon: SUN_SVG },
-  { id: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
-  { id: 'contextual_layers', label: 'Contextual layers', icon: SUN_SVG },
-  { id: 'all_datasets', label: 'All datasets', icon: ALL_SVG },
+  { value: 'climate_and_policy', label: 'Climate & Policy' },
+  { value: 'ecosystem_services', label: 'Ecosystem Services' },
+  { value: 'contextual_layers', label: 'Contextual layers' },
+  { value: 'custom', label: 'Custom' },
 ];
 
 export const STYLES = {
