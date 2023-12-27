@@ -20,13 +20,13 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
   return (
     <div
       className={cn({
-        'inline-flex flex-col rounded-md shadow-md shadow-black/10': true,
+        'inline-flex flex-col rounded-b-full shadow-md shadow-black/10': true,
         [className]: !!className,
       })}
     >
       <button
         className={cn({
-          'group rounded-md bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+          'group -mt-2 rounded-b-full bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
             true,
         })}
         aria-label="Reset map pitch"

@@ -10,7 +10,7 @@ import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
 
 const COMMON_CLASSES =
-  'group bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none';
+  'group w-11 bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none';
 
 const SVG_COMMON_CLASSES = 'h-5 w-5 group-disabled:fill-grey-75';
 
@@ -43,14 +43,14 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
   return (
     <div
       className={cn({
-        'inline-flex flex-col rounded-md shadow-md shadow-black/10': true,
+        'inline-flex flex-col': true,
         [className]: !!className,
       })}
     >
       <button
         className={cn({
           [COMMON_CLASSES]: true,
-          'rounded-t-md': true,
+          'rounded-t-full': true,
         })}
         aria-label="Zoom in"
         type="button"
@@ -62,7 +62,6 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
       <button
         className={cn({
           [COMMON_CLASSES]: true,
-          'rounded-b-md': true,
         })}
         aria-label="Zoom out"
         type="button"
