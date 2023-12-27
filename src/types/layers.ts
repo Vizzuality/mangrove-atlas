@@ -1,6 +1,6 @@
 import type { LayerProps as RMGLLayerProps } from 'react-map-gl';
 
-import { Visibility } from 'mapbox-gl';
+import type { Visibility } from 'mapbox-gl';
 
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
