@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import type { Visibility } from 'mapbox-gl';
 
 import { variables, COLORS } from 'containers/datasets/drivers-change/constants';
 import Tooltip from 'containers/datasets/drivers-change/tooltip';
@@ -114,7 +115,15 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   const PRIMARY_DRIVERS = [
     { id: 'Erosion', color: '#CC61B0' },
     { id: 'Episodic Disturbances', color: '#5D69B1' },
@@ -135,7 +144,10 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       'source-layer': 'main_loss_drivers',
       paint: {
         'fill-color': ['match', ['get', 'primary_driver'], ...COLORS, '#ccc'],
-        'fill-opacity': 0.65,
+        'fill-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
     {
@@ -145,7 +157,11 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       'source-layer': 'main_loss_drivers',
       paint: {
         'line-color': ['match', ['get', 'primary_driver'], ...COLORS, '#ccc'],
+        'line-opacity': opacity,
         'line-width': 1.5,
+      },
+      layout: {
+        visibility,
       },
     },
   ];

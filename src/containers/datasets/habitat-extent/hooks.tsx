@@ -11,6 +11,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -23,7 +24,6 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
 
-import { years } from './constants';
 import type { ExtentData, Indicator, DataResponse } from './types';
 
 const unitOptions = ['km²', 'ha'];
@@ -219,7 +219,17 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  year,
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  year: number;
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   return [
     {
       id: `${id}_${year}_line`,
@@ -228,10 +238,10 @@ export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }):
       'source-layer': `mng_mjr_${year}`,
       paint: {
         'fill-color': '#06C4BD',
-        'fill-opacity': 1,
+        'fill-opacity': opacity,
       },
       layout: {
-        visibility: 'visible',
+        visibility,
       },
     },
     {
@@ -241,11 +251,12 @@ export function useLayers({ year, id }: { year: number; id: LayerProps['id'] }):
       'source-layer': `mng_mjr_${year}`,
       paint: {
         'line-color': '#06C4BD',
+        'line-opacity': opacity,
         'line-width': ['interpolate', ['exponential', 0.7], ['zoom'], 0, 8, 12, 0],
         'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 20, 12, 0],
       },
       layout: {
-        visibility: 'visible',
+        visibility,
       },
     },
   ];

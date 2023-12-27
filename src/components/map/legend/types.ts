@@ -84,7 +84,7 @@ export interface LegendItemButtonProps {
  */
 export interface SortableListProps extends PropsWithChildren {
   className?: string;
-  sortable: Sortable;
+  sortable?: Sortable;
   onChangeOrder: OnChangeOrder;
 }
 

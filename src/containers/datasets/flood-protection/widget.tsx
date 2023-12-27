@@ -7,7 +7,6 @@ import { activeLayersAtom } from 'store/layers';
 import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
-import CoastalProtection from 'containers/datasets/flood-protection/coastal-protection';
 import type {
   FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
@@ -23,8 +22,8 @@ import {
   WIDGET_SUBTITLE_STYLE,
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
+import type { ActiveLayers } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
-import type { ContextualBasemapsId } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
@@ -64,10 +63,7 @@ const FloodProtection = ({
   const handleClick = () => {
     const layersUpdate = isActive
       ? activeLayers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1' }, ...activeLayers] as {
-          id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
-          opacity: string;
-        }[]);
+      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   };
 

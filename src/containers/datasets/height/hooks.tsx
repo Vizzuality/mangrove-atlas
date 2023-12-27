@@ -12,6 +12,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -233,9 +234,23 @@ export function useSource(years: number[]): SourceProps {
     maxzoom: 12,
   };
 }
-export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
+export function useLayer({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps {
   return {
     id,
     type: 'raster',
+    paint: {
+      'raster-opacity': opacity,
+    },
+    layout: {
+      visibility,
+    },
   };
 }

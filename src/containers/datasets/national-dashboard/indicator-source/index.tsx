@@ -12,6 +12,7 @@ import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import WidgetControls from 'components/widget-controls';
+import type { ActiveLayers } from 'types/layers';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -67,7 +68,7 @@ const IndicatorSource = ({
       setActiveLayer(!isActiveLayer);
       const widgetsCheck = isActive
         ? activeLayers.filter((w) => w.id !== id)
-        : [{ id, opacity: '1' }, ...activeLayers];
+        : [{ id, opacity: '1', visibility: 'visible' }, ...activeLayers];
 
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
@@ -81,7 +82,8 @@ const IndicatorSource = ({
           year: yearSelected,
         },
       });
-      const widgetsUpdate = new Set(widgetsCheck);
+    {/* TO - DO -review types */}
+      const widgetsUpdate = new Set(widgetsCheck) as unknown as ActiveLayers[];
       setActiveLayers([...widgetsUpdate]);
     },
     [activeLayers, yearSelected]
