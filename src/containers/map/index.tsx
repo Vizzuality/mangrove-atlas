@@ -73,6 +73,8 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const { data: locations } = useLocations();
@@ -355,7 +357,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }
 
       // *ON MOUSE LEAVE
-      if (!restorationData && map) {
+      if (!restorationData && loaded) {
         map?.setFeatureState(
           {
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
@@ -369,6 +371,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     },
     [setCursor, isDrawingToolVisible, map]
   );
+
+  const handleMapLoad = useCallback(() => {
+    setLoaded(true);
+  }, []);
 
   return (
     <div
@@ -388,6 +394,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
+        onLoad={handleMapLoad}
         cursor={cursor}
         preserveDrawingBuffer
       >

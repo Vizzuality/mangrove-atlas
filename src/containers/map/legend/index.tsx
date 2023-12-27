@@ -63,7 +63,7 @@ const Legend = () => {
 
       setActiveLayers(layersWithVisibility);
     },
-    [activeLayers]
+    [activeLayers, setActiveLayers]
   );
 
   const settings = useRecoilValue(nationalDashboardSettingsAtom);
@@ -100,11 +100,11 @@ const Legend = () => {
       );
       setActiveLayers(sortedLayers);
     },
-    [activeLayers, sortArray, setActiveLayers, isFullScreen]
+    [activeLayers, sortArray, setActiveLayers]
   );
 
   const onChangeOpacity = useCallback(
-    (op, layer) => {
+    (op: number, layer: string) => {
       const layersWithOpacity = activeLayers.map((l) => {
         if (l.id === layer) {
           return { ...l, opacity: op.toString() };
@@ -114,7 +114,7 @@ const Legend = () => {
 
       setActiveLayers(layersWithOpacity);
     },
-    [activeLayers]
+    [activeLayers, setActiveLayers]
   );
 
   const HELPER_ID = activeLayers[0]?.id;
@@ -213,7 +213,7 @@ const Legend = () => {
                               )}
                             </Dialog>
                             <Popover>
-                              <PopoverTrigger asChild>
+                              <PopoverTrigger>
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <div aria-label="Opacity layer">
@@ -236,7 +236,7 @@ const Legend = () => {
                                 sideOffset={2}
                                 side="top"
                                 align="end"
-                                className="rounded-none shadow-none"
+                                className="rounded-none !shadow-md"
                               >
                                 <Slider
                                   className="w-[150px] pt-2"
@@ -328,4 +328,3 @@ const Legend = () => {
 };
 
 export default Legend;
-
