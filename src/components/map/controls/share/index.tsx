@@ -39,7 +39,7 @@ export const Share = ({ className }: { className?: string }) => {
       <DialogTrigger asChild>
         <div
           className={cn({
-            'group flex inline-flex h-11 w-11 flex-col items-center justify-center rounded-full rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+            'group flex inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             [className]: !!className,
           })}
