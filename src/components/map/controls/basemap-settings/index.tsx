@@ -8,7 +8,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
     <button
       className={cn({
-        'group flex inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+        'group inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
           true,
         [className]: !!className,
       })}
