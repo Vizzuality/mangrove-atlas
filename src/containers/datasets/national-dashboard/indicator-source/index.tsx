@@ -82,9 +82,6 @@ const IndicatorSource = ({
           year: yearSelected,
         },
       });
-      {
-        /* TO - DO -review types */
-      }
       setActiveLayers(updatedLayers);
     },
     [activeLayers, yearSelected]
