@@ -16,7 +16,7 @@ import { useWidgets } from 'containers/widgets/hooks';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import { breakpoints } from 'styles/styles.config';
-import { ActiveLayers } from 'types/layers';
+import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';
