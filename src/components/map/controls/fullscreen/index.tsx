@@ -32,7 +32,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
     return () => {
       window.document.removeEventListener('fullscreenchange', handleFullScreenChange);
     };
-  }, []);
+  }, [setFullScreen]);
 
   return (
     <div
@@ -43,7 +43,9 @@ export const FullScreen = ({ className }: { className?: string }) => {
         'hover:bg-gray-100': !isFullScreen,
         [className]: !!className,
       })}
-      onClick={toggleFullScreen}
+      onClick={() => {
+        void toggleFullScreen();
+      }}
     >
       <Icon
         icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}

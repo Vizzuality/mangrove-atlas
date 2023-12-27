@@ -241,7 +241,7 @@ const Legend = () => {
                                 <Slider
                                   className="w-[150px] pt-2"
                                   defaultValue={[l.opacity]}
-                                  onValueChange={(op) => onChangeOpacity(op[0], l.id)}
+                                  onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
                                 />
                               </PopoverContent>
                             </Popover>

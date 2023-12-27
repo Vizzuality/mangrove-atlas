@@ -27,8 +27,8 @@ export const Share = ({ className }: { className?: string }) => {
           setBttnText('Copy link');
         }, 3000);
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch((err: ErrorEvent) => {
+        console.info(err.message);
       });
   };
 

@@ -12,7 +12,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           true,
         [className]: !!className,
       })}
-      onClick={() => console.log('basemap settings')}
+      onClick={() => console.info('basemap settings')}
     >
       <Icon
         icon={BASEMAP_SETTINGS_SVG}
