@@ -24,6 +24,7 @@ import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
+import WidgetsMenu from './widgets-menu';
 
 const LOCAL_STORAGE_KEY = 'mangroves_blog';
 const HELPER_ID = 'menu-categories';
@@ -117,7 +118,7 @@ const WidgetsContainer: React.FC = () => {
         )}
         <Helper
           className={{
-            // button: '-bottom-2.5 -right-[170px] z-[20]',
+            button: '-bottom-2.5 -right-[170px] z-[20]',
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: -50, left: -160 }}
@@ -137,21 +138,31 @@ const WidgetsContainer: React.FC = () => {
               </button>
             </DialogTrigger>
             <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
-              {/* <div className="no-scrollbar overflow-y-auto"> */}
-              <h2 className="font-black/85 text-3xl font-light leading-10">
-                Widgets deck settings
-              </h2>
-              <Helper
-                className={{
-                  button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                  tooltip: 'w-fit-content',
-                }}
-                tooltipPosition={{ top: -40, left: -50 }}
-                message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
-              >
-                <Category />
-              </Helper>
-              {/* </div> */}
+              <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+                <h2 className="font-black/85 text-3xl font-light leading-10">
+                  Widgets deck settings
+                </h2>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -40, left: -50 }}
+                  message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+                >
+                  <Category />
+                </Helper>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -40, left: -50 }}
+                  message="Widgets list"
+                >
+                  <WidgetsMenu />
+                </Helper>
+              </div>
               <DialogClose />
             </DialogContent>
           </Dialog>

@@ -26,7 +26,7 @@ const Category = () => {
       event.preventDefault();
       setCategory(event.currentTarget.value);
       const widgetsFiltered = widgets.filter((widget) =>
-        widget.categoryIds.includes(event.currentTarget.value)
+        widget?.categoryIds?.includes(event.currentTarget.value)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
       event.currentTarget.value === 'custom'
