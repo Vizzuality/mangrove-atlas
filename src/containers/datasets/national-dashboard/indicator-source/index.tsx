@@ -6,13 +6,13 @@ import { numberFormat } from 'lib/format';
 import { activeLayersAtom } from 'store/layers';
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import WidgetControls from 'components/widget-controls';
-import type { ActiveLayers } from 'types/layers';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -66,9 +66,9 @@ const IndicatorSource = ({
   const handleClick = useCallback(
     (id) => {
       setActiveLayer(!isActiveLayer);
-      const widgetsCheck = isActive
+      const updatedLayers = isActive
         ? activeLayers.filter((w) => w.id !== id)
-        : [{ id, opacity: '1', visibility: 'visible' }, ...activeLayers];
+        : [{ id, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
 
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
@@ -82,9 +82,7 @@ const IndicatorSource = ({
           year: yearSelected,
         },
       });
-    {/* TO - DO -review types */}
-      const widgetsUpdate = new Set(widgetsCheck) as unknown as ActiveLayers[];
-      setActiveLayers([...widgetsUpdate]);
+      setActiveLayers(updatedLayers);
     },
     [activeLayers, yearSelected]
   );

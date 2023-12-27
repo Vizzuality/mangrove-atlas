@@ -60,7 +60,7 @@ const Legend = () => {
 
       setActiveLayers(layersWithVisibility);
     },
-    [activeLayers]
+    [setActiveLayers, activeLayers]
   );
 
   const settings = useRecoilValue(nationalDashboardSettingsAtom);
@@ -112,7 +112,7 @@ const Legend = () => {
 
       setActiveLayers(layersWithOpacity);
     },
-    [activeLayers]
+    [activeLayers, setActiveLayers]
   );
 
   const HELPER_ID = activeLayers[0]?.id;
@@ -145,7 +145,7 @@ const Legend = () => {
           exit="close"
           transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         >
-          <div className="bottom-1/12 border-black/65 fixed relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
+          <div className="bottom-1/12 border-black/65 relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
             <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden">
               <SortableList onChangeOrder={onChangeOrder}>
                 {activeLayers.map((l) => {

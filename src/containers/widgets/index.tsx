@@ -13,17 +13,21 @@ import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 import WidgetsLayout from 'layouts/widgets';
 
 import Blog from 'containers/blog';
+import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
+import WidgetsMenu from './widgets-menu';
 
 const LOCAL_STORAGE_KEY = 'mangroves_blog';
+const HELPER_ID = 'menu-categories';
 
 const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
@@ -87,8 +91,8 @@ const WidgetsContainer: React.FC = () => {
 
   return (
     <WidgetsLayout>
-      {widgets.length > 1 && (
-        <div className="flex w-full py-4 print:hidden">
+      <div className="flex grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
+        {widgets.length > 1 && (
           <Helper
             className={{
               button: '-bottom-2.5 -right-[170px] z-[20]',
@@ -101,9 +105,9 @@ const WidgetsContainer: React.FC = () => {
               type="button"
               data-testid="expand-collapse-button"
               className={cn({
-                'mb-10 ml-[3%] w-48 rounded-4xl border-2 border-black border-opacity-20 py-2 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
+                'h-7 w-full rounded-4xl border-2 border-black border-opacity-20 bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0':
                   true,
-                'border-white bg-white text-brand-800': widgetsCollapsedChecker,
+                'bg-white': widgetsCollapsedChecker,
                 'print:hidden': screenWidth >= breakpoints.md,
               })}
               onClick={() => handleWidgetsCollapsed()}
@@ -111,8 +115,59 @@ const WidgetsContainer: React.FC = () => {
               {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
             </button>
           </Helper>
-        </div>
-      )}
+        )}
+        <Helper
+          className={{
+            button: '-bottom-2.5 -right-[170px] z-[20]',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: -50, left: -160 }}
+          message="Triggers deck to configure widgets"
+        >
+          <Dialog>
+            <DialogTrigger asChild className="md:translate-x-0">
+              <button
+                type="button"
+                data-testid="configure-widgets-button"
+                className={cn({
+                  'flex h-7 w-full items-center justify-center rounded-4xl border-2 border-opacity-20 bg-white py-1 px-4 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0 print:hidden':
+                    true,
+                })}
+              >
+                Configure widgets
+              </button>
+            </DialogTrigger>
+            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
+              <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+                <h2 className="font-black/85 text-3xl font-light leading-10">
+                  Widgets deck settings
+                </h2>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -40, left: -50 }}
+                  message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+                >
+                  <Category />
+                </Helper>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -40, left: -50 }}
+                  message="Widgets list"
+                >
+                  <WidgetsMenu />
+                </Helper>
+              </div>
+              <DialogClose />
+            </DialogContent>
+          </Dialog>
+        </Helper>
+      </div>
       {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
       )}

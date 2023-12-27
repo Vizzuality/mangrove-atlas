@@ -7,16 +7,18 @@ import RadioItem from './radio-group-item';
 import type { RadioOption } from './types';
 
 export interface RadioGroupDemoProps extends RadioGroupProps {
-  options: RadioOption[];
+  options?: RadioOption[];
 }
 
-const RadioGroupDemo = ({ options, ...props }: RadioGroupDemoProps) => (
+const RadioGroupDemo = ({ options, children, ...props }: RadioGroupDemoProps) => (
   <RadioGroup.Root className="space-y flex flex-col" {...props}>
-    {options.map((option) => (
-      <div key={option.value} className="flex items-center">
-        <RadioItem option={option} />
-      </div>
-    ))}
+    {!!options
+      ? options.map((option) => (
+          <div key={option.value}>
+            <RadioItem option={option} />
+          </div>
+        ))
+      : children}
   </RadioGroup.Root>
 );
 
