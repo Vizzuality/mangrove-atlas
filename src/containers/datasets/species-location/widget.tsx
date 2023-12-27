@@ -23,7 +23,6 @@ import Loading from 'components/loading';
 import RadioGroupItem from 'components/radio-group/radio-group-item';
 import type { RadioOption } from 'components/radio-group/types';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
-import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';

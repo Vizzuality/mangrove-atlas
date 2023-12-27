@@ -7,7 +7,7 @@ import widgets from 'containers/widgets/constants';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>({
-  key: 'active',
+  key: 'active-widgets',
   default: ['mangrove_habitat_extent'],
   effects: [
     urlSyncEffect({

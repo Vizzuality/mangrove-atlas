@@ -21,12 +21,6 @@ const widgets_dev = [
 
 const widgets_prod = [
   {
-    name: 'Map Style',
-    slug: 'mangrove_contextual_basemaps',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
-  },
-  {
     name: 'Mangrove habitat extent',
     slug: 'mangrove_habitat_extent',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
@@ -128,14 +122,14 @@ const widgets_prod = [
   {
     name: 'Mangrove Emissions Mitigation',
     slug: 'mangrove_emissions_mitigation',
-    locationType: ['custom', 'wdpa', 'country', 'worldwide'],
+    locationType: ['all_datasets', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global and National',
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
   {
     name: 'Mangrove International Status',
     slug: 'mangrove_international_status',
-    locationType: ['custom', 'country'],
+    locationType: ['all_datasets', 'country'],
     applicability: 'National',
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
