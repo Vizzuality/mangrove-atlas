@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import cn from 'lib/classnames';
+
+import { fullScreenAtom } from 'store/map-settings';
+
+import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 
@@ -8,7 +12,7 @@ import DISABLE_FULLSCREEN_SVG from 'svgs/map/disable-fullscreen.svg?sprite';
 import ENABLE_FULLSCREEN_SVG from 'svgs/map/enable-fullscreen.svg?sprite';
 
 export const FullScreen = ({ className }: { className?: string }) => {
-  const [isFullScreen, setFullScreen] = useState(false);
+  const [isFullScreen, setFullScreen] = useRecoilState(fullScreenAtom);
 
   const toggleFullScreen = useCallback(async () => {
     if (document.fullscreenElement) {

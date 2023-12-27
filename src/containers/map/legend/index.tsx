@@ -122,8 +122,6 @@ const Legend = () => {
     close: { y: '200%', opacity: 0 },
   };
 
-  console.log(activeLayers);
-
   return (
     <>
       <button
