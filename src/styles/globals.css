@@ -73,7 +73,7 @@ body {
   ::-webkit-scrollbar {
     width: 0.5rem !important;
   }
-  
+
   .scroll-thin::-webkit-scrollbar {
     width: 0.5rem;
   }

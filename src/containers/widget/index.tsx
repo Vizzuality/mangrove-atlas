@@ -27,10 +27,12 @@ type WidgetLayoutProps = {
   className?: string;
   contextualLayersIds?: string[];
   applicability?: string;
+  info?: boolean;
 };
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
-  const { children, title, id, className, applicability } = props;
+  const { children, title, id, className, applicability, info } = props;
+
   const { showWidget } = useRecoilValue(drawingToolAtom);
 
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
@@ -71,6 +73,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         className={cn({
           'md:h-fit-content z-2 group ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
             true,
+          '!w-[100%] border-none !p-0 !shadow-none': info,
           [className]: !!className,
         })}
       >
@@ -78,6 +81,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           className={cn({
             'rounded-2xl border-2 border-transparent px-9 py-3': true,
             'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
+            'border-none p-0': info,
           })}
           data-testid={`widget-${id}`}
         >

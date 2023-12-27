@@ -406,7 +406,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             <Controls
               className={cn({
                 'absolute bottom-6 right-6 items-center print:hidden': true,
-                'bottom-12 right-10': screenWidth >= breakpoints.md,
+                'right-6 bottom-11': screenWidth >= breakpoints.md,
               })}
             >
               <GuideSwitcher />
@@ -423,8 +423,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   <FullScreenControl />
                   <ShareControl />
                   <BasemapSettingsControl />
-                  <ZoomControl mapId={mapId} />
-                  <PitchReset mapId={mapId} />
+                  <div className="border-box flex flex-col rounded-full border shadow-control">
+                    <ZoomControl mapId={mapId} />
+                    <PitchReset mapId={mapId} />
+                  </div>
                 </div>
               </Helper>
             </Controls>
@@ -459,8 +461,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-32 space-y-1 print:hidden">
-
+        <div className="absolute bottom-11 right-20 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend />
         </div>

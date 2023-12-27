@@ -33,29 +33,23 @@ export const FullScreen = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn({
-        'inline-flex flex-col rounded-full shadow-md shadow-black/10': true,
+        'group flex inline-flex h-11 w-11 flex-col items-center justify-center rounded-full rounded-full border bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+          true,
+        'bg-brand-600': isFullScreen,
+        'hover:bg-gray-100': !isFullScreen,
         [className]: !!className,
       })}
+      onClick={toggleFullScreen}
     >
-      <button
+      <Icon
+        icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
         className={cn({
-          'group flex h-11 w-11 items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
-            true,
+          'h-5 w-5 bg-white group-disabled:fill-grey-75': true,
           'bg-brand-600': isFullScreen,
+          'group-hover:bg-gray-100': !isFullScreen,
         })}
-        aria-label="Toggle fullscreen"
-        type="button"
-        onClick={toggleFullScreen}
-      >
-        <Icon
-          icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
-          className={cn({
-            'h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75': true,
-            'bg-brand-600': isFullScreen,
-          })}
-          description="Fullscreen"
-        />
-      </button>
+        description="Fullscreen"
+      />
     </div>
   );
 };

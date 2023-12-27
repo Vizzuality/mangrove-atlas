@@ -11,12 +11,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { MAP_LEGENDS } from 'containers/datasets';
-import { INFO } from 'containers/datasets';
+import { MAP_LEGENDS, WIDGETS } from 'containers/datasets';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
+import WidgetWrapper from 'containers/widget';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
@@ -119,23 +119,25 @@ const Legend = () => {
 
   const contentVariants = {
     open: { y: '0%', opacity: 1 },
-    close: { y: '100%', opacity: 0 },
+    close: { y: '200%', opacity: 0 },
   };
+
+  console.log(activeLayers);
 
   return (
     <>
-      {!isOpen && (
-        <div>
-          <button
-            onClick={openLegend}
-            className="absolute right-0 bottom-0 flex h-10 cursor-pointer items-center justify-center space-x-2 rounded-3xl border bg-white py-2 px-4"
-          >
-            <p className="opacity-85 text-xs font-bold uppercase text-black">Show legend</p>
+      <button
+        onClick={openLegend}
+        className={cn({
+          'absolute right-0 bottom-0 z-50 flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl border bg-white py-2 px-5 shadow-control':
+            true,
+          hidden: isOpen,
+        })}
+      >
+        <p className="opacity-85 text-xs font-bold uppercase text-black">Show legend</p>
 
-            <FaArrowUp className="mb-1" />
-          </button>
-        </div>
-      )}
+        <FaArrowUp className="mb-1" />
+      </button>
 
       <AnimatePresence>
         <motion.div
@@ -145,13 +147,13 @@ const Legend = () => {
           exit="close"
           transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         >
-          <div className="bottom-1/12 border-black/65 fixed relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
+          <div className="bottom-1/12 fixed relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
             <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden">
               <SortableList onChangeOrder={onChangeOrder}>
                 {activeLayers.map((l) => {
                   const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
 
-                  const Info = INFO[l.id] as React.ElementType;
+                  const Widget = WIDGETS[l.id] as React.ElementType;
 
                   const visibility = l.visibility === 'visible';
 
@@ -185,12 +187,14 @@ const Legend = () => {
                             <DialogTrigger>
                               <Icon
                                 icon={INFO_SVG}
-                                className="mr-1.5 mb-1 h-[18px] w-[18px] fill-black/40"
+                                className="mr-1.5 mb-1.5 h-[17px] w-[17px] fill-black/40"
                               />
                             </DialogTrigger>
-                            <DialogContent className="scroll-y mt-10 h-[90%] rounded-3xl">
-                              <div className="no-scrollbar  overflow-y-auto ">
-                                <Info id={l.id} content={false} />
+                            <DialogContent className="scroll-y mt-10 rounded-3xl" overlay={false}>
+                              <div className="no-scrollbar overflow-y-auto px-3">
+                                <WidgetWrapper key={l.id} title={l.id} id={l.id} info>
+                                  <Widget id={l.id} />
+                                </WidgetWrapper>
                               </div>
                               <DialogClose />
                             </DialogContent>
