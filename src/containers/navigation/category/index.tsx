@@ -11,7 +11,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { VscLayers } from 'react-icons/vsc';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import CATEGORY_OPTIONS from 'containers/sidebar/constants';
+import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import { useWidgets } from 'containers/widgets/hooks';
 
 import Icon from 'components/icon';

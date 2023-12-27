@@ -1,4 +1,4 @@
-import Menu from 'containers/sidebar/menu';
+import Menu from 'containers/navigation/menu';
 import MapToggle from 'containers/sidebar/mobile/map-toggle';
 
 import PlacesMobile from './places';

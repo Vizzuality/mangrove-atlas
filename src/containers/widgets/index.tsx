@@ -16,6 +16,7 @@ import Blog from 'containers/blog';
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
+import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
 
@@ -91,7 +92,8 @@ const WidgetsContainer: React.FC = () => {
 
   return (
     <WidgetsLayout>
-      <div className="flex grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
+      <AppTools />
+      <div className="grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
         {widgets.length > 1 && (
           <Helper
             className={{

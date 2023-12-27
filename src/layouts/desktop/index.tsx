@@ -11,7 +11,6 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import MapContainer from 'containers/map';
-import AppTools from 'containers/navigation';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
 
@@ -64,13 +63,7 @@ const DesktopLayout = () => {
           </p>
         )}
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
-
-        {!isFullScreen && (
-          <>
-            <AppTools />
-            <WidgetsContainer />
-          </>
-        )}
+        {!isFullScreen && <WidgetsContainer />}
       </div>
     </div>
   );

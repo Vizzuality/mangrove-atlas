@@ -26,7 +26,7 @@ const Menu = () => {
   const [section, setSection] = useState('main');
 
   return (
-    <div className="relative flex">
+    <Dialog>
       <Helper
         className={{
           button: '-bottom-10 -right-1.5',
@@ -35,113 +35,107 @@ const Menu = () => {
         tooltipPosition={{ top: -10, left: -60 }}
         message="main menu"
       >
-        <Dialog>
-          <DialogTrigger asChild>
-            <button
-              data-testid="menu-button"
-              type="button"
-              className="flex justify-center rounded-full p-1 md:bg-white"
-              onClick={() => setSection('main')}
-            >
-              <Icon
-                icon={MENU_SVG}
-                className="h-8 w-10 stroke-white stroke-2 md:w-8 md:stroke-brand-800"
-                description="Menu"
-              />
-            </button>
-          </DialogTrigger>
-
-          <DialogContent
-            data-testid="menu-content"
-            className={cn({
-              'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5%] md:max-w-xl': true,
-              'h-fit py-0': section === 'main',
-              'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
-              'md:translate-0 translate-y-10': true,
-            })}
+        <DialogTrigger asChild>
+          <button
+            data-testid="menu-button"
+            type="button"
+            onClick={() => setSection('main')}
+            className="flex items-center space-x-2"
           >
-            {section === 'main' && (
-              <div className="flex flex-col py-10 font-sans text-black/85">
-                <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
-                  Global Mangrove Watch
-                </h2>
-                <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
-                  <button onClick={() => section && setSection('about')}>About this tool</button>
-                  {/* {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
+            <Icon icon={MENU_SVG} className="h-6 w-6 " description="Menu" />
+            <span className="font-sans text-xs text-white">Menu</span>
+          </button>
+        </DialogTrigger>
+      </Helper>
+
+      <DialogContent
+        data-testid="menu-content"
+        className={cn({
+          'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5%] md:max-w-xl': true,
+          'h-fit py-0': section === 'main',
+          'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
+          'md:translate-0 translate-y-10': true,
+        })}
+      >
+        {section === 'main' && (
+          <div className="flex flex-col py-10 font-sans text-black/85">
+            <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+              Global Mangrove Watch
+            </h2>
+            <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
+              <button onClick={() => section && setSection('about')}>About this tool</button>
+              {/* {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
                       <button onClick={() => section && setSection('news')}>News</button>
                     )} */}
-                </div>
-                <div className="space-y-4 pb-6">
-                  <p className="text-xs font-bold uppercase">Powered by</p>
-                  <a
-                    href="https://www.mangrovealliance.org/"
-                    className="pb-3 text-left text-2lg font-light leading-3"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Global Mangrove Alliance
-                  </a>
-                </div>
+            </div>
+            <div className="space-y-4 pb-6">
+              <p className="text-xs font-bold uppercase">Powered by</p>
+              <a
+                href="https://www.mangrovealliance.org/"
+                className="pb-3 text-left text-2lg font-light leading-3"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Global Mangrove Alliance
+              </a>
+            </div>
 
-                <div className="grid w-full grid-cols-2 items-center justify-between py-6 md:grid-cols-4">
-                  <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" description="ABERYSTWYTH" />
-                  <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
-                  <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
-                  <Icon
-                    icon={NATURE_CONSERVANCY_SVG}
-                    className="w-22 md:w-28"
-                    description="NATURE_CONSERVANCY"
-                  />
-                </div>
+            <div className="grid w-full grid-cols-2 items-center justify-between py-6 md:grid-cols-4">
+              <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" description="ABERYSTWYTH" />
+              <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
+              <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
+              <Icon
+                icon={NATURE_CONSERVANCY_SVG}
+                className="w-22 md:w-28"
+                description="NATURE_CONSERVANCY"
+              />
+            </div>
 
-                <Media lessThan="md">
-                  <Image alt="GMA" src={GMA_PNG as StaticImageData} width={100} height={50} />
-                </Media>
-                <Media greaterThanOrEqual="md">
-                  <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
-                </Media>
-              </div>
+            <Media lessThan="md">
+              <Image alt="GMA" src={GMA_PNG as StaticImageData} width={100} height={50} />
+            </Media>
+            <Media greaterThanOrEqual="md">
+              <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
+            </Media>
+          </div>
+        )}
+        <AnimatePresence>
+          {section === 'about' && (
+            <motion.div
+              className="no-scrollbar overflow-y-auto font-sans"
+              initial="hidden"
+              animate="displayed"
+              variants={{
+                hidden: { opacity: 0 },
+                displayed: { opacity: 1 },
+              }}
+              transition={{ duration: 0.4 }}
+            >
+              <About />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
+          <AnimatePresence>
+            {section === 'news' && (
+              <motion.div
+                className="no-scrollbar overflow-y-auto pt-3 font-sans"
+                initial="hidden"
+                animate="displayed"
+                variants={{
+                  hidden: { opacity: 0 },
+                  displayed: { opacity: 1 },
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <BlogContent />
+              </motion.div>
             )}
-            <AnimatePresence>
-              {section === 'about' && (
-                <motion.div
-                  className="no-scrollbar overflow-y-auto font-sans"
-                  initial="hidden"
-                  animate="displayed"
-                  variants={{
-                    hidden: { opacity: 0 },
-                    displayed: { opacity: 1 },
-                  }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <About />
-                </motion.div>
-              )}
-            </AnimatePresence>
-            {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-              <AnimatePresence>
-                {section === 'news' && (
-                  <motion.div
-                    className="no-scrollbar overflow-y-auto pt-3 font-sans"
-                    initial="hidden"
-                    animate="displayed"
-                    variants={{
-                      hidden: { opacity: 0 },
-                      displayed: { opacity: 1 },
-                    }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <BlogContent />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            )}
-            <DialogClose />
-          </DialogContent>
-        </Dialog>
-        <div className="">Menu</div>
-      </Helper>
-    </div>
+          </AnimatePresence>
+        )}
+        <DialogClose />
+      </DialogContent>
+    </Dialog>
   );
 };
 
