@@ -22,7 +22,7 @@ import {
   WIDGET_SUBTITLE_STYLE,
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
-import { ActiveLayers } from 'types/layers';
+import type { ActiveLayers } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
