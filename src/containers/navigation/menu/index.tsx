@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import BlogContent from 'containers/blog/content';
 import Helper from 'containers/guide/helper';
-import About from 'containers/sidebar/menu/about';
+import About from 'containers/navigation/menu/about';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
@@ -26,7 +26,7 @@ const Menu = () => {
   const [section, setSection] = useState('main');
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="relative flex">
       <Helper
         className={{
           button: '-bottom-10 -right-1.5',
@@ -37,8 +37,17 @@ const Menu = () => {
       >
         <Dialog>
           <DialogTrigger asChild>
-            <button data-testid="menu-button" type="button" onClick={() => setSection('main')}>
-              <Icon icon={MENU_SVG} className="h-6 w-6 " description="Menu" />
+            <button
+              data-testid="menu-button"
+              type="button"
+              className="flex justify-center rounded-full p-1 md:bg-white"
+              onClick={() => setSection('main')}
+            >
+              <Icon
+                icon={MENU_SVG}
+                className="h-8 w-10 stroke-white stroke-2 md:w-8 md:stroke-brand-800"
+                description="Menu"
+              />
             </button>
           </DialogTrigger>
 
@@ -130,7 +139,7 @@ const Menu = () => {
             <DialogClose />
           </DialogContent>
         </Dialog>
-        <span className="font-sans text-xs text-white">Menu</span>
+        <div className="">Menu</div>
       </Helper>
     </div>
   );

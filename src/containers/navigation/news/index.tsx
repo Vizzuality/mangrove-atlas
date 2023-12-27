@@ -3,7 +3,7 @@ import BlogContent from 'containers/blog/content';
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
-import NEWS_SVG from 'svgs/tools-app/news.svg?sprite';
+import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
 
 const News = () => (
   <div className="relative flex items-center space-x-2">
@@ -18,7 +18,7 @@ const News = () => (
         <BlogContent />
       </DialogContent>
     </Dialog>
-    <span className="text-sm">News</span>
+    <span className="text-sm text-white">News</span>
   </div>
 );
 
