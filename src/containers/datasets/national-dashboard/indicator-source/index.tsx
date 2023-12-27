@@ -12,7 +12,7 @@ import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import WidgetControls from 'components/widget-controls';
-import { ActiveLayers } from 'types/layers';
+import type { ActiveLayers } from 'types/layers';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
