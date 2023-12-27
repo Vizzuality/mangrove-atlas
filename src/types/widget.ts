@@ -62,6 +62,7 @@ export type ContextualBasemapsId =
   | 'mangrove_tidal_flats'
   | 'planet_medres_visual_monthly'
   | 'planet_medres_analytic_monthly';
+
 export type MosaicId =
   | '45d01564-c099-42d8-b8f2-a0851accf3e7'
   | 'be1f8e5e-6a29-4d27-8542-1fdb664fd78e';

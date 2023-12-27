@@ -85,7 +85,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           })}
           data-testid={`widget-${id}`}
         >
-          <header className="flex items-center justify-between ">
+          <header className="flex items-center justify-between">
             <Helper
               className={{
                 container: 'w-full',

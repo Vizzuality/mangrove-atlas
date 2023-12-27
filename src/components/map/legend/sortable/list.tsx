@@ -9,6 +9,8 @@ import {
   useState,
 } from 'react';
 
+import { fullScreenAtom } from 'store/map-settings';
+
 import {
   DndContext,
   DragOverlay,
@@ -25,6 +27,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { useRecoilValue } from 'recoil';
 
 import { SortableListProps } from 'components/map/legend/types';
 
@@ -37,6 +40,7 @@ export const SortableList: React.FC<SortableListProps> = ({
 }: SortableListProps) => {
   const uid = useId();
   const [activeId, setActiveId] = useState(null);
+  const isFullScreen = useRecoilValue(fullScreenAtom);
 
   const ActiveItem = useMemo(() => {
     const activeChildArray = Children.map(children, (Child) => {
@@ -110,7 +114,11 @@ export const SortableList: React.FC<SortableListProps> = ({
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveId(null)}
     >
-      <SortableContext items={itemsIds} strategy={verticalListSortingStrategy}>
+      <SortableContext
+        items={itemsIds}
+        strategy={verticalListSortingStrategy}
+        disabled={isFullScreen}
+      >
         {Children.map(children, (Child) => {
           if (isValidElement(Child)) {
             const { props } = Child;

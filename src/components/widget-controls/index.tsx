@@ -36,6 +36,7 @@ type WidgetControlsType = Readonly<{
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const { showWidget } = useRecoilValue(drawingToolAtom);
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
+
   const screenWidth = useScreenWidth();
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);

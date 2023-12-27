@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
+import { fullScreenAtom } from 'store/map-settings';
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -25,6 +26,7 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import Slider from 'components/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
 import { ActiveLayers } from 'types/layers';
+import { WidgetSlugType } from 'types/widget';
 
 import CLOSE_SVG from 'svgs/legend/close-legend.svg?sprite';
 import DRAG_SVG from 'svgs/legend/drag.svg?sprite';
@@ -41,6 +43,7 @@ const Legend = () => {
   const locationType = params?.[0] as LocationTypes;
   const id = params?.[1];
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const isFullScreen = useRecoilValue(fullScreenAtom);
 
   const {
     data: { id: locationId },
@@ -95,10 +98,9 @@ const Legend = () => {
       const sortedLayers = activeLayers.sort(
         (a, b) => sortArray.indexOf(a.id) - sortArray.indexOf(b.id)
       );
-
       setActiveLayers(sortedLayers);
     },
-    [activeLayers, sortArray, setActiveLayers]
+    [activeLayers, sortArray, setActiveLayers, isFullScreen]
   );
 
   const onChangeOpacity = useCallback(
@@ -163,6 +165,11 @@ const Legend = () => {
                     )
                       return null;
 
+                    const title =
+                      l.id === 'mangrove_national_dashboard_layer' && nationalDashboardLayerName
+                        ? `National Dashboard: ${nationalDashboardLayerName}`
+                        : layerNameToDisplay;
+
                     return (
                       <div
                         data-testid={`layer-legend-${l.id}`}
@@ -170,39 +177,45 @@ const Legend = () => {
                         key={l.id}
                         className=" flex flex-col items-start rounded-md bg-white px-2 pb-4 pt-2 text-sm"
                       >
-                        <div className="flex w-full items-center justify-between">
+                        <div className="flex w-full items-start justify-between">
                           <div className="flex space-x-2">
                             <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
 
                             <p className="text-xs font-semibold uppercase tracking-wider text-black/85">
-                              {l.id === 'mangrove_national_dashboard_layer' &&
-                              nationalDashboardLayerName
-                                ? `National Dashboard: ${nationalDashboardLayerName}`
-                                : layerNameToDisplay}
+                              {title}
                             </p>
                           </div>
                           <div className="ml-2 flex items-center">
-                            <Dialog>
+                            <Dialog modal={false}>
                               <DialogTrigger>
                                 <Icon
                                   icon={INFO_SVG}
-                                  className="mr-1.5 mb-1.5 h-[17px] w-[17px] fill-black/40"
+                                  className="mr-1.5 h-[17px] w-[17px] fill-black/40"
                                 />
                               </DialogTrigger>
-
-                              <DialogContent className="scroll-y mt-10 rounded-3xl" overlay={false}>
-                                <div className="no-scrollbar overflow-y-auto px-3">
-                                  <WidgetWrapper key={l.id} title={l.id} id={l.id} info>
-                                    <Widget id={l.id} />
-                                  </WidgetWrapper>
-                                </div>
-                                <DialogClose />
-                              </DialogContent>
+                              {isFullScreen && (
+                                <DialogContent
+                                  className="scroll-y mt-10 rounded-3xl !shadow-widget"
+                                  overlay={false}
+                                >
+                                  <div className="no-scrollbar overflow-y-auto px-3">
+                                    <WidgetWrapper
+                                      key={l.id}
+                                      title={title}
+                                      id={l.id as WidgetSlugType}
+                                      info
+                                    >
+                                      <Widget id={l.id} />
+                                    </WidgetWrapper>
+                                  </div>
+                                  <DialogClose />
+                                </DialogContent>
+                              )}
                             </Dialog>
                             <Popover>
-                              <PopoverTrigger>
+                              <PopoverTrigger asChild>
                                 <Tooltip>
-                                  <TooltipTrigger>
+                                  <TooltipTrigger asChild>
                                     <div aria-label="Opacity layer">
                                       <Icon icon={OPACITY_SVG} className="mr-0.5 h-6 w-6" />
                                     </div>
@@ -233,7 +246,7 @@ const Legend = () => {
                               </PopoverContent>
                             </Popover>
                             <Tooltip>
-                              <TooltipTrigger>
+                              <TooltipTrigger asChild>
                                 <button
                                   type="button"
                                   onClick={() => onChangeVisibility(l.id)}
@@ -268,7 +281,7 @@ const Legend = () => {
                               message="layers on the map can be switched off here (same as toggle on widget)"
                             >
                               <Tooltip>
-                                <TooltipTrigger>
+                                <TooltipTrigger asChild>
                                   <button
                                     type="button"
                                     onClick={() => removeLayer(l.id)}

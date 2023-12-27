@@ -39,7 +39,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
       className={cn({
         'group flex inline-flex h-11 w-11 flex-col items-center justify-center rounded-full rounded-full border bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
           true,
-        'bg-brand-600': isFullScreen,
+        'border-brand-800 bg-brand-800': isFullScreen,
         'hover:bg-gray-100': !isFullScreen,
         [className]: !!className,
       })}
@@ -49,7 +49,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
         icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
         className={cn({
           'h-5 w-5 bg-white group-disabled:fill-grey-75': true,
-          'bg-brand-600': isFullScreen,
+          'bg-brand-800': isFullScreen,
           'group-hover:bg-gray-100': !isFullScreen,
         })}
         description="Fullscreen"

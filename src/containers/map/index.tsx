@@ -331,8 +331,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       );
 
       // *ON MOUSE ENTER
-      if (restorationData) {
-        if (hoveredStateId !== null && map) {
+      if (restorationData && map) {
+        if (hoveredStateId !== null) {
           map?.setFeatureState(
             {
               sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
