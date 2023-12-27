@@ -82,6 +82,7 @@ const IndicatorSource = ({
           year: yearSelected,
         },
       });
+    {/* TO - DO -review types */}
       const widgetsUpdate = new Set(widgetsCheck) as unknown as ActiveLayers[];
       setActiveLayers([...widgetsUpdate]);
     },
