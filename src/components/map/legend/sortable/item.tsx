@@ -36,7 +36,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({
         'opacity-0': isDragging,
       })}
       style={style}
-      {...(!sortable.handle && {
+      {...(!sortable?.handle && {
         ...listeners,
         ...attributes,
       })}

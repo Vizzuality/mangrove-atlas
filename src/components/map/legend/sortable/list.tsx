@@ -71,6 +71,11 @@ export const SortableList: React.FC<SortableListProps> = ({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
+    }),
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
     })
   );
 
@@ -108,9 +113,8 @@ export const SortableList: React.FC<SortableListProps> = ({
       <SortableContext items={itemsIds} strategy={verticalListSortingStrategy}>
         {Children.map(children, (Child) => {
           if (isValidElement(Child)) {
-            const {
-              props: { id },
-            } = Child;
+            const { props } = Child;
+            const { id } = props;
 
             return (
               <SortableItem id={id} sortable={sortable}>
