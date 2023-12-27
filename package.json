@@ -80,6 +80,7 @@
     "recoil-sync": "0.2.0",
     "shadcn-ui": "latest",
     "sharp": "^0.32.6",
+    "table": "^6.8.1",
     "tailwind-merge": "^1.11.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.2.7",
