@@ -1,3 +1,5 @@
+import type { Category } from 'types/category';
+
 export type UseParamsOptions = Readonly<{
   location_id?: string | number;
   year?: number;
@@ -9,7 +11,7 @@ export type WidgetTypes = {
   slug: WidgetSlugType;
   locationType: string[];
   applicability?: string;
-  categoryIds: string[];
+  categoryIds: Category[];
   layersIds?: string[];
   contextualLayersIds?: string[];
 };

@@ -9,8 +9,8 @@ const layerSchema = object({
   id: string(),
   opacity: string(),
   visibility: stringLiterals({
-    none: 'none',
-    visible: 'visible',
+    none: 'none' as string,
+    visible: 'visible' as Visibility,
   }),
 });
 

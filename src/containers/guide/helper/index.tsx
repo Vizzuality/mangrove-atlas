@@ -43,7 +43,7 @@ export const Helper = ({
       left,
       right,
     });
-  }, [childrenRef, popOver]);
+  }, [childrenRef, popOver, isActive]);
 
   return (
     <div className={cn({ [className.container]: !!className.container })}>

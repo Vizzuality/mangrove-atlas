@@ -5,7 +5,6 @@ import cn from 'lib/classnames';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
-import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
@@ -14,20 +13,16 @@ import { useLocalStorage, useWindowSize } from 'usehooks-ts';
 import WidgetsLayout from 'layouts/widgets';
 
 import Blog from 'containers/blog';
+import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
-import Category from 'containers/sidebar/category';
-import CATEGORY_OPTIONS from 'containers/sidebar/constants';
 import WidgetWrapper from 'containers/widget';
 import NoData from 'containers/widgets/no-data';
+import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
-
-import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 import { useWidgets } from './hooks';
 
@@ -96,8 +91,8 @@ const WidgetsContainer: React.FC = () => {
 
   return (
     <WidgetsLayout>
-      <div className="flex grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
-        {widgets.length > 1 && (
+      <div className="flex w-full justify-between space-x-6 py-4 print:hidden">
+        {widgets.length > 1 ? (
           <Helper
             className={{
               button: '-bottom-2.5 -right-[170px] z-[20]',
@@ -110,7 +105,7 @@ const WidgetsContainer: React.FC = () => {
               type="button"
               data-testid="expand-collapse-button"
               className={cn({
-                'h-7 w-full rounded-4xl border-2 border-black border-opacity-20 bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0':
+                'w-full rounded-4xl border-2 border-black border-opacity-20 px-4 font-sans text-sm font-semibold text-black/85 transition-colors md:ml-0 md:translate-x-44':
                   true,
                 'bg-white': widgetsCollapsedChecker,
                 'print:hidden': screenWidth >= breakpoints.md,
@@ -120,10 +115,10 @@ const WidgetsContainer: React.FC = () => {
               {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
             </button>
           </Helper>
-        )}
+        ) : null}
         <Helper
           className={{
-            // button: '-bottom-2.5 -right-[170px] z-[20]',
+            button: '-bottom-2.5 -right-[170px] z-[20]',
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: -50, left: -160 }}
@@ -142,23 +137,24 @@ const WidgetsContainer: React.FC = () => {
                 Configure widgets
               </button>
             </DialogTrigger>
-            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
-              {/* <div className="no-scrollbar overflow-y-auto"> */}
-              <h2 className="font-black/85 text-3xl font-light leading-10">
-                Widgets deck settings
-              </h2>
-              <Helper
-                className={{
-                  button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                  tooltip: 'w-fit-content',
-                }}
-                tooltipPosition={{ top: -40, left: -50 }}
-                message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
-              >
-                <Category />
-              </Helper>
-              {/* </div> */}
-              <DialogClose />
+            <DialogContent className="scroll-y mt-10 h-[90%] rounded-3xl">
+              <div className="no-scrollbar space-y-8 overflow-y-auto">
+                <h2 className="font-black/85 text-3xl font-light leading-10">
+                  Widgets deck settings
+                </h2>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -40, left: -50 }}
+                  message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+                >
+                  <Category />
+                </Helper>
+                <WidgetsMenu />
+                <DialogClose />
+              </div>
             </DialogContent>
           </Dialog>
         </Helper>

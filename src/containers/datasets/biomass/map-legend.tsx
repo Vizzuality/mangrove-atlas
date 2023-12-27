@@ -3,8 +3,6 @@ import { useMangroveBiomass } from './hooks';
 const BiomassMapLegend = () => {
   const { config, unit } = useMangroveBiomass();
 
-  console.log(unit);
-
   return (
     <div className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60">
       {config?.legend?.items?.map(({ color, label }) => {

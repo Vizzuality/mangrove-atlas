@@ -1,12 +1,15 @@
-import type { MouseEvent } from 'react';
+import { useCallback, type MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
 
 import { activeCategoryAtom } from 'store/sidebar';
+import { customCategoryAtom } from 'store/sidebar';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/sidebar/constants';
+import widgets from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import Icon from 'components/icon';
@@ -15,10 +18,23 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
+  const [customWidgetSelection] = useRecoilState(customCategoryAtom);
+  const [, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    setCategory(event.currentTarget.value);
-  };
+  const handleClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setCategory(event.currentTarget.value);
+      const widgetsFiltered = widgets.filter((widget) =>
+        widget.categoryIds.includes(event.currentTarget.value)
+      );
+      const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
+      event.currentTarget.value === 'custom'
+        ? setActiveWidgets(customWidgetSelection)
+        : setActiveWidgets(activeWidgetsIds);
+    },
+    [setActiveWidgets, setCategory, customWidgetSelection]
+  );
 
   return (
     <div>
@@ -36,7 +52,8 @@ const Category = () => {
               className={cn({
                 [`relative h-full flex-1 justify-center rounded-xl border border-black/15 p-6 text-sm`]:
                   true,
-                'font-bold text-brand-800': category.value === categorySelected,
+                'border-2 border-brand-800 font-bold text-brand-800':
+                  category.value === categorySelected,
               })}
               data-testid={category.value}
               defaultChecked={'distribution_and_change' === category.value}
@@ -59,8 +76,7 @@ const Category = () => {
             </div>
           </button>
         ))}
-      </div>{' '}
-      <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
+      </div>
     </div>
   );
 };

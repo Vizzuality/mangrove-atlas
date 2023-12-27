@@ -24,12 +24,6 @@ const CheckboxIndicator = ({
   </CheckboxPrimitive.Indicator>
 );
 
-<CheckboxPrimitive.Indicator
-  className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
->
-  <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
-</CheckboxPrimitive.Indicator>;
-
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
@@ -46,14 +40,15 @@ const Checkbox = React.forwardRef<
     {children ? (
       children
     ) : (
-      <CheckboxPrimitive.Indicator
+      <CheckboxIndicator
         className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
       >
         <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
-      </CheckboxPrimitive.Indicator>
+      </CheckboxIndicator>
     )}
   </CheckboxPrimitive.Root>
 ));
+
 Checkbox.displayName = CheckboxPrimitive.Root.displayName;
 CheckboxIndicator.displayName = CheckboxPrimitive.Indicator.displayName;
 

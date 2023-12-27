@@ -4,6 +4,8 @@ import { string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
+import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+
 export const activeCategoryAtom = atom<string>({
   key: 'category',
   default: 'distribution_and_change',
@@ -22,6 +24,13 @@ export const useSetActiveCategory = () => {
     });
   };
 };
+
+export const customCategoryAtom = atom<
+  Partial<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>
+>({
+  key: 'custom',
+  default: [],
+});
 
 export const mapViewAtom = atom<boolean>({
   key: 'map-view',
