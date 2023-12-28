@@ -55,11 +55,6 @@ const Menu = () => {
           'h-fit py-0': section === 'main',
           'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
         })}
-          'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5%] md:max-w-xl': true,
-          'h-fit py-0': section === 'main',
-          'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
-          'md:translate-0 translate-y-10': true,
-        })}
       >
         {section === 'main' && (
           <div className="flex flex-col py-10 font-sans text-black/85">
