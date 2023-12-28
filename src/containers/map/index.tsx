@@ -73,6 +73,8 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
+
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const { data: locations } = useLocations();
@@ -331,8 +333,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       );
 
       // *ON MOUSE ENTER
-      if (restorationData) {
-        if (hoveredStateId !== null && map) {
+      if (restorationData && map) {
+        if (hoveredStateId !== null) {
           map?.setFeatureState(
             {
               sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
@@ -355,7 +357,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }
 
       // *ON MOUSE LEAVE
-      if (!restorationData && map) {
+      if (!restorationData && loaded) {
         map?.setFeatureState(
           {
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
@@ -369,6 +371,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     },
     [setCursor, isDrawingToolVisible, map]
   );
+
+  const handleMapLoad = useCallback(() => {
+    setLoaded(true);
+  }, []);
 
   return (
     <div
@@ -388,6 +394,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
+        onLoad={handleMapLoad}
         cursor={cursor}
         preserveDrawingBuffer
       >
@@ -406,7 +413,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             <Controls
               className={cn({
                 'absolute bottom-6 right-6 items-center print:hidden': true,
-                'bottom-12 right-10': screenWidth >= breakpoints.md,
+                'right-6 bottom-11': screenWidth >= breakpoints.md,
               })}
             >
               <GuideSwitcher />
@@ -423,8 +430,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   <FullScreenControl />
                   <ShareControl />
                   <BasemapSettingsControl />
-                  <ZoomControl mapId={mapId} />
-                  <PitchReset mapId={mapId} />
+                  <div className="border-box flex flex-col rounded-full border shadow-control">
+                    <ZoomControl mapId={mapId} />
+                    <PitchReset mapId={mapId} />
+                  </div>
                 </div>
               </Helper>
             </Controls>
@@ -459,7 +468,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-10 right-32 space-y-1 print:hidden">
+        <div className="absolute bottom-11 right-20 space-y-1 print:hidden">
           {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
           <Legend />
         </div>

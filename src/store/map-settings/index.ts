@@ -34,3 +34,8 @@ export const basemapContextualAnalyticMonthlyDateAtom = atom<{ value: string; la
     label: null,
   },
 });
+
+export const fullScreenAtom = atom<boolean>({
+  key: 'fullScreen',
+  default: false,
+});
