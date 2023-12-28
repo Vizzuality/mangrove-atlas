@@ -8,7 +8,7 @@ import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/an
 import { drawingToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
 import { printModeState } from 'store/print-mode';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
@@ -22,7 +22,7 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 const AnalysisAlert = () => {
   const { asPath, replace } = useRouter();
 
-  const placeSection = useRecoilValue(placeSectionAtom);
+  const locationTool = useRecoilValue(locationToolAtom);
   const isPrintingMode = useRecoilValue(printModeState);
   const setLocationsModalIsOpen = useSetRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
@@ -58,7 +58,7 @@ const AnalysisAlert = () => {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
 
-    if (placeSection === 'worldwide') {
+    if (locationTool === 'worldwide') {
       handleWorldwideView();
     }
 
@@ -70,7 +70,7 @@ const AnalysisAlert = () => {
 
     setAnalysisAlert(false);
   }, [
-    placeSection,
+    locationTool,
     queryParams,
     replace,
     resetDrawingState,

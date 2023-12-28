@@ -5,7 +5,7 @@ import cn from 'lib/classnames';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
@@ -38,7 +38,7 @@ const WidgetsContainer: React.FC = () => {
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
-  const placeSection = useRecoilValue(placeSectionAtom);
+  const locationTool = useRecoilValue(locationToolAtom);
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
 
@@ -72,6 +72,7 @@ const WidgetsContainer: React.FC = () => {
 
     updateWidgetsCollapsed[lastWidgetSlug] = false;
     updateWidgetsCollapsed['mangrove_drawing_tool'] = false;
+    updateWidgetsCollapsed['mangrove_drawing_upload_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
   }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
@@ -92,92 +93,94 @@ const WidgetsContainer: React.FC = () => {
     }, 4000);
   }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
 
-  console.log({ placeSection });
   return (
     <WidgetsLayout>
       <AppTools />
-      <div
-        className={cn({
-          'grid w-full grid-cols-2 justify-between space-x-6 py-1 print:hidden': true,
-          'flex justify-center': placeSection === 'area' || placeSection === 'upload',
-        })}
-      >
-        {widgets.length > 1 && (
+      <div className="py-1">
+        <div
+          className={cn({
+            'grid w-full grid-cols-2 justify-between space-x-6 print:hidden': true,
+            hidden: locationTool === 'area' || locationTool === 'upload',
+          })}
+        >
+          {widgets.length > 1 && (
+            <Helper
+              className={{
+                button: '-bottom-2.5 -right-[170px] z-[20]',
+                tooltip: 'w-fit-content',
+              }}
+              tooltipPosition={{ top: -50, left: -160 }}
+              message="Expand or collapse all widgets"
+            >
+              <button
+                type="button"
+                data-testid="expand-collapse-button"
+                className={cn({
+                  'h-8 w-full rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
+                    true,
+                  'bg-white': widgetsCollapsedChecker,
+                  'print:hidden': screenWidth >= breakpoints.md,
+                })}
+                onClick={() => handleWidgetsCollapsed()}
+              >
+                {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
+              </button>
+            </Helper>
+          )}
           <Helper
             className={{
               button: '-bottom-2.5 -right-[170px] z-[20]',
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: -50, left: -160 }}
-            message="Expand or collapse all widgets"
+            message="Triggers deck to configure widgets"
           >
-            <button
-              type="button"
-              data-testid="expand-collapse-button"
-              className={cn({
-                'h-8 w-full rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
-                  true,
-                'bg-white': widgetsCollapsedChecker,
-                'print:hidden': screenWidth >= breakpoints.md,
-              })}
-              onClick={() => handleWidgetsCollapsed()}
-            >
-              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
-            </button>
+            <Dialog>
+              <DialogTrigger asChild className="md:translate-x-0">
+                <button
+                  type="button"
+                  data-testid="configure-widgets-button"
+                  className={cn({
+                    'flex h-8 w-full items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
+                      true,
+                  })}
+                >
+                  Configure widgets
+                </button>
+              </DialogTrigger>
+              <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
+                <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+                  <h2 className="font-black/85 text-3xl font-light leading-10">
+                    Widgets deck settings
+                  </h2>
+                  <Helper
+                    className={{
+                      button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                      tooltip: 'w-fit-content',
+                    }}
+                    tooltipPosition={{ top: -40, left: -50 }}
+                    message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+                  >
+                    <Category />
+                  </Helper>
+                  <Helper
+                    className={{
+                      button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+                      tooltip: 'w-fit-content',
+                    }}
+                    tooltipPosition={{ top: -40, left: -50 }}
+                    message="Widgets list"
+                  >
+                    <WidgetsMenu />
+                  </Helper>
+                </div>
+                <DialogClose />
+              </DialogContent>
+            </Dialog>
           </Helper>
-        )}
-        <Helper
-          className={{
-            button: '-bottom-2.5 -right-[170px] z-[20]',
-            tooltip: 'w-fit-content',
-          }}
-          tooltipPosition={{ top: -50, left: -160 }}
-          message="Triggers deck to configure widgets"
-        >
-          <Dialog>
-            <DialogTrigger asChild className="md:translate-x-0">
-              <button
-                type="button"
-                data-testid="configure-widgets-button"
-                className={cn({
-                  'flex h-8 w-full items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
-                    true,
-                })}
-              >
-                Configure widgets
-              </button>
-            </DialogTrigger>
-            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
-              <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
-                <h2 className="font-black/85 text-3xl font-light leading-10">
-                  Widgets deck settings
-                </h2>
-                <Helper
-                  className={{
-                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                    tooltip: 'w-fit-content',
-                  }}
-                  tooltipPosition={{ top: -40, left: -50 }}
-                  message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
-                >
-                  <Category />
-                </Helper>
-                <Helper
-                  className={{
-                    button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                    tooltip: 'w-fit-content',
-                  }}
-                  tooltipPosition={{ top: -40, left: -50 }}
-                  message="Widgets list"
-                >
-                  <WidgetsMenu />
-                </Helper>
-              </div>
-              <DialogClose />
-            </DialogContent>
-          </Dialog>
-        </Helper>
+        </div>
       </div>
+
       {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
       )}

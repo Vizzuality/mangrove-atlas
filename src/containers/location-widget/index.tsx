@@ -7,7 +7,7 @@ import cn from 'lib/classnames';
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -37,7 +37,7 @@ const LocationWidget = () => {
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const skipAnalysisAlert = useRecoilValue(skipAnalysisAlertAtom);
-  const savePlaceSection = useSetRecoilState(placeSectionAtom);
+  const saveLocationTool = useSetRecoilState(locationToolAtom);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(null);
@@ -75,12 +75,12 @@ const LocationWidget = () => {
     } else {
       openLocationsModal();
     }
-    savePlaceSection('search');
+    saveLocationTool('search');
   }, [
     openLocationsModal,
     isAnalysisEnabled,
     skipAnalysisAlert,
-    savePlaceSection,
+    saveLocationTool,
     setAnalysisAlert,
   ]);
 

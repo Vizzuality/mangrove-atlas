@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
 import { mapCursorAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
@@ -31,15 +31,15 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const LocationTools = () => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
-  const [placeSection, savePlaceSection] = useRecoilState(placeSectionAtom);
+  const [locationTool, saveLocationTool] = useRecoilState(locationToolAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
-  const setMapViewState = useSetRecoilState(mapSettingsAtom);
 
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
-  const resetDrawingState = useResetRecoilState(drawingToolAtom);
+
   const resetMapCursor = useResetRecoilState(mapCursorAtom);
 
   const isPrintingMode = useRecoilValue(printModeState);
@@ -58,22 +58,9 @@ const LocationTools = () => {
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
-      savePlaceSection(null);
+      saveLocationTool(null);
     }
-  }, [isAnalysisAlertOpen, setLocationsModalIsOpen, savePlaceSection]);
-
-  const handleWorldwideView = useCallback(() => {
-    resetDrawingState();
-    resetAnalysisState();
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    replace(`/?${queryParams}`, null);
-
-    map.flyTo({
-      center: [0, 20],
-      zoom: 2,
-    });
-  }, [map, resetAnalysisState, resetDrawingState, replace, queryParams]);
+  }, [isAnalysisAlertOpen, setLocationsModalIsOpen, saveLocationTool]);
 
   const handleDrawingToolView = useCallback(() => {
     setDrawingToolState((drawingToolState) => ({
@@ -81,11 +68,16 @@ const LocationTools = () => {
       showWidget: true,
       enabled: false,
     }));
+    setDrawingUploadToolState((drawingUploadToolState) => ({
+      ...drawingUploadToolState,
+      showWidget: false,
+      enabled: false,
+    }));
 
     resetAnalysisState();
     resetMapSettingsState();
     resetMapCursor();
-    savePlaceSection('area');
+    saveLocationTool('area');
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
@@ -95,15 +87,27 @@ const LocationTools = () => {
     resetMapCursor,
     replace,
     queryParams,
-    savePlaceSection,
+    saveLocationTool,
     resetMapSettingsState,
+    setDrawingUploadToolState,
   ]);
 
-  const handleUploadToolView = useCallback(() => {
+  const handleDrawingUploadToolView = useCallback(() => {
+    setDrawingUploadToolState((drawingUploadToolState) => ({
+      ...drawingUploadToolState,
+      showWidget: true,
+      enabled: false,
+    }));
+    setDrawingToolState((drawingToolState) => ({
+      ...drawingToolState,
+      showWidget: false,
+      enabled: false,
+    }));
+
     resetAnalysisState();
     resetMapSettingsState();
     resetMapCursor();
-    savePlaceSection('upload');
+    saveLocationTool('upload');
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
@@ -112,8 +116,10 @@ const LocationTools = () => {
     resetMapCursor,
     replace,
     queryParams,
-    savePlaceSection,
+    saveLocationTool,
     resetMapSettingsState,
+    setDrawingUploadToolState,
+    setDrawingToolState,
   ]);
 
   const openAnalysisAlertModal = useCallback(() => {
@@ -125,43 +131,39 @@ const LocationTools = () => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
   }, [setSkipAnalysisAlert]);
 
-  const handleOnClickWorldwide = useCallback(() => {
-    setMapViewState(false);
-    if (isAnalysisEnabled && !skipAnalysisAlert) {
-      openAnalysisAlertModal();
-    } else {
-      handleWorldwideView();
-    }
-    savePlaceSection('worldwide');
-  }, [
-    handleWorldwideView,
-    isAnalysisEnabled,
-    skipAnalysisAlert,
-    openAnalysisAlertModal,
-    savePlaceSection,
-    setMapViewState,
-  ]);
-
   const handleOnClickSearch = useCallback(() => {
+    saveLocationTool('search');
+    setDrawingUploadToolState((drawingUploadToolState) => ({
+      ...drawingUploadToolState,
+      showWidget: false,
+      enabled: false,
+    }));
+    setDrawingToolState((drawingToolState) => ({
+      ...drawingToolState,
+      showWidget: false,
+      enabled: false,
+    }));
+
     if (isAnalysisEnabled && !skipAnalysisAlert) {
       openAnalysisAlertModal();
     } else {
       openLocationsModal();
     }
-    savePlaceSection('search');
   }, [
     openLocationsModal,
     isAnalysisEnabled,
     skipAnalysisAlert,
     openAnalysisAlertModal,
-    savePlaceSection,
+    saveLocationTool,
+    setDrawingUploadToolState,
+    setDrawingToolState,
   ]);
 
   return (
     <div className="flex space-y-2 text-center">
       <div className="mx-auto flex space-x-8">
         {/* //*FIND LOCATIONS* */}
-        <Dialog open={placeSection === 'search' && locationsModalIsOpen}>
+        <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
@@ -232,7 +234,7 @@ const LocationTools = () => {
           <button
             type="button"
             className="flex w-28 cursor-pointer items-center justify-center"
-            onClick={handleUploadToolView}
+            onClick={handleDrawingUploadToolView}
             data-testid="worldwide-button"
           >
             <div className="flex flex-col items-center space-y-1">

@@ -24,6 +24,7 @@ export const widgetsCollapsedAtom = atom({
       ...previousObject,
       [currentObject.slug]: false,
       mangrove_drawing_tool: false,
+      mangrove_drawing_upload_tool: false,
     });
   }, {}),
 });

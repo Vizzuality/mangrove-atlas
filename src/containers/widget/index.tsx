@@ -45,6 +45,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
       ...widgetsCollapsed,
       [id]: !widgetsCollapsed[id],
       ['mangrove_drawing_tool']: false,
+      ['mangrove_drawing_upload_tool']: false,
     };
     setWidgetsCollapsed(updatedWidgetsCollapsed);
   }, [id, widgetsCollapsed, setWidgetsCollapsed]);

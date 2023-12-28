@@ -212,8 +212,14 @@ const widgets_prod = [
     layersIds: ['global_tidal_wetland_change'],
   },
   {
-    name: 'Draw or upload an area',
+    name: 'Draw an area',
     slug: 'mangrove_drawing_tool',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: [],
+  },
+  {
+    name: 'Upload an area',
+    slug: 'mangrove_drawing_upload_tool',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: [],
   },
