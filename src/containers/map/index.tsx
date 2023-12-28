@@ -4,7 +4,6 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
 import { orderByAttribute } from 'lib/utils';
 
 import { analysisAtom } from 'store/analysis';
@@ -32,7 +31,6 @@ import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 import { useLocations } from 'containers/datasets/locations/hooks';
 import Helper from 'containers/guide/helper';
-import GuideSwitcher from 'containers/guide/switcher';
 import { LAYERS_ORDER } from 'containers/layers/constants';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
@@ -410,12 +408,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               />
             )}
 
-            <Controls
-              className={cn({
-                'absolute bottom-6 right-6 items-center print:hidden': true,
-                'right-6 bottom-11': screenWidth >= breakpoints.md,
-              })}
-            >
+            <Controls className="absolute bottom-11 right-6 items-center print:hidden">
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',

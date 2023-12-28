@@ -149,7 +149,7 @@ const Legend = () => {
             transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
           >
             <div className="bottom-1/12 fixed relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
-              <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden">
+              <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-2 print:hidden">
                 <SortableList onChangeOrder={onChangeOrder}>
                   {activeLayers.map((l) => {
                     const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
@@ -175,10 +175,10 @@ const Legend = () => {
                         data-testid={`layer-legend-${l.id}`}
                         id={l.id}
                         key={l.id}
-                        className=" flex flex-col items-start rounded-md bg-white px-2 pb-4 pt-2 text-sm"
+                        className="flex flex-col items-start rounded-md bg-white px-2 pb-4 pt-2 text-sm"
                       >
-                        <div className="flex w-full items-start justify-between">
-                          <div className="flex space-x-2">
+                        <div className="flex w-full items-center justify-between">
+                          <div className="flex items-center space-x-2">
                             <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
 
                             <p className="text-xs font-semibold uppercase tracking-wider text-black/85">
@@ -255,8 +255,9 @@ const Legend = () => {
                                   <Icon
                                     icon={visibility ? HIDE_SVG : SHOW_SVG}
                                     className={cn({
-                                      'mx-px mb-0.5 h-6 w-6 !fill-black/40 p-0.5': true,
-                                      'p-0': visibility,
+                                      'mx-px !fill-black/40': true,
+                                      'h-6 w-6': visibility,
+                                      'h-5 w-6': !visibility,
                                     })}
                                   />
                                 </button>
@@ -276,6 +277,7 @@ const Legend = () => {
                               className={{
                                 button: l.id === HELPER_ID ? '-bottom-2 left-2 z-[20]' : 'hidden',
                                 tooltip: 'w-fit-content',
+                                container: 'flex items-center',
                               }}
                               tooltipPosition={{ top: 100, left: 150 }}
                               message="layers on the map can be switched off here (same as toggle on widget)"
