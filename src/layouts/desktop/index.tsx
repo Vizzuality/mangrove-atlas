@@ -1,5 +1,3 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
@@ -13,7 +11,6 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import MapContainer from 'containers/map';
-import Sidebar from 'containers/sidebar';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
 
@@ -66,13 +63,7 @@ const DesktopLayout = () => {
           </p>
         )}
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
-        {!isFullScreen && (
-          <>
-            <Sidebar />
-
-            <WidgetsContainer />
-          </>
-        )}
+        {!isFullScreen && <WidgetsContainer />}
       </div>
     </div>
   );

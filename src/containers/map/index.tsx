@@ -416,8 +416,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 'right-6 bottom-11': screenWidth >= breakpoints.md,
               })}
             >
-              <GuideSwitcher />
-
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',
