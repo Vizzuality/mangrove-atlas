@@ -51,6 +51,10 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
+          'scroll-y rounded-3xl px-10 font-sans md:top-[10%] md:max-w-xl': true,
+          'h-fit py-0': section === 'main',
+          'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
+        })}
           'scroll-y md:translate-0 rounded-3xl px-10 font-sans md:top-[5%] md:max-w-xl': true,
           'h-fit py-0': section === 'main',
           'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
