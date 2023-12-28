@@ -42,8 +42,8 @@ const Menu = () => {
             onClick={() => setSection('main')}
             className="flex items-center space-x-2"
           >
-            <Icon icon={MENU_SVG} className="h-6 w-6 " description="Menu" />
-            <span className="font-sans text-xs text-white">Menu</span>
+            <Icon icon={MENU_SVG} className="h-7 w-7" description="Menu" />
+            <span className="font-sans text-sm text-white">Menu</span>
           </button>
         </DialogTrigger>
       </Helper>
