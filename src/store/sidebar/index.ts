@@ -37,7 +37,7 @@ export const mapViewAtom = atom<boolean>({
   default: true,
 });
 
-export const placeSectionAtom = atom<'worldwide' | 'search' | 'area'>({
+export const placeSectionAtom = atom<'worldwide' | 'upload' | 'search' | 'area'>({
   key: 'place-section',
   default: 'worldwide',
 });

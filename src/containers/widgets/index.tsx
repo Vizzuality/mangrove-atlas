@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
+import { placeSectionAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
@@ -37,6 +38,7 @@ const WidgetsContainer: React.FC = () => {
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
+  const placeSection = useRecoilValue(placeSectionAtom);
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
 
@@ -90,10 +92,16 @@ const WidgetsContainer: React.FC = () => {
     }, 4000);
   }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
 
+  console.log({ placeSection });
   return (
     <WidgetsLayout>
       <AppTools />
-      <div className="grid w-full grid-cols-2 justify-between space-x-6 py-4 print:hidden">
+      <div
+        className={cn({
+          'grid w-full grid-cols-2 justify-between space-x-6 py-1 print:hidden': true,
+          'flex justify-center': placeSection === 'area' || placeSection === 'upload',
+        })}
+      >
         {widgets.length > 1 && (
           <Helper
             className={{
@@ -107,7 +115,7 @@ const WidgetsContainer: React.FC = () => {
               type="button"
               data-testid="expand-collapse-button"
               className={cn({
-                'h-7 w-full rounded-4xl border-2 border-black border-opacity-20 bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0':
+                'h-8 w-full rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
                   true,
                 'bg-white': widgetsCollapsedChecker,
                 'print:hidden': screenWidth >= breakpoints.md,
@@ -132,7 +140,7 @@ const WidgetsContainer: React.FC = () => {
                 type="button"
                 data-testid="configure-widgets-button"
                 className={cn({
-                  'flex h-7 w-full items-center justify-center rounded-4xl border-2 border-opacity-20 bg-white py-1 px-4 font-sans text-sm font-semibold text-brand-800 transition-colors md:ml-0 print:hidden':
+                  'flex h-8 w-full items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
                     true,
                 })}
               >
