@@ -37,7 +37,7 @@ const LanguageSelector = () => {
       const t = window.Transifex as Transifex;
       const locale = t?.live.detectLanguage();
       const languages = t?.live.getAllLanguages();
-      const defaultLanguage = languages.find((lang) => lang.code === locale)?.name;
+      const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
       setCurrentLanguage(defaultLanguage);
       setLanguages(languages);
     }
