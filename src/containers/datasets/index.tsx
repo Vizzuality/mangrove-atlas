@@ -103,7 +103,6 @@ import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
 
-import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 
@@ -129,7 +128,6 @@ export const WIDGETS = {
   mangrove_drawing_upload_tool: DrawingUploadToolWidget,
   mangrove_national_dashboard: NationalDashboardWidget,
   mangrove_flood_protection: FloodProtectionWidget,
-  mangrove_contextual_basemaps: BasemapsContextualMapSettings,
   mangrove_contextual_layers: BasemapsContextualLayers,
   mangrove_fisheries: FisheriesWidget,
   mangrove_allen_coral_reef: AllenCoralReefWidget,

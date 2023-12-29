@@ -1,6 +1,4 @@
-
 import React, { useCallback, FC } from 'react';
-
 
 import flatten from 'lodash-es/flatten';
 import uniq from 'lodash-es/uniq';
@@ -28,14 +26,10 @@ const WidgetsMenu: FC = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const activeLayersIds = activeLayers.map((layer) => layer.id);
-<<<<<<< HEAD
   const displayedWidgets = widgets.filter(
     (w) => w.slug !== 'mangrove_drawing_upload_tool' && w.slug !== 'mangrove_drawing_tool'
   );
   const widgetsIds = displayedWidgets.map((widget) => widget.slug);
-=======
-  const widgetsIds = widgets.map((widget) => widget.slug);
->>>>>>> 053fd12e (widgets deck select all)
 
   const handleWidgets = useCallback(
     (e) => {
@@ -46,11 +40,7 @@ const WidgetsMenu: FC = () => {
           : [...activeWidgets, e]
       );
 
-<<<<<<< HEAD
       const filteredWidgets = displayedWidgets.filter((obj) => activeWidgets.includes(obj.slug));
-=======
-      const filteredWidgets = widgets.filter((obj) => activeWidgets.includes(obj.slug));
->>>>>>> 053fd12e (widgets deck select all)
       const cat = uniq(flatten(filteredWidgets.map(({ categoryIds }) => categoryIds))).filter(
         (c) => c !== 'all_datasets'
       );
@@ -117,22 +107,14 @@ const WidgetsMenu: FC = () => {
             defaultChecked={false}
             className={cn({
               'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-<<<<<<< HEAD
               'bg-brand-800 text-white': displayedWidgets.length === activeWidgets.length,
-=======
-              'bg-brand-800 text-white': widgets.length === activeWidgets.length,
->>>>>>> 053fd12e (widgets deck select all)
             })}
           >
             <CheckboxIndicator>
               <FaCheck
                 className={cn({
                   'h-2.5 w-2.5 fill-current font-bold': true,
-<<<<<<< HEAD
                   'text-white': displayedWidgets.length === activeWidgets.length,
-=======
-                  'text-white': widgets.length === activeWidgets.length,
->>>>>>> 053fd12e (widgets deck select all)
                 })}
               />
             </CheckboxIndicator>
@@ -160,22 +142,14 @@ const WidgetsMenu: FC = () => {
             className={cn({
               'col-span-4 col-start-3 col-end-6': true,
               'font-bold text-brand-800':
-<<<<<<< HEAD
                 LAYERS.length === activeLayers.length ||
                 displayedWidgets.length === activeWidgets.length,
-=======
-                LAYERS.length === activeLayers.length || widgets.length === activeWidgets.length,
->>>>>>> 053fd12e (widgets deck select all)
             })}
           >
             Select all
           </p>
         </div>
-<<<<<<< HEAD
         {displayedWidgets.map(({ slug, name, layersIds }) => {
-=======
-        {widgets.map(({ slug, name, layersIds }) => {
->>>>>>> 053fd12e (widgets deck select all)
           return (
             <div
               key={`menu-item-${slug}`}

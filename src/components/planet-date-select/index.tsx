@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -31,6 +31,11 @@ const DateSelect = ({
       : basemapContextualAnalyticMonthlyDateAtom;
   const [date, setDate] = useRecoilState(datesState);
   const selectedDate = useMemo(() => date || dates?.[dates.length - 1], [date]);
+  const [dataSelectOpen, setDataSelectOpen] = useState<boolean>(false);
+
+  const handleDataSelect = useCallback(() => {
+    setDataSelectOpen(!dataSelectOpen);
+  }, [dataSelectOpen]);
 
   useEffect(() => {
     if (!date?.value) {
@@ -41,40 +46,45 @@ const DateSelect = ({
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
-          <p className="first-line:after">
-            Period: <span className="text-sm font-bold">{selectedDate?.label}</span>
-          </p>
-          <Icon
-            icon={ARROW_SVG}
-            className={cn({
-              '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold': true,
-            })}
-            description="Arrow"
-          />
+    <div className=" w-[450px]">
+      <button
+        onClick={handleDataSelect}
+        className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4"
+      >
+        <p className="first-line:after">
+          <span className="text-sm font-semibold">{selectedDate?.label}</span>
+        </p>
+        <Icon
+          icon={ARROW_SVG}
+          className={cn({
+            '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5': true,
+          })}
+          description="Arrow"
+        />
+      </button>
+      {dataSelectOpen && (
+        <div className="max-h-56 w-full overflow-y-auto rounded-3xl bg-white p-4 text-sm shadow-widget">
+          <ul className="space-y-2 ">
+            {orderedDates?.map((d) => (
+              <li key={d.value} className="whitespace-nowrap last-of-type:pb-2">
+                <button
+                  className="hover:text-brand-800"
+                  type="button"
+                  role="button"
+                  onClick={() => {
+                    setDate(d);
+                    setDataSelectOpen(false);
+                  }}
+                  aria-label={`Select date ${d.label}`}
+                >
+                  {d.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-      </PopoverTrigger>
-
-      <PopoverContent>
-        <ul className="max-h-56 space-y-2">
-          {orderedDates?.map((d) => (
-            <li key={d.value} className="whitespace-nowrap last-of-type:pb-4">
-              <button
-                className="font-bold hover:text-brand-800"
-                type="button"
-                role="button"
-                onClick={() => setDate(d)}
-                aria-label={`Select date ${d.label}`}
-              >
-                {d.label}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </PopoverContent>
-    </Popover>
+      )}
+    </div>
   );
 };
 
