@@ -418,6 +418,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 message="use these buttons to go full-screen, share link, configure basemap, zoom in/out or reset the bearing"
               >
                 <div className="flex flex-col space-y-2 pt-1">
+                  {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <FullScreenControl />
                   <ShareControl />
                   <BasemapSettingsControl />
@@ -459,8 +460,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-11 right-18 mr-0.5 space-y-1 print:hidden">
-          {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
+        <div className="absolute bottom-11 right-18 mr-0.5 print:hidden">
           <Legend />
         </div>
       </Media>
