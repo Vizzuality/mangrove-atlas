@@ -112,7 +112,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       x: null,
       y: null,
     },
-    popup: null,
+    popup: [null, null],
     info: null,
     feature: null,
   });
@@ -398,29 +398,31 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               </Helper>
             </Controls>
 
-            <Popup
-              popUpPosition={locationPopUp?.position}
-              popUpWidth={500}
-              longitude={locationPopUp?.popup[1]}
-              latitude={locationPopUp?.popup[0]}
-              onClose={() => removePopup('ecoregion')} // removePopup('restoration')
-            >
-              {!isEmpty(locationPopUp?.info) ? (
-                <LocationPopup locationPopUpInfo={locationPopUp} />
-              ) : null}
-              {!isEmpty(restorationPopUp?.popupInfo) ? (
-                <RestorationPopup restorationPopUpInfo={restorationPopUp} />
-              ) : null}
+            {locationPopUp.info && (
+              <Popup
+                popUpPosition={locationPopUp?.position}
+                popUpWidth={500}
+                longitude={locationPopUp?.popup[1]}
+                latitude={locationPopUp?.popup[0]}
+                onClose={() => removePopup('ecoregion')} // removePopup('restoration')
+              >
+                {!isEmpty(locationPopUp?.info) ? (
+                  <LocationPopup locationPopUpInfo={locationPopUp} />
+                ) : null}
+                {!isEmpty(restorationPopUp?.popupInfo) ? (
+                  <RestorationPopup restorationPopUpInfo={restorationPopUp} />
+                ) : null}
 
-              {/* {activeLayers.map((l) => {
+                {/* {activeLayers.map((l) => {
                 const PopUp = MAP_POP_UPS[l.id] as ElementType;
                 return PopUp && <PopUp key={l.id} />;
               })} */}
 
-              {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
-                <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
-              ) : null}
-            </Popup>
+                {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
+                  <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
+                ) : null}
+              </Popup>
+            )}
           </>
         )}
       </Map>
