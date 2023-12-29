@@ -131,7 +131,7 @@ const LayerManagerContainer = () => {
 
       {layersIds.includes('mangrove_iucn_ecoregion') && (
         <IucnEcoregionLayer
-          id="mangrove-iucn-ecoregion-layer"
+          id="mangrove-iucn-ecoregion"
           beforeId="country-boundaries-layer"
           onAdd={handleAdd}
           onRemove={handleRemove}

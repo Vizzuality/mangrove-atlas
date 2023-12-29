@@ -86,6 +86,7 @@ import ProtectionWidget from 'containers/datasets/protection/widget';
 import RestorationInfo from 'containers/datasets/restoration/info.mdx';
 import RestorationLayer from 'containers/datasets/restoration/layer';
 import RestorationMapLegend from 'containers/datasets/restoration/map-legend';
+import PopupRestoration from 'containers/datasets/restoration/map-popup';
 import RestorationWidget from 'containers/datasets/restoration/widget';
 import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
 import RestorationSitesLayer from 'containers/datasets/restoration-sites/layer';
@@ -181,6 +182,10 @@ export const MAP_LEGENDS = {
   mangrove_salt_marsh: SaltMarshMapLegend,
   mangrove_tidal_flats: TidalFlatsMapLegend,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
+};
+
+export const MAP_POP_UPS = {
+  mangrove_restoration: PopupRestoration,
 };
 
 export const INFO = {
