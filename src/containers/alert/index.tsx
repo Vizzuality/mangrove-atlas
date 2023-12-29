@@ -5,7 +5,7 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
@@ -29,8 +29,6 @@ const AnalysisAlert = () => {
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
-  const setDrawingToolState = useSetRecoilState(drawingToolAtom);
-  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
@@ -56,16 +54,6 @@ const AnalysisAlert = () => {
   }, [replace, map, queryParams, resetAnalysisState, resetDrawingState]);
 
   const handleResetPage = useCallback(() => {
-    setDrawingUploadToolState((drawingUploadToolState) => ({
-      ...drawingUploadToolState,
-      showWidget: false,
-      enabled: false,
-    }));
-    setDrawingToolState((drawingToolState) => ({
-      ...drawingToolState,
-      showWidget: false,
-      enabled: false,
-    }));
     if (skipAnalysisAlert) {
       window.localStorage.setItem(MANGROVES_SKIP_ANALYSIS_ALERT, String(skipAnalysisAlert));
     }
@@ -90,8 +78,6 @@ const AnalysisAlert = () => {
     setAnalysisAlert,
     handleWorldwideView,
     skipAnalysisAlert,
-    setDrawingUploadToolState,
-    setDrawingToolState,
   ]);
 
   const handleCheckbox = useCallback(() => {
