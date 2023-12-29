@@ -6,11 +6,12 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
+import { drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationBoundsAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 
 import turfBbox from '@turf/bbox';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
@@ -37,6 +38,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const [searchValue, setSearchValue] = useState('');
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
+  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
+
   const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
@@ -64,6 +67,14 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       replace(url, null);
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
+
+      //!TODO: showWidget
+
+      setDrawingUploadToolState((drawingUploadToolState) => ({
+        ...drawingUploadToolState,
+        showWidget: false,
+        enabled: false,
+      }));
 
       onSelectLocation();
       if (onSelectLocation) onSelectLocation();
