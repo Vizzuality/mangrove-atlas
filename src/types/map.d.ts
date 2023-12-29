@@ -38,4 +38,10 @@ export type RestorationPopUp = {
   Type: string;
 };
 
+export type LocationPopUp = {
+  iso: string;
+  name: string;
+  type: 'country' | 'wpda';
+};
+
 export type PopUpKey = 'restoration' | 'ecoregion';
