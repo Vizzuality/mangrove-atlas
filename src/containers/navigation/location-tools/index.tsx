@@ -133,16 +133,6 @@ const LocationTools = () => {
 
   const handleOnClickSearch = useCallback(() => {
     saveLocationTool('search');
-    setDrawingUploadToolState((drawingUploadToolState) => ({
-      ...drawingUploadToolState,
-      showWidget: false,
-      enabled: false,
-    }));
-    setDrawingToolState((drawingToolState) => ({
-      ...drawingToolState,
-      showWidget: false,
-      enabled: false,
-    }));
 
     if (isAnalysisEnabled && !skipAnalysisAlert) {
       openAnalysisAlertModal();
@@ -155,8 +145,6 @@ const LocationTools = () => {
     skipAnalysisAlert,
     openAnalysisAlertModal,
     saveLocationTool,
-    setDrawingUploadToolState,
-    setDrawingToolState,
   ]);
 
   return (
