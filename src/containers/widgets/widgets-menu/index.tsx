@@ -31,8 +31,6 @@ const WidgetsMenu: FC = () => {
   );
   const widgetsIds = displayedWidgets.map((widget) => widget.slug);
 
-  console.log({ displayedWidgets });
-
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly

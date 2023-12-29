@@ -1,5 +1,7 @@
 import { useCallback, useState } from 'react';
 
+import cn from 'lib/classnames';
+
 import Details from 'containers/map/restoration-popup/sections/details';
 import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';
 import RestorationScores from 'containers/map/restoration-popup/sections/restoration-scores';
@@ -8,10 +10,12 @@ import type { RestorationPopUp } from 'types/map';
 
 const PopupRestoration = ({
   restorationPopUpInfo,
+  className,
 }: {
   restorationPopUpInfo: {
     popupInfo: RestorationPopUp;
   };
+  className?: string;
 }) => {
   const [open, setOpen] = useState('');
 
@@ -27,7 +31,12 @@ const PopupRestoration = ({
   );
 
   return (
-    <div className="c-restoration-popup relative flex w-[460px] flex-col items-start rounded-3xl bg-white">
+    <div
+      className={cn({
+        'c-restoration-popup relative flex w-[460px] flex-col items-start bg-white': true,
+        [className]: !!className,
+      })}
+    >
       <RestorationScores
         data={restorationPopUpInfo?.popupInfo}
         isOpen={open === 'restoration'}

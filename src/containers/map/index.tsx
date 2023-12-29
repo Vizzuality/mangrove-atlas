@@ -4,6 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
+import cn from 'lib/classnames';
 import { orderByAttribute } from 'lib/utils';
 
 import { analysisAtom } from 'store/analysis';
@@ -402,10 +403,23 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onClose={() => removePopup('ecoregion')} // removePopup('restoration')
               >
                 {!isEmpty(locationPopUp?.info) ? (
-                  <LocationPopup locationPopUpInfo={locationPopUp} />
+                  <LocationPopup
+                    locationPopUpInfo={locationPopUp}
+                    className={cn({
+                      '!w-[360px] rounded-3xl pt-6':
+                        isEmpty(iucnEcoregionPopUp?.popupInfo) &&
+                        isEmpty(restorationPopUp?.popupInfo),
+                    })}
+                    isOpen={
+                      isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
+                    }
+                  />
                 ) : null}
                 {!isEmpty(restorationPopUp?.popupInfo) ? (
-                  <RestorationPopup restorationPopUpInfo={restorationPopUp} />
+                  <RestorationPopup
+                    restorationPopUpInfo={restorationPopUp}
+                    className="rounded-3xl"
+                  />
                 ) : null}
 
                 {/* {activeLayers.map((l) => {

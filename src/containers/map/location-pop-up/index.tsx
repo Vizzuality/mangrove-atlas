@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -18,11 +18,15 @@ import type { LocationPopUp } from 'types/map';
 
 const LocationPopUP = ({
   locationPopUpInfo,
+  isOpen,
+  className,
 }: {
   locationPopUpInfo: {
     info: LocationPopUp;
     feature: MapboxGeoJSONFeature;
   };
+  isOpen: boolean;
+  className?: string;
 }) => {
   const [open, setOpen] = useState(false);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
@@ -33,8 +37,13 @@ const LocationPopUP = ({
 
   const queryParams = asPath.split('?')[1];
   const { info, feature } = locationPopUpInfo;
+
   const { type, name } = info;
   const { data: locations } = useLocations();
+
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
     const {
@@ -57,25 +66,26 @@ const LocationPopUP = ({
   return (
     <div
       className={cn({
-        'box-border flex w-full cursor-pointer flex-col items-start border-t border-slate-100 p-6 font-sans':
+        'box-border flex !w-[500px] cursor-pointer flex-col items-start rounded-t-3xl border-t border-slate-100 bg-white p-6 font-sans':
           true,
-        'max-h-[72px] w-full overflow-hidden': !open,
+        'max-h-[86px] w-full overflow-hidden': !open,
+        [className]: !!className,
       })}
     >
-      <div className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
+      <button className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
         <span className="m-0 text-sm font-semibold">
           <h3 className={WIDGET_SUBTITLE_STYLE}>Analyse an area</h3>
         </span>
         <span
           className={cn({
             'text-brand-800': true,
-            'text-5xl': open,
+            'mb-2 text-5xl': open,
             'text-3xl': !open,
           })}
         >
           {open ? '-' : '+'}
         </span>
-      </div>
+      </button>
       <AnimatePresence initial={false}>
         {open && (
           <motion.section
@@ -89,9 +99,9 @@ const LocationPopUP = ({
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            <div className="flex w-full grow flex-col items-center justify-between">
-              <span>{type}</span>
-              <button type="button" onClick={handleClickLocation}>
+            <div className="flex grow flex-col items-start justify-between  font-sans text-sm text-black/85">
+              <span className="font-light capitalize">{type}</span>
+              <button type="button" onClick={handleClickLocation} className="font-semibold">
                 {name}
               </button>
             </div>

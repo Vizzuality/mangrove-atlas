@@ -68,8 +68,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
-      //!TODO: showWidget
-
       setDrawingUploadToolState((drawingUploadToolState) => ({
         ...drawingUploadToolState,
         showWidget: false,
