@@ -315,7 +315,7 @@ const Legend = () => {
               </div>
               <button
                 onClick={closeLegend}
-                className="absolute right-0 -top-[33.8px] right-5 z-50 rounded-t-3xl bg-white p-2"
+                className="absolute -top-[33.8px] right-5 z-50 rounded-t-3xl bg-white p-2"
               >
                 <FaArrowDown />
               </button>

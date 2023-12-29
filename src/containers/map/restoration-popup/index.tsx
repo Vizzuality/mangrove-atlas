@@ -10,9 +10,7 @@ const PopupRestoration = ({
   restorationPopUpInfo,
 }: {
   restorationPopUpInfo: {
-    popup: number[];
     popupInfo: RestorationPopUp;
-    popUpPosition: { x: number; y: number };
   };
 }) => {
   const [open, setOpen] = useState('');
