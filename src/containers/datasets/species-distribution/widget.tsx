@@ -32,7 +32,7 @@ const SpeciesDistribution = () => {
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
-  }, [ref]);
+  }, []);
 
   if (noData) return null;
   return (
