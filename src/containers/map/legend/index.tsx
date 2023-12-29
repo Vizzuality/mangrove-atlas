@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
-import { fullScreenAtom } from 'store/map-settings';
 import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -25,8 +24,8 @@ import SortableList from 'components/map/legend/sortable/list';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import Slider from 'components/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
-import { ActiveLayers } from 'types/layers';
-import { WidgetSlugType } from 'types/widget';
+import type { ActiveLayers } from 'types/layers';
+import type { WidgetSlugType } from 'types/widget';
 
 import CLOSE_SVG from 'svgs/legend/close-legend.svg?sprite';
 import DRAG_SVG from 'svgs/legend/drag.svg?sprite';
@@ -43,7 +42,6 @@ const Legend = () => {
   const locationType = params?.[0] as LocationTypes;
   const id = params?.[1];
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const isFullScreen = useRecoilValue(fullScreenAtom);
 
   const {
     data: { id: locationId },
@@ -148,7 +146,7 @@ const Legend = () => {
             exit="close"
             transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
           >
-            <div className="bottom-1/12 fixed relative right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
+            <div className="bottom-1/12 fixed right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
               <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden">
                 <SortableList onChangeOrder={onChangeOrder}>
                   {activeLayers.map((l) => {
@@ -186,31 +184,30 @@ const Legend = () => {
                             </p>
                           </div>
                           <div className="ml-2 flex items-center">
-                            <Dialog modal={false}>
+                            <Dialog>
                               <DialogTrigger>
                                 <Icon
                                   icon={INFO_SVG}
                                   className="mr-1.5 h-[17px] w-[17px] fill-black/40"
                                 />
                               </DialogTrigger>
-                              {isFullScreen && (
-                                <DialogContent
-                                  className="scroll-y mt-10 rounded-3xl !shadow-widget"
-                                  overlay={false}
-                                >
-                                  <div className="no-scrollbar overflow-y-auto px-3">
-                                    <WidgetWrapper
-                                      key={l.id}
-                                      title={title}
-                                      id={l.id as WidgetSlugType}
-                                      info
-                                    >
-                                      <Widget id={l.id} />
-                                    </WidgetWrapper>
-                                  </div>
-                                  <DialogClose />
-                                </DialogContent>
-                              )}
+
+                              <DialogContent
+                                className="scroll-y mt-10 rounded-3xl !shadow-widget"
+                                overlay={false}
+                              >
+                                <div className="no-scrollbar overflow-y-auto px-3">
+                                  <WidgetWrapper
+                                    key={l.id}
+                                    title={title}
+                                    id={l.id as WidgetSlugType}
+                                    info
+                                  >
+                                    <Widget id={l.id} />
+                                  </WidgetWrapper>
+                                </div>
+                                <DialogClose />
+                              </DialogContent>
                             </Dialog>
                             <Popover>
                               <PopoverTrigger>
@@ -315,7 +312,7 @@ const Legend = () => {
               </div>
               <button
                 onClick={closeLegend}
-                className="absolute right-0 -top-[33.8px] right-5 z-50 rounded-t-3xl bg-white p-2"
+                className="absolute -top-[33.8px] right-5 z-50 rounded-t-3xl bg-white p-2"
               >
                 <FaArrowDown />
               </button>
