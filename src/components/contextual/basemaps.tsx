@@ -23,7 +23,7 @@ const BasemapsMapSettings = () => {
   };
 
   return (
-    <div className="flex items-center  space-x-4">
+    <div className="flex items-center space-x-4 py-1">
       {BASEMAPS.map(({ id, name }) => (
         <div key={id} className="relative flex w-full flex-1 flex-col space-y-0.5">
           <button

@@ -13,7 +13,7 @@ const BasemapsMapSettings = () => {
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
 
   return (
-    <div className="relative flex flex-col font-light text-black/85">
+    <div className="relative flex flex-col pb-4 font-light text-black/85">
       {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id, name, mosaic_id }) => {
         const isActive = basemapContextualSelected === id;
 
