@@ -1,6 +1,5 @@
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { orderBy } from 'lodash-es';
 
 import { MosaicId } from 'types/widget';
 

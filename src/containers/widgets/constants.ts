@@ -183,6 +183,14 @@ const widgets_prod = [
     slug: 'mangrove_contextual_layers',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
+    layersIds: ['planet_medres_visual_monthly', 'planet_medres_analytic_monthly'],
+  },
+  {
+    name: 'Protected areas',
+    slug: 'mangrove_protected_areas',
+    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    categoryIds: ['contextual_layers', 'all_datasets'],
+    layersIds: ['mangrove_protected_areas'],
   },
   {
     name: 'Allen coral atlas',

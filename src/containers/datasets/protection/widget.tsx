@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
+import SuggestedLayers from 'components/suggested-layers';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -103,6 +104,12 @@ const Protection = () => {
           </p>
         </div>
       )}
+      <SuggestedLayers
+        thumbSource="/images/thumbs/contextual/mangrove_protected_areas.png"
+        name="WPDA"
+        id="mangrove_protected_areas"
+        description="We recommend you to use WDPA..."
+      />
     </div>
   );
 };

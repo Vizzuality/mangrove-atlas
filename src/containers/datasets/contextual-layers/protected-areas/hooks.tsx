@@ -1,5 +1,7 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import type { Visibility } from 'mapbox-gl';
+
 export function useSource(): SourceProps {
   return {
     id: 'protection',
@@ -8,18 +10,28 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   return [
     {
       id,
       type: 'fill',
       source: 'composite',
       'source-layer': 'wdpaclientjuly2022',
-      layout: {},
+      layout: {
+        visibility,
+      },
       paint: {
         'fill-color': '#286ce2',
         'fill-outline-color': 'hsla(0, 0%, 0%, 0)',
-        'fill-opacity': 0.1,
+        'fill-opacity': opacity,
       },
     },
     {
@@ -27,7 +39,9 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       type: 'line',
       source: 'composite',
       'source-layer': 'wdpaclientjuly2022',
-      layout: {},
+      layout: {
+        visibility,
+      },
       paint: {
         'line-color': '#286ce2',
         'line-opacity': 0.3,
@@ -48,6 +62,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'text-line-height': 1,
         'text-max-width': 5,
         'symbol-placement': 'line',
+        visibility,
       },
       paint: {
         'text-color': 'hsl(218, 76%, 61%)',

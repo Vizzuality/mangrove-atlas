@@ -6,6 +6,7 @@ import isEmpty from 'lodash-es/isEmpty';
 import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import type { Visibility } from 'mapbox-gl';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -70,9 +71,13 @@ export function useSource({
 export function useLayers({
   id,
   settings,
+  opacity = 1,
+  visibility = 'visible',
 }: {
   id: LayerProps['id'];
   settings: NationalDashboardLayerSettingsTypes;
+  opacity?: number;
+  visibility?: Visibility;
 }): LayerProps[] {
   const {
     query: { params: queryParams },
@@ -95,6 +100,10 @@ export function useLayers({
         type: 'fill',
         paint: {
           'fill-color': setting.color,
+          'fill-opacity': opacity,
+        },
+        layout: {
+          visibility,
         },
       }))
   );
