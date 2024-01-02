@@ -378,7 +378,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   button: 'top-1 left-8 z-[20]',
                   tooltip: 'w-fit-content',
                 }}
-                tooltipPosition={{ top: -4, left: 250 }}
+                tooltipPosition={{ top: 90, left: 250 }}
                 message="use these buttons to go full-screen, share link, configure basemap, zoom in/out or reset the bearing"
               >
                 <div className="flex flex-col space-y-2 pt-1">
