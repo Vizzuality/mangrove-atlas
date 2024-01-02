@@ -1,25 +1,64 @@
 import cn from 'lib/classnames';
 
+import Helper from 'containers/guide/helper';
+
+import Basemaps from 'components/contextual/basemaps';
+import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
-    <button
-      className={cn({
-        'group flex inline-flex h-11 w-11 flex-col items-center justify-center rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
-          true,
-        [className]: !!className,
-      })}
-      onClick={() => console.info('basemap settings')}
-    >
-      <Icon
-        icon={BASEMAP_SETTINGS_SVG}
-        className="h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75"
-        description="Basemap settings"
-      />
-    </button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <div
+          className={cn({
+            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full  border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+              true,
+            [className]: !!className,
+          })}
+        >
+          <Icon
+            icon={BASEMAP_SETTINGS_SVG}
+            className="h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75"
+            description="Basemap settings"
+          />
+        </div>
+      </DialogTrigger>
+      <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit rounded-3xl">
+        <div className="no-scrollbar max-h-[85vh] space-y-6 overflow-y-auto">
+          <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
+          <Helper
+            className={{
+              button: '-bottom-10 -right-1.5 z-[20]',
+              tooltip: 'w-fit-content',
+              container: 'space-y-2',
+            }}
+            tooltipPosition={{ top: -40, left: -50 }}
+            message="pending info"
+          >
+            <p className="text-xs font-bold uppercase tracking-[1px]">map style</p>
+            <Basemaps />
+          </Helper>
+          <Helper
+            className={{
+              button: '-bottom-10 -right-1.5 z-[20]',
+              tooltip: 'w-fit-content',
+              container: 'space-y-2',
+            }}
+            tooltipPosition={{ top: -40, left: -50 }}
+            message="Widgets list"
+          >
+            <p className="text-xs font-semibold uppercase tracking-[1px]">planet imagery</p>
+
+            <BasemapsContextualMapSettings />
+          </Helper>
+        </div>
+        <DialogClose onClose={close} />
+      </DialogContent>
+    </Dialog>
   );
 };
 

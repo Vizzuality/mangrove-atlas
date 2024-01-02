@@ -37,7 +37,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn({
-        'group flex inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full rounded-full border bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+        'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full border bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
           true,
         'border-brand-800 bg-brand-800': isFullScreen,
         'hover:bg-gray-100': !isFullScreen,

@@ -98,7 +98,6 @@ const CardBasemapContextual = ({
           })}
         >
           <Image src={THUMBS[id]} alt={name} fill className="rounded-lg shadow-soft" />
-
           <Checkbox
             className={cn({
               'absolute bottom-2 right-2 h-6 w-6 rounded-full border-none': true,

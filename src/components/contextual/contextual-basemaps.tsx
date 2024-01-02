@@ -1,28 +1,52 @@
-import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
-import Helper from 'containers/guide/helper';
+import cn from 'lib/classnames';
 
-import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
+import { basemapContextualAtom } from 'store/map-settings';
 
-import CardBasemapContextual from './card';
+import { useRecoilState } from 'recoil';
 
-const BasemapsContextualMapSettings = () => {
-  const HELPER_ID = 'mangrove_contextual_basemaps';
+import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
+
+import DateSelect from 'components/planet-date-select';
+import type { ContextualBasemapsId } from 'types/widget';
+
+const BasemapsMapSettings = () => {
+  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
+
   return (
-    <div className={`${WIDGET_CARD_WRAPPER_STYLE} relative flex flex-col`}>
-      <Helper
-        className={{
-          button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-[20]' : 'hidden',
-          tooltip: 'w-fit-content',
-        }}
-        tooltipPosition={{ top: 120, left: -70 }}
-        message="Use this element to choose a different basemap. There is a choice between light, dark and satellite backgrounds"
-      >
-        {BASEMAPS.map((basemap) => (
-          <CardBasemapContextual key={basemap.id} {...basemap} />
-        ))}
-      </Helper>
+    <div className="relative flex flex-col pb-4 font-light text-black/85">
+      {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id, name, mosaic_id }) => {
+        const isActive = basemapContextualSelected === id;
+
+        const handleClick = () => {
+          const updatedContextualBasemap = basemapContextualSelected === id ? null : id;
+          setBasemapContextual(updatedContextualBasemap as ContextualBasemapsId);
+        };
+        return (
+          <div key={id} className="ml-0.5 flex flex-col">
+            <div className="flex items-center space-x-4 py-1 font-light text-black/85">
+              <button
+                type="button"
+                onClick={handleClick}
+                data-testid={id}
+                className={cn({
+                  'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85':
+                    true,
+                  'border-4 border-brand-800': isActive,
+                })}
+              ></button>
+
+              <p className="font-sm m-0 text-sm font-semibold text-brand-800">{name}</p>
+            </div>
+            {isActive && (
+              <div className="ml-6">
+                <DateSelect mosaic_id={mosaic_id} id={id} />
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
 
-export default BasemapsContextualMapSettings;
+export default BasemapsMapSettings;
