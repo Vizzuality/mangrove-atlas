@@ -118,8 +118,8 @@ const Legend = () => {
   const HELPER_ID = activeLayers[0]?.id;
 
   const contentVariants = {
-    open: { y: '0%', opacity: 1 },
-    close: { y: '200%', opacity: 0 },
+    open: { y: '-100%', opacity: 1 },
+    close: { y: '10%', opacity: 0 },
   };
 
   return (
@@ -148,8 +148,9 @@ const Legend = () => {
               animate={isOpen ? 'open' : 'close'}
               exit="close"
               transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
+              className="fixed right-[73px]"
             >
-              <div className="bottom-1/12 fixed right-0 bottom-0 w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
+              <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 md:data-[state=open]:slide-in-from-bottom-16">
                 <div className="divide-black/42 box-content flex max-h-[55vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden">
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
