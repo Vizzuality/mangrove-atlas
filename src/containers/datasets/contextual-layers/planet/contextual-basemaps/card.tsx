@@ -14,6 +14,7 @@ import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import Icon from 'components/icon';
+import DateSelect from 'components/planet-date-select';
 import Info from 'components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
@@ -25,8 +26,6 @@ import satelliteThumb from 'images/thumbs/btn-satellite@2x.png';
 import visualThumb from 'images/thumbs/visual.png';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
-
-import DateSelect from './date-select';
 
 const THUMBS = {
   light: lightThumb as StaticImageData,

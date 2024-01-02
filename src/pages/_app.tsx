@@ -13,8 +13,8 @@ import RecoilDevTools from 'lib/recoil/devtools';
 
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
-import { tx, createNativeInstance } from '@transifex/native';
-import { TXProvider, LanguagePicker, T } from '@transifex/react';
+import { tx, PseudoTranslationPolicy } from '@transifex/native';
+import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
 import { MediaContextProvider } from 'components/media-query';
@@ -71,15 +71,13 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       router.events.off('routeChangeComplete', handleRouteChangeCompleted);
     };
   }, [router.events, handleRouteChangeCompleted]);
-  // useEffect(() => {
-  //   tx.init({
-  //     token: '1/44b1f1b2821b1f7c122257fd917d90379fe51ae1',
-  //   });
-  // }, []);
 
   useEffect(() => {
     tx.init({
       token: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
+      ...(process.env.NODE_ENV === 'development'
+        ? { missingPolicy: new PseudoTranslationPolicy() }
+        : {}),
     });
   }, []);
   return (
