@@ -36,9 +36,9 @@ const Details = ({
   return (
     <div
       className={cn({
-        'box-border flex w-full cursor-pointer flex-col items-start border-t border-slate-100 p-6 font-sans':
+        'box-border flex w-[500px] cursor-pointer flex-col items-start border-t border-slate-100 p-6 font-sans':
           true,
-        'max-h-[72px] w-full overflow-hidden': !isOpen,
+        'max-h-[72px] overflow-hidden': !isOpen,
       })}
     >
       <div className="flex w-full items-center justify-between pb-6" onClick={handleClick}>

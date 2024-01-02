@@ -372,12 +372,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               />
             )}
 
-            <Controls
-              className={cn({
-                'absolute bottom-6 right-6 items-center print:hidden': true,
-                'right-6 bottom-11': screenWidth >= breakpoints.md,
-              })}
-            >
+            <Controls className="absolute bottom-11 right-6 items-center print:hidden">
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',
@@ -387,6 +382,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 message="use these buttons to go full-screen, share link, configure basemap, zoom in/out or reset the bearing"
               >
                 <div className="flex flex-col space-y-2 pt-1">
+                  {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <FullScreenControl />
                   <ShareControl />
                   <BasemapSettingsControl />
@@ -407,10 +403,23 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onClose={() => removePopup('ecoregion')} // removePopup('restoration')
               >
                 {!isEmpty(locationPopUp?.info) ? (
-                  <LocationPopup locationPopUpInfo={locationPopUp} />
+                  <LocationPopup
+                    locationPopUpInfo={locationPopUp}
+                    className={cn({
+                      '!w-[360px] rounded-3xl pt-6':
+                        isEmpty(iucnEcoregionPopUp?.popupInfo) &&
+                        isEmpty(restorationPopUp?.popupInfo),
+                    })}
+                    isOpen={
+                      isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
+                    }
+                  />
                 ) : null}
                 {!isEmpty(restorationPopUp?.popupInfo) ? (
-                  <RestorationPopup restorationPopUpInfo={restorationPopUp} />
+                  <RestorationPopup
+                    restorationPopUpInfo={restorationPopUp}
+                    className="rounded-3xl"
+                  />
                 ) : null}
 
                 {/* {activeLayers.map((l) => {
@@ -432,8 +441,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-11 right-20 space-y-1 print:hidden">
-          {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
+        <div className="absolute bottom-11 right-18 mr-0.5 print:hidden">
           <Legend />
         </div>
       </Media>

@@ -7,12 +7,12 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
 import { mapCursorAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState, useRecoilValue } from 'recoil';
 
@@ -25,23 +25,21 @@ import Icon from 'components/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
-import GLOBE_SVG from 'svgs/sidebar/globe.svg?sprite';
-
-import { STYLES } from '../constants';
+import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
-const Place = () => {
+const LocationTools = () => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
-  const [placeSection, savePlaceSection] = useRecoilState(placeSectionAtom);
+  const [locationTool, saveLocationTool] = useRecoilState(locationToolAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
-  const setMapViewState = useSetRecoilState(mapSettingsAtom);
 
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
-  const resetDrawingState = useResetRecoilState(drawingToolAtom);
+
   const resetMapCursor = useResetRecoilState(mapCursorAtom);
 
   const isPrintingMode = useRecoilValue(printModeState);
@@ -60,22 +58,9 @@ const Place = () => {
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
-      savePlaceSection(null);
+      saveLocationTool(null);
     }
-  }, [isAnalysisAlertOpen, setLocationsModalIsOpen, savePlaceSection]);
-
-  const handleWorldwideView = useCallback(() => {
-    resetDrawingState();
-    resetAnalysisState();
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    replace(`/?${queryParams}`, null);
-
-    map.flyTo({
-      center: [0, 20],
-      zoom: 2,
-    });
-  }, [map, resetAnalysisState, resetDrawingState, replace, queryParams]);
+  }, [isAnalysisAlertOpen, setLocationsModalIsOpen, saveLocationTool]);
 
   const handleDrawingToolView = useCallback(() => {
     setDrawingToolState((drawingToolState) => ({
@@ -83,11 +68,16 @@ const Place = () => {
       showWidget: true,
       enabled: false,
     }));
+    setDrawingUploadToolState((drawingUploadToolState) => ({
+      ...drawingUploadToolState,
+      showWidget: false,
+      enabled: false,
+    }));
 
     resetAnalysisState();
     resetMapSettingsState();
     resetMapCursor();
-    savePlaceSection('area');
+    saveLocationTool('area');
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
@@ -97,8 +87,39 @@ const Place = () => {
     resetMapCursor,
     replace,
     queryParams,
-    savePlaceSection,
+    saveLocationTool,
     resetMapSettingsState,
+    setDrawingUploadToolState,
+  ]);
+
+  const handleDrawingUploadToolView = useCallback(() => {
+    setDrawingUploadToolState((drawingUploadToolState) => ({
+      ...drawingUploadToolState,
+      showWidget: true,
+      enabled: false,
+    }));
+    setDrawingToolState((drawingToolState) => ({
+      ...drawingToolState,
+      showWidget: false,
+      enabled: false,
+    }));
+
+    resetAnalysisState();
+    resetMapSettingsState();
+    resetMapCursor();
+    saveLocationTool('upload');
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    replace(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+  }, [
+    resetAnalysisState,
+    resetMapCursor,
+    replace,
+    queryParams,
+    saveLocationTool,
+    resetMapSettingsState,
+    setDrawingUploadToolState,
+    setDrawingToolState,
   ]);
 
   const openAnalysisAlertModal = useCallback(() => {
@@ -110,72 +131,31 @@ const Place = () => {
     setSkipAnalysisAlert(window.localStorage.getItem(MANGROVES_SKIP_ANALYSIS_ALERT) === 'true');
   }, [setSkipAnalysisAlert]);
 
-  const handleOnClickWorldwide = useCallback(() => {
-    setMapViewState(false);
-    if (isAnalysisEnabled && !skipAnalysisAlert) {
-      openAnalysisAlertModal();
-    } else {
-      handleWorldwideView();
-    }
-    savePlaceSection('worldwide');
-  }, [
-    handleWorldwideView,
-    isAnalysisEnabled,
-    skipAnalysisAlert,
-    openAnalysisAlertModal,
-    savePlaceSection,
-    setMapViewState,
-  ]);
-
   const handleOnClickSearch = useCallback(() => {
+    saveLocationTool('search');
+
     if (isAnalysisEnabled && !skipAnalysisAlert) {
       openAnalysisAlertModal();
     } else {
       openLocationsModal();
     }
-    savePlaceSection('search');
   }, [
     openLocationsModal,
     isAnalysisEnabled,
     skipAnalysisAlert,
     openAnalysisAlertModal,
-    savePlaceSection,
+    saveLocationTool,
   ]);
 
   return (
-    <div className="flex flex-col space-y-2 text-center">
-      <span className="font-sans text-xxs leading-[10px] text-white">Place</span>
-      <div className={`${STYLES['icon-wrapper']} space-y-2.5 rounded-full bg-white pb-1`}>
-        <Helper
-          className={{
-            button: '-bottom-3.5 -right-1.5 z-[20]',
-            tooltip: 'w-fit-content',
-          }}
-          tooltipPosition={{ top: -40, left: -50 }}
-          message="use this button to go back to the worldwide overview"
-        >
-          <button
-            type="button"
-            className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full"
-            onClick={handleOnClickWorldwide}
-            data-testid="worldwide-button"
-          >
-            <Icon
-              icon={GLOBE_SVG}
-              className={cn({
-                'h-9 w-9 rounded-full p-1': true,
-                'bg-brand-800 fill-current text-white': placeSection === 'worldwide',
-                'fill-current text-brand-800': placeSection !== 'worldwide',
-              })}
-              description="Globe"
-            />
-          </button>
-        </Helper>
-        <Dialog open={placeSection === 'search' && locationsModalIsOpen}>
+    <div className="flex space-y-2 text-center">
+      <div className="mx-auto flex space-x-8">
+        {/* //*FIND LOCATIONS* */}
+        <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
             <button
               onClick={handleOnClickSearch}
-              className="flex cursor-pointer items-center justify-center rounded-full"
+              className="flex w-28 cursor-pointer items-center justify-center"
               data-testid="search-button"
             >
               <Helper
@@ -186,26 +166,26 @@ const Place = () => {
                 tooltipPosition={{ top: -40, left: -50 }}
                 message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
               >
-                <Icon
-                  icon={GLASS_SVG}
-                  className={cn({
-                    'h-9 w-9 rounded-full p-1': true,
-                    'bg-brand-800 fill-current text-white': placeSection === 'search',
-                    'fill-current text-brand-800': placeSection !== 'search',
-                  })}
-                  description="Glass"
-                />
+                <div className="flex flex-col items-center space-y-1">
+                  <Icon
+                    icon={GLASS_SVG}
+                    className={cn({
+                      'h-8 w-8 fill-current text-white': true,
+                    })}
+                    description="Glass"
+                  />
+                  <p className="whitespace-nowrap font-sans text-sm text-white">Find locations</p>
+                </div>
               </Helper>
             </button>
           </DialogTrigger>
 
           <LocationDialogContent close={closeMenu} />
         </Dialog>
+        {/* //*DRAW AREA* */}
         <button
           type="button"
-          className={cn({
-            'h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full': true,
-          })}
+          className="flex w-28 cursor-pointer items-center justify-center"
           onClick={handleDrawingToolView}
           data-testid="drawing-tool-button"
         >
@@ -217,21 +197,50 @@ const Place = () => {
             tooltipPosition={{ top: -40, left: -50 }}
             message="use this function to calculate statistics for your own custom area of interest"
           >
-            <Icon
-              icon={AREA_SVG}
-              className={cn({
-                'h-9 w-9 rounded-full p-1': true,
-                'cursor-not-allowed bg-brand-800 fill-current text-white': placeSection === 'area',
-                'fill-current text-brand-800': placeSection !== 'area',
-              })}
-              description="Area"
-            />
+            <div className="flex flex-col items-center space-y-1">
+              <Icon
+                icon={AREA_SVG}
+                className={cn({
+                  'h-8 w-8 rounded-full fill-current text-white': true,
+                })}
+                description="Area"
+              />
+              <p className="whitespace-nowrap font-sans text-sm text-white">Draw area</p>
+            </div>
           </Helper>
         </button>
+
+        {/* //*UPLOAD SHAPEFILE* */}
+        <Helper
+          className={{
+            button: '-bottom-3.5 -right-1.5 z-[20]',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: -40, left: -50 }}
+          message="use this button to go back to the worldwide overview"
+        >
+          <button
+            type="button"
+            className="flex w-28 cursor-pointer items-center justify-center"
+            onClick={handleDrawingUploadToolView}
+            data-testid="worldwide-button"
+          >
+            <div className="flex flex-col items-center space-y-1">
+              <Icon
+                icon={UPLOAD_SVG}
+                className={cn({
+                  'h-8 w-8 fill-current text-white': true,
+                })}
+                description="Upload"
+              />
+              <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+            </div>
+          </button>
+        </Helper>
       </div>
       <AnalysisAlert />
     </div>
   );
 };
 
-export default Place;
+export default LocationTools;

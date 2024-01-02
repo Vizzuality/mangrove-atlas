@@ -1,3 +1,4 @@
+import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
@@ -13,6 +14,8 @@ import Helper from 'containers/guide/helper';
 import MapContainer from 'containers/map';
 import TranslateScripts from 'containers/translate-scripts';
 import WidgetsContainer from 'containers/widgets';
+
+import LOGO_PNG from 'images/logo-bg.png';
 
 const DesktopLayout = () => {
   const isPrintingMode = useRecoilValue(printModeState);
@@ -31,6 +34,14 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
+      <Image
+        src={LOGO_PNG as StaticImageData}
+        alt="Logo Global Mangrove Watch"
+        className="absolute top-0 right-0 z-10"
+        width={186}
+        height={216}
+      />
+
       <div className="absolute right-0 z-[1000] h-10 w-10">
         <Helper
           className={{

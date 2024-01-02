@@ -125,21 +125,20 @@ body {
 }
 
 .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-  border-right-color: #00857F !important;
+  border-right-color: #FFF !important;
 }
 
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-  border-left-color: #00857F !important;
+  border-left-color: #FFF !important;
 }
 
 .mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-  border-bottom-color: #00857F !important;
+  border-bottom-color: #FFF !important;
 }
 
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: #00857F !important;
+  border-top-color: #FFF !important;
 }
-
 
 .txlive-langselector {
   @apply !top-0 !right-28 !bottom-auto !left-auto !bg-brand-800 !rounded-b-3xl !px-5 !uppercase !font-semibold !font-sans;

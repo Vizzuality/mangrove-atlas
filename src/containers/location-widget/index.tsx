@@ -7,7 +7,7 @@ import cn from 'lib/classnames';
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -16,10 +16,11 @@ import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
+import LocationTools from 'containers/navigation/location-tools';
 
 import { Dialog, DialogTrigger } from 'components/dialog';
 
-const LocationTitle = () => {
+const LocationWidget = () => {
   const {
     query: { params },
   } = useRouter();
@@ -36,7 +37,7 @@ const LocationTitle = () => {
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const skipAnalysisAlert = useRecoilValue(skipAnalysisAlertAtom);
-  const savePlaceSection = useSetRecoilState(placeSectionAtom);
+  const saveLocationTool = useSetRecoilState(locationToolAtom);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(null);
@@ -74,12 +75,12 @@ const LocationTitle = () => {
     } else {
       openLocationsModal();
     }
-    savePlaceSection('search');
+    saveLocationTool('search');
   }, [
     openLocationsModal,
     isAnalysisEnabled,
     skipAnalysisAlert,
-    savePlaceSection,
+    saveLocationTool,
     setAnalysisAlert,
   ]);
 
@@ -87,14 +88,14 @@ const LocationTitle = () => {
 
   return (
     <>
-      <div className="flex flex-col text-center print:hidden">
+      <div className="flex h-52 flex-col rounded-2xl border bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button onClick={handleOnClickTitle} disabled={isGuideActive}>
               <div
                 className={cn({
-                  'inline-block py-10 text-6xl font-light text-black/85 first-letter:uppercase':
+                  'inline-block pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                     true,
                   'text-2.75xl': width >= 540,
                 })}
@@ -108,17 +109,20 @@ const LocationTitle = () => {
                   tooltipPosition={{ top: -70, left: -40 }}
                   message="This shows the name of the area selected. This can be a country, a protected area, the world or your own custom area. Use this button to search for a country or a protected area. Countries can also be selected by clicking on the map"
                 >
-                  <h1 ref={titleRef}>{locationName}</h1>
+                  <h1 className="text-white" ref={titleRef}>
+                    {locationName}
+                  </h1>
                 </Helper>
               </div>
             </button>
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
         </Dialog>
+        <LocationTools />
       </div>
       <AnalysisAlert />
     </>
   );
 };
 
-export default LocationTitle;
+export default LocationWidget;

@@ -45,6 +45,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
       ...widgetsCollapsed,
       [id]: !widgetsCollapsed[id],
       ['mangrove_drawing_tool']: false,
+      ['mangrove_drawing_upload_tool']: false,
     };
     setWidgetsCollapsed(updatedWidgetsCollapsed);
   }, [id, widgetsCollapsed, setWidgetsCollapsed]);
@@ -71,7 +72,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         className={cn({
-          'md:h-fit-content z-2 group ml-[3%] w-[94%] rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0 md:w-[540px]':
+          'md:h-fit-content z-2 group ml-[3%] w-full rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0':
             true,
           '!w-[100%] border-none !p-0 !shadow-none': info,
           [className]: !!className,
@@ -79,7 +80,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
       >
         <div
           className={cn({
-            'rounded-2xl border-2 border-transparent px-9 py-3': true,
+            'rounded-2xl border border-transparent px-9 py-3': true,
             'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
             'border-none p-0': info,
           })}

@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
-import { placeSectionAtom } from 'store/sidebar';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useResetRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -17,7 +17,7 @@ import { STYLES } from '../constants';
 const MapSettings = () => {
   const drawingToolState = useRecoilValue(drawingToolAtom);
   const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
-  const savePlaceSection = useSetRecoilState(placeSectionAtom);
+  const saveLocationTool = useSetRecoilState(locationToolAtom);
 
   const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
@@ -25,8 +25,8 @@ const MapSettings = () => {
   const handleMapSettingsView = useCallback(async () => {
     setMapViewState(true);
     resetDrawingToolState();
-    savePlaceSection(null);
-  }, [resetDrawingToolState, savePlaceSection, setMapViewState]);
+    saveLocationTool(null);
+  }, [resetDrawingToolState, saveLocationTool, setMapViewState]);
 
   return (
     <div className="flex flex-col space-y-2 text-center">

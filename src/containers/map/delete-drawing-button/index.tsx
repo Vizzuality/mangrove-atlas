@@ -32,8 +32,7 @@ export const DeleteDrawingButton = () => {
   }, [setDrawingToolState, resetAnalysisState, replace, queryParams]);
 
   return (
-    <div className="flex h-11 items-center justify-between rounded-md bg-brand-800 px-6 py-3 shadow-medium">
-      <p className="text-xs font-semibold uppercase tracking-wide text-white">Delete custom area</p>
+    <div className="shadow-controls flex h-11 w-11 items-center justify-center rounded-full border border-brand-800 bg-brand-800">
       <button onClick={handleDeleteDrawing} data-testid="delete-custom-area-button">
         <Icon icon={REMOVE_SVG} className="h-5 w-5 text-white" />
       </button>

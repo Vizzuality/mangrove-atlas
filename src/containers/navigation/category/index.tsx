@@ -43,7 +43,9 @@ const Category = () => {
       return acc;
     }, {});
 
-    updateWidgetsCollapsed[lastWidgetSlug || 'mangrove_drawing_tool'] = false;
+    updateWidgetsCollapsed[
+      lastWidgetSlug || 'mangrove_drawing_tool' || 'mangrove_drawing_upload_tool'
+    ] = false;
     setWidgetsCollapsed(updateWidgetsCollapsed);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, lastWidgetSlug]);

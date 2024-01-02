@@ -1,4 +1,8 @@
+import { useCallback, useState } from 'react';
+
 import cn from 'lib/classnames';
+
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
@@ -44,64 +48,95 @@ const FAKE_DATA_POP_UP = [
   },
 ];
 
-const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => (
-  <div
-    className={cn({
-      [WIDGET_CARD_WRAPPER_STYLE]: true,
-      'w-full min-w-[500px] space-x-2 rounded-2xl bg-white p-5 pt-0': true,
-    })}
-  >
-    <header className="flex w-full items-center justify-between">
-      <h2 className="cursor-pointer whitespace-nowrap py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
-        ECOSYSTEM ASSESMENT
-      </h2>
-      {/* <a
-        href=""
-        target="_blank"
-        rel="noopener noreferrer"
-        className="whitespace-nowrap text-sm text-brand-800 underline"
-      >
-        Province Description (PDF)
-      </a> */}
-    </header>
-    <ul className="flex space-x-2 text-sm">
-      {legendItems.map(({ color, label }) => (
-        <li key={label} className="flex items-center space-x-2">
-          {color && (
-            <div
-              className={cn({
-                'h-4 w-2 shrink-0 rounded-full font-normal': true,
-              })}
-              style={{ backgroundColor: color }}
-            />
-          )}
-          {<span>{label}</span>}
-        </li>
-      ))}
-    </ul>
-    <p className="text-xs">(1) Or any 50 year period</p>
-    <p>{info?.unit_name}</p>
-    <div className="max-h-[250px] overflow-y-auto pt-3">
-      {FAKE_DATA_POP_UP.map(({ label, tags, data }) => (
-        <div key="label">
-          <p className="text-sm">{label}</p>
-          <ul className="flex space-x-3 py-4">
-            {tags.map((tag, index) => (
-              <div
-                key={`${label}-distribution_of_biotic_processes_${index + 1}`}
-                className="flex-1 rounded-3xl py-2 text-center text-xs font-normal"
-                style={{
-                  backgroundColor: COLORS[info[`${data}_${index + 1}`].toLowerCase()],
-                }}
-              >
-                {tag}
-              </div>
-            ))}
-          </ul>
+const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
+  const [open, setOpen] = useState(false);
+  const handleClick = useCallback(() => {
+    setOpen(!open);
+  }, [open]);
+
+  return (
+    <div
+      className={cn({
+        [WIDGET_CARD_WRAPPER_STYLE]: true,
+        'shadow-b-widget w-full w-[500px] space-x-2 rounded-b-3xl border border-t border-slate-100 bg-white px-6 py-4':
+          true,
+      })}
+    >
+      <button className="flex w-full items-center justify-between" onClick={handleClick}>
+        <h2 className="cursor-pointer whitespace-nowrap py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
+          ECOSYSTEM ASSESMENT
+        </h2>
+        <div
+          className={cn({
+            'z-50 font-normal text-brand-800': true,
+            'mb-2 text-5xl': open,
+            'text-3xl': !open,
+          })}
+        >
+          {open ? '-' : '+'}
         </div>
-      ))}
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="flex flex-col space-y-6"
+          >
+            <div className="flex flex-col space-y-1">
+              <ul className="flex space-x-2 text-sm">
+                {legendItems.map(({ color, label }) => (
+                  <li key={label} className="flex items-center space-x-2">
+                    {color && (
+                      <div
+                        className={cn({
+                          'h-4 w-2 shrink-0 rounded-full font-normal': true,
+                        })}
+                        style={{ backgroundColor: color }}
+                      />
+                    )}
+                    {<span>{label}</span>}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs">(1) Or any 50 year period</p>
+            </div>
+
+            <div>
+              <p className="text-sn font-sans font-semibold">{info?.unit_name}</p>
+              <div className="max-h-[250px] overflow-y-auto pt-3 pr-2">
+                {FAKE_DATA_POP_UP.map(({ label, tags, data }) => (
+                  <div key="label">
+                    <p className="text-sm">{label}</p>
+                    <ul className="flex space-x-3 py-4">
+                      {tags.map((tag, index) => (
+                        <div
+                          key={`${label}-distribution_of_biotic_processes_${index + 1}`}
+                          className="flex-1 rounded-3xl py-2 text-center text-xs font-normal"
+                          style={{
+                            backgroundColor: COLORS[info[`${data}_${index + 1}`].toLowerCase()],
+                          }}
+                        >
+                          {tag}
+                        </div>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
-  </div>
-);
+  );
+};
 
 export default IucnEcoregionPopup;
