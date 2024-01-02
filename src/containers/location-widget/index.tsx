@@ -100,19 +100,9 @@ const LocationWidget = () => {
                   'text-2.75xl': width >= 540,
                 })}
               >
-                <Helper
-                  className={{
-                    button: 'locations-title' ? '-bottom-2.5 right-10 z-[150]' : 'hidden',
-                    tooltip: 'w-fit-content',
-                    active: 'text-6xl',
-                  }}
-                  tooltipPosition={{ top: -70, left: -40 }}
-                  message="This shows the name of the area selected. This can be a country, a protected area, the world or your own custom area. Use this button to search for a country or a protected area. Countries can also be selected by clicking on the map"
-                >
-                  <h1 className="text-white" ref={titleRef}>
-                    {locationName}
-                  </h1>
-                </Helper>
+                <h1 className="text-white" ref={titleRef}>
+                  {locationName}
+                </h1>
               </div>
             </button>
           </DialogTrigger>

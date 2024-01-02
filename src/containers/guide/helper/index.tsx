@@ -13,6 +13,7 @@ export const Helper = ({
   className,
   tooltipPosition,
   message,
+  theme = 'light',
 }: PropsWithChildren<{
   className?: {
     container?: string;
@@ -26,6 +27,7 @@ export const Helper = ({
     right?: number;
   };
   message?: string;
+  theme?: 'light' | 'dark';
 }>) => {
   const childrenRef = useRef<HTMLDivElement>(null);
   const isActive = useRecoilValue(activeGuideAtom);
@@ -58,11 +60,22 @@ export const Helper = ({
             onClick={() => setPopOver(true)}
           >
             {!popOver && isActive && (
-              <span className="absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-800 opacity-20" />
+              <span
+                className={cn({
+                  'absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-800 opacity-20':
+                    true,
+                  'bg-brand-400': theme === 'dark',
+                })}
+              />
             )}
 
             {!popOver && isActive && (
-              <span className="relative inline-flex h-3 w-3 rounded-full bg-brand-800" />
+              <span
+                className={cn({
+                  'relative inline-flex h-3 w-3 rounded-full bg-brand-800': true,
+                  'bg-brand-400': theme === 'dark',
+                })}
+              />
             )}
           </button>
         </div>

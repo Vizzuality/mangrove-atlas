@@ -25,7 +25,7 @@ const WidgetDrawingTool = () => {
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { acceptedFiles } = useDropzone({
     multiple: false,
     accept: {
       'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
@@ -76,7 +76,7 @@ const WidgetDrawingTool = () => {
           className={{
             button: '-bottom-2.5 -right-0',
             tooltip: 'w-fit-content',
-            active: 'max-w-[454px]',
+            active: 'max-w-[450px]',
           }}
           tooltipPosition={{ top: -100, left: -100 }}
           message="draw a polygon on the map. Just click to start drawing and double click to stop"

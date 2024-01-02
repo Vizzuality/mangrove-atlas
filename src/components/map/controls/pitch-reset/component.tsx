@@ -20,7 +20,7 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
   return (
     <div
       className={cn({
-        'inline-flex w-[42px] flex-col rounded-b-full': true,
+        'inline-flex w-full flex-col rounded-b-full': true,
         [className]: !!className,
       })}
     >

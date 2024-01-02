@@ -29,10 +29,11 @@ const Menu = () => {
     <Dialog>
       <Helper
         className={{
-          button: '-bottom-10 -right-1.5',
+          button: '-top-2 -right-5',
           tooltip: 'w-fit-content',
         }}
-        tooltipPosition={{ top: -10, left: -60 }}
+        theme="dark"
+        tooltipPosition={{ top: -40, left: 0 }}
         message="main menu"
       >
         <DialogTrigger asChild>

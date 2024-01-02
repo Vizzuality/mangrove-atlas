@@ -46,10 +46,11 @@ const LanguageSelector = () => {
   return (
     <Helper
       className={{
-        button: '-bottom-10 -right-1.5',
+        button: '-top-2 -right-3',
         tooltip: 'w-fit-content',
       }}
-      tooltipPosition={{ top: -10, left: -60 }}
+      theme="dark"
+      tooltipPosition={{ top: -40, left: 0 }}
       message="Choose your preferred language here. There is a choice between English, French and Spanish"
     >
       <DropdownMenu>
@@ -80,16 +81,6 @@ const LanguageSelector = () => {
               </button>
             </DropdownMenuItem>
           ))}
-          <div className="absolute right-0 z-[1000] h-10 w-10">
-            <Helper
-              className={{
-                button: 'top-1 right-[100px]',
-                tooltip: 'w-fit-content',
-              }}
-              tooltipPosition={{ top: -40, left: 260 }}
-              message="Choose your preferred language here. There is a choice between English, French and Spanish"
-            ></Helper>
-          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </Helper>

@@ -32,24 +32,26 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
           <Helper
             className={{
-              button: '-bottom-10 -right-1.5 z-[20]',
+              button: 'top-4 left-[308px] z-[20]',
               tooltip: 'w-fit-content',
               container: 'space-y-2',
             }}
-            tooltipPosition={{ top: -40, left: -50 }}
-            message="pending info"
+            tooltipPosition={{ top: -140, left: 0 }}
+            message="use these buttons to switch between basemaps"
           >
-            <p className="text-xs font-bold uppercase tracking-[1px]">map style</p>
-            <Basemaps />
+            <div className="w-[490px]">
+              <p className="text-xs font-bold uppercase tracking-[1px]">map style</p>
+              <Basemaps />
+            </div>
           </Helper>
           <Helper
             className={{
-              button: '-bottom-10 -right-1.5 z-[20]',
+              button: '-top-2 left-32 z-[20]',
               tooltip: 'w-fit-content',
               container: 'space-y-2',
             }}
-            tooltipPosition={{ top: -40, left: -50 }}
-            message="Widgets list"
+            tooltipPosition={{ top: -80, left: 0 }}
+            message="Chose between different planet imagery layers and dates"
           >
             <p className="text-xs font-semibold uppercase tracking-[1px]">planet imagery</p>
 
