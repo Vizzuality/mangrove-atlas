@@ -10,9 +10,9 @@ import { useRecoilState } from 'recoil';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import Chart from 'components/chart';
-import DateSelect from 'components/contextual/date-select';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
+import DateSelect from 'components/planet-date-select';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import SuggestedLayers from 'components/suggested-layers';
 import {

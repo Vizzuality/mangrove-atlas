@@ -13,6 +13,8 @@ import RecoilDevTools from 'lib/recoil/devtools';
 
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
+import { tx, PseudoTranslationPolicy } from '@transifex/native';
+import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
 import { MediaContextProvider } from 'components/media-query';
@@ -70,6 +72,14 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
     };
   }, [router.events, handleRouteChangeCompleted]);
 
+  useEffect(() => {
+    tx.init({
+      token: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
+      ...(process.env.NODE_ENV === 'development'
+        ? { missingPolicy: new PseudoTranslationPolicy() }
+        : {}),
+    });
+  }, []);
   return (
     <>
       <Head>
@@ -101,25 +111,42 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
           `,
         }}
       />
+      <Script
+        id="transifex-live-settings"
+        dangerouslySetInnerHTML={{
+          __html: `
+          window.liveSettings = {
+            api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}',
+            detectlang: true,
+            autocollect: true,
+            dynamic: true,
+            manual_init: false,
+            translate_urls: false,
+          }`,
+        }}
+      />
+      <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
       <RecoilRoot>
-        <RecoilURLSyncNext
-          location={{ part: 'queryParams' }}
-          serialize={serialize}
-          deserialize={deserialize}
-        >
-          {process.env.NODE_ENV === 'development' && <RecoilDevTools />}
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-              <MediaContextProvider disableDynamicMediaQueries>
-                <MapProvider>
-                  <TooltipProvider delayDuration={200}>
-                    <Component {...pageProps} />
-                  </TooltipProvider>
-                </MapProvider>
-              </MediaContextProvider>
-            </Hydrate>
-          </QueryClientProvider>
-        </RecoilURLSyncNext>
+        <TXProvider>
+          <RecoilURLSyncNext
+            location={{ part: 'queryParams' }}
+            serialize={serialize}
+            deserialize={deserialize}
+          >
+            {process.env.NODE_ENV === 'development' && <RecoilDevTools />}
+            <QueryClientProvider client={queryClient}>
+              <Hydrate state={pageProps.dehydratedState}>
+                <MediaContextProvider disableDynamicMediaQueries>
+                  <MapProvider>
+                    <TooltipProvider delayDuration={200}>
+                      <Component {...pageProps} />
+                    </TooltipProvider>
+                  </MapProvider>
+                </MediaContextProvider>
+              </Hydrate>
+            </QueryClientProvider>
+          </RecoilURLSyncNext>
+        </TXProvider>
       </RecoilRoot>
     </>
   );

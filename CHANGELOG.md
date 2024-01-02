@@ -46,6 +46,8 @@ Released 25/09/2023
 ### Changed
 
 - Access to Blog (news) moved from main menu to sidebar
+- Access to different tools simplified (menu, language, blog and user guide)
+- Custom language selector
 
 
 ### Fixed
