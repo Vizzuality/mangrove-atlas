@@ -158,7 +158,7 @@ const LocationTools = () => {
             <>
               <Helper
                 className={{
-                  button: '-bottom-3.5 left-10 z-20',
+                  button: '-bottom-3.5 right-9 z-20',
                   tooltip: 'w-fit-content max-w-[400px]',
                 }}
                 tooltipPosition={{ top: -65, left: -10 }}
@@ -196,7 +196,7 @@ const LocationTools = () => {
         >
           <Helper
             className={{
-              button: '-bottom-3.5 left-2.5 z-[20]',
+              button: '-bottom-3.5 right-2.5 z-[20]',
               tooltip: 'w-fit-content max-w-[400px]',
             }}
             tooltipPosition={{ top: -65, left: 0 }}
@@ -218,7 +218,7 @@ const LocationTools = () => {
         {/* //*UPLOAD SHAPEFILE* */}
         <Helper
           className={{
-            button: '-bottom-3.5 right-14 z-[20]',
+            button: '-bottom-3.5 right-9 z-[20]',
             tooltip: 'w-fit-content max-w-[400px]',
           }}
           tooltipPosition={{ top: -65, left: 0 }}
