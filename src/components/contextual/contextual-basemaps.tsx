@@ -6,9 +6,8 @@ import { useRecoilState } from 'recoil';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
+import DateSelect from 'components/planet-date-select';
 import type { ContextualBasemapsId } from 'types/widget';
-
-import DateSelect from './date-select';
 
 const BasemapsMapSettings = () => {
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
