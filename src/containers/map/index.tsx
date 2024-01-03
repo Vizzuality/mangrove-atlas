@@ -37,7 +37,6 @@ import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
-import Collapsible from 'components/collapsible';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import BasemapSettingsControl from 'components/map/controls/basemap-settings';
@@ -436,12 +435,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         )}
       </Map>
       <Media lessThan="md">
-        <div className="absolute top-20 left-0 z-[80]">
-          <Collapsible layers={activeOrdered} setActiveLayers={setActiveLayers} />
+        <div className="absolute bottom-3/4 right-0 z-50 w-full">
+          <Legend />
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-11 right-18 mr-0.5 print:hidden">
+        <div className="absolute bottom-11 right-18 z-50 mr-0.5 print:hidden">
           <Legend />
         </div>
       </Media>

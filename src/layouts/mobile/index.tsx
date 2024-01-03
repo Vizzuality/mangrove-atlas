@@ -17,7 +17,7 @@ const MobileLayout = () => {
       <div className="fixed top-0 -left-0.5 z-40 h-24 w-full bg-[url('/images/mobile-header.svg')] bg-contain bg-no-repeat">
         <Icon icon={LOGO_MOBILE_SVG} className="ml-4 mt-1.5 h-10 w-24" description="Logo" />
       </div>
-      <Sidebar />
+      {/* <Sidebar /> */}
       {mapView && <MapContainer mapId="default-mobile" />}
       {!mapView && <WidgetsContainer />}
     </div>
