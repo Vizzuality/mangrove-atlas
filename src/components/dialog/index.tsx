@@ -62,11 +62,21 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
+const DialogClose = ({
+  onClose = () => null,
+  className,
+}: {
+  onClose?: () => void;
+  className?: string;
+}) => (
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className="absolute right-3 -top-2 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white bg-opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:right-6 md:top-7 md:top-7 md:-right-10 md:border"
+      className={cn({
+        'absolute right-3 -top-2 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white bg-opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:right-6 md:top-7 md:top-7 md:-right-10 md:border':
+          true,
+        [className]: !!className,
+      })}
       onClick={onClose}
       aria-label="close dialog"
     >

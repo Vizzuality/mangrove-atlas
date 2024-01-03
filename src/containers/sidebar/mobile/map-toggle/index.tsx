@@ -29,7 +29,7 @@ const MapToggle = () => {
           <Icon
             icon={CLOSE_SVG}
             className={cn({
-              'h-5 w-5 fill-brand-800': true,
+              'h-5 w-5 fill-brand-600': true,
             })}
             description="Close"
           />

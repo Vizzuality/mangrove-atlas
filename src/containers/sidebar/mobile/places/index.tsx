@@ -34,12 +34,12 @@ const PlacesMobile = () => {
           </button>
         </DialogTrigger>
         <DialogContent
-          className="top-[2%] h-[96%] w-11/12 rounded-3xl px-6 pt-10 pb-0"
+          className="top-[2%] h-[96%] w-full rounded-3xl px-6 pt-4 pb-0"
           onEscapeKeyDown={closeMenu}
           onInteractOutside={closeMenu}
         >
           <LocationsList onSelectLocation={closeMenu} />
-          <DialogClose onClose={closeMenu} />
+          <DialogClose onClose={closeMenu} className="top-4" />
         </DialogContent>
       </Dialog>
       <div className="font-sans text-xxs leading-[10px] text-white">Places</div>
