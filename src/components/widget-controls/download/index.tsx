@@ -25,11 +25,11 @@ const Download = ({ id, content }) => {
         <DialogTrigger>
           <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" description="Download" />
         </DialogTrigger>
-        <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit translate-y-8 rounded-3xl">
+        <DialogContent className="scroll-y top-0 left-0 min-h-screen w-screen md:left-18 md:top-16 md:max-h-[90%] md:min-h-fit md:rounded-3xl">
           <div className="no-scrollbar overflow-y-auto">
             {id && <DownloadInfo />}
             {content && !id && (
-              <div className="p-4">
+              <div className="flex p-4">
                 <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
                 <div className="space-y-2">
                   <div
@@ -40,7 +40,7 @@ const Download = ({ id, content }) => {
               </div>
             )}
           </div>
-          <DialogClose />
+          <DialogClose className="top-6" />
         </DialogContent>
       </Dialog>
     </div>

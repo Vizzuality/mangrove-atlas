@@ -44,7 +44,7 @@ const LanguageSelector = () => {
   }, [t, languages]);
 
   return (
-    <div className="flex flex-col items-center pt-2">
+    <div className="flex min-w-[56px] flex-col items-center  pt-2">
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="flex flex-col items-center space-y-2">
