@@ -28,7 +28,9 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
       })}
     >
       {title && (
-        <h3 className="block max-w-[120px] flex-col justify-center text-sm font-bold">{title}</h3>
+        <h3 className="block flex-col justify-center text-sm font-bold md:max-w-[120px]">
+          {title}
+        </h3>
       )}
       {subtitle && (
         <h2 className="flex max-w-[120px] flex-col justify-center text-sm font-bold opacity-30">

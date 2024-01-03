@@ -51,9 +51,9 @@ const RestorationValueChart = ({ data }: { data: Data }) => {
   };
 
   return (
-    <div className="grid w-full flex-1 grid-cols-2 items-center pb-10">
+    <div className="flex flex-col-reverse items-center pb-6 md:grid md:grid-cols-2 md:pb-10">
       <Legend items={config.data} />
-      <Chart config={config} />
+      <Chart className="w-screen md:w-full" config={config} />
     </div>
   );
 };
