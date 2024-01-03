@@ -83,7 +83,7 @@ const RestorationSitesWidget = () => {
                 'border-b-2 border-b-grey-50 pb-5': areFiltersSelected,
               })}
             >
-              <DialogTrigger asChild>
+              <DialogTrigger>
                 <button
                   className={cn({
                     'flex space-x-2 bg-brand-800 text-xs text-white': true,

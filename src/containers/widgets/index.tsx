@@ -137,7 +137,7 @@ const WidgetsContainer: React.FC = () => {
               tooltipPosition={{ top: -50, left: 0 }}
               message="Triggers deck to configure widgets"
             >
-              <DialogTrigger asChild className="md:translate-x-0">
+              <DialogTrigger className="md:translate-x-0">
                 <button
                   type="button"
                   data-testid="configure-widgets-button"

@@ -102,7 +102,7 @@ const WidgetDrawingUploadTool = () => {
       <div className="block text-sm">
         Learn more about{' '}
         <Dialog>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <span className="text-brand-800 underline">supported file formats</span>
           </DialogTrigger>
           <DialogContent className="top-24 rounded-3xl px-10">

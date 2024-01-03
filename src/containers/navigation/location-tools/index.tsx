@@ -154,7 +154,7 @@ const LocationTools = () => {
       <div className="mx-auto flex space-x-8">
         {/* //*FIND LOCATIONS* */}
         <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <>
               <Helper
                 className={{

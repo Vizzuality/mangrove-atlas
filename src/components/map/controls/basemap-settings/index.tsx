@@ -12,7 +12,7 @@ import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <div
           className={cn({
             'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full  border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
