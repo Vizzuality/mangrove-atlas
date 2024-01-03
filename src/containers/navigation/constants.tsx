@@ -1,3 +1,5 @@
+import { Category } from 'types/category';
+
 import ALL_SVG from 'svgs/sidebar/all.svg?sprite';
 import CHART_SVG from 'svgs/sidebar/chart.svg?sprite';
 import RELOAD_SVG from 'svgs/sidebar/reload.svg?sprite';
@@ -37,17 +39,24 @@ export const EXT_MENU_OPTIONS = [
   },
 ];
 
-const CATEGORY_OPTIONS = [
-  { id: 'distribution_and_change', label: 'Distribution & Change', icon: STAR_SVG },
+const CATEGORY_OPTIONS: {
+  value: Category;
+  label: string;
+  icon: {
+    id: string;
+    viewBox?: string;
+  };
+}[] = [
+  { value: 'distribution_and_change', label: 'Distribution & Change', icon: STAR_SVG },
   {
-    id: 'restoration_and_conservation',
+    value: 'restoration_and_conservation',
     label: 'Restoration & Conservation',
     icon: RELOAD_SVG,
   },
-  { id: 'climate_and_policy', label: 'Climate & Policy', icon: SUN_SVG },
-  { id: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
-  { id: 'contextual_layers', label: 'Contextual layers', icon: SUN_SVG },
-  { id: 'all_datasets', label: 'All datasets', icon: ALL_SVG },
+  { value: 'climate_and_policy', label: 'Climate & Policy', icon: SUN_SVG },
+  { value: 'ecosystem_services', label: 'Ecosystem Services', icon: CHART_SVG },
+  { value: 'contextual_layers', label: 'Contextual layers', icon: SUN_SVG },
+  { value: 'all_datasets', label: 'All datasets', icon: ALL_SVG },
 ];
 
 export const STYLES = {

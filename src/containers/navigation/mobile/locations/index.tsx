@@ -7,7 +7,7 @@ import Icon from 'components/icon';
 
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 
-const PlacesMobile = () => {
+const LocationsMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openMenu = useCallback(() => {
@@ -42,9 +42,9 @@ const PlacesMobile = () => {
           <DialogClose onClose={closeMenu} className="top-4" />
         </DialogContent>
       </Dialog>
-      <div className="font-sans text-xxs leading-[10px] text-white">Places</div>
+      <div className="font-sans text-xxs leading-[10px] text-white">Locations</div>
     </div>
   );
 };
 
-export default PlacesMobile;
+export default LocationsMobile;

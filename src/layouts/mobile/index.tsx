@@ -5,7 +5,7 @@ import { mapViewAtom } from 'store/sidebar';
 import { useRecoilValue } from 'recoil';
 
 import MapContainer from 'containers/map';
-import Sidebar from 'containers/sidebar/mobile';
+import NavigationBar from 'containers/navigation/mobile';
 import WidgetsContainer from 'containers/widgets';
 
 import Icon from 'components/icon';
@@ -30,7 +30,7 @@ const MobileLayout = () => {
           description="Logo"
         />
       </div>
-      <Sidebar />
+      <NavigationBar />
       {mapView && <MapContainer mapId="default-mobile" />}
       {!mapView && <WidgetsContainer />}
     </div>

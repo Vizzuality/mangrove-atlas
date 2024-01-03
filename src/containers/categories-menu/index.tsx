@@ -8,7 +8,7 @@ import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState } from 'recoil';
 
-import CATEGORY_OPTIONS from 'containers/sidebar/constants';
+import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
