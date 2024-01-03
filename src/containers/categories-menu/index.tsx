@@ -50,7 +50,7 @@ const Category = () => {
           >
             <div
               className={cn({
-                [`relative h-full flex-1 justify-center rounded-xl border border-black/15 p-6 text-sm`]:
+                'relative h-full h-24 flex-1 justify-center rounded-xl border border-black/15 p-3 text-xs md:h-auto md:p-6 md:text-sm':
                   true,
                 'border-2 border-brand-800 font-bold text-brand-800':
                   category.value === categorySelected,

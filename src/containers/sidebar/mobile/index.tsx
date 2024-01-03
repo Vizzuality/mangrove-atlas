@@ -24,7 +24,7 @@ const SidebarMobile = () => {
           </DialogTrigger>
           <DialogContent className="scroll-y left-0 top-6 max-h-[100%] min-h-fit w-full space-y-8 rounded-3xl">
             <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
-              <h2 className="font-black/85 text-3xl font-light leading-10">
+              <h2 className="font-black/85 text-2xl font-light leading-10">
                 Widgets deck settings
               </h2>
 
