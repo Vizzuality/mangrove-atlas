@@ -27,8 +27,8 @@ const NavigationMobile = () => {
               <span className="leading-2 font-sans text-xxs text-white">Configure</span>
             </button>
           </DialogTrigger>
-          <DialogContent className="scroll-y left-0 top-6 max-h-[100%] min-h-fit w-full space-y-8 rounded-3xl">
-            <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+          <DialogContent className="scroll-y left-0 top-0 min-h-screen w-full space-y-8 rounded-none">
+            <div className="no-scrollbar max-h-[95vh] space-y-8 overflow-y-auto">
               <h2 className="font-black/85 text-2xl font-light leading-10">
                 Widgets deck settings
               </h2>
