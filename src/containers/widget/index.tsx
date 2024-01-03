@@ -118,7 +118,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           {applicability && (
             <p
               className={cn({
-                'flex whitespace-nowrap text-center text-sm text-black/85': true,
+                'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
                 hidden: widgetsCollapsed[id],
                 block: !widgetsCollapsed[id],
               })}
@@ -129,7 +129,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 <DialogTrigger asChild>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="scroll-y left-16 top-16 max-h-[90%] min-h-fit translate-y-8 rounded-3xl">
+                <DialogContent className="scroll-y h-screen rounded-3xl md:left-16 md:top-16">
                   <div className="no-scrollbar overflow-y-auto ">
                     <Info />
                   </div>

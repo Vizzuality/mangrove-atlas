@@ -4,9 +4,9 @@ import Chart from 'components/chart';
 
 const HabitatExtentChart = ({ legend, config }) => {
   return (
-    <div className="grid grid-cols-2 items-center pb-10">
+    <div className="flex items-center pb-10 md:grid md:grid-cols-2">
       <Legend items={legend} />
-      <Chart config={config} />
+      <Chart className="w-2/3 md:w-full" config={config} />
     </div>
   );
 };
