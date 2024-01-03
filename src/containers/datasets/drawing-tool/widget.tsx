@@ -25,7 +25,7 @@ const WidgetDrawingTool = () => {
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { acceptedFiles } = useDropzone({
     multiple: false,
     accept: {
       'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],

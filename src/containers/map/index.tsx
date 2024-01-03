@@ -35,6 +35,7 @@ import { LAYERS_ORDER } from 'containers/layers/constants';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
+import MobileLegend from 'containers/map/mobile/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
 import Map from 'components/map';
@@ -435,8 +436,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         )}
       </Map>
       <Media lessThan="md">
-        <div className="absolute bottom-3/4 right-0 z-50 w-full">
-          <Legend />
+        <div className="absolute top-20">
+          <MobileLegend />
         </div>
       </Media>
       <Media greaterThanOrEqual="md">
