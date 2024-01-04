@@ -9,10 +9,7 @@ const LayerSettings = object({
   name: string(),
   source: string(),
   source_layer: string(),
-  color: string(),
-  locationId: number(),
-  // active: string(),
-  year: number(),
+  layerIndex: number(),
 });
 
 const layerSchema = object({
@@ -34,10 +31,7 @@ export const activeLayersAtom = atom<
       name: string;
       source: string;
       source_layer: string;
-      color: string;
-      locationId: number;
-      // active: string;
-      year: number;
+      layerIndex: number;
       [key: string]: string | number;
     };
   }[]

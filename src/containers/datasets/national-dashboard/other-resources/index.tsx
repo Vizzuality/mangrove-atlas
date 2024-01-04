@@ -9,7 +9,6 @@ type OtherResourcesTypes = {
 const OtherResources = ({ name, description, link }: OtherResourcesTypes) => (
   <div className="flex flex-1 items-start justify-between">
     {<p>{name}</p>}
-
     <WidgetControls
       content={{
         download: link,

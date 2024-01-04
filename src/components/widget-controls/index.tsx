@@ -13,7 +13,6 @@ import { useScreenWidth } from 'hooks/media';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
-import { useWidgets } from 'containers/widgets/hooks';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import { breakpoints } from 'styles/styles.config';
@@ -38,13 +37,11 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const { showWidget } = useRecoilValue(drawingToolAtom);
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
-
   const screenWidth = useScreenWidth();
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
 
-  const widgets = useWidgets();
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;

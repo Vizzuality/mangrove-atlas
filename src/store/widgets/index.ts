@@ -6,9 +6,14 @@ import widgets from 'containers/widgets/constants';
 
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
+// by default we want to show all widgets in the distribution and change category
+const defaultWidgets = widgets
+  .filter((widget) => widget.categoryIds.includes('distribution_and_change'))
+  .map((widget) => widget.slug);
+
 export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>({
   key: 'active-widgets',
-  default: ['mangrove_habitat_extent'],
+  default: defaultWidgets,
   effects: [
     urlSyncEffect({
       refine: array(string()),

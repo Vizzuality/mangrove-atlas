@@ -7,6 +7,7 @@ import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
+import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useLocalStorage, useWindowSize } from 'usehooks-ts';
@@ -27,14 +28,15 @@ import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
-
 const LOCAL_STORAGE_KEY = 'mangroves_blog';
 const HELPER_ID = 'menu-categories';
 
 const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
+  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const widgetsAvailabe = useWidgets();
 
-  const widgets = useWidgets();
+  const widgets = !!activeWidgets.length ? widgetsAvailabe : widgetsAvailabe;
   const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
   const [isBlogActive, setBlogActive] = useState(false);
   const setPrintingMode = useSetRecoilState(printModeState);
@@ -60,7 +62,7 @@ const WidgetsContainer: React.FC = () => {
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const lastWidgetSlug = useMemo(() => widgets.at(-1).slug, [widgets]);
+  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, [widgets]);
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);
 
@@ -187,7 +189,7 @@ const WidgetsContainer: React.FC = () => {
       {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
         <Blog closeBlogBanner={closeBlogBanner} />
       )}
-      {screenWidth > 0 && screenWidth < breakpoints.md && (
+      {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
           {widgets.map(({ slug, name, applicability }, index) => {
             const Widget = WIDGETS[slug];
@@ -221,9 +223,8 @@ const WidgetsContainer: React.FC = () => {
           })}
         </div>
       )}
-
+      {/* TO - DO - review this condition after reviewing empty widgets behaviour */}
       {widgets.length === 0 && <NoData />}
-
       {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper

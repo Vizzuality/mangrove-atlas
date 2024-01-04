@@ -7,7 +7,7 @@ const widgets_dev = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'National and Sub-National',
     categoryIds: ['all_datasets', 'distribution_and_change'],
-    layersIds: [''],
+    layersIds: [],
   },
   {
     name: 'Mangrove Restoration Sites',

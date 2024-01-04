@@ -1,18 +1,18 @@
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
 
 import { activeLayersAtom } from 'store/layers';
-import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
-import type { Visibility } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import WidgetControls from 'components/widget-controls';
+import type { ActiveLayers } from 'types/layers';
+import type { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
@@ -31,7 +31,8 @@ type DataSourceTypes = {
 };
 
 type IndicatorSourceTypes = {
-  id: string;
+  id: WidgetSlugType;
+  layerIndex: number;
   source: string;
   years: number[];
   unit: string;
@@ -43,82 +44,39 @@ type IndicatorSourceTypes = {
 };
 
 const IndicatorSource = ({
+  id,
   source,
+  layerIndex,
   years,
   unit,
   dataSource,
   color,
-  location,
   yearSelected,
   setYearSelected,
 }: IndicatorSourceTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
-  const [nationalDashboardSettings, setNationalDashboardLayersSettings] = useRecoilState(
-    nationalDashboardSettingsAtom
-  );
-  const [isActiveLayer, setActiveLayer] = useState(false);
+  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
 
-  const isActive = useMemo(
-    () => activeLayersIds.includes('mangrove_national_dashboard_layer'),
-    [activeLayersIds, isActiveLayer]
-  );
-  const handleClick = useCallback(
-    (e) => {
-      setActiveLayer(!isActiveLayer);
-      const updatedLayers = isActive
-        ? activeLayers.filter((w) => w.id !== e.currentTarget.id)
-        : [
-            {
-              id: e.currentTarget.id,
-              opacity: '1',
-              visibility: 'visible' as Visibility,
-              settings: {
-                name: source,
-                source: dataSource.layer_link,
-                source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
-                color: color[0],
-                locationId: location,
-                // active: isActiveLayer,
-                year: yearSelected,
-              },
+  const handleClick = useCallback(() => {
+    const layersUpdate = isActive
+      ? activeLayers.filter((w) => w.id !== id)
+      : ([
+          {
+            id,
+            opacity: '1',
+            visibility: 'visible',
+            settings: {
+              name: source,
+              layerIndex,
+              source: dataSource.layer_link,
+              source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
             },
-            ...activeLayers,
-          ];
-
-      setNationalDashboardLayersSettings({
-        ...nationalDashboardSettings,
-        mangrove_national_dashboard_layer: {
-          name: source,
-          source: dataSource.layer_link,
-          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
-          color: color[0],
-          locationId: location,
-          active: isActiveLayer,
-          year: yearSelected,
-        },
-      });
-      setActiveLayers(updatedLayers);
-    },
-    [activeLayers, yearSelected]
-  );
-
-  useEffect(() => {
-    if (yearSelected && isActiveLayer) {
-      setNationalDashboardLayersSettings({
-        ...nationalDashboardSettings,
-        mangrove_national_dashboard_layer: {
-          name: source,
-          source: dataSource.layer_link,
-          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
-          color: color[0],
-          locationId: location,
-          active: isActiveLayer,
-          year: yearSelected,
-        },
-      });
-    }
-  }, [yearSelected]);
+          },
+          ...activeLayers,
+        ] as ActiveLayers[]);
+    setActiveLayers(layersUpdate);
+  }, [activeLayers, setActiveLayers, id]);
 
   return (
     <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">
@@ -177,13 +135,8 @@ const IndicatorSource = ({
             info: dataSource?.layer_info,
           }}
         />
-
-        <SwitchWrapper id="mangrove_national_dashboard_layer">
-          <SwitchRoot
-            id="mangrove_national_dashboard_layer"
-            onClick={handleClick}
-            checked={isActive}
-          >
+        <SwitchWrapper id={'mangrove_national_dashboard_layer'}>
+          <SwitchRoot onClick={handleClick} checked={isActive}>
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>

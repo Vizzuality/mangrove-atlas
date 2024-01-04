@@ -11,7 +11,7 @@ import BlogContent from './content';
 export const Blog = ({ closeBlogBanner }: { closeBlogBanner: (e) => void }) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <div className="relative my-2 ml-[3%] flex h-12 w-[94%] items-center justify-between rounded-2xl bg-brand-800 px-4 md:ml-0 lg:w-[540px] print:hidden">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <Icon

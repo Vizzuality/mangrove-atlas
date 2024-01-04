@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
-import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
@@ -65,10 +64,9 @@ const Legend = () => {
     },
     [activeLayers, setActiveLayers]
   );
-
-  const settings = useRecoilValue(nationalDashboardSettingsAtom);
-  const nationalDashboardLayerName =
-    settings && Object.values(settings).filter((s) => s.locationId === locationId)[0]?.name;
+  const nationalDashboardLayerName = activeLayers.find((s) =>
+    s.id.includes('mangrove_national_dashboard')
+  )?.settings?.name;
 
   const removeLayer = useCallback(
     (layer: string) => {

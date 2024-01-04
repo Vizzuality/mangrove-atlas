@@ -387,7 +387,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 popUpWidth={500}
                 longitude={locationPopUp?.popup[1]}
                 latitude={locationPopUp?.popup[0]}
-                onClose={() => removePopup('ecoregion')}
+                onClose={() => removePopup('location')}
               >
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
@@ -397,7 +397,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                         isEmpty(iucnEcoregionPopUp?.popupInfo) &&
                         isEmpty(restorationPopUp?.popupInfo),
                     })}
-                    isOpen={
+                    nonExpansible={
                       isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
                     }
                   />

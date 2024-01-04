@@ -6,7 +6,6 @@ import cn from 'lib/classnames';
 
 import { activeGuideAtom } from 'store/guide';
 import { activeLayersAtom } from 'store/layers';
-import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
@@ -69,9 +68,9 @@ const Legend = () => {
     [activeLayers, setActiveLayers]
   );
 
-  const settings = useRecoilValue(nationalDashboardSettingsAtom);
-  const nationalDashboardLayerName =
-    settings && Object.values(settings).filter((s) => s.locationId === locationId)[0]?.name;
+  const nationalDashboardLayerName = activeLayers.find(
+    (l) => l.id === 'mangrove_national_dashboard_layer'
+  )?.settings?.name;
 
   const removeLayer = useCallback(
     (layer: string) => {
@@ -199,7 +198,7 @@ const Legend = () => {
                                 <DialogTrigger>
                                   <Tooltip>
                                     {/* //!TODO: These asChild removes the tooltip from the interface but aldo removes hydratation error */}
-                                    <TooltipTrigger asChild>
+                                    <TooltipTrigger>
                                       <Helper
                                         className={{
                                           button:
@@ -255,7 +254,7 @@ const Legend = () => {
                               <Popover>
                                 <PopoverTrigger>
                                   <Tooltip>
-                                    <TooltipTrigger asChild>
+                                    <TooltipTrigger>
                                       <div aria-label="Opacity layer">
                                         <Helper
                                           className={{

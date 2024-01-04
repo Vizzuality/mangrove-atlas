@@ -1,11 +1,9 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import flatten from 'lodash-es/flatten';
-import isEmpty from 'lodash-es/isEmpty';
-
 import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import chroma from 'chroma-js';
 import type { Visibility } from 'mapbox-gl';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
@@ -15,8 +13,10 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import { COLORS } from './constants';
 import type { Data, DataResponse, NationalDashboardLayerSettingsTypes } from './types';
 
+const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 // widget data
 export function useNationalDashboard(
   params?: UseParamsOptions,
@@ -55,56 +55,39 @@ export function useSource({
 }: {
   settings: NationalDashboardLayerSettingsTypes;
 }): SourceProps {
-  const sources =
-    !!settings &&
-    !isEmpty(settings) &&
-    (Object.values(settings).map((setting, index) =>
-      index === 0 ? `mapbox://${setting.source}` : setting.source
-    ) satisfies string[]);
   return {
     id: 'national-dashboard-sources',
     type: 'vector',
-    url: sources[0],
+    url: `mapbox://${settings.source}`,
   };
 }
 
 export function useLayers({
   id,
-  settings,
-  opacity,
+  opacity = 1,
   visibility = 'visible',
+  settings,
 }: {
   id: LayerProps['id'];
-  settings: NationalDashboardLayerSettingsTypes;
   opacity?: number;
   visibility?: Visibility;
-}): LayerProps[] {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const locationId = queryParams?.[1];
-  const {
-    data: { id: currentLocationId },
-  } = useLocation(locationType, locationId);
+  settings: NationalDashboardLayerSettingsTypes;
+}): LayerProps {
   if (!settings) return null;
 
-  return flatten(
-    Object.values(settings)
-      .filter((s) => s.locationId === currentLocationId)
-      .map((setting) => ({
-        id: `${id}-setting.source_layer`,
-        key: `${setting.source_layer}`,
-        source: 'national-dashboard-sources',
-        'source-layer': setting.source_layer,
-        type: 'fill',
-        paint: {
-          'fill-color': setting.color,
-          'fill-opacity': opacity,
-        },
-        layout: {
-          visibility,
-        },
-      }))
-  );
+  const color = colorsScale.filter((c, i) => i === settings.layerIndex) as string[];
+  return {
+    id,
+    // key: `${settings.source_layer}`,
+    source: 'national-dashboard-sources',
+    'source-layer': settings.source_layer,
+    type: 'fill',
+    paint: {
+      'fill-color': color[0],
+      'fill-opacity': opacity,
+    },
+    layout: {
+      visibility,
+    },
+  };
 }

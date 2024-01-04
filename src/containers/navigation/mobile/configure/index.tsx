@@ -9,10 +9,10 @@ import CONFIGS_SVG from 'svgs/sidebar/configure.svg?sprite';
 const ConfigureWidgets = () => {
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <button
           type="button"
-          className="flex h-full h-full flex-col items-center space-y-1 pt-1 text-white"
+          className="flex h-full flex-col items-center space-y-1 pt-1 text-white"
         >
           <Icon
             icon={CONFIGS_SVG}

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -18,17 +18,17 @@ import type { LocationPopUp } from 'types/map';
 
 const LocationPopUP = ({
   locationPopUpInfo,
-  isOpen,
+  nonExpansible,
   className,
 }: {
   locationPopUpInfo: {
     info: LocationPopUp;
     feature: MapboxGeoJSONFeature;
   };
-  isOpen: boolean;
+  nonExpansible: boolean;
   className?: string;
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(nonExpansible);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const handleClick = useCallback(() => {
     setOpen(!open);
@@ -40,10 +40,6 @@ const LocationPopUP = ({
 
   const { type, name } = info;
   const { data: locations } = useLocations();
-
-  useEffect(() => {
-    setOpen(isOpen);
-  }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
     const {
@@ -72,22 +68,28 @@ const LocationPopUP = ({
         [className]: !!className,
       })}
     >
-      <button className="flex w-full items-center justify-between pb-6" onClick={handleClick}>
+      <button
+        className="flex w-full items-center justify-between"
+        disabled={nonExpansible}
+        onClick={handleClick}
+      >
         <span className="m-0 text-sm font-semibold">
           <h3 className={WIDGET_SUBTITLE_STYLE}>Analyse an area</h3>
         </span>
-        <span
-          className={cn({
-            'text-brand-800': true,
-            'mb-2 text-5xl': open,
-            'text-3xl': !open,
-          })}
-        >
-          {open ? '-' : '+'}
-        </span>
+        {!nonExpansible && (
+          <span
+            className={cn({
+              'text-brand-800': true,
+              'text-5xl': open,
+              'text-3xl': !open,
+            })}
+          >
+            {open ? '-' : '+'}
+          </span>
+        )}
       </button>
       <AnimatePresence initial={false}>
-        {open && (
+        {(open || nonExpansible) && (
           <motion.section
             key="content"
             initial="collapsed"
@@ -99,10 +101,10 @@ const LocationPopUP = ({
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            <div className="flex grow flex-col items-start justify-between  font-sans text-sm text-black/85">
-              <span className="font-light capitalize">{type}</span>
-              <button type="button" onClick={handleClickLocation} className="font-semibold">
-                {name}
+            <div className="flex grow flex-col items-start justify-between font-sans">
+              <button type="button" onClick={handleClickLocation} className="space-x-4">
+                <span className="text-sm font-semibold text-brand-800">{name}</span>
+                <span className="text-xxs font-light uppercase text-black/85">{type}</span>
               </button>
             </div>
           </motion.section>

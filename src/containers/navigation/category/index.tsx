@@ -82,7 +82,7 @@ const Category = () => {
       <div className="w-full py-2 font-sans text-xxs leading-[10px] text-white">Category</div>
       <div className="relative flex flex-col items-center justify-center space-y-4 rounded-full bg-white py-1 text-brand-800">
         <DropdownMenu.Root open={isOpen}>
-          <DropdownMenu.Trigger asChild>
+          <DropdownMenu.Trigger>
             <button
               type="button"
               className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
