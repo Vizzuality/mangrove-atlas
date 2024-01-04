@@ -11,11 +11,14 @@ import SHARE_SVG from 'svgs/map/share.svg?sprite';
 
 export const Share = ({ className }: { className?: string }) => {
   const { asPath } = useRouter();
+
   const [currentUrl, setCurrentUrl] = useState<string | null>(null);
+  const [embeddedLink, setEmbeddedLink] = useState<string | null>(null);
 
   const [, setBttnText] = useState('Copy link');
   useEffect(() => {
     setCurrentUrl(window.location.href);
+    setEmbeddedLink(`${window.location.origin}/embedded?${asPath.slice(1, asPath.length)}`);
   }, [asPath]);
 
   const copyShareLink = () => {
@@ -32,7 +35,18 @@ export const Share = ({ className }: { className?: string }) => {
       });
   };
 
-  // const copyEmbedCode = () => console.info('copy embed code');
+  const copyEmbeddedCode = () =>
+    navigator.clipboard
+      .writeText(embeddedLink)
+      .then(() => {
+        setBttnText('Copied');
+        setTimeout(function () {
+          setBttnText('Copy link');
+        }, 3000);
+      })
+      .catch((err: ErrorEvent) => {
+        console.info(err.message);
+      });
 
   return (
     <Dialog>
@@ -66,18 +80,18 @@ export const Share = ({ className }: { className?: string }) => {
               </button>
             </div>
           </div>
-          {/* <div>
-            <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
+          <div>
+            <h4 className="ml-4 text-[13px] font-semibold">Link to embedded map</h4>
             <div className="flex h-12  items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
-              <p className="truncate">{embedCode}</p>
+              <p className="truncate">{embeddedLink}</p>
               <button
-                onClick={copyEmbedCode}
+                onClick={copyEmbeddedCode}
                 className="whitespace-nowrap rounded-3xl border border-brand-800/20 py-1 px-5 font-semibold text-brand-800 hover:bg-brand-800/20"
               >
-                Copy code
+                Copy embedded link
               </button>
             </div>
-          </div> */}
+          </div>
         </div>
         <DialogClose onClose={close} />
       </DialogContent>
