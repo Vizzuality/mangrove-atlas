@@ -23,7 +23,7 @@ const IUCNEcoregions = () => {
           <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
           <IUCNEcoregionsChart config={data?.config} />
           <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger>
               <div className="w-full text-center text-sm font-normal text-brand-800 underline">
                 <p>Associate reports</p>
               </div>

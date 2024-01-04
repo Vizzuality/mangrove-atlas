@@ -1,9 +1,19 @@
-import { array, object, string, stringLiterals } from '@recoiljs/refine';
+import { array, object, string, stringLiterals, optional, number } from '@recoiljs/refine';
 import type { Visibility } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+
+const LayerSettings = object({
+  name: string(),
+  source: string(),
+  source_layer: string(),
+  color: string(),
+  locationId: number(),
+  // active: string(),
+  year: number(),
+});
 
 const layerSchema = object({
   id: string(),
@@ -12,6 +22,7 @@ const layerSchema = object({
     none: 'none' as string,
     visible: 'visible' as Visibility,
   }),
+  settings: optional(LayerSettings),
 });
 
 export const activeLayersAtom = atom<
@@ -19,6 +30,16 @@ export const activeLayersAtom = atom<
     id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
     opacity: string;
     visibility: Visibility;
+    settings?: {
+      name: string;
+      source: string;
+      source_layer: string;
+      color: string;
+      locationId: number;
+      // active: string;
+      year: number;
+      [key: string]: string | number;
+    };
   }[]
 >({
   key: 'layers',

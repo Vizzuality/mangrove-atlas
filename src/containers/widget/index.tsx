@@ -117,7 +117,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
               <span className="font-normal">Data applicability:</span>{' '}
               <span className="font-light">{applicability}.</span>{' '}
               <Dialog>
-                <DialogTrigger asChild>
+                <DialogTrigger>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
                 <DialogContent className="scroll-y h-screen pt-16 md:left-16 md:top-16 md:rounded-3xl md:pt-6">

@@ -191,7 +191,7 @@ const Legend = () => {
                             </div>
                             <div className="ml-2 flex items-center">
                               <Dialog>
-                                <DialogTrigger>
+                                <DialogTrigger asChild>
                                   <Tooltip>
                                     <TooltipTrigger>
                                       <Helper

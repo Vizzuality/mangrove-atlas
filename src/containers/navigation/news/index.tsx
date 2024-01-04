@@ -17,7 +17,7 @@ const News = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <div data-testid="menu-button" className="flex cursor-pointer">
           <Helper
             className={{

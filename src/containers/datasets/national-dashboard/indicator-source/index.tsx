@@ -60,15 +60,31 @@ const IndicatorSource = ({
   const [isActiveLayer, setActiveLayer] = useState(false);
 
   const isActive = useMemo(
-    () => activeLayersIds.includes('mangrove_national_dashboard_layer') && isActiveLayer,
-    [activeLayersIds, isActiveLayer, dataSource?.layer_link]
+    () => activeLayersIds.includes('mangrove_national_dashboard_layer'),
+    [activeLayersIds, isActiveLayer]
   );
   const handleClick = useCallback(
-    (id) => {
+    (e) => {
       setActiveLayer(!isActiveLayer);
       const updatedLayers = isActive
-        ? activeLayers.filter((w) => w.id !== id)
-        : [{ id, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
+        ? activeLayers.filter((w) => w.id !== e.currentTarget.id)
+        : [
+            {
+              id: e.currentTarget.id,
+              opacity: '1',
+              visibility: 'visible' as Visibility,
+              settings: {
+                name: source,
+                source: dataSource.layer_link,
+                source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+                color: color[0],
+                locationId: location,
+                // active: isActiveLayer,
+                year: yearSelected,
+              },
+            },
+            ...activeLayers,
+          ];
 
       setNationalDashboardLayersSettings({
         ...nationalDashboardSettings,
@@ -164,7 +180,8 @@ const IndicatorSource = ({
 
         <SwitchWrapper id="mangrove_national_dashboard_layer">
           <SwitchRoot
-            onClick={() => handleClick('mangrove_national_dashboard_layer')}
+            id="mangrove_national_dashboard_layer"
+            onClick={handleClick}
             checked={isActive}
           >
             <SwitchThumb />
