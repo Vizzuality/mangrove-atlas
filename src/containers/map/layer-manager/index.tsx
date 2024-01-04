@@ -14,7 +14,6 @@ import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const RestorationLayer = LAYERS['mangrove_restoration'];
-const ProtectedAreasLayer = LAYERS['protected-areas'];
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 const IucnEcoregionLayer = LAYERS['mangrove_iucn_ecoregion'];
@@ -30,12 +29,12 @@ const LayerManagerContainer = () => {
   const layersIds = layers.map((l) => l.id);
   const layersSettings = useRecoilValue(layersSettingsAtom);
 
-  const nationaDashboardLayers = layersIds.filter((l) => l.includes('mangrove_national_dashboard'));
-
+  const nationaDashboardLayers = layersIds.filter((l) => l === 'mangrove_national_dashboard');
+  console.log(nationaDashboardLayers, layersSettings, 'nationaDashboardLayers');
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const nationalDashboardLayerIds = layers
-    .filter((l) => l?.id?.includes('mangrove_national_dashboard'))
+    .filter((l) => l?.id === 'mangrove_national_dashboard')
     .map((l) => l.id);
 
   const activeLayersIds = layers.map((l) => l.id);
@@ -71,7 +70,11 @@ const LayerManagerContainer = () => {
     [setInteractiveLayerIds]
   );
   const LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS = [...nationaDashboardLayers, ...LAYERS_FILTERED];
-
+  console.log(
+    LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS,
+    layersSettings,
+    'LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS'
+  );
   return (
     <>
       {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
@@ -113,8 +116,6 @@ const LayerManagerContainer = () => {
           onRemove={handleRemove}
         />
       }
-
-      {<ProtectedAreasLayer id="protected-areas-layer" beforeId="Country" />}
 
       {layersIds.includes('mangrove_restoration_sites') && (
         <RestorationSitesLayer id="mangrove-restoration-sites-layer" />

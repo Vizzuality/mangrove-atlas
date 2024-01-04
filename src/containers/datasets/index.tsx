@@ -29,7 +29,9 @@ import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
 import GlobalTidalWetlandChangeMapLegend from 'containers/datasets/contextual-layers/global-tidal-wetland-change/map-legend';
 import PlanetSatelliteBasemapInfo from 'containers/datasets/contextual-layers/planet/info.mdx';
+import ProtectedAreasWidget from 'containers/datasets/contextual-layers/protected-areas';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
+import ProtectedAreasMapLegend from 'containers/datasets/contextual-layers/protected-areas/map-legend';
 import SaltMarshWidget from 'containers/datasets/contextual-layers/salt-marsh';
 import SaltMarshInfo from 'containers/datasets/contextual-layers/salt-marsh/info.mdx';
 import SaltMarshLayer from 'containers/datasets/contextual-layers/salt-marsh/layer';
@@ -129,6 +131,7 @@ export const WIDGETS = {
   mangrove_national_dashboard: NationalDashboardWidget,
   mangrove_flood_protection: FloodProtectionWidget,
   mangrove_contextual_layers: BasemapsContextualLayers,
+  mangrove_protected_areas: ProtectedAreasWidget,
   mangrove_fisheries: FisheriesWidget,
   mangrove_allen_coral_reef: AllenCoralReefWidget,
   mangrove_tidal_flats: TidalFlatsWidget,
@@ -151,7 +154,7 @@ export const LAYERS = {
   mangrove_species_location: SpeciesLocationLayer,
   // contextual layers
   'country-boundaries': CountryBoundariesLayer,
-  'protected-areas': ProtectedAreasLayer,
+  mangrove_protected_areas: ProtectedAreasLayer,
   mangrove_restoration_sites: RestorationSitesLayer,
   mangrove_coastal_protection_area: FloodProtectionAreaLayer,
   mangrove_coastal_protection_population: FloodProtectionPopulationLayer,
@@ -163,6 +166,8 @@ export const LAYERS = {
   mangrove_tidal_flats: TidalFlatsLayer,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeLayer,
   mangrove_salt_marsh: SaltMarshLayer,
+  planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
+  planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
 };
 
 export const MAP_LEGENDS = {
@@ -182,6 +187,7 @@ export const MAP_LEGENDS = {
   mangrove_salt_marsh: SaltMarshMapLegend,
   mangrove_tidal_flats: TidalFlatsMapLegend,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
+  mangrove_protected_areas: ProtectedAreasMapLegend,
 };
 
 export const MAP_POP_UPS = {

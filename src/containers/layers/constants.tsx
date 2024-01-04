@@ -6,6 +6,10 @@ export const LAYERS = [
     id: 'mangrove_iucn_ecoregion',
   },
   {
+    name: 'Protected areas',
+    id: 'mangrove_protected_areas',
+  },
+  {
     name: 'Coastal protection: area',
     id: 'mangrove_coastal_protection_area',
   },

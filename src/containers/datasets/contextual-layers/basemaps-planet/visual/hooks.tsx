@@ -2,6 +2,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { basemapContextualVisualMonthlyDateAtom } from 'store/map-settings';
 
+import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
@@ -25,9 +26,23 @@ export function useSource(): SourceProps & { key: string } {
   };
 }
 
-export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps {
+export function useLayer({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps {
   return {
     id,
     type: 'raster',
+    paint: {
+      'raster-opacity': 0.5,
+    },
+    layout: {
+      visibility,
+    },
   };
 }
