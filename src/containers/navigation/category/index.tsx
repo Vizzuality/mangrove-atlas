@@ -90,7 +90,7 @@ const Category = () => {
               disabled={isDrawingToolWidgetVisible}
               data-testid="show-categories-button"
             >
-              {CATEGORY_OPTIONS.map(({ value, icon }) => (
+              {CATEGORY_OPTIONS.map(({ value }) => (
                 <div
                   key={value}
                   className={cn({
@@ -109,17 +109,6 @@ const Category = () => {
                         'fill-current text-brand-800':
                           category !== 'contextual_layers' || mapSettings,
                       })}
-                    />
-                  )}
-                  {value !== 'contextual_layers' && (
-                    <Icon
-                      icon={icon}
-                      className={cn({
-                        'h-9 w-9 rounded-full stroke-none p-1': true,
-                        'bg-brand-800 fill-current text-white': category === value && !mapSettings,
-                        'fill-current text-brand-800': category !== value || mapSettings,
-                      })}
-                      description={category}
                     />
                   )}
                 </div>
@@ -141,7 +130,7 @@ const Category = () => {
               }}
             >
               <ul className="flex h-full flex-col justify-between">
-                {CATEGORY_OPTIONS.map(({ value, label, icon }) => (
+                {CATEGORY_OPTIONS.map(({ value, label }) => (
                   <li key={label}>
                     <button
                       type="button"
@@ -162,18 +151,6 @@ const Category = () => {
                               'fill-current text-brand-800 group-hover:bg-brand-800/15':
                                 category !== value,
                             })}
-                          />
-                        )}
-                        {value !== 'contextual_layers' && (
-                          <Icon
-                            icon={icon}
-                            className={cn({
-                              'h-9 w-9 rounded-full stroke-none p-1': true,
-                              'bg-brand-800 fill-current text-white': category === value,
-                              'fill-current text-brand-800 group-hover:bg-brand-800/15':
-                                category !== value,
-                            })}
-                            description={category}
                           />
                         )}
                       </div>
