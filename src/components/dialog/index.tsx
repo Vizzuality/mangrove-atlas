@@ -40,7 +40,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'left-1/12 fixed top-[5%] grid max-h-[85vh] min-h-[100px] w-10/12 gap-4 bg-white p-6 animate-in duration-300 md:left-18 md:w-full md:max-w-[540px] md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96':
+        'left-1/12 fixed grid gap-4 bg-white p-6 animate-in duration-300 md:top-[5%] md:left-18 md:max-h-[85vh] md:min-h-[100px] md:w-10/12 md:w-full md:max-w-[540px] md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96':
           true,
         [className]: !!className,
       })}
@@ -62,11 +62,21 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DialogHeader.displayName = 'DialogHeader';
 
-const DialogClose = ({ onClose = () => null }: { onClose?: () => void }) => (
+const DialogClose = ({
+  onClose = () => null,
+  className,
+}: {
+  onClose?: () => void;
+  className?: string;
+}) => (
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className="absolute top-7 right-6 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white bg-opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:top-7 md:-right-10 md:border"
+      className={cn({
+        'absolute right-3 -top-2 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:right-6 md:top-7 md:-right-10 md:border md:bg-white md:bg-opacity-70':
+          true,
+        [className]: !!className,
+      })}
       onClick={onClose}
       aria-label="close dialog"
     >

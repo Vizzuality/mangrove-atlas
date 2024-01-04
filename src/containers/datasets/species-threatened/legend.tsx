@@ -20,12 +20,12 @@ const Legend = ({ items }: Legend) => {
   );
 
   return (
-    <div className="text-sm">
+    <div className="space-y-1 text-sm">
       {items?.map((d) => (
         <div key={d.label} className="flex">
           <ul>
             <li key={`item-${d.color}`}>
-              <div className="m-0 overflow-hidden p-0 pr-4">
+              <div className="m-0 overflow-hidden p-0 md:pr-4">
                 <button
                   className="flex items-center space-x-2"
                   onClick={() => handleCollapse(d.label)}

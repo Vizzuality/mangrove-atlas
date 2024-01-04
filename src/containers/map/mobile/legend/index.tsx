@@ -120,18 +120,18 @@ const Legend = () => {
   const HELPER_ID = activeLayers[0]?.id;
 
   const contentVariants = {
-    open: { y: '-100%', opacity: 1 },
-    close: { y: '10%', opacity: 0 },
+    open: { y: '0%', opacity: 1 },
+    close: { y: '-200%', opacity: 0 },
   };
 
   return (
-    <div>
+    <div className="flex w-screen justify-center">
       {!!activeLayers.length && (
         <>
           <button
             onClick={openLegend}
             className={cn({
-              'flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl border bg-white py-2 px-5 shadow-control':
+              'flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-3xl border bg-white py-2 px-10 shadow-control':
                 true,
               hidden: isOpen,
             })}
@@ -153,7 +153,7 @@ const Legend = () => {
               className="fixed md:right-[73px]"
             >
               <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
-                <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
+                <div className="divide-black/42 box-content flex max-h-[70vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:print:hidden">
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
                       const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
@@ -376,7 +376,7 @@ const Legend = () => {
                               </Tooltip>
                             </div>
                           </div>
-                          {WidgetLegend && (
+                          {WidgetLegend && isOpen && (
                             <div className="pt-4 pl-6">
                               <WidgetLegend />
                             </div>

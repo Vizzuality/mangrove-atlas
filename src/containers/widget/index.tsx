@@ -72,7 +72,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
         className={cn({
-          'md:h-fit-content z-2 group ml-[3%] w-full rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-0':
+          'md:h-fit-content z-2 group w-full rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-[3%] md:ml-0':
             true,
           '!w-[100%] border-none !p-0 !shadow-none': info,
           [className]: !!className,
@@ -109,7 +109,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           {applicability && (
             <p
               className={cn({
-                'flex whitespace-nowrap text-center text-sm text-black/85': true,
+                'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
                 hidden: widgetsCollapsed[id],
                 block: !widgetsCollapsed[id],
               })}
@@ -120,11 +120,11 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 <DialogTrigger asChild>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="scroll-y left-16 top-16 max-h-[90%] min-h-fit translate-y-8 rounded-3xl">
+                <DialogContent className="scroll-y h-screen pt-16 md:left-16 md:top-16 md:rounded-3xl md:pt-6">
                   <div className="no-scrollbar overflow-y-auto ">
                     <Info />
                   </div>
-                  <DialogClose />
+                  <DialogClose className="md:top-initial top-5" />
                 </DialogContent>
               </Dialog>
             </p>

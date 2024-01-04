@@ -39,9 +39,9 @@ const PotentialBenefitsToFisheries = () => {
           <p className={WIDGET_SENTENCE_STYLE}>
             Mangrove restoration enhanced the production of new individuals for commercial purposes:{' '}
           </p>
-          <div className="grid flex-1 grid-cols-2 flex-col items-center space-y-2 pb-10">
+          <div className="grid flex-1 grid-cols-2 flex-col items-center gap-2 pb-10">
             {data?.map(({ indicator, value }) => (
-              <div key={indicator} className="flex space-x-4">
+              <div key={indicator} className="flex space-x-4 ">
                 <div
                   className={cn({
                     'box-content h-8 w-8 justify-center rounded-md p-1': true,
@@ -58,7 +58,9 @@ const PotentialBenefitsToFisheries = () => {
                 </div>
                 <div className="flex flex-col text-sm">
                   <span className="first-letter:uppercase">{indicator}</span>
-                  <span className="font-bold">{!!value ? formatAxis(Math.round(value)) : '-'}</span>
+                  <span className="text-xs font-bold md:text-sm">
+                    {!!value ? formatAxis(Math.round(value)) : '-'}
+                  </span>
                 </div>
               </div>
             ))}{' '}

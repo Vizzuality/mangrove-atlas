@@ -90,16 +90,16 @@ const Category = () => {
               disabled={isDrawingToolWidgetVisible}
               data-testid="show-categories-button"
             >
-              {CATEGORY_OPTIONS.map(({ id, icon }) => (
+              {CATEGORY_OPTIONS.map(({ value }) => (
                 <div
-                  key={id}
+                  key={value}
                   className={cn({
                     'flex cursor-pointer items-center justify-center': true,
                     'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
                   })}
-                  data-isactive={category === id && !mapSettings}
+                  data-isactive={category === value && !mapSettings}
                 >
-                  {id === 'contextual_layers' && (
+                  {value === 'contextual_layers' && (
                     <VscLayers
                       className={cn({
                         'h-9 w-9 rounded-full fill-current stroke-none p-1 hover:text-brand-800':
@@ -109,17 +109,6 @@ const Category = () => {
                         'fill-current text-brand-800':
                           category !== 'contextual_layers' || mapSettings,
                       })}
-                    />
-                  )}
-                  {id !== 'contextual_layers' && (
-                    <Icon
-                      icon={icon}
-                      className={cn({
-                        'h-9 w-9 rounded-full stroke-none p-1': true,
-                        'bg-brand-800 fill-current text-white': category === id && !mapSettings,
-                        'fill-current text-brand-800': category !== id || mapSettings,
-                      })}
-                      description={category}
                     />
                   )}
                 </div>
@@ -141,12 +130,12 @@ const Category = () => {
               }}
             >
               <ul className="flex h-full flex-col justify-between">
-                {CATEGORY_OPTIONS.map(({ id, label, icon }) => (
+                {CATEGORY_OPTIONS.map(({ value, label }) => (
                   <li key={label}>
                     <button
                       type="button"
                       className="group flex cursor-pointer items-center space-x-3"
-                      data-category={id}
+                      data-category={value}
                       onClick={handleCategory}
                     >
                       <div
@@ -154,26 +143,14 @@ const Category = () => {
                           'flex h-11 w-11 items-center justify-center': true,
                         })}
                       >
-                        {id === 'contextual_layers' && (
+                        {value === 'contextual_layers' && (
                           <VscLayers
                             className={cn({
                               'h-9 w-9 rounded-full stroke-none p-1': true,
-                              'bg-brand-800 fill-current text-white': category === id,
+                              'bg-brand-800 fill-current text-white': category === value,
                               'fill-current text-brand-800 group-hover:bg-brand-800/15':
-                                category !== id,
+                                category !== value,
                             })}
-                          />
-                        )}
-                        {id !== 'contextual_layers' && (
-                          <Icon
-                            icon={icon}
-                            className={cn({
-                              'h-9 w-9 rounded-full stroke-none p-1': true,
-                              'bg-brand-800 fill-current text-white': category === id,
-                              'fill-current text-brand-800 group-hover:bg-brand-800/15':
-                                category !== id,
-                            })}
-                            description={category}
                           />
                         )}
                       </div>

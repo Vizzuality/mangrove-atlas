@@ -1,4 +1,6 @@
-import { createElement, useMemo } from 'react';
+import { createElement } from 'react';
+
+import cn from 'lib/classnames';
 
 import {
   PieChart,
@@ -18,8 +20,6 @@ import {
   YAxis,
   ReferenceLine,
 } from 'recharts';
-import type { CartesianGridProps, CartesianAxisProps, XAxisProps } from 'recharts/types';
-import type { LayoutType } from 'recharts/types/util/types';
 
 import Brush from './brush';
 
@@ -38,7 +38,7 @@ const ChartsMap = new Map([
   ['composed', ComposedChart],
 ]);
 
-const Chart = ({ config }) => {
+const Chart = ({ config, className }: { config: any; className?: string }) => {
   const {
     data,
     margin = {
@@ -73,7 +73,12 @@ const Chart = ({ config }) => {
   const Chart = ChartsMap.get(type);
 
   return (
-    <div className="relative h-full w-full">
+    <div
+      className={cn({
+        'relative h-full w-full': true,
+        [className]: !!className,
+      })}
+    >
       <ResponsiveContainer
         width={width || '100%'}
         height={height || 250}

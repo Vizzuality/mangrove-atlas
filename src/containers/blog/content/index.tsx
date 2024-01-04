@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
+import cn from 'lib/classnames';
+
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useBlogPosts, usePostTags } from 'hooks/blog';
@@ -21,7 +23,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {!postInfo && (
           <motion.div
-            className="no-scrollbar overflow-y-auto px-10 pt-10"
+            className="no-scrollbar overflow-y-auto px-6 pt-6 md:px-10 md:pt-10"
             initial="hidden"
             animate="displayed"
             variants={{
@@ -62,7 +64,7 @@ export const BlogContent = () => {
               <button
                 type="button"
                 aria-label="back to news"
-                className="pointer-events-all absolute top-4 left-4 z-[1000] rounded-3xl bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white"
+                className="pointer-events-all absolute top-7 left-4 z-[1000] bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white md:top-4 md:rounded-3xl"
                 onClick={(e) => {
                   e.stopPropagation();
                   return setPostInfo(null);
@@ -70,10 +72,10 @@ export const BlogContent = () => {
               >
                 Back to News
               </button>
-              <div className="relative h-[240px] w-full overflow-visible rounded-t-3xl">
+              <div className="relative h-[240px] w-full overflow-visible md:rounded-t-3xl">
                 <Image
                   alt={postInfo.title.rendered}
-                  className="absolute top-0 -left-10 h-[240px] w-[100px] rounded-t-3xl object-cover"
+                  className="absolute top-0 -left-10 h-[240px] w-[100px] object-cover md:rounded-t-3xl"
                   src={postInfo.yoast_head_json.og_image[0].url}
                   fill={true}
                 />
@@ -99,7 +101,13 @@ export const BlogContent = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <DialogClose onClose={() => setPostInfo(null)} />
+      <DialogClose
+        onClose={() => setPostInfo(null)}
+        className={cn({
+          'md:top-initial md:focus-outline top-5 focus:outline-none': true,
+          'text-white': !!postInfo,
+        })}
+      />
     </>
   );
 };
