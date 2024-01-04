@@ -1,8 +1,10 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import { activeLayersAtom } from 'store/layers';
 import { floodAreaPeriodAtom } from 'store/widgets/flood-protection';
 
+import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useMangrovesFloodProtection } from 'containers/datasets/flood-protection/hooks';
@@ -14,7 +16,15 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   const period = useRecoilValue(floodAreaPeriodAtom);
   const selectedPeriod = period || 'annual';
   const { data } = useMangrovesFloodProtection(selectedPeriod, {
@@ -39,7 +49,7 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           max,
           '#63589F',
         ],
-        'fill-opacity': 0.7,
+        'fill-opacity': opacity,
         'fill-outline-color': [
           'interpolate',
           ['linear'],
@@ -49,6 +59,9 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           max,
           '#63589F',
         ],
+      },
+      layout: {
+        visibility,
       },
     },
     {
@@ -67,13 +80,23 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
           '#63589F',
         ],
       },
+      layout: {
+        visibility,
+      },
     },
   ];
 }
 
 const MangrovesFloodProtectionLayer = ({ beforeId, id }: LayerProps) => {
+  const activeLayers = useRecoilValue(activeLayersAtom);
+  const activeLayer = activeLayers.find((l) => l.id === id);
+
   const SOURCE = useSource();
-  const LAYERS = useLayers({ id });
+  const LAYERS = useLayers({
+    id,
+    opacity: parseFloat(activeLayer.opacity),
+    visibility: activeLayer.visibility,
+  });
 
   if (!SOURCE || !LAYERS) return null;
   return (

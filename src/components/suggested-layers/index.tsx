@@ -3,7 +3,6 @@ import { ReactElement, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 
 import { activeLayersAtom } from 'store/layers';
-import { basemapContextualAtom } from 'store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
@@ -28,7 +27,6 @@ const SuggestedLayers = ({
   color,
   thumbSource,
 }: SuggestionTypes) => {
-  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);

@@ -141,6 +141,9 @@ export const WIDGETS = {
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
   mangrove_iucn_ecoregion: IUCNEcoregionWidget,
   mangrove_salt_marsh: SaltMarshWidget,
+  mangrove_coastal_protection_area: FloodProtectionWidget,
+  mangrove_coastal_protection_population: FloodProtectionWidget,
+  mangrove_coastal_protection_stock: FloodProtectionWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {

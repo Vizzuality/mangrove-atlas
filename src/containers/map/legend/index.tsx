@@ -191,7 +191,7 @@ const Legend = () => {
                             </div>
                             <div className="ml-2 flex items-center">
                               <Dialog>
-                                <DialogTrigger asChild>
+                                <DialogTrigger>
                                   <Tooltip>
                                     <TooltipTrigger>
                                       <Helper
@@ -228,7 +228,7 @@ const Legend = () => {
 
                                 <DialogContent
                                   className={cn({
-                                    'scroll-y mt-10 rounded-3xl !shadow-widget': true,
+                                    'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
                                     hidden: guideIsActive,
                                   })}
                                   overlay={false}
