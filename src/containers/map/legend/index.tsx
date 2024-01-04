@@ -58,6 +58,9 @@ const Legend = () => {
         if (l.id === layer) {
           return { ...l, visibility: l.visibility === 'visible' ? 'none' : 'visible' };
         }
+        if (l.id === 'custom-area') {
+          return null;
+        }
         return l;
       });
 
@@ -65,7 +68,7 @@ const Legend = () => {
     },
     [activeLayers, setActiveLayers]
   );
-
+  console.log('activeLayers', activeLayers);
   const settings = useRecoilValue(nationalDashboardSettingsAtom);
   const nationalDashboardLayerName =
     settings && Object.values(settings).filter((s) => s.locationId === locationId)[0]?.name;
@@ -156,6 +159,8 @@ const Legend = () => {
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
+                      if (l.id === 'custom-area') return null;
+
                       const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
 
                       const Widget = WIDGETS[l.id] as React.ElementType;
