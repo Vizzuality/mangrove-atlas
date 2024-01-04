@@ -45,7 +45,7 @@ const CATEGORY_OPTIONS: {
   { value: 'climate_and_policy', label: 'Climate & Policy' },
   { value: 'ecosystem_services', label: 'Ecosystem Services' },
   { value: 'contextual_layers', label: 'Contextual layers' },
-  { value: 'all_datasets', label: 'All datasets' },
+  { value: 'all_datasets', label: 'Custom' },
 ];
 
 export const STYLES = {
