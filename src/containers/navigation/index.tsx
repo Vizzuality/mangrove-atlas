@@ -23,10 +23,11 @@ const AppTools = () => (
     </Helper>
     <Helper
       className={{
-        button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
+        button: HELPER_ID ? '-top-2.5 -right-4 z-20' : 'hidden',
         tooltip: 'w-fit-content',
       }}
-      tooltipPosition={{ top: -40, left: -50 }}
+      theme="dark"
+      tooltipPosition={{ top: -40, left: 0 }}
       message="guide"
     >
       <GuideSwitcher />

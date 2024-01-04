@@ -87,22 +87,13 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           data-testid={`widget-${id}`}
         >
           <header className="flex items-center justify-between">
-            <Helper
-              className={{
-                container: 'w-full',
-                button: HELPER_ID === id && !showWidget ? '-top-0 -right-4 z-[20]' : 'hidden',
-                tooltip: 'w-fit-content',
-              }}
-              tooltipPosition={{ top: 40, left: 0 }}
-              message="Click to expand/collapse widgets"
+            <h2
+              onClick={handleWidgetCollapsed}
+              className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
             >
-              <h2
-                onClick={handleWidgetCollapsed}
-                className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
-              >
-                {title}
-              </h2>
-            </Helper>
+              {title}
+            </h2>
+
             <WidgetControls id={id} />
           </header>
           <div

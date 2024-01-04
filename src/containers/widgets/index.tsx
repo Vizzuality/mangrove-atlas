@@ -35,12 +35,12 @@ const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
 
   const widgets = useWidgets();
+  const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
+  const [isBlogActive, setBlogActive] = useState(false);
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
-  const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
-  const [isBlogActive, setBlogActive] = useState(false);
 
   const closeBlogBanner = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,24 +99,24 @@ const WidgetsContainer: React.FC = () => {
       <div className="py-1">
         <div
           className={cn({
-            'grid w-full grid-cols-2 justify-between space-x-6 print:hidden': true,
+            'grid w-full grid-cols-2 justify-between print:hidden': true,
             hidden: locationTool === 'area' || locationTool === 'upload',
           })}
         >
           {widgets.length > 1 && (
             <Helper
               className={{
-                button: '-bottom-2.5 -right-[170px] z-[20]',
-                tooltip: 'w-fit-content',
+                button: '-top-1.5 right-0 z-20',
+                tooltip: 'max-w-[400px]',
               }}
-              tooltipPosition={{ top: -50, left: -160 }}
+              tooltipPosition={{ top: -50, left: -10 }}
               message="Expand or collapse all widgets"
             >
               <button
                 type="button"
                 data-testid="expand-collapse-button"
                 className={cn({
-                  'h-8 w-full rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
+                  'h-8 w-[270px] rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
                     true,
                   'bg-white': widgetsCollapsedChecker,
                   'print:hidden': screenWidth >= breakpoints.md,
@@ -127,57 +127,60 @@ const WidgetsContainer: React.FC = () => {
               </button>
             </Helper>
           )}
-          <Helper
-            className={{
-              button: '-bottom-2.5 -right-[170px] z-[20]',
-              tooltip: 'w-fit-content',
-            }}
-            tooltipPosition={{ top: -50, left: -160 }}
-            message="Triggers deck to configure widgets"
-          >
-            <Dialog>
+
+          <Dialog>
+            <Helper
+              className={{
+                button: 'right-0 -top-1.5 z-20',
+                tooltip: 'w-fit-content',
+              }}
+              tooltipPosition={{ top: -50, left: 0 }}
+              message="Triggers deck to configure widgets"
+            >
               <DialogTrigger asChild className="md:translate-x-0">
                 <button
                   type="button"
                   data-testid="configure-widgets-button"
                   className={cn({
-                    'flex h-8 w-full items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
+                    'flex h-8 w-[275px] items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
                       true,
                   })}
                 >
-                  Configure widgets
+                  <p>Configure widgets</p>
                 </button>
               </DialogTrigger>
-              <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
-                <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
-                  <h2 className="font-black/85 text-3xl font-light leading-10">
-                    Widgets deck settings
-                  </h2>
-                  <Helper
-                    className={{
-                      button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                      tooltip: 'w-fit-content',
-                    }}
-                    tooltipPosition={{ top: -40, left: -50 }}
-                    message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
-                  >
+            </Helper>
+            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
+              <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+                <h2 className="font-black/85 text-3xl font-light leading-10">
+                  Widgets deck settings
+                </h2>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',
+                    tooltip: 'w-80',
+                  }}
+                  tooltipPosition={{ top: -20, left: 0 }}
+                  message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+                >
+                  <div className="w-[490px]">
                     <Category />
-                  </Helper>
-                  <Helper
-                    className={{
-                      button: HELPER_ID ? '-bottom-10 -right-1.5 z-[20]' : 'hidden',
-                      tooltip: 'w-fit-content',
-                    }}
-                    tooltipPosition={{ top: -40, left: -50 }}
-                    message="Widgets list"
-                  >
-                    <WidgetsMenu />
-                  </Helper>
-                </div>
-                <DialogClose />
-              </DialogContent>
-            </Dialog>
-          </Helper>
+                  </div>
+                </Helper>
+                <Helper
+                  className={{
+                    button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
+                    tooltip: 'w-fit-content',
+                  }}
+                  tooltipPosition={{ top: -70, left: -400 }}
+                  message="Widgets list"
+                >
+                  <WidgetsMenu />
+                </Helper>
+              </div>
+              <DialogClose />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
@@ -225,7 +228,10 @@ const WidgetsContainer: React.FC = () => {
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{
-              button: '-bottom-2.5 -right-0',
+              button:
+                locationTool === 'upload' || locationTool === 'area'
+                  ? 'hidden'
+                  : '-bottom-2.5 -right-0',
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: 100, left: 10 }}

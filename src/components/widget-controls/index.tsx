@@ -5,6 +5,7 @@ import cn from 'lib/classnames';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
 import { mapSettingsAtom } from 'store/map-settings';
+import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -36,6 +37,7 @@ type WidgetControlsType = Readonly<{
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const { showWidget } = useRecoilValue(drawingToolAtom);
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
+  const locationTool = useRecoilValue(locationToolAtom);
 
   const screenWidth = useScreenWidth();
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -54,7 +56,13 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 
-  const HELPER_ID = id === widgets[0].slug;
+  const HELPER_ID = id === activeLayers[0]?.id;
+
+  const showDownloadInfoHelpers =
+    !showWidget &&
+    !isMapSettingsOpen &&
+    HELPER_ID &&
+    (locationTool === 'worldwide' || locationTool === 'search');
 
   return (
     <div
@@ -65,11 +73,10 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     >
       <Helper
         className={{
-          button:
-            !showWidget && !isMapSettingsOpen && HELPER_ID ? '-bottom-3.5 -right-1.5' : 'hidden',
-          tooltip: 'w-28',
+          button: showDownloadInfoHelpers ? '-bottom-3.5 -right-1.5' : 'hidden',
+          tooltip: 'w-80',
         }}
-        tooltipPosition={{ top: -40, left: 42 }}
+        tooltipPosition={{ top: -40, left: 0 }}
         message="Click one of these to find background information about a layer/widget, to download data or to toggle a layer on and off on the map"
       >
         <div className="flex items-center space-x-2">
@@ -81,10 +88,11 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
       {!!layer && (
         <Helper
           className={{
-            button: HELPER_ID ? '-bottom-3.5 -right-1.5' : 'hidden',
-            tooltip: 'w-fit-content',
+            button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-20' : 'hidden',
+            tooltip: 'w-80',
           }}
-          tooltipPosition={{ top: -40, left: 42 }}
+          theme="dark"
+          tooltipPosition={{ top: -40, left: 0 }}
           message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
         >
           <SwitchWrapper id={id}>

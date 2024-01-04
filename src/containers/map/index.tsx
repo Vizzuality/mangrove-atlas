@@ -9,6 +9,7 @@ import { orderByAttribute } from 'lib/utils';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
+import { activeGuideAtom } from 'store/guide';
 import { activeLayersAtom } from 'store/layers';
 import {
   basemapAtom,
@@ -88,9 +89,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
-
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [, setAnalysisState] = useRecoilState(analysisAtom);
+  const guideIsActive = useRecoilValue(activeGuideAtom);
 
   const nationalDashboardLayers = activeLayers.filter((l) =>
     l?.id?.includes('mangrove_national_dashboard')
@@ -353,7 +354,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMapViewStateChange={handleViewState}
         bounds={bounds}
-        interactiveLayerIds={isDrawingToolEnabled ? [] : interactiveLayerIds}
+        interactiveLayerIds={isDrawingToolEnabled || guideIsActive ? [] : interactiveLayerIds}
         onClick={onClickHandler}
         onMouseMove={handleMouseMove}
         onLoad={handleMapLoad}
@@ -378,7 +379,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   button: 'top-1 left-8 z-[20]',
                   tooltip: 'w-fit-content',
                 }}
-                tooltipPosition={{ top: -4, left: 250 }}
+                tooltipPosition={{ top: 90, left: 250 }}
                 message="use these buttons to go full-screen, share link, configure basemap, zoom in/out or reset the bearing"
               >
                 <div className="flex flex-col space-y-2 pt-1">
@@ -394,7 +395,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               </Helper>
             </Controls>
 
-            {locationPopUp.info && (
+            {locationPopUp.info && !guideIsActive && (
               <Popup
                 popUpPosition={locationPopUp?.position}
                 popUpWidth={500}

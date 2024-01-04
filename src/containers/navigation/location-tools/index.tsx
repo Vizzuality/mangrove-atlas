@@ -8,6 +8,7 @@ import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
 import { mapCursorAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
@@ -35,6 +36,7 @@ const LocationTools = () => {
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
+  const guideIsActive = useRecoilValue(activeGuideAtom);
 
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
@@ -153,31 +155,34 @@ const LocationTools = () => {
         {/* //*FIND LOCATIONS* */}
         <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
           <DialogTrigger asChild>
-            <button
-              onClick={handleOnClickSearch}
-              className="flex w-28 cursor-pointer items-center justify-center"
-              data-testid="search-button"
-            >
+            <>
               <Helper
                 className={{
-                  button: '-bottom-3.5 left-7 z-[20]',
-                  tooltip: 'w-fit-content',
+                  button: '-bottom-3.5 right-9 z-20',
+                  tooltip: 'w-fit-content max-w-[400px]',
                 }}
-                tooltipPosition={{ top: -40, left: -50 }}
+                tooltipPosition={{ top: -65, left: -10 }}
                 message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
               >
-                <div className="flex flex-col items-center space-y-1">
-                  <Icon
-                    icon={GLASS_SVG}
-                    className={cn({
-                      'h-8 w-8 fill-current text-white': true,
-                    })}
-                    description="Glass"
-                  />
-                  <p className="whitespace-nowrap font-sans text-sm text-white">Find locations</p>
-                </div>
+                <button
+                  onClick={handleOnClickSearch}
+                  className="flex w-28 cursor-pointer items-center justify-center"
+                  data-testid="search-button"
+                  disabled={guideIsActive}
+                >
+                  <div className="flex flex-col items-center space-y-1">
+                    <Icon
+                      icon={GLASS_SVG}
+                      className={cn({
+                        'h-8 w-8 fill-current text-white': true,
+                      })}
+                      description="Glass"
+                    />
+                    <p className="whitespace-nowrap font-sans text-sm text-white">Find locations</p>
+                  </div>
+                </button>
               </Helper>
-            </button>
+            </>
           </DialogTrigger>
 
           <LocationDialogContent close={closeMenu} />
@@ -191,10 +196,10 @@ const LocationTools = () => {
         >
           <Helper
             className={{
-              button: '-bottom-3.5 left-7 z-[20]',
-              tooltip: 'w-fit-content',
+              button: '-bottom-3.5 right-2.5 z-[20]',
+              tooltip: 'w-fit-content max-w-[400px]',
             }}
-            tooltipPosition={{ top: -40, left: -50 }}
+            tooltipPosition={{ top: -65, left: 0 }}
             message="use this function to calculate statistics for your own custom area of interest"
           >
             <div className="flex flex-col items-center space-y-1">
@@ -213,11 +218,11 @@ const LocationTools = () => {
         {/* //*UPLOAD SHAPEFILE* */}
         <Helper
           className={{
-            button: '-bottom-3.5 -right-1.5 z-[20]',
-            tooltip: 'w-fit-content',
+            button: '-bottom-3.5 right-9 z-[20]',
+            tooltip: 'w-fit-content max-w-[400px]',
           }}
-          tooltipPosition={{ top: -40, left: -50 }}
-          message="use this button to go back to the worldwide overview"
+          tooltipPosition={{ top: -65, left: 0 }}
+          message="use this button to upload an area you want to analyze."
         >
           <button
             type="button"
