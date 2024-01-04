@@ -104,7 +104,7 @@ export const BlogContent = () => {
       <DialogClose
         onClose={() => setPostInfo(null)}
         className={cn({
-          'md:top-initial top-5': true,
+          'md:top-initial md:focus-outline top-5 focus:outline-none': true,
           'text-white': !!postInfo,
         })}
       />

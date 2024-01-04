@@ -1,6 +1,6 @@
 import BlogContent from 'containers/blog/content';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
+import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
 
 import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
