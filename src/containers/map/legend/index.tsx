@@ -207,7 +207,7 @@ const Legend = () => {
                                       >
                                         <Icon
                                           icon={INFO_SVG}
-                                          className="mr-1.5 h-[17px] w-[17px] fill-black/40"
+                                          className="mr-1.5 mt-1.5 h-[17px] w-[17px] fill-black/40"
                                         />
                                       </Helper>
                                     </TooltipTrigger>

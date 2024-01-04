@@ -185,7 +185,7 @@ const WidgetsContainer: React.FC = () => {
         <Blog closeBlogBanner={closeBlogBanner} />
       )}
       {screenWidth > 0 && screenWidth < breakpoints.md && (
-        <div>
+        <div className="pb-16 md:pb-0">
           {widgets.map(({ slug, name, applicability }, index) => {
             const Widget = WIDGETS[slug];
             return (
