@@ -58,6 +58,9 @@ const Legend = () => {
         if (l.id === layer) {
           return { ...l, visibility: l.visibility === 'visible' ? 'none' : 'visible' };
         }
+        if (l.id === 'custom-area') {
+          return null;
+        }
         return l;
       });
 
@@ -156,6 +159,7 @@ const Legend = () => {
                 <div className="divide-black/42 box-content flex max-h-[70vh] flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:print:hidden">
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
+                      if (l.id === 'custom-area') return null;
                       const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
 
                       const Widget = WIDGETS[l.id] as React.ElementType;

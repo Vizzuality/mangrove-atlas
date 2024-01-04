@@ -68,7 +68,7 @@ const Legend = () => {
     },
     [activeLayers, setActiveLayers]
   );
-  console.log('activeLayers', activeLayers);
+
   const settings = useRecoilValue(nationalDashboardSettingsAtom);
   const nationalDashboardLayerName =
     settings && Object.values(settings).filter((s) => s.locationId === locationId)[0]?.name;
