@@ -77,6 +77,7 @@ import InternationalStatusWidget from 'containers/datasets/international-status'
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import IUCNEcoregionInfo from 'containers/datasets/iucn-ecoregion/info.mdx';
 import IUCNEcoregionLayer from 'containers/datasets/iucn-ecoregion/layer';
+import IUCNEcoregionsMapLegend from 'containers/datasets/iucn-ecoregion/map-legend';
 import IUCNEcoregionWidget from 'containers/datasets/iucn-ecoregion/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
 import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
@@ -199,6 +200,7 @@ export const MAP_LEGENDS = {
   mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
   mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,
   mangrove_restoration_sites: RestorationSitesMapLegend,
+  mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
 };
 
 export const MAP_POP_UPS = {
