@@ -1,7 +1,7 @@
 const AlertsMapLegend = () => {
   return (
-    <div className="flex flex-col space-y-2 font-sans text-sm text-black/85">
-      <div className="flex space-x-2">
+    <div className="flex flex-col space-y-2 font-sans text-sm text-black/60">
+      <div className="flex space-x-4">
         <span
           style={{
             background: 'linear-gradient(180deg, #C72BD6 0%, #EB4444 52.39%, #FFC200 100%)',

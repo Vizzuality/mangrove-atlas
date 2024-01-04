@@ -96,6 +96,7 @@ import PopupRestoration from 'containers/datasets/restoration/map-popup';
 import RestorationWidget from 'containers/datasets/restoration/widget';
 import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
 import RestorationSitesLayer from 'containers/datasets/restoration-sites/layer';
+import RestorationSitesMapLegend from 'containers/datasets/restoration-sites/map-legend';
 import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
@@ -197,6 +198,7 @@ export const MAP_LEGENDS = {
   mangrove_coastal_protection_area: FloodProtectionAreaMapLegend,
   mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
   mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,
+  mangrove_restoration_sites: RestorationSitesMapLegend,
 };
 
 export const MAP_POP_UPS = {
