@@ -123,6 +123,7 @@ const Legend = () => {
     open: { y: '0%', opacity: 1 },
     close: { y: '-200%', opacity: 0 },
   };
+  console.log({ activeLayers });
 
   return (
     <div className="flex w-screen justify-center">

@@ -4,8 +4,8 @@ const SpeciesDistributionMapLegend = () => {
   const { legend } = useMangroveSpecies();
 
   return (
-    <div className="w-[260px]">
-      <div className="flex  justify-between text-black/85">
+    <div className="w-[280px]">
+      <div className="flex justify-between text-xs text-black/60">
         <p>{legend[0]}</p>
         <p>{legend[2]}</p>
       </div>

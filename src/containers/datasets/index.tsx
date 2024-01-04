@@ -54,6 +54,9 @@ import FisheriesMapLegend from 'containers/datasets/fisheries/map-legend';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
+import FloodProtectionAreaMapLegend from 'containers/datasets/flood-protection/map-legend/area';
+import FloodProtectionPopulationMapLegend from 'containers/datasets/flood-protection/map-legend/population';
+import FloodProtectionStockMapLegend from 'containers/datasets/flood-protection/map-legend/stock';
 import FloodProtectionAreaLayer from 'containers/datasets/flood-protection/storms/layers/area';
 import FloodProtectionPopulationLayer from 'containers/datasets/flood-protection/storms/layers/population';
 import FloodProtectionStockLayer from 'containers/datasets/flood-protection/storms/layers/stock';
@@ -188,6 +191,9 @@ export const MAP_LEGENDS = {
   mangrove_tidal_flats: TidalFlatsMapLegend,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
   mangrove_protected_areas: ProtectedAreasMapLegend,
+  mangrove_coastal_protection_area: FloodProtectionAreaMapLegend,
+  mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
+  mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,
 };
 
 export const MAP_POP_UPS = {
