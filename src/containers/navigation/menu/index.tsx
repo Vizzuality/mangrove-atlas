@@ -29,7 +29,7 @@ const Menu = () => {
     <Dialog>
       <Helper
         className={{
-          button: '-top-2 -right-5',
+          button: '-top-2 -right-4',
           tooltip: 'w-fit-content',
         }}
         theme="dark"
