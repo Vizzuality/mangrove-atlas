@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -15,38 +15,48 @@ export const Share = ({ className }: { className?: string }) => {
   const [currentUrl, setCurrentUrl] = useState<string | null>(null);
   const [embeddedLink, setEmbeddedLink] = useState<string | null>(null);
 
-  const [, setBttnText] = useState('Copy link');
+  const [shareLinkBtnText, setShareLinkBtnText] = useState('Copy link');
+  const [shareEmbedCodeBtnText, setShareEmbedCodeBtnText] = useState('Copy code');
+
   useEffect(() => {
     setCurrentUrl(window.location.href);
-    setEmbeddedLink(`${window.location.origin}/embedded?${asPath.slice(1, asPath.length)}`);
+    setEmbeddedLink(
+      `<iframe src="${window.location.origin}/embedded?${asPath.slice(
+        1,
+        asPath.length
+      )}" title="Global Mangrove Watch"></iframe>`
+    );
   }, [asPath]);
 
-  const copyShareLink = () => {
+  const copyShareLink = useCallback(() => {
     navigator.clipboard
       .writeText(currentUrl)
       .then(() => {
-        setBttnText('Copied');
+        setShareLinkBtnText('Copied');
         setTimeout(function () {
-          setBttnText('Copy link');
-        }, 3000);
+          setShareLinkBtnText('Copy link');
+        }, 5000);
       })
       .catch((err: ErrorEvent) => {
         console.info(err.message);
       });
-  };
+  }, [currentUrl]);
 
-  const copyEmbeddedCode = () =>
-    navigator.clipboard
-      .writeText(embeddedLink)
-      .then(() => {
-        setBttnText('Copied');
-        setTimeout(function () {
-          setBttnText('Copy link');
-        }, 3000);
-      })
-      .catch((err: ErrorEvent) => {
-        console.info(err.message);
-      });
+  const copyEmbeddedCode = useCallback(
+    () =>
+      navigator.clipboard
+        .writeText(embeddedLink)
+        .then(() => {
+          setShareEmbedCodeBtnText('Copied');
+          setTimeout(function () {
+            setShareEmbedCodeBtnText('Copy code');
+          }, 5000);
+        })
+        .catch((err: ErrorEvent) => {
+          console.info(err.message);
+        }),
+    [embeddedLink]
+  );
 
   return (
     <Dialog>
@@ -76,19 +86,19 @@ export const Share = ({ className }: { className?: string }) => {
                 onClick={copyShareLink}
                 className="whitespace-nowrap rounded-3xl border border-brand-800/20 py-1 px-5 font-semibold text-brand-800 hover:bg-brand-800/20"
               >
-                Copy link
+                {shareLinkBtnText}
               </button>
             </div>
           </div>
           <div>
-            <h4 className="ml-4 text-[13px] font-semibold">Link to embedded map</h4>
+            <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
             <div className="flex h-12  items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
               <p className="truncate">{embeddedLink}</p>
               <button
                 onClick={copyEmbeddedCode}
                 className="whitespace-nowrap rounded-3xl border border-brand-800/20 py-1 px-5 font-semibold text-brand-800 hover:bg-brand-800/20"
               >
-                Copy embedded link
+                {shareEmbedCodeBtnText}
               </button>
             </div>
           </div>
