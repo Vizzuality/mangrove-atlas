@@ -33,7 +33,7 @@ const PopupRestoration = ({
   return (
     <div
       className={cn({
-        'c-restoration-popup relative flex w-[460px] flex-col items-start bg-white': true,
+        'c-restoration-popup relative flex w-[500px] flex-col items-start bg-white': true,
         [className]: !!className,
       })}
     >
