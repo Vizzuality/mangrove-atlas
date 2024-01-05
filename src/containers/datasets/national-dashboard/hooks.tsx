@@ -71,7 +71,7 @@ export function useSource({
 export function useLayers({
   id,
   settings,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];

@@ -236,7 +236,7 @@ export function useSource(years: number[]): SourceProps {
 }
 export function useLayer({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];

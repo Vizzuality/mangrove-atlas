@@ -28,7 +28,7 @@ export function useSource(): SourceProps & { key: string } {
 
 export function useLayer({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -39,7 +39,7 @@ export function useLayer({
     id,
     type: 'raster',
     paint: {
-      'raster-opacity': 0.5,
+      'raster-opacity': opacity * 0.5,
     },
     layout: {
       visibility,

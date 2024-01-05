@@ -80,7 +80,7 @@ export function useSource(): SourceProps {
 
 export function useLayers({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -146,7 +146,7 @@ export function useLayers({
           maxValue,
           '#205272',
         ],
-        'fill-opacity': opacity,
+        'fill-opacity': opacity * 0.6,
       },
       layout: {
         visibility,
@@ -183,7 +183,7 @@ export function useLayers({
           '#205272',
         ],
         'line-width': 1,
-        'line-opacity': 1,
+        'line-opacity': opacity * 0.6,
       },
     },
   ];

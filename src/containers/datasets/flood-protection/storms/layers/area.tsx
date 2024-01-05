@@ -18,7 +18,7 @@ export function useSource(): SourceProps {
 
 export function useLayers({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -49,7 +49,7 @@ export function useLayers({
           max,
           '#63589F',
         ],
-        'fill-opacity': opacity,
+        'fill-opacity': opacity * 0.7,
         'fill-outline-color': [
           'interpolate',
           ['linear'],

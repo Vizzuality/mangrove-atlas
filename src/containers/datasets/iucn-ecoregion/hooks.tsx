@@ -147,7 +147,7 @@ export function useSource(): SourceProps {
 
 export function useLayers({
   id,
-  opacity = 0.5,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -175,7 +175,7 @@ export function useLayers({
       paint: {
         'fill-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
 
-        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity],
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity * 0.55],
       },
       layout: {
         visibility,
@@ -190,7 +190,7 @@ export function useLayers({
         'line-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
         'line-width': 1.75,
         'line-offset': -0.3,
-        'line-opacity': opacity,
+        'line-opacity': opacity * 0.55,
       },
       layout: {
         visibility,

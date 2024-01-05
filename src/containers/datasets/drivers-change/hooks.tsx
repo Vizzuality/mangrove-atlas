@@ -117,7 +117,7 @@ export function useSource(): SourceProps {
 
 export function useLayers({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -144,7 +144,7 @@ export function useLayers({
       'source-layer': 'main_loss_drivers',
       paint: {
         'fill-color': ['match', ['get', 'primary_driver'], ...COLORS, '#ccc'],
-        'fill-opacity': opacity,
+        'fill-opacity': opacity * 0.65,
       },
       layout: {
         visibility,

@@ -469,7 +469,7 @@ export function useSources(): SourceProps[] {
 
 export function useLayers({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -512,7 +512,15 @@ export function useLayers({
           // Adjust the heatmap radius by zoom level
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
           // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 2, 1, 11, opacity],
+          'heatmap-opacity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            opacity * 2,
+            opacity * 1,
+            opacity * 11,
+            opacity * 0.5,
+          ],
         },
         layout: {
           visibility,
@@ -533,7 +541,15 @@ export function useLayers({
           'circle-stroke-color': 'rgba(255, 194, 0, 1)',
           'circle-stroke-width': 1,
           'circle-blur': 0.5,
-          'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 10, opacity],
+          'circle-opacity': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            opacity * 9,
+            opacity * 0,
+            opacity * 10,
+            opacity * 0.7,
+          ],
         },
         layout: {
           visibility,

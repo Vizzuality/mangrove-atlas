@@ -222,7 +222,7 @@ export function useSource(): SourceProps {
 export function useLayers({
   year,
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   year: number;
