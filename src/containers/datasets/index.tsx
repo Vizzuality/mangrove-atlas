@@ -54,6 +54,9 @@ import FisheriesMapLegend from 'containers/datasets/fisheries/map-legend';
 import FisheriesWidget from 'containers/datasets/fisheries/widget';
 import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
+import FloodProtectionAreaMapLegend from 'containers/datasets/flood-protection/map-legend/area';
+import FloodProtectionPopulationMapLegend from 'containers/datasets/flood-protection/map-legend/population';
+import FloodProtectionStockMapLegend from 'containers/datasets/flood-protection/map-legend/stock';
 import FloodProtectionAreaLayer from 'containers/datasets/flood-protection/storms/layers/area';
 import FloodProtectionPopulationLayer from 'containers/datasets/flood-protection/storms/layers/population';
 import FloodProtectionStockLayer from 'containers/datasets/flood-protection/storms/layers/stock';
@@ -74,6 +77,7 @@ import InternationalStatusWidget from 'containers/datasets/international-status'
 import InternationalStatusInfo from 'containers/datasets/international-status/info.mdx';
 import IUCNEcoregionInfo from 'containers/datasets/iucn-ecoregion/info.mdx';
 import IUCNEcoregionLayer from 'containers/datasets/iucn-ecoregion/layer';
+import IUCNEcoregionsMapLegend from 'containers/datasets/iucn-ecoregion/map-legend';
 import IUCNEcoregionWidget from 'containers/datasets/iucn-ecoregion/widget';
 import NationalDashboardInfo from 'containers/datasets/national-dashboard/info.mdx';
 import NationalDashboardLayer from 'containers/datasets/national-dashboard/layer';
@@ -93,6 +97,7 @@ import PopupRestoration from 'containers/datasets/restoration/map-popup';
 import RestorationWidget from 'containers/datasets/restoration/widget';
 import RestorationSitesInfo from 'containers/datasets/restoration-sites/info.mdx';
 import RestorationSitesLayer from 'containers/datasets/restoration-sites/layer';
+import RestorationSitesMapLegend from 'containers/datasets/restoration-sites/map-legend';
 import RestorationSitesWidget from 'containers/datasets/restoration-sites/widget';
 import SpeciesDistributionInfo from 'containers/datasets/species-distribution/info.mdx';
 import SpeciesDistributionLayer from 'containers/datasets/species-distribution/layer';
@@ -138,6 +143,9 @@ export const WIDGETS = {
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeWidget,
   mangrove_iucn_ecoregion: IUCNEcoregionWidget,
   mangrove_salt_marsh: SaltMarshWidget,
+  mangrove_coastal_protection_area: FloodProtectionWidget,
+  mangrove_coastal_protection_population: FloodProtectionWidget,
+  mangrove_coastal_protection_stock: FloodProtectionWidget,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {
@@ -188,6 +196,11 @@ export const MAP_LEGENDS = {
   mangrove_tidal_flats: TidalFlatsMapLegend,
   mangrove_global_tidal_wetland_change: GlobalTidalWetlandChangeMapLegend,
   mangrove_protected_areas: ProtectedAreasMapLegend,
+  mangrove_coastal_protection_area: FloodProtectionAreaMapLegend,
+  mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
+  mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,
+  mangrove_restoration_sites: RestorationSitesMapLegend,
+  mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
 };
 
 export const MAP_POP_UPS = {

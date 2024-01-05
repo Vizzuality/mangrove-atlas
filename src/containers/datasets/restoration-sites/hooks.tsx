@@ -8,6 +8,7 @@ import {
 } from 'store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
@@ -120,7 +121,15 @@ export function useSource(): SourceProps {
     cluster: true,
   };
 }
-export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayer({
+  id,
+  opacity = 1,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   return [
     {
       id: `${id}-clusters`,
@@ -132,9 +141,13 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'circle-stroke-width': 1,
         'circle-stroke-color': '#CC61B0',
         'circle-radius': ['step', ['get', 'point_count'], 10, 100, 20, 500, 30],
+        'circle-opacity': opacity,
+        'circle-stroke-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
-
     {
       id: `${id}-clusters-points`,
       type: 'circle',
@@ -145,6 +158,11 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'circle-radius': 5,
         'circle-stroke-width': 1,
         'circle-stroke-color': '#CC61B0',
+        'circle-opacity': opacity,
+        'circle-stroke-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
     {
@@ -156,10 +174,11 @@ export function useLayer({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'text-field': ['get', 'point_count_abbreviated'],
         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
         'text-size': 12,
-        // 'text-allow-overlap': true,
+        visibility,
       },
       paint: {
         'text-color': '#ffffff',
+        'text-opacity': opacity,
       },
     },
   ];

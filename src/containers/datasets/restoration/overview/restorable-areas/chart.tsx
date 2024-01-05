@@ -53,9 +53,9 @@ const RestorableAreasChart = ({ data }) => {
   };
 
   return (
-    <div className="flex flex-col-reverse items-center pb-6 md:grid md:grid-cols-2 md:pb-10">
+    <div className="flex flex-col-reverse items-center pb-6 md:grid md:w-full md:grid-cols-2 md:pb-10">
       <Legend items={chartData} />
-      <Chart className="w-screen md:w-auto" config={config} />
+      <Chart className="w-screen md:w-full" config={config} />
     </div>
   );
 };

@@ -2,14 +2,10 @@ import React, { useCallback, ReactElement, FC } from 'react';
 
 import cn from 'lib/classnames';
 
-import { drawingToolAtom } from 'store/drawing-tool';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import Helper from 'containers/guide/helper';
-import { useWidgets } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import WidgetControls from 'components/widget-controls';
@@ -33,12 +29,9 @@ type WidgetLayoutProps = {
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability, info } = props;
 
-  const { showWidget } = useRecoilValue(drawingToolAtom);
-
   const isWidgetActive = useRecoilValue(getWidgetActive(id));
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
-  const widgets = useWidgets();
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
@@ -60,9 +53,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   };
 
   if (Boolean(children.type() === null)) return null;
-  const filteredWidgets = widgets.find((w) => w.slug !== 'mangrove_national_dashboard');
-  const HELPER_ID =
-    id === 'mangrove_national_dashboard' ? 'mangrove_national_dashboard' : filteredWidgets?.slug;
+
   return (
     <AnimatePresence>
       <motion.div

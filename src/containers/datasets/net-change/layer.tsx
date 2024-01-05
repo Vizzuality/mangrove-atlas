@@ -13,6 +13,7 @@ import { useLayer, useSources } from './hooks';
 export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers.find((l) => l.id === id);
+
   const SOURCES = useSources();
   const LAYER = useLayer({
     id,

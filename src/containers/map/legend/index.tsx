@@ -58,6 +58,9 @@ const Legend = () => {
         if (l.id === layer) {
           return { ...l, visibility: l.visibility === 'visible' ? 'none' : 'visible' };
         }
+        if (l.id === 'custom-area') {
+          return null;
+        }
         return l;
       });
 
@@ -156,6 +159,8 @@ const Legend = () => {
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
+                      if (l.id === 'custom-area') return null;
+
                       const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
 
                       const Widget = WIDGETS[l.id] as React.ElementType;
@@ -191,7 +196,7 @@ const Legend = () => {
                             </div>
                             <div className="ml-2 flex items-center">
                               <Dialog>
-                                <DialogTrigger asChild>
+                                <DialogTrigger>
                                   <Tooltip>
                                     <TooltipTrigger>
                                       <Helper
@@ -228,7 +233,7 @@ const Legend = () => {
 
                                 <DialogContent
                                   className={cn({
-                                    'scroll-y mt-10 rounded-3xl !shadow-widget': true,
+                                    'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
                                     hidden: guideIsActive,
                                   })}
                                   overlay={false}

@@ -30,7 +30,7 @@ const LayerManagerContainer = () => {
   const layersSettings = useRecoilValue(layersSettingsAtom);
 
   const nationaDashboardLayers = layersIds.filter((l) => l === 'mangrove_national_dashboard');
-  console.log(nationaDashboardLayers, layersSettings, 'nationaDashboardLayers');
+
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
   const nationalDashboardLayerIds = layers
@@ -70,11 +70,7 @@ const LayerManagerContainer = () => {
     [setInteractiveLayerIds]
   );
   const LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS = [...nationaDashboardLayers, ...LAYERS_FILTERED];
-  console.log(
-    LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS,
-    layersSettings,
-    'LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS'
-  );
+
   return (
     <>
       {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {

@@ -25,7 +25,7 @@ const NetChangeMapLegend = () => (
           })}
           style={{ backgroundColor: d.color }}
         />
-        <span className="text-sm text-black/85">{d.label}</span>
+        <span className="text-sm text-black/60">{d.label}</span>
       </li>
     ))}
   </ul>

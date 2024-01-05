@@ -150,8 +150,8 @@ const WidgetsContainer: React.FC = () => {
                 </button>
               </DialogTrigger>
             </Helper>
-            <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit space-y-8 rounded-3xl">
-              <div className="no-scrollbar max-h-[85vh] space-y-8 overflow-y-auto">
+            <DialogContent className="scroll-y left-18 top-16 min-h-fit space-y-8 rounded-3xl">
+              <div className="no-scrollbar max-h-[80vh] space-y-8 overflow-y-auto">
                 <h2 className="font-black/85 text-3xl font-light leading-10">
                   Widgets deck settings
                 </h2>

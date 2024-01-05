@@ -3,6 +3,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 import { formatAxis } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { Visibility } from 'mapbox-gl';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -144,7 +145,15 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
+export function useLayers({
+  id,
+  opacity = 0.5,
+  visibility = 'visible',
+}: {
+  id: LayerProps['id'];
+  opacity?: number;
+  visibility?: Visibility;
+}): LayerProps[] {
   const OVERALL_ASSESMENT = {
     CE: '#EE4D5A',
     VU: '#ECDA9A',
@@ -165,7 +174,11 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
       type: 'fill',
       paint: {
         'fill-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
-        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.55],
+
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity],
+      },
+      layout: {
+        visibility,
       },
     },
     {
@@ -177,6 +190,10 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
         'line-color': ['match', ['get', 'overall_assessment'], ...COLORS, '#ccc'],
         'line-width': 1.75,
         'line-offset': -0.3,
+        'line-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
   ];
