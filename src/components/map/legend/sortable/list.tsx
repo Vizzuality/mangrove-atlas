@@ -72,13 +72,13 @@ export const SortableList: React.FC<SortableListProps> = ({
   }, [children]);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 5,
+        distance: 0.5,
+        tolerance: 10,
       },
     })
   );
