@@ -1,5 +1,3 @@
-import cn from 'lib/classnames';
-
 import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
