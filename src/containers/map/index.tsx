@@ -239,6 +239,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const removePopup = (key?: PopUpKey) => {
     if (!key || key === 'restoration') setRestorationPopUp({ popupInfo: null });
     if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ popupInfo: null });
+    if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
   };
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
@@ -266,6 +267,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         },
       });
     }
+    if (!locationFeature) removePopup('location');
 
     if (restorationFeature) {
       setRestorationPopUp({
@@ -401,7 +403,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 popUpWidth={500}
                 longitude={locationPopUp?.popup[1]}
                 latitude={locationPopUp?.popup[0]}
-                onClose={() => removePopup('ecoregion')} // removePopup('restoration')
+                onClose={() => removePopup('ecoregion')}
               >
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
@@ -422,11 +424,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     className="rounded-3xl"
                   />
                 ) : null}
-
-                {/* {activeLayers.map((l) => {
-                const PopUp = MAP_POP_UPS[l.id] as ElementType;
-                return PopUp && <PopUp key={l.id} />;
-              })} */}
 
                 {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
                   <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
