@@ -1,5 +1,3 @@
-import cn from 'lib/classnames';
-
 import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
@@ -21,7 +19,7 @@ const News = () => {
         <div data-testid="menu-button" className="flex cursor-pointer">
           <Helper
             className={{
-              button: '-top-2.5 -right-6 z-20',
+              button: '-top-2.5 -right-4 z-20',
               tooltip: 'w-fit-content',
             }}
             theme="dark"

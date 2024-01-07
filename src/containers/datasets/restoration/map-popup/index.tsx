@@ -29,7 +29,7 @@ const PopupRestoration = ({
   );
 
   return (
-    <div className="c-restoration-popup relative flex w-[460px] flex-col items-start rounded-3xl bg-white">
+    <div className="c-restoration-popup relative flex w-[500px] flex-col items-start rounded-3xl bg-white">
       <RestorationScores
         data={restorationPopUpInfo?.popupInfo}
         isOpen={open === 'restoration'}

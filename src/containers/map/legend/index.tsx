@@ -198,7 +198,8 @@ const Legend = () => {
                               <Dialog>
                                 <DialogTrigger>
                                   <Tooltip>
-                                    <TooltipTrigger>
+                                    {/* //!TODO: These asChild removes the tooltip from the interface but aldo removes hydratation error */}
+                                    <TooltipTrigger asChild>
                                       <Helper
                                         className={{
                                           button:

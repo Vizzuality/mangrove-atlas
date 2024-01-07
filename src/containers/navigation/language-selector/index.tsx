@@ -46,7 +46,7 @@ const LanguageSelector = () => {
   return (
     <Helper
       className={{
-        button: '-top-2 -right-3',
+        button: 'top-0 -right-4',
         tooltip: 'w-fit-content',
       }}
       theme="dark"
@@ -54,7 +54,7 @@ const LanguageSelector = () => {
       message="Choose your preferred language here. There is a choice between English, French and Spanish"
     >
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className="h-11">
           <div className="flex items-center space-x-2">
             <Icon
               icon={TRANSLATE_SVG}

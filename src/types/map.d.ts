@@ -44,4 +44,4 @@ export type LocationPopUp = {
   type: 'country' | 'wpda';
 };
 
-export type PopUpKey = 'restoration' | 'ecoregion';
+export type PopUpKey = 'restoration' | 'ecoregion' | 'location';

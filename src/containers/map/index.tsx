@@ -5,12 +5,10 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
-import { orderByAttribute } from 'lib/utils';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
-import { activeLayersAtom } from 'store/layers';
 import {
   basemapAtom,
   URLboundsAtom,
@@ -32,7 +30,6 @@ import { useScreenWidth } from 'hooks/media';
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 import Helper from 'containers/guide/helper';
-import { LAYERS_ORDER } from 'containers/layers/constants';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
@@ -53,12 +50,10 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
-import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';
 
-type NationalDashboardLayer = `mangrove_national_dashboard${string}`;
 export const DEFAULT_PROPS = {
   initialViewState: {
     longitude: 0,
@@ -89,19 +84,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
-
-  const nationalDashboardLayers = activeLayers.filter((l) =>
-    l?.id?.includes('mangrove_national_dashboard')
-  );
-  const ordered = orderByAttribute(LAYERS_ORDER, activeLayers);
-
-  const activeOrdered = [...nationalDashboardLayers, ...ordered] as (WidgetSlugType &
-    ContextualBasemapsId &
-    'custom-area' &
-    NationalDashboardLayer)[];
 
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number; y: number };
@@ -239,6 +224,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const removePopup = (key?: PopUpKey) => {
     if (!key || key === 'restoration') setRestorationPopUp({ popupInfo: null });
     if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ popupInfo: null });
+    if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
   };
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
@@ -266,6 +252,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         },
       });
     }
+    if (!locationFeature) removePopup('location');
 
     if (restorationFeature) {
       setRestorationPopUp({
@@ -372,7 +359,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
-
             <Controls className="absolute bottom-11 right-6 items-center print:hidden">
               <Helper
                 className={{
@@ -401,7 +387,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 popUpWidth={500}
                 longitude={locationPopUp?.popup[1]}
                 latitude={locationPopUp?.popup[0]}
-                onClose={() => removePopup('ecoregion')} // removePopup('restoration')
+                onClose={() => removePopup('ecoregion')}
               >
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
@@ -422,11 +408,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     className="rounded-3xl"
                   />
                 ) : null}
-
-                {/* {activeLayers.map((l) => {
-                const PopUp = MAP_POP_UPS[l.id] as ElementType;
-                return PopUp && <PopUp key={l.id} />;
-              })} */}
 
                 {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
                   <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
