@@ -61,7 +61,7 @@ export function useSource(): SourceProps {
 
 export function useLayer({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -100,7 +100,7 @@ export function useLayer({
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],
       paint: {
         'fill-pattern': 'pattern',
-        'fill-opacity': opacity,
+        'fill-opacity': opacity * 0.5,
       },
       layout: {
         visibility,

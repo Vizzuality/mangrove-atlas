@@ -13,7 +13,7 @@ export function useSource(): SourceProps {
 }
 export function useLayers({
   id,
-  opacity = 1,
+  opacity,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
@@ -44,7 +44,12 @@ export function useLayers({
               100,
               '#224294',
             ],
-            'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, opacity],
+            'fill-opacity': [
+              'case',
+              ['boolean', ['feature-state', 'hover'], false],
+              1,
+              opacity * 0.6,
+            ],
             'fill-outline-color': [
               'interpolate',
               ['linear'],
