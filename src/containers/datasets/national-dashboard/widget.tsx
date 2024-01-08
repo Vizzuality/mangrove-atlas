@@ -46,6 +46,7 @@ const NationalDashboard = () => {
                 {sources.map(({ source, years, unit, data_source }) => {
                   const dataSource = data_source.find((d) => d.year === currentYear);
                   const color = colorsScale.filter((c, i) => i === index);
+
                   return (
                     <>
                       <div className="grid grid-cols-4 text-sm font-normal">
@@ -56,6 +57,7 @@ const NationalDashboard = () => {
 
                       <IndicatorSource
                         id="mangrove_national_dashboard_layer"
+                        location={data.location}
                         layerIndex={index}
                         key={source}
                         source={source}
@@ -63,7 +65,6 @@ const NationalDashboard = () => {
                         unit={unit}
                         dataSource={dataSource}
                         color={color}
-                        location={data.location}
                         yearSelected={currentYear}
                         setYearSelected={setYearSelected}
                       />

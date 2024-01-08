@@ -32,13 +32,13 @@ type DataSourceTypes = {
 
 type IndicatorSourceTypes = {
   id: WidgetSlugType;
+  location: number;
   layerIndex: number;
   source: string;
   years: number[];
   unit: string;
   dataSource: DataSourceTypes;
   color: string;
-  location: number;
   yearSelected: number;
   setYearSelected: (year: number) => void;
 };
@@ -46,6 +46,7 @@ type IndicatorSourceTypes = {
 const IndicatorSource = ({
   id,
   source,
+  location,
   layerIndex,
   years,
   unit,
@@ -68,6 +69,7 @@ const IndicatorSource = ({
             visibility: 'visible',
             settings: {
               name: source,
+              locationId: location,
               layerIndex,
               source: dataSource.layer_link,
               source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
