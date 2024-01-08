@@ -6,9 +6,9 @@ import cn from 'lib/classnames';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import BlogContent from 'containers/blog/content';
 import Helper from 'containers/guide/helper';
 import About from 'containers/navigation/menu/about';
+import BlogContent from 'containers/news/content';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
@@ -64,9 +64,6 @@ const Menu = () => {
             </h2>
             <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
               <button onClick={() => section && setSection('about')}>About this tool</button>
-              {/* {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-                      <button onClick={() => section && setSection('news')}>News</button>
-                    )} */}
             </div>
             <div className="space-y-4 pb-6">
               <p className="text-xs font-bold uppercase">Powered by</p>

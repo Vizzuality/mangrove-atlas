@@ -31,7 +31,7 @@ export function useLayers({
       paint: {
         'fill-color': '#286ce2',
         'fill-outline-color': 'hsla(0, 0%, 0%, 0)',
-        'fill-opacity': opacity,
+        'fill-opacity': opacity * 0.1,
       },
     },
     {
@@ -44,7 +44,7 @@ export function useLayers({
       },
       paint: {
         'line-color': '#286ce2',
-        'line-opacity': 0.3,
+        'line-opacity': opacity * 0.3,
       },
     },
     {

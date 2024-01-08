@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -10,11 +10,10 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
-import { useLocalStorage, useWindowSize } from 'usehooks-ts';
+import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
 
-import Blog from 'containers/blog';
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
@@ -28,7 +27,7 @@ import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
-const LOCAL_STORAGE_KEY = 'mangroves_blog';
+
 const HELPER_ID = 'menu-categories';
 
 const WidgetsContainer: React.FC = () => {
@@ -37,28 +36,11 @@ const WidgetsContainer: React.FC = () => {
   const widgetsAvailabe = useWidgets();
 
   const widgets = !!activeWidgets.length ? widgetsAvailabe : widgetsAvailabe;
-  const [blogStorage, setBlogStorage] = useLocalStorage(LOCAL_STORAGE_KEY, undefined);
-  const [isBlogActive, setBlogActive] = useState(false);
+
   const setPrintingMode = useSetRecoilState(printModeState);
   const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
-
-  const closeBlogBanner = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      e.preventDefault();
-
-      setBlogStorage(String(false));
-      setBlogActive(false);
-    },
-    [setBlogStorage]
-  );
-
-  useEffect(() => {
-    if (!blogStorage) {
-      setBlogActive(true);
-    }
-  }, [blogStorage, setBlogActive]);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
@@ -101,7 +83,7 @@ const WidgetsContainer: React.FC = () => {
       <div className="py-1">
         <div
           className={cn({
-            'grid w-full grid-cols-2 justify-between print:hidden': true,
+            'grid w-full grid-cols-2 justify-between gap-1 print:hidden': true,
             hidden: locationTool === 'area' || locationTool === 'upload',
           })}
         >
@@ -118,7 +100,7 @@ const WidgetsContainer: React.FC = () => {
                 type="button"
                 data-testid="expand-collapse-button"
                 className={cn({
-                  'h-8 w-[270px] rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
+                  'h-8 w-[262px] rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
                     true,
                   'bg-white': widgetsCollapsedChecker,
                   'print:hidden': screenWidth >= breakpoints.md,
@@ -144,7 +126,7 @@ const WidgetsContainer: React.FC = () => {
                   type="button"
                   data-testid="configure-widgets-button"
                   className={cn({
-                    'flex h-8 w-[275px] items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
+                    'flex h-8 w-[262px] items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
                       true,
                   })}
                 >
@@ -186,9 +168,6 @@ const WidgetsContainer: React.FC = () => {
         </div>
       </div>
 
-      {isBlogActive && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-        <Blog closeBlogBanner={closeBlogBanner} />
-      )}
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
           {widgets.map(({ slug, name, applicability }, index) => {

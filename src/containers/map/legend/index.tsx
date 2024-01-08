@@ -1,7 +1,5 @@
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from 'lib/classnames';
 
 import { activeGuideAtom } from 'store/guide';
@@ -12,8 +10,6 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { MAP_LEGENDS, WIDGETS } from 'containers/datasets';
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
@@ -34,19 +30,9 @@ import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
 
-const Legend = () => {
-  const {
-    query: { params },
-  } = useRouter();
-
-  const locationType = params?.[0] as LocationTypes;
-  const id = params?.[1];
+const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
-
-  const {
-    data: { id: locationId },
-  } = useLocation(locationType, id);
 
   const [isOpen, setIsOpen] = useState(false);
   const [sortArray, setSortArray] = useState([]);
@@ -152,7 +138,11 @@ const Legend = () => {
               animate={isOpen ? 'open' : 'close'}
               exit="close"
               transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-              className="fixed md:right-[73px]"
+              className={cn({
+                fixed: true,
+                'md:right-[73px]': !embedded,
+                'right-7': embedded,
+              })}
             >
               <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
@@ -187,200 +177,166 @@ const Legend = () => {
                         >
                           <div className="flex w-full items-center justify-between">
                             <div className="flex items-center space-x-2">
-                              <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
+                              {!embedded && (
+                                <Icon
+                                  icon={DRAG_SVG}
+                                  className="h-4 w-4"
+                                  description="Order layer"
+                                />
+                              )}
 
                               <p className="text-xs font-semibold uppercase tracking-wider text-black/85">
                                 {title}
                               </p>
                             </div>
-                            <div className="ml-2 flex items-center">
-                              <Dialog>
-                                <DialogTrigger>
+                            {!embedded && (
+                              <Helper
+                                className={{
+                                  button: HELPER_ID === l.id ? '-top-2 -right-3 z-20' : 'hidden',
+                                  tooltip: 'w-80',
+                                }}
+                                tooltipPosition={{ top: -40, left: 210 }}
+                                message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
+                              >
+                                <div className="ml-2 flex items-center">
+                                  <Dialog>
+                                    <DialogTrigger>
+                                      <Tooltip>
+                                        {/* //!TODO: These asChild removes the tooltip from the interface but aldo removes hydratation error */}
+                                        <TooltipTrigger>
+                                          <Icon
+                                            icon={INFO_SVG}
+                                            className="mr-1.5 mt-1.5 h-[17px] w-[17px] fill-black/40"
+                                          />
+                                        </TooltipTrigger>
+                                        <TooltipPortal>
+                                          <TooltipContent
+                                            side="top"
+                                            align="center"
+                                            className="bg-gray-600 px-2 text-white"
+                                          >
+                                            Info layer
+                                          </TooltipContent>
+                                        </TooltipPortal>
+                                      </Tooltip>
+                                    </DialogTrigger>
+
+                                    <DialogContent
+                                      className={cn({
+                                        'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
+                                        hidden: guideIsActive,
+                                      })}
+                                      overlay={false}
+                                    >
+                                      <div className="no-scrollbar overflow-y-auto px-3">
+                                        <WidgetWrapper
+                                          key={l.id}
+                                          title={title}
+                                          id={l.id as WidgetSlugType}
+                                          info
+                                        >
+                                          <Widget id={l.id} />
+                                        </WidgetWrapper>
+                                      </div>
+                                      <DialogClose />
+                                    </DialogContent>
+                                  </Dialog>
+                                  <Popover>
+                                    <PopoverTrigger>
+                                      <Tooltip>
+                                        <TooltipTrigger>
+                                          <div aria-label="Opacity layer">
+                                            <Icon icon={OPACITY_SVG} className="mr-0.5 h-6 w-6" />
+                                          </div>
+                                        </TooltipTrigger>
+
+                                        <TooltipPortal>
+                                          <TooltipContent
+                                            side="top"
+                                            align="center"
+                                            className="bg-gray-600 px-2 text-white"
+                                          >
+                                            Opacity
+                                          </TooltipContent>
+                                        </TooltipPortal>
+                                      </Tooltip>
+                                    </PopoverTrigger>
+
+                                    <PopoverContent
+                                      sideOffset={2}
+                                      side="top"
+                                      align="end"
+                                      className={cn({
+                                        'rounded-none !shadow-md': true,
+                                        hidden: guideIsActive,
+                                      })}
+                                    >
+                                      <Slider
+                                        className="w-[150px] pt-2"
+                                        defaultValue={[l.opacity]}
+                                        onValueChange={(op: number[]) =>
+                                          onChangeOpacity(op[0], l.id)
+                                        }
+                                      />
+                                    </PopoverContent>
+                                  </Popover>
                                   <Tooltip>
-                                    {/* //!TODO: These asChild removes the tooltip from the interface but aldo removes hydratation error */}
-                                    <TooltipTrigger>
-                                      <Helper
-                                        className={{
-                                          button:
-                                            HELPER_ID === l.id
-                                              ? '-bottom-[11px] right-0 z-20'
-                                              : 'hidden',
-                                          tooltip: 'w-fit-content',
-                                        }}
-                                        tooltipPosition={{ top: 60, left: 0 }}
-                                        message="Info layer"
+                                    <TooltipTrigger asChild>
+                                      <button
+                                        type="button"
+                                        onClick={() => onChangeVisibility(l.id)}
+                                        aria-label="Visibility layer"
                                       >
                                         <Icon
-                                          icon={INFO_SVG}
-                                          className="mr-1.5 mt-1.5 h-[17px] w-[17px] fill-black/40"
+                                          icon={visibility ? HIDE_SVG : SHOW_SVG}
+                                          className={cn({
+                                            'mx-px !fill-black/40': true,
+                                            'h-6 w-6': visibility,
+                                            'h-5 w-6': !visibility,
+                                          })}
                                         />
-                                      </Helper>
+                                      </button>
                                     </TooltipTrigger>
+
                                     <TooltipPortal>
                                       <TooltipContent
                                         side="top"
                                         align="center"
-                                        className={cn({
-                                          'bg-gray-600 px-2 text-white': true,
-                                          hidden: guideIsActive,
-                                        })}
+                                        className="bg-gray-600 px-2 text-white"
                                       >
-                                        Info layer
+                                        {visibility ? 'Hide' : 'Show'}
                                       </TooltipContent>
                                     </TooltipPortal>
                                   </Tooltip>
-                                </DialogTrigger>
 
-                                <DialogContent
-                                  className={cn({
-                                    'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
-                                    hidden: guideIsActive,
-                                  })}
-                                  overlay={false}
-                                >
-                                  <div className="no-scrollbar overflow-y-auto px-3">
-                                    <WidgetWrapper
-                                      key={l.id}
-                                      title={title}
-                                      id={l.id as WidgetSlugType}
-                                      info
-                                    >
-                                      <Widget id={l.id} />
-                                    </WidgetWrapper>
-                                  </div>
-                                  <DialogClose />
-                                </DialogContent>
-                              </Dialog>
-                              <Popover>
-                                <PopoverTrigger>
                                   <Tooltip>
-                                    <TooltipTrigger>
-                                      <div aria-label="Opacity layer">
-                                        <Helper
-                                          className={{
-                                            button:
-                                              HELPER_ID === l.id
-                                                ? '-bottom-3.5 right-0 z-20'
-                                                : 'hidden',
-                                            tooltip: 'w-fit-content',
-                                          }}
-                                          tooltipPosition={{ top: 60, left: 0 }}
-                                          message="Set opacity layer"
-                                        >
-                                          <Icon icon={OPACITY_SVG} className="mr-0.5 h-6 w-6" />
-                                        </Helper>
-                                      </div>
+                                    <TooltipTrigger asChild>
+                                      <button
+                                        type="button"
+                                        onClick={() => removeLayer(l.id)}
+                                        aria-label="Remove layer"
+                                      >
+                                        <Icon
+                                          icon={CLOSE_SVG}
+                                          className="ml-0.5 h-5 w-5 stroke-2"
+                                        />
+                                      </button>
                                     </TooltipTrigger>
-
                                     <TooltipPortal>
                                       <TooltipContent
                                         side="top"
                                         align="center"
-                                        className={cn({
-                                          'bg-gray-600 px-2 text-white': true,
-                                          hidden: guideIsActive,
-                                        })}
+                                        className="bg-gray-600 px-2 text-white"
                                       >
-                                        Opacity
+                                        Remove layer
                                       </TooltipContent>
                                     </TooltipPortal>
                                   </Tooltip>
-                                </PopoverTrigger>
-
-                                <PopoverContent
-                                  sideOffset={2}
-                                  side="top"
-                                  align="end"
-                                  className={cn({
-                                    'rounded-none !shadow-md': true,
-                                    hidden: guideIsActive,
-                                  })}
-                                >
-                                  <Slider
-                                    className="w-[150px] pt-2"
-                                    defaultValue={[l.opacity]}
-                                    onValueChange={(op: number[]) => onChangeOpacity(op[0], l.id)}
-                                  />
-                                </PopoverContent>
-                              </Popover>
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button
-                                    type="button"
-                                    onClick={() => !guideIsActive && onChangeVisibility(l.id)}
-                                    aria-label="Visibility layer"
-                                  >
-                                    <Helper
-                                      className={{
-                                        button:
-                                          HELPER_ID === l.id
-                                            ? '-bottom-3.5 -right-1 z-20'
-                                            : 'hidden',
-                                        tooltip: 'w-fit-content',
-                                      }}
-                                      tooltipPosition={{ top: 60, left: 0 }}
-                                      message="Hide/show layer"
-                                    >
-                                      <Icon
-                                        icon={visibility ? HIDE_SVG : SHOW_SVG}
-                                        className={cn({
-                                          'mx-px !fill-black/40': true,
-                                          'h-6 w-6': visibility,
-                                          'h-5 w-6': !visibility,
-                                        })}
-                                      />
-                                    </Helper>
-                                  </button>
-                                </TooltipTrigger>
-
-                                {!guideIsActive && (
-                                  <TooltipPortal>
-                                    <TooltipContent
-                                      side="top"
-                                      align="center"
-                                      className="bg-gray-600 px-2 text-white"
-                                    >
-                                      {visibility ? 'Hide' : 'Show'}
-                                    </TooltipContent>
-                                  </TooltipPortal>
-                                )}
-                              </Tooltip>
-
-                              <Tooltip>
-                                <TooltipTrigger asChild>
-                                  <button
-                                    type="button"
-                                    onClick={() => !guideIsActive && removeLayer(l.id)}
-                                    aria-label="Remove layer"
-                                  >
-                                    <Helper
-                                      className={{
-                                        button:
-                                          HELPER_ID === l.id ? '-bottom-3 -right-1 z-20' : 'hidden',
-                                        tooltip: 'w-fit-content',
-                                      }}
-                                      tooltipPosition={{ top: 60, left: 0 }}
-                                      message="Remove layer"
-                                    >
-                                      <Icon icon={CLOSE_SVG} className="ml-0.5 h-5 w-5 stroke-2" />
-                                    </Helper>
-                                  </button>
-                                </TooltipTrigger>
-                                <TooltipPortal>
-                                  <TooltipContent
-                                    side="top"
-                                    align="center"
-                                    className={cn({
-                                      'bg-gray-600 px-2 text-white': true,
-                                      hidden: guideIsActive,
-                                    })}
-                                  >
-                                    Remove layer
-                                  </TooltipContent>
-                                </TooltipPortal>
-                              </Tooltip>
-                            </div>
+                                </div>
+                              </Helper>
+                            )}
                           </div>
+
                           {WidgetLegend && (
                             <div className="pt-4 pl-6">
                               <WidgetLegend />
