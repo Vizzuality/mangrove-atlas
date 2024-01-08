@@ -15,6 +15,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import LayerManager from 'containers/map/layer-manager';
+import Legend from 'containers/map/legend';
 
 import Map from 'components/map';
 import { CustomMapProps } from 'components/map/types';
@@ -119,6 +120,9 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
       >
         {() => <LayerManager />}
       </Map>
+      <div className="absolute bottom-11 right-6 z-50 mr-0.5 print:hidden">
+        <Legend embedded />
+      </div>
     </div>
   );
 };

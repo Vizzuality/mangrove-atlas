@@ -21,7 +21,7 @@ export const Share = ({ className }: { className?: string }) => {
   useEffect(() => {
     setCurrentUrl(window.location.href);
     setEmbeddedLink(
-      `<iframe src="${window.location.origin}/embedded?${asPath.slice(
+      `<iframe src="${window.location.origin}/embedded${asPath.slice(
         1,
         asPath.length
       )}" title="Global Mangrove Watch"></iframe>`
