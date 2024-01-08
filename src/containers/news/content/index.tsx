@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useBlogPosts, usePostTags } from 'hooks/blog';
 import type { Post } from 'hooks/blog/types';
 
-import PostComponent from 'containers/blog/post';
+import PostComponent from 'containers/news/post';
 
 import { DialogClose } from 'components/dialog';
 

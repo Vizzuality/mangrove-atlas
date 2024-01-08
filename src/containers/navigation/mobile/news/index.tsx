@@ -1,4 +1,4 @@
-import BlogContent from 'containers/blog/content';
+import BlogContent from 'containers/news/content';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';

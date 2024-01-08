@@ -6,9 +6,9 @@ import cn from 'lib/classnames';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import BlogContent from 'containers/blog/content';
 import Helper from 'containers/guide/helper';
 import About from 'containers/navigation/menu/about';
+import BlogContent from 'containers/news/content';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
