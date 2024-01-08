@@ -1,25 +1,29 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { nationalDashboardSettingsAtom } from 'store/national-dashboard';
+import { activeLayersAtom } from 'store/layers';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
 
 const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
-  const settings = useRecoilValue(nationalDashboardSettingsAtom);
+  const [activeLayers] = useRecoilState(activeLayersAtom);
+  const activeLayer = activeLayers.find((l) => l.id === id);
+  const SOURCE = useSource({ settings: activeLayer.settings });
 
-  const SOURCE = useSource({ settings });
-  const LAYERS = useLayers({ id, settings });
-  if (!SOURCE || !LAYERS) return null;
+  const LAYER = useLayers({
+    id: 'mangrove_national_dashboard_layer',
+    opacity: parseFloat(activeLayer.opacity),
+    visibility: activeLayer.visibility,
+    settings: activeLayer.settings,
+  });
+  if (!SOURCE || !LAYER) return null;
 
   return (
     <Source {...SOURCE}>
-      {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      ))}
+      <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
     </Source>
   );
 };

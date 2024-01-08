@@ -3,7 +3,7 @@ import { useMemo, useCallback } from 'react';
 import { Layer } from 'react-map-gl';
 
 import { activeLayersAtom } from 'store/layers';
-import { interactiveLayerIdsAtom, layersSettingsAtom } from 'store/map';
+import { interactiveLayerIdsAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -27,22 +27,14 @@ const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeLayersAtom);
   const layersIds = layers.map((l) => l.id);
-  const layersSettings = useRecoilValue(layersSettingsAtom);
-
-  const nationaDashboardLayers = layersIds.filter((l) => l === 'mangrove_national_dashboard');
 
   const basemap = useRecoilValue(basemapContextualAtom);
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
-  const nationalDashboardLayerIds = layers
-    .filter((l) => l?.id === 'mangrove_national_dashboard')
-    .map((l) => l.id);
 
   const activeLayersIds = layers.map((l) => l.id);
 
-  const allLayersOrdered = [...nationalDashboardLayerIds, ...activeLayersIds];
-
   const LAYERS_FILTERED = useMemo(() => {
-    const filteredLayers = allLayersOrdered.filter(
+    const filteredLayers = activeLayersIds.filter(
       (layer: WidgetSlugType & ContextualBasemapsId & 'custom-area') =>
         !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
     );
@@ -52,7 +44,7 @@ const LayerManagerContainer = () => {
     }
 
     return filteredLayers;
-  }, [allLayersOrdered, basemap]);
+  }, [activeLayersIds, basemap]);
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
@@ -69,13 +61,10 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
-  const LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS = [...nationaDashboardLayers, ...LAYERS_FILTERED];
-
   return (
     <>
-      {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
-        const beforeId =
-          i === 0 ? 'custom-layers' : `${LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS[i - 1]}-bg`;
+      {LAYERS_FILTERED.map((layer, i) => {
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
         return (
           <Layer
@@ -88,15 +77,13 @@ const LayerManagerContainer = () => {
         );
       })}
 
-      {LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS.map((layer, i) => {
+      {LAYERS_FILTERED.map((layer, i) => {
         const LayerComponent = LAYERS[layer] || BASEMAPS[layer];
-        const beforeId =
-          i === 0 ? 'custom-layers' : `${LAYERS_WITH_NATIONAL_DASHBOARD_LAYERS[i - 1]}-bg`;
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
         return (
           <LayerComponent
             id={layer}
             key={layer}
-            layersSettings={layersSettings?.[layer]}
             beforeId={beforeId}
             onAdd={handleAdd}
             onRemove={handleRemove}

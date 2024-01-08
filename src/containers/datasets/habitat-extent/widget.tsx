@@ -24,11 +24,10 @@ import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 
 const HabitatExtent = () => {
+  const queryClient = useQueryClient();
   const [year, setYear] = useRecoilState(habitatExtentSettings);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
   const [isCanceled, setIsCanceled] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);

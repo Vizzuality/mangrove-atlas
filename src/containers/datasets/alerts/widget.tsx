@@ -74,7 +74,7 @@ const AlertsWidget = () => {
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
             <Popover>
-              <PopoverTrigger asChild>
+              <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedStartDate?.label}
                   <Icon
@@ -110,7 +110,7 @@ const AlertsWidget = () => {
             </Popover>{' '}
             and{' '}
             <Popover>
-              <PopoverTrigger asChild>
+              <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedEndDate?.label}
                   <Icon

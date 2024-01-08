@@ -45,7 +45,9 @@ export function useWidgets(): WidgetTypes[] {
 
     return widgets.filter(
       ({ slug, categoryIds, locationType }) =>
-        (categoryIds?.includes(categorySelected) && locationType.includes(currentLocation)) ||
+        (categoryIds?.includes(categorySelected) &&
+          locationType.includes(currentLocation) &&
+          activeWidgets.includes(slug)) ||
         (categoryIds?.includes('contextual_layers') && activeWidgets.includes(slug))
     );
   }, [

@@ -55,7 +55,8 @@ const NationalDashboard = () => {
                       </div>
 
                       <IndicatorSource
-                        id={source}
+                        id="mangrove_national_dashboard_layer"
+                        layerIndex={index}
                         key={source}
                         source={source}
                         years={years}
