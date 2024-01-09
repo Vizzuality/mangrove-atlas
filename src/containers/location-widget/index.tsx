@@ -88,16 +88,20 @@ const LocationWidget = () => {
 
   return (
     <>
-      <div className="flex h-52 flex-col rounded-2xl border bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
+      <div className="lex relative h-52 flex-col rounded-2xl border bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button onClick={handleOnClickTitle} disabled={isGuideActive}>
               <div
                 className={cn({
-                  'inline-block pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
+                  'inline-block break-all px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                     true,
                   'text-2.75xl': width >= 540,
+                  'text-5xl': locationName.length > 10,
+                  'text-4xl': locationName.length > 35,
+                  'text-2xl': locationName.length > 60,
+                  'text-xl': locationName.length > 120,
                 })}
               >
                 <h1 className="text-white" ref={titleRef}>
@@ -108,7 +112,9 @@ const LocationWidget = () => {
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
         </Dialog>
-        <LocationTools />
+        <div className="absolute bottom-0 left-0 w-full pb-2">
+          <LocationTools />
+        </div>
       </div>
       <AnalysisAlert />
     </>

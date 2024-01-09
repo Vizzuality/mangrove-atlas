@@ -7,24 +7,34 @@ import News from 'containers/navigation/news';
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (
-  <div className="absolute top-2 left-4 z-20 flex h-11 w-auto items-center justify-between space-x-[68px] rounded-full bg-brand-800 px-11 shadow-md print:hidden">
-    <Menu />
+  <div className="absolute top-2 left-4 z-20 h-11 w-[526px] rounded-full bg-brand-800 px-5 shadow-md print:hidden">
+    <div className="grid grid-cols-4 gap-4">
+      <div className="flex items-center justify-center">
+        <Menu />
+      </div>
 
-    {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && <News />}
+      <div className="flex items-center justify-center">
+        <News />
+      </div>
 
-    <LanguageSelector />
+      <div className="flex items-center justify-center">
+        <LanguageSelector />
+      </div>
 
-    <Helper
-      className={{
-        button: HELPER_ID ? '-top-2.5 -right-4 z-20' : 'hidden',
-        tooltip: 'w-fit-content',
-      }}
-      theme="dark"
-      tooltipPosition={{ top: -40, left: 0 }}
-      message="guide"
-    >
-      <GuideSwitcher />
-    </Helper>
+      <div className="flex h-full items-center justify-center">
+        <Helper
+          className={{
+            button: HELPER_ID ? '-top-2.5 -right-4 z-20' : 'hidden',
+            tooltip: 'w-fit-content',
+          }}
+          theme="dark"
+          tooltipPosition={{ top: -40, left: 0 }}
+          message="guide"
+        >
+          <GuideSwitcher />
+        </Helper>
+      </div>
+    </div>
   </div>
 );
 
