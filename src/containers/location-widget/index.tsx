@@ -88,7 +88,7 @@ const LocationWidget = () => {
 
   return (
     <>
-      <div className="lex relative h-52 flex-col rounded-2xl border bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
+      <div className="relative flex h-52 flex-col rounded-2xl border bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
