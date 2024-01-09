@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react';
+'use client';
+import { useCallback, useEffect, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -202,11 +203,10 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                                   <Dialog>
                                     <DialogTrigger>
                                       <Tooltip>
-                                        {/* //!TODO: These asChild removes the tooltip from the interface but aldo removes hydratation error */}
-                                        <TooltipTrigger>
+                                        <TooltipTrigger asChild>
                                           <Icon
                                             icon={INFO_SVG}
-                                            className="mr-1.5 mt-1.5 h-[17px] w-[17px] fill-black/40"
+                                            className="mr-1.5 h-[17px] w-[17px] fill-black/40"
                                           />
                                         </TooltipTrigger>
                                         <TooltipPortal>
@@ -244,7 +244,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                                   <Popover>
                                     <PopoverTrigger>
                                       <Tooltip>
-                                        <TooltipTrigger>
+                                        <TooltipTrigger asChild>
                                           <div aria-label="Opacity layer">
                                             <Icon icon={OPACITY_SVG} className="mr-0.5 h-6 w-6" />
                                           </div>
