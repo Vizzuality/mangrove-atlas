@@ -40,7 +40,12 @@ const BasemapsMapSettings = () => {
               </div>
               {!!layerToUpdate && (
                 <div className="ml-6">
-                  <DateSelect key={id} mosaic_id={mosaic_id} id={id} />
+                  <DateSelect
+                    key={id}
+                    mosaic_id={mosaic_id}
+                    id={id}
+                    className={{ content: 'w-[460px]' }}
+                  />
                 </div>
               )}
             </div>

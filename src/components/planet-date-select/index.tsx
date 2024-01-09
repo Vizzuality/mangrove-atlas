@@ -4,6 +4,7 @@ import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 
+import classNames from 'classnames';
 import { set } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
@@ -25,9 +26,11 @@ import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 const DateSelect = ({
   id,
   mosaic_id,
+  className = { content: '' },
 }: {
   id: ContextualBasemapsId | BasemapId | WidgetSlugType;
   mosaic_id: MosaicId;
+  className?: { content: string };
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -35,7 +38,7 @@ const DateSelect = ({
     () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
   );
-  console.log(activeLayers, id, layerToUpdate);
+
   const selectedDate = useMemo(
     () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
     [dates, layerToUpdate]
@@ -85,7 +88,12 @@ const DateSelect = ({
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="max-h-56 w-[400px] space-y-1 overflow-y-auto bg-white ">
+      <DropdownMenuContent
+        className={cn({
+          'max-h-56 space-y-1 overflow-y-auto bg-white px-2': true,
+          [className.content]: !!className?.content,
+        })}
+      >
         {orderedDates?.map((d) => (
           <DropdownMenuItem key={d.value} className="whitespace-nowrap last-of-type:pb-4">
             <button
