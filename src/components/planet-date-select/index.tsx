@@ -70,8 +70,8 @@ const DateSelect = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
+      <DropdownMenuTrigger className="w-full">
+        <div className="flex cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50 py-1 px-4">
           <p className="first-line:after">
             Period: <span className="text-sm font-bold">{labelToDisplay}</span>
           </p>
@@ -85,13 +85,13 @@ const DateSelect = ({
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="max-h-56 space-y-2">
+      <DropdownMenuContent className="max-h-56 w-[400px] space-y-1 overflow-y-auto bg-white ">
         {orderedDates?.map((d) => (
           <DropdownMenuItem key={d.value} className="whitespace-nowrap last-of-type:pb-4">
             <button
               id={d.label}
               value={d.value}
-              className="font-bold hover:text-brand-800"
+              className="hover:text-brand-800"
               type="button"
               role="button"
               onClick={handleDate}
