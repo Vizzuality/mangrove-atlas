@@ -3,6 +3,11 @@
         "basemap",
         "basemaps",
         "globalmangrovewatch",
+        "gpkg",
+        "notranslate",
+        "SHAPEFILE",
+        "svgs",
+        "tanstack",
         "Transifex"
     ]
 }

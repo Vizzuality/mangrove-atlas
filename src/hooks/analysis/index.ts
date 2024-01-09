@@ -1,5 +1,8 @@
+import { uploadFileAtom } from 'store/upload-file';
+
 import { useQuery } from '@tanstack/react-query';
 import type { QueryObserverOptions } from '@tanstack/react-query';
+import { useRecoilState } from 'recoil';
 
 import { AnalysisWidgetSlug } from 'types/widget';
 
@@ -26,6 +29,7 @@ export const useUploadFile = (
   onUploadFile?: (geojson: UploadFileResponse) => void,
   queryOptions?: QueryObserverOptions<UploadFileResponse>
 ) => {
+  const [, setUploadErrorModal] = useRecoilState(uploadFileAtom);
   const data = new FormData();
   data.append('file', file);
 
@@ -35,5 +39,6 @@ export const useUploadFile = (
     onSuccess: (geojson) => {
       onUploadFile?.(geojson);
     },
+    onError: setUploadErrorModal,
   });
 };
