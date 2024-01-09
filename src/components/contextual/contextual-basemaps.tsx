@@ -11,21 +11,22 @@ import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/
 
 import DateSelect from 'components/planet-date-select';
 import type { ActiveLayers } from 'types/layers';
+import type { ContextualBasemapsId } from 'types/widget';
 
 const BasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [planetImageryLayers, setPlanetImageryLayers] = useState<
     | {
-        id: 'planet_medres_visual_monthly' | 'planet_medres_analytic_monthly';
+        id: ContextualBasemapsId;
         isChecked: boolean;
       }[]
   >([
     {
-      id: 'planet_medres_visual_monthly',
+      id: CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES[0].id,
       isChecked: false,
     },
     {
-      id: 'planet_medres_analytic_monthly',
+      id: CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES[1].id,
       isChecked: false,
     },
   ]);
@@ -41,7 +42,8 @@ const BasemapsMapSettings = () => {
 
       setPlanetImageryLayers(updatedPlanetImagertLayersList);
 
-      const idToUpdate = planetImageryLayers.find((layer) => layer.isChecked)?.id;
+      const idToUpdate = planetImageryLayers.find((layer) => !!layer.isChecked)?.id;
+
       const isActive = activeLayers.find((layer) => layer.id === idToUpdate);
       const layersUpdate = !!isActive
         ? activeLayers.filter((w) => w.id !== idToUpdate)
@@ -53,10 +55,13 @@ const BasemapsMapSettings = () => {
             },
             ...activeLayers,
           ] as ActiveLayers[]);
+
       setActiveLayers(layersUpdate);
     },
     [planetImageryLayers, activeLayers, setActiveLayers]
   );
+
+  const selectedPlanetImageryLayerId = planetImageryLayers.find((layer) => layer.isChecked)?.id;
 
   return (
     <div className="relative flex flex-col pb-4 font-light text-black/85">
@@ -70,8 +75,7 @@ const BasemapsMapSettings = () => {
                   className={cn({
                     'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85':
                       true,
-                    'border-4 border-brand-800':
-                      id === planetImageryLayers.find((layer) => layer.isChecked)?.id,
+                    'border-4 border-brand-800': id === selectedPlanetImageryLayerId,
                   })}
                   onCheckedChange={() => {
                     handleClick(id);
@@ -83,12 +87,12 @@ const BasemapsMapSettings = () => {
                 </label>
               </div>
 
-              {planetImageryLayers.find((layer) => layer.isChecked)?.id === id && (
+              {selectedPlanetImageryLayerId === id && (
                 <div className="ml-6">
                   <DateSelect
                     key={id}
                     mosaic_id={mosaic_id}
-                    id={id}
+                    id={selectedPlanetImageryLayerId}
                     className={{ content: 'w-[460px]' }}
                   />
                 </div>

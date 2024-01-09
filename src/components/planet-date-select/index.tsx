@@ -30,6 +30,7 @@ const DateSelect = ({
   mosaic_id: MosaicId;
   className?: { content: string };
 }) => {
+  console.log({ id });
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const layerToUpdate = useMemo(
@@ -41,6 +42,8 @@ const DateSelect = ({
     () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
     [dates, layerToUpdate]
   );
+
+  console.log({ selectedDate });
 
   const labelToDisplay = useMemo(
     () => dates?.find((d) => d.value === selectedDate)?.label,
@@ -66,6 +69,8 @@ const DateSelect = ({
     },
     [layerToUpdate, activeLayers, id, setActiveLayers]
   );
+
+  console.log({ labelToDisplay });
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
 
