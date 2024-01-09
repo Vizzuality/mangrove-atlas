@@ -1,9 +1,6 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { basemapContextualAnalyticMonthlyDateAtom } from 'store/map-settings';
-
 import type { Visibility } from 'mapbox-gl';
-import { useRecoilValue } from 'recoil';
 
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
@@ -12,7 +9,7 @@ export function useSource({ date }): SourceProps & { key: string } {
     '45d01564-c099-42d8-b8f2-a0851accf3e7'
   );
   const selectedDate = date || (dates?.length && dates?.[dates?.length - 1]?.value);
-  console.log(selectedDate, 'aanalytic');
+
   return {
     id: 'planet_medres_analytic_monthly',
     key: `planet_medres_analytic_monthly-${selectedDate}`,

@@ -9,7 +9,7 @@ export function useSource({ year }): SourceProps & { key: string } {
     'be1f8e5e-6a29-4d27-8542-1fdb664fd78e'
   );
   const selectedDate = year || (dates?.length && dates?.[dates?.length - 1]?.value);
-  console.log('visual', selectedDate);
+
   return {
     id: 'planet_medres_visual_monthly',
     key: `planet_medres_visual_monthly-${selectedDate}`,

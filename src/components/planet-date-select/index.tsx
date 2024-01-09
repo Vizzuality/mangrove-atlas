@@ -4,8 +4,6 @@ import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 
-import classNames from 'classnames';
-import { set } from 'date-fns';
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
