@@ -6,7 +6,7 @@ import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { locationToolAtom } from 'store/sidebar';
 
-import { useRecoilState, useResetRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import Icon from 'components/icon';
 
@@ -15,11 +15,8 @@ import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 import { STYLES } from '../constants';
 
 const MapSettings = () => {
-  const drawingToolState = useRecoilValue(drawingToolAtom);
   const [mapSettings, setMapViewState] = useRecoilState(mapSettingsAtom);
   const saveLocationTool = useSetRecoilState(locationToolAtom);
-
-  const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
   const resetDrawingToolState = useResetRecoilState(drawingToolAtom);
   const handleMapSettingsView = useCallback(async () => {
@@ -37,10 +34,8 @@ const MapSettings = () => {
           className={cn({
             'flex items-center justify-center rounded-full': true,
             'bg-brand-800': mapSettings,
-            'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
           })}
           onClick={handleMapSettingsView}
-          disabled={mapSettings || isDrawingToolWidgetVisible}
           data-testid="map-settings-button"
         >
           <Icon

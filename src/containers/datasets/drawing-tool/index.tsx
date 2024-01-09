@@ -12,6 +12,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { useUploadFile } from 'hooks/analysis';
 
+import DeleteDrawingButton from 'containers/map/delete-drawing-button';
+
 import Icon from 'components/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
@@ -33,7 +35,6 @@ const WidgetDrawingTool = () => {
     (geojson) => {
       setDrawingToolState((drawingToolState) => ({
         ...drawingToolState,
-        showWidget: false,
         uploadedGeojson: geojson.data,
         customGeojson: null,
       }));
@@ -60,24 +61,28 @@ const WidgetDrawingTool = () => {
   }, [setMapCursor, isDrawingToolEnabled]);
 
   return (
-    <button
-      type="button"
-      className="flex w-28 cursor-pointer flex-col items-center justify-center space-y-1"
-      onClick={handleDrawingMode}
-      data-testid="drawing-tool-button"
-    >
-      <Icon
-        icon={AREA_SVG}
-        className={cn({
-          'h-8 w-8 rounded-full fill-current text-white': true,
-        })}
-        description="Area"
-      />
+    <>
+      {isDrawingToolEnabled ? (
+        <DeleteDrawingButton />
+      ) : (
+        <button
+          type="button"
+          className="flex w-28 cursor-pointer flex-col items-center justify-center space-y-1"
+          onClick={handleDrawingMode}
+          data-testid="drawing-tool-button"
+        >
+          <Icon
+            icon={AREA_SVG}
+            className={cn({
+              'h-8 w-8 rounded-full fill-current text-white': true,
+            })}
+            description="Area"
+          />
 
-      <span className="whitespace-nowrap font-sans text-sm text-white">
-        {isDrawingToolEnabled ? 'Start drawing' : 'Draw area'}
-      </span>
-    </button>
+          <span className="whitespace-nowrap font-sans text-sm text-white">Draw area</span>
+        </button>
+      )}
+    </>
   );
 };
 

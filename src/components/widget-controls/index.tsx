@@ -2,7 +2,6 @@ import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
-import { drawingToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
 import { mapSettingsAtom } from 'store/map-settings';
 import { locationToolAtom } from 'store/sidebar';
@@ -34,7 +33,6 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
-  const { showWidget } = useRecoilValue(drawingToolAtom);
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
   const screenWidth = useScreenWidth();
@@ -56,10 +54,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const HELPER_ID = id === activeLayers[0]?.id;
 
   const showDownloadInfoHelpers =
-    !showWidget &&
-    !isMapSettingsOpen &&
-    HELPER_ID &&
-    (locationTool === 'worldwide' || locationTool === 'search');
+    !isMapSettingsOpen && HELPER_ID && (locationTool === 'worldwide' || locationTool === 'search');
 
   return (
     <div

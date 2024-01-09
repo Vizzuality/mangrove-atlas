@@ -5,9 +5,12 @@
         "globalmangrovewatch",
         "gpkg",
         "notranslate",
+        "overscan",
         "SHAPEFILE",
         "svgs",
         "tanstack",
-        "Transifex"
+        "Transifex",
+        "usehooks",
+        "wdpa"
     ]
 }

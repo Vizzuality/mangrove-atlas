@@ -35,7 +35,6 @@ const WidgetDrawingUploadTool = () => {
     (geojson) => {
       setDrawingToolState((drawingToolState) => ({
         ...drawingToolState,
-        showWidget: false,
         uploadedGeojson: geojson.data,
         customGeojson: null,
       }));
@@ -80,6 +79,7 @@ const WidgetDrawingUploadTool = () => {
         </div>
       </div>
     </Helper>
+    // TO - DO - add when error gets defined
     //   </div>
 
     //   <div className="block text-sm">
