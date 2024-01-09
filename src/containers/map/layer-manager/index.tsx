@@ -18,11 +18,11 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 const RestorationSitesLayer = LAYERS['mangrove_restoration_sites'];
 const IucnEcoregionLayer = LAYERS['mangrove_iucn_ecoregion'];
 
-const EXCLUDED_DATA_LAYERS: WidgetSlugType[] = [
+const EXCLUDED_DATA_LAYERS: (WidgetSlugType | ContextualBasemapsId)[] = [
   'mangrove_restoration_sites',
   'mangrove_restoration',
   'mangrove_iucn_ecoregion',
-] satisfies WidgetSlugType[];
+] satisfies (WidgetSlugType | ContextualBasemapsId)[];
 
 const LayerManagerContainer = () => {
   const layers = useRecoilValue(activeLayersAtom);
@@ -39,9 +39,9 @@ const LayerManagerContainer = () => {
         !EXCLUDED_DATA_LAYERS.includes(layer) && !!LAYERS[layer]
     );
 
-    if (!!basemap) {
-      filteredLayers.push(basemap);
-    }
+    // if (!!basemap) {
+    //   filteredLayers.push(basemap);
+    // }
 
     return filteredLayers;
   }, [activeLayersIds, basemap]);
@@ -61,8 +61,22 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
+
   return (
     <>
+      {LAYERS_FILTERED.map((layer, i) => {
+        const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
+
+        return (
+          <Layer
+            id={`${layer}-bg`}
+            key={`${layer}-bg`}
+            type="background"
+            layout={{ visibility: 'none' }}
+            beforeId={beforeId}
+          />
+        );
+      })}
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as RadioGroup from '@radix-ui/react-radio-group';
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import type { RadioGroupProps } from '@radix-ui/react-radio-group';
 
 import RadioItem from './radio-group-item';
@@ -10,8 +10,8 @@ export interface RadioGroupDemoProps extends RadioGroupProps {
   options?: RadioOption[];
 }
 
-const RadioGroupDemo = ({ options, children, ...props }: RadioGroupDemoProps) => (
-  <RadioGroup.Root className="space-y flex flex-col" {...props}>
+const RadioGroup = ({ options, children, ...props }: RadioGroupDemoProps) => (
+  <RadioGroupPrimitive.Root className="space-y flex flex-col" {...props}>
     {!!options
       ? options.map((option) => (
           <div key={option.value}>
@@ -19,7 +19,7 @@ const RadioGroupDemo = ({ options, children, ...props }: RadioGroupDemoProps) =>
           </div>
         ))
       : children}
-  </RadioGroup.Root>
+  </RadioGroupPrimitive.Root>
 );
 
-export default RadioGroupDemo;
+export default RadioGroup;
