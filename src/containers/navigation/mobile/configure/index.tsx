@@ -9,18 +9,15 @@ import CONFIGS_SVG from 'svgs/sidebar/configure.svg?sprite';
 const ConfigureWidgets = () => {
   return (
     <Dialog>
-      <DialogTrigger>
-        <button
-          type="button"
-          className="flex h-full flex-col items-center space-y-1 pt-1 text-white"
-        >
+      <DialogTrigger asChild>
+        <div className="flex flex-col items-center space-y-1 pt-1 text-white">
           <Icon
             icon={CONFIGS_SVG}
             className="h-8 w-8 fill-white text-white"
             description="Configure widgets"
           />
           <span className="leading-2 font-sans text-xxs text-white">Configure</span>
-        </button>
+        </div>
       </DialogTrigger>
       <DialogContent className="scroll-y left-0 top-0 min-h-screen w-full space-y-8 rounded-none">
         <div className="no-scrollbar max-h-[95vh] space-y-8 overflow-y-auto">
