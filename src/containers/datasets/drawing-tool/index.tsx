@@ -12,10 +12,9 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { useUploadFile } from 'hooks/analysis';
 
-import Helper from 'containers/guide/helper';
+import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
 import Icon from 'components/icon';
-import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 
@@ -36,7 +35,6 @@ const WidgetDrawingTool = () => {
     (geojson) => {
       setDrawingToolState((drawingToolState) => ({
         ...drawingToolState,
-        showWidget: false,
         uploadedGeojson: geojson.data,
         customGeojson: null,
       }));
@@ -63,42 +61,28 @@ const WidgetDrawingTool = () => {
   }, [setMapCursor, isDrawingToolEnabled]);
 
   return (
-    <div
-      className={cn({
-        [WIDGET_CARD_WRAPPER_STYLE]: true,
-        'space-y-4 pb-6': true,
-      })}
-    >
-      <div className="space-y-4">
-        <span>Draw in the map the area you want to analyze through on-the-fly calculations.</span>
-
-        <Helper
-          className={{
-            button: '-bottom-2.5 -right-0',
-            tooltip: 'w-fit-content',
-            active: 'max-w-[450px]',
-          }}
-          tooltipPosition={{ top: -100, left: -100 }}
-          message="draw a polygon on the map. Just click to start drawing and double click to stop"
+    <>
+      {isDrawingToolEnabled ? (
+        <DeleteDrawingButton />
+      ) : (
+        <button
+          type="button"
+          className="flex w-28 cursor-pointer flex-col items-center justify-center space-y-1"
+          onClick={handleDrawingMode}
+          data-testid="drawing-tool-button"
         >
-          <button
-            aria-label="Start drawing on the map"
-            type="button"
-            onClick={handleDrawingMode}
+          <Icon
+            icon={AREA_SVG}
             className={cn({
-              'flex h-[88px] w-full items-center justify-center space-x-2 rounded-lg border-2 border-brand-800/10 py-5 font-semibold text-brand-800 transition-colors':
-                true,
-              'hover:bg-brand-400/10': !isDrawingToolEnabled,
-              'bg-brand-800 text-white': isDrawingToolEnabled,
+              'h-8 w-8 rounded-full fill-current text-white': true,
             })}
-            data-testid="start-drawing-button"
-          >
-            <Icon icon={AREA_SVG} className="h-8 w-8" description="Draw polygon" />
-            <span>{isDrawingToolEnabled ? 'Start drawing on the map' : 'Draw area'}</span>
-          </button>
-        </Helper>
-      </div>
-    </div>
+            description="Area"
+          />
+
+          <span className="whitespace-nowrap font-sans text-sm text-white">Draw area</span>
+        </button>
+      )}
+    </>
   );
 };
 

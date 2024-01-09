@@ -71,13 +71,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
       setDrawingUploadToolState((drawingUploadToolState) => ({
         ...drawingUploadToolState,
-        showWidget: false,
         enabled: false,
       }));
 
       setDrawingToolState((drawingToolState) => ({
         ...drawingToolState,
-        showWidget: false,
         enabled: false,
       }));
 

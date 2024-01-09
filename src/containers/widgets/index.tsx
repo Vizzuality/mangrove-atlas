@@ -33,12 +33,12 @@ const HELPER_ID = 'menu-categories';
 const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
-  const widgetsAvailabe = useWidgets();
+  const widgetsAvailable = useWidgets();
 
-  const widgets = !!activeWidgets.length ? widgetsAvailabe : widgetsAvailabe;
+  const widgets = !!activeWidgets.length ? widgetsAvailable : widgetsAvailable;
 
   const setPrintingMode = useSetRecoilState(printModeState);
-  const { showWidget, customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
+  const { customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
 
@@ -202,7 +202,7 @@ const WidgetsContainer: React.FC = () => {
           })}
         </div>
       )}
-      {/* TO - DO - review this condition after reviewing empty widgets behaviour */}
+      {/* TO - DO - review this condition after reviewing empty widgets behavior */}
       {widgets.length === 0 && <NoData />}
       {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
@@ -222,9 +222,9 @@ const WidgetsContainer: React.FC = () => {
                 className={cn({
                   [BUTTON_STYLES]: true,
                   'm-auto bg-brand-800 text-white': true,
-                  hidden: showWidget && !customGeojson && !uploadedGeojson,
+                  hidden: !customGeojson && !uploadedGeojson,
                 })}
-                disabled={showWidget && !customGeojson && !uploadedGeojson}
+                disabled={!customGeojson && !uploadedGeojson}
                 onClick={onClickDownload}
               >
                 Download report as PDF

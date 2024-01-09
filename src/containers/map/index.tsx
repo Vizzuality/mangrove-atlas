@@ -72,15 +72,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-  const [
-    {
-      enabled: isDrawingToolEnabled,
-      showWidget: isDrawingToolVisible,
-      uploadedGeojson,
-      customGeojson,
-    },
-    setDrawingToolState,
-  ] = useRecoilState(drawingToolAtom);
+  const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
+    useRecoilState(drawingToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
@@ -274,10 +267,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   let hoveredStateId = null;
   const handleMouseMove = useCallback(
     (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
-      if (!isDrawingToolVisible) {
-        setCursor(evt.features?.length ? 'pointer' : 'grab');
-      }
-
       const restorationData = evt?.features.find(
         ({ layer }) => layer.id === 'mangrove_restoration-layer'
       );
@@ -319,7 +308,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         hoveredStateId = null;
       }
     },
-    [setCursor, isDrawingToolVisible, map]
+    [setCursor, map]
   );
 
   const handleMapLoad = useCallback(() => {

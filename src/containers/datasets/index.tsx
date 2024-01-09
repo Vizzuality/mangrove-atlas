@@ -40,8 +40,6 @@ import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats'
 import TidalFlatsInfo from 'containers/datasets/contextual-layers/tidal-flats/info.mdx';
 import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
 import TidalFlatsMapLegend from 'containers/datasets/contextual-layers/tidal-flats/map-legend';
-import DrawingToolWidget from 'containers/datasets/drawing-tool/widget';
-import DrawingUploadToolWidget from 'containers/datasets/drawing-upload-tool/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
 import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
 import DriversChangeMapLegend from 'containers/datasets/drivers-change/map-legend';
@@ -131,8 +129,6 @@ export const WIDGETS = {
   mangrove_emissions_mitigation: EmissionsMitigationWidget,
   mangrove_restoration_sites: RestorationSitesWidget,
   mangrove_restoration: RestorationWidget,
-  mangrove_drawing_tool: DrawingToolWidget,
-  mangrove_drawing_upload_tool: DrawingUploadToolWidget,
   mangrove_national_dashboard: NationalDashboardWidget,
   mangrove_flood_protection: FloodProtectionWidget,
   mangrove_contextual_layers: BasemapsContextualLayers,

@@ -83,7 +83,7 @@ const HabitatExtent = () => {
           <button
             aria-label="cancel analysis"
             type="button"
-            onClick={handleCancelAnalysis}
+            onClick={() => void handleCancelAnalysis()}
             className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
           >
             Cancel analysis
