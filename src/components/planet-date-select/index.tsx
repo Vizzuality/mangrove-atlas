@@ -34,8 +34,13 @@ const DateSelect = ({
   const layerUpdate = activeLayers.find((l) => l.id === id);
   console.log(activeLayers, id, layerUpdate);
   const selectedDate = useMemo(
-    () => layerUpdate?.settings?.date || dates?.[dates.length - 1],
+    () => layerUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
     [dates, layerUpdate]
+  );
+
+  const labelToDisplay = useMemo(
+    () => dates?.find((d) => d.value === selectedDate)?.label,
+    [dates, selectedDate]
   );
 
   const handleDate = useCallback(
@@ -43,12 +48,12 @@ const DateSelect = ({
       const filteredLayers = activeLayers.filter((l) => l.id !== id);
       setActiveLayers([
         {
+          ...layerUpdate,
           id,
           settings: {
-            date: e.currentTarget.value,
             ...layerUpdate.settings,
+            date: e.currentTarget.value,
           },
-          ...layerUpdate,
         },
         ...filteredLayers,
       ]);
@@ -63,7 +68,7 @@ const DateSelect = ({
       <DropdownMenuTrigger>
         <div className="flex w-full cursor-pointer items-center justify-between rounded-3xl border-2 border-brand-800 border-opacity-50 py-1 px-4">
           <p className="first-line:after">
-            Period: <span className="text-sm font-bold">{selectedDate?.label}</span>
+            Period: <span className="text-sm font-bold">{labelToDisplay}</span>
           </p>
           <Icon
             icon={ARROW_SVG}

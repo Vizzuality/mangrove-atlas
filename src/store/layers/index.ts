@@ -5,16 +5,12 @@ import { urlSyncEffect } from 'recoil-sync';
 
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-const dateSchema = object({
-  label: string(),
-  value: string(),
-});
 const LayerSettings = object({
-  name: string(),
-  source: string(),
-  source_layer: string(),
-  date: dateSchema,
-  layerIndex: number(),
+  name: optional(string()),
+  source: optional(string()),
+  source_layer: optional(string()),
+  date: optional(string()),
+  layerIndex: optional(number()),
 });
 
 const layerSchema = object({
@@ -33,12 +29,12 @@ export const activeLayersAtom = atom<
     opacity: string;
     visibility: Visibility;
     settings?: {
-      name: string;
-      source: string;
-      source_layer: string;
-      layerIndex: number;
-      date: { label: string; value: string };
-      [key: string]: string | number | { label: string; value: string };
+      name?: string;
+      source?: string;
+      source_layer?: string;
+      layerIndex?: number;
+      date?: string;
+      [key: string]: string | number;
     };
   }[]
 >({
