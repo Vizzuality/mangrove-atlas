@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 import WIDGETS from 'containers/widgets/constants';
+
+import type { Category } from 'types/category';
 const CATEGORY_OPTIONS = [
   'distribution_and_change',
   'restoration_and_conservation',
@@ -8,7 +10,7 @@ const CATEGORY_OPTIONS = [
   'ecosystem_services',
   'contextual_layers',
   'all_datasets',
-];
+] as Category[];
 const DEFAULT_LOCATION = 'worldwide';
 
 test.beforeEach(async ({ page }) => {

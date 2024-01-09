@@ -1,4 +1,4 @@
-import { Category } from 'types/category';
+import type { Category } from 'types/category';
 
 export const EXT_MENU_OPTIONS = [
   {
@@ -46,7 +46,7 @@ const CATEGORY_OPTIONS: {
   { value: 'ecosystem_services', label: 'Ecosystem Services' },
   { value: 'contextual_layers', label: 'Contextual layers' },
   { value: 'all_datasets', label: 'Custom' },
-];
+] satisfies { value: Category; label: string }[];
 
 export const STYLES = {
   'icon-wrapper': 'flex h-10.5 w-10.5 flex-col items-center justify-center text-brand-800',

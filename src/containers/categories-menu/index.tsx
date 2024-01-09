@@ -13,6 +13,7 @@ import widgets from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import Icon from 'components/icon';
+import { Category } from 'types/category';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
@@ -22,14 +23,14 @@ const Category = () => {
   const [, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
 
   const handleClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement>) => {
+    (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
-      setCategory(event.currentTarget.value);
+      setCategory(event.currentTarget.value as Category);
       const widgetsFiltered = widgets.filter((widget) =>
         widget?.categoryIds?.includes(event.currentTarget.value)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
-      event.currentTarget.value === 'custom'
+      event.currentTarget.value === 'all_datasets'
         ? setActiveWidgets(customWidgetSelection)
         : setActiveWidgets(activeWidgetsIds);
     },
@@ -41,7 +42,7 @@ const Category = () => {
       <p className="text-xs font-bold uppercase tracking-[1px]">presets</p>
       <div className="grid grid-cols-3 gap-4 py-2">
         {CATEGORY_OPTIONS.map((category) => (
-          <button key={category.value} type="button" onClick={handleClick} value={category.value}>
+          <button key={category.value} type="button" onClick={handleClick}>
             <div
               className={cn({
                 'relative flex-1 justify-center rounded-xl border border-black/15 p-3 text-xs md:min-h-[90px] md:p-6 md:text-sm':

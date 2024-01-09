@@ -4,7 +4,7 @@ const widgets_dev = [
   {
     name: 'National dashboard',
     slug: 'mangrove_national_dashboard',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'National and Sub-National',
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: [],
@@ -211,18 +211,6 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['global_tidal_wetland_change'],
-  },
-  {
-    name: 'Draw an area',
-    slug: 'mangrove_drawing_tool',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
-  },
-  {
-    name: 'Upload an area',
-    slug: 'mangrove_drawing_upload_tool',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
-    categoryIds: [],
   },
 ] satisfies WidgetTypes[];
 
