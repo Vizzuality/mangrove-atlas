@@ -1,13 +1,11 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { basemapContextualAtom, basemapContextualVisualMonthlyDateAtom } from 'store/map-settings';
+import { activeLayersAtom } from 'store/layers';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
-import { useRecoilState } from 'recoil';
-
-import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Chart from 'components/chart';
 import Icon from 'components/icon';
@@ -29,16 +27,12 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-  const [basemapContextualSelected] = useRecoilState(basemapContextualAtom);
+  const activeLayers = useRecoilValue(activeLayersAtom);
   const isActive = useMemo(
-    () => basemapContextualSelected === 'planet_medres_visual_monthly',
-    [basemapContextualSelected]
+    () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
+    [activeLayers]
   );
 
-  const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(
-    '45d01564-c099-42d8-b8f2-a0851accf3e7'
-  );
-  const [date, setDate] = useRecoilState(basemapContextualVisualMonthlyDateAtom);
   const {
     isLoading,
     isFetched,
@@ -54,12 +48,6 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
   } = useAlerts(startDate, endDate);
-
-  useEffect(() => {
-    if (!date?.value) {
-      setDate(dates?.[dates?.length - 1]);
-    }
-  }, [dates, date?.value, setDate]);
 
   if (!fullData.length) return null;
   return (

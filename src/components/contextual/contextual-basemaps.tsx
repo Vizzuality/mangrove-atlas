@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -32,17 +32,17 @@ const BasemapsMapSettings = () => {
     <div className="relative flex flex-col pb-4 font-light text-black/85">
       <RadioGroupDemo onValueChange={handleClick}>
         {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id, name, mosaic_id }) => {
-          const isActive = !!activeLayers.find((layer) => layer.id === id);
+          const layerToUpdate = activeLayers.find((layer) => id === layer.id);
           return (
             <div key={id} className="ml-0.5 flex flex-col">
               <div className="flex items-center space-x-4 py-1 font-light text-black/85">
                 <RadioGroupItem option={{ label: name, value: id }} data-testid={id} />
               </div>
-              {
+              {!!layerToUpdate && (
                 <div className="ml-6">
                   <DateSelect key={id} mosaic_id={mosaic_id} id={id} />
                 </div>
-              }
+              )}
             </div>
           );
         })}

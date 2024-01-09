@@ -31,11 +31,14 @@ const DateSelect = ({
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const layerUpdate = activeLayers.find((l) => l.id === id);
-  console.log(activeLayers, id, layerUpdate);
+  const layerToUpdate = useMemo(
+    () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
+    [activeLayers]
+  );
+  console.log(activeLayers, id, layerToUpdate);
   const selectedDate = useMemo(
-    () => layerUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
-    [dates, layerUpdate]
+    () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
+    [dates, layerToUpdate]
   );
 
   const labelToDisplay = useMemo(
@@ -46,19 +49,21 @@ const DateSelect = ({
   const handleDate = useCallback(
     (e) => {
       const filteredLayers = activeLayers.filter((l) => l.id !== id);
-      setActiveLayers([
-        {
-          ...layerUpdate,
-          id,
-          settings: {
-            ...layerUpdate.settings,
-            date: e.currentTarget.value,
+      if (!!layerToUpdate) {
+        setActiveLayers([
+          {
+            ...layerToUpdate,
+            id,
+            settings: {
+              ...layerToUpdate.settings,
+              date: e.currentTarget.value,
+            },
           },
-        },
-        ...filteredLayers,
-      ]);
+          ...filteredLayers,
+        ]);
+      }
     },
-    [layerUpdate, activeLayers, id, setActiveLayers]
+    [layerToUpdate, activeLayers, id, setActiveLayers]
   );
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
