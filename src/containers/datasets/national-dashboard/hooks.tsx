@@ -78,7 +78,9 @@ export function useLayers({
   const {
     data: { id: currentLocationId },
   } = useLocation(locationType, locationId);
-  if (!settings) return null;
+
+  if (!settings || settings.locationId !== currentLocationId) return null;
+
   return {
     id,
     // key: `${settings.source_layer}`,

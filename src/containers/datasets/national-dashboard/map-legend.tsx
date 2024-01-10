@@ -12,7 +12,7 @@ const NationalDashboardMapLegend = () => {
   const layer = activeLayers.find(({ id }) => id.includes('mangrove_national_dashboard'));
   const { data } = useNationalDashboard();
   const sources = data?.data[0]?.sources;
-  console.log(data, sources);
+
   const color = colorsScale.filter((c, i) => i === layer.settings.layerIndex) as string[];
 
   return (

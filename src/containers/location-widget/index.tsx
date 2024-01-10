@@ -14,7 +14,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 import LocationTools from 'containers/navigation/location-tools';
 
@@ -60,7 +59,7 @@ const LocationWidget = () => {
   }, [locationType, name]);
 
   useEffect(() => {
-    const { width } = titleRef?.current?.getBoundingClientRect();
+    const width = titleRef?.current?.getBoundingClientRect()?.width;
     setWidth(width);
   }, [name]);
 
@@ -92,23 +91,33 @@ const LocationWidget = () => {
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
-            <button onClick={handleOnClickTitle} disabled={isGuideActive}>
-              <div
-                className={cn({
-                  'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
-                    true,
-                  'text-2.75xl': width >= 540,
+            <button
+              type="button"
+              onClick={handleOnClickTitle}
+              disabled={isGuideActive || !locationName}
+            >
+              {!!locationName ? (
+                <div
+                  className={cn({
+                    'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
+                      true,
+                    'text-2.75xl': width >= 540,
 
-                  'text-5xl': locationName.length > 10,
-                  'text-4xl': locationName.length > 30,
-                  'text-2xl': locationName.length > 60,
-                  'break-all text-xl': locationName.length > 120,
-                })}
-              >
-                <h1 className="text-white" ref={titleRef}>
-                  {locationName}
-                </h1>
-              </div>
+                    'text-5xl': locationName.length > 10,
+                    'text-4xl': locationName.length > 30,
+                    'text-2xl': locationName.length > 60,
+                    'break-all text-xl': locationName.length > 120,
+                  })}
+                >
+                  <h1 className="text-white" ref={titleRef}>
+                    {locationName}
+                  </h1>
+                </div>
+              ) : (
+                !locationName && (
+                  <div className="bg-secondary-900 h-[20px] w-[100px] animate-pulse rounded-md" />
+                )
+              )}
             </button>
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
@@ -116,7 +125,7 @@ const LocationWidget = () => {
         <div
           className={cn({
             'absolute bottom-2 left-0 w-full pb-2': true,
-            'bottom-0': locationName.length > 20,
+            'bottom-0': locationName?.length > 20,
           })}
         >
           <LocationTools />
