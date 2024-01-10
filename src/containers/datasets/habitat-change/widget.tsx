@@ -72,19 +72,17 @@ const HabitatExtent = () => {
                     />
                   </span>
                 </PopoverTrigger>
-                <PopoverContent>
-                  {' '}
-                  <ul className="z-20 max-h-56 space-y-2">
+                <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                  <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
                           aria-label="Select start year"
                           className={cn({
-                            'font-bold': true,
-                            'text-brand-800': currentStartYear === y,
-                            'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
-                            'opacity-50':
-                              currentStartYear === y || y > currentEndYear || currentEndYear === y,
+                            'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                            'font-semibold text-brand-800': currentStartYear === y,
+                            'pointer-events-none opacity-50':
+                              y > currentEndYear || currentEndYear === y,
                           })}
                           type="button"
                           onClick={() => setStartYear(y)}
@@ -114,17 +112,17 @@ const HabitatExtent = () => {
                   </span>
                 </PopoverTrigger>
 
-                <PopoverContent>
-                  <ul className="max-h-56 space-y-2">
+                <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                  <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
                         <button
                           aria-label="select end year"
                           className={cn({
-                            'font-bold': true,
-                            'text-brand-800': currentEndYear === y,
-                            'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
-                            'opacity-50': y < currentStartYear || currentStartYear === y,
+                            'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                            'font-semibold text-brand-800': currentEndYear === y,
+                            'pointer-events-none opacity-50':
+                              y < currentStartYear || currentStartYear === y,
                           })}
                           type="button"
                           onClick={() => setEndYear(y)}

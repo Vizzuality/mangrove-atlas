@@ -67,6 +67,7 @@ module.exports = {
         medium: '0px 4px 12px 0px rgba(168, 168, 168, 0.25)',
         '3xl': '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
         control: '0px 4px 12px 0px rgba(0, 0, 0, 0.08), 0px 0px 0px 1px rgba(0, 0, 0, 0.10)',
+        dropdown: '0px 40px 80px 0px rgba(0, 60, 57, 0.15), 0px 0px 0px 1px rgba(0, 0, 0, 0.10)',
       },
       width: {
         7.5: '1.875rem',

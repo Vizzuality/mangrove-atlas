@@ -116,15 +116,15 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-32 space-y-0.5">
                   {unitOptions?.map((u) => (
-                    <li key={u} className="last-of-type:pb-4">
+                    <li key={u}>
                       <button
                         className={cn({
-                          'font-bold': true,
+                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
                           'hover:text-brand-800': selectedUnit !== u,
-                          'opacity-50': selectedUnit === u,
+                          'pointer-events-none opacity-50': selectedUnit === u,
                         })}
                         type="button"
                         onClick={() => setUnit(u)}
@@ -146,17 +146,16 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         className={cn({
-                          'font-bold': true,
-                          'text-brand-800': currentStartYear === y,
-                          'hover:text-brand-800': currentStartYear !== y && y < currentEndYear,
-                          'opacity-50':
-                            currentStartYear === y || y > currentEndYear || currentEndYear === y,
+                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': currentStartYear === y,
+                          'pointer-events-none opacity-50':
+                            y > currentEndYear || currentEndYear === y,
                         })}
                         type="button"
                         onClick={() => setStartYear(y)}
@@ -180,16 +179,16 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         className={cn({
-                          'font-bold': true,
-                          'text-brand-800': currentEndYear === y,
-                          'hover:text-brand-800': currentEndYear !== y && y > currentStartYear,
-                          'opacity-50': y < currentStartYear || currentStartYear === y,
+                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': currentEndYear === y,
+                          'pointer-events-none opacity-50':
+                            y < currentStartYear || currentStartYear === y,
                         })}
                         type="button"
                         onClick={() => setEndYear(y)}

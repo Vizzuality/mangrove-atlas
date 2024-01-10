@@ -73,17 +73,16 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-56 space-y-0.5">
                   {startDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
                         aria-label="Select start date"
                         className={cn({
-                          'font-bold': true,
-                          'hover:text-brand-800':
-                            startDate?.value !== date?.value && date?.value < endDate?.value,
-                          'opacity-50': date?.value > endDate?.value,
+                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': startDate?.value === date?.value,
+                          'pointer-events-none opacity-50': date?.value > endDate?.value,
                         })}
                         type="button"
                         onClick={() => setStartDate(date)}
@@ -109,17 +108,16 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-56 space-y-0.5">
                   {endDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
                         aria-label="Select end date"
                         className={cn({
-                          'font-bold': true,
-                          'hover:text-brand-800':
-                            endDate?.value !== date?.value && date?.value > startDate?.value,
-                          'opacity-50': date?.value < startDate?.value,
+                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': endDate?.value === date?.value,
+                          'pointer-events-none opacity-50': date?.value < startDate?.value,
                         })}
                         type="button"
                         onClick={() => {
