@@ -122,17 +122,16 @@ const HabitatExtent = () => {
                     />
                   </span>
                 </PopoverTrigger>
-
-                <PopoverContent>
-                  <ul className="max-h-56 space-y-2">
+                <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                  <ul className="z-20 max-h-32 space-y-0.5">
                     {unitOptions?.map((u) => (
-                      <li key={u} className="last-of-type:pb-4">
+                      <li key={u}>
                         <button
                           aria-label="select unit"
                           className={cn({
-                            'font-bold': true,
+                            'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
                             'hover:text-brand-800': selectedUnitAreaExtent !== u,
-                            'opacity-50': selectedUnitAreaExtent === u,
+                            'pointer-events-none opacity-50': selectedUnitAreaExtent === u,
                           })}
                           type="button"
                           onClick={() => setUnitAreaExtent(u)}
@@ -147,39 +146,6 @@ const HabitatExtent = () => {
               </Popover>
             </span>{' '}
             in{' '}
-            {/* <PopoverRoot modal={false} open={true}>
-              <PopoverTrigger asChild>
-                <button className="font-bold">
-                  {year || defaultYear}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                  />
-                </button>
-              </PopoverTrigger>
-              <PopoverAnchor />
-              <PopoverPortal>
-                <PopoverContent className="rounded-lg bg-white p-5 text-black/85 shadow-soft">
-                  <ul>
-                    {years?.map((y) => (
-                      <li key={y} className={cn({ 'space-y-2': true })}>
-                        <button
-                          className={cn({
-                            'hover:font-bold': year !== y,
-                            'opacity-50': year === y,
-                          })}
-                          type="button"
-                          onClick={() => handleClick(y)}
-                          disabled={year === y}
-                        >
-                          {y || defaultYear}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </PopoverContent>
-              </PopoverPortal>
-            </PopoverRoot> */}
             <Popover>
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
@@ -191,21 +157,18 @@ const HabitatExtent = () => {
                   />
                 </span>
               </PopoverTrigger>
-
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         aria-label="select year"
                         className={cn({
-                          'font-bold': true,
-                          'hover:text-brand-800': year !== y,
-                          'opacity-50': year === y,
+                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': y === year || y === defaultYear,
                         })}
                         type="button"
                         onClick={() => handleClick(y)}
-                        disabled={year === y}
                       >
                         {y || defaultYear}
                       </button>
