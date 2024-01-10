@@ -14,7 +14,6 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 import LocationTools from 'containers/navigation/location-tools';
 
@@ -60,7 +59,7 @@ const LocationWidget = () => {
   }, [locationType, name]);
 
   useEffect(() => {
-    const { width } = titleRef?.current?.getBoundingClientRect();
+    const width = titleRef?.current?.getBoundingClientRect()?.width;
     setWidth(width);
   }, [name]);
 
@@ -100,9 +99,9 @@ const LocationWidget = () => {
                   'text-2.75xl': width >= 540,
 
                   'text-5xl': locationName.length > 10,
-                  'pt-6 text-4xl': locationName.length > 30,
+                  'text-4xl': locationName.length > 30,
                   'text-2xl': locationName.length > 60,
-                  'break-all pt-2 text-xl': locationName.length > 120,
+                  'break-all text-xl': locationName.length > 120,
                 })}
               >
                 <h1 className="text-white" ref={titleRef}>
@@ -116,7 +115,7 @@ const LocationWidget = () => {
         <div
           className={cn({
             'absolute bottom-2 left-0 w-full pb-2': true,
-            'bottom-0': locationName.length > 20,
+            'bottom-0': locationName?.length > 20,
           })}
         >
           <LocationTools />

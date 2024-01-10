@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { activeLayersAtom } from 'store/layers';
 import { locationBoundsAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 
@@ -40,6 +41,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
@@ -62,10 +64,25 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           : location.location_type === 'country'
           ? location.iso
           : location.location_id;
-
-      const url = `/${locationType}/${locationId}?${queryParams}`;
+      const url = `/${locationType}/${locationId}?${queryParams !== undefined ? queryParams : ''}`;
 
       replace(url, null);
+
+      // national dashboard
+
+      const isNationalDashboardActive = activeLayers.find(
+        (layer) => layer.id === 'mangrove_national_dashboard_layer'
+      );
+
+      if (
+        isNationalDashboardActive &&
+        Number(locationId) !== isNationalDashboardActive.settings?.locationId
+      ) {
+        const updatedLayers = activeLayers.filter(
+          (layer) => layer.id === 'mangrove_national_dashboard_layer'
+        );
+        setActiveLayers(updatedLayers);
+      }
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 

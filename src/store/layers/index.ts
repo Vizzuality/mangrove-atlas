@@ -10,6 +10,7 @@ const LayerSettings = object({
   source: optional(string()),
   source_layer: optional(string()),
   date: optional(string()),
+  locationId: optional(number()),
   layerIndex: optional(number()),
 });
 
@@ -32,6 +33,7 @@ export const activeLayersAtom = atom<
       name?: string;
       source?: string;
       source_layer?: string;
+      locationId?: number;
       layerIndex?: number;
       date?: string;
       [key: string]: string | number;
