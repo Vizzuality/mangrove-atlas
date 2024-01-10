@@ -8,7 +8,7 @@ import { activeLayersAtom } from 'store/layers';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { MAP_LEGENDS, WIDGETS } from 'containers/datasets';
 import { useLocation } from 'containers/datasets/locations/hooks';
@@ -37,13 +37,7 @@ const Legend = () => {
     query: { params },
   } = useRouter();
 
-  const locationType = params?.[0] as LocationTypes;
-  const id = params?.[1];
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-
-  const {
-    data: { id: locationId },
-  } = useLocation(locationType, id);
 
   const [isOpen, setIsOpen] = useState(false);
   const [sortArray, setSortArray] = useState([]);

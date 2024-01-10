@@ -91,23 +91,29 @@ const LocationWidget = () => {
         <button className="h-10.5 flex w-10.5 cursor-pointer items-center justify-center rounded-full"></button>
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
-            <button onClick={handleOnClickTitle} disabled={isGuideActive}>
-              <div
-                className={cn({
-                  'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
-                    true,
-                  'text-2.75xl': width >= 540,
+            <button onClick={handleOnClickTitle} disabled={isGuideActive || !locationName}>
+              {!!locationName ? (
+                <div
+                  className={cn({
+                    'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
+                      true,
+                    'text-2.75xl': width >= 540,
 
-                  'text-5xl': locationName.length > 10,
-                  'text-4xl': locationName.length > 30,
-                  'text-2xl': locationName.length > 60,
-                  'break-all text-xl': locationName.length > 120,
-                })}
-              >
-                <h1 className="text-white" ref={titleRef}>
-                  {locationName}
-                </h1>
-              </div>
+                    'text-5xl': locationName.length > 10,
+                    'text-4xl': locationName.length > 30,
+                    'text-2xl': locationName.length > 60,
+                    'break-all text-xl': locationName.length > 120,
+                  })}
+                >
+                  <h1 className="text-white" ref={titleRef}>
+                    {locationName}
+                  </h1>
+                </div>
+              ) : (
+                !locationName && (
+                  <div className="bg-secondary-900 h-[20px] w-[100px] animate-pulse rounded-md" />
+                )
+              )}
             </button>
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
