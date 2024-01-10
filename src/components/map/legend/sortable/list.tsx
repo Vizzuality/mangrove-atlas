@@ -94,7 +94,7 @@ export const SortableList: React.FC<SortableListProps> = ({
       const { active, over } = event;
       setActiveId(null);
 
-      if (active.id !== over.id) {
+      if (active.id !== over?.id) {
         const oldIndex = itemsIds.indexOf(active.id);
         const newIndex = itemsIds.indexOf(over.id);
 
