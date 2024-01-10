@@ -5,7 +5,7 @@ import { useDropzone } from 'react-dropzone';
 import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingUploadToolAtom, drawingToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -13,13 +13,18 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { useUploadFile } from 'hooks/analysis';
 
 import Helper from 'containers/guide/helper';
+import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
 import Icon from 'components/icon';
 
 import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
 
 const WidgetDrawingUploadTool = () => {
-  const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }, setDrawingUploadToolState] =
+    useRecoilState(drawingUploadToolAtom);
+
+  const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
+    useRecoilState(drawingToolAtom);
 
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
@@ -33,9 +38,15 @@ const WidgetDrawingUploadTool = () => {
 
   const onUploadFile = useCallback<Parameters<typeof useUploadFile>[1]>(
     (geojson) => {
-      setDrawingToolState((drawingToolState) => ({
+      setDrawingUploadToolState((drawingToolState) => ({
         ...drawingToolState,
         uploadedGeojson: geojson.data,
+        customGeojson: null,
+      }));
+
+      setDrawingToolState((drawingToolState) => ({
+        ...drawingToolState,
+        uploadedGeojson: null,
         customGeojson: null,
       }));
 
@@ -44,14 +55,17 @@ const WidgetDrawingUploadTool = () => {
         enabled: true,
       }));
     },
-    [setDrawingToolState, setAnalysisState]
+    [setDrawingToolState, setAnalysisState, setDrawingUploadToolState]
   );
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
   useEffect(() => {
-    setMapCursor(isDrawingToolEnabled ? 'crosshair' : 'grab');
-  }, [setMapCursor, isDrawingToolEnabled]);
+    setMapCursor(isDrawingUploadToolEnabled ? 'crosshair' : 'grab');
+  }, [setMapCursor, isDrawingUploadToolEnabled]);
+
+  const conditionalProps =
+    (!uploadedGeojson && !!customGeojson) || !isDrawingToolEnabled ? { ...getRootProps() } : {};
 
   return (
     <Helper
@@ -63,18 +77,40 @@ const WidgetDrawingUploadTool = () => {
       tooltipPosition={{ top: -100, left: -100 }}
       message="use this to upload an existing GIS file"
     >
-      <div {...getRootProps()} className="cursor-pointer">
-        <input data-testid="shapefile-upload" {...getInputProps()} />
+      <div
+        {...conditionalProps}
+        className={cn({
+          'w-[128px] cursor-pointer rounded-3xl p-2': true,
+          'bg-white': !!uploadedGeojson,
+          'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
+        })}
+      >
+        <input
+          data-testid="shapefile-upload"
+          {...getInputProps()}
+          disabled={isDrawingToolEnabled || !!customGeojson}
+        />
         <div className="flex flex-col items-center space-y-1">
-          <Icon
-            icon={UPLOAD_SVG}
-            className={cn({
-              'h-8 w-8 fill-current text-white': true,
-            })}
-            description="Upload"
-          />
+          {uploadedGeojson || isDrawingUploadToolEnabled ? (
+            <DeleteDrawingButton size="sm" />
+          ) : (
+            <Icon
+              icon={UPLOAD_SVG}
+              className={cn({
+                'h-8 w-8 fill-current text-white': true,
+              })}
+              description="Upload"
+            />
+          )}
           <label id="label-file-upload" htmlFor="input-file-upload">
-            <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+            <p
+              className={cn({
+                'whitespace-nowrap font-sans text-sm text-white': true,
+                'text-brand-800': !!uploadedGeojson,
+              })}
+            >
+              {uploadedGeojson || isDrawingUploadToolEnabled ? 'Delete area' : 'Upload shapefile'}
+            </p>
           </label>
         </div>
       </div>

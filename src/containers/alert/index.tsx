@@ -5,7 +5,7 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
@@ -29,6 +29,7 @@ const AnalysisAlert = () => {
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
+  const resetDrawingUploadState = useResetRecoilState(drawingUploadToolAtom);
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
@@ -64,6 +65,7 @@ const AnalysisAlert = () => {
 
     resetDrawingState();
     resetAnalysisState();
+    resetDrawingUploadState();
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/?${queryParams}`, null);
@@ -74,6 +76,7 @@ const AnalysisAlert = () => {
     queryParams,
     replace,
     resetDrawingState,
+    resetDrawingUploadState,
     resetAnalysisState,
     setAnalysisAlert,
     handleWorldwideView,
