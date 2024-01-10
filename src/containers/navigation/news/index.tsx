@@ -2,8 +2,8 @@ import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-import BlogContent from 'containers/news/content';
 import Helper from 'containers/guide/helper';
+import BlogContent from 'containers/news/content';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';

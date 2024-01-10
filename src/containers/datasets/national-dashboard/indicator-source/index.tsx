@@ -1,4 +1,5 @@
-import { useMemo, useCallback, useEffect } from 'react';
+import { useMemo, useCallback } from 'react';
+import { useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -63,6 +64,7 @@ const IndicatorSource = ({
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const natDashLayer = useMemo(() => activeLayers.find((l) => l.id === id), [activeLayers, id]);
   const {
     query: { params: queryParams },
   } = useRouter();
@@ -71,6 +73,22 @@ const IndicatorSource = ({
   const {
     data: { id: currentLocationId },
   } = useLocation(locationType, locationId);
+
+  useEffect(() => {
+    const isNationalDashboardActive = activeLayers.find(
+      (layer) => layer.id === 'mangrove_national_dashboard_layer'
+    );
+    if (
+      isNationalDashboardActive &&
+      Number(location) !== isNationalDashboardActive.settings?.locationId
+    ) {
+      const updatedLayers = activeLayers.filter(
+        (layer) => layer.id !== 'mangrove_national_dashboard_layer'
+      );
+      setActiveLayers(updatedLayers);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
@@ -152,8 +170,9 @@ const IndicatorSource = ({
         />
         <SwitchWrapper id={'mangrove_national_dashboard_layer'}>
           <SwitchRoot
+            id={id}
             onClick={handleClick}
-            checked={isActive && Number(currentLocationId) === location}
+            checked={isActive && Number(currentLocationId) === natDashLayer?.settings?.locationId}
           >
             <SwitchThumb />
           </SwitchRoot>

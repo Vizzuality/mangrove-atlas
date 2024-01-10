@@ -68,22 +68,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
       replace(url, null);
 
-      // national dashboard
-
-      const isNationalDashboardActive = activeLayers.find(
-        (layer) => layer.id === 'mangrove_national_dashboard_layer'
-      );
-
-      if (
-        isNationalDashboardActive &&
-        Number(locationId) !== isNationalDashboardActive.settings?.locationId
-      ) {
-        const updatedLayers = activeLayers.filter(
-          (layer) => layer.id === 'mangrove_national_dashboard_layer'
-        );
-        setActiveLayers(updatedLayers);
-      }
-
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
       setDrawingUploadToolState((drawingUploadToolState) => ({
