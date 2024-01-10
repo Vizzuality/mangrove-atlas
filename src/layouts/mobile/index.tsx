@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { mapViewAtom } from 'store/sidebar';
 
@@ -16,7 +17,7 @@ const MobileLayout = () => {
   const mapView = useRecoilValue(mapViewAtom);
   return (
     <div className="h-screen print:bg-transparent">
-      <div className="fixed -top-1 left-0 z-10">
+      <Link className="fixed -top-1 left-0 z-10" href="/">
         <Image
           src="/images/mobile-header.svg"
           alt="Picture of the author"
@@ -29,7 +30,7 @@ const MobileLayout = () => {
           className="absolute top-2 left-4 z-50 h-8 w-20"
           description="Logo"
         />
-      </div>
+      </Link>
       <NavigationBar />
       {mapView && <MapContainer mapId="default-mobile" />}
       {!mapView && <WidgetsContainer />}

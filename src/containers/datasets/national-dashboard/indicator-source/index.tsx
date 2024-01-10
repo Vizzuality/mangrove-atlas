@@ -1,4 +1,6 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
+
+import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
@@ -6,6 +8,9 @@ import { numberFormat } from 'lib/format';
 import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
+
+import { useLocation } from 'containers/datasets/locations/hooks';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -32,13 +37,13 @@ type DataSourceTypes = {
 
 type IndicatorSourceTypes = {
   id: WidgetSlugType;
+  location: number;
   layerIndex: number;
   source: string;
   years: number[];
   unit: string;
   dataSource: DataSourceTypes;
   color: string;
-  location: number;
   yearSelected: number;
   setYearSelected: (year: number) => void;
 };
@@ -46,6 +51,7 @@ type IndicatorSourceTypes = {
 const IndicatorSource = ({
   id,
   source,
+  location,
   layerIndex,
   years,
   unit,
@@ -57,6 +63,14 @@ const IndicatorSource = ({
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const locationId = queryParams?.[1];
+  const {
+    data: { id: currentLocationId },
+  } = useLocation(locationType, locationId);
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
@@ -68,6 +82,7 @@ const IndicatorSource = ({
             visibility: 'visible',
             settings: {
               name: source,
+              locationId: location,
               layerIndex,
               source: dataSource.layer_link,
               source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
@@ -136,7 +151,10 @@ const IndicatorSource = ({
           }}
         />
         <SwitchWrapper id={'mangrove_national_dashboard_layer'}>
-          <SwitchRoot onClick={handleClick} checked={isActive}>
+          <SwitchRoot
+            onClick={handleClick}
+            checked={isActive && Number(currentLocationId) === location}
+          >
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>

@@ -166,7 +166,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
                       const title =
                         l.id === 'mangrove_national_dashboard_layer' && nationalDashboardLayerName
-                          ? `National Dashboard: ${nationalDashboardLayerName}`
+                          ? `National Dashboard`
                           : layerNameToDisplay;
 
                       return (

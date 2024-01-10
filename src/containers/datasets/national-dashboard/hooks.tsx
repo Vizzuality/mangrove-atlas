@@ -69,9 +69,18 @@ export function useLayers({
   visibility?: Visibility;
   settings: LayerSettingsType;
 }): LayerProps {
-  if (!settings) return null;
-
   const color = colorsScale.filter((c, i) => i === settings.layerIndex) as string[];
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const locationId = queryParams?.[1];
+  const {
+    data: { id: currentLocationId },
+  } = useLocation(locationType, locationId);
+
+  if (!settings || settings.locationId !== currentLocationId) return null;
+
   return {
     id,
     // key: `${settings.source_layer}`,

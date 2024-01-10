@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
@@ -32,13 +33,15 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <Image
-        src={LOGO_PNG as StaticImageData}
-        alt="Logo Global Mangrove Watch"
-        className="absolute top-0 right-0 z-10"
-        width={186}
-        height={216}
-      />
+      <Link href="/">
+        <Image
+          src={LOGO_PNG as StaticImageData}
+          alt="Logo Global Mangrove Watch"
+          className="absolute top-0 right-0 z-10"
+          width={186}
+          height={216}
+        />
+      </Link>
 
       <div className="relative h-screen w-screen">
         {isPrintingMode && (

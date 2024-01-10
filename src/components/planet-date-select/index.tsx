@@ -67,8 +67,6 @@ const DateSelect = ({
     [layerToUpdate, activeLayers, id, setActiveLayers]
   );
 
-  console.log({ labelToDisplay });
-
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
 
   return (
