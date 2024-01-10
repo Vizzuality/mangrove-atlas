@@ -27,7 +27,7 @@ const WidgetsMenu: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
-  const enabledWidgets = useWidgetsIdsByLocation() satisfies WidgetSlugType[];
+  const enabledWidgets = useWidgetsIdsByLocation();
 
   const handleWidgets = useCallback(
     (e) => {
