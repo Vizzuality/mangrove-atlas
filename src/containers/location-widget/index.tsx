@@ -97,11 +97,10 @@ const LocationWidget = () => {
                   'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                     true,
                   'text-2.75xl': width >= 540,
-
-                  'text-5xl': locationName.length > 10,
-                  'text-4xl': locationName.length > 30,
-                  'text-2xl': locationName.length > 60,
-                  'break-all text-xl': locationName.length > 120,
+                  'text-5xl': locationName?.length > 10,
+                  'pt-6 text-4xl': locationName?.length > 30,
+                  'text-2xl': locationName?.length > 60,
+                  'break-all pt-2 text-xl': locationName?.length > 120,
                 })}
               >
                 <h1 className="text-white" ref={titleRef}>
