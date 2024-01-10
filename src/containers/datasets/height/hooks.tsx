@@ -91,7 +91,7 @@ export function useMangroveHeight(
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
   const geojson = useMemo(() => customGeojson || uploadedGeojson, [customGeojson, uploadedGeojson]);
-  console.log(geojson);
+
   const fetchMangroveHeight = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
       return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
