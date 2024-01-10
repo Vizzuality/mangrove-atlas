@@ -42,7 +42,7 @@ const Category = () => {
       <p className="text-xs font-bold uppercase tracking-[1px]">presets</p>
       <div className="grid grid-cols-3 gap-4 py-2">
         {CATEGORY_OPTIONS.map((category) => (
-          <button key={category.value} type="button" onClick={handleClick}>
+          <button key={category.value} type="button" value={category.value} onClick={handleClick}>
             <div
               className={cn({
                 'relative flex-1 justify-center rounded-xl border border-black/15 p-3 text-xs md:min-h-[90px] md:p-6 md:text-sm':
