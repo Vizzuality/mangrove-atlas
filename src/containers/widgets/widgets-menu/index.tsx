@@ -89,8 +89,6 @@ const WidgetsMenu: FC = () => {
     [activeLayers, activeLayersIds, setActiveLayers]
   );
 
-  console.log({ widgets, activeWidgets, enabledWidgets });
-
   return (
     <div>
       <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold uppercase tracking-[1px]">
