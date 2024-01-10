@@ -9,7 +9,7 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { VscLayers } from 'react-icons/vsc';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import { useWidgets } from 'containers/widgets/hooks';
@@ -19,15 +19,13 @@ import { Category } from 'types/category';
 const Category = () => {
   const widgets = useWidgets();
   const [isOpen, setIsOpen] = useState(false);
-  const [drawingToolState, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  const setDrawingToolState = useSetRecoilState(drawingToolAtom);
   const category = useRecoilValue(activeCategoryAtom);
   const setCategory = useSetActiveCategory();
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
   const [mapSettings, setMapSettings] = useRecoilState(mapSettingsAtom);
 
   const lastWidgetSlug = useMemo(() => widgets.at(-1)?.slug, [widgets]);
-
-  const { showWidget: isDrawingToolWidgetVisible } = drawingToolState;
 
   const openMenu = useCallback(() => {
     if (!isOpen) setIsOpen(true);
@@ -69,7 +67,6 @@ const Category = () => {
     <div
       className={cn({
         'relative flex max-w-[45px] flex-col text-center': true,
-        'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
       })}
     >
       <div
@@ -86,17 +83,13 @@ const Category = () => {
             <button
               type="button"
               className="relative flex w-11 flex-col items-center justify-center space-y-2.5 rounded-full bg-white text-brand-800"
-              onMouseOver={isDrawingToolWidgetVisible ? null : openMenu}
-              disabled={isDrawingToolWidgetVisible}
+              onMouseOver={openMenu}
               data-testid="show-categories-button"
             >
               {CATEGORY_OPTIONS.map(({ value }) => (
                 <div
                   key={value}
-                  className={cn({
-                    'flex cursor-pointer items-center justify-center': true,
-                    'cursor-not-allowed opacity-50': isDrawingToolWidgetVisible,
-                  })}
+                  className="flex cursor-pointer items-center justify-center"
                   data-isactive={category === value && !mapSettings}
                 >
                   {value === 'contextual_layers' && (

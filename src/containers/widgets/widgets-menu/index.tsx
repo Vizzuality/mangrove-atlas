@@ -44,7 +44,7 @@ const WidgetsMenu: FC = () => {
         (c) => c !== 'all_datasets'
       );
 
-      const newCat = (cat.length === 1 ? cat[0] : 'all_datasets') satisfies Category;
+      const newCat = cat.length === 1 ? cat[0] : 'all_datasets';
 
       if (newCat !== categorySelected) setCategory(newCat);
     },

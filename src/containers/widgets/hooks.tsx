@@ -15,6 +15,7 @@ import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants
 
 export function useWidgets(): WidgetTypes[] {
   const categorySelected = useRecoilValue(activeCategoryAtom);
+
   const isMapSettingsVisible = useRecoilValue(mapSettingsAtom);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
   const {
