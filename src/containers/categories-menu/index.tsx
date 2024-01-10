@@ -45,7 +45,7 @@ const Category = () => {
           <button key={category.value} type="button" value={category.value} onClick={handleClick}>
             <div
               className={cn({
-                'relative flex-1 justify-center rounded-xl border border-black/15 p-3 text-xs md:min-h-[90px] md:p-6 md:text-sm':
+                'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-6 md:text-sm':
                   true,
                 'border-2 border-brand-800 font-bold text-brand-800':
                   category.value === categorySelected,
@@ -53,7 +53,7 @@ const Category = () => {
               data-testid={category.value}
               defaultChecked={'distribution_and_change' === category.value}
             >
-              <h4>{category.label}</h4>
+              <h4 className="flex min-h-[40px] items-center justify-center">{category.label}</h4>
               <Checkbox
                 className={cn({
                   'absolute bottom-2 right-2 h-6 w-6 rounded-full border-none': true,

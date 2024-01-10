@@ -88,16 +88,22 @@ const DateSelect = ({
 
       <DropdownMenuContent
         className={cn({
-          'max-h-56 space-y-1 overflow-y-auto bg-white px-2': true,
+          'max-h-56 overflow-y-auto bg-white p-0': true,
           [className.content]: !!className?.content,
         })}
       >
         {orderedDates?.map((d) => (
-          <DropdownMenuItem key={d.value} className="whitespace-nowrap last-of-type:pb-4">
+          <DropdownMenuItem
+            key={d.value}
+            className="whitespace-nowrap px-1 py-0.5 last-of-type:pb-4"
+          >
             <button
               id={d.label}
               value={d.value}
-              className="hover:text-brand-800"
+              className={cn({
+                'h-8 w-full rounded-xl px-2 text-left hover:bg-brand-800/20': true,
+                'text-brand-800': d.value === selectedDate,
+              })}
               type="button"
               role="button"
               onClick={handleDate}
