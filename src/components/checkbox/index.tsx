@@ -31,7 +31,7 @@ const Checkbox = React.forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn({
-      'h-4 w-4 shrink-0 rounded border-2 border-brand-800/50  text-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-400  focus:ring-offset-2 focus:ring-offset-brand-800 disabled:cursor-not-allowed disabled:opacity-50':
+      'shrink-0 rounded border-2 border-brand-800/50 text-brand-800 disabled:cursor-not-allowed disabled:opacity-50 data-[state-checked]:border-4 data-[state-checked]:bg-brand-800':
         true,
       [className]: !!className,
     })}
@@ -41,7 +41,7 @@ const Checkbox = React.forwardRef<
       children
     ) : (
       <CheckboxIndicator
-        className={cn({ 'flex items-center justify-center p-px text-brand-400': true })}
+        className={cn({ 'flex h-4 w-4 items-center justify-center p-px text-brand-400': true })}
       >
         <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
       </CheckboxIndicator>

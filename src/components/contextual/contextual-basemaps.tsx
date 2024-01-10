@@ -4,11 +4,12 @@ import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 
+import { PiCircleFill } from 'react-icons/pi';
 import { useRecoilState } from 'recoil';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
-import { Checkbox } from 'components/checkbox';
+import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import DateSelect from 'components/planet-date-select';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
@@ -60,7 +61,11 @@ const BasemapsMapSettings = () => {
                   }}
                   data-testid={id}
                   checked={!!activeLayers.find((layer) => layer.id === id) && isActive === id}
-                />
+                >
+                  <CheckboxIndicator>
+                    <PiCircleFill className="h-1.5 w-1.5 rounded-full fill-white" />
+                  </CheckboxIndicator>
+                </Checkbox>
                 <label className="font-sm m-0 text-sm font-semibold text-brand-800" htmlFor={id}>
                   {name}
                 </label>
