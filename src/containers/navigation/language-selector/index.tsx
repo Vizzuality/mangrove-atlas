@@ -64,7 +64,7 @@ const LanguageSelector = () => {
             <span className="text-sm text-white">{currentLanguage}</span>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-brand-800">
+        <DropdownMenuContent className="bg-white">
           {languages?.map((lang: { code: string; name: string }) => (
             <DropdownMenuItem key={lang.code} asChild>
               <button

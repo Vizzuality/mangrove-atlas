@@ -14,7 +14,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import { COLORS } from './constants';
-import type { Data, DataResponse, NationalDashboardLayerSettingsTypes } from './types';
+import type { Data, DataResponse, LayerSettingsType } from './types';
 
 const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 // widget data
@@ -50,11 +50,7 @@ export function useNationalDashboard(
   });
 }
 
-export function useSource({
-  settings,
-}: {
-  settings: NationalDashboardLayerSettingsTypes;
-}): SourceProps {
+export function useSource({ settings }: { settings: LayerSettingsType }): SourceProps {
   return {
     id: 'national-dashboard-sources',
     type: 'vector',
@@ -71,7 +67,7 @@ export function useLayers({
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-  settings: NationalDashboardLayerSettingsTypes;
+  settings: LayerSettingsType;
 }): LayerProps {
   if (!settings) return null;
 

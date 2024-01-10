@@ -1,8 +1,31 @@
-import { string } from '@recoiljs/refine';
+import { object, string, stringLiterals, optional, number, bool } from '@recoiljs/refine';
+import type { Visibility } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
 import type { ContextualBasemapsId } from 'types/widget';
+
+const dateSchema = object({
+  label: string(),
+  value: string(),
+});
+const LayerSettings = object({
+  name: string(),
+  source: string(),
+  source_layer: string(),
+  date: dateSchema,
+  layerIndex: number(),
+});
+
+const layerSchema = object({
+  id: string(),
+  opacity: string(),
+  visibility: stringLiterals({
+    none: 'none' as string,
+    visible: 'visible' as Visibility,
+  }),
+  settings: optional(LayerSettings),
+});
 
 export const mapSettingsAtom = atom<boolean>({
   key: 'map-settings-open',
@@ -19,20 +42,14 @@ export const basemapContextualAtom = atom<ContextualBasemapsId>({
   ],
 });
 
-export const basemapContextualVisualMonthlyDateAtom = atom<{ value: string; label: string }>({
+export const basemapContextualVisualMonthlyDateAtom = atom({
   key: 'basemaps-contextual-visual-monthly-date',
-  default: {
-    value: null,
-    label: null,
-  },
+  default: false,
 });
 
-export const basemapContextualAnalyticMonthlyDateAtom = atom<{ value: string; label: string }>({
+export const basemapContextualAnalyticMonthlyDateAtom = atom({
   key: 'basemaps-contextual-analytic-monthly-date',
-  default: {
-    value: null,
-    label: null,
-  },
+  default: false,
 });
 
 export const fullScreenAtom = atom<boolean>({

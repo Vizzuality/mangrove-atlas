@@ -37,7 +37,7 @@ const BasemapsMapSettings = () => {
             })}
           >
             <Image
-              src={`/images/thumbs/basemaps/${id}.svg`}
+              src={`/images/thumbs/basemaps/basemap-${id}.jpg`}
               alt={name}
               fill
               quality={100}

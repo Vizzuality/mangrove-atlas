@@ -119,11 +119,11 @@ const CardBasemapContextual = ({
           {description && <p>{description}</p>}
         </div>
       </div>
-      {isActive && hasDropdown && (
+      {/* {isActive && hasDropdown && (
         <div className="pb-4">
           <DateSelect mosaic_id={mosaic_id} id={id} />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

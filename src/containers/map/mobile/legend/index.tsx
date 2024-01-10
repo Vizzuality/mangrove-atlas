@@ -65,7 +65,7 @@ const Legend = () => {
     [activeLayers, setActiveLayers]
   );
   const nationalDashboardLayerName = activeLayers.find((s) =>
-    s.id.includes('mangrove_national_dashboard')
+    s?.id?.includes('mangrove_national_dashboard')
   )?.settings?.name;
 
   const removeLayer = useCallback(

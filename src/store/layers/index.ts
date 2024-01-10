@@ -6,10 +6,11 @@ import { urlSyncEffect } from 'recoil-sync';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const LayerSettings = object({
-  name: string(),
-  source: string(),
-  source_layer: string(),
-  layerIndex: number(),
+  name: optional(string()),
+  source: optional(string()),
+  source_layer: optional(string()),
+  date: optional(string()),
+  layerIndex: optional(number()),
 });
 
 const layerSchema = object({
@@ -28,10 +29,11 @@ export const activeLayersAtom = atom<
     opacity: string;
     visibility: Visibility;
     settings?: {
-      name: string;
-      source: string;
-      source_layer: string;
-      layerIndex: number;
+      name?: string;
+      source?: string;
+      source_layer?: string;
+      layerIndex?: number;
+      date?: string;
       [key: string]: string | number;
     };
   }[]
