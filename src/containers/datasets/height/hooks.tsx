@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -32,7 +32,7 @@ export const widgetSlug = 'tree-height';
 const COLORS = ['#C9BB42', '#8BA205', '#428710', '#0A6624', '#103C1F'];
 
 const getColorKeys = (data: Data[]) =>
-  data.reduce((acc, d, i) => {
+  data?.reduce((acc, d, i) => {
     return {
       ...acc,
       [d.indicator]: COLORS[i],
@@ -87,10 +87,11 @@ export function useMangroveHeight(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
-  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
-  const geojson = customGeojson || uploadedGeojson;
-
+  const geojson = useMemo(() => customGeojson || uploadedGeojson, [customGeojson, uploadedGeojson]);
+  console.log(geojson);
   const fetchMangroveHeight = ({ signal }: { signal?: AbortSignal }) => {
     if (isAnalysisEnabled) {
       return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
@@ -139,7 +140,7 @@ export function useMangroveHeight(
 
   const mean = data?.metadata?.avg_height?.[0]?.value;
   const unit = data?.metadata?.units?.value;
-  const years = data?.metadata?.year;
+  const years = data?.metadata?.year || [];
   const year = Math.max(...years);
   const COLORS_BY_INDICATOR = getColorKeys(data?.data);
 

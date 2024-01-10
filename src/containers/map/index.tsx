@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
 import {
   basemapAtom,
@@ -72,8 +72,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-  const [{ enabled: isDrawingToolEnabled, uploadedGeojson, customGeojson }, setDrawingToolState] =
+  const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);

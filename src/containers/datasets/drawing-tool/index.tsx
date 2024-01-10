@@ -5,13 +5,14 @@ import { useDropzone } from 'react-dropzone';
 import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
 import { useUploadFile } from 'hooks/analysis';
 
+import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
 import Icon from 'components/icon';
@@ -20,7 +21,10 @@ import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 
 const WidgetDrawingTool = () => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
+  const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
+  const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }] =
+    useRecoilState(drawingUploadToolAtom);
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
@@ -48,11 +52,17 @@ const WidgetDrawingTool = () => {
   );
 
   const handleDrawingMode = useCallback(() => {
+    resetDrawingUploadToolState();
     setDrawingToolState((drawingToolState) => ({
       ...drawingToolState,
       enabled: !isDrawingToolEnabled,
     }));
-  }, [setDrawingToolState, isDrawingToolEnabled]);
+  }, [
+    setDrawingToolState,
+    isDrawingToolEnabled,
+    isDrawingUploadToolEnabled,
+    resetDrawingUploadToolState,
+  ]);
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
@@ -61,16 +71,29 @@ const WidgetDrawingTool = () => {
   }, [setMapCursor, isDrawingToolEnabled]);
 
   return (
-    <>
-      {isDrawingToolEnabled ? (
-        <DeleteDrawingButton />
-      ) : (
-        <button
-          type="button"
-          className="flex w-28 cursor-pointer flex-col items-center justify-center space-y-1"
-          onClick={handleDrawingMode}
-          data-testid="drawing-tool-button"
-        >
+    <Helper
+      className={{
+        button: '-bottom-3.5 right-2.5 z-[20]',
+        tooltip: 'w-fit-content max-w-[400px]',
+      }}
+      tooltipPosition={{ top: -65, left: 0 }}
+      message="use this function to calculate statistics for your own custom area of interest"
+    >
+      <button
+        type="button"
+        className={cn({
+          'flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
+            true,
+          ' bg-white ': isDrawingToolEnabled && !uploadedGeojson,
+          'cursor-default opacity-40': !!uploadedGeojson,
+        })}
+        onClick={handleDrawingMode}
+        data-testid="drawing-tool-button"
+        disabled={!!uploadedGeojson}
+      >
+        {isDrawingToolEnabled ? (
+          <DeleteDrawingButton size="sm" />
+        ) : (
           <Icon
             icon={AREA_SVG}
             className={cn({
@@ -78,11 +101,17 @@ const WidgetDrawingTool = () => {
             })}
             description="Area"
           />
-
-          <span className="whitespace-nowrap font-sans text-sm text-white">Draw area</span>
-        </button>
-      )}
-    </>
+        )}
+        <span
+          className={cn({
+            'whitespace-nowrap font-sans text-sm text-white': true,
+            'text-brand-800': isDrawingToolEnabled && !uploadedGeojson,
+          })}
+        >
+          {isDrawingToolEnabled && !uploadedGeojson ? 'Delete area' : 'Draw area'}
+        </span>
+      </button>
+    </Helper>
   );
 };
 

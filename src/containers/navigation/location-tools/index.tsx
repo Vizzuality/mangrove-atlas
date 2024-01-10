@@ -68,10 +68,10 @@ const LocationTools = () => {
 
   return (
     <div className="flex space-y-2 text-center">
-      <div className="mx-auto flex space-x-8">
+      <div className="mx-auto flex space-x-8 ">
         {/* //*FIND LOCATIONS* */}
         <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
-          <DialogTrigger>
+          <DialogTrigger className="flex w-[128px] items-center justify-center p-2">
             <>
               <Helper
                 className={{
@@ -83,7 +83,7 @@ const LocationTools = () => {
               >
                 <button
                   onClick={handleOnClickSearch}
-                  className="flex w-28 cursor-pointer items-center justify-center"
+                  className="flex w-[128px] cursor-pointer items-center justify-center"
                   data-testid="search-button"
                   disabled={guideIsActive}
                 >
@@ -106,16 +106,8 @@ const LocationTools = () => {
         </Dialog>
 
         {/* //*DRAW AREA* */}
-        <Helper
-          className={{
-            button: '-bottom-3.5 right-2.5 z-[20]',
-            tooltip: 'w-fit-content max-w-[400px]',
-          }}
-          tooltipPosition={{ top: -65, left: 0 }}
-          message="use this function to calculate statistics for your own custom area of interest"
-        >
-          <WidgetDrawingTool />
-        </Helper>
+
+        <WidgetDrawingTool />
 
         {/* //*UPLOAD SHAPEFILE* */}
         <WidgetDrawingUploadTool />

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { BiomassYearSettings } from 'store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -45,7 +45,8 @@ export function useMangroveBiomass(
   onCancel?: () => void
 ): BiomassData {
   const currentYear = useRecoilValue(BiomassYearSettings);
-  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
 
   const {
@@ -110,7 +111,7 @@ export function useMangroveBiomass(
   const noData = isFetched && !data?.data?.length;
 
   return useMemo(() => {
-    const years = data?.metadata.year;
+    const years = data?.metadata?.year;
     const selectedYear = currentYear || years?.[years?.length - 1];
     const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
 
@@ -118,7 +119,7 @@ export function useMangroveBiomass(
       ({ year }) => year === selectedYear
     )?.value;
 
-    const unit = data?.metadata.units?.value;
+    const unit = data?.metadata?.units?.value;
 
     const colorKeys = getColorKeys(dataFiltered);
     const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);

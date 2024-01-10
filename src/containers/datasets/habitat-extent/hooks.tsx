@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -45,7 +45,9 @@ export function useMangroveHabitatExtent(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(locationType, id);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
-  const { uploadedGeojson, customGeojson } = useRecoilValue(drawingToolAtom);
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+
   const geojson = customGeojson || uploadedGeojson;
 
   const fetchHabitatExtent = ({ signal }: { signal?: AbortSignal }) => {
