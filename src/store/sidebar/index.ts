@@ -4,17 +4,27 @@ import { string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
+import type { Category } from 'types/category';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-export const activeCategoryAtom = atom<string>({
+// const layerChecker = stringLiterals({
+//   distributionAndChange: 'distribution_and_change',
+//   // 'restoration_and_conservation',
+//   // 'climate_and_policy',
+//   // 'ecosystem_services',
+//   // 'contextual_layers',
+//   allDatasets: 'all_datasets',
+// });
+
+export const activeCategoryAtom = atom({
   key: 'category',
   default: 'distribution_and_change',
-  effects: [urlSyncEffect({ refine: string() })],
+  effects: [urlSyncEffect({ refine: string(), history: 'replace' })],
 });
 
 export const useSetActiveCategory = () => {
   const { replace, pathname, query } = useRouter();
-  return async (newValue: string) => {
+  return async (newValue: Category) => {
     await replace({
       pathname,
       query: {

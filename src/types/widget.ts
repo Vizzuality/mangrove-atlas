@@ -1,5 +1,3 @@
-import type { Category } from 'types/category';
-
 export type UseParamsOptions = Readonly<{
   location_id?: string | number;
   year?: number;
@@ -11,7 +9,7 @@ export type WidgetTypes = {
   slug: WidgetSlugType;
   locationType: string[];
   applicability?: string;
-  categoryIds: Category[];
+  categoryIds: string[];
   layersIds?: string[];
   contextualLayersIds?: string[];
 };
@@ -48,9 +46,7 @@ export type WidgetSlugType =
   | 'mangrove_tidal_flats'
   | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
-  | 'mangrove_contextual_layers'
-  | 'mangrove_drawing_tool'
-  | 'mangrove_drawing_upload_tool';
+  | 'mangrove_contextual_layers';
 
 export type AnalysisWidgetSlug =
   | 'mangrove_extent'

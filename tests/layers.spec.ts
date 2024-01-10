@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 
 import WIDGETS from 'containers/widgets/constants';
 
+import { WidgetTypes } from 'types/widget';
+
 const WORDWIDE_LOCATION = 'worldwide';
 const COUNTRY_LOCATION = 'country';
 const ALL_DATASETS_CATEGORY = 'all_datasets';
@@ -14,7 +16,7 @@ test.describe('Can activate contextual layers in map settings', () => {
     await page.getByTestId('map-settings-button').click();
   });
 
-  const contextualLayers = WIDGETS.filter(({ categoryIds }) =>
+  const contextualLayers: WidgetTypes[] = WIDGETS.filter(({ categoryIds }) =>
     categoryIds?.includes(CONTEXTUAL_LAYER_ID)
   );
 

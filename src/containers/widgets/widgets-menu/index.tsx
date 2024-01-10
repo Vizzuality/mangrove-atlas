@@ -16,6 +16,7 @@ import { useRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/layers/constants';
 import widgets from 'containers/widgets/constants';
+import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 
 import { CheckboxIndicator } from 'components/checkbox';
 import type { Category } from 'types/category';
@@ -27,6 +28,7 @@ const WidgetsMenu: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
+  const enabledWidgets = useWidgetsIdsByLocation() satisfies WidgetSlugType[];
 
   const handleWidgets = useCallback(
     (e) => {
@@ -42,7 +44,7 @@ const WidgetsMenu: FC = () => {
         (c) => c !== 'all_datasets'
       );
 
-      const newCat = (cat.length === 1 ? cat[0] : 'all_datasets') satisfies Category;
+      const newCat = cat.length === 1 ? cat[0] : 'all_datasets';
 
       if (newCat !== categorySelected) setCategory(newCat);
     },
@@ -149,13 +151,16 @@ const WidgetsMenu: FC = () => {
           return (
             <div
               key={`menu-item-${slug}`}
-              className="grid grid-cols-[57px_42px_auto] gap-4 text-sm"
+              className={cn({
+                'grid grid-cols-[57px_42px_auto] gap-4 text-sm': true,
+              })}
             >
               <Checkbox
                 id={slug}
                 data-testid={`${slug}-checkbox`}
                 onCheckedChange={() => handleWidgets(slug)}
                 defaultChecked
+                disabled={!enabledWidgets.includes(slug)}
                 checked={activeWidgets.includes(slug)}
                 className={cn({
                   'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
@@ -199,6 +204,7 @@ const WidgetsMenu: FC = () => {
                   'col-span-4 col-start-3 col-end-6': true,
                   'font-bold text-brand-800':
                     activeLayersIds.includes(slug) || activeWidgets.includes(slug),
+                  'opacity-40': !enabledWidgets.includes(slug),
                 })}
                 key={slug}
               >
