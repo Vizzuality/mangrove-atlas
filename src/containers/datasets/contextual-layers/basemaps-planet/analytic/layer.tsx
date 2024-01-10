@@ -15,7 +15,7 @@ export const PlanetSatelliteBasemapAnalyticLayer = ({ beforeId, id }: LayerProps
   const activeLayer = activeLayers.find((l) => l.id === id);
 
   const SOURCE = useSource({
-    date: activeLayer.settings?.date,
+    year: activeLayer.settings?.date,
   });
   const LAYER = useLayer({
     id,

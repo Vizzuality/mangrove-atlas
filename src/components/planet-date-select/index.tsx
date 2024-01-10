@@ -30,11 +30,10 @@ const DateSelect = ({
   mosaic_id: MosaicId;
   className?: { content: string };
 }) => {
-  console.log({ id });
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const layerToUpdate = useMemo(
-    () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
+    () => activeLayers.find((layer) => layer.id === id),
     [activeLayers]
   );
 
@@ -42,8 +41,6 @@ const DateSelect = ({
     () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
     [dates, layerToUpdate]
   );
-
-  console.log({ selectedDate });
 
   const labelToDisplay = useMemo(
     () => dates?.find((d) => d.value === selectedDate)?.label,
@@ -57,7 +54,7 @@ const DateSelect = ({
         setActiveLayers([
           {
             ...layerToUpdate,
-            id,
+            id: id as ContextualBasemapsId,
             settings: {
               ...layerToUpdate.settings,
               date: e.currentTarget.value,
