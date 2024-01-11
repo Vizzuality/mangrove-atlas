@@ -14,7 +14,6 @@ import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import Icon from 'components/icon';
-import DateSelect from 'components/planet-date-select';
 import Info from 'components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
@@ -48,14 +47,7 @@ type CardBasemapContextualProps = {
   hasDropdown?: boolean;
 };
 
-const CardBasemapContextual = ({
-  id,
-  mosaic_id,
-  type,
-  name,
-  description,
-  hasDropdown,
-}: CardBasemapContextualProps) => {
+const CardBasemapContextual = ({ id, type, name, description }: CardBasemapContextualProps) => {
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
 
@@ -120,11 +112,6 @@ const CardBasemapContextual = ({
           {description && <p>{description}</p>}
         </div>
       </div>
-      {/* {isActive && hasDropdown && (
-        <div className="pb-4">
-          <DateSelect mosaic_id={mosaic_id} id={id} />
-        </div>
-      )} */}
     </div>
   );
 };
