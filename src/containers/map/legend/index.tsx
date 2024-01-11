@@ -55,8 +55,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
     [activeLayers, setActiveLayers]
   );
 
-  const nationalDashboardLayerName = activeLayers.find(
-    (l) => l.id === 'mangrove_national_dashboard_layer'
+  const nationalDashboardLayerName = activeLayers.find((l) =>
+    l.id.includes('mangrove_national_dashboard_layer')
   )?.settings?.name;
 
   const removeLayer = useCallback(
@@ -150,13 +150,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
                       if (l.id === 'custom-area') return null;
+                      const layerId = Object.keys(MAP_LEGENDS).find((k) => l.id.includes(k));
+                      const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
 
-                      const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
-
-                      const widgetId =
-                        l.id === 'mangrove_national_dashboard_layer'
-                          ? 'mangrove_national_dashboard'
-                          : l.id;
+                      const widgetId = l.id.includes('mangrove_national_dashboard_layer')
+                        ? 'mangrove_national_dashboard'
+                        : l.id;
 
                       const Widget = WIDGETS[widgetId] as React.ElementType;
 
@@ -165,12 +164,13 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                       const layerNameToDisplay = layerName(l.id);
                       if (
                         layerNameToDisplay === undefined &&
-                        l.id !== 'mangrove_national_dashboard_layer'
+                        !l.id.includes('mangrove_national_dashboard_layer')
                       )
                         return null;
 
                       const title =
-                        l.id === 'mangrove_national_dashboard_layer' && nationalDashboardLayerName
+                        l.id.includes('mangrove_national_dashboard_layer') &&
+                        nationalDashboardLayerName
                           ? `National Dashboard`
                           : layerNameToDisplay;
 

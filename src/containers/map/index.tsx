@@ -231,7 +231,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     );
 
     const iucnEcoregionFeature = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove-iucn-ecoregion-layer'
+      ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
 
     if (locationFeature) {

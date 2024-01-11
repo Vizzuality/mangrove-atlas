@@ -39,7 +39,7 @@ export function useMangroveDriversChange(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const fetchMangroveDriversChange = () =>
     API.request({

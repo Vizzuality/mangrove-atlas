@@ -139,7 +139,7 @@ export function useAlerts<T>(
   const id = queryParams?.[1];
   const {
     data: { location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
   const fetchAlerts = () =>
@@ -438,7 +438,7 @@ export function useSources(): SourceProps[] {
   const id = queryParams?.[1];
   const {
     data: { location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   return [
     {

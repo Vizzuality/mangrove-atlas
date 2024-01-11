@@ -1,76 +1,77 @@
 import { useCallback, useState } from 'react';
+import type { SetStateAction } from 'react';
 
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 
-import { PiCircleFill } from 'react-icons/pi';
 import { useRecoilState } from 'recoil';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import DateSelect from 'components/planet-date-select';
+import RadioGroup from 'components/radio-group';
+import RadioGroupItem from 'components/radio-group/radio-group-item';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
 const BasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const defaultActive = activeLayers.find((layer) => layer.id.includes('planet'))?.id || null;
+  const defaultActive = activeLayers.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
     (id) => {
-      if (isActive === id) {
-        setIsActive(null);
-      } else setIsActive(id);
-
+      setIsActive(id);
+      const noPlanetLayers = activeLayers.filter((w) => !w.id.includes('planet_medres'));
       const layersUpdate =
-        !!activeLayers.find((layer) => layer.id === id) && isActive === null
-          ? activeLayers.filter((w) => w.id !== id)
+        id === 'no-layer'
+          ? noPlanetLayers
           : ([
               {
                 id: id as ContextualBasemapsId,
                 opacity: '1',
                 visibility: 'visible',
               },
-              ...activeLayers,
+              ...noPlanetLayers,
             ] as ActiveLayers[]);
-
       setActiveLayers(layersUpdate);
     },
-    [activeLayers, setActiveLayers, isActive]
+    [activeLayers, setActiveLayers]
   );
 
   return (
-    <div className="relative flex flex-col pb-4 font-light text-black/85">
-      <>
+    <div className="relative flex flex-col text-sm text-black/85">
+      <RadioGroup onValueChange={handleClick}>
+        <div className="flex space-x-4">
+          <RadioGroupItem
+            option={{ value: 'no-layer', label: 'No layer' }}
+            data-testid='"no-layer"'
+          />
+          <label
+            className={cn({
+              'font-semibold text-brand-800': isActive === 'no-layer',
+            })}
+            htmlFor="No layer"
+          >
+            No layer
+          </label>
+        </div>
+
         {CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id, name, mosaic_id }) => {
           return (
-            <div key={id} className="ml-0.5 flex flex-col">
-              <div className="flex items-center space-x-4 py-1 font-light text-black/85">
-                <Checkbox
-                  id={id}
+            <div key={id} className="space-y-2">
+              <div className="flex space-x-4">
+                <RadioGroupItem option={{ value: id, label: name }} data-testid={id} />
+                <label
                   className={cn({
-                    'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85':
-                      true,
-                    'border-4 border-brand-800': id === isActive,
+                    'font-semibold text-brand-800': isActive === id,
                   })}
-                  onCheckedChange={() => {
-                    handleClick(id);
-                  }}
-                  data-testid={id}
-                  checked={!!activeLayers.find((layer) => layer.id === id) && isActive === id}
+                  htmlFor={id}
                 >
-                  <CheckboxIndicator>
-                    <PiCircleFill className="h-1.5 w-1.5 rounded-full fill-white" />
-                  </CheckboxIndicator>
-                </Checkbox>
-                <label className="font-sm m-0 text-sm font-semibold text-brand-800" htmlFor={id}>
                   {name}
                 </label>
               </div>
-
               {isActive === id && (
                 <div className="ml-6">
                   <DateSelect
@@ -84,7 +85,7 @@ const BasemapsMapSettings = () => {
             </div>
           );
         })}
-      </>
+      </RadioGroup>
     </div>
   );
 };

@@ -25,7 +25,7 @@ export function useClimateWatchNDCS(
   const id = queryParams?.[1];
   const {
     data: { iso },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const fetchClimateWatchNDCS = () =>
     ClimateWatchAPI.request({
@@ -71,7 +71,7 @@ export function useClimateWatchNDCSCountriesDocs(
   const id = queryParams?.[1];
   const {
     data: { iso },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const fetchClimateWatchNDCS = () =>
     ClimateWatchAPI.request({

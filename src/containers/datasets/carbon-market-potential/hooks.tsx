@@ -59,7 +59,7 @@ export function useCarbonMarketPotential(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const { units: unit, label, ...rest } = params;
   const unitLabel = units.find((u) => u.value === unit)?.label;

@@ -27,7 +27,7 @@ const LocationWidget = () => {
   const id = params?.[1];
   const {
     data: { name },
-  } = useLocation(locationType, id, {
+  } = useLocation(id, locationType, {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
 

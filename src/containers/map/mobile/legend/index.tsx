@@ -158,12 +158,13 @@ const Legend = () => {
                       const layerNameToDisplay = layerName(l.id);
                       if (
                         layerNameToDisplay === undefined &&
-                        l.id !== 'mangrove_national_dashboard_layer'
+                        !l.id.includes('mangrove_national_dashboard_layer')
                       )
                         return null;
 
                       const title =
-                        l.id === 'mangrove_national_dashboard_layer' && nationalDashboardLayerName
+                        l.id.includes('mangrove_national_dashboard_layer') &&
+                        nationalDashboardLayerName
                           ? `National Dashboard`
                           : layerNameToDisplay;
 

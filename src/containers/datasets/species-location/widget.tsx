@@ -35,7 +35,7 @@ const SpeciesLocation = () => {
   const id = queryParams?.[1];
   const {
     data: { name: location },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const [specieSelected, setSpecie] =
     useRecoilState<DataResponse['data'][number]>(SpeciesLocationState);
 

@@ -40,8 +40,8 @@ export function useLocations<T = DataResponse>(
 }
 
 export function useLocation(
-  locationType: LocationTypes,
   id: Location['location_id'],
+  locationType?: LocationTypes,
   queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
 ) {
   const _id = ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';

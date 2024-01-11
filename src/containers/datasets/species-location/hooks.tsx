@@ -41,7 +41,7 @@ export function useMangroveSpeciesLocation<T>(
   const id = queryParams?.[1];
   const {
     data: { id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   return useQuery([QUERY_KEY, location_id], fetchMangroveSpecies, {
     placeholderData: queryClient.getQueryData<DataResponse>([QUERY_KEY, location_id]) || {

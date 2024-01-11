@@ -32,7 +32,7 @@ export function useMangroveRestorationSites(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const mapFilters = useRecoilValue(RestorationSitesMapFilters);
   const filtersPending = useRecoilValue(RestorationSitesFiltersApplication);
 
@@ -71,7 +71,7 @@ export function useMangroveRestorationSitesFilters(
   const id = queryParams?.[1];
   const {
     data: { id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const fetchMangroveRestorationSitesFilters = () =>
     API.request({
       method: 'GET',

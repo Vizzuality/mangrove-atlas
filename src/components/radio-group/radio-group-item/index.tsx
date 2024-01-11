@@ -17,12 +17,9 @@ const RadioGroupItem = ({ option, className }: { option: RadioOption; className?
       id={option.value}
     >
       <RadioGroup.Indicator className="flex items-center justify-center">
-        <CgRadioCheck className="h-2.5 w-2.5 border-red-500 fill-current text-current" />
+        <CgRadioCheck className="h-2.5 w-2.5 text-brand-800" />
       </RadioGroup.Indicator>
     </RadioGroup.Item>
-    <label className="font-sm m-0 text-sm font-semibold text-brand-800" htmlFor={option.value}>
-      {option.label}
-    </label>
   </div>
 );
 

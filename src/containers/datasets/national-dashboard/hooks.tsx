@@ -28,8 +28,8 @@ export function useNationalDashboard(
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
-    data: { id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+    data: { id: currentLocation, location_id, iso },
+  } = useLocation(id, locationType);
 
   const fetchMangroveNationalDashboard = () =>
     API.request({
@@ -44,7 +44,7 @@ export function useNationalDashboard(
   return useQuery(['national_dashboard', params, location_id], fetchMangroveNationalDashboard, {
     select: (data) => ({
       ...data,
-      location: currentLocation,
+      locationIso: iso,
     }),
     ...queryOptions,
   });
@@ -74,12 +74,13 @@ export function useLayers({
     query: { params: queryParams },
   } = useRouter();
   const locationType = queryParams?.[0] as LocationTypes;
-  const locationId = queryParams?.[1];
-  const {
-    data: { id: currentLocationId },
-  } = useLocation(locationType, locationId);
+  const location = queryParams?.[1];
 
-  if (!settings || settings.locationId !== currentLocationId) return null;
+  const {
+    data: { iso },
+  } = useLocation(location, locationType);
+
+  if (!settings || settings.location !== iso) return null;
 
   return {
     id,
