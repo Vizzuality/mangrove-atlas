@@ -139,7 +139,7 @@ export function useMangroveEcoregions(
 
 export function useSource(): SourceProps {
   return {
-    id: 'mangrove-iucn-ecoregion-layer',
+    id: 'mangrove-iucn-ecoregion',
     type: 'vector',
     url: 'mapbox://globalmangrovewatch.20gft2fx',
   };

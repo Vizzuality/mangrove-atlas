@@ -63,7 +63,10 @@ const IndicatorSource = ({
 }: IndicatorSourceTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const isActive = useMemo(
+    () => activeLayersIds.includes(`mangrove_national_dashboard_layer_${location}`),
+    [activeLayersIds, `mangrove_national_dashboard_layer_${location}`]
+  );
   const natDashLayer = useMemo(() => activeLayers.find((l) => l.id === id), [activeLayers, id]);
   const {
     query: { params: queryParams },
@@ -75,27 +78,27 @@ const IndicatorSource = ({
   } = useLocation(locationType, locationId);
 
   useEffect(() => {
-    const isNationalDashboardActive = activeLayers.find(
-      (layer) => layer.id === 'mangrove_national_dashboard_layer'
+    const isNationalDashboardActive = activeLayers.find((layer) =>
+      layer.id.includes('mangrove_national_dashboard_layer')
     );
     if (
       isNationalDashboardActive &&
-      Number(location) !== isNationalDashboardActive.settings?.locationId
+      Number(currentLocationId) !== isNationalDashboardActive.settings?.locationId
     ) {
       const updatedLayers = activeLayers.filter(
-        (layer) => layer.id !== 'mangrove_national_dashboard_layer'
+        (layer) => !layer.id.includes('mangrove_national_dashboard_layer')
       );
       setActiveLayers(updatedLayers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [currentLocationId, activeLayers]);
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
+      ? activeLayers.filter((w) => w.id !== `mangrove_national_dashboard_layer_${location}`)
       : ([
           {
-            id,
+            id: `mangrove_national_dashboard_layer_${location}`,
             opacity: '1',
             visibility: 'visible',
             settings: {
@@ -133,15 +136,14 @@ const IndicatorSource = ({
               </span>
             </PopoverTrigger>
 
-            <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
-              <ul className="z-20 max-h-32 space-y-0.5">
+            <PopoverContent>
+              <ul className="max-h-56 space-y-2">
                 {years?.map((u) => (
-                  <li key={u}>
+                  <li key={u} className="last-of-type:pb-4">
                     <button
                       aria-label="set year"
                       className={cn({
-                        'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
-                        'font-semibold text-brand-800': yearSelected === u,
+                        'font-bold': true,
                       })}
                       type="button"
                       onClick={() => setYearSelected(u)}
@@ -156,7 +158,6 @@ const IndicatorSource = ({
           </Popover>
         )}
       </div>
-
       {dataSource?.value && (
         <span>
           {numberFormat(dataSource.value)}
@@ -170,11 +171,11 @@ const IndicatorSource = ({
             info: dataSource?.layer_info,
           }}
         />
-        <SwitchWrapper id={'mangrove_national_dashboard_layer'}>
+        <SwitchWrapper id={`mangrove_national_dashboard_layer_${location}`}>
           <SwitchRoot
-            id={id}
+            id={`mangrove_national_dashboard_layer_${location}`}
             onClick={handleClick}
-            checked={isActive && Number(currentLocationId) === natDashLayer?.settings?.locationId}
+            checked={isActive}
           >
             <SwitchThumb />
           </SwitchRoot>
