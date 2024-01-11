@@ -133,14 +133,15 @@ const IndicatorSource = ({
               </span>
             </PopoverTrigger>
 
-            <PopoverContent>
-              <ul className="max-h-56 space-y-2">
+            <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+              <ul className="z-20 max-h-32 space-y-0.5">
                 {years?.map((u) => (
-                  <li key={u} className="last-of-type:pb-4">
+                  <li key={u}>
                     <button
                       aria-label="set year"
                       className={cn({
-                        'font-bold': true,
+                        'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
+                        'font-semibold text-brand-800': yearSelected === u,
                       })}
                       type="button"
                       onClick={() => setYearSelected(u)}
@@ -155,6 +156,7 @@ const IndicatorSource = ({
           </Popover>
         )}
       </div>
+
       {dataSource?.value && (
         <span>
           {numberFormat(dataSource.value)}

@@ -153,7 +153,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
                       const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
 
-                      const Widget = WIDGETS[l.id] as React.ElementType;
+                      const widgetId =
+                        l.id === 'mangrove_national_dashboard_layer'
+                          ? 'mangrove_national_dashboard'
+                          : l.id;
+
+                      const Widget = WIDGETS[widgetId] as React.ElementType;
 
                       const visibility = l.visibility === 'visible';
 
@@ -232,10 +237,10 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                                         <WidgetWrapper
                                           key={l.id}
                                           title={title}
-                                          id={l.id as WidgetSlugType}
+                                          id={widgetId as WidgetSlugType}
                                           info
                                         >
-                                          <Widget id={l.id} />
+                                          <Widget id={widgetId} />
                                         </WidgetWrapper>
                                       </div>
                                       <DialogClose />

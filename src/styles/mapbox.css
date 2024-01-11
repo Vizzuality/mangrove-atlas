@@ -636,3 +636,14 @@
     bottom: -15px !important;
     right: 0px !important;
   }
+
+  .mapboxgl-ctrl-attrib-inner {
+    font-size: 0.75rem;
+    visibility: collapse;
+    :nth-child(1), :nth-child(2) {
+      display: none;
+    }
+    :nth-child(3), :nth-child(4), :nth-child(5) {
+      visibility: visible;
+    }
+  }
