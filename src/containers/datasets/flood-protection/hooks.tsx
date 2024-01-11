@@ -63,7 +63,7 @@ export function useMangrovesFloodProtection(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const selectedPeriod = useMemo(() => period || 'annual', [period]);
   const getBars = useCallback(

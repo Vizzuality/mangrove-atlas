@@ -27,7 +27,7 @@ export function useMangroveInternationalStatus(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   const fetchMangroveInternationalStatus = () =>
     API.request({

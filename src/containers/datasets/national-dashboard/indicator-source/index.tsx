@@ -1,7 +1,4 @@
 import { useMemo, useCallback } from 'react';
-import { useEffect } from 'react';
-
-import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
@@ -9,9 +6,6 @@ import { numberFormat } from 'lib/format';
 import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
-
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -38,7 +32,7 @@ type DataSourceTypes = {
 
 type IndicatorSourceTypes = {
   id: WidgetSlugType;
-  location: number;
+  locationIso: string;
   layerIndex: number;
   source: string;
   years: number[];
@@ -52,7 +46,7 @@ type IndicatorSourceTypes = {
 const IndicatorSource = ({
   id,
   source,
-  location,
+  locationIso,
   layerIndex,
   years,
   unit,
@@ -63,47 +57,18 @@ const IndicatorSource = ({
 }: IndicatorSourceTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(
-    () => activeLayersIds.includes(`mangrove_national_dashboard_layer_${location}`),
-    [activeLayersIds, `mangrove_national_dashboard_layer_${location}`]
-  );
-  const natDashLayer = useMemo(() => activeLayers.find((l) => l.id === id), [activeLayers, id]);
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const locationId = queryParams?.[1];
-  const {
-    data: { id: currentLocationId },
-  } = useLocation(locationType, locationId);
-
-  useEffect(() => {
-    const isNationalDashboardActive = activeLayers.find((layer) =>
-      layer.id.includes('mangrove_national_dashboard_layer')
-    );
-    if (
-      isNationalDashboardActive &&
-      Number(currentLocationId) !== isNationalDashboardActive.settings?.locationId
-    ) {
-      const updatedLayers = activeLayers.filter(
-        (layer) => !layer.id.includes('mangrove_national_dashboard_layer')
-      );
-      setActiveLayers(updatedLayers);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentLocationId, activeLayers]);
-
+  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== `mangrove_national_dashboard_layer_${location}`)
+      ? activeLayers.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
       : ([
           {
-            id: `mangrove_national_dashboard_layer_${location}`,
+            id,
             opacity: '1',
             visibility: 'visible',
             settings: {
               name: source,
-              locationId: location,
+              location: locationIso,
               layerIndex,
               source: dataSource.layer_link,
               source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
@@ -112,7 +77,7 @@ const IndicatorSource = ({
           ...activeLayers,
         ] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
-  }, [activeLayers, setActiveLayers, id]);
+  }, [activeLayers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);
 
   return (
     <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">
@@ -171,12 +136,8 @@ const IndicatorSource = ({
             info: dataSource?.layer_info,
           }}
         />
-        <SwitchWrapper id={`mangrove_national_dashboard_layer_${location}`}>
-          <SwitchRoot
-            id={`mangrove_national_dashboard_layer_${location}`}
-            onClick={handleClick}
-            checked={isActive}
-          >
+        <SwitchWrapper id={id}>
+          <SwitchRoot id={id} onClick={handleClick} checked={isActive}>
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>

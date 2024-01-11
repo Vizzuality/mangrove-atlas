@@ -121,7 +121,7 @@ export function useMangroveEmissionsMitigation(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const { filteredIndicators, ...rest } = params;
 
   const fetchMangroveEmissionsMitigation = () =>

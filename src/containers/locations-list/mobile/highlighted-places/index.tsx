@@ -22,7 +22,7 @@ const HighlightedPlacesMobile = () => {
 
   const {
     data: { location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const isHighlightedPlace = Object.values(HIGHLIGHTED_PLACES).includes(location_id);
 
   const formatToKm = (mts) => {

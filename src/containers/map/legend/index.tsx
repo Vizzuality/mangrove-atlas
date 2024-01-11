@@ -150,8 +150,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                   <SortableList onChangeOrder={onChangeOrder}>
                     {activeLayers.map((l) => {
                       if (l.id === 'custom-area') return null;
-
-                      const WidgetLegend = MAP_LEGENDS[l.id] as React.ElementType;
+                      const layerId = Object.keys(MAP_LEGENDS).find((k) => l.id.includes(k));
+                      const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
 
                       const widgetId = l.id.includes('mangrove_national_dashboard_layer')
                         ? 'mangrove_national_dashboard'

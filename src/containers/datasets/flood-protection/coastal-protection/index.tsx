@@ -15,7 +15,7 @@ const CoastalProtection = () => {
   const id = queryParams?.[1];
   const {
     data: { name: location },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   return (
     <div
       className={cn({

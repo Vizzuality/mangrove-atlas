@@ -98,7 +98,7 @@ export function useMangroveNetChange(
   const id = queryParams?.[1];
   const {
     data: { name: location, id: currentLocation, location_id },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
   const { customGeojson } = useRecoilValue(drawingToolAtom);
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);

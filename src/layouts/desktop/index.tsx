@@ -29,7 +29,7 @@ const DesktopLayout = () => {
 
   const {
     data: { name: location },
-  } = useLocation(locationType, id);
+  } = useLocation(id, locationType);
 
   return (
     <div className="overflow-hidden print:overflow-visible">

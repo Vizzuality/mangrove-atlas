@@ -6,6 +6,8 @@ import cn from 'lib/classnames';
 
 import chroma from 'chroma-js';
 
+import { useLocation } from 'containers/datasets/locations/hooks';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
@@ -46,7 +48,6 @@ const NationalDashboard = () => {
                 {sources.map(({ source, years, unit, data_source }) => {
                   const dataSource = data_source.find((d) => d.year === currentYear);
                   const color = colorsScale.filter((c, i) => i === index);
-
                   return (
                     <>
                       <div className="grid grid-cols-4 text-sm font-normal">
@@ -56,8 +57,8 @@ const NationalDashboard = () => {
                       </div>
 
                       <IndicatorSource
-                        id={`mangrove_national_dashboard_layer_${dataSource}`}
-                        location={data.location}
+                        id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
+                        locationIso={data.locationIso}
                         layerIndex={index}
                         key={source}
                         source={source}

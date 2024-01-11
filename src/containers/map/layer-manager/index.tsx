@@ -4,7 +4,6 @@ import { Layer } from 'react-map-gl';
 
 import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -79,6 +78,7 @@ const LayerManagerContainer = () => {
 
       {LAYERS_FILTERED.map((layer, i) => {
         const layerId = Object.keys(LAYERS).find((k) => layer.includes(k));
+
         const LayerComponent = LAYERS[layerId] || BASEMAPS[layerId];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
         return (
