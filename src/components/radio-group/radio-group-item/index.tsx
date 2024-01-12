@@ -5,7 +5,15 @@ import { CgRadioCheck } from 'react-icons/cg';
 
 import type { RadioOption } from '../types';
 
-const RadioGroupItem = ({ option, className }: { option: RadioOption; className?: string }) => (
+const RadioGroupItem = ({
+  option,
+  className,
+  label = true,
+}: {
+  option: RadioOption;
+  className?: string;
+  label?: boolean;
+}) => (
   <div className="flex items-center space-x-4">
     <RadioGroup.Item
       className={cn({
@@ -20,6 +28,11 @@ const RadioGroupItem = ({ option, className }: { option: RadioOption; className?
         <CgRadioCheck className="h-2.5 w-2.5 text-brand-800" />
       </RadioGroup.Indicator>
     </RadioGroup.Item>
+    {label && (
+      <label className="font-sm m-0 text-sm font-semibold text-brand-800" htmlFor={option.value}>
+        {option.label}
+      </label>
+    )}
   </div>
 );
 

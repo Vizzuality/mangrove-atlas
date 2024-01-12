@@ -60,7 +60,12 @@ const BasemapsMapSettings = () => {
             </Checkbox>
           </button>
 
-          <span className="flex-1 cursor-pointer py-1 text-center text-sm font-semibold text-brand-800">
+          <span
+            className={cn({
+              'flex-1 cursor-pointer py-1 text-center text-sm text-black/85': true,
+              'font-semibold text-brand-800': basemapStored === id,
+            })}
+          >
             {name}
           </span>
         </div>

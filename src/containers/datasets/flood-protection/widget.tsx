@@ -176,7 +176,7 @@ const FloodProtection = ({
           <div className="flex flex-1 flex-col items-center space-y-2">
             <FloodProtectionChart data={data.config} />
           </div>
-          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85 ">
+          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85">
             <p className="w-full text-end text-sm">{UNITS_LABELS[data.unit]}</p>
 
             <div

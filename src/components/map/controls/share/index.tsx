@@ -63,7 +63,7 @@ export const Share = ({ className }: { className?: string }) => {
       <DialogTrigger>
         <div
           className={cn({
-            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             [className]: !!className,
           })}

@@ -15,7 +15,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
       <DialogTrigger>
         <div
           className={cn({
-            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full  border bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             [className]: !!className,
           })}
@@ -27,7 +27,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit rounded-3xl">
+      <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit rounded-4xl">
         <div className="no-scrollbar max-h-[85vh] space-y-6 overflow-y-auto">
           <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
           <Helper

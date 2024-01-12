@@ -123,12 +123,12 @@ const Legend = () => {
           <button
             onClick={openLegend}
             className={cn({
-              'flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-3xl border bg-white py-2 px-10 shadow-control':
+              'flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-4xl bg-white py-2 px-10 shadow-control':
                 true,
               hidden: isOpen,
             })}
           >
-            <p className="opacity-85 whitespace-nowrap text-xs font-bold uppercase text-black">
+            <p className="opacity-85 whitespace-nowrap text-xs font-bold uppercase text-black/85">
               Show legend
             </p>
 

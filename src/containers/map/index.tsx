@@ -315,7 +315,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const handleMapLoad = useCallback(() => {
     setLoaded(true);
   }, []);
-
+  const pitch = map?.getPitch();
   return (
     <div
       className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
@@ -363,9 +363,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   <FullScreenControl />
                   <ShareControl />
                   <BasemapSettingsControl />
-                  <div className="border-box flex flex-col rounded-full border shadow-control">
+                  <div className="border-box flex flex-col overflow-hidden rounded-4xl bg-white shadow-control">
                     <ZoomControl mapId={mapId} />
-                    <PitchReset mapId={mapId} />
+                    {pitch !== 0 && <PitchReset mapId={mapId} />}
                   </div>
                 </div>
               </Helper>
