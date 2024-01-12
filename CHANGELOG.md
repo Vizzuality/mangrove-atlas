@@ -29,6 +29,13 @@ Unreleased
 ### Changed
 
 - New params to URL. Layer and widget id stored in URL independently
+- Custom language selector
+- New (fixed) navigation bar for app tool
+- Restyle of the whole interface
+- Widgets deck added
+- Planet layers separate from the rest of contextual layers
+- New legend with functionality for layers
+- Edit function for custom areas removed
 
 ### Fixed
 
@@ -47,8 +54,6 @@ Released 25/09/2023
 
 - Access to Blog (news) moved from main menu to sidebar
 - Access to different tools simplified (menu, language, blog and user guide)
-- Custom language selector
-
 
 ### Fixed
 

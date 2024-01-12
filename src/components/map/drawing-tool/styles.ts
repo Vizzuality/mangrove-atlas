@@ -22,7 +22,7 @@ const DRAWING_STYLES: Layer[] = [
     type: 'fill',
     filter: ['all', ['==', '$type', 'Polygon'], ['!=', 'mode', 'static']],
     paint: {
-      'fill-color': '#00857F',
+      'fill-color': 'none',
       'fill-outline-color': '#00857F',
       'fill-opacity': 0.1,
     },
