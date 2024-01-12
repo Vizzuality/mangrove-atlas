@@ -100,7 +100,7 @@ const WidgetsContainer: React.FC = () => {
                 type="button"
                 data-testid="expand-collapse-button"
                 className={cn({
-                  'h-8 w-[262px] rounded-4xl border bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0':
+                  'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors md:ml-0':
                     true,
                   'bg-white': widgetsCollapsedChecker,
                   'print:hidden': screenWidth >= breakpoints.md,
@@ -126,7 +126,7 @@ const WidgetsContainer: React.FC = () => {
                   type="button"
                   data-testid="configure-widgets-button"
                   className={cn({
-                    'flex h-8 w-[262px] items-center justify-center rounded-4xl border bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-md transition-colors md:ml-0 print:hidden':
+                    'flex h-8 w-[262px] items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors md:ml-0 print:hidden':
                       true,
                   })}
                 >

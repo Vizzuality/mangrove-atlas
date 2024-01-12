@@ -1,6 +1,6 @@
 <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Frame 17372">
-<rect width="16" height="16" transform="translate(0.5 0.5)" fill="white"/>
+<rect width="16" height="16" transform="translate(0.5 0.5)" />
 <path id="Vector 63" d="M8.5 1L1 6L8.5 11L16 6L8.5 1Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path id="Vector 64" d="M1 10L8.5 15L16 10" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>

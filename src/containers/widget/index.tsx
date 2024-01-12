@@ -12,7 +12,7 @@ import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
 import Info from './info.mdx';
-import { getWidgetActive } from './selector';
+import { getLayerActive } from './selector';
 
 type ChildrenType = ReactElement & { type?: () => null };
 
@@ -29,7 +29,7 @@ type WidgetLayoutProps = {
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability, info } = props;
 
-  const isWidgetActive = useRecoilValue(getWidgetActive(id));
+  const isLayerActive = useRecoilValue(getLayerActive(id));
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
@@ -61,9 +61,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         variants={widgetVariants}
         animate={widgetsCollapsed[id] ? 'collapsed' : 'expanded'}
         exit="expanded"
-        transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
+        transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
         className={cn({
-          'md:h-fit-content z-2 group w-full rounded-2xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-[3%] md:ml-0':
+          'md:h-fit-content z-2 group w-full rounded-4xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget md:ml-[3%] md:ml-0':
             true,
           '!w-[100%] border-none !p-0 !shadow-none': info,
           [className]: !!className,
@@ -71,8 +71,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
       >
         <div
           className={cn({
-            'rounded-2xl border border-transparent px-9 py-3': true,
-            'border-brand-800 transition delay-150 ease-in-out': isWidgetActive,
+            'rounded-3xl border border-transparent px-9 py-3': true,
+            'border-2 border-brand-800 border-opacity-25 transition delay-150 ease-in-out':
+              isLayerActive,
             'border-none p-0': info,
           })}
           data-testid={`widget-${id}`}

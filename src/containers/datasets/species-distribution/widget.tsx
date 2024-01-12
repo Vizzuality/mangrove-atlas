@@ -49,7 +49,7 @@ const SpeciesDistribution = () => {
             <span className="font-bold">{total}</span> species of mangroves distributed by country
             as map shows.
           </p>
-          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85 ">
+          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85">
             <p className="w-full text-end opacity-50">total species</p>
 
             <div
