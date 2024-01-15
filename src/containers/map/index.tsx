@@ -36,6 +36,7 @@ import Legend from 'containers/map/legend';
 import MobileLegend from 'containers/map/mobile/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
+import Icon from 'components/icon';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import BasemapSettingsControl from 'components/map/controls/basemap-settings';
@@ -50,6 +51,8 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';
@@ -379,10 +382,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 latitude={locationPopUp?.popup[0]}
                 onClose={() => removePopup('location')}
               >
+                <button
+                  className="absolute -right-9 top-8 -right-[40px] h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+                  onClick={() => removePopup('location')}
+                >
+                  <Icon icon={CLOSE_SVG} className="ml-1 h-6 w-6" description="Close" />
+                </button>
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
                     locationPopUpInfo={locationPopUp}
-                    onClose={() => removePopup('location')}
                     className={cn({
                       '!w-[360px] rounded-3xl pt-6':
                         isEmpty(iucnEcoregionPopUp?.popupInfo) &&
