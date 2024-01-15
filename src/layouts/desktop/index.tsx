@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { fullScreenAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 
 import { useRecoilValue } from 'recoil';
@@ -18,7 +17,6 @@ import LOGO_PNG from 'images/logo-bg.png';
 
 const DesktopLayout = () => {
   const isPrintingMode = useRecoilValue(printModeState);
-  const isFullScreen = useRecoilValue(fullScreenAtom);
 
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
   const {
@@ -62,7 +60,7 @@ const DesktopLayout = () => {
           </p>
         )}
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
-        {!isFullScreen && <WidgetsContainer />}
+        <WidgetsContainer />
       </div>
     </div>
   );

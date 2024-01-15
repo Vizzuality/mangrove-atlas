@@ -38,6 +38,7 @@ const WidgetsContainer: React.FC = () => {
   const widgets = !!activeWidgets.length ? widgetsAvailable : widgetsAvailable;
 
   const setPrintingMode = useSetRecoilState(printModeState);
+
   const { customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
