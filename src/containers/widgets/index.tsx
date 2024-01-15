@@ -88,30 +88,29 @@ const WidgetsContainer: React.FC = () => {
             hidden: locationTool === 'area' || locationTool === 'upload',
           })}
         >
-          {widgets.length > 1 && (
-            <Helper
-              className={{
-                button: '-top-1.5 right-0 z-20',
-                tooltip: 'max-w-[400px]',
-              }}
-              tooltipPosition={{ top: -50, left: -10 }}
-              message="Expand or collapse all widgets"
+          <Helper
+            className={{
+              button: '-top-1.5 right-0 z-20',
+              tooltip: 'max-w-[400px]',
+            }}
+            tooltipPosition={{ top: -50, left: -10 }}
+            message="Expand or collapse all widgets"
+          >
+            <button
+              type="button"
+              data-testid="expand-collapse-button"
+              className={cn({
+                'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0':
+                  true,
+                'bg-white': widgetsCollapsedChecker,
+                'print:hidden': screenWidth >= breakpoints.md,
+              })}
+              disabled={widgets.length <= 1}
+              onClick={() => handleWidgetsCollapsed()}
             >
-              <button
-                type="button"
-                data-testid="expand-collapse-button"
-                className={cn({
-                  'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors md:ml-0':
-                    true,
-                  'bg-white': widgetsCollapsedChecker,
-                  'print:hidden': screenWidth >= breakpoints.md,
-                })}
-                onClick={() => handleWidgetsCollapsed()}
-              >
-                {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
-              </button>
-            </Helper>
-          )}
+              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
+            </button>
+          </Helper>
 
           <Dialog>
             <Helper
