@@ -13,12 +13,16 @@ import { useRecoilState } from 'recoil';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 
+import Icon from 'components/icon';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const LocationPopUP = ({
   locationPopUpInfo,
   nonExpansible,
+  onClose,
   className,
 }: {
   locationPopUpInfo: {
@@ -26,6 +30,7 @@ const LocationPopUP = ({
     feature: MapboxGeoJSONFeature;
   };
   nonExpansible: boolean;
+  onClose: () => void;
   className?: string;
 }) => {
   const [open, setOpen] = useState(nonExpansible);
@@ -62,12 +67,18 @@ const LocationPopUP = ({
   return (
     <div
       className={cn({
-        'box-border flex !w-[500px] cursor-pointer flex-col items-start rounded-t-3xl border-t border-slate-100 bg-white p-6 font-sans':
+        'relative box-border  flex !w-[500px] cursor-pointer flex-col items-start rounded-t-3xl border-t border-slate-100 bg-white p-6 font-sans':
           true,
         'max-h-[86px] w-full overflow-hidden': !open,
         [className]: !!className,
       })}
     >
+      <button
+        className="absolute -right-9 top-8 -right-[40px] h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+        onClick={onClose}
+      >
+        <Icon icon={CLOSE_SVG} className="ml-1 h-6 w-6" description="Close" />
+      </button>
       <button
         className="flex w-full items-center justify-between"
         disabled={nonExpansible}

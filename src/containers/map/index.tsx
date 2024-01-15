@@ -382,6 +382,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
                     locationPopUpInfo={locationPopUp}
+                    onClose={() => removePopup('location')}
                     className={cn({
                       '!w-[360px] rounded-3xl pt-6':
                         isEmpty(iucnEcoregionPopUp?.popupInfo) &&
