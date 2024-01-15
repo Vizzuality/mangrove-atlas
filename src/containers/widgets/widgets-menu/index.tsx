@@ -102,7 +102,7 @@ const WidgetsMenu: FC = () => {
             id="all-widgets"
             data-testid="all-widgets-checkbox"
             onCheckedChange={handleAllWidgets}
-            defaultChecked={false}
+            defaultChecked={categorySelected === 'all_datasets' ? true : false}
             className={cn({
               'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
               'bg-brand-800 text-white': widgets.length === activeWidgets.length,
