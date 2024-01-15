@@ -13,12 +13,16 @@ import { useRecoilState } from 'recoil';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 
+import Icon from 'components/icon';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const LocationPopUP = ({
   locationPopUpInfo,
   nonExpansible,
+
   className,
 }: {
   locationPopUpInfo: {
@@ -26,6 +30,7 @@ const LocationPopUP = ({
     feature: MapboxGeoJSONFeature;
   };
   nonExpansible: boolean;
+
   className?: string;
 }) => {
   const [open, setOpen] = useState(nonExpansible);
