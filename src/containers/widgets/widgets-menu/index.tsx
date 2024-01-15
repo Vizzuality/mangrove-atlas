@@ -89,6 +89,8 @@ const WidgetsMenu: FC = () => {
     [activeLayers, activeLayersIds, setActiveLayers]
   );
 
+  console.log({ categorySelected });
+
   return (
     <div>
       <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold uppercase tracking-[1px]">
@@ -98,25 +100,48 @@ const WidgetsMenu: FC = () => {
       </div>
       <div className="py-2">
         <div key="menu-item-all" className="grid grid-cols-[57px_42px_auto] gap-4 text-sm">
-          <Checkbox
-            id="all-widgets"
-            data-testid="all-widgets-checkbox"
-            onCheckedChange={handleAllWidgets}
-            defaultChecked={categorySelected === 'all_datasets' ? true : false}
-            className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-              'bg-brand-800 text-white': widgets.length === activeWidgets.length,
-            })}
-          >
-            <CheckboxIndicator>
-              <FaCheck
-                className={cn({
-                  'h-2.5 w-2.5 fill-current font-bold': true,
-                  'text-white': widgets.length === activeWidgets.length,
-                })}
-              />
-            </CheckboxIndicator>
-          </Checkbox>
+          {categorySelected === 'all_datasets' && (
+            <Checkbox
+              id="all-widgets"
+              data-testid="all-widgets-checkbox"
+              onCheckedChange={handleAllWidgets}
+              defaultChecked={true}
+              className={cn({
+                'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
+                'bg-brand-800 text-white': widgets.length === activeWidgets.length,
+              })}
+            >
+              <CheckboxIndicator>
+                <FaCheck
+                  className={cn({
+                    'h-2.5 w-2.5 fill-current font-bold': true,
+                    'text-white': widgets.length === activeWidgets.length,
+                  })}
+                />
+              </CheckboxIndicator>
+            </Checkbox>
+          )}
+          {categorySelected !== 'all_datasets' && (
+            <Checkbox
+              id="all-widgets"
+              data-testid="all-widgets-checkbox"
+              onCheckedChange={handleAllWidgets}
+              defaultChecked={false}
+              className={cn({
+                'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
+                'bg-brand-800 text-white': widgets.length === activeWidgets.length,
+              })}
+            >
+              <CheckboxIndicator>
+                <FaCheck
+                  className={cn({
+                    'h-2.5 w-2.5 fill-current font-bold': true,
+                    'text-white': widgets.length === activeWidgets.length,
+                  })}
+                />
+              </CheckboxIndicator>
+            </Checkbox>
+          )}
           <Checkbox
             id="all-layers"
             data-testid="all-layers-checkbox"
