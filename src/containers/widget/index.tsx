@@ -86,7 +86,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
               {title}
             </h2>
 
-            <WidgetControls id={id} />
+            {!info && <WidgetControls id={id} />}
           </header>
           <div
             data-testid={`widget-${id}-content`}
