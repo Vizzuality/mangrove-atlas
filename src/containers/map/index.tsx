@@ -32,7 +32,9 @@ import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/
 import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
+import LayerManager from 'containers/map/layer-manager';
 import Legend from 'containers/map/legend';
+import LocationPopup from 'containers/map/location-pop-up';
 import MobileLegend from 'containers/map/mobile/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
@@ -50,9 +52,6 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
-
-import LayerManager from './layer-manager';
-import LocationPopup from './location-pop-up';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -136,6 +135,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (map) {
       setURLBounds(map.getBounds().toArray());
       setLocationBounds(null);
+      removePopup('location');
     }
   }, [map, setURLBounds, setLocationBounds]);
 
