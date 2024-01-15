@@ -16,6 +16,7 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
+import { printModeState } from 'store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
@@ -81,6 +82,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
+  const isPrintingMode = useRecoilValue(printModeState);
+  console.log({ isPrintingMode });
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
@@ -416,16 +419,20 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           </>
         )}
       </Map>
-      <Media lessThan="md">
-        <div className="absolute top-20">
-          <MobileLegend />
-        </div>
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-9 right-18 z-50 mr-0.5 print:hidden">
-          <Legend />
-        </div>
-      </Media>
+      {!isPrintingMode && (
+        <>
+          <Media lessThan="md">
+            <div className="absolute top-20">
+              <MobileLegend />
+            </div>
+          </Media>
+          <Media greaterThanOrEqual="md">
+            <div className="absolute bottom-9 right-18 z-50 mr-0.5">
+              <Legend />
+            </div>
+          </Media>
+        </>
+      )}
     </div>
   );
 };
