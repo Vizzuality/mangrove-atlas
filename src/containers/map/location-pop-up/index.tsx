@@ -60,6 +60,23 @@ const LocationPopUP = ({
     }
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
+  const handleClickProtectedArea = useCallback(() => {
+    const { ISO3, NAME } = info.protectedArea;
+    const location = locations.data?.find((l) => {
+      return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
+    });
+
+    if (location) {
+      const bbox = turfBbox(location.bounds);
+
+      if (bbox) {
+        setLocationBounds(bbox as typeof locationBounds);
+      }
+
+      push(`/wpda/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+    }
+  }, [setLocationBounds, push, queryParams, locations, info]);
+
   return (
     <div
       className={cn({
@@ -110,14 +127,18 @@ const LocationPopUP = ({
             </div>
             {info.protectedArea && (
               <div className="flex grow cursor-default flex-col items-start justify-start font-sans">
-                <div className="space-x-4">
+                <button
+                  type="button"
+                  onClick={handleClickProtectedArea}
+                  className="space-x-4 text-start"
+                >
                   <span className="text-sm font-semibold text-brand-800">
                     {info.protectedArea.NAME}
                   </span>
                   <span className="text-xxs font-light uppercase text-black/85">
                     Protected area
                   </span>
-                </div>
+                </button>
                 <span className="text-sm font-semibold text-brand-800">
                   {info.protectedArea.ORIG_NAME}
                 </span>
