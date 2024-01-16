@@ -139,7 +139,7 @@ const LocationPopUP = ({
                 <span className="col-span-7 text-left text-sm font-semibold text-brand-800">
                   {name}
                 </span>
-                <span className="col-span-3 text-left text-xxs font-light uppercase text-black/85">
+                <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
                   {type}
                 </span>
               </button>
@@ -159,7 +159,7 @@ const LocationPopUP = ({
                     {info.protectedArea.ORIG_NAME}
                   </span>
                 </div>
-                <span className="col-span-3 text-left text-xxs font-light uppercase text-black/85">
+                <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
                   Protected area
                 </span>
               </button>

@@ -1,5 +1,3 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
-
 import { useRouter } from 'next/router';
 
 import { numberFormat } from 'lib/format';

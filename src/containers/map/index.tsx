@@ -37,7 +37,6 @@ import Legend from 'containers/map/legend';
 import MobileLegend from 'containers/map/mobile/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
-import Icon from 'components/icon';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import BasemapSettingsControl from 'components/map/controls/basemap-settings';
@@ -52,8 +51,6 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
-
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';
@@ -336,7 +333,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const pitch = map?.getPitch();
   return (
     <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:h-[90vh] print:w-[90vw]"
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:w-[90vw]"
       ref={mapRef}
     >
       <Map
@@ -367,7 +364,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
-            <Controls className="absolute bottom-9 right-6 items-center print:hidden">
+            <Controls className="absolute bottom-9 right-6 hidden items-center print:hidden md:block">
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',
