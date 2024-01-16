@@ -59,12 +59,9 @@ const WidgetsMenu: FC = () => {
     [activeWidgets, setActiveWidgets, setCategory, categorySelected]
   );
 
-  const handleAllWidgets = useCallback(
-    (e) => {
-      e ? setActiveWidgets(widgetsIds) : setActiveWidgets([]);
-    },
-    [widgetsIds, setActiveWidgets]
-  );
+  const handleAllWidgets = useCallback(() => {
+    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+  }, [widgetsIds, setActiveWidgets, activeWidgets]);
 
   const handleAllLayers = useCallback(
     (e) => {
@@ -110,11 +107,12 @@ const WidgetsMenu: FC = () => {
             id="all-widgets"
             data-testid="all-widgets-checkbox"
             onCheckedChange={handleAllWidgets}
+            checked={widgets.length === activeWidgets.length}
             defaultChecked={categorySelected === 'all_datasets'}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-              'bg-brand-800 text-white':
-                widgets.length === activeWidgets.length && categorySelected === 'all_datasets',
+              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
+                true,
+              'bg-brand-800': widgets.length === activeWidgets.length,
             })}
           >
             <CheckboxIndicator>
