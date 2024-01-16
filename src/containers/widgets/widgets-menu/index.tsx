@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react';
+import React, { useCallback, FC, useEffect } from 'react';
 
 import flatten from 'lodash-es/flatten';
 import uniq from 'lodash-es/uniq';
@@ -16,6 +16,7 @@ import { useRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/layers/constants';
 import widgets from 'containers/widgets/constants';
+import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 
 import { CheckboxIndicator } from 'components/checkbox';
@@ -27,8 +28,15 @@ const WidgetsMenu: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
+
   const enabledWidgets = useWidgetsIdsByLocation();
 
+  const cat = useWidgetsIdsByCategory(activeWidgets);
+  useEffect(() => {
+    if (categorySelected !== cat) {
+      setCategory(cat);
+    }
+  }, [categorySelected, setCategory, cat]);
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly
@@ -88,8 +96,6 @@ const WidgetsMenu: FC = () => {
 
     [activeLayers, activeLayersIds, setActiveLayers]
   );
-
-  console.log({ categorySelected });
 
   return (
     <div>
