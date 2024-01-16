@@ -147,7 +147,10 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
             >
               <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
-                  <SortableList onChangeOrder={onChangeOrder}>
+                  <SortableList
+                    onChangeOrder={onChangeOrder}
+                    sortable={{ handle: true, enabled: true }}
+                  >
                     {activeLayers.map((l) => {
                       if (l.id === 'custom-area') return null;
                       const layerId = Object.keys(MAP_LEGENDS).find((k) => l.id.includes(k));
@@ -184,11 +187,13 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                           <div className="flex w-full items-center justify-between">
                             <div className="flex items-center space-x-2">
                               {!embedded && (
-                                <Icon
-                                  icon={DRAG_SVG}
-                                  className="h-4 w-4"
-                                  description="Order layer"
-                                />
+                                <button>
+                                  <Icon
+                                    icon={DRAG_SVG}
+                                    className="h-4 w-4"
+                                    description="Order layer"
+                                  />
+                                </button>
                               )}
 
                               <p className="text-xs font-semibold uppercase tracking-wider text-black/85">

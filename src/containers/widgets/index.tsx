@@ -184,7 +184,7 @@ const WidgetsContainer: React.FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
+        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
           {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (

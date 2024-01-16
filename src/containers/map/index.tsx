@@ -83,7 +83,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
   const isPrintingMode = useRecoilValue(printModeState);
-  console.log({ isPrintingMode });
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
@@ -337,7 +336,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const pitch = map?.getPitch();
   return (
     <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:h-[90vh] print:w-[90vw]"
       ref={mapRef}
     >
       <Map

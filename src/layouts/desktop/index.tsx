@@ -43,21 +43,21 @@ const DesktopLayout = () => {
 
       <div className="relative h-screen w-screen">
         {isPrintingMode && (
-          <h1
-            className={cn({
-              'm-auto w-screen text-center first-letter:uppercase': true,
-              'text-lg': location.length < 10,
-              'text-md': location.length > 10,
-            })}
-          >
-            {location}
-          </h1>
-        )}
+          <div className="print:absolute print:top-6 print:z-50 print:text-black">
+            <h1
+              className={cn({
+                'm-auto w-screen text-center first-letter:uppercase': true,
+                'text-lg': location.length < 10,
+                'text-md': location.length > 10,
+              })}
+            >
+              {location}
+            </h1>
 
-        {isPrintingMode && (
-          <p className="text-center">
-            Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
-          </p>
+            <p className="text-center">
+              Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
+            </p>
+          </div>
         )}
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
         <WidgetsContainer />
