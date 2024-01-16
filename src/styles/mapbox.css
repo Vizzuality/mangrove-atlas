@@ -645,5 +645,9 @@
     }
     :nth-child(3), :nth-child(4), :nth-child(5) {
       visibility: visible;
+      @media print {
+        display: none;
+      }
     }
   }
+

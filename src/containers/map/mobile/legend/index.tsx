@@ -1,7 +1,5 @@
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
@@ -11,8 +9,6 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 
 import { MAP_LEGENDS, WIDGETS } from 'containers/datasets';
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
@@ -33,10 +29,6 @@ import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
 
 const Legend = () => {
-  const {
-    query: { params },
-  } = useRouter();
-
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const [isOpen, setIsOpen] = useState(false);

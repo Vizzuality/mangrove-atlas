@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
@@ -39,7 +39,9 @@ const WidgetsContainer: React.FC = () => {
 
   const setPrintingMode = useSetRecoilState(printModeState);
 
-  const { customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
+  const { enabled: drawingToolEnabled } = useRecoilValue(drawingToolAtom);
+  const { enabled: drawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
+
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
 
@@ -182,7 +184,7 @@ const WidgetsContainer: React.FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
+        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
           {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
@@ -222,9 +224,9 @@ const WidgetsContainer: React.FC = () => {
                 className={cn({
                   [BUTTON_STYLES]: true,
                   'm-auto bg-brand-800 text-white': true,
-                  hidden: !customGeojson && !uploadedGeojson,
+                  hidden: drawingToolEnabled || drawingUploadToolEnabled,
                 })}
-                disabled={!customGeojson && !uploadedGeojson}
+                disabled={drawingToolEnabled || drawingUploadToolEnabled}
                 onClick={onClickDownload}
               >
                 Download report as PDF
