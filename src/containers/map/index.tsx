@@ -397,12 +397,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 latitude={locationPopUp?.popup[0]}
                 onClose={() => removePopup('location')}
               >
-                <button
-                  className="absolute -right-9 top-8 -right-[40px] h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
-                  onClick={() => removePopup('location')}
-                >
-                  <Icon icon={CLOSE_SVG} className="ml-1 h-6 w-6" description="Close" />
-                </button>
                 {!isEmpty(locationPopUp?.info) ? (
                   <LocationPopup
                     locationPopUpInfo={locationPopUp}
@@ -414,6 +408,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     nonExpansible={
                       isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
                     }
+                    onClose={() => removePopup('location')}
                   />
                 ) : null}
                 {!isEmpty(restorationPopUp?.popupInfo) ? (

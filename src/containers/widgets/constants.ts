@@ -174,7 +174,7 @@ const widgets_prod = [
       slug: 'mangrove_iucn_ecoregion',
       locationType: ['worldwide'],
       applicability: 'Global',
-      categoryIds: ['all_datasets', 'distribution_and_change'],
+      categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
       layersIds: ['ecoregion'],
     }),
   },
@@ -228,5 +228,92 @@ export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
 ];
 
 export const MAP_SETTINGS_SLUGS: string[] = ['mangrove_contextual_basemaps'];
+
+export const WIDGETS_BY_CATEGORY = [
+  {
+    distribution_and_change: [
+      'mangrove_national_dashboard',
+      'mangrove_habitat_extent',
+      'mangrove_net_change',
+      'mangrove_habitat_change',
+      'mangrove_alerts',
+      'mangrove_species_location',
+      'mangrove_species_distribution',
+      'mangrove_species_threatened',
+      'mangrove_iucn_ecoregion',
+    ],
+  },
+  {
+    restoration_and_conservation: [
+      'mangrove_restoration_sites',
+      'mangrove_habitat_extent',
+      'mangrove_net_change',
+      'mangrove_alerts',
+      'mangrove_species_location',
+      'mangrove_species_distribution',
+      'mangrove_species_threatened',
+      'mangrove_protection',
+      'mangrove_restoration',
+      'mangrove_drivers_change',
+      'mangrove_iucn_ecoregion',
+    ],
+  },
+  {
+    climate_and_policy: [
+      'mangrove_blue_carbon',
+      'mangrove_emissions_mitigation',
+      'mangrove_international_status',
+      'mangrove_carbon_market_potential',
+    ],
+  },
+  {
+    ecosystem_services: [
+      'mangrove_biomass',
+      'mangrove_height',
+      'mangrove_blue_carbon',
+      'mangrove_fisheries',
+      'mangrove_flood_protection',
+    ],
+  },
+  {
+    contextual_layers: [
+      'mangrove_protected_areas',
+      'mangrove_allen_coral_reef',
+      'mangrove_salt_marsh',
+      'mangrove_tidal_flats',
+      'mangrove_global_tidal_wetland_change',
+    ],
+  },
+  {
+    all_datasets: [
+      'mangrove_national_dashboard',
+      'mangrove_restoration_sites',
+      'mangrove_habitat_extent',
+      'mangrove_net_change',
+      'mangrove_habitat_change',
+      'mangrove_alerts',
+      'mangrove_species_location',
+      'mangrove_species_distribution',
+      'mangrove_species_threatened',
+      'mangrove_protection',
+      'mangrove_restoration',
+      'mangrove_biomass',
+      'mangrove_height',
+      'mangrove_blue_carbon',
+      'mangrove_emissions_mitigation',
+      'mangrove_international_status',
+      'mangrove_carbon_market_potential',
+      'mangrove_drivers_change',
+      'mangrove_fisheries',
+      'mangrove_flood_protection',
+      'mangrove_iucn_ecoregion',
+      'mangrove_protected_areas',
+      'mangrove_allen_coral_reef',
+      'mangrove_salt_marsh',
+      'mangrove_tidal_flats',
+      'mangrove_global_tidal_wetland_change',
+    ],
+  },
+];
 
 export default widgets;

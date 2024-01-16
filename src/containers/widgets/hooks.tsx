@@ -9,6 +9,9 @@ import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';
 
+import { WIDGETS_BY_CATEGORY } from 'containers/widgets/constants';
+
+import type { Category } from 'types/category';
 import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
@@ -58,4 +61,19 @@ export function useWidgetsIdsByLocation(): WidgetSlugType[] {
         .map(({ slug }) => slug),
     [currentLocation]
   );
+}
+
+export function useWidgetsIdsByCategory(widgets): Category {
+  const widgetsKey = widgets.slice().sort().join(',');
+
+  for (const cat of WIDGETS_BY_CATEGORY) {
+    const [category, slugsCategory] = Object.entries(cat)[0];
+    const slugsCategoryKey = slugsCategory.slice().sort().join(',');
+
+    if (widgetsKey === slugsCategoryKey) {
+      return category as Category;
+    }
+  }
+
+  return 'all_datasets';
 }
