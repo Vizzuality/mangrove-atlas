@@ -285,7 +285,7 @@ export const WIDGETS_BY_CATEGORY = [
     ],
   },
   {
-    all_datsets: [
+    all_datasets: [
       'mangrove_national_dashboard',
       'mangrove_restoration_sites',
       'mangrove_habitat_extent',
