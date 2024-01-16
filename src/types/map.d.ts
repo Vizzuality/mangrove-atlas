@@ -39,9 +39,24 @@ export type RestorationPopUp = {
 };
 
 export type LocationPopUp = {
-  iso: string;
-  name: string;
-  type: 'country' | 'wpda';
+  location: {
+    iso: string;
+    name: string;
+    type: 'country' | 'wpda';
+  };
+  protectedArea?: {
+    ISO3: string;
+    NAME: string;
+    ORIG_NAME: string;
+    PARENT_ISO: string;
+    PA_DEF: number;
+    STATUS: string;
+    STATUS_YR: number;
+    VERIF: string;
+    WDPAID: number;
+    fid: number;
+    id: string;
+  };
 };
 
 export type PopUpKey = 'restoration' | 'ecoregion' | 'location';

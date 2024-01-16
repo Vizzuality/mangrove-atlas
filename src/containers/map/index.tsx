@@ -226,6 +226,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'country-boundaries-layer'
     );
 
+    const protectedAreaFeature = e?.features.find(
+      ({ layer }) => layer.id === 'mangrove_protected_areas'
+    );
+
     const restorationFeature = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_restoration-layer'
     );
@@ -237,7 +241,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (locationFeature) {
       setLocationPopUp({
         ...locationPopUp,
-        info: locationFeature.properties as LocationPopUp,
+        info: {
+          location: locationFeature.properties,
+          ...(protectedAreaFeature && {
+            protectedArea: {
+              ...(protectedAreaFeature?.properties as LocationPopUp['protectedArea']),
+              id: locationId,
+            },
+          }),
+        } as LocationPopUp,
         feature: locationFeature,
         popup: [e?.lngLat.lat, e?.lngLat.lng],
         position: {
@@ -246,6 +258,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         },
       });
     }
+
     if (!locationFeature) removePopup('location');
 
     if (restorationFeature) {

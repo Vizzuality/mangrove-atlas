@@ -38,7 +38,8 @@ const LocationPopUP = ({
   const queryParams = asPath.split('?')[1];
   const { info, feature } = locationPopUpInfo;
 
-  const { type, name } = info;
+  const { type, name } = info.location;
+
   const { data: locations } = useLocations();
 
   const handleClickLocation = useCallback(() => {
@@ -57,7 +58,7 @@ const LocationPopUP = ({
 
       push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
     }
-  }, [setLocationBounds, push, queryParams, locations]);
+  }, [setLocationBounds, push, queryParams, locations, feature]);
 
   return (
     <div
@@ -102,11 +103,26 @@ const LocationPopUP = ({
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
             <div className="flex grow flex-col items-start justify-between font-sans">
-              <button type="button" onClick={handleClickLocation} className="space-x-4">
+              <button type="button" onClick={handleClickLocation} className="space-x-4 text-start">
                 <span className="text-sm font-semibold text-brand-800">{name}</span>
                 <span className="text-xxs font-light uppercase text-black/85">{type}</span>
               </button>
             </div>
+            {info.protectedArea && (
+              <div className="flex grow cursor-default flex-col items-start justify-start font-sans">
+                <div className="space-x-4">
+                  <span className="text-sm font-semibold text-brand-800">
+                    {info.protectedArea.NAME}
+                  </span>
+                  <span className="text-xxs font-light uppercase text-black/85">
+                    Protected area
+                  </span>
+                </div>
+                <span className="text-sm font-semibold text-brand-800">
+                  {info.protectedArea.ORIG_NAME}
+                </span>
+              </div>
+            )}
           </motion.section>
         )}
       </AnimatePresence>
