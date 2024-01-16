@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import type { SetStateAction } from 'react';
 
 import cn from 'lib/classnames';
 

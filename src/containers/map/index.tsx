@@ -16,6 +16,7 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
+import { printModeState } from 'store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
@@ -81,6 +82,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
+  const isPrintingMode = useRecoilValue(printModeState);
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
@@ -334,7 +336,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const pitch = map?.getPitch();
   return (
     <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:h-[90vh] print:w-[90vw]"
       ref={mapRef}
     >
       <Map
@@ -429,16 +431,20 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           </>
         )}
       </Map>
-      <Media lessThan="md">
-        <div className="absolute top-20">
-          <MobileLegend />
-        </div>
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-9 right-18 z-50 mr-0.5 print:hidden">
-          <Legend />
-        </div>
-      </Media>
+      {!isPrintingMode && (
+        <>
+          <Media lessThan="md">
+            <div className="absolute top-20">
+              <MobileLegend />
+            </div>
+          </Media>
+          <Media greaterThanOrEqual="md">
+            <div className="absolute bottom-9 right-18 z-50 mr-0.5">
+              <Legend />
+            </div>
+          </Media>
+        </>
+      )}
     </div>
   );
 };

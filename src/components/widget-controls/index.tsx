@@ -8,13 +8,10 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { useScreenWidth } from 'hooks/media';
-
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import { breakpoints } from 'styles/styles.config';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
@@ -35,7 +32,7 @@ type WidgetControlsType = Readonly<{
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
-  const screenWidth = useScreenWidth();
+
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
@@ -59,8 +56,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   return (
     <div
       className={cn({
-        'flex items-center space-x-2': true,
-        'print:hidden': screenWidth >= breakpoints.lg,
+        'flex items-center space-x-2 print:hidden': true,
       })}
     >
       <Helper
