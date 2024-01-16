@@ -101,25 +101,35 @@ const LocationPopUP = ({
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="mt-4 flex flex-col space-y-2"
           >
-            <div className="flex grow flex-col items-start justify-between font-sans">
-              <button type="button" onClick={handleClickLocation} className="space-x-4 text-start">
-                <span className="text-sm font-semibold text-brand-800">{name}</span>
-                <span className="text-xxs font-light uppercase text-black/85">{type}</span>
+            <div className="font-sans">
+              <button
+                type="button"
+                onClick={handleClickLocation}
+                className="grid w-full grid-cols-10 gap-4"
+              >
+                <span className="col-span-7 text-left text-sm font-semibold text-brand-800">
+                  {name}
+                </span>
+                <span className="col-span-3 text-left text-xxs font-light uppercase text-black/85">
+                  {type}
+                </span>
               </button>
             </div>
             {info.protectedArea && (
-              <div className="flex grow cursor-default flex-col items-start justify-start font-sans">
-                <div className="space-x-4">
+              <div className="grid grow cursor-default grid-cols-10 gap-4 font-sans">
+                <div className="col-span-7 flex flex-col text-left">
                   <span className="text-sm font-semibold text-brand-800">
                     {info.protectedArea.NAME}
                   </span>
-                  <span className="text-xxs font-light uppercase text-black/85">
-                    Protected area
+
+                  <span className="text-left text-sm font-semibold text-brand-800">
+                    {info.protectedArea.ORIG_NAME}
                   </span>
                 </div>
-                <span className="text-sm font-semibold text-brand-800">
-                  {info.protectedArea.ORIG_NAME}
+                <span className="col-span-3 text-left text-xxs font-light uppercase text-black/85">
+                  Protected area
                 </span>
               </div>
             )}
