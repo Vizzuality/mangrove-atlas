@@ -30,7 +30,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const handleChangeOrder = useCallback(
     (order: string[]) => {
       const newLayers = order.map((id) => {
-        return activeLayers.find((la) => la.id === id);
+        return activeLayers.find((l) => l.id === id);
       }) as ActiveLayers[];
 
       setActiveLayers(newLayers);
@@ -69,14 +69,10 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
               animate={isOpen ? 'open' : 'close'}
               exit="close"
               transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-              className={cn({
-                fixed: true,
-                'md:right-[73px]': !embedded,
-                'right-7': embedded,
-              })}
+              className="absolute md:right-0"
             >
-              <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
-                <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 md:max-h-[55vh] md:print:hidden">
+              <div className="w-[360px] gap-4 rounded-3xl bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
+                <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
                   <SortableList
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
