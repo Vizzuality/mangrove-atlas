@@ -27,7 +27,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y left-18 top-16 max-h-[90%] min-h-fit rounded-4xl">
+      <DialogContent className="scroll-y max-h-[90%] min-h-fit rounded-4xl">
         <div className="no-scrollbar max-h-[85vh] space-y-6 overflow-y-auto">
           <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
           <Helper
@@ -39,7 +39,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
             tooltipPosition={{ top: -140, left: 0 }}
             message="use these buttons to switch between basemaps"
           >
-            <div className="w-[490px]">
+            <div className="flex w-[490px] flex-col space-y-2">
               <p className="text-xs font-bold uppercase tracking-[1px]">map style</p>
               <Basemaps />
             </div>

@@ -154,7 +154,7 @@ const LegendItem = ({
 
                 <DialogContent
                   className={cn({
-                    'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
+                    'mt-10 rounded-3xl !shadow-widget': true,
                     hidden: guideIsActive,
                   })}
                   overlay={false}

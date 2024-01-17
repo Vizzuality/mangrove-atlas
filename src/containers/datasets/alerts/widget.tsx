@@ -73,7 +73,7 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+              <PopoverContent className="rounded-2xl px-2 shadow-border">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {startDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
@@ -108,7 +108,7 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+              <PopoverContent className="rounded-2xl px-2 shadow-border">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {endDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">

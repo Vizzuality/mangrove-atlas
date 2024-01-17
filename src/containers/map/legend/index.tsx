@@ -38,11 +38,6 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
     [activeLayers, setActiveLayers]
   );
 
-  const contentVariants = {
-    open: { y: '-100%', opacity: 1 },
-    close: { y: '10%', opacity: 0 },
-  };
-
   return (
     <div>
       {!!activeLayers.length && (
@@ -69,7 +64,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 animate={{ opacity: 1, bottom: 36 }}
                 exit={{ opacity: 0, bottom: -200 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-                className="fixed  w-[360px] gap-4 rounded-3xl bg-white shadow-medium md:right-20"
+                className="fixed w-[360px] gap-4 rounded-3xl bg-white shadow-medium md:right-20"
               >
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
                   <SortableList
