@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -14,25 +14,9 @@ import ENABLE_FULLSCREEN_SVG from 'svgs/map/enable-fullscreen.svg?sprite';
 export const FullScreen = ({ className }: { className?: string }) => {
   const [isFullScreen, setFullScreen] = useRecoilState(fullScreenAtom);
 
-  const toggleFullScreen = useCallback(async () => {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else {
-      await document.documentElement.requestFullscreen();
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleFullScreenChange = () => {
-      setFullScreen(!!document.fullscreenElement);
-    };
-
-    window.document.addEventListener('fullscreenchange', handleFullScreenChange);
-
-    return () => {
-      window.document.removeEventListener('fullscreenchange', handleFullScreenChange);
-    };
-  }, [setFullScreen]);
+  const toggleFullScreen = useCallback(() => {
+    setFullScreen(!isFullScreen);
+  }, [setFullScreen, isFullScreen]);
 
   return (
     <div
@@ -43,9 +27,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
         'hover:bg-gray-100': !isFullScreen,
         [className]: !!className,
       })}
-      onClick={() => {
-        void toggleFullScreen();
-      }}
+      onClick={toggleFullScreen}
     >
       <Icon
         icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}

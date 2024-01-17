@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react';
+import React, { useCallback, FC, useEffect } from 'react';
 
 import flatten from 'lodash-es/flatten';
 import uniq from 'lodash-es/uniq';
@@ -16,6 +16,7 @@ import { useRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/layers/constants';
 import widgets from 'containers/widgets/constants';
+import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 
 import { CheckboxIndicator } from 'components/checkbox';
@@ -27,8 +28,15 @@ const WidgetsMenu: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
+
   const enabledWidgets = useWidgetsIdsByLocation();
 
+  const cat = useWidgetsIdsByCategory(activeWidgets);
+  useEffect(() => {
+    if (categorySelected !== cat) {
+      setCategory(cat);
+    }
+  }, [categorySelected, setCategory, cat]);
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly
@@ -51,12 +59,9 @@ const WidgetsMenu: FC = () => {
     [activeWidgets, setActiveWidgets, setCategory, categorySelected]
   );
 
-  const handleAllWidgets = useCallback(
-    (e) => {
-      e ? setActiveWidgets(widgetsIds) : setActiveWidgets([]);
-    },
-    [widgetsIds, setActiveWidgets]
-  );
+  const handleAllWidgets = useCallback(() => {
+    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+  }, [widgetsIds, setActiveWidgets, activeWidgets]);
 
   const handleAllLayers = useCallback(
     (e) => {
@@ -102,21 +107,19 @@ const WidgetsMenu: FC = () => {
             id="all-widgets"
             data-testid="all-widgets-checkbox"
             onCheckedChange={handleAllWidgets}
-            defaultChecked={false}
+            checked={widgets.length === activeWidgets.length}
+            defaultChecked={categorySelected === 'all_datasets'}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-              'bg-brand-800 text-white': widgets.length === activeWidgets.length,
+              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
+                true,
+              'bg-brand-800': widgets.length === activeWidgets.length,
             })}
           >
             <CheckboxIndicator>
-              <FaCheck
-                className={cn({
-                  'h-2.5 w-2.5 fill-current font-bold': true,
-                  'text-white': widgets.length === activeWidgets.length,
-                })}
-              />
+              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
+
           <Checkbox
             id="all-layers"
             data-testid="all-layers-checkbox"
@@ -128,19 +131,14 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheck
-                className={cn({
-                  'h-2.5 w-2.5 fill-current font-bold': true,
-                  'text-white': LAYERS.length === activeLayers.length,
-                })}
-              />
+              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
           <p
             className={cn({
               'col-span-4 col-start-3 col-end-6': true,
               'font-bold text-brand-800':
-                LAYERS.length === activeLayers.length || widgets.length === activeWidgets.length,
+                LAYERS.length === activeLayers.length && widgets.length === activeWidgets.length,
             })}
           >
             Select all
@@ -163,17 +161,20 @@ const WidgetsMenu: FC = () => {
                 checked={activeWidgets.includes(slug)}
                 className={cn({
                   'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-                  'bg-brand-800 text-white': activeWidgets.includes(slug),
+                  'bg-brand-800 text-white':
+                    activeWidgets.includes(slug) && enabledWidgets.includes(slug),
                 })}
               >
-                <CheckboxIndicator>
-                  <FaCheck
-                    className={cn({
-                      'h-2.5 w-2.5 fill-current font-bold': true,
-                      'text-white': activeWidgets.includes(slug),
-                    })}
-                  />
-                </CheckboxIndicator>
+                {enabledWidgets.includes(slug) && (
+                  <CheckboxIndicator>
+                    <FaCheck
+                      className={cn({
+                        'h-2.5 w-2.5 fill-current font-bold': true,
+                        'text-white': activeWidgets.includes(slug),
+                      })}
+                    />
+                  </CheckboxIndicator>
+                )}
               </Checkbox>
               {!!layersIds && !!layersIds.length && (
                 <Checkbox

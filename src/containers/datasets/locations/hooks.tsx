@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
 
 import API from 'services/api';
@@ -48,7 +50,6 @@ export function useLocation(
 
   return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
     placeholderData: { data: {} as DataResponse['data'][0] },
-
     select: ({ data }) => {
       if (locationType === 'custom-area') {
         return {

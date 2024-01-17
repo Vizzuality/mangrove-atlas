@@ -1,9 +1,5 @@
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
-import cn from 'lib/classnames';
-
 import { analysisAtom } from 'store/analysis';
 
 import { useQueryClient } from '@tanstack/react-query';

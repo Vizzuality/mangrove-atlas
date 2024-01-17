@@ -106,7 +106,7 @@ const Protection = () => {
       )}
       <SuggestedLayers
         thumbSource="/images/thumbs/contextual/mangrove_protected_areas.png"
-        name="WPDA"
+        name="WDPA"
         id="mangrove_protected_areas"
         description="We recommend you to use WDPA..."
       />

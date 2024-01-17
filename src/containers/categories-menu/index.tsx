@@ -3,10 +3,9 @@ import { useCallback, type MouseEvent } from 'react';
 import cn from 'lib/classnames';
 
 import { activeCategoryAtom } from 'store/sidebar';
-import { customCategoryAtom } from 'store/sidebar';
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
@@ -19,8 +18,7 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
-  const [customWidgetSelection] = useRecoilState(customCategoryAtom);
-  const [, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
@@ -30,11 +28,10 @@ const Category = () => {
         widget?.categoryIds?.includes(event.currentTarget.value)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
-      event.currentTarget.value === 'all_datasets'
-        ? setActiveWidgets(customWidgetSelection)
-        : setActiveWidgets(activeWidgetsIds);
+
+      setActiveWidgets(activeWidgetsIds);
     },
-    [setActiveWidgets, setCategory, customWidgetSelection]
+    [setActiveWidgets, setCategory]
   );
 
   return (

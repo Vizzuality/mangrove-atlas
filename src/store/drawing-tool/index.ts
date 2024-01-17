@@ -25,7 +25,7 @@ export const drawingUploadToolAtom = atom<{
   default: {
     // ? this property allows to enable/disable the drawing mode in the map
     enabled: false,
-    // ? this property stores a geojson geometry draw by the user
+    // ? this property stores a geojson geometry drawn by the user
     customGeojson: null,
     // ? this property stores a geojson geometry uploaded by the user
     uploadedGeojson: null,
