@@ -75,7 +75,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+  const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
@@ -376,7 +376,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 <div className="flex flex-col space-y-2 pt-1">
                   {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <FullScreenControl />
-                  <ShareControl />
+                  {/* Disable the sharing tool in any of the painting states */}
+                  {!isDrawingToolEnabled &&
+                    !isUploadToolEnabled &&
+                    !customGeojson &&
+                    !uploadedGeojson && <ShareControl />}
                   <BasemapSettingsControl />
                   <div className="border-box flex flex-col overflow-hidden rounded-4xl bg-white shadow-control">
                     <ZoomControl mapId={mapId} />
