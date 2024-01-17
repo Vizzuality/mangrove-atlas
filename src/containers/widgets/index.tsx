@@ -19,7 +19,6 @@ import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
-import NoData from 'containers/widgets/no-data';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
