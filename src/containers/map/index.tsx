@@ -405,7 +405,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                         isEmpty(iucnEcoregionPopUp?.popupInfo) &&
                         isEmpty(restorationPopUp?.popupInfo),
                     })}
-                    onClose={() => removePopup('location')}
                     nonExpansible={
                       isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
                     }
