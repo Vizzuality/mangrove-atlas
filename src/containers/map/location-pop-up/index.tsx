@@ -13,13 +13,17 @@ import { useRecoilState } from 'recoil';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 
+import Icon from 'components/icon';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const LocationPopUP = ({
   locationPopUpInfo,
   nonExpansible,
   className,
+  onClose,
 }: {
   locationPopUpInfo: {
     info: LocationPopUp;
@@ -27,6 +31,7 @@ const LocationPopUP = ({
   };
   nonExpansible: boolean;
   className?: string;
+  onClose: () => void;
 }) => {
   const [open, setOpen] = useState(nonExpansible);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
@@ -57,6 +62,7 @@ const LocationPopUP = ({
       }
 
       push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      onClose();
     }
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
@@ -73,19 +79,25 @@ const LocationPopUP = ({
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      push(`/wpda/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+      onClose();
     }
   }, [setLocationBounds, push, queryParams, locations, info]);
 
   return (
     <div
       className={cn({
-        'box-border flex !w-[500px] cursor-pointer flex-col items-start rounded-t-3xl border-t border-slate-100 bg-white p-6 font-sans':
+        'relative box-border flex !w-[500px] cursor-pointer flex-col items-start rounded-t-3xl border-t border-slate-100 bg-white p-6 font-sans':
           true,
-        'max-h-[86px] w-full overflow-hidden': !open,
         [className]: !!className,
       })}
     >
+      <button
+        className="absolute top-8 -right-[40px] h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+        onClick={onClose}
+      >
+        <Icon icon={CLOSE_SVG} className="ml-1 h-6 w-6" description="Close" />
+      </button>
       <button
         className="flex w-full items-center justify-between"
         disabled={nonExpansible}
@@ -118,31 +130,41 @@ const LocationPopUP = ({
               collapsed: { opacity: 0, height: 0 },
             }}
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="mt-4 flex flex-col space-y-2"
           >
-            <div className="flex grow flex-col items-start justify-between font-sans">
-              <button type="button" onClick={handleClickLocation} className="space-x-4 text-start">
-                <span className="text-sm font-semibold text-brand-800">{name}</span>
-                <span className="text-xxs font-light uppercase text-black/85">{type}</span>
+            <div className="font-sans">
+              <button
+                type="button"
+                onClick={handleClickLocation}
+                className="grid w-full grid-cols-10 gap-4"
+              >
+                <span className="col-span-7 text-left text-sm font-semibold text-brand-800">
+                  {name}
+                </span>
+                <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+                  {type}
+                </span>
               </button>
             </div>
             {info.protectedArea && (
-              <div className="flex grow cursor-default flex-col items-start justify-start font-sans">
-                <button
-                  type="button"
-                  onClick={handleClickProtectedArea}
-                  className="space-x-4 text-start"
-                >
+              <button
+                type="button"
+                className="grid grow cursor-pointer grid-cols-10 gap-4 font-sans"
+                onClick={handleClickProtectedArea}
+              >
+                <div className="col-span-7 flex flex-col text-left">
                   <span className="text-sm font-semibold text-brand-800">
                     {info.protectedArea.NAME}
                   </span>
-                  <span className="text-xxs font-light uppercase text-black/85">
-                    Protected area
+
+                  <span className="text-left text-sm font-semibold text-brand-800">
+                    {info.protectedArea.ORIG_NAME}
                   </span>
-                </button>
-                <span className="text-sm font-semibold text-brand-800">
-                  {info.protectedArea.ORIG_NAME}
+                </div>
+                <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+                  Protected area
                 </span>
-              </div>
+              </button>
             )}
           </motion.section>
         )}
