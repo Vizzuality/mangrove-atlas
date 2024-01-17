@@ -60,21 +60,22 @@ const LocationPopUP = ({
     }
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
-  // const handleClickProtectedArea = useCallback(() => {
-  //   const { ISO3, NAME } = info.protectedArea;
-  //   const location = locations.data?.find((l) => {
-  //     return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
-  //   });
+  const handleClickProtectedArea = useCallback(() => {
+    const { ISO3, NAME } = info.protectedArea;
+    const location = locations.data?.find((l) => {
+      return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
+    });
 
-  //   if (location) {
-  //     const bbox = turfBbox(location.bounds);
+    if (location) {
+      const bbox = turfBbox(location.bounds);
 
-  //     if (bbox) {
-  //       setLocationBounds(bbox as typeof locationBounds);
-  //     }
+      if (bbox) {
+        setLocationBounds(bbox as typeof locationBounds);
+      }
 
-  //     push(`/wpda/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
-  //   }
+      push(`/wpda/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+    }
+  }, []);
   // }, [setLocationBounds, push, queryParams, locations, info]);
 
   return (
@@ -129,7 +130,7 @@ const LocationPopUP = ({
               <div className="flex grow cursor-default flex-col items-start justify-start font-sans">
                 <button
                   type="button"
-                  // onClick={handleClickProtectedArea}
+                  onClick={handleClickProtectedArea}
                   className="space-x-4 text-start"
                 >
                   <span className="text-sm font-semibold text-brand-800">
