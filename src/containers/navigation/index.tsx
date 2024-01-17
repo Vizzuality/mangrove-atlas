@@ -7,7 +7,7 @@ import News from 'containers/navigation/news';
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (
-  <div className="fixed top-2 left-4 z-20 h-11 w-[526px] rounded-4xl bg-brand-800 px-5 shadow-md print:hidden">
+  <div className="fixed top-2 left-4 z-20 hidden h-11 w-[526px] rounded-4xl bg-brand-800 px-5 shadow-md print:hidden md:block">
     <div className="grid grid-cols-4 gap-4">
       <div className="flex items-center justify-center">
         <Menu />

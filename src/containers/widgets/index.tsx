@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
@@ -19,7 +19,6 @@ import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
-import NoData from 'containers/widgets/no-data';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
@@ -38,7 +37,10 @@ const WidgetsContainer: React.FC = () => {
   const widgets = !!activeWidgets.length ? widgetsAvailable : widgetsAvailable;
 
   const setPrintingMode = useSetRecoilState(printModeState);
-  const { customGeojson, uploadedGeojson } = useRecoilValue(drawingToolAtom);
+
+  const { enabled: drawingToolEnabled } = useRecoilValue(drawingToolAtom);
+  const { enabled: drawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
+
   const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
 
@@ -87,30 +89,29 @@ const WidgetsContainer: React.FC = () => {
             hidden: locationTool === 'area' || locationTool === 'upload',
           })}
         >
-          {widgets.length > 1 && (
-            <Helper
-              className={{
-                button: '-top-1.5 right-0 z-20',
-                tooltip: 'max-w-[400px]',
-              }}
-              tooltipPosition={{ top: -50, left: -10 }}
-              message="Expand or collapse all widgets"
+          <Helper
+            className={{
+              button: '-top-1.5 right-0 z-20',
+              tooltip: 'max-w-[400px]',
+            }}
+            tooltipPosition={{ top: -50, left: -10 }}
+            message="Expand or collapse all widgets"
+          >
+            <button
+              type="button"
+              data-testid="expand-collapse-button"
+              className={cn({
+                'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0':
+                  true,
+                'bg-white': widgetsCollapsedChecker,
+                'print:hidden': screenWidth >= breakpoints.md,
+              })}
+              disabled={widgets.length <= 1}
+              onClick={() => handleWidgetsCollapsed()}
             >
-              <button
-                type="button"
-                data-testid="expand-collapse-button"
-                className={cn({
-                  'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors md:ml-0':
-                    true,
-                  'bg-white': widgetsCollapsedChecker,
-                  'print:hidden': screenWidth >= breakpoints.md,
-                })}
-                onClick={() => handleWidgetsCollapsed()}
-              >
-                {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
-              </button>
-            </Helper>
-          )}
+              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
+            </button>
+          </Helper>
 
           <Dialog>
             <Helper
@@ -126,7 +127,7 @@ const WidgetsContainer: React.FC = () => {
                   type="button"
                   data-testid="configure-widgets-button"
                   className={cn({
-                    'flex h-8 w-[262px] items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors md:ml-0 print:hidden':
+                    'flex h-8 w-[262px] items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0':
                       true,
                   })}
                 >
@@ -182,7 +183,7 @@ const WidgetsContainer: React.FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:gap-1">
+        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
           {widgets.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
@@ -202,8 +203,6 @@ const WidgetsContainer: React.FC = () => {
           })}
         </div>
       )}
-      {/* TO - DO - review this condition after reviewing empty widgets behavior */}
-      {widgets.length === 0 && <NoData />}
       {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
@@ -222,9 +221,9 @@ const WidgetsContainer: React.FC = () => {
                 className={cn({
                   [BUTTON_STYLES]: true,
                   'm-auto bg-brand-800 text-white': true,
-                  hidden: !customGeojson && !uploadedGeojson,
+                  hidden: drawingToolEnabled || drawingUploadToolEnabled,
                 })}
-                disabled={!customGeojson && !uploadedGeojson}
+                disabled={drawingToolEnabled || drawingUploadToolEnabled}
                 onClick={onClickDownload}
               >
                 Download report as PDF

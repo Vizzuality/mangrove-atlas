@@ -120,7 +120,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
       >
         {() => <LayerManager />}
       </Map>
-      <div className="absolute bottom-11 right-6 z-50 mr-0.5 print:hidden">
+      <div className="absolute bottom-11 right-6 z-50 mr-0.5">
         <Legend embedded />
       </div>
     </div>

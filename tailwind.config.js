@@ -21,9 +21,6 @@ module.exports = {
   plugins: [animate, forms, lineClamp, typography, scrollBar],
   theme: {
     extend: {
-      screens: {
-        print: { raw: 'print, (max-width: 1024px)' },
-      },
       backgroundImage: {
         rufiji: "url('/images/highlighted-places/rufiji.jpg')",
         saloum: "url('/images/highlighted-places/saloum.png')",
