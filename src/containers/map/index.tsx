@@ -16,6 +16,7 @@ import {
   interactiveLayerIdsAtom,
   mapCursorAtom,
 } from 'store/map';
+import { printModeState } from 'store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
@@ -74,10 +75,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+  const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
+  const isPrintingMode = useRecoilValue(printModeState);
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
@@ -331,7 +333,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const pitch = map?.getPitch();
   return (
     <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
+      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:w-[90vw]"
       ref={mapRef}
     >
       <Map
@@ -362,7 +364,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
-            <Controls className="absolute bottom-9 right-6 items-center print:hidden">
+            <Controls className="absolute bottom-9 right-6 hidden items-center print:hidden md:block">
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',
@@ -374,7 +376,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 <div className="flex flex-col space-y-2 pt-1">
                   {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <FullScreenControl />
-                  <ShareControl />
+                  {/* Disable the sharing tool in any of the painting states */}
+                  {!isDrawingToolEnabled &&
+                    !isUploadToolEnabled &&
+                    !customGeojson &&
+                    !uploadedGeojson && <ShareControl />}
                   <BasemapSettingsControl />
                   <div className="border-box flex flex-col overflow-hidden rounded-4xl bg-white shadow-control">
                     <ZoomControl mapId={mapId} />
@@ -403,6 +409,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     nonExpansible={
                       isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
                     }
+                    onClose={() => removePopup('location')}
                   />
                 ) : null}
                 {!isEmpty(restorationPopUp?.popupInfo) ? (
@@ -420,16 +427,20 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           </>
         )}
       </Map>
-      <Media lessThan="md">
-        <div className="absolute top-20">
-          <MobileLegend />
-        </div>
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <div className="absolute bottom-9 right-18 z-50 mr-0.5 print:hidden">
-          <Legend />
-        </div>
-      </Media>
+      {!isPrintingMode && (
+        <>
+          <Media lessThan="md">
+            <div className="absolute top-20">
+              <MobileLegend />
+            </div>
+          </Media>
+          <Media greaterThanOrEqual="md">
+            <div className="absolute bottom-9 right-18 z-50 mr-0.5">
+              <Legend />
+            </div>
+          </Media>
+        </>
+      )}
     </div>
   );
 };

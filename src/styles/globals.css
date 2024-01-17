@@ -4,6 +4,9 @@
 
 body {
   background-color: #00C5BD;
+  @media print {
+    background-color: #fff;
+  }
 }
 
 @-webkit-keyframes autofill {

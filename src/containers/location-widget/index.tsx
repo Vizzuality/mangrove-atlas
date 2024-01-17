@@ -50,7 +50,6 @@ const LocationWidget = () => {
     if (locationType === 'custom-area') {
       return 'Custom Area';
     }
-
     if (locationType) {
       return name;
     }
@@ -62,7 +61,6 @@ const LocationWidget = () => {
     const width = titleRef?.current?.getBoundingClientRect()?.width;
     setWidth(width);
   }, [name]);
-
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
   }, [locationsModalIsOpen, setLocationsModalIsOpen]);

@@ -42,7 +42,7 @@ export type LocationPopUp = {
   location: {
     iso: string;
     name: string;
-    type: 'country' | 'wpda';
+    type: 'country' | 'wdpa';
   };
   protectedArea?: {
     ISO3: string;

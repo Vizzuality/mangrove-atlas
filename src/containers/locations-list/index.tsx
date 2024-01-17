@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeLayersAtom } from 'store/layers';
 import { locationBoundsAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 
@@ -41,7 +40,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
