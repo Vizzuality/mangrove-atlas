@@ -37,7 +37,6 @@ import Legend from 'containers/map/legend';
 import MobileLegend from 'containers/map/mobile/legend';
 import RestorationPopup from 'containers/map/restoration-popup';
 
-import Icon from 'components/icon';
 import Map from 'components/map';
 import Controls from 'components/map/controls';
 import BasemapSettingsControl from 'components/map/controls/basemap-settings';
@@ -52,8 +51,6 @@ import { Media } from 'components/media-query';
 import Popup from 'components/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
-
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';

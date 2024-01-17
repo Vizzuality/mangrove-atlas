@@ -6,8 +6,6 @@ import cn from 'lib/classnames';
 
 import chroma from 'chroma-js';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 

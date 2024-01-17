@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeLayersAtom } from 'store/layers';
 import { locationBoundsAtom } from 'store/map';
 import { mapSettingsAtom } from 'store/map-settings';
 

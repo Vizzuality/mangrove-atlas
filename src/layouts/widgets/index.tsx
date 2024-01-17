@@ -1,9 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import cn from 'lib/classnames';
-
 import { fullScreenAtom } from 'store/map-settings';
-import { printModeState } from 'store/print-mode';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
@@ -13,7 +10,6 @@ import LocationWidget from 'containers/location-widget';
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
   const isFullScreen = useRecoilValue(fullScreenAtom);
-  const isPrintingMode = useRecoilValue(printModeState);
 
   return (
     <AnimatePresence initial={false}>

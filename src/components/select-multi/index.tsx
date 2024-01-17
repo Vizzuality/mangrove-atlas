@@ -6,7 +6,6 @@ import { Listbox } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
 
 import Icon from 'components/icon';
-import Loading from 'components/loading';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -23,7 +22,6 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
     disabled = false,
     options,
     groups,
-    loading,
     size = 'base',
     theme = 'default',
     state = 'none',

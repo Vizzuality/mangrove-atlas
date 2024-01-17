@@ -204,8 +204,6 @@ const WidgetsContainer: React.FC = () => {
           })}
         </div>
       )}
-      {/* TO - DO - review this condition after reviewing empty widgets behavior */}
-      {widgets.length === 0 && <NoData />}
       {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
