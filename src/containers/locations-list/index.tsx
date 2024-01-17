@@ -41,7 +41,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const { data: locations } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
