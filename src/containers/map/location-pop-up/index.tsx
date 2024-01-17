@@ -78,7 +78,7 @@ const LocationPopUP = ({
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      push(`/wdpa/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
     }
   }, [setLocationBounds, push, queryParams, locations, info]);
 
