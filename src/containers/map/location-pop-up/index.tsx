@@ -62,6 +62,7 @@ const LocationPopUP = ({
       }
 
       push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      onClose();
     }
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
@@ -79,6 +80,7 @@ const LocationPopUP = ({
       }
 
       push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+      onClose();
     }
   }, [setLocationBounds, push, queryParams, locations, info]);
 
