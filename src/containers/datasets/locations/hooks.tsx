@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
 
 import API from 'services/api';

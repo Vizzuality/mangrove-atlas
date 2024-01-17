@@ -13,7 +13,7 @@ const DRAWING_STYLES: Layer[] = [
     },
     paint: {
       'line-color': '#00857F',
-      'line-width': 2,
+      'line-width': 3,
     },
   },
   // polygon fill
@@ -25,16 +25,6 @@ const DRAWING_STYLES: Layer[] = [
       'fill-color': 'none',
       'fill-outline-color': '#00857F',
       'fill-opacity': 0.1,
-    },
-  },
-  // polygon mid points
-  {
-    id: 'gl-draw-polygon-midpoint',
-    type: 'circle',
-    filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']],
-    paint: {
-      'circle-radius': 3,
-      'circle-color': '#fbb03b',
     },
   },
   // polygon outline stroke
@@ -49,7 +39,7 @@ const DRAWING_STYLES: Layer[] = [
     },
     paint: {
       'line-color': '#00857F',
-      'line-width': 2,
+      'line-width': 3,
     },
   },
   // vertex point halos
@@ -59,7 +49,9 @@ const DRAWING_STYLES: Layer[] = [
     filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point'], ['!=', 'mode', 'static']],
     paint: {
       'circle-radius': 5,
-      'circle-color': '#FFF',
+      'circle-color': 'white',
+      'circle-stroke-width': 0.5,
+      'circle-stroke-color': 'hsla(0, 0%, 0%, 0.15)',
     },
   },
   // vertex points
@@ -68,8 +60,10 @@ const DRAWING_STYLES: Layer[] = [
     type: 'circle',
     filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point'], ['!=', 'mode', 'static']],
     paint: {
-      'circle-radius': 3,
-      'circle-color': '#00857F',
+      'circle-radius': 5,
+      'circle-color': 'white',
+      'circle-stroke-width': 0.5,
+      'circle-stroke-color': 'hsla(0, 0%, 0%, 0.15)',
     },
   },
 
