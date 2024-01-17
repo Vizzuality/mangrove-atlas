@@ -43,7 +43,6 @@ import FullScreenControl from 'components/map/controls/fullscreen';
 import PitchReset from 'components/map/controls/pitch-reset';
 import ShareControl from 'components/map/controls/share';
 import ZoomControl from 'components/map/controls/zoom';
-import type { DrawControlProps } from 'components/map/drawing-tool';
 import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
@@ -179,7 +178,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   const handleUserDrawing = useCallback(
-    (evt: Parameters<DrawControlProps['onCreate']>[0]) => {
+    (evt: { features: GeoJSON.Feature[]; action: 'onCreate' }) => {
       const customGeojson: GeoJSON.FeatureCollection = {
         type: 'FeatureCollection',
         features: evt.features,
@@ -206,7 +205,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   const handleDrawingUpdate = useCallback(
-    (evt: Parameters<DrawControlProps['onUpdate']>[0]) => {
+    (evt: { features: GeoJSON.Feature[]; action: 'onUpdate' }) => {
       setDrawingToolState((prevDrawingToolState) => ({
         ...prevDrawingToolState,
         customGeojson: { type: 'FeatureCollection', features: evt.features },
