@@ -63,15 +63,14 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
           </button>
 
           <AnimatePresence>
-            <motion.div
-              initial={false}
-              variants={contentVariants}
-              animate={isOpen ? 'open' : 'close'}
-              exit="close"
-              transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-              className="absolute md:right-0"
-            >
-              <div className="w-[360px] gap-4 rounded-3xl bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0, bottom: -200 }}
+                animate={{ opacity: 1, bottom: 36 }}
+                exit={{ opacity: 0, bottom: -200 }}
+                transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
+                className="fixed  w-[360px] gap-4 rounded-3xl bg-white shadow-medium md:right-20"
+              >
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
                   <SortableList
                     onChangeOrder={handleChangeOrder}
@@ -88,8 +87,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 >
                   <FaArrowDown />
                 </button>
-              </div>
-            </motion.div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </>
       )}
