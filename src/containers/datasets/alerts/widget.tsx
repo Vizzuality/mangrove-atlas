@@ -155,7 +155,13 @@ const AlertsWidget = () => {
           There are <span className="font-bold"> 535</span> areas monitored in the world.
         </p>
         <div className="flex space-x-2">
-          <div className="text-brand-900 h-4 w-4 border-2 border-brand-800" />
+          <div className="flex">
+            <div className="flex flex-col">
+              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+            </div>
+            <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+          </div>
           <p className="text-sm font-normal">Monitored area</p>
         </div>
       </div>
