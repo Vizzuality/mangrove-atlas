@@ -4,6 +4,7 @@
         "basemaps",
         "globalmangrovewatch",
         "gpkg",
+        "mapbox",
         "notranslate",
         "overscan",
         "SHAPEFILE",

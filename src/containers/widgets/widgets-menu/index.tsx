@@ -84,7 +84,7 @@ const WidgetsMenu: FC = () => {
   );
 
   const handleLayers = useCallback(
-    (e) => {
+    (e: WidgetSlugType) => {
       const layersUpdate = activeLayersIds.includes(e)
         ? activeLayers.filter((w) => w.id !== e)
         : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
@@ -93,7 +93,6 @@ const WidgetsMenu: FC = () => {
 
     [activeLayers, activeLayersIds, setActiveLayers]
   );
-
   return (
     <div>
       <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold uppercase tracking-[1px]">
@@ -125,9 +124,11 @@ const WidgetsMenu: FC = () => {
             data-testid="all-layers-checkbox"
             onCheckedChange={handleAllLayers}
             defaultChecked={false}
+            checked={LAYERS.length === activeLayers.length}
             className={cn({
-              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
-              'bg-brand-800 font-bold text-white': LAYERS.length === activeLayers.length,
+              'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
+                true,
+              'bg-brand-800': LAYERS.length === activeLayers.length,
             })}
           >
             <CheckboxIndicator>
@@ -181,12 +182,14 @@ const WidgetsMenu: FC = () => {
                   id={slug}
                   data-testid={`${slug}-checkbox`}
                   onCheckedChange={() => handleLayers(slug)}
+                  disabled={!enabledWidgets.includes(slug)}
                   defaultChecked
                   checked={activeLayersIds.includes(slug)}
                   className={cn({
                     'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white':
                       true,
-                    'bg-brand-800 font-bold text-white': activeLayersIds.includes(slug),
+                    'bg-brand-800 font-bold text-white':
+                      activeLayersIds.includes(slug) && enabledWidgets.includes(slug),
                   })}
                 >
                   <CheckboxIndicator>
