@@ -162,7 +162,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
-    layersIds: [
+    subLayersIds: [
       'mangrove_coastal_protection_area',
       'mangrove_coastal_protection_population',
       'mangrove_coastal_protection_stock',
@@ -197,6 +197,7 @@ const widgets_prod = [
     slug: 'mangrove_salt_marsh',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
+    layersIds: ['salt_marsh'],
   },
   {
     name: 'Tidal flats',

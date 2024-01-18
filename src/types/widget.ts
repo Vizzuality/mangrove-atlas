@@ -11,6 +11,7 @@ export type WidgetTypes = {
   applicability?: string;
   categoryIds: string[];
   layersIds?: string[];
+  subLayersIds?: string[];
   contextualLayersIds?: string[];
 };
 
