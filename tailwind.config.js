@@ -81,6 +81,19 @@ module.exports = {
       letterSpacing: {
         2.5: '0.625rem',
       },
+      keyframes: {
+        'reverse-slide': {
+          '0%, 20%, 40%, 60%, 80%,': {
+            left: '-600px',
+          },
+          '95%': {
+            left: '100px',
+          },
+        },
+      },
+      animation: {
+        'reverse-slide': 'reverse-slide 0.5s ease-in-out',
+      },
     },
   },
 };
