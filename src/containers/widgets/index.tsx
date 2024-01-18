@@ -101,7 +101,7 @@ const WidgetsContainer: React.FC = () => {
               type="button"
               data-testid="expand-collapse-button"
               className={cn({
-                'h-8 w-[262px] rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0':
+                'h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0 md:w-[262px]':
                   true,
                 'bg-white': widgetsCollapsedChecker,
                 'print:hidden': screenWidth >= breakpoints.md,
@@ -122,12 +122,12 @@ const WidgetsContainer: React.FC = () => {
               tooltipPosition={{ top: -50, left: 0 }}
               message="Triggers deck to configure widgets"
             >
-              <DialogTrigger className="md:translate-x-0">
+              <DialogTrigger>
                 <button
                   type="button"
                   data-testid="configure-widgets-button"
                   className={cn({
-                    'flex h-8 w-[262px] items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0':
+                    'ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0 md:w-[262px]':
                       true,
                   })}
                 >
@@ -136,7 +136,7 @@ const WidgetsContainer: React.FC = () => {
               </DialogTrigger>
             </Helper>
             <DialogContent>
-              <DialogClose />
+              <DialogClose className="top-8" />
               <div className="no-scrollbar space-y-8 overflow-y-auto">
                 <h2 className="font-black/85 text-3xl font-light leading-10">
                   Widgets deck settings

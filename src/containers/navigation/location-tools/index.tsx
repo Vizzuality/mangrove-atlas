@@ -68,7 +68,7 @@ const LocationTools = () => {
 
   return (
     <div className="flex space-y-2 text-center">
-      <div className="mx-auto flex space-x-8 ">
+      <div className="mx-auto flex space-x-2 md:space-x-8">
         {/* //*FIND LOCATIONS* */}
         <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
           <DialogTrigger className="flex w-[128px] items-center justify-center p-2">
