@@ -1,5 +1,7 @@
 import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
+import cn from 'lib/classnames';
+
 import Helper from 'containers/guide/helper';
 
 import {
@@ -66,16 +68,21 @@ const LanguageSelector = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
           {languages?.map((lang: { code: string; name: string }) => (
-            <DropdownMenuItem key={lang.code} asChild>
+            <DropdownMenuItem key={lang.code} asChild className="rounded-lg">
               <button
                 data-testid={`${lang.code}-button`}
                 id={lang.name}
                 value={lang.code}
                 type="button"
-                className="cursor-pointer hover:bg-white"
+                className="w-full cursor-pointer py-1 px-2 text-left hover:bg-brand-800/20"
                 onClick={handleChange}
               >
-                <span className="font-sans text-sm text-white hover:text-brand-800">
+                <span
+                  className={cn({
+                    'font-sans text-sm text-black/85': true,
+                    'font-semibold text-brand-800': currentLanguage === lang.name,
+                  })}
+                >
                   {lang.name}
                 </span>
               </button>

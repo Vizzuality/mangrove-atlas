@@ -47,7 +47,7 @@ const DialogContent = React.forwardRef<
     >
       <div
         className={cn({
-          'relative flex shrink-0 flex-col bg-white p-8 md:max-h-[85vh] md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
+          'relative flex shrink-0 flex-col bg-white p-8 shadow-widget md:max-h-[85vh] md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
             true,
           [className]: !!className,
         })}
