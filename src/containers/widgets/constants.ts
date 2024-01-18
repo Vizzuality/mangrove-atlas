@@ -17,6 +17,14 @@ const widgets_dev = [
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['restoration_sites'],
   },
+  {
+    name: 'IUCN Ecoregion assesment',
+    slug: 'mangrove_iucn_ecoregion',
+    locationType: ['worldwide'],
+    applicability: 'Global',
+    categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
+    layersIds: ['ecoregion'],
+  },
 ] satisfies WidgetTypes[];
 
 const widgets_prod = [
@@ -168,16 +176,7 @@ const widgets_prod = [
       'mangrove_coastal_protection_stock',
     ],
   },
-  {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'IUCN Ecoregion assesment',
-      slug: 'mangrove_iucn_ecoregion',
-      locationType: ['worldwide'],
-      applicability: 'Global',
-      categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-      layersIds: ['ecoregion'],
-    }),
-  },
+
   {
     name: 'Protected areas',
     slug: 'mangrove_protected_areas',
@@ -219,6 +218,7 @@ const widgets =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
     ? [...widgets_dev, ...widgets_prod]
     : widgets_prod;
+
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_habitat_extent',
   'mangrove_net_change',

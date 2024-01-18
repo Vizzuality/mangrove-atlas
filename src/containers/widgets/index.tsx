@@ -118,7 +118,7 @@ const WidgetsContainer: React.FC = () => {
               <DialogTrigger>
                 <button
                   type="button"
-                  data-testid="configure-widgets-button"
+                  data-testid="widgets-deck-trigger"
                   className={cn({
                     'ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0 md:w-[262px]':
                       true,

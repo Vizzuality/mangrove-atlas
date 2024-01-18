@@ -10,7 +10,10 @@ const ConfigureWidgets = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex flex-col items-center space-y-1 pt-1 text-white">
+        <div
+          className="flex flex-col items-center space-y-1 pt-1 text-white"
+          data-testid="widgets-deck-trigger"
+        >
           <Icon
             icon={CONFIGS_SVG}
             className="h-8 w-8 fill-white text-white"

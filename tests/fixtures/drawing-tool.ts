@@ -1,5 +1,3 @@
-import { resolve } from 'path';
-
 import { Page } from '@playwright/test';
 
 const positions = [
