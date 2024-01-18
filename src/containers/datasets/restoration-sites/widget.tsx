@@ -90,7 +90,7 @@ const RestorationSitesWidget = () => {
                     [BUTTON_STYLES]: true,
                   })}
                 >
-                  <p>Filter sites</p>{' '}
+                  <p>Filter sites</p>
                   {areFiltersSelected && (
                     <span className="rounded-full bg-white px-1.5 text-brand-800">
                       {totalLength}

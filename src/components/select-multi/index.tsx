@@ -132,22 +132,6 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   })}
                   description="Arrow"
                 />
-                {/* <span className="pointer-events-none relative flex items-center space-x-2">
-                  <Loading
-                    visible={loading}
-                    className={THEME[theme].loading}
-                    iconClassName="w-3 h-3 shrink-0"
-                  />
-
-                  {} */}
-
-                {/* <Icon
-                    icon={open ? CHEVRON_UP_SVG : CHEVRON_DOWN_SVG}
-                    className={cn({
-                      'h-3 w-3 shrink-0': true,
-                    })}
-                  /> */}
-                {/* </span> */}
               </Listbox.Button>
 
               <Listbox.Options

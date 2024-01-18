@@ -1,7 +1,12 @@
+import cn from 'lib/classnames';
+
 import { Listbox } from '@headlessui/react';
 import cx from 'classnames';
 
-import { Checkbox } from 'components/checkbox';
+import { Checkbox, CheckboxIndicator } from 'components/checkbox';
+import Icon from 'components/icon';
+
+import CHECK_SVG from 'svgs/ui/check-light.svg?sprite';
 
 import THEME from '../constants/theme';
 
@@ -37,7 +42,15 @@ export const Option = ({ opt, theme }: OptionProps) => {
             [THEME[theme].item.disabled]: d,
           })}
         >
-          <Checkbox className="cursor-pointer" checked={s} />
+          <Checkbox className="h-4 w-4 cursor-pointer" checked={s}>
+            <CheckboxIndicator>
+              <Icon
+                icon={CHECK_SVG}
+                className="h-2.5 w-2.5 fill-brand-800/70"
+                description="Checkmark"
+              />
+            </CheckboxIndicator>
+          </Checkbox>
 
           <span
             className={cx({

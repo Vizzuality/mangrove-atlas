@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
-
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useBlogPosts, usePostTags } from 'hooks/blog';
