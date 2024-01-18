@@ -37,11 +37,16 @@ export function useWidgets(): WidgetTypes[] {
       return widgets.filter(({ slug }) => MAP_SETTINGS_SLUGS.includes(slug));
     }
 
+    const enabledWidgets =
+      categorySelected !== 'all_datasets' && activeWidgets.length === 0
+        ? widgets.map(({ slug }) => slug)
+        : activeWidgets;
+
     return widgets.filter(
       ({ slug, categoryIds, locationType }) =>
         (categoryIds?.includes(categorySelected) &&
           locationType.includes(currentLocation) &&
-          activeWidgets.includes(slug)) ||
+          enabledWidgets.includes(slug)) ||
         (categoryIds?.includes('contextual_layers') && activeWidgets.includes(slug))
     );
   }, [categorySelected, currentLocation, isAnalysisRunning, isMapSettingsVisible, activeWidgets]);

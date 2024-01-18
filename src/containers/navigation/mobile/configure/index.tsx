@@ -12,7 +12,7 @@ const ConfigureWidgets = () => {
       <DialogTrigger asChild>
         <div
           className="flex flex-col items-center space-y-1 pt-1 text-white"
-          data-testid="widgets-deck-trigger"
+          data-testid="widgets-deck-trigger-mobile"
         >
           <Icon
             icon={CONFIGS_SVG}

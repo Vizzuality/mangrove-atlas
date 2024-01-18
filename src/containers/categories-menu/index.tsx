@@ -19,7 +19,7 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
-
+  console.log('categorySelected', categorySelected);
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();

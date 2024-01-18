@@ -25,7 +25,6 @@ export const SortableItem: React.FC<SortableItemProps> = ({
     sortable,
     listeners,
     attributes,
-    isDragging,
   });
 
   return (

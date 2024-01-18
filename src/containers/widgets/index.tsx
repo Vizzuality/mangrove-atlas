@@ -4,6 +4,7 @@ import cn from 'lib/classnames';
 
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
+import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -17,6 +18,7 @@ import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
+import widgets from 'containers/widgets/constants';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
@@ -25,13 +27,12 @@ import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
 
 const HELPER_ID = 'menu-categories';
-
 const WidgetsContainer: React.FC = () => {
+  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
+
   const { width: screenWidth } = useWindowSize();
   const activeWidgets = useRecoilValue(activeWidgetsAtom);
   const widgetsAvailable = useWidgets();
-
-  const widgets = !!activeWidgets.length ? widgetsAvailable : widgetsAvailable;
 
   const setPrintingMode = useSetRecoilState(printModeState);
 
@@ -71,6 +72,8 @@ const WidgetsContainer: React.FC = () => {
       setPrintingMode(false);
     }, 4000);
   }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
+
+  console.log(widgetsAvailable);
 
   return (
     <WidgetsLayout>
@@ -162,7 +165,7 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgets.map(({ slug, name, applicability }, index) => {
+          {widgetsAvailable.map(({ slug, name, applicability }, index) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
@@ -175,7 +178,7 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
         <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
-          {widgets.map(({ slug, name, applicability }) => {
+          {widgetsAvailable.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper
