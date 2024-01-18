@@ -135,9 +135,9 @@ const WidgetsContainer: React.FC = () => {
                 </button>
               </DialogTrigger>
             </Helper>
-            <DialogContent className="scroll-y min-h-fit ">
+            <DialogContent>
               <DialogClose />
-              <div className="no-scrollbar max-h-[80vh] space-y-8 overflow-y-auto">
+              <div className="no-scrollbar space-y-8 overflow-y-auto">
                 <h2 className="font-black/85 text-3xl font-light leading-10">
                   Widgets deck settings
                 </h2>
@@ -149,9 +149,7 @@ const WidgetsContainer: React.FC = () => {
                   tooltipPosition={{ top: -20, left: 0 }}
                   message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
                 >
-                  <div className="w-[490px]">
-                    <Category />
-                  </div>
+                  <Category />
                 </Helper>
                 <Helper
                   className={{

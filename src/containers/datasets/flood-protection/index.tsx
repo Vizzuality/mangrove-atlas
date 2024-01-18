@@ -12,7 +12,7 @@ import FloodProtection from './widget';
 
 const MangrovesFloodProtection = () => {
   const [areaPeriod, setAreaPeriod] = useRecoilState(floodAreaPeriodAtom);
-
+  console.log('Hola');
   const [populationPeriod, setPopulationPeriod] = useRecoilState(floodPopulationPeriodAtom);
 
   const [stockPeriod, setStockPeriod] = useRecoilState(floodStockPeriodAtom);

@@ -15,7 +15,7 @@ const MobileNews = () => (
         </div>
       </DialogTrigger>
 
-      <DialogContent className="scroll-y top-0 h-screen w-full rounded-none px-0 py-0 font-sans">
+      <DialogContent className="scroll-y top-0 h-screen font-sans">
         <BlogContent />
       </DialogContent>
     </Dialog>

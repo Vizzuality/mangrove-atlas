@@ -112,6 +112,8 @@ const LegendItem = ({
 
   if (l.id === 'custom-area') return null;
 
+  console.log('widgetId', widgetId);
+
   return (
     <div id={id} className="flex flex-col items-start rounded-md bg-white px-2 pb-4 pt-2 text-sm">
       <div className="flex w-full items-center justify-between">

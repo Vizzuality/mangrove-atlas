@@ -104,7 +104,7 @@ const RestorationSitesWidget = () => {
                 </button>
               )}
             </div>
-            <DialogContent className="h-fit-content w-[580px] rounded-3xl p-10">
+            <DialogContent>
               <FilterSites
                 open={open}
                 onChangeModalVisibility={setOpen}

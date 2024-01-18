@@ -28,7 +28,7 @@ const IUCNEcoregions = () => {
                 <p>Associate reports</p>
               </div>
             </DialogTrigger>
-            <DialogContent className="scroll-y left-18 top-16 max-h-fit rounded-3xl">
+            <DialogContent>
               <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
                 <h2 className="font-sans text-2xl font-light text-black/85">
                   IUCN Ecosystem Red List Assesment

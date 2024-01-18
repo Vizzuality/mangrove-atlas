@@ -27,8 +27,8 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="scroll-y max-h-[90%] min-h-fit rounded-4xl">
-        <div className="no-scrollbar max-h-[85vh] space-y-6 overflow-y-auto">
+      <DialogContent>
+        <div className="no-scrollbar space-y-6">
           <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
           <Helper
             className={{

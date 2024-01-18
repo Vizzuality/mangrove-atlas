@@ -91,20 +91,17 @@ const AnalysisAlert = () => {
     <>
       <Dialog open={isAnalysisAlertOpen}>
         <DialogPortal className="z-50">
-          <DialogContent
-            className="space-y-5 rounded-3xl p-10 md:left-auto"
-            onEscapeKeyDown={() => setAnalysisAlert(false)}
-          >
-            <div className="space-y-5">
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setAnalysisAlert(false)}
-                  aria-label="Reset analysis"
-                >
-                  <Icon icon={CLOSE_SVG} className="h-8 w-8" description="Close" />
-                </button>
-              </div>
+          <DialogContent onEscapeKeyDown={() => setAnalysisAlert(false)} overlay>
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={() => setAnalysisAlert(false)}
+                aria-label="Reset analysis"
+              >
+                <Icon icon={CLOSE_SVG} className="absolute right-8 h-8 w-8" description="Close" />
+              </button>
+            </div>
+            <div className="flex flex-col space-y-5">
               <h3 className="text-3xl">Reset the page and delete area</h3>
               <div className="space-y-2">
                 <p>
@@ -117,24 +114,25 @@ const AnalysisAlert = () => {
                   <label htmlFor="modal">Don&apos;t ask me again.</label>
                 </div>
               </div>
-            </div>
-            <div className="flex items-center justify-center space-x-5">
-              <button
-                aria-label="Cancel reset page"
-                type="button"
-                onClick={handleCancelResetPage}
-                className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
-              >
-                Cancel
-              </button>
-              <button
-                aria-label="Reset page"
-                type="button"
-                onClick={handleResetPage}
-                className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
-              >
-                Reset page
-              </button>
+
+              <div className="flex items-center justify-center space-x-5">
+                <button
+                  aria-label="Cancel reset page"
+                  type="button"
+                  onClick={handleCancelResetPage}
+                  className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
+                >
+                  Cancel
+                </button>
+                <button
+                  aria-label="Reset page"
+                  type="button"
+                  onClick={handleResetPage}
+                  className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
+                >
+                  Reset page
+                </button>
+              </div>
             </div>
           </DialogContent>
         </DialogPortal>
