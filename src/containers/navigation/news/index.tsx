@@ -2,6 +2,8 @@ import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
 
+import { useBlogPosts } from 'hooks/blog';
+
 import Helper from 'containers/guide/helper';
 import BlogContent from 'containers/news/content';
 
@@ -12,6 +14,7 @@ import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
 
 const News = () => {
   const guideIsActive = useRecoilValue(activeGuideAtom);
+  const { data } = useBlogPosts();
 
   return (
     <Dialog>
@@ -34,7 +37,7 @@ const News = () => {
         </div>
       </DialogTrigger>
 
-      {!guideIsActive && (
+      {!guideIsActive && data && (
         <DialogContent className="md:mb-20">
           <BlogContent />
         </DialogContent>
