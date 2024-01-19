@@ -7,7 +7,7 @@ import VIZZUALITY_PNG from 'images/vizzuality.png';
 
 const About = () => {
   return (
-    <div className="pb-20 font-sans text-2lg font-light leading-8 text-black/85 md:py-10">
+    <div className="pb-20 font-sans text-2lg font-light leading-8 text-black/85">
       <h2 className="py-6 text-3xl font-bold">About Global Mangrove Watch</h2>
       <h3 className="pb-6 text-xl font-bold leading-8">
         Monitoring to catalyse the action needed to protect and restore mangroves

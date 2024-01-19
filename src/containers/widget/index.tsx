@@ -112,8 +112,8 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 <DialogTrigger>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="mb-20">
-                  <div className="no-scrollbar overflow-y-auto ">
+                <DialogContent className="md:mb-20">
+                  <div className="no-scrollbar overflow-y-auto">
                     <Info />
                   </div>
                   <DialogClose className="fixed !top-18 left-[595px]" />

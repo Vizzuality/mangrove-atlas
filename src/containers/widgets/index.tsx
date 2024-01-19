@@ -128,8 +128,8 @@ const WidgetsContainer: React.FC = () => {
                 </button>
               </DialogTrigger>
             </Helper>
-            <DialogContent className="mb-10 border-2">
-              <DialogClose className="fixed !top-18 left-[595px]" />
+            <DialogContent className="mb-10 w-screen border-2 md:w-auto">
+              <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
               <div className="no-scrollbar space-y-8">
                 <h2 className="font-black/85 text-3xl font-light leading-10">
                   Widgets deck settings

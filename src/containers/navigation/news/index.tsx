@@ -35,7 +35,7 @@ const News = () => {
       </DialogTrigger>
 
       {!guideIsActive && (
-        <DialogContent className="mb-20">
+        <DialogContent className="md:mb-20">
           <BlogContent />
         </DialogContent>
       )}

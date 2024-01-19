@@ -161,6 +161,7 @@ const LegendItem = ({
 
                 <DialogContent
                   className={cn({
+                    'h-screen w-screen md:mb-20 md:h-auto md:w-auto': true,
                     hidden: guideIsActive,
                   })}
                   overlay={false}
@@ -170,7 +171,7 @@ const LegendItem = ({
                       <Widget id={widgetId} />
                     </WidgetWrapper>
                   </div>
-                  <DialogClose />
+                  <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
                 </DialogContent>
               </Dialog>
               <Popover>

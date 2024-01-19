@@ -99,7 +99,10 @@ export const BlogContent = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <DialogClose onClose={() => setPostInfo(null)} className="fixed !top-18 left-[595px]" />
+      <DialogClose
+        onClose={() => setPostInfo(null)}
+        className="top-8 md:fixed md:!top-18 md:left-[595px]"
+      />
     </>
   );
 };
