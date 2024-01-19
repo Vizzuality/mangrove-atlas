@@ -64,7 +64,7 @@ module.exports = {
         medium: '0px 4px 12px 0px rgba(168, 168, 168, 0.25)',
         '3xl': '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
         control: '0px 4px 12px 0px rgba(0, 0, 0, 0.08)',
-        dropdown: '0px 40px 80px 0px rgba(0, 60, 57, 0.15), 0px 0px 0px 1px rgba(0, 0, 0, 0.10)',
+        border: '0px 40px 80px 0px rgba(0, 60, 57, 0.15), 0px 0px 0px 1px rgba(0, 0, 0, 0.10)',
       },
       width: {
         7.5: '1.875rem',
@@ -82,18 +82,17 @@ module.exports = {
         2.5: '0.625rem',
       },
       keyframes: {
-        overlayShow: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
-        },
-        contentShow: {
-          from: { opacity: 0, transform: 'translate(-50%, -48%) scale(0.96)' },
-          to: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
+        'reverse-slide': {
+          '0%, 20%, 40%, 60%, 80%,': {
+            left: '-600px',
+          },
+          '95%': {
+            left: '100px',
+          },
         },
       },
       animation: {
-        overlayShow: 'overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-        contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        'reverse-slide': 'reverse-slide 0.5s ease-in-out',
       },
     },
   },

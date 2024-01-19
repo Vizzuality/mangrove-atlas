@@ -63,7 +63,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
         className={cn({
-          'md:h-fit-content z-2 group w-full rounded-4xl border border-[#DADED0] bg-white px-1 py-1 shadow-widget print:!w-[90%] md:ml-[3%] md:ml-0':
+          'md:h-fit-content z-2 group w-full rounded-4xl bg-white px-1 py-1 shadow-widget print:!w-[90%] md:ml-[3%] md:ml-0':
             true,
           '!w-[100%] border-none !p-0 !shadow-none': info,
           [className]: !!className,
@@ -112,11 +112,11 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 <DialogTrigger>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent className="scroll-y h-screen pt-16 md:left-16 md:top-16 md:rounded-3xl md:pt-6">
+                <DialogContent>
                   <div className="no-scrollbar overflow-y-auto ">
                     <Info />
                   </div>
-                  <DialogClose className="md:top-initial top-5" />
+                  <DialogClose />
                 </DialogContent>
               </Dialog>
             </p>

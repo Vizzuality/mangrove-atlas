@@ -34,7 +34,7 @@ import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
-import MobileLegend from 'containers/map/mobile/legend';
+import MobileLegend from 'containers/map/legend/mobile';
 import RestorationPopup from 'containers/map/restoration-popup';
 
 import Map from 'components/map';

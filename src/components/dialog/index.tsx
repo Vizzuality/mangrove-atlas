@@ -34,19 +34,26 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { overlay?: boolean }
->(({ className, children, overlay = true, ...props }, ref) => (
+>(({ className, children, overlay = false, ...props }, ref) => (
   <DialogPortal>
     {overlay && <DialogOverlay />}
     <DialogPrimitive.Content
       ref={ref}
-      className={cn({
-        'left-1/12 fixed grid gap-4 bg-white p-6 animate-in duration-300 md:top-[5%] md:left-18 md:max-h-[85vh] md:min-h-[100px] md:w-10/12 md:w-full md:max-w-[540px] md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96':
-          true,
-        [className]: !!className,
-      })}
+      className="fixed w-full animate-in duration-300 md:left-0 md:w-auto md:py-[100%] md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96"
+      style={{
+        background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
+      }}
       {...props}
     >
-      {children}
+      <div
+        className={cn({
+          'relative flex shrink-0 flex-col bg-white p-8 shadow-widget md:max-h-[85vh] md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
+            true,
+          [className]: !!className,
+        })}
+      >
+        {children}
+      </div>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
@@ -73,15 +80,14 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'absolute right-3 -top-2 z-40 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 md:right-6 md:top-7 md:-right-10 md:border md:bg-white md:bg-opacity-70':
+        'absolute right-3 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:right-6 md:top-8 md:-right-10 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
           true,
         [className]: !!className,
       })}
       onClick={onClose}
       aria-label="close dialog"
     >
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-5 md:w-5" description="Cross" />
-      <span className="sr-only">Close</span>
+      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-6 md:w-6" description="Cross" />
     </button>
   </DialogPrimitive.Close>
 );

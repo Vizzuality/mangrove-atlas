@@ -90,7 +90,7 @@ const RestorationSitesWidget = () => {
                     [BUTTON_STYLES]: true,
                   })}
                 >
-                  <p>Filter sites</p>{' '}
+                  <p>Filter sites</p>
                   {areFiltersSelected && (
                     <span className="rounded-full bg-white px-1.5 text-brand-800">
                       {totalLength}
@@ -104,7 +104,7 @@ const RestorationSitesWidget = () => {
                 </button>
               )}
             </div>
-            <DialogContent className="h-fit-content w-[580px] rounded-3xl p-10">
+            <DialogContent>
               <FilterSites
                 open={open}
                 onChangeModalVisibility={setOpen}

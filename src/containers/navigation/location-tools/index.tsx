@@ -68,14 +68,14 @@ const LocationTools = () => {
 
   return (
     <div className="flex space-y-2 text-center">
-      <div className="mx-auto flex space-x-8 ">
+      <div className="mx-auto flex space-x-2 md:space-x-8">
         {/* //*FIND LOCATIONS* */}
         <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
           <DialogTrigger className="flex w-[128px] items-center justify-center p-2">
             <>
               <Helper
                 className={{
-                  button: '-bottom-3.5 right-9 z-20',
+                  button: '-top-1 right-9 z-20',
                   tooltip: 'w-fit-content max-w-[400px]',
                 }}
                 tooltipPosition={{ top: -65, left: -10 }}

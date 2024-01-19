@@ -9,8 +9,6 @@ import {
   useState,
 } from 'react';
 
-import { fullScreenAtom } from 'store/map-settings';
-
 import {
   DndContext,
   DragOverlay,
@@ -27,7 +25,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useRecoilValue } from 'recoil';
 
 import { SortableListProps } from 'components/map/legend/types';
 
@@ -39,14 +36,13 @@ export const SortableList: React.FC<SortableListProps> = ({
   onChangeOrder,
 }: SortableListProps) => {
   const uid = useId();
-  const [activeId, setActiveId] = useState(null);
-  const isFullScreen = useRecoilValue(fullScreenAtom);
+  const [activeId, setActiveId] = useState<string>(null);
 
   const ActiveItem = useMemo(() => {
     const activeChildArray = Children.map(children, (Child) => {
       if (isValidElement(Child)) {
-        const { props } = Child;
-        const { id } = props;
+        const { props } = Child as ReactElement<unknown>;
+        const { id } = props as { id: string };
 
         if (id === activeId) {
           return Child;
@@ -62,8 +58,8 @@ export const SortableList: React.FC<SortableListProps> = ({
   const itemsIds = useMemo(() => {
     return Children.map(children, (Child) => {
       if (isValidElement(Child)) {
-        const { props } = Child;
-        const { id } = props;
+        const { props } = Child as ReactElement<unknown>;
+        const { id } = props as { id: string };
         return id;
       }
 
@@ -84,14 +80,14 @@ export const SortableList: React.FC<SortableListProps> = ({
   );
 
   const handleDragStart = useCallback((event) => {
-    const { active } = event;
+    const { active } = event as { active: { id: string } };
     if (!active) return;
     setActiveId(active.id);
   }, []);
 
   const handleDragEnd = useCallback(
     (event) => {
-      const { active, over } = event;
+      const { active, over } = event as { active: { id: string }; over: { id: string } };
       setActiveId(null);
 
       if (active.id !== over?.id) {
@@ -114,15 +110,11 @@ export const SortableList: React.FC<SortableListProps> = ({
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveId(null)}
     >
-      <SortableContext
-        items={itemsIds}
-        strategy={verticalListSortingStrategy}
-        disabled={isFullScreen}
-      >
+      <SortableContext items={itemsIds} strategy={verticalListSortingStrategy}>
         {Children.map(children, (Child) => {
           if (isValidElement(Child)) {
-            const { props } = Child;
-            const { id } = props;
+            const { props } = Child as ReactElement<unknown>;
+            const { id } = props as { id: string };
 
             return (
               <SortableItem id={id} sortable={sortable}>

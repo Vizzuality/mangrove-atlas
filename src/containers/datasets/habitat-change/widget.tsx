@@ -72,7 +72,7 @@ const HabitatExtent = () => {
                     />
                   </span>
                 </PopoverTrigger>
-                <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <PopoverContent className="rounded-2xl px-2 shadow-border">
                   <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">
@@ -112,7 +112,7 @@ const HabitatExtent = () => {
                   </span>
                 </PopoverTrigger>
 
-                <PopoverContent className="rounded-2xl px-2 shadow-dropdown">
+                <PopoverContent className="rounded-2xl px-2 shadow-border">
                   <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
                       <li key={y} className="last-of-type:pb-4">

@@ -634,7 +634,8 @@
     display: flex !important;
     white-space: nowrap !important;
     bottom: -15px !important;
-    right: 0px !important;
+    right: 6px !important;
+    font-size: 10px !important;
   }
 
   .mapboxgl-ctrl-attrib-inner {

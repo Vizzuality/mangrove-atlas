@@ -14,6 +14,7 @@ import WidgetWrapper from 'containers/widget';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
+import { Media } from 'components/media-query';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import Slider from 'components/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
@@ -113,16 +114,22 @@ const LegendItem = ({
   if (l.id === 'custom-area') return null;
 
   return (
-    <div id={id} className="flex flex-col items-start rounded-md bg-white px-2 pb-4 pt-2 text-sm">
+    <div
+      id={id}
+      className="flex flex-col items-start rounded-md bg-white pb-4 pt-2 text-sm md:px-2"
+    >
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-2">
-          {!embedded && (
-            <button>
-              <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
-            </button>
-          )}
-
-          <p className="text-xs font-semibold uppercase tracking-wider text-black/85">{title}</p>
+          <Media greaterThanOrEqual="md">
+            {!embedded && (
+              <button>
+                <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
+              </button>
+            )}
+          </Media>
+          <p className="pl-4 text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
+            {title}
+          </p>
         </div>
         {!embedded && (
           <Helper
@@ -154,7 +161,7 @@ const LegendItem = ({
 
                 <DialogContent
                   className={cn({
-                    'scroll-y mt-10 h-[80vh] rounded-3xl !shadow-widget': true,
+                    'mt-10 rounded-3xl !shadow-widget': true,
                     hidden: guideIsActive,
                   })}
                   overlay={false}

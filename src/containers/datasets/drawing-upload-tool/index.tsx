@@ -70,7 +70,7 @@ const WidgetDrawingUploadTool = () => {
   return (
     <Helper
       className={{
-        button: '-bottom-2.5 -right-0',
+        button: 'top-1 right-9',
         tooltip: 'w-fit-content',
         active: 'max-w-[454px]',
       }}
