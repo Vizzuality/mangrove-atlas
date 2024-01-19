@@ -131,7 +131,7 @@ const WidgetsContainer: React.FC = () => {
                       true,
                   })}
                 >
-                  <p>Configure widgets</p>
+                  <p>Explore data</p>
                 </button>
               </DialogTrigger>
             </Helper>
@@ -201,7 +201,7 @@ const WidgetsContainer: React.FC = () => {
           })}
         </div>
       )}
-      {!!widgets.length && !mapSettings ? (
+      {/* {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{
@@ -229,7 +229,7 @@ const WidgetsContainer: React.FC = () => {
             </div>
           </Helper>
         </div>
-      ) : null}
+      ) : null} */}
     </WidgetsLayout>
   );
 };

@@ -18,11 +18,11 @@ import { useSearch } from 'hooks/search';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 import { Location } from 'containers/datasets/locations/types';
-import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighted-places';
+// import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighted-places';
 
-import HighlightedPlaces from 'components/highlighted-places';
+// import HighlightedPlaces from 'components/highlighted-places';
 import Icon from 'components/icon';
-import { Media } from 'components/media-query';
+// import { Media } from 'components/media-query';
 import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
@@ -145,13 +145,15 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         )}
       </div>
 
-      <Media lessThan="md">
+      {/* <Media lessThan="md">
         <HighlightedPlacesMobile />
       </Media>
       <Media greaterThanOrEqual="md">
         <HighlightedPlaces onSelectLocation={onSelectLocation} />
       </Media>
       <div className="relative min-h-[70vh] md:min-h-[50vh]">
+      </Media> */}
+      <div className="relative h-full">
         <AutoSizer>
           {({ width, height }) => (
             <List
