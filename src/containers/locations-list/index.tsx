@@ -149,11 +149,9 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         <HighlightedPlacesMobile />
       </Media>
       <Media greaterThanOrEqual="md">
-        <HighlightedPlaces onSelectLocation={onSelectLocation} />
-      </Media>
-      <div className="relative min-h-[70vh] md:min-h-[50vh]">
+        <HighlightedPlaces onSelectLocation={onSelectLocation} /
       </Media> */}
-      <div className="relative h-full">
+      <div className="relative min-h-[70vh] md:min-h-[90vh]">
         <AutoSizer>
           {({ width, height }) => (
             <List
