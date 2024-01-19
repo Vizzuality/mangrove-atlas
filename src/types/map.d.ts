@@ -38,25 +38,27 @@ export type RestorationPopUp = {
   Type: string;
 };
 
+type ProtectedArea = {
+  ISO3: string;
+  NAME: string;
+  ORIG_NAME: string;
+  PARENT_ISO: string;
+  PA_DEF: number;
+  STATUS: string;
+  STATUS_YR: number;
+  VERIF: string;
+  WDPAID: number;
+  fid: number;
+  id: string;
+};
+
 export type LocationPopUp = {
   location: {
     iso: string;
     name: string;
     type: 'country' | 'wdpa';
   };
-  protectedArea?: {
-    ISO3: string;
-    NAME: string;
-    ORIG_NAME: string;
-    PARENT_ISO: string;
-    PA_DEF: number;
-    STATUS: string;
-    STATUS_YR: number;
-    VERIF: string;
-    WDPAID: number;
-    fid: number;
-    id: string;
-  };
+  protectedArea?: ProtectedArea[];
 };
 
 export type PopUpKey = 'restoration' | 'ecoregion' | 'location';
