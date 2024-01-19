@@ -14,7 +14,7 @@ const ConfigureWidgets = () => {
           <Icon
             icon={CONFIGS_SVG}
             className="h-8 w-8 fill-white text-white"
-            description="Configure widgets"
+            description="Explore data"
           />
           <span className="leading-2 font-sans text-xxs text-white">Configure</span>
         </div>
