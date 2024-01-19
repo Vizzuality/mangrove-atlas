@@ -64,7 +64,7 @@ const LocationPopUP = ({
       push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
       onClose();
     }
-  }, [setLocationBounds, push, queryParams, locations, feature]);
+  }, [setLocationBounds, push, queryParams, locations, feature, onClose]);
 
   const handleClickProtectedArea = useCallback(() => {
     const { ISO3, NAME } = info.protectedArea;
@@ -78,11 +78,10 @@ const LocationPopUP = ({
       if (bbox) {
         setLocationBounds(bbox as typeof locationBounds);
       }
-
       push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
       onClose();
     }
-  }, [setLocationBounds, push, queryParams, locations, info]);
+  }, [setLocationBounds, push, queryParams, locations, info, onClose]);
 
   return (
     <div
@@ -157,9 +156,9 @@ const LocationPopUP = ({
                     {info.protectedArea.NAME}
                   </span>
 
-                  <span className="text-left text-sm font-semibold text-brand-800">
+                  {/* <span className="text-left text-sm font-semibold text-brand-800">
                     {info.protectedArea.ORIG_NAME}
-                  </span>
+                  </span> */}
                 </div>
                 <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
                   Protected area
