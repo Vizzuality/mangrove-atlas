@@ -112,11 +112,11 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 <DialogTrigger>
                   <div className="inline-flex text-brand-800 underline">Learn more</div>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="mb-20">
                   <div className="no-scrollbar overflow-y-auto ">
                     <Info />
                   </div>
-                  <DialogClose />
+                  <DialogClose className="fixed !top-18 left-[595px]" />
                 </DialogContent>
               </Dialog>
             </p>
