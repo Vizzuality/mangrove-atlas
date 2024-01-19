@@ -286,6 +286,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         ({ layer }) => layer.id === 'mangrove_restoration-layer'
       );
 
+      const interactiveLayers = evt?.features.find(
+        ({ layer }) =>
+          layer.id === 'country-boundaries-layer' ||
+          layer.id === 'mangrove_protected_areas' ||
+          layer.id === 'mangrove_iucn_ecoregion-layer'
+      );
+
       // *ON MOUSE ENTER
       if (restorationData && map) {
         if (hoveredStateId !== null) {
@@ -322,6 +329,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         );
         hoveredStateId = null;
       }
+
+      if (interactiveLayers || restorationData) {
+        setCursor('pointer');
+      } else setCursor('grab');
     },
     [setCursor, map]
   );

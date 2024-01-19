@@ -36,6 +36,8 @@ Unreleased
 - Planet layers separate from the rest of contextual layers
 - New legend with functionality for layers
 - Edit function for custom areas removed
+- New cursor to map for interactive layers
+- Print report and Highlighted places removed
 
 ### Fixed
 
