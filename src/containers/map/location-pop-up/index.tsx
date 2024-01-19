@@ -66,23 +66,25 @@ const LocationPopUP = ({
     }
   }, [setLocationBounds, push, queryParams, locations, feature, onClose]);
 
-  const handleClickProtectedArea = useCallback(() => {
-    const { ISO3, NAME } = info.protectedArea;
-    const location = locations.data?.find((l) => {
-      return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
-    });
+  const handleClickProtectedArea = useCallback(
+    (index: number) => {
+      const { ISO3, NAME } = info.protectedArea[index];
+      const location = locations.data?.find((l) => {
+        return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
+      });
 
-    if (location) {
-      const bbox = turfBbox(location.bounds);
+      if (location) {
+        const bbox = turfBbox(location.bounds);
 
-      if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
+        if (bbox) {
+          setLocationBounds(bbox as typeof locationBounds);
+        }
+        push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+        onClose();
       }
-      push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
-      onClose();
-    }
-  }, [setLocationBounds, push, queryParams, locations, info, onClose]);
-
+    },
+    [setLocationBounds, push, queryParams, locations, info, onClose]
+  );
   return (
     <div
       className={cn({
@@ -145,26 +147,22 @@ const LocationPopUP = ({
                 </span>
               </button>
             </div>
-            {info.protectedArea && (
-              <button
-                type="button"
-                className="grid grow cursor-pointer grid-cols-10 gap-4 font-sans"
-                onClick={handleClickProtectedArea}
-              >
-                <div className="col-span-7 flex flex-col text-left">
-                  <span className="text-sm font-semibold text-brand-800">
-                    {info.protectedArea.NAME}
+            {info.protectedArea &&
+              info.protectedArea?.map(({ NAME }, index) => (
+                <button
+                  key={NAME}
+                  type="button"
+                  className="grid grow cursor-pointer grid-cols-10 gap-4 font-sans"
+                  onClick={() => handleClickProtectedArea(index)}
+                >
+                  <div className="col-span-7 flex flex-col text-left">
+                    <span className="text-sm font-semibold text-brand-800">{NAME}</span>
+                  </div>
+                  <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+                    Protected area
                   </span>
-
-                  {/* <span className="text-left text-sm font-semibold text-brand-800">
-                    {info.protectedArea.ORIG_NAME}
-                  </span> */}
-                </div>
-                <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
-                  Protected area
-                </span>
-              </button>
-            )}
+                </button>
+              ))}
           </motion.section>
         )}
       </AnimatePresence>

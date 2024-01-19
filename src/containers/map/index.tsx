@@ -227,7 +227,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'country-boundaries-layer'
     );
 
-    const protectedAreaFeature = e?.features.find(
+    const protectedAreaFeature = e?.features.filter(
       ({ layer }) => layer.id === 'mangrove_protected_areas'
     );
 
@@ -240,16 +240,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     );
 
     if (locationFeature) {
+      const protectedAreas = protectedAreaFeature.map((feature) => ({
+        ...feature.properties,
+        id: locationId,
+      }));
       setLocationPopUp({
         ...locationPopUp,
         info: {
           location: locationFeature.properties,
-          ...(protectedAreaFeature && {
-            protectedArea: {
-              ...(protectedAreaFeature?.properties as LocationPopUp['protectedArea']),
-              id: locationId,
-            },
-          }),
+          protectedArea: protectedAreas, // Now an array of ProtectedArea objects
         } as LocationPopUp,
         feature: locationFeature,
         popup: [e?.lngLat.lat, e?.lngLat.lng],
