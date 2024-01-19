@@ -129,7 +129,7 @@ const Menu = () => {
             )}
           </AnimatePresence>
         )}
-        <DialogClose className="fixed !top-18 left-[595px]" />
+        <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
       </DialogContent>
     </Dialog>
   );
