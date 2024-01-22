@@ -160,7 +160,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           </button>
         )}
       </div>
-      <div className="relative min-h-[70vh] md:min-h-[90vh]">
+
+      <div className="relative min-h-[200vh]">
         <AutoSizer>
           {({ width, height }) => (
             <List

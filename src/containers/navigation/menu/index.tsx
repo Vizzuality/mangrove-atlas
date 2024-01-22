@@ -52,13 +52,12 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'scroll-y rounded-3xl px-10 font-sans md:top-[10%] md:max-w-xl': true,
+          'font-sans md:mb-20': true,
           'h-fit py-0': section === 'main',
-          'h-[96%] pb-0 md:h-[90vh] md:py-0': section === 'news' || section === 'about',
         })}
       >
         {section === 'main' && (
-          <div className="flex flex-col py-10 font-sans text-black/85">
+          <div className="flex flex-col py-10 pr-20 font-sans text-black/85">
             <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
               Global Mangrove Watch
             </h2>
@@ -130,7 +129,7 @@ const Menu = () => {
             )}
           </AnimatePresence>
         )}
-        <DialogClose />
+        <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
       </DialogContent>
     </Dialog>
   );

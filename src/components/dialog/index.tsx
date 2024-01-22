@@ -39,7 +39,7 @@ const DialogContent = React.forwardRef<
     {overlay && <DialogOverlay />}
     <DialogPrimitive.Content
       ref={ref}
-      className="fixed w-full animate-in duration-300 md:left-0 md:w-auto md:py-[100%] md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96"
+      className="no-scrollbar absolute z-40 h-[100vh] w-full overflow-y-auto pr-16 animate-in duration-300 md:left-0 md:w-auto md:pt-10 md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96"
       style={{
         background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
       }}
@@ -47,7 +47,7 @@ const DialogContent = React.forwardRef<
     >
       <div
         className={cn({
-          'relative flex shrink-0 flex-col bg-white p-8 shadow-widget md:max-h-[85vh] md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
+          'relative flex shrink-0 flex-col bg-white p-8 shadow-widget md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
             true,
           [className]: !!className,
         })}

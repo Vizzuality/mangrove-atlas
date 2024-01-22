@@ -2,8 +2,6 @@ import { useCallback, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { mapSettingsAtom } from 'store/map-settings';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
@@ -22,7 +20,6 @@ import WidgetWrapper from 'containers/widget';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
-import { BUTTON_STYLES } from 'styles/widgets';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
@@ -38,10 +35,6 @@ const WidgetsContainer: React.FC = () => {
 
   const setPrintingMode = useSetRecoilState(printModeState);
 
-  const { enabled: drawingToolEnabled } = useRecoilValue(drawingToolAtom);
-  const { enabled: drawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
-
-  const mapSettings = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
@@ -135,9 +128,9 @@ const WidgetsContainer: React.FC = () => {
                 </button>
               </DialogTrigger>
             </Helper>
-            <DialogContent>
-              <DialogClose className="top-8" />
-              <div className="no-scrollbar space-y-8 overflow-y-auto">
+            <DialogContent className="mb-10 w-screen border-2 md:w-auto">
+              <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+              <div className="no-scrollbar space-y-8">
                 <h2 className="font-black/85 text-3xl font-light leading-10">
                   Widgets deck settings
                 </h2>

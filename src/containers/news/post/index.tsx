@@ -23,8 +23,8 @@ export const Post = ({
           fill={true}
         />
       </div>
-      <div className="flex flex-col space-y-2.5 p-4">
-        <div className="flex flex-wrap gap-2">
+      <div className="flex flex-col p-4">
+        <div className="mb-2.5 flex flex-wrap gap-2">
           {data?.map((tag, i) => {
             return (
               <div
@@ -36,7 +36,7 @@ export const Post = ({
             );
           })}
         </div>
-        <h5 className="text-left text-2lg font-light">{post.title.rendered}</h5>
+        <h5 className="text-left text-2lg font-light line-clamp-3">{post.title.rendered}</h5>
       </div>
     </div>
   );
