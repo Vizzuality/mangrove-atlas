@@ -75,7 +75,7 @@ export const Share = ({ className }: { className?: string }) => {
           />
         </div>
       </DialogTrigger>
-      <DialogContent className="text-black/85">
+      <DialogContent className="top-64 text-black/85">
         <h3 className="mb-2 text-3xl font-light">Share</h3>
         <div className="flex w-[480px] flex-col space-y-5">
           <div className="flex flex-col space-y-1">

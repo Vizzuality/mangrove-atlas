@@ -15,13 +15,13 @@ const Info = ({ id, content }) => {
         <DialogTrigger>
           <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" description="Info" />
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="w-screen md:mb-20 md:w-auto">
           <div className="no-scrollbar overflow-y-auto">
             {/* Supports external content or look by id for static info about widgets */}
             {id && <Info />}
             {content && <p>{content}</p>}
           </div>
-          <DialogClose className="top-3" />
+          <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
         </DialogContent>
       </Dialog>
     </div>

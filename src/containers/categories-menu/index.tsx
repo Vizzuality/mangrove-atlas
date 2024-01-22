@@ -53,7 +53,7 @@ const Category = () => {
               <h4 className="flex min-h-[40px] items-center justify-center">{category.label}</h4>
               <Checkbox
                 className={cn({
-                  'absolute bottom-2 right-2 h-6 w-6 rounded-full border-none': true,
+                  'absolute bottom-2 right-2 h-4 w-4 rounded-full border-none md:h-6 md:w-6': true,
                 })}
                 checked={category.value === categorySelected}
               >
