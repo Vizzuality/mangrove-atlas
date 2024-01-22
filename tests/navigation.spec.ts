@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test('test menu links', async ({ page }) => {
   await page.goto('/');
@@ -9,6 +9,10 @@ test('test menu links', async ({ page }) => {
   await menuContent.isVisible();
   await menuContent.getByRole('button', { name: 'About this tool' }).click();
   await menuContent.getByRole('button', { name: 'Close' }).click();
+});
+
+test('test blog links', async ({ page }) => {
+  await page.goto('/');
 
   const newsButton = page.getByTestId('news-button');
   await newsButton.click();
@@ -21,12 +25,12 @@ test('test menu links', async ({ page }) => {
   await backToNewsBtn.click();
   await postsList.isVisible();
   await page.getByRole('button', { name: 'Close' }).click();
+});
 
+test('test help guide', async ({ page }) => {
+  await page.goto('/');
   const helpGuideButton = page.getByTestId('guide-button');
   await helpGuideButton.click();
-  // const helperBtn = page.getByTestId('helper-button');
-  // await helperBtn.click();
-  // await page.waitForEvent('popup');
-
-  // await page.getByText('Triggers deck to configure widgets').isVisible();
+  const helpers = page.getByTestId('helper-button');
+  await expect(helpers).toHaveCount(15);
 });

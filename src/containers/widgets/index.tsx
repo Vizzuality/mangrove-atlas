@@ -127,7 +127,6 @@ const WidgetsContainer: FC = () => {
                 button: 'right-0 -top-1.5 z-20',
                 tooltip: 'w-fit-content',
               }}
-              data-testid="configure-widgets-helper"
               tooltipPosition={{ top: -50, left: 0 }}
               message="Triggers deck to configure widgets"
             >
