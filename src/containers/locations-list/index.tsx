@@ -16,8 +16,8 @@ import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
 
-import { useLocations } from 'containers/datasets/locations/hooks';
-import { Location } from 'containers/datasets/locations/types';
+import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
+import { Location, LocationTypes } from 'containers/datasets/locations/types';
 // import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighted-places';
 
 // import HighlightedPlaces from 'components/highlighted-places';
@@ -36,6 +36,16 @@ const locationNames = {
 const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
   const screenWidth = useScreenWidth();
   const [searchValue, setSearchValue] = useState('');
+
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const id = queryParams?.[1];
+  const {
+    data: { id: locationId },
+  } = useLocation(id, locationType);
+
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
@@ -106,12 +116,18 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 'flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10':
                   true,
                 'print:hidden': screenWidth >= breakpoints.lg,
+                'pointer-events-none': locationId === locationsToDisplay[index].id,
               })}
               onClick={() => {
                 handleLocation(locationsToDisplay[index]);
               }}
             >
-              <p className="text-left font-sans text-2lg font-light text-black/85">
+              <p
+                className={cn({
+                  'text-left font-sans text-2lg font-light text-black/85': true,
+                  'font-semibold text-brand-800': locationId === locationsToDisplay[index].id,
+                })}
+              >
                 {locationsToDisplay[index].name}
               </p>
               <span className="text-xs text-grey-800 text-opacity-90">
@@ -145,12 +161,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         )}
       </div>
 
-      {/* <Media lessThan="md">
-        <HighlightedPlacesMobile />
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <HighlightedPlaces onSelectLocation={onSelectLocation} /
-      </Media> */}
       <div className="relative min-h-[200vh]">
         <AutoSizer>
           {({ width, height }) => (
