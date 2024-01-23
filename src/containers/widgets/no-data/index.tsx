@@ -4,12 +4,12 @@ import NO_DATA_SVG from 'svgs/ui/no-data.svg?sprite';
 
 const NoData = () => {
   return (
-    <div className="m-auto flex w-full max-w-full break-inside-avoid flex-col items-center justify-center rounded-3xl bg-white py-8">
+    <div className="m-auto ml-[3%] flex min-h-[334px] w-full max-w-full break-inside-avoid flex-col items-center justify-center rounded-3xl bg-white pt-8 pr-5 pl-10 shadow-widget md:ml-0">
       <Icon className="h-40 w-40" icon={NO_DATA_SVG} description="No data" />
       <p className="text-center font-sans text-xs leading-5 sm:text-base sm:leading-6">
-        Sorry, there are <b>no data</b> for this category.
+        Sorry, there are <b>no data</b> for this location.
         <br />
-        Try with another location.
+        Try another one.
       </p>
     </div>
   );
