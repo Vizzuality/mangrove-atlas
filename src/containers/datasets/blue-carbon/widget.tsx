@@ -5,6 +5,8 @@ import { analysisAtom } from 'store/analysis';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
@@ -39,7 +41,7 @@ const BlueCarbonWidget = () => {
 
   const { location, agb, toc, soc, config, noData } = data;
 
-  if (noData) return null;
+  if (noData) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

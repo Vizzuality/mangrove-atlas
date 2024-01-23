@@ -38,6 +38,7 @@ const SpeciesDistribution = () => {
   }, []);
 
   if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

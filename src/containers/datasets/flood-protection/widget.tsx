@@ -11,6 +11,7 @@ import type {
   FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
 } from 'containers/datasets/flood-protection/types';
+import NoData from 'containers/widgets/no-data';
 
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -75,7 +76,7 @@ const FloodProtection = ({
     }
   }, [ref, ref.current]);
 
-  if (!data || isEmpty(data)) return null;
+  if (!data || isEmpty(data)) return <NoData />;
 
   const { periods, max, selectedValue, location, getFormattedValue } = data;
 

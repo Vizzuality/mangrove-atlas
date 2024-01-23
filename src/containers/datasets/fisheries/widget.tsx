@@ -1,3 +1,5 @@
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
@@ -6,7 +8,7 @@ import { useMangroveFisheries } from './hooks';
 const Fisheries = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
-  if (!data?.config?.data?.length) return null;
+  if (!data?.config?.data?.length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

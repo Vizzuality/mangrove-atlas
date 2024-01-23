@@ -1,3 +1,5 @@
+import NoData from 'containers/widgets/no-data';
+
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -8,7 +10,7 @@ import { useMangroveEcoregions } from './hooks';
 const IUCNEcoregions = () => {
   const { data, isLoading, isFetched } = useMangroveEcoregions();
 
-  if (!data) return null;
+  if (!data) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

@@ -6,6 +6,8 @@ import { BiomassYearSettings } from 'store/widgets/biomass';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
@@ -40,7 +42,8 @@ const BiomassWidget = () => {
 
   const { legend } = config;
 
-  if (noData) return null;
+  if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">

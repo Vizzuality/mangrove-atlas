@@ -1,3 +1,5 @@
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
@@ -16,7 +18,9 @@ const InternationalStatus = () => {
   } = useMangroveInternationalStatus();
 
   const apostrophe = location?.[location?.length - 1] === 's' ? "'" : "'s";
-  if (noData) return null;
+
+  if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

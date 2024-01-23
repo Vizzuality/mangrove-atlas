@@ -8,6 +8,8 @@ import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -72,7 +74,7 @@ const NetChangeWidget = () => {
     await refetch();
   }, [refetch]);
 
-  if (noData) return null;
+  if (noData) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

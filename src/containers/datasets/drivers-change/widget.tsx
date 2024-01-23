@@ -1,6 +1,7 @@
 import DriversChangeChart from 'containers/datasets/drivers-change/chart';
 import { primaryDrivers } from 'containers/datasets/drivers-change/constants';
 import { useMangroveDriversChange } from 'containers/datasets/drivers-change/hooks';
+import NoData from 'containers/widgets/no-data';
 
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -11,7 +12,7 @@ const DriversChangeWidget = () => {
 
   const { legend } = config;
 
-  if (noData) return null;
+  if (noData) return <NoData />;
 
   return (
     primaryDriver && (

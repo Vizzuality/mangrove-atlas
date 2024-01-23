@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import NoData from 'containers/widgets/no-data';
+
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -21,7 +23,7 @@ const Protection = () => {
   const [selectedUnit, setUnit] = useState('ha');
   const { data, isFetched, isFetching } = useMangroveProtectedAreas({ unit: selectedUnit });
 
-  if (!Object.keys(data || {}).length) return null;
+  if (!Object.keys(data || {}).length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

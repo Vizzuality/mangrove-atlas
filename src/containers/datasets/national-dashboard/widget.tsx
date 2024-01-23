@@ -34,6 +34,7 @@ const NationalDashboard = () => {
     .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
   const years = data?.data?.[0]?.sources[0]?.years;
   const currentYear = yearSelected || years?.[years?.length - 1];
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
