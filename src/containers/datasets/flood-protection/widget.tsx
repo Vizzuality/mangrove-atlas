@@ -76,7 +76,7 @@ const FloodProtection = ({
     }
   }, [ref, ref.current]);
 
-  if (!data || isEmpty(data)) return <NoData />;
+  if (!data && isEmpty(data)) return null;
 
   const { periods, max, selectedValue, location, getFormattedValue } = data;
 

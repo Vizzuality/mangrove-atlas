@@ -6,6 +6,8 @@ import cn from 'lib/classnames';
 
 import chroma from 'chroma-js';
 
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
@@ -17,7 +19,9 @@ import OtherResources from './other-resources';
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
   const [yearSelected, setYearSelected] = useState<number>(data?.data?.sources?.years?.[0] || null);
-  if (!data?.data.length) return null;
+
+  if (isFetched && !data?.data.length) return <NoData />;
+
   const sources = flatten(
     data?.data?.map(({ sources }) =>
       flatten(

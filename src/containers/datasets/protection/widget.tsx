@@ -23,7 +23,7 @@ const Protection = () => {
   const [selectedUnit, setUnit] = useState('ha');
   const { data, isFetched, isFetching } = useMangroveProtectedAreas({ unit: selectedUnit });
 
-  if (!Object.keys(data || {}).length) return <NoData />;
+  if (isFetched && !Object.keys(data || {}).length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

@@ -10,7 +10,7 @@ import { useMangroveEcoregions } from './hooks';
 const IUCNEcoregions = () => {
   const { data, isLoading, isFetched } = useMangroveEcoregions();
 
-  if (!data) return <NoData />;
+  if (isFetched && !data) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

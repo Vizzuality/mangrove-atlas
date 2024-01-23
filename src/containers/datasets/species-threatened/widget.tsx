@@ -18,8 +18,7 @@ const SpeciesThreatened = () => {
     isPlaceholderData,
   } = useMangroveSpecies();
 
-  if (chartData?.length === 0) return <NoData />;
-
+  if (isFetched && !chartData) return <NoData />;
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

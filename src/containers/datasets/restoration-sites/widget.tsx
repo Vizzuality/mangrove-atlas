@@ -68,7 +68,7 @@ const RestorationSitesWidget = () => {
 
   if (!filtersData) return null;
 
-  if (data.data.length === 0) return <NoData />;
+  if (isFetched && data?.data.length === 0) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

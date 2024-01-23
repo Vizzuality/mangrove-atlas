@@ -122,6 +122,7 @@ export function useMangroveSpecies(
       total,
       location,
       chartData,
+
       tooltip: {
         content: (properties) => <CustomTooltip {...properties} />,
       },

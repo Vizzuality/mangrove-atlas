@@ -49,9 +49,10 @@ const AlertsWidget = () => {
     fullData,
     defaultStartDate,
     defaultEndDate,
+    noData,
   } = useAlerts(startDate, endDate);
 
-  if (!fullData.length) return <NoData />;
+  if (noData) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

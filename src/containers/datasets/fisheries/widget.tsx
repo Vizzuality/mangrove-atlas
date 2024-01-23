@@ -8,7 +8,7 @@ import { useMangroveFisheries } from './hooks';
 const Fisheries = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
-  if (!data?.config?.data?.length) return <NoData />;
+  if (isFetched && !data?.config?.data?.length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
