@@ -14,7 +14,13 @@ test('test legend order', async ({ page }) => {
   await mangroveAlertsLayerSwitcher.click({ force: true });
   await expect(mangroveAlertsLayerSwitcher).toHaveAttribute('data-state', 'checked');
 
-  await page
-    .locator('#legend-item-mangrove_habitat_extent')
-    .dragTo(page.locator('#legend-item-mangrove_net_change'));
+  const source = page.getByTestId('legend-item-mangrove_habitat_extent').first();
+  const target = page.getByTestId('legend-item-mangrove_alerts').first();
+
+  await source.dragTo(target);
+
+  // await source.dragTo(target, {
+  //   sourcePosition: { x: 34, y: 7 },
+  //   targetPosition: { x: 10, y: 20 },
+  // });
 });

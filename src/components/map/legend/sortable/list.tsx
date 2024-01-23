@@ -117,7 +117,7 @@ export const SortableList: React.FC<SortableListProps> = ({
             const { id } = props as { id: string };
 
             return (
-              <SortableItem id={id} sortable={sortable}>
+              <SortableItem id={id} sortable={sortable} data-testid={`legend-item-${id}`}>
                 {cloneElement(Child as ReactElement, {
                   sortable,
                 })}

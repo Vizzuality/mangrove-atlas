@@ -113,13 +113,10 @@ const LegendItem = ({
 
   if (l.id === 'custom-area') return null;
 
-  console.log('l.id', id);
-
   return (
     <div
       id={id}
       className="flex flex-col items-start rounded-md bg-white pb-4 pt-2 text-sm md:px-2"
-      data-testid={`legend-item-${id}`}
     >
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-2">
