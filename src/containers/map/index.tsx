@@ -386,10 +386,18 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <FullScreenControl />
                   {/* Disable the sharing tool in any of the painting states */}
-                  {!isDrawingToolEnabled &&
+                  {/* {!isDrawingToolEnabled &&
                     !isUploadToolEnabled &&
                     !customGeojson &&
-                    !uploadedGeojson && <ShareControl />}
+                    !uploadedGeojson && <ShareControl />} */}
+                  <ShareControl
+                    disabled={
+                      isDrawingToolEnabled ||
+                      isUploadToolEnabled ||
+                      !!customGeojson ||
+                      !!uploadedGeojson
+                    }
+                  />
                   <BasemapSettingsControl />
                   <div className="border-box flex flex-col overflow-hidden rounded-4xl bg-white shadow-control">
                     <ZoomControl mapId={mapId} />
