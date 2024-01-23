@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -19,6 +19,7 @@ import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import widgets from 'containers/widgets/constants';
+import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
@@ -27,20 +28,33 @@ import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
 
 const HELPER_ID = 'menu-categories';
-const WidgetsContainer: React.FC = () => {
-  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
+const WidgetsContainer: FC = () => {
+  const [categorySelected] = useRecoilState(activeCategoryAtom);
 
   const { width: screenWidth } = useWindowSize();
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const widgetsAvailable = useWidgets();
 
   const setPrintingMode = useSetRecoilState(printModeState);
+  const cat = useWidgetsIdsByCategory(activeWidgets);
+
+  // ensures that the appropriate widgets for a selected category are activated during
+  // the first render. This is crucial when the initial state is being loaded from a URL,
+  //  particularly in cases where the active widgets are not immediately visible on it
+
+  useEffect(() => {
+    if (categorySelected !== cat) {
+      const filteredWidgets = widgetsAvailable.map(({ slug }) => slug);
+      setActiveWidgets(filteredWidgets);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const locationTool = useRecoilValue(locationToolAtom);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, [widgets]);
+  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, []);
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);
 
@@ -55,7 +69,7 @@ const WidgetsContainer: React.FC = () => {
     updateWidgetsCollapsed['mangrove_drawing_upload_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);
 
   const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
     acc[key] = false;
@@ -72,8 +86,6 @@ const WidgetsContainer: React.FC = () => {
       setPrintingMode(false);
     }, 4000);
   }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
-
-  console.log(widgetsAvailable);
 
   return (
     <WidgetsLayout>
@@ -165,11 +177,11 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgetsAvailable.map(({ slug, name, applicability }, index) => {
-            const Widget = WIDGETS[slug];
+          {widgetsAvailable.map(({ slug, name, applicability }) => {
+            const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
               <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
-                {WIDGETS[slug] && <Widget index={index} />}
+                {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
             );
           })}
@@ -177,7 +189,10 @@ const WidgetsContainer: React.FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
+        <div
+          data-testid="widgets-wrapper"
+          className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24"
+        >
           {widgetsAvailable.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (

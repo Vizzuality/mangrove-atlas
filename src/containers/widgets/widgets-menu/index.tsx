@@ -16,8 +16,8 @@ import { useRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/layers/constants';
 import widgets from 'containers/widgets/constants';
-import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
+import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { CheckboxIndicator } from 'components/checkbox';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
@@ -30,13 +30,17 @@ const WidgetsMenu: FC = () => {
   const widgetsIds = widgets.map((widget) => widget.slug);
 
   const enabledWidgets = useWidgetsIdsByLocation();
+  // Updates the category when user changes widgets filtering throw checkboxes,
+  // are activated. It identifies the category associated with the active widgets and
+  // updates it accordingly.
 
   const cat = useWidgetsIdsByCategory(activeWidgets);
   useEffect(() => {
     if (categorySelected !== cat) {
       setCategory(cat);
     }
-  }, [categorySelected, setCategory, cat]);
+  }, [setCategory, cat, categorySelected]);
+
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly

@@ -19,13 +19,12 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
-  console.log('categorySelected', categorySelected);
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
-      setCategory(encodeURIComponent(event.currentTarget.value) as Category);
+      setCategory(encodeURIComponent(event.currentTarget.value as Category));
       const widgetsFiltered = widgets.filter((widget) =>
-        widget?.categoryIds?.includes(event.currentTarget.value)
+        widget?.categoryIds?.includes(event.currentTarget.value as Category)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
