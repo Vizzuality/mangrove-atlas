@@ -67,7 +67,7 @@ const WidgetDrawingTool = () => {
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
   useEffect(() => {
-    setMapCursor(isDrawingToolEnabled ? 'crosshair' : 'grab');
+    setMapCursor(isDrawingToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingToolEnabled]);
 
   return (

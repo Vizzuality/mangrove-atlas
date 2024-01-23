@@ -61,7 +61,7 @@ const WidgetDrawingUploadTool = () => {
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
   useEffect(() => {
-    setMapCursor(isDrawingUploadToolEnabled ? 'crosshair' : 'grab');
+    setMapCursor(isDrawingUploadToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingUploadToolEnabled]);
 
   const conditionalProps =

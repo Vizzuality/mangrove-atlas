@@ -328,18 +328,20 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         );
         hoveredStateId = null;
       }
-
-      if (interactiveLayers || restorationData) {
+      if (isDrawingToolEnabled && !customGeojson) {
+        setCursor('cell');
+      } else if (interactiveLayers || restorationData) {
         setCursor('pointer');
       } else setCursor('grab');
     },
-    [setCursor, map]
+    [cursor, map, isDrawingToolEnabled, customGeojson]
   );
 
   const handleMapLoad = useCallback(() => {
     setLoaded(true);
   }, []);
   const pitch = map?.getPitch();
+
   return (
     <div
       className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:w-[90vw]"
