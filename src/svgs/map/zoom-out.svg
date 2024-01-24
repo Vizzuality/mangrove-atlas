@@ -1,3 +1,5 @@
-<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-<path d="M5 8.91309H15V11.087H5V8.91309Z"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/zoom-out">
+<path id="Vector" d="M3 8H13" stroke="black" stroke-opacity="0.85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>
