@@ -375,7 +375,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 onSetCustomPolygon={handleCustomPolygon}
               />
             )}
-            <Controls className="absolute bottom-9 right-6 hidden items-center print:hidden md:block">
+            <Controls className="absolute bottom-9 right-5 hidden items-center print:hidden md:block">
               <Helper
                 className={{
                   button: 'top-1 left-8 z-[20]',

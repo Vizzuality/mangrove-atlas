@@ -1,3 +1,6 @@
-<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 8.91304H11.087V5H8.91304V8.91304H5V11.087H8.91304V15H11.087V11.087H15V8.91304Z" />
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/zoom-in">
+<path id="Vector" d="M8 3V13" stroke="black" stroke-opacity="0.85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M3 8H13" stroke="black" stroke-opacity="0.85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
 </svg>
