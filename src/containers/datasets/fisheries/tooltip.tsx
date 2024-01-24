@@ -14,7 +14,7 @@ const CustomTooltip = ({ payload }: TooltipProps) => {
         <span className="font-bold">
           {category} {unit}:
         </span>{' '}
-        {valueFormatted}
+        <span className="whitespace-nowrap">{valueFormatted}</span>
       </p>
     </div>
   );

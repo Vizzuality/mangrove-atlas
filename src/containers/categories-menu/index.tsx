@@ -42,7 +42,7 @@ const Category = () => {
           <button key={category.value} type="button" value={category.value} onClick={handleClick}>
             <div
               className={cn({
-                'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-6 md:text-sm':
+                'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
                   true,
                 'border-2 border-brand-800 font-bold text-brand-800':
                   category.value === categorySelected,

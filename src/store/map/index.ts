@@ -39,7 +39,7 @@ export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>({
   default: [],
 });
 
-export const mapCursorAtom = atom<'grab' | 'pointer' | 'crosshair'>({
+export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>({
   key: 'mapCursor',
   default: 'grab',
 });
