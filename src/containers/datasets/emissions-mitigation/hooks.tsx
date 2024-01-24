@@ -142,8 +142,8 @@ export function useMangroveEmissionsMitigation(
     ...queryOptions,
   });
 
-  const { data } = query;
-  const noData = !data?.data?.length;
+  const { data, isFetched } = query;
+  const noData = isFetched && !data?.data?.length;
   const DATA = useMemo(() => {
     const COLOR_RAMP = chroma
       .scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9'])

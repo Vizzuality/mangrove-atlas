@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import NoData from 'containers/widgets/no-data';
+
 import Chart from 'components/chart';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -25,7 +27,7 @@ const EmissionsMitigationWidget = () => {
   const { config, location, noData } = data;
   const { legend, ...restConfig } = config;
 
-  if (noData) return null;
+  if (noData) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

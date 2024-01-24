@@ -51,9 +51,9 @@ export function useMangroveSpecies(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isFetched } = query;
 
-  const noData = !data?.data?.total;
+  const noData = isFetched && !data?.data?.total;
 
   return useMemo(() => {
     const total = data?.data?.total;

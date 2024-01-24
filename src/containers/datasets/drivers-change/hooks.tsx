@@ -60,7 +60,7 @@ export function useMangroveDriversChange(
   });
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
-  const noData = !data?.data?.length;
+  const noData = isFetched && !data?.data?.length;
 
   return useMemo(() => {
     const colorKeys = getColorKeys(data?.data);

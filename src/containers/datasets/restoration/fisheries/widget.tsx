@@ -25,6 +25,7 @@ const PotentialBenefitsToFisheries = () => {
   });
 
   if (!data?.length) return null;
+
   return (
     <div
       className={cn({

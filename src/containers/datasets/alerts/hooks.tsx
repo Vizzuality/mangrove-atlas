@@ -163,8 +163,11 @@ export function useAlerts<T>(
     ...queryOptions,
   });
 
-  const { data } = query;
+  const { data, isFetched } = query;
+
   const fullData = getData(data);
+  const noData = isFetched && !fullData?.length;
+
   const startDateOptions = fullData.map((d) => d.startDate);
   const endDateOptions = fullData.map((d) => d.endDate);
 
@@ -422,6 +425,7 @@ export function useAlerts<T>(
       chartData,
       defaultStartDate,
       defaultEndDate,
+      noData,
     };
   }, [query, startDate, endDate, data, startIndex, endIndex, selectedStartDate, selectedEndDate]);
 }

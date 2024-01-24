@@ -6,6 +6,8 @@ import { habitatChangeStartYear, habitatChangeEndYear } from 'store/widgets/habi
 
 import { useRecoilState } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import Chart from 'components/chart';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -46,7 +48,9 @@ const HabitatExtent = () => {
     useMangroveHabitatChange({ startYear, endYear, limit });
 
   const isLoading = false;
-  if (noData) return null;
+
+  if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

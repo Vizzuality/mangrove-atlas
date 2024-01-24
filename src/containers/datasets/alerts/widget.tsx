@@ -7,6 +7,8 @@ import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import Chart from 'components/chart';
 import Icon from 'components/icon';
 import Loading from 'components/loading';
@@ -47,9 +49,11 @@ const AlertsWidget = () => {
     fullData,
     defaultStartDate,
     defaultEndDate,
+    noData,
   } = useAlerts(startDate, endDate);
 
-  if (!fullData.length) return null;
+  if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

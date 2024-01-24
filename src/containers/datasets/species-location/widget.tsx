@@ -10,6 +10,7 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';
 import { getLayerActive } from 'containers/widget/selector';
+import NoData from 'containers/widgets/no-data';
 
 import {
   Command,
@@ -68,7 +69,8 @@ const SpeciesLocation = () => {
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
 
-  if (!species.length) return null;
+  if (isFetched && !species.length) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading

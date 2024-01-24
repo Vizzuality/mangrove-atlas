@@ -6,6 +6,8 @@ import cn from 'lib/classnames';
 
 import chroma from 'chroma-js';
 
+import NoData from 'containers/widgets/no-data';
+
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
@@ -17,7 +19,9 @@ import OtherResources from './other-resources';
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
   const [yearSelected, setYearSelected] = useState<number>(data?.data?.sources?.years?.[0] || null);
-  if (!data?.data.length) return null;
+
+  if (isFetched && !data?.data.length) return <NoData />;
+
   const sources = flatten(
     data?.data?.map(({ sources }) =>
       flatten(
@@ -34,6 +38,7 @@ const NationalDashboard = () => {
     .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
   const years = data?.data?.[0]?.sources[0]?.years;
   const currentYear = yearSelected || years?.[years?.length - 1];
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import NoData from 'containers/widgets/no-data';
+
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -32,7 +34,7 @@ const CarbonMarketPotentialWidget = () => {
 
   const { noData, location, units, labels, config, investibleBlueCarbonValue } = data;
 
-  if (noData) return null;
+  if (noData) return <NoData />;
 
   const { legend } = config;
 

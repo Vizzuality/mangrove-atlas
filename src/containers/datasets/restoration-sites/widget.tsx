@@ -8,6 +8,8 @@ import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
 import { useSetRecoilState } from 'recoil';
 
+import NoData from 'containers/widgets/no-data';
+
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -65,6 +67,8 @@ const RestorationSitesWidget = () => {
   }, [setMapFilters, filterKeys]);
 
   if (!filtersData) return null;
+
+  if (isFetched && data?.data.length === 0) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

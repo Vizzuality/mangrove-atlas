@@ -2,6 +2,8 @@ import { createRef, useState, useLayoutEffect } from 'react';
 
 import cn from 'lib/classnames';
 
+import NoData from 'containers/widgets/no-data';
+
 import Icon from 'components/icon';
 import Loading from 'components/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
@@ -23,6 +25,7 @@ const SpeciesDistribution = () => {
     isFetched,
     isPlaceholderData,
   } = useMangroveSpecies();
+
   const isWorldwide = location === 'Worldwide';
   // const total = data?.total;
   const ref = createRef<HTMLDivElement>();
@@ -34,7 +37,8 @@ const SpeciesDistribution = () => {
     }
   }, []);
 
-  if (noData) return null;
+  if (noData) return <NoData />;
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading
