@@ -11,7 +11,7 @@ import { formatAxis } from 'lib/format';
 import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
@@ -129,7 +129,7 @@ export function useAlerts<T>(
   endDate: { label: string; value: string },
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
-  queryOptions?: UseQueryResult<DataResponse[], T>,
+  queryOptions?: UseQueryOptions<DataResponse, T>,
   onCancel?: () => void
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
@@ -137,6 +137,7 @@ export function useAlerts<T>(
   const {
     query: { params: queryParams },
   } = useRouter();
+
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
@@ -144,28 +145,33 @@ export function useAlerts<T>(
   } = useLocation(id, locationType);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
-  const fetchAlerts = () =>
-    isAnalysisRunning
-      ? API_cloud_functions.request({
-          method: 'POST',
-          url: '/fetch-alerts',
-          data: {
-            ...dataParams,
-          },
-        })
-          .then((response) => response.data)
-          .catch((err: CanceledError<unknown> | AxiosError) => {
-            if (err.code === 'ERR_CANCELED') onCancel?.();
-            return err;
-          })
-      : API_cloud_functions.request({
-          method: 'GET',
-          url: '/fetch-alerts',
-          params: {
-            location_id,
-            ...params,
-          },
-        }).then((response) => response.data);
+  const fetchAlerts = () => {
+    if (isAnalysisRunning) {
+      return API_cloud_functions.request({
+        method: 'POST',
+        url: '/fetch-alerts',
+        data: {
+          ...dataParams,
+        },
+      })
+        .then((response) => response.data)
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
+    }
+
+    if (!isAnalysisRunning) {
+      return API_cloud_functions.request({
+        method: 'GET',
+        url: '/fetch-alerts',
+        params: {
+          location_id,
+          ...params,
+        },
+      }).then((response) => response.data);
+    }
+  };
 
   const query = useQuery(['alerts', params, location_id], fetchAlerts, {
     placeholderData: [],
@@ -188,9 +194,11 @@ export function useAlerts<T>(
 
   if (selectedEndDate) setEndDate(selectedEndDate);
   if (selectedStartDate) setStartDate(selectedStartDate);
-  const dataFiltered = data?.filter(
-    (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
-  );
+  const dataFiltered =
+    Array.isArray(data) &&
+    data.filter(
+      (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+    );
 
   const chartData = getData(dataFiltered);
 

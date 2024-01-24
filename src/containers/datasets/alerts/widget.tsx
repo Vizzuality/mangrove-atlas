@@ -34,6 +34,12 @@ const AlertsWidget = () => {
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const activeLayers = useRecoilValue(activeLayersAtom);
 
+  const [isCanceled, setIsCanceled] = useState(false);
+
+  const handleQueryCancellation = useCallback(() => {
+    setIsCanceled(true);
+  }, []);
+
   const isActive = useMemo(
     () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
@@ -56,12 +62,20 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
     noData,
-  } = useAlerts(startDate, endDate, null, {
-    ...(customGeojson && { geometry: customGeojson }),
-    ...(uploadedGeojson && { geometry: uploadedGeojson }),
-  });
+  } = useAlerts(
+    startDate,
+    endDate,
+    null,
+    {
+      ...(customGeojson && { geometry: customGeojson }),
+      ...(uploadedGeojson && { geometry: uploadedGeojson }),
+    },
+    { enabled: !isCanceled },
+    handleQueryCancellation
+  );
 
   const handleTryAgain = useCallback(async () => {
+    setIsCanceled(false);
     await refetch();
   }, [refetch]);
 
@@ -181,40 +195,44 @@ const AlertsWidget = () => {
           />
         </div>
       )}
-      <div className="space-y-2">
-        <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
-        <p className="items-center pt-6 font-sans text-lg font-light leading-7">
-          There are <span className="font-bold"> 535</span> areas monitored in the world.
-        </p>
-        <div className="flex space-x-2">
-          <div className="flex">
-            <div className="flex flex-col">
-              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
-              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+      {!isError && !isLoading && (
+        <>
+          <div className="space-y-2">
+            <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
+            <p className="items-center pt-6 font-sans text-lg font-light leading-7">
+              There are <span className="font-bold"> 535</span> areas monitored in the world.
+            </p>
+            <div className="flex space-x-2">
+              <div className="flex">
+                <div className="flex flex-col">
+                  <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+                  <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+                </div>
+                <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+              </div>
+              <p className="text-sm font-normal">Monitored area</p>
             </div>
-            <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
           </div>
-          <p className="text-sm font-normal">Monitored area</p>
-        </div>
-      </div>
-      <div>
-        <SuggestedLayers
-          name="Planet-NICFI Satellite Imagery"
-          thumbSource="/images/thumbs/basemaps/planet.svg"
-          id="planet_medres_visual_monthly"
-          description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
-        >
-          {isActive && (
-            <div className="pb-4">
-              <DateSelect
-                mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
-                id="planet_medres_visual_monthly"
-                className={{ content: 'w-[420px]' }}
-              />
-            </div>
-          )}
-        </SuggestedLayers>
-      </div>
+          <div>
+            <SuggestedLayers
+              name="Planet-NICFI Satellite Imagery"
+              thumbSource="/images/thumbs/basemaps/planet.svg"
+              id="planet_medres_visual_monthly"
+              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
+            >
+              {isActive && (
+                <div className="pb-4">
+                  <DateSelect
+                    mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
+                    id="planet_medres_visual_monthly"
+                    className={{ content: 'w-[420px]' }}
+                  />
+                </div>
+              )}
+            </SuggestedLayers>
+          </div>
+        </>
+      )}
     </div>
   );
 };
