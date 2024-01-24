@@ -12,6 +12,7 @@ import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -128,7 +129,8 @@ export function useAlerts<T>(
   endDate: { label: string; value: string },
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
-  queryOptions?: UseQueryResult<DataResponse[], T>
+  queryOptions?: UseQueryResult<DataResponse[], T>,
+  onCancel?: () => void
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
@@ -150,7 +152,12 @@ export function useAlerts<T>(
           data: {
             ...dataParams,
           },
-        }).then((response) => response.data)
+        })
+          .then((response) => response.data)
+          .catch((err: CanceledError<unknown> | AxiosError) => {
+            if (err.code === 'ERR_CANCELED') onCancel?.();
+            return err;
+          })
       : API_cloud_functions.request({
           method: 'GET',
           url: '/fetch-alerts',

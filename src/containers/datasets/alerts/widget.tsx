@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -33,6 +33,7 @@ const AlertsWidget = () => {
   const { customGeojson } = useRecoilValue(drawingToolAtom);
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const activeLayers = useRecoilValue(activeLayersAtom);
+
   const isActive = useMemo(
     () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
@@ -41,7 +42,9 @@ const AlertsWidget = () => {
   const {
     isLoading,
     isFetched,
+    isError,
     isPlaceholderData,
+    refetch,
     alertsTotal,
     startDateOptions,
     selectedStartDate,
@@ -58,6 +61,10 @@ const AlertsWidget = () => {
     ...(uploadedGeojson && { geometry: uploadedGeojson }),
   });
 
+  const handleTryAgain = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
   if (noData) return <NoData />;
 
   return (
@@ -66,7 +73,22 @@ const AlertsWidget = () => {
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
-      {isFetched && !isLoading && (
+      {isError && !isLoading && (
+        <div className="flex flex-col items-center space-y-4">
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
+          <button
+            aria-label="Retry analysis"
+            type="button"
+            onClick={handleTryAgain}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+      {isFetched && !isLoading && !isError && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
