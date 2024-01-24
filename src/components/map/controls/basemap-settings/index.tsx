@@ -15,14 +15,14 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
       <DialogTrigger>
         <div
           className={cn({
-            'group inline-flex h-11 w-11 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+            'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             [className]: !!className,
           })}
         >
           <Icon
             icon={BASEMAP_SETTINGS_SVG}
-            className="h-5 w-5 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75"
+            className="h-4 w-4 bg-white group-hover:bg-gray-100 group-disabled:fill-grey-75"
             description="Basemap settings"
           />
         </div>
