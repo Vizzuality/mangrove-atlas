@@ -8,10 +8,7 @@ import { AnalysisWidgetSlug } from 'types/widget';
 
 import API from 'services/api';
 
-type UploadFileResponse = {
-  data: GeoJSON.FeatureCollection;
-};
-
+import type { UploadFileResponse } from './types';
 export type AnalysisResponse<T> = Record<AnalysisWidgetSlug, T>;
 
 const fetchUploadFile = (data: FormData) =>

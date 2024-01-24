@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
@@ -29,6 +30,8 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const activeLayers = useRecoilValue(activeLayersAtom);
   const isActive = useMemo(
     () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
@@ -50,7 +53,10 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
     noData,
-  } = useAlerts(startDate, endDate);
+  } = useAlerts(startDate, endDate, null, {
+    ...(customGeojson && { geometry: customGeojson }),
+    ...(uploadedGeojson && { geometry: uploadedGeojson }),
+  });
 
   if (noData) return <NoData />;
 
