@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
 import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 
@@ -29,7 +30,16 @@ import Legend from './legend';
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
   const [endDate, setEndDate] = useRecoilState(alertsEndDate);
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const activeLayers = useRecoilValue(activeLayersAtom);
+
+  const [isCanceled, setIsCanceled] = useState(false);
+
+  const handleQueryCancellation = useCallback(() => {
+    setIsCanceled(true);
+  }, []);
+
   const isActive = useMemo(
     () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
@@ -38,7 +48,9 @@ const AlertsWidget = () => {
   const {
     isLoading,
     isFetched,
+    isError,
     isPlaceholderData,
+    refetch,
     alertsTotal,
     startDateOptions,
     selectedStartDate,
@@ -50,7 +62,22 @@ const AlertsWidget = () => {
     defaultStartDate,
     defaultEndDate,
     noData,
-  } = useAlerts(startDate, endDate);
+  } = useAlerts(
+    startDate,
+    endDate,
+    null,
+    {
+      ...(customGeojson && { geometry: customGeojson }),
+      ...(uploadedGeojson && { geometry: uploadedGeojson }),
+    },
+    { enabled: !isCanceled },
+    handleQueryCancellation
+  );
+
+  const handleTryAgain = useCallback(async () => {
+    setIsCanceled(false);
+    await refetch();
+  }, [refetch]);
 
   if (noData) return <NoData />;
 
@@ -60,7 +87,22 @@ const AlertsWidget = () => {
         visible={(isPlaceholderData || isLoading) && !isFetched}
         iconClassName="flex w-10 h-10 m-auto my-10"
       />
-      {isFetched && !isLoading && (
+      {isError && !isLoading && (
+        <div className="flex flex-col items-center space-y-4">
+          <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
+            An error occurred while fetching the data. You can try again.
+          </p>
+          <button
+            aria-label="Retry analysis"
+            type="button"
+            onClick={handleTryAgain}
+            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+          >
+            Try again
+          </button>
+        </div>
+      )}
+      {isFetched && !isLoading && !isError && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
@@ -153,40 +195,44 @@ const AlertsWidget = () => {
           />
         </div>
       )}
-      <div className="space-y-2">
-        <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
-        <p className="items-center pt-6 font-sans text-lg font-light leading-7">
-          There are <span className="font-bold"> 535</span> areas monitored in the world.
-        </p>
-        <div className="flex space-x-2">
-          <div className="flex">
-            <div className="flex flex-col">
-              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
-              <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+      {!isError && !isLoading && (
+        <>
+          <div className="space-y-2">
+            <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
+            <p className="items-center pt-6 font-sans text-lg font-light leading-7">
+              There are <span className="font-bold"> 535</span> areas monitored in the world.
+            </p>
+            <div className="flex space-x-2">
+              <div className="flex">
+                <div className="flex flex-col">
+                  <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+                  <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+                </div>
+                <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
+              </div>
+              <p className="text-sm font-normal">Monitored area</p>
             </div>
-            <div className="text-brand-900 h-2 w-2 border-2 border-brand-800" />
           </div>
-          <p className="text-sm font-normal">Monitored area</p>
-        </div>
-      </div>
-      <div>
-        <SuggestedLayers
-          name="Planet-NICFI Satellite Imagery"
-          thumbSource="/images/thumbs/basemaps/planet.svg"
-          id="planet_medres_visual_monthly"
-          description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
-        >
-          {isActive && (
-            <div className="pb-4">
-              <DateSelect
-                mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
-                id="planet_medres_visual_monthly"
-                className={{ content: 'w-[420px]' }}
-              />
-            </div>
-          )}
-        </SuggestedLayers>
-      </div>
+          <div>
+            <SuggestedLayers
+              name="Planet-NICFI Satellite Imagery"
+              thumbSource="/images/thumbs/basemaps/planet.svg"
+              id="planet_medres_visual_monthly"
+              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
+            >
+              {isActive && (
+                <div className="pb-4">
+                  <DateSelect
+                    mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
+                    id="planet_medres_visual_monthly"
+                    className={{ content: 'w-[420px]' }}
+                  />
+                </div>
+              )}
+            </SuggestedLayers>
+          </div>
+        </>
+      )}
     </div>
   );
 };
