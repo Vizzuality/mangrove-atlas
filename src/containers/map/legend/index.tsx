@@ -44,6 +44,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
         <>
           <button
             onClick={openLegend}
+            data-testid="show-legend-button"
             className={cn({
               'flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-4xl bg-white py-2 px-5 shadow-control':
                 true,
@@ -65,6 +66,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 exit={{ opacity: 0, bottom: -200 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
                 className="fixed w-[360px] gap-4 rounded-3xl bg-white shadow-medium md:right-[75px]"
+                data-testid="legend-content"
               >
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
                   <SortableList

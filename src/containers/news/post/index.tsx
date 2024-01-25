@@ -36,7 +36,9 @@ export const Post = ({
             );
           })}
         </div>
-        <h5 className="text-left text-2lg font-light line-clamp-3">{post.title.rendered}</h5>
+        <h5 data-testid="post-title" className="text-left text-2lg font-light line-clamp-3">
+          {post.title.rendered}
+        </h5>
       </div>
     </div>
   );

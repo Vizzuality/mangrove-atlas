@@ -57,6 +57,7 @@ export const Helper = ({
               [className.button]: !!className.button,
               'pointer-events-none': popOver,
             })}
+            data-testid="helper-button"
             onClick={() => setPopOver(true)}
           >
             {!popOver && isActive && (
@@ -119,15 +120,6 @@ export const Helper = ({
                 <p className="text-left font-sans text-sm font-light text-black/85 first-letter:uppercase">
                   {message}
                 </p>
-                {/* <svg
-                  className="absolute left-0 top-full h-2.5 w-full rounded text-white"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 255 255"
-                  xmlSpace="preserve"
-                >
-                  <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-                </svg> */}
               </div>
             )}
           </div>,

@@ -31,11 +31,12 @@ export const BlogContent = () => {
             transition={{ duration: 0.4 }}
           >
             <h3 className="leading-1 pt-1 pb-6 text-3xl font-light">News</h3>
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-4" data-testid="posts-list">
               {data?.map((post) => (
                 <button
                   aria-label={`navigate to post - ${post.title.rendered}`}
                   key={post.id}
+                  data-testid={`post-${post.id}`}
                   className="flex h-32 w-full items-center rounded-3xl border border-slate-100 px-2 transition duration-300 hover:border-slate-400"
                   onClick={() => setPostInfo(post)}
                 >
@@ -52,6 +53,7 @@ export const BlogContent = () => {
             className="no-scrollbar overflow-y-auto overflow-x-visible"
             initial="hidden"
             animate="displayed"
+            data-testid="post-info"
             variants={{
               hidden: { opacity: 0 },
               displayed: { opacity: 1 },
@@ -60,6 +62,7 @@ export const BlogContent = () => {
           >
             <div className="absolute top-0 left-0 h-[240px] w-full">
               <button
+                data-testid="back-to-news-button"
                 type="button"
                 aria-label="back to news"
                 className="pointer-events-all absolute top-8 left-8 z-20 bg-white px-4 py-1 text-sm text-brand-800 transition duration-300 delay-150 ease-in-out hover:bg-brand-800 hover:text-white md:top-4 md:rounded-3xl"
@@ -89,7 +92,10 @@ export const BlogContent = () => {
                 </div>
               ))}
             </div>
-            <h3 className="mt-10 font-sans text-3xl font-light text-black/85">
+            <h3
+              className="mt-10 font-sans text-3xl font-light text-black/85"
+              data-testid="post-heading"
+            >
               {postInfo.title.rendered}
             </h3>
             <div
