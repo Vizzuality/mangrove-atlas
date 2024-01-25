@@ -3,16 +3,19 @@ type Specie = Readonly<{
   iucn_url: string;
 }>;
 
+type Label = Readonly<
+  | 'Critically Endangered'
+  | 'Endangered'
+  | 'Vulnerable'
+  | 'Near Threatened'
+  | 'Least Concern'
+  | 'Data Deficient'
+>;
+
 export type LegendItem = Readonly<{
   value: number;
   color: string;
-  label:
-    | 'Critically Endangered'
-    | 'Endangered'
-    | 'Vulnerable'
-    | 'Near Threatened'
-    | 'Least Concern'
-    | 'Data Deficient';
+  label: Label;
 }>;
 
 export type CategoryIds =
@@ -29,21 +32,37 @@ export type CategoryIds =
   | 'LC'
   | 'DD';
 
+export type Colors = Readonly<{ [key: Label]: string }>;
+
+export const COLORS = {
+  ce: '#EE4D5A',
+  en: '#F97B57',
+  vu: '#ECDA9A',
+  lc: '#B4DCAA',
+  dd: '#ECECEF',
+  ne: '#ECECEF',
+};
+
+export const LABELS = {
+  ce: 'Critically Endangered',
+  en: 'Endangered',
+  vu: 'Vulnerable',
+  lc: 'Least Concern',
+  dd: 'Data Deficient',
+};
+
+export type IUCNEcoregionPopUpInfoLabels =
+  | 'distribution_of_biotic_processes'
+  | 'environmental_degradation'
+  | 'overall_assessment'
+  | 'quantitative_risk_analysis'
+  | 'reduction_in_geographic_distribution'
+  | 'restricted_geographic_distribution';
+
 export type IUCNEcoregionPopUpInfo = {
-  Region: 'string';
-  distribution_of_biotic_processes_1?: CategoryIds;
-  distribution_of_biotic_processes_2?: CategoryIds;
-  distribution_of_biotic_processes_3?: CategoryIds;
-  environmental_degradation_1?: CategoryIds;
-  environmental_degradation_2?: CategoryIds;
-  environmental_degradation_3?: CategoryIds;
+  [K in IUCNEcoregionPopUpInfoLabels as `${K}_${number}`]?: CategoryIds;
+} & {
+  region: string; // Corrected type
   overall_assessment: CategoryIds;
-  quantitative_risk_analysis_1?: CategoryIds;
-  reduction_in_geographic_distribution_1?: CategoryIds;
-  reduction_in_geographic_distribution_2?: CategoryIds;
-  reduction_in_geographic_distribution_3?: CategoryIds;
-  restricted_geographic_distribution_1?: CategoryIds;
-  restricted_geographic_distribution_2?: CategoryIds;
-  restricted_geographic_distribution_3?: CategoryIds;
   unit_name: string;
 };

@@ -112,7 +112,9 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 
-export const WIDGETS = {
+type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
+
+export const WIDGETS: WidgetsCollection = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
   mangrove_net_change: NetChangeWidget,

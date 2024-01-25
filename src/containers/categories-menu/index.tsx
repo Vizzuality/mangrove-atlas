@@ -19,13 +19,12 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
-
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
-      setCategory(event.currentTarget.value as Category);
+      setCategory(encodeURIComponent(event.currentTarget.value as Category));
       const widgetsFiltered = widgets.filter((widget) =>
-        widget?.categoryIds?.includes(event.currentTarget.value)
+        widget?.categoryIds?.includes(event.currentTarget.value as Category)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
@@ -39,7 +38,13 @@ const Category = () => {
       <p className="text-xs font-bold uppercase tracking-[1px]">presets</p>
       <div className="grid grid-cols-3 gap-4 py-2">
         {CATEGORY_OPTIONS.map((category) => (
-          <button key={category.value} type="button" value={category.value} onClick={handleClick}>
+          <button
+            key={category.value}
+            type="button"
+            value={category.value}
+            onClick={handleClick}
+            data-testid={category.value}
+          >
             <div
               className={cn({
                 'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
@@ -47,7 +52,6 @@ const Category = () => {
                 'border-2 border-brand-800 font-bold text-brand-800':
                   category.value === categorySelected,
               })}
-              data-testid={category.value}
               defaultChecked={'distribution_and_change' === category.value}
             >
               <h4 className="flex min-h-[40px] items-center justify-center">{category.label}</h4>

@@ -5,9 +5,20 @@ import cn from 'lib/classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
-import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
+import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
 
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
+
+type Tags =
+  | 'Historical (1750)'
+  | 'Past 50 years (1970)'
+  | 'Future (¹)'
+  | 'Not evaluated'
+  | 'Extent of occurrence'
+  | 'Area of occupancy'
+  | 'Threat locations <5'
+  | 'Not evaluated';
+
 const legendItems = [
   { color: '#F3AD6A', label: 'Vulnerable' },
   {
@@ -58,13 +69,13 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
     <div
       className={cn({
         [WIDGET_CARD_WRAPPER_STYLE]: true,
-        'shadow-b-widget w-full w-[500px] space-x-2 rounded-b-3xl border border-t border-slate-100 bg-white px-6 py-4':
+        'shadow-b-widget w-[500px] space-x-2 rounded-b-3xl border border-t border-slate-100 bg-white px-6 py-4':
           true,
       })}
     >
       <button className="flex w-full items-center justify-between" onClick={handleClick}>
         <h2 className="cursor-pointer whitespace-nowrap py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
-          ECOSYSTEM ASSESMENT
+          ECOSYSTEM ASSESSMENT
         </h2>
         <div
           className={cn({
@@ -112,24 +123,34 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
             <div>
               <p className="text-sn font-sans font-semibold">{info?.unit_name}</p>
               <div className="max-h-[250px] overflow-y-auto pt-3 pr-2">
-                {FAKE_DATA_POP_UP.map(({ label, tags, data }) => (
-                  <div key="label">
-                    <p className="text-sm">{label}</p>
-                    <ul className="flex space-x-3 py-4">
-                      {tags.map((tag, index) => (
-                        <div
-                          key={`${label}-distribution_of_biotic_processes_${index + 1}`}
-                          className="flex-1 rounded-3xl py-2 text-center text-xs font-normal"
-                          style={{
-                            backgroundColor: COLORS[info[`${data}_${index + 1}`].toLowerCase()],
-                          }}
-                        >
-                          {tag}
-                        </div>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
+                {FAKE_DATA_POP_UP.map(
+                  ({ label, tags, data }: { label: Label; tags: Tags[]; data: string }) => (
+                    <div key="label">
+                      <p className="text-sm">{label}</p>
+                      <ul className="flex space-x-3 py-4">
+                        {tags.map((tag, index) => {
+                          const infoKey = `${data}_${index + 1}`;
+                          const colorKey = info[infoKey] as string;
+
+                          // Check if colorKey is defined and has a value
+                          const backgroundColor = colorKey
+                            ? COLORS[colorKey.toLowerCase() as keyof typeof COLORS]
+                            : 'ne';
+
+                          return (
+                            <div
+                              key={`${label}-distribution_of_biotic_processes_${index + 1}`}
+                              className="flex-1 rounded-3xl py-2 text-center text-xs font-normal"
+                              style={{ backgroundColor }}
+                            >
+                              {tag}
+                            </div>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           </motion.div>

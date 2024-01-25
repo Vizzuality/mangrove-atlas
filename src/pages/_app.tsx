@@ -75,7 +75,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
   useEffect(() => {
     tx.init({
       token: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-      ...(process.env.NODE_ENV === 'development'
+      ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
         ? { missingPolicy: new PseudoTranslationPolicy() }
         : {}),
     });
@@ -133,7 +133,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
             serialize={serialize}
             deserialize={deserialize}
           >
-            {process.env.NODE_ENV === 'development' && <RecoilDevTools />}
+            {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && <RecoilDevTools />}
             <QueryClientProvider client={queryClient}>
               <Hydrate state={pageProps.dehydratedState}>
                 <MediaContextProvider disableDynamicMediaQueries>

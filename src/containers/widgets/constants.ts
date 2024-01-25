@@ -219,6 +219,7 @@ const widgets =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
     ? [...widgets_dev, ...widgets_prod]
     : widgets_prod;
+
 export const ANALYSIS_WIDGETS_SLUGS: WidgetTypes['slug'][] = [
   'mangrove_habitat_extent',
   'mangrove_net_change',

@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { analysisAtom } from 'store/analysis';
 import { mapSettingsAtom } from 'store/map-settings';
 import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilValue } from 'recoil';
 
@@ -26,7 +25,6 @@ export function useWidgets(): WidgetTypes[] {
   } = useRouter();
   const locationType = params?.[0];
   const currentLocation = locationType || 'worldwide';
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
 
   return useMemo(() => {
     if (isAnalysisRunning) {
@@ -38,13 +36,10 @@ export function useWidgets(): WidgetTypes[] {
     }
 
     return widgets.filter(
-      ({ slug, categoryIds, locationType }) =>
-        (categoryIds?.includes(categorySelected) &&
-          locationType.includes(currentLocation) &&
-          activeWidgets.includes(slug)) ||
-        (categoryIds?.includes('contextual_layers') && activeWidgets.includes(slug))
+      ({ categoryIds, locationType }) =>
+        categoryIds?.includes(categorySelected) && locationType.includes(currentLocation)
     );
-  }, [categorySelected, currentLocation, isAnalysisRunning, isMapSettingsVisible, activeWidgets]);
+  }, [categorySelected, currentLocation, isAnalysisRunning, isMapSettingsVisible]);
 }
 
 export function useWidgetsIdsByLocation(): WidgetSlugType[] {

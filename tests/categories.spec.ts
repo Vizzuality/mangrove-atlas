@@ -3,6 +3,12 @@ import { test, expect } from '@playwright/test';
 import WIDGETS from 'containers/widgets/constants';
 
 import type { Category } from 'types/category';
+
+type Data = {
+  data: unknown[];
+  metadata: { [key: string]: unknown };
+};
+
 const CATEGORY_OPTIONS = [
   'distribution_and_change',
   'restoration_and_conservation',
@@ -14,49 +20,64 @@ const CATEGORY_OPTIONS = [
 const DEFAULT_LOCATION = 'worldwide';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
-});
-
-test('Has all categories buttons', async ({ page }) => {
-  // Hover over the categories on sidebar to open the category menu
-  await page.getByTestId('show-categories-button').hover();
-  for (const category of CATEGORY_OPTIONS) {
-    // Check that the category button is visible
-    await expect(page.locator(`[data-category="${category}"]`)).toBeVisible();
-  }
+  await page.goto('/', {
+    waitUntil: 'load',
+  });
 });
 
 test('Selecting a category changes the url query "category"', async ({ page }) => {
-  const categoriesButton = page.getByTestId('show-categories-button');
-  for (let i = 0; i < CATEGORY_OPTIONS.length; i++) {
-    // Hover over the categories on sidebar to open the category menu
-    await categoriesButton.hover();
-    const category = CATEGORY_OPTIONS[i];
-    // Click on the category button
-    await page.locator(`[data-category="${category}"]`).click();
-    // Check that the category button is active
-    const categoryButton = categoriesButton.locator('div').nth(i);
-    await expect(categoryButton).toHaveAttribute('data-isactive', 'true');
+  const widgetsDeckTrigger = page.getByTestId('widgets-deck-trigger');
+  await expect(widgetsDeckTrigger).toBeVisible();
+  await widgetsDeckTrigger.click();
+  for (const category of CATEGORY_OPTIONS) {
+    // Get and click on the different categories buttons
+    const categoryButton = page.getByTestId(category);
+    await expect(categoryButton).toBeVisible();
+    await categoryButton.click();
+
     // Check that the url has the correct query
     const url = new RegExp(`.*?category=${encodeURIComponent(`"${category}"`)}`);
     await expect(page).toHaveURL(url);
   }
 });
 
+async function testCategoryWidgets(page, category: Category) {
+  // Go to the category page
+  const url = `https://mangrove-atlas-api-staging.herokuapp.com/api/v2/widgets/**?*`;
+  const widgetResponse = page.waitForResponse(url);
+
+  await page.goto(`/?category="${category}"`);
+  await page.waitForTimeout(6000);
+
+  // Get all widgets that should be enabled
+  const widgets = WIDGETS.filter(
+    ({ categoryIds, locationType }) =>
+      categoryIds?.includes(`${category}`) && locationType?.includes(DEFAULT_LOCATION)
+  );
+
+  const widgetsToDisplay = [];
+  // Verify whether a widget is visible or does not have data for a specific location
+  for (const widget of widgets) {
+    const isVisible = await page.getByTestId(`widget-${widget.slug}`).isVisible();
+
+    if (isVisible) {
+      widgetsToDisplay.push(widget);
+    } else {
+      const response = await widgetResponse;
+      const widgetData = (await response.json()) as Data;
+      expect(widgetData.data.length).toBe(0);
+    }
+  }
+
+  const widgetsWrapper = page.getByTestId('widgets-wrapper');
+  const widgetsWrapperChildren = await widgetsWrapper.locator('> div').count();
+  expect(widgetsWrapperChildren).toEqual(widgetsToDisplay.length);
+}
+
 test.describe('Categories display the correct widgets', () => {
   for (const category of CATEGORY_OPTIONS) {
-    test(`Category ${category}  display correct widgets`, async ({ page }) => {
-      // Go to the category page
-      await page.goto(`/?category=${encodeURIComponent(`"${category}"`)}`);
-      // Get all widgets that should be visible
-      const widgets = WIDGETS.filter(
-        ({ categoryIds, locationType }) =>
-          categoryIds?.includes(category) && locationType?.includes(DEFAULT_LOCATION)
-      );
-      // Check that all widgets are visible
-      for (const widget of widgets) {
-        await expect(page.getByTestId(`widget-${widget.slug}`)).toBeVisible();
-      }
+    test(`Category ${category} displays correct widgets`, async ({ page }) => {
+      await testCategoryWidgets(page, category);
     });
   }
 });

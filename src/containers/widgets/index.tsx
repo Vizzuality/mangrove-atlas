@@ -1,9 +1,10 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
 
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
+import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -17,6 +18,8 @@ import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
+import widgets from 'containers/widgets/constants';
+import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { breakpoints } from 'styles/styles.config';
@@ -25,21 +28,33 @@ import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
 
 const HELPER_ID = 'menu-categories';
+const WidgetsContainer: FC = () => {
+  const [categorySelected] = useRecoilState(activeCategoryAtom);
 
-const WidgetsContainer: React.FC = () => {
   const { width: screenWidth } = useWindowSize();
-  const activeWidgets = useRecoilValue(activeWidgetsAtom);
+  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const widgetsAvailable = useWidgets();
 
-  const widgets = !!activeWidgets.length ? widgetsAvailable : widgetsAvailable;
-
   const setPrintingMode = useSetRecoilState(printModeState);
+  const cat = useWidgetsIdsByCategory(activeWidgets);
+
+  // ensures that the appropriate widgets for a selected category are activated during
+  // the first render. This is crucial when the initial state is being loaded from a URL,
+  //  particularly in cases where the active widgets are not immediately visible on it
+
+  useEffect(() => {
+    if (categorySelected !== cat) {
+      const filteredWidgets = widgetsAvailable.map(({ slug }) => slug);
+      setActiveWidgets(filteredWidgets);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const locationTool = useRecoilValue(locationToolAtom);
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, [widgets]);
+  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, []);
 
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);
 
@@ -54,7 +69,7 @@ const WidgetsContainer: React.FC = () => {
     updateWidgetsCollapsed['mangrove_drawing_upload_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);
 
   const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
     acc[key] = false;
@@ -118,7 +133,7 @@ const WidgetsContainer: React.FC = () => {
               <DialogTrigger>
                 <button
                   type="button"
-                  data-testid="configure-widgets-button"
+                  data-testid="widgets-deck-trigger"
                   className={cn({
                     'ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0 md:w-[262px]':
                       true,
@@ -162,11 +177,11 @@ const WidgetsContainer: React.FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgets.map(({ slug, name, applicability }, index) => {
-            const Widget = WIDGETS[slug];
+          {widgetsAvailable.map(({ slug, name, applicability }) => {
+            const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
               <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
-                {WIDGETS[slug] && <Widget index={index} />}
+                {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
             );
           })}
@@ -174,8 +189,11 @@ const WidgetsContainer: React.FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24">
-          {widgets.map(({ slug, name, applicability }) => {
+        <div
+          data-testid="widgets-wrapper"
+          className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24"
+        >
+          {widgetsAvailable.map(({ slug, name, applicability }) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper
