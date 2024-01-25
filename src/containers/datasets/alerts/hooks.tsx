@@ -11,7 +11,8 @@ import { formatAxis } from 'lib/format';
 import { analysisAtom } from 'store/analysis';
 import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { AxiosError, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -22,7 +23,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import API_cloud_functions from 'services/cloud-functions';
 
 import Tooltip from './tooltip';
-import type { UseParamsOptions, DataParams, DataResponse } from './types';
+import type { UseParamsOptions, DataResponse, CustomAreaGeometry } from './types';
 
 // widget data
 const months = [
@@ -127,14 +128,16 @@ export function useAlerts<T>(
   startDate: { label: string; value: string },
   endDate: { label: string; value: string },
   params?: UseParamsOptions,
-  dataParams?: DataParams,
-  queryOptions?: UseQueryResult<DataResponse[], T>
+  dataParams?: CustomAreaGeometry,
+  queryOptions?: UseQueryOptions<DataResponse, T>,
+  onCancel?: () => void
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
   const {
     query: { params: queryParams },
   } = useRouter();
+
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
@@ -142,21 +145,33 @@ export function useAlerts<T>(
   } = useLocation(id, locationType);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
-  const fetchAlerts = () =>
-    isAnalysisRunning
-      ? API_cloud_functions.request({
-          method: 'POST',
-          url: '/fetch-alerts',
-          data: dataParams,
-        }).then((response) => response.data)
-      : API_cloud_functions.request({
-          method: 'GET',
-          url: '/fetch-alerts',
-          params: {
-            location_id,
-            ...params,
-          },
-        }).then((response) => response.data);
+  const fetchAlerts = () => {
+    if (isAnalysisRunning) {
+      return API_cloud_functions.request({
+        method: 'POST',
+        url: '/fetch-alerts',
+        data: {
+          ...dataParams,
+        },
+      })
+        .then((response) => response.data)
+        .catch((err: CanceledError<unknown> | AxiosError) => {
+          if (err.code === 'ERR_CANCELED') onCancel?.();
+          return err;
+        });
+    }
+
+    if (!isAnalysisRunning) {
+      return API_cloud_functions.request({
+        method: 'GET',
+        url: '/fetch-alerts',
+        params: {
+          location_id,
+          ...params,
+        },
+      }).then((response) => response.data);
+    }
+  };
 
   const query = useQuery(['alerts', params, location_id], fetchAlerts, {
     placeholderData: [],
@@ -179,9 +194,11 @@ export function useAlerts<T>(
 
   if (selectedEndDate) setEndDate(selectedEndDate);
   if (selectedStartDate) setStartDate(selectedStartDate);
-  const dataFiltered = data?.filter(
-    (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
-  );
+  const dataFiltered =
+    Array.isArray(data) &&
+    data.filter(
+      (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+    );
 
   const chartData = getData(dataFiltered);
 
@@ -202,49 +219,6 @@ export function useAlerts<T>(
       },
       margin: { top: 50, right: 10, left: 10, bottom: 35 },
       label: 'alerts',
-      // gradients: {
-      //   key: {
-      //     attributes: {
-      //       id: 'colorAlerts',
-      //       x1: 0,
-      //       y1: 0,
-      //       x2: 0,
-      //       y2: 1,
-      //     },
-      //     stops: getStops(),
-      //   },
-      // },
-      // patterns: {
-      //   diagonal: {
-      //     attributes: {
-      //       id: 'diagonal-stripe-1',
-      //       patternUnits: 'userSpaceOnUse',
-      //       patternTransform: 'rotate(-45)',
-      //       width: 4,
-      //       height: 6,
-      //     },
-      //     children: {
-      //       rect2: {
-      //         tag: 'rect',
-      //         x: 0,
-      //         y: 0,
-      //         width: 4,
-      //         height: 6,
-      //         transform: 'translate(0,0)',
-      //         fill: '#d2d2d2',
-      //       },
-      //       rect: {
-      //         tag: 'rect',
-      //         x: 0,
-      //         y: 0,
-      //         width: 3,
-      //         height: 6,
-      //         transform: 'translate(0,0)',
-      //         fill: '#fff',
-      //       },
-      //     },
-      //   },
-      // },
       xKey: 'name',
       chartBase: {
         lines: {
@@ -267,7 +241,6 @@ export function useAlerts<T>(
         },
 
         width: 40,
-        // tickFormatter: (value) => formatAxis(Math.round(value)),
         interval: 0,
         orientation: 'right',
         value: 'alerts',
@@ -292,24 +265,11 @@ export function useAlerts<T>(
                   Alerts
                 </tspan>
               </text>
-              {/* <text x={x + 20} y={y - 50} className="recharts-text recharts-label-large" textAnchor="middle" dominantBaseline="central">
-                <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" lineheight="29" fontSize="12">2022</tspan>
-              </text> */}
             </g>
           );
         },
         type: 'number',
       },
-      // brush: {
-      //   margin: { top: 60, right: 0, left: 0, bottom: 0 },
-      //   startIndex,
-      //   endIndex,
-      // },
-      // customBrush: {
-      //   margin: { top: 60, right: 0, left: 15, bottom: 60 },
-      //   startIndex,
-      //   endIndex,
-      // },
       tooltip: {
         content: (properties) => {
           return <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />;
@@ -434,15 +394,6 @@ export function useAlerts<T>(
 export function useSources(): SourceProps[] {
   const startDate = useRecoilValue(alertsStartDate);
   const endDate = useRecoilValue(alertsEndDate);
-
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
-  const {
-    data: { location_id },
-  } = useLocation(id, locationType);
 
   return [
     {

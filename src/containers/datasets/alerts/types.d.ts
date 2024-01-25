@@ -1,13 +1,7 @@
-import { GeoJsonTypes } from 'geojson';
-
 export type UseParamsOptions = {
   startDate?: string;
   endDate?: string;
   location_id: number;
-};
-
-export type DataParams = {
-  geometry: GeoJsonTypes['Geometry'];
 };
 
 export type DataResponse = {
@@ -15,3 +9,5 @@ export type DataResponse = {
     date: { label: string; value: number };
   };
 };
+
+export type CustomAreaGeometry = { geometry: GeoJSON.FeatureCollection };
