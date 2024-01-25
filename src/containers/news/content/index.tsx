@@ -36,6 +36,7 @@ export const BlogContent = () => {
                 <button
                   aria-label={`navigate to post - ${post.title.rendered}`}
                   key={post.id}
+                  data-testid={`post-${post.id}`}
                   className="flex h-32 w-full items-center rounded-3xl border border-slate-100 px-2 transition duration-300 hover:border-slate-400"
                   onClick={() => setPostInfo(post)}
                 >
@@ -52,6 +53,7 @@ export const BlogContent = () => {
             className="no-scrollbar overflow-y-auto overflow-x-visible"
             initial="hidden"
             animate="displayed"
+            data-testid="post-info"
             variants={{
               hidden: { opacity: 0 },
               displayed: { opacity: 1 },
@@ -90,7 +92,10 @@ export const BlogContent = () => {
                 </div>
               ))}
             </div>
-            <h3 className="mt-10 font-sans text-3xl font-light text-black/85">
+            <h3
+              className="mt-10 font-sans text-3xl font-light text-black/85"
+              data-testid="post-heading"
+            >
               {postInfo.title.rendered}
             </h3>
             <div
