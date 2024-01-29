@@ -61,8 +61,8 @@ const WidgetsMenu: FC = () => {
     [datasets, setDatasets, setCategory, categorySelected]
   );
 
-  const handleAllWidgets = useCallback(() => {
-    datasets.length === widgets.length ? setDatasets([]) : setDatasets(widgetsIds);
+  const handleAllWidgets = useCallback(async () => {
+    datasets.length === widgets.length ? await setDatasets([]) : await setDatasets(widgetsIds);
   }, [widgetsIds, setDatasets, datasets]);
 
   const handleAllLayers = useCallback(

@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import Image, { StaticImageData } from 'next/image';
 
 import cn from 'lib/classnames';
+import { useSyncBasemap } from 'lib/utils/sync-query';
 
 import { basemapAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';
@@ -48,7 +49,7 @@ type CardBasemapContextualProps = {
 };
 
 const CardBasemapContextual = ({ id, type, name, description }: CardBasemapContextualProps) => {
-  const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
+  const [basemapStored, setBasemap] = useSyncBasemap();
   const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
 
   const isActive = useMemo(() => {

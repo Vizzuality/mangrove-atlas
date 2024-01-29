@@ -51,7 +51,7 @@ const WidgetsContainer: FC = () => {
   useEffect(() => {
     if (categorySelected !== cat) {
       const filteredWidgets = widgetsAvailable.map(({ slug }) => slug);
-      setDatasets(filteredWidgets);
+      void setDatasets(filteredWidgets);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

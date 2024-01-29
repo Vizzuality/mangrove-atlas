@@ -5,6 +5,7 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
+import { useSyncBasemap } from 'lib/utils/sync-query';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
@@ -70,7 +71,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
-  const basemap = useRecoilValue(basemapAtom);
+  const [basemap] = useSyncBasemap();
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);

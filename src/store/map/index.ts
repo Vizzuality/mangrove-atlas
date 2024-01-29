@@ -9,11 +9,6 @@ import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 export const basemapAtom = atom<BasemapId>({
   key: 'basemap',
   default: 'light',
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
 });
 
 // ? this atom syncs the bounds of the URL with the initial view of the map, allowing

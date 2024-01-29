@@ -15,3 +15,5 @@ const defaultWidgets = widgets
 
 export const useSyncDatasets = () =>
   useQueryState('datasets', parseAsArrayOf(parseAsString).withDefault(defaultWidgets));
+
+export const useSyncBasemap = () => useQueryState('basemap', parseAsString.withDefault('light'));

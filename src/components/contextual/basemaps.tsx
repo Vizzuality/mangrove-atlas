@@ -3,6 +3,7 @@ import { MouseEvent } from 'react';
 import Image from 'next/image';
 
 import cn from 'lib/classnames';
+import { useSyncBasemap } from 'lib/utils/sync-query';
 
 import { basemapAtom } from 'store/map';
 
@@ -16,10 +17,10 @@ import Icon from 'components/icon';
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const BasemapsMapSettings = () => {
-  const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
+  const [basemapStored, setBasemap] = useSyncBasemap();
 
-  const handleClick = (e: MouseEvent) => {
-    setBasemap(e.currentTarget.id as BasemapId);
+  const handleClick = async (e: MouseEvent) => {
+    await setBasemap(e.currentTarget.id as BasemapId);
   };
 
   return (

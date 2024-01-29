@@ -5,7 +5,7 @@ import { useSyncDatasets } from 'lib/utils/sync-query';
 
 import { activeCategoryAtom } from 'store/sidebar';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
@@ -20,7 +20,7 @@ const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const [, setDatasets] = useSyncDatasets();
   const handleClick = useCallback(
-    (event: MouseEvent<HTMLButtonElement & { value }>) => {
+    async (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
       setCategory(encodeURIComponent(event.currentTarget.value as Category));
       const widgetsFiltered = widgets.filter((widget) =>
@@ -28,7 +28,7 @@ const Category = () => {
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
-      setDatasets(activeWidgetsIds);
+      await setDatasets(activeWidgetsIds);
     },
     [setDatasets, setCategory]
   );
