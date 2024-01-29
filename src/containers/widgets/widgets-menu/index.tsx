@@ -4,10 +4,10 @@ import flatten from 'lodash-es/flatten';
 import uniq from 'lodash-es/uniq';
 
 import cn from 'lib/classnames';
+import { useSyncDatasets } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
 import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
 import type { Visibility } from 'mapbox-gl';
@@ -25,7 +25,7 @@ import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [datasets, setDatasets] = useSyncDatasets();
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
 
@@ -34,7 +34,7 @@ const WidgetsMenu: FC = () => {
   // are activated. It identifies the category associated with the active widgets and
   // updates it accordingly.
 
-  const cat = useWidgetsIdsByCategory(activeWidgets);
+  const cat = useWidgetsIdsByCategory(datasets);
   useEffect(() => {
     if (categorySelected !== cat) {
       setCategory(cat);
@@ -44,13 +44,11 @@ const WidgetsMenu: FC = () => {
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly
-      setActiveWidgets(
-        activeWidgets.includes(e)
-          ? activeWidgets.filter((widget) => widget !== e)
-          : [...activeWidgets, e]
+      setDatasets(
+        datasets.includes(e) ? datasets.filter((widget) => widget !== e) : [...datasets, e]
       );
 
-      const filteredWidgets = widgets.filter((obj) => activeWidgets.includes(obj.slug));
+      const filteredWidgets = widgets.filter((obj) => datasets.includes(obj.slug));
       const cat = uniq(flatten(filteredWidgets.map(({ categoryIds }) => categoryIds))).filter(
         (c) => c !== 'all_datasets'
       );
@@ -60,12 +58,12 @@ const WidgetsMenu: FC = () => {
       // if (newCat !== catAccordingWidgetsSel) setCategory(catAccordingWidgetsSel);
     },
 
-    [activeWidgets, setActiveWidgets, setCategory, categorySelected]
+    [datasets, setDatasets, setCategory, categorySelected]
   );
 
   const handleAllWidgets = useCallback(() => {
-    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
-  }, [widgetsIds, setActiveWidgets, activeWidgets]);
+    datasets.length === widgets.length ? setDatasets([]) : setDatasets(widgetsIds);
+  }, [widgetsIds, setDatasets, datasets]);
 
   const handleAllLayers = useCallback(
     (e) => {
@@ -110,12 +108,12 @@ const WidgetsMenu: FC = () => {
             id="all-widgets"
             data-testid="all-widgets-checkbox"
             onCheckedChange={handleAllWidgets}
-            checked={widgets.length === activeWidgets.length}
+            checked={widgets.length === datasets.length}
             defaultChecked={categorySelected === 'all_datasets'}
             className={cn({
               'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
                 true,
-              'bg-brand-800': widgets.length === activeWidgets.length,
+              'bg-brand-800': widgets.length === datasets.length,
             })}
           >
             <CheckboxIndicator>
@@ -143,7 +141,7 @@ const WidgetsMenu: FC = () => {
             className={cn({
               'col-span-4 col-start-3 col-end-6': true,
               'font-bold text-brand-800':
-                LAYERS.length === activeLayers.length && widgets.length === activeWidgets.length,
+                LAYERS.length === activeLayers.length && widgets.length === datasets.length,
             })}
           >
             Select all
@@ -163,11 +161,11 @@ const WidgetsMenu: FC = () => {
                 onCheckedChange={() => handleWidgets(slug)}
                 defaultChecked
                 disabled={!enabledWidgets.includes(slug)}
-                checked={activeWidgets.includes(slug)}
+                checked={datasets.includes(slug)}
                 className={cn({
                   'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white': true,
                   'bg-brand-800 text-white':
-                    activeWidgets.includes(slug) && enabledWidgets.includes(slug),
+                    datasets.includes(slug) && enabledWidgets.includes(slug),
                 })}
               >
                 {enabledWidgets.includes(slug) && (
@@ -175,7 +173,7 @@ const WidgetsMenu: FC = () => {
                     <FaCheck
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
-                        'text-white': activeWidgets.includes(slug),
+                        'text-white': datasets.includes(slug),
                       })}
                     />
                   </CheckboxIndicator>
@@ -210,7 +208,7 @@ const WidgetsMenu: FC = () => {
                 className={cn({
                   'col-span-4 col-start-3 col-end-6': true,
                   'font-bold text-brand-800':
-                    activeLayersIds.includes(slug) || activeWidgets.includes(slug),
+                    activeLayersIds.includes(slug) || datasets.includes(slug),
                   'opacity-40': !enabledWidgets.includes(slug),
                 })}
                 key={slug}

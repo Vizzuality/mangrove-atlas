@@ -1,18 +1,8 @@
 import { activeLayersAtom } from 'store/layers';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { selectorFamily } from 'recoil';
 
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
-
-export const getWidgetActive = selectorFamily({
-  key: 'is-widget-active',
-  get:
-    (widgetId: WidgetSlugType) =>
-    ({ get }) => {
-      return get(activeWidgetsAtom).includes(widgetId);
-    },
-});
 
 export const getLayerActive = selectorFamily<
   boolean,

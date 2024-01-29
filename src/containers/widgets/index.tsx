@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasets } from 'lib/utils/sync-query';
 
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
@@ -30,6 +30,7 @@ import WidgetsMenu from './widgets-menu';
 const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [categorySelected] = useRecoilState(activeCategoryAtom);
+  const [datasets, setDatasets] = useSyncDatasets();
 
   const { width: screenWidth } = useWindowSize();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
@@ -40,7 +41,7 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, enabledWidgets]);
 
-  // const setPrintingMode = useSetRecoilState(printModeState);
+  const setPrintingMode = useSetRecoilState(printModeState);
   const cat = useWidgetsIdsByCategory(activeWidgets);
 
   // ensures that the appropriate widgets for a selected category are activated during
@@ -50,7 +51,7 @@ const WidgetsContainer: FC = () => {
   useEffect(() => {
     if (categorySelected !== cat) {
       const filteredWidgets = widgetsAvailable.map(({ slug }) => slug);
-      setActiveWidgets(filteredWidgets);
+      setDatasets(filteredWidgets);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

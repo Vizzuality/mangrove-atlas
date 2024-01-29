@@ -13,17 +13,6 @@ const defaultWidgets = widgets
   .filter((widget) => widget.categoryIds.includes(defaultCategory))
   .map((widget) => widget.slug) satisfies WidgetSlugType[];
 
-export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>({
-  key: 'active-widgets',
-  default: defaultWidgets,
-  effects: [
-    urlSyncEffect({
-      refine: array(string()),
-      history: 'replace',
-    }),
-  ],
-});
-
 export const widgetsCollapsedAtom = atom({
   key: 'widgets-collapsed',
   default: widgets.reduce((previousObject, currentObject) => {

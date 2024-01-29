@@ -1,9 +1,9 @@
 import { useCallback, type MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasets } from 'lib/utils/sync-query';
 
 import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -18,7 +18,7 @@ import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
-  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
+  const [, setDatasets] = useSyncDatasets();
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
@@ -28,9 +28,9 @@ const Category = () => {
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
-      setActiveWidgets(activeWidgetsIds);
+      setDatasets(activeWidgetsIds);
     },
-    [setActiveWidgets, setCategory]
+    [setDatasets, setCategory]
   );
 
   return (
