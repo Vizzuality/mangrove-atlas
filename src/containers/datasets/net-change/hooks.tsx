@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
+import flatten from 'lodash-es/flatten';
 import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
@@ -220,7 +221,7 @@ export function useMangroveNetChange(
     };
   }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
-export function useSources(): SourceProps[] {
+export function useSource(): SourceProps {
   const startYear = useRecoilValue(netChangeStartYear);
   const endYear = useRecoilValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
@@ -230,16 +231,18 @@ export function useSources(): SourceProps[] {
 
   const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
 
-  return filteredYears?.map((year) => ({
-    id: `net-change-${filteredYears[0]} - ${filteredYears[filteredYears.length - 1]}`,
+  return {
+    id: `net-change-${filteredYears?.[0]} - ${filteredYears?.[filteredYears.length - 1]}`,
     type: 'raster',
-    tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/loss/${year}/{z}/{x}/{y}.png`,
-    ],
-    minZoom: 0,
-    maxZoom: 12,
-  }));
+    tiles: flatten(
+      filteredYears?.map((year) => [
+        `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
+        `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/loss/${year}/{z}/{x}/{y}.png`,
+      ])
+    ),
+    minzoom: 0,
+    maxzoom: 12,
+  };
 }
 
 export function useLayer({
