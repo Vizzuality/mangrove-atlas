@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Source, Layer } from 'react-map-gl';
+import { Source, Layer, SourceProps } from 'react-map-gl';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -8,13 +8,13 @@ import { useRecoilValue } from 'recoil';
 
 import { LayerProps } from 'types/layers';
 
-import { useLayer, useSources } from './hooks';
+import { useLayer, useSource } from './hooks';
 
 export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers.find((l) => l.id === id);
 
-  const SOURCES = useSources();
+  const SOURCES = useSource() satisfies SourceProps;
   const LAYER = useLayer({
     id,
     opacity: parseFloat(activeLayer.opacity),
@@ -22,13 +22,12 @@ export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   });
 
   if (!SOURCES || !LAYER) return null;
+
   return (
     <>
-      {SOURCES.map((SOURCE) => (
-        <Source key={SOURCE.id} {...SOURCE}>
-          <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-        </Source>
-      ))}
+      <Source key={SOURCES.id} {...SOURCES}>
+        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+      </Source>
     </>
   );
 };
