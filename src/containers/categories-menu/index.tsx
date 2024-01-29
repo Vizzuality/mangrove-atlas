@@ -1,34 +1,29 @@
 import { useCallback, type MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
-import { useSyncDatasets } from 'lib/utils/sync-query';
-
-import { activeCategoryAtom } from 'store/sidebar';
-
-import { useRecoilState } from 'recoil';
+import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';
 import Icon from 'components/icon';
-import { Category } from 'types/category';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
-  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
+  const [categorySelected, setCategory] = useSyncCategory();
   const [, setDatasets] = useSyncDatasets();
   const handleClick = useCallback(
-    async (event: MouseEvent<HTMLButtonElement & { value }>) => {
+    (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
-      setCategory(encodeURIComponent(event.currentTarget.value as Category));
+      setCategory(event.currentTarget.value);
       const widgetsFiltered = widgets.filter((widget) =>
-        widget?.categoryIds?.includes(event.currentTarget.value as Category)
+        widget?.categoryIds?.includes(event.currentTarget.value)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
-      await setDatasets(activeWidgetsIds);
+      setDatasets(activeWidgetsIds);
     },
     [setDatasets, setCategory]
   );
@@ -52,7 +47,7 @@ const Category = () => {
                 'border-2 border-brand-800 font-bold text-brand-800':
                   category.value === categorySelected,
               })}
-              defaultChecked={'distribution_and_change' === category.value}
+              defaultChecked={category?.defaultCategory}
             >
               <h4 className="flex min-h-[40px] items-center justify-center">{category.label}</h4>
               <Checkbox

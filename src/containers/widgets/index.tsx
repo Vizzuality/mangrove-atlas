@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
-import { useSyncDatasets } from 'lib/utils/sync-query';
+import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
 
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
-import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
@@ -29,7 +28,7 @@ import WidgetsMenu from './widgets-menu';
 
 const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
-  const [categorySelected] = useRecoilState(activeCategoryAtom);
+  const [categorySelected] = useSyncCategory();
   const [datasets, setDatasets] = useSyncDatasets();
 
   const { width: screenWidth } = useWindowSize();

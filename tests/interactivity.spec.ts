@@ -1,16 +1,17 @@
 import { test, expect } from '@playwright/test';
 
+import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import WIDGETS from 'containers/widgets/constants';
 
 const DEFAULT_LOCATION = 'worldwide';
-const DEFAULT_CATEGORY = 'distribution_and_change';
+const DEFAULT_CATEGORY = CATEGORY_OPTIONS.find((c) => c.defaultCategory)?.value;
 const WIDGETS_BY_CATEGORY = WIDGETS.filter(
   ({ categoryIds, locationType }) =>
     categoryIds?.includes(DEFAULT_CATEGORY) && locationType?.includes(DEFAULT_LOCATION)
 );
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(`/?category="distribution_and_change"`);
+  await page.goto(`/?category=${DEFAULT_CATEGORY}`);
 });
 
 test.describe('Expand / collapse widgets functionality', () => {
@@ -27,7 +28,7 @@ test.describe('Expand / collapse widgets functionality', () => {
   });
 
   test('Collapse button text', async ({ page }) => {
-    await page.goto(`/?category="distribution_and_change"`);
+    await page.goto(`/?category=${DEFAULT_CATEGORY}`);
 
     // Click on button to expand widgets
     const button = page.getByTestId('expand-collapse-button');

@@ -4,10 +4,9 @@ import flatten from 'lodash-es/flatten';
 import uniq from 'lodash-es/uniq';
 
 import cn from 'lib/classnames';
-import { useSyncDatasets } from 'lib/utils/sync-query';
+import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
-import { activeCategoryAtom } from 'store/sidebar';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
 import type { Visibility } from 'mapbox-gl';
@@ -20,10 +19,11 @@ import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { CheckboxIndicator } from 'components/checkbox';
+import { Category } from 'types/category';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 const WidgetsMenu: FC = () => {
-  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
+  const [categorySelected, setCategory] = useSyncCategory();
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [datasets, setDatasets] = useSyncDatasets();
   const activeLayersIds = activeLayers.map((layer) => layer.id);
@@ -37,14 +37,14 @@ const WidgetsMenu: FC = () => {
   const cat = useWidgetsIdsByCategory(datasets);
   useEffect(() => {
     if (categorySelected !== cat) {
-      setCategory(cat);
+      void setCategory(cat);
     }
   }, [setCategory, cat, categorySelected]);
 
   const handleWidgets = useCallback(
     (e) => {
       // activate or deactivate widget accordingly
-      setDatasets(
+      void setDatasets(
         datasets.includes(e) ? datasets.filter((widget) => widget !== e) : [...datasets, e]
       );
 
@@ -54,8 +54,7 @@ const WidgetsMenu: FC = () => {
       );
 
       const newCat = cat.length === 1 ? cat[0] : 'all_datasets';
-      if (newCat !== categorySelected) setCategory(newCat);
-      // if (newCat !== catAccordingWidgetsSel) setCategory(catAccordingWidgetsSel);
+      if (newCat !== categorySelected) void setCategory(newCat as Category);
     },
 
     [datasets, setDatasets, setCategory, categorySelected]
@@ -158,7 +157,7 @@ const WidgetsMenu: FC = () => {
               <Checkbox
                 id={slug}
                 data-testid={`${slug}-checkbox`}
-                onCheckedChange={() => handleWidgets(slug)}
+                onCheckedChange={() => void handleWidgets(slug)}
                 defaultChecked
                 disabled={!enabledWidgets.includes(slug)}
                 checked={datasets.includes(slug)}

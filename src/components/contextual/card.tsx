@@ -3,9 +3,9 @@ import { useMemo } from 'react';
 import Image, { StaticImageData } from 'next/image';
 
 import cn from 'lib/classnames';
+import { useSyncBasemapContextual } from 'lib/utils/sync-query';
 
 import { basemapAtom } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
@@ -49,17 +49,17 @@ type CardBasemapContextualProps = {
 
 const CardBasemapContextual = ({ id, type, name, description }: CardBasemapContextualProps) => {
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
-  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
+  const [basemapContextualSelected, setBasemapContextual] = useSyncBasemapContextual();
 
   const isActive = useMemo(() => {
     if (type === 'contextual-basemap') return basemapContextualSelected === id;
     if (type === 'basemap') return basemapStored === id;
   }, [basemapContextualSelected, basemapStored, type, id]);
   const info = INFO[id];
-  const handleClick = () => {
+  const handleClick = async () => {
     if (type === 'contextual-basemap') {
       const updatedContextualBasemap = basemapContextualSelected === id ? null : id;
-      setBasemapContextual(updatedContextualBasemap as ContextualBasemapsId);
+      await setBasemapContextual(updatedContextualBasemap as ContextualBasemapsId);
     }
 
     if (type === 'basemap') {
@@ -81,7 +81,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
       <div className={`${WIDGET_CARD_WRAPPER_STYLE} flex`}>
         <button
           type="button"
-          onClick={handleClick}
+          onClick={void handleClick}
           data-testid={id}
           className={cn({
             [`relative mr-10 h-24 w-24  shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:

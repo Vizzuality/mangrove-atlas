@@ -1,8 +1,6 @@
 import type { LayerProps } from 'react-map-gl';
 
-import { string, number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
 
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
@@ -11,16 +9,10 @@ export const basemapAtom = atom<BasemapId>({
   default: 'light',
 });
 
-// ? this atom syncs the bounds of the URL with the initial view of the map, allowing
-// ? the initialization of the map with bounds from the URL
+// ? this atom syncs the bounds of the URL with the initial view of the map
 export const URLboundsAtom = atom({
   key: 'bounds',
   default: null,
-  effects: [
-    urlSyncEffect({
-      refine: array(array(number())),
-    }),
-  ],
 });
 
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL

@@ -1,6 +1,4 @@
-import { string } from '@recoiljs/refine';
 import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
 
 import type { ContextualBasemapsId } from 'types/widget';
 
@@ -12,11 +10,6 @@ export const mapSettingsAtom = atom<boolean>({
 export const basemapContextualAtom = atom<ContextualBasemapsId>({
   key: 'basemaps-contextual',
   default: null,
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
 });
 
 export const basemapContextualVisualMonthlyDateAtom = atom({

@@ -19,7 +19,7 @@ const MapSettings = () => {
   const saveLocationTool = useSetRecoilState(locationToolAtom);
 
   const resetDrawingToolState = useResetRecoilState(drawingToolAtom);
-  const handleMapSettingsView = useCallback(async () => {
+  const handleMapSettingsView = useCallback(() => {
     setMapViewState(true);
     resetDrawingToolState();
     saveLocationTool(null);

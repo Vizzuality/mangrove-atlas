@@ -2,9 +2,10 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
+
 import { analysisAtom } from 'store/analysis';
 import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom } from 'store/sidebar';
 
 import { useRecoilValue } from 'recoil';
 
@@ -16,8 +17,8 @@ import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
 
 export function useWidgets(): WidgetTypes[] {
-  const categorySelected = useRecoilValue(activeCategoryAtom);
-
+  const [categorySelected] = useSyncCategory();
+  const [datasets] = useSyncDatasets();
   const isMapSettingsVisible = useRecoilValue(mapSettingsAtom);
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
   const {
@@ -35,11 +36,19 @@ export function useWidgets(): WidgetTypes[] {
       return widgets.filter(({ slug }) => MAP_SETTINGS_SLUGS.includes(slug));
     }
 
+    if (categorySelected === 'all_datasets') {
+      return widgets.filter(
+        ({ slug, categoryIds, locationType }) =>
+          categoryIds?.includes(categorySelected) &&
+          locationType.includes(currentLocation) &&
+          datasets.includes(slug)
+      );
+    }
     return widgets.filter(
       ({ categoryIds, locationType }) =>
         categoryIds?.includes(categorySelected) && locationType.includes(currentLocation)
     );
-  }, [categorySelected, currentLocation, isAnalysisRunning, isMapSettingsVisible]);
+  }, [categorySelected, datasets, currentLocation, isAnalysisRunning, isMapSettingsVisible]);
 }
 
 export function useWidgetsIdsByLocation(): WidgetSlugType[] {

@@ -4,7 +4,9 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { basemapAtom, URLboundsAtom, locationBoundsAtom, mapCursorAtom } from 'store/map';
+import { useSyncBasemap, useSyncBounds } from 'lib/utils/sync-query';
+
+import { locationBoundsAtom, mapCursorAtom } from 'store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
@@ -37,10 +39,10 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const [, setLoaded] = useState(false);
 
-  const basemap = useRecoilValue(basemapAtom);
+  const [basemap] = useSyncBasemap();
 
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
+  const [URLBounds, setURLBounds] = useSyncBounds();
   const cursor = useRecoilValue(mapCursorAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);

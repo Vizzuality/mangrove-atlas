@@ -5,18 +5,12 @@ import { useMap } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
-import { useSyncBasemap } from 'lib/utils/sync-query';
+import { useSyncBasemap, useSyncBounds } from 'lib/utils/sync-query';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
-import {
-  basemapAtom,
-  URLboundsAtom,
-  locationBoundsAtom,
-  interactiveLayerIdsAtom,
-  mapCursorAtom,
-} from 'store/map';
+import { locationBoundsAtom, interactiveLayerIdsAtom, mapCursorAtom } from 'store/map';
 import { printModeState } from 'store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
@@ -77,7 +71,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     useRecoilState(drawingToolAtom);
   const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
+  const [URLBounds, setURLBounds] = useSyncBounds();
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
   const isPrintingMode = useRecoilValue(printModeState);
 

@@ -36,8 +36,9 @@ export const EXT_MENU_OPTIONS = [
 const CATEGORY_OPTIONS: {
   value: Category;
   label: string;
+  defaultCategory?: boolean;
 }[] = [
-  { value: 'distribution_and_change', label: 'Distribution & Change' },
+  { value: 'distribution_and_change', label: 'Distribution & Change', defaultCategory: true },
   {
     value: 'restoration_and_conservation',
     label: 'Restoration & Conservation',
@@ -46,7 +47,7 @@ const CATEGORY_OPTIONS: {
   { value: 'ecosystem_services', label: 'Ecosystem Services' },
   { value: 'contextual_layers', label: 'Contextual layers' },
   { value: 'all_datasets', label: 'Custom' },
-] satisfies { value: Category; label: string }[];
+] satisfies { value: Category; label: string; defaultCategory?: boolean }[];
 
 export const STYLES = {
   'icon-wrapper': 'flex h-10.5 w-10.5 flex-col items-center justify-center text-brand-800',

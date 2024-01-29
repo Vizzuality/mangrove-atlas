@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 import WIDGETS from 'containers/widgets/constants';
 
-import type { Category } from 'types/category';
+import type { Category, CategoryEnum } from 'types/category';
 
 type Data = {
   data: unknown[];
@@ -16,7 +16,8 @@ const CATEGORY_OPTIONS = [
   'ecosystem_services',
   'contextual_layers',
   'all_datasets',
-] as Category[];
+] as CategoryEnum[];
+
 const DEFAULT_LOCATION = 'worldwide';
 
 test.beforeEach(async ({ page }) => {

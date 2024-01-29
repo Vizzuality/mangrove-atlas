@@ -2,11 +2,12 @@ import { test, expect } from '@playwright/test';
 
 import WIDGETS from 'containers/widgets/constants';
 
+import type { Category } from 'types/category';
 import { WidgetTypes } from 'types/widget';
 
 const WORDWIDE_LOCATION = 'worldwide';
 const COUNTRY_LOCATION = 'country';
-const ALL_DATASETS_CATEGORY = 'all_datasets';
+const ALL_DATASETS_CATEGORY: Category = 'all_datasets';
 const CONTEXTUAL_LAYER_ID = 'contextual_layers';
 const STYLE_CONTEXTUAL_LAYERS = ['planet_medres_visual_monthly', 'planet_medres_analytic_monthly'];
 
