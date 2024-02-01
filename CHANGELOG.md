@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Unreleased
 
 ### Added
+- New animated widget to have access to widgets deck
 
 
 ### Changed
@@ -37,12 +38,13 @@ Unreleased
 - New legend with functionality for layers
 - Edit function for custom areas removed
 - New cursor to map for interactive layers
-- Print report and Highlighted places removed
 
 ### Fixed
 
 
 ### Removed
+- Print report
+- Highlighted places
 
 
 Released 25/09/2023

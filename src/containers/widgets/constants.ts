@@ -213,6 +213,19 @@ const widgets_prod = [
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['global_tidal_wetland_change'],
   },
+  {
+    name: 'Customize widgets deck',
+    slug: 'widgets_deck_tool',
+    locationType: ['wdpa', 'country', 'worldwide'],
+    categoryIds: [
+      'distribution_and_change',
+      'ecosystem_services',
+      'climate_and_polity',
+      'restoration_and_conservation',
+      'contextual_layers',
+      'all_datasets',
+    ],
+  },
 ] satisfies WidgetTypes[];
 
 const widgets =

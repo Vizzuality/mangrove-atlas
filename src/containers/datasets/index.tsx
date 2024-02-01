@@ -40,6 +40,7 @@ import TidalFlatsWidget from 'containers/datasets/contextual-layers/tidal-flats'
 import TidalFlatsInfo from 'containers/datasets/contextual-layers/tidal-flats/info.mdx';
 import TidalFlatsLayer from 'containers/datasets/contextual-layers/tidal-flats/layer';
 import TidalFlatsMapLegend from 'containers/datasets/contextual-layers/tidal-flats/map-legend';
+import CustomizeWidgetsDeck from 'containers/datasets/customize-widgets-deck/widget';
 import DriversChangeInfo from 'containers/datasets/drivers-change/info.mdx';
 import DriversChangeLayer from 'containers/datasets/drivers-change/layer';
 import DriversChangeMapLegend from 'containers/datasets/drivers-change/map-legend';
@@ -145,6 +146,7 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_coastal_protection_area: FloodProtectionWidget,
   mangrove_coastal_protection_population: FloodProtectionWidget,
   mangrove_coastal_protection_stock: FloodProtectionWidget,
+  widgets_deck_tool: CustomizeWidgetsDeck,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {

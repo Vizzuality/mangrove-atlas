@@ -47,7 +47,8 @@ export type WidgetSlugType =
   | 'mangrove_tidal_flats'
   | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
-  | 'mangrove_contextual_layers';
+  | 'mangrove_contextual_layers'
+  | 'widgets_deck_tool';
 
 export type AnalysisWidgetSlug =
   | 'mangrove_extent'
