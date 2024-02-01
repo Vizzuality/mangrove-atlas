@@ -221,7 +221,8 @@ export function useMangroveNetChange(
     };
   }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
-export function useSource(): SourceProps {
+
+export function useSources(): SourceProps[] {
   const startYear = useRecoilValue(netChangeStartYear);
   const endYear = useRecoilValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
@@ -231,18 +232,16 @@ export function useSource(): SourceProps {
 
   const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
 
-  return {
-    id: `net-change-${filteredYears?.[0]} - ${filteredYears?.[filteredYears.length - 1]}`,
+  return filteredYears?.map((year) => ({
+    id: `net-change-${year}}`,
     type: 'raster',
-    tiles: flatten(
-      filteredYears?.map((year) => [
-        `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
-        `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/loss/${year}/{z}/{x}/{y}.png`,
-      ])
-    ),
-    minzoom: 0,
-    maxzoom: 12,
-  };
+    tiles: [
+      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
+      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/loss/${year}/{z}/{x}/{y}.png`,
+    ],
+    minZoom: 0,
+    maxZoom: 12,
+  }));
 }
 
 export function useLayer({

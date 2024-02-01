@@ -8,13 +8,13 @@ import { useRecoilValue } from 'recoil';
 
 import { LayerProps } from 'types/layers';
 
-import { useLayer, useSource } from './hooks';
+import { useLayer, useSources } from './hooks';
 
 export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers.find((l) => l.id === id);
 
-  const SOURCES = useSource() satisfies SourceProps;
+  const SOURCES = useSources() satisfies SourceProps[];
   const LAYER = useLayer({
     id,
     opacity: parseFloat(activeLayer.opacity),
@@ -25,9 +25,11 @@ export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
 
   return (
     <>
-      <Source key={SOURCES.id} {...SOURCES}>
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      </Source>
+      {SOURCES.map((SOURCE) => (
+        <Source key={SOURCE.id} {...SOURCE}>
+          <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+        </Source>
+      ))}
     </>
   );
 };
