@@ -146,7 +146,7 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_coastal_protection_area: FloodProtectionWidget,
   mangrove_coastal_protection_population: FloodProtectionWidget,
   mangrove_coastal_protection_stock: FloodProtectionWidget,
-  customize_widgets_deck: CustomizeWidgetsDeck,
+  widgets_deck_tool: CustomizeWidgetsDeck,
 } satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
 export const LAYERS = {

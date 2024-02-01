@@ -33,9 +33,14 @@ const WidgetsContainer: FC = () => {
 
   const { width: screenWidth } = useWindowSize();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
-  const widgetsAvailable = useWidgets();
+  const enabledWidgets = useWidgets();
+  const widgetsAvailable = useMemo(() => {
+    return enabledWidgets.filter(
+      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
+    );
+  }, [activeWidgets, enabledWidgets]);
 
-  const setPrintingMode = useSetRecoilState(printModeState);
+  // const setPrintingMode = useSetRecoilState(printModeState);
   const cat = useWidgetsIdsByCategory(activeWidgets);
 
   // ensures that the appropriate widgets for a selected category are activated during
@@ -54,8 +59,6 @@ const WidgetsContainer: FC = () => {
 
   const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
 
-  const lastWidgetSlug = useMemo(() => !!widgets.length && widgets.at(-1).slug, []);
-
   const widgetsCollapsedChecker = Object.values(widgetsCollapsed)?.includes(true);
 
   const handleWidgetsCollapsed = useCallback(() => {
@@ -64,28 +67,28 @@ const WidgetsContainer: FC = () => {
       return acc;
     }, {});
 
-    updateWidgetsCollapsed[lastWidgetSlug] = false;
+    updateWidgetsCollapsed['widgets_deck_tool'] = false;
     updateWidgetsCollapsed['mangrove_drawing_tool'] = false;
     updateWidgetsCollapsed['mangrove_drawing_upload_tool'] = false;
 
     setWidgetsCollapsed(updateWidgetsCollapsed);
-  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed, lastWidgetSlug]);
+  }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
 
-  const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
-    acc[key] = false;
-    return acc;
-  }, {});
+  // const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
+  //   acc[key] = false;
+  //   return acc;
+  // }, {});
 
-  const onClickDownload = useCallback(() => {
-    setWidgetsCollapsed(expandedWidgets);
-    setPrintingMode(true);
-    setTimeout(() => {
-      window.print();
-    }, 2000);
-    setTimeout(() => {
-      setPrintingMode(false);
-    }, 4000);
-  }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
+  // const onClickDownload = useCallback(() => {
+  //   setWidgetsCollapsed(expandedWidgets);
+  //   setPrintingMode(true);
+  //   setTimeout(() => {
+  //     window.print();
+  //   }, 2000);
+  //   setTimeout(() => {
+  //     setPrintingMode(false);
+  //   }, 4000);
+  // }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
 
   return (
     <WidgetsLayout>
@@ -139,7 +142,7 @@ const WidgetsContainer: FC = () => {
                       true,
                   })}
                 >
-                  <p>Explore data</p>
+                  <p>Select data</p>
                 </button>
               </DialogTrigger>
             </Helper>

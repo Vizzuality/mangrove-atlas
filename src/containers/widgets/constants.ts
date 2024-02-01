@@ -215,7 +215,7 @@ const widgets_prod = [
   },
   {
     name: 'Customize widgets deck',
-    slug: 'customize_widgets_deck',
+    slug: 'widgets_deck_tool',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: [
       'distribution_and_change',

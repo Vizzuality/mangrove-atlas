@@ -1,18 +1,16 @@
-import { useCallback, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import { activeWidgetsAtom } from 'store/widgets';
 
-import { analysisAtom } from 'store/analysis';
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
+import { motion } from 'framer-motion';
+import { useRecoilValue } from 'recoil';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import Category from 'containers/categories-menu';
+import widgets from 'containers/widgets/constants';
+import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import NoData from 'containers/widgets/no-data';
-
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
 import Icon from 'components/icon';
-import Loading from 'components/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -22,77 +20,98 @@ import {
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
-const HabitatExtent = () => {
-  const queryClient = useQueryClient();
-  const [year, setYear] = useRecoilState(habitatExtentSettings);
-  const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
-  const [isCanceled, setIsCanceled] = useState(false);
+const CustomizeWidgetsDeck = () => {
+  const displayedWidgets = useRecoilValue(activeWidgetsAtom);
+  const [animateState, setAnimateState] = useState('start');
 
-  const handleClick = useCallback(
-    (y) => {
-      setYear(y);
-    },
-    [setYear]
-  );
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setAnimateState('end');
+    }, 1500);
 
+    const returnTimeoutId = setTimeout(() => {
+      if (animateState === 'end') {
+        setAnimateState('return');
+      }
+    }, 4700);
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearTimeout(returnTimeoutId);
+    };
+  }, [animateState]);
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="space-y-4">
         <p className={WIDGET_SENTENCE_STYLE}>
-          The area of mangrove habitat in <span className="font-bold"> </span> was{' '}
+          You are showing{' '}
           <span className="notranslate font-bold">
-            <Popover>
-              <PopoverTrigger asChild>
+            <Dialog>
+              <DialogTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {selectedUnitAreaExtent}
+                  {displayedWidgets.length} of {widgets.length}
                   <Icon
                     icon={ARROW_SVG}
                     className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                     description="Arrow"
                   />
                 </span>
-              </PopoverTrigger>
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
-                <ul className="z-20 max-h-32 space-y-0.5">
-                  <li key={'u'}></li>
-                </ul>
-              </PopoverContent>
-            </Popover>
+              </DialogTrigger>
+              <DialogContent className="left-0 top-0 min-h-screen w-screen space-y-8 rounded-none">
+                <div className="no-scrollbar space-y-8 overflow-y-auto">
+                  <h2 className="font-black/85 text-3xl font-light leading-10">
+                    Widgets deck settings
+                  </h2>
+
+                  <Category />
+
+                  <WidgetsMenu />
+                </div>
+                <DialogClose />
+              </DialogContent>
+            </Dialog>
           </span>{' '}
-          in{' '}
-          <Popover>
-            <PopoverTrigger asChild>
-              <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                holli
-                <Icon
-                  icon={ARROW_SVG}
-                  className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                  description="Arrow"
-                />
-              </span>
-            </PopoverTrigger>
-            <PopoverContent className="rounded-2xl px-2 shadow-border">
-              <ul className="z-20 max-h-56 space-y-0.5">
-                <li key={'y'} className="last-of-type:pb-4">
-                  <button
-                    aria-label="select year"
-                    className={cn({
-                      'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
-                      // 'font-semibold text-brand-800': y === year || y === defaultYear,
-                    })}
-                    type="button"
-                    // onClick={() => handleClick(y)}
-                  >
-                    holi
-                  </button>
-                </li>
-              </ul>
-            </PopoverContent>
-          </Popover>
+          data cards. Customize the data deck according to your preferences and discover additional
+          capabilities.
         </p>
+      </div>
+
+      {/* Widgets animation */}
+      <div className="m-auto flex w-full flex-col items-center justify-center">
+        <div className="h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="-mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <motion.div
+          initial={{ x: 0, rotate: 0 }}
+          animate={
+            animateState === 'end'
+              ? { x: 100, rotate: 7 }
+              : animateState === 'return'
+              ? { x: 0, rotate: 0 }
+              : {}
+          }
+          transition={
+            animateState === 'end'
+              ? {
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 15,
+                  mass: 1,
+                }
+              : {
+                  duration: 0.75,
+                  ease: 'easeInOut',
+                }
+          }
+          className="-mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] border-brand-400 bg-white"
+          role="presentation"
+        />
+
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
       </div>
     </div>
   );
 };
 
-export default HabitatExtent;
+export default CustomizeWidgetsDeck;

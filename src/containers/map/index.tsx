@@ -244,8 +244,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         ...feature.properties,
         id: locationId,
       }));
+
       setLocationPopUp({
-        ...locationPopUp,
         info: {
           location: locationFeature.properties,
           protectedArea: protectedAreas, // Now an array of ProtectedArea objects
