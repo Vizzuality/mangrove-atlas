@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { activeWidgetsAtom } from 'store/widgets';
+import { useSyncDatasets } from 'lib/utils/sync-query';
 
 import { motion } from 'framer-motion';
-import { useRecoilValue } from 'recoil';
 
 import Category from 'containers/categories-menu';
 import widgets from 'containers/widgets/constants';
@@ -21,7 +20,7 @@ import {
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 const CustomizeWidgetsDeck = () => {
-  const displayedWidgets = useRecoilValue(activeWidgetsAtom);
+  const [displayedWidgets] = useSyncDatasets();
   const [animateState, setAnimateState] = useState('start');
 
   useEffect(() => {
@@ -47,7 +46,7 @@ const CustomizeWidgetsDeck = () => {
           You are showing{' '}
           <span className="notranslate font-bold">
             <Dialog>
-              <DialogTrigger asChild>
+              <DialogTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {displayedWidgets.length} of {widgets.length}
                   <Icon

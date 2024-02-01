@@ -5,10 +5,6 @@ import Image from 'next/image';
 import cn from 'lib/classnames';
 import { useSyncBasemap } from 'lib/utils/sync-query';
 
-import { basemapAtom } from 'store/map';
-
-import { useRecoilState } from 'recoil';
-
 import BASEMAPS, { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from 'components/checkbox';

@@ -42,10 +42,4 @@ export const activeLayersAtom = atom<
 >({
   key: 'layers',
   default: [{ id: 'mangrove_habitat_extent', opacity: '1', visibility: 'visible' }],
-  effects: [
-    urlSyncEffect({
-      refine: array(layerSchema),
-      history: 'replace',
-    }),
-  ],
 });

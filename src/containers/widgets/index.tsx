@@ -3,11 +3,11 @@ import { useCallback, useEffect, useMemo, FC } from 'react';
 import cn from 'lib/classnames';
 import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
 
-import { printModeState } from 'store/print-mode';
+// import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -32,16 +32,15 @@ const WidgetsContainer: FC = () => {
   const [datasets, setDatasets] = useSyncDatasets();
 
   const { width: screenWidth } = useWindowSize();
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const enabledWidgets = useWidgets();
   const widgetsAvailable = useMemo(() => {
     return enabledWidgets.filter(
-      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
+      ({ slug }) => datasets?.includes(slug) || slug === 'widgets_deck_tool'
     );
-  }, [activeWidgets, enabledWidgets]);
+  }, [datasets, enabledWidgets]);
 
-  const setPrintingMode = useSetRecoilState(printModeState);
-  const cat = useWidgetsIdsByCategory(activeWidgets);
+  // const setPrintingMode = useSetRecoilState(printModeState);
+  const cat = useWidgetsIdsByCategory(datasets);
 
   // ensures that the appropriate widgets for a selected category are activated during
   // the first render. This is crucial when the initial state is being loaded from a URL,

@@ -1,10 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
@@ -15,14 +12,14 @@ import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
 const BasemapsMapSettings = () => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const defaultActive = activeLayers.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
+  const [activeLayers, setActiveLayers] = useSyncLayers();
+  const defaultActive = activeLayers.find((layer) => layer.includes('planet')) || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
     (id) => {
       setIsActive(id);
-      const noPlanetLayers = activeLayers.filter((w) => !w.id.includes('planet_medres'));
+      const noPlanetLayers = activeLayers.filter((w) => !w.includes('planet_medres'));
       const layersUpdate =
         id === 'no-layer'
           ? noPlanetLayers
@@ -34,7 +31,7 @@ const BasemapsMapSettings = () => {
               },
               ...noPlanetLayers,
             ] as ActiveLayers[]);
-      setActiveLayers(layersUpdate);
+      // setActiveLayers(layersUpdate);
     },
     [activeLayers, setActiveLayers]
   );
