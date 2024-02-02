@@ -233,7 +233,7 @@ export function useSources(): SourceProps[] {
   const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
 
   return filteredYears?.map((year) => ({
-    id: `net-change-${year}}`,
+    id: `net-change-${year}`,
     type: 'raster',
     tiles: [
       `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
