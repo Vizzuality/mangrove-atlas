@@ -1,16 +1,10 @@
-import { parseAsInteger, useQueryState } from 'nuqs';
-import {
-  parseAsString,
-  parseAsFloat,
-  parseAsArrayOf,
-  parseAsStringLiteral,
-  createParser,
-} from 'nuqs/parsers';
+import { parseAsJson, useQueryState } from 'nuqs';
+import { parseAsString, parseAsFloat, parseAsArrayOf, parseAsStringLiteral } from 'nuqs/parsers';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
 
-import { WidgetSlugType } from 'types/widget';
+import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const Categories = CATEGORY_OPTIONS.map((category) => category.value);
 const defaultCategory = CATEGORY_OPTIONS.find((c) => c.defaultCategory)?.value;
@@ -19,41 +13,18 @@ const defaultWidgets = widgets
   .filter((widget) => widget.categoryIds.includes(defaultCategory))
   .map((widget) => widget.slug) satisfies WidgetSlugType[];
 
-// createParser({
-//   parse(query) {
-//     if (query.length !== 6) {
-//       return null; // always return null for invalid inputs
-//     }
-//     return {
-//       // When composing other parsers, they may return null too.
-//       r: parseAsHex.parse(query.slice(0, 2)) ?? 0x00,
-//       g: parseAsHex.parse(query.slice(2, 4)) ?? 0x00,
-//       b: parseAsHex.parse(query.slice(4)) ?? 0x00,
-//     };
-//   },
-//   serialize({ r, g, b }) {
-//     return parseAsHex.serialize(r) + parseAsHex.serialize(g) + parseAsHex.serialize(b);
-//   },
-// });
+const datasetsSettingsParser = parseAsJson<{
+  [key: string]: Record<string, unknown>;
+}>();
 
-const LayerSettings = {
-  name: parseAsString,
-  source: parseAsString,
-  source_layer: parseAsString,
-  date: parseAsString,
-  location: parseAsString,
-  layerIndex: parseAsInteger,
-};
+const Widgets = [
+  ...widgets.map(({ slug }) => slug),
+  ...(['planet_medres_analytic_monthly'] as ContextualBasemapsId[]),
+];
 
-const layerSchema = {
-  id: parseAsString,
-  opacity: parseAsString,
-  // visibility: parseAsStringLiteral({
-  //   none: 'none',
-  //   visible: 'visible',
-  // }),
-  settings: LayerSettings,
-};
+const layersParser = parseAsStringLiteral(
+  Widgets satisfies (ContextualBasemapsId | WidgetSlugType)[]
+);
 
 export const useSyncDatasets = () =>
   useQueryState('datasets', parseAsArrayOf(parseAsString).withDefault(defaultWidgets));
@@ -69,7 +40,20 @@ export const useSyncBounds = () =>
   useQueryState('bounds', parseAsArrayOf(parseAsArrayOf(parseAsFloat)));
 
 export const useSyncLayers = () =>
-  useQueryState('layers', parseAsArrayOf(parseAsString).withDefault(['mangrove_habitat_extent']));
+  useQueryState(
+    'layers',
+    parseAsArrayOf(layersParser).withDefault(['planet_medres_analytic_monthly'])
+  );
 
 export const useSyncDatasetsSettings = () =>
-  useQueryState('datasets-settings', parseAsArrayOf(parseAsArrayOf(parseAsString)));
+  useQueryState(
+    'datasets-settings',
+    parseAsArrayOf(datasetsSettingsParser).withDefault([
+      {
+        mangrove_habitat_extent: {
+          opacity: 1,
+          visibility: 'visible',
+        },
+      },
+    ])
+  );

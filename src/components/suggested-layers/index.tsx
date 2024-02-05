@@ -2,14 +2,11 @@ import { ReactElement, useMemo, useCallback } from 'react';
 
 import Image from 'next/image';
 
-import { activeLayersAtom } from 'store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
-
 type SuggestionTypes = {
   name: string;
   id: ContextualBasemapsId | WidgetSlugType;
@@ -27,16 +24,18 @@ const SuggestedLayers = ({
   color,
   thumbSource,
 }: SuggestionTypes) => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
+  const [layers] = useSyncLayers();
+  const [, setDatasetSettings] = useSyncDatasetsSettings();
+
+  const activeLayersIds = layers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
-    setActiveLayers(layersUpdate);
-  }, [isActive, activeLayers, setActiveLayers, id]);
+      ? layers.filter((w) => w.id !== id)
+      : ([{ id, opacity: '1', visibility: 'visible' }, ...layers] as ActiveLayers[]);
+    setDatasetSettings(layersUpdate);
+  }, [isActive, layers, setDatasetSettings, id]);
 
   // const handleClick = () => {
   //   const updatedContextualBasemap = basemapContextualSelected === id ? null : id;

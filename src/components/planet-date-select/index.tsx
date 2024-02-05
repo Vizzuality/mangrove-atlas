@@ -1,11 +1,9 @@
 import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
+import { useSyncDatasetsSettings, useSyncLayers } from 'lib/utils/sync-query';
 
 import { orderBy } from 'lodash-es';
-import { useRecoilState } from 'recoil';
 
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
@@ -31,11 +29,10 @@ const DateSelect = ({
   className?: { content: string };
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const layerToUpdate = useMemo(
-    () => activeLayers.find((layer) => layer.id === id),
-    [activeLayers]
-  );
+  const [layers, setActiveLayers] = useSyncLayers();
+  const [, setDatasetSettings] = useSyncDatasetsSettings();
+
+  const layerToUpdate = useMemo(() => layers.find((layer) => layer.id === id), [layers]);
 
   const selectedDate = useMemo(
     () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
@@ -49,9 +46,10 @@ const DateSelect = ({
 
   const handleDate = useCallback(
     (e) => {
-      const filteredLayers = activeLayers.filter((l) => l.id !== id);
+      const filteredLayers = layers.filter((l) => l.id !== id);
       if (!!layerToUpdate) {
-        setActiveLayers([
+        setActiveLayers(e.currentTarget.value);
+        setDatasetSettings([
           {
             ...layerToUpdate,
             id: id as ContextualBasemapsId,
@@ -64,7 +62,7 @@ const DateSelect = ({
         ]);
       }
     },
-    [layerToUpdate, activeLayers, id, setActiveLayers]
+    [layerToUpdate, layers, id, setActiveLayers, setDatasetSettings]
   );
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);

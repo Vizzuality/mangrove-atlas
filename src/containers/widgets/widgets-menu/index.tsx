@@ -5,6 +5,7 @@ import uniq from 'lodash-es/uniq';
 
 import cn from 'lib/classnames';
 import { useSyncCategory, useSyncDatasets } from 'lib/utils/sync-query';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -25,6 +26,8 @@ import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useSyncCategory();
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [layers] = useSyncLayers();
+
   const [datasets, setDatasets] = useSyncDatasets();
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);

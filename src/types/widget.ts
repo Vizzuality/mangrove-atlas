@@ -1,3 +1,5 @@
+import widgets from 'containers/widgets/constants';
+
 export type UseParamsOptions = Readonly<{
   location_id?: string | number;
   year?: number;
@@ -14,6 +16,8 @@ export type WidgetTypes = {
   subLayersIds?: string[];
   contextualLayersIds?: string[];
 };
+
+export const Widgets = widgets.map(({ slug }) => slug);
 
 export type WidgetSlugType =
   | 'mangrove_habitat_extent'

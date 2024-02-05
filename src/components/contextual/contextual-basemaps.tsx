@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 import { useSyncLayers } from 'lib/utils/sync-query';
+import { useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
@@ -12,14 +13,15 @@ import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
 const BasemapsMapSettings = () => {
-  const [activeLayers, setActiveLayers] = useSyncLayers();
-  const defaultActive = activeLayers.find((layer) => layer.includes('planet')) || 'no-layer';
+  const [layers, setActiveLayers] = useSyncLayers();
+  const [, setDatasetSettings] = useSyncDatasetsSettings();
+  const defaultActive = layers.find((layer) => layer.includes('planet')) || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
     (id) => {
       setIsActive(id);
-      const noPlanetLayers = activeLayers.filter((w) => !w.includes('planet_medres'));
+      const noPlanetLayers = layers.filter((w) => !w.includes('planet_medres'));
       const layersUpdate =
         id === 'no-layer'
           ? noPlanetLayers
@@ -31,9 +33,10 @@ const BasemapsMapSettings = () => {
               },
               ...noPlanetLayers,
             ] as ActiveLayers[]);
-      // setActiveLayers(layersUpdate);
+      setActiveLayers(id);
+      setDatasetSettings(layersUpdate);
     },
-    [activeLayers, setActiveLayers]
+    [layers, setActiveLayers, setDatasetSettings]
   );
 
   return (

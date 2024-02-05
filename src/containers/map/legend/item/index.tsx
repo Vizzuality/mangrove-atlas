@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { activeGuideAtom } from 'store/guide';
 import { activeLayersAtom } from 'store/layers';
@@ -27,7 +28,6 @@ import HIDE_SVG from 'svgs/legend/hide.svg?sprite';
 import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
-
 const LegendItem = ({
   id,
   embedded = false,
@@ -38,6 +38,8 @@ const LegendItem = ({
   l: ActiveLayers;
 }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [layers] = useSyncLayers();
+
   const guideIsActive = useRecoilValue(activeGuideAtom);
 
   const onChangeVisibility = useCallback(

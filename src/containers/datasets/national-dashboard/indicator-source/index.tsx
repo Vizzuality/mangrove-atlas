@@ -2,6 +2,7 @@ import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -55,12 +56,13 @@ const IndicatorSource = ({
   yearSelected,
   setYearSelected,
 }: IndicatorSourceTypes) => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
+  const [layers, setActiveLayers] = useSyncLayers();
+
+  const activeLayersIds = layers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
+      ? layers.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
       : ([
           {
             id,
@@ -74,10 +76,10 @@ const IndicatorSource = ({
               source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
             },
           },
-          ...activeLayers,
+          ...layers,
         ] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
-  }, [activeLayers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);
+  }, [layers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);
 
   return (
     <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">

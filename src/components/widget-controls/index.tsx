@@ -1,12 +1,12 @@
 import { useMemo, useCallback } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasetsSettings, useSyncLayers } from 'lib/utils/sync-query';
 
-import { activeLayersAtom } from 'store/layers';
 import { mapSettingsAtom } from 'store/map-settings';
 import { locationToolAtom } from 'store/sidebar';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
@@ -33,22 +33,39 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const isMapSettingsOpen = useRecoilValue(mapSettingsAtom);
   const locationTool = useRecoilValue(locationToolAtom);
 
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const [layers, setActiveLayers] = useSyncLayers();
+  const [datasetSettings, setDatasetSettings] = useSyncDatasetsSettings();
+  const isActive: boolean = useMemo(() => layers.includes(id), [layers, id]);
 
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
-    const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
-    setActiveLayers(layersUpdate);
-  }, [isActive, activeLayers, setActiveLayers, id]);
+    if (isActive) {
+      // Remove the layer and its settings
+      const newLayers = layers.filter((w) => w !== id);
+      const newSettings = datasetSettings.filter((setting) => !Object.keys(setting).includes(id));
+      setActiveLayers(newLayers);
+      setDatasetSettings(newSettings);
+    } else {
+      // Add the layer and its default settings
+      const newLayers = [id, ...layers];
+      const newSetting = {
+        [id]: { opacity: '1', visibility: 'visible' },
+      };
+      // Ensure we merge new settings correctly with existing ones, without duplicating
+      const existingSettings = datasetSettings.some((setting) => Object.keys(setting).includes(id))
+        ? datasetSettings.map((setting) =>
+            Object.keys(setting).includes(id) ? { ...setting, ...newSetting } : setting
+          )
+        : [...datasetSettings, newSetting];
+      setActiveLayers(newLayers);
+      setDatasetSettings(existingSettings);
+    }
+  }, [isActive, layers, datasetSettings, id, setActiveLayers, setDatasetSettings]);
 
-  const HELPER_ID = id === activeLayers[0]?.id;
+  const HELPER_ID = id === layers[0]?.id;
 
   const showDownloadInfoHelpers =
     !isMapSettingsOpen && HELPER_ID && (locationTool === 'worldwide' || locationTool === 'search');

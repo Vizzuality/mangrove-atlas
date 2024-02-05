@@ -2,6 +2,7 @@
 import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -16,6 +17,7 @@ import LegendItem from './item';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [layers] = useSyncLayers();
 
   const [isOpen, setIsOpen] = useState(false);
 

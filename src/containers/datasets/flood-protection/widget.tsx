@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncLayers } from 'lib/utils/sync-query';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -58,6 +59,8 @@ const FloodProtection = ({
   const id = `mangrove_coastal_protection_${indicator}` satisfies WidgetSlugType;
 
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [layers] = useSyncLayers();
+
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
 
