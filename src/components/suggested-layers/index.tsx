@@ -6,10 +6,10 @@ import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import type { ActiveLayers } from 'types/layers';
-import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+import type { ContextualBasemapsId, LayersSlugType, WidgetSlugType } from 'types/widget';
 type SuggestionTypes = {
   name: string;
-  id: ContextualBasemapsId | WidgetSlugType;
+  id: LayersSlugType & ContextualBasemapsId & WidgetSlugType;
   description: string;
   children?: ReactElement;
   color?: string;
@@ -24,18 +24,34 @@ const SuggestedLayers = ({
   color,
   thumbSource,
 }: SuggestionTypes) => {
-  const [layers] = useSyncLayers();
-  const [, setDatasetSettings] = useSyncDatasetsSettings();
+  const [layers, setActiveLayers] = useSyncLayers();
+  const [datasetsSettings, setdatasetsSettings] = useSyncDatasetsSettings();
 
-  const activeLayersIds = layers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const isActive = useMemo(() => layers.includes(id), [layers, id]);
 
-  const handleClick = useCallback(() => {
-    const layersUpdate = isActive
-      ? layers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...layers] as ActiveLayers[]);
-    setDatasetSettings(layersUpdate);
-  }, [isActive, layers, setDatasetSettings, id]);
+  const handleClick = useCallback(async () => {
+    if (isActive) {
+      // Remove the layer and its settings
+      const newLayers = layers.filter((w) => w !== id);
+      const newSettings = datasetsSettings.filter((setting) => !Object.keys(setting).includes(id));
+      await setActiveLayers(newLayers);
+      await setdatasetsSettings(newSettings);
+    } else {
+      // Add the layer and its default settings
+      const newLayers = [id, ...layers];
+      const newSetting = {
+        [id]: { opacity: '1', visibility: 'visible' },
+      };
+      // Ensure we merge new settings correctly with existing ones, without duplicating
+      const existingSettings = datasetsSettings.some((setting) => Object.keys(setting).includes(id))
+        ? datasetsSettings.map((setting) =>
+            Object.keys(setting).includes(id) ? { ...setting, ...newSetting } : setting
+          )
+        : [...datasetsSettings, newSetting];
+      await setActiveLayers(newLayers);
+      await setdatasetsSettings(existingSettings);
+    }
+  }, [isActive, layers, setdatasetsSettings, setActiveLayers, datasetsSettings, id]);
 
   // const handleClick = () => {
   //   const updatedContextualBasemap = basemapContextualSelected === id ? null : id;

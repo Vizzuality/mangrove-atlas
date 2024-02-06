@@ -8,13 +8,13 @@ import { useLayers, useSource } from 'containers/datasets/drivers-change/hooks';
 
 import type { LayerProps } from 'types/layers';
 
-const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
+const MangrovesDriversOfChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers.find((l) => l.id === id);
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
     visibility: activeLayer.visibility,
   });
 
@@ -29,4 +29,4 @@ const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   );
 };
 
-export default MangrovesLayer;
+export default MangrovesDriversOfChangeLayer;

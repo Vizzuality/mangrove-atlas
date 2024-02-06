@@ -1,20 +1,16 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import type { LayerProps } from 'types/layers';
 
-import {} from './hooks';
 import { useLayers, useSource, useMangroveHabitatExtent } from './hooks';
 
-import { activeLayersAtom } from 'store/layers';
-
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
-  const year = useRecoilValue(habitatExtentSettings);
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
+  const activeLayer = layers.find((l) => l === id);
+  const year = datasetsSettings[activeLayer]?.year || '2020';
   const { data } = useMangroveHabitatExtent({ year });
   const years = data?.years?.sort() || [];
 
@@ -24,7 +20,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const LAYERS = useLayers({
     year: currentYear,
     id,
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
     visibility: activeLayer.visibility,
   });
   if (!SOURCE || !LAYERS) return null;

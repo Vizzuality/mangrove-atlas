@@ -12,8 +12,7 @@ import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import type { ActiveLayers } from 'types/layers';
-import type { WidgetSlugType } from 'types/widget';
+import type { LayersSlugType, WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 import Download from './download';
 import Info from './info';
@@ -25,7 +24,7 @@ type ContentType = {
 };
 
 type WidgetControlsType = Readonly<{
-  id?: WidgetSlugType;
+  id?: LayersSlugType & ContextualBasemapsId & WidgetSlugType;
   content?: ContentType;
 }>;
 
@@ -34,20 +33,20 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const locationTool = useRecoilValue(locationToolAtom);
 
   const [layers, setActiveLayers] = useSyncLayers();
-  const [datasetSettings, setDatasetSettings] = useSyncDatasetsSettings();
-  const isActive: boolean = useMemo(() => layers.includes(id), [layers, id]);
+  const [datasetsSettings, setDatasetsSettings] = useSyncDatasetsSettings();
+  const isActive = useMemo(() => id !== undefined && layers.includes(id), [layers, id]);
 
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback(async () => {
     if (isActive) {
       // Remove the layer and its settings
       const newLayers = layers.filter((w) => w !== id);
-      const newSettings = datasetSettings.filter((setting) => !Object.keys(setting).includes(id));
-      setActiveLayers(newLayers);
-      setDatasetSettings(newSettings);
+      const newSettings = datasetsSettings.filter((setting) => !Object.keys(setting).includes(id));
+      await setActiveLayers(newLayers);
+      await setDatasetsSettings(newSettings);
     } else {
       // Add the layer and its default settings
       const newLayers = [id, ...layers];
@@ -55,15 +54,15 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
         [id]: { opacity: '1', visibility: 'visible' },
       };
       // Ensure we merge new settings correctly with existing ones, without duplicating
-      const existingSettings = datasetSettings.some((setting) => Object.keys(setting).includes(id))
-        ? datasetSettings.map((setting) =>
+      const existingSettings = datasetsSettings.some((setting) => Object.keys(setting).includes(id))
+        ? datasetsSettings.map((setting) =>
             Object.keys(setting).includes(id) ? { ...setting, ...newSetting } : setting
           )
-        : [...datasetSettings, newSetting];
-      setActiveLayers(newLayers);
-      setDatasetSettings(existingSettings);
+        : [...datasetsSettings, newSetting];
+      await setActiveLayers(newLayers);
+      await setDatasetsSettings(existingSettings);
     }
-  }, [isActive, layers, datasetSettings, id, setActiveLayers, setDatasetSettings]);
+  }, [isActive, layers, datasetsSettings, id, setActiveLayers, setDatasetsSettings]);
 
   const HELPER_ID = id === layers[0]?.id;
 

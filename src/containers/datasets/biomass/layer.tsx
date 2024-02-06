@@ -1,20 +1,19 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import type { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
 const MangrovesBiomassLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
+  const activeLayer = layers.find((l) => l === id);
   const SOURCE = useSource();
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
     visibility: activeLayer.visibility,
   });
 

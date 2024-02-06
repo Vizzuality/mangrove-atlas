@@ -1,21 +1,20 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncDatasetsSettings, useSyncLayers } from 'lib/utils/sync-query';
 
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSources } from './hooks';
 
 const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
+  const activeLayer = layers.find((l) => l === id);
   const SOURCES = useSources();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(datasetsSettings[activeLayer].opacity),
+    visibility: datasetsSettings[activeLayer].visibility,
   });
 
   if (!SOURCES || !LAYERS) return null;

@@ -2,24 +2,23 @@ import React from 'react';
 
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
 export const PlanetSatelliteBasemapVisualLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
+  const activeLayer = layers.find((l) => l === id);
 
   const SOURCE = useSource({
     year: activeLayer.settings?.date,
   });
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
     visibility: activeLayer.visibility,
   });
 

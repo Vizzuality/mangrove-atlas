@@ -16,14 +16,13 @@ import { ActiveLayers } from 'types/layers';
 import LegendItem from './item';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const [layers] = useSyncLayers();
+  const [layers, setActiveLayers] = useSyncLayers();
 
   const [isOpen, setIsOpen] = useState(false);
 
   const openLegend = useCallback(() => {
-    if (!!activeLayers.length) setIsOpen(true);
-  }, [activeLayers]);
+    if (!!layers.length) setIsOpen(true);
+  }, [layers]);
 
   const closeLegend = useCallback(() => {
     setIsOpen(false);
@@ -31,18 +30,19 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
   const handleChangeOrder = useCallback(
     (order: string[]) => {
-      const newLayers = order.map((id) => {
-        return activeLayers.find((l) => l.id === id);
-      }) as ActiveLayers[];
+      console.log('layers order');
+      // const newLayers = order.map((id) => {
+      //   return layers.find((l) => l.id === id);
+      // }) as ActiveLayers[];
 
-      setActiveLayers(newLayers);
+      // setActiveLayers(newLayers);
     },
-    [activeLayers, setActiveLayers]
+    [layers, setActiveLayers]
   );
 
   return (
     <div>
-      {!!activeLayers.length && (
+      {!!layers.length && (
         <>
           <button
             onClick={openLegend}
@@ -75,8 +75,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
                   >
-                    {activeLayers.map((l) => {
-                      return <LegendItem id={l.id} key={l.id} embedded={embedded} l={l} />;
+                    {layers.map((l) => {
+                      return <LegendItem id={l} key={l} embedded={embedded} l={l} />;
                     })}
                   </SortableList>
                 </div>

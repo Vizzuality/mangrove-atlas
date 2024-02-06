@@ -6,7 +6,7 @@ import { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const MangroveGlobalTidalWetlandChangeLayer = ({ beforeId, id }: LayerProps) => {
+const PlanetImagery = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYER = useLayer({ id });
 
@@ -19,4 +19,4 @@ const MangroveGlobalTidalWetlandChangeLayer = ({ beforeId, id }: LayerProps) => 
   );
 };
 
-export default MangroveGlobalTidalWetlandChangeLayer;
+export default PlanetImagery;

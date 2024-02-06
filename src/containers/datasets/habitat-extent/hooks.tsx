@@ -98,8 +98,8 @@ export function useMangroveHabitatExtent(
     location_id === 'custom-area'
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.value, 0) === 0
       : isFetched && !data?.data?.length;
-
   const { unit, year } = params;
+
   const DATA = useMemo(() => {
     const metadata = data?.metadata;
     const years = metadata?.year?.sort();

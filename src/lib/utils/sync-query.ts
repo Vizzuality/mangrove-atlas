@@ -1,10 +1,11 @@
 import { parseAsJson, useQueryState } from 'nuqs';
 import { parseAsString, parseAsFloat, parseAsArrayOf, parseAsStringLiteral } from 'nuqs/parsers';
 
+import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
 
-import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+import type { LayersSlugType, WidgetSlugType, WidgetSlugTypeWithoutSomeValues } from 'types/widget';
 
 const Categories = CATEGORY_OPTIONS.map((category) => category.value);
 const defaultCategory = CATEGORY_OPTIONS.find((c) => c.defaultCategory)?.value;
@@ -13,18 +14,14 @@ const defaultWidgets = widgets
   .filter((widget) => widget.categoryIds.includes(defaultCategory))
   .map((widget) => widget.slug) satisfies WidgetSlugType[];
 
-const datasetsSettingsParser = parseAsJson<{
-  [key: string]: Record<string, unknown>;
-}>();
+const datasetsSettingsParser = parseAsJson<Record<string, Record<string, unknown>>>();
 
 const Widgets = [
   ...widgets.map(({ slug }) => slug),
-  ...(['planet_medres_analytic_monthly'] as ContextualBasemapsId[]),
-];
+  ...CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id }) => id),
+] as const;
 
-const layersParser = parseAsStringLiteral(
-  Widgets satisfies (ContextualBasemapsId | WidgetSlugType)[]
-);
+const layersParser = parseAsStringLiteral(Widgets);
 
 export const useSyncDatasets = () =>
   useQueryState('datasets', parseAsArrayOf(parseAsString).withDefault(defaultWidgets));
@@ -45,15 +42,15 @@ export const useSyncLayers = () =>
     parseAsArrayOf(layersParser).withDefault(['planet_medres_analytic_monthly'])
   );
 
+// Assuming parseAsJson is correctly typed to parse a JSON string into a specific object structure.
+
 export const useSyncDatasetsSettings = () =>
   useQueryState(
     'datasets-settings',
-    parseAsArrayOf(datasetsSettingsParser).withDefault([
-      {
-        mangrove_habitat_extent: {
-          opacity: 1,
-          visibility: 'visible',
-        },
+    datasetsSettingsParser.withDefault({
+      mangrove_habitat_extent: {
+        opacity: 1,
+        visibility: 'visible',
       },
-    ])
+    })
   );

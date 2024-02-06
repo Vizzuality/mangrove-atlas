@@ -1,7 +1,8 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
+
 import { floodAreaPeriodAtom } from 'store/widgets/flood-protection';
 
 import { Visibility } from 'mapbox-gl';
@@ -88,13 +89,13 @@ export function useLayers({
 }
 
 const MangrovesFloodProtectionLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
-
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
+  const activeLayer = layers.find((l) => l === id);
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
     visibility: activeLayer.visibility,
   });
 

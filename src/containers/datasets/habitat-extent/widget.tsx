@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { analysisAtom } from 'store/analysis';
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import NoData from 'containers/widgets/no-data';
 
@@ -27,7 +27,7 @@ import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
-  const [year, setYear] = useRecoilState(habitatExtentSettings);
+  const [datasetsSettings, setDatasetsSettings] = useSyncDatasetsSettings();
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
   const [isCanceled, setIsCanceled] = useState(false);
 
@@ -35,8 +35,9 @@ const HabitatExtent = () => {
     setIsCanceled(true);
   }, []);
 
+  const year = datasetsSettings['mangrove_habitat_extent']?.year;
   const { data, isFetching, isError, refetch } = useMangroveHabitatExtent(
-    { year, unit: selectedUnitAreaExtent },
+    { ...(year && { year: Number(year) }), unit: selectedUnitAreaExtent },
     { enabled: !isCanceled },
     handleQueryCancellation
   );
@@ -70,10 +71,30 @@ const HabitatExtent = () => {
   } = data;
 
   const handleClick = useCallback(
-    (y) => {
-      setYear(y);
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      // Convert the button's value to a number since it's stored as a string
+      const year = Number(e.currentTarget.value);
+
+      // Validate the conversion result to make sure it's a valid number
+      if (isNaN(year)) {
+        console.error('Invalid year.');
+        return;
+      }
+
+      // Proceed with updating the settings
+      await setDatasetsSettings((prevSettings) => {
+        const updatedSettings = {
+          ...prevSettings,
+          mangrove_habitat_extent: {
+            ...prevSettings['mangrove_habitat_extent'],
+            year: year,
+          },
+        };
+
+        return updatedSettings;
+      });
     },
-    [setYear]
+    [setDatasetsSettings]
   );
 
   if (noData) return <NoData />;
@@ -171,7 +192,8 @@ const HabitatExtent = () => {
                           'font-semibold text-brand-800': y === year || y === defaultYear,
                         })}
                         type="button"
-                        onClick={() => handleClick(y)}
+                        value={Number(y)}
+                        onClick={handleClick}
                       >
                         {y || defaultYear}
                       </button>

@@ -39,12 +39,7 @@ export type WidgetSlugType =
   | 'mangrove_drivers_change'
   | 'mangrove_national_dashboard'
   | 'mangrove_fisheries'
-  | 'mangrove_contextual_basemaps'
   | 'mangrove_flood_protection'
-  | 'mangrove_coastal_protection_area'
-  | 'mangrove_coastal_protection_population'
-  | 'mangrove_coastal_protection_stock'
-  | `mangrove_national_dashboard_layer_${string}`
   | 'mangrove_protected_areas'
   | 'mangrove_iucn_ecoregion'
   | 'mangrove_allen_coral_reef'
@@ -54,6 +49,22 @@ export type WidgetSlugType =
   | 'mangrove_contextual_layers'
   | 'widgets_deck_tool';
 
+type ExcludeLiteral<T, U extends string | number | symbol> = T extends U ? never : T;
+
+export type WidgetSlugTypeWithoutSomeValues = ExcludeLiteral<
+  WidgetSlugType,
+  | 'mangrove_flood_protection'
+  | 'mangrove_national_dashboard'
+  | 'mangrove_contextual_layers'
+  | 'widgets_deck_tool'
+>;
+
+export type LayersSlugType =
+  | WidgetSlugTypeWithoutSomeValues
+  | `mangrove_coastal_protection_${string}`
+  | `mangrove_national_dashboard_layer_${string}`
+  | ContextualBasemapsId;
+
 export type AnalysisWidgetSlug =
   | 'mangrove_extent'
   | 'mangrove_net_change'
@@ -62,12 +73,11 @@ export type AnalysisWidgetSlug =
   | 'mangrove_blue_carbon';
 
 export type ContextualBasemapsId =
-  | 'mangrove_allen_coral_reef'
-  | 'mangrove_salt_marsh'
-  | 'mangrove_global_tidal_wetland_change'
-  | 'mangrove_tidal_flats'
-  | 'planet_medres_visual_monthly'
-  | 'planet_medres_analytic_monthly';
+  // | 'mangrove_allen_coral_reef'
+  // | 'mangrove_salt_marsh'
+  // | 'mangrove_global_tidal_wetland_change'
+  // | 'mangrove_tidal_flats'
+  'planet_medres_visual_monthly' | 'planet_medres_analytic_monthly';
 
 export type MosaicId =
   | '45d01564-c099-42d8-b8f2-a0851accf3e7'

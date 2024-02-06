@@ -2,10 +2,11 @@ import { useMemo, useCallback } from 'react';
 
 import { Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
+import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
+
 import { interactiveLayerIdsAtom } from 'store/map';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
@@ -15,21 +16,20 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeLayersAtom);
+  const [layers] = useSyncLayers();
+  const [datasetsSettings] = useSyncDatasetsSettings();
 
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
 
-  const activeLayersIds = layers.map((l) => l.id);
-
   const LAYERS_FILTERED = useMemo(() => {
-    const filteredLayers = activeLayersIds.filter(
+    const filteredLayers = layers.filter(
       (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
         return Object.keys(LAYERS).some((k) => layer.includes(k));
       }
     );
 
     return filteredLayers;
-  }, [activeLayersIds]);
+  }, [layers]);
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
@@ -78,7 +78,6 @@ const LayerManagerContainer = () => {
 
       {LAYERS_FILTERED.map((layer, i) => {
         const layerId = Object.keys(LAYERS).find((k) => layer.includes(k));
-
         const LayerComponent = LAYERS[layerId] || BASEMAPS[layerId];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
         return (

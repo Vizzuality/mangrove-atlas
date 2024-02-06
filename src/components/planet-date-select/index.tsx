@@ -30,7 +30,7 @@ const DateSelect = ({
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [layers, setActiveLayers] = useSyncLayers();
-  const [, setDatasetSettings] = useSyncDatasetsSettings();
+  const [, setdatasetsSettings] = useSyncDatasetsSettings();
 
   const layerToUpdate = useMemo(() => layers.find((layer) => layer.id === id), [layers]);
 
@@ -49,7 +49,7 @@ const DateSelect = ({
       const filteredLayers = layers.filter((l) => l.id !== id);
       if (!!layerToUpdate) {
         setActiveLayers(e.currentTarget.value);
-        setDatasetSettings([
+        setdatasetsSettings([
           {
             ...layerToUpdate,
             id: id as ContextualBasemapsId,
@@ -62,7 +62,7 @@ const DateSelect = ({
         ]);
       }
     },
-    [layerToUpdate, layers, id, setActiveLayers, setDatasetSettings]
+    [layerToUpdate, layers, id, setActiveLayers, setdatasetsSettings]
   );
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
