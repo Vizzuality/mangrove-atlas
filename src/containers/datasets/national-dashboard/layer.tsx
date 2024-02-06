@@ -15,7 +15,7 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
 
   const LAYER = useLayers({
     id: 'mangrove_national_dashboard_layer',
-    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
+  opacity: datasetsSettings[activeLayer]?.opacity,
     visibility: activeLayer.visibility,
     settings: activeLayer.settings,
   });

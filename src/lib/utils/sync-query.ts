@@ -19,7 +19,16 @@ const Widgets = [
   ...CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id }) => id),
 ] as const;
 
+// parsers
 const layersParser = parseAsStringLiteral(Widgets);
+
+const datasetsSettingsParser =
+  parseAsJson<
+    Record<
+      string,
+      { opacity: number; visibility: string; year?: number; startYear?: number; endYear?: number }
+    >
+  >();
 
 export const useSyncDatasets = () =>
   useQueryState('datasets', parseAsArrayOf(parseAsString).withDefault(defaultWidgets));
@@ -40,10 +49,6 @@ export const useSyncLayers = () =>
     parseAsArrayOf(layersParser).withDefault(['planet_medres_analytic_monthly'])
   );
 
-// Assuming parseAsJson is correctly typed to parse a JSON string into a specific object structure.
-const datasetsSettingsParser =
-  parseAsJson<Record<string, { opacity: number; visibility: string; year?: number }>>();
-
 export const useSyncDatasetsSettings = () =>
   useQueryState(
     'datasets-settings',
@@ -51,7 +56,6 @@ export const useSyncDatasetsSettings = () =>
       mangrove_habitat_extent: {
         opacity: 1,
         visibility: 'visible',
-        // year is optional in default but can be set or updated as needed
       },
     })
   );

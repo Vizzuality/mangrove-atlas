@@ -71,7 +71,7 @@ const HabitatExtent = () => {
   } = data;
 
   const handleClick = useCallback(
-    async (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       // Convert the button's value to a number since it's stored as a string
       const year = Number(e.currentTarget.value);
 
@@ -82,7 +82,7 @@ const HabitatExtent = () => {
       }
 
       // Proceed with updating the settings
-      await setDatasetsSettings((prevSettings) => {
+      void setDatasetsSettings((prevSettings) => {
         const updatedSettings = {
           ...prevSettings,
           mangrove_habitat_extent: {

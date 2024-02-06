@@ -7,9 +7,10 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
+import { useSyncDatasetsSettings } from 'lib/utils/sync-query';
+
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -222,11 +223,10 @@ export function useMangroveNetChange(
   }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
 export function useSource(): SourceProps {
-  const startYear = useRecoilValue(netChangeStartYear);
-  const endYear = useRecoilValue(netChangeEndYear);
+  const [datasetsSettings] = useSyncDatasetsSettings();
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
-    startYear,
-    endYear,
+    startYear: datasetsSettings['mangrove_net_change']?.startYear,
+    endYear: datasetsSettings['mangrove_net_change']?.endYear,
   });
 
   const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);

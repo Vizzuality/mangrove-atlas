@@ -18,7 +18,7 @@ export const PlanetSatelliteBasemapAnalyticLayer = ({ beforeId, id }: LayerProps
   });
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(datasetsSettings[activeLayer]?.opacity) || 1,
+  opacity: datasetsSettings[activeLayer]?.opacity,
     visibility: datasetsSettings[activeLayer]?.visibility || 'visible',
   });
 

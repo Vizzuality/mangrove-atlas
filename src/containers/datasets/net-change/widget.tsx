@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
 import { analysisAtom } from 'store/analysis';
-import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import NoData from 'containers/widgets/no-data';
 
@@ -28,8 +28,8 @@ import { useMangroveNetChange, widgetSlug } from './hooks';
 const NetChangeWidget = () => {
   const queryClient = useQueryClient();
   const [selectedUnit, setUnit] = useState('km²');
-  const [startYear, setStartYear] = useRecoilState(netChangeStartYear);
-  const [endYear, setEndYear] = useRecoilState(netChangeEndYear);
+  const [datasetsSettings, setDatasetsSettings] = useSyncDatasetsSettings();
+  const { startYear, endYear } = datasetsSettings['mangrove_net_change'] || {};
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
   const [isCanceled, setIsCanceled] = useState(false);
@@ -44,6 +44,24 @@ const NetChangeWidget = () => {
       fetchStatus: 'fetching',
     });
   }, [queryClient]);
+
+  const handleYearChange = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const yearType = e.currentTarget.getAttribute('data-year-type');
+      const yearValue = parseInt(e.currentTarget.value, 10);
+
+      if (!yearType || isNaN(yearValue)) return;
+      console.log(yearType, yearValue, 'despues');
+      void setDatasetsSettings((currentSettings) => ({
+        ...currentSettings,
+        mangrove_net_change: {
+          ...currentSettings['mangrove_net_change'],
+          [yearType]: yearValue,
+        },
+      }));
+    },
+    [setDatasetsSettings]
+  );
 
   const {
     netChange,
@@ -160,7 +178,9 @@ const NetChangeWidget = () => {
                             y > currentEndYear || currentEndYear === y,
                         })}
                         type="button"
-                        onClick={() => setStartYear(y)}
+                        data-year-type="startYear"
+                        value={Number(y)}
+                        onClick={handleYearChange}
                         disabled={
                           currentStartYear === y || y > currentEndYear || currentEndYear === y
                         }
@@ -193,7 +213,9 @@ const NetChangeWidget = () => {
                             y < currentStartYear || currentStartYear === y,
                         })}
                         type="button"
-                        onClick={() => setEndYear(y)}
+                        data-year-type="endYear"
+                        value={Number(y)}
+                        onClick={handleYearChange}
                         disabled={
                           currentEndYear === y || y < currentStartYear || currentStartYear === y
                         }
