@@ -43,28 +43,24 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const handleClick = useCallback(async () => {
     if (isActive) {
       // Remove the layer and its settings
-      const newLayers = layers.filter((w) => w !== id);
-      const newSettings = datasetsSettings.filter((setting) => !Object.keys(setting).includes(id));
+      const newLayers = layers.filter((layer) => layer !== id);
+      const { [id]: removedSetting, ...newSettings } = datasetsSettings; // Destructure to remove the layer's settings
       await setActiveLayers(newLayers);
       await setDatasetsSettings(newSettings);
     } else {
       // Add the layer and its default settings
       const newLayers = [id, ...layers];
-      const newSetting = {
-        [id]: { opacity: '1', visibility: 'visible' },
+      const newSettings = {
+        ...datasetsSettings,
+        [id]: { opacity: 1, visibility: 'visible' }, // Directly add or update the layer's settings
       };
-      // Ensure we merge new settings correctly with existing ones, without duplicating
-      const existingSettings = datasetsSettings.some((setting) => Object.keys(setting).includes(id))
-        ? datasetsSettings.map((setting) =>
-            Object.keys(setting).includes(id) ? { ...setting, ...newSetting } : setting
-          )
-        : [...datasetsSettings, newSetting];
+
       await setActiveLayers(newLayers);
-      await setDatasetsSettings(existingSettings);
+      await setDatasetsSettings(newSettings);
     }
   }, [isActive, layers, datasetsSettings, id, setActiveLayers, setDatasetsSettings]);
 
-  const HELPER_ID = id === layers[0]?.id;
+  const HELPER_ID = id === layers[0];
 
   const showDownloadInfoHelpers =
     !isMapSettingsOpen && HELPER_ID && (locationTool === 'worldwide' || locationTool === 'search');

@@ -14,8 +14,6 @@ const defaultWidgets = widgets
   .filter((widget) => widget.categoryIds.includes(defaultCategory))
   .map((widget) => widget.slug) satisfies WidgetSlugType[];
 
-const datasetsSettingsParser = parseAsJson<Record<string, Record<string, unknown>>>();
-
 const Widgets = [
   ...widgets.map(({ slug }) => slug),
   ...CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id }) => id),
@@ -43,6 +41,8 @@ export const useSyncLayers = () =>
   );
 
 // Assuming parseAsJson is correctly typed to parse a JSON string into a specific object structure.
+const datasetsSettingsParser =
+  parseAsJson<Record<string, { opacity: number; visibility: string; year?: number }>>();
 
 export const useSyncDatasetsSettings = () =>
   useQueryState(
@@ -51,6 +51,7 @@ export const useSyncDatasetsSettings = () =>
       mangrove_habitat_extent: {
         opacity: 1,
         visibility: 'visible',
+        // year is optional in default but can be set or updated as needed
       },
     })
   );
