@@ -8,7 +8,7 @@ export type UseParamsOptions = Readonly<{
 
 export type WidgetTypes = {
   name: string;
-  slug: WidgetSlugType;
+  slug: (typeof WidgetSlugType)[number];
   locationType: string[];
   applicability?: string;
   categoryIds: string[];
@@ -19,51 +19,57 @@ export type WidgetTypes = {
 
 export const Widgets = widgets.map(({ slug }) => slug);
 
-export type WidgetSlugType =
-  | 'mangrove_habitat_extent'
-  | 'mangrove_net_change'
-  | 'mangrove_habitat_change'
-  | 'mangrove_alerts'
-  | 'mangrove_biomass'
-  | 'mangrove_height'
-  | 'mangrove_blue_carbon'
-  | 'mangrove_protection'
-  | 'mangrove_restoration'
-  | 'mangrove_restoration_sites'
-  | 'mangrove_species_distribution'
-  | 'mangrove_species_threatened'
-  | 'mangrove_species_location'
-  | 'mangrove_emissions_mitigation'
-  | 'mangrove_international_status'
-  | 'mangrove_carbon_market_potential'
-  | 'mangrove_drivers_change'
-  | 'mangrove_national_dashboard'
-  | 'mangrove_fisheries'
-  | 'mangrove_flood_protection'
-  | 'mangrove_protected_areas'
-  | 'mangrove_iucn_ecoregion'
-  | 'mangrove_allen_coral_reef'
-  | 'mangrove_tidal_flats'
-  | 'mangrove_salt_marsh'
-  | 'mangrove_global_tidal_wetland_change'
-  | 'mangrove_contextual_layers'
-  | 'widgets_deck_tool';
+export const WidgetSlugType = [
+  'mangrove_habitat_extent',
+  'mangrove_net_change',
+  'mangrove_habitat_change',
+  'mangrove_alerts',
+  'mangrove_biomass',
+  'mangrove_height',
+  'mangrove_blue_carbon',
+  'mangrove_protection',
+  'mangrove_restoration',
+  'mangrove_restoration_sites',
+  'mangrove_species_distribution',
+  'mangrove_species_threatened',
+  'mangrove_species_location',
+  'mangrove_emissions_mitigation',
+  'mangrove_international_status',
+  'mangrove_carbon_market_potential',
+  'mangrove_drivers_change',
+  'mangrove_national_dashboard',
+  'mangrove_fisheries',
+  'mangrove_flood_protection',
+  'mangrove_protected_areas',
+  'mangrove_iucn_ecoregion',
+  'mangrove_allen_coral_reef',
+  'mangrove_tidal_flats',
+  'mangrove_salt_marsh',
+  'mangrove_global_tidal_wetland_change',
+  'mangrove_contextual_layers',
+  'widgets_deck_tool',
+] as const;
 
 type ExcludeLiteral<T, U extends string | number | symbol> = T extends U ? never : T;
 
 export type WidgetSlugTypeWithoutSomeValues = ExcludeLiteral<
-  WidgetSlugType,
+  typeof WidgetSlugType,
   | 'mangrove_flood_protection'
   | 'mangrove_national_dashboard'
   | 'mangrove_contextual_layers'
   | 'widgets_deck_tool'
 >;
 
+export type FloodProtectionLayers =
+  | 'mangrove_coastal_protection_area'
+  | 'mangrove_coastal_protection_population'
+  | 'mangrove_coastal_protection_stock';
+
 export type LayersSlugType =
-  | WidgetSlugTypeWithoutSomeValues
-  | `mangrove_coastal_protection_${string}`
-  | `mangrove_national_dashboard_layer_${string}`
-  | ContextualBasemapsId;
+  // | WidgetSlugTypeWithoutSomeValues
+  // | FloodProtectionLayers
+  `mangrove_national_dashboard_layer_${string}`;
+// | ContextualBasemapsId;
 
 export type AnalysisWidgetSlug =
   | 'mangrove_extent'

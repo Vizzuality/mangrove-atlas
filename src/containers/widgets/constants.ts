@@ -1,6 +1,6 @@
 import { WidgetTypes } from 'types/widget';
 
-const widgets_dev = [
+const widgets_dev: WidgetTypes[] = [
   {
     name: 'National dashboard',
     slug: 'mangrove_national_dashboard',
@@ -17,7 +17,7 @@ const widgets_dev = [
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['restoration_sites'],
   },
-] satisfies WidgetTypes[];
+];
 
 const widgets_prod = [
   {

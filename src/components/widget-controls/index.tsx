@@ -24,7 +24,7 @@ type ContentType = {
 };
 
 type WidgetControlsType = Readonly<{
-  id?: LayersSlugType & ContextualBasemapsId & WidgetSlugType;
+  id?: LayersSlugType & ContextualBasemapsId & typeof WidgetSlugType;
   content?: ContentType;
 }>;
 

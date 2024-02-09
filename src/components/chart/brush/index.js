@@ -154,7 +154,7 @@ export default class Brush extends PureComponent {
           const [rx0, rx1] = [sx0, sx1].map((d) => Math.round(this.scale.invert(d)));
 
           this.setState({
-            animate: true,
+            animate: false,
             brushSelection: [
               [sx0, sy0],
               [sx1, sy1],

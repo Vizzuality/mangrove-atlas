@@ -9,13 +9,12 @@ import { useRouter } from 'next/router';
 import { formatAxis } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
-import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -24,6 +23,8 @@ import API_cloud_functions from 'services/cloud-functions';
 
 import Tooltip from './tooltip';
 import type { UseParamsOptions, DataResponse, CustomAreaGeometry } from './types';
+
+type MangrovesAlertsLayers = 'alerts-heatmap' | 'alerts-tiles' | 'monitored-alerts';
 
 // widget data
 const months = [
@@ -132,8 +133,6 @@ export function useAlerts<T>(
   queryOptions?: UseQueryOptions<DataResponse, T>,
   onCancel?: () => void
 ) {
-  const setStartDate = useSetRecoilState(alertsStartDate);
-  const setEndDate = useSetRecoilState(alertsEndDate);
   const {
     query: { params: queryParams },
   } = useRouter();
@@ -189,11 +188,10 @@ export function useAlerts<T>(
   const defaultStartDate = startDateOptions[0];
   const defaultEndDate = endDateOptions[endDateOptions.length - 1];
 
-  const selectedStartDate = startDate || defaultStartDate;
-  const selectedEndDate = endDate || defaultEndDate;
+  const selectedStartDate =
+    startDateOptions.find(({ value }) => value === startDate) || defaultStartDate;
+  const selectedEndDate = endDateOptions.find(({ value }) => value === endDate) || defaultEndDate;
 
-  if (selectedEndDate) setEndDate(selectedEndDate);
-  if (selectedStartDate) setStartDate(selectedStartDate);
   const dataFiltered =
     Array.isArray(data) &&
     data.filter(
@@ -391,10 +389,13 @@ export function useAlerts<T>(
 }
 
 // dataset layer
-export function useSources(): SourceProps[] {
-  const startDate = useRecoilValue(alertsStartDate);
-  const endDate = useRecoilValue(alertsEndDate);
-
+export function useSources({
+  startDate,
+  endDate,
+}: {
+  startDate: string;
+  endDate: string;
+}): SourceProps[] {
   return [
     {
       id: 'monitored-alerts',
@@ -405,16 +406,16 @@ export function useSources(): SourceProps[] {
       id: 'alerts-heatmap',
       type: 'geojson',
       data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
-        startDate?.value || ''
-      }&end_date=${endDate?.value || ''}`,
+        startDate || ''
+      }&end_date=${endDate || ''}`,
     },
     {
       id: 'alerts-tiles',
       type: 'vector',
       tiles: [
         `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
-          startDate?.value || ''
-        }&end_date=${endDate?.value || ''}`,
+          startDate || ''
+        }&end_date=${endDate || ''}`,
       ],
       minzoom: 10,
       maxzoom: 14,
@@ -424,17 +425,13 @@ export function useSources(): SourceProps[] {
 
 export function useLayers({
   id,
-  opacity,
+  opacity = 1,
   visibility = 'visible',
 }: {
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-}): {
-  'alerts-heatmap': LayerProps[];
-  'alerts-tiles': LayerProps[];
-  'monitored-alerts': LayerProps[];
-} {
+}): Record<MangrovesAlertsLayers, LayerProps[]> {
   return {
     'alerts-heatmap': [
       {

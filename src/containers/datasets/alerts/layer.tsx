@@ -1,31 +1,44 @@
+import React from 'react';
+
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncDatasetsSettings, useSyncLayers } from 'lib/utils/sync-query';
+
+import type { Visibility } from 'mapbox-gl';
 
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSources } from './hooks';
 
-const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
+type MangrovesAlertsLayers = 'alerts-heatmap' | 'alerts-tiles' | 'monitored-alerts';
+
+const MangrovesAlertsLayer: React.FC<LayerProps> = ({ beforeId, id }) => {
   const [layers] = useSyncLayers();
   const [datasetsSettings] = useSyncDatasetsSettings();
   const activeLayer = layers.find((l) => l === id);
-  const SOURCES = useSources();
-  const LAYERS = useLayers({
+  const startDate = datasetsSettings?.['mangrove_alerts']?.startDate;
+  const endDate = datasetsSettings?.['mangrove_alerts']?.endDate;
+
+  const SOURCES = useSources({ startDate, endDate });
+  const LAYERS: Record<MangrovesAlertsLayers, LayerProps>[] = useLayers({
     id,
-    opacity: parseFloat(datasetsSettings[activeLayer].opacity),
-    visibility: datasetsSettings[activeLayer].visibility,
+    opacity: datasetsSettings?.[activeLayer]?.opacity ?? 1, // Provide a fallback opacity if undefined
+    visibility: datasetsSettings?.[activeLayer]?.visibility,
   });
 
-  if (!SOURCES || !LAYERS) return null;
+  if (!SOURCES || Object.keys(LAYERS).length === 0) return null;
 
-  return SOURCES.map((SOURCE) => (
-    <Source key={SOURCE.id} {...SOURCE}>
-      {LAYERS[SOURCE.id].map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+  return (
+    <>
+      {SOURCES.map((SOURCE) => (
+        <Source key={SOURCE.id} {...SOURCE}>
+          {LAYERS[SOURCE.id]?.map((LAYER) => (
+            <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+          ))}
+        </Source>
       ))}
-    </Source>
-  ));
+    </>
+  );
 };
 
 export default MangrovesAlertsLayer;

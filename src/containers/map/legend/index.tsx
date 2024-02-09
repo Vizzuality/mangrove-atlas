@@ -30,11 +30,9 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
   const handleChangeOrder = useCallback(
     (order: string[]) => {
-      console.log('layers order');
       // const newLayers = order.map((id) => {
       //   return layers.find((l) => l.id === id);
       // }) as ActiveLayers[];
-
       // setActiveLayers(newLayers);
     },
     [layers, setActiveLayers]

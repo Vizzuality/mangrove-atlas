@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Source, Layer, SourceProps } from 'react-map-gl';
+import { Source, Layer } from 'react-map-gl';
 
 import { useSyncLayers, useSyncDatasetsSettings } from 'lib/utils/sync-query';
 
@@ -13,11 +13,11 @@ export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const [datasetsSettings] = useSyncDatasetsSettings();
   const activeLayer = layers.find((l) => l === id);
 
-  const SOURCES = useSource() satisfies SourceProps;
+  const SOURCES = useSource();
   const LAYER = useLayer({
     id,
     opacity: datasetsSettings[activeLayer]?.opacity,
-    visibility: activeLayer.visibility,
+    visibility: datasetsSettings[activeLayer]?.visibility,
   });
 
   if (!SOURCES || !LAYER) return null;

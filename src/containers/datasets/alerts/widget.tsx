@@ -1,6 +1,7 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, MouseEvent, useEffect } from 'react';
 
 import cn from 'lib/classnames';
+import { useSyncDatasetsSettings, useSyncLayers } from 'lib/utils/sync-query';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
@@ -28,11 +29,14 @@ import { useAlerts } from './hooks';
 import Legend from './legend';
 
 const AlertsWidget = () => {
-  const [startDate, setStartDate] = useRecoilState(alertsStartDate);
-  const [endDate, setEndDate] = useRecoilState(alertsEndDate);
+  const [datasetsSettings, setDatasetsSettings] = useSyncDatasetsSettings();
+
+  const startDate = datasetsSettings['mangrove_alerts']?.startDate;
+  const endDate = datasetsSettings['mangrove_alerts']?.endDate;
+
   const { customGeojson } = useRecoilValue(drawingToolAtom);
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const layers = useSyncLayers();
 
   const [isCanceled, setIsCanceled] = useState(false);
 
@@ -41,8 +45,23 @@ const AlertsWidget = () => {
   }, []);
 
   const isActive = useMemo(
-    () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
-    [activeLayers]
+    () => layers.filter((l) => l === 'planet_medres_visual_monthly'),
+    [layers]
+  );
+
+  const handleDateChange = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const yearType = e.currentTarget.getAttribute('data-date-type');
+      if (!yearType) return;
+      void setDatasetsSettings((currentSettings) => ({
+        ...currentSettings,
+        mangrove_alerts: {
+          ...currentSettings['mangrove_alerts'],
+          [yearType]: e.currentTarget.value,
+        },
+      }));
+    },
+    [setDatasetsSettings]
   );
 
   const {
@@ -73,6 +92,18 @@ const AlertsWidget = () => {
     { enabled: !isCanceled },
     handleQueryCancellation
   );
+
+  useEffect(() => {
+    if (!startDate || !endDate)
+      void setDatasetsSettings((currentSettings) => ({
+        ...currentSettings,
+        mangrove_alerts: {
+          ...currentSettings['mangrove_alerts'],
+          ...(!!selectedStartDate && !startDate && { startDate: selectedStartDate?.value }),
+          ...(!!selectedEndDate && !endDate && { endDate: selectedEndDate?.value }),
+        },
+      }));
+  }, [startDate, endDate, selectedStartDate, selectedEndDate, setDatasetsSettings]);
 
   const handleTryAgain = useCallback(async () => {
     setIsCanceled(false);
@@ -127,12 +158,14 @@ const AlertsWidget = () => {
                         aria-label="Select start date"
                         className={cn({
                           'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': startDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value > endDate?.value,
+                          'font-semibold text-brand-800': startDate === date?.value,
+                          'pointer-events-none opacity-50': date?.value > endDate,
                         })}
                         type="button"
-                        onClick={() => setStartDate(date)}
-                        disabled={date?.value > endDate?.value}
+                        value={date?.value}
+                        data-date-type="startDate"
+                        onClick={handleDateChange}
+                        disabled={date?.value > endDate}
                       >
                         {date?.label || defaultStartDate?.label}
                       </button>
@@ -162,14 +195,14 @@ const AlertsWidget = () => {
                         aria-label="Select end date"
                         className={cn({
                           'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': endDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value < startDate?.value,
+                          'font-semibold text-brand-800': endDate === date?.value,
+                          'pointer-events-none opacity-50': date?.value < startDate,
                         })}
                         type="button"
-                        onClick={() => {
-                          return setEndDate(date);
-                        }}
-                        disabled={date?.value < startDate?.value}
+                        value={date?.value}
+                        data-date-type="endDate"
+                        onClick={handleDateChange}
+                        disabled={date?.value < startDate}
                       >
                         {date?.label || defaultEndDate?.label}
                       </button>
@@ -186,8 +219,22 @@ const AlertsWidget = () => {
             config={{
               ...configBrush,
               onBrushEnd: ({ startIndex, endIndex }) => {
-                if (startIndex) setStartDate(fullData[startIndex]?.startDate);
-                if (endIndex) setEndDate(fullData[endIndex]?.endDate);
+                if (startIndex)
+                  setDatasetsSettings((currentSettings) => ({
+                    ...currentSettings,
+                    mangrove_alerts: {
+                      ...currentSettings['mangrove_alerts'],
+                      startDate: fullData[startIndex]?.startDate?.value,
+                    },
+                  }));
+                if (endIndex)
+                  setDatasetsSettings((currentSettings) => ({
+                    ...currentSettings,
+                    mangrove_alerts: {
+                      ...currentSettings['mangrove_alerts'],
+                      endDate: fullData[endIndex]?.endDate?.value,
+                    },
+                  }));
               },
               startIndex: configBrush?.customBrush?.startIndex,
               endIndex: configBrush?.customBrush?.endIndex,

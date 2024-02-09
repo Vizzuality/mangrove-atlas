@@ -279,7 +279,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       const restorationData = evt?.features.find(
         ({ layer }) => layer.id === 'mangrove_restoration-layer'
       );
-      console.log(map.getStyle().layers);
+      // console.log(map.getStyle().layers);
       const interactiveLayers = evt?.features.find(
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||

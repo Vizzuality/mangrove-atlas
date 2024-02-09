@@ -51,7 +51,6 @@ const NetChangeWidget = () => {
       const yearValue = parseInt(e.currentTarget.value, 10);
 
       if (!yearType || isNaN(yearValue)) return;
-      console.log(yearType, yearValue, 'despues');
       void setDatasetsSettings((currentSettings) => ({
         ...currentSettings,
         mangrove_net_change: {

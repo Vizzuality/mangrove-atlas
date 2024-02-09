@@ -1,3 +1,4 @@
+import { Visibility } from 'mapbox-gl';
 import { parseAsJson, useQueryState } from 'nuqs';
 import { parseAsString, parseAsFloat, parseAsArrayOf, parseAsStringLiteral } from 'nuqs/parsers';
 
@@ -12,23 +13,42 @@ const defaultCategory = CATEGORY_OPTIONS.find((c) => c.defaultCategory)?.value;
 
 const defaultWidgets = widgets
   .filter((widget) => widget.categoryIds.includes(defaultCategory))
-  .map((widget) => widget.slug) satisfies WidgetSlugType[];
+  .map((widget) => widget.slug);
 
-const Widgets = [
-  ...widgets.map(({ slug }) => slug),
+const floodProtectionLayers = widgets.find(
+  ({ slug }) => slug === 'mangrove_flood_protection'
+)?.subLayersIds;
+
+const Layers = [
+  ...widgets
+    .map(({ slug }) => slug)
+    .filter(
+      (slug) =>
+        slug !== 'widgets_deck_tool' &&
+        slug !== 'mangrove_contextual_layers' &&
+        slug !== 'mangrove_national_dashboard' &&
+        slug !== 'mangrove_flood_protection'
+    ),
+  // `mangrove_national_dashboard_layer_${string}`
+  ...floodProtectionLayers,
   ...CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES.map(({ id }) => id),
 ] as const;
 
 // parsers
-const layersParser = parseAsStringLiteral(Widgets);
-
-const datasetsSettingsParser =
-  parseAsJson<
-    Record<
-      string,
-      { opacity: number; visibility: string; year?: number; startYear?: number; endYear?: number }
-    >
-  >();
+const datasetsSettingsParser = parseAsJson<
+  Record<
+    string,
+    {
+      opacity: number;
+      visibility: Visibility;
+      year?: number;
+      startYear?: number;
+      endYear?: number;
+      startDate?: string;
+      endDate?: string;
+    }
+  >
+>();
 
 export const useSyncDatasets = () =>
   useQueryState('datasets', parseAsArrayOf(parseAsString).withDefault(defaultWidgets));
@@ -44,10 +64,7 @@ export const useSyncBounds = () =>
   useQueryState('bounds', parseAsArrayOf(parseAsArrayOf(parseAsFloat)));
 
 export const useSyncLayers = () =>
-  useQueryState(
-    'layers',
-    parseAsArrayOf(layersParser).withDefault(['planet_medres_analytic_monthly'])
-  );
+  useQueryState('layers', parseAsArrayOf(parseAsString).withDefault(['mangrove_habitat_extent']));
 
 export const useSyncDatasetsSettings = () =>
   useQueryState(
