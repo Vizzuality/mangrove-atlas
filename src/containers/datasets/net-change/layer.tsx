@@ -14,20 +14,23 @@ export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers.find((l) => l.id === id);
 
-  const SOURCES = useSources() satisfies SourceProps[];
+  const sourceLoss = useSources('loss') satisfies SourceProps[];
+  const sourceGain = useSources('gain') satisfies SourceProps[];
   const LAYER = useLayer({
     id,
     opacity: parseFloat(activeLayer.opacity),
     visibility: activeLayer.visibility,
   });
 
-  if (!SOURCES || !LAYER) return null;
+  if (!LAYER || !sourceLoss || !sourceGain) return null;
+
+  const SOURCES = [...sourceGain, ...sourceLoss];
 
   return (
     <>
       {SOURCES.map((SOURCE) => (
         <Source key={SOURCE.id} {...SOURCE}>
-          <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+          <Layer key={`${SOURCE.id}-layer`} {...LAYER} id={SOURCE.id} beforeId={beforeId} />
         </Source>
       ))}
     </>
