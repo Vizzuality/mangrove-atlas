@@ -222,22 +222,20 @@ export function useMangroveNetChange(
   }, [data, query, startYear, endYear, location, selectedUnit, noData]);
 }
 
-export function useSources(): SourceProps[] {
+export function useSources(fluctuation): SourceProps[] {
   const startYear = useRecoilValue(netChangeStartYear);
   const endYear = useRecoilValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
     startYear,
     endYear,
   });
-
   const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
 
   return filteredYears?.map((year) => ({
-    id: `net-change-${year}`,
+    id: `net-change-${year}-${fluctuation}`,
     type: 'raster',
     tiles: [
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/gain/${year}/{z}/{x}/{y}.png`,
-      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/loss/${year}/{z}/{x}/{y}.png`,
+      `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/${fluctuation}/${year}/{z}/{x}/{y}.png`,
     ],
     minZoom: 0,
     maxZoom: 12,
