@@ -50,16 +50,20 @@ const Category = () => {
                 'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
                   true,
                 'border-2 border-brand-800 font-bold text-brand-800':
-                  category.value === categorySelected,
+                  category.value === categorySelected ||
+                  (categorySelected === 'all_datasets' && category.value === 'custom'),
               })}
               defaultChecked={'distribution_and_change' === category.value}
             >
               <h4 className="flex min-h-[40px] items-center justify-center">{category.label}</h4>
               <Checkbox
                 className={cn({
-                  'absolute bottom-2 right-2 h-4 w-4 rounded-full border-none md:h-6 md:w-6': true,
+                  'absolute bottom-1 right-1 h-4 w-4 rounded-full border-none md:h-6 md:w-6': true,
                 })}
-                checked={category.value === categorySelected}
+                checked={
+                  category.value === categorySelected ||
+                  (categorySelected === 'all_datasets' && category.value === 'custom')
+                }
               >
                 <CheckboxIndicator>
                   <Icon

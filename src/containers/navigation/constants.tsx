@@ -34,7 +34,7 @@ export const EXT_MENU_OPTIONS = [
 ];
 
 const CATEGORY_OPTIONS: {
-  value: Category;
+  value: Category | 'custom';
   label: string;
 }[] = [
   { value: 'distribution_and_change', label: 'Distribution & Change' },
@@ -45,8 +45,8 @@ const CATEGORY_OPTIONS: {
   { value: 'climate_and_policy', label: 'Climate & Policy' },
   { value: 'ecosystem_services', label: 'Ecosystem Services' },
   { value: 'contextual_layers', label: 'Contextual layers' },
-  { value: 'all_datasets', label: 'Custom' },
-] satisfies { value: Category; label: string }[];
+  { value: 'custom', label: 'Custom' },
+] satisfies { value: Category | 'custom'; label: string }[];
 
 export const STYLES = {
   'icon-wrapper': 'flex h-10.5 w-10.5 flex-col items-center justify-center text-brand-800',

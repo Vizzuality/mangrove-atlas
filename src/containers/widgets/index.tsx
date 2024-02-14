@@ -35,7 +35,7 @@ const buttonMotion = {
     width: 48,
     x: 0,
     transition: {
-      duration: 0.4,
+      duration: 0.2,
       type: 'tween',
       ease: 'easeIn',
     },
@@ -44,7 +44,7 @@ const buttonMotion = {
     width: 140,
     x: -46,
     transition: {
-      duration: 0.4,
+      duration: 0.2,
       type: 'tween',
       ease: 'easeOut',
     },
@@ -254,24 +254,63 @@ const WidgetsContainer: FC = () => {
           })}
         </div>
       )}
-
-      <motion.div
-        initial="rest"
-        whileHover="hover"
-        animate="rest"
-        // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
-        className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20 print:hidden"
-      >
-        <motion.button
-          className="flex min-w-[48px] items-center space-x-4 rounded-full bg-brand-800 p-4 text-xs font-semibold text-white shadow-control"
-          variants={buttonMotion}
+      <Dialog>
+        <Helper
+          className={{
+            button: 'right-0 -top-1.5 z-20',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: -50, left: 0 }}
+          message="Triggers deck to configure widgets"
         >
-          <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
-          <motion.span variants={textMotion} className="whitespace-nowrap">
-            Select Data
-          </motion.span>
-        </motion.button>
-      </motion.div>
+          <DialogTrigger>
+            <motion.div
+              initial="rest"
+              whileHover="hover"
+              animate="rest"
+              // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
+              className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20 print:hidden"
+            >
+              <motion.button
+                className="flex min-w-[48px] items-center space-x-4 rounded-full bg-brand-800 p-4 text-xs font-semibold text-white shadow-control"
+                variants={buttonMotion}
+              >
+                <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
+                <motion.span variants={textMotion} className="whitespace-nowrap">
+                  Select Data
+                </motion.span>
+              </motion.button>
+            </motion.div>
+          </DialogTrigger>
+        </Helper>
+        <DialogContent className="mb-10 w-screen border-2 md:w-auto">
+          <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+          <div className="no-scrollbar space-y-8">
+            <h2 className="font-black/85 text-3xl font-light leading-10">Widgets deck settings</h2>
+            <Helper
+              className={{
+                button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',
+                tooltip: 'w-80',
+              }}
+              tooltipPosition={{ top: -20, left: 0 }}
+              message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+            >
+              <Category />
+            </Helper>
+            <Helper
+              className={{
+                button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
+                tooltip: 'w-fit-content',
+              }}
+              tooltipPosition={{ top: -70, left: -400 }}
+              message="Widgets list"
+            >
+              <WidgetsMenu />
+            </Helper>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
