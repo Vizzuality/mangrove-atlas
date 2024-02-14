@@ -4,9 +4,11 @@ import cn from 'lib/classnames';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { INFO } from 'containers/datasets';
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
 import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
 
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 type Tags =
@@ -59,6 +61,8 @@ const FAKE_DATA_POP_UP = [
   },
 ];
 
+const Info = INFO['mangrove_iucn_ecoregion'];
+
 const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   const [open, setOpen] = useState(false);
   const handleClick = useCallback(() => {
@@ -87,6 +91,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
           {open ? '-' : '+'}
         </div>
       </button>
+
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -101,6 +106,19 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="flex flex-col space-y-6"
           >
+            <Dialog>
+              <DialogTrigger>
+                <p className="w-full text-right text-xs text-brand-800 underline">
+                  Province Descriptions
+                </p>
+              </DialogTrigger>
+              <DialogContent className="w-screen md:mb-20 md:w-auto">
+                <div className="no-scrollbar overflow-y-auto">
+                  <Info />
+                </div>
+                <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+              </DialogContent>
+            </Dialog>
             <div className="flex flex-col space-y-1">
               <ul className="flex space-x-2 text-sm">
                 {legendItems.map(({ color, label }) => (

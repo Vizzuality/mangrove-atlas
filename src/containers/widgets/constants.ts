@@ -170,7 +170,7 @@ const widgets_prod = [
   },
   {
     ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'IUCN Ecoregion assesment',
+      name: 'IUCN Ecoregion assessment',
       slug: 'mangrove_iucn_ecoregion',
       locationType: ['worldwide'],
       applicability: 'Global',
