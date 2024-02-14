@@ -50,7 +50,8 @@ const Category = () => {
                 'relative flex-1 items-center justify-center rounded-xl border border-black/15 p-3 text-xs md:p-5 md:text-sm':
                   true,
                 'border-2 border-brand-800 font-bold text-brand-800':
-                  category.value === categorySelected,
+                  category.value === categorySelected ||
+                  (categorySelected === 'all_datasets' && category.value === 'custom'),
               })}
               defaultChecked={'distribution_and_change' === category.value}
             >
