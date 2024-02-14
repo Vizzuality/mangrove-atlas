@@ -51,8 +51,6 @@ const SuggestedLayers = ({
             <div className="relative h-[42px] w-[42px] shrink-0 rounded-2xl">
               <Image
                 fill={true}
-                // width={42}
-                // height={42}
                 quality={100}
                 style={{ objectFit: 'cover' }}
                 className="rounded-xl"
