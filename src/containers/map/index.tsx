@@ -82,7 +82,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
-
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number; y: number };
     info: LocationPopUp;

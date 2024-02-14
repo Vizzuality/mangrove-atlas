@@ -2,7 +2,7 @@ import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 export const LAYERS = [
   {
-    name: 'Iucn ecoregion',
+    name: 'IUCN Ecosystem assessment',
     id: 'mangrove_iucn_ecoregion',
   },
   {

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { INFO } from 'containers/datasets';
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
+import { useMangroveEcoregions } from 'containers/datasets/iucn-ecoregion/hooks';
 import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
@@ -68,6 +69,11 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   const handleClick = useCallback(() => {
     setOpen(!open);
   }, [open]);
+  const { data } = useMangroveEcoregions();
+
+  // Temp fix. TO -DO: Remove this when the data is updated
+  const unitNameWithoutMangrove = info?.unit_name?.replace('Mangroves of', '').trim();
+  const url = data?.reports?.find((d) => d.name.includes(unitNameWithoutMangrove))?.url;
 
   return (
     <div
@@ -79,7 +85,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
     >
       <button className="flex w-full items-center justify-between" onClick={handleClick}>
         <h2 className="cursor-pointer whitespace-nowrap py-5 text-xs font-bold uppercase -tracking-tighter text-black/85">
-          ECOSYSTEM ASSESSMENT
+          IUCN ECOSYSTEM ASSESSMENT
         </h2>
         <div
           className={cn({
@@ -106,19 +112,15 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
             transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="flex flex-col space-y-6"
           >
-            <Dialog>
-              <DialogTrigger>
-                <p className="w-full text-right text-xs text-brand-800 underline">
-                  Province Descriptions
-                </p>
-              </DialogTrigger>
-              <DialogContent className="w-screen md:mb-20 md:w-auto">
-                <div className="no-scrollbar overflow-y-auto">
-                  <Info />
-                </div>
-                <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
-              </DialogContent>
-            </Dialog>
+            <a
+              className="w-full text-right text-xs text-brand-800 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={url}
+            >
+              Province Descriptions
+            </a>
+
             <div className="flex flex-col space-y-1">
               <ul className="flex space-x-2 text-sm">
                 {legendItems.map(({ color, label }) => (
