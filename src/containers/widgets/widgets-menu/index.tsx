@@ -30,16 +30,16 @@ const WidgetsMenu: FC = () => {
   const widgetsIds = widgets.map((widget) => widget.slug);
 
   const enabledWidgets = useWidgetsIdsByLocation();
+  const cat = useWidgetsIdsByCategory(activeWidgets);
+
   // Updates the category when user changes widgets filtering throw checkboxes,
   // are activated. It identifies the category associated with the active widgets and
   // updates it accordingly.
-
-  const cat = useWidgetsIdsByCategory(activeWidgets);
   useEffect(() => {
     if (categorySelected !== cat) {
       setCategory(cat);
     }
-  }, [setCategory, cat, categorySelected]);
+  }, [categorySelected, cat, setCategory]);
 
   const handleWidgets = useCallback(
     (e) => {
@@ -57,7 +57,6 @@ const WidgetsMenu: FC = () => {
 
       const newCat = cat.length === 1 ? cat[0] : 'all_datasets';
       if (newCat !== categorySelected) setCategory(newCat);
-      // if (newCat !== catAccordingWidgetsSel) setCategory(catAccordingWidgetsSel);
     },
 
     [activeWidgets, setActiveWidgets, setCategory, categorySelected]

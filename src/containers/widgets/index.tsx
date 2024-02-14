@@ -2,13 +2,13 @@ import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
 
-import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
-import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import { motion } from 'framer-motion';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -22,10 +22,47 @@ import widgets from 'containers/widgets/constants';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
+import Icon from 'components/icon';
 import { breakpoints } from 'styles/styles.config';
+
+import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
+
+const buttonMotion = {
+  rest: {
+    width: 48,
+    x: 0,
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+      ease: 'easeIn',
+    },
+  },
+  hover: {
+    width: 140,
+    x: -46,
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+      ease: 'easeOut',
+    },
+  },
+};
+
+const textMotion = {
+  rest: { opacity: 0, transition: { ease: 'easeOut', duration: 0.2, type: 'tween', x: 140 } },
+  hover: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+      ease: 'easeIn',
+    },
+  },
+};
 
 const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
@@ -100,30 +137,6 @@ const WidgetsContainer: FC = () => {
             hidden: locationTool === 'area' || locationTool === 'upload',
           })}
         >
-          <Helper
-            className={{
-              button: '-top-1.5 right-0 z-20',
-              tooltip: 'max-w-[400px]',
-            }}
-            tooltipPosition={{ top: -50, left: -10 }}
-            message="Expand or collapse all widgets"
-          >
-            <button
-              type="button"
-              data-testid="expand-collapse-button"
-              className={cn({
-                'h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0 md:w-[262px]':
-                  true,
-                'bg-white': widgetsCollapsedChecker,
-                'print:hidden': screenWidth >= breakpoints.md,
-              })}
-              disabled={widgets.length <= 1}
-              onClick={() => handleWidgetsCollapsed()}
-            >
-              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
-            </button>
-          </Helper>
-
           <Dialog>
             <Helper
               className={{
@@ -142,7 +155,9 @@ const WidgetsContainer: FC = () => {
                       true,
                   })}
                 >
-                  <p>Select data</p>
+                  <p>
+                    Select Data <span>({activeWidgets.length})</span>
+                  </p>
                 </button>
               </DialogTrigger>
             </Helper>
@@ -175,6 +190,30 @@ const WidgetsContainer: FC = () => {
               </div>
             </DialogContent>
           </Dialog>
+
+          <Helper
+            className={{
+              button: '-top-1.5 right-0 z-20',
+              tooltip: 'max-w-[400px]',
+            }}
+            tooltipPosition={{ top: -50, left: -10 }}
+            message="Expand or collapse all widgets"
+          >
+            <button
+              type="button"
+              data-testid="expand-collapse-button"
+              className={cn({
+                'h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0 md:w-[262px]':
+                  true,
+                'bg-white': widgetsCollapsedChecker,
+                'print:hidden': screenWidth >= breakpoints.md,
+              })}
+              disabled={widgets.length <= 1}
+              onClick={() => handleWidgetsCollapsed()}
+            >
+              {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
+            </button>
+          </Helper>
         </div>
       </div>
 
@@ -215,6 +254,24 @@ const WidgetsContainer: FC = () => {
           })}
         </div>
       )}
+
+      <motion.div
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
+        className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20 print:hidden"
+      >
+        <motion.button
+          className="flex min-w-[48px] items-center space-x-4 rounded-full bg-brand-800 p-4 text-xs font-semibold text-white shadow-control"
+          variants={buttonMotion}
+        >
+          <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
+          <motion.span variants={textMotion} className="whitespace-nowrap">
+            Select Data
+          </motion.span>
+        </motion.button>
+      </motion.div>
       {/* {!!widgets.length && !mapSettings ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
