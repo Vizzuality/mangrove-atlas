@@ -87,7 +87,7 @@ Released 23/08/2023
 
 
 ### Fixed
- - IUCN Ecoregion tooltip position
+ - IUCN ecosystem_assessment tooltip position
  - Duplicated layers for extent and restoration
 
 
