@@ -154,15 +154,15 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  const OVERALL_ASSESMENT = {
+  const OVERALL_ASSESSMENT = {
     CE: '#EE4D5A',
     VU: '#ECDA9A',
     LC: '#B4DCAA',
     DD: '#ECECEF',
     EN: '#F97B57',
   };
-  const COLORS = Object.keys(OVERALL_ASSESMENT).reduce(
-    (acc, value) => [...acc, [value, OVERALL_ASSESMENT[value]]].flat(),
+  const COLORS = Object.keys(OVERALL_ASSESSMENT).reduce(
+    (acc, value) => [...acc, [value, OVERALL_ASSESSMENT[value]]].flat(),
     []
   );
 

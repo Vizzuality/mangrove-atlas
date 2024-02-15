@@ -27,13 +27,13 @@ const IUCNEcoregions = () => {
           <Dialog>
             <DialogTrigger>
               <div className="w-full text-center text-sm font-normal text-brand-800 underline">
-                <p>Associate reports</p>
+                <p>Associated reports</p>
               </div>
             </DialogTrigger>
             <DialogContent>
               <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
                 <h2 className="font-sans text-2xl font-light text-black/85">
-                  IUCN Ecosystem Red List Assesment
+                  IUCN Ecosystem Red List Assessment
                 </h2>
                 <h4 className="py-4 text-sm font-bold ">Associated reports</h4>
                 <ul className="text-light space-y-4 text-sm text-brand-800 underline">
