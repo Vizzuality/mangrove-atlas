@@ -166,7 +166,7 @@ export function useAlerts<T>(
         method: 'GET',
         url: '/fetch-alerts',
         params: {
-          location_id,
+          ...(location_id ? { location_id } : { location_id: 'worldwide' }),
           ...params,
         },
       }).then((response) => response.data);
