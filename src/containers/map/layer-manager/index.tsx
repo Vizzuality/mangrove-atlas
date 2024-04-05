@@ -21,7 +21,7 @@ const LayerManagerContainer = () => {
 
   const activeLayersIds = layers.map((l) => l.id);
 
-  const LAYERS_FILTERED = useMemo(() => {
+  const ACTIVE_LAYERS = useMemo(() => {
     const filteredLayers = activeLayersIds.filter(
       (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
         return Object.keys(LAYERS).some((k) => layer.includes(k));
@@ -30,6 +30,11 @@ const LayerManagerContainer = () => {
 
     return filteredLayers;
   }, [activeLayersIds]);
+
+  // planet layers must be always at the bottom
+  const planet_layers = ACTIVE_LAYERS.filter((layer) => layer.includes('planet'));
+  const no_planet_layers = ACTIVE_LAYERS.filter((layer) => !layer.includes('planet'));
+  const LAYERS_FILTERED = [...no_planet_layers, ...planet_layers];
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
