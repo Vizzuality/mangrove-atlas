@@ -10,7 +10,7 @@ import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
 
 const COMMON_CLASSES =
-  'group w-full w-12 px-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none';
+  'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
 
 const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 
@@ -41,12 +41,7 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
   );
 
   return (
-    <div
-      className={cn({
-        'inline-flex w-full flex-col space-y-4 bg-white py-4': true,
-        [className]: !!className,
-      })}
-    >
+    <div className={cn({ 'flex flex-col': true, [className]: !!className })}>
       <button
         className={cn({
           [COMMON_CLASSES]: true,
