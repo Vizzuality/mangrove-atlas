@@ -297,7 +297,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           map?.setFeatureState(
             {
               sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-              source: 'jsx-source-0',
+              source: 'mangrove_restoration',
               id: hoveredStateId,
             },
             { hover: false }
@@ -308,7 +308,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         map?.setFeatureState(
           {
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'jsx-source-0',
+            source: 'mangrove_restoration',
             id: hoveredStateId,
           },
           { hover: true }
@@ -320,7 +320,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         map?.setFeatureState(
           {
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'jsx-source-0',
+            source: 'mangrove_restoration',
             id: hoveredStateId,
           },
           { hover: false }

@@ -38,9 +38,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
     [activeLayers, setActiveLayers]
   );
 
+  // planet layers behave as a basemap so there is no need to include them in the legend
+  const activeLayerNoPlanet = activeLayers.filter((l) => !l.id.includes('planet'));
+
   return (
     <div>
-      {!!activeLayers.length && (
+      {!!activeLayerNoPlanet.length && (
         <>
           <button
             onClick={openLegend}
@@ -73,7 +76,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
                   >
-                    {activeLayers.map((l) => {
+                    {activeLayerNoPlanet.map((l) => {
                       return <LegendItem id={l.id} key={l.id} embedded={embedded} l={l} />;
                     })}
                   </SortableList>
@@ -81,7 +84,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
                 <button
                   onClick={closeLegend}
-                  className="absolute -top-8 right-5 -z-10 rounded-t-3xl bg-white p-2 p-3"
+                  className="absolute -top-8 right-5 -z-10 rounded-t-3xl bg-white p-2"
                 >
                   <FaArrowDown />
                 </button>

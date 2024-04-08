@@ -9,9 +9,10 @@ export function useSource(): SourceProps {
     type: 'vector',
     promoteId: 'ID',
     url: 'mapbox://globalmangrovewatch.7rr6p3ir',
+    id: 'mangrove_restoration',
   };
 }
-export function useLayers({
+export function useLayer({
   id,
   opacity,
   visibility = 'visible',
@@ -19,58 +20,56 @@ export function useLayers({
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-}): LayerProps[] {
+}): LayerProps {
   return useMemo(
     () =>
-      [
-        {
-          id: `${id}-layer`,
-          type: 'fill',
-          source: 'mangrove_restoration',
-          'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
-          paint: {
-            'fill-color': [
-              'interpolate',
-              ['linear'],
-              ['get', 'Rest_Score'],
-              20,
-              '#f9ddda',
-              40,
-              '#ffadad',
-              60,
-              '#ce78b3',
-              80,
-              '#8478ce',
-              100,
-              '#224294',
-            ],
-            'fill-opacity': [
-              'case',
-              ['boolean', ['feature-state', 'hover'], false],
-              1,
-              opacity * 0.6,
-            ],
-            'fill-outline-color': [
-              'interpolate',
-              ['linear'],
-              ['get', 'Rest_Score'],
-              20,
-              '#f9ddda',
-              40,
-              '#ffadad',
-              60,
-              '#ce78b3',
-              80,
-              '#8478ce',
-              100,
-              '#224294',
-            ],
-          },
-          layout: {
-            visibility,
-          },
+      ({
+        id: `${id}-layer`,
+        type: 'fill',
+        source: 'mangrove_restoration',
+        'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
+        paint: {
+          'fill-color': [
+            'interpolate',
+            ['linear'],
+            ['get', 'Rest_Score'],
+            20,
+            '#f9ddda',
+            40,
+            '#ffadad',
+            60,
+            '#ce78b3',
+            80,
+            '#8478ce',
+            100,
+            '#224294',
+          ],
+          'fill-opacity': [
+            'case',
+            ['boolean', ['feature-state', 'hover'], false],
+            1,
+            opacity * 0.6,
+          ],
+          'fill-outline-color': [
+            'interpolate',
+            ['linear'],
+            ['get', 'Rest_Score'],
+            20,
+            '#f9ddda',
+            40,
+            '#ffadad',
+            60,
+            '#ce78b3',
+            80,
+            '#8478ce',
+            100,
+            '#224294',
+          ],
         },
-      ] satisfies LayerProps[],
+        layout: {
+          visibility,
+        },
+      } satisfies LayerProps),
     [id, opacity, visibility]
   );
 }
