@@ -71,8 +71,8 @@ const CustomizeWidgetsDeck = () => {
               </DialogContent>
             </Dialog>
           </span>{' '}
-          data cards. Customize the data deck according to your preferences and discover additional
-          capabilities.
+          data cards. Customize the widgets deck according to your preferences and discover
+          additional capabilities.
         </p>
       </div>
 

@@ -156,7 +156,7 @@ const WidgetsContainer: FC = () => {
                   })}
                 >
                   <p>
-                    Select Data <span>({activeWidgets.length})</span>
+                    Widgets deck <span>({activeWidgets.length})</span>
                   </p>
                 </button>
               </DialogTrigger>
@@ -277,7 +277,7 @@ const WidgetsContainer: FC = () => {
               >
                 <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
                 <motion.span variants={textMotion} className="whitespace-nowrap">
-                  Select Data
+                  Widgets deck
                 </motion.span>
               </motion.button>
             </motion.div>

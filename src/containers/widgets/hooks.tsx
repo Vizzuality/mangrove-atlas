@@ -10,7 +10,6 @@ import { useRecoilValue } from 'recoil';
 
 import { WIDGETS_BY_CATEGORY } from 'containers/widgets/constants';
 
-import type { Category } from 'types/category';
 import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
