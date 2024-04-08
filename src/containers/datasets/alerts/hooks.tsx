@@ -25,6 +25,35 @@ import API_cloud_functions from 'services/cloud-functions';
 import Tooltip from './tooltip';
 import type { UseParamsOptions, DataResponse, CustomAreaGeometry } from './types';
 
+interface DataEntry {
+  date: {
+    value: string; // the date in YYYY-MM-DD format
+  };
+  count: number;
+}
+
+function extractMonthsOrYears(data: DataEntry[]): string[] {
+  const monthSet = new Set<string>();
+  const yearSet = new Set<string>();
+
+  data.forEach((entry) => {
+    const dateValue = entry.date.value;
+    const dateObject = new Date(dateValue);
+    // Format the date to "Month Year" (e.g., "May 2024")
+    const formattedMonthYear = dateObject.toLocaleString('en-US', {
+      month: 'long', // Full month name
+      year: 'numeric', // Four digit year
+    });
+    const yearOnly = dateObject.getFullYear().toString(); // Get the full year as a string
+
+    monthSet.add(formattedMonthYear);
+    yearSet.add(yearOnly);
+  });
+
+  // Determine which set to return based on the size of the monthSet
+  return monthSet.size > 19 ? Array.from(yearSet) : Array.from(monthSet);
+}
+
 // widget data
 const months = [
   { label: 'January', value: 1, shortLabel: 'Jan' },
