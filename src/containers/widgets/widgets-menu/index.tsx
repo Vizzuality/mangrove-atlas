@@ -145,7 +145,7 @@ const WidgetsMenu: FC = () => {
                 LAYERS.length === activeLayers.length && widgets.length === activeWidgets.length,
             })}
           >
-            Select all
+            Select All
           </p>
         </div>
         {widgets.map(({ slug, name, layersIds }) => {
