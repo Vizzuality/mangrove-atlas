@@ -31,13 +31,13 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <Link href="/">
+      <Link href="/" className="pointer-events-auto fixed top-0 right-0 z-[800]" draggable={false}>
         <Image
           src={LOGO_PNG as StaticImageData}
           alt="Logo Global Mangrove Watch"
-          className="absolute top-0 right-0 z-10"
           width={186}
           height={216}
+          draggable={false}
         />
       </Link>
 
