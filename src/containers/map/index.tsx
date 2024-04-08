@@ -395,7 +395,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     }
                   />
                   <BasemapSettingsControl />
-                  <div className="border-box flex flex-col overflow-hidden rounded-4xl bg-white shadow-control">
+                  <div className="border-box flex flex-col overflow-hidden rounded-4xl shadow-control">
                     <ZoomControl mapId={mapId} />
                     {pitch !== 0 && <PitchReset mapId={mapId} />}
                   </div>
