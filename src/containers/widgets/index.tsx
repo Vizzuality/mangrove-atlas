@@ -2,13 +2,15 @@ import { useCallback, useEffect, useMemo, FC } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { motion } from 'framer-motion';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -24,12 +26,12 @@ import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
 import { breakpoints } from 'styles/styles.config';
+import { BUTTON_STYLES } from 'styles/widgets';
 
 import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
-
 const buttonMotion = {
   rest: {
     width: 48,
@@ -67,6 +69,9 @@ const textMotion = {
 const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [categorySelected] = useRecoilState(activeCategoryAtom);
+  const [{ customGeojson }] = useRecoilState(drawingToolAtom);
+
+  const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
 
   const { width: screenWidth } = useWindowSize();
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
@@ -77,7 +82,7 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, enabledWidgets]);
 
-  // const setPrintingMode = useSetRecoilState(printModeState);
+  const setPrintingMode = useSetRecoilState(printModeState);
   const cat = useWidgetsIdsByCategory(activeWidgets);
 
   // ensures that the appropriate widgets for a selected category are activated during
@@ -111,21 +116,21 @@ const WidgetsContainer: FC = () => {
     setWidgetsCollapsed(updateWidgetsCollapsed);
   }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
 
-  // const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
-  //   acc[key] = false;
-  //   return acc;
-  // }, {});
+  const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
+    acc[key] = false;
+    return acc;
+  }, {});
 
-  // const onClickDownload = useCallback(() => {
-  //   setWidgetsCollapsed(expandedWidgets);
-  //   setPrintingMode(true);
-  //   setTimeout(() => {
-  //     window.print();
-  //   }, 2000);
-  //   setTimeout(() => {
-  //     setPrintingMode(false);
-  //   }, 4000);
-  // }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
+  const onClickDownload = useCallback(() => {
+    setWidgetsCollapsed(expandedWidgets);
+    setPrintingMode(true);
+    setTimeout(() => {
+      window.print();
+    }, 2000);
+    setTimeout(() => {
+      setPrintingMode(false);
+    }, 4000);
+  }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
 
   return (
     <WidgetsLayout>
@@ -209,7 +214,7 @@ const WidgetsContainer: FC = () => {
                 'print:hidden': screenWidth >= breakpoints.md,
               })}
               disabled={widgets.length <= 1}
-              onClick={() => handleWidgetsCollapsed()}
+              onClick={handleWidgetsCollapsed}
             >
               {widgetsCollapsedChecker ? 'Expand all widgets' : 'Collapse all widgets'}
             </button>
@@ -311,7 +316,7 @@ const WidgetsContainer: FC = () => {
         </DialogContent>
       </Dialog>
 
-      {/* {!!widgets.length && !mapSettings ? (
+      {!!widgets.length ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{
@@ -321,25 +326,23 @@ const WidgetsContainer: FC = () => {
                   : '-bottom-2.5 -right-0',
               tooltip: 'w-fit-content',
             }}
-            tooltipPosition={{ top: 100, left: 10 }}
+            tooltipPosition={{ top: 50, left: 10 }}
             message="use this button to download the current map view and associated widgets as a pdf file"
           >
-            <div>
-              <button
-                className={cn({
-                  [BUTTON_STYLES]: true,
-                  'm-auto bg-brand-800 text-white': true,
-                  hidden: drawingToolEnabled || drawingUploadToolEnabled,
-                })}
-                disabled={drawingToolEnabled || drawingUploadToolEnabled}
-                onClick={onClickDownload}
-              >
-                Download report as PDF
-              </button>
-            </div>
+            <button
+              className={cn({
+                [BUTTON_STYLES]: true,
+                'm-auto bg-brand-800 text-white': true,
+                hidden: !customGeojson && !uploadedGeojson,
+              })}
+              disabled={!customGeojson && !uploadedGeojson}
+              onClick={onClickDownload}
+            >
+              Download report as PDF
+            </button>
           </Helper>
         </div>
-      ) : null} */}
+      ) : null}
     </WidgetsLayout>
   );
 };
