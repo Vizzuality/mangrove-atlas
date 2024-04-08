@@ -38,6 +38,7 @@ Unreleased
 - New legend with functionality for layers
 - Edit function for custom areas removed
 - New cursor to map for interactive layers
+- "Select data" changed to "widgets deck"
 
 ### Fixed
 

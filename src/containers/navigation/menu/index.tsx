@@ -52,12 +52,12 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans md:mb-20': true,
+          'min-w-[540px] font-sans md:mb-20': true,
           'h-fit py-0': section === 'main',
         })}
       >
         {section === 'main' && (
-          <div className="flex flex-col py-10 pr-20 font-sans text-black/85">
+          <div className="flex w-full flex-col py-10 font-sans text-black/85">
             <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
               Global Mangrove Watch
             </h2>
@@ -76,7 +76,7 @@ const Menu = () => {
               </a>
             </div>
 
-            <div className="grid w-full grid-cols-2 items-center justify-between py-6 md:grid-cols-4">
+            <div className="grid grid-cols-2 items-center py-6">
               <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" description="ABERYSTWYTH" />
               <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
               <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
