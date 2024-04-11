@@ -2,7 +2,7 @@ import { WidgetTypes } from 'types/widget';
 
 const widgets_dev = [
   {
-    name: 'National dashboard',
+    name: 'National Dashboard',
     slug: 'mangrove_national_dashboard',
     locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'National and Sub-National',
@@ -21,7 +21,7 @@ const widgets_dev = [
 
 const widgets_prod = [
   {
-    name: 'Mangrove habitat extent',
+    name: 'Mangrove Habitat Extent',
     slug: 'mangrove_habitat_extent',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, Sub-National, and Local',
@@ -29,7 +29,7 @@ const widgets_prod = [
     layersIds: ['extent'],
   },
   {
-    name: 'Mangrove net change',
+    name: 'Mangrove Net Change',
     slug: 'mangrove_net_change',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
@@ -37,7 +37,7 @@ const widgets_prod = [
     layersIds: ['net'],
   },
   {
-    name: 'Mangrove habitat change',
+    name: 'Mangrove Habitat Change',
     slug: 'mangrove_habitat_change',
     locationType: ['worldwide'],
     applicability: 'Global',
@@ -45,7 +45,7 @@ const widgets_prod = [
     layersIds: [],
   },
   {
-    name: 'Mangrove alerts',
+    name: 'Mangrove Alerts',
     slug: 'mangrove_alerts',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, Sub-National, and Local',
@@ -54,7 +54,7 @@ const widgets_prod = [
     contextualLayersIds: ['45d01564-c099-42d8-b8f2-a0851accf3e7'],
   },
   {
-    name: 'Species location by country',
+    name: 'Species Location by Country',
     slug: 'mangrove_species_location',
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',
@@ -70,7 +70,7 @@ const widgets_prod = [
     layersIds: ['species-distribution'],
   },
   {
-    name: 'Mangrove species by Red List status',
+    name: 'Mangrove Species by Red List Status',
     slug: 'mangrove_species_threatened',
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',
@@ -92,7 +92,7 @@ const widgets_prod = [
     layersIds: ['restoration'],
   },
   {
-    name: 'Mangrove biomass',
+    name: 'Mangrove Biomass',
     slug: 'mangrove_biomass',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
@@ -100,7 +100,7 @@ const widgets_prod = [
     layersIds: ['biomass'],
   },
   {
-    name: 'Mangrove height',
+    name: 'Mangrove Height',
     slug: 'mangrove_height',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
@@ -141,7 +141,7 @@ const widgets_prod = [
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
   {
-    name: 'Drivers of change',
+    name: 'Drivers of Change',
     slug: 'mangrove_drivers_change',
     locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'National',
@@ -149,7 +149,7 @@ const widgets_prod = [
     layersIds: ['extent'],
   },
   {
-    name: 'Mangrove fisheries',
+    name: 'Mangrove Fisheries',
     slug: 'mangrove_fisheries',
     locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'Global, National, and Sub-National',
@@ -157,7 +157,7 @@ const widgets_prod = [
     layersIds: ['mangrove_fisheries'],
   },
   {
-    name: 'Coastal protection',
+    name: 'Coastal Protection',
     slug: 'mangrove_flood_protection',
     locationType: ['custom-area', 'wdpa', 'country'],
     applicability: 'National',
@@ -170,7 +170,7 @@ const widgets_prod = [
   },
   {
     ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'IUCN Ecosystem red list assessment',
+      name: 'IUCN Ecosystem Red List Assessment',
       slug: 'mangrove_iucn_ecoregion',
       locationType: ['worldwide'],
       applicability: 'Global',
@@ -179,14 +179,14 @@ const widgets_prod = [
     }),
   },
   {
-    name: 'Protected areas',
+    name: 'Protected Areas',
     slug: 'mangrove_protected_areas',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['mangrove_protected_areas'],
   },
   {
-    name: 'Allen coral atlas',
+    name: 'Allen Coral Atlas',
     slug: 'mangrove_allen_coral_reef',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
@@ -200,21 +200,21 @@ const widgets_prod = [
     layersIds: ['salt_marsh'],
   },
   {
-    name: 'Tidal flats',
+    name: 'Tidal Flats',
     slug: 'mangrove_tidal_flats',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['tidal_flats'],
   },
   {
-    name: 'Global tidal wetland change',
+    name: 'Global Tidal Wetland Change',
     slug: 'mangrove_global_tidal_wetland_change',
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['global_tidal_wetland_change'],
   },
   {
-    name: 'Customize widgets deck',
+    name: 'Customize Widgets Deck',
     slug: 'widgets_deck_tool',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: [
