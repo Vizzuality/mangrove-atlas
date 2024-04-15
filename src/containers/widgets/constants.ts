@@ -217,6 +217,7 @@ const widgets_prod = [
     name: 'Customize Widgets Deck',
     slug: 'widgets_deck_tool',
     locationType: ['wdpa', 'country', 'worldwide'],
+
     categoryIds: [
       'distribution_and_change',
       'ecosystem_services',
@@ -228,7 +229,7 @@ const widgets_prod = [
   },
 ] satisfies WidgetTypes[];
 
-const widgets =
+export const widgets =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
     ? [...widgets_dev, ...widgets_prod]
     : widgets_prod;

@@ -15,7 +15,7 @@ import { FaCheck } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 
 import { LAYERS } from 'containers/layers/constants';
-import widgets from 'containers/widgets/constants';
+import { widgets as rawWidgets } from 'containers/widgets/constants';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
@@ -26,6 +26,8 @@ const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const widgets = rawWidgets.filter(({ slug }) => slug !== 'widgets_deck_tool');
+
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
 
