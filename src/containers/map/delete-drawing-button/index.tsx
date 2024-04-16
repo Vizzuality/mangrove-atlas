@@ -52,10 +52,8 @@ export const DeleteDrawingButton = ({ size = 'md' }: { size?: 'sm' | 'md' }) => 
     if (locationTool === 'worldwide') {
       handleWorldwideView();
     }
-
     resetDrawingState();
     resetAnalysisState();
-
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/?${queryParams}`, null);
   }, [

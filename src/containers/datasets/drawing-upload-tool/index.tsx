@@ -85,11 +85,13 @@ const WidgetDrawingUploadTool = () => {
           'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
         })}
       >
-        <input
-          data-testid="shapefile-upload"
-          {...getInputProps()}
-          disabled={isDrawingToolEnabled || !!customGeojson}
-        />
+        {!uploadedGeojson && (
+          <input
+            data-testid="shapefile-upload"
+            {...getInputProps()}
+            disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
+          />
+        )}
         <div className="flex flex-col items-center space-y-1">
           {uploadedGeojson || isDrawingUploadToolEnabled ? (
             <DeleteDrawingButton size="sm" />

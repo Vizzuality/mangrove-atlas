@@ -24,6 +24,7 @@ const fetchUploadFile = (data: FormData) =>
 export const useUploadFile = (
   file: File,
   onUploadFile?: (geojson: UploadFileResponse) => void,
+  enabled?: boolean,
   queryOptions?: QueryObserverOptions<UploadFileResponse>
 ) => {
   const [, setUploadErrorModal] = useRecoilState(uploadFileAtom);
@@ -32,7 +33,7 @@ export const useUploadFile = (
 
   return useQuery(['converter'], () => fetchUploadFile(data), {
     ...queryOptions,
-    enabled: !!file,
+    enabled: !!file && enabled,
     onSuccess: (geojson) => {
       onUploadFile?.(geojson);
     },

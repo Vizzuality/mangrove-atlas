@@ -22,6 +22,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 const CustomizeWidgetsDeck = () => {
   const displayedWidgets = useRecoilValue(activeWidgetsAtom);
+
   const [animateState, setAnimateState] = useState('start');
 
   useEffect(() => {
@@ -49,7 +50,7 @@ const CustomizeWidgetsDeck = () => {
             <Dialog>
               <DialogTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {displayedWidgets.length} of {widgets.length}
+                  {displayedWidgets.length} of {widgets.length - 1}
                   <Icon
                     icon={ARROW_SVG}
                     className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
