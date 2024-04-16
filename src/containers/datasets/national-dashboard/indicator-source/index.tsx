@@ -85,7 +85,7 @@ const IndicatorSource = ({
             <PopoverContent className="rounded-2xl px-2 shadow-border">
               <ul className="max-h-32 space-y-0.5">
                 {years?.map((u) => (
-                  <li key={u} className="last-of-type:pb-4">
+                  <li key={u}>
                     <button
                       aria-label="set year"
                       className={cn({
