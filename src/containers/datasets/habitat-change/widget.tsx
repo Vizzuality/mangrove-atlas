@@ -79,7 +79,7 @@ const HabitatExtent = () => {
                 <PopoverContent className="rounded-2xl px-2 shadow-border">
                   <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
-                      <li key={y} className="last-of-type:pb-4">
+                      <li key={y}>
                         <button
                           aria-label="Select start year"
                           className={cn({
@@ -119,7 +119,7 @@ const HabitatExtent = () => {
                 <PopoverContent className="rounded-2xl px-2 shadow-border">
                   <ul className="z-20 max-h-56 space-y-0.5">
                     {years?.map((y) => (
-                      <li key={y} className="last-of-type:pb-4">
+                      <li key={y}>
                         <button
                           aria-label="select end year"
                           className={cn({

@@ -11,36 +11,17 @@ import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
 import WidgetControls from 'components/widget-controls';
+import { WIDGET_SELECT_STYLES, WIDGET_SELECT_ARROW_STYLES } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
-import type { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import { DATA_SOURCES } from '../constants';
 
+import type { IndicatorSourceTypes } from './types';
+
 const LABEL_UNITS = {
   km2: 'km²',
-};
-
-type DataSourceTypes = {
-  value: number;
-  layer_link: `globalmangrovewatch.${string}`;
-  download_link: string;
-  layer_info: string;
-  source_layer: string;
-};
-
-type IndicatorSourceTypes = {
-  id: WidgetSlugType;
-  locationIso: string;
-  layerIndex: number;
-  source: string;
-  years: number[];
-  unit: string;
-  dataSource: DataSourceTypes;
-  color: string;
-  yearSelected: number;
-  setYearSelected: (year: number) => void;
 };
 
 const IndicatorSource = ({
@@ -91,24 +72,26 @@ const IndicatorSource = ({
         {years.length > 1 && (
           <Popover>
             <PopoverTrigger asChild>
-              <span className="first-line:after relative cursor-pointer border-b-2 border-b-brand-800 font-bold">
+              <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                 {yearSelected}
                 <Icon
                   icon={ARROW_SVG}
-                  className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
+                  className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
                   description="Arrow"
                 />
               </span>
             </PopoverTrigger>
 
-            <PopoverContent>
-              <ul className="max-h-56 space-y-2">
+            <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <ul className="max-h-32 space-y-0.5">
                 {years?.map((u) => (
-                  <li key={u} className="last-of-type:pb-4">
+                  <li key={u}>
                     <button
                       aria-label="set year"
                       className={cn({
-                        'font-bold': true,
+                        'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                        'hover:text-brand-800': yearSelected !== u,
+                        'pointer-events-none opacity-50': yearSelected === u,
                       })}
                       type="button"
                       onClick={() => setYearSelected(u)}

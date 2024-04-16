@@ -60,10 +60,10 @@ const CarbonMarketPotentialWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-border">
+                <ul className="max-h-32 space-y-0.5">
                   {labels?.map((l) => (
-                    <li key={l} className="last-of-type:pb-4">
+                    <li key={l}>
                       <button
                         className={cn({
                           'font-bold': true,
@@ -94,10 +94,10 @@ const CarbonMarketPotentialWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent>
-                <ul className="max-h-56 space-y-2">
+              <PopoverContent className="rounded-2xl px-2 shadow-border">
+                <ul className="max-h-32 space-y-0.5">
                   {units?.map((u) => (
-                    <li key={u.label} className="last-of-type:pb-4">
+                    <li key={u.label}>
                       <button
                         aria-label="set unit"
                         className={cn({
