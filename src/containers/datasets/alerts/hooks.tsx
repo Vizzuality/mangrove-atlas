@@ -25,35 +25,6 @@ import API_cloud_functions from 'services/cloud-functions';
 import Tooltip from './tooltip';
 import type { UseParamsOptions, DataResponse, CustomAreaGeometry } from './types';
 
-interface DataEntry {
-  date: {
-    value: string; // the date in YYYY-MM-DD format
-  };
-  count: number;
-}
-
-function extractMonthsOrYears(data: DataEntry[]): string[] {
-  const monthSet = new Set<string>();
-  const yearSet = new Set<string>();
-
-  data.forEach((entry) => {
-    const dateValue = entry.date.value;
-    const dateObject = new Date(dateValue);
-    // Format the date to "Month Year" (e.g., "May 2024")
-    const formattedMonthYear = dateObject.toLocaleString('en-US', {
-      month: 'long', // Full month name
-      year: 'numeric', // Four digit year
-    });
-    const yearOnly = dateObject.getFullYear().toString(); // Get the full year as a string
-
-    monthSet.add(formattedMonthYear);
-    yearSet.add(yearOnly);
-  });
-
-  // Determine which set to return based on the size of the monthSet
-  return monthSet.size > 19 ? Array.from(yearSet) : Array.from(monthSet);
-}
-
 // widget data
 const months = [
   { label: 'January', value: 1, shortLabel: 'Jan' },
@@ -114,7 +85,9 @@ const getData = (data) =>
         title: month.label,
         name: `${monthsConversion[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
           'en',
-          { year: '2-digit' }
+          {
+            year: '2-digit',
+          }
         )}`,
         alerts: d.count,
         label: `${month.label}, ${year}`,
@@ -150,7 +123,7 @@ const TickSmall = ({ x, y, payload }) => {
   );
 };
 
-const getTotal = (data) =>
+const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
 
 export function useAlerts<T>(
@@ -230,12 +203,12 @@ export function useAlerts<T>(
     );
 
   const chartData = getData(dataFiltered);
-
   const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
   const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
 
   return useMemo(() => {
     const alertsTotal = getTotal(dataFiltered);
+    const dataLimitOverflow = dataFiltered.length > 16;
 
     const config = {
       data: chartData,
@@ -248,7 +221,7 @@ export function useAlerts<T>(
       },
       margin: { top: 50, right: 10, left: 10, bottom: 35 },
       label: 'alerts',
-      xKey: 'name',
+      xKey: dataLimitOverflow ? 'year' : 'name',
       chartBase: {
         lines: {
           alerts: {
@@ -260,7 +233,8 @@ export function useAlerts<T>(
       },
       xAxis: {
         tick: TickSmall,
-        interval: 0,
+        ...(dataLimitOverflow && { ticks: Array.from(new Set(chartData.map((d) => d.year))) }),
+        interval: dataLimitOverflow ? 'preserveStartEnd' : 0,
         type: 'category',
       },
       yAxis: {
@@ -376,7 +350,7 @@ export function useAlerts<T>(
         },
       },
 
-      xKey: 'name',
+      xKey: 'year',
       chartBase: {
         lines: {
           alerts: {
@@ -388,7 +362,7 @@ export function useAlerts<T>(
       },
       xAxis: {
         tick: TickSmall,
-        interval: 0,
+        interval: 'preserveStartEnd',
         type: 'category',
       },
 
