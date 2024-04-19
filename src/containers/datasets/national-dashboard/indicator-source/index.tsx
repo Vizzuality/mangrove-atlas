@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
@@ -6,6 +6,8 @@ import { numberFormat } from 'lib/format';
 import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
+
+import { updateLayers } from 'hooks/layers';
 
 import Icon from 'components/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
@@ -38,7 +40,31 @@ const IndicatorSource = ({
 }: IndicatorSourceTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+
+  const isActive = useMemo(
+    () => activeLayersIds.some((layerId) => layerId.startsWith('mangrove_national_dashboard')),
+    [activeLayersIds]
+  );
+
+  const compareNationalLayers = activeLayersIds.includes(id);
+  useEffect(() => {
+    if (isActive && !compareNationalLayers) {
+      const layersUpdate = updateLayers(activeLayers, {
+        id,
+        opacity: '1',
+        visibility: 'visible',
+        settings: {
+          name: source,
+          location: locationIso,
+          layerIndex,
+          source: dataSource.layer_link,
+          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+        },
+      });
+      setActiveLayers(layersUpdate);
+    }
+  }, [compareNationalLayers]);
+
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
       ? activeLayers.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))

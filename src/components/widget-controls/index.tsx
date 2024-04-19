@@ -8,11 +8,12 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { updateLayers } from 'hooks/layers';
+
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
-import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';
@@ -35,16 +36,31 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
 
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+
+  const isActive = useMemo(() => {
+    // Check if the id is included in activeLayersIds
+    const isCurrentlyActive = activeLayersIds.includes(id);
+
+    // Check if any id in activeLayersIds starts with 'national_dashboard'
+    const isAnyActiveNationalDashboard =
+      id?.startsWith('mangrove_national_dashboard') &&
+      activeLayersIds.some((layerId) => layerId.startsWith('mangrove_national_dashboard'));
+
+    // Returns true if the current id is 'national_dashboard' and it is active,
+    // or if the id is not 'national_dashboard' but some id in activeLayersIds is
+    return isCurrentlyActive || isAnyActiveNationalDashboard;
+  }, [activeLayersIds, id]);
 
   const download = DOWNLOAD[id] || content?.download;
   const info = INFO[id] || content?.info;
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
-    const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
+    const layersUpdate = updateLayers(activeLayers, {
+      id,
+      opacity: '1',
+      visibility: isActive ? 'none' : 'visible',
+    });
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 

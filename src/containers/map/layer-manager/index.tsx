@@ -5,7 +5,7 @@ import { Layer } from 'react-map-gl';
 import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom } from 'store/map';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
@@ -15,7 +15,7 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeLayersAtom);
+  const [layers] = useRecoilState(activeLayersAtom);
 
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
 
