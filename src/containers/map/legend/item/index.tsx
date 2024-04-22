@@ -7,7 +7,7 @@ import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { MAP_LEGENDS, WIDGETS } from 'containers/datasets';
+import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
@@ -18,6 +18,7 @@ import { Media } from 'components/media-query';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import Slider from 'components/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
+import Info from 'components/widget-controls/info';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
@@ -111,6 +112,8 @@ const LegendItem = ({
       ? `National Dashboard`
       : layerNameToDisplay;
 
+  const WidgetInfo = INFO[widgetId] as React.ElementType;
+
   if (l.id === 'custom-area') return null;
 
   return (
@@ -127,9 +130,37 @@ const LegendItem = ({
               </button>
             )}
           </Media>
-          <p className="pl-4 text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
-            {title}
-          </p>
+          <Dialog modal={false}>
+            <DialogTrigger>
+              <Tooltip>
+                <TooltipTrigger>
+                  <p className="pl-4 text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
+                    {title}
+                  </p>
+                </TooltipTrigger>
+                <TooltipPortal>
+                  <TooltipContent side="top" align="center" className="bg-gray-600 px-2 text-white">
+                    Layer statistics
+                  </TooltipContent>
+                </TooltipPortal>
+              </Tooltip>
+            </DialogTrigger>
+
+            <DialogContent
+              className={cn({
+                'h-screen w-screen md:mb-20 md:h-auto md:w-auto': true,
+                hidden: guideIsActive,
+              })}
+              overlay={false}
+            >
+              <div className="no-scrollbar overflow-y-auto px-3">
+                <WidgetWrapper key={l.id} title={title} id={widgetId as WidgetSlugType} info>
+                  <Widget id={widgetId} />
+                </WidgetWrapper>
+              </div>
+              <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+            </DialogContent>
+          </Dialog>
         </div>
         {!embedded && (
           <Helper
@@ -141,11 +172,14 @@ const LegendItem = ({
             message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
           >
             <div className="ml-2 flex items-center">
-              <Dialog>
+              <Dialog modal={false}>
                 <DialogTrigger>
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Icon icon={INFO_SVG} className="mr-1.5 h-[17px] w-[17px] fill-black/40" />
+                    <TooltipTrigger>
+                      <Icon
+                        icon={INFO_SVG}
+                        className="mr-1.5 h-[17px] w-[17px] fill-black/40 align-middle"
+                      />
                     </TooltipTrigger>
                     <TooltipPortal>
                       <TooltipContent
@@ -167,9 +201,9 @@ const LegendItem = ({
                   overlay={false}
                 >
                   <div className="no-scrollbar overflow-y-auto px-3">
-                    <WidgetWrapper key={l.id} title={title} id={widgetId as WidgetSlugType} info>
-                      <Widget id={widgetId} />
-                    </WidgetWrapper>
+                    <div className="no-scrollbar overflow-y-auto">
+                      {WidgetInfo && <WidgetInfo />}
+                    </div>
                   </div>
                   <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
                 </DialogContent>
