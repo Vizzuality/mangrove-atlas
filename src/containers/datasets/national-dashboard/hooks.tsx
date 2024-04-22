@@ -54,7 +54,7 @@ export function useSource({ settings }: { settings: LayerSettingsType }): Source
   return {
     id: 'national-dashboard-sources',
     type: 'vector',
-    url: `mapbox://${settings.source}`,
+    url: `mapbox://${settings?.source}`,
   };
 }
 
