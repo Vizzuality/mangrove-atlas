@@ -11,11 +11,11 @@ const widgets_dev = [
   },
   {
     name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_restoration_sites',
+    slug: 'mangrove_rest_sites',
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['restoration_sites'],
+    layersIds: ['restoration-sites'],
   },
 ] satisfies WidgetTypes[];
 
@@ -261,7 +261,7 @@ export const WIDGETS_BY_CATEGORY = [
   },
   {
     restoration_and_conservation: [
-      'mangrove_restoration_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_alerts',
@@ -303,7 +303,7 @@ export const WIDGETS_BY_CATEGORY = [
   {
     all_datasets: [
       'mangrove_national_dashboard',
-      'mangrove_restoration_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_habitat_change',

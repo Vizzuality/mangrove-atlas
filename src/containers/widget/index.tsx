@@ -101,7 +101,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           {applicability && (
             <p
               className={cn({
-                'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
+                'block flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
                 hidden: widgetsCollapsed[id],
                 block: !widgetsCollapsed[id],
               })}

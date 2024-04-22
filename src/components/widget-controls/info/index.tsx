@@ -8,8 +8,6 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 const Info = ({ id, content }) => {
   const Info = INFO[id];
 
-  console.log(Info);
-
   if (!Info && !content) return null;
   return (
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">

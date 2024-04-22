@@ -63,9 +63,7 @@ const CustomizeWidgetsDeck = () => {
                   <h2 className="font-black/85 text-3xl font-light leading-10">
                     Widgets deck settings
                   </h2>
-
                   <Category />
-
                   <WidgetsMenu />
                 </div>
                 <DialogClose />

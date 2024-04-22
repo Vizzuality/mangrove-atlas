@@ -8,9 +8,9 @@ import type { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
+const MangrovesRestorationSitesLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === 'mangrove_restoration_sites');
+  const activeLayer = activeLayers.find((l) => l.id === 'mangrove_rest_sites');
 
   const SOURCE = useSource();
   const LAYERS = useLayer({
@@ -29,4 +29,4 @@ const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   );
 };
 
-export default MangrovesLayer;
+export default MangrovesRestorationSitesLayer;

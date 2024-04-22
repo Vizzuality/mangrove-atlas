@@ -85,7 +85,7 @@ const LocationWidget = () => {
 
   return (
     <>
-      <div className="relative flex h-52 flex-col rounded-4xl bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-widget print:hidden">
+      <div className="relative flex h-52 flex-col rounded-4xl bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-control print:hidden">
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button onClick={handleOnClickTitle} disabled={isGuideActive || !locationName}>

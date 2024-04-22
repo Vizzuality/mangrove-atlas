@@ -34,8 +34,8 @@ export const LAYERS = [
     id: 'mangrove_biomass',
   },
   {
-    name: 'Mangrove Restoration Sites',
-    id: 'mangrove_restoration_sites',
+    name: 'Restoration Sites',
+    id: 'mangrove_rest_sites',
   },
   {
     name: 'Mangrove restoration',
@@ -120,7 +120,7 @@ export const LAYERS_ORDER = [
   'mangrove_height',
   'mangrove_biomass',
   'mangrove_protection',
-  'mangrove_restoration_sites',
+  'mangrove_rest_sites',
   'mangrove_species_distribution',
   'mangrove_species_location',
   'mangrove_alerts',

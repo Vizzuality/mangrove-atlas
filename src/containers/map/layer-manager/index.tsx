@@ -54,6 +54,14 @@ const LayerManagerContainer = () => {
 
   return (
     <>
+      {
+        <CountryBoundariesLayer
+          id="country-boundaries-layer"
+          beforeId="water"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
+      }
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
@@ -67,6 +75,7 @@ const LayerManagerContainer = () => {
           />
         );
       })}
+
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
@@ -96,15 +105,6 @@ const LayerManagerContainer = () => {
           />
         );
       })}
-
-      {
-        <CountryBoundariesLayer
-          id="country-boundaries-layer"
-          beforeId="Country"
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-        />
-      }
     </>
   );
 };
