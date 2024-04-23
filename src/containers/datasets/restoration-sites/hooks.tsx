@@ -101,6 +101,7 @@ export function useSource(): SourceProps {
     .map(({ site_centroid, landscape_name, organizations, site_name }) => {
       if (site_centroid) {
         return {
+          type: 'Feature',
           geometry: JSON.parse(site_centroid),
           properties: {
             landscape_name,
@@ -111,8 +112,9 @@ export function useSource(): SourceProps {
       }
     });
 
+  if (!restorationSiteFeatures) return null;
   return {
-    id: 'restoration-sites',
+    id: 'mangrove_rest_sites',
     type: 'geojson',
     data: {
       type: 'FeatureCollection',
@@ -133,8 +135,10 @@ export function useLayer({
   return [
     {
       id: `${id}-clusters`,
+      metadata: {
+        position: 'top',
+      },
       type: 'circle',
-      source: 'restoration-sites',
       filter: ['has', 'point_count'],
       paint: {
         'circle-color': '#CC61B0',
@@ -150,8 +154,10 @@ export function useLayer({
     },
     {
       id: `${id}-clusters-points`,
+      metadata: {
+        position: 'top',
+      },
       type: 'circle',
-      source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
       paint: {
         'circle-color': '#CC61B0',
@@ -166,9 +172,29 @@ export function useLayer({
       },
     },
     {
-      id: `${id}-cluster-count`,
+      id: `${id}-cluster-text`,
+      metadata: {
+        position: 'top',
+      },
       type: 'symbol',
-      source: 'restoration-sites',
+      filter: ['!', ['has', 'point_count']],
+      layout: {
+        'text-field': ['get', 'site_name'],
+        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+        'text-size': 12,
+        visibility,
+      },
+      paint: {
+        'text-color': '#ffffff',
+        'text-opacity': opacity,
+      },
+    },
+    {
+      id: `${id}-cluster-count`,
+      metadata: {
+        position: 'top',
+      },
+      type: 'symbol',
       filter: ['has', 'point_count'],
       layout: {
         'text-field': ['get', 'point_count_abbreviated'],

@@ -208,7 +208,7 @@ export function useAlerts<T>(
 
   return useMemo(() => {
     const alertsTotal = getTotal(dataFiltered);
-    const dataLimitOverflow = dataFiltered.length > 16;
+    const dataLimitOverflow = dataFiltered.length > 12;
 
     const config = {
       data: chartData,
@@ -234,7 +234,7 @@ export function useAlerts<T>(
       xAxis: {
         tick: TickSmall,
         ...(dataLimitOverflow && { ticks: Array.from(new Set(chartData.map((d) => d.year))) }),
-        interval: dataLimitOverflow ? 'preserveStartEnd' : 0,
+        interval: dataLimitOverflow ? 0 : 'preserveStart',
         type: 'category',
       },
       yAxis: {

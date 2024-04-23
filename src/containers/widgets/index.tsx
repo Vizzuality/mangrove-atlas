@@ -28,6 +28,7 @@ import Icon from 'components/icon';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 
+import ALERT_SVG from 'svgs/ui/alert.svg?sprite';
 import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
@@ -182,6 +183,16 @@ const WidgetsContainer: FC = () => {
                 >
                   <Category />
                 </Helper>
+                <div className="flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5 shadow-control">
+                  <Icon
+                    icon={ALERT_SVG}
+                    className="h-16 w-16 fill-current text-white"
+                    description="alert"
+                  />
+                  <p className="text-sm font-light text-black/85">
+                    Disclaimer: Some layers and widgets are not available for certain locations.
+                  </p>
+                </div>
                 <Helper
                   className={{
                     button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
