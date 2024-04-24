@@ -8,6 +8,7 @@ import {
 } from 'store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { GeoJsonProperties, GeoJsonTypes } from 'geojson';
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
@@ -18,7 +19,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, DataFilters } from './types';
+import type { Data, DataResponse, DataFilters, RestorationSite } from './types';
 
 // widget data
 export function useMangroveRestorationSites(
@@ -113,6 +114,7 @@ export function useSource(): SourceProps {
     });
 
   if (!restorationSiteFeatures) return null;
+
   return {
     id: 'mangrove_rest_sites',
     type: 'geojson',
@@ -169,24 +171,6 @@ export function useLayer({
       },
       layout: {
         visibility,
-      },
-    },
-    {
-      id: `${id}-cluster-text`,
-      metadata: {
-        position: 'top',
-      },
-      type: 'symbol',
-      filter: ['!', ['has', 'point_count']],
-      layout: {
-        'text-field': ['get', 'site_name'],
-        'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
-        'text-size': 12,
-        visibility,
-      },
-      paint: {
-        'text-color': '#ffffff',
-        'text-opacity': opacity,
       },
     },
     {

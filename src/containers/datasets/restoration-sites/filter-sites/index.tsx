@@ -11,13 +11,13 @@ import Loading from 'components/loading';
 import MultiSelect from 'components/select-multi';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
-import type { DataSites } from '../types';
+import type { DataDitesProperties } from '../types';
 
 type FilterSitesProps = {
   open: boolean;
   onChangeModalVisibility: Dispatch<SetStateAction<boolean>>;
   filters: { [key: string]: string[] | number[] };
-  data: DataSites[];
+  data: DataDitesProperties[];
   setFilters: Dispatch<SetStateAction<{ [key: string]: string[] | number[] }>>;
   isFetching: boolean;
   isFetched: boolean;
