@@ -232,34 +232,36 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  return [
-    {
-      id: `${id}_${year}_line`,
-      type: 'fill',
-      source: 'habitat_extent',
-      'source-layer': `mng_mjr_${year}`,
-      paint: {
-        'fill-color': '#06C4BD',
-        'fill-opacity': opacity,
-      },
-      layout: {
-        visibility,
-      },
-    },
-    {
-      id: `${id}_${year}_fill`,
-      type: 'line',
-      source: 'habitat_extent',
-      'source-layer': `mng_mjr_${year}`,
-      paint: {
-        'line-color': '#06C4BD',
-        'line-opacity': opacity,
-        'line-width': ['interpolate', ['exponential', 0.7], ['zoom'], 0, 8, 12, 0],
-        'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 20, 12, 0],
-      },
-      layout: {
-        visibility,
-      },
-    },
-  ];
+  return year
+    ? [
+        {
+          id: `${id}_${year}_line`,
+          type: 'fill',
+          source: 'habitat_extent',
+          'source-layer': `mng_mjr_${year}`,
+          paint: {
+            'fill-color': '#06C4BD',
+            'fill-opacity': opacity,
+          },
+          layout: {
+            visibility,
+          },
+        },
+        {
+          id: `${id}_${year}_fill`,
+          type: 'line',
+          source: 'habitat_extent',
+          'source-layer': `mng_mjr_${year}`,
+          paint: {
+            'line-color': '#06C4BD',
+            'line-opacity': opacity,
+            'line-width': ['interpolate', ['exponential', 0.7], ['zoom'], 0, 8, 12, 0],
+            'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 20, 12, 0],
+          },
+          layout: {
+            visibility,
+          },
+        },
+      ]
+    : null;
 }

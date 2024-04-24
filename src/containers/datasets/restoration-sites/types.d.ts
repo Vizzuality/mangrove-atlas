@@ -1,4 +1,4 @@
-export type DataSites = {
+export type DataDitesProperties = {
   id: number;
   landscape_id: number;
   landscape_name: string;
@@ -7,9 +7,17 @@ export type DataSites = {
   site_name: string;
   organizations: string;
 };
+interface RestorationSite {
+  type: 'Feature';
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
+  properties: DataDitesProperties;
+}
 
 export type Data = {
-  data: DataSites[];
+  data: RestorationSite[];
   location: string;
 };
 
