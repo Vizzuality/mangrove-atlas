@@ -22,39 +22,9 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API_cloud_functions from 'services/cloud-functions';
 
+import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { UseParamsOptions, DataResponse, CustomAreaGeometry } from './types';
-
-// widget data
-const months = [
-  { label: 'January', value: 1, shortLabel: 'Jan' },
-  { label: 'February', value: 2, shortLabel: 'Feb' },
-  { label: 'March', value: 3, shortLabel: 'Mar' },
-  { label: 'April', value: 4, shortLabel: 'Apr' },
-  { label: 'May', value: 5, shortLabel: 'May' },
-  { label: 'June', value: 6, shortLabel: 'Jun' },
-  { label: 'July', value: 7, shortLabel: 'Jul' },
-  { label: 'August', value: 8, shortLabel: 'Aug' },
-  { label: 'September', value: 9, shortLabel: 'Sep' },
-  { label: 'October', value: 10, shortLabel: 'Oct' },
-  { label: 'November', value: 11, shortLabel: 'Nov' },
-  { label: 'December', value: 12, shortLabel: 'Dec' },
-];
-
-const monthsConversion = {
-  January: 'Jan',
-  February: 'Feb',
-  March: 'March',
-  April: 'April',
-  May: 'May',
-  June: 'June',
-  July: 'July',
-  August: 'Aug',
-  September: 'Sept',
-  October: 'Oct',
-  November: 'Nov',
-  December: 'Dec',
-};
 
 const getStops = () => {
   const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];
@@ -70,7 +40,7 @@ const getData = (data) =>
   sortBy(
     data?.map((d) => {
       const year = Number(d.date.value.split('-', 1)[0]);
-      const month = months?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
+      const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
       const day = new Date(year, month.value, 0).getDate();
 
       const lastDay = new Date(year, month.value, 0).getDate();
@@ -83,7 +53,7 @@ const getData = (data) =>
         end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
         start: d.date.value,
         title: month.label,
-        name: `${monthsConversion[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
+        name: `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
           'en',
           {
             year: '2-digit',
@@ -202,13 +172,15 @@ export function useAlerts<T>(
       (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
     );
 
+  const fixedXAxis = fullData.map((d) => d.year);
+
   const chartData = getData(dataFiltered);
   const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
   const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
 
   return useMemo(() => {
     const alertsTotal = getTotal(dataFiltered);
-    const dataLimitOverflow = dataFiltered.length > 12;
+    const dataLimitOverflow = dataFiltered.length > 16;
 
     const config = {
       data: chartData,
@@ -234,7 +206,7 @@ export function useAlerts<T>(
       xAxis: {
         tick: TickSmall,
         ...(dataLimitOverflow && { ticks: Array.from(new Set(chartData.map((d) => d.year))) }),
-        interval: dataLimitOverflow ? 0 : 'preserveStart',
+        interval: 0,
         type: 'category',
       },
       yAxis: {
@@ -362,7 +334,8 @@ export function useAlerts<T>(
       },
       xAxis: {
         tick: TickSmall,
-        interval: 'preserveStartEnd',
+        ticks: Array.from(new Set(fixedXAxis)),
+        interval: 0,
         type: 'category',
       },
 
