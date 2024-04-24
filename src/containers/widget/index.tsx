@@ -2,6 +2,7 @@ import React, { useCallback, ReactElement, FC } from 'react';
 
 import cn from 'lib/classnames';
 
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { widgetsCollapsedAtom } from 'store/widgets';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -28,10 +29,12 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability, info } = props;
-
+  const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
+  const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
   const isLayerActive = useRecoilValue(getLayerActive(id));
 
-  const [widgetsCollapsed, setWidgetsCollapsed] = useRecoilState(widgetsCollapsedAtom);
+  const [widgetsCollapsed, setWidgetsCollapsed] =
+    useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {
@@ -54,12 +57,15 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
 
   if (Boolean(children.type() === null)) return null;
 
+  const isCollapsed: boolean =
+    isDrawingToolEnabled || isDrawingUploadToolEnabled ? false : widgetsCollapsed[id];
+
   return (
     <AnimatePresence>
       <motion.div
         initial={false}
         variants={widgetVariants}
-        animate={widgetsCollapsed[id] ? 'collapsed' : 'expanded'}
+        animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
         transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
         className={cn({
@@ -92,8 +98,8 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
             data-testid={`widget-${id}-content`}
             className={cn({
               'group-last-of-type:block': true,
-              hidden: widgetsCollapsed[id],
-              block: !widgetsCollapsed[id],
+              hidden: isCollapsed,
+              block: !isCollapsed,
             })}
           >
             {children}
@@ -101,9 +107,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           {applicability && (
             <p
               className={cn({
-                'block flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
-                hidden: widgetsCollapsed[id],
-                block: !widgetsCollapsed[id],
+                'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
+                hidden: isCollapsed,
+                block: !isCollapsed,
               })}
             >
               <span className="font-normal">Data applicability:</span>{' '}

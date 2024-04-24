@@ -9,7 +9,6 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import AnalysisAlert from 'containers/alert';
 import WidgetDrawingTool from 'containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from 'containers/datasets/drawing-upload-tool';
 import Helper from 'containers/guide/helper';
@@ -67,52 +66,47 @@ const LocationTools = () => {
   ]);
 
   return (
-    <div className="flex space-y-2 text-center">
-      <div className="mx-auto flex space-x-2 md:space-x-8">
-        {/* //*FIND LOCATIONS* */}
-        <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
-          <DialogTrigger className="flex w-[128px] items-center justify-center p-2">
-            <>
-              <Helper
-                className={{
-                  button: '-top-1 right-9 z-20',
-                  tooltip: 'w-fit-content max-w-[400px]',
-                }}
-                tooltipPosition={{ top: -65, left: -10 }}
-                message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
+    <div className="mx-auto flex w-full items-center justify-center space-x-2 md:space-x-8">
+      {/* //*FIND LOCATIONS* */}
+      <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
+        <DialogTrigger asChild>
+          <>
+            <Helper
+              className={{
+                button: '-top-1 right-9 z-20',
+                tooltip: 'w-fit-content max-w-[400px]',
+              }}
+              tooltipPosition={{ top: -65, left: -10 }}
+              message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
+            >
+              <button
+                onClick={handleOnClickSearch}
+                className="mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2"
+                data-testid="search-button"
+                disabled={guideIsActive}
               >
-                <button
-                  onClick={handleOnClickSearch}
-                  className="flex w-[128px] cursor-pointer items-center justify-center"
-                  data-testid="search-button"
-                  disabled={guideIsActive}
-                >
-                  <div className="flex flex-col items-center space-y-1">
-                    <Icon
-                      icon={GLASS_SVG}
-                      className={cn({
-                        'h-8 w-8 fill-current text-white': true,
-                      })}
-                      description="Glass"
-                    />
-                    <p className="whitespace-nowrap font-sans text-sm text-white">Find locations</p>
-                  </div>
-                </button>
-              </Helper>
-            </>
-          </DialogTrigger>
+                <Icon
+                  icon={GLASS_SVG}
+                  className={cn({
+                    'h-8 w-8 fill-current text-white': true,
+                  })}
+                  description="Glass"
+                />
+                <p className="whitespace-nowrap font-sans text-sm text-white">Find locations</p>
+              </button>
+            </Helper>
+          </>
+        </DialogTrigger>
 
-          <LocationDialogContent close={closeMenu} />
-        </Dialog>
+        <LocationDialogContent close={closeMenu} />
+      </Dialog>
 
-        {/* //*DRAW AREA* */}
+      {/* //*DRAW AREA* */}
 
-        <WidgetDrawingTool />
+      <WidgetDrawingTool />
 
-        {/* //*UPLOAD SHAPEFILE* */}
-        <WidgetDrawingUploadTool />
-      </div>
-      <AnalysisAlert />
+      {/* //*UPLOAD SHAPEFILE* */}
+      <WidgetDrawingUploadTool />
     </div>
   );
 };

@@ -85,21 +85,21 @@ const LocationWidget = () => {
 
   return (
     <>
-      <div className="relative flex h-52 flex-col rounded-4xl bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-control print:hidden">
+      <div className="relative flex h-52 flex-col justify-between rounded-4xl bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-control print:hidden">
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button onClick={handleOnClickTitle} disabled={isGuideActive || !locationName}>
               {!!locationName ? (
                 <div
                   className={cn({
-                    'inline-block px-10 pb-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
+                    'inline-block h-[128px] flex-1 grow px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                       true,
                     'text-2.75xl': width >= 540,
 
                     'text-5xl': locationName.length > 10,
-                    'text-4xl': locationName.length > 30,
-                    'text-2xl': locationName.length > 60,
-                    'break-all text-xl': locationName.length > 120,
+                    'text-4xl': locationName.length > 30 && locationName.length <= 55,
+                    'text-2xl': locationName.length > 55 && locationName.length <= 120,
+                    'break-all text-base': locationName.length > 120,
                   })}
                 >
                   <h1 className="text-white" ref={titleRef}>
@@ -115,14 +115,7 @@ const LocationWidget = () => {
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
         </Dialog>
-        <div
-          className={cn({
-            'absolute bottom-2 left-0 w-full pb-2': true,
-            'bottom-0': locationName?.length > 20,
-          })}
-        >
-          <LocationTools />
-        </div>
+        <LocationTools />
       </div>
       <AnalysisAlert />
     </>

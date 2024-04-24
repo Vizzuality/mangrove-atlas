@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, ReactElement } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -22,7 +22,13 @@ const SIZE = {
   sm: 'h-8 w-8',
 };
 
-export const DeleteDrawingButton = ({ size = 'md' }: { size?: 'sm' | 'md' }) => {
+export const DeleteDrawingButton = ({
+  size = 'md',
+  children = null,
+}: {
+  size?: 'sm' | 'md';
+  children?: ReactElement;
+}) => {
   const resetAnalysisState = useResetRecoilState(analysisAtom);
   const locationTool = useRecoilValue(locationToolAtom);
   const resetDrawingState = useResetRecoilState(drawingToolAtom);
@@ -66,16 +72,19 @@ export const DeleteDrawingButton = ({ size = 'md' }: { size?: 'sm' | 'md' }) => 
   ]);
 
   return (
-    <div
-      className={cn({
-        'shadow-controls flex items-center justify-center rounded-full border border-brand-800 bg-brand-800':
-          true,
-        [SIZE[size]]: true,
-      })}
-    >
-      <button onClick={handleResetPage} data-testid="delete-custom-area-button">
-        <Icon icon={REMOVE_SVG} className="h-5 w-5 text-white" />
-      </button>
+    <div className="flex w-full flex-col items-center justify-center space-y-1">
+      <div
+        className={cn({
+          'shadow-controls flex items-center justify-center rounded-full border border-brand-800 bg-brand-800':
+            true,
+          [SIZE[size]]: true,
+        })}
+      >
+        <button onClick={handleResetPage} data-testid="delete-custom-area-button">
+          <Icon icon={REMOVE_SVG} className="h-5 w-5 text-white" />
+        </button>
+      </div>
+      {children && children}
     </div>
   );
 };

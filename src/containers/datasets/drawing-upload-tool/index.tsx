@@ -2,6 +2,8 @@ import { useCallback, useEffect } from 'react';
 
 import { useDropzone } from 'react-dropzone';
 
+import { useRouter } from 'next/router';
+
 import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
@@ -29,6 +31,10 @@ const WidgetDrawingUploadTool = () => {
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
+  const { push, asPath } = useRouter();
+
+  const queryParams = asPath.split('?')[1];
+
   const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
     multiple: false,
     accept: {
@@ -54,8 +60,10 @@ const WidgetDrawingUploadTool = () => {
         ...prevAnalysisState,
         enabled: true,
       }));
+
+      void push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`, null);
     },
-    [setDrawingToolState, setAnalysisState, setDrawingUploadToolState]
+    [setDrawingToolState, setAnalysisState, setDrawingUploadToolState, push, queryParams]
   );
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
@@ -77,45 +85,43 @@ const WidgetDrawingUploadTool = () => {
       tooltipPosition={{ top: -100, left: -100 }}
       message="use this to upload an existing GIS file"
     >
-      <div
-        {...conditionalProps}
-        className={cn({
-          'w-[128px] cursor-pointer rounded-3xl p-2': true,
-          'bg-white': !!uploadedGeojson,
-          'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
-        })}
-      >
-        {!uploadedGeojson && (
-          <input
-            data-testid="shapefile-upload"
-            {...getInputProps()}
-            disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
-          />
-        )}
-        <div className="flex flex-col items-center space-y-1">
-          {uploadedGeojson || isDrawingUploadToolEnabled ? (
-            <DeleteDrawingButton size="sm" />
-          ) : (
-            <Icon
-              icon={UPLOAD_SVG}
-              className={cn({
-                'h-8 w-8 fill-current text-white': true,
-              })}
-              description="Upload"
+      <>
+        {(!customGeojson || !isDrawingToolEnabled) && (
+          <div
+            {...conditionalProps}
+            className={cn({
+              'w-[128px] cursor-pointer rounded-3xl p-2': true,
+              hidden: !!uploadedGeojson,
+              'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
+            })}
+          >
+            <input
+              data-testid="shapefile-upload"
+              {...getInputProps()}
+              disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
             />
-          )}
-          <label id="label-file-upload" htmlFor="input-file-upload">
-            <p
-              className={cn({
-                'whitespace-nowrap font-sans text-sm text-white': true,
-                'text-brand-800': !!uploadedGeojson,
-              })}
-            >
-              {uploadedGeojson || isDrawingUploadToolEnabled ? 'Delete area' : 'Upload shapefile'}
-            </p>
-          </label>
-        </div>
-      </div>
+            <div className="flex flex-col items-center space-y-1">
+              <Icon
+                icon={UPLOAD_SVG}
+                className={cn({
+                  'h-8 w-8 fill-current text-white': true,
+                })}
+                description="Upload"
+              />
+            </div>
+            <label id="label-file-upload" htmlFor="input-file-upload">
+              <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+            </label>
+          </div>
+        )}
+        {(uploadedGeojson || isDrawingUploadToolEnabled) && (
+          <div className="mb-2 w-[128px] cursor-pointer rounded-3xl bg-white p-2">
+            <DeleteDrawingButton size="sm">
+              <p className="whitespace-nowrap font-sans text-sm text-brand-800">Delete area</p>
+            </DeleteDrawingButton>
+          </div>
+        )}
+      </>
     </Helper>
     // TO - DO - add when error gets defined
     //   </div>

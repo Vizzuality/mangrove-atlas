@@ -200,7 +200,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+      void push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
     [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
   );
