@@ -42,7 +42,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const activeLayerNoPlanet = activeLayers.filter((l) => !l.id.includes('planet'));
 
   return (
-    <div>
+    <div className="print:hidden">
       {!!activeLayerNoPlanet.length && (
         <>
           <button

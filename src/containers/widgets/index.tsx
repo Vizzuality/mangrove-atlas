@@ -20,13 +20,14 @@ import { WIDGETS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
-import widgets from 'containers/widgets/constants';
+import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
 import Icon from 'components/icon';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
+import { WidgetTypes } from 'types/widget';
 
 import ALERT_SVG from 'svgs/ui/alert.svg?sprite';
 import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
@@ -78,10 +79,13 @@ const WidgetsContainer: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const enabledWidgets = useWidgets();
   const widgetsAvailable = useMemo(() => {
+    if (customGeojson || uploadedGeojson) {
+      return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
+    }
     return enabledWidgets.filter(
       ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
     );
-  }, [activeWidgets, enabledWidgets]);
+  }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const setPrintingMode = useSetRecoilState(printModeState);
   const cat = useWidgetsIdsByCategory(activeWidgets);
@@ -117,21 +121,11 @@ const WidgetsContainer: FC = () => {
     setWidgetsCollapsed(updateWidgetsCollapsed);
   }, [widgetsCollapsed, widgetsCollapsedChecker, setWidgetsCollapsed]);
 
-  const expandedWidgets = Object.keys(widgetsCollapsed).reduce((acc, key) => {
-    acc[key] = false;
-    return acc;
-  }, {});
-
   const onClickDownload = useCallback(() => {
-    setWidgetsCollapsed(expandedWidgets);
-    setPrintingMode(true);
     setTimeout(() => {
       window.print();
     }, 2000);
-    setTimeout(() => {
-      setPrintingMode(false);
-    }, 4000);
-  }, [expandedWidgets, setPrintingMode, setWidgetsCollapsed]);
+  }, []);
 
   return (
     <WidgetsLayout>
@@ -235,10 +229,10 @@ const WidgetsContainer: FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgetsAvailable.map(({ slug, name, applicability }) => {
+          {widgetsAvailable.map(({ slug, name, ...props }) => {
             const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
-              <WidgetWrapper key={slug} title={name} id={slug} applicability={applicability}>
+              <WidgetWrapper key={slug} title={name} id={slug} applicability={props?.applicability}>
                 {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
             );
@@ -251,14 +245,14 @@ const WidgetsContainer: FC = () => {
           data-testid="widgets-wrapper"
           className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24"
         >
-          {widgetsAvailable.map(({ slug, name, applicability }) => {
+          {widgetsAvailable.map(({ slug, name, ...props }) => {
             const Widget = WIDGETS[slug];
             return (
               <WidgetWrapper
                 key={slug}
                 title={name}
                 id={slug}
-                applicability={applicability}
+                applicability={props?.applicability}
                 className={cn({
                   'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
                     true,

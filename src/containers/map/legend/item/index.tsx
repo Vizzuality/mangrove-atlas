@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -38,10 +38,11 @@ const LegendItem = ({
   embedded?: boolean;
   l: ActiveLayers;
 }) => {
+  const [statisticsDialogVisibility, setStatisticsDialogVisibility] = useState(false);
+  const [infoDialogVisibility, setInfoDialogVisibility] = useState(false);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const widget = widgets.find((w) => w.slug === l.id);
-
   const onChangeVisibility = useCallback(
     (layer) => {
       const layersWithVisibility: ActiveLayers[] = activeLayers.map((l) => {
@@ -133,11 +134,15 @@ const LegendItem = ({
               </button>
             )}
           </Media>
-          <Dialog>
-            <DialogTrigger>
+          <Dialog open={statisticsDialogVisibility}>
+            <DialogTrigger asChild>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button type="button" aria-label="Layer statistics">
+                  <button
+                    type="button"
+                    aria-label="Layer statistics"
+                    onClick={() => setStatisticsDialogVisibility(!statisticsDialogVisibility)}
+                  >
                     <p className="pl-4 text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
                       {title}
                     </p>
@@ -153,7 +158,7 @@ const LegendItem = ({
 
             <DialogContent
               className={cn({
-                'h-screen w-screen md:mb-20 md:h-auto md:w-auto': true,
+                'h-screen w-screen min-w-[540px] md:mb-20 md:h-auto md:w-auto': true,
                 hidden: guideIsActive,
               })}
               overlay={false}
@@ -169,7 +174,10 @@ const LegendItem = ({
                   <Widget id={widgetId} />
                 </WidgetWrapper>
               </div>
-              <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+              <DialogClose
+                className="top-8 md:fixed md:!top-18 md:left-[595px]"
+                onClose={() => setStatisticsDialogVisibility(false)}
+              />
             </DialogContent>
           </Dialog>
         </div>
@@ -183,10 +191,13 @@ const LegendItem = ({
             message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
           >
             <div className="ml-2 flex items-center">
-              <Dialog>
-                <DialogTrigger>
+              <Dialog open={infoDialogVisibility}>
+                <DialogTrigger asChild>
                   <Tooltip>
-                    <TooltipTrigger asChild>
+                    <TooltipTrigger
+                      asChild
+                      onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
+                    >
                       <button type="button" aria-label="Info layer">
                         <Icon
                           icon={INFO_SVG}
@@ -200,7 +211,7 @@ const LegendItem = ({
                         align="center"
                         className="bg-gray-600 px-2 text-white"
                       >
-                        Info layer
+                        Layer info
                       </TooltipContent>
                     </TooltipPortal>
                   </Tooltip>
@@ -218,9 +229,13 @@ const LegendItem = ({
                       {WidgetInfo && <WidgetInfo />}
                     </div>
                   </div>
-                  <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+                  <DialogClose
+                    className="top-8 md:fixed md:!top-18 md:left-[595px]"
+                    onClose={() => setInfoDialogVisibility(false)}
+                  />
                 </DialogContent>
               </Dialog>
+
               <Popover>
                 <PopoverTrigger>
                   <Tooltip>
