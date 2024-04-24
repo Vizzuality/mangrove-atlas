@@ -11,11 +11,11 @@ const widgets_dev = [
   },
   {
     name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_restoration_sites',
+    slug: 'mangrove_rest_sites',
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['restoration_sites'],
+    layersIds: ['restoration-sites'],
   },
 ] satisfies WidgetTypes[];
 
@@ -143,7 +143,7 @@ const widgets_prod = [
   {
     name: 'Drivers of Change',
     slug: 'mangrove_drivers_change',
-    locationType: ['custom-area', 'wdpa', 'country'],
+    locationType: ['wdpa', 'country'],
     applicability: 'National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['extent'],
@@ -151,7 +151,7 @@ const widgets_prod = [
   {
     name: 'Mangrove Fisheries',
     slug: 'mangrove_fisheries',
-    locationType: ['custom-area', 'wdpa', 'country'],
+    locationType: ['wdpa', 'country'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
     layersIds: ['mangrove_fisheries'],
@@ -159,7 +159,7 @@ const widgets_prod = [
   {
     name: 'Coastal Protection',
     slug: 'mangrove_flood_protection',
-    locationType: ['custom-area', 'wdpa', 'country'],
+    locationType: ['wdpa', 'country'],
     applicability: 'National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
     subLayersIds: [
@@ -181,35 +181,35 @@ const widgets_prod = [
   {
     name: 'Protected Areas',
     slug: 'mangrove_protected_areas',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['mangrove_protected_areas'],
   },
   {
     name: 'Allen Coral Atlas',
     slug: 'mangrove_allen_coral_reef',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['allen_coral_reef'],
   },
   {
     name: 'Salt Marsh',
     slug: 'mangrove_salt_marsh',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['salt_marsh'],
   },
   {
     name: 'Tidal Flats',
     slug: 'mangrove_tidal_flats',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['tidal_flats'],
   },
   {
     name: 'Global Tidal Wetland Change',
     slug: 'mangrove_global_tidal_wetland_change',
-    locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
+    locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
     layersIds: ['global_tidal_wetland_change'],
   },
@@ -261,7 +261,7 @@ export const WIDGETS_BY_CATEGORY = [
   },
   {
     restoration_and_conservation: [
-      'mangrove_restoration_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_alerts',
@@ -303,7 +303,7 @@ export const WIDGETS_BY_CATEGORY = [
   {
     all_datasets: [
       'mangrove_national_dashboard',
-      'mangrove_restoration_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_habitat_change',

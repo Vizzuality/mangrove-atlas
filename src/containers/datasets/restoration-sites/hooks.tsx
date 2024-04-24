@@ -8,6 +8,7 @@ import {
 } from 'store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import { GeoJsonProperties, GeoJsonTypes } from 'geojson';
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
@@ -18,7 +19,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, DataFilters } from './types';
+import type { Data, DataResponse, DataFilters, RestorationSite } from './types';
 
 // widget data
 export function useMangroveRestorationSites(
@@ -101,6 +102,7 @@ export function useSource(): SourceProps {
     .map(({ site_centroid, landscape_name, organizations, site_name }) => {
       if (site_centroid) {
         return {
+          type: 'Feature',
           geometry: JSON.parse(site_centroid),
           properties: {
             landscape_name,
@@ -111,8 +113,10 @@ export function useSource(): SourceProps {
       }
     });
 
+  if (!restorationSiteFeatures) return null;
+
   return {
-    id: 'restoration-sites',
+    id: 'mangrove_rest_sites',
     type: 'geojson',
     data: {
       type: 'FeatureCollection',
@@ -133,8 +137,10 @@ export function useLayer({
   return [
     {
       id: `${id}-clusters`,
+      metadata: {
+        position: 'top',
+      },
       type: 'circle',
-      source: 'restoration-sites',
       filter: ['has', 'point_count'],
       paint: {
         'circle-color': '#CC61B0',
@@ -150,8 +156,10 @@ export function useLayer({
     },
     {
       id: `${id}-clusters-points`,
+      metadata: {
+        position: 'top',
+      },
       type: 'circle',
-      source: 'restoration-sites',
       filter: ['!', ['has', 'point_count']],
       paint: {
         'circle-color': '#CC61B0',
@@ -167,8 +175,10 @@ export function useLayer({
     },
     {
       id: `${id}-cluster-count`,
+      metadata: {
+        position: 'top',
+      },
       type: 'symbol',
-      source: 'restoration-sites',
       filter: ['has', 'point_count'],
       layout: {
         'text-field': ['get', 'point_count_abbreviated'],

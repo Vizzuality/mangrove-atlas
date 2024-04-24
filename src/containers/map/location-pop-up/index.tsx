@@ -61,7 +61,7 @@ const LocationPopUP = ({
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
       onClose();
     }
   }, [setLocationBounds, push, queryParams, locations, feature, onClose]);
@@ -79,7 +79,7 @@ const LocationPopUP = ({
         if (bbox) {
           setLocationBounds(bbox as typeof locationBounds);
         }
-        push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+        void push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
         onClose();
       }
     },

@@ -1,4 +1,4 @@
-import { createRef, useState, useLayoutEffect } from 'react';
+import { createRef, useState, useLayoutEffect, useRef, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -28,10 +28,10 @@ const SpeciesDistribution = () => {
 
   const isWorldwide = location === 'Worldwide';
   // const total = data?.total;
-  const ref = createRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   const trianglePosition = (total * lineChartWidth) / worldwideTotal - 11; // substract icon size
   // fires synchronously after all DOM mutations.
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }

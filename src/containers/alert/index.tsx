@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationsModalAtom } from 'store/locations';
-import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
@@ -23,7 +22,6 @@ const AnalysisAlert = () => {
   const { asPath, replace } = useRouter();
 
   const locationTool = useRecoilValue(locationToolAtom);
-  const isPrintingMode = useRecoilValue(printModeState);
   const setLocationsModalIsOpen = useSetRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
@@ -33,8 +31,7 @@ const AnalysisAlert = () => {
 
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
 
-  const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-  const { [`default-desktop-${isPrintingId}`]: map } = useMap();
+  const { [`default-desktop`]: map } = useMap();
 
   const handleCancelResetPage = useCallback(() => {
     setAnalysisAlert(false);

@@ -40,7 +40,6 @@ const DesktopLayout = () => {
           draggable={false}
         />
       </Link>
-
       <div className="relative h-screen w-screen">
         {isPrintingMode && (
           <div className="print:absolute print:top-6 print:z-50 print:text-black">

@@ -200,7 +200,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+      void push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
     [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
   );
@@ -288,7 +288,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||
           layer.id === 'mangrove_protected_areas' ||
-          layer.id === 'mangrove_iucn_ecoregion-layer'
+          layer.id === 'mangrove_iucn_ecoregion-layer' ||
+          layer.id === 'mangrove_restoration-layer'
       );
 
       // *ON MOUSE ENTER

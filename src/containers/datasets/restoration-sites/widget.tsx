@@ -68,18 +68,24 @@ const RestorationSitesWidget = () => {
 
   if (!filtersData) return null;
 
-  if (isFetched && data?.data.length === 0) return <NoData />;
-
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-20" />
       {isFetched && data && (
         <div className="relative space-y-8">
-          <p className={WIDGET_SENTENCE_STYLE}>
-            There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
-            {data.location}
-            {!areFiltersEmpty && ' that match your criteria'}.
-          </p>
+          {data.data?.length > 0 && (
+            <p className={WIDGET_SENTENCE_STYLE}>
+              There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
+              {data.location}
+              {!areFiltersEmpty && ' that match your criteria'}.
+            </p>
+          )}
+          {data.data?.length === 0 && (
+            <p>
+              Sorry there are no results for this selection of filters for this area. Try another
+              one
+            </p>
+          )}
           <Dialog open={open} onOpenChange={setOpen}>
             <div
               className={cn({

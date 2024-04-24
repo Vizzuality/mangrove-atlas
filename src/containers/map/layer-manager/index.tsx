@@ -5,7 +5,7 @@ import { Layer } from 'react-map-gl';
 import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom } from 'store/map';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
@@ -15,7 +15,7 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
-  const layers = useRecoilValue(activeLayersAtom);
+  const [layers] = useRecoilState(activeLayersAtom);
 
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
 
@@ -54,6 +54,14 @@ const LayerManagerContainer = () => {
 
   return (
     <>
+      {
+        <CountryBoundariesLayer
+          id="country-boundaries-layer"
+          beforeId="water"
+          onAdd={handleAdd}
+          onRemove={handleRemove}
+        />
+      }
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
@@ -67,6 +75,7 @@ const LayerManagerContainer = () => {
           />
         );
       })}
+
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 
@@ -96,15 +105,6 @@ const LayerManagerContainer = () => {
           />
         );
       })}
-
-      {
-        <CountryBoundariesLayer
-          id="country-boundaries-layer"
-          beforeId="Country"
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-        />
-      }
     </>
   );
 };

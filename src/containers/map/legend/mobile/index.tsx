@@ -29,7 +29,7 @@ const Legend = () => {
   };
 
   return (
-    <div className="flex w-screen justify-center">
+    <div className="flex w-screen justify-center print:hidden">
       {!!activeLayers.length && (
         <>
           <button

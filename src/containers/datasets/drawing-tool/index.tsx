@@ -23,8 +23,7 @@ const WidgetDrawingTool = () => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
-  const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }] =
-    useRecoilState(drawingUploadToolAtom);
+  const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
@@ -57,12 +56,7 @@ const WidgetDrawingTool = () => {
       ...drawingToolState,
       enabled: !isDrawingToolEnabled,
     }));
-  }, [
-    setDrawingToolState,
-    isDrawingToolEnabled,
-    isDrawingUploadToolEnabled,
-    resetDrawingUploadToolState,
-  ]);
+  }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
@@ -82,7 +76,7 @@ const WidgetDrawingTool = () => {
       <button
         type="button"
         className={cn({
-          'flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
+          'mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
             true,
           ' bg-white ': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,

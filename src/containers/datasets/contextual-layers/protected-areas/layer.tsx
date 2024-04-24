@@ -24,7 +24,7 @@ const MangrovesProtectedAreasLayer = ({ beforeId, id, onAdd, onRemove }: LayerPr
     const ids = LAYERS.map((layer) => layer.id);
     onAdd(ids);
     return () => onRemove(ids);
-  }, [onAdd, onRemove]);
+  }, [onAdd, onRemove, LAYERS]);
 
   if (!SOURCE || !LAYERS) return null;
   return (
