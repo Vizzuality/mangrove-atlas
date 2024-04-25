@@ -78,15 +78,18 @@ const TickSmall = ({ x, y, payload }) => {
   const { value } = payload;
   return (
     <g transform={`translate(${x},${y})`}>
-      <text
-        x={0}
-        y={0}
-        textAnchor="end"
-        fill="#3A3F59"
-        opacity={0.5}
-        transform="rotate(270)"
-        fontSize="8px"
-      >
+      <text x={0} y={5} textAnchor="end" fill="#3A3F59" opacity={0.7} fontSize="10px">
+        {value}
+      </text>
+    </g>
+  );
+};
+
+const DefaultTick = ({ x, y, payload }) => {
+  const { value } = payload;
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <text x={0} y={5} fill="#3A3F59" opacity={0.5} fontSize="12px">
         {value}
       </text>
     </g>
@@ -180,7 +183,6 @@ export function useAlerts<T>(
 
   return useMemo(() => {
     const alertsTotal = getTotal(dataFiltered);
-    const dataLimitOverflow = dataFiltered.length > 16;
 
     const config = {
       data: chartData,
@@ -193,7 +195,7 @@ export function useAlerts<T>(
       },
       margin: { top: 50, right: 10, left: 10, bottom: 35 },
       label: 'alerts',
-      xKey: dataLimitOverflow ? 'year' : 'name',
+      xKey: 'name',
       chartBase: {
         lines: {
           alerts: {
@@ -205,8 +207,6 @@ export function useAlerts<T>(
       },
       xAxis: {
         tick: TickSmall,
-        ...(dataLimitOverflow && { ticks: Array.from(new Set(chartData.map((d) => d.year))) }),
-        interval: 0,
         type: 'category',
       },
       yAxis: {
@@ -333,7 +333,7 @@ export function useAlerts<T>(
         },
       },
       xAxis: {
-        tick: TickSmall,
+        tick: DefaultTick,
         ticks: Array.from(new Set(fixedXAxis)),
         interval: 0,
         type: 'category',
