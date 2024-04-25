@@ -21,7 +21,7 @@ const Info = ({ id, content }) => {
             {id && <Info />}
             {content && <p>{content}</p>}
           </div>
-          <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+          <DialogClose className="md:0 -top-2 md:absolute" />
         </DialogContent>
       </Dialog>
     </div>
