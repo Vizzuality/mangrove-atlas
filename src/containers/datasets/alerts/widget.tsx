@@ -33,7 +33,6 @@ const AlertsWidget = () => {
   const { customGeojson } = useRecoilValue(drawingToolAtom);
   const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
   const activeLayers = useRecoilValue(activeLayersAtom);
-
   const [isCanceled, setIsCanceled] = useState(false);
 
   const handleQueryCancellation = useCallback(() => {
@@ -45,24 +44,7 @@ const AlertsWidget = () => {
     [activeLayers]
   );
 
-  const {
-    isLoading,
-    isFetched,
-    isError,
-    isPlaceholderData,
-    refetch,
-    alertsTotal,
-    startDateOptions,
-    selectedStartDate,
-    endDateOptions,
-    selectedEndDate,
-    config,
-    configBrush,
-    fullData,
-    defaultStartDate,
-    defaultEndDate,
-    noData,
-  } = useAlerts(
+  const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
     startDate,
     endDate,
     null,
@@ -79,7 +61,20 @@ const AlertsWidget = () => {
     await refetch();
   }, [refetch]);
 
-  if (noData) return <NoData />;
+  if (!data) return <NoData />;
+
+  const {
+    alertsTotal,
+    startDateOptions,
+    selectedStartDate,
+    endDateOptions,
+    selectedEndDate,
+    config,
+    configBrush,
+    fullData,
+    defaultStartDate,
+    defaultEndDate,
+  } = data;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
