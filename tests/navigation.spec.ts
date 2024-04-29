@@ -1,5 +1,4 @@
 import { expect, test } from '@playwright/test';
-import { fi } from 'date-fns/locale';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');

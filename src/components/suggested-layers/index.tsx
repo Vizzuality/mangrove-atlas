@@ -44,9 +44,9 @@ const SuggestedLayers = ({
   // };
 
   return (
-    <div className="flex flex-col space-y-4 rounded-xl bg-black bg-opacity-[4%] p-3">
+    <div className="flex flex-col space-y-5 rounded-xl bg-black bg-opacity-[4%] p-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-4">
           {!!thumbSource && (
             <div className="relative h-[42px] w-[42px] shrink-0 rounded-2xl">
               <Image
@@ -62,7 +62,7 @@ const SuggestedLayers = ({
           {color && (
             <div className="h-[42px] w-[42px] rounded-2xl" style={{ backgroundColor: color }} />
           )}
-          <p className="text-sm">{description}</p>
+          <p className="text-sm font-light">{description}</p>
         </div>
         <div className="flex items-start space-x-2">
           <SwitchWrapper id={id}>

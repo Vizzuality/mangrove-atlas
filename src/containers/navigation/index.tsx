@@ -3,7 +3,6 @@ import GuideSwitcher from 'containers/guide/switcher';
 import LanguageSelector from 'containers/navigation/language-selector';
 import Menu from 'containers/navigation/menu';
 import News from 'containers/navigation/news';
-
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (

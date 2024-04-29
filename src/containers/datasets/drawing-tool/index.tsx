@@ -27,12 +27,14 @@ const WidgetDrawingTool = () => {
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
-  const { acceptedFiles } = useDropzone({
+  const { acceptedFiles, ...rest } = useDropzone({
     multiple: false,
     accept: {
       'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
     },
   });
+
+  console.log(acceptedFiles, 'acceptedFiles');
 
   const onUploadFile = useCallback<Parameters<typeof useUploadFile>[1]>(
     (geojson) => {
@@ -59,7 +61,6 @@ const WidgetDrawingTool = () => {
   }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
-
   useEffect(() => {
     setMapCursor(isDrawingToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingToolEnabled]);

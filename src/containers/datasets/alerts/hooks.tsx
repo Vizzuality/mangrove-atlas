@@ -4,6 +4,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 
+import Error from 'next/error';
 import { useRouter } from 'next/router';
 
 import { formatAxis } from 'lib/format';
@@ -110,6 +111,7 @@ export function useAlerts<T>(
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
   const {
+    push,
     query: { params: queryParams },
   } = useRouter();
 
@@ -129,10 +131,15 @@ export function useAlerts<T>(
           ...dataParams,
         },
       })
-        .then((response) => response.data)
+        .then((response) => {
+          console.log(response);
+          return response.data;
+        })
         .catch((err: CanceledError<unknown> | AxiosError) => {
+          console.log(err, 'entra en el rr');
           if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
+          push('/500');
+          return <Error statusCode={err.response.status} />;
         });
     }
 
@@ -144,17 +151,30 @@ export function useAlerts<T>(
           location_id,
           ...params,
         },
-      }).then((response) => response.data);
+      }).then((response) => {
+        console.log(response, 'response no analysis');
+        return response.data;
+      });
     }
   };
 
   const query = useQuery(['alerts', params, location_id], fetchAlerts, {
     placeholderData: [],
+    select: (data) => {
+      if (!data) return null;
+      if (data?.props?.statusCode === 500) {
+        console.log('dentro', data.props);
+        return <Error statusCode={500} />;
+      }
+      console.log(data, 'data');
+      return data;
+    },
     ...queryOptions,
   });
 
   const { data, isFetched } = query;
-
+  console.log('isError', data);
+  // if (isError) return <Error statusCode={500} />;
   const fullData = getData(data);
   const noData = isFetched && !fullData?.length;
 
