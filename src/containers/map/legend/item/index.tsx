@@ -125,7 +125,7 @@ const LegendItem = ({
       id={id}
       className="flex flex-col items-start rounded-md bg-white pb-4 pt-2 text-sm md:px-2"
     >
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-start justify-between">
         <div className="flex items-center space-x-2">
           <Media greaterThanOrEqual="md">
             {!embedded && (
@@ -143,7 +143,7 @@ const LegendItem = ({
                     aria-label="Layer statistics"
                     onClick={() => setStatisticsDialogVisibility(!statisticsDialogVisibility)}
                   >
-                    <p className="pl-4 text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
+                    <p className="pl-4 text-left text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
                       {title}
                     </p>
                   </button>
