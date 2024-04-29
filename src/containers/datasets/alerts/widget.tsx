@@ -221,13 +221,11 @@ const AlertsWidget = () => {
               description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
             >
               {isActive && (
-                <div className="pb-4">
-                  <DateSelect
-                    mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
-                    id="planet_medres_visual_monthly"
-                    className={{ content: 'w-[420px]' }}
-                  />
-                </div>
+                <DateSelect
+                  mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
+                  id="planet_medres_visual_monthly"
+                  className={{ content: 'w-[420px]' }}
+                />
               )}
             </SuggestedLayers>
           </div>

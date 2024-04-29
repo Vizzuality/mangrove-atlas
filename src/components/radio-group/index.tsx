@@ -11,7 +11,7 @@ export interface RadioGroupDemoProps extends RadioGroupProps {
 }
 
 const RadioGroup = ({ options, children, ...props }: RadioGroupDemoProps) => (
-  <RadioGroupPrimitive.Root className="space-y flex flex-col" {...props}>
+  <RadioGroupPrimitive.Root className="flex flex-col" {...props}>
     {!!options
       ? options.map((option) => (
           <div key={option.value}>

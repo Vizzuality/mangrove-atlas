@@ -47,6 +47,7 @@ const IndicatorSource = ({
   );
 
   const compareNationalLayers = activeLayersIds.includes(id);
+
   useEffect(() => {
     if (isActive && !compareNationalLayers) {
       const layersUpdate = updateLayers(activeLayers, {

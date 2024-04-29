@@ -8,7 +8,6 @@ import {
 } from 'store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { GeoJsonProperties, GeoJsonTypes } from 'geojson';
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
@@ -19,7 +18,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, DataFilters, RestorationSite } from './types';
+import type { Data, DataResponse, DataFilters } from './types';
 
 // widget data
 export function useMangroveRestorationSites(

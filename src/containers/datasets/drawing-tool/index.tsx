@@ -59,7 +59,6 @@ const WidgetDrawingTool = () => {
   }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
-
   useEffect(() => {
     setMapCursor(isDrawingToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingToolEnabled]);
