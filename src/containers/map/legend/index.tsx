@@ -32,8 +32,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
       const newLayers = order.map((id) => {
         return activeLayers.find((l) => l.id === id);
       }) as ActiveLayers[];
-
-      setActiveLayers(newLayers);
+      const activeLayerPlanet = activeLayers.filter((l) => l.id.includes('planet'));
+      setActiveLayers([...newLayers, ...activeLayerPlanet]);
     },
     [activeLayers, setActiveLayers]
   );

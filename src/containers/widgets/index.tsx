@@ -185,6 +185,7 @@ const WidgetsContainer: FC = () => {
                   />
                   <p className="text-sm font-light text-black/85">
                     Disclaimer: Some layers and widgets are not available for certain locations.
+                    Select applicable geography to enable layer.
                   </p>
                 </div>
                 <Helper

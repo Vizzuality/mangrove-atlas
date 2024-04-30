@@ -29,8 +29,8 @@ export const useUploadFile = (
 ) => {
   const [, setUploadErrorModal] = useRecoilState(uploadFileAtom);
   const data = new FormData();
-  data.append('file', file);
 
+  data.append('file', file);
   return useQuery(['converter'], () => fetchUploadFile(data), {
     ...queryOptions,
     enabled: !!file && enabled,

@@ -40,8 +40,8 @@ const BasemapsMapSettings = () => {
   );
 
   return (
-    <div className="relative flex flex-col text-sm text-black/85">
-      <RadioGroup onValueChange={handleClick} defaultValue={defaultActive}>
+    <div className="relative flex flex-col text-sm leading-4 text-black/85">
+      <RadioGroup onValueChange={handleClick} defaultValue={defaultActive} className="space-y-2">
         <div className="flex space-x-4">
           <RadioGroupItem
             option={{ value: 'no-layer', label: 'No layer' }}
