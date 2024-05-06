@@ -18,6 +18,7 @@ export type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
   customPolygon?: GeoJSON.FeatureCollection;
   onSetCustomPolygon?: (customPolygon) => void;
   styles?: typeof DRAWING_STYLES;
+  onError?: (message: string, error: Error) => void;
 };
 
 const DEFAULT_PROPS: Partial<DrawControlProps> = {
@@ -49,7 +50,7 @@ export const DrawControl = (props: DrawControlProps) => {
     }
   );
 
-  const { onSetCustomPolygon, customPolygon } = props;
+  const { onSetCustomPolygon, customPolygon, onError } = props;
 
   useEffect(() => {
     if (!customPolygon) {
@@ -61,13 +62,18 @@ export const DrawControl = (props: DrawControlProps) => {
     if (!drawRef) return null;
 
     if (customPolygon) {
-      drawRef.add(customPolygon);
+      try {
+        drawRef.add(customPolygon);
+      } catch (error) {
+        console.error('Error adding custom polygon:', error);
+        onError?.('Error adding custom polygon:', error);
+      }
 
       if (onSetCustomPolygon) {
         onSetCustomPolygon(customPolygon);
       }
     }
-  }, [onSetCustomPolygon, customPolygon, drawRef]);
+  }, [onSetCustomPolygon, customPolygon, drawRef, onError]);
 
   return null;
 };
