@@ -27,14 +27,12 @@ const WidgetDrawingTool = () => {
   const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
-  const { acceptedFiles, ...rest } = useDropzone({
+  const { acceptedFiles } = useDropzone({
     multiple: false,
     accept: {
       'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
     },
   });
-
-  console.log(acceptedFiles, 'acceptedFiles');
 
   const onUploadFile = useCallback<Parameters<typeof useUploadFile>[1]>(
     (geojson) => {
