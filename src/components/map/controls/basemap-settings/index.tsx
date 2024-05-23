@@ -58,7 +58,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
             <BasemapsContextualMapSettings />
           </Helper>
         </div>
-        <DialogClose onClose={close} />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

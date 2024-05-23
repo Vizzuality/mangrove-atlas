@@ -32,7 +32,7 @@ export const widgetSlug = 'aboveground_biomass';
 const COLORS = ['#EAF19D', '#B8E98E', '#1B97C1', '#1C52A3', '#13267F'];
 
 const getColorKeys = (data: Data[] = []) =>
-  data.reduce((acc, d, i) => {
+  data?.reduce((acc, d, i) => {
     return {
       ...acc,
       [d.indicator]: COLORS[i],

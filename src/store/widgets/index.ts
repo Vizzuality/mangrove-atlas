@@ -10,7 +10,7 @@ import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 // by default we want to show all widgets in the distribution and change category
 const defaultCategory: Category = 'distribution_and_change';
 const defaultWidgets = widgets
-  .filter((widget) => widget.categoryIds.includes(defaultCategory))
+  .filter((widget) => widget.categoryIds?.includes(defaultCategory))
   .map((widget) => widget.slug) satisfies WidgetSlugType[];
 
 export const activeWidgetsAtom = atom<(WidgetSlugType | ContextualBasemapsId | 'custom-area')[]>({

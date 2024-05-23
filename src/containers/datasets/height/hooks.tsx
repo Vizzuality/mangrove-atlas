@@ -44,7 +44,7 @@ const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
   const barsValues = data?.map(({ value }) => value);
   const total = barsValues.reduce((previous, current) => current + previous);
   return [
-    data.reduce((acc, d) => {
+    data?.reduce((acc, d) => {
       const percentage = (d.value / total) * 100;
       return {
         ...acc,
@@ -58,7 +58,7 @@ const getData = (data: Data[], unit, COLORS_BY_INDICATOR: ColorKeysTypes) => {
 };
 
 const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
-  data.reduce(
+  data?.reduce(
     (acc, d) => ({
       ...acc,
       [`${d.indicator} m`]: {

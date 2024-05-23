@@ -33,7 +33,7 @@ type DataResponse = {
 };
 
 const getColorKeys = (data: Data[]) =>
-  data.reduce(
+  data?.reduce(
     (acc, d) => ({
       ...acc,
       [d.category]: COLORS[d.category],
