@@ -21,7 +21,7 @@ import type { DataResponse, Data } from './types';
 const COLORS = ['#F3E79B', '#FAC484', '#F0746E', '#B9257A', '#701A64'];
 
 const getColorKeys = (data) =>
-  data.reduce(
+  data?.reduce(
     (acc, d, index) => ({
       ...acc,
       [d]: COLORS[index],

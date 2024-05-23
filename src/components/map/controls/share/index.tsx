@@ -113,7 +113,7 @@ export const Share = ({
                 </div>
               </div>
             </div>
-            <DialogClose onClose={close} />
+            <DialogClose />
           </DialogContent>
         </Dialog>
       )}
