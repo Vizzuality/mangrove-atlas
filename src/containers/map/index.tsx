@@ -47,7 +47,7 @@ import ZoomControl from 'components/map/controls/zoom';
 import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
-import Popup from 'components/popup';
+import Popup from 'components/ui/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
 

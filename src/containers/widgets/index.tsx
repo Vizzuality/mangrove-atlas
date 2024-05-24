@@ -23,8 +23,8 @@ import WidgetWrapper from 'containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';

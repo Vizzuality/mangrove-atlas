@@ -4,8 +4,8 @@ import Helper from 'containers/guide/helper';
 
 import Basemaps from 'components/contextual/basemaps';
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 

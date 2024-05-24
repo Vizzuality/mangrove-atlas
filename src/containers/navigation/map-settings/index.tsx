@@ -8,7 +8,7 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 

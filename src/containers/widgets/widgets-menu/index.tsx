@@ -19,7 +19,8 @@ import { widgets as rawWidgets } from 'containers/widgets/constants';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
-import { CheckboxIndicator } from 'components/checkbox';
+import { CheckboxIndicator } from 'components/ui/checkbox';
+import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 const WidgetsMenu: FC = () => {
@@ -70,20 +71,33 @@ const WidgetsMenu: FC = () => {
 
   const handleAllLayers = useCallback(
     (e) => {
-      const activeLayers = LAYERS.map((layer) => ({
-        id: layer.id,
-        opacity: '1',
-        visibility: 'visible',
-      }));
-      e
-        ? setActiveLayers(
-            activeLayers as {
-              id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
-              opacity: string;
-              visibility: Visibility;
-            }[]
-          )
-        : setActiveLayers([]);
+      if (activeLayers.length <= LAYERS.length) {
+        setActiveLayers([]);
+      }
+      if (LAYERS.length > activeLayers.length) {
+        const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
+          id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
+          opacity: '1',
+          visibility: 'visible',
+        }));
+
+        setActiveLayers(NewLayersActive);
+      }
+
+      // const activeLayers = LAYERS.map((layer) => ({
+      //   id: layer.id,
+      //   opacity: '1',
+      //   visibility: 'visible',
+      // }));
+      // e
+      //   ? setActiveLayers(
+      //       activeLayers as {
+      //         id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+      //         opacity: string;
+      //         visibility: Visibility;
+      //       }[]
+      //     )
+      //   : setActiveLayers([]);
     },
     [setActiveLayers]
   );

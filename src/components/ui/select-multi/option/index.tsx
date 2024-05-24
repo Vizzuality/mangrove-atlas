@@ -1,10 +1,8 @@
-import cn from 'lib/classnames';
-
 import { Listbox } from '@headlessui/react';
 import cx from 'classnames';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
-import Icon from 'components/icon';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import Icon from 'components/ui/icon';
 
 import CHECK_SVG from 'svgs/ui/check-light.svg?sprite';
 

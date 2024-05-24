@@ -15,8 +15,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from 'components/dropdown';
-import Icon from 'components/icon';
+} from 'components/ui/dropdown';
+import Icon from 'components/ui/icon';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';

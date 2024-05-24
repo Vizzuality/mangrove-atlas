@@ -13,7 +13,7 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useResetRecoilState, useRecoilValue } from 'recoil';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 

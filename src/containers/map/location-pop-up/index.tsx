@@ -13,7 +13,7 @@ import { useRecoilState } from 'recoil';
 
 import { useLocations } from 'containers/datasets/locations/hooks';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
 

@@ -11,8 +11,8 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { Dialog, DialogPortal, DialogContent } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogPortal, DialogContent } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 

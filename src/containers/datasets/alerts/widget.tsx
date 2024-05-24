@@ -11,11 +11,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import NoData from 'containers/widgets/no-data';
 
 import Chart from 'components/chart';
-import Icon from 'components/icon';
-import Loading from 'components/loading';
 import DateSelect from 'components/planet-date-select';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
 import SuggestedLayers from 'components/suggested-layers';
+import Icon from 'components/ui/icon';
+import Loading from 'components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

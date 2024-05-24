@@ -8,7 +8,7 @@ import chroma from 'chroma-js';
 
 import NoData from 'containers/widgets/no-data';
 
-import Loading from 'components/loading';
+import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import { COLORS } from './constants';

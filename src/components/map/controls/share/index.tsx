@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
-import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
+import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
 
 import SHARE_SVG from 'svgs/map/share.svg?sprite';
 

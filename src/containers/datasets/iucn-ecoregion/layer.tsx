@@ -12,7 +12,7 @@ import { useLayers, useSource } from './hooks';
 
 const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === 'mangrove_iucn_ecoregion');
+  const activeLayer = activeLayers.find((l) => l.id === id);
 
   const SOURCE = useSource();
   const LAYERS = useLayers({
@@ -25,7 +25,8 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
     const ids = LAYERS.map((layer) => layer.id);
     onAdd(ids);
     return () => onRemove(ids);
-  }, [onAdd, onRemove, LAYERS]);
+    // eslint-disable-next-line
+  }, [onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;
 

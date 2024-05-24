@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import cn from 'classnames';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
 

@@ -8,7 +8,7 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 

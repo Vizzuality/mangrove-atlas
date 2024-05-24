@@ -2,7 +2,7 @@ import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilState } from 'recoil';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 

@@ -12,8 +12,8 @@ import { useRecoilState } from 'recoil';
 import { INFO } from 'containers/datasets';
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
-import Icon from 'components/icon';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import Icon from 'components/ui/icon';
 import Info from 'components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';

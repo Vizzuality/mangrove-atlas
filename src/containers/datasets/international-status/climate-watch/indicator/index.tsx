@@ -1,11 +1,11 @@
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 import {
   Tooltip,
   TooltipArrow,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
-} from 'components/tooltip';
+} from 'components/ui/tooltip';
 
 type IndicatorTypes = {
   label: string;
