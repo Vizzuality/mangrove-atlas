@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 

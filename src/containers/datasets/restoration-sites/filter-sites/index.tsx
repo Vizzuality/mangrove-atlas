@@ -7,8 +7,8 @@ import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
 import { useSetRecoilState } from 'recoil';
 
-import Loading from 'components/loading';
-import MultiSelect from 'components/select-multi';
+import Loading from 'components/ui/loading';
+import MultiSelect from 'components/ui/select-multi';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataDitesProperties } from '../types';

@@ -17,12 +17,11 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
-import { MediaContextProvider } from 'components/media-query';
-
 import 'styles/globals.css';
 import 'styles/mapbox.css';
 
-import { TooltipProvider } from 'components/tooltip';
+import { MediaContextProvider } from 'components/media-query';
+import { TooltipProvider } from 'components/ui/tooltip';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],

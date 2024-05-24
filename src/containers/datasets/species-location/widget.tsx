@@ -19,10 +19,10 @@ import {
   CommandInput,
   CommandEmpty,
   CommandList,
-} from 'components/command';
-import Loading from 'components/loading';
-import RadioGroupItem from 'components/radio-group/radio-group-item';
-import type { RadioOption } from 'components/radio-group/types';
+} from 'components/ui/command';
+import Loading from 'components/ui/loading';
+import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
+import type { RadioOption } from 'components/ui/radio-group/types';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';

@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 

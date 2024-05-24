@@ -1,8 +1,8 @@
 import Category from 'containers/categories-menu';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import CONFIGS_SVG from 'svgs/sidebar/configure.svg?sprite';
 

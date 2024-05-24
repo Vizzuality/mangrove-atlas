@@ -13,12 +13,12 @@ import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
 import { widgets } from 'containers/widgets/constants';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import { Media } from 'components/media-query';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
-import Slider from 'components/slider';
-import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/tooltip';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Slider from 'components/ui/slider';
+import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 

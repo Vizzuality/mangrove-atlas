@@ -13,7 +13,7 @@ import { updateLayers } from 'hooks/layers';
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/guide/helper';
 
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
+import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';

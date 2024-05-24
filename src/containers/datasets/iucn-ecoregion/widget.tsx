@@ -1,7 +1,7 @@
 import NoData from 'containers/widgets/no-data';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Loading from 'components/loading';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import IUCNEcoregionsChart from './chart';

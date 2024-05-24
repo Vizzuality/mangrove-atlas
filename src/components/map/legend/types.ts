@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
-import { IconProps } from 'components/icon/types';
+import { IconProps } from 'components/ui/icon/types';
 
 type Components = {
   Info: React.ReactNode;

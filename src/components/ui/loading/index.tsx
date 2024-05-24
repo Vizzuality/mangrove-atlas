@@ -5,7 +5,7 @@ import cn from 'lib/classnames';
 import cx from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import LOADING_SVG from 'svgs/ui/loading.svg?sprite';
 

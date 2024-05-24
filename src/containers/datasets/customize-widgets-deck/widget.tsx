@@ -9,8 +9,8 @@ import Category from 'containers/categories-menu';
 import widgets from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

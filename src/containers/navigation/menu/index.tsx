@@ -10,8 +10,8 @@ import Helper from 'containers/guide/helper';
 import About from 'containers/navigation/menu/about';
 import BlogContent from 'containers/news/content';
 
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import { Media } from 'components/media-query';
 
 import GMA_PNG from 'images/gma.png';

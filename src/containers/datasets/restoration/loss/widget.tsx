@@ -3,7 +3,7 @@ import { numberFormat } from 'lib/format';
 
 import { TreemapNode } from 'recharts/types/util/types';
 
-import Loading from 'components/loading';
+import Loading from 'components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

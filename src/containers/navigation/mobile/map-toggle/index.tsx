@@ -7,7 +7,7 @@ import { mapViewAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
