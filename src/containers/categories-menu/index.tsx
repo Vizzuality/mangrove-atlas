@@ -10,8 +10,8 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
-import Icon from 'components/icon';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import Icon from 'components/ui/icon';
 import { Category } from 'types/category';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';

@@ -5,7 +5,7 @@ import cn from 'lib/classnames';
 import { Listbox } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 

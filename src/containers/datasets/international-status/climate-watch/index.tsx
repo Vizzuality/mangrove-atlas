@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import Loading from 'components/loading';
+import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import { useClimateWatchNDCS, useClimateWatchNDCSCountriesDocs } from './hooks';

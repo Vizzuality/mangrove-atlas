@@ -4,9 +4,9 @@ import cn from 'lib/classnames';
 
 import NoData from 'containers/widgets/no-data';
 
-import Icon from 'components/icon';
-import Loading from 'components/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
+import Icon from 'components/ui/icon';
+import Loading from 'components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

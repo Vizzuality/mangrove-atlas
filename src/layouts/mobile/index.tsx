@@ -9,7 +9,7 @@ import MapContainer from 'containers/map';
 import NavigationBar from 'containers/navigation/mobile';
 import WidgetsContainer from 'containers/widgets';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import LOGO_MOBILE_SVG from 'svgs/logo-mobile.svg?sprite';
 

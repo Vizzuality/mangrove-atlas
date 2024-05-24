@@ -7,8 +7,8 @@ import { useBlogPosts } from 'hooks/blog';
 import Helper from 'containers/guide/helper';
 import BlogContent from 'containers/news/content';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
 

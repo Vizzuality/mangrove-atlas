@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 
 import LocationsList from 'containers/locations-list';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 

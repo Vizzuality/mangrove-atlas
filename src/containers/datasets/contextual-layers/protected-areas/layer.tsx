@@ -20,11 +20,12 @@ const MangrovesProtectedAreasLayer = ({ beforeId, id, onAdd, onRemove }: LayerPr
     visibility: activeLayer.visibility,
   });
 
+  const ids = LAYERS.map((layer) => layer.id);
   useEffect(() => {
-    const ids = LAYERS.map((layer) => layer.id);
     onAdd(ids);
     return () => onRemove(ids);
-  }, [onAdd, onRemove, LAYERS]);
+    // eslint-disable-next-line
+  }, [onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;
   return (

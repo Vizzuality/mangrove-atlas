@@ -1,7 +1,7 @@
 import { INFO } from 'containers/datasets';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 

@@ -10,8 +10,8 @@ import { useRecoilState } from 'recoil';
 
 import BASEMAPS, { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
-import { Checkbox, CheckboxIndicator } from 'components/checkbox';
-import Icon from 'components/icon';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import Icon from 'components/ui/icon';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 

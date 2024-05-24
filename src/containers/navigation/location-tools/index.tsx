@@ -14,8 +14,8 @@ import WidgetDrawingUploadTool from 'containers/datasets/drawing-upload-tool';
 import Helper from 'containers/guide/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 
-import { Dialog, DialogTrigger } from 'components/dialog';
-import Icon from 'components/icon';
+import { Dialog, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 

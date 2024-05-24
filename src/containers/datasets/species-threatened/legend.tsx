@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 

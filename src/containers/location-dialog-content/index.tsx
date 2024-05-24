@@ -1,6 +1,6 @@
 import LocationsList from 'containers/locations-list';
 
-import { DialogContent, DialogClose } from 'components/dialog';
+import { DialogContent, DialogClose } from 'components/ui/dialog';
 
 const LocationDialogContent = ({ close }: { close: () => void }) => {
   return (

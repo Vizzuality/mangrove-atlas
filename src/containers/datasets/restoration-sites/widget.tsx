@@ -10,8 +10,8 @@ import { useSetRecoilState } from 'recoil';
 
 import NoData from 'containers/widgets/no-data';
 
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/dialog';
-import Loading from 'components/loading';
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 import { BUTTON_STYLES } from 'styles/widgets';
 

@@ -17,7 +17,7 @@ import { useUploadFile } from 'hooks/analysis';
 import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
 
@@ -68,6 +68,11 @@ const WidgetDrawingUploadTool = () => {
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
+  const { data, isLoading, isError, isInitialLoading, fetchStatus, ...rest } = useUploadFile(
+    acceptedFiles?.[0],
+    onUploadFile
+  );
+
   useEffect(() => {
     setMapCursor(isDrawingUploadToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingUploadToolEnabled]);
@@ -109,9 +114,16 @@ const WidgetDrawingUploadTool = () => {
                 description="Upload"
               />
             </div>
-            <label id="label-file-upload" htmlFor="input-file-upload">
-              <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
-            </label>
+            {!isInitialLoading && (
+              <label id="label-file-upload" htmlFor="input-file-upload">
+                <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+              </label>
+            )}
+            {isInitialLoading && fetchStatus === 'fetching' && (
+              <label id="label-file-upload" htmlFor="input-file-upload">
+                <p className="whitespace-nowrap font-sans text-sm text-white">...uploading</p>
+              </label>
+            )}
           </div>
         )}
         {(uploadedGeojson || isDrawingUploadToolEnabled) && (

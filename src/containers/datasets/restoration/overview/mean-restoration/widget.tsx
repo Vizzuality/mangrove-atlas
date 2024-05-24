@@ -2,7 +2,7 @@ import cn from 'lib/classnames';
 
 import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
 
-import Loading from 'components/loading';
+import Loading from 'components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

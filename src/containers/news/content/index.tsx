@@ -9,7 +9,7 @@ import type { Post } from 'hooks/blog/types';
 
 import PostComponent from 'containers/news/post';
 
-import { DialogClose } from 'components/dialog';
+import { DialogClose } from 'components/ui/dialog';
 
 export const BlogContent = () => {
   const { data } = useBlogPosts();

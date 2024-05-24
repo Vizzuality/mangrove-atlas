@@ -6,7 +6,7 @@ import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
 
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
+import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 

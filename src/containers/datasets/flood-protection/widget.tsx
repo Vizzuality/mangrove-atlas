@@ -13,10 +13,10 @@ import type {
 } from 'containers/datasets/flood-protection/types';
 import NoData from 'containers/widgets/no-data';
 
-import Icon from 'components/icon';
-import Loading from 'components/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/switch';
+import Icon from 'components/ui/icon';
+import Loading from 'components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import cn from 'lib/classnames';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import NAVIGATION_SVG from 'svgs/map/navigation.svg?sprite';
 

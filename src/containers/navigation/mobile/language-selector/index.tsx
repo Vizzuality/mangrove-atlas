@@ -5,8 +5,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from 'components/dropdown';
-import Icon from 'components/icon';
+} from 'components/ui/dropdown';
+import Icon from 'components/ui/icon';
 
 import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
 

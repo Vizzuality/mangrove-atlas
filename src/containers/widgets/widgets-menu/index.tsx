@@ -19,7 +19,8 @@ import { widgets as rawWidgets } from 'containers/widgets/constants';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
-import { CheckboxIndicator } from 'components/checkbox';
+import { CheckboxIndicator } from 'components/ui/checkbox';
+import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 const WidgetsMenu: FC = () => {

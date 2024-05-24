@@ -15,7 +15,7 @@ import { useUploadFile } from 'hooks/analysis';
 import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
-import Icon from 'components/icon';
+import Icon from 'components/ui/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 
@@ -58,7 +58,6 @@ const WidgetDrawingTool = () => {
     }));
   }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
 
-  useUploadFile(acceptedFiles?.[0], onUploadFile);
   useEffect(() => {
     setMapCursor(isDrawingToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingToolEnabled]);

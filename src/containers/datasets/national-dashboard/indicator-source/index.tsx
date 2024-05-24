@@ -9,9 +9,9 @@ import { useRecoilState } from 'recoil';
 
 import { updateLayers } from 'hooks/layers';
 
-import Icon from 'components/icon';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/popover';
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/switch';
+import Icon from 'components/ui/icon';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import WidgetControls from 'components/widget-controls';
 import { WIDGET_SELECT_STYLES, WIDGET_SELECT_ARROW_STYLES } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
