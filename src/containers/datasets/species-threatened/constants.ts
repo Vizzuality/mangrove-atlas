@@ -1,4 +1,8 @@
-const Types = {
+export type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
+
+export type Colors = Partial<Record<ThreatenedSpecies, string>>;
+
+export const Types: Record<string, ThreatenedSpecies> = {
   EX: 'ex',
   EW: 'ew',
   RE: 're',
@@ -24,7 +28,7 @@ export const RED_LIST_CATEGORIES = {
   [Types.DD]: 'Data Deficient',
 };
 
-export const COLORS = {
+export const COLORS: Colors = {
   ex: '#000000',
   ew: '#542243',
   cr: '#EE4D5A',
