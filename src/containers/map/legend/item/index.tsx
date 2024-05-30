@@ -224,7 +224,7 @@ const LegendItem = ({
                   })}
                   overlay={false}
                 >
-                  <div className="no-scrollbar overflow-y-auto px-3">
+                  <div className="no-scrollbar overflow-y-auto">
                     <div className="no-scrollbar overflow-y-auto">
                       {WidgetInfo && <WidgetInfo />}
                     </div>

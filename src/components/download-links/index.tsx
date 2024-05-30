@@ -39,7 +39,7 @@ const Download = ({ info }) => {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand-800 underline"
+                  className="text-brand-800 underline hover:no-underline"
                 >
                   DOWNLOAD
                 </a>

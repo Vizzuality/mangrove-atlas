@@ -83,11 +83,11 @@ const WidgetDrawingUploadTool = () => {
   return (
     <Helper
       className={{
-        button: 'top-1 right-9',
+        button: '-top-0.5 right-9',
         tooltip: 'w-fit-content',
         active: 'max-w-[454px]',
       }}
-      tooltipPosition={{ top: -100, left: -100 }}
+      tooltipPosition={{ top: -62, left: 0 }}
       message="use this to upload an existing GIS file"
     >
       <>

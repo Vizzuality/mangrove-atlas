@@ -68,7 +68,7 @@ const WidgetDrawingTool = () => {
         button: 'top-1 right-9 z-[20]',
         tooltip: 'w-fit-content max-w-[400px]',
       }}
-      tooltipPosition={{ top: -65, left: 0 }}
+      tooltipPosition={{ top: -65, left: -20 }}
       message="use this function to calculate statistics for your own custom area of interest"
     >
       <button

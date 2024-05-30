@@ -77,9 +77,8 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
       >
         <div
           className={cn({
-            'rounded-3xl border border-transparent px-9 py-3': true,
-            'border-2 border-brand-800 border-opacity-25 transition delay-150 ease-in-out':
-              isLayerActive,
+            'rounded-3xl border-2 border-transparent px-9 py-3': true,
+            'border-brand-800 border-opacity-25 transition delay-150 ease-in-out': isLayerActive,
             'border-none p-0': info,
           })}
           data-testid={`widget-${id}`}
@@ -116,7 +115,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
               <span className="font-light">{applicability}.</span>{' '}
               <Dialog>
                 <DialogTrigger>
-                  <div className="inline-flex text-brand-800 underline">Learn more</div>
+                  <div className="inline-flex text-brand-800 underline hover:no-underline">
+                    Learn more
+                  </div>
                 </DialogTrigger>
                 <DialogContent className="md:mb-20">
                   <div className="no-scrollbar overflow-y-auto">
