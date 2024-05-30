@@ -62,45 +62,27 @@ const WidgetsMenu: FC = () => {
       if (newCat !== categorySelected) setCategory(newCat);
     },
 
-    [activeWidgets, setActiveWidgets, setCategory, categorySelected]
+    [activeWidgets, setActiveWidgets, setCategory, categorySelected, widgets]
   );
 
   const handleAllWidgets = useCallback(() => {
     activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
-  }, [widgetsIds, setActiveWidgets, activeWidgets]);
+  }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
 
-  const handleAllLayers = useCallback(
-    (e) => {
-      if (activeLayers.length <= LAYERS.length) {
-        setActiveLayers([]);
-      }
-      if (LAYERS.length > activeLayers.length) {
-        const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
-          id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
-          opacity: '1',
-          visibility: 'visible',
-        }));
+  const handleAllLayers = useCallback(() => {
+    if (activeLayers.length <= LAYERS.length && activeLayers.length > 0) {
+      setActiveLayers([]);
+    }
+    if (LAYERS.length > activeLayers.length) {
+      const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
+        id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
+        opacity: '1',
+        visibility: 'visible',
+      }));
 
-        setActiveLayers(NewLayersActive);
-      }
-
-      // const activeLayers = LAYERS.map((layer) => ({
-      //   id: layer.id,
-      //   opacity: '1',
-      //   visibility: 'visible',
-      // }));
-      // e
-      //   ? setActiveLayers(
-      //       activeLayers as {
-      //         id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
-      //         opacity: string;
-      //         visibility: Visibility;
-      //       }[]
-      //     )
-      //   : setActiveLayers([]);
-    },
-    [setActiveLayers]
-  );
+      setActiveLayers(NewLayersActive);
+    }
+  }, [setActiveLayers, activeLayers]);
 
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
