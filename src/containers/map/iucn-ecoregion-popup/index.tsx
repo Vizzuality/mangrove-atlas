@@ -4,12 +4,12 @@ import cn from 'lib/classnames';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { INFO } from 'containers/datasets';
+// import { INFO } from 'containers/datasets';
 import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from 'containers/datasets/iucn-ecoregion/hooks';
 import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+// import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 type Tags =
@@ -62,7 +62,7 @@ const FAKE_DATA_POP_UP = [
   },
 ];
 
-const Info = INFO['mangrove_iucn_ecoregion'];
+// const Info = INFO['mangrove_iucn_ecoregion'];
 
 const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   const [open, setOpen] = useState(false);
