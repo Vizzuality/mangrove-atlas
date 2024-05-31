@@ -52,7 +52,7 @@ const LanguageSelector = () => {
         tooltip: 'w-fit-content',
       }}
       theme="dark"
-      tooltipPosition={{ top: -40, left: 0 }}
+      tooltipPosition={{ top: -50, left: 0 }}
       message="Choose your preferred language here. There is a choice between English, French and Spanish"
     >
       <DropdownMenu>

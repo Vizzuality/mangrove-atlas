@@ -73,7 +73,7 @@ const LocationTools = () => {
           <>
             <Helper
               className={{
-                button: '-top-1 right-9 z-20',
+                button: 'top-1 right-9 z-20',
                 tooltip: 'w-fit-content max-w-[400px]',
               }}
               tooltipPosition={{ top: -65, left: -10 }}

@@ -69,6 +69,7 @@ const About = () => {
             <Image
               src={CONVENED_PNG as StaticImageData}
               alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International"
+              className="-ml-3"
             />
           </div>
           <div>
@@ -76,6 +77,7 @@ const About = () => {
             <Image
               src={SUPPORTED_PNG as StaticImageData}
               alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography"
+              className="-ml-2"
             />
           </div>
 
@@ -84,6 +86,7 @@ const About = () => {
             <Image
               src={DONORS_PNG as StaticImageData}
               alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation"
+              className="-ml-6 -mt-1"
             />
           </div>
 
@@ -95,12 +98,18 @@ const About = () => {
               rel="noopener noreferrer"
               className="m-10"
             >
-              <Image src={VIZZUALITY_PNG as StaticImageData} alt="vizzuality" width={200} />
+              <Image
+                src={VIZZUALITY_PNG as StaticImageData}
+                alt="vizzuality"
+                width={300}
+                height={300}
+                className="ml-2 -mt-1 w-40"
+              />
             </a>
           </div>
         </div>
 
-        <h3 className="py-6 text-xl font-bold leading-8">Disclaimer</h3>
+        <h3 className="py-4 text-xl font-bold leading-8">Disclaimer</h3>
         <p>
           THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE
           PROVIDED ON AN “AS IS” BASIS AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER

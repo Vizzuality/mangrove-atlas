@@ -76,7 +76,7 @@ const Menu = () => {
               </a>
             </div>
 
-            <div className="grid grid-cols-2 items-center py-6">
+            <div className="grid grid-cols-2 items-center gap-y-6 pb-6">
               <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" description="ABERYSTWYTH" />
               <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
               <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
