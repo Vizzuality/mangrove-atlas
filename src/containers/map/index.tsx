@@ -53,6 +53,7 @@ import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';
+import Restoration from 'containers/datasets/restoration/widget';
 
 export const DEFAULT_PROPS = {
   initialViewState: {

@@ -84,7 +84,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
           onClick={handleClick}
           data-testid={id}
           className={cn({
-            [`relative mr-10 h-24 w-24  shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:
+            [`relative mr-10 h-24 w-24 shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:
               true,
             'border-brand-800': isActive,
           })}
