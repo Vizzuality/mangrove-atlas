@@ -13,9 +13,9 @@ import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
 import { widgets } from 'containers/widgets/constants';
 
+import { Media } from 'components/media-query';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
-import { Media } from 'components/media-query';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import Slider from 'components/ui/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';

@@ -72,6 +72,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
+
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
   const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
@@ -283,7 +284,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       const restorationData = evt?.features.find(
         ({ layer }) => layer.id === 'mangrove_restoration-layer'
       );
-
       const interactiveLayers = evt?.features.find(
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||
