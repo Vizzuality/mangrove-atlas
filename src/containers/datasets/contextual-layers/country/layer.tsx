@@ -14,7 +14,7 @@ export const MangrovesCountryBoundariesLayer = ({ beforeId, id, onAdd, onRemove 
     const ids = LAYERS.map((layer) => layer.id);
     onAdd(ids);
     return () => onRemove(ids);
-  }, [LAYERS, onAdd, onRemove]);
+  }, [onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;
 

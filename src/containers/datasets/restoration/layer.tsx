@@ -21,9 +21,9 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   });
 
   useEffect(() => {
-    onAdd([id]);
-    return () => onRemove([id]);
-  }, [id, onAdd, onRemove]);
+    onAdd([LAYER.id]);
+    return () => onRemove([LAYER.id]);
+  }, [onAdd, onRemove, LAYER]);
 
   if (!SOURCE || !LAYER) return null;
 
