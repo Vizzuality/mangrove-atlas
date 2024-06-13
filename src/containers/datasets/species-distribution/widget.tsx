@@ -27,11 +27,12 @@ const SpeciesDistribution = () => {
   } = useMangroveSpecies();
 
   const isWorldwide = location === 'Worldwide';
-  // const total = data?.total;
-  const ref = useRef<HTMLDivElement>(null);
+
+  const ref = createRef<HTMLDivElement>();
   const trianglePosition = (total * lineChartWidth) / worldwideTotal - 11; // substract icon size
+
   // fires synchronously after all DOM mutations.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (ref && ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
