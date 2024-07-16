@@ -2,6 +2,7 @@ import { useCallback, type MouseEvent } from 'react';
 
 import cn from 'lib/classnames';
 
+import { activeLayersAtom } from 'store/layers';
 import { activeCategoryAtom } from 'store/sidebar';
 import { activeWidgetsAtom } from 'store/widgets';
 
@@ -12,13 +13,16 @@ import widgets from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
-import { Category } from 'types/category';
+import type { Category } from 'types/category';
+import type { ActiveLayers } from 'types/layers';
+import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
+  const setActiveLayers = useSetRecoilState(activeLayersAtom);
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement & { value }>) => {
       event.preventDefault();
@@ -28,9 +32,19 @@ const Category = () => {
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
 
+      const activeLayersIds: ActiveLayers[] = widgetsFiltered
+        .flatMap(({ layersIds }) => layersIds || [])
+        .filter(Boolean)
+        .map((id) => ({
+          id: id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
+          opacity: '1',
+          visibility: 'visible',
+        }));
+
       setActiveWidgets(activeWidgetsIds);
+      setActiveLayers(activeLayersIds);
     },
-    [setActiveWidgets, setCategory]
+    [setActiveWidgets, setActiveLayers, setCategory]
   );
 
   return (

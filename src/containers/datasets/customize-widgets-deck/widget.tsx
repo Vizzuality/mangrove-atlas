@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 
+import { useRouter } from 'next/router';
+
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 import Category from 'containers/categories-menu';
+import type { LocationTypes } from 'containers/datasets/locations/types';
 import widgets from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 
@@ -25,6 +28,11 @@ const CustomizeWidgetsDeck = () => {
 
   const [animateState, setAnimateState] = useState('start');
 
+  const {
+    query: { params },
+  } = useRouter();
+  const locationType = params?.[0] || ('worldwide' as LocationTypes);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setAnimateState('end');
@@ -41,6 +49,15 @@ const CustomizeWidgetsDeck = () => {
       clearTimeout(returnTimeoutId);
     };
   }, [animateState]);
+
+  const filteredWidgetsByLocationType = widgets
+    .filter((w) => w.locationType.includes(locationType))
+    .map((w) => w.slug);
+
+  const filteredWidgetsToDisplay = filteredWidgetsByLocationType.filter(
+    (element) => displayedWidgets.includes(element) && element !== 'widgets_deck_tool'
+  );
+
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="space-y-4">
@@ -50,7 +67,7 @@ const CustomizeWidgetsDeck = () => {
             <Dialog>
               <DialogTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                  {displayedWidgets.length} of {widgets.length - 1}
+                  {filteredWidgetsToDisplay.length} of {widgets.length - 1}
                   <Icon
                     icon={ARROW_SVG}
                     className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}

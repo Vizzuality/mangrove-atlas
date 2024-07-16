@@ -31,18 +31,37 @@ const WidgetsMenu: FC = () => {
 
   const activeLayersIds = activeLayers.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
-
   const enabledWidgets = useWidgetsIdsByLocation();
-  const cat = useWidgetsIdsByCategory(activeWidgets);
+
+  const categoryFromWidgets = useWidgetsIdsByCategory(activeWidgets);
 
   // Updates the category when user changes widgets filtering throw checkboxes,
   // are activated. It identifies the category associated with the active widgets and
   // updates it accordingly.
   useEffect(() => {
-    if (categorySelected !== cat) {
-      setCategory(cat);
+    if (categorySelected !== categoryFromWidgets) {
+      setCategory(categoryFromWidgets);
     }
-  }, [categorySelected, cat, setCategory]);
+  }, [categorySelected, categoryFromWidgets, setCategory]);
+
+  const handleAllWidgets = useCallback(() => {
+    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+  }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
+
+  const handleAllLayers = useCallback(() => {
+    if (activeLayers.length <= LAYERS.length && activeLayers.length > 0) {
+      setActiveLayers([]);
+    }
+    if (LAYERS.length > activeLayers.length) {
+      const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
+        id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
+        opacity: '1',
+        visibility: 'visible',
+      }));
+
+      setActiveLayers(NewLayersActive);
+    }
+  }, [setActiveLayers, activeLayers]);
 
   const handleWidgets = useCallback(
     (e) => {
@@ -64,26 +83,6 @@ const WidgetsMenu: FC = () => {
 
     [activeWidgets, setActiveWidgets, setCategory, categorySelected, widgets]
   );
-
-  const handleAllWidgets = useCallback(() => {
-    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
-  }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
-
-  const handleAllLayers = useCallback(() => {
-    if (activeLayers.length <= LAYERS.length && activeLayers.length > 0) {
-      setActiveLayers([]);
-    }
-    if (LAYERS.length > activeLayers.length) {
-      const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
-        id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
-        opacity: '1',
-        visibility: 'visible',
-      }));
-
-      setActiveLayers(NewLayersActive);
-    }
-  }, [setActiveLayers, activeLayers]);
-
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
       const layersUpdate = activeLayersIds.includes(e)
@@ -94,6 +93,7 @@ const WidgetsMenu: FC = () => {
 
     [activeLayers, activeLayersIds, setActiveLayers]
   );
+
   return (
     <div>
       <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold uppercase tracking-[1px]">

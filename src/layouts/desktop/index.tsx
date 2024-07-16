@@ -38,6 +38,7 @@ const DesktopLayout = () => {
           width={186}
           height={216}
           draggable={false}
+          priority={true}
         />
       </Link>
       <div className="relative h-screen w-screen">

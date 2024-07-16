@@ -341,6 +341,8 @@ export function useAlerts<DataResponse>(
           endIndex,
         },
       };
+
+      if (!fullData.length) return undefined;
       return {
         alertsTotal: formatAxis(alertsTotal),
         startDateOptions,
