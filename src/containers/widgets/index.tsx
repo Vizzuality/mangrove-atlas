@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, FC } from 'react';
 
+import { useRouter } from 'next/router';
+
 import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
@@ -17,6 +19,7 @@ import WidgetsLayout from 'layouts/widgets';
 
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
+import { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
@@ -34,6 +37,7 @@ import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
 import WidgetsMenu from './widgets-menu';
+
 const buttonMotion = {
   rest: {
     width: 48,
@@ -72,6 +76,13 @@ const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [categorySelected] = useRecoilState(activeCategoryAtom);
   const [{ customGeojson }] = useRecoilState(drawingToolAtom);
+
+  const {
+    query: { params },
+  } = useRouter();
+
+  // Params as default don't appear in URL, when there is no location we assume worldwide
+  const locationType = params?.[0] || ('worldwide' as LocationTypes);
 
   const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
 
@@ -127,6 +138,14 @@ const WidgetsContainer: FC = () => {
     }, 2000);
   }, []);
 
+  const activeWidgetsFilteredByLocationType = widgets
+    .filter((w) => w.locationType.includes(locationType))
+    .map(({ slug }) => slug);
+
+  const filteredWidgetsToDisplay = activeWidgetsFilteredByLocationType.filter(
+    (element) => activeWidgets.includes(element) && element !== 'widgets_deck_tool'
+  );
+
   return (
     <WidgetsLayout>
       <AppTools />
@@ -156,7 +175,7 @@ const WidgetsContainer: FC = () => {
                   })}
                 >
                   <p>
-                    Widgets deck <span>({activeWidgets.length})</span>
+                    Widgets deck <span>({filteredWidgetsToDisplay.length})</span>
                   </p>
                 </button>
               </DialogTrigger>

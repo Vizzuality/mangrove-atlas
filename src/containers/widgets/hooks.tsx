@@ -82,3 +82,24 @@ export function useWidgetsIdsByCategory(widgets) {
 
   return 'all_datasets';
 }
+
+export function useWLayersIdsByCategory(widgets) {
+  for (const cat of WIDGETS_BY_CATEGORY) {
+    const [category, slugsCategory] = Object.entries(cat)[0];
+    // Convert each category's widget array to a set for efficient lookup
+    const slugsCategorySet = new Set(slugsCategory);
+    // Check if every element in the category set is in the widgets set
+    const isCategoryFullyInWidgets = [...slugsCategorySet].every((slug) => widgets.has(slug));
+
+    // Also, ensure that the input widgets set does not contain more items than the current category
+    // This is done by checking if every element in the widgets set is in the category set
+    const areWidgetsOnlyFromCategory = [...widgets].every((widget) => slugsCategorySet.has(widget));
+
+    // Check for an exact match in terms of content and count
+    if (isCategoryFullyInWidgets && areWidgetsOnlyFromCategory) {
+      return category;
+    }
+  }
+
+  return 'all_datasets';
+}

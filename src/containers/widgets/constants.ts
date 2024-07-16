@@ -4,10 +4,10 @@ const widgets_dev = [
   {
     name: 'National Dashboard',
     slug: 'mangrove_national_dashboard',
-    locationType: ['custom-area', 'wdpa', 'country'],
+    locationType: ['custom-area', 'country'],
     applicability: 'National and Sub-National',
     categoryIds: ['all_datasets', 'distribution_and_change'],
-    layersIds: [],
+    layersIds: ['mangrove_national_dashboard'],
   },
   {
     name: 'Mangrove Restoration Sites',
@@ -15,7 +15,7 @@ const widgets_dev = [
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['restoration-sites'],
+    layersIds: ['mangrove_rest_sites'],
   },
 ] satisfies WidgetTypes[];
 
@@ -26,7 +26,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, Sub-National, and Local',
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-    layersIds: ['extent'],
+    layersIds: ['mangrove_habitat_extent'],
   },
   {
     name: 'Mangrove Net Change',
@@ -34,7 +34,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-    layersIds: ['net'],
+    layersIds: ['mangrove_net_change'],
   },
   {
     name: 'Mangrove Habitat Change',
@@ -50,7 +50,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, Sub-National, and Local',
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
-    layersIds: ['alerts-heat'],
+    layersIds: ['mangrove_alerts'],
     contextualLayersIds: ['45d01564-c099-42d8-b8f2-a0851accf3e7'],
   },
   {
@@ -59,7 +59,7 @@ const widgets_prod = [
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
-    layersIds: ['species-location'],
+    layersIds: ['mangrove_species_location'],
   },
   {
     name: 'Mangrove Species Distribution',
@@ -67,7 +67,7 @@ const widgets_prod = [
     locationType: ['country', 'worldwide'],
     applicability: 'Global and National',
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
-    layersIds: ['species-distribution'],
+    layersIds: ['mangrove_species_distribution'],
   },
   {
     name: 'Mangrove Species by Red List Status',
@@ -89,7 +89,7 @@ const widgets_prod = [
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['restoration'],
+    layersIds: ['mangrove_restoration'],
   },
   {
     name: 'Mangrove Biomass',
@@ -97,7 +97,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
-    layersIds: ['biomass'],
+    layersIds: ['mangrove_biomass'],
   },
   {
     name: 'Mangrove Height',
@@ -105,7 +105,7 @@ const widgets_prod = [
     locationType: ['custom-area', 'wdpa', 'country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
-    layersIds: ['height'],
+    layersIds: ['mangrove_height'],
   },
   {
     name: 'Mangrove Blue Carbon',
@@ -117,7 +117,7 @@ const widgets_prod = [
     ],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'climate_and_policy', 'ecosystem_services'],
-    layersIds: ['carbon'],
+    layersIds: ['mangrove_blue_carbon'],
   },
   {
     name: 'Mangrove Emissions Mitigation',
@@ -146,7 +146,7 @@ const widgets_prod = [
     locationType: ['wdpa', 'country'],
     applicability: 'National',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['extent'],
+    layersIds: ['mangrove_drivers_change'],
   },
   {
     name: 'Mangrove Fisheries',
@@ -175,7 +175,7 @@ const widgets_prod = [
       locationType: ['worldwide'],
       applicability: 'Global',
       categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-      layersIds: ['ecoregion'],
+      layersIds: ['mangrove_iucn_ecoregion'],
     }),
   },
   {
@@ -190,28 +190,28 @@ const widgets_prod = [
     slug: 'mangrove_allen_coral_reef',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
-    layersIds: ['allen_coral_reef'],
+    layersIds: ['mangrove_allen_coral_reef'],
   },
   {
     name: 'Salt Marsh',
     slug: 'mangrove_salt_marsh',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
-    layersIds: ['salt_marsh'],
+    layersIds: ['mangrove_salt_marsh'],
   },
   {
     name: 'Tidal Flats',
     slug: 'mangrove_tidal_flats',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
-    layersIds: ['tidal_flats'],
+    layersIds: ['mangrove_tidal_flats'],
   },
   {
     name: 'Global Tidal Wetland Change',
     slug: 'mangrove_global_tidal_wetland_change',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
-    layersIds: ['global_tidal_wetland_change'],
+    layersIds: ['mangrove_global_tidal_wetland_change'],
   },
   {
     name: 'Customize Widgets Deck',
