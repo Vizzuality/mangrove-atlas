@@ -261,6 +261,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
     if (!locationFeature) removePopup('location');
 
+    // Restoration
     if (restorationFeature) {
       setRestorationPopUp({
         ...restorationPopUp,
@@ -270,7 +271,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!restorationFeature) {
       removePopup('restoration');
     }
-
+    // IUCN Ecoregions
     if (iucnEcoregionFeature)
       setIucnEcoregionPopUp({
         popupInfo: iucnEcoregionFeature.properties as IUCNEcoregionPopUpInfo,
@@ -318,14 +319,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       // *ON MOUSE LEAVE
       if (!restorationData && loaded) {
-        map?.setFeatureState(
-          {
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateId,
-          },
-          { hover: false }
-        );
         hoveredStateId = null;
       }
       if (isDrawingToolEnabled && !customGeojson) {
