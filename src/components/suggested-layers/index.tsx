@@ -6,9 +6,15 @@ import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
 
+import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
+
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import { Icon } from 'components/ui/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
+
+import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 type SuggestionTypes = {
   name: string;
@@ -66,6 +72,18 @@ const SuggestedLayers = ({
           <p className="text-sm font-light">{description}</p>
         </div>
         <div className="flex items-start space-x-2">
+          <Dialog>
+            <DialogTrigger>
+              <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" description="Info" />
+            </DialogTrigger>
+            <DialogContent className="w-screen md:mb-20 md:w-auto">
+              <div className="no-scrollbar overflow-y-auto">
+                <Info />
+              </div>
+              <DialogClose className="md:0 -top-2 md:absolute" />
+            </DialogContent>
+          </Dialog>
+
           <SwitchWrapper id={id}>
             <SwitchRoot onClick={handleClick} defaultChecked={isActive} checked={isActive}>
               <SwitchThumb />

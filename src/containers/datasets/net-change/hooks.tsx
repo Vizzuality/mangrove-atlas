@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import flatten from 'lodash-es/flatten';
 import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
