@@ -213,7 +213,7 @@ const AlertsWidget = () => {
               name="Planet-NICFI Satellite Imagery"
               thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
               id="planet_medres_visual_monthly"
-              description="We recommend you to use ## Planet-NICFI Satellite Imagery to validate the alerts."
+              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
             >
               {isActive && (
                 <DateSelect

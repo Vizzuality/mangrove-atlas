@@ -1,4 +1,4 @@
-import { createRef, useState, useLayoutEffect, useRef, useEffect } from 'react';
+import { createRef, useState, useLayoutEffect } from 'react';
 
 import cn from 'lib/classnames';
 

@@ -10,6 +10,14 @@ type ContextualLayersTypes = Array<{
   description: string;
   hasDropdown: boolean;
 }>;
+
+type HiResTypes = Array<{
+  id: string;
+  type: 'contextual-basemap';
+  name: string;
+  description: string;
+}>;
+
 export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   {
     id: 'planet_medres_visual_monthly',
@@ -47,3 +55,12 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
   // },
 ] satisfies ContextualLayersTypes;
 // TO - DO - Check use case for periodic basemaps
+
+export const HIGH_RESOLUTION_EXTENT = [
+  {
+    id: 'high_res_extent',
+    type: 'contextual-basemap',
+    name: 'High resolution extent layer',
+    description: 'LOREM IPSUM',
+  },
+] satisfies HiResTypes;

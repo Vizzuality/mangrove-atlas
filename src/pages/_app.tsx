@@ -18,7 +18,7 @@ import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
 import 'styles/globals.css';
-// import 'styles/mapbox.css';
+import 'styles/mapbox.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MediaContextProvider } from 'components/media-query';

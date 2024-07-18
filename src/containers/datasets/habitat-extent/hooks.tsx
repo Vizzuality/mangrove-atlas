@@ -241,7 +241,7 @@ export function useLayers({
           'source-layer': `mng_mjr_${year}`,
           paint: {
             'fill-color': '#06C4BD',
-            'fill-opacity': opacity,
+            'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, opacity * 1.2, 12, opacity],
           },
           layout: {
             visibility,
@@ -255,8 +255,8 @@ export function useLayers({
           paint: {
             'line-color': '#06C4BD',
             'line-opacity': opacity,
-            'line-width': ['interpolate', ['exponential', 0.7], ['zoom'], 0, 8, 12, 0],
-            'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 20, 12, 0],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 0, 8, 12, 1],
+            'line-blur': ['interpolate', ['linear'], ['zoom'], 0, 50, 12, 0],
           },
           layout: {
             visibility,

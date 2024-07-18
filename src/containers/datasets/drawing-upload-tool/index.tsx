@@ -68,10 +68,7 @@ const WidgetDrawingUploadTool = () => {
 
   useUploadFile(acceptedFiles?.[0], onUploadFile);
 
-  const { data, isLoading, isError, isInitialLoading, fetchStatus, ...rest } = useUploadFile(
-    acceptedFiles?.[0],
-    onUploadFile
-  );
+  const { isInitialLoading, fetchStatus } = useUploadFile(acceptedFiles?.[0], onUploadFile);
 
   useEffect(() => {
     setMapCursor(isDrawingUploadToolEnabled ? 'cell' : 'grab');
