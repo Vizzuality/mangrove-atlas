@@ -165,7 +165,7 @@ const WidgetsContainer: FC = () => {
               tooltipPosition={{ top: -50, left: 0 }}
               message="Triggers deck to configure widgets"
             >
-              <DialogTrigger>
+              <DialogTrigger asChild>
                 <button
                   type="button"
                   data-testid="widgets-deck-trigger"
@@ -293,7 +293,7 @@ const WidgetsContainer: FC = () => {
           tooltipPosition={{ top: -50, left: 0 }}
           message="Triggers deck to configure widgets"
         >
-          <DialogTrigger>
+          <DialogTrigger asChild>
             <motion.div
               initial="rest"
               whileHover="hover"

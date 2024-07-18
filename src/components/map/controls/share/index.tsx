@@ -69,7 +69,7 @@ export const Share = ({
     <>
       {!disabled && (
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Dialog>
               <DialogTrigger>
                 <div

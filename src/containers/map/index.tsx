@@ -285,6 +285,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       const restorationData = evt?.features.find(
         ({ layer }) => layer.id === 'mangrove_restoration-layer'
       );
+
       const interactiveLayers = evt?.features.find(
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||
@@ -318,7 +319,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }
 
       // *ON MOUSE LEAVE
-      if (!restorationData && loaded) {
+
+      if (!restorationData && loaded && hoveredStateId) {
+        map?.setFeatureState(
+          {
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: hoveredStateId,
+          },
+          { hover: false }
+        );
         hoveredStateId = null;
       }
       if (isDrawingToolEnabled && !customGeojson) {
