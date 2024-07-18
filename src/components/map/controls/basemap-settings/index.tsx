@@ -18,7 +18,7 @@ import InfoHiRes from './info-hi-res.mdx';
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Dialog>
           <DialogTrigger>
             <div

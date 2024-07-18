@@ -65,7 +65,7 @@ const CustomizeWidgetsDeck = () => {
           You are showing{' '}
           <span className="notranslate font-bold">
             <Dialog>
-              <DialogTrigger asChild>
+              <DialogTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {filteredWidgetsToDisplay.length} of {widgets.length - 1}
                   <Icon
