@@ -76,6 +76,7 @@ const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [categorySelected] = useRecoilState(activeCategoryAtom);
   const [{ customGeojson }] = useRecoilState(drawingToolAtom);
+  const isPrintingMode = useRecoilValue(printModeState);
 
   const {
     query: { params },
@@ -145,7 +146,7 @@ const WidgetsContainer: FC = () => {
   const filteredWidgetsToDisplay = activeWidgetsFilteredByLocationType.filter(
     (element) => activeWidgets.includes(element) && element !== 'widgets_deck_tool'
   );
-
+  console.log({ isPrintingMode });
   return (
     <WidgetsLayout>
       <AppTools />
@@ -341,7 +342,7 @@ const WidgetsContainer: FC = () => {
         </DialogContent>
       </Dialog>
 
-      {!!widgets.length ? (
+      {!!widgets.length && isPrintingMode ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{
