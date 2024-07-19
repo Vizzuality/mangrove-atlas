@@ -32,13 +32,13 @@ const SpeciesDistribution = () => {
   const trianglePosition = (total * lineChartWidth) / worldwideTotal - 11; // substract icon size
 
   // fires synchronously after all DOM mutations.
-  useLayoutEffect(() => {
-    if (ref && ref.current && ref.current.offsetWidth) {
-      setLineChartWidth(ref?.current?.offsetWidth);
-    }
-  }, [ref]);
+  // useLayoutEffect(() => {
+  //   if (ref && ref.current && ref.current.offsetWidth) {
+  //     setLineChartWidth(ref?.current?.offsetWidth);
+  //   }
+  // }, [ref]);
 
-  if (noData) return <NoData />;
+  // if (noData) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -54,7 +54,7 @@ const SpeciesDistribution = () => {
             <span className="font-bold">{total}</span> species of mangroves distributed by country
             as map shows.
           </p>
-          <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85">
+          {/* <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85">
             <p className="w-full text-end opacity-50">total species</p>
 
             <div
@@ -82,7 +82,7 @@ const SpeciesDistribution = () => {
                 <p key={l}>{l}</p>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
