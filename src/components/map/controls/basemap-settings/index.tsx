@@ -13,7 +13,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
-import InfoHiRes from './info-hi-res.mdx';
+import InfoHiRes from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
 
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (

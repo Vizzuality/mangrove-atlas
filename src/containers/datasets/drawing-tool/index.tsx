@@ -1,16 +1,11 @@
 import { useCallback, useEffect } from 'react';
 
-import { useDropzone } from 'react-dropzone';
-
 import cn from 'lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
-
-import { useUploadFile } from 'hooks/analysis';
 
 import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
@@ -24,31 +19,7 @@ const WidgetDrawingTool = () => {
   const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
   const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
-  const setAnalysisState = useSetRecoilState(analysisAtom);
   const setMapCursor = useSetRecoilState(mapCursorAtom);
-
-  const { acceptedFiles } = useDropzone({
-    multiple: false,
-    accept: {
-      'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
-    },
-  });
-
-  const onUploadFile = useCallback<Parameters<typeof useUploadFile>[1]>(
-    (geojson) => {
-      setDrawingToolState((drawingToolState) => ({
-        ...drawingToolState,
-        uploadedGeojson: geojson.data,
-        customGeojson: null,
-      }));
-
-      setAnalysisState((prevAnalysisState) => ({
-        ...prevAnalysisState,
-        enabled: true,
-      }));
-    },
-    [setDrawingToolState, setAnalysisState]
-  );
 
   const handleDrawingMode = useCallback(() => {
     resetDrawingUploadToolState();

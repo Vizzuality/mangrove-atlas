@@ -1,3 +1,7 @@
+import { useCallback } from 'react';
+
+import { useMap } from 'react-map-gl';
+
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -16,6 +20,8 @@ import WidgetsContainer from 'containers/widgets';
 import LOGO_PNG from 'images/logo-bg.png';
 
 const DesktopLayout = () => {
+  const map = useMap();
+
   const isPrintingMode = useRecoilValue(printModeState);
 
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
@@ -29,9 +35,23 @@ const DesktopLayout = () => {
     data: { name: location },
   } = useLocation(id, locationType);
 
+  const handleReset = useCallback(() => {
+    if (map) {
+      map?.['default-desktop-no-print'].flyTo({
+        center: [0, 20],
+        zoom: 2,
+      });
+    }
+  }, [map]);
+
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <Link href="/" className="pointer-events-auto fixed top-0 right-0 z-[800]" draggable={false}>
+      <Link
+        href="/"
+        className="pointer-events-auto fixed top-0 right-0 z-[800]"
+        draggable={false}
+        onClick={handleReset}
+      >
         <Image
           src={LOGO_PNG as StaticImageData}
           alt="Logo Global Mangrove Watch"

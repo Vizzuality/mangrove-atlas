@@ -1,5 +1,9 @@
 import { useCallback, useEffect } from 'react';
 
+import { useMap } from 'react-map-gl';
+
+import Link from 'next/link';
+
 import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
@@ -7,6 +11,7 @@ import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
 import { locationToolAtom } from 'store/sidebar';
 
+import { BiReset } from 'react-icons/bi';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import WidgetDrawingTool from 'containers/datasets/drawing-tool';
@@ -28,6 +33,7 @@ const LocationTools = () => {
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
+  const map = useMap();
 
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
@@ -65,9 +71,26 @@ const LocationTools = () => {
     saveLocationTool,
   ]);
 
+  const handleReset = useCallback(() => {
+    if (map) {
+      map?.['default-desktop-no-print'].flyTo({
+        center: [0, 20],
+        zoom: 2,
+      });
+    }
+  }, [map]);
+
   return (
-    <div className="mx-auto flex w-full items-center justify-center space-x-2 md:space-x-8">
+    <div className="mx-auto flex w-full items-center justify-center space-x-1 md:space-x-2">
       {/* //*FIND LOCATIONS* */}
+      <Link
+        href="/"
+        onClick={handleReset}
+        className="mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white"
+      >
+        <BiReset className="h-8 w-8 fill-current " />
+        <span className="whitespace-nowrap font-sans text-sm">Reset page</span>
+      </Link>
       <Dialog open={locationTool === 'search' && locationsModalIsOpen}>
         <DialogTrigger asChild>
           <>
@@ -81,7 +104,7 @@ const LocationTools = () => {
             >
               <button
                 onClick={handleOnClickSearch}
-                className="mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2"
+                className="rounded-3xlp-2 mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1"
                 data-testid="search-button"
                 disabled={guideIsActive}
               >

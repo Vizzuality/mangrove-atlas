@@ -18,7 +18,7 @@ import LocationDialogContent from 'containers/location-dialog-content';
 import LocationTools from 'containers/navigation/location-tools';
 
 import { Dialog, DialogTrigger } from 'components/ui/dialog';
-
+import { GrPowerReset } from 'react-icons/gr';
 const LocationWidget = () => {
   const {
     query: { params },

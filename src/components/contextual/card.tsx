@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 
@@ -55,7 +55,9 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
     if (type === 'contextual-basemap') return basemapContextualSelected === id;
     if (type === 'basemap') return basemapStored === id;
   }, [basemapContextualSelected, basemapStored, type, id]);
+
   const info = INFO[id];
+
   const handleClick = () => {
     if (type === 'contextual-basemap') {
       const updatedContextualBasemap = basemapContextualSelected === id ? null : id;

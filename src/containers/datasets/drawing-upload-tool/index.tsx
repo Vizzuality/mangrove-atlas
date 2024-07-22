@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/router';
 
@@ -12,7 +13,7 @@ import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { useUploadFile } from 'hooks/analysis';
+import { fetchUploadFile } from 'hooks/analysis';
 
 import Helper from 'containers/guide/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
@@ -25,6 +26,8 @@ const WidgetDrawingUploadTool = () => {
   const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }, setDrawingUploadToolState] =
     useRecoilState(drawingUploadToolAtom);
 
+  const [uploadingFile, setFileUpload] = useState(false);
+
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
 
@@ -35,40 +38,51 @@ const WidgetDrawingUploadTool = () => {
 
   const queryParams = asPath.split('?')[1];
 
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
     accept: {
       'multipart/form-data': ['.zip', '.gpkg', '.geojson', '.json'],
     },
-  });
+    onDropAccepted(files) {
+      if (files.length > 0) {
+        setFileUpload(true);
+        fetchUploadFile(files)
+          .then((data) => {
+            setFileUpload(false);
+            setDrawingUploadToolState((drawingToolState) => ({
+              ...drawingToolState,
+              uploadedGeojson: data?.data,
+              customGeojson: null,
+            }));
 
-  const onUploadFile = useCallback<Parameters<typeof useUploadFile>[1]>(
-    (geojson) => {
-      setDrawingUploadToolState((drawingToolState) => ({
-        ...drawingToolState,
-        uploadedGeojson: geojson.data,
-        customGeojson: null,
-      }));
+            setDrawingToolState((drawingToolState) => ({
+              ...drawingToolState,
+              uploadedGeojson: null,
+              customGeojson: null,
+            }));
 
-      setDrawingToolState((drawingToolState) => ({
-        ...drawingToolState,
-        uploadedGeojson: null,
-        customGeojson: null,
-      }));
+            setAnalysisState((prevAnalysisState) => ({
+              ...prevAnalysisState,
+              enabled: true,
+            }));
+            void push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`, null);
 
-      setAnalysisState((prevAnalysisState) => ({
-        ...prevAnalysisState,
-        enabled: true,
-      }));
-
-      void push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`, null);
+            toast.success('File uploaded successfully');
+          })
+          .catch((error: Error) => {
+            setFileUpload(false);
+            toast.error(`Error uploading file: ${error.message}`);
+          });
+      }
     },
-    [setDrawingToolState, setAnalysisState, setDrawingUploadToolState, push, queryParams]
-  );
-
-  useUploadFile(acceptedFiles?.[0], onUploadFile);
-
-  const { isInitialLoading, fetchStatus } = useUploadFile(acceptedFiles?.[0], onUploadFile);
+    onDropRejected(fileRejections) {
+      fileRejections.forEach(({ errors }) => {
+        errors.forEach((error) => {
+          toast.error(`Error uploading file: ${error.message}`);
+        });
+      });
+    },
+  });
 
   useEffect(() => {
     setMapCursor(isDrawingUploadToolEnabled ? 'cell' : 'grab');
@@ -111,12 +125,12 @@ const WidgetDrawingUploadTool = () => {
                 description="Upload"
               />
             </div>
-            {!isInitialLoading && (
+            {!uploadingFile && (
               <label id="label-file-upload" htmlFor="input-file-upload">
                 <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
               </label>
             )}
-            {isInitialLoading && fetchStatus === 'fetching' && (
+            {uploadingFile && (
               <label id="label-file-upload" htmlFor="input-file-upload">
                 <p className="whitespace-nowrap font-sans text-sm text-white">...uploading</p>
               </label>
