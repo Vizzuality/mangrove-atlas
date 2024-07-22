@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
+import { Slide, ToastContainer } from 'react-toastify';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -17,6 +18,7 @@ import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import 'styles/mapbox.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -141,6 +143,12 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
                     <TooltipProvider delayDuration={200}>
                       <Component {...pageProps} />
                     </TooltipProvider>
+                    <ToastContainer
+                      transition={Slide}
+                      hideProgressBar={true}
+                      theme="colored"
+                      autoClose={1500}
+                    />
                   </MapProvider>
                 </MediaContextProvider>
               </Hydrate>

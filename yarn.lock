@@ -3893,6 +3893,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^2.1.0":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: acd3e1ab9d8a433ecb3cc2f6a05ab95fe50b4a3cfc5ba47abb6cbf3754585fcb87b84e90c822a1f256c4198e3b41c7f6c391577ffc8678ad587fc0976b24fd57
+  languageName: node
+  linkType: hard
+
 "cmdk@npm:0.2.0":
   version: 0.2.0
   resolution: "cmdk@npm:0.2.0"
@@ -7387,6 +7394,7 @@ __metadata:
     react-icons: 4.11.0
     react-map-gl: 7.0.21
     react-markdown: ^9.0.1
+    react-toastify: ^10.0.5
     react-virtualized: 9.22.5
     recharts: ^2.5.0
     recoil: ^0.7.7
@@ -9728,6 +9736,18 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^10.0.5":
+  version: 10.0.5
+  resolution: "react-toastify@npm:10.0.5"
+  dependencies:
+    clsx: ^2.1.0
+  peerDependencies:
+    react: ">=18"
+    react-dom: ">=18"
+  checksum: 982d33918c63e99464623a1b3b023ab5fe18fe341143cb0cb04287e37fd0611c560d9ef451e151ac8ade15a1cda09df09d4c442b3db582965d71aaf42d49b230
   languageName: node
   linkType: hard
 

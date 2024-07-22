@@ -8,35 +8,29 @@ import { AnalysisWidgetSlug } from 'types/widget';
 
 import API from 'services/api';
 
+import { toast } from 'react-toastify';
+
 import type { UploadFileResponse } from './types';
 export type AnalysisResponse<T> = Record<AnalysisWidgetSlug, T>;
 
-const fetchUploadFile = (data: FormData) =>
-  API.request<UploadFileResponse>({
+export const fetchUploadFile = (data: File[]) => {
+  const formData = new FormData();
+  formData.append('file', data[0]);
+  return API.request<UploadFileResponse>({
     method: 'post',
     url: '/spatial_file/converter',
-    data,
+    data: formData,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-  }).then(({ data }) => data);
-
-export const useUploadFile = (
-  file: File,
-  onUploadFile?: (geojson: UploadFileResponse) => void,
-  enabled?: boolean,
-  queryOptions?: QueryObserverOptions<UploadFileResponse>
-) => {
-  const [, setUploadErrorModal] = useRecoilState(uploadFileAtom);
-  const data = new FormData();
-
-  data.append('file', file);
-  return useQuery(['converter'], () => fetchUploadFile(data), {
-    ...queryOptions,
-    enabled: !!file && enabled,
-    onSuccess: (geojson) => {
-      onUploadFile?.(geojson);
-    },
-    onError: setUploadErrorModal,
-  });
+  })
+    .then(({ data }) => data)
+    .catch((error) => {
+      console.error('Error uploading file:', error);
+      const errorMessage: string =
+        typeof error?.response?.data?.message === 'string'
+          ? error.response.data.message
+          : 'There was a problem uploading the file. Please try again.';
+      throw new Error(errorMessage);
+    });
 };

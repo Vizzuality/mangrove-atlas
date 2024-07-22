@@ -28,6 +28,8 @@ import GlobalTidalWetlandChangeWidget from 'containers/datasets/contextual-layer
 import GlobalTidalWetlandChangeInfo from 'containers/datasets/contextual-layers/global-tidal-wetland-change/info.mdx';
 import GlobalTidalWetlandChangeLayer from 'containers/datasets/contextual-layers/global-tidal-wetland-change/layer';
 import GlobalTidalWetlandChangeMapLegend from 'containers/datasets/contextual-layers/global-tidal-wetland-change/map-legend';
+import HiResExtentInfo from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
+import HiResExtentLayer from 'containers/datasets/contextual-layers/hi-res-extent/layer';
 import PlanetSatelliteBasemapInfo from 'containers/datasets/contextual-layers/planet/info.mdx';
 import ProtectedAreasWidget from 'containers/datasets/contextual-layers/protected-areas';
 import ProtectedAreasLayer from 'containers/datasets/contextual-layers/protected-areas/layer';
@@ -66,7 +68,6 @@ import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
 import HabitatExtentMapLegend from 'containers/datasets/habitat-extent/map-legend';
 import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';
-import HiResExtentLayer from 'containers/datasets/contextual-layers/hi-res-extent/layer';
 import HeightInfo from 'containers/datasets/height/info.mdx';
 import HeightLayer from 'containers/datasets/height/layer';
 import HeightMapLegend from 'containers/datasets/height/map-legend';
@@ -213,6 +214,7 @@ export const MAP_POP_UPS = {
 
 export const INFO = {
   mangrove_habitat_extent: HabitatExtentInfo,
+  'hi-res-extent': HiResExtentInfo,
   mangrove_habitat_change: HabitatChangeInfo,
   mangrove_species_distribution: SpeciesDistributionInfo,
   mangrove_species_threatened: SpeciesThreatenedInfo,

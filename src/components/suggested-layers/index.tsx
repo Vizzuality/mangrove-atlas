@@ -6,7 +6,7 @@ import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
 
-import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
+import { INFO } from 'containers/datasets';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import { Icon } from 'components/ui/icon';
@@ -33,6 +33,7 @@ const SuggestedLayers = ({
   color,
   thumbSource,
 }: SuggestionTypes) => {
+  const Info = INFO[id];
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers.map((l) => l.id);
   const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
