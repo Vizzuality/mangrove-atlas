@@ -36,7 +36,7 @@ const SpeciesDistribution = () => {
   //     setLineChartWidth(ref?.current?.offsetWidth);
   //   }
   // }, [ref]);
-  console.log({ total });
+
   if (noData) return <NoData />;
 
   return (

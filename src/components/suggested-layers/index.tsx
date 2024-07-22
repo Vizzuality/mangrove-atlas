@@ -18,7 +18,7 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 type SuggestionTypes = {
   name: string;
-  id: ContextualBasemapsId | WidgetSlugType;
+  id: ContextualBasemapsId | WidgetSlugType | 'hi-res-extent';
   description: string;
   children?: ReactElement;
   color?: string;

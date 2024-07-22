@@ -14,7 +14,7 @@ import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
 
 const News = () => {
   const guideIsActive = useRecoilValue(activeGuideAtom);
-  const { data } = useBlogPosts();
+  const { data } = useBlogPosts({ wl_topic: [53] });
 
   return (
     <Dialog>

@@ -178,7 +178,7 @@ const WidgetsMenu: FC = () => {
                   </CheckboxIndicator>
                 )}
               </Checkbox>
-              {!!layersIds && !!layersIds.length && (
+              {!!layersIds && !!layersIds.length && slug !== 'mangrove_national_dashboard' && (
                 <Checkbox
                   id={slug}
                   data-testid={`${slug}-checkbox`}

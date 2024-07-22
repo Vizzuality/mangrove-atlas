@@ -6,12 +6,13 @@ import { activeLayersAtom } from 'store/layers';
 import { interactiveLayerIdsAtom } from 'store/map';
 
 import { useRecoilState } from 'recoil';
-
+import { useRouter } from 'next/router';
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
+import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
@@ -31,10 +32,24 @@ const LayerManagerContainer = () => {
     return filteredLayers;
   }, [activeLayersIds]);
 
-  // planet layers must be always at the bottom
-  const planet_layers = ACTIVE_LAYERS.filter((layer) => layer.includes('planet'));
-  const no_planet_layers = ACTIVE_LAYERS.filter((layer) => !layer.includes('planet'));
-  const LAYERS_FILTERED = [...no_planet_layers, ...planet_layers];
+  const {
+    query: { params },
+  } = useRouter();
+  const id = params?.[1];
+
+  // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
+  const basemap_layers = ACTIVE_LAYERS.filter(
+    (layer) => layer.includes('planet') || layer === 'hi-res-extent'
+  );
+  const no_planet_layers = ACTIVE_LAYERS.filter(
+    (layer) => !layer.includes('planet') && layer !== 'hi-res-extent'
+  );
+
+  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
+    ? no_planet_layers.filter((l) => !l.includes('national_dashboard'))
+    : no_planet_layers;
+
+  const LAYERS_FILTERED = [...filterNationalDashboardLayers, ...basemap_layers];
 
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
@@ -54,14 +69,13 @@ const LayerManagerContainer = () => {
 
   return (
     <>
-      {
-        <CountryBoundariesLayer
-          id="country-boundaries-layer"
-          beforeId="water"
-          onAdd={handleAdd}
-          onRemove={handleRemove}
-        />
-      }
+      <CountryBoundariesLayer
+        id="country-boundaries-layer"
+        beforeId="water"
+        onAdd={handleAdd}
+        onRemove={handleRemove}
+      />
+
       {LAYERS_FILTERED.map((layer, i) => {
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
 

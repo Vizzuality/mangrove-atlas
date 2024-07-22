@@ -66,6 +66,7 @@ import HabitatExtentInfo from 'containers/datasets/habitat-extent/info.mdx';
 import HabitatExtentLayer from 'containers/datasets/habitat-extent/layer';
 import HabitatExtentMapLegend from 'containers/datasets/habitat-extent/map-legend';
 import HabitatExtentWidget from 'containers/datasets/habitat-extent/widget';
+import HiResExtentLayer from 'containers/datasets/contextual-layers/hi-res-extent/layer';
 import HeightInfo from 'containers/datasets/height/info.mdx';
 import HeightLayer from 'containers/datasets/height/layer';
 import HeightMapLegend from 'containers/datasets/height/map-legend';
@@ -151,6 +152,7 @@ export const WIDGETS: WidgetsCollection = {
 
 export const LAYERS = {
   mangrove_habitat_extent: HabitatExtentLayer,
+  'hi-res-extent': HiResExtentLayer,
   mangrove_net_change: NetChangeLayer,
   mangrove_alerts: AlertsLayer,
   mangrove_biomass: BiomassLayer,

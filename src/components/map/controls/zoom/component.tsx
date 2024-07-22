@@ -34,7 +34,6 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       if (!map) return null;
-
       map.zoomOut();
     },
     [map]

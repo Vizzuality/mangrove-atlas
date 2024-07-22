@@ -26,7 +26,7 @@ const layerSchema = object({
 
 export const activeLayersAtom = atom<
   {
-    id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+    id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
     opacity: string;
     visibility: Visibility;
     settings?: {

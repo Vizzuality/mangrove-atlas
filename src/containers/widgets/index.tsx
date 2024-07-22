@@ -146,7 +146,7 @@ const WidgetsContainer: FC = () => {
   const filteredWidgetsToDisplay = activeWidgetsFilteredByLocationType.filter(
     (element) => activeWidgets.includes(element) && element !== 'widgets_deck_tool'
   );
-  console.log({ isPrintingMode });
+
   return (
     <WidgetsLayout>
       <AppTools />
