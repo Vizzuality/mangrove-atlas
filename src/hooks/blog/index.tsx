@@ -5,11 +5,16 @@ import type { Tag, Post } from 'hooks/blog/types';
 
 import { BlogAPI } from 'services/api';
 
-export function useBlogPosts(): UseQueryResult<Post[], unknown> {
+type useBlogParams = {
+  wl_topic?: number[];
+};
+
+export function useBlogPosts(params?: useBlogParams): UseQueryResult<Post[], unknown> {
   const fetchBlogPosts = () =>
     BlogAPI.request({
       method: 'GET',
-      url: '/wp-json/wp/v2/posts/wl_topic=53',
+      url: '/wp-json/wp/v2/posts',
+      params,
     }).then((response: AxiosResponse<Post[]>) => response.data);
 
   const query = useQuery(['blog-posts'], fetchBlogPosts, {

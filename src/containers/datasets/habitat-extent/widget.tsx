@@ -24,6 +24,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
+import SuggestedLayers from 'components/suggested-layers';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
@@ -189,6 +190,14 @@ const HabitatExtent = () => {
             of the coastline.
           </p>
           <HabitatExtentChart legend={legend} config={config} />
+          <div>
+            <SuggestedLayers
+              name="High Resolution Extent"
+              thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
+              id="hi-res-extent"
+              description="We recommend you to use High resolution."
+            />
+          </div>
         </div>
       )}
     </div>

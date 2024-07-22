@@ -12,7 +12,7 @@ import PostComponent from 'containers/news/post';
 import { DialogClose } from 'components/ui/dialog';
 
 export const BlogContent = () => {
-  const { data } = useBlogPosts();
+  const { data } = useBlogPosts({ wl_topic: [53] });
 
   const [postInfo, setPostInfo] = useState<Post | null>(null);
   const { data: dataTags } = usePostTags({ id: postInfo?.id });

@@ -3,7 +3,7 @@ import type { Visibility } from 'mapbox-gl';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 type Layer = {
-  id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+  id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
   opacity: string;
   visibility: Visibility;
   settings?: {

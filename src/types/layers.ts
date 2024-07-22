@@ -13,7 +13,7 @@ export type LayerProps = {
 };
 
 export type ActiveLayers = {
-  id: WidgetSlugType | ContextualBasemapsId | 'custom-area';
+  id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
   opacity: string;
   visibility: Visibility;
 };

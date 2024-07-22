@@ -38,7 +38,7 @@ const THUMBS = {
 };
 
 type CardBasemapContextualProps = {
-  id: BasemapId | ContextualBasemapsId | WidgetSlugType;
+  id: BasemapId | ContextualBasemapsId | WidgetSlugType | 'hi-res-extent';
   mosaic_id?: MosaicId;
   type: 'contextual-basemap' | 'basemap';
   name?: string;

@@ -1,6 +1,8 @@
 'use client';
 import { useCallback, useState } from 'react';
 
+import { useRouter } from 'next/router';
+
 import cn from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
@@ -9,6 +11,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 
+import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
+
 import SortableList from 'components/map/legend/sortable/list';
 import { ActiveLayers } from 'types/layers';
 
@@ -16,6 +20,10 @@ import LegendItem from './item';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const {
+    query: { params },
+  } = useRouter();
+  const id = params?.[1];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -41,9 +49,13 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   // planet layers behave as a basemap so there is no need to include them in the legend
   const activeLayerNoPlanet = activeLayers.filter((l) => !l.id.includes('planet'));
 
+  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
+    ? activeLayerNoPlanet.filter((l) => !l.id.includes('national_dashboard'))
+    : activeLayerNoPlanet;
+
   return (
     <div className="print:hidden">
-      {!!activeLayerNoPlanet.length && (
+      {!!filterNationalDashboardLayers.length && (
         <>
           <button
             onClick={openLegend}
@@ -76,7 +88,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
                   >
-                    {activeLayerNoPlanet.map((l) => {
+                    {filterNationalDashboardLayers.map((l) => {
                       return <LegendItem id={l.id} key={l.id} embedded={embedded} l={l} />;
                     })}
                   </SortableList>
