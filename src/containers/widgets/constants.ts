@@ -9,14 +9,14 @@ const widgets_dev = [
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: ['mangrove_national_dashboard'],
   },
-  {
-    name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_rest_sites',
-    locationType: ['country', 'worldwide'],
-    applicability: 'Global, National, and Sub-National',
-    categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['mangrove_rest_sites'],
-  },
+  // {
+  //   name: 'Mangrove Restoration Sites',
+  //   slug: 'mangrove_rest_sites',
+  //   locationType: ['country', 'worldwide'],
+  //   applicability: 'Global, National, and Sub-National',
+  //   categoryIds: ['all_datasets', 'restoration_and_conservation'],
+  //   layersIds: ['mangrove_rest_sites'],
+  // },
 ] satisfies WidgetTypes[];
 
 const widgets_prod = [
