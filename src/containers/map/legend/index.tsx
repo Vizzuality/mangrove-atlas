@@ -11,10 +11,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 
+import { LocationTypes } from 'containers/datasets/locations/types';
 import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
+import { widgets } from 'containers/widgets/constants';
 
 import SortableList from 'components/map/legend/sortable/list';
 import { ActiveLayers } from 'types/layers';
+import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
 
@@ -24,6 +27,33 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
     query: { params },
   } = useRouter();
   const id = params?.[1];
+
+  const locationType = params?.[0] || ('worldwide' as LocationTypes);
+
+  function filterLayersByLocationType(widgets: WidgetTypes[], locationType: string): string[] {
+    const filteredLayers: string[] = [];
+
+    widgets.forEach((widget) => {
+      if (widget.locationType.includes(locationType)) {
+        if (widget.layersIds) {
+          filteredLayers.push(...widget.layersIds);
+        }
+        if (widget.contextualLayersIds) {
+          filteredLayers.push(...widget.contextualLayersIds);
+        }
+        if (widget.subLayersIds) {
+          filteredLayers.push(...widget.subLayersIds);
+        }
+      }
+    });
+
+    return filteredLayers;
+  }
+
+  const filteredLayersIds = filterLayersByLocationType(widgets, locationType);
+  const filteredLayers = activeLayers.filter(({ id }) => {
+    return filteredLayersIds.includes(id);
+  }) as ActiveLayers[];
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -47,7 +77,9 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   );
 
   // planet layers behave as a basemap so there is no need to include them in the legend
-  const activeLayerNoPlanet = activeLayers.filter((l) => !l.id.includes('planet'));
+  const activeLayerNoPlanet = filteredLayers.filter(
+    (l) => !l.id.includes('planet') && !l.id.includes('custom-area')
+  );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
     ? activeLayerNoPlanet.filter((l) => !l.id.includes('national_dashboard'))

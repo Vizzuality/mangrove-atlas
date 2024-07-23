@@ -51,7 +51,7 @@ const widgets_prod = [
     applicability: 'Global, National, Sub-National, and Local',
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
     layersIds: ['mangrove_alerts'],
-    contextualLayersIds: ['45d01564-c099-42d8-b8f2-a0851accf3e7'],
+    contextualLayersIds: [],
   },
   {
     name: 'Species Location by Country',
@@ -261,7 +261,7 @@ export const WIDGETS_BY_CATEGORY = [
   },
   {
     restoration_and_conservation: [
-      'mangrove_rest_sites',
+      // 'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_alerts',

@@ -11,7 +11,13 @@ const INFO = [
     title: 'JAXA (raster data)',
     href: 'https://www.eorc.jaxa.jp/ALOS/en/dataset/gmw_e.htm',
   },
+  {
+    id: 3,
+    title: 'High-resolution 2020 extent: Zenodo',
+    href: 'https://zenodo.org/records/12756047',
+  },
 ];
+
 const HabitatExtentDownload = () => <Download info={INFO} />;
 
 export default HabitatExtentDownload;

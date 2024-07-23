@@ -203,7 +203,7 @@ export const MAP_LEGENDS = {
   mangrove_coastal_protection_area: FloodProtectionAreaMapLegend,
   mangrove_coastal_protection_population: FloodProtectionPopulationMapLegend,
   mangrove_coastal_protection_stock: FloodProtectionStockMapLegend,
-  mangrove_rest_sites: RestorationSitesMapLegend,
+  // mangrove_rest_sites: RestorationSitesMapLegend,
   mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
   mangrove_national_dashboard_layer: NationalDashboardMapLegend,
 };
