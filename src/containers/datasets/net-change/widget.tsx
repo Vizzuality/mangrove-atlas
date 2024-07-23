@@ -80,7 +80,7 @@ const NetChangeWidget = () => {
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-        {isAnalysisRunning && isFetching && !isCanceled && (
+        {isAnalysisRunning && isFetching && (
           <button
             type="button"
             onClick={handleCancelAnalysis}
@@ -104,7 +104,7 @@ const NetChangeWidget = () => {
           </button>
         </div>
       )}
-      {data && !isFetching && !isError && !isCanceled && (
+      {!!data?.data?.length && !isFetching && !isError && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             The extent of mangroves in <span className="font-bold"> {location}</span> has{' '}

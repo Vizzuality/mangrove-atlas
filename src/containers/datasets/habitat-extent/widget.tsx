@@ -109,7 +109,7 @@ const HabitatExtent = () => {
           </button>
         </div>
       )}
-      {data && !isFetching && !isError && !isCanceled && (
+      {!!data && !isFetching && !isError && !isCanceled && (
         <div className="space-y-4">
           <p className={WIDGET_SENTENCE_STYLE}>
             The area of mangrove habitat in <span className="font-bold"> {location}</span> was{' '}
