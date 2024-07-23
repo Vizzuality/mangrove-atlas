@@ -4,8 +4,24 @@ import LayoutMdx from 'layouts/mdx';
 
 ## Overview:
 
+To enable improvevement of the resolution and local relevance of Global Mangrove Watch data, a new baseline layer has been created for the year 2020. Using Copernicus Sentinel-2 satellite imagery, processed to a pixel resolution of 10 m, the mangrove extent has been completely remapped and revised with many areas which were not previously mapped now included within the new map. This has increased the spatial resolution of the mapping from a pixel resolution of 25 m to 10 m, allowing finer features to be mapped, such as fringing and riverine mangroves.
+
+Using the same pre-processed Sentinel-2 data as used for the ESA WorldCover 2020 map (Zanaga et al., 2021), over 30,000 machine learning models were trained to classify mangroves using over 5 million reference points for mangrove and non-mangrove classes. The reference points were generated using the existing CoastTrain reference dataset (Murray et al., 2022), sampling from the GMW v3.0 mangrove extent layers, user feedback and extensive quality assurance and refinement during the production of the classification.
+
+## References:
+
+- Zanaga, D., Van De Kerchove, R., De Keersmaecker, W., Souverijns, N., Brockmann, C., Quast, R., Wevers, J., Grosu, A., Paccini, A., Vergnaud, S., Cartus, O., Santoro, M., Fritz, S., Georgieva, I., Lesiv, M., Carter, S., Herold, M., Li, Linlin, Tsendbazar, N.E., Ramoino, F., Arino, O., 2021. ESA WorldCover 10 m 2020 v100. <a href="https://doi.org/10.5281/zenodo.5571936" target="_blank" rel="noopener noreferrer">https://doi.org/10.5281/zenodo.5571936</a>
+
+- Murray, N.J.; Bunting, P.; Canto, R.F.; Hilarides, L.; Kennedy, E.V.; Lucas, R.M.; Lyons, M.B.; Navarro, A.; Roelfsema, C.M.; Rosenqvist, A.; et al. coastTrain: A Global Reference Library for Coastal Ecosystems. Remote Sens. 2022, 14, 5766. <a href="https://doi.org/10.3390/rs14225766" target="_blank" rel="noopener noreferrer">https://doi.org/10.3390/rs14225766</a>
+
 ## Date of content:
 
+2020
+
 ## License:
+
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+  CC-BY 4.0
+</a>
 
 export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;

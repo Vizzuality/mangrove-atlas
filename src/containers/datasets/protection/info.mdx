@@ -7,10 +7,11 @@ import LayoutMdx from 'layouts/mdx';
 This layer shows the area and proportion of mangroves in protected areas per country. The level of protection that protected ares afford to mangrove habitats varies, as does the degree to which they are effectively governed and managed.
 
 The extent of mangroves found in protected areas was calculated using three datasets:
+
 - World Database on Protected Areas (July 2022)
 - Global Mangrove Watch v3.0 for the year 2020
 - Country and Exclusive Economic Zone boundaries by UNEP-WCMC.
-The WDPA dataset was filtered for protected areas (PA_DEF = 1) excluding those with a "proposed" status (STATUS != Proposed). The remaining data was intersected with the Country-EEZ dataset and then dissolved by country. This dataset was used to clip the GMWv3.0 dataset and calculate the mangrove extent in protected areas. This number was divided by the total extent of mangroves for each country to get the proportions.
+  The WDPA dataset was filtered for protected areas (PA_DEF = 1) excluding those with a "proposed" status (STATUS != Proposed). The remaining data was intersected with the Country-EEZ dataset and then dissolved by country. This dataset was used to clip the GMWv3.0 dataset and calculate the mangrove extent in protected areas. This number was divided by the total extent of mangroves for each country to get the proportions.
 
 ## Reference:
 
@@ -24,11 +25,10 @@ Country-EEZ: not yet available
 
 ## License:
 
-cc-by-4.0
-  
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+  CC-BY 4.0
+</a>
 
-export default ({ children, ...props }) => (
-  <LayoutMdx {...props}>
-    {children}
-  </LayoutMdx>
-);
+export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;
+
+;

@@ -195,7 +195,7 @@ const HabitatExtent = () => {
               name="High Resolution Extent"
               thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
               id="hi-res-extent"
-              description="We recommend you to use High resolution."
+              description="Show high-resolution mangrove extent layer"
             />
           </div>
         </div>

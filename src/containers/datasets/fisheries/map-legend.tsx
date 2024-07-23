@@ -13,7 +13,7 @@ const FisheriesMapLegend = () => {
               className="my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md text-sm"
             />
             <div className="flex flex-col items-start text-sm">
-              <p>{label}</p>
+              <p>{label} fisher days/km/year</p>
             </div>
           </div>
         );
