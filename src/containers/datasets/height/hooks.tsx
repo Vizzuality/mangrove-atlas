@@ -149,7 +149,7 @@ export function useMangroveHeight(
   const bars = useMemo(() => getBars(data?.data, COLORS_BY_INDICATOR), [data?.data]);
   const legendData = useMemo(
     () =>
-      data?.data.map((d) => {
+      data?.data?.map((d) => {
         return {
           label: d.indicator,
           color: COLORS_BY_INDICATOR[d.indicator],

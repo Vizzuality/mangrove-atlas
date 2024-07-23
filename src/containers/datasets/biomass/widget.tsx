@@ -48,7 +48,7 @@ const BiomassWidget = () => {
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-        {isAnalysisRunning && isFetching && !isCanceled && (
+        {isAnalysisRunning && isFetching && (
           <button
             aria-label="cancel analysis"
             type="button"
@@ -59,7 +59,7 @@ const BiomassWidget = () => {
           </button>
         )}
       </div>
-      {(isCanceled || isError) && !isFetching && (
+      {(!isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -73,7 +73,7 @@ const BiomassWidget = () => {
           </button>
         </div>
       )}
-      {mean && !isFetching && !isError && !isCanceled && (
+      {mean && !isFetching && !isError && (
         <>
           <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove aboveground biomass density in{' '}

@@ -43,7 +43,7 @@ const HeightWidget = () => {
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
       <div className="flex flex-col items-center space-y-4">
         <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
-        {isAnalysisRunning && isFetching && !isCanceled && (
+        {isAnalysisRunning && isFetching && (
           <button
             aria-label="Cancel analysis"
             type="button"
@@ -54,7 +54,7 @@ const HeightWidget = () => {
           </button>
         )}
       </div>
-      {(isCanceled || isError) && !isFetching && (
+      {(!isCanceled || isError) && !isFetching && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -69,7 +69,7 @@ const HeightWidget = () => {
           </button>
         </div>
       )}
-      {data && !isFetching && !isError && !isCanceled && (
+      {data && !isFetching && !isError && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove maximum canopy height in <span className="font-bold"> {location}</span>{' '}
