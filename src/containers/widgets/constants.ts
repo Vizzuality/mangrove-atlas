@@ -82,6 +82,7 @@ const widgets_prod = [
     locationType: ['country', 'worldwide'],
     applicability: '',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['mangrove_protection'],
   },
   {
     name: 'Mangrove Restoration',
