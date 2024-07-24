@@ -10,6 +10,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
 import widgets from 'containers/widgets/constants';
+import { LAYERS_BY_CATEGORY } from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
@@ -31,15 +32,13 @@ const Category = () => {
         widget?.categoryIds?.includes(event.currentTarget.value as Category)
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
-
-      const activeLayersIds: ActiveLayers[] = widgetsFiltered
-        .flatMap(({ layersIds }) => layersIds || [])
-        .filter(Boolean)
-        .map((id) => ({
-          id: id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
-          opacity: '1',
-          visibility: 'visible',
-        }));
+      const activeLayersIds: ActiveLayers[] = LAYERS_BY_CATEGORY[
+        event.currentTarget.value as string
+      ].map((id) => ({
+        id: id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
+        opacity: '1',
+        visibility: 'visible',
+      }));
 
       setActiveWidgets(activeWidgetsIds);
       setActiveLayers(activeLayersIds);

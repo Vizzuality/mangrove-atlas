@@ -7,12 +7,13 @@ import Link from 'next/link';
 import cn from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
 import { locationToolAtom } from 'store/sidebar';
 
 import { BiReset } from 'react-icons/bi';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import WidgetDrawingTool from 'containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from 'containers/datasets/drawing-upload-tool';
@@ -32,6 +33,10 @@ const LocationTools = () => {
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
   const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
   const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
+  const resetAnalysisState = useResetRecoilState(analysisAtom);
+  const resetDrawingState = useResetRecoilState(drawingToolAtom);
+  const resetDrawingUploadState = useResetRecoilState(drawingUploadToolAtom);
+
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const map = useMap();
 
@@ -72,6 +77,9 @@ const LocationTools = () => {
   ]);
 
   const handleReset = useCallback(() => {
+    resetDrawingState();
+    resetAnalysisState();
+    resetDrawingUploadState();
     if (map) {
       map?.['default-desktop-no-print'].flyTo({
         center: [0, 20],
