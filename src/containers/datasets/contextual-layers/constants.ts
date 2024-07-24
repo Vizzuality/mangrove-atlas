@@ -58,7 +58,7 @@ export const CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES = [
 
 export const HIGH_RESOLUTION_EXTENT = [
   {
-    id: 'high_res_extent',
+    id: 'hi-res-extent',
     type: 'contextual-basemap',
     name: 'High resolution extent layer',
     description: 'LOREM IPSUM',

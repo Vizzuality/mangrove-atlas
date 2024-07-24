@@ -68,8 +68,7 @@ const LayerManagerContainer = () => {
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS.filter(
-    (layer) =>
-      (layer.includes('planet') || layer === 'hi-res-extent') && filteredLayers.includes(layer)
+    (layer) => layer.includes('planet') || layer === 'hi-res-extent'
   );
   const no_planet_layers = ACTIVE_LAYERS.filter(
     (layer) =>

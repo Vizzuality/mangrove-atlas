@@ -6,7 +6,7 @@ export function useSource(): SourceProps {
   return {
     id: 'hi-res-extent',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.gmw_v4_sen2_sgl_cls_v007_z2_z12',
+    url: 'mapbox://globalmangrovewatch.gmw_v4_sen2_sgl_cls_v007_all_z',
   };
 }
 const darkTeal = '#005f73';

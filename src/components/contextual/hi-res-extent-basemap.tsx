@@ -15,23 +15,23 @@ import type { ContextualBasemapsId } from 'types/widget';
 
 const HighResolutionExtentBasemap = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const defaultActive = activeLayers.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
+  const defaultActive =
+    activeLayers.find((layer) => layer.id === 'hi-res-extent')?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
     (id) => {
       setIsActive(id);
-      const noPlanetLayers = activeLayers.filter((w) => !w.id.includes('planet_medres'));
       const layersUpdate =
         id === 'no-layer'
-          ? noPlanetLayers
+          ? activeLayers.filter((w) => w.id !== 'hi-res-extent')
           : ([
+              ...activeLayers,
               {
-                id: id as ContextualBasemapsId,
+                id: 'hi-res-extent' as ContextualBasemapsId,
                 opacity: '1',
                 visibility: 'visible',
               },
-              ...noPlanetLayers,
             ] as ActiveLayers[]);
       setActiveLayers(layersUpdate);
     },
