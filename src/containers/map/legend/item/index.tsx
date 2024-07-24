@@ -61,7 +61,7 @@ const LegendItem = ({
   );
 
   const nationalDashboardLayerName = activeLayers.find((l) =>
-    l.id.includes('mangrove_national_dashboard_layer')
+    l.id?.includes('mangrove_national_dashboard_layer')
   )?.settings?.name;
 
   const removeLayer = useCallback(
@@ -95,7 +95,7 @@ const LegendItem = ({
   const HELPER_ID = activeLayers[0]?.id;
 
   const layerId = Object.keys(MAP_LEGENDS).find(
-    (k) => (l.id.startsWith('mangrove_national_dashboard') && l.id.includes(k)) || l.id === k
+    (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k
   );
   const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
 
