@@ -54,7 +54,7 @@ const HeightWidget = () => {
           </button>
         )}
       </div>
-      {(!isCanceled || isError) && !isFetching && (
+      {(!isCanceled || isError) && !isFetching && !data && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.
@@ -69,7 +69,7 @@ const HeightWidget = () => {
           </button>
         </div>
       )}
-      {data && !isFetching && !isError && (
+      {!!data && !isFetching && !isError && (
         <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             Mean mangrove maximum canopy height in <span className="font-bold"> {location}</span>{' '}

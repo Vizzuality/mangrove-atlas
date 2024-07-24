@@ -90,7 +90,7 @@ const NetChangeWidget = () => {
           </button>
         )}
       </div>
-      {(isCanceled || isError) && !isFetching && (
+      {(isCanceled || isError) && !isFetching && !data?.data?.length && (
         <div className="flex flex-col items-center space-y-4">
           <p className={`${WIDGET_SENTENCE_STYLE} italic`}>
             An error occurred while fetching the data. You can try again.

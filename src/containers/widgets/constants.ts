@@ -333,4 +333,16 @@ export const WIDGETS_BY_CATEGORY = [
   },
 ];
 
+export const LAYERS_BY_CATEGORY: { [key: string]: string[] } = {
+  distribution_and_change: ['mangrove_habitat_extent', 'mangrove_net_change'],
+  restoration_and_conservation: [
+    'mangrove_habitat_extent',
+    'mangrove_net_change',
+    'mangrove_alerts',
+  ],
+  climate_and_policy: ['mangrove_blue_carbon'],
+  ecosystem_services: ['mangrove_biomass', 'mangrove_height', 'mangrove_blue_carbon'],
+  contextual_layers: ['mangrove_allen_coral_reef', 'mangrove_salt_marsh', 'mangrove_tidal_flats'],
+};
+
 export default widgets;

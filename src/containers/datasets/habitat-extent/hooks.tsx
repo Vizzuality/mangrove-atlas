@@ -118,7 +118,7 @@ export function useMangroveHabitatExtent(
     const totalLength = metadata?.total_lenght;
     const mangroveArea = dataParsed?.habitat_extent_area;
     const mangroveCoastCoverage = dataParsed?.linear_coverage;
-    const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength;
+    const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength || 0;
     const nonMangrove = totalLength - mangroveCoastCoverage;
     const defaultUnitLinearCoverage = metadata?.units?.linear_coverage;
     const area = unit === 'ha' ? mangroveArea * 100 : mangroveArea;
@@ -188,10 +188,10 @@ export function useMangroveHabitatExtent(
 
     return {
       metadata,
-      area: numberFormat(area),
-      nonMangrove: numberFormat(nonMangrove),
-      mangroveCoastCoveragePercentage: numberFormat(mangroveCoastCoveragePercentage),
-      totalLength: numberFormat(totalLength),
+      area: numberFormat(+area),
+      nonMangrove: numberFormat(+nonMangrove),
+      mangroveCoastCoveragePercentage: numberFormat(+mangroveCoastCoveragePercentage),
+      totalLength: numberFormat(+totalLength),
       years: metadata?.year, // API improvement, change year to years as is an array
       units: metadata?.units,
       legend: LegendData,
@@ -203,7 +203,7 @@ export function useMangroveHabitatExtent(
       defaultUnitLinearCoverage,
       noData,
     };
-  }, [data, unit, year]);
+  }, [data, unit, year, location, noData]);
 
   return useMemo(() => {
     return {

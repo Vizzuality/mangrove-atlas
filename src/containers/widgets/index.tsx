@@ -5,14 +5,13 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
 import { activeCategoryAtom } from 'store/sidebar';
 import { widgetsCollapsedAtom } from 'store/widgets';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { motion } from 'framer-motion';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from 'layouts/widgets';
@@ -60,10 +59,14 @@ const buttonMotion = {
 };
 
 const textMotion = {
-  rest: { opacity: 0, transition: { ease: 'easeOut', duration: 0.2, type: 'tween', x: 140 } },
+  rest: {
+    opacity: 0,
+    transition: { ease: 'easeOut', duration: 0.2, type: 'tween', x: 140, width: 0 },
+  },
   hover: {
     opacity: 1,
     x: 0,
+    width: 140,
     transition: {
       duration: 0.4,
       type: 'tween',
@@ -76,7 +79,6 @@ const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [categorySelected] = useRecoilState(activeCategoryAtom);
   const [{ customGeojson }] = useRecoilState(drawingToolAtom);
-  const isPrintingMode = useRecoilValue(printModeState);
 
   const {
     query: { params },
@@ -99,7 +101,6 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
-  const setPrintingMode = useSetRecoilState(printModeState);
   const cat = useWidgetsIdsByCategory(activeWidgets);
 
   // ensures that the appropriate widgets for a selected category are activated during
@@ -342,7 +343,7 @@ const WidgetsContainer: FC = () => {
         </DialogContent>
       </Dialog>
 
-      {!!widgets.length && isPrintingMode ? (
+      {!!widgets.length && (uploadedGeojson || customGeojson) ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{
