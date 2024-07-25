@@ -18,11 +18,8 @@ import { useSearch } from 'hooks/search';
 
 import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
 import { Location, LocationTypes } from 'containers/datasets/locations/types';
-// import HighlightedPlacesMobile from 'containers/locations-list/mobile/highlighted-places';
 
-// import HighlightedPlaces from 'components/highlighted-places';
 import Icon from 'components/ui/icon';
-// import { Media } from 'components/media-query';
 import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
