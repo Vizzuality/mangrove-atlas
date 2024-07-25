@@ -1,17 +1,17 @@
 import cn from 'lib/classnames';
 
-type Item = {
+export type Item = {
   showValue?: boolean;
   highlightValue?: boolean;
-  color: string;
-  label: string;
+  color?: string;
+  label?: string;
   labelFormatted?: string;
   value?: number;
   unit?: string;
   valueFormatted?: string;
 };
 
-type LegendTypes = {
+export type LegendTypes = {
   title?: string;
   subtitle?: string;
   items: Item[];
