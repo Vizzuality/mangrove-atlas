@@ -14,7 +14,7 @@
   },
   "engines": {
     "node": "~18",
-    "yarn": "3.5.0"
+    "yarn": "3.6.0"
   },
   "dependencies": {
     "@artsy/fresnel": "6.1.0",
@@ -114,5 +114,5 @@
   "husky": {
     "pre-commit": "yarn lint"
   },
-  "packageManager": "yarn@3.5.0"
+  "packageManager": "yarn@3.6.0"
 }

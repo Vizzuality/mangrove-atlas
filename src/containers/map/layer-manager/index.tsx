@@ -30,7 +30,7 @@ const LayerManagerContainer = () => {
   const ACTIVE_LAYERS = useMemo(() => {
     const filteredLayers = activeLayersIds.filter(
       (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
-        return Object.keys(LAYERS).some((k) => layer.includes(k));
+        return Object.keys(LAYERS).some((k) => layer?.includes(k));
       }
     );
 
@@ -48,7 +48,7 @@ const LayerManagerContainer = () => {
     const filteredLayers: string[] = [];
 
     widgets.forEach((widget) => {
-      if (widget.locationType.includes(locationType)) {
+      if (widget.locationType?.includes(locationType)) {
         if (widget.layersIds) {
           filteredLayers.push(...widget.layersIds);
         }
@@ -68,15 +68,15 @@ const LayerManagerContainer = () => {
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS.filter(
-    (layer) => layer.includes('planet') || layer === 'hi-res-extent'
+    (layer) => layer?.includes('planet') || layer === 'hi-res-extent'
   );
   const no_planet_layers = ACTIVE_LAYERS.filter(
     (layer) =>
-      !layer.includes('planet') && layer !== 'hi-res-extent' && filteredLayers.includes(layer)
+      !layer?.includes('planet') && layer !== 'hi-res-extent' && filteredLayers?.includes(layer)
   );
 
-  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
-    ? no_planet_layers.filter((l) => !l.includes('national_dashboard'))
+  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
+    ? no_planet_layers.filter((l) => !l?.includes('national_dashboard'))
     : no_planet_layers;
 
   const LAYERS_FILTERED = [...filterNationalDashboardLayers, ...basemap_layers];
@@ -91,7 +91,7 @@ const LayerManagerContainer = () => {
   const handleRemove = useCallback(
     (styleIds: LayerProps['id'][]) => {
       setInteractiveLayerIds((prevInteractiveIds) => [
-        ...prevInteractiveIds.filter((id) => !styleIds.includes(id)),
+        ...prevInteractiveIds.filter((id) => !styleIds?.includes(id)),
       ]);
     },
     [setInteractiveLayerIds]
@@ -135,7 +135,7 @@ const LayerManagerContainer = () => {
       })}
 
       {LAYERS_FILTERED.map((layer, i) => {
-        const layerId = Object.keys(LAYERS).find((k) => layer.includes(k));
+        const layerId = Object.keys(LAYERS).find((k) => layer?.includes(k));
 
         const LayerComponent = LAYERS[layerId] || BASEMAPS[layerId];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
