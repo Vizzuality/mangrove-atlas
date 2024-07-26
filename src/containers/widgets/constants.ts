@@ -169,16 +169,18 @@ const widgets_prod = [
       'mangrove_coastal_protection_stock',
     ],
   },
-  {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'IUCN Ecosystem Red List Assessment',
-      slug: 'mangrove_iucn_ecoregion',
-      locationType: ['worldwide'],
-      applicability: 'Global',
-      categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-      layersIds: ['mangrove_iucn_ecoregion'],
-    }),
-  },
+  ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+    ? ([
+        {
+          name: 'IUCN Ecosystem Red List Assessment',
+          slug: 'mangrove_iucn_ecoregion',
+          locationType: ['worldwide'],
+          applicability: 'Global',
+          categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
+          layersIds: ['mangrove_iucn_ecoregion'],
+        },
+      ] as WidgetTypes[])
+    : []),
   {
     name: 'Protected Areas',
     slug: 'mangrove_protected_areas',
