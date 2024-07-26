@@ -20,7 +20,7 @@ import { RecoilRoot } from 'recoil';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
-// import 'styles/mapbox.css';
+import 'styles/mapbox.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MediaContextProvider } from 'components/media-query';
