@@ -85,8 +85,7 @@ const WidgetsContainer: FC = () => {
   } = useRouter();
 
   // Params as default don't appear in URL, when there is no location we assume worldwide
-  const locationType = params?.[0] || ('worldwide' as LocationTypes);
-
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
 
   const { width: screenWidth } = useWindowSize();
@@ -141,7 +140,7 @@ const WidgetsContainer: FC = () => {
   }, []);
 
   const activeWidgetsFilteredByLocationType = widgets
-    .filter((w) => w.locationType.includes(locationType))
+    .filter((w) => w.locationType?.includes(locationType))
     .map(({ slug }) => slug);
 
   const filteredWidgetsToDisplay = activeWidgetsFilteredByLocationType.filter(

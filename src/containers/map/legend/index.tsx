@@ -28,13 +28,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   } = useRouter();
   const id = params?.[1];
 
-  const locationType = params?.[0] || ('worldwide' as LocationTypes);
-
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   function filterLayersByLocationType(widgets: WidgetTypes[], locationType: string): string[] {
     const filteredLayers: string[] = [];
 
     widgets.forEach((widget) => {
-      if (widget.locationType.includes(locationType)) {
+      if (widget.locationType?.includes(locationType)) {
         if (widget.layersIds) {
           filteredLayers.push(...widget.layersIds);
         }

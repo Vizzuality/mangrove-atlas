@@ -18,12 +18,12 @@ import LocationDialogContent from 'containers/location-dialog-content';
 import LocationTools from 'containers/navigation/location-tools';
 
 import { Dialog, DialogTrigger } from 'components/ui/dialog';
-import { GrPowerReset } from 'react-icons/gr';
+
 const LocationWidget = () => {
   const {
     query: { params },
   } = useRouter();
-  const locationType = params?.[0] as LocationTypes;
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   const id = params?.[1];
   const {
     data: { name },

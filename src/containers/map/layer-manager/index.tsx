@@ -42,8 +42,7 @@ const LayerManagerContainer = () => {
   } = useRouter();
   const id = params?.[1];
 
-  const locationType = params?.[0] || ('worldwide' as LocationTypes);
-
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   function filterLayersByLocationType(widgets: WidgetTypes[], locationType: string): string[] {
     const filteredLayers: string[] = [];
 
