@@ -111,24 +111,22 @@ const Menu = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-          <AnimatePresence>
-            {section === 'news' && (
-              <motion.div
-                className="no-scrollbar overflow-y-auto pt-3 font-sans"
-                initial="hidden"
-                animate="displayed"
-                variants={{
-                  hidden: { opacity: 0 },
-                  displayed: { opacity: 1 },
-                }}
-                transition={{ duration: 0.4 }}
-              >
-                <BlogContent />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
+        <AnimatePresence>
+          {section === 'news' && (
+            <motion.div
+              className="no-scrollbar overflow-y-auto pt-3 font-sans"
+              initial="hidden"
+              animate="displayed"
+              variants={{
+                hidden: { opacity: 0 },
+                displayed: { opacity: 1 },
+              }}
+              transition={{ duration: 0.4 }}
+            >
+              <BlogContent />
+            </motion.div>
+          )}
+        </AnimatePresence>
         <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
       </DialogContent>
     </Dialog>
