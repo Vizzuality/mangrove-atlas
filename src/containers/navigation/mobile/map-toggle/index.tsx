@@ -34,7 +34,7 @@ const MapToggle = () => {
             description="Close"
           />
         )}
-        {!mapView && <p className="font-sans text-sm text-white">{activeLayers.length}</p>}
+        {!mapView && <p className="font-sans text-sm text-white">{activeLayers?.length}</p>}
       </button>
       <div className="text-center font-sans text-xxs text-white">Map</div>
     </div>

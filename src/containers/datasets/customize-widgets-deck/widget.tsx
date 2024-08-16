@@ -31,8 +31,7 @@ const CustomizeWidgetsDeck = () => {
   const {
     query: { params },
   } = useRouter();
-  const locationType = params?.[0] || ('worldwide' as LocationTypes);
-
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setAnimateState('end');
@@ -51,7 +50,7 @@ const CustomizeWidgetsDeck = () => {
   }, [animateState]);
 
   const filteredWidgetsByLocationType = widgets
-    .filter((w) => w.locationType.includes(locationType))
+    .filter((w) => w.locationType?.includes(locationType))
     .map((w) => w.slug);
 
   const filteredWidgetsToDisplay = filteredWidgetsByLocationType.filter(

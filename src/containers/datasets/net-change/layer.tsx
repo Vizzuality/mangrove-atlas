@@ -12,7 +12,7 @@ import { useLayer, useSources } from './hooks';
 
 export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const activeLayer = activeLayers?.find((l) => l.id === id);
 
   const sourceLoss = useSources('loss') satisfies SourceProps[];
   const sourceGain = useSources('gain') satisfies SourceProps[];

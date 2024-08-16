@@ -63,6 +63,7 @@ export function useWidgetsIdsByCategory(widgets) {
 
   for (const cat of WIDGETS_BY_CATEGORY) {
     const [category, slugsCategory] = Object.entries(cat)[0];
+
     // Convert each category's widget array to a set for efficient lookup
     const slugsCategorySet = new Set(slugsCategory);
     // Check if every element in the category set is in the widgets set
@@ -75,7 +76,7 @@ export function useWidgetsIdsByCategory(widgets) {
     );
 
     // Check for an exact match in terms of content and count
-    if (isCategoryFullyInWidgets && areWidgetsOnlyFromCategory) {
+    if (isCategoryFullyInWidgets && areWidgetsOnlyFromCategory && category !== 'all_datasets') {
       return category;
     }
   }

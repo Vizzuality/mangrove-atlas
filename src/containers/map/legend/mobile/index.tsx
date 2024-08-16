@@ -16,7 +16,7 @@ const Legend = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openLegend = useCallback(() => {
-    if (!!activeLayers.length) setIsOpen(true);
+    if (!!activeLayers?.length) setIsOpen(true);
   }, [activeLayers]);
 
   const closeLegend = useCallback(() => {
@@ -30,7 +30,7 @@ const Legend = () => {
 
   return (
     <div className="flex w-screen justify-center print:hidden">
-      {!!activeLayers.length && (
+      {!!activeLayers?.length && (
         <>
           <button
             onClick={openLegend}
@@ -59,7 +59,7 @@ const Legend = () => {
               <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
                 <div className="divide-black/42 box-content flex max-h-[70vh] flex-col space-y-1 divide-y overflow-y-auto pt-4 md:px-4 md:print:hidden">
                   <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
-                    {activeLayers.map((l) => {
+                    {activeLayers?.map((l) => {
                       return <LegendItem id={l.id} key={l.id} l={l} />;
                     })}
                   </div>

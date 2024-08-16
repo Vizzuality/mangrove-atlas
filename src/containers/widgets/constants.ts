@@ -2,6 +2,17 @@ import { WidgetTypes } from 'types/widget';
 
 const widgets_dev = [
   {
+    name: 'Mangrove Restoration Sites',
+    slug: 'mangrove_rest_sites',
+    locationType: ['country', 'worldwide'],
+    applicability: 'Global, National, and Sub-National',
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['mangrove_rest_sites'],
+  },
+] satisfies WidgetTypes[];
+
+const widgets_prod = [
+  {
     name: 'National Dashboard',
     slug: 'mangrove_national_dashboard',
     locationType: ['custom-area', 'country'],
@@ -9,17 +20,6 @@ const widgets_dev = [
     categoryIds: ['all_datasets', 'distribution_and_change'],
     layersIds: ['mangrove_national_dashboard'],
   },
-  // {
-  //   name: 'Mangrove Restoration Sites',
-  //   slug: 'mangrove_rest_sites',
-  //   locationType: ['country', 'worldwide'],
-  //   applicability: 'Global, National, and Sub-National',
-  //   categoryIds: ['all_datasets', 'restoration_and_conservation'],
-  //   layersIds: ['mangrove_rest_sites'],
-  // },
-] satisfies WidgetTypes[];
-
-const widgets_prod = [
   {
     name: 'Mangrove Habitat Extent',
     slug: 'mangrove_habitat_extent',
@@ -169,16 +169,18 @@ const widgets_prod = [
       'mangrove_coastal_protection_stock',
     ],
   },
-  {
-    ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && {
-      name: 'IUCN Ecosystem Red List Assessment',
-      slug: 'mangrove_iucn_ecoregion',
-      locationType: ['worldwide'],
-      applicability: 'Global',
-      categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
-      layersIds: ['mangrove_iucn_ecoregion'],
-    }),
-  },
+  ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+    ? ([
+        {
+          name: 'IUCN Ecosystem Red List Assessment',
+          slug: 'mangrove_iucn_ecoregion',
+          locationType: ['worldwide'],
+          applicability: 'Global',
+          categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
+          layersIds: ['mangrove_iucn_ecoregion'],
+        },
+      ] as WidgetTypes[])
+    : []),
   {
     name: 'Protected Areas',
     slug: 'mangrove_protected_areas',

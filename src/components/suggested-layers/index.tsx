@@ -35,12 +35,12 @@ const SuggestedLayers = ({
 }: SuggestionTypes) => {
   const Info = INFO[id];
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const activeLayersIds = activeLayers?.map((l) => l.id);
+  const isActive = useMemo(() => activeLayersIds?.includes(id), [activeLayersIds, id]);
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
+      ? activeLayers?.filter((w) => w.id !== id)
       : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);

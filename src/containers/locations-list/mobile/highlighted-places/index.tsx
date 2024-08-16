@@ -17,7 +17,7 @@ const HighlightedPlacesMobile = () => {
   const {
     query: { params },
   } = useRouter();
-  const locationType = params?.[0] as LocationTypes;
+  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
   const id = params?.[1];
 
   const {

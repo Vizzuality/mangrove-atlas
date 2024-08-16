@@ -13,7 +13,7 @@ import { activeLayersAtom } from 'store/layers';
 
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const activeLayer = activeLayers?.find((l) => l.id === id);
   const year = useRecoilValue(habitatExtentSettings);
   const { data } = useMangroveHabitatExtent({ year });
   const years = data?.years?.sort() || [];

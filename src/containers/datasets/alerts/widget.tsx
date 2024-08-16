@@ -40,7 +40,7 @@ const AlertsWidget = () => {
   }, []);
 
   const isActive = useMemo(
-    () => activeLayers.find(({ id }) => id === 'planet_medres_visual_monthly'),
+    () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
   );
 
