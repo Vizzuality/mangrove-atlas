@@ -12,7 +12,7 @@ import { useLayer, useSource } from './hooks';
 
 const MangroveGlobalTidalWetlandChangeLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const activeLayer = activeLayers?.find((l) => l.id === id);
   const SOURCE = useSource();
   const LAYER = useLayer({
     id,

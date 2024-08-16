@@ -33,7 +33,7 @@ const DateSelect = ({
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const layerToUpdate = useMemo(
-    () => activeLayers.find((layer) => layer.id === id),
+    () => activeLayers?.find((layer) => layer.id === id),
     [activeLayers]
   );
 
@@ -49,7 +49,7 @@ const DateSelect = ({
 
   const handleDate = useCallback(
     (e) => {
-      const filteredLayers = activeLayers.filter((l) => l.id !== id);
+      const filteredLayers = activeLayers?.filter((l) => l.id !== id);
       if (!!layerToUpdate) {
         setActiveLayers([
           {

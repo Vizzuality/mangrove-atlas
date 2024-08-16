@@ -10,7 +10,7 @@ import { useLayers, useSource } from './hooks';
 
 const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useRecoilState(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const activeLayer = activeLayers?.find((l) => l.id === id);
   const SOURCE = useSource({ settings: activeLayer.settings });
 
   const LAYER = useLayers({

@@ -45,7 +45,7 @@ const LegendItem = ({
   const widget = widgets.find((w) => w.slug === l.id);
   const onChangeVisibility = useCallback(
     (layer) => {
-      const layersWithVisibility: ActiveLayers[] = activeLayers.map((l) => {
+      const layersWithVisibility: ActiveLayers[] = activeLayers?.map((l) => {
         if (l.id === layer) {
           return { ...l, visibility: l.visibility === 'visible' ? 'none' : 'visible' };
         }
@@ -60,13 +60,13 @@ const LegendItem = ({
     [activeLayers, setActiveLayers]
   );
 
-  const nationalDashboardLayerName = activeLayers.find((l) =>
+  const nationalDashboardLayerName = activeLayers?.find((l) =>
     l.id?.includes('mangrove_national_dashboard_layer')
   )?.settings?.name;
 
   const removeLayer = useCallback(
     (layer: string) => {
-      const updatedLayers = activeLayers.filter((l) => {
+      const updatedLayers = activeLayers?.filter((l) => {
         return l.id !== layer;
       });
       setActiveLayers(updatedLayers);
@@ -80,7 +80,7 @@ const LegendItem = ({
 
   const onChangeOpacity = useCallback(
     (op: number, layer: string) => {
-      const layersWithOpacity = activeLayers.map((l) => {
+      const layersWithOpacity = activeLayers?.map((l) => {
         if (l.id === layer) {
           return { ...l, opacity: op.toString() };
         }
@@ -92,7 +92,7 @@ const LegendItem = ({
     [activeLayers, setActiveLayers]
   );
 
-  const HELPER_ID = activeLayers[0]?.id;
+  const HELPER_ID = activeLayers?.[0]?.id;
 
   const layerId = Object.keys(MAP_LEGENDS).find(
     (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k

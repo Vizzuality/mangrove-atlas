@@ -10,7 +10,7 @@ import { useLayers, useSources } from './hooks';
 
 const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
-  const activeLayer = activeLayers.find((l) => l.id === id);
+  const activeLayer = activeLayers?.find((l) => l.id === id);
   const SOURCES = useSources();
   const LAYERS = useLayers({
     id,

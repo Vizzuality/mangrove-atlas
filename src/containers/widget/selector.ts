@@ -24,6 +24,6 @@ export const getLayerActive = selectorFamily<
     ({ get }) => {
       const activeLayers = get(activeLayersAtom);
       // Check if any object in the array has an id that matches widgetId
-      return activeLayers.some((layer) => layer.id === widgetId);
+      return activeLayers?.some((layer) => layer.id === widgetId);
     },
 });
