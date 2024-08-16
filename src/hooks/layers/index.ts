@@ -19,18 +19,18 @@ type Layer = {
 
 export function updateLayers(activeLayers: Layer[], newLayer: Layer): Layer[] {
   const { id } = newLayer;
-  const index = activeLayers.findIndex((layer) => layer.id === id);
+  const index = activeLayers?.findIndex((layer) => layer.id === id);
   const hasNationalDashboard = id.includes('national_dashboard');
-  const nationalDashboardIndex = activeLayers.findIndex((layer) =>
+  const nationalDashboardIndex = activeLayers?.findIndex((layer) =>
     layer.id.includes('national_dashboard')
   );
 
   if (index !== -1) {
     // Delete the layer if it already exists by creating a new array without that layer
-    return [...activeLayers.slice(0, index), ...activeLayers.slice(index + 1)];
+    return [...activeLayers?.slice(0, index), ...activeLayers?.slice(index + 1)];
   } else if (hasNationalDashboard && nationalDashboardIndex !== -1) {
     // Replace the national_dashboard layer with the new layer by creating a new array
-    return activeLayers.map((layer, idx) => (idx === nationalDashboardIndex ? newLayer : layer));
+    return activeLayers?.map((layer, idx) => (idx === nationalDashboardIndex ? newLayer : layer));
   } else {
     // Adds the new layer to the list by creating a new array with the new layer
     return [...activeLayers, newLayer];

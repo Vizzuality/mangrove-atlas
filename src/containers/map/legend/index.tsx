@@ -50,14 +50,14 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   }
 
   const filteredLayersIds = filterLayersByLocationType(widgets, locationType);
-  const filteredLayers = activeLayers.filter(({ id }) => {
+  const filteredLayers = activeLayers?.filter(({ id }) => {
     return filteredLayersIds.includes(id);
   }) as ActiveLayers[];
 
   const [isOpen, setIsOpen] = useState(false);
 
   const openLegend = useCallback(() => {
-    if (!!activeLayers.length) setIsOpen(true);
+    if (!!activeLayers?.length) setIsOpen(true);
   }, [activeLayers]);
 
   const closeLegend = useCallback(() => {
@@ -67,26 +67,26 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const handleChangeOrder = useCallback(
     (order: string[]) => {
       const newLayers = order.map((id) => {
-        return activeLayers.find((l) => l.id === id);
+        return activeLayers?.find((l) => l.id === id);
       }) as ActiveLayers[];
-      const activeLayerPlanet = activeLayers.filter((l) => l.id.includes('planet'));
+      const activeLayerPlanet = activeLayers?.filter((l) => l.id.includes('planet'));
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
     },
     [activeLayers, setActiveLayers]
   );
 
   // planet layers behave as a basemap so there is no need to include them in the legend
-  const activeLayerNoPlanet = filteredLayers.filter(
+  const activeLayerNoPlanet = filteredLayers?.filter(
     (l) => !l.id.includes('planet') && !l.id.includes('custom-area')
   );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
-    ? activeLayerNoPlanet.filter((l) => !l.id.includes('national_dashboard'))
+    ? activeLayerNoPlanet?.filter((l) => !l.id.includes('national_dashboard'))
     : activeLayerNoPlanet;
 
   return (
     <div className="print:hidden">
-      {!!filterNationalDashboardLayers.length && (
+      {!!filterNationalDashboardLayers?.length && (
         <>
           <button
             onClick={openLegend}

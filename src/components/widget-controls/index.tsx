@@ -35,11 +35,11 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const locationTool = useRecoilValue(locationToolAtom);
 
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
+  const activeLayersIds = activeLayers?.map((l) => l.id);
 
   const isActive = useMemo(() => {
     // Check if the id is included in activeLayersIds
-    const isCurrentlyActive = activeLayersIds.includes(id);
+    const isCurrentlyActive = activeLayersIds?.includes(id);
 
     // Check if any id in activeLayersIds starts with 'national_dashboard'
     const isAnyActiveNationalDashboard =
@@ -64,7 +64,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 
-  const HELPER_ID = id === activeLayers[0]?.id;
+  const HELPER_ID = id === activeLayers?.[0]?.id;
 
   const showDownloadInfoHelpers =
     !isMapSettingsOpen && HELPER_ID && (locationTool === 'worldwide' || locationTool === 'search');

@@ -9,7 +9,7 @@ import { useNationalDashboard } from './hooks';
 const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 const NationalDashboardMapLegend = () => {
   const [activeLayers] = useRecoilState(activeLayersAtom);
-  const layer = activeLayers.find(({ id }) => id.includes('mangrove_national_dashboard'));
+  const layer = activeLayers?.find(({ id }) => id.includes('mangrove_national_dashboard'));
   const { data } = useNationalDashboard();
   const sources = data?.data[0]?.sources;
 

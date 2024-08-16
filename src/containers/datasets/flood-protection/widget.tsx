@@ -58,12 +58,12 @@ const FloodProtection = ({
   const id = `mangrove_coastal_protection_${indicator}` satisfies WidgetSlugType;
 
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
-  const isActive = useMemo(() => activeLayersIds.includes(id), [activeLayersIds, id]);
+  const activeLayersIds = activeLayers?.map((l) => l.id);
+  const isActive = useMemo(() => activeLayersIds?.includes(id), [activeLayersIds, id]);
 
   const handleClick = () => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => w.id !== id)
+      ? activeLayers?.filter((w) => w.id !== id)
       : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   };

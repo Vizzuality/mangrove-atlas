@@ -29,17 +29,16 @@ const WidgetsMenu: FC = () => {
   const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
   const widgets = rawWidgets.filter(({ slug }) => slug !== 'widgets_deck_tool');
 
-  const activeLayersIds = activeLayers.map((layer) => layer.id);
+  const activeLayersIds = activeLayers?.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
   const enabledWidgets = useWidgetsIdsByLocation();
-
   const categoryFromWidgets = useWidgetsIdsByCategory(activeWidgets);
 
   // Updates the category when user changes widgets filtering throw checkboxes,
   // are activated. It identifies the category associated with the active widgets and
   // updates it accordingly.
   useEffect(() => {
-    if (categorySelected !== categoryFromWidgets) {
+    if (categorySelected !== categoryFromWidgets && categoryFromWidgets !== 'all_datasets') {
       setCategory(categoryFromWidgets);
     }
   }, [categorySelected, categoryFromWidgets, setCategory]);
@@ -49,10 +48,10 @@ const WidgetsMenu: FC = () => {
   }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
 
   const handleAllLayers = useCallback(() => {
-    if (activeLayers.length <= LAYERS.length && activeLayers.length > 0) {
+    if (activeLayers?.length <= LAYERS.length && activeLayers?.length > 0) {
       setActiveLayers([]);
     }
-    if (LAYERS.length > activeLayers.length) {
+    if (LAYERS.length > activeLayers?.length) {
       const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
         id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
         opacity: '1',
@@ -85,8 +84,8 @@ const WidgetsMenu: FC = () => {
   );
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
-      const layersUpdate = activeLayersIds.includes(e)
-        ? activeLayers.filter((w) => w.id !== e)
+      const layersUpdate = activeLayersIds?.includes(e)
+        ? activeLayers?.filter((w) => w.id !== e)
         : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
       setActiveLayers(layersUpdate);
     },
@@ -125,11 +124,11 @@ const WidgetsMenu: FC = () => {
             data-testid="all-layers-checkbox"
             onCheckedChange={handleAllLayers}
             defaultChecked={false}
-            checked={LAYERS.length === activeLayers.length}
+            checked={LAYERS.length === activeLayers?.length}
             className={cn({
               'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white text-white':
                 true,
-              'bg-brand-800': LAYERS.length === activeLayers.length,
+              'bg-brand-800': LAYERS.length === activeLayers?.length,
             })}
           >
             <CheckboxIndicator>
@@ -140,7 +139,7 @@ const WidgetsMenu: FC = () => {
             className={cn({
               'col-span-4 col-start-3 col-end-6': true,
               'font-bold text-brand-800':
-                LAYERS.length === activeLayers.length && widgets.length === activeWidgets.length,
+                LAYERS.length === activeLayers?.length && widgets.length === activeWidgets.length,
             })}
           >
             Select All
@@ -185,19 +184,19 @@ const WidgetsMenu: FC = () => {
                   onCheckedChange={() => handleLayers(slug)}
                   disabled={!enabledWidgets.includes(slug)}
                   defaultChecked
-                  checked={activeLayersIds.includes(slug)}
+                  checked={activeLayersIds?.includes(slug)}
                   className={cn({
                     'text-brand-500 m-auto h-3 w-3 rounded-sm border border-black/15 bg-white':
                       true,
                     'bg-brand-800 font-bold text-white':
-                      activeLayersIds.includes(slug) && enabledWidgets.includes(slug),
+                      activeLayersIds?.includes(slug) && enabledWidgets.includes(slug),
                   })}
                 >
                   <CheckboxIndicator>
                     <FaCheck
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
-                        'text-white': activeLayersIds.includes(slug),
+                        'text-white': activeLayersIds?.includes(slug),
                       })}
                     />
                   </CheckboxIndicator>
@@ -207,7 +206,7 @@ const WidgetsMenu: FC = () => {
                 className={cn({
                   'col-span-4 col-start-3 col-end-6': true,
                   'font-bold text-brand-800':
-                    activeLayersIds.includes(slug) || activeWidgets.includes(slug),
+                    activeLayersIds?.includes(slug) || activeWidgets.includes(slug),
                   'opacity-40': !enabledWidgets.includes(slug),
                 })}
                 key={slug}

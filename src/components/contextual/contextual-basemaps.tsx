@@ -16,13 +16,14 @@ import type { ContextualBasemapsId } from 'types/widget';
 
 const BasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const defaultActive = activeLayers.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
+  const defaultActive =
+    activeLayers?.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
     (id) => {
       setIsActive(id);
-      const noPlanetLayers = activeLayers.filter((w) => !w.id.includes('planet_medres'));
+      const noPlanetLayers = activeLayers?.filter((w) => !w.id.includes('planet_medres'));
       const layersUpdate =
         id === 'no-layer'
           ? noPlanetLayers

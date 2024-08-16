@@ -39,14 +39,14 @@ const IndicatorSource = ({
   setYearSelected,
 }: IndicatorSourceTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const activeLayersIds = activeLayers.map((l) => l.id);
+  const activeLayersIds = activeLayers?.map((l) => l.id);
 
   const isActive = useMemo(
     () => activeLayersIds.some((layerId) => layerId.startsWith('mangrove_national_dashboard')),
     [activeLayersIds]
   );
 
-  const compareNationalLayers = activeLayersIds.includes(id);
+  const compareNationalLayers = activeLayersIds?.includes(id);
 
   useEffect(() => {
     if (isActive && !compareNationalLayers) {
@@ -68,7 +68,7 @@ const IndicatorSource = ({
 
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
-      ? activeLayers.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
+      ? activeLayers?.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
       : ([
           {
             id,

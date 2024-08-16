@@ -16,7 +16,7 @@ import type { ContextualBasemapsId } from 'types/widget';
 const HighResolutionExtentBasemap = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const defaultActive =
-    activeLayers.find((layer) => layer.id === 'hi-res-extent')?.id || 'no-layer';
+    activeLayers?.find((layer) => layer.id === 'hi-res-extent')?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);
 
   const handleClick = useCallback(
@@ -24,7 +24,7 @@ const HighResolutionExtentBasemap = () => {
       setIsActive(id);
       const layersUpdate =
         id === 'no-layer'
-          ? activeLayers.filter((w) => w.id !== 'hi-res-extent')
+          ? activeLayers?.filter((w) => w.id !== 'hi-res-extent')
           : ([
               ...activeLayers,
               {
