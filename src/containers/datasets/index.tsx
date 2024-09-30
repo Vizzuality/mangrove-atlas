@@ -218,7 +218,7 @@ export const INFO = {
   mangrove_habitat_change: HabitatChangeInfo,
   mangrove_species_distribution: SpeciesDistributionInfo,
   mangrove_species_threatened: SpeciesThreatenedInfo,
-  mangrove_protection: ProtectionInfo,
+  mangrove_protected_areas: ProtectionInfo,
   mangrove_drivers_change: DriversChangeInfo,
   mangrove_net_change: NetChangeInfo,
   mangrove_alerts: AlertsInfo,
