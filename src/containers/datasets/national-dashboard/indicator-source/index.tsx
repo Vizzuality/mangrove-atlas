@@ -84,6 +84,7 @@ const IndicatorSource = ({
           },
           ...activeLayers,
         ] as ActiveLayers[]);
+
     setActiveLayers(layersUpdate);
   }, [activeLayers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);
 

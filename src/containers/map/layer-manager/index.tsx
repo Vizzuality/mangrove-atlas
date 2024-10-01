@@ -42,36 +42,12 @@ const LayerManagerContainer = () => {
   } = useRouter();
   const id = params?.[1];
 
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
-  function filterLayersByLocationType(widgets: WidgetTypes[], locationType: string): string[] {
-    const filteredLayers: string[] = [];
-
-    widgets.forEach((widget) => {
-      if (widget.locationType?.includes(locationType)) {
-        if (widget.layersIds) {
-          filteredLayers.push(...widget.layersIds);
-        }
-        if (widget.contextualLayersIds) {
-          filteredLayers.push(...widget.contextualLayersIds);
-        }
-        if (widget.subLayersIds) {
-          filteredLayers.push(...widget.subLayersIds);
-        }
-      }
-    });
-
-    return filteredLayers;
-  }
-
-  const filteredLayers = filterLayersByLocationType(widgets, locationType);
-
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS?.filter(
     (layer) => layer?.includes('planet') || layer === 'hi-res-extent'
   );
   const no_planet_layers = ACTIVE_LAYERS?.filter(
-    (layer) =>
-      !layer?.includes('planet') && layer !== 'hi-res-extent' && filteredLayers?.includes(layer)
+    (layer) => !layer?.includes('planet') && layer !== 'hi-res-extent'
   );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
@@ -79,6 +55,7 @@ const LayerManagerContainer = () => {
     : no_planet_layers;
 
   const LAYERS_FILTERED = [...(filterNationalDashboardLayers || []), ...(basemap_layers || [])];
+
   const handleAdd = useCallback(
     (styleIds: LayerProps['id'][]) => {
       setInteractiveLayerIds((prevInteractiveIds) => [...prevInteractiveIds, ...styleIds]);
