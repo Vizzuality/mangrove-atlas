@@ -12,10 +12,9 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useRecoilState(activeLayersAtom);
   const activeLayer = activeLayers?.find((l) => l.id === id);
   const SOURCE = useSource({ settings: activeLayer.settings });
-
   const LAYER = useLayers({
     id: 'mangrove_national_dashboard_layer',
-    opacity: parseFloat(activeLayer.opacity),
+    opacity: parseFloat(activeLayer?.opacity),
     visibility: activeLayer.visibility,
     settings: activeLayer.settings,
   });
@@ -23,7 +22,7 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
 
   return (
     <Source {...SOURCE}>
-      <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+      <Layer key={LAYER.id} id={SOURCE.id} {...LAYER} beforeId={beforeId} />
     </Source>
   );
 };
