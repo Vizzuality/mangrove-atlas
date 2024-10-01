@@ -51,7 +51,11 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
   const filteredLayersIds = filterLayersByLocationType(widgets, locationType);
   const filteredLayers = activeLayers?.filter(({ id }) => {
-    return filteredLayersIds.includes(id);
+    return (
+      filteredLayersIds.includes(id) ||
+      (id.includes('mangrove_national_dashboard') &&
+        filteredLayersIds.includes('mangrove_national_dashboard'))
+    );
   }) as ActiveLayers[];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +71,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const handleChangeOrder = useCallback(
     (order: string[]) => {
       const newLayers = order.map((id) => {
-        return activeLayers?.find((l) => l.id === id);
+        return activeLayers?.find((l) => l.id === id || l.id.includes(id));
       }) as ActiveLayers[];
       const activeLayerPlanet = activeLayers?.filter((l) => l.id.includes('planet'));
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
