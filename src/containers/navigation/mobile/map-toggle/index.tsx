@@ -16,7 +16,7 @@ const MapToggle = () => {
   const [mapView, setMapView] = useRecoilState(mapViewAtom);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex h-full flex-col items-center">
       <button
         className={cn({
           'my-0.5 box-border flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border-2 border-white':

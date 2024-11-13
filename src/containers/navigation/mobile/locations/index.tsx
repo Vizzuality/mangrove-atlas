@@ -19,7 +19,7 @@ const LocationsMobile = () => {
   }, []);
 
   return (
-    <div className="flex flex-col space-y-1.5 text-center">
+    <div className="flex h-full flex-col space-y-1.5 text-center">
       <Dialog open={isOpen}>
         <DialogTrigger asChild>
           <button
