@@ -41,7 +41,7 @@ const Menu = () => {
             data-testid="menu-button"
             type="button"
             onClick={() => setSection('main')}
-            className="flex items-center space-x-2"
+            className="flex h-full items-center space-x-2"
           >
             <Icon icon={MENU_SVG} className="h-6 w-6" description="Menu" />
             <span className="font-sans text-sm text-white">Menu</span>

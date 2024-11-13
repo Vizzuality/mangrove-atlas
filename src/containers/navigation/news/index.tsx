@@ -19,7 +19,7 @@ const News = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <div data-testid="news-button" className="flex cursor-pointer">
+        <div data-testid="news-button" className="flex h-full cursor-pointer">
           <Helper
             className={{
               button: '-top-2.5 -right-4 z-20',
