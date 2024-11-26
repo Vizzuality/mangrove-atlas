@@ -34,12 +34,14 @@ const LanguageSelector = () => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const t = window.Transifex as Transifex;
-      t.live?.init();
-      const locale = t?.live.detectLanguage();
-      const languages = t?.live.getAllLanguages();
-      const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
-      setCurrentLanguage(defaultLanguage);
-      setLanguages(languages);
+      if (t?.live) {
+        t.live?.init();
+        const locale = t?.live.detectLanguage();
+        const languages = t.live.getAllLanguages();
+        const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
+        setCurrentLanguage(defaultLanguage);
+        setLanguages(languages);
+      }
     }
   }, [t, languages]);
 

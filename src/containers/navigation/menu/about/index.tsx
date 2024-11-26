@@ -1,9 +1,4 @@
-import Image, { StaticImageData } from 'next/image';
-
-import CONVENED_PNG from 'images/partners/convened.png';
-import DONORS_PNG from 'images/partners/donors.png';
-import SUPPORTED_PNG from 'images/partners/supported.png';
-import VIZZUALITY_PNG from 'images/vizzuality.png';
+import Image from 'next/image';
 
 const About = () => {
   return (
@@ -67,26 +62,32 @@ const About = () => {
           <div>
             <p>Convened by</p>
             <Image
-              src={CONVENED_PNG as StaticImageData}
+              src="/images/partners/convened.png"
               alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International"
               className="-ml-3"
+              width={500}
+              height={300}
             />
           </div>
           <div>
             <p>Supported by</p>
             <Image
-              src={SUPPORTED_PNG as StaticImageData}
+              src="/images/partners/supported.png"
               alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography"
               className="-ml-2"
+              width={500}
+              height={300}
             />
           </div>
 
           <div>
             <p>Donors</p>
             <Image
-              src={DONORS_PNG as StaticImageData}
+              src="/images/partners/donors.png"
               alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation"
               className="-ml-6 -mt-1"
+              width={500}
+              height={300}
             />
           </div>
 
@@ -99,8 +100,8 @@ const About = () => {
               className="m-10"
             >
               <Image
-                src={VIZZUALITY_PNG as StaticImageData}
-                alt="vizzuality"
+                src="/images/vizzuality.png"
+                alt="Vizzuality"
                 width={300}
                 height={300}
                 className="ml-2 -mt-1 w-40"

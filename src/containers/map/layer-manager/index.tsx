@@ -10,12 +10,9 @@ import { interactiveLayerIdsAtom } from 'store/map';
 import { useRecoilState } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
-import { LocationTypes } from 'containers/datasets/locations/types';
 import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
-import { widgets } from 'containers/widgets/constants';
 
 import type { LayerProps } from 'types/layers';
-import type { WidgetTypes } from 'types/widget';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
@@ -71,7 +68,7 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
-  console.log(LAYERS_FILTERED);
+
   return (
     <>
       <CountryBoundariesLayer

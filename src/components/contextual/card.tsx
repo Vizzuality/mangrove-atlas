@@ -18,20 +18,14 @@ import Info from 'components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
-import analyticThumb from 'images/thumbs/analytic.png';
-import darkThumb from 'images/thumbs/btn-dark@2x.png';
-import lightThumb from 'images/thumbs/btn-light@2x.png';
-import satelliteThumb from 'images/thumbs/btn-satellite@2x.png';
-import visualThumb from 'images/thumbs/visual.png';
-
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const THUMBS = {
-  light: lightThumb as StaticImageData,
-  dark: darkThumb as StaticImageData,
-  satellite: satelliteThumb as StaticImageData,
-  planet_medres_analytic_monthly: analyticThumb as StaticImageData,
-  planet_medres_visual_monthly: visualThumb as StaticImageData,
+  light: 'images/thumbs/analytic.png',
+  dark: 'images/thumbs/btn-dark@2x.png',
+  satellite: 'images/thumbs/btn-light@2x.png',
+  planet_medres_analytic_monthly: 'images/thumbs/btn-satellite@2x.png',
+  planet_medres_visual_monthly: 'images/thumbs/visual.png',
   mangrove_tidal_flats: '/images/thumbs/contextual/tidal_flats.png',
   mangrove_allen_coral_reef: '/images/thumbs/contextual/allen_coral_reef.png',
   mangrove_global_tidal_wetland_change: '/images/thumbs/contextual/global_tidal_wetland_change.png',
