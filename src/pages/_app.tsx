@@ -129,7 +129,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       />
       <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
       <RecoilRoot>
-        <TXProvider>
+        <TXProvider token={process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}>
           <RecoilURLSyncNext
             location={{ part: 'queryParams' }}
             serialize={serialize}

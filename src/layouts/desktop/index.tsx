@@ -17,8 +17,6 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import MapContainer from 'containers/map';
 import WidgetsContainer from 'containers/widgets';
 
-import LOGO_PNG from 'images/logo-bg.png';
-
 const DesktopLayout = () => {
   const map = useMap();
 
@@ -53,7 +51,7 @@ const DesktopLayout = () => {
         onClick={handleReset}
       >
         <Image
-          src={LOGO_PNG as StaticImageData}
+          src="/images/logo-bg.png"
           alt="Logo Global Mangrove Watch"
           width={186}
           height={216}

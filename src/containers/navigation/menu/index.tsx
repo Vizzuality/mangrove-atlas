@@ -1,29 +1,41 @@
 import { useState } from 'react';
 
-import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
 
 import cn from 'lib/classnames';
 
 import { AnimatePresence, motion } from 'framer-motion';
+import { HiChevronDown } from 'react-icons/hi2';
 
 import Helper from 'containers/guide/helper';
 import About from 'containers/navigation/menu/about';
+import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
 
-import { Media } from 'components/media-query';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
-import GMA_PNG from 'images/gma.png';
-
-import ABERYSTWYTH_SVG from 'svgs/partners/aberystwyth.svg?sprite';
-import NATURE_CONSERVANCY_SVG from 'svgs/partners/nature.svg?sprite';
-import SOLO_SVG from 'svgs/partners/solo.svg?sprite';
-import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
+
+const RESOURCES_LINKS = [
+  {
+    label: 'MRTT',
+    href: 'https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/',
+  },
+  { label: 'Training on conservation', href: 'https://www.mangrovealliance.org/' },
+  { label: 'Restoration best practices', href: 'https://www.mangrovealliance.org/' },
+  { label: 'State of the Worlds', href: 'https://www.mangrovealliance.org/' },
+  {
+    label: 'GMW Leaflet',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/05/GMW_Leaflet_2024-update.pdf',
+  },
+  { label: 'Policy document', href: 'https://www.mangrovealliance.org/' },
+];
 
 const Menu = () => {
   const [section, setSection] = useState('main');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <Dialog>
@@ -57,42 +69,41 @@ const Menu = () => {
         })}
       >
         {section === 'main' && (
-          <div className="flex w-full flex-col py-10 font-sans text-black/85">
-            <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
-              Global Mangrove Watch
-            </h2>
-            <div className="flex flex-col items-start space-y-4 pb-10 text-2lg font-light">
-              <button onClick={() => section && setSection('about')}>About this tool</button>
-            </div>
-            <div className="space-y-4 pb-6">
-              <p className="text-xs font-bold uppercase">Powered by</p>
-              <a
-                href="https://www.mangrovealliance.org/"
-                className="pb-3 text-left text-2lg font-light leading-3"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+          <div className="space-y-10 py-10">
+            <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
+              <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+                Global Mangrove Watch
+              </h2>
+              <div className="text-2lg font-light">
+                <button onClick={() => section && setSection('about')}>About this tool</button>
+              </div>
+              <Link href="https://www.mangrovealliance.org/" className="text-2lg font-light">
                 Global Mangrove Alliance
-              </a>
+              </Link>
+              {/* <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
+                <CollapsibleTrigger>
+                  <div className="flex items-center space-x-4 text-2lg font-light">
+                    <span>Resources</span>
+                    <HiChevronDown className="h-4 w-4" />
+                    <span className="sr-only">Toggle</span>
+                  </div>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6">
+                  {RESOURCES_LINKS.map(({ label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-2lg font-light"
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </CollapsibleContent>
+              </Collapsible> */}
             </div>
-
-            <div className="grid grid-cols-2 items-center gap-y-6 pb-6">
-              <Icon icon={ABERYSTWYTH_SVG} className="w-22 md:w-28" description="ABERYSTWYTH" />
-              <Icon icon={SOLO_SVG} className="w-22 md:w-28" description="SOLO" />
-              <Icon icon={WETLANDS_SVG} className="w-22 md:w-28" description="Wetlands" />
-              <Icon
-                icon={NATURE_CONSERVANCY_SVG}
-                className="w-22 md:w-28"
-                description="NATURE_CONSERVANCY"
-              />
-            </div>
-
-            <Media lessThan="md">
-              <Image alt="GMA" src={GMA_PNG as StaticImageData} width={100} height={50} />
-            </Media>
-            <Media greaterThanOrEqual="md">
-              <Image alt="GMA" src={GMA_PNG as StaticImageData} width={133} height={58} />
-            </Media>
+            <PartnersLinks />
           </div>
         )}
         <AnimatePresence>
