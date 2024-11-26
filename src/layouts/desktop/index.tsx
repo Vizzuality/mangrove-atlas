@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
