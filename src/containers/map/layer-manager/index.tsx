@@ -71,7 +71,7 @@ const LayerManagerContainer = () => {
     },
     [setInteractiveLayerIds]
   );
-
+  console.log(LAYERS_FILTERED);
   return (
     <>
       <CountryBoundariesLayer

@@ -19,12 +19,12 @@ interface Transifex {
     detectLanguage: () => string;
     getAllLanguages: () => { code: string; name: string }[];
     translateTo: (string) => string;
+    init: () => void;
   };
 }
 
 const LanguageSelector = () => {
   const t = typeof window !== 'undefined' && (window.Transifex as Transifex);
-
   const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const Transifex = window.Transifex as Transifex;
     Transifex?.live.translateTo(e.currentTarget.value);
@@ -35,15 +35,18 @@ const LanguageSelector = () => {
   const [currentLanguage, setCurrentLanguage] = useState('');
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && window.Transifex) {
       const t = window.Transifex as Transifex;
-      const locale = t?.live.detectLanguage();
-      const languages = t?.live.getAllLanguages();
-      const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
-      setCurrentLanguage(defaultLanguage);
-      setLanguages(languages);
+      if (t?.live) {
+        t.live?.init();
+        const locale = t?.live.detectLanguage();
+        const languages = t.live.getAllLanguages();
+        const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
+        setCurrentLanguage(defaultLanguage);
+        setLanguages(languages);
+      }
     }
-  }, [t, languages]);
+  }, [t]);
 
   return (
     <Helper

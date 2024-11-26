@@ -2428,14 +2428,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@transifex/react@npm:6.0.2":
-  version: 6.0.2
-  resolution: "@transifex/react@npm:6.0.2"
+"@transifex/react@npm:^7.1.3":
+  version: 7.1.3
+  resolution: "@transifex/react@npm:7.1.3"
   peerDependencies:
-    "@transifex/native": ^6.0.0
+    "@transifex/native": ^7.0.0
     prop-types: ^15.0.0
     react: ^16.0.0 || ^17.0.0 || ^18.0.0
-  checksum: dcd46ed8622aca62bfe23218118b52e6586ce495889cf140465103f435ad26d44970fa3918707384eaaa62a6117685b0907ca26614281b64eba5fc36d416be5f
+  checksum: c583fa983a14525c23131c709bbaebf25603a0144ce20a0fabea022f6ccf6fe4d456e572cb1eb3c4e156acbbfcfe5325957cede76a2878e5a48330fd44068833
   languageName: node
   linkType: hard
 
@@ -7353,7 +7353,7 @@ __metadata:
     "@tailwindcss/typography": 0.5.9
     "@tanstack/react-query": 4.29.25
     "@transifex/native": 6.0.2
-    "@transifex/react": 6.0.2
+    "@transifex/react": ^7.1.3
     "@turf/bbox": 6.5.0
     "@types/d3-format": ^3.0.1
     "@types/geojson": 7946.0.10

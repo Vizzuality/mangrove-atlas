@@ -17,9 +17,9 @@ const AppTools = () => (
         <News />
       </div>
 
-      {/* <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <LanguageSelector />
-      </div> */}
+      </div>
 
       <div className="flex h-full items-center justify-center">
         <Helper
