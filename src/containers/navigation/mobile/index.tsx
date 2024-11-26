@@ -11,7 +11,7 @@ const NavigationMobile = () => {
         <Locations />
         <News />
         <ConfigureWidgets />
-        {/* <LanguageSelector /> */}
+        <LanguageSelector />
         <MapToggle />
       </div>
     </div>
