@@ -80,7 +80,7 @@ const Menu = () => {
               <Link href="https://www.mangrovealliance.org/" className="text-2lg font-light">
                 Global Mangrove Alliance
               </Link>
-              {/* <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
+              <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
                 <CollapsibleTrigger>
                   <div className="flex items-center space-x-4 text-2lg font-light">
                     <span>Resources</span>
@@ -101,7 +101,7 @@ const Menu = () => {
                     </a>
                   ))}
                 </CollapsibleContent>
-              </Collapsible> */}
+              </Collapsible>
             </div>
             <PartnersLinks />
           </div>

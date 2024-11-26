@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Media } from 'components/media-query';
 import Icon from 'components/ui/icon';
 
 import ABERYSTWYTH_SVG from 'svgs/partners/aberystwyth.svg?sprite';
@@ -12,20 +11,15 @@ import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
 const PartnersLinks = () => {
   return (
     <div className="flex w-full space-x-12">
-      <div className="space-y-4 pb-6">
+      <div className="relative flex w-60 flex-col space-y-6">
         <p className="text-xs font-bold uppercase">Powered by</p>
         <Link
           href="https://www.mangrovealliance.org/"
-          className="pb-3 text-left text-2lg font-light leading-3"
+          className="text-left text-2lg font-light leading-3"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Media lessThan="md">
-            <Image alt="GMA" src="/images/menu/gma.webp" width={88} height={50} />
-          </Media>
-          <Media greaterThanOrEqual="md">
-            <Image alt="GMA" src="/images/menu/gma.webp" width={133} height={58} />
-          </Media>
+          <Image alt="GMA" src="/images/menu/gma.webp" width={150} height={65} />
         </Link>
       </div>
 
