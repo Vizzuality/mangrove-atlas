@@ -20,17 +20,40 @@ import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
 
 const RESOURCES_LINKS = [
   {
-    label: 'MRTT',
-    href: 'https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/',
+    label: 'GMW Training',
+    href: '',
   },
-  { label: 'Training on conservation', href: 'https://www.mangrovealliance.org/' },
-  { label: 'Restoration best practices', href: 'https://www.mangrovealliance.org/' },
-  { label: 'State of the Worlds', href: 'https://www.mangrovealliance.org/' },
+  { label: 'Restoration Best Practices', href: '' },
+  { label: 'State of the Worlds Mangroves 2024', href: '' },
   {
     label: 'GMW Leaflet',
     href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/05/GMW_Leaflet_2024-update.pdf',
   },
-  { label: 'Policy document', href: 'https://www.mangrovealliance.org/' },
+  {
+    label: 'Policy Brief: GMW and NBSAPs',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/10/Global-Mangrove-Watch-NBSAPs_-Update-2024.pdf',
+  },
+  {
+    label: 'Policy Brief: GMW and NDCs',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_NDC-Policy-Brief_update2024.pdf',
+  },
+  {
+    label: 'Policy Brief: GMW and the Ramsar Convention',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_RAMSAR-Policy-Brief_v7.pdf.pdf',
+  },
+
+  // {
+  //   label: 'MRTT',
+  //   href: 'https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/',
+  // },
+  // { label: 'Training on conservation', href: 'https://www.mangrovealliance.org/' },
+  // { label: 'Restoration best practices', href: 'https://www.mangrovealliance.org/' },
+  // { label: 'State of the Worlds', href: 'https://www.mangrovealliance.org/' },
+  // {
+  //   label: 'GMW Leaflet',
+  //   href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/05/GMW_Leaflet_2024-update.pdf',
+  // },
+  // { label: 'Policy document', href: 'https://www.mangrovealliance.org/' },
 ];
 
 const Menu = () => {
@@ -74,17 +97,37 @@ const Menu = () => {
               <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
                 Global Mangrove Watch
               </h2>
-              <div className="text-2lg font-light">
-                <button onClick={() => section && setSection('about')}>About this tool</button>
-              </div>
-              <Link href="https://www.mangrovealliance.org/" className="text-2lg font-light">
+              <button
+                type="button"
+                className="text-left text-2lg font-light hover:text-brand-800"
+                onClick={() => section && setSection('about')}
+              >
+                About this tool
+              </button>
+              <Link
+                href="https://www.mangrovealliance.org/"
+                className="text-2lg font-light hover:text-brand-800"
+              >
                 Global Mangrove Alliance
               </Link>
-              {/* <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
+              <Link
+                href="https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/"
+                className="text-2lg font-light hover:text-brand-800"
+              >
+                Mangrove Restoration Tracker Tool
+              </Link>
+              {/* conatct */}
+
+              <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
                 <CollapsibleTrigger>
-                  <div className="flex items-center space-x-4 text-2lg font-light">
-                    <span>Resources</span>
-                    <HiChevronDown className="h-4 w-4" />
+                  <div className="flex items-center space-x-4 text-2lg font-light hover:text-brand-800">
+                    <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
+                    <HiChevronDown
+                      className={cn({
+                        'h-4 w-4 stroke-[1px]': true,
+                        'rotate-180 text-brand-800': isOpen,
+                      })}
+                    />
                     <span className="sr-only">Toggle</span>
                   </div>
                 </CollapsibleTrigger>
@@ -95,13 +138,13 @@ const Menu = () => {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-2lg font-light"
+                      className="text-2lg font-light text-black/85 hover:text-brand-800"
                     >
                       {label}
                     </a>
                   ))}
                 </CollapsibleContent>
-              </Collapsible> */}
+              </Collapsible>
             </div>
             <PartnersLinks />
           </div>
