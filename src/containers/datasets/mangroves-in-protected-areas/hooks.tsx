@@ -17,10 +17,9 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import CustomTooltip from './tooltip';
-import type { DataResponse } from './types';
-
 import { COLORS } from './constants';
+import CustomTooltip from './tooltip';
+import type { DataResponse, ProtectionType } from './types';
 
 const getColor = (percentage) => {
   let color: string;
@@ -47,9 +46,6 @@ const getColor = (percentage) => {
   return color;
 };
 
-type ProtectionType = {
-  location: string;
-};
 // widget data
 export function useMangrovesInProtectedAreas(
   params?: UseParamsOptions,
