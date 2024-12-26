@@ -29,9 +29,10 @@ import { WidgetSlugType } from 'types/widget';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 
-import FloodProtectionChart from './chart';
+import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
 import { useMangrovesFloodProtection } from './hooks';
+import type { Config, ChartData } from './types';
 
 const FloodProtection = ({
   indicator,
@@ -53,7 +54,20 @@ const FloodProtection = ({
 
   const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {
     indicator,
-  });
+  }) as {
+    isFetched: boolean;
+    isFetching: boolean;
+    data: {
+      periods: FloodProtectionPeriodId[];
+      max: number;
+      selectedValue: number;
+      location: string;
+      getFormattedValue: (value: number, indicator: FloodProtectionIndicatorId) => string;
+      config: Config;
+      unit: string;
+      data: ChartData[];
+    };
+  };
 
   const id = `mangrove_coastal_protection_${indicator}` satisfies WidgetSlugType;
 
@@ -74,19 +88,31 @@ const FloodProtection = ({
     if (ref.current && ref.current.offsetWidth) {
       setLineChartWidth(ref?.current?.offsetWidth);
     }
-  }, [ref, ref.current]);
+  }, [ref]);
 
   if (!data && isEmpty(data)) return null;
 
-  const { periods, max, selectedValue, location, getFormattedValue } = data;
+  const {
+    periods,
+    max,
+    selectedValue,
+    location,
+    getFormattedValue,
+  }: {
+    periods: FloodProtectionPeriodId[];
+    max: number;
+    selectedValue: number;
+    location: string;
+    getFormattedValue: (value: number, indicator: FloodProtectionIndicatorId) => string;
+  } = data;
 
   const isWorldwide = location === 'Worldwide';
   const trianglePositionPerc = (selectedValue * 100) / max;
   const trianglePosition = (lineChartWidth * trianglePositionPerc) / 100 - 11; // substract icon size;
   const value = getFormattedValue(selectedValue, indicator);
 
-  const getBackground = (indicator) => {
-    let background;
+  const getBackground = (indicator: FloodProtectionIndicatorId): string => {
+    let background: string;
     switch (true) {
       case indicator === 'area':
         background =
@@ -106,6 +132,7 @@ const FloodProtection = ({
     }
     return background;
   };
+
   return (
     <div className={`${WIDGET_CARD_WRAPPER_STYLE} relative`}>
       <Loading visible={isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
@@ -175,7 +202,11 @@ const FloodProtection = ({
             .
           </p>
           <div className="flex flex-1 flex-col items-center space-y-2">
-            <FloodProtectionChart data={data.config} />
+            <FloodProtectionChart
+              config={data.config}
+              data={data.data}
+              handleBarClick={setPeriod}
+            />
           </div>
           <div className="relative flex flex-1 flex-col font-sans text-sm text-black/85">
             <p className="w-full text-end text-sm">{UNITS_LABELS[data.unit]}</p>
