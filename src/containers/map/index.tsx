@@ -49,10 +49,11 @@ import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/ui/popup';
 import { breakpoints } from 'styles/styles.config';
-import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
+import type { RestorationPopUp, RestorationSitesPopUp, PopUpKey, LocationPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
 import LocationPopup from './location-pop-up';
+import RestorationSitesPopup from './restoration-sites-popup';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -72,7 +73,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-
+  console.log({ interactiveLayerIds });
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
   const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
@@ -100,6 +101,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const [restorationPopUp, setRestorationPopUp] = useState<{
     popupInfo: RestorationPopUp;
+  }>({
+    popupInfo: null,
+  });
+
+  const [restorationSitesPopUp, setRestorationSitesPopUp] = useState<{
+    popupInfo: RestorationSitesPopUp;
   }>({
     popupInfo: null,
   });
@@ -220,6 +227,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!key || key === 'restoration') setRestorationPopUp({ popupInfo: null });
     if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ popupInfo: null });
     if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
+    if (!key || key.includes('mangrove_rest_sites')) setRestorationSitesPopUp({ popupInfo: null });
   };
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
@@ -235,10 +243,14 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'mangrove_restoration-layer'
     );
 
+    const restorationSitesFeature = e?.features.find(({ layer }) =>
+      layer.id.includes('mangrove_rest_sites')
+    );
+
     const iucnEcoregionFeature = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
-
+    console.log(restorationSitesFeature, e.features);
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature.map((feature) => ({
         ...feature.properties,
@@ -271,6 +283,18 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!restorationFeature) {
       removePopup('restoration');
     }
+
+    // Restoration Sites
+    if (restorationSitesFeature) {
+      setRestorationSitesPopUp({
+        ...restorationSitesPopUp,
+        popupInfo: restorationSitesFeature.properties as RestorationSitesPopUp,
+      });
+    }
+    if (!restorationSitesFeature) {
+      removePopup('restoration');
+    }
+
     // IUCN Ecoregions
     if (iucnEcoregionFeature)
       setIucnEcoregionPopUp({
@@ -434,6 +458,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     restorationPopUpInfo={restorationPopUp}
                     className="rounded-3xl"
                   />
+                ) : null}
+
+                {!isEmpty(restorationSitesPopUp?.popupInfo) ? (
+                  <RestorationSitesPopup info={restorationSitesPopUp} className="rounded-3xl" />
                 ) : null}
 
                 {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
