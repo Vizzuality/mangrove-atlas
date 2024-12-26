@@ -4,7 +4,6 @@ import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationToolAtom } from 'store/sidebar';
-import { activeCategoryAtom } from 'store/sidebar';
 import { activeWidgetsAtom } from 'store/widgets';
 
 import { motion } from 'framer-motion';
@@ -19,7 +18,6 @@ import Helper from 'containers/guide/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
-import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
@@ -30,8 +28,8 @@ import { WidgetTypes } from 'types/widget';
 import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
-import WidgetsMenu from './widgets-menu';
 import WidgetsCardsControls from './widgets-cards-controls';
+import WidgetsMenu from './widgets-menu';
 
 const buttonMotion = {
   rest: {
@@ -88,20 +86,6 @@ const WidgetsContainer: FC = () => {
       ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
-
-  const cat = useWidgetsIdsByCategory(activeWidgets);
-
-  // ensures that the appropriate widgets for a selected category are activated during
-  // the first render. This is crucial when the initial state is being loaded from a URL,
-  //  particularly in cases where the active widgets are not immediately visible on it
-
-  // useEffect(() => {
-  //   if (categorySelected !== cat) {
-  //     const filteredWidgets = widgetsAvailable.map(({ slug }) => slug);
-  //     setActiveWidgets(filteredWidgets);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const locationTool = useRecoilValue(locationToolAtom);
 
