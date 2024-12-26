@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import Loading from 'components/ui/loading';
 import {

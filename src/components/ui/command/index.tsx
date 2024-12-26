@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';

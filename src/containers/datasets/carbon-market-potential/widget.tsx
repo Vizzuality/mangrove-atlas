@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import NoData from 'containers/widgets/no-data';
 

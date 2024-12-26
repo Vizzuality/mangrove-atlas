@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';

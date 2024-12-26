@@ -1,6 +1,6 @@
 import orderBy from 'lodash-es/orderBy';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 type Item = {
   color: string;

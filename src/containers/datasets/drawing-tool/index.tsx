@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';

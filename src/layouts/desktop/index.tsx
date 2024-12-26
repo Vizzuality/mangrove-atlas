@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { printModeState } from 'store/print-mode';
 

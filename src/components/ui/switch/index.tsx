@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import * as SwitchRadix from '@radix-ui/react-switch';
 

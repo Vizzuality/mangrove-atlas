@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { locationBoundsAtom } from 'store/map';
 

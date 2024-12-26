@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';

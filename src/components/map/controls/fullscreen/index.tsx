@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 import { fullScreenAtom } from 'store/map-settings';

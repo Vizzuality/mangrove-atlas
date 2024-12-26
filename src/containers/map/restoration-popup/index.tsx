@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import Details from 'containers/map/restoration-popup/sections/details';
 import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';

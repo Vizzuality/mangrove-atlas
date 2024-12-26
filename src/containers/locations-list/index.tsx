@@ -4,7 +4,7 @@ import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { locationBoundsAtom } from 'store/map';

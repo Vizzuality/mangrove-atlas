@@ -1,6 +1,6 @@
 import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import Helper from 'containers/guide/helper';
 

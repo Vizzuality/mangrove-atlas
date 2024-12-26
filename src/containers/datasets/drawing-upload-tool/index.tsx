@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingUploadToolAtom, drawingToolAtom } from 'store/drawing-tool';

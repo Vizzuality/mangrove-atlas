@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { activeGuideAtom } from 'store/guide';

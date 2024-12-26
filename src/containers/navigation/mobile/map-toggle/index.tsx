@@ -1,6 +1,6 @@
 import React from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 import { mapViewAtom } from 'store/sidebar';

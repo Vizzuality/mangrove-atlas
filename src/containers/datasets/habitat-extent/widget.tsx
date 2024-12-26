@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { habitatExtentSettings } from 'store/widgets/habitat-extent';

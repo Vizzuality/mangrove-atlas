@@ -1,6 +1,6 @@
 import React, { useMemo, Children, isValidElement } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import SortableList from './sortable/list';
 import { LegendProps } from './types';

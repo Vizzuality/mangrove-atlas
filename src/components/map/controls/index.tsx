@@ -1,6 +1,6 @@
 import { Children, FC, PropsWithChildren } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import type { ControlsProps } from './types';
 

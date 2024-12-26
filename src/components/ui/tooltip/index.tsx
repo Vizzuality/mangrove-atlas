@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
