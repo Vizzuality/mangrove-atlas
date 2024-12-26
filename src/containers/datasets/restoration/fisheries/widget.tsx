@@ -5,7 +5,7 @@ import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import BIVALVE_SVG from 'svgs/fisheries/bivalve.svg?sprite';
+import BIVALVE_SVG from 'svgs/fisheries/bivalve.svg';
 import CRAB_SVG from 'svgs/fisheries/crab.svg?sprite';
 import FISH_SVG from 'svgs/fisheries/fish.svg?sprite';
 import SHRIMP_SVG from 'svgs/fisheries/shrimp.svg?sprite';

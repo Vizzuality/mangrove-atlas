@@ -264,7 +264,7 @@ export const WIDGETS_BY_CATEGORY = [
   },
   {
     restoration_and_conservation: [
-      // 'mangrove_rest_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_alerts',
