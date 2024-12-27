@@ -77,12 +77,12 @@ const widgets_prod = [
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
   },
   {
-    name: 'Mangrove Protection',
+    name: 'Mangroves in Protected Areas',
     slug: 'mangrove_protection',
     locationType: ['country', 'worldwide'],
     applicability: '',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['mangrove_protection'],
+    layersIds: ['mangrove_protection', 'mangrove_protected_areas'],
   },
   {
     name: 'Mangrove Restoration',
@@ -182,7 +182,7 @@ const widgets_prod = [
       ] as WidgetTypes[])
     : []),
   {
-    name: 'Protected Areas',
+    name: 'World Database of Protected Areas',
     slug: 'mangrove_protected_areas',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],

@@ -8,3 +8,7 @@ export type DataResponse = {
   data: Data;
   metadata: Metadata;
 };
+
+export type ProtectionType = {
+  location: string;
+};

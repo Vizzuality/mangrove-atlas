@@ -2,7 +2,7 @@ import Legend from 'containers/legend';
 
 import Chart from 'components/chart';
 
-const ProtectionChart = ({ config, legend }) => {
+const MangrovesInProtectedAreasChart = ({ config, legend }) => {
   return (
     <div className="flex flex-col-reverse items-center pb-6 md:grid md:grid-cols-2 md:pb-10">
       <Legend items={legend} />
@@ -11,4 +11,4 @@ const ProtectionChart = ({ config, legend }) => {
   );
 };
 
-export default ProtectionChart;
+export default MangrovesInProtectedAreasChart;

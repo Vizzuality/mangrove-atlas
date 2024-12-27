@@ -1,7 +1,7 @@
-import { useMangroveProtectedAreas } from './hooks';
+import { useMangrovesInProtectedAreas } from './hooks';
 
 const ProtectionMapLegend = () => {
-  const { data } = useMangroveProtectedAreas({ unit: 'ha' });
+  const { data } = useMangrovesInProtectedAreas({ unit: 'ha' });
 
   return (
     <div className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60">

@@ -4,10 +4,10 @@ import cn from 'lib/classnames';
 
 import NoData from 'containers/widgets/no-data';
 
+import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import SuggestedLayers from 'components/suggested-layers';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -17,11 +17,11 @@ import {
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
-import ProtectionChart from './chart';
-import { useMangroveProtectedAreas } from './hooks';
-const Protection = () => {
+import MangrovesInProtectedAreasChart from './chart';
+import { useMangrovesInProtectedAreas } from './hooks';
+const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');
-  const { data, isFetched, isFetching } = useMangroveProtectedAreas({ unit: selectedUnit });
+  const { data, isFetched, isFetching } = useMangrovesInProtectedAreas({ unit: selectedUnit });
 
   if (isFetched && !Object.keys(data || {}).length) return <NoData />;
 
@@ -99,10 +99,11 @@ const Protection = () => {
               </PopoverContent>
             </Popover>
           </p>
-          <ProtectionChart config={data.config} legend={data.legend} />
+          <MangrovesInProtectedAreasChart config={data.config} legend={data.legend} />
           <p className="text-sm italic">
             Note: This represents the proportion of mangroves known to occur within protected areas.
-            The level and the effectiveness of protection of these mangroves however are unknown.
+            The level and the effectiveness of MangrovesInProtectedAreas of these mangroves however
+            are unknown.
           </p>
         </div>
       )}
@@ -116,4 +117,4 @@ const Protection = () => {
   );
 };
 
-export default Protection;
+export default MangrovesInProtectedAreas;
