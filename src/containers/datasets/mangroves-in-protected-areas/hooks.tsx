@@ -20,16 +20,10 @@ import API from 'services/api';
 import CustomTooltip from './tooltip';
 import type { DataResponse } from './types';
 
-const COLORS = {
-  '0% - 20%': 'rgba(207, 89, 126, 0.7)',
-  '20% - 40%': 'rgba(238, 180, 121, 0.7)',
-  '40% - 60%': 'rgba(233, 226, 156, 0.7)',
-  '60% - 80%': 'rgba(156, 203, 134, 0.7)',
-  '80% - 100%': 'rgba(0, 147, 146, 0.7)',
-};
+import { COLORS } from './constants';
 
 const getColor = (percentage) => {
-  let color;
+  let color: string;
   switch (true) {
     case percentage <= 20:
       color = COLORS['0% - 20%'];
@@ -57,7 +51,7 @@ type ProtectionType = {
   location: string;
 };
 // widget data
-export function useMangroveProtectedAreas(
+export function useMangrovesInProtectedAreas(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
 ) {
