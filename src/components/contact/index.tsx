@@ -1,17 +1,17 @@
 'use client';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-import { FormEvent, useCallback, useRef, useState } from 'react';
-import { Resend } from 'resend';
+import { useCallback, useRef, useState } from 'react';
 
-import { useForm, FormState } from 'react-hook-form';
-
+import { useForm } from 'react-hook-form';
+import { HiCheck } from 'react-icons/hi2';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 // import subscribeNewsletter from '@/containers/newsletter/action';
 import cn from 'lib/classnames';
+import { HiChevronDown } from 'react-icons/hi';
 import { Button } from 'components/ui/button';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
 import {
@@ -21,8 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'components/ui/select';
+import { Label } from 'components/ui/label';
 
-import { HiChevronUpDown } from 'react-icons/hi2';
 // import { ContactUsEmail } from './email-template';
 // import { postContactForm } from 'services/api';
 const TOPICS = [
@@ -34,7 +34,6 @@ const TOPICS = [
 ] as const;
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
 export const ContactFormSchema = z.object({
   name: z.string({ message: 'Name is required' }).min(2, 'Name must contain at least 2 characters'),
@@ -48,20 +47,11 @@ export const ContactFormSchema = z.object({
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
-// const refinedContactFormSchema = ContactFormSchema.superRefine(
-//   ({ organizationType, otherOrganization }, ctx) => {
-//     if (organizationType === 'other' && otherOrganization === undefined) {
-//       return ctx.addIssue({
-//         code: z.ZodIssueCode.custom,
-//         message: 'Please, provide an answer',
-//         path: ['otherOrganization'],
-//       });
-//     }
-//   }
-// );
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [isOpen, setIsOpen] = useState(false);
+  const [privacyPolicy, setPrivacyPolicy] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<z.infer<typeof ContactFormSchema>>({
@@ -76,37 +66,12 @@ export function ContactForm() {
     mode: 'onSubmit',
   });
 
-  //   const handleNewsletter = useCallback(
-  //     (evt: FormEvent<HTMLFormElement>) => {
-  //       evt.preventDefault();
-
-  //       form.handleSubmit(async (formValues) => {
-  //         try {
-  //           setSubscribedStatus('loading');
-  //           const parsed = ContactFormSchema.omit({}).safeParse(formValues);
-  //           if (parsed.success) {
-  //             const response = await subscribeNewsletter(parsed.data.email, {
-  //               FNAME: parsed.data.name.split(' ')[0],
-  //               LNAME: parsed.data.name.split(' ')[1],
-  //               ...(parsed.data.organizationType !== 'other' && {
-  //                 ORG_TYPE: parsed.data.organizationType,
-  //               }),
-  //               ...(parsed.data.otherOrganization && { ORG_TYPE_O: parsed.data.otherOrganization }),
-  //             });
-  //             setSubscribedStatus(response.ok ? 'subscribed' : 'error');
-  //           }
-  //         } catch (err) {
-  //           setSubscribedStatus('error');
-  //         }
-  //       })(evt);
-  //     },
-  //     [form]
-  //   );
+  const handlePrivacyPolicy = useCallback(() => {
+    setPrivacyPolicy((prev) => !prev);
+  }, [setPrivacyPolicy]);
 
   const onSubmitData = async (values: FormSchema) => {
     try {
-      console.log('Submitting form data:', values);
-
       const response = await fetch('api/contact', {
         method: 'POST',
         headers: {
@@ -120,7 +85,7 @@ export function ContactForm() {
       }
 
       const data = await response.json();
-      console.log('Email sent successfully:', data);
+      console.info('Email sent successfully:', data);
       setStatus('success'); // Update form submission status
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -165,10 +130,21 @@ export function ContactForm() {
             render={({ field }) => (
               <FormItem className="space-y-1.5">
                 <FormLabel className="text-xs">Topics</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  onOpenChange={(open) => setIsOpen(open)}
+                >
                   <FormControl>
                     <SelectTrigger className="focus-visible:ring-ring flex h-9 w-full rounded-3xl border border-black/15 py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
                       <SelectValue placeholder="Select" />
+                      <HiChevronDown
+                        className={cn({
+                          'h-4 w-4': true,
+                          'rotate-180': isOpen,
+                        })}
+                      />
+                      <span className="sr-only">Select</span>
                     </SelectTrigger>
                   </FormControl>
                   <FormMessage />
@@ -178,7 +154,6 @@ export function ContactForm() {
                         <SelectItem key={value} value={value} className="hover:text-brand-800">
                           {label}
                           <span className="sr-only">Select</span>
-                          <HiChevronUpDown className={cn({ 'h-4 w-4 stroke-[1px]': true })} />
                         </SelectItem>
                       ))}
                     </div>
@@ -219,6 +194,28 @@ export function ContactForm() {
               </FormItem>
             )}
           />
+          <button
+            type="button"
+            onClick={handlePrivacyPolicy}
+            className="flex items-center space-x-2.5 text-black/85"
+          >
+            <Checkbox
+              id="privacyPolicy"
+              className={cn({
+                '[data=] h-5 w-5 border border-black/15': true,
+              })}
+            >
+              <CheckboxIndicator className="bg-brand-800">
+                <HiCheck className="stroke-2 text-white" />
+              </CheckboxIndicator>
+            </Checkbox>
+            <Label htmlFor="privacyPolicy" className="cursor-pointer">
+              I agree with the 
+              <a href="/" className="underline">
+                Privacy Policy.
+              </a>
+            </Label>
+          </button>
 
           <div className="space-y-4">
             {status === 'loading' && <p>Sending...</p>}

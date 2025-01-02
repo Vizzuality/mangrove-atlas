@@ -25,16 +25,16 @@ const Contact = () => {
       <DialogContent
         data-testid="ContactForm-content"
         className={cn({
-          'min-w-[540px] font-sans md:mb-20': true,
+          'font-sans md:mb-20 md:w-[436px]': true,
         })}
       >
         <div className="space-y-10 py-10">
           <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-            <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">Contact</h2>
+            <h2 className="text-2xl font-light leading-4 md:pt-0 md:text-3xl">Contact</h2>
           </div>
         </div>
         <ContactForm />
-        <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

@@ -94,7 +94,7 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'min-w-[540px] font-sans md:mb-20': true,
+          'font-sans  md:mb-20 md:w-[436px]': true,
           'h-fit py-0': section === 'main',
         })}
       >
@@ -188,7 +188,7 @@ const Menu = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
+        <DialogClose className="" />
       </DialogContent>
     </Dialog>
   );

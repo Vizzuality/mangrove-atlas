@@ -3,10 +3,6 @@ import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import cn from 'classnames';
 
-import Icon from 'components/ui/icon';
-
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
-
 const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
@@ -27,7 +23,6 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <Icon icon={ARROW_DOWN_SVG} className="h-2 w-3 stroke-white stroke-2" description="Arrow" />
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
