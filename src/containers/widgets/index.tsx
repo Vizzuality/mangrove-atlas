@@ -94,7 +94,7 @@ const WidgetsContainer: FC = () => {
       window.print();
     }, 2000);
   }, []);
-
+  console.log(widgetsAvailable, enabledWidgets);
   return (
     <WidgetsLayout>
       <AppTools />
