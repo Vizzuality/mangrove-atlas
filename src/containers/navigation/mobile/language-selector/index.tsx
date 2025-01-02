@@ -46,13 +46,13 @@ const LanguageSelector = () => {
   }, [t, languages]);
 
   return (
-    <div className="items-center2 flex h-full flex-col">
+    <div className="flex h-full flex-col items-center">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className="flex flex-col items-center space-y-2">
+          <div className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
             <Icon
               icon={TRANSLATE_SVG}
-              className="h-6 w-6 stroke-white"
+              className="h-8 w-8 stroke-white"
               description="language-selection"
             />
             <span className="text-xxs text-white">{currentLanguage}</span>
