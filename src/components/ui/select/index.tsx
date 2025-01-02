@@ -3,10 +3,6 @@ import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import cn from 'classnames';
 
-import Icon from 'components/ui/icon';
-
-import ARROW_DOWN_SVG from 'svgs/ui/arrow-down.svg?sprite';
-
 const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
@@ -20,14 +16,13 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn({
-      'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50':
+      'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50':
         true,
       [className]: !!className,
     })}
     {...props}
   >
     {children}
-    <Icon icon={ARROW_DOWN_SVG} className="h-2 w-3 stroke-white stroke-2" description="Arrow" />
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
@@ -40,7 +35,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'bg-popover relative -top-11 z-50 overflow-hidden shadow-medium animate-in fade-in-70 duration-300',
+        'relative -top-11 z-50 w-[var(--radix-select-trigger-width)] shadow-medium animate-in fade-in-70 duration-300',
         position === 'popper' && 'translate-y-1',
         className
       )}
@@ -50,8 +45,7 @@ const SelectContent = React.forwardRef<
       <SelectPrimitive.Viewport
         className={cn(
           'p-1',
-          position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+          position === 'popper' && 'w-full min-w-[var(--radix-select-trigger-width)]'
         )}
       >
         {children}

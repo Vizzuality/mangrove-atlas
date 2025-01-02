@@ -73,7 +73,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const basemap = useRecoilValue(basemapAtom);
   const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
-  console.log({ interactiveLayerIds });
+
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useRecoilState(drawingToolAtom);
   const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
@@ -250,7 +250,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     const iucnEcoregionFeature = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
-    console.log(restorationSitesFeature, e.features);
+
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature.map((feature) => ({
         ...feature.properties,

@@ -84,7 +84,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'absolute right-3 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:right-6 md:top-8 md:-right-10 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
+        'absolute -right-10 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:top-9 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
           true,
         [className]: !!className,
       })}

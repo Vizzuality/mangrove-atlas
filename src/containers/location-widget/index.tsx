@@ -15,7 +15,7 @@ import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationDialogContent from 'containers/location-dialog-content';
-import LocationTools from 'containers/navigation/location-tools';
+import MenuTools from 'containers/navigation/menu-tools';
 
 import { Dialog, DialogTrigger } from 'components/ui/dialog';
 
@@ -115,7 +115,7 @@ const LocationWidget = () => {
           </DialogTrigger>
           <LocationDialogContent close={closeMenu} />
         </Dialog>
-        <LocationTools />
+        <MenuTools />
       </div>
       <AnalysisAlert />
     </>
