@@ -29,7 +29,6 @@ const WidgetsMenu: FC = () => {
   const activeLayersIds = activeLayers?.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
   const enabledWidgets = useWidgetsIdsByLocation();
-  const categoryByWidgets = findCategoryByWidgets(activeWidgets);
 
   const handleAllWidgets = useCallback(() => {
     activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
@@ -55,12 +54,12 @@ const WidgetsMenu: FC = () => {
       const updatedWidgets = activeWidgets.includes(e)
         ? activeWidgets.filter((widget) => widget !== e)
         : [...activeWidgets, e].filter((widget) => widget !== 'widgets_deck_tool');
-
+      const newCategory = findCategoryByWidgets(updatedWidgets);
       setActiveWidgets(updatedWidgets);
-      if (updatedWidgets) setCategory(categoryByWidgets);
+      if (updatedWidgets) setCategory(newCategory);
     },
 
-    [activeWidgets, setActiveWidgets, setCategory, categoryByWidgets]
+    [activeWidgets, setActiveWidgets, setCategory]
   );
 
   const handleLayers = useCallback(
