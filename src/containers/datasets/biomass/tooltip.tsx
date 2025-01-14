@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 type TooltipProps = {
   payload: {
     title: string;

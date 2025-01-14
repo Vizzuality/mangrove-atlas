@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 

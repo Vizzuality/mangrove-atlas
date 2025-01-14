@@ -2,7 +2,7 @@ import { MouseEvent } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
 

@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 import { numberFormat } from 'lib/format';
 type TooltipProps = {
   payload: {

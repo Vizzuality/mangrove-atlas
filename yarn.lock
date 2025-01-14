@@ -3096,7 +3096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-email/components@npm:^0.0.31":
+"@react-email/components@npm:0.0.31":
   version: 0.0.31
   resolution: "@react-email/components@npm:0.0.31"
   dependencies:
@@ -8941,7 +8941,7 @@ __metadata:
     "@radix-ui/react-switch": ^1.0.2
     "@radix-ui/react-toggle": ^1.0.2
     "@radix-ui/react-tooltip": ^1.0.5
-    "@react-email/components": ^0.0.31
+    "@react-email/components": 0.0.31
     "@tailwindcss/forms": 0.5.3
     "@tailwindcss/line-clamp": 0.4.2
     "@tailwindcss/typography": 0.5.9
@@ -8985,7 +8985,7 @@ __metadata:
     react: 18.2.0
     react-dom: 18.2.0
     react-dropzone: 14.2.3
-    react-email: ^3.0.4
+    react-email: 3.0.4
     react-hook-form: ^7.54.2
     react-icons: 4.11.0
     react-map-gl: 7.0.21
@@ -11389,7 +11389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-email@npm:^3.0.4":
+"react-email@npm:3.0.4":
   version: 3.0.4
   resolution: "react-email@npm:3.0.4"
   dependencies:

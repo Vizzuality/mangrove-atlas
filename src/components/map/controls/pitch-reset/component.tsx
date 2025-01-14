@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import Icon from 'components/ui/icon';
 

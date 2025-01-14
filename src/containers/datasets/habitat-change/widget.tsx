@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { habitatChangeStartYear, habitatChangeEndYear } from 'store/widgets/habitat-change';
 

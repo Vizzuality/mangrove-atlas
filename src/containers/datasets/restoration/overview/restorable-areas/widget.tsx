@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
 

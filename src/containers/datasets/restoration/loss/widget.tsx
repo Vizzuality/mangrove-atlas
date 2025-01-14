@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 import { numberFormat } from 'lib/format';
 
 import { TreemapNode } from 'recharts/types/util/types';

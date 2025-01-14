@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { activeWidgetsAtom } from 'store/widgets';
 

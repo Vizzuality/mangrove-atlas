@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import flatten from 'lodash-es/flatten';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import chroma from 'chroma-js';
 

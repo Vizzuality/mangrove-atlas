@@ -1,6 +1,6 @@
 import { forwardRef, ElementRef, ComponentPropsWithoutRef, HTMLAttributes } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 

@@ -7,6 +7,7 @@ import cn from 'lib/classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HiChevronDown } from 'react-icons/hi2';
 
+import ContactForm from 'containers/contact';
 import Helper from 'containers/guide/helper';
 import About from 'containers/navigation/menu/about';
 import PartnersLinks from 'containers/navigation/menu/partners';
@@ -17,7 +18,6 @@ import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui
 import Icon from 'components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
-import ContactForm from 'containers/contact';
 
 const RESOURCES_LINKS = [
   {

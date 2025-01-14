@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';

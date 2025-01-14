@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { activeLayersAtom } from 'store/layers';
 

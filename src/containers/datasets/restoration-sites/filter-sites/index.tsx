@@ -1,7 +1,7 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
 import React from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 

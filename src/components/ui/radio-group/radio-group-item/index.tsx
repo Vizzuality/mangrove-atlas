@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { CgRadioCheck } from 'react-icons/cg';

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { drawingToolAtom } from 'store/drawing-tool';
 import { mapSettingsAtom } from 'store/map-settings';

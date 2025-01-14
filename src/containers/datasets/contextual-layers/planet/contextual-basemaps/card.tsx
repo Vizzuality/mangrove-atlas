@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { basemapAtom } from 'store/map';
 import { basemapContextualAtom } from 'store/map-settings';

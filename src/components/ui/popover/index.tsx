@@ -1,6 +1,6 @@
 import React from 'react';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 

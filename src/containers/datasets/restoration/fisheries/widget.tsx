@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 import { formatAxis } from 'lib/format';
 
 import Icon from 'components/ui/icon';

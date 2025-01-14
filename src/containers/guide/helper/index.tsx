@@ -2,7 +2,7 @@ import { useRef, useState, PropsWithChildren, useEffect } from 'react';
 
 import { createPortal } from 'react-dom';
 
-import cn from 'lib/classnames';
+import { cn } from 'lib/classnames';
 
 import { activeGuideAtom } from 'store/guide';
 
