@@ -8,12 +8,15 @@ import { activeGuideAtom } from 'store/guide';
 
 import { useRecoilValue } from 'recoil';
 
+import Icon from 'components/ui/icon';
+
+import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+
 export const Helper = ({
   children,
   className,
   tooltipPosition,
   message,
-  theme = 'light',
 }: PropsWithChildren<{
   className?: {
     container?: string;
@@ -27,7 +30,6 @@ export const Helper = ({
     right?: number;
   };
   message?: string;
-  theme?: 'light' | 'dark';
 }>) => {
   const childrenRef = useRef<HTMLDivElement>(null);
   const isActive = useRecoilValue(activeGuideAtom);
@@ -63,9 +65,8 @@ export const Helper = ({
             {!popOver && isActive && (
               <span
                 className={cn({
-                  'absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-brand-800 opacity-20':
+                  'absolute inline-flex h-full w-full animate-[ping_1.5s_ease-in-out_infinite] rounded-full bg-yellow-400 opacity-20':
                     true,
-                  'bg-brand-400': theme === 'dark',
                 })}
               />
             )}
@@ -73,8 +74,7 @@ export const Helper = ({
             {!popOver && isActive && (
               <span
                 className={cn({
-                  'relative inline-flex h-3 w-3 rounded-full bg-brand-800': true,
-                  'bg-brand-400': theme === 'dark',
+                  'relative inline-flex h-3 w-3 rounded-full bg-yellow-400': true,
                 })}
               />
             )}
@@ -113,13 +113,18 @@ export const Helper = ({
                   left: childrenPosition?.left - tooltipPosition.left,
                 }}
                 className={cn({
-                  'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-3': true,
+                  'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-6': true,
                   [className.tooltip]: !!className.tooltip,
                 })}
               >
                 <p className="text-left font-sans text-sm font-light text-black/85 first-letter:uppercase">
                   {message}
                 </p>
+                <Icon
+                  icon={CLOSE_SVG}
+                  className="absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer text-black/85"
+                  description="Close"
+                />
               </div>
             )}
           </div>,

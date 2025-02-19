@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 
 import { useBlogPosts } from 'hooks/blog';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import BlogContent from 'containers/news/content';
 
 import { Dialog, DialogContent, DialogTrigger } from 'components/ui/dialog';
@@ -25,7 +25,6 @@ const News = () => {
               button: '-top-2.5 -right-4 z-20',
               tooltip: 'w-fit-content',
             }}
-            theme="dark"
             tooltipPosition={{ top: -40, left: 0 }}
             message="news"
           >

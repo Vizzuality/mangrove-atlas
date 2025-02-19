@@ -10,7 +10,7 @@ import { useRecoilState } from 'recoil';
 
 import Category from 'containers/categories-menu';
 import { LocationTypes } from 'containers/datasets/locations/types';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import { widgets } from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 

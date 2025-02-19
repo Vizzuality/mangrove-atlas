@@ -7,7 +7,8 @@ import cn from 'lib/classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HiChevronDown } from 'react-icons/hi2';
 
-import Helper from 'containers/guide/helper';
+import ContactForm from 'containers/contact';
+import Helper from 'containers/help/helper';
 import About from 'containers/navigation/menu/about';
 import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
@@ -17,7 +18,6 @@ import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui
 import Icon from 'components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
-import ContactForm from 'containers/contact';
 
 const RESOURCES_LINKS = [
   {
@@ -74,7 +74,6 @@ const Menu = () => {
           button: '-top-2 -right-4',
           tooltip: 'w-fit-content',
         }}
-        theme="dark"
         tooltipPosition={{ top: -40, left: 0 }}
         message="main menu"
       >
@@ -123,7 +122,7 @@ const Menu = () => {
               >
                 Mangrove Restoration Tracker Tool
               </Link>
-              <ContactForm />
+              <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
 
               <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
                 <CollapsibleTrigger>

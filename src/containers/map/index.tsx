@@ -30,7 +30,7 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';

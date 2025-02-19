@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -8,12 +8,18 @@ import ARROW_SVG from 'svgs/ui/arrow.svg';
 
 // components
 
-const Download = ({ info }) => {
-  const [isCollapsed, toggleCollapse] = useState({});
+const Download = ({ info }: { info: Record<string, string | number>[] }) => {
+  const [isCollapsed, toggleCollapse] = useState<Record<string, boolean>>({});
 
-  const handleClick = (id) => {
-    toggleCollapse({ ...isCollapsed, [id]: !isCollapsed[id] });
-  };
+  const handleClick = useCallback(
+    (id: string) => {
+      toggleCollapse((prev: Record<string, boolean>) => ({
+        ...prev,
+        [id]: !prev[id],
+      }));
+    },
+    [toggleCollapse]
+  );
 
   return (
     <div className="mb-10 space-y-12 md:space-y-6">
@@ -22,7 +28,7 @@ const Download = ({ info }) => {
         {info.map(({ id, title, href, description, license }) => (
           <div key={id} className="text-xs font-bold uppercase tracking-widest">
             <div className="flex w-full items-center justify-between">
-              <div className="flex" onClick={() => handleClick(id)}>
+              <div className="flex" onClick={() => handleClick(id as string)}>
                 <Icon
                   icon={ARROW_SVG}
                   className={cn({
@@ -36,7 +42,7 @@ const Download = ({ info }) => {
               </div>
               {href && (
                 <a
-                  href={href}
+                  href={href as string}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-brand-800 underline hover:no-underline"

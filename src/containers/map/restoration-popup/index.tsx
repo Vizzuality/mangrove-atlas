@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import cn from 'lib/classnames';
 
 import Details from 'containers/map/restoration-popup/sections/details';
-import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';
+import EcosystemServices from 'containers/map/restoration-popup/sections/ecosystem-services';
 import RestorationScores from 'containers/map/restoration-popup/sections/restoration-scores';
 
 import type { RestorationPopUp } from 'types/map';

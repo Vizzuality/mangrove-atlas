@@ -7,7 +7,7 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import { useRecoilState } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import { widgets } from 'containers/widgets/constants';
 
 import { breakpoints } from 'styles/styles.config';

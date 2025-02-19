@@ -56,6 +56,9 @@ module.exports = {
         blue: {
           400: '#7996F3',
         },
+        yellow: {
+          400: '#D7D367',
+        },
       },
       boxShadow: {
         widget: 'rgba(0, 0, 0, 0.08) 0px 4px 12px 4px',

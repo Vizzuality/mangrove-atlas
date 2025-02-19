@@ -1,7 +1,7 @@
 import cn from 'lib/classnames';
 
 import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 
 import Basemaps from 'components/contextual/basemaps';
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';

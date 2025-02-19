@@ -1,8 +1,9 @@
-import Helper from 'containers/guide/helper';
-import GuideSwitcher from 'containers/guide/switcher';
+import HelpContainer from 'containers/help';
+import Helper from 'containers/help/helper';
 import LanguageSelector from 'containers/navigation/language-selector';
 import Menu from 'containers/navigation/menu';
 import News from 'containers/navigation/news';
+
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (
@@ -27,11 +28,10 @@ const AppTools = () => (
             button: HELPER_ID ? '-top-2.5 -right-4 z-20' : 'hidden',
             tooltip: 'w-fit-content',
           }}
-          theme="dark"
           tooltipPosition={{ top: -40, left: 0 }}
           message="guide"
         >
-          <GuideSwitcher />
+          <HelpContainer />
         </Helper>
       </div>
     </div>

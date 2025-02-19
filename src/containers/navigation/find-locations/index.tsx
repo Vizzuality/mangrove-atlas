@@ -9,7 +9,7 @@ import { locationToolAtom } from 'store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import LocationDialogContent from 'containers/location-dialog-content';
 
 import { Dialog, DialogTrigger } from 'components/ui/dialog';
@@ -70,7 +70,7 @@ const FindLocations = () => {
         <>
           <Helper
             className={{
-              button: 'top-1 right-9 z-20',
+              button: '-top-1 right-6 z-20',
               tooltip: 'w-fit-content max-w-[400px]',
             }}
             tooltipPosition={{ top: -65, left: -10 }}
