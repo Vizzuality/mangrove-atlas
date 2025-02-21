@@ -58,7 +58,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
     );
   }) as ActiveLayers[];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const openLegend = useCallback(() => {
     if (!!activeLayers?.length) setIsOpen(true);

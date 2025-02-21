@@ -24,7 +24,7 @@ const PopupRestorationSites = ({
     <div
       className={cn({
         [WIDGET_CARD_WRAPPER_STYLE]: true,
-        'shadow-b-widget space-x-2 rounded-b-3xl border border-t border-slate-100 bg-white px-6 py-4':
+        'shadow-b-widget space-x-2 border  border-t border-slate-100 bg-white px-6 py-4 last:rounded-b-3xl':
           true,
       })}
     >
