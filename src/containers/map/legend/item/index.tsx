@@ -8,7 +8,7 @@ import { activeLayersAtom } from 'store/layers';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
 import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import { LAYERS } from 'containers/layers/constants';
 import WidgetWrapper from 'containers/widget';
 import { widgets } from 'containers/widgets/constants';

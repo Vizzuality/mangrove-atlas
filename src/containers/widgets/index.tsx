@@ -14,7 +14,7 @@ import WidgetsLayout from 'layouts/widgets';
 
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
@@ -30,6 +30,7 @@ import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
 import WidgetsMenu from './widgets-menu';
+import CloseHelpGuide from 'containers/help/close';
 
 const buttonMotion = {
   rest: {
@@ -98,6 +99,7 @@ const WidgetsContainer: FC = () => {
   return (
     <WidgetsLayout>
       <AppTools />
+      <CloseHelpGuide />
 
       <WidgetsCardsControls />
 

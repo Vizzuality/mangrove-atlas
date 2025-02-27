@@ -15,7 +15,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { fetchUploadFile } from 'hooks/analysis';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
 import Icon from 'components/ui/icon';

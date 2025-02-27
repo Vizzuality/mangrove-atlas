@@ -1,26 +1,23 @@
 import cn from 'lib/classnames';
 
-import Helper from 'containers/guide/helper';
+// import Helper from 'containers/help/helper';
 
 import ContactForm from 'components/contact';
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
 
-const Contact = () => {
+const Contact = ({ className }: { className?: string }) => {
   return (
     <Dialog>
-      <Helper
+      {/* <Helper
         className={{
           button: '-top-2 -right-4',
           tooltip: 'w-fit-content',
         }}
-        theme="dark"
         tooltipPosition={{ top: -40, left: 0 }}
         message=""
-      >
-        <DialogTrigger>
-          <span className="text-left text-2lg font-light hover:text-brand-800">Contact</span>
-        </DialogTrigger>
-      </Helper>
+      > */}
+      <DialogTrigger className={cn({ [className]: !!className })}>Contact</DialogTrigger>
+      {/* </Helper> */}
 
       <DialogContent
         data-testid="ContactForm-content"
