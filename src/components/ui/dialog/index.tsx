@@ -36,13 +36,20 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { overlay?: boolean }
->(({ className, children, overlay = false, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    overlay?: boolean;
+    classNameContent?: string;
+  }
+>(({ className, classNameContent, children, overlay = false, ...props }, ref) => (
   <DialogPortal>
     {overlay && <DialogOverlay />}
     <DialogPrimitive.Content
       ref={ref}
-      className="no-scrollbar absolute z-40 h-[100vh] w-full overflow-y-auto pr-16 animate-in duration-300 md:left-0 md:w-auto md:pt-10 md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96"
+      className={cn({
+        'no-scrollbar absolute z-40 h-[100vh] w-full overflow-y-auto pr-16 animate-in duration-300 md:left-0 md:w-auto md:pt-10 md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96':
+          true,
+        [classNameContent]: !!classNameContent,
+      })}
       style={{
         background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
       }}

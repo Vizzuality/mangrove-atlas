@@ -32,21 +32,22 @@ const WelcomeIntroMessage = () => {
   return (
     <Dialog open={showWelcomeDialog} onOpenChange={setShowWelcomeDialog}>
       <DialogContent
-        className="min-w-3xl sm:min-w-4xl fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 space-y-6 p-8 text-black/85 shadow-sm data-[state=open]:fade-in-60 data-[state=close]:fade-out data-[state=open]:slide-in-from-left-96
-    data-[state=close]:slide-out-to-right-96 md:max-w-3xl"
+        className="min-w-3xl sm:min-w-4xl fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 space-y-6 p-8 p-0 text-black/85 shadow-sm data-[state=open]:fade-in-60 data-[state=close]:fade-out
+    data-[state=open]:slide-in-from-left-96 data-[state=close]:slide-out-to-right-96 md:max-w-3xl"
       >
-        <DialogDescription className="grid h-full grid-cols-12">
-          <div className="col-span-6 grid rounded-3xl">
-            <Image
-              src="/images/welcome-message.png"
-              alt="Mangrove"
-              fill
-              objectFit="objectFit"
-              className="h-full  rounded-3xl"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+        <DialogDescription className="grid h-full w-full grid-cols-12">
+          <div className="relative col-span-6 h-full w-full overflow-hidden rounded-tl-3xl rounded-bl-3xl">
+            <div className="absolute inset-0 h-full w-full">
+              <Image
+                src="/images/welcome-message.png"
+                alt="Mangrove"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
           </div>
-          <div className="col-span-6 flex h-full flex-col justify-between space-y-4">
+          <div className="col-span-6 flex h-full flex-col justify-between space-y-4 p-6">
             <DialogHeader className="space-y-6">
               <DialogTitle className="text-3xl font-light">
                 Thriving mangroves are key to the health of nature and effective climate action
@@ -73,7 +74,7 @@ const WelcomeIntroMessage = () => {
             </div>
           </div>
         </DialogDescription>
-        <DialogClose />
+        <DialogClose onClose={handleClose} />
       </DialogContent>
     </Dialog>
   );
