@@ -51,10 +51,12 @@ export function useMangroveRestorationSites(
     ['restoration-sites', mapFilters, currentLocation, filtersPending],
     fetchMangroveRestorationSites,
     {
-      select: ({ data }) => ({
-        data,
-        location,
-      }),
+      select: ({ data }) => {
+        return {
+          data,
+          location,
+        };
+      },
       ...queryOptions,
     }
   );
@@ -196,7 +198,15 @@ export function useLayers({
       type: 'symbol',
       filter: ['has', 'point_count'],
       layout: {
-        'text-field': ['format', ['get', 'point_count_abbreviated'], { 'font-scale': 1.2 }],
+        'text-field': [
+          'format',
+          ['get', 'point_count_abbreviated'],
+          { 'font-scale': 1.2 },
+          ['get', 'category'],
+          { 'font-scale': 0.8 },
+          '\n',
+          {},
+        ],
         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
         'text-size': 12,
         visibility,
