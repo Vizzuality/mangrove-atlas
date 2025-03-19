@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: #00C5BD;
+  background-color: #00c5bd;
   @media print {
     background-color: #fff;
   }
@@ -23,10 +23,9 @@ body {
   scrollbar-width: 3px !important;
 }
 
-
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #F3F5F5;
+  background: #f3f5f5;
   border-radius: 20px !important;
   width: 3px;
   padding-top: 10px !important;
@@ -35,7 +34,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #CDD0D0;
+  background: #cdd0d0;
   border-radius: 20px !important;
 }
 
@@ -67,7 +66,6 @@ body {
     display: none;
   }
 
-
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -82,18 +80,16 @@ body {
   }
 
   .print {
-    display: none
+    display: none;
   }
-
-
 }
 .recharts-brush-texts {
-  display: none
+  display: none;
 }
 
 .recharts-brush-slide {
-  stroke: #00857F !important;
-  fill: #00857F !important;
+  stroke: #00857f !important;
+  fill: #00857f !important;
   opacity: 1 !important;
 }
 
@@ -119,34 +115,9 @@ body {
   pointer-events: none;
 }
 
-.c-restoration-popup .mapboxgl-popup-close-button {
-  display: none !important;
-}
-
-.c-restoration-popup .mapboxgl-popup-tip {
-  border-width: 10px !important;
-}
-
-.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-  border-right-color: #FFF !important;
-}
-
-.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-  border-left-color: #FFF !important;
-}
-
-.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
-  border-bottom-color: #FFF !important;
-}
-
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: #FFF !important;
-}
-
 .txlive-langselector {
   @apply !hidden;
 }
-
 
 @media print {
   @page {
@@ -160,8 +131,8 @@ body {
   }
 }
 
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--secondary) var(--primary);
-  }
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}

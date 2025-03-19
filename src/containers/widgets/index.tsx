@@ -196,8 +196,32 @@ const WidgetsContainer: FC = () => {
           </div>
         </DialogContent>
       </Dialog>
-
-      {!!widgets.length && (uploadedGeojson || customGeojson) ? (
+      <div className="flex w-full justify-center py-4 print:hidden">
+        <Helper
+          className={{
+            button:
+              locationTool === 'upload' || locationTool === 'area'
+                ? 'hidden'
+                : '-bottom-2.5 -right-0',
+            tooltip: 'w-fit-content',
+          }}
+          tooltipPosition={{ top: 50, left: 10 }}
+          message="use this button to download the current map view and associated widgets as a pdf file"
+        >
+          <button
+            className={cn({
+              [BUTTON_STYLES]: true,
+              'm-auto bg-brand-800 text-white': true,
+              // hidden: !customGeojson && !uploadedGeojson,
+            })}
+            // disabled={!customGeojson && !uploadedGeojson}
+            onClick={onClickDownload}
+          >
+            Download report as PDF
+          </button>
+        </Helper>
+      </div>
+      {!!widgets.length ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper
             className={{

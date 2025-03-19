@@ -3,17 +3,20 @@
 import { useCallback, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
-import { HiCheck } from 'react-icons/hi2';
+
+import cn from 'lib/classnames';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { HiChevronDown } from 'react-icons/hi';
+import { HiCheck } from 'react-icons/hi2';
 import { z } from 'zod';
 
 // import subscribeNewsletter from '@/containers/newsletter/action';
-import cn from 'lib/classnames';
-import { HiChevronDown } from 'react-icons/hi';
 import { Button } from 'components/ui/button';
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
 import {
   Select,
   SelectContent,
@@ -21,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'components/ui/select';
-import { Label } from 'components/ui/label';
 
 // import { ContactUsEmail } from './email-template';
 // import { postContactForm } from 'services/api';
@@ -134,6 +136,7 @@ export function ContactForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   onOpenChange={(open) => setIsOpen(open)}
+                  open={true}
                 >
                   <FormControl>
                     <SelectTrigger className="focus-visible:ring-ring flex h-9 w-full rounded-3xl border border-black/15 py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
@@ -148,7 +151,7 @@ export function ContactForm() {
                     </SelectTrigger>
                   </FormControl>
                   <FormMessage />
-                  <SelectContent className="top-0 w-full rounded-3xl border bg-white p-4 text-sm font-light shadow-sm">
+                  <SelectContent className="top-0 w-[var(--radix-select-trigger-width)] rounded-3xl border bg-white p-4 text-sm font-light shadow-sm">
                     <div className="space-y-4">
                       {TOPICS.map(({ label, value }) => (
                         <SelectItem key={value} value={value} className="hover:text-brand-800">

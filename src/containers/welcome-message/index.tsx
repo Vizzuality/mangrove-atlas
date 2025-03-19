@@ -39,7 +39,7 @@ const WelcomeIntroMessage = () => {
           <div className="relative col-span-6 h-full w-full overflow-hidden rounded-tl-3xl rounded-bl-3xl">
             <div className="absolute inset-0 h-full w-full">
               <Image
-                src="/images/welcome-message.png"
+                src="/images/welcome-modal.webp"
                 alt="Mangrove"
                 fill
                 className="object-cover"

@@ -65,7 +65,7 @@ export const HelpContainer = () => {
       </Popover>
 
       {/* Show the modal ONLY if it's the first time clicking the switch */}
-      {showGuideModal && <GuideModalIntro isOpen={showGuideModal} />}
+      {/* {showGuideModal && <GuideModalIntro isOpen={showGuideModal} />} */}
     </div>
   );
 };

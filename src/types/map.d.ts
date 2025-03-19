@@ -68,4 +68,4 @@ export type LocationPopUp = {
   protectedArea?: ProtectedArea[];
 };
 
-export type PopUpKey = 'restoration' | 'ecoregion' | 'location';
+export type PopUpKey = 'restoration' | 'ecoregion' | 'location' | 'mangrove_rest_sites';
