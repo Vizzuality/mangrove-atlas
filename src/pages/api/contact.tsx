@@ -1,28 +1,42 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 
+// Define types for the email template props
+interface ContactEmailProps {
+  name: string;
+  email: string;
+  message: string;
+}
+
 // Simple email template function
-const ContactUsEmail = ({ name, email, message }) => (
+const ContactUsEmail = ({ name, email, message }: ContactEmailProps) => (
   <div>
     <p>
-      <strong>Name:</strong> ${name}
+      <strong>Name:</strong> {name}
     </p>
     <p>
-      <strong>Email:</strong> ${email}
+      <strong>Email:</strong> {email}
     </p>
     <p>
-      <strong>Message:</strong> ${message}
+      <strong>Message:</strong> {message}
     </p>
   </div>
 );
 // Initialize Resend instance
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
-export default async function handler(req, res) {
+// Define response types
+type ContactResponse = {
+  message?: string;
+  data?: any;
+  error?: string;
+};
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ContactResponse>) {
   if (req.method === 'POST') {
     try {
       // Parse request body
-      const { name, email, message } = req.body;
-
+      const { name, email, message } = req.body as ContactEmailProps;
       // Send email using Resend
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',

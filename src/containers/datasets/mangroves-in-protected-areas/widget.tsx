@@ -4,10 +4,10 @@ import cn from 'lib/classnames';
 
 import NoData from 'containers/widgets/no-data';
 
+import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import SuggestedLayers from 'components/suggested-layers';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

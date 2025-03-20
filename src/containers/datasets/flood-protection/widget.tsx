@@ -11,7 +11,7 @@ import type {
   FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
 } from 'containers/datasets/flood-protection/types';
-import NoData from 'containers/widgets/no-data';
+// import NoData from 'containers/widgets/no-data';
 
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';

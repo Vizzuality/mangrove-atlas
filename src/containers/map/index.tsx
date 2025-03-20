@@ -273,7 +273,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
     if (!locationFeature) removePopup('location');
 
-    // Restoration
+    // Restoration Potential
     if (restorationFeature) {
       setRestorationPopUpInfo({
         ...restorationPopUp,

@@ -128,5 +128,5 @@ export function useMangroveInternationalStatus(
       isPlaceholderData,
       noData,
     };
-  }, [data, isFetched, isLoading]);
+  }, [data, isFetched, isLoading, isPlaceholderData, location, noData]);
 }

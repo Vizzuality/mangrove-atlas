@@ -11,8 +11,8 @@ import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={className} {...props}>
+const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
+  <DialogPrimitive.Portal {...props}>
     <div className="absolute top-0 left-0 z-50 flex h-full w-full items-start justify-center md:z-20 md:items-center">
       {children}
     </div>

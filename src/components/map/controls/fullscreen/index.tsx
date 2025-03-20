@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 
 import cn from 'lib/classnames';
-import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 import { fullScreenAtom } from 'store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
 import Icon from 'components/ui/icon';
+import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 import DISABLE_FULLSCREEN_SVG from 'svgs/map/disable-fullscreen.svg?sprite';
 import ENABLE_FULLSCREEN_SVG from 'svgs/map/enable-fullscreen.svg?sprite';

@@ -1,5 +1,6 @@
-import { Body, Container, Head, Html, Markdown, Preview, Text } from '@react-email/components';
 import { CSSProperties } from 'react';
+
+import { Body, Container, Head, Html, Markdown, Preview, Text } from '@react-email/components';
 
 interface ContactUsEmailProps {
   name: string;

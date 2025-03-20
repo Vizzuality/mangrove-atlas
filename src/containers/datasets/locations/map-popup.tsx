@@ -91,7 +91,7 @@ const LocationPopUP = ({
         <h3 className={WIDGET_SUBTITLE_STYLE}>Analyse an area</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex w-full flex-col space-y-2 border-none p-6 font-sans shadow-none">
+        <div className="flex w-full flex-col space-y-2 border-none px-6 pb-6 font-sans shadow-none">
           <button
             type="button"
             onClick={handleClickLocation}

@@ -12,11 +12,15 @@ import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 
-import GuideModalIntro from './modal-intro';
+// import GuideModalIntro from './modal-intro';
 
 export const HelpContainer = () => {
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
-  const [showGuideModal, setShowGuideModal] = useState(() => {
+  const [
+    ,
+    // showGuideModal
+    setShowGuideModal,
+  ] = useState(() => {
     return !!localStorage.getItem('hasClickedGuideSwitch'); // Only true if the user never clicked before
   });
 
@@ -46,7 +50,7 @@ export const HelpContainer = () => {
         </PopoverTrigger>
 
         <PopoverContent className="rounded-2xl p-6 text-sm font-semibold shadow-border">
-          <Contact />
+          {process.env.NEXT_PUBLIC_VERCEL_ENV === 'dev' && <Contact />}
           <div className="flex space-x-2">
             <span>Navigation help</span>
 

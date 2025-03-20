@@ -13,5 +13,5 @@
         "Transifex",
         "usehooks",
         "wdpa"
-    ]
+    ], "npm.packageManager": "pnpm"
 }

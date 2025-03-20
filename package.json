@@ -2,19 +2,18 @@
   "name": "mangrove-atlas",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
+"scripts": {
+"dev": "next dev",
+"build": "next build",
+"start": "next start",
     "lint": "next lint",
-    "build": "next build",
-    "start": "next start",
     "check-types": "tsc",
     "test": "playwright test",
     "test-ui": "playwright test --ui",
     "postinstall": "husky install"
   },
   "engines": {
-    "node": "~18",
-    "yarn": "3.6.0"
+    "node": "~18"
   },
   "dependencies": {
     "@artsy/fresnel": "6.1.0",
@@ -45,10 +44,12 @@
     "@radix-ui/react-scroll-area": "^1.0.4",
     "@radix-ui/react-select": "^1.2.1",
     "@radix-ui/react-slider": "1.1.2",
+    "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-switch": "^1.0.2",
     "@radix-ui/react-toggle": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.5",
     "@react-email/components": "^0.0.31",
+    "@recoiljs/refine": "^0.1.1",
     "@tailwindcss/forms": "0.5.3",
     "@tailwindcss/line-clamp": "0.4.2",
     "@tailwindcss/typography": "0.5.9",
@@ -56,11 +57,13 @@
     "@turf/bbox": "6.5.0",
     "@types/d3-format": "^3.0.1",
     "@types/lodash-es": "4.17.7",
+    "@typescript-eslint/parser": "^5.48.2",
     "autoprefixer": "^10.4.19",
     "axios": "1.6.0",
     "chroma-js": "^2.4.2",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.3.2",
+    "clsx": "^2.1.1",
     "cmdk": "0.2.0",
     "d3-format": "3.1.0",
     "date-fns": "2.30.0",
@@ -108,8 +111,8 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@typescript-eslint/eslint-plugin": "5.48.2",
-    "eslint": "8.32.0",
-    "eslint-config-next": "13.1.2",
+    "eslint": "8.57.1",
+    "eslint-config-next": "15.2.3",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
     "husky": "6.0.0",
@@ -123,5 +126,5 @@
   "husky": {
     "pre-commit": "yarn lint"
   },
-  "packageManager": "yarn@3.6.0"
+  "packageManager": "pnpm@10.5.0"
 }

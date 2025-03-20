@@ -15,7 +15,7 @@ const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 border-none p-6 shadow-none">
+        <section className="flex w-full flex-col space-y-2 border-none px-6 pb-6 shadow-none">
           <div className="w-fit-content grid grid-flow-col grid-rows-2 gap-2">
             <RestorationDataGroup label="Mean soil organic carbon" value={SOC} unit="mtCO₂e" />
             <RestorationDataGroup label="Mean aboveground carbon" value={AGB} unit="mtCO₂e" />
