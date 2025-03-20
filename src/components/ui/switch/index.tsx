@@ -15,7 +15,25 @@ interface SwitchThumbProps extends SwitchRadix.SwitchThumbProps {
   icon?: React.ReactNode;
 }
 
-const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) => (
+const SIZE = {
+  root: {
+    sm: 'h-6 w-10',
+    md: 'h-[30px] w-[50px]',
+  },
+  thumb: {
+    sm: 'h-4 w-4',
+    md: 'h-5 w-5',
+  },
+};
+
+const SwitchRoot = ({
+  className,
+  children,
+  size = 'md',
+  ...props
+}: SwitchRadix.SwitchProps & {
+  size?: 'sm' | 'md';
+}) => (
   <SwitchRadix.Root
     role="button"
     aria-label="Toggle component"
@@ -23,6 +41,7 @@ const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) 
       'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 bg-white outline-none data-[state=checked]:bg-brand-800':
         true,
       [className]: !!className,
+      [SIZE['root'][size]]: true,
     })}
     {...props}
   >
@@ -30,12 +49,17 @@ const SwitchRoot = ({ className, children, ...props }: SwitchRadix.SwitchProps) 
   </SwitchRadix.Root>
 );
 
-const SwitchThumb = ({ className, icon }: SwitchThumbProps) => (
+const SwitchThumb = ({
+  className,
+  icon,
+  size = 'md',
+}: SwitchThumbProps & { size?: 'sm' | 'md' }) => (
   <SwitchRadix.Thumb
     className={cn({
       'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
         true,
       [className]: !!className,
+      [SIZE['thumb'][size]]: true,
     })}
   >
     {icon && (
@@ -58,6 +82,7 @@ const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
     {children}
   </div>
 );
+
 SwitchRoot.displayName = SwitchRadix.Root.displayName;
 SwitchThumb.displayName = SwitchRadix.Thumb.displayName;
 

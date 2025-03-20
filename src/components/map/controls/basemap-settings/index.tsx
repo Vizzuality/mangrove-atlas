@@ -1,7 +1,8 @@
 import cn from 'lib/classnames';
 
+import InfoHiRes from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
 import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 
 import Basemaps from 'components/contextual/basemaps';
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
@@ -12,8 +13,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
-
-import InfoHiRes from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
 
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (

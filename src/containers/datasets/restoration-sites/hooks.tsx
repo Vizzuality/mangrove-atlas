@@ -51,10 +51,12 @@ export function useMangroveRestorationSites(
     ['restoration-sites', mapFilters, currentLocation, filtersPending],
     fetchMangroveRestorationSites,
     {
-      select: ({ data }) => ({
-        data,
-        location,
-      }),
+      select: ({ data }) => {
+        return {
+          data,
+          location,
+        };
+      },
       ...queryOptions,
     }
   );
@@ -124,7 +126,7 @@ export function useSource(): SourceProps {
     cluster: true,
   };
 }
-export function useLayer({
+export function useLayers({
   id,
   opacity,
   visibility = 'visible',
@@ -142,10 +144,26 @@ export function useLayer({
       type: 'circle',
       filter: ['has', 'point_count'],
       paint: {
-        'circle-color': '#CC61B0',
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#CC61B0', // color for small clusters
+          50,
+          '#FF9F1C', // medium clusters
+          200,
+          '#FF4040', // large clusters
+        ],
         'circle-stroke-width': 1,
-        'circle-stroke-color': '#CC61B0',
-        'circle-radius': ['step', ['get', 'point_count'], 10, 100, 20, 500, 30],
+        'circle-stroke-color': '#FFFFFF',
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          15, // radius for clusters with 1-25 points
+          15,
+          25, // radius for clusters with 25-50 points
+          50,
+          35, // radius for clusters with 50+ points
+        ],
         'circle-opacity': opacity,
         'circle-stroke-opacity': opacity,
       },
@@ -164,7 +182,7 @@ export function useLayer({
         'circle-color': '#CC61B0',
         'circle-radius': 5,
         'circle-stroke-width': 1,
-        'circle-stroke-color': '#CC61B0',
+        'circle-stroke-color': '#FFFFFF',
         'circle-opacity': opacity,
         'circle-stroke-opacity': opacity,
       },
@@ -180,13 +198,23 @@ export function useLayer({
       type: 'symbol',
       filter: ['has', 'point_count'],
       layout: {
-        'text-field': ['get', 'point_count_abbreviated'],
+        'text-field': [
+          'format',
+          ['get', 'point_count_abbreviated'],
+          { 'font-scale': 1.2 },
+          ['get', 'category'],
+          { 'font-scale': 0.8 },
+          '\n',
+          {},
+        ],
         'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
         'text-size': 12,
         visibility,
       },
       paint: {
         'text-color': '#ffffff',
+        'text-halo-color': '#fff',
+        'text-halo-width': 0.5,
         'text-opacity': opacity,
       },
     },

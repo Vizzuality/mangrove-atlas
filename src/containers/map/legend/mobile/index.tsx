@@ -13,7 +13,7 @@ import LegendItem from '../item';
 const Legend = () => {
   const activeLayers = useRecoilValue(activeLayersAtom);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const openLegend = useCallback(() => {
     if (!!activeLayers?.length) setIsOpen(true);

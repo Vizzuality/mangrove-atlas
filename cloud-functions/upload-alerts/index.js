@@ -34,9 +34,18 @@ const pipeline = chain([
       score,
       uid,
     } = properties;
-    const first_obs_date = (~~firstobsyear === 0 && ~~firstobsmonth === 0 && ~~firstobsday === 0) ? null : new Date(~~firstobsyear, ~~firstobsmonth - 1, ~~firstobsday);
-    const last_obs_date = (~~lastobsyear === 0 && ~~lastobsmonth === 0 && ~~lastobsday === 0) ? null :  new Date(~~lastobsyear, ~~lastobsmonth - 1, ~~lastobsday);
-    const scr5_obs_date = (~~scr5obsyear === 0 && ~~scr5obsmonth === 0 && ~~scr5obsday === 0) ? null : new Date(~~scr5obsyear, ~~scr5obsmonth - 1, ~~scr5obsday);
+    const first_obs_date =
+      ~~firstobsyear === 0 && ~~firstobsmonth === 0 && ~~firstobsday === 0
+        ? null
+        : new Date(~~firstobsyear, ~~firstobsmonth - 1, ~~firstobsday);
+    const last_obs_date =
+      ~~lastobsyear === 0 && ~~lastobsmonth === 0 && ~~lastobsday === 0
+        ? null
+        : new Date(~~lastobsyear, ~~lastobsmonth - 1, ~~lastobsday);
+    const scr5_obs_date =
+      ~~scr5obsyear === 0 && ~~scr5obsmonth === 0 && ~~scr5obsday === 0
+        ? null
+        : new Date(~~scr5obsyear, ~~scr5obsmonth - 1, ~~scr5obsday);
     const result = {
       id: uid,
       confident: ~~score,
@@ -50,7 +59,7 @@ const pipeline = chain([
     return result;
   },
   new Stringer(),
-  fs.createWriteStream('./data/edited.json')
+  fs.createWriteStream('./data/edited.json'),
 ]);
 
 pipeline.on('end', () => console.log(`Process has been finished successfully`));

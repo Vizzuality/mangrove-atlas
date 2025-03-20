@@ -1,18 +1,25 @@
-export const LABELS = {
+export type Period = 'annual' | '25_year' | '100_year';
+type Label = {
+  axis: string;
+  large: string;
+  short: string;
+};
+
+export const LABELS: Record<Period, Label> = {
   annual: {
-    axis: 'annual',
-    large: 'annually',
-    short: 'average annual storm',
+    axis: 'Annual',
+    large: 'Annually',
+    short: 'Average annual storm',
   },
   '25_year': {
-    axis: '25 year',
-    large: 'once every 25 years',
-    short: '25 year storm',
+    axis: '25 Year',
+    large: 'Once every 25 years',
+    short: '25-year storm',
   },
   '100_year': {
-    axis: '100 year',
-    large: 'once every 100 years',
-    short: '100 year storm',
+    axis: '100 Year',
+    large: 'Once every 100 years',
+    short: '100-year storm',
   },
 };
 

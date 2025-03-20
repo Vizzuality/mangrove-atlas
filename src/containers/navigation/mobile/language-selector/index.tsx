@@ -46,19 +46,19 @@ const LanguageSelector = () => {
   }, [t, languages]);
 
   return (
-    <div className="flex min-w-[56px] flex-col items-center  pt-2">
+    <div className="flex h-full flex-col items-center">
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <div className="flex flex-col items-center space-y-2">
+          <div className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
             <Icon
               icon={TRANSLATE_SVG}
-              className="h-6 w-6 stroke-white"
+              className="h-8 w-8 stroke-white"
               description="language-selection"
             />
             <span className="text-xxs text-white">{currentLanguage}</span>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-brand-800">
+        <DropdownMenuContent>
           {languages?.map((lang: { code: string; name: string }) => (
             <DropdownMenuItem key={lang.code} asChild>
               <button
@@ -66,12 +66,10 @@ const LanguageSelector = () => {
                 id={lang.name}
                 value={lang.code}
                 type="button"
-                className="cursor-pointer hover:bg-white"
+                className="hover:bg-white"
                 onClick={handleChange}
               >
-                <span className="font-sans text-sm text-white hover:text-brand-800">
-                  {lang.name}
-                </span>
+                <span className=" hover:text-brand-800">{lang.name}</span>
               </button>
             </DropdownMenuItem>
           ))}

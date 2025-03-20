@@ -11,8 +11,8 @@ import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = ({ className, children, ...props }: DialogPrimitive.DialogPortalProps) => (
-  <DialogPrimitive.Portal className={className} {...props}>
+const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
+  <DialogPrimitive.Portal {...props}>
     <div className="absolute top-0 left-0 z-50 flex h-full w-full items-start justify-center md:z-20 md:items-center">
       {children}
     </div>
@@ -36,13 +36,20 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { overlay?: boolean }
->(({ className, children, overlay = false, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    overlay?: boolean;
+    classNameContent?: string;
+  }
+>(({ className, classNameContent, children, overlay = false, ...props }, ref) => (
   <DialogPortal>
     {overlay && <DialogOverlay />}
     <DialogPrimitive.Content
       ref={ref}
-      className="no-scrollbar absolute z-40 h-[100vh] w-full overflow-y-auto pr-16 animate-in duration-300 md:left-0 md:w-auto md:pt-10 md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96"
+      className={cn({
+        'no-scrollbar absolute z-40 h-[100vh] w-full overflow-y-auto pr-16 animate-in duration-300 md:left-0 md:w-auto md:pt-10 md:pl-14 md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96':
+          true,
+        [classNameContent]: !!classNameContent,
+      })}
       style={{
         background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
       }}
@@ -84,7 +91,7 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'absolute right-3 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:right-6 md:top-8 md:-right-10 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
+        'absolute -right-10 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:top-9 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
           true,
         [className]: !!className,
       })}

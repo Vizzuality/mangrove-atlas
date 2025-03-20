@@ -29,13 +29,16 @@ import { useOnClickOutside } from 'usehooks-ts';
 import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
+// POPUPS
+import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
-import Helper from 'containers/guide/helper';
+import LocationPopup from 'containers/datasets/locations/map-popup';
+import RestorationPopup from 'containers/datasets/restoration/map-popup';
+import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
+import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
-import IucnEcoregionPopup from 'containers/map/iucn-ecoregion-popup';
 import Legend from 'containers/map/legend';
 import MobileLegend from 'containers/map/legend/mobile';
-import RestorationPopup from 'containers/map/restoration-popup';
 
 import Map from 'components/map';
 import Controls from 'components/map/controls';
@@ -49,10 +52,9 @@ import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/ui/popup';
 import { breakpoints } from 'styles/styles.config';
-import type { RestorationPopUp, PopUpKey, LocationPopUp } from 'types/map';
+import type { RestorationPopUp, RestorationSitesPopUp, PopUpKey, LocationPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
-import LocationPopup from './location-pop-up';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -98,16 +100,22 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     feature: null,
   });
 
-  const [restorationPopUp, setRestorationPopUp] = useState<{
-    popupInfo: RestorationPopUp;
+  const [restorationPopUp, setRestorationPopUpInfo] = useState<{
+    info: RestorationPopUp;
   }>({
-    popupInfo: null,
+    info: null,
+  });
+
+  const [restorationSitesPopUp, setRestorationSitesPopUp] = useState<{
+    info: RestorationSitesPopUp;
+  }>({
+    info: null,
   });
 
   const [iucnEcoregionPopUp, setIucnEcoregionPopUp] = useState<{
-    popupInfo: IUCNEcoregionPopUpInfo;
+    info: IUCNEcoregionPopUpInfo;
   }>({
-    popupInfo: null,
+    info: null,
   });
 
   const handleClickOutside = () => {
@@ -217,9 +225,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   const removePopup = (key?: PopUpKey) => {
-    if (!key || key === 'restoration') setRestorationPopUp({ popupInfo: null });
-    if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ popupInfo: null });
+    if (!key || key === 'restoration') setRestorationPopUpInfo({ info: null });
+    if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ info: null });
     if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
+    if (!key || key.includes('mangrove_rest_sites')) setRestorationSitesPopUp({ info: null });
   };
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
@@ -231,8 +240,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'mangrove_protected_areas'
     );
 
-    const restorationFeature = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_restoration-layer'
+    const restorationFeature = e?.features.find(({ layer }) => {
+      return layer.id === 'mangrove_restoration-layer';
+    });
+    const restorationSitesFeature = e?.features.find(({ layer }) =>
+      layer.id.includes('mangrove_rest_sites')
     );
 
     const iucnEcoregionFeature = e?.features.find(
@@ -261,30 +273,43 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
     if (!locationFeature) removePopup('location');
 
-    // Restoration
+    // Restoration Potential
     if (restorationFeature) {
-      setRestorationPopUp({
+      setRestorationPopUpInfo({
         ...restorationPopUp,
-        popupInfo: restorationFeature.properties as RestorationPopUp,
+        info: restorationFeature.properties as RestorationPopUp,
       });
     }
     if (!restorationFeature) {
       removePopup('restoration');
     }
+
+    // Restoration Sites
+    if (restorationSitesFeature) {
+      setRestorationSitesPopUp({
+        ...restorationSitesPopUp,
+        info: restorationSitesFeature.properties as RestorationSitesPopUp,
+      });
+    }
+    if (!restorationSitesFeature) {
+      removePopup('mangrove_rest_sites');
+    }
+
     // IUCN Ecoregions
     if (iucnEcoregionFeature)
       setIucnEcoregionPopUp({
-        popupInfo: iucnEcoregionFeature.properties as IUCNEcoregionPopUpInfo,
+        info: iucnEcoregionFeature.properties as IUCNEcoregionPopUpInfo,
       });
     if (!iucnEcoregionFeature) removePopup('ecoregion');
   };
 
   let hoveredStateId = null;
+
   const handleMouseMove = useCallback(
     (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
-      const restorationData = evt?.features.find(
-        ({ layer }) => layer.id === 'mangrove_restoration-layer'
-      );
+      const restorationData = evt?.features.find((layer) => {
+        return layer.id === 'mangrove_restoration-layer';
+      });
 
       const interactiveLayers = evt?.features.find(
         ({ layer }) =>
@@ -419,25 +444,25 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   <LocationPopup
                     locationPopUpInfo={locationPopUp}
                     className={cn({
-                      '!w-[360px] rounded-3xl pt-6':
-                        isEmpty(iucnEcoregionPopUp?.popupInfo) &&
-                        isEmpty(restorationPopUp?.popupInfo),
+                      'rounded-3xl pt-6':
+                        isEmpty(iucnEcoregionPopUp?.info) && isEmpty(restorationPopUp?.info),
                     })}
                     nonExpansible={
-                      isEmpty(iucnEcoregionPopUp?.popupInfo) && isEmpty(restorationPopUp?.popupInfo)
+                      isEmpty(iucnEcoregionPopUp?.info) && isEmpty(restorationPopUp?.info)
                     }
                     onClose={() => removePopup('location')}
                   />
                 ) : null}
-                {!isEmpty(restorationPopUp?.popupInfo) ? (
-                  <RestorationPopup
-                    restorationPopUpInfo={restorationPopUp}
-                    className="rounded-3xl"
-                  />
+                {!isEmpty(restorationPopUp?.info) ? (
+                  <RestorationPopup {...restorationPopUp} />
                 ) : null}
 
-                {!isEmpty(iucnEcoregionPopUp?.popupInfo) ? (
-                  <IucnEcoregionPopup info={iucnEcoregionPopUp.popupInfo} />
+                {!isEmpty(restorationSitesPopUp?.info) ? (
+                  <RestorationSitesPopup {...restorationSitesPopUp} />
+                ) : null}
+
+                {!isEmpty(iucnEcoregionPopUp?.info) ? (
+                  <IucnEcoregionPopup info={iucnEcoregionPopUp.info} />
                 ) : null}
               </Popup>
             )}

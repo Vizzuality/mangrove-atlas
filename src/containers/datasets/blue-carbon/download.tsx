@@ -10,7 +10,7 @@ const INFO = [
     id: 19,
     title: 'Mangrove Soil Carbon',
     href: 'https://zenodo.org/record/2536803#.YP6xOuhKg2x',
-    description: false,
+    description: null,
     // license: 'Creative Commons Attribution Share Alike 4.0 International',
   },
   // {

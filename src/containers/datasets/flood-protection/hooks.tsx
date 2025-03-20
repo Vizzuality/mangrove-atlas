@@ -59,6 +59,7 @@ export function useMangrovesFloodProtection(
   const {
     query: { params: queryParams },
   } = useRouter();
+
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
   const {
@@ -66,27 +67,25 @@ export function useMangrovesFloodProtection(
   } = useLocation(id, locationType);
 
   const selectedPeriod = useMemo(() => period || 'annual', [period]);
-  const getBars = useCallback(
-    (data, selectedPeriod, metadata, indicator) => {
-      const color = getColor(data, selectedPeriod, indicator, metadata);
-      return data.map((d) => ({
-        ...d,
-        barSize: 40,
-        fill: d.period === selectedPeriod ? color : '#E1E1E1',
-        isAnimationActive: false,
-        value: d.value,
-        period: LABELS[d.period].axis,
-        color: d.period === selectedPeriod ? color : '#E1E1E1',
-        [d.period]: d.value,
-        showValue: true,
-        label: d.period,
-        labelFormatted: LABELS[d.period].axis,
-        valueFormatted: getFormattedValue(d.value, indicator),
-        unit: UNITS_LABELS[metadata.unit],
-      }));
-    },
-    [selectedPeriod]
-  );
+
+  const getBars = useCallback((data, selectedPeriod, metadata, indicator) => {
+    const color = getColor(data, selectedPeriod, indicator, metadata);
+    return data.map((d) => ({
+      ...d,
+      barSize: 40,
+      fill: d.period === selectedPeriod ? color : '#E1E1E1',
+      isAnimationActive: false,
+      value: d.value,
+      period: LABELS[d.period].axis,
+      color: d.period === selectedPeriod ? color : '#E1E1E1',
+      [d.period]: d.value,
+      showValue: true,
+      label: d.period,
+      labelFormatted: LABELS[d.period].axis,
+      valueFormatted: getFormattedValue(d.value, indicator),
+      unit: UNITS_LABELS[metadata.unit],
+    }));
+  }, []);
   const fetchMangrovesFloodProtection = () =>
     API.request({
       method: 'GET',

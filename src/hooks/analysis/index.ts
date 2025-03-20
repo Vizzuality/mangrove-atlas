@@ -1,14 +1,6 @@
-import { uploadFileAtom } from 'store/upload-file';
-
-import { useQuery } from '@tanstack/react-query';
-import type { QueryObserverOptions } from '@tanstack/react-query';
-import { useRecoilState } from 'recoil';
-
 import { AnalysisWidgetSlug } from 'types/widget';
 
 import API from 'services/api';
-
-import { toast } from 'react-toastify';
 
 import type { UploadFileResponse } from './types';
 export type AnalysisResponse<T> = Record<AnalysisWidgetSlug, T>;

@@ -11,7 +11,7 @@ const Detail = ({
 }) => (
   <div className="flex w-full items-center font-sans">
     <div className="w-[165px] whitespace-nowrap text-right text-sm font-light">{label}</div>
-    <div className="mx-4 flex h-4 w-[126px] bg-white">
+    <div className="mx-4 flex h-4 w-[126px]">
       <div
         className="relative h-full bg-[#B2CBF9]"
         style={{ width: `${100}%`, marginRight: !!pct && pct > 0 ? 2 : 0 }}

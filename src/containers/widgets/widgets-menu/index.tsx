@@ -1,7 +1,4 @@
-import React, { useCallback, FC, useEffect } from 'react';
-
-import flatten from 'lodash-es/flatten';
-import uniq from 'lodash-es/uniq';
+import React, { useCallback, FC } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -17,7 +14,7 @@ import { useRecoilState } from 'recoil';
 import { LAYERS } from 'containers/layers/constants';
 import { widgets as rawWidgets } from 'containers/widgets/constants';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
-import { useWidgetsIdsByCategory } from 'containers/widgets/hooks';
+import { findCategoryByWidgets } from 'containers/widgets/utils';
 
 import { CheckboxIndicator } from 'components/ui/checkbox';
 import type { ActiveLayers } from 'types/layers';
@@ -32,16 +29,6 @@ const WidgetsMenu: FC = () => {
   const activeLayersIds = activeLayers?.map((layer) => layer.id);
   const widgetsIds = widgets.map((widget) => widget.slug);
   const enabledWidgets = useWidgetsIdsByLocation();
-  const categoryFromWidgets = useWidgetsIdsByCategory(activeWidgets);
-
-  // Updates the category when user changes widgets filtering throw checkboxes,
-  // are activated. It identifies the category associated with the active widgets and
-  // updates it accordingly.
-  useEffect(() => {
-    if (categorySelected !== categoryFromWidgets && categoryFromWidgets !== 'all_datasets') {
-      setCategory(categoryFromWidgets);
-    }
-  }, [categorySelected, categoryFromWidgets, setCategory]);
 
   const handleAllWidgets = useCallback(() => {
     activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
@@ -64,24 +51,17 @@ const WidgetsMenu: FC = () => {
 
   const handleWidgets = useCallback(
     (e) => {
-      // activate or deactivate widget accordingly
-      setActiveWidgets(
-        activeWidgets.includes(e)
-          ? activeWidgets.filter((widget) => widget !== e)
-          : [...activeWidgets, e]
-      );
-
-      const filteredWidgets = widgets.filter((obj) => activeWidgets.includes(obj.slug));
-      const cat = uniq(flatten(filteredWidgets.map(({ categoryIds }) => categoryIds))).filter(
-        (c) => c !== 'all_datasets'
-      );
-
-      const newCat = cat.length === 1 ? cat[0] : 'all_datasets';
-      if (newCat !== categorySelected) setCategory(newCat);
+      const updatedWidgets = activeWidgets.includes(e)
+        ? activeWidgets.filter((widget) => widget !== e)
+        : [...activeWidgets, e].filter((widget) => widget !== 'widgets_deck_tool');
+      const newCategory = findCategoryByWidgets(updatedWidgets);
+      setActiveWidgets(updatedWidgets);
+      if (updatedWidgets) setCategory(newCategory);
     },
 
-    [activeWidgets, setActiveWidgets, setCategory, categorySelected, widgets]
+    [activeWidgets, setActiveWidgets, setCategory]
   );
+
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
       const layersUpdate = activeLayersIds?.includes(e)

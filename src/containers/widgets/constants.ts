@@ -1,15 +1,6 @@
 import { WidgetTypes } from 'types/widget';
 
-const widgets_dev = [
-  {
-    name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_rest_sites',
-    locationType: ['country', 'worldwide'],
-    applicability: 'Global, National, and Sub-National',
-    categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['mangrove_rest_sites'],
-  },
-] satisfies WidgetTypes[];
+const widgets_dev = [] satisfies WidgetTypes[];
 
 const widgets_prod = [
   {
@@ -77,15 +68,23 @@ const widgets_prod = [
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
   },
   {
-    name: 'Mangrove Protection',
+    name: 'Mangroves in Protected Areas',
     slug: 'mangrove_protection',
     locationType: ['country', 'worldwide'],
     applicability: '',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['mangrove_protection'],
+    layersIds: ['mangrove_protection', 'mangrove_protected_areas'],
   },
   {
-    name: 'Mangrove Restoration',
+    name: 'Mangrove Restoration Sites',
+    slug: 'mangrove_rest_sites',
+    locationType: ['country', 'worldwide'],
+    applicability: 'Global, National, and Sub-National',
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['mangrove_rest_sites'],
+  },
+  {
+    name: 'Mangrove Restoration Potential',
     slug: 'mangrove_restoration',
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',
@@ -182,7 +181,7 @@ const widgets_prod = [
       ] as WidgetTypes[])
     : []),
   {
-    name: 'Protected Areas',
+    name: 'World Database of Protected Areas',
     slug: 'mangrove_protected_areas',
     locationType: ['wdpa', 'country', 'worldwide'],
     categoryIds: ['contextual_layers', 'all_datasets'],
@@ -264,7 +263,7 @@ export const WIDGETS_BY_CATEGORY = [
   },
   {
     restoration_and_conservation: [
-      // 'mangrove_rest_sites',
+      'mangrove_rest_sites',
       'mangrove_habitat_extent',
       'mangrove_net_change',
       'mangrove_alerts',

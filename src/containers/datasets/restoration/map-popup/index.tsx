@@ -1,50 +1,22 @@
-import { useCallback, useState } from 'react';
+import cn from 'lib/classnames';
 
-import Details from 'containers/map/restoration-popup/sections/details';
-import EcosystemServices from 'containers/map/restoration-popup/sections/ecosysyem-services';
-import RestorationScores from 'containers/map/restoration-popup/sections/restoration-scores';
+import Details from 'containers/datasets/restoration/map-popup/sections/details';
+import EcosystemServices from 'containers/datasets/restoration/map-popup/sections/ecosystem-services';
+import RestorationScores from 'containers/datasets/restoration/map-popup/sections/restoration-scores';
 
 import type { RestorationPopUp } from 'types/map';
 
-const PopupRestoration = ({
-  restorationPopUpInfo,
-}: {
-  restorationPopUpInfo: {
-    popup: number[];
-    popupInfo: RestorationPopUp;
-    popUpPosition: { x: number; y: number };
-  };
-}) => {
-  const [open, setOpen] = useState('');
-
-  const handleClick = useCallback(
-    (id: string) => {
-      if (!open || id !== open) {
-        setOpen(id);
-      } else {
-        setOpen(null);
-      }
-    },
-    [open]
-  );
-
+const PopupRestoration = ({ info, className }: { info: RestorationPopUp; className?: string }) => {
   return (
-    <div className="c-restoration-popup relative flex w-[500px] flex-col items-start rounded-3xl bg-white">
-      <RestorationScores
-        data={restorationPopUpInfo?.popupInfo}
-        isOpen={open === 'restoration'}
-        handleClick={() => handleClick('restoration')}
-      />
-      <Details
-        data={restorationPopUpInfo?.popupInfo}
-        isOpen={open === 'details'}
-        handleClick={() => handleClick('details')}
-      />
-      <EcosystemServices
-        data={restorationPopUpInfo?.popupInfo}
-        isOpen={open === 'ecosystem'}
-        handleClick={() => handleClick('ecosystem')}
-      />
+    <div
+      className={cn({
+        'relative flex w-full flex-col items-start divide-y divide-gray-100': true,
+        [className]: !!className,
+      })}
+    >
+      <RestorationScores data={info} />
+      <Details data={info} />
+      <EcosystemServices data={info} />
     </div>
   );
 };

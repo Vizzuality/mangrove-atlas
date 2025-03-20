@@ -38,6 +38,13 @@ export type RestorationPopUp = {
   Type: string;
 };
 
+export type RestorationSitesPopUp = {
+  cluster: boolean;
+  point_count: number;
+  site_name: string;
+  landscape_name: string;
+};
+
 type ProtectedArea = {
   ISO3: string;
   NAME: string;
@@ -61,4 +68,4 @@ export type LocationPopUp = {
   protectedArea?: ProtectedArea[];
 };
 
-export type PopUpKey = 'restoration' | 'ecoregion' | 'location';
+export type PopUpKey = 'restoration' | 'ecoregion' | 'location' | 'mangrove_rest_sites';

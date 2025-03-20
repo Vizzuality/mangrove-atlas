@@ -7,7 +7,7 @@ import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 
 import Icon from 'components/ui/icon';

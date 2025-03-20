@@ -7,7 +7,8 @@ import cn from 'lib/classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import { HiChevronDown } from 'react-icons/hi2';
 
-import Helper from 'containers/guide/helper';
+import ContactForm from 'containers/contact';
+import Helper from 'containers/help/helper';
 import About from 'containers/navigation/menu/about';
 import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
@@ -20,17 +21,46 @@ import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
 
 const RESOURCES_LINKS = [
   {
-    label: 'MRTT',
-    href: 'https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/',
+    label: 'GMW Training',
+    href: 'https://www.conservationtraining.org/',
   },
-  { label: 'Training on conservation', href: 'https://www.mangrovealliance.org/' },
-  { label: 'Restoration best practices', href: 'https://www.mangrovealliance.org/' },
-  { label: 'State of the Worlds', href: 'https://www.mangrovealliance.org/' },
+  {
+    label: 'Restoration Best Practices',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2023/12/Best-Practice-Guidelines-for-Mangrove-Restoration_spreadsv5.pdf',
+  },
+  {
+    label: 'State of the Worlds Mangroves 2024',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/07/SOWM-2024-HR.pdf',
+  },
   {
     label: 'GMW Leaflet',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/05/GMW_Leaflet_2024-update.pdf',
+    href: 'https://www.wetlands.org/publication/global-mangrove-watch-leaflet/',
   },
-  { label: 'Policy document', href: 'https://www.mangrovealliance.org/' },
+  {
+    label: 'Policy Brief: GMW and NBSAPs',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/10/Global-Mangrove-Watch-NBSAPs_-Update-2024.pdf',
+  },
+  {
+    label: 'Policy Brief: GMW and NDCs',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_NDC-Policy-Brief_update2024.pdf',
+  },
+  {
+    label: 'Policy Brief: GMW and the Ramsar Convention',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_RAMSAR-Policy-Brief_v7.pdf.pdf',
+  },
+
+  // {
+  //   label: 'MRTT',
+  //   href: 'https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/',
+  // },
+  // { label: 'Training on conservation', href: 'https://www.mangrovealliance.org/' },
+  // { label: 'Restoration best practices', href: 'https://www.mangrovealliance.org/' },
+  // { label: 'State of the Worlds', href: 'https://www.mangrovealliance.org/' },
+  // {
+  //   label: 'GMW Leaflet',
+  //   href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/05/GMW_Leaflet_2024-update.pdf',
+  // },
+  // { label: 'Policy document', href: 'https://www.mangrovealliance.org/' },
 ];
 
 const Menu = () => {
@@ -44,7 +74,6 @@ const Menu = () => {
           button: '-top-2 -right-4',
           tooltip: 'w-fit-content',
         }}
-        theme="dark"
         tooltipPosition={{ top: -40, left: 0 }}
         message="main menu"
       >
@@ -64,7 +93,7 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'min-w-[540px] font-sans md:mb-20': true,
+          'font-sans  md:mb-20 md:w-[436px]': true,
           'h-fit py-0': section === 'main',
         })}
       >
@@ -74,34 +103,58 @@ const Menu = () => {
               <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
                 Global Mangrove Watch
               </h2>
-              <div className="text-2lg font-light">
-                <button onClick={() => section && setSection('about')}>About this tool</button>
-              </div>
-              <Link href="https://www.mangrovealliance.org/" className="text-2lg font-light">
+              <button
+                type="button"
+                className="text-left text-2lg font-light hover:text-brand-800"
+                onClick={() => section && setSection('about')}
+              >
+                About this tool
+              </button>
+              <Link
+                href="https://www.mangrovealliance.org/"
+                className="text-2lg font-light hover:text-brand-800"
+              >
                 Global Mangrove Alliance
               </Link>
-              {/* <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-[350px] space-y-2">
-                <CollapsibleTrigger>
-                  <div className="flex items-center space-x-4 text-2lg font-light">
-                    <span>Resources</span>
-                    <HiChevronDown className="h-4 w-4" />
+              <Link
+                href="https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/"
+                className="text-2lg font-light hover:text-brand-800"
+              >
+                Mangrove Restoration Tracker Tool
+              </Link>
+              {process.env.NEXT_PUBLIC_VERCEL_ENV === 'dev' && (
+                <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
+              )}
+
+              <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
+                <CollapsibleTrigger showExpandIcon={false} className="p-0">
+                  <div className="flex w-full items-center space-x-4 text-2lg font-light hover:text-brand-800">
+                    <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
+                    <HiChevronDown
+                      className={cn({
+                        'h-4 w-4 stroke-[1px]': true,
+                        'rotate-180 text-brand-800': isOpen,
+                      })}
+                    />
                     <span className="sr-only">Toggle</span>
                   </div>
                 </CollapsibleTrigger>
-                <CollapsibleContent className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6">
-                  {RESOURCES_LINKS.map(({ label, href }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-2lg font-light"
-                    >
-                      {label}
-                    </a>
-                  ))}
+                <CollapsibleContent>
+                  <div className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6 pb-6">
+                    {RESOURCES_LINKS.map(({ label, href }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-2lg font-light text-black/85 hover:text-brand-800"
+                      >
+                        {label}
+                      </a>
+                    ))}
+                  </div>
                 </CollapsibleContent>
-              </Collapsible> */}
+              </Collapsible>
             </div>
             <PartnersLinks />
           </div>
@@ -138,7 +191,7 @@ const Menu = () => {
             </motion.div>
           )}
         </AnimatePresence>
-        <DialogClose className="md:fixed md:!top-18 md:left-[595px]" />
+        <DialogClose />
       </DialogContent>
     </Dialog>
   );

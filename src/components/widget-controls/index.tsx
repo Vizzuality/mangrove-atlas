@@ -11,7 +11,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { updateLayers } from 'hooks/layers';
 
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
@@ -95,7 +95,6 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
             button: HELPER_ID ? '-bottom-3.5 -right-1.5 z-20' : 'hidden',
             tooltip: 'w-80',
           }}
-          theme="dark"
           tooltipPosition={{ top: -40, left: 0 }}
           message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
         >

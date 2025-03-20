@@ -12,9 +12,12 @@ import { printModeState } from 'store/print-mode';
 
 import { useRecoilValue } from 'recoil';
 
+// import { LuCirclePlay } from 'react-icons/lu';
+
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import MapContainer from 'containers/map';
+// import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
 
 const DesktopLayout = () => {
@@ -79,6 +82,8 @@ const DesktopLayout = () => {
         )}
         <MapContainer mapId={`default-desktop-${isPrintingId}`} />
         <WidgetsContainer />
+
+        {/* <WelcomeIntroMessage /> */}
       </div>
     </div>
   );

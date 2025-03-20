@@ -25,20 +25,20 @@ const PartnersLinks = () => {
 
       <div className="space-y-4 pb-6">
         <p className="text-xs font-bold uppercase">Partners</p>
-        <div className="flex w-full flex-wrap items-center gap-6">
+        <div className="flex w-full flex-wrap items-center gap-4">
           <Link href="https://www.aber.ac.uk/en/">
-            <Icon icon={ABERYSTWYTH_SVG} className="h-full w-32" description="ABERYSTWYTH" />
+            <Icon icon={ABERYSTWYTH_SVG} className="h-full w-24" description="ABERYSTWYTH" />
           </Link>
           <Link href="https://soloeo.com/">
-            <Icon icon={SOLO_SVG} className="h-full w-32" description="SOLO" />
+            <Icon icon={SOLO_SVG} className="h-full w-24" description="SOLO" />
           </Link>
           <Link href="https://www.wetlands.org/">
-            <Icon icon={WETLANDS_SVG} className="h-full w-32" description="Wetlands" />
+            <Icon icon={WETLANDS_SVG} className="h-full w-24" description="Wetlands" />
           </Link>
           <Link href="https://www.nature.org/">
             <Icon
               icon={NATURE_CONSERVANCY_SVG}
-              className="h-full w-32"
+              className="h-full w-24"
               description="NATURE_CONSERVANCY"
             />
           </Link>

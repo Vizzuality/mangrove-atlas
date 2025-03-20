@@ -2,7 +2,7 @@ import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
 import cn from 'lib/classnames';
 
-import Helper from 'containers/guide/helper';
+import Helper from 'containers/help/helper';
 
 import {
   DropdownMenu,
@@ -54,7 +54,6 @@ const LanguageSelector = () => {
         button: 'top-0 -right-4',
         tooltip: 'w-fit-content',
       }}
-      theme="dark"
       tooltipPosition={{ top: -50, left: 0 }}
       message="Choose your preferred language here. There is a choice between English, French and Spanish"
     >
