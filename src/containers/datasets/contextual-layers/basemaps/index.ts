@@ -24,7 +24,7 @@ const BASEMAPS = [
     id: 'satellite',
     type: 'basemap',
     name: 'Satellite',
-    url: 'mapbox://styles/globalmangrovewatch/clk0y3gom00a201qj04psh0qv/draft',
+    url: 'mapbox://styles/globalmangrovewatch/cm8fuzedu00yp01qzeb914gdo',
   },
 ] satisfies BasemapTypes[];
 
