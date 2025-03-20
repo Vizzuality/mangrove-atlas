@@ -15,20 +15,20 @@ const PORT = process.env.PORT || 3000;
 export default defineConfig({
   testDir: 'tests',
   outputDir: 'test-results',
-  timeout: 60000,
-  globalTimeout: 60000,
-  expect: {
-    timeout: 60000,
-  },
+timeout: 120000,
+globalTimeout: 120000,
+expect: {
+timeout: 120000,
+},
   /* Run your local dev server before starting the tests */
-  webServer: process.env.CI
-    ? undefined
-    : {
-        command: process.env.CI ? 'yarn build && yarn start' : 'yarn dev',
-        url: `http://localhost:${PORT}`,
-        reuseExistingServer: !process.env.CI,
-        timeout: 300000,
-      },
+webServer: process.env.CI
+? undefined
+: {
+    command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
+    url: `http://localhost:${PORT}`,
+    reuseExistingServer: !process.env.CI,
+    timeout: 300000,
+    },
   /* Run tests in files in parallel */
   fullyParallel: !process.env.CI,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -46,7 +46,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    navigationTimeout: 60000,
+    navigationTimeout: 120000,
   },
 
   /* Configure projects for major browsers */

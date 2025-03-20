@@ -17,7 +17,7 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SCORES</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 p-6 ">
+        <section className="flex w-full flex-col space-y-2 px-6 pb-6">
           <div className="w-full">
             <div className="flex grow items-center justify-between">
               <RestorationDataGroup label="Mangrove type" value={Class} />

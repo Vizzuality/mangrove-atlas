@@ -27,7 +27,7 @@ const Details = ({ data }: { data: RestorationPopUp }) => {
         <h3 className={WIDGET_SUBTITLE_STYLE}>DETAILS</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <section className="flex w-full flex-col space-y-2 border-none p-6 shadow-none">
+        <section className="flex w-full flex-col space-y-2 border-none px-6 pb-6 shadow-none">
           <div className="flex w-full grow flex-col items-center justify-between">
             <Detail label="Tidal range" pct={Tidal_range1} value={Tidal_range} />
             <Detail label="Antecedent SLR" pct={Ant_SLR1} value={Ant_SLR} />

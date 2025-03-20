@@ -1,13 +1,14 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import { RestorationSitesPopUp } from 'types/map';
 
 const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => (
   <Collapsible className="min-w-[375px]">
     <CollapsibleTrigger>
-      <h2>RESTORATION SITES</h2>
+      <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SITES</h3>
     </CollapsibleTrigger>
     <CollapsibleContent>
-      <div className="flex w-full flex-col space-y-2 border-none p-6 font-sans shadow-none">
+      <div className="flex w-full flex-col space-y-2 border-none px-6 pb-6 font-sans shadow-none">
         {info.cluster && (
           <p className="text-sm text-black/85">
             <span>

@@ -87,7 +87,7 @@ const AnalysisAlert = () => {
   return (
     <>
       <Dialog open={isAnalysisAlertOpen}>
-        <DialogPortal className="z-50">
+        <DialogPortal>
           <DialogContent onEscapeKeyDown={() => setAnalysisAlert(false)} overlay>
             <div className="flex justify-end">
               <button

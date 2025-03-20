@@ -1,15 +1,6 @@
 import { WidgetTypes } from 'types/widget';
 
-const widgets_dev = [
-  {
-    name: 'Mangrove Restoration Sites',
-    slug: 'mangrove_rest_sites',
-    locationType: ['country', 'worldwide'],
-    applicability: 'Global, National, and Sub-National',
-    categoryIds: ['all_datasets', 'restoration_and_conservation'],
-    layersIds: ['mangrove_rest_sites'],
-  },
-] satisfies WidgetTypes[];
+const widgets_dev = [] satisfies WidgetTypes[];
 
 const widgets_prod = [
   {
@@ -85,7 +76,15 @@ const widgets_prod = [
     layersIds: ['mangrove_protection', 'mangrove_protected_areas'],
   },
   {
-    name: 'Mangrove Restoration',
+    name: 'Mangrove Restoration Sites',
+    slug: 'mangrove_rest_sites',
+    locationType: ['country', 'worldwide'],
+    applicability: 'Global, National, and Sub-National',
+    categoryIds: ['all_datasets', 'restoration_and_conservation'],
+    layersIds: ['mangrove_rest_sites'],
+  },
+  {
+    name: 'Mangrove Restoration Potential',
     slug: 'mangrove_restoration',
     locationType: ['country', 'worldwide'],
     applicability: 'Global, National, and Sub-National',

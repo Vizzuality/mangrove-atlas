@@ -17,10 +17,9 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
+import { COLORS } from './constants';
 import CustomTooltip from './tooltip';
 import type { DataResponse } from './types';
-
-import { COLORS } from './constants';
 
 const getColor = (percentage) => {
   let color: string;

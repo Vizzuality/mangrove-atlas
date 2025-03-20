@@ -14,6 +14,7 @@ import WidgetsLayout from 'layouts/widgets';
 
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
+import CloseHelpGuide from 'containers/help/close';
 import Helper from 'containers/help/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
@@ -30,7 +31,6 @@ import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
 import WidgetsMenu from './widgets-menu';
-import CloseHelpGuide from 'containers/help/close';
 
 const buttonMotion = {
   rest: {
