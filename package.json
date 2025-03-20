@@ -2,10 +2,10 @@
   "name": "mangrove-atlas",
   "version": "1.0.0",
   "private": true,
-"scripts": {
-"dev": "next dev",
-"build": "next build",
-"start": "next start",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "next lint",
     "check-types": "tsc",
     "test": "playwright test",
@@ -54,6 +54,8 @@
     "@tailwindcss/line-clamp": "0.4.2",
     "@tailwindcss/typography": "0.5.9",
     "@tanstack/react-query": "4.29.25",
+    "@transifex/native": "^7.1.3",
+    "@transifex/react": "^7.1.3",
     "@turf/bbox": "6.5.0",
     "@types/d3-format": "^3.0.1",
     "@types/lodash-es": "4.17.7",
@@ -103,8 +105,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.41.0",
-    "@transifex/native": "6.0.2",
-    "@transifex/react": "^7.1.3",
     "@types/geojson": "7946.0.10",
     "@types/mapbox-gl": "2.7.11",
     "@types/node": "20.12.7",
