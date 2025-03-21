@@ -1,6 +1,6 @@
-import { ReactNode, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import cn from 'lib/classnames';
 
