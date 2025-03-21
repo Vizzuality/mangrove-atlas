@@ -5,6 +5,11 @@ const API = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+export const STAGING_API = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URL_STAGING}/api/v2`,
+  headers: { 'Content-Type': 'application/json' },
+});
+
 export const AnalysisAPI = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ANALYSIS_API_URL,
   headers: { 'Content-Type': 'application/json' },

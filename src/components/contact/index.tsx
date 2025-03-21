@@ -53,7 +53,11 @@ type FormSchema = z.infer<typeof ContactFormSchema>;
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [isOpen, setIsOpen] = useState(false);
-  const [privacyPolicy, setPrivacyPolicy] = useState(false);
+  const [
+    ,
+    // privacyPolicy
+    setPrivacyPolicy,
+  ] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<z.infer<typeof ContactFormSchema>>({

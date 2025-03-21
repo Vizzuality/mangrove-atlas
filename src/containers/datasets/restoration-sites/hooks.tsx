@@ -17,6 +17,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
+import { STAGING_API } from 'services/api';
 
 import type { Data, DataResponse, DataFilters } from './types';
 
@@ -36,8 +37,9 @@ export function useMangroveRestorationSites(
   const mapFilters = useRecoilValue(RestorationSitesMapFilters);
   const filtersPending = useRecoilValue(RestorationSitesFiltersApplication);
 
+  // TO - DO - remove when API gets ready
   const fetchMangroveRestorationSites = () =>
-    API.request({
+    STAGING_API.request({
       method: 'GET',
       url: '/widgets/sites',
       params: {
