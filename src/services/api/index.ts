@@ -6,7 +6,7 @@ const API = axios.create({
 });
 
 export const STAGING_API = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL_STAGING}/api/v2`,
+  baseURL: `${process.env.NEXT_PUBLIC_API_STAGING_URL}/api/v2`,
   headers: { 'Content-Type': 'application/json' },
 });
 
