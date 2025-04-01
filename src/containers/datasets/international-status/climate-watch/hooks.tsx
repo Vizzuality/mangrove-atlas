@@ -11,6 +11,7 @@ import type { UseParamsOptions } from 'types/widget';
 import { ClimateWatchAPI } from 'services/api';
 
 import type { DataResponse, DataResponseDocuments, IndicatorsParams, Data } from './types';
+import { orderBy } from 'lodash-es';
 
 // widget data
 export function useClimateWatchNDCS(
@@ -73,7 +74,7 @@ export function useClimateWatchNDCSCountriesDocs(
     data: { iso },
   } = useLocation(id, locationType);
 
-  const fetchClimateWatchNDCS = () =>
+  const fetchClimateWatchNDCSCountriesDocs = () =>
     ClimateWatchAPI.request({
       method: 'GET',
       url: '/ndcs/countries_documents',
@@ -84,16 +85,17 @@ export function useClimateWatchNDCSCountriesDocs(
       ...queryOptions,
     }).then((response) => response.data);
 
-  return useQuery(['climate-watch-ndcs-countries_documents', params, iso], fetchClimateWatchNDCS, {
-    select: (data) => {
-      return {
-        ...data,
-        update: data?.data?.[iso]?.find(
-          ({ slug }) =>
-            slug === 'second_ndc' || slug === 'revised_first_ndc' || slug === 'first_ndc'
-        ),
-      };
-    },
-    ...queryOptions,
-  });
+  return useQuery(
+    ['climate-watch-ndcs-countries_documents', params, iso],
+    fetchClimateWatchNDCSCountriesDocs,
+    {
+      select: (data) => {
+        return {
+          ...data,
+          update: orderBy(data?.data?.[iso], ['ordering'], ['desc'])[0],
+        };
+      },
+      ...queryOptions,
+    }
+  );
 }

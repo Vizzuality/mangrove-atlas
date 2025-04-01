@@ -110,7 +110,7 @@ const LocationPopUP = ({
             <button
               key={NAME}
               type="button"
-              className="grid grow cursor-pointer grid-cols-10 gap-4 font-sans"
+              className="grid grow cursor-pointer grid-cols-10 gap-4 px-6 pb-6 font-sans"
               onClick={() => handleClickProtectedArea(index)}
             >
               <div className="col-span-7 flex flex-col text-left">

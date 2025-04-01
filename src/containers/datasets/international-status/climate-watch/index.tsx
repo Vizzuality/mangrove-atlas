@@ -8,20 +8,28 @@ import Indicator from './indicator';
 const ClimateWatchNationalDashboard = () => {
   const { isFetched, isFetching, data } = useClimateWatchNDCS({
     indicators: [
-      'M_TarA4',
-      'adaptation',
-      'pledge_content',
-      'M_TarA1',
-      'M_TarA2',
-      'M_TarA5',
-      'M_TarB1',
+      // 'M_TarA4',
+      // 'adaptation',
+      // 'pledge_content',
+      // 'M_TarA1',
+      // 'M_TarA2',
+      // 'M_TarA5',
+      // 'M_TarB1',
+      // 'mitigation_contribution_type',
+      // 'M_TarYr',
+      'ndce statement',
+      'ghg_target',
       'mitigation_contribution_type',
-      'M_TarYr',
+      'adaptation',
+      'pledge_base_year',
+      'time_target_year',
+      'submission_type',
     ],
   });
 
   const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs();
   const update = dataDocuments?.update;
+
   const Indicators = [
     {
       label: 'Emissions reduction <sup>(1)</sup>',
@@ -44,11 +52,17 @@ const ClimateWatchNationalDashboard = () => {
         data?.M_TarB1?.info ||
         '% of emissions reduction (compared to base year or to baseline scenario)',
     },
+    // {
+    //   label: 'Mitigation',
+    //   value: false,
+    //   check:
+    //     !!data?.M_TarA1 || !!data?.M_TarA5 || !!data?.M_TarB1 || !!data?.M_TarA2 ? 'yes' : 'no',
+    //   info: 'NDC contains Mitigation?',
+    // },
     {
       label: 'Mitigation',
       value: false,
-      check:
-        !!data?.M_TarA1 || !!data?.M_TarA5 || !!data?.M_TarB1 || !!data?.M_TarA2 ? 'yes' : 'no',
+      check: !!data?.mitigation_contribution_type[data.iso]?.value ? 'yes' : 'no',
       info: 'NDC contains Mitigation?',
     },
     {
@@ -65,15 +79,15 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Base year/s',
-      value: data?.M_TarA4?.[data.iso]?.value,
+      value: data?.pledge_base_year?.[data.iso]?.value,
       check: false,
       info: 'Year/s against which emission targets are measured against',
     },
     {
       label: 'Target year/s',
-      value: data?.M_TarYr?.[data.iso]?.value || '-',
+      value: data?.time_target_year?.[data.iso]?.value || '-',
       check: false,
-      info: data?.M_TarYr?.info || '',
+      info: data?.time_target_year?.info || '',
     },
     {
       label: 'Update status',

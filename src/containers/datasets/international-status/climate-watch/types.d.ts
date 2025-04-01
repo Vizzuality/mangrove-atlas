@@ -64,14 +64,22 @@ export type DataResponseDocuments = {
 
 type IndicatorsParams = {
   indicators: [
-    'M_TarA4',
-    'adaptation',
-    'pledge_content',
-    'M_TarA1',
-    'M_TarA2',
-    'M_TarA5',
-    'M_TarB1',
+    // 'M_TarA4',
+    // 'adaptation',
+    // 'pledge_content',
+    // 'M_TarA1',
+    // 'M_TarA2',
+    // 'M_TarA5',
+    // 'M_TarB1',
+    // 'mitigation_contribution_type',
+    // 'M_TarYr'
+
+    'ndce statement',
+    'ghg_target',
     'mitigation_contribution_type',
-    'M_TarYr'
+    'adaptation',
+    'pledge_base_year',
+    'time_target_year',
+    'submission_type'
   ];
 };

@@ -70,7 +70,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
 
   return (
     <Collapsible>
-      <CollapsibleTrigger>
+      <CollapsibleTrigger className="min-w-[375px]">
         <h3 className={WIDGET_SUBTITLE_STYLE}>IUCN ECOSYSTEM ASSESSMENT</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
