@@ -1,5 +1,6 @@
 import { Source, Layer } from 'react-map-gl';
 
+import { activeLayersAtom } from 'store/layers';
 import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 
 import { useRecoilValue } from 'recoil';
@@ -8,8 +9,6 @@ import type { LayerProps } from 'types/layers';
 
 import {} from './hooks';
 import { useLayers, useSource, useMangroveHabitatExtent } from './hooks';
-
-import { activeLayersAtom } from 'store/layers';
 
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
