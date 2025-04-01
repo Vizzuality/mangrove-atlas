@@ -22,7 +22,7 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
   );
 
   return (
-    <div className="mb-10 space-y-12 md:space-y-6">
+    <div className="mb-10 flex flex-col space-y-12 md:space-y-6">
       <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
       <div className="space-y-2">
         {info.map(({ id, title, href, description, license }) => (

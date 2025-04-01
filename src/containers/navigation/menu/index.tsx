@@ -140,7 +140,7 @@ const Menu = () => {
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6 pb-6">
+                  <div className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6">
                     {RESOURCES_LINKS.map(({ label, href }) => (
                       <a
                         key={label}
