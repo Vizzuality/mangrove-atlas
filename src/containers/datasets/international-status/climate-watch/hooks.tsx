@@ -131,7 +131,12 @@ export function useClimateWatchNDCSContentOverview(
     {
       select: ({ values }) =>
         values.reduce((acc, item) => {
-          const cleanedValue = item.value.replace(/^\"|\"$/g, '').replace(/\\"/g, '');
+          const cleanedValue = item.value
+            .replace(/^\"|\"$/g, '')
+            .replace(/\\"/g, '')
+            .replace(/<br>/g, '\n')
+            .replace(/\\?"/g, '')
+            .trim();
 
           acc[item.slug] = cleanedValue;
           acc.document_slug = item.document_slug;
