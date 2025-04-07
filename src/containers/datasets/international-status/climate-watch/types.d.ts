@@ -47,6 +47,18 @@ export type DataResponse = {
   indicators: Indicator[];
 };
 
+type NDCSContentOverview = {
+  slug: string;
+  name: string;
+  value: string;
+  document_slug: string;
+};
+
+export type DataResponseContentOverview = {
+  sectors: string[];
+  values: NDCSContentOverview[];
+};
+
 export type DataResponseDocuments = {
   data: {
     [key: string]: {
