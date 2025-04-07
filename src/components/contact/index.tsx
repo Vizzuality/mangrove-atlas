@@ -140,7 +140,7 @@ export function ContactForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   onOpenChange={(open) => setIsOpen(open)}
-                  open={true}
+                  open={isOpen}
                 >
                   <FormControl>
                     <SelectTrigger className="focus-visible:ring-ring flex h-9 w-full rounded-3xl border border-black/15 py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
