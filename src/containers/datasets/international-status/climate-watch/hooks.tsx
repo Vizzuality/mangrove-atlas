@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { orderBy } from 'lodash-es';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -10,8 +11,13 @@ import type { UseParamsOptions } from 'types/widget';
 
 import { ClimateWatchAPI } from 'services/api';
 
-import type { DataResponse, DataResponseDocuments, IndicatorsParams, Data } from './types';
-import { orderBy } from 'lodash-es';
+import type {
+  DataResponse,
+  DataResponseDocuments,
+  IndicatorsParams,
+  Data,
+  DataResponseContentOverview,
+} from './types';
 
 // widget data
 export function useClimateWatchNDCS(
@@ -95,6 +101,42 @@ export function useClimateWatchNDCSCountriesDocs(
           update: orderBy(data?.data?.[iso], ['ordering'], ['desc'])[0],
         };
       },
+      ...queryOptions,
+    }
+  );
+}
+
+export function useClimateWatchNDCSContentOverview(
+  queryOptions?: UseQueryOptions<DataResponseContentOverview, Error>
+) {
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+  const locationType = queryParams?.[0] as LocationTypes;
+  const id = queryParams?.[1];
+  const {
+    data: { iso },
+  } = useLocation(id, locationType);
+
+  const fetchClimateWatchNDCSContentOverview = () =>
+    ClimateWatchAPI.request({
+      method: 'GET',
+      url: `/ndcs/${iso}/content_overview`,
+      ...queryOptions,
+    }).then((response) => response.data);
+
+  return useQuery(
+    ['climate-watch-ndcs-content_overview', iso],
+    fetchClimateWatchNDCSContentOverview,
+    {
+      select: ({ values }) =>
+        values.reduce((acc, item) => {
+          const cleanedValue = item.value.replace(/^\"|\"$/g, '').replace(/\\"/g, '');
+
+          acc[item.slug] = cleanedValue;
+          acc.document_slug = item.document_slug;
+          return acc;
+        }, {}),
       ...queryOptions,
     }
   );
