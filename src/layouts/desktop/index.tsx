@@ -29,7 +29,7 @@ const DesktopLayout = () => {
   const {
     query: { params: queryParams },
   } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
+  const locationType = (queryParams?.[0] || 'worldwide') as LocationTypes;
   const id = queryParams?.[1];
 
   const {
