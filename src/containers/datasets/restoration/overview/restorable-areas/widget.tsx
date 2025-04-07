@@ -27,8 +27,8 @@ const RestorableAreas = () => {
           <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold first-letter:uppercase"> {data.location}</span> restorable
             mangrove areas represent{' '}
-            <span className="font-bold">{data.restorable_area_perc} %</span> of the total mangrove
-            area.
+            <span className="whitespace-nowrap font-bold">{data.restorable_area_perc} %</span> of
+            the total mangrove area.
           </p>
           <div className="flex flex-1 flex-col items-center space-y-2">
             {!!data && <RestorableAreasChart data={data} />}

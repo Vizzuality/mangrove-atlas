@@ -60,7 +60,7 @@ const PotentialBenefitsToFisheries = () => {
                 <div className="flex flex-col text-sm">
                   <span className="first-letter:uppercase">{indicator}</span>
                   <span className="text-xs font-bold md:text-sm">
-                    {!!value ? formatAxis(Math.round(value)) : '-'}
+                    {!!value ? formatAxis(Math.round(value)) : 'No data'}
                   </span>
                 </div>
               </div>

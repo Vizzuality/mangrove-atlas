@@ -1,4 +1,4 @@
-import { numberFormat } from 'lib/format';
+import { formatNumberNearestInteger } from 'lib/format';
 const CustomTooltip = (data) => {
   const { payload } = data;
   if (!payload.length) return null;
@@ -11,7 +11,7 @@ const CustomTooltip = (data) => {
         <p className="font-bold">{legendData.label}</p>
       </div>
       <p className="pl-3 text-xs">
-        {numberFormat(legendData.value)} {legendData.unit}
+        {formatNumberNearestInteger(legendData.value)} {legendData.unit}
       </p>{' '}
     </div>
   );

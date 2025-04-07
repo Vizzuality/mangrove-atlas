@@ -20,6 +20,7 @@ import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
 import { Location, LocationTypes } from 'containers/datasets/locations/types';
 
 import Icon from 'components/ui/icon';
+import Loading from 'components/ui/loading';
 import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
@@ -48,7 +49,12 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
   const setDrawingToolState = useSetRecoilState(drawingToolAtom);
 
-  const { data: locations } = useLocations({ select: ({ data }) => data });
+  const {
+    data: locations,
+    isFetching,
+    isLoading,
+    isFetched,
+  } = useLocations({ select: ({ data }) => data });
   const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
   const cache = new CellMeasurerCache({
@@ -89,7 +95,15 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       if (onSelectLocation) onSelectLocation();
       resetMapSettingsState();
     },
-    [replace, asPath, setLocationBounds, onSelectLocation]
+    [
+      replace,
+      asPath,
+      setLocationBounds,
+      onSelectLocation,
+      resetMapSettingsState,
+      setDrawingToolState,
+      setDrawingUploadToolState,
+    ]
   );
 
   const renderRow = ({
@@ -158,21 +172,24 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         )}
       </div>
 
-      <div className="relative min-h-[200vh]">
-        <AutoSizer>
-          {({ width, height }) => (
-            <List
-              width={width}
-              height={height}
-              deferredMeasurementCache={cache}
-              rowHeight={cache.rowHeight}
-              rowRenderer={renderRow}
-              rowCount={locationsToDisplay.length}
-              overscanRowCount={15}
-              className="no-scrollbar"
-            />
-          )}
-        </AutoSizer>
+      {(isFetching || isLoading) && <Loading visible iconClassName="flex w-10 h-10 m-auto my-10" />}
+      <div className="relative max-h-7 min-h-[100vh]">
+        {isFetched && !isLoading && !isFetching && (
+          <AutoSizer>
+            {({ width, height }) => (
+              <List
+                width={width}
+                height={height}
+                deferredMeasurementCache={cache}
+                rowHeight={cache.rowHeight}
+                rowRenderer={renderRow}
+                rowCount={locationsToDisplay.length}
+                overscanRowCount={15}
+                className="no-scrollbar"
+              />
+            )}
+          </AutoSizer>
+        )}
       </div>
     </div>
   );
