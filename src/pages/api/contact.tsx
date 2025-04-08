@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       // Send email using Resend
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',
-        to: ['maluenarod@gmail.com'], // Replace with your recipient's email
+        to: ['maria.luena@vizzuality.com'], // Replace with your recipient's email
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
         text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Fallback text content
