@@ -1,4 +1,4 @@
-import { numberFormat } from 'lib/format';
+import { numberFormat, formatNumberNearestInteger } from 'lib/format';
 
 import Legend from 'containers/legend';
 
@@ -26,7 +26,7 @@ const RestorationValueChart = ({ data }: { data: Data }) => {
       color: CHART_COLORS[indicator],
       unit,
       value,
-      valueFormatted: numberFormat(value),
+      valueFormatted: formatNumberNearestInteger(value),
       percentage: numberFormat((value * 100) / total),
     };
   });

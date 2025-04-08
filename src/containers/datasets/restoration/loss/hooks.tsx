@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
+import { formatNumberNearestInteger } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
@@ -27,7 +27,7 @@ const getLossData = (data, unit) => {
       label: 'Total area loss',
       children: lossData.map((l) => ({
         ...l,
-        valueFormatted: numberFormat(l.value),
+        valueFormatted: formatNumberNearestInteger(l.value),
         unit,
       })),
     },

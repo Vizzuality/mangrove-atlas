@@ -1,5 +1,6 @@
 import { format, formatPrefix } from 'd3-format';
 
+export const formatNumberNearestInteger = format(',.0f');
 export const numberFormat = format(',.2f');
 export const percentFormat = format('.2%');
 export const smallNumberFormat = format('.4f');

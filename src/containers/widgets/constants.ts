@@ -133,13 +133,13 @@ const widgets_prod = [
     applicability: 'National',
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
-  {
-    name: 'Carbon Market Potential',
-    slug: 'mangrove_carbon_market_potential',
-    locationType: ['country'],
-    applicability: 'National',
-    categoryIds: ['all_datasets', 'climate_and_policy'],
-  },
+  // {
+  //   name: 'Carbon Market Potential',
+  //   slug: 'mangrove_carbon_market_potential',
+  //   locationType: ['country'],
+  //   applicability: 'National',
+  //   categoryIds: ['all_datasets', 'climate_and_policy'],
+  // },
   {
     name: 'Drivers of Change',
     slug: 'mangrove_drivers_change',
@@ -281,7 +281,7 @@ export const WIDGETS_BY_CATEGORY = [
       'mangrove_blue_carbon',
       'mangrove_emissions_mitigation',
       'mangrove_international_status',
-      'mangrove_carbon_market_potential',
+      // 'mangrove_carbon_market_potential',
     ],
   },
   {
@@ -320,7 +320,7 @@ export const WIDGETS_BY_CATEGORY = [
       'mangrove_blue_carbon',
       'mangrove_emissions_mitigation',
       'mangrove_international_status',
-      'mangrove_carbon_market_potential',
+      // 'mangrove_carbon_market_potential',
       'mangrove_drivers_change',
       'mangrove_fisheries',
       'mangrove_flood_protection',

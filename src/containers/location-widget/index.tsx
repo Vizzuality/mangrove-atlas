@@ -97,7 +97,7 @@ const LocationWidget = () => {
                     'text-2.75xl': width >= 540,
 
                     'text-5xl': locationName.length > 10,
-                    'text-4xl': locationName.length > 30 && locationName.length <= 55,
+                    'text-3xl': locationName.length > 30 && locationName.length <= 55,
                     'text-2xl': locationName.length > 55 && locationName.length <= 120,
                     'break-all text-base': locationName.length > 120,
                   })}

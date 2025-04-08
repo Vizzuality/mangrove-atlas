@@ -28,7 +28,7 @@ const BlueCarbonWidget = () => {
     });
   }, [queryClient]);
 
-  const { data, isFetching, isError, refetch } = useMangroveBlueCarbon(
+  const { data, isFetched, isFetching, isError, refetch } = useMangroveBlueCarbon(
     {},
     { enabled: !isCanceled },
     handleQueryCancellation
@@ -39,9 +39,9 @@ const BlueCarbonWidget = () => {
     setIsCanceled(false);
   }, [refetch]);
 
-  const { location, agb, toc, soc, config, noData } = data;
+  const { location, config, agb, toc, soc, noData } = data;
 
-  if (noData) return <NoData />;
+  if (noData && isFetched && !isError) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

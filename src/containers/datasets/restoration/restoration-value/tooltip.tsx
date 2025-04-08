@@ -1,4 +1,4 @@
-import { numberFormat } from 'lib/format';
+import { formatNumberNearestInteger } from 'lib/format';
 const CustomTooltip = ({ payload }) => {
   const { unit, value, percentage, label } = payload;
   return (
@@ -7,7 +7,7 @@ const CustomTooltip = ({ payload }) => {
         <p>{label}</p>
       </div>
       <p className="whitespace-nowrap pl-3 text-xs">
-        <span className="mr-4 font-bold">Area</span> {numberFormat(value)} {unit}
+        <span className="mr-4 font-bold">Area</span> {formatNumberNearestInteger(value)} {unit}
       </p>
       <p className="whitespace-nowrap pl-3 text-xs">
         <span className="mr-4 font-bold">Percentage</span> {percentage} %

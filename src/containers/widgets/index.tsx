@@ -196,7 +196,7 @@ const WidgetsContainer: FC = () => {
           </div>
         </DialogContent>
       </Dialog>
-      <div className="flex w-full justify-center py-4 print:hidden">
+      {/* <div className="flex w-full justify-center py-4 print:hidden">
         <Helper
           className={{
             button:
@@ -220,7 +220,7 @@ const WidgetsContainer: FC = () => {
             Download report as PDF
           </button>
         </Helper>
-      </div>
+      </div> */}
       {!!widgets.length ? (
         <div className="flex w-full justify-center py-4 print:hidden">
           <Helper

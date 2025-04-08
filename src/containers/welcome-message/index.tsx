@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -12,28 +12,31 @@ import {
   DialogClose,
 } from 'components/ui/dialog';
 
-// import { LuCirclePlay } from 'react-icons/lu';
-
 const WelcomeIntroMessage = () => {
-  const [showWelcomeDialog, setShowWelcomeDialog] = useState(() => {
-    return !localStorage.getItem('welcomeIntroMessage');
-  });
-
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState<boolean>(false);
   useEffect(() => {
-    if (showWelcomeDialog) {
+    const hasSeenWelcome = localStorage.getItem('welcomeIntroMessage');
+    if (!hasSeenWelcome) {
+      setIsOpen(true);
       localStorage.setItem('welcomeIntroMessage', 'true');
     }
-  }, [showWelcomeDialog]);
+
+    setIsReady(true);
+  }, []);
 
   const handleClose = useCallback(() => {
-    setShowWelcomeDialog(false);
-  }, [setShowWelcomeDialog]);
+    setIsOpen(false);
+  }, []);
+
+  if (!isReady) return null;
 
   return (
-    <Dialog open={showWelcomeDialog} onOpenChange={setShowWelcomeDialog}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      {/* TO - DO - fix this and improve dialog component*/}
       <DialogContent
-        className="min-w-3xl sm:min-w-4xl fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 space-y-6 p-8 p-0 text-black/85 shadow-sm data-[state=open]:fade-in-60 data-[state=close]:fade-out
-    data-[state=open]:slide-in-from-left-96 data-[state=close]:slide-out-to-right-96 md:max-w-3xl"
+        classNameContent="animate-none duration-0"
+        className="min-w-3xl sm:min-w-4xl fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 space-y-6 p-8 text-black/85 shadow-sm md:max-w-3xl"
       >
         <DialogDescription className="grid h-full w-full grid-cols-12">
           <div className="relative col-span-6 h-full w-full overflow-hidden rounded-tl-3xl rounded-bl-3xl">
@@ -68,9 +71,6 @@ const WelcomeIntroMessage = () => {
               <Button onClick={handleClose} className="text-sm font-bold">
                 Let’s explore the tool
               </Button>
-              {/* <button type="button" onClick={handleClose} className="text-sm font-bold">
-                Demo video
-              </button> */}
             </div>
           </div>
         </DialogDescription>

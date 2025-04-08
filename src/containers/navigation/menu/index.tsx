@@ -122,9 +122,8 @@ const Menu = () => {
               >
                 Mangrove Restoration Tracker Tool
               </Link>
-              {process.env.NEXT_PUBLIC_VERCEL_ENV === 'dev' && (
-                <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
-              )}
+
+              <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
 
               <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
                 <CollapsibleTrigger showExpandIcon={false} className="p-0">

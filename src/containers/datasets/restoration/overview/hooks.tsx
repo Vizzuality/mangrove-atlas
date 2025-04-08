@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
+import { formatNumberNearestInteger } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
@@ -41,7 +41,7 @@ export function useMangroveRestoration(
     select: ({ data, metadata }) => ({
       ...metadata,
       ...data,
-      restorable_area_perc: numberFormat(data?.restorable_area_perc),
+      restorable_area_perc: formatNumberNearestInteger(data?.restorable_area_perc),
       location,
     }),
     ...queryOptions,

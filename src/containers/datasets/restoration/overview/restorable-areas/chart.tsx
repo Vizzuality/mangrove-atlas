@@ -1,4 +1,4 @@
-import { numberFormat } from 'lib/format';
+import { formatNumberNearestInteger } from 'lib/format';
 
 import Legend from 'containers/legend';
 
@@ -16,20 +16,20 @@ const RestorableAreasChart = ({ data }) => {
     {
       label: 'Total restorable area',
       color: '#7996F3',
-      percentage: numberFormat(restorable_area_perc),
+      percentage: formatNumberNearestInteger(restorable_area_perc),
       unit: restorableAreaUnit,
       value: restorable_area,
-      valueFormatted: numberFormat(restorable_area),
-      area: numberFormat(restorable_area),
+      valueFormatted: formatNumberNearestInteger(restorable_area),
+      area: formatNumberNearestInteger(restorable_area),
     },
     {
       label: `Mangrove area in ${year}`,
       color: '#ECECEF',
-      percentage: numberFormat(nonProtectedPercentage),
+      percentage: formatNumberNearestInteger(nonProtectedPercentage),
       unit: mangroveAreaUnit,
       value: mangrove_area_extent - restorable_area,
-      valueFormatted: numberFormat(mangrove_area_extent),
-      area: numberFormat(mangrove_area_extent),
+      valueFormatted: formatNumberNearestInteger(mangrove_area_extent),
+      area: formatNumberNearestInteger(mangrove_area_extent),
     },
   ];
 
