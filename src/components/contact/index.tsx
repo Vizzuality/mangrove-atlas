@@ -58,7 +58,6 @@ export function ContactForm() {
     // privacyPolicy
     setPrivacyPolicy,
   ] = useState(false);
-
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
