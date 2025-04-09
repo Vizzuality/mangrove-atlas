@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 
 import MapContainer from 'containers/map';
 import NavigationBar from 'containers/navigation/mobile';
+import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
 
 import Icon from 'components/ui/icon';
@@ -47,6 +48,7 @@ const MobileLayout = () => {
         />
       </Link>
       <NavigationBar />
+      <WelcomeIntroMessage />
       {mapView && <MapContainer mapId="default-mobile" />}
       {!mapView && <WidgetsContainer />}
     </div>
