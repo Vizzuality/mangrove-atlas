@@ -36,7 +36,7 @@ const WelcomeIntroMessage = () => {
       {/* TO - DO - fix this and improve dialog component*/}
       <DialogContent
         classNameContent="animate-none duration-0"
-        className="min-w-screen max-w-screen fixed top-0 left-0 right-0 space-y-6 p-0 text-black/85 shadow-sm sm:left-1/2 sm:top-1/2 sm:-translate-y-1/2 sm:-translate-x-1/2 sm:p-8 md:max-w-3xl"
+        className="min-w-screen max-w-screen fixed top-0 left-0 right-0 bottom-0 space-y-6 p-0 text-black/85 shadow-sm sm:left-1/2 sm:top-1/2 sm:-translate-y-1/2 sm:-translate-x-1/2 sm:p-8 md:max-w-3xl"
       >
         <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-bl-3xl sm:rounded-tl-3xl">
@@ -50,7 +50,7 @@ const WelcomeIntroMessage = () => {
               />
             </div>
           </div>
-          <div className="flex h-full flex-col justify-between space-y-4 p-6 sm:col-span-6">
+          <div className="flex h-[calc(100vh/2)] flex-col justify-between space-y-4 p-6 sm:col-span-6 sm:h-full">
             <DialogHeader className="space-y-6">
               <DialogTitle className="text-3xl font-light">
                 Thriving mangroves are key to the health of nature and effective climate action

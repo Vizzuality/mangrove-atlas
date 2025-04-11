@@ -36,20 +36,27 @@ const ClimateWatchNationalDashboard = () => {
     ],
   });
 
-  const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs();
-  const update = dataDocuments?.update;
-
   const {
     isFetching: isFetchingNDCSContentOverview,
     data: NDCSContentOverview,
     isFetched: isFetchedNDCSContentOverview,
   } = useClimateWatchNDCSContentOverview();
 
+  const { data: dataDocuments } = useClimateWatchNDCSCountriesDocs(
+    {
+      documentSlug: NDCSContentOverview?.document_slug,
+    },
+    {
+      enabled: !!NDCSContentOverview?.document_slug,
+    }
+  );
+  const update = dataDocuments?.update;
+
   const Indicators = [
     {
       label: 'Mitigation',
       value: false,
-      check: !!NDCSContentOverview?.mitigation_contribution_type ? 'yes' : 'no',
+      check: NDCSContentOverview?.mitigation_contribution_type === 'yes',
       info: 'NDC contains Mitigation?',
     },
     {
@@ -61,7 +68,7 @@ const ClimateWatchNationalDashboard = () => {
     {
       label: 'Adaptation',
       value: false,
-      check: NDCSContentOverview?.adaptation,
+      check: NDCSContentOverview?.adaptation === 'yes',
       info: 'NDC contains Adaptation?',
     },
     {
@@ -78,7 +85,8 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Update status',
-      value: update?.long_name,
+      value: update?.value,
+      url: update?.url,
       check: false,
       info: "Indicates whether this is the country's first NDC or whether it has been updated",
     },
@@ -119,8 +127,8 @@ const ClimateWatchNationalDashboard = () => {
           {data.widgetIntroduction && <p>{data.widgetIntroduction}</p>}
           <div className="space-y-5">
             <div dangerouslySetInnerHTML={{ __html: NDCSContentOverview?.indc_summary }} />
-            {Indicators.map(({ label, value, info, check }) => (
-              <Indicator key={label} label={label} value={value} info={info} check={check} />
+            {Indicators.map((indicator) => (
+              <Indicator key={indicator.label} {...indicator} />
             ))}
           </div>
           {<p className="pt-6 text-sm">(1) Compared to base year or to baseline scenario.</p>}

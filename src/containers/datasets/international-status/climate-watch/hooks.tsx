@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { orderBy } from 'lodash-es';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -17,6 +16,7 @@ import type {
   IndicatorsParams,
   Data,
   DataResponseContentOverview,
+  UseClimateWatchNDCSCountriesDocsParamsOptions,
 } from './types';
 
 // widget data
@@ -68,7 +68,7 @@ export function useClimateWatchNDCS(
 }
 
 export function useClimateWatchNDCSCountriesDocs(
-  params?: UseParamsOptions,
+  params?: UseClimateWatchNDCSCountriesDocsParamsOptions,
   queryOptions?: UseQueryOptions<DataResponseDocuments, Error>
 ) {
   const {
@@ -90,7 +90,6 @@ export function useClimateWatchNDCSCountriesDocs(
       },
       ...queryOptions,
     }).then((response) => response.data);
-
   return useQuery(
     ['climate-watch-ndcs-countries_documents', params, iso],
     fetchClimateWatchNDCSCountriesDocs,
@@ -98,7 +97,10 @@ export function useClimateWatchNDCSCountriesDocs(
       select: (data) => {
         return {
           ...data,
-          update: orderBy(data?.data?.[iso], ['ordering'], ['desc'])[0],
+          update: {
+            value: data?.data?.[iso].find(({ slug }) => params?.documentSlug === slug)?.long_name,
+            url: data?.data?.[iso].find(({ slug }) => params?.documentSlug === slug)?.url,
+          },
         };
       },
       ...queryOptions,
@@ -129,8 +131,9 @@ export function useClimateWatchNDCSContentOverview(
     ['climate-watch-ndcs-content_overview', iso],
     fetchClimateWatchNDCSContentOverview,
     {
-      select: ({ values }) =>
-        values.reduce((acc, item) => {
+      select: ({ values }) => {
+        const update = values.find(({ slug }) => slug === 'indc_summary');
+        const content = values.reduce((acc, item) => {
           const cleanedValue = item.value
             .replace(/^\"|\"$/g, '')
             .replace(/\\"/g, '')
@@ -141,7 +144,12 @@ export function useClimateWatchNDCSContentOverview(
           acc[item.slug] = cleanedValue;
           acc.document_slug = item.document_slug;
           return acc;
-        }, {}),
+        }, {});
+        return {
+          ...content,
+          documentSlug: update.document_slug,
+        };
+      },
       ...queryOptions,
     }
   );
