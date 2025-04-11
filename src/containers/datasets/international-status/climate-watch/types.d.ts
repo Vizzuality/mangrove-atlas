@@ -95,3 +95,7 @@ type IndicatorsParams = {
     'submission_type'
   ];
 };
+
+export type UseClimateWatchNDCSCountriesDocsParamsOptions = {
+  documentSlug?: string;
+};
