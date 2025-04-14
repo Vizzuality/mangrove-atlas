@@ -143,8 +143,9 @@ const IndicatorSource = ({
       <div className="col-span-1 flex justify-end space-x-2">
         <WidgetControls
           content={{
-            download: dataSource?.download_link,
-            info: dataSource?.layer_info,
+            link: dataSource?.download_link,
+            description: dataSource?.layer_info,
+            name: source,
           }}
         />
         <SwitchWrapper id={id}>
