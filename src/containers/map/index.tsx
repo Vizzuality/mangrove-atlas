@@ -4,20 +4,6 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeGuideAtom } from 'store/guide';
-import {
-  basemapAtom,
-  URLboundsAtom,
-  locationBoundsAtom,
-  interactiveLayerIdsAtom,
-  mapCursorAtom,
-} from 'store/map';
-import { printModeState } from 'store/print-mode';
-
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
@@ -26,19 +12,7 @@ import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
 
-import { useScreenWidth } from 'hooks/media';
-
-import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 // POPUPS
-import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
-import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
-import LocationPopup from 'containers/datasets/locations/map-popup';
-import RestorationPopup from 'containers/datasets/restoration/map-popup';
-import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
-import Helper from 'containers/help/helper';
-import DeleteDrawingButton from 'containers/map/delete-drawing-button';
-import Legend from 'containers/map/legend';
-import MobileLegend from 'containers/map/legend/mobile';
 
 import Map from 'components/map';
 import Controls from 'components/map/controls';
@@ -51,6 +25,29 @@ import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/ui/popup';
+import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
+import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
+import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
+import LocationPopup from 'containers/datasets/locations/map-popup';
+import RestorationPopup from 'containers/datasets/restoration/map-popup';
+import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
+import Helper from 'containers/help/helper';
+import DeleteDrawingButton from 'containers/map/delete-drawing-button';
+import Legend from 'containers/map/legend';
+import MobileLegend from 'containers/map/legend/mobile';
+import { useScreenWidth } from 'hooks/media';
+import cn from 'lib/classnames';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { activeGuideAtom } from 'store/guide';
+import {
+  basemapAtom,
+  URLboundsAtom,
+  locationBoundsAtom,
+  interactiveLayerIdsAtom,
+  mapCursorAtom,
+} from 'store/map';
+import { printModeState } from 'store/print-mode';
 import { breakpoints } from 'styles/styles.config';
 import type { RestorationPopUp, RestorationSitesPopUp, PopUpKey, LocationPopUp } from 'types/map';
 
@@ -157,7 +154,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
         }),
     }),
-    [URLBounds, locationId, queryClient]
+    [URLBounds, locationId, queryClient],
   );
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {
@@ -184,7 +181,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setLocationBounds(bbox as typeof locationBounds);
       }
     },
-    [setLocationBounds]
+    [setLocationBounds],
   );
 
   const handleUserDrawing = useCallback(
@@ -211,7 +208,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       void push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
     },
-    [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
+    [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams],
   );
 
   const handleDrawingUpdate = useCallback(
@@ -221,7 +218,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         customGeojson: { type: 'FeatureCollection', features: evt.features },
       }));
     },
-    [setDrawingToolState]
+    [setDrawingToolState],
   );
 
   const removePopup = (key?: PopUpKey) => {
@@ -233,22 +230,22 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
     const locationFeature = e?.features.find(
-      ({ layer }) => layer.id === 'country-boundaries-layer'
+      ({ layer }) => layer.id === 'country-boundaries-layer',
     );
 
     const protectedAreaFeature = e?.features.filter(
-      ({ layer }) => layer.id === 'mangrove_protected_areas'
+      ({ layer }) => layer.id === 'mangrove_protected_areas',
     );
 
     const restorationFeature = e?.features.find(({ layer }) => {
       return layer.id === 'mangrove_restoration-layer';
     });
     const restorationSitesFeature = e?.features.find(({ layer }) =>
-      layer.id.includes('mangrove_rest_sites')
+      layer.id.includes('mangrove_rest_sites'),
     );
 
     const iucnEcoregionFeature = e?.features.find(
-      ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
+      ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer',
     );
 
     if (locationFeature) {
@@ -316,7 +313,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           layer.id === 'country-boundaries-layer' ||
           layer.id === 'mangrove_protected_areas' ||
           layer.id === 'mangrove_iucn_ecoregion-layer' ||
-          layer.id === 'mangrove_restoration-layer'
+          layer.id === 'mangrove_restoration-layer',
       );
 
       // *ON MOUSE ENTER
@@ -328,7 +325,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               source: 'mangrove_restoration',
               id: hoveredStateId,
             },
-            { hover: false }
+            { hover: false },
           );
         }
 
@@ -339,7 +336,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             source: 'mangrove_restoration',
             id: hoveredStateId,
           },
-          { hover: true }
+          { hover: true },
         );
       }
 
@@ -352,7 +349,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             source: 'mangrove_restoration',
             id: hoveredStateId,
           },
-          { hover: false }
+          { hover: false },
         );
         hoveredStateId = null;
       }
@@ -362,7 +359,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setCursor('pointer');
       } else setCursor('grab');
     },
-    [cursor, map, isDrawingToolEnabled, customGeojson]
+    [cursor, map, isDrawingToolEnabled, customGeojson],
   );
 
   const handleMapLoad = useCallback(() => {

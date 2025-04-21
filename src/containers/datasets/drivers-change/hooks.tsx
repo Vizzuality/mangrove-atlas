@@ -18,7 +18,6 @@ import type {
 } from 'containers/datasets/drivers-change/types';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
 import API from 'services/api';
 
 const getColorKeys = (data: Data[]) =>
@@ -30,7 +29,7 @@ const getColorKeys = (data: Data[]) =>
   }, {} satisfies ColorKeysTypes);
 
 export function useMangroveDriversChange(
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
 ): DriversChangeData {
   const {
     query: { params: queryParams },

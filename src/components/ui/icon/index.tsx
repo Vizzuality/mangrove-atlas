@@ -7,7 +7,7 @@ export const Icon = ({ icon, className = 'w-5 h-5', style, description }: IconPr
     role="img"
     className={cx({
       'fill-current': true,
-      [className]: className,
+      [`${className}`]: className,
     })}
     viewBox={icon?.viewBox || '0 0 32 32'}
     style={style}

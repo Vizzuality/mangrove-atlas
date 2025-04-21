@@ -2,23 +2,20 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import { numberFormat } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import type { DataResponse, InternationalStatusTypes, Data } from './types';
 
 // widget data
 export function useMangroveInternationalStatus(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, { data: Data[] }>
+  queryOptions?: UseQueryOptions<DataResponse, Error, { data: Data[] }>,
 ): InternationalStatusTypes {
   const {
     query: { params: queryParams },
@@ -69,7 +66,7 @@ export function useMangroveInternationalStatus(
       },
 
       ...queryOptions,
-    }
+    },
   );
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;

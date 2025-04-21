@@ -1,6 +1,5 @@
-import Detail from 'containers/datasets/restoration/map-popup/detail';
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import Detail from 'containers/datasets/restoration/map-popup/detail';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 const Details = ({ data }: { data: RestorationPopUp }) => {

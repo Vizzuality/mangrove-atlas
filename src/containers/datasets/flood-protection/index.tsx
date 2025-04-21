@@ -1,10 +1,10 @@
+import { useRecoilState } from 'recoil';
+
 import {
   floodAreaPeriodAtom,
   floodPopulationPeriodAtom,
   floodStockPeriodAtom,
 } from 'store/widgets/flood-protection';
-
-import { useRecoilState } from 'recoil';
 
 import CoastalProtection from './coastal-protection';
 import { useMangrovesFloodProtection } from './hooks';

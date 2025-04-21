@@ -1,15 +1,13 @@
 import React, { useCallback, ReactElement, FC } from 'react';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { widgetsCollapsedAtom } from 'store/widgets';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import WidgetControls from 'components/widget-controls';
+import cn from 'lib/classnames';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { widgetsCollapsedAtom } from 'store/widgets';
 import { WidgetSlugType } from 'types/widget';
 
 import Info from './info.mdx';
@@ -72,7 +70,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           'z-2 group w-full rounded-4xl bg-white px-1 py-1 shadow-widget print:!w-[90%] md:ml-0':
             true,
           '!w-[100%] border-none !p-0 !shadow-none': info,
-          [className]: !!className,
+          [`${className}`]: !!className,
         })}
       >
         <div

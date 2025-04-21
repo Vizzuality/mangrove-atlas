@@ -1,6 +1,6 @@
-import Icon from 'components/ui/icon';
-
 import HEXAGON_SVG from 'svgs/map/hexagon.svg';
+
+import Icon from 'components/ui/icon';
 
 const ITEMS = [
   {

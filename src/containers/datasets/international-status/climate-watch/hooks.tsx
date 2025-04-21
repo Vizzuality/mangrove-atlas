@@ -5,10 +5,8 @@ import { AxiosResponse } from 'axios';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
 import { ClimateWatchAPI } from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import type {
   DataResponse,
@@ -23,7 +21,7 @@ import type {
 export function useClimateWatchNDCS(
   indicators: IndicatorsParams,
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },
@@ -57,7 +55,7 @@ export function useClimateWatchNDCS(
               ({ document_slug }) =>
                 document_slug === 'second_ndc' ||
                 document_slug === 'revised_first_ndc' ||
-                document_slug === 'first_ndc'
+                document_slug === 'first_ndc',
             ),
           },
         };
@@ -69,7 +67,7 @@ export function useClimateWatchNDCS(
 
 export function useClimateWatchNDCSCountriesDocs(
   params?: UseClimateWatchNDCSCountriesDocsParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponseDocuments, Error>
+  queryOptions?: UseQueryOptions<DataResponseDocuments, Error>,
 ) {
   const {
     query: { params: queryParams },
@@ -104,12 +102,12 @@ export function useClimateWatchNDCSCountriesDocs(
         };
       },
       ...queryOptions,
-    }
+    },
   );
 }
 
 export function useClimateWatchNDCSContentOverview(
-  queryOptions?: UseQueryOptions<DataResponseContentOverview, Error>
+  queryOptions?: UseQueryOptions<DataResponseContentOverview, Error>,
 ) {
   const {
     query: { params: queryParams },
@@ -151,6 +149,6 @@ export function useClimateWatchNDCSContentOverview(
         };
       },
       ...queryOptions,
-    }
+    },
   );
 }

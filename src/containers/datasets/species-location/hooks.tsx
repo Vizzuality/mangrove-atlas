@@ -4,8 +4,6 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { SpeciesLocationState } from 'store/widgets/species-location';
-
 import { useQuery, QueryClient } from '@tanstack/react-query';
 import type { QueryObserverOptions } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
@@ -13,15 +11,15 @@ import { useRecoilValue } from 'recoil';
 
 import { useLocations, useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
 import API from 'services/api';
+import { SpeciesLocationState } from 'store/widgets/species-location';
 
 import type { DataResponse } from './types';
 
 const QUERY_KEY = 'species-location';
 
 export function useMangroveSpeciesLocation<T>(
-  queryOptions?: QueryObserverOptions<DataResponse, Error, T>
+  queryOptions?: QueryObserverOptions<DataResponse, Error, T>,
 ) {
   const queryClient = new QueryClient();
 

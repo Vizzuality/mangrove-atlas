@@ -7,7 +7,6 @@ import {
   DropdownMenuTrigger,
 } from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
-
 import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
 
 interface Transifex {
@@ -69,7 +68,7 @@ const LanguageSelector = () => {
                 className="hover:bg-white"
                 onClick={handleChange}
               >
-                <span className=" hover:text-brand-800">{lang.name}</span>
+                <span className="hover:text-brand-800">{lang.name}</span>
               </button>
             </DropdownMenuItem>
           ))}

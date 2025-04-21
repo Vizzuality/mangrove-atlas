@@ -1,14 +1,12 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
 import React from 'react';
 
-import cn from 'lib/classnames';
-
-import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
-
 import { useSetRecoilState } from 'recoil';
 
 import Loading from 'components/ui/loading';
 import MultiSelect from 'components/ui/select-multi';
+import cn from 'lib/classnames';
+import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataDitesProperties } from '../types';
@@ -34,7 +32,7 @@ const FilterSites = ({
   filterKeys,
 }: FilterSitesProps) => {
   const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
-    RestorationSitesMapFilters
+    RestorationSitesMapFilters,
   );
 
   const handleFiltersApplication = () => {
@@ -57,7 +55,7 @@ const FilterSites = ({
 
   const areFiltersEmpty = useMemo(
     () => Object.values(filters).every((value) => value.length === 0),
-    [filters]
+    [filters],
   );
 
   return (

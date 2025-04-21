@@ -2,14 +2,12 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { analysisAtom } from 'store/analysis';
-import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom } from 'store/sidebar';
-
 import { useRecoilValue } from 'recoil';
 
 import { WIDGETS_BY_CATEGORY } from 'containers/widgets/constants';
-
+import { analysisAtom } from 'store/analysis';
+import { mapSettingsAtom } from 'store/map-settings';
+import { activeCategoryAtom } from 'store/sidebar';
 import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
@@ -36,7 +34,7 @@ export function useWidgets(): WidgetTypes[] {
 
     return widgets.filter(
       ({ categoryIds, locationType }) =>
-        categoryIds?.includes(categorySelected) && locationType.includes(currentLocation)
+        categoryIds?.includes(categorySelected) && locationType.includes(currentLocation),
     );
   }, [categorySelected, currentLocation, isAnalysisRunning, isMapSettingsVisible]);
 }
@@ -53,7 +51,7 @@ export function useWidgetsIdsByLocation(): WidgetSlugType[] {
       widgets
         .filter(({ locationType }) => locationType.includes(currentLocation))
         .map(({ slug }) => slug),
-    [currentLocation]
+    [currentLocation],
   );
 }
 
@@ -72,7 +70,7 @@ export function useWidgetsIdsByCategory(widgets) {
     // Also, ensure that the input widgets set does not contain more items than the current category
     // This is done by checking if every element in the widgets set is in the category set
     const areWidgetsOnlyFromCategory = [...widgetsSet].every((widget) =>
-      slugsCategorySet.has(widget)
+      slugsCategorySet.has(widget),
     );
 
     // Check for an exact match in terms of content and count

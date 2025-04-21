@@ -1,24 +1,20 @@
 import { useCallback, type MouseEvent } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { useRecoilState, useSetRecoilState } from 'recoil';
-
-import CATEGORY_OPTIONS from 'containers/navigation/constants';
-import widgets from 'containers/widgets/constants';
-import { LAYERS_BY_CATEGORY } from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
+import CATEGORY_OPTIONS from 'containers/navigation/constants';
+import widgets from 'containers/widgets/constants';
+import { LAYERS_BY_CATEGORY } from 'containers/widgets/constants';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
+import { activeCategoryAtom } from 'store/sidebar';
+import { activeWidgetsAtom } from 'store/widgets';
+import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 import type { Category } from 'types/category';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
-
-import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
@@ -29,7 +25,7 @@ const Category = () => {
       event.preventDefault();
       setCategory(encodeURIComponent(event.currentTarget.value as Category));
       const widgetsFiltered = widgets.filter((widget) =>
-        widget?.categoryIds?.includes(event.currentTarget.value as Category)
+        widget?.categoryIds?.includes(event.currentTarget.value as Category),
       );
       const activeWidgetsIds = widgetsFiltered.map((widget) => widget.slug);
       const activeLayersIds: ActiveLayers[] = LAYERS_BY_CATEGORY[
@@ -43,7 +39,7 @@ const Category = () => {
       setActiveWidgets(activeWidgetsIds);
       setActiveLayers(activeLayersIds);
     },
-    [setActiveWidgets, setActiveLayers, setCategory]
+    [setActiveWidgets, setActiveLayers, setCategory],
   );
 
   return (

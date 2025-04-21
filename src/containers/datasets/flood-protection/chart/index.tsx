@@ -1,5 +1,3 @@
-import cn from 'lib/classnames';
-
 import {
   BarChart,
   Bar,
@@ -12,6 +10,7 @@ import {
 } from 'recharts';
 
 import type { FloodProtectionPeriodId } from 'containers/datasets/flood-protection/types';
+import cn from 'lib/classnames';
 
 import { Data, Config } from '../types';
 
@@ -49,7 +48,7 @@ const Chart = ({
     <div
       className={cn({
         'relative h-full w-full': true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <ResponsiveContainer

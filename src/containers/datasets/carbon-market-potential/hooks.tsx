@@ -1,16 +1,13 @@
 import { useMemo } from 'react';
 
-import sortBy from 'lodash-es/sortBy';
-
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
+import sortBy from 'lodash-es/sortBy';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
+import { numberFormat } from 'lib/format';
 import API from 'services/api';
 
 import Tooltip from './tooltip';
@@ -50,7 +47,7 @@ const CATEGORY_DICTIONARY = {
 // widget data
 export function useCarbonMarketPotential(
   params?: UseParamsOptions,
-  queryOptions: UseQueryOptions<CarbonMarketPotentialData, unknown> = {} // API
+  queryOptions: UseQueryOptions<CarbonMarketPotentialData, unknown> = {}, // API
 ) {
   const {
     query: { params: queryParams },
@@ -84,14 +81,14 @@ export function useCarbonMarketPotential(
         metadata: { unit: null },
       },
       ...queryOptions,
-    }
+    },
   );
   const { isLoading, isFetched, isPlaceholderData, data } = query;
   const noData = isFetched && !data?.data?.length;
 
   const investibleBlueCarbonValue = useMemo(
     () => data?.data?.find((d) => d.label === label)?.value,
-    [data?.data, label]
+    [data?.data, label],
   );
 
   const chartData = sortBy(
@@ -117,7 +114,7 @@ export function useCarbonMarketPotential(
         ],
       };
     }),
-    'value'
+    'value',
   );
 
   const CONFIG = {
@@ -155,7 +152,7 @@ export function useCarbonMarketPotential(
       investibleBlueCarbonValue,
       config: CONFIG,
     }),
-    [CONFIG, investibleBlueCarbonValue, location, noData]
+    [CONFIG, investibleBlueCarbonValue, location, noData],
   );
 
   return useMemo(() => {

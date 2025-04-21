@@ -4,7 +4,7 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 export function orderByAttribute(
   layerIds: (WidgetSlugType | ContextualBasemapsId | 'custom-area')[],
-  layers: { id: string; opacity: string; visibility: Visibility }[]
+  layers: { id: string; opacity: string; visibility: Visibility }[],
 ) {
   const index = layerIds.reduce((map, id, index) => {
     map[id] = index;

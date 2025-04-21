@@ -1,12 +1,11 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilValue } from 'recoil';
+
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 
 import LegendItem from '../item';
 

@@ -1,28 +1,22 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import orderBy from 'lodash-es/orderBy';
-
 import { useRouter } from 'next/router';
-
-import { numberFormat, formatNumberNearestInteger } from 'lib/format';
-
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import orderBy from 'lodash-es/orderBy';
 import type { Visibility } from 'mapbox-gl';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
-import type { AnalysisResponse } from 'hooks/analysis';
-
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import type { AnalysisResponse } from 'hooks/analysis';
+import { numberFormat, formatNumberNearestInteger } from 'lib/format';
 import API, { AnalysisAPI } from 'services/api';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import type { UseParamsOptions } from 'types/widget';
 
 import Tooltip from './tooltip';
 import type { BlueCarbon, DataResponse } from './types';
@@ -41,7 +35,7 @@ const COLORS = {
 export function useMangroveBlueCarbon(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, AxiosError | CancelledError, BlueCarbon>,
-  onCancel?: () => void
+  onCancel?: () => void,
 ) {
   const {
     query: { params: queryParams },
@@ -99,7 +93,7 @@ export function useMangroveBlueCarbon(
           ...d,
           shortLabel: Number(d.indicator.split('-', 1)[0]),
         })),
-        'shortLabel'
+        'shortLabel',
       );
 
       const total = orderedData.reduce((prev, curr) => curr.value + prev, 0);

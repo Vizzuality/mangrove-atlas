@@ -4,17 +4,14 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import { useResetRecoilState, useRecoilValue } from 'recoil';
 
+import Icon from 'components/ui/icon';
+import cn from 'lib/classnames';
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { printModeState } from 'store/print-mode';
 import { locationToolAtom } from 'store/sidebar';
-
-import { useResetRecoilState, useRecoilValue } from 'recoil';
-
-import Icon from 'components/ui/icon';
-
 import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
 
 const SIZE = {

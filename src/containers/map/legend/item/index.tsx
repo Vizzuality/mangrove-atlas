@@ -1,17 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeGuideAtom } from 'store/guide';
-import { activeLayersAtom } from 'store/layers';
-
 import { useRecoilValue, useRecoilState } from 'recoil';
-
-import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
-import Helper from 'containers/help/helper';
-import { LAYERS } from 'containers/layers/constants';
-import WidgetWrapper from 'containers/widget';
-import { widgets } from 'containers/widgets/constants';
 
 import { Media } from 'components/media-query';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
@@ -19,15 +8,22 @@ import Icon from 'components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import Slider from 'components/ui/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
-import type { ActiveLayers } from 'types/layers';
-import type { WidgetSlugType } from 'types/widget';
-
+import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
+import Helper from 'containers/help/helper';
+import { LAYERS } from 'containers/layers/constants';
+import WidgetWrapper from 'containers/widget';
+import { widgets } from 'containers/widgets/constants';
+import cn from 'lib/classnames';
+import { activeGuideAtom } from 'store/guide';
+import { activeLayersAtom } from 'store/layers';
 import CLOSE_SVG from 'svgs/legend/close-legend.svg?sprite';
 import DRAG_SVG from 'svgs/legend/drag.svg?sprite';
 import HIDE_SVG from 'svgs/legend/hide.svg?sprite';
 import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
+import type { ActiveLayers } from 'types/layers';
+import type { WidgetSlugType } from 'types/widget';
 
 const LegendItem = ({
   id,
@@ -57,11 +53,11 @@ const LegendItem = ({
 
       setActiveLayers(layersWithVisibility);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   const nationalDashboardLayerName = activeLayers?.find((l) =>
-    l.id?.includes('mangrove_national_dashboard_layer')
+    l.id?.includes('mangrove_national_dashboard_layer'),
   )?.settings?.name;
 
   const removeLayer = useCallback(
@@ -71,7 +67,7 @@ const LegendItem = ({
       });
       setActiveLayers(updatedLayers);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   const layerName = (label) => {
@@ -89,13 +85,13 @@ const LegendItem = ({
 
       setActiveLayers(layersWithOpacity);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   const HELPER_ID = activeLayers?.[0]?.id;
 
   const layerId = Object.keys(MAP_LEGENDS).find(
-    (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k
+    (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k,
   );
   const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
 
@@ -187,7 +183,7 @@ const LegendItem = ({
               button: HELPER_ID === l.id ? '-top-2 -right-3 z-20' : 'hidden',
               tooltip: 'w-80',
             }}
-            tooltipPosition={{ top: -40, left: 210 }}
+            tooltipPosition={{ top: 140, left: 210 }}
             message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
           >
             <div className="ml-2 flex items-center">

@@ -1,15 +1,12 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { useRecoilState } from 'recoil';
-
-import { HIGH_RESOLUTION_EXTENT } from 'containers/datasets/contextual-layers/constants';
 
 import RadioGroup from 'components/ui/radio-group';
 import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
+import { HIGH_RESOLUTION_EXTENT } from 'containers/datasets/contextual-layers/constants';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
@@ -35,7 +32,7 @@ const HighResolutionExtentBasemap = () => {
             ] as ActiveLayers[]);
       setActiveLayers(layersUpdate);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   return (

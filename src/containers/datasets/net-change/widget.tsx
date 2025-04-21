@@ -1,25 +1,21 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { analysisAtom } from 'store/analysis';
-import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
-
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import NoData from 'containers/widgets/no-data';
 
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
+import { analysisAtom } from 'store/analysis';
+import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
-
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
@@ -66,7 +62,7 @@ const NetChangeWidget = () => {
       endYear,
     },
     { enabled: !isCanceled },
-    handleQueryCancellation
+    handleQueryCancellation,
   );
 
   const handleTryAgain = useCallback(async () => {

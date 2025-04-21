@@ -1,13 +1,11 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { formatAxis } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Visibility } from 'mapbox-gl';
 
-import type { UseParamsOptions } from 'types/widget';
-
+import { formatAxis } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import { COLORS, LABELS } from './constants';
 import CustomTooltip from './tooltip';
@@ -38,7 +36,7 @@ const getColorKeys = (data: Data[]) =>
       ...acc,
       [d.category]: COLORS[d.category],
     }),
-    []
+    [],
   );
 
 const REPORTS = [
@@ -90,7 +88,7 @@ type DataParsed = {
 // widget data
 export function useMangroveEcoregions(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, DataParsed>
+  queryOptions?: UseQueryOptions<DataResponse, Error, DataParsed>,
 ) {
   const fetchMangroveIUCNEcoregions = () =>
     API.request({
@@ -163,7 +161,7 @@ export function useLayers({
   };
   const COLORS = Object.keys(OVERALL_ASSESSMENT).reduce(
     (acc, value) => [...acc, [value, OVERALL_ASSESSMENT[value]]].flat(),
-    []
+    [],
   );
 
   return [

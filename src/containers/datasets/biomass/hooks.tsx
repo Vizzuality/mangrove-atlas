@@ -4,25 +4,20 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
-
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { BiomassYearSettings } from 'store/widgets/biomass';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import type { AnalysisResponse } from 'hooks/analysis';
-
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import type { AnalysisResponse } from 'hooks/analysis';
+import { numberFormat } from 'lib/format';
 import API, { AnalysisAPI } from 'services/api';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { BiomassYearSettings } from 'store/widgets/biomass';
+import type { UseParamsOptions } from 'types/widget';
 
 import Tooltip from './tooltip';
 import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
@@ -42,7 +37,7 @@ const getColorKeys = (data: Data[] = []) =>
 export function useMangroveBiomass(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>,
-  onCancel?: () => void
+  onCancel?: () => void,
 ): BiomassData {
   const currentYear = useRecoilValue(BiomassYearSettings);
   const { customGeojson } = useRecoilValue(drawingToolAtom);
@@ -91,7 +86,7 @@ export function useMangroveBiomass(
         },
       }).then(({ data }) => data);
     },
-    [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params, onCancel]
+    [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params, onCancel],
   );
 
   const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveBiomass, {
@@ -115,7 +110,7 @@ export function useMangroveBiomass(
     const selectedYear = currentYear || years?.[years?.length - 1];
     const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
     const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
-      ({ year }) => year === selectedYear
+      ({ year }) => year === selectedYear,
     )?.value;
 
     const unit = data?.metadata?.units?.value;

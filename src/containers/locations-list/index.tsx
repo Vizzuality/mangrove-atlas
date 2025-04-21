@@ -4,25 +4,20 @@ import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { locationBoundsAtom } from 'store/map';
-import { mapSettingsAtom } from 'store/map-settings';
-
 import turfBbox from '@turf/bbox';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { useScreenWidth } from 'hooks/media';
-import { useSearch } from 'hooks/search';
-
-import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
-import { Location, LocationTypes } from 'containers/datasets/locations/types';
-
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
+import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
+import { Location, LocationTypes } from 'containers/datasets/locations/types';
+import { useScreenWidth } from 'hooks/media';
+import { useSearch } from 'hooks/search';
+import cn from 'lib/classnames';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { locationBoundsAtom } from 'store/map';
+import { mapSettingsAtom } from 'store/map-settings';
 import { breakpoints } from 'styles/styles.config';
-
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const locationNames = {
@@ -73,8 +68,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         location.location_type === 'worldwide'
           ? ''
           : location.location_type === 'country'
-          ? location.iso
-          : location.location_id;
+            ? location.iso
+            : location.location_id;
       const url = `/${locationType}/${locationId}?${queryParams !== undefined ? queryParams : ''}`;
 
       replace(url, null);
@@ -103,7 +98,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       resetMapSettingsState,
       setDrawingToolState,
       setDrawingUploadToolState,
-    ]
+    ],
   );
 
   const renderRow = ({

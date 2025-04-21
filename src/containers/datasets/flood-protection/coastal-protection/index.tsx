@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';
-
+import cn from 'lib/classnames';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 const CoastalProtection = () => {

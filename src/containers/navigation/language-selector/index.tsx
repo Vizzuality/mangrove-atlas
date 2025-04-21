@@ -1,9 +1,5 @@
 import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
-import cn from 'lib/classnames';
-
-import Helper from 'containers/help/helper';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +7,8 @@ import {
   DropdownMenuTrigger,
 } from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
-
+import Helper from 'containers/help/helper';
+import cn from 'lib/classnames';
 import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
 
 interface Transifex {

@@ -2,21 +2,17 @@ import { FC } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { useRecoilState } from 'recoil';
 
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import Category from 'containers/categories-menu';
 import { LocationTypes } from 'containers/datasets/locations/types';
 import Helper from 'containers/help/helper';
 import { widgets } from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
-
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
+import { activeWidgetsAtom } from 'store/widgets';
 import ALERT_SVG from 'svgs/ui/alert.svg?sprite';
 
 const HELPER_ID = 'menu-categories';
@@ -35,7 +31,7 @@ const WidgetsDeck: FC = () => {
     .map(({ slug }) => slug);
 
   const filteredWidgetsToDisplay = activeWidgetsFilteredByLocationType.filter(
-    (element) => activeWidgets.includes(element) && element !== 'widgets_deck_tool'
+    (element) => activeWidgets.includes(element) && element !== 'widgets_deck_tool',
   );
 
   return (

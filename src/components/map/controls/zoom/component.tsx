@@ -2,10 +2,8 @@ import { useCallback, MouseEvent } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from 'lib/classnames';
-
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
 
@@ -27,7 +25,7 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
 
       map.zoomIn();
     },
-    [map]
+    [map],
   );
 
   const decreaseZoom = useCallback(
@@ -36,11 +34,11 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
       if (!map) return null;
       map.zoomOut();
     },
-    [map]
+    [map],
   );
 
   return (
-    <div className={cn({ 'flex flex-col': true, [className]: !!className })}>
+    <div className={cn({ 'flex flex-col': true, [`${className}`]: !!className })}>
       <button
         className={cn({
           [COMMON_CLASSES]: true,

@@ -1,7 +1,7 @@
-import cn from 'lib/classnames';
-
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { CgRadioCheck } from 'react-icons/cg';
+
+import cn from 'lib/classnames';
 
 import type { RadioOption } from '../types';
 
@@ -19,7 +19,7 @@ const RadioGroupItem = ({
       className={cn({
         'flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85 data-[state=checked]:border-4 data-[state=checked]:border-brand-800':
           true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
       value={option.value}
       id={option.value}

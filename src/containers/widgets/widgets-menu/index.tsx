@@ -1,22 +1,19 @@
 import React, { useCallback, FC } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { Checkbox } from '@radix-ui/react-checkbox';
 import type { Visibility } from 'mapbox-gl';
 import { FaCheck } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 
+import { CheckboxIndicator } from 'components/ui/checkbox';
 import { LAYERS } from 'containers/layers/constants';
 import { widgets as rawWidgets } from 'containers/widgets/constants';
 import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
 import { findCategoryByWidgets } from 'containers/widgets/utils';
-
-import { CheckboxIndicator } from 'components/ui/checkbox';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
+import { activeCategoryAtom } from 'store/sidebar';
+import { activeWidgetsAtom } from 'store/widgets';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
@@ -59,7 +56,7 @@ const WidgetsMenu: FC = () => {
       if (updatedWidgets) setCategory(newCategory);
     },
 
-    [activeWidgets, setActiveWidgets, setCategory]
+    [activeWidgets, setActiveWidgets, setCategory],
   );
 
   const handleLayers = useCallback(
@@ -70,7 +67,7 @@ const WidgetsMenu: FC = () => {
       setActiveLayers(layersUpdate);
     },
 
-    [activeLayers, activeLayersIds, setActiveLayers]
+    [activeLayers, activeLayersIds, setActiveLayers],
   );
 
   return (

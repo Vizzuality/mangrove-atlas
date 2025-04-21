@@ -68,7 +68,7 @@ const Legend = ({ title, subtitle, items, variant = 'vertical' }: LegendTypes) =
               </div>
             </div>
           );
-        }
+        },
       )}
     </div>
   );

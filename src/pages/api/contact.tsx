@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { Resend } from 'resend';
 
 // Define types for the email template props
@@ -28,7 +29,7 @@ const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 // Define response types
 type ContactResponse = {
   message?: string;
-  data?: any;
+  data?: unknown;
   error?: string;
 };
 

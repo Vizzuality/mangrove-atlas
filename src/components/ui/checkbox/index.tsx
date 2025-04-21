@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import cn from 'lib/classnames';
-
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const CheckboxIndicator = ({
@@ -17,7 +15,7 @@ const CheckboxIndicator = ({
     {...props}
     className={cn({
       'flex items-center justify-center p-px text-brand-400': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
   >
     {children}
@@ -33,7 +31,7 @@ const Checkbox = React.forwardRef<
     className={cn({
       'shrink-0 rounded border-2 border-brand-800/50 text-brand-800 disabled:cursor-not-allowed disabled:opacity-50 data-[state-checked]:border-4 data-[state-checked]:bg-brand-800 data-[state-checked]:text-white':
         true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
     {...props}
   >

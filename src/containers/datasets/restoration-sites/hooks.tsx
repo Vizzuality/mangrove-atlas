@@ -2,28 +2,25 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import {
-  RestorationSitesMapFilters,
-  RestorationSitesFiltersApplication,
-} from 'store/widgets/restoration-sites';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
 import API from 'services/api';
+import {
+  RestorationSitesMapFilters,
+  RestorationSitesFiltersApplication,
+} from 'store/widgets/restoration-sites';
+import type { UseParamsOptions } from 'types/widget';
 
 import type { Data, DataResponse, DataFilters } from './types';
 
 // widget data
 export function useMangroveRestorationSites(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },
@@ -59,13 +56,13 @@ export function useMangroveRestorationSites(
         };
       },
       ...queryOptions,
-    }
+    },
   );
 }
 
 export function useMangroveRestorationSitesFilters(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, DataFilters>
+  queryOptions?: UseQueryOptions<DataResponse, Error, DataFilters>,
 ) {
   const {
     query: { params: queryParams },
@@ -93,7 +90,7 @@ export function useMangroveRestorationSitesFilters(
         data,
       }),
       ...queryOptions,
-    }
+    },
   );
 }
 

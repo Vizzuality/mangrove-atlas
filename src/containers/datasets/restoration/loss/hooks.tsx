@@ -1,22 +1,19 @@
 import { useRouter } from 'next/router';
 
-import { formatNumberNearestInteger } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import { formatNumberNearestInteger } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import type { Data, DataResponse } from './types';
 
 const getLossData = (data, unit) => {
   const lossData = data?.filter(
-    ({ indicator }) => indicator !== 'lost_area' && indicator !== 'mangrove_area'
+    ({ indicator }) => indicator !== 'lost_area' && indicator !== 'mangrove_area',
   );
 
   // TO DO - this should come from API
@@ -40,7 +37,7 @@ const getLossData = (data, unit) => {
       ...acc,
       [indicator]: colorsScale[index],
     }),
-    {}
+    {},
   );
 
   return dataParsed.map((d, index) => ({
@@ -55,7 +52,7 @@ const getLossData = (data, unit) => {
 // widget data
 export function useMangroveDegradationAndLoss(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },

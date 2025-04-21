@@ -1,14 +1,7 @@
 import { useMemo, useCallback } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
-
-import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
-import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import {
   DropdownMenu,
@@ -17,9 +10,12 @@ import {
   DropdownMenuTrigger,
 } from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
-import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
-
+import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 const DateSelect = ({
   id,
@@ -34,17 +30,17 @@ const DateSelect = ({
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const layerToUpdate = useMemo(
     () => activeLayers?.find((layer) => layer.id === id),
-    [activeLayers]
+    [activeLayers],
   );
 
   const selectedDate = useMemo(
     () => layerToUpdate?.settings?.date || dates?.[dates.length - 1]?.value,
-    [dates, layerToUpdate]
+    [dates, layerToUpdate],
   );
 
   const labelToDisplay = useMemo(
     () => dates?.find((d) => d.value === selectedDate)?.label,
-    [dates, selectedDate]
+    [dates, selectedDate],
   );
 
   const handleDate = useCallback(
@@ -64,7 +60,7 @@ const DateSelect = ({
         ]);
       }
     },
-    [layerToUpdate, activeLayers, id, setActiveLayers]
+    [layerToUpdate, activeLayers, id, setActiveLayers],
   );
 
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);

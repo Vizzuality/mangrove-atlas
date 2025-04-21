@@ -1,17 +1,11 @@
 import { useCallback, useMemo, FC } from 'react';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { locationToolAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import WidgetsLayout from 'layouts/widgets';
-
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import Category from 'containers/categories-menu';
 import { WIDGETS } from 'containers/datasets';
 import CloseHelpGuide from 'containers/help/close';
@@ -19,14 +13,15 @@ import Helper from 'containers/help/helper';
 import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
-
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+import WidgetsLayout from 'layouts/widgets';
+import cn from 'lib/classnames';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { locationToolAtom } from 'store/sidebar';
+import { activeWidgetsAtom } from 'store/widgets';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
-import { WidgetTypes } from 'types/widget';
-
 import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
+import { WidgetTypes } from 'types/widget';
 
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
@@ -84,7 +79,7 @@ const WidgetsContainer: FC = () => {
       return widgets.filter(({ slug }) => ANALYSIS_WIDGETS_SLUGS.includes(slug));
     }
     return enabledWidgets.filter(
-      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool'
+      ({ slug }) => activeWidgets?.includes(slug) || slug === 'widgets_deck_tool',
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 

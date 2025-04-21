@@ -1,11 +1,9 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-
 import { useRecoilValue } from 'recoil';
 
 import { useLayers, useSource } from 'containers/datasets/drivers-change/hooks';
-
+import { activeLayersAtom } from 'store/layers';
 import type { LayerProps } from 'types/layers';
 
 const MangrovesLayer = ({ beforeId, id }: LayerProps) => {

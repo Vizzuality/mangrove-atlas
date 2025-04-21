@@ -5,17 +5,14 @@ import { useMap } from 'react-map-gl';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { mapViewAtom } from 'store/sidebar';
-
 import { useRecoilValue } from 'recoil';
 
+import Icon from 'components/ui/icon';
 import MapContainer from 'containers/map';
 import NavigationBar from 'containers/navigation/mobile';
 import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
-
-import Icon from 'components/ui/icon';
-
+import { mapViewAtom } from 'store/sidebar';
 import LOGO_MOBILE_SVG from 'svgs/logo-mobile.svg?sprite';
 
 const MobileLayout = () => {

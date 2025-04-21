@@ -1,24 +1,20 @@
 import { useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { habitatChangeStartYear, habitatChangeEndYear } from 'store/widgets/habitat-change';
-
 import { useRecoilState } from 'recoil';
-
-import NoData from 'containers/widgets/no-data';
 
 import Chart from 'components/chart';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
+import { habitatChangeStartYear, habitatChangeEndYear } from 'store/widgets/habitat-change';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
-
 import TRIANGLE_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -172,7 +168,7 @@ const HabitatExtent = () => {
               icon={ARROW_SVG}
               className={cn({
                 'inline-block h-2 w-2 fill-current text-brand-800': true,
-                'rotate-180 transform ': limit === 10,
+                'rotate-180 transform': limit === 10,
               })}
               description="Arrow"
             />

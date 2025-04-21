@@ -2,12 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
-
+import cn from 'lib/classnames';
 import SHARE_SVG from 'svgs/map/share.svg?sprite';
 
 export const Share = ({
@@ -30,8 +28,8 @@ export const Share = ({
     setEmbeddedLink(
       `<iframe src="${window.location.origin}/embedded${asPath.slice(
         1,
-        asPath.length
-      )}" title="Global Mangrove Watch"></iframe>`
+        asPath.length,
+      )}" title="Global Mangrove Watch"></iframe>`,
     );
   }, [asPath]);
 
@@ -62,7 +60,7 @@ export const Share = ({
         .catch((err: ErrorEvent) => {
           console.info(err.message);
         }),
-    [embeddedLink]
+    [embeddedLink],
   );
 
   return (
@@ -76,7 +74,7 @@ export const Share = ({
                   className={cn({
                     'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
-                    [className]: !!className,
+                    [`${className}`]: !!className,
                   })}
                 >
                   <Icon
@@ -104,7 +102,7 @@ export const Share = ({
                   </div>
                   <div>
                     <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
-                    <div className="flex h-12  items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
+                    <div className="flex h-12 items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
                       <p className="truncate">{embeddedLink}</p>
                       <button
                         onClick={copyEmbeddedCode}
@@ -131,7 +129,7 @@ export const Share = ({
               className={cn({
                 'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
-                [className]: !!className,
+                [`${className}`]: !!className,
               })}
             >
               <Icon

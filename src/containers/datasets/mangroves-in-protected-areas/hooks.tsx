@@ -4,18 +4,15 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import { numberFormat } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import { COLORS } from './constants';
 import CustomTooltip from './tooltip';
@@ -52,7 +49,7 @@ type ProtectionType = {
 // widget data
 export function useMangrovesInProtectedAreas(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
+  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>,
 ) {
   const units = ['ha', 'km²'];
 
@@ -107,7 +104,7 @@ export function useMangrovesInProtectedAreas(
         label: key,
         color: COLORS[key],
       })),
-    []
+    [],
   );
   return useQuery(['protected-areas', restParams, location_id], fetchMangroveProtectedAreas, {
     select: (data) => ({
@@ -148,7 +145,7 @@ export function useMangrovesInProtectedAreas(
                     >
                       <tspan alignmentBaseline="middle" fill="rgba(0,0,0,0.85)" fontSize="28">
                         {numberFormat(
-                          (data?.data?.[0].protected_area * 100) / data?.data?.[0].total_area
+                          (data?.data?.[0].protected_area * 100) / data?.data?.[0].total_area,
                         )}{' '}
                         %
                       </tspan>

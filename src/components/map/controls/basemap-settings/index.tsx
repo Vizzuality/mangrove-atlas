@@ -1,16 +1,13 @@
-import cn from 'lib/classnames';
-
-import InfoHiRes from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
-import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
-import Helper from 'containers/help/helper';
-
 import Basemaps from 'components/contextual/basemaps';
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
 import HighResolutionExtentBasemap from 'components/contextual/hi-res-extent-basemap';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
-
+import InfoHiRes from 'containers/datasets/contextual-layers/hi-res-extent/info.mdx';
+import Info from 'containers/datasets/contextual-layers/planet/info.mdx';
+import Helper from 'containers/help/helper';
+import cn from 'lib/classnames';
 import BASEMAP_SETTINGS_SVG from 'svgs/map/basemap-settings.svg?sprite';
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
@@ -24,7 +21,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               className={cn({
                 'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
-                [className]: !!className,
+                [`${className}`]: !!className,
               })}
             >
               <Icon

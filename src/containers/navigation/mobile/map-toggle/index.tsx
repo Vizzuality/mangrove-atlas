@@ -1,14 +1,11 @@
 import React from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-import { mapViewAtom } from 'store/sidebar';
-
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
+import { mapViewAtom } from 'store/sidebar';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const MapToggle = () => {

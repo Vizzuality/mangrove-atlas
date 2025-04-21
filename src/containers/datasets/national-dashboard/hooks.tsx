@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
@@ -10,10 +8,8 @@ import type { Visibility } from 'mapbox-gl';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import { COLORS } from './constants';
 import type { Data, DataResponse, LayerSettingsType } from './types';
@@ -23,18 +19,13 @@ const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 // widget data
 export function useNationalDashboard(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },
   } = useRouter();
-  const { locationType, id } = useMemo(() => {
-    return {
-      locationType: queryParams?.[0] as LocationTypes,
-      id: queryParams?.[1],
-    };
-  }, [queryParams]);
-
+  const locationType = queryParams?.[0] as LocationTypes;
+  const id = queryParams?.[1];
   const {
     data: { id: currentLocation, location_id, iso },
   } = useLocation(id, locationType);
@@ -49,11 +40,7 @@ export function useNationalDashboard(
       },
     }).then((response) => response.data);
 
-  const queryKey = useMemo(() => {
-    return ['national_dashboard', JSON.stringify(params), location_id];
-  }, [params, location_id]);
-
-  return useQuery(queryKey, fetchMangroveNationalDashboard, {
+  return useQuery(['national_dashboard', params, location_id], fetchMangroveNationalDashboard, {
     select: (data) => ({
       ...data,
       locationIso: iso,

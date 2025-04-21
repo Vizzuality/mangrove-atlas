@@ -1,14 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeLayersAtom } from 'store/layers';
-import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
-
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import NoData from 'containers/widgets/no-data';
 
 import Chart from 'components/chart';
 import DateSelect from 'components/planet-date-select';
@@ -16,12 +8,16 @@ import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { activeLayersAtom } from 'store/layers';
+import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
-
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
@@ -41,7 +37,7 @@ const AlertsWidget = () => {
 
   const isActive = useMemo(
     () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
-    [activeLayers]
+    [activeLayers],
   );
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
@@ -53,7 +49,7 @@ const AlertsWidget = () => {
       ...(uploadedGeojson && { geometry: uploadedGeojson }),
     },
     { enabled: !isCanceled },
-    handleQueryCancellation
+    handleQueryCancellation,
   );
 
   const handleTryAgain = useCallback(async () => {

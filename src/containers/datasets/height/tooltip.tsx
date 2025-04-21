@@ -28,7 +28,7 @@ const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
         if (Number(a.dataKey.split('-', 1)) < Number(b.dataKey.split('-', 1))) return 1;
         return 0;
       }),
-    [payload]
+    [payload],
   );
 
   if (!active) return null;

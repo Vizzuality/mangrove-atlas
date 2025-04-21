@@ -1,15 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 
 import isEmpty from 'lodash-es/isEmpty';
-
-import cn from 'lib/classnames';
-
-import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
-
 import { useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
 import Loading from 'components/ui/loading';
+import cn from 'lib/classnames';
+import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 import { BUTTON_STYLES } from 'styles/widgets';
 
@@ -23,7 +20,7 @@ const RestorationSitesWidget = () => {
 
   // global filters state to update query
   const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
-    RestorationSitesMapFilters
+    RestorationSitesMapFilters,
   );
 
   const [open, setOpen] = useState(false);

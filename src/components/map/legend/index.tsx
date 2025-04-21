@@ -20,7 +20,7 @@ export const Legend: React.FC<LegendProps> = ({
       className={cn({
         'relative flex grow flex-col overflow-hidden': true,
         hidden: !isChildren,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       {isChildren && (

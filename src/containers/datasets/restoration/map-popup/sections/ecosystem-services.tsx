@@ -1,6 +1,5 @@
-import RestorationDataGroup from 'containers/datasets/restoration/map-popup/restoration-data-group';
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import RestorationDataGroup from 'containers/datasets/restoration/map-popup/restoration-data-group';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 

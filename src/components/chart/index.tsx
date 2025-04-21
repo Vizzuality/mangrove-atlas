@@ -1,7 +1,5 @@
 import { createElement } from 'react';
 
-import cn from 'lib/classnames';
-
 import {
   PieChart,
   BarChart,
@@ -19,9 +17,37 @@ import {
   XAxis,
   YAxis,
   ReferenceLine,
+  YAxisProps,
 } from 'recharts';
 
+import cn from 'lib/classnames';
+
 import Brush from './brush';
+
+type ChartRecord<T> = Record<string, T>;
+
+type PieChartData = {
+  label: string;
+  value: number;
+  customLabel?: string;
+};
+
+type BarChartData = {
+  category: string;
+  series: number[];
+  label?: object;
+  color?: string;
+  itemColor?: string;
+  dot?: object;
+  fill?: string;
+  stroke?: string;
+  [key: string]: unknown;
+};
+
+type LineChartData = {
+  x: number;
+  y: number;
+};
 
 const DEFAULTVALUES = {
   pie: {
@@ -38,7 +64,79 @@ const ChartsMap = new Map([
   ['composed', ComposedChart],
 ]);
 
-const Chart = ({ config, className }: { config: any; className?: string }) => {
+const Chart = ({
+  config,
+  className,
+}: {
+  config: {
+    data: Array<{ color: string; [key: string]: unknown }>;
+    margin?: { top: number; right: number; left: number; bottom: number };
+    type?: 'pie' | 'bar' | 'line' | 'composed';
+    height?: number;
+    width?: number;
+    layout?: 'horizontal' | 'vertical';
+    stackOffset?: string;
+    tooltip?: object;
+    cartesianGrid?: object;
+    cartesianAxis?: object;
+    xAxis?: {
+      tick?: object;
+      tickLine?: boolean;
+      tickCount?: number;
+      tickMargin?: number;
+      tickSize?: number;
+      axisLine?: boolean;
+      orientation?: 'top' | 'bottom';
+      type?: 'number' | 'category';
+      domain?: [number, number];
+      scale?: 'linear' | 'band';
+      allowDataOverflow?: boolean;
+      hide?: boolean;
+      mirror?: boolean;
+      interval?: number;
+      scaleToFit?: boolean;
+      reversed?: boolean;
+      allowDuplicatedCategory?: boolean;
+      ticks?: number[];
+      stroke?: string;
+      strokeWidth?: number;
+      fontSize?: string;
+      fill?: string;
+      textShadow?: string;
+      fontFamily?: string;
+      fontWeight?: string;
+      fontStyle?: string;
+      fontVariant?: string;
+      fontStretch?: string;
+      fontSynthesis?: string;
+      textAnchor?: string;
+      angle?: number;
+      dy?: number;
+      dx?: number;
+      dataKey?: string;
+    };
+    yAxis?: YAxisProps;
+    chartBase: {
+      pies?: ChartRecord<PieChartData>;
+      bars?: ChartRecord<BarChartData>;
+      lines?: ChartRecord<LineChartData>;
+      bar?: BarChartData;
+    };
+    xKey?: string;
+    referenceLines?: object[];
+    customBrush?: boolean;
+    patterns?: Record<
+      string,
+      { attributes: object; children?: Record<string, { tag: string; [key: string]: unknown }> }
+    >;
+    gradients?: Record<string, { attributes: object; stops?: Record<string, object> }>;
+    onBrushEnd?: (startIndex: number, endIndex: number) => void;
+    startIndex?: number;
+    endIndex?: number;
+    dataKey?: string;
+  };
+  className?: string;
+}) => {
   const {
     data,
     margin = {
@@ -70,13 +168,13 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
   } = config;
 
   const { pies, bars, lines, bar } = chartBase;
-  const Chart = ChartsMap.get(type);
+  const ChartComponent = ChartsMap.get(type) as React.ElementType;
 
   return (
     <div
       className={cn({
         'relative h-full w-full': true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <ResponsiveContainer
@@ -84,7 +182,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
         height={height || 250}
         className="relative w-full flex-1"
       >
-        <Chart
+        <ChartComponent
           stackOffset={stackOffset}
           height={height}
           width={width}
@@ -101,7 +199,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                 <linearGradient key={`lg_${key}`} {...gradients[key].attributes}>
                   {gradients[key].stops &&
                     Object.keys(gradients[key].stops).map((sKey) => (
-                      <stop key={`st_${sKey}`} {...gradients[key].stops[sKey]} />
+                      <stop key={`st_${sKey}`} {...gradients[key]?.stops?.[sKey]} />
                     ))}
                 </linearGradient>
               ))}
@@ -111,12 +209,15 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                 <pattern key={`pattern_${key}`} {...patterns[key].attributes}>
                   {patterns[key].children &&
                     Object.keys(patterns[key].children).map((iKey) => {
-                      const { tag } = patterns[key].children[iKey];
+                      const child = patterns[key]?.children?.[iKey];
+                      if (child && 'tag' in child) {
+                        const { tag } = child;
 
-                      return createElement(tag, {
-                        key: iKey,
-                        ...patterns[key].children[iKey],
-                      });
+                        return createElement(tag, {
+                          key: iKey,
+                          ...patterns[key]?.children?.[iKey],
+                        });
+                      }
                     })}
                 </pattern>
               ))}
@@ -138,7 +239,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                 fontSize: '12px',
                 fill: 'rgba(0,0,0,0.54)',
                 textShadow: '0 2 4 0 rgba(0,0,0,0.5)',
-                ...xAxis.tick,
+                ...xAxis?.tick,
               }}
               {...xAxis}
             />
@@ -147,13 +248,13 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
           {yAxis && (
             <YAxis
               axisLine={false}
-              orientation={yAxis.orientation || 'left'}
+              orientation={yAxis?.orientation || 'left'}
               tickMargin={0}
               tickLine={false}
               {...yAxis}
             />
           )}
-          {bar && <Bar dataKey={dataKey} {...bar} />}
+          {bar && dataKey && <Bar dataKey={dataKey} {...bar} />}
           {bars &&
             Object.keys(bars).map((key) => {
               return (
@@ -180,18 +281,21 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
                   startAngle={90}
                   endAngle={-270}
                   {...pies[key]}
+                  // @ts-expect-error legacy types
                   {...DEFAULTVALUES[type]}
                 >
                   {data.map((d, i) => (
-                    <Cell key={`cell-${i}`} fill={d.color} />
+                    <Cell key={`cell-${i}`} fill={(d as { color: string }).color} />
                   ))}
                   {pies[key].customLabel && (
-                    <Label width={30} position="center" content={pies[key].customLabel} />
+                    <Label width={30} position="center" content={() => pies[key].customLabel} />
                   )}
                 </Pie>
               );
             })}
-          {referenceLines && referenceLines.map((line) => <ReferenceLine key={line} {...line} />)}
+          {referenceLines &&
+            // @ts-expect-error legacy types
+            referenceLines.map((line) => <ReferenceLine key={line.key} {...line} />)}
           {tooltip && <Tooltip {...tooltip} />}
           {/* {brush && (
             <BrushRecharts
@@ -203,9 +307,9 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
               alwaysShowText={false}
             />
           )} */}
-        </Chart>
+        </ChartComponent>
       </ResponsiveContainer>
-      {customBrush && (
+      {customBrush && height && (
         <Brush
           data={data}
           width="100%"

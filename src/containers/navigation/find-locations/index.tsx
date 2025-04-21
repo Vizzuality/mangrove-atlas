@@ -1,20 +1,16 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { Dialog, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
+import Helper from 'containers/help/helper';
+import LocationDialogContent from 'containers/location-dialog-content';
+import cn from 'lib/classnames';
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
 import { activeGuideAtom } from 'store/guide';
 import { locationsModalAtom } from 'store/locations';
 import { locationToolAtom } from 'store/sidebar';
-
-import { useRecoilState, useRecoilValue } from 'recoil';
-
-import Helper from 'containers/help/helper';
-import LocationDialogContent from 'containers/location-dialog-content';
-
-import { Dialog, DialogTrigger } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
@@ -78,7 +74,7 @@ const FindLocations = () => {
           >
             <button
               onClick={handleOnClickSearch}
-              className="rounded-3xlp-2 mb-2 flex  cursor-pointer flex-col items-center justify-center space-y-1"
+              className="rounded-3xlp-2 mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1"
               data-testid="search-button"
               disabled={guideIsActive}
             >

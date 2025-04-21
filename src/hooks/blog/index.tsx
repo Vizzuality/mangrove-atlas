@@ -2,7 +2,6 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import type { Tag, Post } from 'hooks/blog/types';
-
 import { BlogAPI } from 'services/api';
 
 type useBlogParams = {

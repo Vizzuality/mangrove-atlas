@@ -1,20 +1,17 @@
-import { printModeState } from 'store/print-mode';
+import type { GetServerSideProps } from 'next';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import type { GetServerSideProps } from 'next';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import DesktopLayout from 'layouts/desktop';
-import MobileLayout from 'layouts/mobile';
-
 import type { DataResponse } from 'containers/datasets/locations/hooks';
 import MetaTags from 'containers/meta-tags';
-
-import { breakpoints } from 'styles/styles.config';
-
+import DesktopLayout from 'layouts/desktop';
+import MobileLayout from 'layouts/mobile';
 import API from 'services/api';
+import { printModeState } from 'store/print-mode';
+import { breakpoints } from 'styles/styles.config';
 
 const Home = () => {
   const isPrintingMode = useRecoilValue(printModeState);

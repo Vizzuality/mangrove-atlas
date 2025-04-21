@@ -4,25 +4,20 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
-
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import type { AnalysisResponse } from 'hooks/analysis';
-
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import type { AnalysisResponse } from 'hooks/analysis';
+import { numberFormat } from 'lib/format';
 import API, { AnalysisAPI } from 'services/api';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import type { UseParamsOptions } from 'types/widget';
 
 import Tooltip from './tooltip';
 import type { Data, DataResponse, ColorKeysTypes } from './types';
@@ -70,14 +65,14 @@ const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
         indicator: Number(d.indicator.replace('-', '')),
       },
     }),
-    {}
+    {},
   );
 
 // widget data
 export function useMangroveHeight(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>,
-  onCancel?: () => void
+  onCancel?: () => void,
 ) {
   const {
     query: { params: queryParams },
@@ -155,7 +150,7 @@ export function useMangroveHeight(
           color: COLORS_BY_INDICATOR[d.indicator],
         };
       }),
-    [data?.data]
+    [data?.data],
   );
 
   const TooltipData = {

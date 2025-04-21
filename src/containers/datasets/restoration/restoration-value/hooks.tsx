@@ -4,7 +4,6 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
 import API from 'services/api';
 
 import type { Data, DataResponse } from './types';
@@ -15,7 +14,7 @@ type UseParamsOptions = {
 
 export function useMangroveEcosystemServices(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },

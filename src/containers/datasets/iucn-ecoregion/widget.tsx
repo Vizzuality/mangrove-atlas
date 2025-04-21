@@ -1,7 +1,6 @@
-import NoData from 'containers/widgets/no-data';
-
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Loading from 'components/ui/loading';
+import NoData from 'containers/widgets/no-data';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import IUCNEcoregionsChart from './chart';
@@ -35,7 +34,7 @@ const IUCNEcoregions = () => {
                 <h2 className="font-sans text-2xl font-light text-black/85">
                   IUCN Ecosystem Red List Assessment
                 </h2>
-                <h4 className="py-4 text-sm font-bold ">Associated reports</h4>
+                <h4 className="py-4 text-sm font-bold">Associated reports</h4>
                 <ul className="text-light space-y-4 text-sm text-brand-800 underline">
                   {data.reports.map(({ name, url }) => (
                     <li key={name} className="">

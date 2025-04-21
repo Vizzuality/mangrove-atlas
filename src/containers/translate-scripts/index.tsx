@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 
 import Script from 'next/script';
 
-import { printModeState } from 'store/print-mode';
-
 import { useRecoilValue } from 'recoil';
 
+import { printModeState } from 'store/print-mode';
 import { breakpoints } from 'styles/styles.config';
 
 const TranslateScripts = () => {

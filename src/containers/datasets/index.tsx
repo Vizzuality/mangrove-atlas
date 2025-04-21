@@ -1,3 +1,4 @@
+import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import AlertsDownload from 'containers/datasets/alerts/download';
 import AlertsInfo from 'containers/datasets/alerts/info.mdx';
 import AlertsLayer from 'containers/datasets/alerts/layer';
@@ -111,8 +112,6 @@ import SpeciesLocationtMapLegend from 'containers/datasets/species-location/map-
 import SpeciesLocationWidget from 'containers/datasets/species-location/widget';
 import SpeciesThreatenedInfo from 'containers/datasets/species-threatened/info.mdx';
 import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widget';
-
-import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;

@@ -22,7 +22,7 @@ export function updateLayers(activeLayers: Layer[], newLayer: Layer): Layer[] {
   const index = activeLayers?.findIndex((layer) => layer.id === id);
   const hasNationalDashboard = id.includes('national_dashboard');
   const nationalDashboardIndex = activeLayers?.findIndex((layer) =>
-    layer.id.includes('national_dashboard')
+    layer.id.includes('national_dashboard'),
   );
 
   if (index !== -1) {

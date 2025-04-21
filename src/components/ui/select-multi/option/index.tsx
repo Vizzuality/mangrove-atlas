@@ -3,7 +3,6 @@ import cx from 'classnames';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
-
 import CHECK_SVG from 'svgs/ui/check-light.svg?sprite';
 
 import THEME from '../constants/theme';

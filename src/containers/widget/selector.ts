@@ -1,8 +1,7 @@
-import { activeLayersAtom } from 'store/layers';
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { selectorFamily } from 'recoil';
 
+import { activeLayersAtom } from 'store/layers';
+import { activeWidgetsAtom } from 'store/widgets';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 export const getWidgetActive = selectorFamily({
