@@ -1,9 +1,8 @@
-import cn from 'lib/classnames';
-
 // import Helper from 'containers/help/helper';
 
 import ContactForm from 'components/contact';
 import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import cn from 'lib/classnames';
 
 const Contact = ({ className }: { className?: string }) => {
   return (
@@ -16,7 +15,7 @@ const Contact = ({ className }: { className?: string }) => {
         tooltipPosition={{ top: -40, left: 0 }}
         message=""
       > */}
-      <DialogTrigger className={cn({ [className]: !!className })}>Contact</DialogTrigger>
+      <DialogTrigger className={cn({ [`${className}`]: !!className })}>Contact</DialogTrigger>
       {/* </Helper> */}
 
       <DialogContent

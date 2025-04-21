@@ -3,14 +3,13 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
 import {
   useHighlightedPlaces,
   useLocation,
   HIGHLIGHTED_PLACES,
 } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
+import cn from 'lib/classnames';
 
 const HighlightedPlaces = ({ onSelectLocation }: { onSelectLocation: () => void }) => {
   const { data } = useHighlightedPlaces();

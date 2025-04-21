@@ -1,6 +1,5 @@
-import { AnalysisWidgetSlug } from 'types/widget';
-
 import API from 'services/api';
+import { AnalysisWidgetSlug } from 'types/widget';
 
 import type { UploadFileResponse } from './types';
 export type AnalysisResponse<T> = Record<AnalysisWidgetSlug, T>;

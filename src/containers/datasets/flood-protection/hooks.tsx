@@ -1,17 +1,14 @@
 import { useMemo, useCallback } from 'react';
 
-import compact from 'lodash-es/compact';
-
 import { useRouter } from 'next/router';
-
-import { numberFormat, formatMillion, formatAxis } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
+import compact from 'lodash-es/compact';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
+import { numberFormat, formatMillion, formatAxis } from 'lib/format';
 import API from 'services/api';
 
 import { LABELS, UNITS_LABELS } from './constants';
@@ -54,7 +51,7 @@ const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId)
 export function useMangrovesFloodProtection(
   period: FloodProtectionPeriodId,
   params: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data>,
 ) {
   const {
     query: { params: queryParams },

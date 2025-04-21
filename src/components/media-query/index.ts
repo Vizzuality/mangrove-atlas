@@ -16,7 +16,7 @@ const ExampleAppMedia = createMedia<
     {
       // We need a breakpoint starting at 0 to target screens smaller than sm
       '0': 0,
-    }
+    },
   ),
 });
 

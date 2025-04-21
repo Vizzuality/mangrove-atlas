@@ -1,9 +1,8 @@
+import Loading from 'components/ui/loading';
 import DriversChangeChart from 'containers/datasets/drivers-change/chart';
 import { primaryDrivers } from 'containers/datasets/drivers-change/constants';
 import { useMangroveDriversChange } from 'containers/datasets/drivers-change/hooks';
 import NoData from 'containers/widgets/no-data';
-
-import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 const DriversChangeWidget = () => {

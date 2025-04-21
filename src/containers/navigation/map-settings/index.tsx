@@ -1,15 +1,12 @@
 import { useCallback } from 'react';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom } from 'store/drawing-tool';
-import { mapSettingsAtom } from 'store/map-settings';
-import { locationToolAtom } from 'store/sidebar';
-
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
+import { drawingToolAtom } from 'store/drawing-tool';
+import { mapSettingsAtom } from 'store/map-settings';
+import { locationToolAtom } from 'store/sidebar';
 import MAP_SETTINGS_SVG from 'svgs/sidebar/map-settings.svg?sprite';
 
 import { STYLES } from '../constants';

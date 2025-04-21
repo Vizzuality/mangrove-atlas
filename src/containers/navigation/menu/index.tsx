@@ -2,21 +2,18 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import cn from 'lib/classnames';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { HiChevronDown } from 'react-icons/hi2';
 
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import ContactForm from 'containers/contact';
 import Helper from 'containers/help/helper';
 import About from 'containers/navigation/menu/about';
 import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
-
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
 
 const RESOURCES_LINKS = [
@@ -93,7 +90,7 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans  md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20 md:w-[436px]': true,
           'h-fit py-0': section === 'main',
         })}
       >

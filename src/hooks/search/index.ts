@@ -20,6 +20,6 @@ export const useSearch = <T = unknown>(items: T[], search: string, fields: strin
   return useMemo(
     () => fuse && fuse.search(diacritics.remove(search)).map((d) => d.item),
 
-    [search, fuse]
+    [search, fuse],
   ) satisfies T[];
 };

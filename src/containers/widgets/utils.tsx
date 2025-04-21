@@ -18,7 +18,7 @@ export function findCategoryByWidgets(widgets) {
 
     // Ensure that the input widgets set does not contain more items than the current category
     const areWidgetsOnlyFromCategory = [...widgetsSet].every((widget: string) =>
-      slugsCategorySet.has(widget)
+      slugsCategorySet.has(widget),
     );
 
     // Check for an exact match in terms of content and count

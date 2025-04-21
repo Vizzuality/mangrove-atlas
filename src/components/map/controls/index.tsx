@@ -13,7 +13,7 @@ export const Controls: FC<ControlsPropsWithChildren> = ({
   <div
     className={cn({
       'flex flex-col space-y-2': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
   >
     {Children.map(children, (child) => child)}

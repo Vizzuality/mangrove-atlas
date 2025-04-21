@@ -9,7 +9,7 @@ type UseSyncURLNextOptions = {
 };
 
 export function useSyncURLNext(
-  options: UseSyncURLNextOptions
+  options: UseSyncURLNextOptions,
 ): Partial<Omit<RecoilURLSyncOptions, 'children'>> {
   const { decodedQueryParams } = options;
   const { isReady, asPath, replace, push, events } = useRouter();
@@ -43,7 +43,7 @@ export function useSyncURLNext(
         const u = decodedQueryParams ? decodeURIComponent(url) : url;
         return replace(u, undefined, { shallow: true });
       },
-      [decodedQueryParams, replace]
+      [decodedQueryParams, replace],
     ),
 
     pushURL: useCallback(
@@ -51,13 +51,13 @@ export function useSyncURLNext(
         const u = decodedQueryParams ? decodeURIComponent(url) : url;
         return push(u, undefined, { shallow: true });
       },
-      [decodedQueryParams, push]
+      [decodedQueryParams, push],
     ),
 
     getURL: useCallback(() => {
       const url = new URL(
         urlRef.current.path,
-        globalThis?.document?.location?.href ?? 'http://localhost:3000'
+        globalThis?.document?.location?.href ?? 'http://localhost:3000',
       );
       return url.toString();
     }, []),
@@ -74,7 +74,7 @@ export function useSyncURLNext(
           urlRef.current.handler = undefined;
         };
       },
-      [events, updateURL]
+      [events, updateURL],
     ),
   };
 

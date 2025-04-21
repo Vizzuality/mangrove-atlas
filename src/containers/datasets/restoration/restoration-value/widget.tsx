@@ -1,6 +1,5 @@
-import cn from 'lib/classnames';
-
 import Loading from 'components/ui/loading';
+import cn from 'lib/classnames';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,

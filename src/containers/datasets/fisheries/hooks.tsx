@@ -2,18 +2,15 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, formatAxis } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import { numberFormat, formatAxis } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import CustomTooltip from './tooltip';
 import type { DataResponse, Data } from './types';
@@ -26,7 +23,7 @@ const getColorKeys = (data) =>
       ...acc,
       [d]: COLORS[index],
     }),
-    []
+    [],
   );
 
 type ProtectionType = {
@@ -36,7 +33,7 @@ type ProtectionType = {
 // widget data
 export function useMangroveFisheries(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
+  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>,
 ) {
   const getChartData = (data: Data[], colorKeys, unit) => {
     const total = data?.reduce((acc, d) => acc + d.value, 0);
@@ -77,7 +74,7 @@ export function useMangroveFisheries(
   return useQuery(['fisheries', location_id], fetchMangroveFisheries, {
     select: (data) => {
       const dataFiltered = data?.data?.filter(
-        (d) => d.category !== 'median' && d.category !== 'range_max' && d.category !== 'range_min'
+        (d) => d.category !== 'median' && d.category !== 'range_max' && d.category !== 'range_min',
       );
       const median = data?.data?.find((d) => d.category === 'median')?.value;
       const medianFormatted = median === 0 ? formatAxis(median) : median;

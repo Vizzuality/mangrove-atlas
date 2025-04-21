@@ -1,15 +1,12 @@
 import { useState } from 'react';
 
-import { activeGuideAtom } from 'store/guide';
-
 import { useRecoilState } from 'recoil';
-
-import Contact from 'containers/contact';
 
 import Icon from 'components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
-
+import Contact from 'containers/contact';
+import { activeGuideAtom } from 'store/guide';
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 
 // import GuideModalIntro from './modal-intro';

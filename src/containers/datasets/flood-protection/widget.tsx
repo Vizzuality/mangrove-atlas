@@ -1,33 +1,30 @@
 import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
-import type {
-  FloodProtectionPeriodId,
-  FloodProtectionIndicatorId,
-} from 'containers/datasets/flood-protection/types';
 // import NoData from 'containers/widgets/no-data';
 
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+import type {
+  FloodProtectionPeriodId,
+  FloodProtectionIndicatorId,
+} from 'containers/datasets/flood-protection/types';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SUBTITLE_STYLE,
   WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
-import type { ActiveLayers } from 'types/layers';
-import { WidgetSlugType } from 'types/widget';
-
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
+import type { ActiveLayers } from 'types/layers';
+import { WidgetSlugType } from 'types/widget';
 
 import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
@@ -49,7 +46,7 @@ const FloodProtection = ({
     (period: FloodProtectionPeriodId) => {
       setPeriod(period);
     },
-    [setPeriod]
+    [setPeriod],
   );
 
   const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {

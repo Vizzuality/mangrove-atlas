@@ -1,10 +1,8 @@
 import { useCallback, useState } from 'react';
 
-import LocationsList from 'containers/locations-list';
-
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
-
+import LocationsList from 'containers/locations-list';
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 
 const LocationsMobile = () => {

@@ -69,7 +69,7 @@ export function useLayer({
         layout: {
           visibility,
         },
-      } satisfies LayerProps),
-    [id, opacity, visibility]
+      }) satisfies LayerProps,
+    [id, opacity, visibility],
   );
 }

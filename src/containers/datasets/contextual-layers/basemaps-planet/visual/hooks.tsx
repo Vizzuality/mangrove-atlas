@@ -6,7 +6,7 @@ import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets
 
 export function useSource({ year }): SourceProps & { key: string } {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(
-    'be1f8e5e-6a29-4d27-8542-1fdb664fd78e'
+    'be1f8e5e-6a29-4d27-8542-1fdb664fd78e',
   );
   const selectedDate = year || (dates?.length && dates?.[dates?.length - 1]?.value);
 

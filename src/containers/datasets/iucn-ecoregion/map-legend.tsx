@@ -38,7 +38,7 @@ const IUCNEcoregionsMapLegend = () => {
               </div>
             </div>
           );
-        }
+        },
       )}
     </div>
   );

@@ -4,12 +4,10 @@ import Image from 'next/image';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
+import { DialogClose } from 'components/ui/dialog';
+import PostComponent from 'containers/news/post';
 import { useBlogPosts, usePostTags } from 'hooks/blog';
 import type { Post } from 'hooks/blog/types';
-
-import PostComponent from 'containers/news/post';
-
-import { DialogClose } from 'components/ui/dialog';
 
 export const BlogContent = () => {
   const { data } = useBlogPosts({ wl_topic: [53] });

@@ -1,9 +1,7 @@
 import { useState, useCallback } from 'react';
 
-import cn from 'lib/classnames';
-
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import ARROW_SVG from 'svgs/ui/arrow.svg';
 
 // components
@@ -18,7 +16,7 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
         [id]: !prev[id],
       }));
     },
-    [toggleCollapse]
+    [toggleCollapse],
   );
 
   return (

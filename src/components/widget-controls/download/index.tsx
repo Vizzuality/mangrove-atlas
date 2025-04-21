@@ -1,8 +1,6 @@
-import { DOWNLOAD } from 'containers/datasets';
-
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
-
+import { DOWNLOAD } from 'containers/datasets';
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
 
 /**

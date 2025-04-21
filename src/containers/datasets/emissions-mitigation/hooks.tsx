@@ -1,19 +1,16 @@
 import { useMemo } from 'react';
 
-import groupBy from 'lodash-es/groupBy';
-import orderBy from 'lodash-es/orderBy';
-
 import { useRouter } from 'next/router';
-
-import { significantDigitsFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
+import groupBy from 'lodash-es/groupBy';
+import orderBy from 'lodash-es/orderBy';
 import type { CartesianViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
+import { significantDigitsFormat } from 'lib/format';
 import API from 'services/api';
 
 import CustomTooltip from './tooltip';
@@ -43,7 +40,7 @@ const getData = (data) => {
       acc.category = r.category;
       acc[r.indicator] = r.value;
       return acc;
-    }, {} as DataBar)
+    }, {} as DataBar),
   );
 };
 
@@ -64,7 +61,7 @@ const getBars = (indicators, filteredIndicators) =>
             : 0.5,
       },
     }),
-    {}
+    {},
   );
 
 const getLegendPayload = (data) =>
@@ -112,7 +109,7 @@ const LabelXAxis = ({ viewBox }: { viewBox: CartesianViewBox }) => {
 // widget data
 export function useMangroveEmissionsMitigation(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, unknown>
+  queryOptions?: UseQueryOptions<DataResponse, unknown>,
 ) {
   const {
     query: { params: queryParams },

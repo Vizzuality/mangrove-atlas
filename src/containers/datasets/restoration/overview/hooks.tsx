@@ -1,22 +1,19 @@
 import { useRouter } from 'next/router';
 
-import { formatNumberNearestInteger } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import type { UseParamsOptions } from 'types/widget';
-
+import { formatNumberNearestInteger } from 'lib/format';
 import API from 'services/api';
+import type { UseParamsOptions } from 'types/widget';
 
 import type { Data, DataResponse } from './types';
 
 // widget data
 export function useMangroveRestoration(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data & { restorable_area_perc: string }>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data & { restorable_area_perc: string }>,
 ) {
   const {
     query: { params: queryParams },

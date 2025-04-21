@@ -42,6 +42,6 @@ export function useLayers({ id }: { id: LayerProps['id'] }): LayerProps[] {
         },
       },
     ],
-    [id]
+    [id],
   );
 }

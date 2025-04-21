@@ -1,17 +1,13 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from 'lib/classnames';
-
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { mapCursorAtom } from 'store/map';
-
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 
+import Icon from 'components/ui/icon';
 import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
-
-import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { mapCursorAtom } from 'store/map';
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 
 const WidgetDrawingTool = () => {
@@ -47,7 +43,7 @@ const WidgetDrawingTool = () => {
         className={cn({
           'mb-2 flex w-[128px] cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
             true,
-          ' bg-white ': isDrawingToolEnabled && !uploadedGeojson,
+          'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
         })}
         onClick={handleDrawingMode}

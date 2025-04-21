@@ -17,7 +17,7 @@ export const LegendTypeChoropleth: React.FC<LegendTypeChoroplethProps> = ({
   return (
     <div
       className={cx({
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <ul className="flex w-full">

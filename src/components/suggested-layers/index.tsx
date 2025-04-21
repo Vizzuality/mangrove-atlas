@@ -2,19 +2,16 @@ import { ReactElement, useMemo, useCallback } from 'react';
 
 import Image from 'next/image';
 
-import { activeLayersAtom } from 'store/layers';
-
 import { useRecoilState } from 'recoil';
-
-import { INFO } from 'containers/datasets';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import { Icon } from 'components/ui/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
+import { INFO } from 'containers/datasets';
+import { activeLayersAtom } from 'store/layers';
+import INFO_SVG from 'svgs/ui/info.svg?sprite';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
-
-import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 type SuggestionTypes = {
   name: string;
@@ -44,6 +41,7 @@ const SuggestedLayers = ({
       : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
+  if (!Info) return null;
 
   // const handleClick = () => {
   //   const updatedContextualBasemap = basemapContextualSelected === id ? null : id;

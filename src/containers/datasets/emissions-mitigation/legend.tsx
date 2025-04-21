@@ -12,7 +12,7 @@ type LegendTypes = {
   onClick: (
     label: string,
     filteredIndicators: string[],
-    setFilteredIndicators: (filteredIndicators: string[]) => void
+    setFilteredIndicators: (filteredIndicators: string[]) => void,
   ) => void;
   filteredIndicators: string[];
   setFilteredIndicators: (filteredIndicators: string[]) => void;

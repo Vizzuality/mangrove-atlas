@@ -109,7 +109,7 @@ export const LegendTypeMatrix: React.FC<LegendTypeMatrixProps> = ({
 
       <div
         className={cx({
-          [className]: !!className,
+          [`${className}`]: !!className,
         })}
       >
         <ul className="flex w-full flex-col space-y-2">

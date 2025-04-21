@@ -21,7 +21,7 @@ import type { DataResponse } from './types';
 
 export function useMangroveEcosystemServices(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data[]>
+  queryOptions?: UseQueryOptions<DataResponse, Error, Data[]>,
 ) {
   const {
     query: { params: queryParams },

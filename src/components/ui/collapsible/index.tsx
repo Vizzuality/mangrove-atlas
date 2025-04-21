@@ -2,10 +2,10 @@
 
 import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
-import cn from 'lib/classnames';
-
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import { HiPlus, HiMinus } from 'react-icons/hi';
+
+import cn from 'lib/classnames';
 
 const Collapsible = CollapsiblePrimitive.Root;
 
@@ -24,7 +24,7 @@ const CollapsibleTrigger = forwardRef<
       ref={ref}
       className={cn(
         'group flex w-full items-center justify-between whitespace-nowrap p-6 text-black/85',
-        className
+        className,
       )}
       {...props}
     >

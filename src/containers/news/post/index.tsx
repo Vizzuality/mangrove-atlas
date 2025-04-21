@@ -18,7 +18,7 @@ export const Post = ({
       <div className="relative h-[114px] w-[112px] shrink-0">
         <Image
           alt={post.title.rendered}
-          className="absolute top-0 left-0  h-[114px] w-[112px] rounded-2xl object-cover"
+          className="absolute top-0 left-0 h-[114px] w-[112px] rounded-2xl object-cover"
           src={post.yoast_head_json.og_image[0].url}
           fill={true}
         />

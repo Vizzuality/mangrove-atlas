@@ -1,8 +1,6 @@
-import cn from 'lib/classnames';
-
 import Icon from 'components/ui/icon';
+import cn from 'lib/classnames';
 import { BUTTON_STYLES } from 'styles/widgets';
-
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 type SelectedFiltersProps = {
@@ -25,7 +23,7 @@ const SelectedFilters = ({
               type="button"
               className={cn({
                 [BUTTON_STYLES]: true,
-                'flex  items-center space-x-2 overflow-hidden text-ellipsis whitespace-nowrap bg-[#00857f26] text-sm text-black/85':
+                'flex items-center space-x-2 overflow-hidden text-ellipsis whitespace-nowrap bg-[#00857f26] text-sm text-black/85':
                   true,
               })}
             >

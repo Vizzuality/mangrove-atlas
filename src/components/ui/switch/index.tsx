@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 
-import cn from 'lib/classnames';
-
 import * as SwitchRadix from '@radix-ui/react-switch';
+
+import cn from 'lib/classnames';
 
 type WrapperProps = Readonly<{
   'data-testid'?: string;
@@ -40,7 +40,7 @@ const SwitchRoot = ({
     className={cn({
       'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 bg-white outline-none data-[state=checked]:bg-brand-800':
         true,
-      [className]: !!className,
+      [`${className}`]: !!className,
       [SIZE['root'][size]]: true,
     })}
     {...props}
@@ -58,12 +58,12 @@ const SwitchThumb = ({
     className={cn({
       'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
         true,
-      [className]: !!className,
+      [`${className}`]: !!className,
       [SIZE['thumb'][size]]: true,
     })}
   >
     {icon && (
-      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold ">?</div>
+      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold">?</div>
     )}
   </SwitchRadix.Thumb>
 );
@@ -73,7 +73,7 @@ const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
     <label
       className={cn({
         'sr-only pr-[15px] text-[15px] leading-none text-white': true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
       htmlFor={id}
     >

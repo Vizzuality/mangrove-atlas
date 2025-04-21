@@ -27,7 +27,7 @@ export const fetchLocation = (locationId: Location['location_id']) =>
   }).then((response) => response.data);
 
 export function useLocations<T = DataResponse>(
-  queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
+  queryOptions: UseQueryOptions<DataResponse, Error, T> = {},
 ) {
   const queryClient = useQueryClient();
   return useQuery(['locations'], fetchLocations, {
@@ -42,7 +42,7 @@ export function useLocations<T = DataResponse>(
 export function useLocation(
   id: Location['location_id'],
   locationType?: LocationTypes,
-  queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
+  queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {},
 ) {
   const _id = ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
@@ -69,7 +69,7 @@ export function useLocation(
 }
 
 export function useHighlightedPlaces(
-  queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {}
+  queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {},
 ) {
   const queryClient = useQueryClient();
 

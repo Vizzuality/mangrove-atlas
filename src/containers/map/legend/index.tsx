@@ -3,19 +3,16 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 
+import SortableList from 'components/map/legend/sortable/list';
 import { LocationTypes } from 'containers/datasets/locations/types';
 import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
 import { widgets } from 'containers/widgets/constants';
-
-import SortableList from 'components/map/legend/sortable/list';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 import { ActiveLayers } from 'types/layers';
 import type { WidgetTypes } from 'types/widget';
 
@@ -76,12 +73,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
       const activeLayerPlanet = activeLayers?.filter((l) => l.id.includes('planet'));
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   // planet layers behave as a basemap so there is no need to include them in the legend
   const activeLayerNoPlanet = filteredLayers?.filter(
-    (l) => !l.id.includes('planet') && !l.id.includes('custom-area')
+    (l) => !l.id.includes('planet') && !l.id.includes('custom-area'),
   );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)

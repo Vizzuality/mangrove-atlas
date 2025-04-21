@@ -1,24 +1,20 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import sortBy from 'lodash-es/sortBy';
-
 import { useRouter } from 'next/router';
-
-import { formatAxis } from 'lib/format';
-
-import { analysisAtom } from 'store/analysis';
-import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
+import sortBy from 'lodash-es/sortBy';
 import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
+import { formatAxis } from 'lib/format';
 import API_cloud_functions from 'services/cloud-functions';
+import { analysisAtom } from 'store/analysis';
+import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
@@ -55,7 +51,7 @@ const getData = (data) =>
           'en',
           {
             year: '2-digit',
-          }
+          },
         )}`,
         alerts: d.count,
         label: `${month.label}, ${year}`,
@@ -69,7 +65,7 @@ const getData = (data) =>
         },
       };
     }),
-    ['month']
+    ['month'],
   );
 
 const TickSmall = ({ x, y, payload }) => {
@@ -103,7 +99,7 @@ export function useAlerts<DataResponse>(
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
   queryOptions?: UseQueryOptions<DataResponse, Error, AlertData>,
-  onCancel?: () => void
+  onCancel?: () => void,
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
@@ -168,7 +164,7 @@ export function useAlerts<DataResponse>(
       const dataFiltered =
         Array.isArray(data) &&
         data.filter(
-          (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+          (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value,
         );
 
       const fixedXAxis = fullData.map((d) => d.year);

@@ -2,29 +2,24 @@ import { useMemo } from 'react';
 
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import orderBy from 'lodash-es/orderBy';
-
 import { useRouter } from 'next/router';
-
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
 import { AxiosResponse } from 'axios';
 import { format } from 'd3-format';
+import orderBy from 'lodash-es/orderBy';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import type { AnalysisResponse } from 'hooks/analysis';
-
+import CustomTooltip from 'components/chart/tooltip';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
-
-import CustomTooltip from 'components/chart/tooltip';
-
+import type { AnalysisResponse } from 'hooks/analysis';
 import API, { AnalysisAPI } from 'services/api';
+import { analysisAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
 
 import { Data, DataResponse, UseParamsOptions } from './types';
 
@@ -53,7 +48,7 @@ const getWidgetData = (data: Data[], unit = '') => {
       acc.push((acc[i] += value));
       return acc;
     },
-    [0]
+    [0],
   );
 
   return orderBy(
@@ -72,7 +67,7 @@ const getWidgetData = (data: Data[], unit = '') => {
 
             label: 'Net change',
             value: numberFormat(
-              unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i]
+              unit === 'ha' ? cumulativeValuesNetChange[i] * 100 : cumulativeValuesNetChange[i],
             ),
             variant: 'thin',
             unit,
@@ -81,7 +76,7 @@ const getWidgetData = (data: Data[], unit = '') => {
         direction: 'vertical',
       };
     }),
-    (l) => l.year
+    (l) => l.year,
   );
 };
 
@@ -89,7 +84,7 @@ const getWidgetData = (data: Data[], unit = '') => {
 export function useMangroveNetChange(
   params: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>,
-  onCancel?: () => void
+  onCancel?: () => void,
 ) {
   const {
     query: { params: queryParams },
@@ -156,7 +151,7 @@ export function useMangroveNetChange(
     const currentStartYear = startYear || years?.[0];
     const currentEndYear = endYear || years?.[years?.length - 1];
     const dataFiltered = data?.data?.filter(
-      (d) => d.year >= currentStartYear && d.year <= currentEndYear
+      (d) => d.year >= currentStartYear && d.year <= currentEndYear,
     );
     const DATA = getWidgetData(dataFiltered, unit) || [];
     const TooltipData = {

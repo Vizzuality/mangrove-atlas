@@ -1,20 +1,17 @@
 import { useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import NoData from 'containers/widgets/no-data';
-
 import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
-
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import MangrovesInProtectedAreasChart from './chart';

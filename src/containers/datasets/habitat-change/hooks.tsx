@@ -2,12 +2,11 @@ import { useMemo } from 'react';
 
 import Link from 'next/link';
 
-import { numberFormat } from 'lib/format';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Rectangle } from 'recharts';
 import { CartesianViewBox } from 'recharts/types/util/types';
 
+import { numberFormat } from 'lib/format';
 import API from 'services/api';
 
 import Tooltip from './tooltip';
@@ -37,7 +36,7 @@ const widgetData = (data: DataResponse) =>
 // widget data
 export function useMangroveHabitatChange(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: UseQueryOptions<DataResponse>,
 ) {
   const { startYear, endYear, limit } = params;
   const fetchMangroveHabitatChange = () => {
@@ -146,7 +145,7 @@ export function useMangroveHabitatChange(
                       href={`/country/${iso}`}
                       className="w-full text-xs font-bold text-black/85"
                     >
-                      <p className=" text-center">{name}</p>
+                      <p className="text-center">{name}</p>
                     </Link>
                   </foreignObject>
                 );

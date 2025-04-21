@@ -3,7 +3,6 @@ import { ReactNode } from 'react';
 import { Popup as PopupReactMapGL } from 'react-map-gl';
 
 import Icon from 'components/ui/icon';
-
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const Popup = ({
@@ -39,7 +38,7 @@ const Popup = ({
       closeOnClick={false}
       className="relative min-w-fit p-0"
     >
-      <div className="relative flex h-full  min-w-fit grow flex-col justify-between divide-y divide-gray-100 lg:max-w-sm">
+      <div className="relative flex h-full min-w-fit grow flex-col justify-between divide-y divide-gray-100 lg:max-w-sm">
         {children}
         <button
           type="button"

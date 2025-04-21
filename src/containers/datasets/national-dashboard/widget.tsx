@@ -1,14 +1,11 @@
 import { useState } from 'react';
 
+import chroma from 'chroma-js';
 import flatten from 'lodash-es/flatten';
 
-import cn from 'lib/classnames';
-
-import chroma from 'chroma-js';
-
-import NoData from 'containers/widgets/no-data';
-
 import Loading from 'components/ui/loading';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import { COLORS } from './constants';
@@ -18,6 +15,7 @@ import OtherResources from './other-resources';
 
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
+
   const [yearSelected, setYearSelected] = useState<number>(data?.data?.sources?.years?.[0] || null);
 
   if (isFetched && !data?.data.length) return <NoData />;
@@ -27,11 +25,11 @@ const NationalDashboard = () => {
       flatten(
         sources.map(({ data_source }) =>
           data_source.map(({ layer_link }, index) =>
-            index === 0 ? `mapbox://${layer_link}` : layer_link
-          )
-        )
-      )
-    )
+            index === 0 ? `mapbox://${layer_link}` : layer_link,
+          ),
+        ),
+      ),
+    ),
   );
   const colorsScale = chroma
     .scale(COLORS)
@@ -48,31 +46,24 @@ const NationalDashboard = () => {
             {data?.data?.map(({ indicator, sources }, index) => (
               <div key={indicator}>
                 {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
+                {/* <IndicatorSourceTable sources={sources} /> */}
                 {sources.map(({ source, years, unit, data_source }) => {
                   const dataSource = data_source.find((d) => d.year === currentYear);
                   const color = colorsScale.filter((c, i) => i === index);
                   return (
-                    <>
-                      <div className="grid grid-cols-4 text-sm font-normal">
-                        <h5>Source</h5>
-                        <h5 className="ml-2">Year</h5>
-                        <h5 className="ml-2">Extent</h5>
-                      </div>
-
-                      <IndicatorSource
-                        id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
-                        locationIso={data.locationIso}
-                        layerIndex={index}
-                        key={source}
-                        source={source}
-                        years={years}
-                        unit={unit}
-                        dataSource={dataSource}
-                        color={color}
-                        yearSelected={currentYear}
-                        setYearSelected={setYearSelected}
-                      />
-                    </>
+                    <IndicatorSource
+                      id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
+                      locationIso={data.locationIso}
+                      layerIndex={index}
+                      key={source}
+                      source={source}
+                      years={years}
+                      unit={unit}
+                      dataSource={dataSource}
+                      color={color}
+                      yearSelected={currentYear}
+                      setYearSelected={setYearSelected}
+                    />
                   );
                 })}
               </div>

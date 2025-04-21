@@ -2,22 +2,19 @@ import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { activeGuideAtom } from 'store/guide';
-import { locationsModalAtom } from 'store/locations';
-import { locationToolAtom } from 'store/sidebar';
-
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import { Dialog, DialogTrigger } from 'components/ui/dialog';
 import AnalysisAlert from 'containers/alert';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import LocationDialogContent from 'containers/location-dialog-content';
 import MenuTools from 'containers/navigation/menu-tools';
-
-import { Dialog, DialogTrigger } from 'components/ui/dialog';
+import cn from 'lib/classnames';
+import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
+import { activeGuideAtom } from 'store/guide';
+import { locationsModalAtom } from 'store/locations';
+import { locationToolAtom } from 'store/sidebar';
 
 const LocationWidget = () => {
   const {

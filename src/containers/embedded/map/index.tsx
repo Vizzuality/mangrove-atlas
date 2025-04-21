@@ -4,21 +4,18 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { basemapAtom, URLboundsAtom, locationBoundsAtom, mapCursorAtom } from 'store/map';
-
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilValue, useRecoilState } from 'recoil';
 
-import { useScreenWidth } from 'hooks/media';
-
+import Map from 'components/map';
+import { CustomMapProps } from 'components/map/types';
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import LayerManager from 'containers/map/layer-manager';
 import Legend from 'containers/map/legend';
-
-import Map from 'components/map';
-import { CustomMapProps } from 'components/map/types';
+import { useScreenWidth } from 'hooks/media';
+import { basemapAtom, URLboundsAtom, locationBoundsAtom, mapCursorAtom } from 'store/map';
 import { breakpoints } from 'styles/styles.config';
 
 export const DEFAULT_PROPS = {
@@ -73,7 +70,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
           bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
         }),
     }),
-    [URLBounds, locationId, queryClient]
+    [URLBounds, locationId, queryClient],
   );
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {

@@ -1,8 +1,8 @@
-import { INFO } from 'containers/datasets';
+import ReactMarkdown from 'react-markdown';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
-
+import { INFO } from 'containers/datasets';
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
 
 const Info = ({ id, content }) => {
@@ -19,7 +19,9 @@ const Info = ({ id, content }) => {
           <div className="no-scrollbar overflow-y-auto">
             {/* Supports external content or look by id for static info about widgets */}
             {id && <Info />}
-            {content && <p>{content}</p>}
+            {content && (
+              <ReactMarkdown className="prose prose-a:text-brand-800">{content}</ReactMarkdown>
+            )}
           </div>
           <DialogClose className="md:0 -top-2 md:absolute" />
         </DialogContent>

@@ -4,15 +4,14 @@ import { useMap } from 'react-map-gl';
 
 import Link from 'next/link';
 
-import { analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-
 import { BiReset } from 'react-icons/bi';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import WidgetDrawingTool from 'containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from 'containers/datasets/drawing-upload-tool';
 import FindLocations from 'containers/navigation/find-locations';
+import { analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -48,7 +47,7 @@ const LocationTools = () => {
         onClick={handleReset}
         className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white md:w-[128px]"
       >
-        <BiReset className="h-8 w-8 fill-current " />
+        <BiReset className="h-8 w-8 fill-current" />
         <span className="whitespace-nowrap font-sans text-sm">Reset page</span>
       </Link>
 

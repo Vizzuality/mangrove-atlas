@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+import Loading from 'components/ui/loading';
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';
-
-import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import {
@@ -48,7 +47,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       enabled: !!NDCSContentOverview?.document_slug,
-    }
+    },
   );
   const update = dataDocuments?.update;
 

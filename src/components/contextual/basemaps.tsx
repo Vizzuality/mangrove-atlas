@@ -2,17 +2,13 @@ import { MouseEvent } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
-
-import { basemapAtom } from 'store/map';
-
 import { useRecoilState } from 'recoil';
-
-import BASEMAPS, { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
-
+import BASEMAPS, { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import cn from 'lib/classnames';
+import { basemapAtom } from 'store/map';
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 
 const BasemapsMapSettings = () => {

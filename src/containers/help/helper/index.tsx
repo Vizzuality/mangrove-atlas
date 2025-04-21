@@ -2,14 +2,11 @@ import { useRef, useState, PropsWithChildren, useEffect } from 'react';
 
 import { createPortal } from 'react-dom';
 
-import cn from 'lib/classnames';
-
-import { activeGuideAtom } from 'store/guide';
-
 import { useRecoilValue } from 'recoil';
 
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
+import { activeGuideAtom } from 'store/guide';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 export const Helper = ({
@@ -128,7 +125,7 @@ export const Helper = ({
               </div>
             )}
           </div>,
-          document?.body
+          document?.body,
         )}
     </div>
   );

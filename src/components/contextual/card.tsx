@@ -2,23 +2,19 @@ import { useMemo } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
-
-import { basemapAtom } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
-
 import { useRecoilState } from 'recoil';
-
-import { INFO } from 'containers/datasets';
-import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
 import Info from 'components/widget-controls/info';
+import { INFO } from 'containers/datasets';
+import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import cn from 'lib/classnames';
+import { basemapAtom } from 'store/map';
+import { basemapContextualAtom } from 'store/map-settings';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
-import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
-
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
+import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 const THUMBS = {
   light: 'images/thumbs/analytic.png',
@@ -80,7 +76,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
           onClick={handleClick}
           data-testid={id}
           className={cn({
-            [`relative mr-10 h-24 w-24  shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:
+            [`relative mr-10 h-24 w-24 shrink-0 rounded-xl border-4 border-transparent bg-cover bg-center`]:
               true,
             'border-brand-800': isActive,
           })}

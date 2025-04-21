@@ -1,9 +1,8 @@
 import { useState } from 'react';
 
-import NoData from 'containers/widgets/no-data';
-
 import Chart from 'components/chart';
 import Loading from 'components/ui/loading';
+import NoData from 'containers/widgets/no-data';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import { useMangroveEmissionsMitigation } from './hooks';

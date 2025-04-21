@@ -2,15 +2,8 @@ import { useCallback, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { SpeciesLocationState } from 'store/widgets/species-location';
-
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { useRecoilValue, useRecoilState } from 'recoil';
-
-import { useLocation } from 'containers/datasets/locations/hooks';
-import { LocationTypes } from 'containers/datasets/locations/types';
-import { getLayerActive } from 'containers/widget/selector';
-import NoData from 'containers/widgets/no-data';
 
 import {
   Command,
@@ -23,6 +16,11 @@ import {
 import Loading from 'components/ui/loading';
 import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
 import type { RadioOption } from 'components/ui/radio-group/types';
+import { useLocation } from 'containers/datasets/locations/hooks';
+import { LocationTypes } from 'containers/datasets/locations/types';
+import { getLayerActive } from 'containers/widget/selector';
+import NoData from 'containers/widgets/no-data';
+import { SpeciesLocationState } from 'store/widgets/species-location';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';
@@ -56,7 +54,7 @@ const SpeciesLocation = () => {
         label: scientific_name,
         value: scientific_name,
       })),
-    [species]
+    [species],
   );
 
   const onSelectSpecies = useCallback(
@@ -64,7 +62,7 @@ const SpeciesLocation = () => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
     },
-    [species, setSpecie]
+    [species, setSpecie],
   );
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);

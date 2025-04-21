@@ -2,15 +2,13 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { locationBoundsAtom } from 'store/map';
-
 import turfBbox from '@turf/bbox';
 import type { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
-import { useLocations } from 'containers/datasets/locations/hooks';
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { useLocations } from 'containers/datasets/locations/hooks';
+import { locationBoundsAtom } from 'store/map';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
 
@@ -79,7 +77,7 @@ const LocationPopUP = ({
         onClose();
       }
     },
-    [setLocationBounds, push, queryParams, locations, info, onClose]
+    [setLocationBounds, push, queryParams, locations, info, onClose],
   );
 
   return (

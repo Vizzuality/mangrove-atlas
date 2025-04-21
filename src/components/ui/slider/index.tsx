@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import cn from 'lib/classnames';
-
 import * as SliderPrimitive from '@radix-ui/react-slider';
+
+import cn from 'lib/classnames';
 
 const Slider = ({ defaultValue, max = 1, step = 0.1, onValueChange, className }) => {
   const [currentValue, setCurrentValue] = useState(defaultValue);
@@ -12,7 +12,7 @@ const Slider = ({ defaultValue, max = 1, step = 0.1, onValueChange, className })
       <SliderPrimitive.Root
         className={cn({
           'relative flex h-4 w-full touch-none select-none items-center': true,
-          [className]: !!className,
+          [`${className}`]: !!className,
         })}
         defaultValue={defaultValue}
         max={max}

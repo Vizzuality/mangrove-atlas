@@ -1,9 +1,8 @@
-import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
-
 import { TreemapNode } from 'recharts/types/util/types';
 
 import Loading from 'components/ui/loading';
+import cn from 'lib/classnames';
+import { numberFormat } from 'lib/format';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -69,8 +68,8 @@ const LossWidget = () => {
       subtitle: `(${numberFormat(
         data?.chartData?.[0].children.reduce(
           (acc: number, curr: { value: number }) => acc + curr.value,
-          0
-        )
+          0,
+        ),
       )} ${data?.unit})`,
       items: data?.chartData?.[0].children,
     },

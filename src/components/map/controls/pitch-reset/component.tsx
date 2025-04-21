@@ -2,10 +2,8 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from 'lib/classnames';
-
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import NAVIGATION_SVG from 'svgs/map/navigation.svg?sprite';
 
 export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
@@ -21,7 +19,7 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
     <div
       className={cn({
         'inline-flex w-full flex-col rounded-b-full': true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <button

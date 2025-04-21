@@ -8,10 +8,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 
-import { GAPage } from 'lib/analytics/ga';
-import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
-import RecoilDevTools from 'lib/recoil/devtools';
-
 import { Open_Sans } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
@@ -25,6 +21,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MediaContextProvider } from 'components/media-query';
 import { TooltipProvider } from 'components/ui/tooltip';
+import { GAPage } from 'lib/analytics/ga';
+import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
+import RecoilDevTools from 'lib/recoil/devtools';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],
@@ -51,7 +50,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
             refetchOnWindowFocus: false,
           },
         },
-      })
+      }),
   );
 
   const serialize: Serialize = useCallback((x) => {

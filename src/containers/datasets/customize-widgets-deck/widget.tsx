@@ -2,25 +2,22 @@ import { useState, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { activeWidgetsAtom } from 'store/widgets';
-
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import Icon from 'components/ui/icon';
 import Category from 'containers/categories-menu';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 import widgets from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
-
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+import { activeWidgetsAtom } from 'store/widgets';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
-
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 const CustomizeWidgetsDeck = () => {
@@ -54,7 +51,7 @@ const CustomizeWidgetsDeck = () => {
     .map((w) => w.slug);
 
   const filteredWidgetsToDisplay = filteredWidgetsByLocationType.filter(
-    (element) => displayedWidgets.includes(element) && element !== 'widgets_deck_tool'
+    (element) => displayedWidgets.includes(element) && element !== 'widgets_deck_tool',
   );
 
   return (
@@ -101,8 +98,8 @@ const CustomizeWidgetsDeck = () => {
             animateState === 'end'
               ? { x: 100, rotate: 7 }
               : animateState === 'return'
-              ? { x: 0, rotate: 0 }
-              : {}
+                ? { x: 0, rotate: 0 }
+                : {}
           }
           transition={
             animateState === 'end'

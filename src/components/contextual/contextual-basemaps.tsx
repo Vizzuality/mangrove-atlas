@@ -1,16 +1,13 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { activeLayersAtom } from 'store/layers';
-
 import { useRecoilState } from 'recoil';
-
-import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
 
 import DateSelect from 'components/planet-date-select';
 import RadioGroup from 'components/ui/radio-group';
 import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
+import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
+import cn from 'lib/classnames';
+import { activeLayersAtom } from 'store/layers';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
@@ -37,7 +34,7 @@ const BasemapsMapSettings = () => {
             ] as ActiveLayers[]);
       setActiveLayers(layersUpdate);
     },
-    [activeLayers, setActiveLayers]
+    [activeLayers, setActiveLayers],
   );
 
   return (

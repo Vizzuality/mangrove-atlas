@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import cn from 'lib/classnames';
-
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import Icon from 'components/ui/icon';
-
+import cn from 'lib/classnames';
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 
 const Dialog = DialogPrimitive.Root;
@@ -28,7 +26,7 @@ const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn({
       'fixed inset-0 bg-brand-600/70 backdrop-blur-sm md:bg-black/50': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
   />
 ));
@@ -59,7 +57,7 @@ const DialogContent = React.forwardRef<
         className={cn({
           'relative flex shrink-0 flex-col bg-white p-8 shadow-widget md:min-h-[100px] md:w-full md:max-w-[540px] md:rounded-3xl':
             true,
-          [className]: !!className,
+          [`${className}`]: !!className,
         })}
       >
         {children}
@@ -73,7 +71,7 @@ const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
   <div
     className={cn({
       'flex flex-col space-y-2 text-center md:text-left': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
     {...props}
   />
@@ -91,9 +89,9 @@ const DialogClose = ({
     <button
       type="button"
       className={cn({
-        'absolute -right-10 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:top-9 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm ':
+        'absolute -right-10 -top-2 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:outline-none focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 md:top-9 md:-z-10 md:bg-white/70 md:shadow-widget md:backdrop-blur-sm':
           true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
       onClick={onClose}
       aria-label="close dialog"
@@ -108,7 +106,7 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
   <div
     className={cn({
       'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
     {...props}
   />
@@ -121,7 +119,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn({ 'text-lg font-semibold text-slate-900': true, [className]: !!className })}
+    className={cn({ 'text-lg font-semibold text-slate-900': true, [`${className}`]: !!className })}
     {...props}
   />
 ));
@@ -135,7 +133,7 @@ const DialogDescription = React.forwardRef<
     ref={ref}
     className={cn({
       'text-sm text-slate-500': true,
-      [className]: !!className,
+      [`${className}`]: !!className,
     })}
     {...props}
   />

@@ -1,13 +1,12 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-import { floodPopulationPeriodAtom } from 'store/widgets/flood-protection';
-
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
 import { useMangrovesFloodProtection } from 'containers/datasets/flood-protection/hooks';
+import { activeLayersAtom } from 'store/layers';
+import { floodPopulationPeriodAtom } from 'store/widgets/flood-protection';
 
 export function useSource(): SourceProps {
   return {

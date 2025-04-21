@@ -76,7 +76,7 @@ export const SortableList: React.FC<SortableListProps> = ({
         distance: 0.5,
         tolerance: 10,
       },
-    })
+    }),
   );
 
   const handleDragStart = useCallback((event) => {
@@ -97,7 +97,7 @@ export const SortableList: React.FC<SortableListProps> = ({
         if (onChangeOrder) onChangeOrder(arrayMove(itemsIds, oldIndex, newIndex));
       }
     },
-    [itemsIds, onChangeOrder]
+    [itemsIds, onChangeOrder],
   );
 
   return (

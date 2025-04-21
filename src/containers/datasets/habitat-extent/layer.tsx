@@ -1,10 +1,9 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
-
 import { useRecoilValue } from 'recoil';
 
+import { activeLayersAtom } from 'store/layers';
+import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 import type { LayerProps } from 'types/layers';
 
 import {} from './hooks';

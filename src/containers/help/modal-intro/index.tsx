@@ -1,7 +1,5 @@
 import { useState } from 'react';
 
-import VideoIntro from 'containers/help/video-intro';
-
 import { Button } from 'components/ui/button';
 import {
   Dialog,
@@ -10,6 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from 'components/ui/dialog';
+import VideoIntro from 'containers/help/video-intro';
 
 export const GuideModalIntro = ({ isOpen }) => {
   const [showDialog, setShowDialog] = useState(!!isOpen);

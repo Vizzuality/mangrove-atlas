@@ -1,11 +1,10 @@
-import cn from 'lib/classnames';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
 
 // import { INFO } from 'containers/datasets';
-import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
 import { useMangroveEcoregions } from 'containers/datasets/iucn-ecoregion/hooks';
 import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
-
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import cn from 'lib/classnames';
 // import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
@@ -132,7 +131,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
                       })}
                     </ul>
                   </div>
-                )
+                ),
               )}
             </div>
           </div>

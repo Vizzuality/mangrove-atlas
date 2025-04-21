@@ -4,14 +4,12 @@ import { Layer } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { activeLayersAtom } from 'store/layers';
-import { interactiveLayerIdsAtom } from 'store/map';
-
 import { useRecoilState } from 'recoil';
 
 import { LAYERS, BASEMAPS } from 'containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
-
+import { activeLayersAtom } from 'store/layers';
+import { interactiveLayerIdsAtom } from 'store/map';
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
@@ -28,7 +26,7 @@ const LayerManagerContainer = () => {
     const filteredLayers = activeLayersIds?.filter(
       (layer: WidgetSlugType | ContextualBasemapsId | 'custom-area') => {
         return Object.keys(LAYERS).some((k) => layer?.includes(k));
-      }
+      },
     );
 
     return filteredLayers;
@@ -41,10 +39,10 @@ const LayerManagerContainer = () => {
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS?.filter(
-    (layer) => layer?.includes('planet') || layer === 'hi-res-extent'
+    (layer) => layer?.includes('planet') || layer === 'hi-res-extent',
   );
   const no_planet_layers = ACTIVE_LAYERS?.filter(
-    (layer) => !layer?.includes('planet') && layer !== 'hi-res-extent'
+    (layer) => !layer?.includes('planet') && layer !== 'hi-res-extent',
   );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
@@ -57,7 +55,7 @@ const LayerManagerContainer = () => {
     (styleIds: LayerProps['id'][]) => {
       setInteractiveLayerIds((prevInteractiveIds) => [...prevInteractiveIds, ...styleIds]);
     },
-    [setInteractiveLayerIds]
+    [setInteractiveLayerIds],
   );
 
   const handleRemove = useCallback(
@@ -66,7 +64,7 @@ const LayerManagerContainer = () => {
         ...prevInteractiveIds.filter((id) => !styleIds?.includes(id)),
       ]);
     },
-    [setInteractiveLayerIds]
+    [setInteractiveLayerIds],
   );
 
   return (

@@ -1,26 +1,22 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-
-import { analysisAtom } from 'store/analysis';
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
-
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
-
-import NoData from 'containers/widgets/no-data';
 
 import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import NoData from 'containers/widgets/no-data';
+import cn from 'lib/classnames';
+import { analysisAtom } from 'store/analysis';
+import { habitatExtentSettings } from 'store/widgets/habitat-extent';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
-
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
@@ -39,7 +35,7 @@ const HabitatExtent = () => {
   const { data, isFetching, isError, refetch } = useMangroveHabitatExtent(
     { year, unit: selectedUnitAreaExtent },
     { enabled: !isCanceled },
-    handleQueryCancellation
+    handleQueryCancellation,
   );
 
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
@@ -74,7 +70,7 @@ const HabitatExtent = () => {
     (y) => {
       setYear(y);
     },
-    [setYear]
+    [setYear],
   );
 
   if (noData) return <NoData />;

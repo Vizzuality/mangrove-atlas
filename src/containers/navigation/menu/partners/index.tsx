@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Icon from 'components/ui/icon';
-
 import ABERYSTWYTH_SVG from 'svgs/partners/aberystwyth.svg?sprite';
 import NATURE_CONSERVANCY_SVG from 'svgs/partners/nature.svg?sprite';
 import SOLO_SVG from 'svgs/partners/solo.svg?sprite';

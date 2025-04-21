@@ -1,11 +1,10 @@
 import { PropsWithChildren } from 'react';
 
-import { fullScreenAtom } from 'store/map-settings';
-
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
 import LocationWidget from 'containers/location-widget';
+import { fullScreenAtom } from 'store/map-settings';
 
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;

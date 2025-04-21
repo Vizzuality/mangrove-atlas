@@ -38,5 +38,5 @@ export type ChartConfigProps = {
   onBrushEnd: (args: { startIndex: number; endIndex: number }) => void;
   startIndex: number;
   endIndex: number;
-  dataKey: DataKey<any>;
+  dataKey: DataKey<unknown>;
 };

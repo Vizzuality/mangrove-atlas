@@ -6,10 +6,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
-import { printModeState } from 'store/print-mode';
-
 import { useRecoilValue } from 'recoil';
 
 // import { LuCirclePlay } from 'react-icons/lu';
@@ -19,6 +15,8 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import MapContainer from 'containers/map';
 import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
+import cn from 'lib/classnames';
+import { printModeState } from 'store/print-mode';
 
 const DesktopLayout = () => {
   const map = useMap();

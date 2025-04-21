@@ -17,7 +17,7 @@ export const LegendTypeBasic: React.FC<LegendTypeBasicProps> = ({
   return (
     <div
       className={cx({
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <ul className="flex w-full flex-col space-y-1">

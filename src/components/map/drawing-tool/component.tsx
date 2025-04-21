@@ -47,7 +47,7 @@ export const DrawControl = (props: DrawControlProps) => {
     },
     {
       position: props.position,
-    }
+    },
   );
 
   const { onSetCustomPolygon, customPolygon, onError } = props;

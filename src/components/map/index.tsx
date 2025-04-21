@@ -44,7 +44,7 @@ export const CustomMap: FC<CustomMapProps> = ({
     !initialViewState && {
       ...DEFAULT_VIEW_STATE,
       ...viewState,
-    }
+    },
   );
   const [isFlying, setFlying] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -68,7 +68,7 @@ export const CustomMap: FC<CustomMapProps> = ({
           [bbox[0], bbox[1]],
           [bbox[2], bbox[3]],
         ],
-        options
+        options,
       );
     } catch (e) {
       setFlying(false);
@@ -86,7 +86,7 @@ export const CustomMap: FC<CustomMapProps> = ({
       setLocalViewState(newViewState);
       debouncedViewStateChange(newViewState);
     },
-    [constrainedAxis, localViewState.latitude, localViewState.longitude, debouncedViewStateChange]
+    [constrainedAxis, localViewState.latitude, localViewState.longitude, debouncedViewStateChange],
   );
 
   const handleMapLoad = useCallback(
@@ -97,7 +97,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         onLoad(e);
       }
     },
-    [onLoad]
+    [onLoad],
   );
 
   useEffect(() => {
@@ -137,7 +137,7 @@ export const CustomMap: FC<CustomMapProps> = ({
     <div
       className={cx({
         'relative z-0 h-screen w-full print:h-[90vh]': true,
-        [className]: !!className,
+        [`${className}`]: !!className,
       })}
     >
       <ReactMapGL

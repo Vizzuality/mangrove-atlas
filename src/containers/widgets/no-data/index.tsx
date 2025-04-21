@@ -1,5 +1,4 @@
 import Icon from 'components/ui/icon';
-
 import NO_DATA_SVG from 'svgs/ui/no-data.svg?sprite';
 
 const NoData = () => {
