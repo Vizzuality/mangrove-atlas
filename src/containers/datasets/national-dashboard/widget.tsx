@@ -87,8 +87,8 @@ const NationalDashboard = () => {
                 <h3 className={cn({ [WIDGET_SUBTITLE_STYLE]: true, 'py-2': true })}>
                   OTHER RESOURCES
                 </h3>
-                {data?.metadata?.other_resources.map(({ name, description, link }) => (
-                  <OtherResources key={link} name={name} description={description} link={link} />
+                {data?.metadata?.other_resources.map((resource) => (
+                  <OtherResources key={resource.link} {...resource} />
                 ))}
               </section>
             )}

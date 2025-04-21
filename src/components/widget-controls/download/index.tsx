@@ -5,20 +5,39 @@ import Icon from 'components/ui/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
 
+/**
+ * Download component
+ *
+ * This component renders a download button that opens a modal dialog.
+ * It can display one of two types of content depending on the props:
+ *
+ * 1. Static Markdown-based dataset info:
+ *    - If the `id` prop is passed and matches an entry in the `DOWNLOAD` map,
+ *      the corresponding component (typically rendering markdown) is shown.
+ *    - This is used in standard widgets where each widget is tied to a single dataset,
+ *      and the info is static and general for the dataset/widget.
+ *
+ * 2. Dynamic content object:
+ *    - If the `content` prop is passed (and `id` is not), it expects an object with
+ *      `{ name, description, link }` to display a download resource.
+ *    - This is specifically used for the "National Dashboards" widget, where each location
+ *      can have multiple dataset resources with dynamic metadata.
+ *    - These resources are location-specific and change depending
+ *      on the selected geography.
+ *
+ * Props:
+ * - id (string): Optional ID used to retrieve static dataset info from the DOWNLOAD map.
+ * - content (object): Optional dynamic object for location-specific download info.
+ *   - name (string): Title of the dataset or resource.
+ *   - description (string): (Optional) Additional description.
+ *   - link (string): URL to the downloadable resource.
+ */
+
 const Download = ({ id, content }) => {
   const DownloadInfo = DOWNLOAD[id];
 
   if (!DownloadInfo && !content) return null;
 
-  const markdownParser = (text) => {
-    const toHTML = text
-      .replace(/^### (.*$)/gim, '<h3>$1</h3>') // h3 tag
-      .replace(/^## (.*$)/gim, '<h2>$1</h2>') // h2 tag
-      .replace(/^# (.*$)/gim, '<h1>$1</h1>') // h1 tag
-      .replace(/\*\*(.*)\*\*/gim, '<b>$1</b>') // bold text
-      .replace(/\*(.*)\*/gim, '<i>$1</i>'); // italic text
-    return toHTML.trim(); // using trim method to remove whitespace
-  };
   return (
     <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
       <Dialog>
@@ -29,14 +48,18 @@ const Download = ({ id, content }) => {
           <div className="no-scrollbar w-[480px] overflow-y-auto">
             {id && <DownloadInfo />}
             {content && !id && (
-              <div className="flex p-4">
+              <div className="flex flex-col items-start justify-start space-y-4">
                 <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
-                <div className="space-y-2">
-                  <div
-                    className="prose py-4"
-                    dangerouslySetInnerHTML={{ __html: markdownParser(content) }}
-                  />
-                </div>
+                <p className="text-sm font-extralight text-black/85">{content.description}</p>
+                <a
+                  title={content.name}
+                  href={content.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-brand-800 underline"
+                >
+                  {content.name}
+                </a>
               </div>
             )}
           </div>

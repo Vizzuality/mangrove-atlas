@@ -20,13 +20,15 @@ import Download from './download';
 import Info from './info';
 
 type ContentType = {
-  info: string;
-  download: string;
+  description: string;
+  link: string;
+  name: string;
   layer?: string;
 };
 
 type WidgetControlsType = Readonly<{
   id?: WidgetSlugType;
+  contextualLayers?: string[];
   content?: ContentType;
 }>;
 
@@ -51,8 +53,8 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
     return isCurrentlyActive || isAnyActiveNationalDashboard;
   }, [activeLayersIds, id]);
 
-  const download = DOWNLOAD[id] || content?.download;
-  const info = INFO[id] || content?.info;
+  const download = DOWNLOAD[id] || content;
+  const info = INFO[id] || content?.description;
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
@@ -84,7 +86,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
         message="Click one of these to find background information about a layer/widget, to download data or to toggle a layer on and off on the map"
       >
         <div className="flex items-center space-x-2">
-          {!!download && <Download id={id} content={download} />}
+          {!!download && download.link && <Download id={id} content={download} />}
           {!!info && <Info id={id} content={info} />}
         </div>
       </Helper>
