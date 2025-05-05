@@ -154,7 +154,10 @@ export function ContactForm() {
                     </SelectTrigger>
                   </FormControl>
                   <FormMessage />
-                  <SelectContent className="top-0 w-[var(--radix-select-trigger-width)] rounded-3xl border bg-white p-4 text-sm font-light shadow-sm">
+                  <SelectContent
+                    className="top-2 left-1 z-[90] w-[var(--radix-select-trigger-width)] rounded-3xl border bg-white p-4 text-sm font-light shadow-sm"
+                    position="item-aligned"
+                  >
                     <div className="space-y-4">
                       {TOPICS.map(({ label, value }) => (
                         <SelectItem key={value} value={value} className="hover:text-brand-800">
