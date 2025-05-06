@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-
+import { useLocalStorage } from 'usehooks-ts';
 import Image from 'next/image';
-
 import { Button } from 'components/ui/button';
 import {
   Dialog,
@@ -13,30 +12,25 @@ import {
 } from 'components/ui/dialog';
 
 const WelcomeIntroMessage = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isReady, setIsReady] = useState<boolean>(false);
+  const [hasSeenWelcome, setHasSeenWelcome] = useLocalStorage<boolean>('welcomeIntroMessage', false);
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    const hasSeenWelcome = localStorage.getItem('welcomeIntroMessage');
     if (!hasSeenWelcome) {
       setIsOpen(true);
-      localStorage.setItem('welcomeIntroMessage', 'true');
     }
-
-    setIsReady(true);
-  }, []);
+  }, [hasSeenWelcome]);
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-  }, []);
-
-  if (!isReady) return null;
+    setHasSeenWelcome(true);
+  }, [setHasSeenWelcome]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      {/* TO - DO - fix this and improve dialog component*/}
       <DialogContent
-        classNameContent="animate-none duration-0"
-        className="min-w-screen max-w-screen fixed top-0 left-0 right-0 bottom-0 space-y-6 p-0 text-black/85 shadow-sm sm:left-1/2 sm:top-1/2 sm:-translate-y-1/2 sm:-translate-x-1/2 sm:p-8 md:max-w-3xl"
+        classNameContent="animate-none duration-0 min-h-fit"
+        className="w-screen max-w-screen fixed top-0 left-0 right-0 bottom-0 space-y-6 p-0 text-black/85 shadow-sm sm:left-1/2 sm:top-1/2 sm:-translate-y-1/2 sm:-translate-x-1/2 sm:p-8 md:max-w-3xl min-h-fit"
       >
         <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-bl-3xl sm:rounded-tl-3xl">
@@ -60,12 +54,7 @@ const WelcomeIntroMessage = () => {
               Global Mangrove Watch (GMW) is an online platform that provides the remote sensing
               data and tools for monitoring mangroves necessary for this. It gives universal access
               to near real-time information on where and what changes there are to mangroves across
-              the world, and highlights why they are valuable. With hi-res information on
-              topography, soil conditions and hydrology, Global Mangrove Watch gives coastal and
-              park managers, conservationists, policymakers and practitioners the evidence needed to
-              respond to illegal logging, pinpoint the causes of local mangrove loss and track
-              restoration progress. It is a tool that can help mangroves be central to climate
-              mitigation, adaptation and sustainable development plans and policies.
+              the world, and highlights why they are valuable...
             </p>
             <div className="flex items-center justify-between space-x-7">
               <Button onClick={handleClose} className="text-sm font-bold">
