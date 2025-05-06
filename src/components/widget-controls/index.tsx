@@ -58,11 +58,11 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
-    const layersUpdate = updateLayers(activeLayers, {
+    const layersUpdate = updateLayers({
       id,
       opacity: '1',
       visibility: isActive ? 'none' : 'visible',
-    });
+    }, activeLayers);
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 

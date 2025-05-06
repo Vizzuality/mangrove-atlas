@@ -78,7 +78,7 @@ const FloodProtection = ({
   const handleClick = () => {
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
+      : ([ ...activeLayers, { id, opacity: '1', visibility: 'visible' }] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   };
 

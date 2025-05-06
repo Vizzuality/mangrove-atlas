@@ -50,7 +50,7 @@ const IndicatorSource = ({
 
   useEffect(() => {
     if (isActive && !compareNationalLayers) {
-      const layersUpdate = updateLayers(activeLayers, {
+      const layersUpdate = updateLayers({
         id,
         opacity: '1',
         visibility: 'visible',
@@ -61,7 +61,7 @@ const IndicatorSource = ({
           source: dataSource.layer_link,
           source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
         },
-      });
+      }, activeLayers );
       setActiveLayers(layersUpdate);
     }
   }, [compareNationalLayers]);
@@ -70,6 +70,7 @@ const IndicatorSource = ({
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
       : ([
+        ...activeLayers,
           {
             id,
             opacity: '1',
@@ -82,7 +83,6 @@ const IndicatorSource = ({
               source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
             },
           },
-          ...activeLayers,
         ] as ActiveLayers[]);
 
     setActiveLayers(layersUpdate);
