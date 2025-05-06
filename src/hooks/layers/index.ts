@@ -17,7 +17,7 @@ type Layer = {
   };
 };
 
-export function updateLayers(activeLayers: Layer[], newLayer: Layer): Layer[] {
+export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
   const { id } = newLayer;
   const index = activeLayers?.findIndex((layer) => layer.id === id);
   const hasNationalDashboard = id.includes('national_dashboard');
@@ -33,6 +33,6 @@ export function updateLayers(activeLayers: Layer[], newLayer: Layer): Layer[] {
     return activeLayers?.map((layer, idx) => (idx === nationalDashboardIndex ? newLayer : layer));
   } else {
     // Adds the new layer to the list by creating a new array with the new layer
-    return [...activeLayers, newLayer];
+    return [newLayer, ...activeLayers];
   }
 }
