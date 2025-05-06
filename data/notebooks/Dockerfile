@@ -1,4 +1,4 @@
-FROM jupyter/datascience-notebook:python-3.8.6 AS base
+FROM mambaorg/micromamba:1.4.4 AS base
 
 SHELL [ "/bin/bash", "-l", "-c" ]
 
@@ -6,9 +6,30 @@ USER root
 
 
 # Update repos and install dependencies
-RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get -y install git build-essential libsqlite3-dev zlib1g-dev
+RUN apt-get update && \
+    apt-get install -y \
+    make \
+    git \
+    python3-rtree \
+    software-properties-common \
+    graphviz \
+    tini \
+    ca-certificates \
+    build-essential \
+    sqlite3 \
+    libsqlite3-dev \
+    zlib1g-dev \
+    manpages-dev \
+    curl \
+    tzdata \
+    unzip \
+    xclip \
+    libedit-dev \
+    g++ && export CXX=g++ && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN sed -i 's/^#force_color_prompt=yes/force_color_prompt=yes/' /etc/skel/.bashrc
 
 # Create a directory and copy in all files
 RUN mkdir -p /tmp/tippecanoe-src
@@ -37,51 +58,30 @@ RUN mkdir -p /usr/local/gcloud \
 ENV PATH $PATH:/usr/local/gcloud/google-cloud-sdk/bin
 
 FROM stage_1 AS stage_2
-
 # Installing the basic packages
-RUN pip install jupyter_contrib_nbextensions \
-    jupyter_nbextensions_configurator \
-    version_information \
-    jupyterlab \
-    nbdev \
-    autopep8 \
-    nbdime \
-    vega \
-    ipyleaflet \
-    jupyterlab_templates
+USER $MAMBA_USER
+COPY --chown=$MAMBA_USER:$MAMBA_USER environment.yml /tmp/environment.yml
 
-### GDAl trhough conda because it fails through pip
-RUN conda update -n base conda && conda install -c conda-forge \
-    python-blosc \
-    cytoolz \
-    gdal \
-    dask \
-    xhistogram \
-    lz4 \
-    nomkl \
-    dask-labextension \
-    python-graphviz \
-    tini==0.18.0 \
-    xarray=0.16.1
-# Enable extensions
-RUN jupyter contrib nbextension install --sys-prefix && \
-    jupyter nbextensions_configurator enable  && \
-    jupyter nbextension install --sys-prefix --py vega && \
-    jupyter nbextension enable vega --py --sys-prefix &&  \
-    jupyter nbextension enable --py --sys-prefix ipyleaflet && \
-    jupyter labextension install jupyterlab_templates &&\
-    jupyter serverextension enable --py jupyterlab_templates
+RUN micromamba install -n base --yes --file /tmp/environment.yml && \
+    micromamba clean --all --yes
+
+# TODO: export .env in here
+# Otherwise python will not be found
+ARG MAMBA_DOCKERFILE_ACTIVATE=1
+RUN mkdir -p /home/$MAMBA_USER/.config
+USER root
+RUN npm install -g mapshaper@latest
 
 FROM stage_2 AS stage_3
 
-WORKDIR "/home/jovyan/"
+USER $MAMBA_USER
+
+WORKDIR /home/$MAMBA_USER
 # Add requirements file
-RUN npm install -g mapshaper@latest
-COPY jupyter_notebook_config.py /etc/jupyter/
-COPY jupyter_server_config.py .jupyter/jupyter_server_config.py
-COPY requirements.txt /app/
-RUN pip install wheel -r /app/requirements.txt
-RUN mkdir /opt/app
+COPY --chown=$MAMBA_USER:$MAMBA_USER jupyter_notebook_config.py /etc/jupyter/
+COPY --chown=$MAMBA_USER:$MAMBA_USER jupyter_server_config.py .jupyter/jupyter_server_config.py
 # Jupyter with Docker Compose
 
 EXPOSE 8888
+
+ENTRYPOINT ["/usr/local/bin/_entrypoint.sh", "jupyter", "lab", "--ip=0.0.0.0","--allow-root", "--no-browser", "--collaborative", "--ServerApp.disable_check_xsrf=True", "--ServerApp.token=''"]

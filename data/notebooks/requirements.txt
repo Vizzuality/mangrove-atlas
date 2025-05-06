@@ -12,8 +12,8 @@ matplotlib
 earthengine-api
 gcsfs
 s3fs
-google-cloud-storage == 2.4.0
-google-cloud-datastore == 2.8.0
+google-cloud-storage
+google-cloud-datastore
 google-api-python-client
 iso8601
 pystac

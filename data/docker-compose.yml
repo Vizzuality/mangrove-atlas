@@ -1,39 +1,36 @@
-version:  '3.7'
+version: '3.7'
 services:
   module_data-notebooks:
-      build:
-        context: ./notebooks
-        dockerfile: Dockerfile
-      volumes:
-        - ./data:/home/jovyan/work/datasets
-        - ./notebooks:/home/jovyan/work/notebooks
-        - /opt/ssl-certs/jupyter:/etc/ssl/notebook
-        - ~/.config/gspread/credentials.json:/home/jovyan/.config/gspread/credentials.json
-      ports:
-        - 8887:8888
-      container_name: module_data_jupyter_notebook
-      command: "start-notebook.sh \
-        --NotebookApp.token=''"
-      environment:
-        - GRANT_SUDO=yes
-        - CHOWN_HOME=yes
-        - CHOWN_HOME_OPTS=-R
-        - DOCKER_STACKS_JUPYTER_CMD=lab
+    user: 'mambauser'
+    build:
+      context: ./notebooks
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/home/mambauser/work/datasets
+      - ./notebooks:/home/mambauser/work/notebooks
+      - /opt/ssl-certs/jupyter:/etc/ssl/notebook
+      - ~/.config/gspread/credentials.json:/home/mambauser/.config/gspread/credentials.json
+    ports:
+      - 8887:8888
+    container_name: module_data_jupyter_notebook
+    environment:
+      - GRANT_SUDO=yes
+      - CHOWN_HOME=yes
+      - CHOWN_HOME_OPTS=-R
+      - DOCKER_STACKS_JUPYTER_CMD=lab
 
-  spatial_db:
-      image: postgis/postgis:14-3.2
-      container_name: spatial_db_db
-      volumes:
-      - ./data:/work
-      - pg_tileserv_db:/var/lib/postgresql/data
-      ports:
-      - 5432:5432
-      environment:
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=postgres
-        - POSTGRES_DB=postgres
+#   spatial_db:
+#       image: postgis/postgis:14-3.2
+#       container_name: spatial_db_db
+#       volumes:
+#       - ./data:/work
+#       - pg_tileserv_db:/var/lib/postgresql/data
+#       ports:
+#       - 5432:5432
+#       environment:
+#         - POSTGRES_USER=postgres
+#         - POSTGRES_PASSWORD=postgres
+#         - POSTGRES_DB=postgres
 
 volumes:
   pg_tileserv_db:
-
-
