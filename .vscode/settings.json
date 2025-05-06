@@ -13,5 +13,7 @@
         "Transifex",
         "usehooks",
         "wdpa"
-    ], "npm.packageManager": "pnpm"
+    ],
+    "npm.packageManager": "pnpm",
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

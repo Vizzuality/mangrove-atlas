@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vizzuality/mangrove-atlas-data.git"
+    "url": "git+https://github.com/Vizzuality/mangrove-atlas.git"
   },
   "author": "Vizzuality",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Vizzuality/mangrove-atlas-data/issues"
+    "url": "https://github.com/Vizzuality/mangrove-atlas/issues"
   },
-  "homepage": "https://github.com/Vizzuality/mangrove-atlas-data#readme",
+  "homepage": "https://github.com/Vizzuality/mangrove-atlas#readme",
   "dependencies": {
     "@google-cloud/bigquery": "^5.0.0",
     "axios": "^1.6.0",
