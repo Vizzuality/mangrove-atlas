@@ -11,28 +11,25 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
+import { useLocalStorage } from 'usehooks-ts';
 
-// import GuideModalIntro from './modal-intro';
+ import GuideModalIntro from './modal-intro';
 
 export const HelpContainer = () => {
+  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
-  const [
-    ,
-    // showGuideModal
-    setShowGuideModal,
-  ] = useState(() => {
-    return !!localStorage.getItem('hasClickedGuideSwitch'); // Only true if the user never clicked before
-  });
+
 
   const handleClick = () => {
     setIsActive((prev) => !prev);
 
     // Only show modal the first time the switch is clicked
-    if (!localStorage.getItem('hasClickedGuideSwitch')) {
-      setShowGuideModal(true);
-      localStorage.setItem('hasClickedGuideSwitch', 'true'); // Mark as seen so it never shows again
+    if (!guideLocalStorage) {
+      setGuideLocalStorage(true);
+      setIsOpen(true);
     }
-  };
+  };  
 
   return (
     <div>
@@ -69,7 +66,7 @@ export const HelpContainer = () => {
       </Popover>
 
       {/* Show the modal ONLY if it's the first time clicking the switch */}
-      {/* {showGuideModal && <GuideModalIntro isOpen={showGuideModal} />} */}
+      {guideLocalStorage && <GuideModalIntro isOpen={isOpen} />}
     </div>
   );
 };
