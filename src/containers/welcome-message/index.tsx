@@ -23,7 +23,7 @@ const WelcomeIntroMessage = () => {
 
   const handleClose = useCallback(() => {
     setIsOpen(false);
-    setHasSeenWelcome(true); // ✅ store that it's been seen
+    setHasSeenWelcome(true);
   }, [setHasSeenWelcome]);
 
   return (
