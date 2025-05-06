@@ -37,6 +37,10 @@ const RESOURCES_LINKS = [
     href: 'https://www.wetlands.org/publication/global-mangrove-watch-leaflet/',
   },
   {
+    label: 'MRTT user guide',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2023/07/MRTT-Guide-v15.pdf',
+  },
+  {
     label: 'Policy Brief: GMW and NBSAPs',
     href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/10/Global-Mangrove-Watch-NBSAPs_-Update-2024.pdf',
   },
