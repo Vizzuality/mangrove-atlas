@@ -18,19 +18,19 @@ jobs:
       contents: 'read'
       id-token: 'write'
     steps:
-    - uses: actions/checkout@v4
-    - id: auth
-      name: Authenticate in google cloud services
-      uses: google-github-actions/auth@v2
-      with:
-        credentials_json: '${{ secrets.gcp_credentials }}'
-    - id: 'deploy'
-      uses: 'google-github-actions/deploy-cloud-functions@v3'
-      timeout-minutes: 10
-      with:
-        name: 'alerts-tiler'
-        runtime: 'nodejs20'
+      - uses: actions/checkout@v4
+      - id: auth
+        name: Authenticate in google cloud services
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.gcp_credentials }}'
+      - id: 'deploy'
+        uses: 'google-github-actions/deploy-cloud-functions@v3'
+        timeout-minutes: 10
+        with:
+          name: 'alerts-tiler'
+          runtime: 'nodejs20'
 
-    # Example of using the output
-    - id: 'test'
-      run: 'curl "${{ steps.deploy.outputs.url }}"'
+      # Example of using the output
+      - id: 'test'
+        run: 'curl "${{ steps.deploy.outputs.url }}"'
