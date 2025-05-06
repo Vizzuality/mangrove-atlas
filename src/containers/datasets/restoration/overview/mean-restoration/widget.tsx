@@ -31,6 +31,7 @@ const MeanRestoration = () => {
             <span className="font-bold"> {data.location}</span> is{' '}
             <span className="font-bold">{data.restoration_potential_score}</span>
           </p>
+          <p>This is an indicator of the likely ease for achieving successful restoration, not the extent of possible restoration.</p>
           <div className="flex flex-1 items-center space-y-2">
             <OverviewChart restoration_potential_score={data.restoration_potential_score} />
           </div>
