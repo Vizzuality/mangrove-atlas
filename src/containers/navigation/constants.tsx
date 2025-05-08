@@ -28,7 +28,7 @@ export const EXT_MENU_OPTIONS = [
   },
   {
     id: 'contact',
-    label: 'Contact',
+    label: 'Contact Us',
     href: 'https://www.mangrovealliance.org/contact',
   },
 ];

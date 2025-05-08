@@ -27,7 +27,7 @@ const Contact = ({ className }: { className?: string }) => {
       >
         <div className="space-y-10 py-10">
           <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-            <h2 className="text-2xl font-light leading-4 md:pt-0 md:text-3xl">Contact</h2>
+            <h2 className="text-2xl font-light leading-4 md:pt-0 md:text-3xl">Contact Us</h2>
           </div>
         </div>
         <ContactForm />
