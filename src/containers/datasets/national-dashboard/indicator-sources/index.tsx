@@ -1,32 +1,23 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
-
 import { activeLayersAtom } from 'store/layers';
 
 import { useRecoilState } from 'recoil';
 
 import { updateLayers } from 'hooks/layers';
 
-import Icon from 'components/ui/icon';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import WidgetControls from 'components/widget-controls';
-import { WIDGET_SELECT_ARROW_STYLES, WIDGET_SELECT_STYLES } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
-
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import { DATA_SOURCES } from '../constants';
 
-import type { IndicatorSourceTypes } from './types';
+import IndicatorExtent from './extent';
+import IndicatorSource from './source';
+import type { IndicatorSourcesTypes } from './types';
+import IndicatorYear from './year';
 
-const LABEL_UNITS = {
-  km2: 'km²',
-};
-
-const IndicatorSource = ({
+const IndicatorSources = ({
   id,
   source,
   locationIso,
@@ -37,7 +28,7 @@ const IndicatorSource = ({
   color,
   yearSelected,
   setYearSelected,
-}: IndicatorSourceTypes) => {
+}: IndicatorSourcesTypes) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers?.map((l) => l.id);
 
@@ -92,58 +83,12 @@ const IndicatorSource = ({
   }, [activeLayers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);
 
   return (
-    <div key={source} className="grid grid-cols-4 items-start justify-between space-x-2 py-4">
-      <div className="col-span-1 flex space-x-2">
-        <div style={{ backgroundColor: color }} className="mt-1 h-4 w-2 shrink-0 rounded-md pt-4" />
+    <div key={source} className="flex w-full items-start justify-between space-x-4 py-4">
+      <IndicatorSource source={source} color={color} />
+      <IndicatorYear yearSelected={yearSelected} setYearSelected={setYearSelected} years={years} />
+      <IndicatorExtent unit={unit} dataSource={dataSource} />
 
-        <span className="max-w-[180px]">{source}</span>
-      </div>
-      <div className="col-span-1 flex">
-        {years.length === 1 && <span>{years[0]}</span>}
-        {years.length > 1 && (
-          <Popover>
-            <PopoverTrigger asChild>
-              <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
-                {yearSelected}
-                <Icon
-                  icon={ARROW_SVG}
-                  className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                  description="Arrow"
-                />
-              </span>
-            </PopoverTrigger>
-
-            <PopoverContent className="rounded-2xl px-2 shadow-border">
-              <ul className="max-h-32 space-y-0.5">
-                {years?.map((u) => (
-                  <li key={u}>
-                    <button
-                      aria-label="set year"
-                      className={cn({
-                        'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                        'hover:text-brand-800': yearSelected !== u,
-                        'pointer-events-none opacity-50': yearSelected === u,
-                      })}
-                      type="button"
-                      onClick={() => setYearSelected(u)}
-                      disabled={yearSelected === u}
-                    >
-                      {u}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </PopoverContent>
-          </Popover>
-        )}
-      </div>
-      {dataSource?.value && (
-        <span>
-          {numberFormat(dataSource.value)}
-          {unit && <span> {LABEL_UNITS[unit] || unit}</span>}
-        </span>
-      )}
-      <div className="col-span-1 flex justify-end space-x-2">
+      <div className="flex min-h-min justify-end space-x-2">
         <WidgetControls
           content={{
             link: dataSource?.download_link,
@@ -161,4 +106,4 @@ const IndicatorSource = ({
   );
 };
 
-export default IndicatorSource;
+export default IndicatorSources;
