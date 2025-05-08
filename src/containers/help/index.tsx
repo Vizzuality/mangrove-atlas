@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { useRecoilState } from 'recoil';
 import { activeGuideAtom } from 'store/guide';
+import { useRecoilState } from 'recoil';
 
 import { useLocalStorage } from 'usehooks-ts';
 

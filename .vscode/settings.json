@@ -15,10 +15,8 @@
     "wdpa"
   ],
   "npm.packageManager": "pnpm",
-
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": true
+    "source.fixAll.eslint": "always"
   },
   "eslint.validate": ["javascript", "typescript", "typescriptreact"]
 }
