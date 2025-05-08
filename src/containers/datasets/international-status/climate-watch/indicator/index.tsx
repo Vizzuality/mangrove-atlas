@@ -38,7 +38,7 @@ const Indicator = (indicator: IndicatorTypes) => {
                 className="rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
               >
                 {info}
-                <TooltipArrow className=" fill-white" width={10} height={5} />
+                <TooltipArrow className="fill-white" width={10} height={5} />
               </TooltipContent>
             </TooltipPortal>
           </Tooltip>

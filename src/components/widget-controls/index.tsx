@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -13,7 +13,7 @@ import { updateLayers } from 'hooks/layers';
 import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
 import Helper from 'containers/help/helper';
 
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
 
 import Download from './download';
@@ -58,11 +58,14 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const layer = LAYERS[id] || content?.layer;
 
   const handleClick = useCallback(() => {
-    const layersUpdate = updateLayers({
-      id,
-      opacity: '1',
-      visibility: isActive ? 'none' : 'visible',
-    }, activeLayers);
+    const layersUpdate = updateLayers(
+      {
+        id,
+        opacity: '1',
+        visibility: isActive ? 'none' : 'visible',
+      },
+      activeLayers
+    );
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 
@@ -86,7 +89,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
         message="Click one of these to find background information about a layer/widget, to download data or to toggle a layer on and off on the map"
       >
         <div className="flex items-center space-x-2">
-          {!!download && download.link && <Download id={id} content={download} />}
+          {!!download && <Download id={id} content={download} />}
           {!!info && <Info id={id} content={info} />}
         </div>
       </Helper>

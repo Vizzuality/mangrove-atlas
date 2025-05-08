@@ -92,7 +92,7 @@ type IndicatorsParams = {
     'adaptation',
     'pledge_base_year',
     'time_target_year',
-    'submission_type'
+    'submission_type',
   ];
 };
 

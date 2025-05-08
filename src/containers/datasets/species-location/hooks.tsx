@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
 import { SpeciesLocationState } from 'store/widgets/species-location';
 
-import { useQuery, QueryClient } from '@tanstack/react-query';
 import type { QueryObserverOptions } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import { useLocations, useLocation } from 'containers/datasets/locations/hooks';
+import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
 
 import API from 'services/api';
@@ -23,8 +23,6 @@ const QUERY_KEY = 'species-location';
 export function useMangroveSpeciesLocation<T>(
   queryOptions?: QueryObserverOptions<DataResponse, Error, T>
 ) {
-  const queryClient = new QueryClient();
-
   const fetchMangroveSpecies = () =>
     API.request<DataResponse>({
       method: 'GET',
@@ -44,9 +42,6 @@ export function useMangroveSpeciesLocation<T>(
   } = useLocation(id, locationType);
 
   return useQuery([QUERY_KEY, location_id], fetchMangroveSpecies, {
-    placeholderData: queryClient.getQueryData<DataResponse>([QUERY_KEY, location_id]) || {
-      data: [],
-    },
     ...queryOptions,
   });
 }

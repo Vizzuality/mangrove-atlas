@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -24,7 +24,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
 
-import type { ExtentData, Indicator, DataResponse } from './types';
+import type { DataResponse, ExtentData, Indicator } from './types';
 
 const unitOptions = ['km²', 'ha'];
 
@@ -93,7 +93,7 @@ export function useMangroveHabitatExtent(
     ...queryOptions,
   });
 
-  const { data, isFetched } = query;
+  const { data, isFetched, isFetching, isError, refetch } = query;
   const noData =
     location_id === 'custom-area'
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.value, 0) === 0
@@ -207,10 +207,12 @@ export function useMangroveHabitatExtent(
 
   return useMemo(() => {
     return {
-      ...query,
+      isFetching,
+      isError,
+      refetch,
       data: DATA,
     } as typeof query;
-  }, [query, DATA]);
+  }, [data, isFetching, isError, refetch, DATA]);
 }
 
 export function useSource(): SourceProps {

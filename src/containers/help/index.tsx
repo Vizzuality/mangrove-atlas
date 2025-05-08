@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+import { useRecoilState } from 'recoil';
 import { activeGuideAtom } from 'store/guide';
 
-import { useRecoilState } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from 'containers/contact';
 
@@ -11,7 +12,6 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
-import { useLocalStorage } from 'usehooks-ts';
 
 import GuideModalIntro from './modal-intro';
 

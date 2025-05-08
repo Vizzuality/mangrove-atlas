@@ -1,4 +1,4 @@
-import { useMemo, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { Layer } from 'react-map-gl';
 
@@ -9,7 +9,7 @@ import { interactiveLayerIdsAtom } from 'store/map';
 
 import { useRecoilState } from 'recoil';
 
-import { LAYERS, BASEMAPS } from 'containers/datasets';
+import { BASEMAPS, LAYERS } from 'containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
 
 import type { LayerProps } from 'types/layers';

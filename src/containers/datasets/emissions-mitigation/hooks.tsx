@@ -17,7 +17,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import API from 'services/api';
 
 import CustomTooltip from './tooltip';
-import type { DataResponse, UseParamsOptions, emissionsMitigationData, Data } from './types';
+import type { Data, DataResponse, emissionsMitigationData, UseParamsOptions } from './types';
 
 interface DataBar {
   category: DataResponse['data'][0]['category'];
@@ -142,7 +142,7 @@ export function useMangroveEmissionsMitigation(
     ...queryOptions,
   });
 
-  const { data, isFetched } = query;
+  const { data, isFetched, isLoading } = query;
   const noData = isFetched && !data?.data?.length;
   const DATA = useMemo(() => {
     const COLOR_RAMP = chroma
@@ -218,12 +218,12 @@ export function useMangroveEmissionsMitigation(
       noData,
       config,
     } satisfies emissionsMitigationData;
-  }, [query, data]);
+  }, [data]);
 
   return useMemo(() => {
     return {
       ...query,
       data: DATA,
     };
-  }, [query]);
+  }, [data, isFetched, isLoading]);
 }
