@@ -58,7 +58,7 @@ const SpeciesLocation = () => {
       })),
     [species, isLoading]
   );
-  console.log({ species, specieOptions });
+
   const onSelectSpecies = useCallback(
     (specieName: RadioOption['value']) => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
