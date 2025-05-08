@@ -97,7 +97,7 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans  md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20 md:w-[436px]': true,
           'h-fit py-0': section === 'main',
         })}
       >
@@ -117,12 +117,16 @@ const Menu = () => {
               <Link
                 href="https://www.mangrovealliance.org/"
                 className="text-2lg font-light hover:text-brand-800"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 Global Mangrove Alliance
               </Link>
               <Link
-                href="https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/"
+                href="https://mrtt.globalmangrovewatch.org"
                 className="text-2lg font-light hover:text-brand-800"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 Mangrove Restoration Tracker Tool
               </Link>
