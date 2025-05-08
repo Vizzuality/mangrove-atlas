@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import isEmpty from 'lodash-es/isEmpty';
 
@@ -8,10 +8,9 @@ import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
 
 import { useSetRecoilState } from 'recoil';
 
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Loading from 'components/ui/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
-import { BUTTON_STYLES } from 'styles/widgets';
+import { BUTTON_STYLES, WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';

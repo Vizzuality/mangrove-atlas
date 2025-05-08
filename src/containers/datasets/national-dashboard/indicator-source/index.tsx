@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import cn from 'lib/classnames';
 import { numberFormat } from 'lib/format';
@@ -11,9 +11,9 @@ import { updateLayers } from 'hooks/layers';
 
 import Icon from 'components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import WidgetControls from 'components/widget-controls';
-import { WIDGET_SELECT_STYLES, WIDGET_SELECT_ARROW_STYLES } from 'styles/widgets';
+import { WIDGET_SELECT_ARROW_STYLES, WIDGET_SELECT_STYLES } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
@@ -50,18 +50,21 @@ const IndicatorSource = ({
 
   useEffect(() => {
     if (isActive && !compareNationalLayers) {
-      const layersUpdate = updateLayers({
-        id,
-        opacity: '1',
-        visibility: 'visible',
-        settings: {
-          name: source,
-          location: locationIso,
-          layerIndex,
-          source: dataSource.layer_link,
-          source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+      const layersUpdate = updateLayers(
+        {
+          id,
+          opacity: '1',
+          visibility: 'visible',
+          settings: {
+            name: source,
+            location: locationIso,
+            layerIndex,
+            source: dataSource.layer_link,
+            source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+          },
         },
-      }, activeLayers );
+        activeLayers
+      );
       setActiveLayers(layersUpdate);
     }
   }, [compareNationalLayers]);
@@ -70,7 +73,7 @@ const IndicatorSource = ({
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => !w.id.includes('mangrove_national_dashboard_layer'))
       : ([
-        ...activeLayers,
+          ...activeLayers,
           {
             id,
             opacity: '1',

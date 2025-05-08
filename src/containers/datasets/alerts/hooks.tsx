@@ -1,4 +1,4 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 
@@ -22,7 +22,7 @@ import API_cloud_functions from 'services/cloud-functions';
 
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
-import type { UseParamsOptions, AlertData, CustomAreaGeometry } from './types';
+import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
 
 const getStops = () => {
   const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];

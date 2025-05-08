@@ -1,17 +1,24 @@
 {
-    "cSpell.words": [
-        "basemap",
-        "basemaps",
-        "globalmangrovewatch",
-        "gpkg",
-        "mapbox",
-        "notranslate",
-        "overscan",
-        "SHAPEFILE",
-        "svgs",
-        "tanstack",
-        "Transifex",
-        "usehooks",
-        "wdpa"
-    ], "npm.packageManager": "pnpm"
+  "cSpell.words": [
+    "basemap",
+    "basemaps",
+    "globalmangrovewatch",
+    "gpkg",
+    "mapbox",
+    "notranslate",
+    "overscan",
+    "SHAPEFILE",
+    "svgs",
+    "tanstack",
+    "Transifex",
+    "usehooks",
+    "wdpa"
+  ],
+  "npm.packageManager": "pnpm",
+
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": true
+  },
+  "eslint.validate": ["javascript", "typescript", "typescriptreact"]
 }

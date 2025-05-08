@@ -1,4 +1,4 @@
-import { useCallback, MouseEvent } from 'react';
+import { MouseEvent, useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 

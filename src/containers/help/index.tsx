@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
+import { useRecoilState } from 'recoil';
 import { activeGuideAtom } from 'store/guide';
 
-import { useRecoilState } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from 'containers/contact';
 
@@ -11,15 +12,16 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
-import { useLocalStorage } from 'usehooks-ts';
 
- import GuideModalIntro from './modal-intro';
+import GuideModalIntro from './modal-intro';
 
 export const HelpContainer = () => {
-  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
+  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>(
+    'guideLocalStorage',
+    false
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
-
 
   const handleClick = () => {
     setIsActive((prev) => !prev);
@@ -29,7 +31,7 @@ export const HelpContainer = () => {
       setGuideLocalStorage(true);
       setIsOpen(true);
     }
-  };  
+  };
 
   return (
     <div>

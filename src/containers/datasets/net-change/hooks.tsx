@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
 
@@ -8,11 +8,10 @@ import { useRouter } from 'next/router';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { netChangeStartYear, netChangeEndYear } from 'store/widgets/net-change';
+import { netChangeEndYear, netChangeStartYear } from 'store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import { format } from 'd3-format';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
@@ -143,7 +142,7 @@ export function useMangroveNetChange(
     ...queryOptions,
   });
 
-  const { data, isFetched } = query;
+  const { data, isFetched, isFetching, refetch, isError } = query;
 
   const noData =
     location_id === 'custom-area'
@@ -218,7 +217,22 @@ export function useMangroveNetChange(
       noData,
       ...query,
     };
-  }, [data, query, startYear, endYear, location, selectedUnit, noData]);
+  }, [
+    data,
+    startYear,
+    endYear,
+    location,
+    selectedUnit,
+    noData,
+
+    location,
+    unitOptions,
+    data,
+    isFetching,
+    refetch,
+    isError,
+    noData,
+  ]);
 }
 
 export function useSources(fluctuation): SourceProps[] {

@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import cn from 'lib/classnames';
 
 import { analysisAtom } from 'store/analysis';
-import { drawingUploadToolAtom, drawingToolAtom } from 'store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { mapCursorAtom } from 'store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -106,7 +106,7 @@ const WidgetDrawingUploadTool = () => {
           <div
             {...conditionalProps}
             className={cn({
-              'w-[128px] cursor-pointer rounded-3xl p-2': true,
+              'cursor-pointer rounded-3xl p-2': true,
               hidden: !!uploadedGeojson,
               'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
             })}
@@ -138,7 +138,7 @@ const WidgetDrawingUploadTool = () => {
           </div>
         )}
         {(uploadedGeojson || isDrawingUploadToolEnabled) && (
-          <div className="mb-2 w-[128px] cursor-pointer rounded-3xl bg-white p-2">
+          <div className="mb-2 cursor-pointer rounded-3xl bg-white p-2">
             <DeleteDrawingButton size="sm">
               <p className="whitespace-nowrap font-sans text-sm text-brand-800">Delete area</p>
             </DeleteDrawingButton>

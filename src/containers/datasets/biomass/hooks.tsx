@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -25,7 +25,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
-import type { DataResponse, Data, BiomassData, ColorKeysTypes } from './types';
+import type { BiomassData, ColorKeysTypes, Data, DataResponse } from './types';
 
 export const widgetSlug = 'aboveground_biomass';
 

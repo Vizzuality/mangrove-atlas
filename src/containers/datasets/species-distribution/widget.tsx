@@ -10,7 +10,7 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 
-import { useMangroveSpecies } from './hooks';
+import { useMangroveSpeciesDistribution } from './hooks';
 
 const SpeciesDistribution = () => {
   const {
@@ -22,7 +22,7 @@ const SpeciesDistribution = () => {
     isLoading,
     isFetched,
     isPlaceholderData,
-  } = useMangroveSpecies();
+  } = useMangroveSpeciesDistribution();
 
   const isWorldwide = location === 'Worldwide';
 

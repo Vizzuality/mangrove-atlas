@@ -4,7 +4,7 @@ import cn from 'lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
-import { alertsStartDate, alertsEndDate } from 'store/widgets/alerts';
+import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -18,8 +18,8 @@ import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
-  WIDGET_SENTENCE_STYLE,
   WIDGET_SELECT_STYLES,
+  WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';

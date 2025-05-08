@@ -1,10 +1,10 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
 import {
-  RestorationSitesMapFilters,
   RestorationSitesFiltersApplication,
+  RestorationSitesMapFilters,
 } from 'store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -18,7 +18,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, DataFilters } from './types';
+import type { Data, DataFilters, DataResponse } from './types';
 
 // widget data
 export function useMangroveRestorationSites(

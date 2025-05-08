@@ -1,10 +1,10 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, formatNumberNearestInteger } from 'lib/format';
+import { formatNumberNearestInteger, numberFormat } from 'lib/format';
 
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';

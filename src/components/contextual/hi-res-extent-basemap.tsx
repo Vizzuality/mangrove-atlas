@@ -26,11 +26,11 @@ const HighResolutionExtentBasemap = () => {
         id === 'no-layer'
           ? activeLayers?.filter((w) => w.id !== 'hi-res-extent')
           : ([
-            {
-              id: 'hi-res-extent' as ContextualBasemapsId,
-              opacity: '1',
-              visibility: 'visible',
-            },
+              {
+                id: 'hi-res-extent' as ContextualBasemapsId,
+                opacity: '1',
+                visibility: 'visible',
+              },
               ...activeLayers,
             ] as ActiveLayers[]);
       setActiveLayers(layersUpdate);

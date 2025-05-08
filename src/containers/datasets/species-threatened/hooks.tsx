@@ -70,7 +70,7 @@ const getThreatened = (th: number, total: number) => {
   }
 };
 // widget data
-export function useMangroveSpecies(
+export function useMangroveSpeciesThreatened(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {

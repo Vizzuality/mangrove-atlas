@@ -14,7 +14,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import API from 'services/api';
 
 import Tooltip from './tooltip';
-import type { CarbonMarketPotentialData, UseParamsOptions, Unit } from './types';
+import type { CarbonMarketPotentialData, Unit, UseParamsOptions } from './types';
 
 const labels = ['at $5/ton', 'at $10/ton'];
 

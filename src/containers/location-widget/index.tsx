@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -92,7 +92,7 @@ const LocationWidget = () => {
               {!!locationName ? (
                 <div
                   className={cn({
-                    'inline-block h-[128px] flex-1 grow px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
+                    'inline-block flex-1 grow px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                       true,
                     'text-2.75xl': width >= 540,
 
