@@ -16,7 +16,7 @@ const Contact = ({ className }: { className?: string }) => {
         tooltipPosition={{ top: -40, left: 0 }}
         message=""
       > */}
-      <DialogTrigger className={cn({ [className]: !!className })}>Contact</DialogTrigger>
+      <DialogTrigger className={cn({ [className]: !!className })}>Contact Us</DialogTrigger>
       {/* </Helper> */}
 
       <DialogContent
