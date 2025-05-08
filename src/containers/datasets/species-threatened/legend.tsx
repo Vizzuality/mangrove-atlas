@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -6,7 +6,7 @@ import Icon from 'components/ui/icon';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
-import type { LegendItem, Category } from './types';
+import type { Category, LegendItem } from './types';
 type Legend = {
   items: LegendItem[];
 };

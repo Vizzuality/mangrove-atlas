@@ -13,7 +13,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { DataResponse, InternationalStatusTypes, Data } from './types';
+import type { Data, DataResponse, InternationalStatusTypes } from './types';
 
 // widget data
 export function useMangroveInternationalStatus(

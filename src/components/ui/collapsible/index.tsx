@@ -1,11 +1,11 @@
 'use client';
 
-import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import cn from 'lib/classnames';
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
-import { HiPlus, HiMinus } from 'react-icons/hi';
+import { HiMinus, HiPlus } from 'react-icons/hi';
 
 const Collapsible = CollapsiblePrimitive.Root;
 
@@ -45,4 +45,4 @@ CollapsibleTrigger.displayName = CollapsiblePrimitive.Trigger.displayName;
 
 const CollapsibleContent = CollapsiblePrimitive.CollapsibleContent;
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent };
+export { Collapsible, CollapsibleContent, CollapsibleTrigger };

@@ -1,4 +1,4 @@
-import React, { useCallback, ReactElement, FC } from 'react';
+import { FC, ReactElement } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -8,11 +8,11 @@ import { widgetsCollapsedAtom } from 'store/widgets';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import WidgetControls from 'components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
-import Info from './info.mdx';
+import WidgetApplicability from './applicability';
+import WidgetHeader from './header';
 import { getLayerActive } from './selector';
 
 type ChildrenType = ReactElement & { type?: () => null };
@@ -33,18 +33,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
   const isLayerActive = useRecoilValue(getLayerActive(id));
 
-  const [widgetsCollapsed, setWidgetsCollapsed] =
-    useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
-
-  const handleWidgetCollapsed = useCallback(() => {
-    const updatedWidgetsCollapsed = {
-      ...widgetsCollapsed,
-      [id]: !widgetsCollapsed[id],
-      ['mangrove_drawing_tool']: false,
-      ['mangrove_drawing_upload_tool']: false,
-    };
-    setWidgetsCollapsed(updatedWidgetsCollapsed);
-  }, [id, widgetsCollapsed, setWidgetsCollapsed]);
+  const [widgetsCollapsed] = useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const widgetVariants = {
     collapsed: {
@@ -83,16 +72,10 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           })}
           data-testid={`widget-${id}`}
         >
-          <header className="flex items-center justify-between">
-            <h2
-              onClick={handleWidgetCollapsed}
-              className="flex-1 cursor-pointer py-5 text-xs font-bold uppercase -tracking-tighter text-black/85 group-last-of-type:pointer-events-none"
-            >
-              {title}
-            </h2>
-
+          <WidgetHeader title={title} id={id}>
             {!info && <WidgetControls id={id} />}
-          </header>
+          </WidgetHeader>
+
           <div
             data-testid={`widget-${id}-content`}
             className={cn({
@@ -103,31 +86,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           >
             {children}
           </div>
-          {applicability && (
-            <p
-              className={cn({
-                'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
-                hidden: isCollapsed,
-                block: !isCollapsed,
-              })}
-            >
-              <span className="font-normal">Data applicability:</span>{' '}
-              <span className="font-light">{applicability}.</span>{' '}
-              <Dialog>
-                <DialogTrigger>
-                  <div className="inline-flex text-brand-800 underline hover:no-underline">
-                    Learn more
-                  </div>
-                </DialogTrigger>
-                <DialogContent className="md:mb-20">
-                  <div className="no-scrollbar overflow-y-auto">
-                    <Info />
-                  </div>
-                  <DialogClose className="fixed !top-18 left-[595px]" />
-                </DialogContent>
-              </Dialog>
-            </p>
-          )}
+          {applicability && <WidgetApplicability id={id} applicability={applicability} />}
         </div>
       </motion.div>
     </AnimatePresence>

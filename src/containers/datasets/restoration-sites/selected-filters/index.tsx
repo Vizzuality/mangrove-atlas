@@ -25,7 +25,7 @@ const SelectedFilters = ({
               type="button"
               className={cn({
                 [BUTTON_STYLES]: true,
-                'flex  items-center space-x-2 overflow-hidden text-ellipsis whitespace-nowrap bg-[#00857f26] text-sm text-black/85':
+                'flex items-center space-x-2 overflow-hidden text-ellipsis whitespace-nowrap bg-[#00857f26] text-sm text-black/85':
                   true,
               })}
             >

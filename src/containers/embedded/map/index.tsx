@@ -4,12 +4,12 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { basemapAtom, URLboundsAtom, locationBoundsAtom, mapCursorAtom } from 'store/map';
+import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from 'store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 

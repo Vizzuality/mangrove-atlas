@@ -39,7 +39,7 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
             <div className="flex grow items-center justify-between space-x-6">
               <div className="relative h-6 w-full bg-slate-100">
                 <div
-                  className=" h-full w-full"
+                  className="h-full w-full"
                   style={{
                     background:
                       'linear-gradient(90deg, #F9DDDA 0%, #FFADAD 25.52%, #CE78B3 50.52%, #8478CE 78.13%, #224294 100%)',

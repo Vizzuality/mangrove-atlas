@@ -104,7 +104,7 @@ export const Share = ({
                   </div>
                   <div>
                     <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
-                    <div className="flex h-12  items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
+                    <div className="flex h-12 items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
                       <p className="truncate">{embeddedLink}</p>
                       <button
                         onClick={copyEmbeddedCode}

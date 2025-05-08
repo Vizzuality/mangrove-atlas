@@ -1,7 +1,7 @@
-import { useMangroveSpecies } from './hooks';
+import { useMangroveSpeciesDistribution } from './hooks';
 
 const SpeciesDistributionMapLegend = () => {
-  const { legend } = useMangroveSpecies();
+  const { legend } = useMangroveSpeciesDistribution();
 
   return (
     <div className="w-[280px]">

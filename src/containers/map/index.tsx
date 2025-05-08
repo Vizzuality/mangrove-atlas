@@ -11,10 +11,10 @@ import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
 import {
   basemapAtom,
-  URLboundsAtom,
-  locationBoundsAtom,
   interactiveLayerIdsAtom,
+  locationBoundsAtom,
   mapCursorAtom,
+  URLboundsAtom,
 } from 'store/map';
 import { printModeState } from 'store/print-mode';
 
@@ -23,7 +23,7 @@ import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
 import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
@@ -33,8 +33,8 @@ import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 import LocationPopup from 'containers/datasets/locations/map-popup';
-import RestorationPopup from 'containers/datasets/restoration/map-popup';
 import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
+import RestorationPopup from 'containers/datasets/restoration/map-popup';
 import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
@@ -52,7 +52,7 @@ import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
 import Popup from 'components/ui/popup';
 import { breakpoints } from 'styles/styles.config';
-import type { RestorationPopUp, RestorationSitesPopUp, PopUpKey, LocationPopUp } from 'types/map';
+import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
 

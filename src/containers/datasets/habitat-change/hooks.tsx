@@ -62,7 +62,7 @@ export function useMangroveHabitatChange(
     ...queryOptions,
   });
 
-  const { data, isFetched } = query;
+  const { data, isFetched, isPlaceholderData, isLoading } = query;
   const noData = isFetched && !data?.data?.length;
 
   return useMemo(() => {
@@ -146,7 +146,7 @@ export function useMangroveHabitatChange(
                       href={`/country/${iso}`}
                       className="w-full text-xs font-bold text-black/85"
                     >
-                      <p className=" text-center">{name}</p>
+                      <p className="text-center">{name}</p>
                     </Link>
                   </foreignObject>
                 );
@@ -242,5 +242,5 @@ export function useMangroveHabitatChange(
       config: CONFIG,
       noData,
     };
-  }, [query, data]);
+  }, [isFetched, isPlaceholderData, noData, isLoading, data]);
 }
