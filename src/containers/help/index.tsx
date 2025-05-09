@@ -13,23 +13,20 @@ import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 import { useLocalStorage } from 'usehooks-ts';
 
- import GuideModalIntro from './modal-intro';
+import GuideModalIntro from './modal-intro';
 
 export const HelpContainer = () => {
-  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
+  const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
 
-
   const handleClick = () => {
-    setIsActive((prev) => !prev);
-
-    // Only show modal the first time the switch is clicked
-    if (!guideLocalStorage) {
-      setGuideLocalStorage(true);
-      setIsOpen(true);
-    }
-  };  
+    setIsActive((prev) => {
+      const nextState = !prev;
+      setIsOpen(nextState);
+      return nextState;
+    });
+  };
 
   return (
     <div>
@@ -64,9 +61,7 @@ export const HelpContainer = () => {
           </div>
         </PopoverContent>
       </Popover>
-
-      {/* Show the modal ONLY if it's the first time clicking the switch */}
-      {guideLocalStorage && <GuideModalIntro isOpen={isOpen} />}
+      {!guideLocalStorage && isOpen && <GuideModalIntro isOpen={isOpen} setIsOpen={setIsOpen} />}
     </div>
   );
 };
