@@ -9,14 +9,13 @@ import { activeWidgetsAtom } from 'store/widgets';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import CATEGORY_OPTIONS from 'containers/navigation/constants';
-import widgets from 'containers/widgets/constants';
-import { LAYERS_BY_CATEGORY } from 'containers/widgets/constants';
+import widgets, { LAYERS_BY_CATEGORY } from 'containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import Icon from 'components/ui/icon';
 import type { Category } from 'types/category';
 import type { ActiveLayers } from 'types/layers';
-import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
+import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import CHECK_SVG from 'svgs/ui/check.svg?sprite';
 

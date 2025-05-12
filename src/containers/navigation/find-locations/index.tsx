@@ -78,7 +78,7 @@ const FindLocations = () => {
           >
             <button
               onClick={handleOnClickSearch}
-              className="rounded-3xlp-2 mb-2 flex  cursor-pointer flex-col items-center justify-center space-y-1"
+              className="rounded-3xlp-2 mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 p-2"
               data-testid="search-button"
               disabled={guideIsActive}
             >

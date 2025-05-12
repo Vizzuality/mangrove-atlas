@@ -9,8 +9,8 @@ import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import {
   useClimateWatchNDCS,
-  useClimateWatchNDCSCountriesDocs,
   useClimateWatchNDCSContentOverview,
+  useClimateWatchNDCSCountriesDocs,
 } from './hooks';
 import Indicator from './indicator';
 

@@ -101,8 +101,8 @@ const CustomizeWidgetsDeck = () => {
             animateState === 'end'
               ? { x: 100, rotate: 7 }
               : animateState === 'return'
-              ? { x: 0, rotate: 0 }
-              : {}
+                ? { x: 0, rotate: 0 }
+                : {}
           }
           transition={
             animateState === 'end'

@@ -1,4 +1,4 @@
-import { useCallback, useState, MouseEvent, useEffect } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 
 import {
   DropdownMenu,
@@ -69,7 +69,7 @@ const LanguageSelector = () => {
                 className="hover:bg-white"
                 onClick={handleChange}
               >
-                <span className=" hover:text-brand-800">{lang.name}</span>
+                <span className="hover:text-brand-800">{lang.name}</span>
               </button>
             </DropdownMenuItem>
           ))}

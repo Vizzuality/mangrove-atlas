@@ -56,14 +56,14 @@ const SwitchThumb = ({
 }: SwitchThumbProps & { size?: 'sm' | 'md' }) => (
   <SwitchRadix.Thumb
     className={cn({
-      'duration-400 block h-5 w-5 translate-x-0.5 rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-[19px] data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
+      'duration-400 block h-5 w-5 translate-x-[3px] rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
         true,
       [className]: !!className,
       [SIZE['thumb'][size]]: true,
     })}
   >
     {icon && (
-      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold ">?</div>
+      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold">?</div>
     )}
   </SwitchRadix.Thumb>
 );
@@ -86,4 +86,4 @@ const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
 SwitchRoot.displayName = SwitchRadix.Root.displayName;
 SwitchThumb.displayName = SwitchRadix.Thumb.displayName;
 
-export { SwitchThumb, SwitchRoot, SwitchWrapper };
+export { SwitchRoot, SwitchThumb, SwitchWrapper };

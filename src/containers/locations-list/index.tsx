@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { List, AutoSizer, Style, CellMeasurer, CellMeasurerCache, Parent } from 'react-virtualized';
+import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
 import { useRouter } from 'next/router';
 
@@ -73,8 +73,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         location.location_type === 'worldwide'
           ? ''
           : location.location_type === 'country'
-          ? location.iso
-          : location.location_id;
+            ? location.iso
+            : location.location_id;
       const url = `/${locationType}/${locationId}?${queryParams !== undefined ? queryParams : ''}`;
 
       replace(url, null);

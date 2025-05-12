@@ -1,6 +1,6 @@
 import { DOWNLOAD } from 'containers/datasets';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
@@ -51,15 +51,17 @@ const Download = ({ id, content }) => {
               <div className="flex flex-col items-start justify-start space-y-4">
                 <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
                 <p className="text-sm font-extralight text-black/85">{content.description}</p>
-                <a
-                  title={content.name}
-                  href={content.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-bold text-brand-800 underline"
-                >
-                  {content.name}
-                </a>
+                {content.link && (
+                  <a
+                    title={content.name}
+                    href={content.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-brand-800 underline"
+                  >
+                    {content.name || content.link}
+                  </a>
+                )}
               </div>
             )}
           </div>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { SpeciesLocationState } from 'store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import { LocationTypes } from 'containers/datasets/locations/types';
@@ -14,10 +14,10 @@ import NoData from 'containers/widgets/no-data';
 
 import {
   Command,
-  CommandItem,
+  CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandEmpty,
+  CommandItem,
   CommandList,
 } from 'components/ui/command';
 import Loading from 'components/ui/loading';
@@ -52,11 +52,11 @@ const SpeciesLocation = () => {
 
   const specieOptions = useMemo(
     () =>
-      species.map(({ scientific_name }) => ({
+      species?.map(({ scientific_name }) => ({
         label: scientific_name,
         value: scientific_name,
       })),
-    [species]
+    [species, isLoading]
   );
 
   const onSelectSpecies = useCallback(

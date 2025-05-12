@@ -1,10 +1,10 @@
-import { useMemo, useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import compact from 'lodash-es/compact';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, formatMillion, formatAxis } from 'lib/format';
+import { formatAxis, formatMillion, numberFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';

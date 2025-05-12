@@ -14,7 +14,7 @@ import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';

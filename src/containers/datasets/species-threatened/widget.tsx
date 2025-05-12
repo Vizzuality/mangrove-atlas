@@ -4,7 +4,7 @@ import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import SpeciesThreatenedChart from './chart';
-import { useMangroveSpecies } from './hooks';
+import { useMangroveSpeciesThreatened } from './hooks';
 
 const SpeciesThreatened = () => {
   const {
@@ -16,7 +16,7 @@ const SpeciesThreatened = () => {
     location,
     isFetched,
     isPlaceholderData,
-  } = useMangroveSpecies();
+  } = useMangroveSpeciesThreatened();
 
   if (isFetched && !chartData) return <NoData />;
   return (

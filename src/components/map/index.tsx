@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, FC } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
