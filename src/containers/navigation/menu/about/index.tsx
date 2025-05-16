@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const About = () => {
   return (
@@ -51,11 +52,22 @@ const About = () => {
           A coordinated effort across sectors and geographies will accomplish more, faster. Global
           Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a
           collaboration of organisations working to increase the world’s mangrove cover 20% by 2030.{' '}
-          <span className="font-semibold text-brand-800">Learn more at MangroveAlliance.org.</span>
+          Learn more at{' '}
+          <Link
+            href="https://www.mangrovealliance.org/about-us/"
+            target="_blank"
+            className="font-semibold text-brand-800"
+            rel="noopener noreferrer"
+          >
+            MangroveAlliance.org
+          </Link>
+          .
         </p>
         <p>
           Got a query? Contact{' '}
-          <span className="font-semibold text-brand-800">Mangrove Alliance</span>
+          <a href="mailto:contact@mangrovealliance.org" className="font-semibold text-brand-800">
+            Mangrove Alliance
+          </a>
         </p>
 
         <div className="space-y-6">
