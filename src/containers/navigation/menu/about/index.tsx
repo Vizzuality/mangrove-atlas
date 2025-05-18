@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import AboutPartners from './partners';
+import { ConvenedBy, Donors, SupportedBy } from './constants';
+
 const About = () => {
   return (
     <div className="pb-20 font-sans text-2lg font-light leading-8 text-black/85">
@@ -71,37 +74,10 @@ const About = () => {
         </p>
 
         <div className="space-y-6">
-          <div>
-            <p>Convened by</p>
-            <Image
-              src="/images/partners/convened.png"
-              alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International"
-              className="-ml-3"
-              width={500}
-              height={300}
-            />
-          </div>
-          <div>
-            <p>Supported by</p>
-            <Image
-              src="/images/partners/supported.png"
-              alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography"
-              className="-ml-2"
-              width={500}
-              height={300}
-            />
-          </div>
+          <AboutPartners title="Convened by" list={ConvenedBy} />
+          <AboutPartners title="Supported by" list={SupportedBy} />
 
-          <div>
-            <p>Donors</p>
-            <Image
-              src="/images/partners/donors.png"
-              alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation"
-              className="-ml-6 -mt-1"
-              width={500}
-              height={300}
-            />
-          </div>
+          <AboutPartners title="Donors" list={Donors} />
 
           <div>
             <p>Designed by:</p>
