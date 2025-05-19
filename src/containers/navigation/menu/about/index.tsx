@@ -54,8 +54,8 @@ const About = () => {
         <p>
           A coordinated effort across sectors and geographies will accomplish more, faster. Global
           Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a
-          collaboration of organisations working to increase the world’s mangrove cover 20% by 2030.{' '}
-          Learn more at{' '}
+          collaboration of organisations working to halt mangrove loss, restore half, and double
+          protection by 2030. Learn more at{' '}
           <Link
             href="https://www.mangrovealliance.org/about-us/"
             target="_blank"
