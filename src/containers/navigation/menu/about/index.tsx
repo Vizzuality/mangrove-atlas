@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import AboutPartners from './partners';
+import { ConvenedBy, Donors, SupportedBy } from './constants';
+
 const About = () => {
   return (
     <div className="pb-20 font-sans text-2lg font-light leading-8 text-black/85">
@@ -51,8 +54,8 @@ const About = () => {
         <p>
           A coordinated effort across sectors and geographies will accomplish more, faster. Global
           Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a
-          collaboration of organisations working to increase the world’s mangrove cover 20% by 2030.{' '}
-          Learn more at{' '}
+          collaboration of organisations working to halt mangrove loss, restore half, and double
+          protection by 2030. Learn more at{' '}
           <Link
             href="https://www.mangrovealliance.org/about-us/"
             target="_blank"
@@ -71,37 +74,10 @@ const About = () => {
         </p>
 
         <div className="space-y-6">
-          <div>
-            <p>Convened by</p>
-            <Image
-              src="/images/partners/convened.png"
-              alt="Convened by Aberystwyth University, soloEO, TNC, Wetlands International"
-              className="-ml-3"
-              width={500}
-              height={300}
-            />
-          </div>
-          <div>
-            <p>Supported by</p>
-            <Image
-              src="/images/partners/supported.png"
-              alt="Supported by University of Cambridge, JAXA, NASA, IUCN, Griffith University, Conservation International, WWF, Scripps Institution of Oceanography"
-              className="-ml-2"
-              width={500}
-              height={300}
-            />
-          </div>
+          <AboutPartners title="Convened by" list={ConvenedBy} />
+          <AboutPartners title="Supported by" list={SupportedBy} />
 
-          <div>
-            <p>Donors</p>
-            <Image
-              src="/images/partners/donors.png"
-              alt="DOB Ecology, Oak Foundation, Dutch Postcode Lottery, COmON Foundation"
-              className="-ml-6 -mt-1"
-              width={500}
-              height={300}
-            />
-          </div>
+          <AboutPartners title="Donors" list={Donors} />
 
           <div>
             <p>Designed by:</p>
