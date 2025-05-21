@@ -14,15 +14,15 @@ export const ConvenedBy = [
     size: [120, 30],
   },
   {
-    name: 'The Nature Conservancy',
-    url: 'https://www.nature.org/',
-    image: '/images/partners/convened/TNC.webp',
-    size: [150, 40],
-  },
-  {
     name: 'Wetlands International',
     url: 'https://www.wetlands.org/',
     image: '/images/partners/convened/wetlands.webp',
+    size: [150, 40],
+  },
+  {
+    name: 'The Nature Conservancy',
+    url: 'https://www.nature.org/',
+    image: '/images/partners/convened/TNC.webp',
     size: [150, 40],
   },
 ] satisfies ItemType[];
@@ -83,7 +83,7 @@ export const Donors = [
     name: 'DOB Ecology',
     url: 'https://www.dobecology.com/',
     image: '/images/partners/donors/dob_ecology.webp',
-    size: [150, 40],
+    size: [140, 30],
   },
   {
     name: 'Oak Foundation',

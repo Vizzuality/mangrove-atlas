@@ -21,7 +21,6 @@ const AboutPartners = ({ title, list, classname }: PartnerProps) => {
               width={item.size[0]}
               height={item.size[1]}
               className="cursor-pointer"
-              layout="responsive"
             />
           </Link>
         ))}
