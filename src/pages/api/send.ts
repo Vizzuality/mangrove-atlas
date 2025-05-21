@@ -47,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     } catch (error) {
       console.error('Server error:', error);
       res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message || 'Internal server error' });
     }
   } else {
     res.setHeader('Allow', ['POST']);

@@ -84,12 +84,12 @@ export function ContactForm() {
         },
         body: JSON.stringify(values), // Send form data to the API
       });
-      console.info(response);
-      if (!response.ok) {
-        throw new Error(`Failed to send email: ${response.statusText}`);
-      }
 
       const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || `Failed to send email: ${response.statusText}`);
+      }
+
       console.info('Email sent successfully:', data);
       setStatus('success'); // Update form submission status
     } catch (error) {
