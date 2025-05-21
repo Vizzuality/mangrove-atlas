@@ -11,6 +11,8 @@ import { HiChevronDown } from 'react-icons/hi';
 import { HiCheck } from 'react-icons/hi2';
 import { z } from 'zod';
 
+import { TOPICS } from './constants';
+
 // import subscribeNewsletter from '@/containers/newsletter/action';
 import { Button } from 'components/ui/button';
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
@@ -27,13 +29,6 @@ import {
 
 // import { ContactUsEmail } from './email-template';
 // import { postContactForm } from 'services/api';
-const TOPICS = [
-  { label: 'General', value: 'general' },
-  { label: 'Datasets', value: 'datasets' },
-  { label: 'GMW Platform', value: 'gmw-platform' },
-  { label: 'Mangrove Restoration Tracker Tool', value: 'mrtt' },
-  { label: 'Global Mangrove Alliance', value: 'gma' },
-] as const;
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 
@@ -45,7 +40,10 @@ export const ContactFormSchema = z.object({
     .min(1, 'Email is required')
     .email('Invalid email'),
   topic: z.enum(TOPICS_VALUES, { message: 'Please, select a topic' }),
-  message: z.string().optional(),
+  message: z.string().min(1, 'Message is required'),
+  privacyPolicy: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the Privacy Policy',
+  }),
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
@@ -53,11 +51,7 @@ type FormSchema = z.infer<typeof ContactFormSchema>;
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [isOpen, setIsOpen] = useState(false);
-  const [
-    ,
-    // privacyPolicy
-    setPrivacyPolicy,
-  ] = useState(false);
+  const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
@@ -67,6 +61,7 @@ export function ContactForm() {
       email: '',
       topic: undefined,
       message: '',
+      privacyPolicy: false,
     },
     mode: 'onSubmit',
   });
@@ -77,24 +72,23 @@ export function ContactForm() {
 
   const onSubmitData = async (values: FormSchema) => {
     try {
-      const response = await fetch('api/contact', {
+      const response = await fetch('/api/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(values), // Send form data to the API
+        body: JSON.stringify(values),
       });
 
+      const data = await response.json();
       if (!response.ok) {
-        throw new Error(`Failed to send email: ${response.statusText}`);
+        throw new Error(data.error || `Failed to send email: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      console.info('Email sent successfully:', data);
-      setStatus('success'); // Update form submission status
+      setStatus('success');
     } catch (error) {
       console.error('Error submitting form:', error);
-      setStatus('error'); // Update status in case of an error
+      setStatus('error');
     }
   };
   return (
@@ -197,40 +191,51 @@ export function ContactForm() {
               <FormItem className="space-y-1.5">
                 <FormLabel className="text-xs">Your message</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" autoComplete="message" {...field} />
+                  <Input placeholder="Enter your message" autoComplete="message" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <button
-            type="button"
-            onClick={handlePrivacyPolicy}
-            className="flex items-center space-x-2.5 text-black/85"
-          >
-            <Checkbox
-              id="privacyPolicy"
-              className={cn({
-                '[data=] h-5 w-5 border border-black/15': true,
-              })}
-            >
-              <CheckboxIndicator className="bg-brand-800">
-                <HiCheck className="stroke-2 text-white" />
-              </CheckboxIndicator>
-            </Checkbox>
-            <Label htmlFor="privacyPolicy" className="cursor-pointer">
-              I agree with the 
-              <a href="/" className="underline">
-                Privacy Policy.
-              </a>
-            </Label>
-          </button>
+          {process.env.NODE_ENV === 'development' && (
+            <FormField
+              control={form.control}
+              name="privacyPolicy"
+              render={({ field }) => (
+                <FormItem className="space-y-1.5">
+                  <FormControl>
+                    <button type="button" className="flex items-center space-x-2.5 text-black/85">
+                      <Checkbox
+                        id="privacyPolicy"
+                        onCheckedChange={(checked) => field.onChange(checked)}
+                        className={cn({
+                          '[data=] h-5 w-5 cursor-pointer border border-black/15': true,
+                        })}
+                        checked={field.value}
+                      >
+                        <CheckboxIndicator className="bg-brand-800">
+                          <HiCheck className="stroke-2 text-white" />
+                        </CheckboxIndicator>
+                      </Checkbox>
+                      <Label htmlFor="privacyPolicy" className="cursor-pointer">
+                        I agree with the 
+                        <a href="/" className="underline">
+                          Privacy Policy.
+                        </a>
+                      </Label>
+                    </button>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <div className="space-y-4">
             {status === 'loading' && <p>Sending...</p>}
             {status === 'success' && <p>Email sent successfully!</p>}
             {status === 'error' && <p>Failed to send email. Please try again.</p>}
-            <Button type="submit" className="h-9 w-full" disabled={false}>
+            <Button type="submit" className="h-9 w-full" disabled={!form.formState.isValid}>
               Send message
             </Button>
           </div>
