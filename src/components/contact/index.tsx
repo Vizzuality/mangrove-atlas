@@ -43,10 +43,10 @@ export const ContactFormSchema = z.object({
   topic: z.enum(TOPICS_VALUES, { message: 'Please, select a topic' }),
   message: z.string().min(1, 'Message is required'),
   privacyPolicy: isDev
-    ? z.boolean().optional()
-    : z.boolean().refine((val) => val === true, {
+    ? z.boolean().refine((val) => val === true, {
         message: 'You must accept the Privacy Policy',
-      }),
+      })
+    : z.boolean().optional(),
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
@@ -54,7 +54,6 @@ type FormSchema = z.infer<typeof ContactFormSchema>;
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [isOpen, setIsOpen] = useState(false);
-  const [privacyPolicy, setPrivacyPolicy] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
@@ -68,10 +67,6 @@ export function ContactForm() {
     },
     mode: 'onSubmit',
   });
-
-  const handlePrivacyPolicy = useCallback(() => {
-    setPrivacyPolicy((prev) => !prev);
-  }, [setPrivacyPolicy]);
 
   const onSubmitData = async (values: FormSchema) => {
     try {
