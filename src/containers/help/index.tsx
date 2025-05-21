@@ -44,7 +44,7 @@ export const HelpContainer = () => {
         </PopoverTrigger>
 
         <PopoverContent className="rounded-2xl p-6 text-sm font-semibold shadow-border">
-          {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && <Contact />}
+          <Contact />
           <div className="flex space-x-2">
             <span>Navigation help</span>
 
