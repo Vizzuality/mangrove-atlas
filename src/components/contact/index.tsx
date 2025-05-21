@@ -31,6 +31,7 @@ import {
 // import { postContactForm } from 'services/api';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
+const isDev = process.env.NODE_ENV === 'development';
 
 export const ContactFormSchema = z.object({
   name: z.string({ message: 'Name is required' }).min(2, 'Name must contain at least 2 characters'),
@@ -41,9 +42,11 @@ export const ContactFormSchema = z.object({
     .email('Invalid email'),
   topic: z.enum(TOPICS_VALUES, { message: 'Please, select a topic' }),
   message: z.string().min(1, 'Message is required'),
-  privacyPolicy: z.boolean().refine((val) => val === true, {
-    message: 'You must accept the Privacy Policy',
-  }),
+  privacyPolicy: isDev
+    ? z.boolean().optional()
+    : z.boolean().refine((val) => val === true, {
+        message: 'You must accept the Privacy Policy',
+      }),
 });
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
@@ -197,7 +200,7 @@ export function ContactForm() {
               </FormItem>
             )}
           />
-          {process.env.NODE_ENV === 'development' && (
+          {isDev && (
             <FormField
               control={form.control}
               name="privacyPolicy"

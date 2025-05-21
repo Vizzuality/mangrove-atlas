@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const { name, email, message, organization, topic } = req.body as ContactEmailProps;
       // Send email using Resend
       if (topic === 'gmw-platform') {
-        recipients = ['maria.luena@vizzuality.com'];
+        recipients = ['maria.luena@vizzuality.com', 'maluenarod@gmail.com'];
       } else if (topic === 'general') {
         recipients = ['kathryn.longley-wood@TNC.ORG'];
       } else {
