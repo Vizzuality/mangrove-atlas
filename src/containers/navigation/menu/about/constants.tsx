@@ -16,7 +16,7 @@ export const ConvenedBy = [
   {
     name: 'Wetlands International',
     url: 'https://www.wetlands.org/',
-    image: '/images/partners/convened/wetlands.webp',
+    image: '/images/partners/convened/wetlands-logo.webp',
     size: [150, 40],
   },
   {

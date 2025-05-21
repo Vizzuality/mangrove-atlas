@@ -3,6 +3,8 @@ import { Resend } from 'resend';
 
 import { ContactUsEmail } from 'components/contact/email-template';
 
+let recipients: string[] = [];
+
 // Define types for the email template props
 interface ContactEmailProps {
   name: string;
@@ -28,10 +30,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       // Parse request body
       const { name, email, message, organization, topic } = req.body as ContactEmailProps;
       // Send email using Resend
-      console.log(req, 'request');
+      if (topic === 'gmw-platform') {
+        recipients = ['maria.luena@vizzuality.com'];
+      } else if (topic === 'general') {
+        recipients = ['kathryn.longley-wood@TNC.ORG'];
+      } else {
+        recipients = ['kathryn.longley-wood@TNC.ORG'];
+      }
+
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',
-        to: ['maria.luena@vizzuality.com'],
+        to: ['maria.luena@vizzuality.com', 'kathryn.longley-wood@TNC.ORG'],
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
         text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content
