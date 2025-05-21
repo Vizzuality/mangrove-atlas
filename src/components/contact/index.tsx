@@ -77,14 +77,14 @@ export function ContactForm() {
 
   const onSubmitData = async (values: FormSchema) => {
     try {
-      const response = await fetch('api/contact', {
+      const response = await fetch('/api/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values), // Send form data to the API
       });
-
+      console.info(response);
       if (!response.ok) {
         throw new Error(`Failed to send email: ${response.statusText}`);
       }
@@ -197,7 +197,7 @@ export function ContactForm() {
               <FormItem className="space-y-1.5">
                 <FormLabel className="text-xs">Your message</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your email" autoComplete="message" {...field} />
+                  <Input placeholder="Enter your message" autoComplete="message" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

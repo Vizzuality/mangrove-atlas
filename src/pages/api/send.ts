@@ -8,6 +8,8 @@ interface ContactEmailProps {
   name: string;
   email: string;
   message: string;
+  organization?: string;
+  topic?: string;
 }
 
 // Initialize Resend instance
@@ -24,14 +26,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method === 'POST') {
     try {
       // Parse request body
-      const { name, email, message } = req.body as ContactEmailProps;
+      const { name, email, message, organization, topic } = req.body as ContactEmailProps;
       // Send email using Resend
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',
         to: ['maria.luena@vizzuality.com'], // Replace with your recipient's email
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Fallback text content
+        text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content
       });
 
       // Handle errors
