@@ -63,7 +63,7 @@ export function ContactForm() {
       email: '',
       topic: undefined,
       message: '',
-      privacyPolicy: false,
+      privacyPolicy: true,
     },
     mode: 'onSubmit',
   });
