@@ -1,39 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const allowedOrigins = [
-  'https://mrtt.globalmangrovewatch.org/',
-  'https://mrtt-staging.globalmangrovewatch.org/',
+  'https://mrtt.globalmangrovewatch.org',
+  'https://mrtt-staging.globalmangrovewatch.org',
 ];
 
-const corsOptions = {
-  'Access-Control-Allow-Methods': 'POST',
+const corsHeaders = {
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Credentials': 'true',
 };
 
 export function middleware(request: NextRequest) {
-  // Check the origin from the request
-  const origin = request.headers.get('origin') ?? '';
-  const isAllowedOrigin = allowedOrigins.includes(origin);
+  const origin = request.headers.get('origin');
+  const isAllowedOrigin = origin && allowedOrigins.includes(origin.replace(/\/$/, ''));
 
-  // Handle preflighted requests
-  const isPreflight = request.method === 'OPTIONS';
+  const response =
+    request.method === 'OPTIONS' ? new NextResponse(null, { status: 204 }) : NextResponse.next();
 
-  if (isPreflight) {
-    const preflightHeaders = {
-      ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
-      ...corsOptions,
-    };
-    return NextResponse.json({}, { headers: preflightHeaders });
-  }
-
-  // Handle simple requests
-  const response = NextResponse.next();
-
-  if (isAllowedOrigin) {
+  if (isAllowedOrigin && origin) {
     response.headers.set('Access-Control-Allow-Origin', origin);
   }
 
-  Object.entries(corsOptions).forEach(([key, value]) => {
+  Object.entries(corsHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
 
