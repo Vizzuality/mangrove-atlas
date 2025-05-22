@@ -3,6 +3,11 @@ import { Resend } from 'resend';
 
 import { ContactUsEmail } from 'components/contact/email-template';
 
+const allowedOrigins = [
+  'https://mrtt.globalmangrovewatch.org',
+  'https://mrtt-staging.globalmangrovewatch.org',
+];
+
 let recipients: string[] = [];
 
 // Define types for the email template props
@@ -25,6 +30,23 @@ type ContactResponse = {
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ContactResponse>) {
+  const origin = req.headers.origin || '';
+  const isAllowedOrigin = allowedOrigins.includes(origin.replace(/\/$/, ''));
+
+  // CORS headers
+  if (isAllowedOrigin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle preflight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end(); // No content, just CORS headers
+  }
+
   if (req.method === 'POST') {
     try {
       // Parse request body
@@ -60,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.status(500).json({ error: error.message || 'Internal server error' });
     }
   } else {
-    res.setHeader('Allow', ['POST']);
+    res.setHeader('Allow', ['POST', 'OPTIONS']);
     res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
 }
