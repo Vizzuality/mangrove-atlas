@@ -6,6 +6,7 @@ import { ContactUsEmail } from 'components/contact/email-template';
 const allowedOrigins = [
   'https://mrtt.globalmangrovewatch.org',
   'https://mrtt-staging.globalmangrovewatch.org',
+  'https://staging.globalmangrovewatch.org/',
 ];
 
 let recipients: string[] = [];
@@ -55,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       if (topic === 'gmw-platform') {
         recipients = ['maria.luena@vizzuality.com', 'maluenarod@gmail.com'];
       } else if (topic === 'general') {
-        recipients = ['kathryn.longley-wood@TNC.ORG'];
+        recipients = ['andres.gonzalez@vizzuality.com', 'maluenarod@gmail.com'];
       } else {
         recipients = ['kathryn.longley-wood@TNC.ORG'];
       }
