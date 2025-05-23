@@ -32,7 +32,7 @@ type ContactResponse = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ContactResponse>) {
   const origin = req.headers.origin || '';
   const isAllowedOrigin = allowedOrigins.includes(origin.replace(/\/$/, ''));
-
+  console.info(req, res);
   // CORS headers
   if (isAllowedOrigin) {
     res.setHeader('Access-Control-Allow-Origin', origin);

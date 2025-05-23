@@ -80,6 +80,7 @@ export function ContactForm() {
 
       const data = await response.json();
       if (!response.ok) {
+        console.log(data.error.message);
         throw new Error(data.error || `Failed to send email: ${response.statusText}`);
       }
 
