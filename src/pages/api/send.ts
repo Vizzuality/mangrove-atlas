@@ -57,13 +57,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         recipients = ['maria.luena@vizzuality.com', 'maluenarod@gmail.com'];
       } else if (topic === 'general') {
         recipients = ['andres.gonzalez@vizzuality.com', 'maluenarod@gmail.com'];
+      } else if (topic === 'datasets') {
+        recipients = ['maluenarod@gmail.com'];
+      } else if (topic === 'mrtt') {
+        recipients = ['maluenarod@gmail.com'];
       } else {
         recipients = ['kathryn.longley-wood@TNC.ORG'];
       }
 
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',
-        to: recipients,
+        to: ['maria.luena@vizzuality.com'],
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
         text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content

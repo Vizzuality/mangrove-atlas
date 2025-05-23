@@ -17,15 +17,12 @@ export function middleware(request: NextRequest) {
 
   const isPreflight = request.method === 'OPTIONS';
 
-  // Create a response object before modifying headers
   const response = isPreflight ? new NextResponse(null, { status: 204 }) : NextResponse.next();
 
-  // Set CORS headers if origin is allowed
   if (isAllowedOrigin && origin) {
     response.headers.set('Access-Control-Allow-Origin', origin);
   }
 
-  // Always set standard CORS headers (especially for preflight)
   Object.entries(corsHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);
   });
