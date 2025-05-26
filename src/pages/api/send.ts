@@ -54,20 +54,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const { name, email, message, organization, topic } = req.body as ContactEmailProps;
       // Send email using Resend
       if (topic === 'gmw-platform') {
-        recipients = ['maria.luena@vizzuality.com', 'maluenarod@gmail.com'];
+        recipients = [
+          'maria.luena@vizzuality.com',
+          'kate.longley-wood@tnc.org',
+          'lammert.hilarides@wetlands.org',
+        ];
       } else if (topic === 'general') {
-        recipients = ['andres.gonzalez@vizzuality.com', 'maluenarod@gmail.com'];
+        recipients = ['marice.leal@tnc.org', 'maria.luena@vizzuality.com'];
       } else if (topic === 'datasets') {
-        recipients = ['maluenarod@gmail.com'];
+        recipients = ['pfb@aber.ac.uk', 'lammert.hilarides@wetlands.org'];
       } else if (topic === 'mrtt') {
-        recipients = ['maluenarod@gmail.com'];
+        recipients = ['taw52@cam.ac.uk', 'lanie.esch@wwfus.org'];
+      } else if (topic === 'gma') {
+        recipients = ['contact@globalmangrovealliance.org'];
       } else {
         recipients = ['kathryn.longley-wood@TNC.ORG'];
       }
 
       const { data, error } = await resend.emails.send({
-        from: 'GMW <onboarding@resend.dev>',
-        to: ['maria.luena@vizzuality.com'],
+        from: 'GMW <noreply@globalmangrovewatch.org>',
+        to: recipients,
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
         text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content
