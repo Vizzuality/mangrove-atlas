@@ -3,7 +3,7 @@ export interface FeatureCollection {
   features: {
     type: string,
     properties: {
-      name: string
+      [key: string]: any
     },
     geometry: {
       type: string,
