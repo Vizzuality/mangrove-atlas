@@ -2,10 +2,11 @@ import{ Request, Response} from 'express';
 import {
   ArrayNotEmpty,
   validateOrReject,
-  IsEnum
+  IsEnum,
+  IsObject
 } from 'class-validator';
 import 'reflect-metadata';
-import { plainToClass } from 'class-transformer';
+import { plainToClass} from 'class-transformer';
 
 import   ee  from '@google/earthengine'
 import type { HttpFunction } from '@google-cloud/functions-framework';
@@ -26,8 +27,8 @@ enum Widgets {
   "mangrove_biomass"  = "mangrove_biomass",
   "mangrove_blue_carbon"  = "mangrove_blue_carbon"
 }
-
 class AnalysisRequestBody {
+  @IsObject()
   geometry: FeatureCollection;
 }
 class AnalysisRequestParams {
@@ -36,7 +37,7 @@ class AnalysisRequestParams {
   widgets: Widgets[];
 }
 
-export const analyze: HttpFunction = async (req: Request, res: Response): Promise<Response> => {
+export const analyze: HttpFunction = async (req, res) => {
 
   res.set('Access-Control-Allow-Origin', '*');
   const TEST_DICT = {
@@ -88,15 +89,19 @@ export const analyze: HttpFunction = async (req: Request, res: Response): Promis
   return res
 }
 
-async function validateInput(req: Request, res:  Response): Promise<{"status": Boolean, "res": Response}> {
+async function validateInput(req, res): Promise<{"status": Boolean, "res": Response}> {
   try {
     if (!req.body || !req.query) {
       return {"status": false,
             "res":  res.status(400).json({"error":"No data provided"})};
     }
 
-    await validateOrReject(plainToClass(AnalysisRequestParams, req.query));
-    await validateOrReject(plainToClass(AnalysisRequestBody, req.body));
+    await validateOrReject(plainToClass(AnalysisRequestParams, req.query,{
+      enableImplicitConversion: true
+    }));
+    await validateOrReject(plainToClass(AnalysisRequestBody, req.body, {
+      enableImplicitConversion: true
+    }));
 
     return {"status": true, "res": res};
   }
