@@ -8,7 +8,7 @@ import 'reflect-metadata';
 import { plainToClass } from 'class-transformer';
 
 import   ee  from '@google/earthengine'
-import type { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
+import type { HttpFunction } from '@google-cloud/functions-framework';
 
 import { eeAuthenticate, eeEvaluate } from './utils';
 import { FeatureCollection } from './FeatureCollection';
@@ -36,7 +36,7 @@ class AnalysisRequestParams {
   widgets: Widgets[];
 }
 
-export const analyze: HttpFunction = async (req, res) => {
+export const analyze: HttpFunction = async (req: Request, res: Response): Promise<Response> => {
 
   res.set('Access-Control-Allow-Origin', '*');
   const TEST_DICT = {
@@ -79,7 +79,10 @@ export const analyze: HttpFunction = async (req, res) => {
 
   } catch (error) {
     console.error(error)
-    res.status(400).json({"error": error.message});
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 
   return res
