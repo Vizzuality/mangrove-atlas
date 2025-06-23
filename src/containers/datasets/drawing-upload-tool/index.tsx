@@ -22,6 +22,48 @@ import Icon from 'components/ui/icon';
 
 import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
 
+const drawingToolHelperContent = (
+  <div className="max-w-xs space-y-4 text-sm">
+    <p>
+      Be aware to upload a minimum size area in order to ensure enough data for the analysis. The
+      recommended maximum file size is 10MB. Anything larger than that may not work properly.
+    </p>
+    <h3 className="font-bold">List of supported file formats:</h3>
+    <ul className="list-disc pl-5">
+      <li>
+        <a
+          className="text-brand-800 hover:underline"
+          href="https://geojson.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          geoJSON (.json, .geojson)
+        </a>
+      </li>
+      <li>
+        <a
+          className="text-brand-800 hover:underline"
+          href="https://www.geopackage.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          geoPackage (.gpkg)
+        </a>
+      </li>
+      <li>
+        <a
+          className="text-brand-800 hover:underline"
+          href="https://doc.arcgis.com/en/arcgis-online/reference/shapefiles.htm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          .zip with the following file formats .shp, .shx, .dbf and .prj
+        </a>
+      </li>
+    </ul>
+  </div>
+);
+
 const WidgetDrawingUploadTool = () => {
   const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }, setDrawingUploadToolState] =
     useRecoilState(drawingUploadToolAtom);
@@ -94,25 +136,25 @@ const WidgetDrawingUploadTool = () => {
   return (
     <Helper
       className={{
-        button: '-top-0.5 right-9',
-        tooltip: 'w-fit-content',
-        active: 'max-w-[454px]',
+        button: '-top-1 left-16 z-20',
+        tooltip: 'w-fit max-w-[400px]',
       }}
-      tooltipPosition={{ top: -62, left: 0 }}
-      message="use this to upload an existing GIS file"
+      tooltipPosition={{ top: -65, left: -0 }}
+      content={drawingToolHelperContent}
     >
-      <>
+      <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2">
         {(!customGeojson || !isDrawingToolEnabled) && (
           <div
             {...conditionalProps}
             className={cn({
-              'cursor-pointer rounded-3xl p-2': true,
+              'flex cursor-pointer flex-col items-center justify-center rounded-3xl': true,
               hidden: !!uploadedGeojson,
               'cursor-default opacity-30': !!customGeojson || isDrawingToolEnabled,
             })}
           >
             <input
               data-testid="shapefile-upload"
+              className="w-full"
               {...getInputProps()}
               disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
             />
@@ -120,21 +162,21 @@ const WidgetDrawingUploadTool = () => {
               <Icon
                 icon={UPLOAD_SVG}
                 className={cn({
-                  'h-8 w-8 fill-current text-white': true,
+                  'h-8 w-8 fill-current text-green-900': true,
                 })}
                 description="Upload"
               />
+              {!uploadingFile && (
+                <label id="label-file-upload" htmlFor="input-file-upload">
+                  <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+                </label>
+              )}
+              {uploadingFile && (
+                <label id="label-file-upload" htmlFor="input-file-upload">
+                  <p className="whitespace-nowrap font-sans text-sm text-white">...uploading</p>
+                </label>
+              )}
             </div>
-            {!uploadingFile && (
-              <label id="label-file-upload" htmlFor="input-file-upload">
-                <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
-              </label>
-            )}
-            {uploadingFile && (
-              <label id="label-file-upload" htmlFor="input-file-upload">
-                <p className="whitespace-nowrap font-sans text-sm text-white">...uploading</p>
-              </label>
-            )}
           </div>
         )}
         {(uploadedGeojson || isDrawingUploadToolEnabled) && (
@@ -144,7 +186,7 @@ const WidgetDrawingUploadTool = () => {
             </DeleteDrawingButton>
           </div>
         )}
-      </>
+      </div>
     </Helper>
     // TO - DO - add when error gets defined
     //   </div>

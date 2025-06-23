@@ -36,16 +36,16 @@ const WidgetDrawingTool = () => {
   return (
     <Helper
       className={{
-        button: 'top-1 right-9 z-[20]',
-        tooltip: 'w-fit-content max-w-[400px]',
+        button: '-top-1 left-9 z-[20]',
+        tooltip: 'w-fit max-w-[400px]',
       }}
-      tooltipPosition={{ top: -65, left: -20 }}
+      tooltipPosition={{ top: -65, left: -0 }}
       message="use this function to calculate statistics for your own custom area of interest"
     >
       <button
         type="button"
         className={cn({
-          'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
+          'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2':
             true,
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
