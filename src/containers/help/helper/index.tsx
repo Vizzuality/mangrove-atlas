@@ -17,6 +17,7 @@ export const Helper = ({
   className,
   tooltipPosition,
   message,
+  content,
 }: PropsWithChildren<{
   className?: {
     container?: string;
@@ -30,6 +31,7 @@ export const Helper = ({
     right?: number;
   };
   message?: string;
+  content?: React.ReactNode;
 }>) => {
   const childrenRef = useRef<HTMLDivElement>(null);
   const isActive = useRecoilValue(activeGuideAtom);
@@ -117,9 +119,12 @@ export const Helper = ({
                   [className.tooltip]: !!className.tooltip,
                 })}
               >
-                <p className="text-left font-sans text-sm font-light text-black/85 first-letter:uppercase">
-                  {message}
-                </p>
+                {message && (
+                  <p className="text-left font-sans text-sm font-light text-black/85 first-letter:uppercase">
+                    {message}
+                  </p>
+                )}
+                {!!content && content}
                 <Icon
                   icon={CLOSE_SVG}
                   className="absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer text-black/85"

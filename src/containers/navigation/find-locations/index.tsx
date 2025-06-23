@@ -73,12 +73,12 @@ const FindLocations = () => {
               button: '-top-1 right-6 z-20',
               tooltip: 'w-fit-content max-w-[400px]',
             }}
-            tooltipPosition={{ top: -65, left: -10 }}
+            tooltipPosition={{ top: -65, left: -0 }}
             message="use this button to search for a country or a protected area. Countries can also be selected by clicking on the map or on the name of the area selected (on top of the widgets)"
           >
             <button
               onClick={handleOnClickSearch}
-              className="rounded-3xlp-2 mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 p-2"
+              className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2"
               data-testid="search-button"
               disabled={guideIsActive}
             >

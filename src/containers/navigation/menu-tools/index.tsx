@@ -42,23 +42,23 @@ const LocationTools = () => {
 
   return (
     <div className="mx-4 flex w-full items-center justify-center space-x-6 md:mx-auto">
-      {/* //*RESET PAGE* */}
+      {/* RESET PAGE */}
       <Link
         href="/"
         onClick={handleReset}
-        className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white"
+        className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2 text-white"
       >
         <BiReset className="h-8 w-8 fill-current" />
         <span className="whitespace-nowrap font-sans text-sm">Reset page</span>
       </Link>
 
-      {/* //*FIND LOCATIONS* */}
+      {/* FIND LOCATIONS */}
       <FindLocations />
 
-      {/* //*DRAW AREA* */}
+      {/* DRAW AREA */}
       <WidgetDrawingTool />
 
-      {/* //*UPLOAD SHAPEFILE* */}
+      {/* UPLOAD SHAPEFILE */}
       <WidgetDrawingUploadTool />
     </div>
   );
