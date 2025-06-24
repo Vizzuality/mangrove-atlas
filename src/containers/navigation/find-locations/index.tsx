@@ -19,7 +19,7 @@ import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
-const FindLocations = () => {
+const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
   const [locationTool, saveLocationTool] = useRecoilState(locationToolAtom);
   const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
@@ -78,7 +78,7 @@ const FindLocations = () => {
           >
             <button
               onClick={handleOnClickSearch}
-              className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2"
+              className={menuItemStyle}
               data-testid="search-button"
               disabled={guideIsActive}
             >

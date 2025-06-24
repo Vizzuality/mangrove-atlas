@@ -64,7 +64,7 @@ const drawingToolHelperContent = (
   </div>
 );
 
-const WidgetDrawingUploadTool = () => {
+const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }, setDrawingUploadToolState] =
     useRecoilState(drawingUploadToolAtom);
 
@@ -142,7 +142,7 @@ const WidgetDrawingUploadTool = () => {
       tooltipPosition={{ top: -65, left: -0 }}
       content={drawingToolHelperContent}
     >
-      <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2">
+      <div className={menuItemStyle}>
         {(!customGeojson || !isDrawingToolEnabled) && (
           <div
             {...conditionalProps}

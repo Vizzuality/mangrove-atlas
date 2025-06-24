@@ -14,7 +14,7 @@ import Icon from 'components/ui/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 
-const WidgetDrawingTool = () => {
+const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
@@ -44,9 +44,7 @@ const WidgetDrawingTool = () => {
     >
       <button
         type="button"
-        className={cn({
-          'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2':
-            true,
+        className={cn(menuItemStyle, {
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
         })}
