@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -15,10 +15,10 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { SpeciesData, DataResponse } from './types';
+import type { DataResponse, SpeciesData } from './types';
 
 // widget data
-export function useMangroveSpecies(
+export function useMangroveSpeciesDistribution(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ): SpeciesData {
@@ -68,7 +68,7 @@ export function useMangroveSpecies(
       legend,
       ...query,
     };
-  }, [query, data, location, noData]);
+  }, [data, location, noData, isFetched]);
 }
 
 export function useSource(): SourceProps {

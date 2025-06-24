@@ -10,6 +10,7 @@ export const getCookie = function (key: string): string {
       .find((row) => row.startsWith(`${key}=`))
       ?.split('=')[1];
   } catch (err) {
+    console.error(err);
     return null;
   }
 };

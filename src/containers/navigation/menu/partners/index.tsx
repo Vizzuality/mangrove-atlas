@@ -1,12 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Icon from 'components/ui/icon';
-
-import ABERYSTWYTH_SVG from 'svgs/partners/aberystwyth.svg?sprite';
-import NATURE_CONSERVANCY_SVG from 'svgs/partners/nature.svg?sprite';
-import SOLO_SVG from 'svgs/partners/solo.svg?sprite';
-import WETLANDS_SVG from 'svgs/partners/wetlands.svg?sprite';
+import AboutPartners from '../about/partners';
+import { ConvenedBy } from '../about/constants';
 
 const PartnersLinks = () => {
   return (
@@ -23,27 +19,7 @@ const PartnersLinks = () => {
         </Link>
       </div>
 
-      <div className="space-y-4 pb-6">
-        <p className="text-xs font-bold uppercase">Partners</p>
-        <div className="flex w-full flex-wrap items-center gap-4">
-          <Link href="https://www.aber.ac.uk/en/">
-            <Icon icon={ABERYSTWYTH_SVG} className="h-full w-24" description="ABERYSTWYTH" />
-          </Link>
-          <Link href="https://soloeo.com/">
-            <Icon icon={SOLO_SVG} className="h-full w-24" description="SOLO" />
-          </Link>
-          <Link href="https://www.wetlands.org/">
-            <Icon icon={WETLANDS_SVG} className="h-full w-24" description="Wetlands" />
-          </Link>
-          <Link href="https://www.nature.org/">
-            <Icon
-              icon={NATURE_CONSERVANCY_SVG}
-              className="h-full w-24"
-              description="NATURE_CONSERVANCY"
-            />
-          </Link>
-        </div>
-      </div>
+      <AboutPartners title="Partners" list={ConvenedBy} classname="grid grid-cols-2" />
     </div>
   );
 };

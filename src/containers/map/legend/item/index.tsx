@@ -5,7 +5,7 @@ import cn from 'lib/classnames';
 import { activeGuideAtom } from 'store/guide';
 import { activeLayersAtom } from 'store/layers';
 
-import { useRecoilValue, useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
 import Helper from 'containers/help/helper';
@@ -14,7 +14,7 @@ import WidgetWrapper from 'containers/widget';
 import { widgets } from 'containers/widgets/constants';
 
 import { Media } from 'components/media-query';
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import Slider from 'components/ui/slider';

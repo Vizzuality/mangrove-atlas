@@ -16,9 +16,9 @@ import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
-  WIDGET_SENTENCE_STYLE,
-  WIDGET_SELECT_STYLES,
   WIDGET_SELECT_ARROW_STYLES,
+  WIDGET_SELECT_STYLES,
+  WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';

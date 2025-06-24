@@ -1,8 +1,8 @@
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat, formatAxis } from 'lib/format';
+import { formatAxis, numberFormat } from 'lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
@@ -16,7 +16,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import CustomTooltip from './tooltip';
-import type { DataResponse, Data } from './types';
+import type { Data, DataResponse } from './types';
 
 const COLORS = ['#F3E79B', '#FAC484', '#F0746E', '#B9257A', '#701A64'];
 

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { activeGuideAtom } from 'store/guide';
-
 import { useRecoilState } from 'recoil';
+
+import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from 'containers/contact';
 
@@ -12,26 +13,19 @@ import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 
-// import GuideModalIntro from './modal-intro';
+import GuideModalIntro from './modal-intro';
 
 export const HelpContainer = () => {
+  const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
+  const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
-  const [
-    ,
-    // showGuideModal
-    setShowGuideModal,
-  ] = useState(() => {
-    return !!localStorage.getItem('hasClickedGuideSwitch'); // Only true if the user never clicked before
-  });
 
   const handleClick = () => {
-    setIsActive((prev) => !prev);
-
-    // Only show modal the first time the switch is clicked
-    if (!localStorage.getItem('hasClickedGuideSwitch')) {
-      setShowGuideModal(true);
-      localStorage.setItem('hasClickedGuideSwitch', 'true'); // Mark as seen so it never shows again
-    }
+    setIsActive((prev) => {
+      const nextState = !prev;
+      setIsOpen(nextState);
+      return nextState;
+    });
   };
 
   return (
@@ -50,7 +44,7 @@ export const HelpContainer = () => {
         </PopoverTrigger>
 
         <PopoverContent className="rounded-2xl p-6 text-sm font-semibold shadow-border">
-          {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && <Contact />}
+          <Contact />
           <div className="flex space-x-2">
             <span>Navigation help</span>
 
@@ -67,9 +61,7 @@ export const HelpContainer = () => {
           </div>
         </PopoverContent>
       </Popover>
-
-      {/* Show the modal ONLY if it's the first time clicking the switch */}
-      {/* {showGuideModal && <GuideModalIntro isOpen={showGuideModal} />} */}
+      {!guideLocalStorage && isOpen && <GuideModalIntro isOpen={isOpen} setIsOpen={setIsOpen} />}
     </div>
   );
 };

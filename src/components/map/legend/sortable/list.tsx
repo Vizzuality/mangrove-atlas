@@ -10,9 +10,9 @@ import {
 } from 'react';
 
 import {
+  closestCenter,
   DndContext,
   DragOverlay,
-  closestCenter,
   KeyboardSensor,
   PointerSensor,
   useSensor,

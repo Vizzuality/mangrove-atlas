@@ -41,24 +41,24 @@ const LocationTools = () => {
   }, [map, resetAnalysisState, resetDrawingState, resetDrawingUploadState]);
 
   return (
-    <div className="mx-4 flex w-full items-center justify-center space-x-1 md:mx-auto md:space-x-2">
-      {/* //*RESET PAGE* */}
+    <div className="mx-4 flex w-full items-center justify-center space-x-6 md:mx-auto">
+      {/* RESET PAGE */}
       <Link
         href="/"
         onClick={handleReset}
-        className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white md:w-[128px]"
+        className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2 text-white"
       >
-        <BiReset className="h-8 w-8 fill-current " />
+        <BiReset className="h-8 w-8 fill-current" />
         <span className="whitespace-nowrap font-sans text-sm">Reset page</span>
       </Link>
 
-      {/* //*FIND LOCATIONS* */}
+      {/* FIND LOCATIONS */}
       <FindLocations />
 
-      {/* //*DRAW AREA* */}
+      {/* DRAW AREA */}
       <WidgetDrawingTool />
 
-      {/* //*UPLOAD SHAPEFILE* */}
+      {/* UPLOAD SHAPEFILE */}
       <WidgetDrawingUploadTool />
     </div>
   );

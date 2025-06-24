@@ -13,7 +13,7 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets
 
 import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
-import IndicatorSource from './indicator-source';
+import IndicatorSource from './indicator-sources';
 import OtherResources from './other-resources';
 
 const NationalDashboard = () => {
@@ -53,12 +53,6 @@ const NationalDashboard = () => {
                   const color = colorsScale.filter((c, i) => i === index);
                   return (
                     <>
-                      <div className="grid grid-cols-4 text-sm font-normal">
-                        <h5>Source</h5>
-                        <h5 className="ml-2">Year</h5>
-                        <h5 className="ml-2">Extent</h5>
-                      </div>
-
                       <IndicatorSource
                         id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
                         locationIso={data.locationIso}

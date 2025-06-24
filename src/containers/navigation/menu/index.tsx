@@ -14,7 +14,7 @@ import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import { Dialog, DialogContent, DialogClose, DialogTrigger } from 'components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
@@ -35,6 +35,10 @@ const RESOURCES_LINKS = [
   {
     label: 'GMW Leaflet',
     href: 'https://www.wetlands.org/publication/global-mangrove-watch-leaflet/',
+  },
+  {
+    label: 'MRTT user guide',
+    href: 'https://www.mangrovealliance.org/wp-content/uploads/2023/07/MRTT-Guide-v15.pdf',
   },
   {
     label: 'Policy Brief: GMW and NBSAPs',
@@ -93,7 +97,7 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans  md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20 md:w-[436px]': true,
           'h-fit py-0': section === 'main',
         })}
       >
@@ -113,18 +117,21 @@ const Menu = () => {
               <Link
                 href="https://www.mangrovealliance.org/"
                 className="text-2lg font-light hover:text-brand-800"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 Global Mangrove Alliance
               </Link>
               <Link
-                href="https://www.mangrovealliance.org/news/new-the-mangrove-restoration-tracker-tool/"
+                href="https://mrtt.globalmangrovewatch.org"
                 className="text-2lg font-light hover:text-brand-800"
+                rel="noopener noreferrer"
+                target="_blank"
               >
                 Mangrove Restoration Tracker Tool
               </Link>
-              {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-                <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
-              )}
+
+              <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
 
               <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
                 <CollapsibleTrigger showExpandIcon={false} className="p-0">

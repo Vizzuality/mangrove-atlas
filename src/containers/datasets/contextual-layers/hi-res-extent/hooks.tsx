@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 export function useSource(): SourceProps {
   return {

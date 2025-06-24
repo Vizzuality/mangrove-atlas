@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -8,8 +8,8 @@ import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
 import type {
-  FloodProtectionPeriodId,
   FloodProtectionIndicatorId,
+  FloodProtectionPeriodId,
 } from 'containers/datasets/flood-protection/types';
 // import NoData from 'containers/widgets/no-data';
 
@@ -19,9 +19,9 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
+  WIDGET_SELECT_STYLES,
   WIDGET_SENTENCE_STYLE,
   WIDGET_SUBTITLE_STYLE,
-  WIDGET_SELECT_STYLES,
 } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
@@ -32,7 +32,7 @@ import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
 import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
 import { useMangrovesFloodProtection } from './hooks';
-import type { Config, ChartData } from './types';
+import type { ChartData, Config } from './types';
 
 const FloodProtection = ({
   indicator,
@@ -78,7 +78,7 @@ const FloodProtection = ({
   const handleClick = () => {
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
+      : ([...activeLayers, { id, opacity: '1', visibility: 'visible' }] as ActiveLayers[]);
     setActiveLayers(layersUpdate);
   };
 

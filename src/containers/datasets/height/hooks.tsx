@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import type { SourceProps, LayerProps } from 'react-map-gl';
+import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -10,8 +10,7 @@ import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, CanceledError } from 'axios';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
@@ -25,7 +24,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API, { AnalysisAPI } from 'services/api';
 
 import Tooltip from './tooltip';
-import type { Data, DataResponse, ColorKeysTypes } from './types';
+import type { ColorKeysTypes, Data, DataResponse } from './types';
 
 export const widgetSlug = 'tree-height';
 
@@ -135,7 +134,7 @@ export function useMangroveHeight(
     ...queryOptions,
   });
 
-  const { data, isFetched } = query;
+  const { isFetching, isError, data, refetch, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
   const mean = data?.metadata?.avg_height?.[0]?.value;
@@ -219,7 +218,7 @@ export function useMangroveHeight(
       config,
       noData,
     };
-  }, [query, data]);
+  }, [isFetching, isError, data, refetch, data]);
 }
 
 export function useSource(years: number[]): SourceProps {

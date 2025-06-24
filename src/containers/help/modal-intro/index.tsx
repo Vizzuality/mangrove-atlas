@@ -1,4 +1,8 @@
-import { useState } from 'react';
+import { useLocalStorage } from 'usehooks-ts';
+
+import { activeGuideAtom } from 'store/guide';
+
+import { useRecoilValue } from 'recoil';
 
 import VideoIntro from 'containers/help/video-intro';
 
@@ -11,11 +15,21 @@ import {
   DialogTitle,
 } from 'components/ui/dialog';
 
-export const GuideModalIntro = ({ isOpen }) => {
-  const [showDialog, setShowDialog] = useState(!!isOpen);
+export const GuideModalIntro = ({ isOpen, setIsOpen }) => {
+  const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>(
+    'guideLocalStorage',
+    false,
+  );
+  const isActive = useRecoilValue(activeGuideAtom);
+
+  const handleClick = () => {
+    if (!guideLocalStorage) {
+      setGuideLocalStorage(true);
+    }
+  };
 
   return (
-    <Dialog open={showDialog}>
+    <Dialog open={isActive && isOpen}>
       <DialogContent className="z-50 space-y-6 p-8 text-black/85">
         <DialogHeader className="space-y-6">
           <DialogTitle className="text-3xl font-light">Navigation help</DialogTitle>
@@ -26,10 +40,10 @@ export const GuideModalIntro = ({ isOpen }) => {
         <div className="relative h-full min-h-[300px] w-full rounded-3xl">
           <VideoIntro />
         </div>
-        <Button onClick={() => setShowDialog(false)} className="text-sm font-bold">
-          Got it!
+        <Button onClick={handleClick} className="text-sm font-bold">
+          Got it! Don't show again
         </Button>
-        <DialogClose onClose={() => setShowDialog(false)} />
+        <DialogClose onClose={() => setIsOpen(false)} />
       </DialogContent>
     </Dialog>
   );

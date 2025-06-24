@@ -1,27 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Resend } from 'resend';
 
+import { ContactUsEmail } from 'components/contact/email-template';
+
+let recipients: string[] = [];
+
 // Define types for the email template props
 interface ContactEmailProps {
   name: string;
   email: string;
   message: string;
+  organization?: string;
+  topic?: string;
 }
 
-// Simple email template function
-const ContactUsEmail = ({ name, email, message }: ContactEmailProps) => (
-  <div>
-    <p>
-      <strong>Name:</strong> {name}
-    </p>
-    <p>
-      <strong>Email:</strong> {email}
-    </p>
-    <p>
-      <strong>Message:</strong> {message}
-    </p>
-  </div>
-);
 // Initialize Resend instance
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
@@ -36,14 +28,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   if (req.method === 'POST') {
     try {
       // Parse request body
-      const { name, email, message } = req.body as ContactEmailProps;
+      const { name, email, message, organization, topic } = req.body as ContactEmailProps;
       // Send email using Resend
+      if (topic === 'gmw-platform') {
+        recipients = ['maria.luena@vizzuality.com', 'maluenarod@gmail.com'];
+      } else if (topic === 'general') {
+        recipients = ['kathryn.longley-wood@TNC.ORG'];
+      } else {
+        recipients = ['kathryn.longley-wood@TNC.ORG'];
+      }
+
       const { data, error } = await resend.emails.send({
         from: 'GMW <onboarding@resend.dev>',
-        to: ['maria.luena@vizzuality.com'], // Replace with your recipient's email
+        to: ['maria.luena@vizzuality.com', 'kathryn.longley-wood@TNC.ORG'],
         subject: `New message from ${name}`,
         react: ContactUsEmail({ name, email, message }), // Pass dynamic content
-        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`, // Fallback text content
+        text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content
       });
 
       // Handle errors
@@ -57,6 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     } catch (error) {
       console.error('Server error:', error);
       res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: error.message || 'Internal server error' });
     }
   } else {
     res.setHeader('Allow', ['POST']);
