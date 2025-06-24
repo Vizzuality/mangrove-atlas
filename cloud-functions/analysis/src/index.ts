@@ -40,18 +40,6 @@ class AnalysisRequestParams {
 export const analyze: HttpFunction = async (req, res) => {
 
   res.set('Access-Control-Allow-Origin', '*');
-  const TEST_DICT = {
-    "mangrove_extent": HabitatExtentCalculations,
-    "mangrove_net_change": NetChangeCalculations,
-    "mangrove_height": TreeHeightCalculations,
-    "mangrove_biomass": BiomassCalculations,
-    "mangrove_blue_carbon": BlueCarbonCalculations
-  }
-  const isValid = await validateInput(req, res);
-
-  if (!isValid.status) {
-    return isValid.res;
-  }
 
   if (req.method === 'OPTIONS') {
     // Send response to OPTIONS requests
@@ -61,6 +49,18 @@ export const analyze: HttpFunction = async (req, res) => {
     return res.status(204).send('');
   }
 
+  const TEST_DICT = {
+    "mangrove_extent": HabitatExtentCalculations,
+    "mangrove_net_change": NetChangeCalculations,
+    "mangrove_height": TreeHeightCalculations,
+    "mangrove_biomass": BiomassCalculations,
+    "mangrove_blue_carbon": BlueCarbonCalculations
+  }
+
+  const isValid = await validateInput(req, res);
+  if (!isValid.status) {
+    return isValid.res;
+  }
   try {
 
     await eeAuthenticate();
