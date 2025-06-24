@@ -35,7 +35,6 @@ const ClimateWatchNationalDashboard = () => {
       'submission_type',
     ],
   });
-
   const {
     isFetching: isFetchingNDCSContentOverview,
     data: NDCSContentOverview,
@@ -56,7 +55,10 @@ const ClimateWatchNationalDashboard = () => {
     {
       label: 'Mitigation',
       value: false,
-      check: NDCSContentOverview?.mitigation_contribution_type === 'yes',
+      check:
+        NDCSContentOverview?.mitigation_contribution_type.toLowerCase() === 'yes' ||
+        (!!NDCSContentOverview?.mitigation_contribution_type.length &&
+          NDCSContentOverview?.mitigation_contribution_type.toLowerCase() !== 'no'),
       info: 'NDC contains Mitigation?',
     },
     {
@@ -68,7 +70,7 @@ const ClimateWatchNationalDashboard = () => {
     {
       label: 'Adaptation',
       value: false,
-      check: NDCSContentOverview?.adaptation === 'yes',
+      check: NDCSContentOverview?.adaptation.toLowerCase() === 'yes',
       info: 'NDC contains Adaptation?',
     },
     {
