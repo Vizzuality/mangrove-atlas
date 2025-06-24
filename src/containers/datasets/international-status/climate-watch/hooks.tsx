@@ -53,12 +53,14 @@ export function useClimateWatchNDCS(
           iso,
           [value.slug]: {
             info: !!value?.description ? value?.description : value?.name,
-            [iso]: value.locations[iso].find(
-              ({ document_slug }) =>
-                document_slug === 'second_ndc' ||
-                document_slug === 'revised_first_ndc' ||
-                document_slug === 'first_ndc'
-            ),
+            [iso]: value.locations[iso][0],
+            // .find(
+            //   ({ document_slug }) =>
+            //     document_slug === 'third_ndc' ||
+            //     document_slug === 'second_ndc' ||
+            //     document_slug === 'revised_first_ndc' ||
+            //     document_slug === 'first_ndc'
+            // ),
           },
         };
       }, {});
