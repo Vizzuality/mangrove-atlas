@@ -234,9 +234,9 @@ Example response:
 #### Deploying it to cloud functions
 
 ```bash
-gcloud functions deploy fetch-alerts --runtime nodejs10 --trigger-http \
-   --memory 256MB --timeout 540s --region us-central1 --entry-point Analysis \
-   --service-account-file ./credentials.json --source ./cloud-functions/Analysis
+gcloud functions deploy analysis --runtime nodejs20 --trigger-http \
+   --memory 256MB --timeout 540s --region us-central1 --entry-point analyze \
+    --source ./cloud-functions/analysis
 ```
 
 ``` bash
