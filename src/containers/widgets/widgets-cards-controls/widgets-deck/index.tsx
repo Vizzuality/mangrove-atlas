@@ -43,10 +43,10 @@ const WidgetsDeck: FC = () => {
       <Helper
         className={{
           button: 'right-0 -top-1.5 z-20',
-          tooltip: 'w-fit-content',
+          tooltip: 'w-fit-content max-w-[400px]',
         }}
         tooltipPosition={{ top: -50, left: 0 }}
-        message="Triggers deck to configure widgets"
+        message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
       >
         <DialogTrigger asChild>
           <button
@@ -73,7 +73,7 @@ const WidgetsDeck: FC = () => {
               tooltip: 'w-80',
             }}
             tooltipPosition={{ top: -20, left: 0 }}
-            message="Widgets display information and statistics about a geometry on the map. Most widgets also come with map layer that can be toggled on or off"
+            message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
           >
             <Category />
           </Helper>

@@ -24,7 +24,7 @@ import Loading from 'components/ui/loading';
 import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
-
+import Helper from 'containers/help/helper';
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
@@ -154,13 +154,22 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   return (
     <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
       <div className="relative box-border w-full px-1 pt-0.5">
-        <input
-          type="search"
-          className="relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2 focus:border-grey-75 focus:outline-none focus:ring-transparent"
-          placeholder="Type name..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.currentTarget.value)}
-        />
+        <Helper
+          className={{
+            button: '-top-1 right-4 z-20',
+            tooltip: 'w-fit-content max-w-[400px]',
+          }}
+          tooltipPosition={{ top: -0, left: -5 }}
+          message="Click this icon to search for a country or a protected area. Countries can also be selected by clicking on the map or on the selected geography seen in the blue space above. "
+        >
+          <input
+            type="search"
+            className="relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2 focus:border-grey-75 focus:outline-none focus:ring-transparent"
+            placeholder="Type name..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.currentTarget.value)}
+          />
+        </Helper>
         {searchValue && (
           <button
             type="button"

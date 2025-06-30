@@ -11,7 +11,7 @@ const LocationDialogContent = ({ close }: { close: () => void }) => {
       data-testid="location-dialog-content"
     >
       <LocationsList onSelectLocation={close} />
-      <DialogClose className="fixed !top-18 left-[595px]" onClose={close} />
+      <DialogClose onClose={close} />
     </DialogContent>
   );
 };

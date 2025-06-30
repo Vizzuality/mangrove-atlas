@@ -29,7 +29,7 @@ const AppTools = () => (
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: -40, left: 0 }}
-          message="guide"
+          message="Contact the GMW team or activate a tour of the platform."
         >
           <HelpContainer />
         </Helper>

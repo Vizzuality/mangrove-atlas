@@ -39,7 +39,7 @@ const ExpandCollapseWidgets: FC = () => {
         tooltip: 'max-w-[400px]',
       }}
       tooltipPosition={{ top: -50, left: -10 }}
-      message="Expand or collapse all widgets"
+      message="Collapse widget deck so that only widget titles are showing or expand widget deck so that all available information is viewable. "
     >
       <button
         type="button"

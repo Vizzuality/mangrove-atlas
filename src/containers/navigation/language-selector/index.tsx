@@ -52,10 +52,10 @@ const LanguageSelector = () => {
     <Helper
       className={{
         button: 'top-0 -right-4',
-        tooltip: 'w-fit-content',
+        tooltip: 'w-fit-content max-w-[400px]',
       }}
       tooltipPosition={{ top: -50, left: 0 }}
-      message="Choose your preferred language here. There is a choice between English, French and Spanish"
+      message="Select your preferred language here. There is a choice between English, French, and Spanish. More languages coming soon."
     >
       <DropdownMenu>
         <DropdownMenuTrigger className="h-11">
