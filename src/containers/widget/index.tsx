@@ -14,7 +14,7 @@ import { WidgetSlugType } from 'types/widget';
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { getLayerActive } from './selector';
-
+import Helper from 'containers/help/helper';
 type ChildrenType = ReactElement & { type?: () => null };
 
 type WidgetLayoutProps = {
@@ -72,9 +72,18 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
           })}
           data-testid={`widget-${id}`}
         >
-          <WidgetHeader title={title} id={id}>
-            {!info && <WidgetControls id={id} />}
-          </WidgetHeader>
+          <Helper
+            className={{
+              button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
+              tooltip: 'max-w-[400px]',
+            }}
+            tooltipPosition={{ top: -50, left: 0 }}
+            message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
+          >
+            <WidgetHeader title={title} id={id}>
+              {!info && <WidgetControls id={id} />}
+            </WidgetHeader>
+          </Helper>
 
           <div
             data-testid={`widget-${id}-content`}

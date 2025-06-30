@@ -26,7 +26,7 @@ const News = () => {
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: -40, left: 0 }}
-            message="news"
+            message="Latest news from the Global Mangrove Alliance"
           >
             <div className="flex items-center space-x-2">
               <Icon icon={NEWS_SVG} className="h-6 w-6 text-white" description="New" />

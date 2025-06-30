@@ -76,10 +76,10 @@ const Menu = () => {
       <Helper
         className={{
           button: '-top-2 -right-4',
-          tooltip: 'w-fit-content',
+          tooltip: 'w-fit-content max-w-[400px]',
         }}
         tooltipPosition={{ top: -40, left: 0 }}
-        message="main menu"
+        message="Find more information about the Global Mangrove Watch, the Global Mangrove Alliance, and our associated resources, trainings, and guidance documents"
       >
         <DialogTrigger asChild>
           <button

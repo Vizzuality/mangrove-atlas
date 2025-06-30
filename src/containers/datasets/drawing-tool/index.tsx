@@ -36,15 +36,18 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   return (
     <Helper
       className={{
-        button: '-top-1 left-9 z-[20]',
+        button: 'right-1.5 -top-1 z-[20]',
         tooltip: 'w-fit max-w-[400px]',
       }}
-      tooltipPosition={{ top: -65, left: -0 }}
-      message="use this function to calculate statistics for your own custom area of interest"
+      tooltipPosition={{ top: -65, left: -10 }}
+      message="Use this function to draw a polygon on the map to calculate statistics for your area of interest. Complete the polygon by double clicking. The widgets will update with statistics for the area drawn."
     >
+      {/* TO - DO - This tool is limited to areas between xx km2 and xx km2. */}
       <button
         type="button"
-        className={cn(menuItemStyle, {
+        className={cn({
+          'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
+            true,
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
         })}
@@ -65,10 +68,13 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         )}
         <span
           className={cn({
-            'whitespace-nowrap font-sans text-sm text-white': true,
+            // Minimum width is customized to prevent layout shifts in the menu when the text changes.
+            // It's based on the width of the longest possible label
+            'min-w-[75.05px] whitespace-nowrap font-sans text-sm text-white': true,
             'text-brand-800': isDrawingToolEnabled && !uploadedGeojson,
           })}
         >
+          {/* Update width above if these text change */}
           {isDrawingToolEnabled && !uploadedGeojson ? 'Delete area' : 'Draw area'}
         </span>
       </button>

@@ -163,7 +163,7 @@ const LegendItem = ({
               })}
               overlay={false}
             >
-              <div className="no-scrollbar overflow-y-auto px-3">
+              <div className="no-scrollbar relative overflow-y-auto bg-red-900 px-3">
                 <WidgetWrapper
                   key={l.id}
                   title={title}

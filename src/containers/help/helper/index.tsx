@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 
@@ -42,6 +42,12 @@ export const Helper = ({
     right: null,
   });
 
+  const handlePopover = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setPopOver((prev) => !prev);
+  }, []);
+
   useEffect(() => {
     const { top, left, right } = childrenRef.current?.getBoundingClientRect();
     saveChildrenPosition({
@@ -62,7 +68,7 @@ export const Helper = ({
               'pointer-events-none': popOver,
             })}
             data-testid="helper-button"
-            onClick={() => setPopOver(true)}
+            onClick={handlePopover}
           >
             {!popOver && isActive && (
               <span
@@ -97,7 +103,7 @@ export const Helper = ({
           >
             <div
               className={cn({
-                'pointer-events-none absolute cursor-default': true,
+                'pointer-events-none fixed cursor-default': true,
                 [className.button]: !!className.button,
                 [className.active]: isActive,
               })}
@@ -112,7 +118,9 @@ export const Helper = ({
               <div
                 style={{
                   top: childrenPosition?.top - tooltipPosition.top,
-                  left: childrenPosition?.left - tooltipPosition.left,
+                  left: childrenPosition?.left - tooltipPosition.left || 'auto',
+                  right: childrenPosition?.right - tooltipPosition?.right || 'auto',
+                  zIndex: 10000,
                 }}
                 className={cn({
                   'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-6': true,

@@ -75,16 +75,15 @@ export const DeleteDrawingButton = ({
     <div className="flex w-full flex-col items-center justify-center space-y-1">
       <div
         className={cn({
-          'shadow-controls flex items-center justify-center rounded-full border border-brand-800 bg-brand-800':
-            true,
+          'shadow-controls flex items-center justify-center rounded-full bg-brand-800': true,
           [SIZE[size]]: true,
         })}
       >
         <button onClick={handleResetPage} data-testid="delete-custom-area-button">
-          <Icon icon={REMOVE_SVG} className="h-5 w-5 text-white" />
+          <Icon icon={REMOVE_SVG} className="h-3.5 w-3.5 text-white" />
         </button>
       </div>
-      {children && children}
+      {/* {children && children} */}
     </div>
   );
 };

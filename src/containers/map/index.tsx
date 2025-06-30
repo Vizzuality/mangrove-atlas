@@ -404,17 +404,26 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               />
             )}
             <Controls className="absolute bottom-9 right-5 hidden items-center print:hidden md:block">
-              <Helper
-                className={{
-                  button: 'top-1 left-8 z-[20]',
-                  tooltip: 'w-fit-content',
-                }}
-                tooltipPosition={{ top: 90, left: 250 }}
-                message="use these buttons to go full-screen, share link, configure basemap, zoom in/out or reset the bearing"
-              >
-                <div className="flex flex-col space-y-2 pt-1">
-                  {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
+              <div className="flex flex-col space-y-2 pt-1">
+                {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
+                <Helper
+                  className={{
+                    button: 'top-1 left-8 z-[20]',
+                    tooltip: 'w-80',
+                  }}
+                  tooltipPosition={{ top: 0, left: 330 }}
+                  message="Use this icon to show the map in full screen. Widgets and other menu items will be hidden until the icon is clicked again. "
+                >
                   <FullScreenControl />
+                </Helper>
+                <Helper
+                  className={{
+                    button: 'top-1 left-8 z-[20]',
+                    tooltip: 'w-80',
+                  }}
+                  tooltipPosition={{ top: 0, left: 330 }}
+                  message="Use this function to generate a link to a user-customized map on GMW or to embed a customized map into another website."
+                >
                   <ShareControl
                     disabled={
                       isDrawingToolEnabled ||
@@ -423,13 +432,31 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                       !!uploadedGeojson
                     }
                   />
+                </Helper>
+                <Helper
+                  className={{
+                    button: 'top-1 left-8 z-[20]',
+                    tooltip: 'w-80',
+                  }}
+                  tooltipPosition={{ top: 0, left: 330 }}
+                  message="Select this icon to choose from a variety of basemaps, enable visualization of the high-resolution mangrove extent, or to select high resolution imagery from Planet."
+                >
                   <BasemapSettingsControl />
+                </Helper>
+                <Helper
+                  className={{
+                    button: 'top-1 left-8 z-[20]',
+                    tooltip: 'w-80',
+                  }}
+                  tooltipPosition={{ top: 0, left: 330 }}
+                  message="Use the + icon to zoom into the map and the – button to zoom out of the map"
+                >
                   <div className="border-box flex flex-col overflow-hidden rounded-4xl shadow-control">
                     <ZoomControl mapId={mapId} />
                     {pitch !== 0 && <PitchReset mapId={mapId} />}
                   </div>
-                </div>
-              </Helper>
+                </Helper>
+              </div>
             </Controls>
 
             {locationPopUp.info && !guideIsActive && (

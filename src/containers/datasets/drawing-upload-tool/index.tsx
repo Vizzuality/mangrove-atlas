@@ -23,12 +23,17 @@ import Icon from 'components/ui/icon';
 import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
 
 const drawingToolHelperContent = (
-  <div className="max-w-xs space-y-4 text-sm">
+  <div className="max-w-xs space-y-4 text-sm font-light text-black/85">
+    <p>
+      Use this function to upload a polygon for which you would like statistics calculated. The
+      widgets will update with statistics for this area.
+    </p>
     <p>
       Be aware to upload a minimum size area in order to ensure enough data for the analysis. The
       recommended maximum file size is 10MB. Anything larger than that may not work properly.
     </p>
-    <h3 className="font-bold">List of supported file formats:</h3>
+    <h3>Acceptable formats include:</h3>
+
     <ul className="list-disc pl-5">
       <li>
         <a
