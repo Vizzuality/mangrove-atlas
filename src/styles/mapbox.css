@@ -535,18 +535,19 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   border: none; */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   max-height: none !important;
-  min-width: none !important;
   max-width: none !important;
   padding: 0px !important;
   background: white;
   height: auto !important;
   min-height: 100px;
+  min-width: 300px !important;
   overflow: visible !important;
   border-radius: 20px !important;
   --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
     var(--tw-shadow);
+  width: 100%;
 }
 
 .mapboxgl-popup-anchor-top-left .mapboxgl-popup-content {

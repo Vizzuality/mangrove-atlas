@@ -31,6 +31,7 @@ import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
 import WidgetsMenu from './widgets-menu';
+import { activeGuideAtom } from 'store/guide';
 
 const buttonMotion = {
   rest: {
@@ -73,6 +74,7 @@ const textMotion = {
 const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [{ customGeojson }] = useRecoilState(drawingToolAtom);
+  const isHelpGuideEnabled = useRecoilValue(activeGuideAtom);
 
   const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
 
@@ -183,16 +185,8 @@ const WidgetsContainer: FC = () => {
             >
               <Category />
             </Helper>
-            <Helper
-              className={{
-                button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
-                tooltip: 'w-fit-content',
-              }}
-              tooltipPosition={{ top: -70, left: -400 }}
-              message="Widgets list"
-            >
-              <WidgetsMenu />
-            </Helper>
+
+            <WidgetsMenu />
           </div>
         </DialogContent>
       </Dialog>

@@ -67,16 +67,8 @@ const WidgetsDeck: FC = () => {
         <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
         <div className="no-scrollbar space-y-8">
           <h2 className="font-black/85 text-3xl font-light leading-10">Widgets deck settings</h2>
-          <Helper
-            className={{
-              button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',
-              tooltip: 'w-80',
-            }}
-            tooltipPosition={{ top: -20, left: 0 }}
-            message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-          >
-            <Category />
-          </Helper>
+
+          <Category />
           <div className="flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5 shadow-control">
             <Icon
               icon={ALERT_SVG}
@@ -88,16 +80,8 @@ const WidgetsDeck: FC = () => {
               applicable geography to enable layer.
             </p>
           </div>
-          <Helper
-            className={{
-              button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
-              tooltip: 'w-fit-content',
-            }}
-            tooltipPosition={{ top: -70, left: -400 }}
-            message="Widgets list"
-          >
-            <WidgetsMenu />
-          </Helper>
+
+          <WidgetsMenu />
         </div>
       </DialogContent>
     </Dialog>
