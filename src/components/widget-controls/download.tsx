@@ -5,6 +5,9 @@ import Icon from 'components/ui/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
 
+import Helper from 'containers/help/helper';
+import { HELPER_POSITION } from './constants';
+
 /**
  * Download component
  *
@@ -39,36 +42,43 @@ const Download = ({ id, content }) => {
   if (!DownloadInfo && !content) return null;
 
   return (
-    <div className="flex h-[30px] w-[30px] flex-col items-center justify-center rounded-full bg-white text-brand-800">
-      <Dialog>
-        <DialogTrigger>
+    <Dialog>
+      <Helper
+        className={{
+          button: HELPER_POSITION,
+          tooltip: 'w-fit-content max-w-[400px]',
+        }}
+        tooltipPosition={{ top: -35, left: 0 }}
+        message="Use this function to download spatial data associated with this widget and map layer. Links may point to external sources. Not all data layers are available for download. "
+      >
+        <DialogTrigger className="flex h-full items-center">
           <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" description="Download" />
         </DialogTrigger>
-        <DialogContent>
-          <div className="no-scrollbar w-[480px] overflow-y-auto">
-            {id && <DownloadInfo />}
-            {content && !id && (
-              <div className="flex flex-col items-start justify-start space-y-4">
-                <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
-                <p className="text-sm font-extralight text-black/85">{content.description}</p>
-                {content.link && (
-                  <a
-                    title={content.name}
-                    href={content.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-bold text-brand-800 underline"
-                  >
-                    {content.name || content.link}
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-          <DialogClose className="top-6" />
-        </DialogContent>
-      </Dialog>
-    </div>
+      </Helper>
+      <DialogContent>
+        <div className="no-scrollbar w-[480px] overflow-y-auto">
+          {id && <DownloadInfo />}
+          {content && !id && (
+            <div className="flex flex-col items-start justify-start space-y-4">
+              <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
+              <p className="text-sm font-extralight text-black/85">{content.description}</p>
+              {content.link && (
+                <a
+                  title={content.name}
+                  href={content.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-brand-800 underline"
+                >
+                  {content.name || content.link}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+        <DialogClose className="top-6" />
+      </DialogContent>
+    </Dialog>
   );
 };
 
