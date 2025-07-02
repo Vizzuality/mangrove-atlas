@@ -86,6 +86,7 @@ const LocationPopUP = ({
     <Collapsible
       open={nonExpansible ? nonExpansible : isOpen}
       onOpenChange={handlePopUpContentVisibility}
+      className="w-full rounded-t-3xl bg-white"
     >
       <CollapsibleTrigger showExpandIcon={!nonExpansible} disabled={nonExpansible}>
         <h3 className={WIDGET_SUBTITLE_STYLE}>Analyse an area</h3>

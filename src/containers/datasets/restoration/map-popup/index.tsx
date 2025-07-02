@@ -10,7 +10,7 @@ const PopupRestoration = ({ info, className }: { info: RestorationPopUp; classNa
   return (
     <div
       className={cn({
-        'relative flex w-full flex-col items-start divide-y divide-gray-100': true,
+        'relative flex w-full flex-col items-start divide-y divide-gray-100 bg-white': true,
         [className]: !!className,
       })}
     >
