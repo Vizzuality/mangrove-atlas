@@ -335,11 +335,12 @@ export const WIDGETS_BY_CATEGORY = [
 ];
 
 export const LAYERS_BY_CATEGORY: { [key: string]: string[] } = {
-  distribution_and_change: ['mangrove_habitat_extent', 'mangrove_net_change'],
+  distribution_and_change: ['mangrove_alerts', 'mangrove_net_change', 'mangrove_habitat_extent'],
   restoration_and_conservation: [
-    'mangrove_habitat_extent',
-    'mangrove_net_change',
+    'mangrove_rest_sites',
     'mangrove_alerts',
+    'mangrove_net_change',
+    'mangrove_habitat_extent',
   ],
   climate_and_policy: ['mangrove_blue_carbon'],
   ecosystem_services: ['mangrove_biomass', 'mangrove_height', 'mangrove_blue_carbon'],
