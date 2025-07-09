@@ -33,6 +33,9 @@ const ClimateWatchNationalDashboard = () => {
       'pledge_base_year',
       'time_target_year',
       'submission_type',
+      'indc_submission',
+      'base_year',
+      'coverage_lulucf',
     ],
   });
   const {
@@ -75,7 +78,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Base year/s',
-      value: NDCSContentOverview?.ghg_target_type,
+      value: NDCSContentOverview?.base_year,
       check: false,
       info: 'Year/s against which emission targets are measured against',
     },
@@ -84,6 +87,14 @@ const ClimateWatchNationalDashboard = () => {
       value: NDCSContentOverview?.time_target_year || '-',
       check: false,
       info: data?.time_target_year?.info || '',
+    },
+    {
+      label: 'Mitigation: Sector Coverage',
+      value: NDCSContentOverview?.coverage_lulucf
+        ? 'LULUCF included in the NDC'
+        : 'LULUCF not included in the NDC',
+      check: false,
+      info: "Does the NDC's GHG target cover the LULUCF (Land Use, Land-Use Change, and Forestry) sector?",
     },
     {
       label: 'Update status',

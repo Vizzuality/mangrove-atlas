@@ -93,6 +93,9 @@ type IndicatorsParams = {
     'pledge_base_year',
     'time_target_year',
     'submission_type',
+    'indc_submission',
+    'base_year',
+    'coverage_lulucf',
   ];
 };
 

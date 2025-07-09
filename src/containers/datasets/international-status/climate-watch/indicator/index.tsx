@@ -22,7 +22,7 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 const Indicator = (indicator: IndicatorTypes) => {
   const { label, value, check, url, info } = indicator;
   return (
-    <div className="grid grid-cols-2 text-sm text-black/85">
+    <div className="grid grid-cols-2 space-x-4 text-sm text-black/85">
       <div className="flex items-center">
         <div dangerouslySetInnerHTML={{ __html: label }} className="mr-2 font-bold" />
         {info && (
@@ -35,7 +35,7 @@ const Indicator = (indicator: IndicatorTypes) => {
               <TooltipContent
                 side="bottom"
                 align="center"
-                className="rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
+                className="max-w-sm rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
               >
                 {info}
                 <TooltipArrow className="fill-white" width={10} height={5} />
