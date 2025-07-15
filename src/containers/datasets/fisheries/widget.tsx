@@ -1,33 +1,15 @@
-import NoData from 'containers/widgets/no-data';
+import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
-import Loading from 'components/ui/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import Fisheries2 from './widget copy';
+import CommercialFisheriesProduction from './commercial-fisheries-production/widget';
+import cn from 'lib/classnames';
 
-import FisheriesChart from './chart';
-import { useMangroveFisheries } from './hooks';
 const Fisheries = () => {
-  const { data, isFetched, isFetching } = useMangroveFisheries();
-
-  if (isFetched && !data?.config?.data?.length) return <NoData />;
-
   return (
-    <div className={WIDGET_CARD_WRAPPER_STYLE}>
-      <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />
-      {isFetched && data && (
-        <div className="space-y-4">
-          {(!!data.rangeMin || data.rangeMin === 0) &&
-            (!!data.rangeMax || data.rangeMax === 0) &&
-            !!data.median && (
-              <p className={WIDGET_SENTENCE_STYLE}>
-                In <span className="font-bold">{data.location} </span>, the median mangrove fishing
-                intensity <sup>(1)</sup> is <span className="font-bold">{data.median} days</span>{' '}
-                (ranging from {data.rangeMin} to {data.rangeMax}).
-              </p>
-            )}
-          <FisheriesChart config={data.config} />
-          <p className="text-sm italic">(1) Fishing intensity: fisher days/km/year </p>
-        </div>
-      )}
+    <div className={cn(WIDGET_CARD_WRAPPER_STYLE, 'space-y-4')}>
+      <Fisheries2 />
+      <div className="absolute left-4 right-4 my-4 h-0.5 bg-brand-800/30" />
+      <CommercialFisheriesProduction />
     </div>
   );
 };
