@@ -114,6 +114,7 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
+import MangrovesCommercialFisheriesProductionLayer from 'containers/datasets/fisheries/commercial-fisheries-production/layer';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
@@ -180,6 +181,7 @@ export const LAYERS = {
   mangrove_salt_marsh: SaltMarshLayer,
   planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
   planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
+  commercial_fisheries_production_fish: MangrovesCommercialFisheriesProductionLayer,
 };
 
 export const MAP_LEGENDS = {
