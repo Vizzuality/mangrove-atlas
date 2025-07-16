@@ -25,13 +25,7 @@ export const GAEvent = ({ action, params }): void => {
   }
 };
 
-// Track events with a predefined category
-export function trackEvent(categoryName: string, options: ReactGAEvent): void {
-  console.log(categoryName, 'fuera *********************');
-
-  console.log(categoryName, 'dentro *********************');
-  ReactGA.event({
-    action: 'custom_test_event',
-  });
-  ReactGA.event({ category: categoryName, ...options });
+// Track events
+export function trackEvent(eventName: string, params?: Record<string, any>): void {
+  ReactGA.event(eventName, params);
 }

@@ -108,6 +108,7 @@ const MangrovesInProtectedAreas = () => {
         </div>
       )}
       <SuggestedLayers
+        origin="mangrove_protected_areas"
         thumbSource="/images/thumbs/contextual/mangrove_protected_areas.png"
         name="WDPA"
         id="mangrove_protected_areas"

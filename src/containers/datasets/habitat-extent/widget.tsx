@@ -192,6 +192,7 @@ const HabitatExtent = () => {
           <HabitatExtentChart legend={legend} config={config} />
           <div>
             <SuggestedLayers
+              origin="mangrove_habitat_extent"
               name="High Resolution Extent"
               thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
               id="hi-res-extent"

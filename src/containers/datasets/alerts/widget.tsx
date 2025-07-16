@@ -210,6 +210,7 @@ const AlertsWidget = () => {
           </div>
           <div>
             <SuggestedLayers
+              origin="mangrove_alerts"
               name="Planet-NICFI Satellite Imagery"
               thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
               id="planet_medres_visual_monthly"

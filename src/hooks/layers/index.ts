@@ -1,3 +1,4 @@
+import { trackEvent } from 'lib/analytics/ga';
 import type { Visibility } from 'mapbox-gl';
 
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
@@ -29,10 +30,22 @@ export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
     // Delete the layer if it already exists by creating a new array without that layer
     return [...activeLayers?.slice(0, index), ...activeLayers?.slice(index + 1)];
   } else if (hasNationalDashboard && nationalDashboardIndex !== -1) {
+    // Google Analytics tracking
+    trackEvent(`Replace national dashboard layer - ${id}`, {
+      action: 'replace national dashboard layer',
+      label: `Replace national dashboard layer - ${id}`,
+    });
+
     // Replace the national_dashboard layer with the new layer by creating a new array
     return activeLayers?.map((layer, idx) => (idx === nationalDashboardIndex ? newLayer : layer));
   } else {
     // Adds the new layer to the list by creating a new array with the new layer
+
+    // Google Analytics tracking
+    trackEvent(`Add national dashboard layer - ${id}`, {
+      action: 'add national dashboard layer',
+      label: `Add national dashboard layer - ${id}`,
+    });
     return [newLayer, ...activeLayers];
   }
 }
