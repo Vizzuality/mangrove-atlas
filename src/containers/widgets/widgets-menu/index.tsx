@@ -32,7 +32,16 @@ const WidgetsMenu: FC = () => {
   const enabledWidgets = useWidgetsIdsByLocation();
 
   const handleAllWidgets = useCallback(() => {
-    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+    const allActive = activeWidgets.length === widgets.length;
+
+    // Google Analytics tracking
+    if (!allActive) {
+      trackEvent('Widgets selection - Activate all', {
+        action: 'activate widgets',
+        label: 'Widgets deck tool- Activate all widgets',
+      });
+    }
+    allActive ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
   }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
 
   const handleAllLayers = useCallback(() => {
@@ -47,14 +56,25 @@ const WidgetsMenu: FC = () => {
       }));
 
       setActiveLayers(NewLayersActive);
+
+      // Google Analytics tracking
+      trackEvent('Layers selection - Activate all', {
+        action: 'activate layers',
+        label: 'Widgets deck tool- Activate all layers',
+      });
     }
   }, [setActiveLayers, activeLayers]);
 
   const handleWidgets = useCallback(
     (e) => {
-      const isActive = activeWidgets.includes(e); 
+      const isActive = activeWidgets.includes(e);
+
+      // Google Analytics tracking
       if (!isActive) {
-        trackEvent(e);
+        trackEvent(`Widget selected - ${e}`, {
+          action: 'activate widget',
+          label: `Widgets deck tool - widget -${e}`,
+        });
       }
       const updatedWidgets = isActive
         ? activeWidgets.filter((widget) => widget !== e)
@@ -69,7 +89,16 @@ const WidgetsMenu: FC = () => {
 
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
-      const layersUpdate = activeLayersIds?.includes(e)
+      const isActive = activeLayersIds?.includes(e);
+
+      // Google Analytics tracking
+      if (!isActive) {
+        trackEvent(`Layer selected - ${e}`, {
+          action: 'activate layer',
+          label: `Widgets deck tool - layer - ${e}`,
+        });
+      }
+      const layersUpdate = isActive
         ? activeLayers?.filter((w) => w.id !== e)
         : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
       setActiveLayers(layersUpdate);

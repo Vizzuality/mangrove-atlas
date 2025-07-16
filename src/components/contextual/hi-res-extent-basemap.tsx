@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { trackEvent } from 'lib/analytics/ga';
 
 import { activeLayersAtom } from 'store/layers';
 
@@ -34,6 +35,14 @@ const HighResolutionExtentBasemap = () => {
               ...activeLayers,
             ] as ActiveLayers[]);
       setActiveLayers(layersUpdate);
+
+      // Google Analytics tracking
+      if (id !== 'no-layer') {
+        trackEvent('Contextual layer high resolution extent layer', {
+          action: 'enable contextual layer high resolution extent layer',
+          label: 'Enable Contextual layer high resolution extent layer',
+        });
+      }
     },
     [activeLayers, setActiveLayers]
   );
