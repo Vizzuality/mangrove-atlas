@@ -2,13 +2,6 @@ import ReactGA from 'react-ga4';
 
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-type ReactGAEvent = {
-  action: string;
-  label?: string;
-  value?: number;
-  nonInteraction?: boolean;
-};
-
 // log the pageview with their URL
 export const GAPage = (url: string): void => {
   if (window.gtag) {

@@ -81,7 +81,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
         <h3 className={WIDGET_SUBTITLE_STYLE}>IUCN ECOSYSTEM RED LIST ASSESSMENT</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <div className="flex w-full min-w-[450px] flex-col space-y-2 border-none px-6 pb-6 shadow-none">
+        <div className="flex w-full min-w-[450px] flex-col space-y-2 border-none px-6 shadow-none">
           <a
             className="w-full text-right text-xs text-brand-800 underline"
             target="_blank"

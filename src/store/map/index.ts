@@ -3,6 +3,7 @@ import type { LayerProps } from 'react-map-gl';
 import { string, number, array } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
+import type { LngLat } from 'mapbox-gl';
 
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 
@@ -42,4 +43,14 @@ export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>({
 export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>({
   key: 'mapCursor',
   default: 'grab',
+});
+
+export const mapPopUpPositionAtom = atom<LngLat | null>({
+  key: 'mapPopUpPosition',
+  default: null,
+});
+
+export const mapDraggableTooltipPositionAtom = atom<{ x: number; y: number } | null>({
+  key: 'mapDraggableTooltipPosition',
+  default: null,
 });

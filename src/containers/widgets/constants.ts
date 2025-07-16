@@ -168,7 +168,7 @@ const widgets_prod = [
       'mangrove_coastal_protection_stock',
     ],
   },
-  ...(process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+  ...(process.env.NEXT_PUBLIC_VERCEL_ENV !== 'development'
     ? ([
         {
           name: 'IUCN Ecosystem Red List Assessment',
