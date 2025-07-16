@@ -1,6 +1,5 @@
 import ReactGA from 'react-ga4';
 
-
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 type ReactGAEvent = {
@@ -27,8 +26,12 @@ export const GAEvent = ({ action, params }): void => {
 };
 
 // Track events with a predefined category
-export function trackEvent(categoryName: string) {
-  return (options: ReactGAEvent) => {
-    ReactGA.event({ category: categoryName, ...options });
-  };
+export function trackEvent(categoryName: string, options: ReactGAEvent): void {
+  console.log(categoryName, 'fuera *********************');
+
+  console.log(categoryName, 'dentro *********************');
+  ReactGA.event({
+    action: 'custom_test_event',
+  });
+  ReactGA.event({ category: categoryName, ...options });
 }

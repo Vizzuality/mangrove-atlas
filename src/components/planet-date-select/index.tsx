@@ -1,30 +1,22 @@
 import { useCallback, useMemo } from 'react';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectIcon } from 'components/ui/select';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 import cn from 'lib/classnames';
+import { trackEvent } from 'lib/analytics/ga';
 
 import { activeLayersAtom } from 'store/layers';
-
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
 import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from 'components/ui/dropdown';
-import Icon from 'components/ui/icon';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
-
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 const DateSelect = ({
   id,
   mosaic_id,
-  className = { content: '' },
 }: {
   id: ContextualBasemapsId | BasemapId | WidgetSlugType;
   mosaic_id: MosaicId;
@@ -32,6 +24,7 @@ const DateSelect = ({
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+
   const layerToUpdate = useMemo(
     () => activeLayers?.find((layer) => layer.id === id),
     [activeLayers]
@@ -48,7 +41,7 @@ const DateSelect = ({
   );
 
   const handleDate = useCallback(
-    (e) => {
+    (value: string) => {
       const filteredLayers = activeLayers?.filter((l) => l.id !== id);
       if (!!layerToUpdate) {
         setActiveLayers([
@@ -57,12 +50,18 @@ const DateSelect = ({
             id: id as ContextualBasemapsId,
             settings: {
               ...layerToUpdate.settings,
-              date: e.currentTarget.value,
+              date: value,
             },
           },
           ...filteredLayers,
         ]);
       }
+
+      // Google Analytics tracking
+      trackEvent(`Contextual Basemap settings - Date - ${id}`, {
+        action: 'date change in contextual layer',
+        label: `Contextual Basemap - ${id}. Selected date: ${value}`,
+      });
     },
     [layerToUpdate, activeLayers, id, setActiveLayers]
   );
@@ -70,51 +69,37 @@ const DateSelect = ({
   const orderedDates = useMemo(() => orderBy(dates, ['value'], ['desc']), [dates]);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="w-full">
-        <div className="flex cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50 py-1 px-4">
-          <p className="first-line:after">
-            Period: <span className="text-sm font-bold">{labelToDisplay}</span>
-          </p>
-          <Icon
-            icon={ARROW_SVG}
-            className={cn({
-              '[data-state=closed]:rotate-180 relative inline-block h-1.5 w-2.5 font-bold': true,
-            })}
-            description="Arrow"
-          />
-        </div>
-      </DropdownMenuTrigger>
+    <Select value={selectedDate} onValueChange={handleDate}>
+      <SelectTrigger
+        className="z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50 px-4 py-1"
+        aria-label="Select period"
+      >
+        <p>
+          Period: <span className="text-sm font-bold">{labelToDisplay}</span>
+        </p>
+        <SelectIcon>
+          <ChevronDownIcon className="h-4 w-4" />
+        </SelectIcon>
+      </SelectTrigger>
 
-      <DropdownMenuContent
-        className={cn({
-          'max-h-56 overflow-y-auto bg-white p-0': true,
-          [className.content]: !!className?.content,
-        })}
+      <SelectContent
+        className="z-[70] flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white py-2 px-4 text-sm shadow-md"
+        alignOffset={0}
+        sideOffset={-30}
       >
         {orderedDates?.map((d) => (
-          <DropdownMenuItem
+          <SelectItem
             key={d.value}
-            className="whitespace-nowrap px-1 py-0.5 last-of-type:pb-4"
+            value={d.value}
+            className={cn('cursor-pointer rounded py-1 px-2 text-sm hover:bg-brand-800/20', {
+              'font-semibold text-brand-800': d.value === selectedDate,
+            })}
           >
-            <button
-              id={d.label}
-              value={d.value}
-              className={cn({
-                'h-8 w-full rounded-xl px-2 text-left hover:bg-brand-800/20': true,
-                'text-brand-800': d.value === selectedDate,
-              })}
-              type="button"
-              role="button"
-              onClick={handleDate}
-              aria-label={`Select date ${d.label}`}
-            >
-              {d.label}
-            </button>
-          </DropdownMenuItem>
+            {d.label}
+          </SelectItem>
         ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </SelectContent>
+    </Select>
   );
 };
 
