@@ -16,6 +16,7 @@ import IndicatorExtent from './extent';
 import IndicatorSource from './source';
 import type { IndicatorSourcesTypes } from './types';
 import IndicatorYear from './year';
+import { trackEvent } from 'lib/analytics/ga';
 
 const IndicatorSources = ({
   id,
@@ -78,6 +79,14 @@ const IndicatorSources = ({
             },
           },
         ] as ActiveLayers[]);
+
+    // Google Analytics tracking
+    if (!isActive) {
+      trackEvent(`Add mangrove national dashboard indicator layer - ${id}`, {
+        action: 'add mangrove national dashboard indicator layer',
+        label: `Add mangrove national dashboard indicator layer - ${id}`,
+      });
+    }
 
     setActiveLayers(layersUpdate);
   }, [activeLayers, setActiveLayers, id, dataSource, isActive, layerIndex, locationIso, source]);

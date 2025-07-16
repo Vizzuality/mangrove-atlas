@@ -36,7 +36,7 @@ const WidgetsMenu: FC = () => {
 
     // Google Analytics tracking
     if (!allActive) {
-      trackEvent('Widgets selection - Activate all', {
+      trackEvent('Widgets deck - Widgets selection - Activate all', {
         action: 'activate widgets',
         label: 'Widgets deck tool- Activate all widgets',
       });
@@ -58,7 +58,7 @@ const WidgetsMenu: FC = () => {
       setActiveLayers(NewLayersActive);
 
       // Google Analytics tracking
-      trackEvent('Layers selection - Activate all', {
+      trackEvent('Widgets deck - Layers selection - Activate all', {
         action: 'activate layers',
         label: 'Widgets deck tool- Activate all layers',
       });
@@ -71,7 +71,7 @@ const WidgetsMenu: FC = () => {
 
       // Google Analytics tracking
       if (!isActive) {
-        trackEvent(`Widget selected - ${e}`, {
+        trackEvent(`Widgets deck - Widget selected - ${e}`, {
           action: 'activate widget',
           label: `Widgets deck tool - widget -${e}`,
         });
@@ -93,7 +93,7 @@ const WidgetsMenu: FC = () => {
 
       // Google Analytics tracking
       if (!isActive) {
-        trackEvent(`Layer selected - ${e}`, {
+        trackEvent(`Widgets deck - Layer selected - ${e}`, {
           action: 'activate layer',
           label: `Widgets deck tool - layer - ${e}`,
         });

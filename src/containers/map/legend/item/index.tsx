@@ -28,6 +28,7 @@ import HIDE_SVG from 'svgs/legend/hide.svg?sprite';
 import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
+import { trackEvent } from 'lib/analytics/ga';
 
 const LegendItem = ({
   id,
@@ -47,12 +48,19 @@ const LegendItem = ({
     (layer) => {
       const layersWithVisibility: ActiveLayers[] = activeLayers?.map((l) => {
         if (l.id === layer) {
-          return { ...l, visibility: l.visibility === 'visible' ? 'none' : 'visible' };
+          const visibility = l.visibility === 'visible' ? 'none' : 'visible';
+          return { ...l, visibility };
         }
         if (l.id === 'custom-area') {
           return null;
         }
         return l;
+      });
+
+      // Google Analytics tracking
+      trackEvent(`Legend - Layer visibility`, {
+        action: 'enable or disable layer visibility',
+        label: `Legend - ${l.visibility === 'none' ? 'enable' : 'disable'} layer visibility`,
       });
 
       setActiveLayers(layersWithVisibility);
@@ -68,6 +76,12 @@ const LegendItem = ({
     (layer: string) => {
       const updatedLayers = activeLayers?.filter((l) => {
         return l.id !== layer;
+      });
+
+      // Google Analytics tracking
+      trackEvent(`Legend - Remove layer`, {
+        action: 'remove layer from legend',
+        label: `Legend - remove layer ${layer}`,
       });
       setActiveLayers(updatedLayers);
     },
@@ -85,6 +99,12 @@ const LegendItem = ({
           return { ...l, opacity: op.toString() };
         }
         return l;
+      });
+
+      // Google Analytics tracking
+      trackEvent(`Legend - Change opacity`, {
+        action: 'change opacity from legend',
+        label: `Legend - change opacity ${layer} from ${l.opacity} to ${op}`,
       });
 
       setActiveLayers(layersWithOpacity);

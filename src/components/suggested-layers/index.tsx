@@ -15,8 +15,10 @@ import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import INFO_SVG from 'svgs/ui/info.svg?sprite';
+import { trackEvent } from 'lib/analytics/ga';
 
 type SuggestionTypes = {
+  origin?: WidgetSlugType; // Optional prop to track the origin of the suggestion
   name: string;
   id: ContextualBasemapsId | WidgetSlugType | 'hi-res-extent';
   description: string;
@@ -26,6 +28,7 @@ type SuggestionTypes = {
 };
 
 const SuggestedLayers = ({
+  origin,
   children,
   name,
   id,
@@ -42,6 +45,14 @@ const SuggestedLayers = ({
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
       : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
+
+    if (!isActive) {
+      // Google Analytics tracking
+      trackEvent(`Suggested layer - ${id}`, {
+        action: 'add suggested contextual layer',
+        label: `Suggested Contextual Layer - ${id}. From: ${origin}`,
+      });
+    }
     setActiveLayers(layersUpdate);
   }, [isActive, activeLayers, setActiveLayers, id]);
 

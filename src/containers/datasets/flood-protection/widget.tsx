@@ -33,6 +33,7 @@ import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
 import { useMangrovesFloodProtection } from './hooks';
 import type { ChartData, Config } from './types';
+import { trackEvent } from 'lib/analytics/ga';
 
 const FloodProtection = ({
   indicator,
@@ -47,6 +48,13 @@ const FloodProtection = ({
 
   const handlePeriod = useCallback(
     (period: FloodProtectionPeriodId) => {
+      trackEvent(
+        `Change mangrove coastal protection period - from ${selectedPeriod} to ${period}`,
+        {
+          action: 'Change mangrove coastal protection period',
+          label: `Change mangrove coastal protection - from ${selectedPeriod} to ${period}`,
+        }
+      );
       setPeriod(period);
     },
     [setPeriod]
@@ -79,6 +87,14 @@ const FloodProtection = ({
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
       : ([...activeLayers, { id, opacity: '1', visibility: 'visible' }] as ActiveLayers[]);
+
+    // Google Analytics tracking
+    if (!isActive) {
+      trackEvent(`Add mangrove coastal protection layer - ${id}`, {
+        action: 'add mangrove coastal protection layer',
+        label: `Add mangrove coastal protection layer - ${id}`,
+      });
+    }
     setActiveLayers(layersUpdate);
   };
 
