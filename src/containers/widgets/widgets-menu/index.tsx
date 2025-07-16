@@ -19,6 +19,7 @@ import { findCategoryByWidgets } from 'containers/widgets/utils';
 import { CheckboxIndicator } from 'components/ui/checkbox';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
+import { trackEvent } from 'lib/analytics/ga';
 
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
@@ -51,7 +52,11 @@ const WidgetsMenu: FC = () => {
 
   const handleWidgets = useCallback(
     (e) => {
-      const updatedWidgets = activeWidgets.includes(e)
+      const isActive = activeWidgets.includes(e); 
+      if (!isActive) {
+        trackEvent(e);
+      }
+      const updatedWidgets = isActive
         ? activeWidgets.filter((widget) => widget !== e)
         : [...activeWidgets, e].filter((widget) => widget !== 'widgets_deck_tool');
       const newCategory = findCategoryByWidgets(updatedWidgets);
