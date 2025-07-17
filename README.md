@@ -16,8 +16,8 @@ Global Mangrove Watch (GMW) is an online platform that provides the remote sensi
 
 Requirements:
 
-* NodeJs v18
-* Yarn
+- NodeJs v18
+- Yarn
 
 ## Project implementation
 
@@ -27,10 +27,24 @@ This platform is built upon [Vizzuality's scaffold project](https://github.com/V
 - [Next.js](https://nextjs.org/) as a framework
 - [Tailwind CSS](https://tailwindcss.com/) as a styles framework
 - Reusable components such as forms, modals, icons, and other most use components
-- [Recoil](https://recoiljs.org/) 
+- [Recoil](https://recoiljs.org/)
 - [Typescript](https://www.typescriptlang.org/) already configured
 - git workflow and hooks
 - editorconfig and code style based on [Airbnb](https://github.com/airbnb/javascript)
+
+## Analytics
+
+This project uses **Google Analytics 4 (GA4)** to track user interactions and behavior across the platform.
+
+Analytics tracking is enabled via the environment variable:
+
+NEXT_PUBLIC_GA_ID
+
+Make sure this value is set in your environment when deploying or testing in environments where tracking is required.
+
+Custom events are handled using [`react-ga4`](https://github.com/PriceRunner/react-ga4) and follow GA4's recommended structure (`event name` + `parameters`). Analytics is initialized in the app only when the GA ID is present.
+
+If you need to add a new event, please follow the existing `trackEvent` wrapper pattern and ensure parameter names follow GA4 conventions.
 
 ## Quick start
 
@@ -46,7 +60,6 @@ In order to start modifying the app, please make sure to correctly configure you
 8. Run the server: `yarn dev`
 
 You can access a hot-reloaded version of the app on [http://localhost:3000](http://localhost:3000).
-
 
 ## Deploy on Vercel
 
@@ -70,27 +83,28 @@ Here's a step-by-step guide on how to address vulnerabilities found in productio
 
 1. Go to the Dependabot alerts page and locate the front-end vulnerability to address
 2. Identify if the vulnerability affects production code:
-	- To do so run `yarn npm audit --recursive --environment production`
-	- If the dependency is _not_ listed by this command, then the vulnerability only affects the development code. You can dismiss the alert on GitHub as “Vulnerable code is not actually used” in the top right corner of the vulnerability page.
-	- If the dependency _is_ listed, follow the steps below.
+   - To do so run `yarn npm audit --recursive --environment production`
+   - If the dependency is _not_ listed by this command, then the vulnerability only affects the development code. You can dismiss the alert on GitHub as “Vulnerable code is not actually used” in the top right corner of the vulnerability page.
+   - If the dependency _is_ listed, follow the steps below.
 3. On the vulnerability page, click the “Create Dependabot security update” button
-	- This will create a Pull Request with a fix for the vulnerability. If GitHub can generate this PR, then you can merge and the security alert will disappear.
-	- If the vulnerability can't be patched automatically, follow the steps below.
+   - This will create a Pull Request with a fix for the vulnerability. If GitHub can generate this PR, then you can merge and the security alert will disappear.
+   - If the vulnerability can't be patched automatically, follow the steps below.
 4. If the action fails, then you can semi-automatically update the vulnerable dependency by running `npm_config_yes=true npx yarn-audit-fix --only prod`
-	- `yarn-audit-fix` (see [repository](https://github.com/antongolub/yarn-audit-fix)) is a tool that applies the fixes from `npm audit fix` to Yarn installations
-	- The tool might also not be able to fix the vulnerability. If so, continue with the steps below.
+   - `yarn-audit-fix` (see [repository](https://github.com/antongolub/yarn-audit-fix)) is a tool that applies the fixes from `npm audit fix` to Yarn installations
+   - The tool might also not be able to fix the vulnerability. If so, continue with the steps below.
 5. If the action fails, then you will have to manually update the dependencies until the vulnerability is solved
 
 ## Env variables
 
-| Variable name                 | Description                                                             |  Default value                      |
-|-------------------------------|-------------------------------------------------------------------------|------------------------------------:|
-| NEXT_PUBLIC_API_URL           | URL of the API for widgets Data. 										  | http://localhost:3000   			|
-| NEXT_PUBLIC_ANALYSIS_API_URL  | URL of the API for the Analysis tool. 								  | http://localhost:3000               |
-| NEXT_PUBLIC_MAPBOX_API_TOKEN  | Mapbox token. 														  |    									|
-| NEXT_PUBLIC_GA_ID	|	Google Analytics Tracking ID	| G-JMJEG8GFH6 |
-| NEXT_PUBLIC_PLANET_API_KEY    | URL of the Planet API. 		       									  |    								    |
-| NEXT_PUBLIC_BASE_URL  	    | Based URL of the project. 											  |    								    |
-| NEXT_PUBLIC_TRANSIFEX_API_KEY | URL of the Transifex API. 											  |    								    |
-| NEXT_PUBLIC_BLOG_API_URL  	| URL of the API for WordPress content. 								  |    									|
-
+| Variable name                    | Description                           |         Default value |
+| -------------------------------- | ------------------------------------- | --------------------: |
+| NEXT_PUBLIC_API_URL              | URL of the API for widgets Data.      | http://localhost:3000 |
+| NEXT_PUBLIC_ANALYSIS_API_URL     | URL of the API for the Analysis tool. | http://localhost:3000 |
+| NEXT_PUBLIC_MAPBOX_API_TOKEN     | Mapbox token.                         |                       |
+| NEXT_PUBLIC_GA_ID                | Google Analytics Tracking ID          |          G-JMJEG8GFH6 |
+| NEXT_PUBLIC_PLANET_API_KEY       | URL of the Planet API.                |                       |
+| NEXT_PUBLIC_BASE_URL             | Based URL of the project.             |                       |
+| NEXT_PUBLIC_TRANSIFEX_API_KEY    | URL of the Transifex API.             |                       |
+| NEXT_PUBLIC_BLOG_API_URL         | URL of the API for WordPress content. |                       |
+| NEXT_PUBLIC_PLANET_API_KEY       | URL of the API for planet content.    |
+| NEXT_PUBLIC_FEATURE_FLAG_WIDGETS |
