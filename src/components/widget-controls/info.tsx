@@ -8,13 +8,23 @@ import Helper from 'containers/help/helper';
 import { HELPER_POSITION } from './constants';
 import { useRecoilValue } from 'recoil';
 import { activeGuideAtom } from 'store/guide';
+import { trackEvent } from 'lib/analytics/ga';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];
   const isHelpGuideActive = useRecoilValue(activeGuideAtom);
   if (!Info && !content) return null;
+
+  // Google Analytics tracking
+  const handleAnalytics = () => {
+    trackEvent(`Widget Info`, {
+      action: 'widget info',
+      label: `Info for widget ${id}`,
+    });
+  };
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleAnalytics}>
       <Helper
         className={{
           button: HELPER_POSITION,

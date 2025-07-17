@@ -14,6 +14,7 @@ import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
 
 import GuideModalIntro from './modal-intro';
+import { trackEvent } from 'lib/analytics/ga';
 
 export const HelpContainer = () => {
   const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
@@ -21,6 +22,11 @@ export const HelpContainer = () => {
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
 
   const handleClick = () => {
+    // Google Analytics tracking
+    trackEvent('Help guide', {
+      action: 'Help guide',
+      label: `Help guide - ${isActive ? 'deactivated' : 'activated'}`,
+    });
     setIsActive((prev) => {
       const nextState = !prev;
       setIsOpen(nextState);

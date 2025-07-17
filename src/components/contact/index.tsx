@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from 'components/ui/select';
+import { trackEvent } from 'lib/analytics/ga';
 
 // import { ContactUsEmail } from './email-template';
 // import { postContactForm } from 'services/api';
@@ -76,6 +77,12 @@ export function ContactForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
+      });
+
+      // Google Analytics tracking
+      trackEvent('Contact form', {
+        action: 'Contact form',
+        label: `Contact form`,
       });
 
       const data = await response.json();

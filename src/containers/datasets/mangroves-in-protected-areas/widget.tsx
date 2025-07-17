@@ -19,6 +19,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
+import { trackEvent } from 'lib/analytics/ga';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');
@@ -59,7 +60,14 @@ const MangrovesInProtectedAreas = () => {
                             'opacity-50': selectedUnit === u,
                           })}
                           type="button"
-                          onClick={() => setUnit(u)}
+                          onClick={() => {
+                            // Google Analytics tracking
+                            trackEvent('Widget iteration - Protected areas - change unit', {
+                              action: 'Widget iteration - Protected areas',
+                              label: `Widget iteration - Protected areas - change unit to ${u}`,
+                            });
+                            setUnit(u);
+                          }}
                         >
                           {u}
                         </button>
@@ -90,7 +98,14 @@ const MangrovesInProtectedAreas = () => {
                           'opacity-50': selectedUnit === u,
                         })}
                         type="button"
-                        onClick={() => setUnit(u)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - Protected areas - change unit', {
+                            action: 'Widget iteration - Protected areas',
+                            label: `Widget iteration - Protected areas - change unit to ${u}`,
+                          });
+                          setUnit(u);
+                        }}
                       >
                         {u}
                       </button>
