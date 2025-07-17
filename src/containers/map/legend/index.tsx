@@ -79,7 +79,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
       // Google Analytics tracking
       trackEvent(`Layers order`, {
         action: "change layers' order",
-        label: `Add mangrove coastal protection layer - ${id}`,
+        label: `change layers order from ${activeLayers} to ${newLayers}`,
       });
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
     },

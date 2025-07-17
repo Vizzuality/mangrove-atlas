@@ -24,6 +24,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
 import { useMangroveNetChange, widgetSlug } from './hooks';
+import { trackEvent } from 'lib/analytics/ga';
 
 const NetChangeWidget = () => {
   const queryClient = useQueryClient();
@@ -129,7 +130,14 @@ const NetChangeWidget = () => {
                           'pointer-events-none opacity-50': selectedUnit === u,
                         })}
                         type="button"
-                        onClick={() => setUnit(u)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - net change - change unit', {
+                            action: 'Widget iteration - net change',
+                            label: `Widget iteration - net change - change unit to ${u}`,
+                          });
+                          setUnit(u);
+                        }}
                         disabled={selectedUnit === u}
                       >
                         {u}

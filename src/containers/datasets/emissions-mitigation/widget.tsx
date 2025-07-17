@@ -8,6 +8,8 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import { useMangroveEmissionsMitigation } from './hooks';
 import Legend from './legend';
+import { trackEvent } from 'lib/analytics/ga';
+
 const EmissionsMitigationWidget = () => {
   const [filteredIndicators, setFilteredIndicators] = useState([]);
   const { isLoading, data, isPlaceholderData, isFetched } = useMangroveEmissionsMitigation({
@@ -18,7 +20,17 @@ const EmissionsMitigationWidget = () => {
     const index = filteredIndicators.indexOf(indicator);
     if (index === -1) {
       setFilteredIndicators([...filteredIndicators, indicator]);
+      // Google Analytics tracking
+      trackEvent('Widget iteration - filter change in emissions mitigation', {
+        action: 'Widget iteration - filter change in emissions mitigation',
+        label: `Widget iteration - emissions mitigation add ${indicator} filter`,
+      });
     } else {
+      // Google Analytics tracking
+      trackEvent('Widget iteration - filter change in emissions mitigation', {
+        action: 'Widget iteration - filter change in emissions mitigation',
+        label: `Widget iteration - emissions mitigation remove ${indicator} filter`,
+      });
       const filter = filteredIndicators.splice(index, 1);
       const updatedIndicators = filteredIndicators.filter((indicator) => indicator !== filter);
       setFilteredIndicators(updatedIndicators);
