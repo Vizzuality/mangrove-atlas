@@ -13,6 +13,7 @@ import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Icon from 'components/ui/icon';
 
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
+import { trackEvent } from 'lib/analytics/ga';
 
 const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
@@ -27,6 +28,14 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
       ...drawingToolState,
       enabled: !isDrawingToolEnabled,
     }));
+    // Google Analytics tracking
+    trackEvent(
+      `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
+      {
+        action: 'draw polygon',
+        label: `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
+      }
+    );
   }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-eco
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 // import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
+import { trackEvent } from 'lib/analytics/ga';
 
 type Tags =
   | 'Historical (1750)'
@@ -67,9 +68,15 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   // Temp fix. TO -DO: Remove this when the data is updated
   const unitNameWithoutMangrove = info?.unit_name?.replace('Mangroves of', '').trim();
   const url = data?.reports?.find((d) => d.name.includes(unitNameWithoutMangrove))?.url;
-
+  // Google Analytics tracking
+  const handleAnalytics = () => {
+    trackEvent(`IUCN Ecoregion pop up - expand/collapse`, {
+      action: 'expand/collapse IUCN Ecoregion pop up',
+      label: `IUCN Ecoregion pop up - expand/collapse`,
+    });
+  };
   return (
-    <Collapsible>
+    <Collapsible onOpenChange={handleAnalytics}>
       <CollapsibleTrigger className="min-w-[375px]">
         <h3 className={WIDGET_SUBTITLE_STYLE}>IUCN ECOSYSTEM RED LIST ASSESSMENT</h3>
       </CollapsibleTrigger>

@@ -3,6 +3,7 @@ import Detail from 'containers/datasets/restoration/map-popup/detail';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
+import { trackEvent } from 'lib/analytics/ga';
 const Details = ({ data }: { data: RestorationPopUp }) => {
   const {
     Tidal_range,
@@ -21,8 +22,15 @@ const Details = ({ data }: { data: RestorationPopUp }) => {
     Contig_Group1,
   } = data;
 
+  const handleAnalytics = () => {
+    // Google Analytics tracking
+    trackEvent(`restoration details pop up - expand/collapse`, {
+      action: 'expand/collapse restoration details pop up',
+      label: `restoration details pop up - expand/collapse`,
+    });
+  };
   return (
-    <Collapsible className="w-full">
+    <Collapsible className="w-full" onOpenChange={handleAnalytics}>
       <CollapsibleTrigger>
         <h3 className={WIDGET_SUBTITLE_STYLE}>DETAILS</h3>
       </CollapsibleTrigger>

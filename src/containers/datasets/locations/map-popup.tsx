@@ -13,6 +13,7 @@ import { useLocations } from 'containers/datasets/locations/hooks';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
+import { trackEvent } from 'lib/analytics/ga';
 
 const LocationPopUP = ({
   locationPopUpInfo,
@@ -40,6 +41,11 @@ const LocationPopUP = ({
   const { data: locations } = useLocations();
 
   const handlePopUpContentVisibility = useCallback(() => {
+    // Google Analytics tracking
+    trackEvent(`Location pop up - ${isOpen ? 'collapse' : 'expand'}`, {
+      action: 'expand/collapse location pop up',
+      label: `Location pop up - ${isOpen ? 'collapse' : 'expand'}`,
+    });
     setIsOpen(!isOpen);
   }, [isOpen]);
 
@@ -60,6 +66,12 @@ const LocationPopUP = ({
       void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
       onClose();
     }
+
+    // Google Analytics tracking
+    trackEvent(`Location pop up - ${info.location.name}`, {
+      action: 'map location',
+      label: `Location pop up - ${info.location.name}`,
+    });
   }, [setLocationBounds, push, queryParams, locations, feature, onClose]);
 
   const handleClickProtectedArea = useCallback(
@@ -78,6 +90,12 @@ const LocationPopUP = ({
         void push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
         onClose();
       }
+
+      // Google Analytics tracking
+      trackEvent(`Location pop up, protected area - ${info.location.name}`, {
+        action: 'map protected area',
+        label: `Location pop up, protected area - ${info.location.name}`,
+      });
     },
     [setLocationBounds, push, queryParams, locations, info, onClose]
   );
