@@ -7,6 +7,7 @@ import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
 
 import Helper from 'containers/help/helper';
 import { HELPER_POSITION } from './constants';
+import { trackEvent } from 'lib/analytics/ga';
 
 /**
  * Download component
@@ -41,8 +42,15 @@ const Download = ({ id, content }) => {
 
   if (!DownloadInfo && !content) return null;
 
+  // Google Analytics tracking
+  const handleAnalytics = () =>
+    trackEvent(`Widget Download data`, {
+      action: 'widget download data',
+      label: `Download data for widget ${id}`,
+    });
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={handleAnalytics}>
       <Helper
         className={{
           button: HELPER_POSITION,

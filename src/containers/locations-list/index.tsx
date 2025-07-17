@@ -25,6 +25,7 @@ import { breakpoints } from 'styles/styles.config';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
 import Helper from 'containers/help/helper';
+import { trackEvent } from 'lib/analytics/ga';
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
@@ -130,6 +131,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
               })}
               onClick={() => {
+                // Google Analytics tracking
+                trackEvent('Select location', {
+                  action: 'Select location',
+                  label: `Select location - ${locationsToDisplay[index].name}`,
+                });
                 handleLocation(locationsToDisplay[index]);
               }}
             >

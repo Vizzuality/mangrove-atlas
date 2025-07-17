@@ -27,6 +27,7 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
+import { trackEvent } from 'lib/analytics/ga';
 
 const SpeciesLocation = () => {
   const {
@@ -63,6 +64,11 @@ const SpeciesLocation = () => {
     (specieName: RadioOption['value']) => {
       const specie = species.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
+      // Google Analytics tracking
+      trackEvent('Widget iteration - species location - select specie', {
+        action: 'Widget iteration - species location - select specie',
+        label: `Widget iteration - species location - select specie ${specie}`,
+      });
     },
     [species, setSpecie]
   );

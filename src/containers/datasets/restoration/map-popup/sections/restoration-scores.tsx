@@ -5,14 +5,23 @@ import RestorationDataGroup from 'containers/datasets/restoration/map-popup/rest
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
+import { trackEvent } from 'lib/analytics/ga';
 
 const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
   const { Class, Max_Area_20_ha, Area_loss_ha, Rest_Area_Loss, Loss_Driver, Rest_Score } = data;
 
   const nonRestScore = useMemo(() => 100 - Rest_Score, [Rest_Score]);
 
+  const handleAnalytics = () => {
+    // Google Analytics tracking
+    trackEvent(`restoration scores pop up - expand/collapse`, {
+      action: 'expand/collapse restoration scores pop up',
+      label: `restoration scores pop up - expand/collapse`,
+    });
+  };
+
   return (
-    <Collapsible className="w-full min-w-[450px]">
+    <Collapsible className="w-full min-w-[450px]" onOpenChange={handleAnalytics}>
       <CollapsibleTrigger>
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SCORES</h3>
       </CollapsibleTrigger>

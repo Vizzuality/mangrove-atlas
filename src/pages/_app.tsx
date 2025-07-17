@@ -62,17 +62,17 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
     return JSON.parse(x);
   }, []);
 
-  const handleRouteChangeCompleted = useCallback((url: string) => {
-    GAPage(url);
-  }, []);
+  // const handleRouteChangeCompleted = useCallback((url: string) => {
+  //   GAPage(url);
+  // }, []);
 
-  useEffect(() => {
-    router.events.on('routeChangeComplete', handleRouteChangeCompleted);
+  // useEffect(() => {
+  //   router.events.on('routeChangeComplete', handleRouteChangeCompleted);
 
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChangeCompleted);
-    };
-  }, [router.events, handleRouteChangeCompleted]);
+  //   return () => {
+  //     router.events.off('routeChangeComplete', handleRouteChangeCompleted);
+  //   };
+  // }, [router.events, handleRouteChangeCompleted]);
 
   useEffect(() => {
     tx.init({
@@ -115,19 +115,21 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
       />
       <Script
         id="transifex-live-settings"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-          window.liveSettings = {
-            api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}',
-            detectlang: true,
-            autocollect: true,
-            dynamic: true,
-            manual_init: false,
-            translate_urls: false,
-          }`,
+      window.liveSettings = {
+        api_key: '${process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}',
+        detectlang: true,
+        autocollect: true,
+        dynamic: true,
+        manual_init: false,
+        translate_urls: false,
+      };
+    `,
         }}
       />
-      <Script id="transifex-live" src="//cdn.transifex.com/live.js" />
+      <Script id="transifex-live" src="//cdn.transifex.com/live.js" strategy="afterInteractive" />
       <RecoilRoot>
         <TXProvider token={process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY}>
           <RecoilURLSyncNext

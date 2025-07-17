@@ -19,6 +19,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import CarbonMarketPotentialChart from './chart';
 import { useCarbonMarketPotential } from './hooks';
 import type { Unit } from './types';
+import { trackEvent } from 'lib/analytics/ga';
 
 const CarbonMarketPotentialWidget = () => {
   const [unit, setUnit] = useState<Unit>({
@@ -71,7 +72,14 @@ const CarbonMarketPotentialWidget = () => {
                           'opacity-50': label === l,
                         })}
                         type="button"
-                        onClick={() => setLabel(l)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - rate change in carbon market potential', {
+                            action: 'Widget iteration - rate change in carbon market potential',
+                            label: `Widget iteration - carbon market potential rate to ${l}`,
+                          });
+                          setLabel(l);
+                        }}
                         disabled={label === l}
                       >
                         {l}
@@ -106,7 +114,14 @@ const CarbonMarketPotentialWidget = () => {
                           'opacity-50': unit === u,
                         })}
                         type="button"
-                        onClick={() => setUnit(u)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - unit change in carbon market potential', {
+                            action: 'Widget iteration - unit change in carbon market potential',
+                            label: `Widget iteration - carbon market potential unit to ${u}`,
+                          });
+                          setUnit(u);
+                        }}
                         disabled={unit === u}
                       >
                         {u.label}

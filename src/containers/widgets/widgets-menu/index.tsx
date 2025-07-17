@@ -19,6 +19,7 @@ import { findCategoryByWidgets } from 'containers/widgets/utils';
 import { CheckboxIndicator } from 'components/ui/checkbox';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
+import { trackEvent } from 'lib/analytics/ga';
 
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
@@ -31,7 +32,16 @@ const WidgetsMenu: FC = () => {
   const enabledWidgets = useWidgetsIdsByLocation();
 
   const handleAllWidgets = useCallback(() => {
-    activeWidgets.length === widgets.length ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+    const allActive = activeWidgets.length === widgets.length;
+
+    // Google Analytics tracking
+    if (!allActive) {
+      trackEvent('Widgets deck - Widgets selection - Activate all', {
+        action: 'activate widgets',
+        label: 'Widgets deck tool- Activate all widgets',
+      });
+    }
+    allActive ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
   }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
 
   const handleAllLayers = useCallback(() => {
@@ -46,12 +56,27 @@ const WidgetsMenu: FC = () => {
       }));
 
       setActiveLayers(NewLayersActive);
+
+      // Google Analytics tracking
+      trackEvent('Widgets deck - Layers selection - Activate all', {
+        action: 'activate layers',
+        label: 'Widgets deck tool- Activate all layers',
+      });
     }
   }, [setActiveLayers, activeLayers]);
 
   const handleWidgets = useCallback(
     (e) => {
-      const updatedWidgets = activeWidgets.includes(e)
+      const isActive = activeWidgets.includes(e);
+
+      // Google Analytics tracking
+      if (!isActive) {
+        trackEvent(`Widgets deck - Widget selected - ${e}`, {
+          action: 'activate widget',
+          label: `Widgets deck tool - widget -${e}`,
+        });
+      }
+      const updatedWidgets = isActive
         ? activeWidgets.filter((widget) => widget !== e)
         : [...activeWidgets, e].filter((widget) => widget !== 'widgets_deck_tool');
       const newCategory = findCategoryByWidgets(updatedWidgets);
@@ -64,7 +89,16 @@ const WidgetsMenu: FC = () => {
 
   const handleLayers = useCallback(
     (e: WidgetSlugType) => {
-      const layersUpdate = activeLayersIds?.includes(e)
+      const isActive = activeLayersIds?.includes(e);
+
+      // Google Analytics tracking
+      if (!isActive) {
+        trackEvent(`Widgets deck - Layer selected - ${e}`, {
+          action: 'activate layer',
+          label: `Widgets deck tool - layer - ${e}`,
+        });
+      }
+      const layersUpdate = isActive
         ? activeLayers?.filter((w) => w.id !== e)
         : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
       setActiveLayers(layersUpdate);

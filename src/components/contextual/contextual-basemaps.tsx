@@ -13,8 +13,9 @@ import RadioGroup from 'components/ui/radio-group';
 import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
+import { trackEvent } from 'lib/analytics/ga';
 
-const BasemapsMapSettings = () => {
+const ContextualBasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const defaultActive =
     activeLayers?.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
@@ -24,6 +25,15 @@ const BasemapsMapSettings = () => {
     (id) => {
       setIsActive(id);
       const noPlanetLayers = activeLayers?.filter((w) => !w.id.includes('planet_medres'));
+
+      // Google Analytics tracking
+      if (id !== 'no-layer') {
+        trackEvent(`Contextual Basemap settings (planet) - ${id}`, {
+          action: 'activate layer',
+          label: `Contextual Basemap settings (planet) - ${id}`,
+        });
+      }
+
       const layersUpdate =
         id === 'no-layer'
           ? noPlanetLayers
@@ -79,12 +89,7 @@ const BasemapsMapSettings = () => {
               </div>
               {isActive === id && (
                 <div className="ml-6">
-                  <DateSelect
-                    key={id}
-                    mosaic_id={mosaic_id}
-                    id={id}
-                    className={{ content: 'w-[460px]' }}
-                  />
+                  <DateSelect key={id} mosaic_id={mosaic_id} id={id} />
                 </div>
               )}
             </div>
@@ -95,4 +100,4 @@ const BasemapsMapSettings = () => {
   );
 };
 
-export default BasemapsMapSettings;
+export default ContextualBasemapsMapSettings;

@@ -25,6 +25,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
+import { trackEvent } from 'lib/analytics/ga';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
@@ -172,7 +173,14 @@ const HabitatExtent = () => {
                           'font-semibold text-brand-800': y === year || y === defaultYear,
                         })}
                         type="button"
-                        onClick={() => handleClick(y)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - date change in habitat extent', {
+                            action: 'Widget iteration - date change in habitat extent',
+                            label: `Widget iteration - change date in habitat extent to ${y}`,
+                          });
+                          handleClick(y);
+                        }}
                       >
                         {y || defaultYear}
                       </button>
@@ -192,6 +200,7 @@ const HabitatExtent = () => {
           <HabitatExtentChart legend={legend} config={config} />
           <div>
             <SuggestedLayers
+              origin="mangrove_habitat_extent"
               name="High Resolution Extent"
               thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
               id="hi-res-extent"

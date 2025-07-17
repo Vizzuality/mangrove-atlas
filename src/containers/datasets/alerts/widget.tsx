@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
+import { trackEvent } from 'lib/analytics/ga';
 
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeLayersAtom } from 'store/layers';
@@ -126,7 +127,14 @@ const AlertsWidget = () => {
                           'pointer-events-none opacity-50': date?.value > endDate?.value,
                         })}
                         type="button"
-                        onClick={() => setStartDate(date)}
+                        onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - start date change in alerts', {
+                            action: 'Widget iteration - start date change in alerts',
+                            label: `Widget iteration - alerts start date ${date.value}`,
+                          });
+                          setStartDate(date);
+                        }}
                         disabled={date?.value > endDate?.value}
                       >
                         {date?.label || defaultStartDate?.label}
@@ -162,6 +170,11 @@ const AlertsWidget = () => {
                         })}
                         type="button"
                         onClick={() => {
+                          // Google Analytics tracking
+                          trackEvent('Widget iteration - end date change in alerts', {
+                            action: 'Widget iteration - end date change in alerts',
+                            label: `Widget iteration - alerts end date ${date.value}`,
+                          });
                           return setEndDate(date);
                         }}
                         disabled={date?.value < startDate?.value}
@@ -181,8 +194,22 @@ const AlertsWidget = () => {
             config={{
               ...configBrush,
               onBrushEnd: ({ startIndex, endIndex }) => {
-                if (startIndex) setStartDate(fullData[startIndex]?.startDate);
-                if (endIndex) setEndDate(fullData[endIndex]?.endDate);
+                if (startIndex) {
+                  // Google Analytics tracking
+                  trackEvent('Widget iteration - start date change in alerts', {
+                    action: 'Widget iteration - start date change in alerts',
+                    label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
+                  });
+                  setStartDate(fullData[startIndex]?.startDate);
+                }
+                if (endIndex) {
+                  // Google Analytics tracking
+                  trackEvent('Widget iteration - end date change in alerts', {
+                    action: 'Widget iteration - end date change in alerts',
+                    label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
+                  });
+                  setEndDate(fullData[endIndex]?.endDate);
+                }
               },
               startIndex: configBrush?.customBrush?.startIndex,
               endIndex: configBrush?.customBrush?.endIndex,
@@ -210,6 +237,7 @@ const AlertsWidget = () => {
           </div>
           <div>
             <SuggestedLayers
+              origin="mangrove_alerts"
               name="Planet-NICFI Satellite Imagery"
               thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
               id="planet_medres_visual_monthly"

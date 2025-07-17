@@ -24,6 +24,7 @@ import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useMangroveHabitatChange } from './hooks';
 import { UseParamsOptions } from './types';
+import { trackEvent } from 'lib/analytics/ga';
 
 const labelsForLayer = [
   {
@@ -95,7 +96,14 @@ const HabitatExtent = () => {
                               y > currentEndYear || currentEndYear === y,
                           })}
                           type="button"
-                          onClick={() => setStartYear(y)}
+                          onClick={() => {
+                            // Google Analytics tracking
+                            trackEvent('Widget iteration - start date change in habitat change', {
+                              action: 'Widget iteration - start date change in habitat change',
+                              label: `Widget iteration - change start date in habitat change to ${y}`,
+                            });
+                            setStartYear(y);
+                          }}
                           disabled={
                             currentStartYear === y || y > currentEndYear || currentEndYear === y
                           }
@@ -135,7 +143,14 @@ const HabitatExtent = () => {
                               y < currentStartYear || currentStartYear === y,
                           })}
                           type="button"
-                          onClick={() => setEndYear(y)}
+                          onClick={() => {
+                            // Google Analytics tracking
+                            trackEvent('Widget iteration - end date change in habitat change', {
+                              action: 'Widget iteration - end date change in habitat change',
+                              label: `Widget iteration - change end date in habitat change to ${y}`,
+                            });
+                            setEndYear(y);
+                          }}
                           disabled={
                             currentEndYear === y || y < currentStartYear || currentStartYear === y
                           }
@@ -171,7 +186,15 @@ const HabitatExtent = () => {
             aria-label="set number of countries to show"
             type="button"
             className="flex w-full items-center justify-center space-x-2 text-sm font-semibold text-brand-800"
-            onClick={() => setLimit(limit === 5 ? 10 : 5)}
+            onClick={() => {
+              const newLimit = limit === 5 ? 10 : 5;
+              // Google Analytics tracking
+              trackEvent('Widget iteration - limit change in habitat change', {
+                action: 'Widget iteration - limit change in habitat change',
+                label: `Widget iteration - change limit in habitat change to ${newLimit}`,
+              });
+              setLimit(newLimit);
+            }}
           >
             <span>{limit === 5 ? 'Show 10' : 'Show 5'}</span>
             <Icon

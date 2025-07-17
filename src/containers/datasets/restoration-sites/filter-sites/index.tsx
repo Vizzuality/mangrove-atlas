@@ -12,6 +12,7 @@ import MultiSelect from 'components/ui/select-multi';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataDitesProperties } from '../types';
+import { trackEvent } from 'lib/analytics/ga';
 
 type FilterSitesProps = {
   open: boolean;
@@ -38,6 +39,11 @@ const FilterSites = ({
   );
 
   const handleFiltersApplication = () => {
+    // Google Analytics tracking
+    trackEvent('Widget iteration - restoration sites - apply filters', {
+      action: 'Widget iteration - restoration sites',
+      label: `Widget iteration - restoration sites - apply filters ${filters}`,
+    });
     onChangeModalVisibility(!open);
     setMapFilters(filters);
   };
@@ -86,6 +92,11 @@ const FilterSites = ({
                 options={options}
                 values={filters[id] || []}
                 onChange={(values) => {
+                  // Google Analytics tracking
+                  trackEvent('Widget iteration - restoration sites - filters selection', {
+                    action: 'Widget iteration - restoration sites',
+                    label: `Widget iteration - restoration sites - filters selection, ${filters[id]}`,
+                  });
                   setFilters({ ...filters, [id]: values });
                 }}
               />

@@ -20,6 +20,7 @@ import { ActiveLayers } from 'types/layers';
 import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
+import { trackEvent } from 'lib/analytics/ga';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -74,6 +75,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
         return activeLayers?.find((l) => l.id === id || l.id.includes(id));
       }) as ActiveLayers[];
       const activeLayerPlanet = activeLayers?.filter((l) => l.id.includes('planet'));
+
+      // Google Analytics tracking
+      trackEvent(`Layers order`, {
+        action: "change layers' order",
+        label: `change layers order from ${activeLayers} to ${newLayers}`,
+      });
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
     },
     [activeLayers, setActiveLayers]

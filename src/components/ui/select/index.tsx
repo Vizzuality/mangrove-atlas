@@ -9,6 +9,20 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
+const SelectIcon = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Icon>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Icon>
+>(({ className, children, ...props }) => (
+  <SelectPrimitive.Icon
+    className={cn({ 'text-muted-foreground': true, [className]: !!className })}
+    {...props}
+  >
+    {children}
+  </SelectPrimitive.Icon>
+));
+
+SelectIcon.displayName = SelectPrimitive.Icon.displayName;
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
@@ -100,4 +114,5 @@ export {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  SelectIcon,
 };

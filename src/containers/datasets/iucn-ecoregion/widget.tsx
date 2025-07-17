@@ -6,11 +6,20 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import IUCNEcoregionsChart from './chart';
 import { useMangroveEcoregions } from './hooks';
+import { trackEvent } from 'lib/analytics/ga';
 
 const IUCNEcoregions = () => {
   const { data, isLoading, isFetched } = useMangroveEcoregions();
 
   if (isFetched && !data) return <NoData />;
+
+  // Google Analytics tracking
+  const handleAnalytics = () => {
+    trackEvent('Widget iteration - IUCN ecoregions - show associated reports', {
+      action: 'Widget iteration - IUCN ecoregions',
+      label: 'Widget iteration - IUCN ecoregions - show associated reports',
+    });
+  };
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -24,7 +33,7 @@ const IUCNEcoregions = () => {
           </p>
           <p className={WIDGET_SENTENCE_STYLE}>Click on the map for more information.</p>
           <IUCNEcoregionsChart config={data?.config} />
-          <Dialog>
+          <Dialog onOpenChange={handleAnalytics}>
             <DialogTrigger>
               <div className="w-full text-center text-sm font-normal text-brand-800 underline">
                 <p>Associated reports</p>
