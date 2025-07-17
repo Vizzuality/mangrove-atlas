@@ -3,11 +3,20 @@ import RestorationDataGroup from 'containers/datasets/restoration/map-popup/rest
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
+import { trackEvent } from 'lib/analytics/ga';
 
 const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
   const { SOC, AGB, Fish_Score_Inv, Fish_Score } = data;
+
+  const handleAnalytics = () => {
+    // Google Analytics tracking
+    trackEvent(`restoration ecosystem services pop up - expand/collapse`, {
+      action: 'expand/collapse restoration ecosystem services pop up',
+      label: `restoration ecosystem services pop up - expand/collapse`,
+    });
+  };
   return (
-    <Collapsible className="w-full">
+    <Collapsible className="w-full" onOpenChange={handleAnalytics}>
       <CollapsibleTrigger>
         <div className="flex w-full flex-col space-y-0.5 text-start">
           <h3 className={WIDGET_SUBTITLE_STYLE}>ECOSYSTEM SERVICES</h3>

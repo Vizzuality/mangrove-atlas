@@ -60,23 +60,28 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                 tooltipPosition={{ top: -80, left: 0 }}
                 message="Chose between different planet imagery layers and dates"
               >
-                <div className="flex items-center space-x-2">
-                  <p className="text-xs font-semibold uppercase tracking-[1px]">
-                    High-resolution Mangrove extent
-                  </p>
-                  <Dialog>
-                    <DialogTrigger>
-                      <Icon icon={INFO_SVG} className="h-5 w-5 text-brand-800" description="Info" />
-                    </DialogTrigger>
-                    <DialogContent className="w-screen md:mb-20 md:w-auto">
-                      <div className="no-scrollbar overflow-y-auto">
-                        <InfoHiRes />
-                      </div>
-                      <DialogClose className="md:0 -top-2 md:absolute" />
-                    </DialogContent>
-                  </Dialog>
-                </div>
-
+                <>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-xs font-semibold uppercase tracking-[1px]">
+                      High-resolution Mangrove extent
+                    </p>
+                    <Dialog>
+                      <DialogTrigger>
+                        <Icon
+                          icon={INFO_SVG}
+                          className="h-5 w-5 text-brand-800"
+                          description="Info"
+                        />
+                      </DialogTrigger>
+                      <DialogContent className="w-screen md:mb-20 md:w-auto">
+                        <div className="no-scrollbar overflow-y-auto">
+                          <InfoHiRes />
+                        </div>
+                        <DialogClose className="md:0 -top-2 md:absolute" />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
+                </>
                 <HighResolutionExtentBasemap />
               </Helper>
               <Helper
@@ -88,22 +93,28 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                 tooltipPosition={{ top: -80, left: 0 }}
                 message="Chose between different planet imagery layers and dates"
               >
-                <div className="flex items-center space-x-2">
-                  <p className="text-xs font-semibold uppercase tracking-[1px]">planet imagery</p>
-                  <Dialog>
-                    <DialogTrigger>
-                      <Icon icon={INFO_SVG} className="h-5 w-5 text-brand-800" description="Info" />
-                    </DialogTrigger>
-                    <DialogContent className="w-screen md:mb-20 md:w-auto">
-                      <div className="no-scrollbar overflow-y-auto">
-                        <Info />
-                      </div>
-                      <DialogClose className="md:0 -top-2 md:absolute" />
-                    </DialogContent>
-                  </Dialog>
-                </div>
+                <>
+                  <div className="flex items-center space-x-2">
+                    <p className="text-xs font-semibold uppercase tracking-[1px]">planet imagery</p>
+                    <Dialog>
+                      <DialogTrigger>
+                        <Icon
+                          icon={INFO_SVG}
+                          className="h-5 w-5 text-brand-800"
+                          description="Info"
+                        />
+                      </DialogTrigger>
+                      <DialogContent className="w-screen md:mb-20 md:w-auto">
+                        <div className="no-scrollbar overflow-y-auto">
+                          <Info />
+                        </div>
+                        <DialogClose className="md:0 -top-2 md:absolute" />
+                      </DialogContent>
+                    </Dialog>
+                  </div>
 
-                <BasemapsContextualMapSettings />
+                  <BasemapsContextualMapSettings />
+                </>
               </Helper>
             </div>
             <DialogClose />
