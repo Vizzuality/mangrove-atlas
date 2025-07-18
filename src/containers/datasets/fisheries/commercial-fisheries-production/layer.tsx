@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 const MangrovesCommercialFisheriesProductionLayer = ({
   beforeId,
-  id = 'commercial_fisheries_production',
+  id = 'mangrove_commercial_fisheries_production',
 }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = useMemo(() => activeLayers?.find((l) => l.id === id), [activeLayers, id]);

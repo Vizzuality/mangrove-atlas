@@ -154,7 +154,7 @@ const widgets_prod = [
     locationType: ['wdpa', 'country'],
     applicability: 'Global, National, and Sub-National',
     categoryIds: ['all_datasets', 'ecosystem_services'],
-    layersIds: ['mangrove_fisheries'],
+    layersIds: ['mangrove_fisheries', 'mangrove_commercial_fisheries_production'],
   },
   {
     name: 'Coastal Protection',

@@ -47,7 +47,7 @@ const INDICATOR_ICONS = {
   bivalve: BIVALVE_SVG,
 };
 
-const id = 'commercial_fisheries_production';
+const id = 'mangrove_commercial_fisheries_production';
 
 const LayerSentenceByCategory = ({
   length,

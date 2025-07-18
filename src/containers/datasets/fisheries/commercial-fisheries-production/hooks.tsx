@@ -101,7 +101,7 @@ export function useMangroveFisheryMitigationPotentials<TData = Data[]>(
 
 export function useSource(): SourceProps {
   return {
-    id: 'commercial_fisheries_production-source',
+    id: 'mangrove_commercial_fisheries_production-source',
     type: 'vector',
     url: 'mapbox://globalmangrovewatch.dny2poqp',
   };
@@ -122,7 +122,7 @@ export function useLayer({
 
   return {
     id: `${id}-${indicator}`,
-    source: 'commercial_fisheries_production',
+    source: 'mangrove_commercial_fisheries_production',
     'source-layer': 'all_sp_fit_fn_totals',
     type: 'line',
     filter: ['>', ['get', Indicator], 0],
