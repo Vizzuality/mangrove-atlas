@@ -4,11 +4,6 @@ export type Data = {
   value: number;
 };
 
-export type DataLocation = {
-  location: string;
-  data: Data[];
-};
-
 export type GroupedData = {
   indicator: 'fish' | 'shrimp' | 'crab' | 'bivalve';
   absolute?: number | null;

@@ -7,7 +7,20 @@ const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
 
-const SelectValue = SelectPrimitive.Value;
+const SelectValue = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Value>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Value>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Value
+    ref={ref}
+    className={cn({ 'truncate text-3xl': true, [className]: !!className })}
+    {...props}
+  >
+    {children}
+  </SelectPrimitive.Value>
+));
+
+SelectValue.displayName = SelectPrimitive.Value.displayName;
 
 const SelectIcon = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Icon>,

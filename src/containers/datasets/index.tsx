@@ -49,10 +49,10 @@ import DriversChangeMapLegend from 'containers/datasets/drivers-change/map-legen
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
-import FisheriesInfo from 'containers/datasets/fisheries/info.mdx';
-import FisheriesLayer from 'containers/datasets/fisheries/layer';
-import FisheriesMapLegend from 'containers/datasets/fisheries/map-legend';
-import FisheriesWidget from 'containers/datasets/fisheries/widget';
+import FisheriesInfo from 'containers/datasets/fisheries/fisheries/info.mdx';
+import FisheriesLayer from 'containers/datasets/fisheries/fisheries/layer';
+import FisheriesMapLegend from 'containers/datasets/fisheries/fisheries/map-legend';
+import FisheriesWidget from 'containers/datasets/fisheries';
 import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
 import FloodProtectionAreaMapLegend from 'containers/datasets/flood-protection/map-legend/area';
@@ -181,7 +181,7 @@ export const LAYERS = {
   mangrove_salt_marsh: SaltMarshLayer,
   planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
   planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
-  commercial_fisheries_production_fish: MangrovesCommercialFisheriesProductionLayer,
+  commercial_fisheries_production: MangrovesCommercialFisheriesProductionLayer,
 };
 
 export const MAP_LEGENDS = {

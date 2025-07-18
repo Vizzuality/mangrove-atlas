@@ -1,4 +1,5 @@
 import { array, object, string, stringLiterals, optional, number } from '@recoiljs/refine';
+import { Data } from 'containers/datasets/fisheries/commercial-fisheries-production/types';
 import type { Visibility } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
@@ -29,6 +30,7 @@ export const activeLayersAtom = atom<
     id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
     opacity: string;
     visibility: Visibility;
+    filter?: Data['indicator'] | 'total';
     settings?: {
       name?: string;
       source?: string;

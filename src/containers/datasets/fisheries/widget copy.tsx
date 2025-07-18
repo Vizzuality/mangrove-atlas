@@ -3,8 +3,8 @@ import NoData from 'containers/widgets/no-data';
 import Loading from 'components/ui/loading';
 import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import FisheriesChart from './chart';
-import { useMangroveFisheries } from './hooks';
+import FisheriesChart from './fisheries/chart';
+import { useMangroveFisheries } from './fisheries/hooks';
 const Fisheries2 = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
