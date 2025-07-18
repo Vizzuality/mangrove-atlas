@@ -117,6 +117,7 @@ const LegendItem = ({
   const layerId = Object.keys(MAP_LEGENDS).find(
     (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k
   );
+
   const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
 
   const widgetId = l.id.includes('mangrove_national_dashboard_layer')
@@ -211,50 +212,52 @@ const LegendItem = ({
             message="Use the settings of each layer to obtain detailed information, manage the opacity, hide or show it or to remove it from the map."
           >
             <div className="ml-2 flex items-center">
-              <Dialog open={infoDialogVisibility}>
-                <DialogTrigger asChild>
-                  <Tooltip>
-                    <TooltipTrigger
-                      asChild
-                      onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
-                    >
-                      <button type="button" aria-label="Info layer">
-                        <Icon
-                          icon={INFO_SVG}
-                          className="mr-1.5 h-[17px] w-[17px] fill-black/40 align-middle"
-                        />
-                      </button>
-                    </TooltipTrigger>
-                    <TooltipPortal>
-                      <TooltipContent
-                        side="top"
-                        align="center"
-                        className="bg-gray-600 px-2 text-white"
+              {WidgetInfo && (
+                <Dialog open={infoDialogVisibility}>
+                  <DialogTrigger asChild>
+                    <Tooltip>
+                      <TooltipTrigger
+                        asChild
+                        onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
                       >
-                        Layer info
-                      </TooltipContent>
-                    </TooltipPortal>
-                  </Tooltip>
-                </DialogTrigger>
+                        <button type="button" aria-label="Info layer">
+                          <Icon
+                            icon={INFO_SVG}
+                            className="mr-1.5 h-[17px] w-[17px] fill-black/40 align-middle"
+                          />
+                        </button>
+                      </TooltipTrigger>
+                      <TooltipPortal>
+                        <TooltipContent
+                          side="top"
+                          align="center"
+                          className="bg-gray-600 px-2 text-white"
+                        >
+                          Layer info
+                        </TooltipContent>
+                      </TooltipPortal>
+                    </Tooltip>
+                  </DialogTrigger>
 
-                <DialogContent
-                  className={cn({
-                    'h-screen w-screen md:mb-20 md:h-auto md:w-auto': true,
-                    hidden: guideIsActive,
-                  })}
-                  overlay={false}
-                >
-                  <div className="no-scrollbar overflow-y-auto">
+                  <DialogContent
+                    className={cn({
+                      'h-screen w-screen md:mb-20 md:h-auto md:w-auto': true,
+                      hidden: guideIsActive,
+                    })}
+                    overlay={false}
+                  >
                     <div className="no-scrollbar overflow-y-auto">
-                      {WidgetInfo && <WidgetInfo />}
+                      <div className="no-scrollbar overflow-y-auto">
+                        {WidgetInfo && <WidgetInfo />}
+                      </div>
                     </div>
-                  </div>
-                  <DialogClose
-                    className="top-8 md:fixed md:!top-18 md:left-[595px]"
-                    onClose={() => setInfoDialogVisibility(false)}
-                  />
-                </DialogContent>
-              </Dialog>
+                    <DialogClose
+                      className="top-8 md:fixed md:!top-18 md:left-[595px]"
+                      onClose={() => setInfoDialogVisibility(false)}
+                    />
+                  </DialogContent>
+                </Dialog>
+              )}
 
               <Popover>
                 <PopoverTrigger>

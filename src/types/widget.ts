@@ -48,6 +48,7 @@ export type WidgetSlugType =
   | 'mangrove_salt_marsh'
   | 'mangrove_global_tidal_wetland_change'
   | 'mangrove_contextual_layers'
+  | 'mangrove_commercial_fisheries_production'
   | 'widgets_deck_tool';
 
 export type AnalysisWidgetSlug =

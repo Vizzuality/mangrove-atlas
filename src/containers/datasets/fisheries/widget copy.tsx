@@ -1,17 +1,17 @@
 import NoData from 'containers/widgets/no-data';
 
 import Loading from 'components/ui/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import FisheriesChart from './chart';
-import { useMangroveFisheries } from './hooks';
-const Fisheries = () => {
+import FisheriesChart from './fisheries/chart';
+import { useMangroveFisheries } from './fisheries/hooks';
+const Fisheries2 = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
   if (isFetched && !data?.config?.data?.length) return <NoData />;
 
   return (
-    <div className={WIDGET_CARD_WRAPPER_STYLE}>
+    <>
       <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && data && (
         <div className="space-y-4">
@@ -28,8 +28,8 @@ const Fisheries = () => {
           <p className="text-sm italic">(1) Fishing intensity: fisher days/km/year </p>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
-export default Fisheries;
+export default Fisheries2;

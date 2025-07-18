@@ -49,10 +49,10 @@ import DriversChangeMapLegend from 'containers/datasets/drivers-change/map-legen
 import DriversChangeWidget from 'containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from 'containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from 'containers/datasets/emissions-mitigation/widget';
-import FisheriesInfo from 'containers/datasets/fisheries/info.mdx';
-import FisheriesLayer from 'containers/datasets/fisheries/layer';
-import FisheriesMapLegend from 'containers/datasets/fisheries/map-legend';
-import FisheriesWidget from 'containers/datasets/fisheries/widget';
+import FisheriesInfo from 'containers/datasets/fisheries/fisheries/info.mdx';
+import FisheriesLayer from 'containers/datasets/fisheries/fisheries/layer';
+import FisheriesMapLegend from 'containers/datasets/fisheries/fisheries/map-legend';
+import FisheriesWidget from 'containers/datasets/fisheries';
 import FloodProtectionWidget from 'containers/datasets/flood-protection';
 import FloodProtectionInfo from 'containers/datasets/flood-protection/info.mdx';
 import FloodProtectionAreaMapLegend from 'containers/datasets/flood-protection/map-legend/area';
@@ -114,6 +114,8 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
+import MangrovesCommercialFisheriesProductionLayer from 'containers/datasets/fisheries/commercial-fisheries-production/layer';
+import CommercialFisheriesProductionMapLegend from 'containers/datasets/fisheries/commercial-fisheries-production/map-legend';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
@@ -180,6 +182,7 @@ export const LAYERS = {
   mangrove_salt_marsh: SaltMarshLayer,
   planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
   planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
+  mangrove_commercial_fisheries_production: MangrovesCommercialFisheriesProductionLayer,
 };
 
 export const MAP_LEGENDS = {
@@ -206,6 +209,7 @@ export const MAP_LEGENDS = {
   mangrove_rest_sites: RestorationSitesMapLegend,
   mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
   mangrove_national_dashboard_layer: NationalDashboardMapLegend,
+  mangrove_commercial_fisheries_production: CommercialFisheriesProductionMapLegend,
 };
 
 export const MAP_POP_UPS = {
