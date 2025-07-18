@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -87,8 +87,9 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   );
 
   // planet layers behave as a basemap so there is no need to include them in the legend
-  const activeLayerNoPlanet = filteredLayers?.filter(
-    (l) => !l.id.includes('planet') && !l.id.includes('custom-area')
+  const activeLayerNoPlanet = useMemo(
+    () => filteredLayers?.filter((l) => !l.id.includes('planet') && !l.id.includes('custom-area')),
+    [filteredLayers]
   );
 
   const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)

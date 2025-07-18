@@ -115,6 +115,7 @@ import SpeciesThreatenedWidget from 'containers/datasets/species-threatened/widg
 import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 import MangrovesCommercialFisheriesProductionLayer from 'containers/datasets/fisheries/commercial-fisheries-production/layer';
+import CommercialFisheriesProductionMapLegend from 'containers/datasets/fisheries/commercial-fisheries-production/map-legend';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
@@ -181,7 +182,7 @@ export const LAYERS = {
   mangrove_salt_marsh: SaltMarshLayer,
   planet_medres_visual_monthly: PlanetSatelliteBasemapVisualLayer,
   planet_medres_analytic_monthly: PlanetSatelliteBasemapAnalyticLayer,
-  commercial_fisheries_production: MangrovesCommercialFisheriesProductionLayer,
+  mangrove_commercial_fisheries_production: MangrovesCommercialFisheriesProductionLayer,
 };
 
 export const MAP_LEGENDS = {
@@ -208,6 +209,7 @@ export const MAP_LEGENDS = {
   mangrove_rest_sites: RestorationSitesMapLegend,
   mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
   mangrove_national_dashboard_layer: NationalDashboardMapLegend,
+  mangrove_commercial_fisheries_production: CommercialFisheriesProductionMapLegend,
 };
 
 export const MAP_POP_UPS = {

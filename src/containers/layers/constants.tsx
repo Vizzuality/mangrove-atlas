@@ -102,6 +102,10 @@ export const LAYERS = [
     name: 'Global Tidal Marsh Distribution',
     id: 'mangrove_salt_marsh',
   },
+  {
+    name: 'Commercial fisheries production',
+    id: 'mangrove_commercial_fisheries_production',
+  },
 ];
 
 export const LAYERS_ORDER = [
@@ -129,6 +133,7 @@ export const LAYERS_ORDER = [
   'custom-area',
   'mangrove_restoration',
   'mangrove_iucn_ecoregion',
+  'mangrove_commercial_fisheries_production',
 ] satisfies (WidgetSlugType | ContextualBasemapsId | 'custom-area')[];
 
 export const NATIONAL_DASHBOARD_LOCATIONS = [
