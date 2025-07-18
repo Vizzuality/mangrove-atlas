@@ -12,7 +12,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse } from '../types';
+import type { Data, DataResponse } from './types';
 
 const MOCK: Data[] = [
   {
@@ -101,9 +101,9 @@ export function useMangroveFisheryMitigationPotentials<TData = Data[]>(
 
 export function useSource(): SourceProps {
   return {
-    id: 'commercial_fisheries_production_fish-source',
+    id: 'commercial_fisheries_production-source',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.0i6otzu4',
+    url: 'mapbox://globalmangrovewatch.dny2poqp',
   };
 }
 
@@ -111,44 +111,26 @@ export function useLayer({
   id,
   opacity,
   visibility = 'visible',
+  indicator,
 }: {
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
+  indicator?: Data['indicator'];
 }): LayerProps {
+  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Total';
+
   return {
-    id,
-    source: 'commercial_fisheries_production_fish',
-    'source-layer': 'protected_area_pct',
-    type: 'fill',
+    id: `${id}-${indicator}`,
+    source: 'commercial_fisheries_production',
+    'source-layer': 'all_sp_fit_fn_totals',
+    type: 'line',
+    filter: ['>', ['get', Indicator], 0],
+    minzoom: 0,
     paint: {
-      'fill-color': [
-        'step',
-        ['get', 'pct_protected'],
-        '#cf597e',
-        0.2,
-        '#eeb479',
-        0.4,
-        '#e9e29c',
-        0.6,
-        '#9ccb86',
-        0.8,
-        '#009392',
-      ],
-      'fill-outline-color': [
-        'step',
-        ['get', 'pct_protected'],
-        '#cf597e',
-        0.2,
-        '#eeb479',
-        0.4,
-        '#e9e29c',
-        0.6,
-        '#9ccb86',
-        0.8,
-        '#009392',
-      ],
-      'fill-opacity': opacity,
+      'line-color': '#8800FF',
+      'line-opacity': opacity,
+      'line-width': 1,
     },
     layout: {
       visibility,
