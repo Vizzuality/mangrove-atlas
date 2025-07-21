@@ -76,12 +76,12 @@ const ClimateWatchNationalDashboard = () => {
       check: NDCSContentOverview?.adaptation.toLowerCase() === 'yes',
       info: 'NDC contains Adaptation?',
     },
-    {
-      label: 'Base year/s',
-      value: NDCSContentOverview?.base_year,
-      check: false,
-      info: 'Year/s against which emission targets are measured against',
-    },
+    // {
+    //   label: 'Base year/s',
+    //   value: NDCSContentOverview?.base_year,
+    //   check: false,
+    //   info: 'Year/s against which emission targets are measured against',
+    // },
     {
       label: 'Target year/s',
       value: NDCSContentOverview?.time_target_year || '-',
