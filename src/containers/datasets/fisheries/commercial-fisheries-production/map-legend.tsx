@@ -5,10 +5,11 @@ const CommercialFisheriesProductionMapLegend = () => {
   const { query } = useRouter();
   const { layers } = query as { layers: string };
 
-  const layersParsed = useMemo(() => JSON.parse(layers), [layers]);
+  const layersParsed = useMemo(() => layers && JSON.parse(layers), [layers]);
   const commercialFisheriesProductionFilter = useMemo(
     () =>
-      layersParsed.find((layer) => layer.id === 'mangrove_commercial_fisheries_production')?.filter,
+      layersParsed?.find((layer) => layer.id === 'mangrove_commercial_fisheries_production')
+        ?.filter,
     [layersParsed]
   );
 

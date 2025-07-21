@@ -3,9 +3,10 @@ import NoData from 'containers/widgets/no-data';
 import Loading from 'components/ui/loading';
 import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import FisheriesChart from './fisheries/chart';
-import { useMangroveFisheries } from './fisheries/hooks';
-const Fisheries2 = () => {
+import FisheriesChart from './chart';
+import { useMangroveFisheries } from './hooks';
+
+const Fisheries = () => {
   const { data, isFetched, isFetching } = useMangroveFisheries();
 
   if (isFetched && !data?.config?.data?.length) return <NoData />;
@@ -32,4 +33,4 @@ const Fisheries2 = () => {
   );
 };
 
-export default Fisheries2;
+export default Fisheries;
