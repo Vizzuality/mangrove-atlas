@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
+import Fisheries from '../fisheries/widget';
 
 const CommercialFisheriesProductionMapLegend = () => {
   const { query } = useRouter();
