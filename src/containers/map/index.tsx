@@ -307,10 +307,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const handleMouseMove = useCallback(
     (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
-      const restorationData = evt?.features.find((layer) => {
+      const restorationData = evt?.features.find(({ layer }) => {
         return layer.id === 'mangrove_restoration-layer';
       });
-
       const interactiveLayers = evt?.features.find(
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||
