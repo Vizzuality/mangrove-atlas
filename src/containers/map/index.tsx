@@ -55,7 +55,6 @@ import LayerManager from './layer-manager';
 import Image from 'next/image';
 
 import MapPopup from './pop-up';
-import { set } from 'date-fns';
 
 export const DEFAULT_PROPS = {
   initialViewState: {

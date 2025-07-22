@@ -107,21 +107,19 @@ const CommercialFisheriesProduction = () => {
     useMangroveFisheryMitigationPotentials<GroupedDataResponse>(
       {},
       {
-        select: (data) => {
-          return {
-            location: data.location,
-            indicators: Object.values(
-              data?.data?.reduce(
-                (acc, { indicator, indicator_type, value }) => {
-                  if (!acc[indicator]) acc[indicator] = { indicator };
-                  acc[indicator][indicator_type] = value;
-                  return acc;
-                },
-                {} as Record<string, GroupedData>
-              )
-            ),
-          };
-        },
+        select: (data) => ({
+          location: data.location,
+          indicators: Object.values(
+            data?.data?.reduce(
+              (acc, { indicator, indicator_type, value }) => {
+                if (!acc[indicator]) acc[indicator] = { indicator };
+                acc[indicator][indicator_type] = value;
+                return acc;
+              },
+              {} as Record<string, GroupedData>
+            )
+          ),
+        }),
       }
     );
 
@@ -254,7 +252,7 @@ const CommercialFisheriesProduction = () => {
                         </div>
                       </button>
                     </TooltipTrigger>
-                    {density && (
+                    {!!density && !!absolute && (
                       <TooltipPortal>
                         <TooltipContent
                           side="bottom"

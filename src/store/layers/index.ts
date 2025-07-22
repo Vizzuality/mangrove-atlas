@@ -22,6 +22,15 @@ const layerSchema = object({
     none: 'none' as string,
     visible: 'visible' as Visibility,
   }),
+  filter: optional(
+    stringLiterals({
+      fish: 'fish',
+      shrimp: 'shrimp',
+      crab: 'crab',
+      bivalve: 'bivalve',
+      total: 'total',
+    })
+  ),
   settings: optional(LayerSettings),
 });
 
