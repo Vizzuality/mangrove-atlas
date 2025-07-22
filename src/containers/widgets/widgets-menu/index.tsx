@@ -67,7 +67,6 @@ const WidgetsMenu: FC = () => {
 
   const handleWidgets = useCallback(
     (e) => {
-<<<<<<< HEAD
       const isActive = activeWidgets.includes(e);
 
       // Google Analytics tracking
@@ -76,11 +75,6 @@ const WidgetsMenu: FC = () => {
           action: 'activate widget',
           label: `Widgets deck tool - widget -${e}`,
         });
-=======
-      const isActive = activeWidgets.includes(e); 
-      if (!isActive) {
-        trackEvent(e);
->>>>>>> 4ed7dc28 (ga events)
       }
       const updatedWidgets = isActive
         ? activeWidgets.filter((widget) => widget !== e)
