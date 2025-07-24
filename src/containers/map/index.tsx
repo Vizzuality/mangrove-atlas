@@ -55,6 +55,7 @@ import LayerManager from './layer-manager';
 import Image from 'next/image';
 
 import MapPopup from './pop-up';
+import { set } from 'date-fns';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -227,12 +228,33 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
-  const removePopup = (key?: PopUpKey) => {
-    if (!key || key === 'restoration') setRestorationPopUpInfo({ info: null });
-    if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ info: null });
-    if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
-    if (!key || key.includes('mangrove_rest_sites')) setRestorationSitesPopUp({ info: null });
-  };
+  const removePopup = useCallback(
+    (key?: PopUpKey) => {
+      const removeAll = !key;
+
+      if (removeAll || key === 'restoration') {
+        setRestorationPopUpInfo({ info: null });
+      }
+
+      if (removeAll || key === 'ecoregion') {
+        setIucnEcoregionPopUp({ info: null });
+      }
+
+      if (removeAll || key === 'location') {
+        setLocationPopUp({
+          info: null,
+          feature: null,
+          popup: [null, null],
+          position: { x: null, y: null },
+        });
+      }
+
+      if (removeAll || key?.includes('mangrove_rest_sites')) {
+        setRestorationSitesPopUp({ info: null });
+      }
+    },
+    [setRestorationPopUpInfo, setIucnEcoregionPopUp, setLocationPopUp, setRestorationSitesPopUp]
+  );
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
     const locationFeature = e?.features.find(

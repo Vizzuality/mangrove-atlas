@@ -48,7 +48,6 @@ const LocationPopUP = ({
   }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
-    console.log('handleClickLocation', info.location.name);
     const {
       properties: { location_idn },
     } = feature;
@@ -74,7 +73,6 @@ const LocationPopUP = ({
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
-      console.log('handleClickProtectedArea', info.protectedArea[index].NAME);
       const { ISO3, NAME } = info.protectedArea[index];
       const location = locations.data?.find((l) => {
         return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
