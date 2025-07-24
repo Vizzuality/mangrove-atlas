@@ -14,6 +14,89 @@ import API from 'services/api';
 
 import type { Data, DataResponse } from './types';
 import mapboxgl from 'mapbox-gl';
+import { useMemo } from 'react';
+
+const COLORS = {
+  total: [
+    'interpolate',
+    ['linear'],
+    ['get', 'Total'],
+    1.5,
+    '#f8e855',
+    2.1,
+    '#78c66e',
+    2.2,
+    '#468e95',
+    3.3,
+    '#405187',
+    17.8,
+    '#3e0751',
+  ],
+
+  fish: [
+    'interpolate',
+    ['linear'],
+    ['get', 'Fish'],
+    0,
+    '#f0f2fb',
+    40,
+    '#c2d6db',
+    80,
+    '#7bacd1',
+    105,
+    '#4b7baf',
+    115,
+    '#234f97',
+  ],
+
+  shrimp: [
+    'interpolate',
+    ['linear'],
+    ['get', 'Shrimp'],
+    0,
+    '#fcede4',
+    170,
+    '#f0b7bc',
+    220,
+    '#e970a2',
+    240,
+    '#b73088',
+    260,
+    '#6e1375',
+  ],
+
+  crab: [
+    'interpolate',
+    ['linear'],
+    ['get', 'Crab'],
+    0,
+    '#effaec',
+    0.5,
+    '#c2e2b8',
+    0.6,
+    '#84c27c',
+    1,
+    '#529b58',
+    100,
+    '#2e6b34',
+  ],
+
+  bivalve: [
+    'interpolate',
+    ['linear'],
+    ['get', 'Bivalve'],
+    0,
+    '#fdefe2',
+    50,
+    '#f4c28c',
+    70,
+    '#ed904e',
+    90,
+    '#d45e2b',
+    110,
+    '#9a3f1b',
+  ],
+};
 
 const MOCK: Data[] = [
   {
@@ -28,22 +111,22 @@ const MOCK: Data[] = [
   },
   {
     indicator: 'shrimp',
-    value: null,
+    value: 34,
     indicator_type: 'absolute',
   },
   {
     indicator: 'shrimp',
-    value: null,
+    value: 34,
     indicator_type: 'density',
   },
   {
     indicator: 'crab',
-    value: null,
+    value: 6767,
     indicator_type: 'absolute',
   },
   {
     indicator: 'crab',
-    value: null,
+    value: 567,
     indicator_type: 'density',
   },
   {
@@ -81,16 +164,10 @@ export function useMangroveFisheryMitigationPotentials<TData = Data[]>(
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         ...params,
       },
-    }).then((response) =>
-      !!response.data.data.length
-        ? response.data
-        : {
-            location,
-            data: MOCK,
-            metadata: response.data.metadata,
-          }
-    );
-
+    }).then((response) => ({
+      location,
+      ...response.data,
+    }));
   return useQuery<DataResponse, Error, TData>(
     ['fishery-mitigation-potentials', params, location_id],
     fetchMangroveFisheryMitigationPotentials,
@@ -120,97 +197,23 @@ export function useLayers({
   indicator?: Data['indicator'];
 }): LayerProps[] {
   const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Total';
-  const COLORS = {
-    Fish: [
-      'interpolate',
-      ['linear'],
-      ['get', Indicator],
-      40,
-      '#f0f2fb',
-      80,
-      '#c2d6db',
-      105,
-      '#7bacd1',
-      115,
-      '#4b7baf',
-      120,
-      '#234f97',
-    ],
-    Shrimp: [
-      'interpolate',
-      ['linear'],
-      ['get', Indicator],
-      170,
-      '#fcede4',
-      220,
-      '#f0b7bc',
-      240,
-      '#e970a2',
-      260,
-      '#b73088',
-      270,
-      '#6e1375',
-    ],
-    Crab: [
-      'interpolate',
-      ['linear'],
-      ['get', Indicator],
-      0.5,
-      '#fcede4',
-      0.6,
-      '#c2e2b8',
-      1,
-      '#84c27c',
-      100,
-      '#529b58',
-      101,
-      '#2e6b34',
-    ],
-    Bivalve: [
-      'interpolate',
-      ['linear'],
-      ['get', Indicator],
-      50,
-      '#fdefe2',
-      70,
-      '#f4c28c',
-      90,
-      '#ed904e',
-      110,
-      '#d45e2b',
-      111,
-      '#9a3f1b',
-    ],
-    Total: [
-      'interpolate',
-      ['linear'],
-      ['get', Indicator],
-      1.5,
-      '#f8e855',
-      2.1,
-      '#78c66e',
-      2.2,
-      '#468e95',
-      3.3,
-      '#405187',
-      17.8,
-      '#3e0751',
-    ],
-  };
-  const COLOR = (COLORS[Indicator as keyof typeof COLORS] || '#8800FF') as
-    | mapboxgl.StyleFunction
-    | string;
+
+  const COLOR = useMemo(() => {
+    return COLORS[indicator] || COLORS.total || '#8800FF';
+  }, [indicator, COLORS]);
+
+  if (!Indicator) return null;
 
   return [
     {
-      id: `${id}-${indicator}`,
-      source: 'mangrove_commercial_fisheries_production-line',
+      id: `${id}-${indicator}-line`,
+      source: 'mangrove_commercial_fisheries_production',
       'source-layer': 'all_sp_fit_fn_totals',
       type: 'line',
       filter: ['>', ['get', Indicator], 0],
       minzoom: 0,
       paint: {
-        'line-color': COLOR,
+        'line-color': COLOR as mapboxgl.StyleFunction,
         'line-opacity': opacity,
         'line-width': 1,
       },
@@ -219,13 +222,18 @@ export function useLayers({
       },
     },
     {
-      id: `${id}-${indicator}`,
-      type: 'fill',
-      source: 'mangrove_commercial_fisheries_production-fill',
+      id: `${id}-${indicator}-fill`,
+      source: 'mangrove_commercial_fisheries_production',
       'source-layer': 'all_sp_fit_fn_totals',
+      type: 'fill',
       filter: ['>', ['get', Indicator], 0],
+      minzoom: 0,
       paint: {
-        'fill-color': COLOR,
+        'fill-color': COLOR as mapboxgl.StyleFunction,
+        'fill-opacity': opacity,
+      },
+      layout: {
+        visibility,
       },
     },
   ];
