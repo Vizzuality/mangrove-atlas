@@ -45,8 +45,8 @@ export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>({
   default: 'grab',
 });
 
-export const mapPopUpPositionAtom = atom<LngLat | null>({
-  key: 'mapPopUpPosition',
+export const coordinatesAtom = atom<LngLat | null>({
+  key: 'markerCoordinates',
   default: null,
 });
 

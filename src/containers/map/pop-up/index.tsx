@@ -1,41 +1,34 @@
-import cn from 'lib/classnames';
+import { useState } from 'react';
 
-import Draggable from 'containers/draggable';
+import cn from 'lib/classnames';
 import { isEmpty } from 'lodash-es';
-import { useRecoilState } from 'recoil';
+
+import { mapDraggableTooltipPositionAtom, coordinatesAtom } from 'store/map';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
+import { useMap } from 'react-map-gl';
+import { MapboxGeoJSONFeature } from 'mapbox-gl';
+
+import Draggable from 'components/draggable';
+import { ScrollArea } from 'components/ui/scroll-area';
 
 // POPUPS
-import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
+import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import LocationPopup from 'containers/datasets/locations/map-popup';
 import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
 import RestorationPopup from 'containers/datasets/restoration/map-popup';
 
-import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
-import { mapDraggableTooltipPositionAtom } from 'store/map';
-
+// Icons
 import { MdOutlineDragHandle } from 'react-icons/md';
-import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { HiX } from 'react-icons/hi';
-import { ScrollArea } from 'components/ui/scroll-area';
-export const DEFAULT_PROPS = {
-  initialViewState: {
-    longitude: 0,
-    latitude: 20,
-    zoom: 2,
-    pitch: 0,
-    bearing: 0,
-  },
-  minZoom: 1,
-  maxZoom: 20,
-};
+import { LuPin, LuPinOff } from 'react-icons/lu';
+import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 
-const MapPopup = ({
-  locationInfo,
-  restorationInfo,
-  restorationsitesInfo,
-  iucnEcoregionInfo,
-}: {
+import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
+
+type MapPopupProps = {
+  mapId: string;
   locationInfo: {
     info: LocationPopUp;
     position?: { x: number; y: number };
@@ -44,43 +37,91 @@ const MapPopup = ({
   restorationInfo: { info: RestorationPopUp };
   restorationsitesInfo: { info: RestorationSitesPopUp };
   iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo };
-}) => {
+};
+
+const MapPopup = ({
+  mapId,
+  locationInfo,
+  restorationInfo,
+  restorationsitesInfo,
+  iucnEcoregionInfo,
+}: MapPopupProps) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
+  const coordinates = useRecoilValue(coordinatesAtom);
+  const [isPinned, setPin] = useState(false);
+
+  const { [mapId]: map } = useMap();
 
   const handleClick = () => {
     setPosition(null);
   };
+
+  const handleClickToDocker = (e) => {
+    e.stopPropagation();
+    setPin((prev) => {
+      if (prev) {
+        const point = map?.project([coordinates.lng, coordinates.lat]);
+
+        setPosition(point);
+      } else {
+        setPosition({ x: 14, y: 16 });
+      }
+      return !prev;
+    });
+  };
+
   if (!locationInfo.info) return null;
 
   return (
     <Draggable position={position} id="draggable-map-popup">
       {({ listeners, attributes }) => (
         <div
-          className={cn(
-            'w-fit-content shadow-popup absolute z-50 flex flex-col rounded-3xl border border-gray-300 bg-white'
-          )}
+          className={cn({
+            'w-fit-content shadow-popup absolute z-50 flex flex-col rounded-3xl border border-gray-300 bg-white transition-all duration-300':
+              true,
+
+            'w-[532px] border-2 border-brand-800': isPinned,
+          })}
           onMouseDown={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Drag handle */}
-          <div className="flex w-full items-center justify-between rounded-t-3xl px-6 pt-3 hover:bg-white/90">
+          <div className="flex w-full items-center justify-between rounded-t-3xl hover:bg-white/90">
             <button
               type="button"
-              className="w-full flex-1 cursor-move"
+              className="w-full flex-1 cursor-grab"
               {...listeners}
               {...attributes}
               onMouseDown={(e) => e.stopPropagation()}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
             >
-              <MdOutlineDragHandle className="h-6 w-6" />
+              <MdOutlineDragHandle
+                className="ml-6 mt-3 h-6 w-6 text-brand-800"
+                onClick={handleClickToDocker}
+              />
             </button>
-            <button
-              type="button"
-              className="cursor-pointer rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-              onClick={handleClick}
-            >
-              <HiX className="h-6 w-6 font-bold text-brand-800" />
-            </button>
+            <div className="mr-6 mt-3 flex items-center justify-end space-x-4">
+              <button
+                type="button"
+                className="cursor-pointer rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                onClick={handleClickToDocker}
+              >
+                {isPinned ? (
+                  <BsPinAngleFill className="h-5 w-5 font-bold text-brand-800" />
+                ) : (
+                  <BsPinAngle className="h-5 w-5 font-bold text-brand-800" />
+                )}
+              </button>
+              <button
+                type="button"
+                className="cursor-pointer rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                onClick={handleClick}
+              >
+                <HiX className="h-5 w-5 font-bold text-brand-800" />
+              </button>
+            </div>
           </div>
 
           {/* Pop-up content */}
@@ -94,7 +135,6 @@ const MapPopup = ({
               <LocationPopup
                 locationPopUpInfo={locationInfo}
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
-                onClose={() => removePopup('location')}
               />
               {restorationInfo?.info && <RestorationPopup {...restorationInfo} />}
               {restorationsitesInfo?.info && <RestorationSitesPopup {...restorationsitesInfo} />}

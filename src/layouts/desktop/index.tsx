@@ -17,7 +17,7 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import MapContainer from 'containers/map';
 import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
-import { DndContext } from '@dnd-kit/core';
+import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { mapDraggableTooltipPositionAtom } from 'store/map';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 
@@ -58,7 +58,15 @@ const DesktopLayout = () => {
 
   return (
     <div className="overflow-hidden print:overflow-visible">
-      <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToWindowEdges]}>
+      <DndContext
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToWindowEdges]}
+        measuring={{
+          droppable: {
+            strategy: MeasuringStrategy.Always,
+          },
+        }}
+      >
         <Link
           href="/"
           className="pointer-events-auto fixed top-0 right-0 z-[800]"

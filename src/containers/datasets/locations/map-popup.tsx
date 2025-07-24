@@ -18,7 +18,6 @@ import { trackEvent } from 'lib/analytics/ga';
 const LocationPopUP = ({
   locationPopUpInfo,
   nonExpansible,
-  onClose,
 }: {
   locationPopUpInfo: {
     info: LocationPopUp;
@@ -26,7 +25,6 @@ const LocationPopUP = ({
   };
   nonExpansible: boolean;
   className?: string;
-  onClose: () => void;
 }) => {
   const [isOpen, setIsOpen] = useState(nonExpansible);
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
@@ -50,6 +48,7 @@ const LocationPopUP = ({
   }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
+    console.log('handleClickLocation', info.location.name);
     const {
       properties: { location_idn },
     } = feature;
@@ -64,7 +63,6 @@ const LocationPopUP = ({
       }
 
       void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
-      onClose();
     }
 
     // Google Analytics tracking
@@ -72,10 +70,11 @@ const LocationPopUP = ({
       action: 'map location',
       label: `Location pop up - ${info.location.name}`,
     });
-  }, [setLocationBounds, push, queryParams, locations, feature, onClose]);
+  }, [setLocationBounds, push, queryParams, locations, feature]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
+      console.log('handleClickProtectedArea', info.protectedArea[index].NAME);
       const { ISO3, NAME } = info.protectedArea[index];
       const location = locations.data?.find((l) => {
         return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
@@ -88,7 +87,6 @@ const LocationPopUP = ({
           setLocationBounds(bbox as typeof locationBounds);
         }
         void push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
-        onClose();
       }
 
       // Google Analytics tracking
@@ -97,7 +95,7 @@ const LocationPopUP = ({
         label: `Location pop up, protected area - ${info.location.name}`,
       });
     },
-    [setLocationBounds, push, queryParams, locations, info, onClose]
+    [setLocationBounds, push, queryParams, locations, info]
   );
 
   return (

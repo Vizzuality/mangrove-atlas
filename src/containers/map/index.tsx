@@ -14,11 +14,11 @@ import {
   interactiveLayerIdsAtom,
   locationBoundsAtom,
   mapCursorAtom,
-  mapPopUpPositionAtom,
+  coordinatesAtom,
   URLboundsAtom,
 } from 'store/map';
 import { printModeState } from 'store/print-mode';
-import Draggable from 'containers/draggable';
+import Draggable from 'components/draggable';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
@@ -71,7 +71,7 @@ export const DEFAULT_PROPS = {
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
 
-  const [mapPopUpPosition, setMapPopUpPosition] = useRecoilState(mapPopUpPositionAtom);
+  const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -88,7 +88,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
-  const [coordinates, setCoordinates] = useState<LngLat | null>(null);
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number; y: number };
     info: LocationPopUp;
@@ -273,7 +272,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         // 3. Convert back to lat/lng
         const shiftedLngLat = map?.unproject(point);
         setCoordinates(shiftedLngLat);
-        // setMapPopUpPosition(shiftedLngLat);
       }
 
       setLocationPopUp({
@@ -392,6 +390,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     <>
       {!!locationPopUp.info && !guideIsActive && (
         <MapPopup
+          mapId={mapId}
           locationInfo={locationPopUp}
           restorationInfo={restorationPopUp}
           restorationsitesInfo={restorationSitesPopUp}
@@ -486,21 +485,24 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 </div>
               </Controls>
 
-              <Marker
-                latitude={coordinates?.lat || null}
-                longitude={coordinates?.lng || null}
-                anchor="bottom"
-              >
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCoordinates(null);
-                  }}
+              {position && (
+                <Marker
+                  latitude={coordinates?.lat || null}
+                  longitude={coordinates?.lng || null}
+                  anchor="bottom"
                 >
-                  <Image src="/images/MapMarker.png" alt="Map Marker" width={30} height={10} />
-                </button>
-              </Marker>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCoordinates(null);
+                      setPosition(null);
+                    }}
+                  >
+                    <Image src="/images/MapMarker.png" alt="Map Marker" width={30} height={10} />
+                  </button>
+                </Marker>
+              )}
             </>
           )}
         </Map>
