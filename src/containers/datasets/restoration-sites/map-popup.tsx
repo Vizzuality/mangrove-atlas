@@ -11,7 +11,6 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
       label: `restoration sites pop up - expand/collapse`,
     });
   };
-
   return (
     <Collapsible className="min-w-[375px]" onOpenChange={handleAnalytics}>
       <CollapsibleTrigger>

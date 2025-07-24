@@ -8,7 +8,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 
-import { GAPage } from 'lib/analytics/ga';
 import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
 import RecoilDevTools from 'lib/recoil/devtools';
 

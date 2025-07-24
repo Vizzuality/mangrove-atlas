@@ -13,6 +13,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import type { Data, DataResponse } from './types';
+import mapboxgl from 'mapbox-gl';
 
 const MOCK: Data[] = [
   {
@@ -107,7 +108,7 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayer({
+export function useLayers({
   id,
   opacity,
   visibility = 'visible',
@@ -117,23 +118,115 @@ export function useLayer({
   opacity?: number;
   visibility?: Visibility;
   indicator?: Data['indicator'];
-}): LayerProps {
+}): LayerProps[] {
   const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Total';
-
-  return {
-    id: `${id}-${indicator}`,
-    source: 'mangrove_commercial_fisheries_production',
-    'source-layer': 'all_sp_fit_fn_totals',
-    type: 'line',
-    filter: ['>', ['get', Indicator], 0],
-    minzoom: 0,
-    paint: {
-      'line-color': '#8800FF',
-      'line-opacity': opacity,
-      'line-width': 1,
-    },
-    layout: {
-      visibility,
-    },
+  const COLORS = {
+    Fish: [
+      'interpolate',
+      ['linear'],
+      ['get', Indicator],
+      40,
+      '#f0f2fb',
+      80,
+      '#c2d6db',
+      105,
+      '#7bacd1',
+      115,
+      '#4b7baf',
+      120,
+      '#234f97',
+    ],
+    Shrimp: [
+      'interpolate',
+      ['linear'],
+      ['get', Indicator],
+      170,
+      '#fcede4',
+      220,
+      '#f0b7bc',
+      240,
+      '#e970a2',
+      260,
+      '#b73088',
+      270,
+      '#6e1375',
+    ],
+    Crab: [
+      'interpolate',
+      ['linear'],
+      ['get', Indicator],
+      0.5,
+      '#fcede4',
+      0.6,
+      '#c2e2b8',
+      1,
+      '#84c27c',
+      100,
+      '#529b58',
+      101,
+      '#2e6b34',
+    ],
+    Bivalve: [
+      'interpolate',
+      ['linear'],
+      ['get', Indicator],
+      50,
+      '#fdefe2',
+      70,
+      '#f4c28c',
+      90,
+      '#ed904e',
+      110,
+      '#d45e2b',
+      111,
+      '#9a3f1b',
+    ],
+    Total: [
+      'interpolate',
+      ['linear'],
+      ['get', Indicator],
+      1.5,
+      '#f8e855',
+      2.1,
+      '#78c66e',
+      2.2,
+      '#468e95',
+      3.3,
+      '#405187',
+      17.8,
+      '#3e0751',
+    ],
   };
+  const COLOR = (COLORS[Indicator as keyof typeof COLORS] || '#8800FF') as
+    | mapboxgl.StyleFunction
+    | string;
+
+  return [
+    {
+      id: `${id}-${indicator}`,
+      source: 'mangrove_commercial_fisheries_production-line',
+      'source-layer': 'all_sp_fit_fn_totals',
+      type: 'line',
+      filter: ['>', ['get', Indicator], 0],
+      minzoom: 0,
+      paint: {
+        'line-color': COLOR,
+        'line-opacity': opacity,
+        'line-width': 1,
+      },
+      layout: {
+        visibility,
+      },
+    },
+    {
+      id: `${id}-${indicator}`,
+      type: 'fill',
+      source: 'mangrove_commercial_fisheries_production-fill',
+      'source-layer': 'all_sp_fit_fn_totals',
+      filter: ['>', ['get', Indicator], 0],
+      paint: {
+        'fill-color': COLOR,
+      },
+    },
+  ];
 }

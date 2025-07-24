@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { useMap } from 'react-map-gl';
+import { Marker, useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -14,14 +14,15 @@ import {
   interactiveLayerIdsAtom,
   locationBoundsAtom,
   mapCursorAtom,
+  coordinatesAtom,
   URLboundsAtom,
 } from 'store/map';
 import { printModeState } from 'store/print-mode';
-
+import Draggable from 'components/draggable';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import { isEmpty } from 'lodash-es';
-import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
+import type { LngLat, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -30,11 +31,8 @@ import { useScreenWidth } from 'hooks/media';
 
 import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 // POPUPS
-import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
-import LocationPopup from 'containers/datasets/locations/map-popup';
-import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
-import RestorationPopup from 'containers/datasets/restoration/map-popup';
+
 import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
@@ -50,11 +48,14 @@ import ZoomControl from 'components/map/controls/zoom';
 import DrawControl from 'components/map/drawing-tool';
 import { CustomMapProps } from 'components/map/types';
 import { Media } from 'components/media-query';
-import Popup from 'components/ui/popup';
 import { breakpoints } from 'styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
-
+import { mapDraggableTooltipPositionAtom } from 'store/map';
 import LayerManager from './layer-manager';
+import Image from 'next/image';
+
+import MapPopup from './pop-up';
+import { set } from 'date-fns';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -69,6 +70,9 @@ export const DEFAULT_PROPS = {
 };
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
+  const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
+
+  const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -224,12 +228,33 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setDrawingToolState]
   );
 
-  const removePopup = (key?: PopUpKey) => {
-    if (!key || key === 'restoration') setRestorationPopUpInfo({ info: null });
-    if (!key || key === 'ecoregion') setIucnEcoregionPopUp({ info: null });
-    if (!key || key === 'location') setLocationPopUp({ ...locationPopUp, info: null });
-    if (!key || key.includes('mangrove_rest_sites')) setRestorationSitesPopUp({ info: null });
-  };
+  const removePopup = useCallback(
+    (key?: PopUpKey) => {
+      const removeAll = !key;
+
+      if (removeAll || key === 'restoration') {
+        setRestorationPopUpInfo({ info: null });
+      }
+
+      if (removeAll || key === 'ecoregion') {
+        setIucnEcoregionPopUp({ info: null });
+      }
+
+      if (removeAll || key === 'location') {
+        setLocationPopUp({
+          info: null,
+          feature: null,
+          popup: [null, null],
+          position: { x: null, y: null },
+        });
+      }
+
+      if (removeAll || key?.includes('mangrove_rest_sites')) {
+        setRestorationSitesPopUp({ info: null });
+      }
+    },
+    [setRestorationPopUpInfo, setIucnEcoregionPopUp, setLocationPopUp, setRestorationSitesPopUp]
+  );
 
   const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
     const locationFeature = e?.features.find(
@@ -251,11 +276,25 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
 
+    setPosition({ x: e.point.x, y: e.point.y });
+
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature.map((feature) => ({
         ...feature.properties,
         id: locationId,
       }));
+
+      if (map && e?.lngLat) {
+        // 1. Convert lat/lng to screen point
+        const point = map?.project([e?.lngLat?.lng, e?.lngLat?.lat]);
+
+        // 2. Move it down 20 pixels in Y to match the end of the marker instead of the end of the image as the marker has a shadow
+        point.y += 15;
+
+        // 3. Convert back to lat/lng
+        const shiftedLngLat = map?.unproject(point);
+        setCoordinates(shiftedLngLat);
+      }
 
       setLocationPopUp({
         info: {
@@ -263,7 +302,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           protectedArea: protectedAreas, // Now an array of ProtectedArea objects
         } as LocationPopUp,
         feature: locationFeature,
-        popup: [e?.lngLat.lat, e?.lngLat.lng],
+        popup: [e?.lngLat?.lat, e?.lngLat.lng],
         position: {
           x: e.point.x,
           y: e.point.y,
@@ -370,146 +409,142 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const pitch = map?.getPitch();
 
   return (
-    <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:w-[90vw]"
-      ref={mapRef}
-    >
-      <Map
-        id={mapId}
-        reuseMaps
-        mapStyle={selectedBasemap}
-        minZoom={minZoom}
-        maxZoom={maxZoom}
-        initialViewState={initialViewState}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        onMapViewStateChange={handleViewState}
-        bounds={bounds}
-        interactiveLayerIds={isDrawingToolEnabled || guideIsActive ? [] : interactiveLayerIds}
-        onClick={onClickHandler}
-        onMouseMove={handleMouseMove}
-        onLoad={handleMapLoad}
-        cursor={cursor}
-        preserveDrawingBuffer
+    <>
+      {!!locationPopUp.info && !guideIsActive && (
+        <MapPopup
+          mapId={mapId}
+          locationInfo={locationPopUp}
+          restorationInfo={restorationPopUp}
+          restorationsitesInfo={restorationSitesPopUp}
+          iucnEcoregionInfo={iucnEcoregionPopUp}
+        />
+      )}
+      <div
+        className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:top-4 print:w-[90vw]"
+        ref={mapRef}
       >
-        {() => (
+        <Map
+          id={mapId}
+          reuseMaps
+          mapStyle={selectedBasemap}
+          minZoom={minZoom}
+          maxZoom={maxZoom}
+          initialViewState={initialViewState}
+          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+          onMapViewStateChange={handleViewState}
+          bounds={bounds}
+          interactiveLayerIds={isDrawingToolEnabled || guideIsActive ? [] : interactiveLayerIds}
+          onClick={onClickHandler}
+          onMouseMove={handleMouseMove}
+          onLoad={handleMapLoad}
+          cursor={cursor}
+          preserveDrawingBuffer
+        >
+          {() => (
+            <>
+              <LayerManager />
+              {(isDrawingToolEnabled || uploadedGeojson) && (
+                <DrawControl
+                  onCreate={handleUserDrawing}
+                  onUpdate={handleDrawingUpdate}
+                  customPolygon={uploadedGeojson}
+                  onSetCustomPolygon={handleCustomPolygon}
+                />
+              )}
+              <Controls className="absolute bottom-9 right-5 hidden items-center print:hidden md:block">
+                <div className="flex flex-col space-y-2 pt-1">
+                  {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
+                  <Helper
+                    className={{
+                      button: 'top-1 left-8 z-[20]',
+                      tooltip: 'w-80',
+                    }}
+                    tooltipPosition={{ top: 0, left: 330 }}
+                    message="Use this icon to show the map in full screen. Widgets and other menu items will be hidden until the icon is clicked again. "
+                  >
+                    <FullScreenControl />
+                  </Helper>
+                  <Helper
+                    className={{
+                      button: 'top-1 left-8 z-[20]',
+                      tooltip: 'w-80',
+                    }}
+                    tooltipPosition={{ top: 0, left: 330 }}
+                    message="Use this function to generate a link to a user-customized map on GMW or to embed a customized map into another website."
+                  >
+                    <ShareControl
+                      disabled={
+                        isDrawingToolEnabled ||
+                        isUploadToolEnabled ||
+                        !!customGeojson ||
+                        !!uploadedGeojson
+                      }
+                    />
+                  </Helper>
+                  <Helper
+                    className={{
+                      button: 'top-1 left-8 z-[20]',
+                      tooltip: 'w-80',
+                    }}
+                    tooltipPosition={{ top: 0, left: 330 }}
+                    message="Select this icon to choose from a variety of basemaps, enable visualization of the high-resolution mangrove extent, or to select high resolution imagery from Planet."
+                  >
+                    <BasemapSettingsControl />
+                  </Helper>
+                  <Helper
+                    className={{
+                      button: 'top-1 left-8 z-[20]',
+                      tooltip: 'w-80',
+                    }}
+                    tooltipPosition={{ top: 0, left: 330 }}
+                    message="Use the + icon to zoom into the map and the – button to zoom out of the map"
+                  >
+                    <div className="border-box flex flex-col overflow-hidden rounded-4xl shadow-control">
+                      <ZoomControl mapId={mapId} />
+                      {pitch !== 0 && <PitchReset mapId={mapId} />}
+                    </div>
+                  </Helper>
+                </div>
+              </Controls>
+
+              {position && (
+                <Marker
+                  latitude={coordinates?.lat || null}
+                  longitude={coordinates?.lng || null}
+                  anchor="bottom"
+                >
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCoordinates(null);
+                      setPosition(null);
+                    }}
+                  >
+                    <Image src="/images/MapMarker.png" alt="Map Marker" width={30} height={10} />
+                  </button>
+                </Marker>
+              )}
+            </>
+          )}
+        </Map>
+
+        {!isPrintingMode && (
           <>
-            <LayerManager />
-            {(isDrawingToolEnabled || uploadedGeojson) && (
-              <DrawControl
-                onCreate={handleUserDrawing}
-                onUpdate={handleDrawingUpdate}
-                customPolygon={uploadedGeojson}
-                onSetCustomPolygon={handleCustomPolygon}
-              />
-            )}
-            <Controls className="absolute bottom-9 right-5 hidden items-center print:hidden md:block">
-              <div className="flex flex-col space-y-2 pt-1">
-                {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
-                <Helper
-                  className={{
-                    button: 'top-1 left-8 z-[20]',
-                    tooltip: 'w-80',
-                  }}
-                  tooltipPosition={{ top: 0, left: 330 }}
-                  message="Use this icon to show the map in full screen. Widgets and other menu items will be hidden until the icon is clicked again. "
-                >
-                  <FullScreenControl />
-                </Helper>
-                <Helper
-                  className={{
-                    button: 'top-1 left-8 z-[20]',
-                    tooltip: 'w-80',
-                  }}
-                  tooltipPosition={{ top: 0, left: 330 }}
-                  message="Use this function to generate a link to a user-customized map on GMW or to embed a customized map into another website."
-                >
-                  <ShareControl
-                    disabled={
-                      isDrawingToolEnabled ||
-                      isUploadToolEnabled ||
-                      !!customGeojson ||
-                      !!uploadedGeojson
-                    }
-                  />
-                </Helper>
-                <Helper
-                  className={{
-                    button: 'top-1 left-8 z-[20]',
-                    tooltip: 'w-80',
-                  }}
-                  tooltipPosition={{ top: 0, left: 330 }}
-                  message="Select this icon to choose from a variety of basemaps, enable visualization of the high-resolution mangrove extent, or to select high resolution imagery from Planet."
-                >
-                  <BasemapSettingsControl />
-                </Helper>
-                <Helper
-                  className={{
-                    button: 'top-1 left-8 z-[20]',
-                    tooltip: 'w-80',
-                  }}
-                  tooltipPosition={{ top: 0, left: 330 }}
-                  message="Use the + icon to zoom into the map and the – button to zoom out of the map"
-                >
-                  <div className="border-box flex flex-col overflow-hidden rounded-4xl shadow-control">
-                    <ZoomControl mapId={mapId} />
-                    {pitch !== 0 && <PitchReset mapId={mapId} />}
-                  </div>
-                </Helper>
+            <Media lessThan="md">
+              <div className="absolute top-20">
+                <MobileLegend />
               </div>
-            </Controls>
-
-            {locationPopUp.info && !guideIsActive && (
-              <Popup
-                popUpPosition={locationPopUp?.position}
-                popUpWidth={500}
-                longitude={locationPopUp?.popup[1]}
-                latitude={locationPopUp?.popup[0]}
-                onClose={() => removePopup('location')}
-              >
-                {!isEmpty(locationPopUp?.info) ? (
-                  <LocationPopup
-                    locationPopUpInfo={locationPopUp}
-                    className={cn({
-                      'rounded-3xl pt-6':
-                        isEmpty(iucnEcoregionPopUp?.info) && isEmpty(restorationPopUp?.info),
-                    })}
-                    nonExpansible={
-                      isEmpty(iucnEcoregionPopUp?.info) && isEmpty(restorationPopUp?.info)
-                    }
-                    onClose={() => removePopup('location')}
-                  />
-                ) : null}
-                {!isEmpty(restorationPopUp?.info) ? (
-                  <RestorationPopup {...restorationPopUp} />
-                ) : null}
-
-                {!isEmpty(restorationSitesPopUp?.info) ? (
-                  <RestorationSitesPopup {...restorationSitesPopUp} />
-                ) : null}
-
-                {!isEmpty(iucnEcoregionPopUp?.info) ? (
-                  <IucnEcoregionPopup info={iucnEcoregionPopUp.info} />
-                ) : null}
-              </Popup>
-            )}
+            </Media>
+            <Media greaterThanOrEqual="md">
+              <div className="absolute bottom-9 right-18 z-50 mr-0.5">
+                <Legend />
+              </div>
+            </Media>
           </>
         )}
-      </Map>
-      {!isPrintingMode && (
-        <>
-          <Media lessThan="md">
-            <div className="absolute top-20">
-              <MobileLegend />
-            </div>
-          </Media>
-          <Media greaterThanOrEqual="md">
-            <div className="absolute bottom-9 right-18 z-50 mr-0.5">
-              <Legend />
-            </div>
-          </Media>
-        </>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
