@@ -31,7 +31,7 @@ const Details = ({ data }: { data: RestorationPopUp }) => {
   };
   return (
     <Collapsible className="w-full" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger>
+      <CollapsibleTrigger iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>DETAILS</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>

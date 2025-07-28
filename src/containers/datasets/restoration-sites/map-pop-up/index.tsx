@@ -1,6 +1,8 @@
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 import { trackEvent } from 'lib/analytics/ga';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
+
+import PopupRestorationSitesItem from './item';
 import { RestorationSitesPopUp } from 'types/map';
 
 const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
@@ -11,9 +13,10 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
       label: `restoration sites pop up - expand/collapse`,
     });
   };
+
   return (
     <Collapsible className="min-w-[375px]" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger>
+      <CollapsibleTrigger iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SITES</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>
@@ -27,24 +30,10 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
             </p>
           )}
 
-          <div className="flex w-full justify-between font-sans">
-            {info.site_name && (
-              <div className="flex flex-col">
-                <span className="text-left text-sm font-semibold text-brand-800">Site</span>
-                <span className="text-left text-xxs font-light uppercase leading-5 text-black/85">
-                  {info.site_name}
-                </span>
-              </div>
-            )}
-
-            {info.landscape_name && (
-              <div className="flex flex-col">
-                <span className="text-left text-sm font-semibold text-brand-800">Landscape</span>
-                <span className="text-left text-xxs font-light uppercase leading-5 text-black/85">
-                  {info.landscape_name}
-                </span>
-              </div>
-            )}
+          <div className="grid grid-cols-2 gap-4 font-sans">
+            {Object.entries(info).map(([key, value]) => (
+              <PopupRestorationSitesItem title={key} info={value as string | string[]} />
+            ))}
           </div>
         </div>
       </CollapsibleContent>

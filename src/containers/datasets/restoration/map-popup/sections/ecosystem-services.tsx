@@ -17,7 +17,7 @@ const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
   };
   return (
     <Collapsible className="w-full" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger>
+      <CollapsibleTrigger iconType="plus-minus">
         <div className="flex w-full flex-col space-y-0.5 text-start">
           <h3 className={WIDGET_SUBTITLE_STYLE}>ECOSYSTEM SERVICES</h3>
           <p className="text-sm font-light">for restored mangroves</p>

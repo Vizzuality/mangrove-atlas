@@ -39,10 +39,16 @@ export type RestorationPopUp = {
 };
 
 export type RestorationSitesPopUp = {
-  cluster: boolean;
-  point_count: number;
+  cluster?: boolean;
+  point_count?: number;
   site_name: string;
   landscape_name: string;
+  organizations: string[];
+  causes_of_decline: string[];
+  ecological_aims: string[];
+  socioeconomic_aims: string[];
+  community_activities: string[];
+  intervention_types: string[];
 };
 
 type ProtectedArea = {

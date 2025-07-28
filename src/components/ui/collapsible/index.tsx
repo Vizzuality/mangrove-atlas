@@ -5,7 +5,8 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 import cn from 'lib/classnames';
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
-import { HiMinus, HiPlus } from 'react-icons/hi';
+
+import { HiMinus, HiPlus, HiChevronDown, HiChevronUp } from 'react-icons/hi';
 
 const Collapsible = CollapsiblePrimitive.Root;
 
@@ -15,10 +16,11 @@ const CollapsibleTrigger = forwardRef<
     inset?: boolean;
     children?: React.ReactNode;
     className?: string;
-    showExpandIcon?: boolean;
+    iconType?: 'arrow' | 'plus-minus' | null;
+    iconSize?: 'md' | 'sm';
     isOpen?: boolean;
   }
->(({ className, children, showExpandIcon = true, ...props }, ref) => {
+>(({ className, children, iconType = 'arrow', iconSize = 'md', ...props }, ref) => {
   return (
     <CollapsiblePrimitive.Trigger
       ref={ref}
@@ -30,12 +32,48 @@ const CollapsibleTrigger = forwardRef<
     >
       {children}
 
-      {showExpandIcon && (
-        <HiMinus className="h-6 w-6 text-brand-800 group-data-[state=open]:block group-data-[state=closed]:hidden" />
+      {iconType === 'plus-minus' && (
+        <HiMinus
+          className={cn({
+            'h-6 w-6 text-brand-800 group-data-[state=open]:block group-data-[state=closed]:hidden':
+              true,
+            'h-6 w-6': iconSize === 'md',
+            'h-4 w-4': iconSize === 'sm',
+          })}
+        />
       )}
 
-      {showExpandIcon && (
-        <HiPlus className="h-6 w-6 text-brand-800 group-data-[state=closed]:block group-data-[state=open]:hidden" />
+      {iconType === 'plus-minus' && (
+        <HiPlus
+          className={cn({
+            'h-6 w-6 text-brand-800 group-data-[state=closed]:block group-data-[state=open]:hidden':
+              true,
+            'h-6 w-6': iconSize === 'md',
+            'h-4 w-4': iconSize === 'sm',
+          })}
+        />
+      )}
+
+      {iconType === 'arrow' && (
+        <HiChevronDown
+          className={cn({
+            'h-4 w-4 text-brand-800 group-data-[state=closed]:block group-data-[state=open]:hidden':
+              true,
+            'h-6 w-6': iconSize === 'md',
+            'h-4 w-4': iconSize === 'sm',
+          })}
+        />
+      )}
+
+      {iconType === 'arrow' && (
+        <HiChevronUp
+          className={cn({
+            'h-4 w-4 text-brand-800 group-data-[state=open]:block group-data-[state=closed]:hidden':
+              true,
+            'h-6 w-6': iconSize === 'md',
+            'h-4 w-4': iconSize === 'sm',
+          })}
+        />
       )}
     </CollapsiblePrimitive.Trigger>
   );
