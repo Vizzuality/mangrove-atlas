@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Marker, useMap } from 'react-map-gl';
 
@@ -16,11 +16,9 @@ import {
   URLboundsAtom,
 } from 'store/map';
 import { printModeState } from 'store/print-mode';
-import Draggable from 'components/draggable';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import { isEmpty } from 'lodash-es';
-import type { LngLat, LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
+import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
@@ -69,6 +67,7 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
+  const mapPopUpRef = useRef<HTMLDivElement>(null);
 
   const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
   const mapRef = useRef(null);

@@ -80,7 +80,7 @@ const MapPopup = ({
           className={cn(
             'shadow-popup absolute z-50 flex flex-col rounded-3xl border bg-white transition-all duration-300',
             'w-fit-content border-gray-300',
-            isPinned && 'w-[532px] border-2 border-brand-800 shadow-md',
+            isPinned && 'border-2 border-brand-800 shadow-md sm:w-[532px]',
             flash && 'ring-2 ring-brand-400'
           )}
           onMouseDown={(e) => e.stopPropagation()}
@@ -106,7 +106,7 @@ const MapPopup = ({
             <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
             <div className="pointer-events-none absolute bottom-0 left-6 right-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />
 
-            <div className="relative max-h-[calc(100svh_-_theme(space.20))] min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white">
+            <div className="min-w-content relative max-h-[calc(100svh_-_theme(space.20))] min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white">
               <LocationPopup
                 locationPopUpInfo={locationInfo}
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}

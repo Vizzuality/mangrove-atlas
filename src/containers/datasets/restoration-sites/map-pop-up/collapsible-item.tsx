@@ -21,7 +21,11 @@ const PopupRestorationSitesCollapsibleItem = ({
   };
   return (
     <Collapsible onOpenChange={handleAnalytics} defaultOpen>
-      <CollapsibleTrigger iconType="arrow" iconSize="sm" className="w-full space-x-2 p-0">
+      <CollapsibleTrigger
+        iconType="arrow"
+        iconSize="sm"
+        className="w-full justify-start space-x-2 p-0"
+      >
         <PopupRestorationSitesCollapsibleItemTitle title={title} />
       </CollapsibleTrigger>
       <CollapsibleContent className="relative">

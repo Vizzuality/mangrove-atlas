@@ -3,11 +3,6 @@ import { useDraggable } from '@dnd-kit/core';
 type DraggableProps = {
   id: string;
   position: { x: number; y: number };
-  /**
-   * Children is a render function that receives:
-   * - `listeners`: drag listeners (apply to your handle)
-   * - `attributes`: drag accessibility attributes
-   */
   children: (params: {
     listeners: ReturnType<typeof useDraggable>['listeners'];
     attributes: ReturnType<typeof useDraggable>['attributes'];
@@ -23,7 +18,7 @@ export default function Draggable({ id, position, children }: DraggableProps) {
     position: 'absolute',
     left: position.x,
     top: position.y,
-    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    transform: `translate3d(${transform?.x ?? 0}px, ${transform?.y ?? 0}px, 0) translate(${-470 / 2}px, 20px)`,
     transition: 'transform 0.1s ease-out',
     zIndex: 10000,
   };
