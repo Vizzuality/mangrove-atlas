@@ -36,7 +36,6 @@ export function useMangroveRestorationSites(
   const mapFilters = useRecoilValue(RestorationSitesMapFilters);
   const filtersPending = useRecoilValue(RestorationSitesFiltersApplication);
 
-  // TO - DO - remove when API gets ready
   const fetchMangroveRestorationSites = () =>
     API.request({
       method: 'GET',

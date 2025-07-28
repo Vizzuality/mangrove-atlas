@@ -15,7 +15,10 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
   };
 
   return (
-    <Collapsible className="min-w-[375px]" onOpenChange={handleAnalytics}>
+    <Collapsible
+      className="flex min-w-[90vw] flex-col sm:min-w-[470px] sm:max-w-[calc(100vw-520px)]"
+      onOpenChange={handleAnalytics}
+    >
       <CollapsibleTrigger iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SITES</h3>
       </CollapsibleTrigger>
