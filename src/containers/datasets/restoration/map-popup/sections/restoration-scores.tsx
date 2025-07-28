@@ -22,7 +22,7 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
 
   return (
     <Collapsible className="w-full min-w-[450px]" onOpenChange={handleAnalytics}>
-      <CollapsibleTrigger>
+      <CollapsibleTrigger iconType="plus-minus">
         <h3 className={WIDGET_SUBTITLE_STYLE}>RESTORATION SCORES</h3>
       </CollapsibleTrigger>
       <CollapsibleContent>

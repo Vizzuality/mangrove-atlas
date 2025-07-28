@@ -15,7 +15,7 @@ import { ScrollArea } from 'components/ui/scroll-area';
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
 import LocationPopup from 'containers/datasets/locations/map-popup';
-import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-popup';
+import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-pop-up';
 import RestorationPopup from 'containers/datasets/restoration/map-popup';
 
 import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';

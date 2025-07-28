@@ -101,19 +101,36 @@ export function useSource(): SourceProps {
   const { data } = useMangroveRestorationSites();
   const restorationSiteFeatures = data?.data
     .filter((site) => !!site.site_centroid)
-    .map(({ site_centroid, landscape_name, organizations, site_name }) => {
-      if (site_centroid) {
-        return {
-          type: 'Feature',
-          geometry: JSON.parse(site_centroid),
-          properties: {
-            landscape_name,
-            organizations,
-            site_name,
-          },
-        };
+    .map(
+      ({
+        site_centroid,
+        landscape_name,
+        organizations,
+        site_name,
+        causes_of_decline,
+        ecological_aims,
+        socioeconomic_aims,
+        community_activities,
+        intervention_types,
+      }) => {
+        if (site_centroid) {
+          return {
+            type: 'Feature',
+            geometry: JSON.parse(site_centroid),
+            properties: {
+              landscape_name,
+              organizations,
+              site_name,
+              causes_of_decline,
+              ecological_aims,
+              socioeconomic_aims,
+              community_activities,
+              intervention_types,
+            },
+          };
+        }
       }
-    });
+    );
 
   if (!restorationSiteFeatures) return null;
 

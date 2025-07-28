@@ -4,8 +4,6 @@ import { Marker, useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
-
 import { analysisAtom } from 'store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
 import { activeGuideAtom } from 'store/guide';
@@ -33,6 +31,7 @@ import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
 // POPUPS
 import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
 
+import { LABELS } from 'containers/datasets/restoration-sites/constants';
 import Helper from 'containers/help/helper';
 import DeleteDrawingButton from 'containers/map/delete-drawing-button';
 import Legend from 'containers/map/legend';
@@ -324,9 +323,22 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
     // Restoration Sites
     if (restorationSitesFeature) {
+      const infoParsed = Object.entries(LABELS).reduce((acc, [key, label]) => {
+        const value = restorationSitesFeature.properties[key];
+
+        if (key === 'landscape_name' || key === 'site_name') {
+          acc[label] = [value];
+        } else {
+          const parsed = value ? JSON.parse(value) : null;
+          acc[label] = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
+        }
+
+        return acc;
+      }, {});
+
       setRestorationSitesPopUp({
         ...restorationSitesPopUp,
-        info: restorationSitesFeature.properties as RestorationSitesPopUp,
+        info: infoParsed as RestorationSitesPopUp,
       });
     }
     if (!restorationSitesFeature) {

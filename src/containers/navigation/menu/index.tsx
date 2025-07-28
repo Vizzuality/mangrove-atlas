@@ -134,7 +134,7 @@ const Menu = () => {
               <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
 
               <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
-                <CollapsibleTrigger showExpandIcon={false} className="p-0">
+                <CollapsibleTrigger iconType={null} className="p-0">
                   <div className="flex w-full items-center space-x-4 text-2lg font-light hover:text-brand-800">
                     <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
                     <HiChevronDown
