@@ -54,3 +54,13 @@ export const mapDraggableTooltipPositionAtom = atom<{ x: number; y: number } | n
   key: 'mapDraggableTooltipPosition',
   default: null,
 });
+
+export const mapDraggableTooltipPinnedAtom = atom<boolean>({
+  key: 'mapDraggableTooltipPinned',
+  default: false,
+});
+
+export const mapDraggableTooltipDimensionsAtom = atom<{ h: number; w: number } | null>({
+  key: 'mapDraggableTooltipDimensions',
+  default: null,
+});

@@ -3,13 +3,14 @@ import { useDraggable } from '@dnd-kit/core';
 type DraggableProps = {
   id: string;
   position: { x: number; y: number };
+  isPinned?: boolean;
   children: (params: {
     listeners: ReturnType<typeof useDraggable>['listeners'];
     attributes: ReturnType<typeof useDraggable>['attributes'];
   }) => React.ReactNode;
 };
 
-export default function Draggable({ id, position, children }: DraggableProps) {
+export default function Draggable({ id, position, children, isPinned }: DraggableProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
 
   if (!position) return null;
@@ -18,7 +19,7 @@ export default function Draggable({ id, position, children }: DraggableProps) {
     position: 'absolute',
     left: position.x,
     top: position.y,
-    transform: `translate3d(${transform?.x ?? 0}px, ${transform?.y ?? 0}px, 0) translate(${-470 / 2}px, 20px)`,
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     transition: 'transform 0.1s ease-out',
     zIndex: 10000,
   };
