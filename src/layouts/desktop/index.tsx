@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -10,7 +10,7 @@ import cn from 'lib/classnames';
 
 import { printModeState } from 'store/print-mode';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from 'containers/datasets/locations/hooks';
 import type { LocationTypes } from 'containers/datasets/locations/types';
@@ -18,8 +18,13 @@ import MapContainer from 'containers/map';
 import WelcomeIntroMessage from 'containers/welcome-message';
 import WidgetsContainer from 'containers/widgets';
 import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
-import { mapDraggableTooltipPositionAtom } from 'store/map';
+import {
+  mapDraggableTooltipDimensionsAtom,
+  mapDraggableTooltipPinnedAtom,
+  mapDraggableTooltipPositionAtom,
+} from 'store/map';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { is } from 'date-fns/locale';
 
 const DesktopLayout = () => {
   const map = useMap();
@@ -32,15 +37,33 @@ const DesktopLayout = () => {
   } = useRouter();
   const locationType = (queryParams?.[0] || 'worldwide') as LocationTypes;
   const id = queryParams?.[1];
-  const [, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
+  const setPosition = useSetRecoilState(mapDraggableTooltipPositionAtom);
+  const [isPinnedGlobally, setPinnedGlobally] = useRecoilState(mapDraggableTooltipPinnedAtom);
+  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
 
   const handleDragEnd = (event) => {
     const { delta } = event;
+    const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
+    setPosition((prev) => {
+      return {
+        x:
+          prev.x + delta.x < 0
+            ? 0
+            : prev.x + delta.x > window.innerWidth - w
+              ? window.innerWidth - w
+              : prev.x + delta.x,
+        y:
+          prev.y + delta.y < 0
+            ? 0
+            : prev.y + delta.y > window.innerHeight - h
+              ? window.innerHeight - h
+              : prev.y + delta.y,
+      };
+    });
 
-    setPosition((prev) => ({
-      x: prev.x + delta.x,
-      y: prev.y + delta.y,
-    }));
+    if (isPinnedGlobally) {
+      setPinnedGlobally(false);
+    }
   };
 
   const {

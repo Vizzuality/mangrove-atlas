@@ -14,6 +14,7 @@ import {
   mapCursorAtom,
   coordinatesAtom,
   URLboundsAtom,
+  mapDraggableTooltipDimensionsAtom,
 } from 'store/map';
 import { printModeState } from 'store/print-mode';
 import { useQueryClient } from '@tanstack/react-query';
@@ -67,7 +68,7 @@ export const DEFAULT_PROPS = {
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
-  const mapPopUpRef = useRef<HTMLDivElement>(null);
+  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
 
   const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
   const mapRef = useRef(null);
@@ -272,9 +273,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     const iucnEcoregionFeature = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
+    const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
+    const x = Math.max(0, Math.min(e.point.x, window.innerWidth - w));
+    const y = Math.max(0, Math.min(e.point.y, window.innerHeight - h));
 
-    setPosition({ x: e.point.x, y: e.point.y });
-
+    setPosition({ x, y });
     if (locationFeature) {
       const protectedAreas = protectedAreaFeature.map((feature) => ({
         ...feature.properties,

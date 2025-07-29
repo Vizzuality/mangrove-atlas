@@ -1,6 +1,8 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 import { HiX } from 'react-icons/hi';
 import { useCallback } from 'react';
+import { mapDraggableTooltipPinnedAtom } from 'store/map';
+import { useSetRecoilState } from 'recoil';
 
 type Position = { x: number; y: number };
 
@@ -9,9 +11,11 @@ type MapPopupCloseProps = {
 };
 
 const MapPopupClose = ({ setPosition }: MapPopupCloseProps) => {
+  const setPin = useSetRecoilState(mapDraggableTooltipPinnedAtom);
   const handleClick = useCallback(() => {
     setPosition(null);
-  }, [setPosition]);
+    setPin(false);
+  }, [setPosition, setPin]);
 
   return (
     <Tooltip>

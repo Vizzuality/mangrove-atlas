@@ -1,9 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import cn from 'lib/classnames';
 import { isEmpty } from 'lodash-es';
 
-import { mapDraggableTooltipPositionAtom, coordinatesAtom } from 'store/map';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  mapDraggableTooltipPositionAtom,
+  coordinatesAtom,
+  mapDraggableTooltipPinnedAtom,
+  mapDraggableTooltipDimensionsAtom,
+} from 'store/map';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useMap } from 'react-map-gl';
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
@@ -23,6 +28,7 @@ import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'typ
 import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupClose from './pop-up-controls/close';
 import MapPopupPin from './pop-up-controls/pin';
+import { set } from 'date-fns';
 
 type Position = { x: number; y: number };
 
@@ -47,8 +53,11 @@ const MapPopup = ({
 }: MapPopupProps) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
   const coordinates = useRecoilValue(coordinatesAtom);
-  const [isPinned, setPin] = useState(false);
+  const [isPinned, setPin] = useRecoilState(mapDraggableTooltipPinnedAtom);
+  const setMapDraggableTooltipDimensions = useSetRecoilState(mapDraggableTooltipDimensionsAtom);
   const [flash, setFlash] = useState(false);
+
+  const popUpRef = useRef<HTMLDivElement>(null);
 
   const { [mapId]: map } = useMap();
 
@@ -56,27 +65,50 @@ const MapPopup = ({
     (e: React.MouseEvent) => {
       e.stopPropagation();
 
-      setPin((prev) => {
-        if (prev) {
-          const point = map?.project([coordinates.lng, coordinates.lat]);
-          setPosition(point ?? null);
-        } else {
-          setFlash(true);
-          setTimeout(() => setFlash(false), 1000);
-          setPosition({ x: 14, y: 16 });
-        }
-        return !prev;
-      });
+      if (isPinned) {
+        const point = map?.project([coordinates.lng, coordinates.lat]);
+        setPosition(point ?? null);
+        setPin(false);
+      }
+
+      if (!isPinned) {
+        setFlash(true);
+        setTimeout(() => setFlash(false), 1000);
+        setPosition({ x: 14, y: 16 });
+        setPin(true);
+      }
     },
-    [map, coordinates, setPosition]
+    [map, coordinates, setPosition, setPin, isPinned]
   );
+
+  useEffect(() => {
+    if (popUpRef.current) {
+      popUpRef.current.getBoundingClientRect().height;
+      popUpRef.current.getBoundingClientRect().width;
+      setMapDraggableTooltipDimensions((prev) => ({
+        h: popUpRef.current.getBoundingClientRect().height,
+        w: popUpRef.current.getBoundingClientRect().width,
+      }));
+    }
+  }, [
+    locationInfo.info,
+    restorationInfo.info,
+    restorationsitesInfo.info,
+    iucnEcoregionInfo.info,
+    popUpRef,
+  ]);
 
   if (!locationInfo.info) return null;
 
+  const maxHeight = useMemo(() => {
+    return `calc(${window.innerHeight - position?.y}px)`;
+  }, [position?.y]);
+
   return (
-    <Draggable position={position} id="draggable-map-popup">
+    <Draggable position={position} id="draggable-map-popup" isPinned={isPinned}>
       {({ listeners, attributes }) => (
         <div
+          ref={popUpRef}
           className={cn(
             'shadow-popup absolute z-50 flex flex-col rounded-3xl border bg-white transition-all duration-300',
             'w-fit-content border-gray-300',
@@ -106,7 +138,10 @@ const MapPopup = ({
             <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
             <div className="pointer-events-none absolute bottom-0 left-6 right-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />
 
-            <div className="min-w-content relative max-h-[calc(100svh_-_theme(space.20))] min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white">
+            <div
+              className="relative min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white"
+              style={{ maxHeight }}
+            >
               <LocationPopup
                 locationPopUpInfo={locationInfo}
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
