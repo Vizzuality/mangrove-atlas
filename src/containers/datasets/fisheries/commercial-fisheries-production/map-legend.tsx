@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import Fisheries from '../fisheries/widget';
 
 const LEGEND_RANGES = {
   total: [
@@ -65,7 +64,6 @@ const CommercialFisheriesProductionMapLegend = () => {
           </div>
         ))}
 
-      {!commercialFisheriesProductionFilter && <p>Combined density for all species</p>}
       {!commercialFisheriesProductionFilter &&
         LEGEND_RANGES['total'].map(({ color, range }, index) => (
           <div key={index} className="flex items-center space-x-2">
