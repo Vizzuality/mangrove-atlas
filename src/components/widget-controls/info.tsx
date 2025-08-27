@@ -17,7 +17,7 @@ const Info = ({ id, content }) => {
 
   // Google Analytics tracking
   const handleAnalytics = () => {
-    trackEvent(`Widget Info`, {
+    trackEvent(`Widget Info - ${id}`, {
       action: 'widget info',
       label: `Info for widget ${id}`,
     });
