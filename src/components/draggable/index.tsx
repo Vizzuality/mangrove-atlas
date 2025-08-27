@@ -4,21 +4,24 @@ type DraggableProps = {
   id: string;
   position: { x: number; y: number };
   isPinned?: boolean;
+  yOffset?: number;
   children: (params: {
     listeners: ReturnType<typeof useDraggable>['listeners'];
     attributes: ReturnType<typeof useDraggable>['attributes'];
   }) => React.ReactNode;
 };
 
-export default function Draggable({ id, position, children, isPinned }: DraggableProps) {
+export default function Draggable({ id, position, children, yOffset = 50 }: DraggableProps) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id });
 
   if (!position) return null;
 
+  const top = Math.max(0, position.y - yOffset);
+
   const style: React.CSSProperties = {
     position: 'absolute',
     left: position.x,
-    top: position.y,
+    top,
     transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
     transition: 'transform 0.1s ease-out',
     zIndex: 10000,
