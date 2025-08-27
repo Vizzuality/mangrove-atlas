@@ -101,7 +101,7 @@ const MapPopup = ({
   if (!locationInfo.info) return null;
 
   const maxHeight = useMemo(() => {
-    return `calc(${window.innerHeight - position?.y}px)`;
+    return `calc(${window.innerHeight - position?.y - 20}px)`;
   }, [position?.y]);
 
   return (
@@ -133,7 +133,7 @@ const MapPopup = ({
           </div>
 
           {/* Pop-up content */}
-          <ScrollArea className="relative grow overflow-y-auto overflow-x-hidden">
+          <ScrollArea className="relative -mb-8 grow overflow-y-auto overflow-x-hidden">
             {/* Gradients */}
             <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
             <div className="pointer-events-none absolute bottom-0 left-6 right-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />
