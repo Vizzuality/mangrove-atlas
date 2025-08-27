@@ -322,21 +322,22 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!restorationFeature) {
       removePopup('restoration');
     }
-
     // Restoration Sites
     if (restorationSitesFeature) {
-      const infoParsed = Object.entries(LABELS).reduce((acc, [key, label]) => {
-        const value = restorationSitesFeature.properties[key];
+      const infoParsed = restorationSitesFeature?.properties.cluster
+        ? { point_count: restorationSitesFeature?.properties.point_count }
+        : Object.entries(LABELS).reduce((acc, [key, label]) => {
+            const value = restorationSitesFeature.properties[key];
 
-        if (key === 'landscape_name' || key === 'site_name') {
-          acc[label] = [value];
-        } else {
-          const parsed = value ? JSON.parse(value) : null;
-          acc[label] = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
-        }
+            if (key === 'landscape_name' || key === 'site_name') {
+              acc[label] = [value];
+            } else {
+              const parsed = value ? JSON.parse(value) : null;
+              acc[label] = Array.isArray(parsed) ? parsed : parsed ? [parsed] : [];
+            }
 
-        return acc;
-      }, {});
+            return acc;
+          }, {});
 
       setRestorationSitesPopUp({
         ...restorationSitesPopUp,

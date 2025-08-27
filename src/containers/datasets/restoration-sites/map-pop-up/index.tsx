@@ -24,7 +24,7 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
       </CollapsibleTrigger>
       <CollapsibleContent>
         <div className="flex w-full flex-col space-y-2 border-none px-6 pb-6 font-sans shadow-none">
-          {info.cluster && (
+          {info.point_count && (
             <p className="text-sm text-black/85">
               <span>
                 There are <strong>{info.point_count}</strong> restoration sites in this location.{' '}

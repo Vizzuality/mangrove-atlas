@@ -19,6 +19,7 @@ const PopupRestorationSitesCollapsibleItem = ({
       label: `restoration sites pop up - expand/collapse`,
     });
   };
+
   return (
     <Collapsible onOpenChange={handleAnalytics} defaultOpen>
       <CollapsibleTrigger

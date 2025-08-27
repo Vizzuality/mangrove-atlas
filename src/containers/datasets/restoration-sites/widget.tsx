@@ -74,7 +74,7 @@ const RestorationSitesWidget = () => {
             <p className={WIDGET_SENTENCE_STYLE}>
               There are <span className="font-bold">{data.data?.length}</span> restoration sites in{' '}
               {data.location}
-              {!areFiltersEmpty && ' that match your criteria'}.
+              {!areFiltersEmpty && ' that match your criteria'}.<sup>*</sup>
             </p>
           )}
           {data.data?.length === 0 && (
@@ -132,6 +132,18 @@ const RestorationSitesWidget = () => {
               filtersSelected={filtersSelected}
             />
           )}
+          <div className="text-sm">
+            <sup>*</sup>As entered into the Mangrove Restoration Tracker Tool. Enter your data{' '}
+            <a
+              href="https://mrtt.globalmangrovewatch.org/auth/login"
+              rel="noopener noreferrer"
+              target="_blank"
+              className="font-semibold text-brand-800 underline"
+            >
+              here
+            </a>
+            .
+          </div>
         </div>
       )}
     </div>
