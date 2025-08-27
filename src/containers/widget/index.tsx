@@ -44,7 +44,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
     },
   };
 
-  if (Boolean(children.type() === null)) return null;
+  if (Boolean(children?.type() === null)) return null;
 
   const isCollapsed: boolean =
     isDrawingToolEnabled || isDrawingUploadToolEnabled ? false : widgetsCollapsed[id];

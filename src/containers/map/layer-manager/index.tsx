@@ -22,7 +22,7 @@ const LayerManagerContainer = () => {
 
   const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
 
-  const activeLayersIds = layers?.map((l) => l.id);
+  const activeLayersIds = useMemo(() => layers?.map((l) => l?.id), [layers]);
 
   const ACTIVE_LAYERS = useMemo(() => {
     const filteredLayers = activeLayersIds?.filter(
