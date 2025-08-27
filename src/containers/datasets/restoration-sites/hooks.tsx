@@ -19,6 +19,7 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import type { Data, DataFilters, DataResponse } from './types';
+import { sortObject } from 'lib/utils';
 
 // widget data
 export function useMangroveRestorationSites(
@@ -88,9 +89,12 @@ export function useMangroveRestorationSitesFilters(
     ['restoration-sites-filters', currentLocation],
     fetchMangroveRestorationSitesFilters,
     {
-      select: ({ data }) => ({
-        data,
-      }),
+      select: ({ data }) => {
+        const orderedData = sortObject(data);
+        return {
+          data: orderedData,
+        };
+      },
       ...queryOptions,
     }
   );
