@@ -66,8 +66,10 @@ const SpeciesLocation = () => {
       if (specie) setSpecie(specie);
       // Google Analytics tracking
       trackEvent('Widget iteration - species location - select specie', {
-        action: 'Widget iteration - species location - select specie',
+        category: 'Widget iteration',
+        action: 'Select',
         label: `Widget iteration - species location - select specie ${specie}`,
+        value: specie,
       });
     },
     [species, setSpecie]

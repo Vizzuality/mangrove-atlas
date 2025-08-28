@@ -59,7 +59,8 @@ const LegendItem = ({
 
       // Google Analytics tracking
       trackEvent(`Legend - Layer visibility`, {
-        action: 'enable or disable layer visibility',
+        category: 'Layers - legend',
+        action: 'click',
         label: `Legend - ${l.visibility === 'none' ? 'enable' : 'disable'} layer visibility`,
       });
 
@@ -80,7 +81,8 @@ const LegendItem = ({
 
       // Google Analytics tracking
       trackEvent(`Legend - Remove layer`, {
-        action: 'remove layer from legend',
+        category: 'Layers - legend',
+        action: 'Click',
         label: `Legend - remove layer ${layer}`,
       });
       setActiveLayers(updatedLayers);
@@ -103,8 +105,10 @@ const LegendItem = ({
 
       // Google Analytics tracking
       trackEvent(`Legend - Change opacity`, {
-        action: 'change opacity from legend',
+        category: 'Layers - legend',
+        action: 'Slider',
         label: `Legend - change opacity ${layer} from ${l.opacity} to ${op}`,
+        value: op,
       });
 
       setActiveLayers(layersWithOpacity);

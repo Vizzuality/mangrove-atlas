@@ -32,7 +32,8 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
     trackEvent(
       `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
       {
-        action: 'draw polygon',
+        category: 'Drawing tool',
+        action: 'Click',
         label: `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
       }
     );
@@ -59,6 +60,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             true,
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
+          [menuItemStyle]: true,
         })}
         onClick={handleDrawingMode}
         data-testid="drawing-tool-button"

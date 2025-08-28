@@ -29,8 +29,9 @@ const ContextualBasemapsMapSettings = () => {
       // Google Analytics tracking
       if (id !== 'no-layer') {
         trackEvent(`Contextual Basemap settings (planet) - ${id}`, {
-          action: 'activate layer',
-          label: `Contextual Basemap settings (planet) - ${id}`,
+          category: 'Layers - Contextual',
+          action: 'Toggle',
+          label: `Add contextual Basemap settings (planet) - ${id}`,
         });
       }
 

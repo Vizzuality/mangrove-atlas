@@ -83,7 +83,8 @@ const IndicatorSources = ({
     // Google Analytics tracking
     if (!isActive) {
       trackEvent(`Add mangrove national dashboard indicator layer - ${id}`, {
-        action: 'add mangrove national dashboard indicator layer',
+        category: 'Layers',
+        action: 'Toggle',
         label: `Add mangrove national dashboard indicator layer - ${id}`,
       });
     }

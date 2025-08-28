@@ -41,8 +41,10 @@ const FilterSites = ({
   const handleFiltersApplication = () => {
     // Google Analytics tracking
     trackEvent('Widget iteration - restoration sites - apply filters', {
-      action: 'Widget iteration - restoration sites',
+      category: 'Widget iteration',
+      action: 'Click',
       label: `Widget iteration - restoration sites - apply filters ${filters}`,
+      value: filters,
     });
     onChangeModalVisibility(!open);
     setMapFilters(filters);
@@ -94,8 +96,10 @@ const FilterSites = ({
                 onChange={(values) => {
                   // Google Analytics tracking
                   trackEvent('Widget iteration - restoration sites - filters selection', {
-                    action: 'Widget iteration - restoration sites',
-                    label: `Widget iteration - restoration sites - filters selection, ${filters[id]}`,
+                    category: 'Widget iteration',
+                    action: 'Select',
+                    label: `Widget iteration - restoration sites - filters selection, ${filters[id]}: ${values}`,
+                    value: { [id]: values },
                   });
                   setFilters({ ...filters, [id]: values });
                 }}

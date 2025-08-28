@@ -99,8 +99,10 @@ const HabitatExtent = () => {
                           onClick={() => {
                             // Google Analytics tracking
                             trackEvent('Widget iteration - start date change in habitat change', {
-                              action: 'Widget iteration - start date change in habitat change',
+                              category: 'Widget iteration',
+                              action: 'Select',
                               label: `Widget iteration - change start date in habitat change to ${y}`,
+                              value: y,
                             });
                             setStartYear(y);
                           }}
@@ -146,7 +148,8 @@ const HabitatExtent = () => {
                           onClick={() => {
                             // Google Analytics tracking
                             trackEvent('Widget iteration - end date change in habitat change', {
-                              action: 'Widget iteration - end date change in habitat change',
+                              category: 'Widget iteration',
+                              action: 'Select',
                               label: `Widget iteration - change end date in habitat change to ${y}`,
                             });
                             setEndYear(y);
@@ -190,8 +193,10 @@ const HabitatExtent = () => {
               const newLimit = limit === 5 ? 10 : 5;
               // Google Analytics tracking
               trackEvent('Widget iteration - limit change in habitat change', {
-                action: 'Widget iteration - limit change in habitat change',
+                category: 'Widget iteration',
+                action: 'Select',
                 label: `Widget iteration - change limit in habitat change to ${newLimit}`,
+                value: newLimit,
               });
               setLimit(newLimit);
             }}

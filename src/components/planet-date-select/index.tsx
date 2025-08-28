@@ -59,8 +59,10 @@ const DateSelect = ({
 
       // Google Analytics tracking
       trackEvent(`Contextual Basemap settings - Date - ${id}`, {
-        action: 'date change in contextual layer',
+        category: 'Layers - Contextual',
+        action: 'Select',
         label: `Contextual Basemap - ${id}. Selected date: ${value}`,
+        value: value,
       });
     },
     [layerToUpdate, activeLayers, id, setActiveLayers]

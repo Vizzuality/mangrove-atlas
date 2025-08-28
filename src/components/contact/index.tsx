@@ -80,9 +80,10 @@ export function ContactForm() {
       });
 
       // Google Analytics tracking
-      trackEvent('Contact form', {
-        action: 'Contact form',
-        label: `Contact form`,
+      trackEvent('Contact form - submit', {
+        category: 'Menu - contact form - help',
+        action: 'Submit',
+        label: 'Contact form',
       });
 
       const data = await response.json();

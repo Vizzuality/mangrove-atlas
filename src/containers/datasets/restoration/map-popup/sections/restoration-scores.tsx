@@ -15,7 +15,8 @@ const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
   const handleAnalytics = () => {
     // Google Analytics tracking
     trackEvent(`restoration scores pop up - expand/collapse`, {
-      action: 'expand/collapse restoration scores pop up',
+      category: 'Map popup iteration',
+      action: 'Expand / Collapse',
       label: `restoration scores pop up - expand/collapse`,
     });
   };

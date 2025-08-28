@@ -176,8 +176,10 @@ const HabitatExtent = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - date change in habitat extent', {
-                            action: 'Widget iteration - date change in habitat extent',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - change date in habitat extent to ${y}`,
+                            value: y,
                           });
                           handleClick(y);
                         }}

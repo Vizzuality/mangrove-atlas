@@ -133,8 +133,10 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               onClick={() => {
                 // Google Analytics tracking
                 trackEvent('Select location', {
+                  category: 'Menu - Location selection',
                   action: 'Select location',
                   label: `Select location - ${locationsToDisplay[index].name}`,
+                  value: locationsToDisplay[index].name,
                 });
                 handleLocation(locationsToDisplay[index]);
               }}

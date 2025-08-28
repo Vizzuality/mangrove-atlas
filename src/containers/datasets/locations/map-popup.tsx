@@ -14,6 +14,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
 import { trackEvent } from 'lib/analytics/ga';
+import { ca } from 'date-fns/locale';
 
 const LocationPopUP = ({
   locationPopUpInfo,
@@ -41,8 +42,10 @@ const LocationPopUP = ({
   const handlePopUpContentVisibility = useCallback(() => {
     // Google Analytics tracking
     trackEvent(`Location pop up - ${isOpen ? 'collapse' : 'expand'}`, {
-      action: 'expand/collapse location pop up',
+      category: 'Map Popup iteration',
+      action: 'Expand / collapse',
       label: `Location pop up - ${isOpen ? 'collapse' : 'expand'}`,
+      value: isOpen ? 'collapse' : 'expand',
     });
     setIsOpen(!isOpen);
   }, [isOpen]);
@@ -66,8 +69,10 @@ const LocationPopUP = ({
 
     // Google Analytics tracking
     trackEvent(`Location pop up - ${info.location.name}`, {
-      action: 'map location',
+      category: 'Map Popup iteration',
+      action: 'Click',
       label: `Location pop up - ${info.location.name}`,
+      value: info.location.name,
     });
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
@@ -89,8 +94,10 @@ const LocationPopUP = ({
 
       // Google Analytics tracking
       trackEvent(`Location pop up, protected area - ${info.location.name}`, {
-        action: 'map protected area',
+        category: 'Map Popup iteration',
+        action: 'Click',
         label: `Location pop up, protected area - ${info.location.name}`,
+        value: info.location.name,
       });
     },
     [setLocationBounds, push, queryParams, locations, info]

@@ -133,8 +133,10 @@ const NetChangeWidget = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - net change - change unit', {
-                            action: 'Widget iteration - net change',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - net change - change unit to ${u}`,
+                            value: u,
                           });
                           setUnit(u);
                         }}

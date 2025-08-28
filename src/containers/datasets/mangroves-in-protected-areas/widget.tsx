@@ -20,6 +20,7 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
 import { trackEvent } from 'lib/analytics/ga';
+import { ca } from 'date-fns/locale';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');
@@ -63,8 +64,10 @@ const MangrovesInProtectedAreas = () => {
                           onClick={() => {
                             // Google Analytics tracking
                             trackEvent('Widget iteration - Protected areas - change unit', {
-                              action: 'Widget iteration - Protected areas',
+                              category: 'Widget iteration',
+                              action: 'Select',
                               label: `Widget iteration - Protected areas - change unit to ${u}`,
+                              value: u,
                             });
                             setUnit(u);
                           }}
@@ -101,8 +104,10 @@ const MangrovesInProtectedAreas = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - Protected areas - change unit', {
-                            action: 'Widget iteration - Protected areas',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - Protected areas - change unit to ${u}`,
+                            value: u,
                           });
                           setUnit(u);
                         }}

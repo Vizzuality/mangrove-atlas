@@ -37,7 +37,8 @@ const WidgetsMenu: FC = () => {
     // Google Analytics tracking
     if (!allActive) {
       trackEvent('Widgets deck - Widgets selection - Activate all', {
-        action: 'activate widgets',
+        category: 'Widgets deck',
+        action: 'Checkbox',
         label: 'Widgets deck tool- Activate all widgets',
       });
     }
@@ -59,7 +60,8 @@ const WidgetsMenu: FC = () => {
 
       // Google Analytics tracking
       trackEvent('Widgets deck - Layers selection - Activate all', {
-        action: 'activate layers',
+        category: 'Widgets deck',
+        action: 'Checkbox',
         label: 'Widgets deck tool- Activate all layers',
       });
     }
@@ -72,8 +74,10 @@ const WidgetsMenu: FC = () => {
       // Google Analytics tracking
       if (!isActive) {
         trackEvent(`Widgets deck - Widget selected - ${e}`, {
-          action: 'activate widget',
+          category: 'Widgets deck',
+          action: 'Checkbox',
           label: `Widgets deck tool - widget -${e}`,
+          value: e,
         });
       }
       const updatedWidgets = isActive
@@ -94,8 +98,10 @@ const WidgetsMenu: FC = () => {
       // Google Analytics tracking
       if (!isActive) {
         trackEvent(`Widgets deck - Layer selected - ${e}`, {
-          action: 'activate layer',
+          category: 'Widgets deck',
+          action: 'Checkbox',
           label: `Widgets deck tool - layer - ${e}`,
+          value: e,
         });
       }
       const layersUpdate = isActive

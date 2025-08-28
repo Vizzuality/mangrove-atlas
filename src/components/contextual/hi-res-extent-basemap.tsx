@@ -39,7 +39,8 @@ const HighResolutionExtentBasemap = () => {
       // Google Analytics tracking
       if (id !== 'no-layer') {
         trackEvent('Contextual layer high resolution extent layer', {
-          action: 'enable contextual layer high resolution extent layer',
+          category: 'Layers - Contextual',
+          action: 'Toggle',
           label: 'Enable Contextual layer high resolution extent layer',
         });
       }

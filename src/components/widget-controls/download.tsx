@@ -45,7 +45,8 @@ const Download = ({ id, content }) => {
   // Google Analytics tracking
   const handleAnalytics = () =>
     trackEvent(`Widget Download data - ${id}`, {
-      action: 'widget download data',
+      category: 'Widget iteration',
+      action: 'Download',
       label: `Download data for widget ${id}`,
     });
 

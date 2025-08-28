@@ -11,7 +11,8 @@ const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
   const handleAnalytics = () => {
     // Google Analytics tracking
     trackEvent(`restoration ecosystem services pop up - expand/collapse`, {
-      action: 'expand/collapse restoration ecosystem services pop up',
+      category: 'Map popup iteration',
+      action: 'Expand / Collapse',
       label: `restoration ecosystem services pop up - expand/collapse`,
     });
   };

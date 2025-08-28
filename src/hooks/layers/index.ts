@@ -32,7 +32,8 @@ export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
   } else if (hasNationalDashboard && nationalDashboardIndex !== -1) {
     // Google Analytics tracking
     trackEvent(`Replace national dashboard layer - ${id}`, {
-      action: 'replace national dashboard layer',
+      category: 'Layers',
+      action: 'Toggle',
       label: `Replace national dashboard layer - ${id}`,
     });
 
@@ -43,7 +44,8 @@ export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
 
     // Google Analytics tracking
     trackEvent(`Add national dashboard layer - ${id}`, {
-      action: 'add national dashboard layer',
+      category: 'Layers',
+      action: 'Toggle',
       label: `Add national dashboard layer - ${id}`,
     });
     return [newLayer, ...activeLayers];
