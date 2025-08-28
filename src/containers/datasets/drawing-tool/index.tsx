@@ -15,7 +15,7 @@ import Icon from 'components/ui/icon';
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import { trackEvent } from 'lib/analytics/ga';
 
-const WidgetDrawingTool = () => {
+const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
@@ -60,6 +60,7 @@ const WidgetDrawingTool = () => {
             true,
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
+          [menuItemStyle]: true,
         })}
         onClick={handleDrawingMode}
         data-testid="drawing-tool-button"
