@@ -42,8 +42,10 @@ const Category = () => {
 
       // Google Analytics tracking
       trackEvent(`Change category - ${event.currentTarget.value}`, {
-        action: 'Change widgets category',
+        category: 'Widgets deck',
+        action: 'Click',
         label: `Change category - from ${categorySelected} to ${event.currentTarget.value}`,
+        value: event.currentTarget.value,
       });
 
       // No extra tracking for layers or widgets as it’s already intrinsic to the category selection

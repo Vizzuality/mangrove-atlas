@@ -14,9 +14,11 @@ const PopupRestorationSitesCollapsibleItem = ({
 }) => {
   // Google Analytics tracking
   const handleAnalytics = () => {
-    trackEvent(`restoration sites pop up - expand/collapse`, {
-      action: 'expand/collapse restoration sites pop up',
-      label: `restoration sites pop up - expand/collapse`,
+    trackEvent(`restoration sites pop up - expand/collapse category`, {
+      category: 'Map popup iteration',
+      action: 'Expand / Collapse',
+      label: `restoration sites pop up - expand/collapse ${title}`,
+      value: title,
     });
   };
 

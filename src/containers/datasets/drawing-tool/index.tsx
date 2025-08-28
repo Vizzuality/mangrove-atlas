@@ -15,7 +15,7 @@ import Icon from 'components/ui/icon';
 import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
 import { trackEvent } from 'lib/analytics/ga';
 
-const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
+const WidgetDrawingTool = () => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
   const resetDrawingUploadToolState = useResetRecoilState(drawingUploadToolAtom);
 
@@ -32,7 +32,8 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
     trackEvent(
       `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
       {
-        action: 'draw polygon',
+        category: 'Drawing tool',
+        action: 'Click',
         label: `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
       }
     );

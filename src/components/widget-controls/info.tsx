@@ -9,6 +9,7 @@ import { HELPER_POSITION } from './constants';
 import { useRecoilValue } from 'recoil';
 import { activeGuideAtom } from 'store/guide';
 import { trackEvent } from 'lib/analytics/ga';
+import { ca } from 'date-fns/locale';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];
@@ -18,6 +19,7 @@ const Info = ({ id, content }) => {
   // Google Analytics tracking
   const handleAnalytics = () => {
     trackEvent(`Widget Info - ${id}`, {
+      category: 'Widget iteration',
       action: 'widget info',
       label: `Info for widget ${id}`,
     });

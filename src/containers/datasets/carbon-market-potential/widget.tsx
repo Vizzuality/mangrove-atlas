@@ -75,8 +75,10 @@ const CarbonMarketPotentialWidget = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - rate change in carbon market potential', {
-                            action: 'Widget iteration - rate change in carbon market potential',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - carbon market potential rate to ${l}`,
+                            value: l,
                           });
                           setLabel(l);
                         }}
@@ -117,8 +119,10 @@ const CarbonMarketPotentialWidget = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - unit change in carbon market potential', {
-                            action: 'Widget iteration - unit change in carbon market potential',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - carbon market potential unit to ${u}`,
+                            value: u,
                           });
                           setUnit(u);
                         }}

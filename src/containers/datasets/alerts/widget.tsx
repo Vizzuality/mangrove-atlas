@@ -27,6 +27,7 @@ import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
+import { ca } from 'date-fns/locale';
 
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
@@ -130,8 +131,10 @@ const AlertsWidget = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - start date change in alerts', {
-                            action: 'Widget iteration - start date change in alerts',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - alerts start date ${date.value}`,
+                            date: date.value,
                           });
                           setStartDate(date);
                         }}
@@ -172,8 +175,10 @@ const AlertsWidget = () => {
                         onClick={() => {
                           // Google Analytics tracking
                           trackEvent('Widget iteration - end date change in alerts', {
-                            action: 'Widget iteration - end date change in alerts',
+                            category: 'Widget iteration',
+                            action: 'Select',
                             label: `Widget iteration - alerts end date ${date.value}`,
+                            value: date.value,
                           });
                           return setEndDate(date);
                         }}
@@ -197,16 +202,20 @@ const AlertsWidget = () => {
                 if (startIndex) {
                   // Google Analytics tracking
                   trackEvent('Widget iteration - start date change in alerts', {
-                    action: 'Widget iteration - start date change in alerts',
+                    category: 'Widget iteration',
+                    action: 'Brush - drag',
                     label: `Widget iteration - alerts start date ${fullData[startIndex]?.startDate}`,
+                    value: fullData[startIndex]?.startDate,
                   });
                   setStartDate(fullData[startIndex]?.startDate);
                 }
                 if (endIndex) {
                   // Google Analytics tracking
                   trackEvent('Widget iteration - end date change in alerts', {
-                    action: 'Widget iteration - end date change in alerts',
+                    category: 'Widget iteration',
+                    action: 'Brush - drag',
                     label: `Widget iteration - alerts end date ${fullData[endIndex]?.endDate}`,
+                    value: fullData[endIndex]?.endDate,
                   });
                   setEndDate(fullData[endIndex]?.endDate);
                 }

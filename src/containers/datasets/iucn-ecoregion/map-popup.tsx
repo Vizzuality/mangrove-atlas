@@ -70,9 +70,10 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
   const url = data?.reports?.find((d) => d.name.includes(unitNameWithoutMangrove))?.url;
   // Google Analytics tracking
   const handleAnalytics = () => {
-    trackEvent(`IUCN Ecoregion pop up - expand/collapse`, {
-      action: 'expand/collapse IUCN Ecoregion pop up',
-      label: `IUCN Ecoregion pop up - expand/collapse`,
+    trackEvent('IUCN Ecoregion pop up - expand/collapse', {
+      category: 'Map Popup iteration',
+      action: 'Expand / collapse',
+      label: 'IUCN Ecoregion pop up - expand/collapse',
     });
   };
   return (

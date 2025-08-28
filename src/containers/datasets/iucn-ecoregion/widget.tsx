@@ -16,7 +16,8 @@ const IUCNEcoregions = () => {
   // Google Analytics tracking
   const handleAnalytics = () => {
     trackEvent('Widget iteration - IUCN ecoregions - show associated reports', {
-      action: 'Widget iteration - IUCN ecoregions',
+      category: 'Widget iteration',
+      action: 'Dialog - show',
       label: 'Widget iteration - IUCN ecoregions - show associated reports',
     });
   };

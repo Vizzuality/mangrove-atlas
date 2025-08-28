@@ -51,8 +51,10 @@ const FloodProtection = ({
       trackEvent(
         `Change mangrove coastal protection period - from ${selectedPeriod} to ${period}`,
         {
-          action: 'Change mangrove coastal protection period',
-          label: `Change mangrove coastal protection - from ${selectedPeriod} to ${period}`,
+          category: 'Widget iteration',
+          action: 'Select',
+          label: `Change mangrove coastal protection period - from ${selectedPeriod} to ${period}`,
+          value: period,
         }
       );
       setPeriod(period);
@@ -91,7 +93,8 @@ const FloodProtection = ({
     // Google Analytics tracking
     if (!isActive) {
       trackEvent(`Add mangrove coastal protection layer - ${id}`, {
-        action: 'add mangrove coastal protection layer',
+        category: 'Layers',
+        action: 'toggle',
         label: `Add mangrove coastal protection layer - ${id}`,
       });
     }

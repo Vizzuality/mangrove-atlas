@@ -24,7 +24,8 @@ export const HelpContainer = () => {
   const handleClick = () => {
     // Google Analytics tracking
     trackEvent('Help guide', {
-      action: 'Help guide',
+      category: 'Menu - help',
+      action: 'Toggle',
       label: `Help guide - ${isActive ? 'deactivated' : 'activated'}`,
     });
     setIsActive((prev) => {

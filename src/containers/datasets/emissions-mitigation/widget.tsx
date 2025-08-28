@@ -22,13 +22,16 @@ const EmissionsMitigationWidget = () => {
       setFilteredIndicators([...filteredIndicators, indicator]);
       // Google Analytics tracking
       trackEvent('Widget iteration - filter change in emissions mitigation', {
-        action: 'Widget iteration - filter change in emissions mitigation',
+        category: 'Widget iteration',
+        action: 'Click bar chart',
         label: `Widget iteration - emissions mitigation add ${indicator} filter`,
+        value: indicator,
       });
     } else {
       // Google Analytics tracking
       trackEvent('Widget iteration - filter change in emissions mitigation', {
-        action: 'Widget iteration - filter change in emissions mitigation',
+        category: 'Widget iteration',
+        action: 'Click bar chart',
         label: `Widget iteration - emissions mitigation remove ${indicator} filter`,
       });
       const filter = filteredIndicators.splice(index, 1);

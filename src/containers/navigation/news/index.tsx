@@ -12,6 +12,7 @@ import Icon from 'components/ui/icon';
 
 import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
 import { trackEvent } from 'lib/analytics/ga';
+import { ca } from 'date-fns/locale';
 
 const News = () => {
   const guideIsActive = useRecoilValue(activeGuideAtom);
@@ -20,7 +21,8 @@ const News = () => {
   const handleAnalytics = () => {
     // Google Analytics tracking
     trackEvent('News', {
-      action: 'News',
+      category: 'Menu - News',
+      action: 'click',
       label: 'News - activated',
     });
   };

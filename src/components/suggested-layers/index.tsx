@@ -49,8 +49,9 @@ const SuggestedLayers = ({
     if (!isActive) {
       // Google Analytics tracking
       trackEvent(`Suggested layer - ${id}`, {
-        action: 'add suggested contextual layer',
+        action: 'Layers - Contextual',
         label: `Suggested Contextual Layer - ${id}. From: ${origin}`,
+        value: origin,
       });
     }
     setActiveLayers(layersUpdate);

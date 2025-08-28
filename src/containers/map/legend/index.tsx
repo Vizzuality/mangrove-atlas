@@ -78,7 +78,8 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
       // Google Analytics tracking
       trackEvent(`Layers order`, {
-        action: "change layers' order",
+        category: 'Layers',
+        action: "Drag and drop",
         label: `change layers order from ${activeLayers} to ${newLayers}`,
       });
       setActiveLayers([...newLayers, ...activeLayerPlanet]);

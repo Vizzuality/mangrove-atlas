@@ -4,12 +4,14 @@ import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import PopupRestorationSitesItem from './item';
 import { RestorationSitesPopUp } from 'types/map';
+import { ca } from 'date-fns/locale';
 
 const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
   // Google Analytics tracking
   const handleAnalytics = () => {
     trackEvent(`restoration sites pop up - expand/collapse`, {
-      action: 'expand/collapse restoration sites pop up',
+      category: 'Map popup iteration',
+      action: 'Expand / Collapse',
       label: `restoration sites pop up - expand/collapse`,
     });
   };

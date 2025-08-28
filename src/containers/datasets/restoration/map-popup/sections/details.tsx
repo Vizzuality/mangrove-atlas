@@ -4,6 +4,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
 import { trackEvent } from 'lib/analytics/ga';
+import { ca } from 'date-fns/locale';
 const Details = ({ data }: { data: RestorationPopUp }) => {
   const {
     Tidal_range,
@@ -25,7 +26,8 @@ const Details = ({ data }: { data: RestorationPopUp }) => {
   const handleAnalytics = () => {
     // Google Analytics tracking
     trackEvent(`restoration details pop up - expand/collapse`, {
-      action: 'expand/collapse restoration details pop up',
+      category: 'Map popup iteration',
+      action: 'Expand / Collapse',
       label: `restoration details pop up - expand/collapse`,
     });
   };
