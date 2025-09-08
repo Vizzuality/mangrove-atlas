@@ -318,6 +318,26 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         ...restorationPopUp,
         info: restorationFeature.properties as RestorationPopUp,
       });
+
+      if (map) {
+        if (hoveredStateId !== null) {
+          map?.removeFeatureState({
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: hoveredStateId,
+          });
+        }
+
+        hoveredStateId = restorationFeature?.id;
+        map?.setFeatureState(
+          {
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: hoveredStateId,
+          },
+          { clicked: true }
+        );
+      }
     }
     if (!restorationFeature) {
       removePopup('restoration');
@@ -374,14 +394,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       // *ON MOUSE ENTER
       if (restorationData && map) {
         if (hoveredStateId !== null) {
-          map?.setFeatureState(
-            {
-              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-              source: 'mangrove_restoration',
-              id: hoveredStateId,
-            },
-            { hover: false }
-          );
+          map?.removeFeatureState({
+            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+            source: 'mangrove_restoration',
+            id: hoveredStateId,
+          });
         }
 
         hoveredStateId = restorationData?.id;

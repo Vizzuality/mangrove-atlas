@@ -46,7 +46,11 @@ export function useLayer({
           ],
           'fill-opacity': [
             'case',
-            ['boolean', ['feature-state', 'hover'], false],
+            [
+              'any',
+              ['boolean', ['feature-state', 'hover'], false],
+              ['boolean', ['feature-state', 'clicked'], false],
+            ],
             1,
             opacity * 0.6,
           ],

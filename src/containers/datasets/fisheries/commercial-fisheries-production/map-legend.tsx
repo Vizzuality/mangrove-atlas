@@ -39,6 +39,8 @@ const LEGEND_RANGES = {
   ],
 };
 
+const UNIT = 'individuals / 100 m²';
+
 const CommercialFisheriesProductionMapLegend = () => {
   const { query } = useRouter();
   const { layers } = query as { layers: string };
@@ -61,6 +63,7 @@ const CommercialFisheriesProductionMapLegend = () => {
           <div key={index} className="flex items-center space-x-2">
             <div className="h-2 w-2" style={{ backgroundColor: color }} />
             <span>{range}</span>
+            {UNIT && <span>{UNIT}</span>}
           </div>
         ))}
 
@@ -68,7 +71,7 @@ const CommercialFisheriesProductionMapLegend = () => {
         LEGEND_RANGES['total'].map(({ color, range }, index) => (
           <div key={index} className="flex items-center space-x-2">
             <div className="h-2 w-2" style={{ backgroundColor: color }} />
-            <span>{range}</span>
+            <span>{range}</span> {UNIT && <span>{UNIT}</span>}
           </div>
         ))}
     </div>
