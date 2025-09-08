@@ -16,7 +16,7 @@ import {
   SelectContent,
   SelectItem,
 } from 'components/ui/select';
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+
 import {
   Tooltip,
   TooltipArrow,
@@ -39,6 +39,7 @@ import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
 import type { GroupedData, GroupedDataResponse } from './types';
 import { useMangroveFisheryMitigationPotentials } from './hooks';
+import WidgetControls from 'components/widget-controls';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,
@@ -54,7 +55,6 @@ const cmp = (a: string, b: string) => {
   const B = normalize(b);
   return A < B ? -1 : A > B ? 1 : 0;
 };
-
 const LayerSentenceByCategory = ({
   length,
   indicatorsWithData,
@@ -67,7 +67,7 @@ const LayerSentenceByCategory = ({
   handleIndicatorSelect: (value: GroupedData['indicator'] | 'all') => void;
 }) => (
   <span>
-    Showing {selectedIndicator === 'all' && ' combined '}density for{' '}
+    Showing {(selectedIndicator === 'all' || !selectedIndicator) && ' combined '}density for{' '}
     {length === 1 && <span>{indicatorsWithData[0].indicator}</span>}
     <Select value={selectedIndicator ?? 'all'} onValueChange={handleIndicatorSelect as any}>
       <SelectTrigger
@@ -206,17 +206,7 @@ const CommercialFisheriesProduction = () => {
   return (
     <div className="py-2">
       <WidgetHeader id="mangrove_fisheries" title="Mangrove Commercial Fisheries Production">
-        <SwitchWrapper id={id}>
-          <SwitchRoot
-            data-testid={id}
-            onCheckedChange={handleIndicatorLayerToggle}
-            checked={isActive}
-            aria-pressed={isActive}
-            aria-label="Toggle commercial fisheries production layer"
-          >
-            <SwitchThumb />
-          </SwitchRoot>
-        </SwitchWrapper>
+        <WidgetControls id={id} />
       </WidgetHeader>
 
       <div className="space-y-8">

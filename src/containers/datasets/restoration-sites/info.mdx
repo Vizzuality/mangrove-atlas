@@ -4,22 +4,25 @@ import LayoutMdx from 'layouts/mdx';
 
 ## Overview:
 
-This widget shows restoration sites that have been entered by users of the Mangrove Restoration Tracker Tool (MRTT). The Mangrove Restoration Tracker Tool (MRTT) is an application to record and track outcomes from mangrove restoration projects. Developed by the University of Cambridge and WWF on behalf of the <a href="https://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Global Mangrove Alliance</a> in collaboration with conservation practitioners and scientists from around the world, the MRTT has a flexible structure designed to capture field and desk-based data on mangrove restoration projects in a standardised format. 
+This widget shows restoration sites that have been entered by users of the <a href="https://mrtt.globalmangrovewatch.org/auth/login" target="\_blank" rel="noopener noreferrer"> Mangrove Restoration Tracker Tool (MRTT)</a> . The Mangrove Restoration Tracker Tool (MRTT) is an application to record and track outcomes from mangrove restoration projects. Developed by the University of Cambridge and WWF on behalf of the <a href="https://www.mangrovealliance.org/" target="_blank" rel="noopener noreferrer">Global Mangrove Alliance</a> in collaboration with conservation practitioners and scientists from around the world, the MRTT has a flexible structure designed to capture field and desk-based data on mangrove restoration projects in a standardised format.
 The tool will aid the mangrove conservation community in quantifying how specific conservation actions lead to outcomes for biodiversity, mangrove resilience, management effectiveness, communities, and governance. In turn, this will help improve mangrove conservation implementation and build a community to support more effective mangrove restoration projects.
-The MRTT has three overarching sections to record information through the lifetime of a mangrove restoration project: (i) site background and pre-restoration baseline, (ii) the restoration interventions and project costs, and (iii) post-restoration monitoring that incorporates both socio-economic and ecological factors. Each of the three sections has several subsections that make up the MRTT. The MRTT is designed to capture multiple monitoring events, allowing users to track their project throughout its lifetime.   
-The MRTT is able to record both historical and current restoration projects. The tool can also be viewed as a guide to the type of data that should be collected to plan and monitor mangrove restoration projects efficiently and effectively.  Note that not all restoration projects entered into MRTT have been made publicly available through this widget, and this widget is not intended to be an exhaustive record of all mangrove restoration projects taking place worldwide.
+The MRTT has three overarching sections to record information through the lifetime of a mangrove restoration project: (i) site background and pre-restoration baseline, (ii) the restoration interventions and project costs, and (iii) post-restoration monitoring that incorporates both socio-economic and ecological factors. Each of the three sections has several subsections that make up the MRTT. The MRTT is designed to capture multiple monitoring events, allowing users to track their project throughout its lifetime.  
+The MRTT is able to record both historical and current restoration projects. The tool can also be viewed as a guide to the type of data that should be collected to plan and monitor mangrove restoration projects efficiently and effectively. Note that not all restoration projects entered into MRTT have been made publicly available through this widget, and this widget is not intended to be an exhaustive record of all mangrove restoration projects taking place worldwide.
 
 ## Reference:
 
-Gatt et al. (In Review). 
+<a
+  href="https://www.sciencedirect.com/science/article/pii/S2590332224004342"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Gatt et al. 2024.{' '}
+</a>
 
 ## License:
 
-<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY 4.0</a>
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+  CC-BY 4.0
+</a>
 
-export default ({ children, ...props }) => (
-  <LayoutMdx {...props}>
-    {children}
-  </LayoutMdx>
-);
-
+export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;

@@ -116,6 +116,7 @@ import BasemapsContextualLayers from 'components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 import MangrovesCommercialFisheriesProductionLayer from 'containers/datasets/fisheries/commercial-fisheries-production/layer';
 import CommercialFisheriesProductionMapLegend from 'containers/datasets/fisheries/commercial-fisheries-production/map-legend';
+import CommercialFisheriesProductionDownload from 'containers/datasets/fisheries/commercial-fisheries-production/download';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
@@ -253,6 +254,7 @@ export const DOWNLOAD = {
   mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
   mangrove_blue_carbon: BlueCarbonDownload,
+  mangrove_commercial_fisheries_production: CommercialFisheriesProductionDownload,
 };
 
 export const BASEMAPS = {
