@@ -130,6 +130,14 @@ const Menu = () => {
               >
                 Mangrove Restoration Tracker Tool
               </Link>
+              <Link
+                href="https://www.youtube.com/playlist?list=PLVJGmVOGPDZoLvbW7Za051HVRSjDW1-Gw"
+                className="text-2lg font-light hover:text-brand-800"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Video Tutorial
+              </Link>
 
               <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
 
