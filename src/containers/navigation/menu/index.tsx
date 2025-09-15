@@ -52,6 +52,10 @@ const RESOURCES_LINKS = [
     label: 'Policy Brief: GMW and the Ramsar Convention',
     href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_RAMSAR-Policy-Brief_v7.pdf.pdf',
   },
+  {
+    label: 'Video Tutorial',
+    href: 'https://www.youtube.com/playlist?list=PLVJGmVOGPDZoLvbW7Za051HVRSjDW1-Gw',
+  },
 
   // {
   //   label: 'MRTT',
@@ -129,14 +133,6 @@ const Menu = () => {
                 target="_blank"
               >
                 Mangrove Restoration Tracker Tool
-              </Link>
-              <Link
-                href="https://www.youtube.com/playlist?list=PLVJGmVOGPDZoLvbW7Za051HVRSjDW1-Gw"
-                className="text-2lg font-light hover:text-brand-800"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Video Tutorial
               </Link>
 
               <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
