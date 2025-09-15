@@ -196,10 +196,10 @@ export function useLayers({
   visibility?: Visibility;
   indicator?: Data['indicator'];
 }): LayerProps[] {
-  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Total';
+  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Fish';
 
   const COLOR = useMemo(() => {
-    return COLORS[indicator] || COLORS.total || '#8800FF';
+    return COLORS[indicator] || COLORS.fish || '#8800FF';
   }, [indicator, COLORS]);
 
   if (!Indicator) return null;

@@ -117,6 +117,7 @@ import { WidgetSlugType } from 'types/widget';
 import MangrovesCommercialFisheriesProductionLayer from 'containers/datasets/fisheries/commercial-fisheries-production/layer';
 import CommercialFisheriesProductionMapLegend from 'containers/datasets/fisheries/commercial-fisheries-production/map-legend';
 import CommercialFisheriesProductionDownload from 'containers/datasets/fisheries/commercial-fisheries-production/download';
+import CommercialFisheriesProductionInfo from 'containers/datasets/fisheries/commercial-fisheries-production/info.mdx';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 
@@ -245,6 +246,7 @@ export const INFO = {
   mangrove_species_location: SpeciesLocationInfo,
   mangrove_salt_marsh: SaltMarshInfo,
   mangrove_contextual_layers: PlanetSatelliteBasemapInfo,
+  mangrove_commercial_fisheries_production: CommercialFisheriesProductionInfo,
 };
 
 export const DOWNLOAD = {

@@ -56,7 +56,7 @@ const CommercialFisheriesProductionMapLegend = () => {
   return (
     <div className="flex flex-col space-y-2 font-sans text-sm text-black/60">
       {commercialFisheriesProductionFilter && (
-        <p>Showing density for {commercialFisheriesProductionFilter}</p>
+        <p>Commercial {commercialFisheriesProductionFilter} productivity (per 100 m2) </p>
       )}
       {LEGEND_RANGES[commercialFisheriesProductionFilter] &&
         LEGEND_RANGES[commercialFisheriesProductionFilter].map(({ color, range }, index) => (
@@ -68,7 +68,7 @@ const CommercialFisheriesProductionMapLegend = () => {
         ))}
 
       {!commercialFisheriesProductionFilter &&
-        LEGEND_RANGES['total'].map(({ color, range }, index) => (
+        LEGEND_RANGES['fish'].map(({ color, range }, index) => (
           <div key={index} className="flex items-center space-x-2">
             <div className="h-2 w-2" style={{ backgroundColor: color }} />
             <span>{range}</span> {UNIT && <span>{UNIT}</span>}

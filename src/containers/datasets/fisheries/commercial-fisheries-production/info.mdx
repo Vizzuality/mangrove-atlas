@@ -1,0 +1,29 @@
+import LayoutMdx from 'layouts/mdx';
+
+# Mangrove Commercial Fisheries Production
+
+## Overview:
+
+This map displays the modelled density of commercially important prawn species due to the presence of mangrove ecosystems. The model was fit using expert-identified drivers of mangrove fish and invertebrate density and data from published field studies from around the world. Mangrove area, sea surface salinity, sea surface temperature, tidal amplitude, mangrove edge, change in extent, net primary productivity, sampling method, and mangrove geomorphic type were identified as key variables determining density. A model was created for three species of prawn determined to be both mangrove-affiliated and commercially important. Estimates of density are displayed in units of individuals per 100m2 (10m x 10m) and refer to juvenile and resident prawn. Predictions are only available for the Indian Ocean, Red Sea, and Western Pacific due to a lack of field data from other regions.
+
+## Reference:
+
+zu Ermgassen et al. (2025). <a
+style={{ color: '#00857f', fontWeight: 600, textDecoration: 'none' }}
+href="https://www.nature.com/articles/s43247-025-02229-w#Sec21"
+target="\_blank"
+rel="noopener noreferrer">
+Mangroves support an estimated annual abundance of over 700 billion juvenile fish and invertebrates.</a>
+
+## License:
+
+<a
+  style={{ color: '#00857f', fontWeight: 600, textDecoration: 'none' }}
+  href="https://creativecommons.org/licenses/by/4.0/"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  License CC by 4.0
+</a>
+
+export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;
