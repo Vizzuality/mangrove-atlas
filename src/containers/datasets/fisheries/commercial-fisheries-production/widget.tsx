@@ -32,7 +32,6 @@ import type { ActiveLayers } from 'types/layers';
 import type { GroupedData, GroupedDataResponse } from './types';
 import { useMangroveFisheryMitigationPotentials } from './hooks';
 import WidgetControls from 'components/widget-controls';
-import { set } from 'date-fns';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,
@@ -51,6 +50,7 @@ const cmp = (a: string, b: string) => {
 
 const CommercialFisheriesProduction = () => {
   const [selectedIndicator, setSelectedIndicator] = useState<GroupedData['indicator']>('fish');
+  const setActiveLayers = useSetRecoilState(activeLayersAtom);
 
   const { isFetched, isFetching, data } =
     useMangroveFisheryMitigationPotentials<GroupedDataResponse>(
@@ -69,8 +69,6 @@ const CommercialFisheriesProduction = () => {
         },
       }
     );
-
-  const setActiveLayers = useSetRecoilState(activeLayersAtom);
 
   // Sort once (case/diacritics-insensitive)
   const indicatorsWithData = useMemo(() => {
@@ -103,12 +101,13 @@ const CommercialFisheriesProduction = () => {
     [updateIndicatorAndLayer]
   );
 
-  if (isFetched && !data?.indicators?.length) return <NoData />;
-
   const averageValueByIndicator = useMemo(() => {
+    if (isFetched && !data?.indicators?.length) return null;
     const indicatorData = data?.indicators?.find((d) => d.indicator === selectedIndicator);
     return formatAxis(indicatorData?.density || 0);
   }, [data, selectedIndicator]);
+
+  if (isFetched && !data?.indicators?.length) return <NoData />;
 
   return (
     <div className="py-2">
