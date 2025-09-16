@@ -12,7 +12,13 @@ import type { LocationTypes } from 'containers/datasets/locations/types';
 import widgets from 'containers/widgets/constants';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
@@ -76,9 +82,9 @@ const CustomizeWidgetsDeck = () => {
               </DialogTrigger>
               <DialogContent className="left-0 top-0 min-h-screen w-screen space-y-8 rounded-none">
                 <div className="no-scrollbar space-y-8 overflow-y-auto">
-                  <h2 className="font-black/85 text-3xl font-light leading-10">
+                  <DialogTitle className="font-black/85 text-3xl font-light leading-10">
                     Widgets deck settings
-                  </h2>
+                  </DialogTitle>
                   <Category />
                   <WidgetsMenu />
                 </div>

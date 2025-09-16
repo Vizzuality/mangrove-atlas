@@ -29,6 +29,7 @@ import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from 'svgs/legend/show.svg?sprite';
 import { trackEvent } from 'lib/analytics/ga';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 const LegendItem = ({
   id,
@@ -188,6 +189,7 @@ const LegendItem = ({
               })}
               overlay={false}
             >
+              <DialogTitle className="sr-only">Layer statistics</DialogTitle>
               <div className="no-scrollbar relative overflow-y-auto bg-red-900 px-3">
                 <WidgetWrapper
                   key={l.id}
@@ -250,6 +252,7 @@ const LegendItem = ({
                     })}
                     overlay={false}
                   >
+                    <DialogTitle className="sr-only">Widget info</DialogTitle>
                     <div className="no-scrollbar overflow-y-auto">
                       <div className="no-scrollbar overflow-y-auto">
                         {WidgetInfo && <WidgetInfo />}

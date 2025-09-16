@@ -7,7 +7,7 @@ import { useBlogPosts } from 'hooks/blog';
 import Helper from 'containers/help/helper';
 import BlogContent from 'containers/news/content';
 
-import { Dialog, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
@@ -49,6 +49,7 @@ const News = () => {
 
       {!guideIsActive && data && (
         <DialogContent className="md:mb-20">
+          <DialogTitle className="sr-only">News</DialogTitle>
           <BlogContent />
         </DialogContent>
       )}

@@ -15,6 +15,7 @@ import { Dialog, DialogPortal, DialogContent } from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -89,6 +90,7 @@ const AnalysisAlert = () => {
       <Dialog open={isAnalysisAlertOpen}>
         <DialogPortal>
           <DialogContent onEscapeKeyDown={() => setAnalysisAlert(false)} overlay>
+            <DialogTitle className="sr-only">Reset page</DialogTitle>
             <div className="flex justify-end">
               <button
                 type="button"

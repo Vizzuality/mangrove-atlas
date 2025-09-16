@@ -4,7 +4,13 @@ import { useRouter } from 'next/router';
 
 import cn from 'lib/classnames';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -88,7 +94,7 @@ export const Share = ({
               </DialogTrigger>
 
               <DialogContent className="top-[30%] text-black/85">
-                <h3 className="mb-2 text-3xl font-light">Share</h3>
+                <DialogTitle className="mb-2 text-3xl font-light">Share</DialogTitle>
                 <div className="flex w-[480px] flex-col space-y-5">
                   <div className="flex flex-col space-y-1">
                     <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>

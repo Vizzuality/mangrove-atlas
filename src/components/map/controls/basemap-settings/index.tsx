@@ -7,7 +7,13 @@ import Helper from 'containers/help/helper';
 import Basemaps from 'components/contextual/basemaps';
 import BasemapsContextualMapSettings from 'components/contextual/contextual-basemaps';
 import HighResolutionExtentBasemap from 'components/contextual/hi-res-extent-basemap';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
@@ -36,7 +42,9 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           </DialogTrigger>
           <DialogContent className="top-52">
             <div className="no-scrollbar space-y-6">
-              <h2 className="font-black/85 text-3xl font-light leading-10">Basemap settings</h2>
+              <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+                Basemap settings
+              </DialogTitle>
               <Helper
                 className={{
                   button: 'top-4 left-[308px] z-[20]',
@@ -74,6 +82,9 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                         />
                       </DialogTrigger>
                       <DialogContent className="w-screen md:mb-20 md:w-auto">
+                        <DialogTitle className="sr-only">
+                          High-resolution Mangrove extent
+                        </DialogTitle>
                         <div className="no-scrollbar overflow-y-auto">
                           <InfoHiRes />
                         </div>
@@ -105,6 +116,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                         />
                       </DialogTrigger>
                       <DialogContent className="w-screen md:mb-20 md:w-auto">
+                        <DialogTitle className="sr-only">Planet imagery</DialogTitle>
                         <div className="no-scrollbar overflow-y-auto">
                           <Info />
                         </div>

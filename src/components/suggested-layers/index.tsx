@@ -8,7 +8,13 @@ import { useRecoilState } from 'recoil';
 
 import { INFO } from 'containers/datasets';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import { Icon } from 'components/ui/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import type { ActiveLayers } from 'types/layers';
@@ -90,6 +96,7 @@ const SuggestedLayers = ({
               <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" description="Info" />
             </DialogTrigger>
             <DialogContent className="w-screen md:mb-20 md:w-auto">
+              <DialogTitle className="sr-only">Info</DialogTitle>
               <div className="no-scrollbar overflow-y-auto">
                 <Info />
               </div>

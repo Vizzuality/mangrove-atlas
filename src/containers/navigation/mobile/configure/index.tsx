@@ -1,7 +1,13 @@
 import Category from 'containers/categories-menu';
 import WidgetsMenu from 'containers/widgets/widgets-menu';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogTitle,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import CONFIGS_SVG from 'svgs/sidebar/configure.svg?sprite';
@@ -24,7 +30,9 @@ const ConfigureWidgets = () => {
       </DialogTrigger>
       <DialogContent className="left-0 top-0 min-h-screen w-screen space-y-8 rounded-none">
         <div className="no-scrollbar space-y-8 overflow-y-auto">
-          <h2 className="font-black/85 text-3xl font-light leading-10">Widgets deck settings</h2>
+          <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+            Widgets deck settings
+          </DialogTitle>
 
           <Category />
 
