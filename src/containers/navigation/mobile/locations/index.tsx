@@ -2,7 +2,13 @@ import { useCallback, useState } from 'react';
 
 import LocationsList from 'containers/locations-list';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogTitle,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
@@ -38,6 +44,7 @@ const LocationsMobile = () => {
           onEscapeKeyDown={closeMenu}
           onInteractOutside={closeMenu}
         >
+          <DialogTitle className="sr-only">Locations</DialogTitle>
           <LocationsList onSelectLocation={closeMenu} />
           <DialogClose onClose={closeMenu} className="top-4" />
         </DialogContent>

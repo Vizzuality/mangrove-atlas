@@ -12,6 +12,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from 'components/ui/dialog';
 
 const WelcomeIntroMessage = () => {
@@ -38,6 +39,7 @@ const WelcomeIntroMessage = () => {
         classNameContent="animate-none duration-0 min-h-fit"
         className="max-w-screen fixed top-0 left-0 right-0 bottom-0 min-h-fit w-screen space-y-6 p-0 text-black/85 shadow-sm sm:left-1/2 sm:top-1/2 sm:-translate-y-1/2 sm:-translate-x-1/2 sm:p-8 md:max-w-3xl"
       >
+        <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
         <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-bl-3xl sm:rounded-tl-3xl">
             <div className="absolute inset-0 h-full w-full sm:h-full">

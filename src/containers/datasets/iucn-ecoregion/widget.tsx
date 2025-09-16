@@ -1,6 +1,12 @@
 import NoData from 'containers/widgets/no-data';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Loading from 'components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
@@ -42,9 +48,9 @@ const IUCNEcoregions = () => {
             </DialogTrigger>
             <DialogContent>
               <div className="no-scrollbar space-y-4 overflow-y-auto p-4">
-                <h2 className="font-sans text-2xl font-light text-black/85">
+                <DialogTitle className="font-sans text-2xl font-light text-black/85">
                   IUCN Ecosystem Red List Assessment
-                </h2>
+                </DialogTitle>
                 <h4 className="py-4 text-sm font-bold">Associated reports</h4>
                 <ul className="text-light space-y-4 text-sm text-brand-800 underline">
                   {data.reports.map(({ name, url }) => (

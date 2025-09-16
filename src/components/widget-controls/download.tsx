@@ -1,6 +1,12 @@
 import { DOWNLOAD } from 'containers/datasets';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
@@ -65,6 +71,7 @@ const Download = ({ id, content }) => {
         </DialogTrigger>
       </Helper>
       <DialogContent>
+        <DialogTitle className="sr-only">Download Data</DialogTitle>
         <div className="no-scrollbar w-[480px] overflow-y-auto">
           {id && <DownloadInfo />}
           {content && !id && (

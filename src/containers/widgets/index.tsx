@@ -20,7 +20,13 @@ import AppTools from 'containers/navigation';
 import WidgetWrapper from 'containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogClose,
+  DialogTitle,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 import { breakpoints } from 'styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
@@ -172,7 +178,9 @@ const WidgetsContainer: FC = () => {
         <DialogContent className="mb-10 w-screen border-2 md:w-auto">
           <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
           <div className="no-scrollbar space-y-8">
-            <h2 className="font-black/85 text-3xl font-light leading-10">Widgets deck settings</h2>
+            <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+              Widgets deck settings
+            </DialogTitle>
             <Helper
               className={{
                 button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',

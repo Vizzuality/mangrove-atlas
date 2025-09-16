@@ -15,6 +15,7 @@ import { BUTTON_STYLES, WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 
 import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
 import SelectedFilters from './selected-filters';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 const RestorationSitesWidget = () => {
   // filters component state to avoid refetch on every selection
@@ -112,6 +113,7 @@ const RestorationSitesWidget = () => {
               )}
             </div>
             <DialogContent>
+              <DialogTitle className="sr-only">Filter sites</DialogTitle>
               <FilterSites
                 open={open}
                 onChangeModalVisibility={setOpen}

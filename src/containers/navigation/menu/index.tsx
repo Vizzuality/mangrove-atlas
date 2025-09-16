@@ -14,7 +14,13 @@ import PartnersLinks from 'containers/navigation/menu/partners';
 import BlogContent from 'containers/news/content';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from 'components/ui/dialog';
 import Icon from 'components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
@@ -108,9 +114,9 @@ const Menu = () => {
         {section === 'main' && (
           <div className="space-y-10 py-10">
             <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-              <h2 className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+              <DialogTitle className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
                 Global Mangrove Watch
-              </h2>
+              </DialogTitle>
               <button
                 type="button"
                 className="text-left text-2lg font-light hover:text-brand-800"

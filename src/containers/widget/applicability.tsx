@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui
 import { WidgetSlugType } from 'types/widget';
 
 import Info from './info.mdx';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 type ApplicabilityProps = {
   id: WidgetSlugType;
@@ -43,6 +44,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
           <div className="inline-flex text-brand-800 underline hover:no-underline">Learn more</div>
         </DialogTrigger>
         <DialogContent className="md:mb-20">
+          <DialogTitle className="sr-only">Data applicability</DialogTitle>
           <div className="no-scrollbar overflow-y-auto">
             <Info />
           </div>
