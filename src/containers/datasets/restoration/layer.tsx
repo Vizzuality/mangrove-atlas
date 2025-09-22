@@ -8,13 +8,13 @@ import { useRecoilValue } from 'recoil';
 
 import type { LayerProps } from 'types/layers';
 
-import { useLayer, useSource } from './hooks';
+import { useLayers, useSource } from './hooks';
 
 const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers?.find((l) => l.id === id);
   const SOURCE = useSource();
-  const LAYER = useLayer({
+  const LAYERS = useLayers({
     id,
     opacity: parseFloat(activeLayer.opacity),
     visibility: activeLayer.visibility,
@@ -22,16 +22,18 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
 
   useEffect(() => {
     if (activeLayer) {
-      onAdd([LAYER.id]);
-      return () => onRemove([LAYER.id]);
+      onAdd(LAYERS.map((layer) => layer.id));
+      return () => onRemove(LAYERS.map((layer) => layer.id));
     }
-  }, [onAdd, onRemove, LAYER.id, activeLayer]);
+  }, [onAdd, onRemove, LAYERS, activeLayer]);
 
-  if (!SOURCE || !LAYER) return null;
+  if (!SOURCE || !LAYERS) return null;
 
   return (
     <Source {...SOURCE}>
-      <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
+      {LAYERS.map((layer) => (
+        <Layer key={layer.id} {...layer} beforeId={beforeId} />
+      ))}
     </Source>
   );
 };

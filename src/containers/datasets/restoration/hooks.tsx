@@ -12,7 +12,7 @@ export function useSource(): SourceProps {
     id: 'mangrove_restoration',
   };
 }
-export function useLayer({
+export function useLayers({
   id,
   opacity,
   visibility = 'visible',
@@ -20,60 +20,100 @@ export function useLayer({
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-}): LayerProps {
+}): LayerProps[] {
   return useMemo(
     () =>
-      ({
-        id: `${id}-layer`,
-        type: 'fill',
-        source: 'mangrove_restoration',
-        'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
-        paint: {
-          'fill-color': [
-            'interpolate',
-            ['linear'],
-            ['get', 'Rest_Score'],
-            20,
-            '#f9ddda',
-            40,
-            '#ffadad',
-            60,
-            '#ce78b3',
-            80,
-            '#8478ce',
-            100,
-            '#224294',
-          ],
-          'fill-opacity': [
-            'case',
-            [
-              'any',
-              ['boolean', ['feature-state', 'hover'], false],
-              ['boolean', ['feature-state', 'clicked'], false],
+      [
+        {
+          id: `${id}-layer`,
+          type: 'fill',
+          source: 'mangrove_restoration',
+          'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
+          paint: {
+            'fill-color': [
+              'interpolate',
+              ['linear'],
+              ['get', 'Rest_Score'],
+              20,
+              '#f9ddda',
+              40,
+              '#ffadad',
+              60,
+              '#ce78b3',
+              80,
+              '#8478ce',
+              100,
+              '#224294',
             ],
-            1,
-            opacity * 0.6,
-          ],
-          'fill-outline-color': [
-            'interpolate',
-            ['linear'],
-            ['get', 'Rest_Score'],
-            20,
-            '#f9ddda',
-            40,
-            '#ffadad',
-            60,
-            '#ce78b3',
-            80,
-            '#8478ce',
-            100,
-            '#224294',
-          ],
+            'fill-opacity': [
+              'case',
+              [
+                'any',
+                ['boolean', ['feature-state', 'hover'], false],
+                ['boolean', ['feature-state', 'clicked'], false],
+              ],
+              1,
+              opacity * 0.6,
+            ],
+            'fill-outline-color': [
+              'interpolate',
+              ['linear'],
+              ['get', 'Rest_Score'],
+              20,
+              '#f9ddda',
+              40,
+              '#ffadad',
+              60,
+              '#ce78b3',
+              80,
+              '#8478ce',
+              100,
+              '#224294',
+            ],
+          },
+          layout: {
+            visibility,
+          },
         },
-        layout: {
-          visibility,
+        {
+          id: `${id}-layer-line`,
+          type: 'line',
+          source: 'mangrove_restoration',
+          'source-layer': 'MOW_Global_Mangrove_Restoration_202212',
+          paint: {
+            'line-color': [
+              'interpolate',
+              ['linear'],
+              ['get', 'Rest_Score'],
+              20,
+              '#f9ddda',
+              40,
+              '#ffadad',
+              60,
+              '#ce78b3',
+              80,
+              '#8478ce',
+              100,
+              '#224294',
+            ],
+
+            'line-width': [
+              'case',
+              [
+                'any',
+                ['boolean', ['feature-state', 'hover'], false],
+                ['boolean', ['feature-state', 'clicked'], false],
+              ],
+              0.5,
+              0,
+            ],
+            'line-opacity': opacity,
+          },
+          layout: {
+            visibility,
+          },
         },
-      }) satisfies LayerProps,
+      ] satisfies LayerProps[],
     [id, opacity, visibility]
   );
 }

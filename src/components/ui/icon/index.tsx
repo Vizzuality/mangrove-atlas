@@ -11,7 +11,7 @@ export const Icon = ({ icon, className = 'w-5 h-5', style, description }: IconPr
     })}
     viewBox={icon?.viewBox || '0 0 32 32'}
     style={style}
-    aria-labelledby={`icon-title-${description}-${icon.id}`}
+    aria-labelledby={`icon-title-${description}-${icon?.id}`}
   >
     <title id={`icon-title-${description}-${icon.id}`}>{description}</title>
     <use xlinkHref={`#${icon?.id}`} aria-hidden="true" />

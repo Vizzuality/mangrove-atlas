@@ -30,12 +30,12 @@ import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import type { ActiveLayers } from 'types/layers';
 import type { GroupedData, GroupedDataResponse } from './types';
-import { useMangroveFisheryMitigationPotentials } from './hooks';
+import { useMangroveCommercialFisheriesProduction } from './hooks';
 import WidgetControls from 'components/widget-controls';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,
-  fish: FISH_SVG,
+  finfish: FISH_SVG,
   crab: CRAB_SVG,
   bivalve: BIVALVE_SVG,
 } as const;
@@ -49,15 +49,16 @@ const cmp = (a: string, b: string) => {
 };
 
 const CommercialFisheriesProduction = () => {
-  const [selectedIndicator, setSelectedIndicator] = useState<GroupedData['indicator']>('fish');
+  const [selectedIndicator, setSelectedIndicator] = useState<GroupedData['indicator']>('finfish');
   const setActiveLayers = useSetRecoilState(activeLayersAtom);
 
   const { isFetched, isFetching, data } =
-    useMangroveFisheryMitigationPotentials<GroupedDataResponse>(
+    useMangroveCommercialFisheriesProduction<GroupedDataResponse>(
       {},
       {
         select: (raw) => {
           const acc: Record<string, GroupedData> = {};
+
           raw?.data?.forEach(({ indicator, indicator_type, value }) => {
             acc[indicator] ??= { indicator } as GroupedData;
             (acc[indicator] as any)[indicator_type] = value;
@@ -69,7 +70,6 @@ const CommercialFisheriesProduction = () => {
         },
       }
     );
-
   // Sort once (case/diacritics-insensitive)
   const indicatorsWithData = useMemo(() => {
     const list = data?.indicators?.filter((d) => d.absolute) ?? [];
@@ -169,7 +169,6 @@ const CommercialFisheriesProduction = () => {
                 .map(({ indicator, absolute, density }) => {
                   const disabled = !density && !absolute;
                   const selected = indicator === selectedIndicator;
-
                   return (
                     <button
                       id={indicator}
