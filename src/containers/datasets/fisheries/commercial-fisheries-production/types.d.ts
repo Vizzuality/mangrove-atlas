@@ -1,11 +1,11 @@
 export type Data = {
-  indicator: 'fish' | 'shrimp' | 'crab' | 'bivalve';
+  indicator: 'finfish' | 'shrimp' | 'crab' | 'bivalve';
   indicator_type: 'absolute' | 'density';
   value: number;
 };
 
 export type GroupedData = {
-  indicator: 'fish' | 'shrimp' | 'crab' | 'bivalve';
+  indicator: 'finfish' | 'shrimp' | 'crab' | 'bivalve';
   absolute?: number | null;
   density?: number | null;
 };
@@ -25,3 +25,11 @@ export type DataResponse = {
   data: Data[];
   metadata: Metadata;
 };
+
+type ApiData = Omit<Data, 'indicator'> & {
+  indicator: 'fish' | Data['indicator'];
+};
+
+type ApiResponse =
+  | (Omit<DataResponse, 'data'> & { data: ApiData[] })
+  | (Omit<DataResponse, 'data'> & { indicators: ApiData[] });

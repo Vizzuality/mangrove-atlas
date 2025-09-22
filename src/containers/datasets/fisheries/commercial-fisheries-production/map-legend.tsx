@@ -9,7 +9,7 @@ const LEGEND_RANGES = {
     { range: '2.2-3.3', color: '#405187' },
     { range: '3.3-17.8', color: '#3e0751' },
   ],
-  fish: [
+  finfish: [
     { range: '0-40', color: '#f0f2fb' },
     { range: '40-80', color: '#c2d6db' },
     { range: '80-105', color: '#7bacd1' },
@@ -68,7 +68,7 @@ const CommercialFisheriesProductionMapLegend = () => {
         ))}
 
       {!commercialFisheriesProductionFilter &&
-        LEGEND_RANGES['fish'].map(({ color, range }, index) => (
+        LEGEND_RANGES['finfish'].map(({ color, range }, index) => (
           <div key={index} className="flex items-center space-x-2">
             <div className="h-2 w-2" style={{ backgroundColor: color }} />
             <span>{range}</span> {UNIT && <span>{UNIT}</span>}

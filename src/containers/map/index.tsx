@@ -149,6 +149,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       setLocationBounds(null);
     }
   }, [map, setURLBounds, setLocationBounds]);
+  const clickedStateIdRef = useRef<string | number | null>(null);
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
@@ -318,25 +319,59 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         ...restorationPopUp,
         info: restorationFeature.properties as RestorationPopUp,
       });
-
       if (map) {
-        if (hoveredStateId !== null) {
-          map?.removeFeatureState({
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateId,
-          });
-        }
+        if (restorationFeature) {
+          const newId = restorationFeature.id as string | number;
 
-        hoveredStateId = restorationFeature?.id;
-        map?.setFeatureState(
-          {
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateId,
-          },
-          { clicked: true }
-        );
+          if (clickedStateIdRef.current !== null && clickedStateIdRef.current !== newId) {
+            map.removeFeatureState(
+              {
+                source: 'mangrove_restoration',
+                sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+                id: clickedStateIdRef.current,
+              },
+              'clicked'
+            );
+          }
+
+          map.removeFeatureState(
+            {
+              source: 'mangrove_restoration',
+              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+              id: newId,
+            },
+            'hover'
+          );
+
+          map.setFeatureState(
+            {
+              source: 'mangrove_restoration',
+              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+              id: newId,
+            },
+            { clicked: true }
+          );
+
+          clickedStateIdRef.current = newId;
+
+          setRestorationPopUpInfo({
+            ...restorationPopUp,
+            info: restorationFeature.properties as RestorationPopUp,
+          });
+        } else {
+          if (clickedStateIdRef.current !== null) {
+            map.removeFeatureState(
+              {
+                source: 'mangrove_restoration',
+                sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+                id: clickedStateIdRef.current,
+              },
+              'clicked'
+            );
+            clickedStateIdRef.current = null;
+          }
+          removePopup('restoration');
+        }
       }
     }
     if (!restorationFeature) {

@@ -12,7 +12,7 @@ import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse } from './types';
+import type { ApiResponse, Data, DataResponse, ApiData } from './types';
 import mapboxgl from 'mapbox-gl';
 import { useMemo } from 'react';
 
@@ -33,7 +33,7 @@ const COLORS = {
     '#3e0751',
   ],
 
-  fish: [
+  finfish: [
     'interpolate',
     ['linear'],
     ['get', 'Fish'],
@@ -98,50 +98,7 @@ const COLORS = {
   ],
 };
 
-const MOCK: Data[] = [
-  {
-    indicator: 'fish',
-    value: 565.826,
-    indicator_type: 'absolute',
-  },
-  {
-    indicator: 'fish',
-    value: 1234,
-    indicator_type: 'density',
-  },
-  {
-    indicator: 'shrimp',
-    value: 34,
-    indicator_type: 'absolute',
-  },
-  {
-    indicator: 'shrimp',
-    value: 34,
-    indicator_type: 'density',
-  },
-  {
-    indicator: 'crab',
-    value: 6767,
-    indicator_type: 'absolute',
-  },
-  {
-    indicator: 'crab',
-    value: 567,
-    indicator_type: 'density',
-  },
-  {
-    indicator: 'bivalve',
-    value: 65824,
-    indicator_type: 'absolute',
-  },
-  {
-    indicator: 'bivalve',
-    value: 123,
-    indicator_type: 'density',
-  },
-];
-
-export function useMangroveFisheryMitigationPotentials<TData = Data[]>(
+export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, TData>
 ): UseQueryResult<TData, Error> {
@@ -156,27 +113,39 @@ export function useMangroveFisheryMitigationPotentials<TData = Data[]>(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
 
-  const fetchMangroveFisheryMitigationPotentials = () =>
-    API.request({
+  const fetchMangroveFisheryMitigationPotentials = async (): Promise<DataResponse> => {
+    const response = await API.request<ApiResponse>({
       method: 'GET',
       url: '/widgets/fishery_mitigation_potentials',
       params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+        ...(location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         ...params,
       },
-    }).then((response) => ({
-      location,
-      ...response.data,
+    });
+
+    const rawList: ApiData[] =
+      'data' in response.data
+        ? (response.data.data as ApiData[])
+        : ((response.data as any).indicators as ApiData[]);
+
+    const data: DataResponse['data'] = rawList.map((d) => ({
+      ...d,
+      indicator: d.indicator === 'fish' ? 'finfish' : d.indicator,
     }));
+
+    return {
+      location,
+      metadata: (response.data as any).metadata,
+      data,
+    };
+  };
+
   return useQuery<DataResponse, Error, TData>(
     ['fishery-mitigation-potentials', params, location_id],
     fetchMangroveFisheryMitigationPotentials,
-    {
-      ...(queryOptions || {}),
-    }
+    { ...(queryOptions || {}) }
   );
 }
-
 export function useSource(): SourceProps {
   return {
     id: 'mangrove_commercial_fisheries_production-source',
@@ -199,7 +168,7 @@ export function useLayers({
   const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Fish';
 
   const COLOR = useMemo(() => {
-    return COLORS[indicator] || COLORS.fish || '#8800FF';
+    return COLORS[indicator] || COLORS.finfish || '#8800FF';
   }, [indicator, COLORS]);
 
   if (!Indicator) return null;
