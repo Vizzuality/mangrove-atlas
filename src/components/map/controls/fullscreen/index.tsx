@@ -21,7 +21,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger>
         <div
           className={cn({
             'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
@@ -42,9 +42,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
           />
         </div>
       </TooltipTrigger>
-      <TooltipContent side="left" align="start" className="bg-gray-600 px-2 text-white">
-        Fullscreen
-      </TooltipContent>
+      <TooltipContent className="bg-gray-600 px-2 text-white">Fullscreen</TooltipContent>
     </Tooltip>
   );
 };

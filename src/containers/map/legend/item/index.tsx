@@ -175,7 +175,7 @@ const LegendItem = ({
                   </button>
                 </TooltipTrigger>
                 <TooltipPortal>
-                  <TooltipContent side="top" align="center" className="bg-gray-600 px-2 text-white">
+                  <TooltipContent className="bg-gray-600 px-2 text-white">
                     Layer statistics
                   </TooltipContent>
                 </TooltipPortal>
@@ -234,11 +234,7 @@ const LegendItem = ({
                         </button>
                       </TooltipTrigger>
                       <TooltipPortal>
-                        <TooltipContent
-                          side="top"
-                          align="center"
-                          className="bg-gray-600 px-2 text-white"
-                        >
+                        <TooltipContent className="bg-gray-600 px-2 text-white">
                           Layer info
                         </TooltipContent>
                       </TooltipPortal>
@@ -276,11 +272,7 @@ const LegendItem = ({
                     </TooltipTrigger>
 
                     <TooltipPortal>
-                      <TooltipContent
-                        side="top"
-                        align="center"
-                        className="bg-gray-600 px-2 text-white"
-                      >
+                      <TooltipContent className="bg-gray-600 px-2 text-white">
                         Opacity
                       </TooltipContent>
                     </TooltipPortal>
@@ -322,7 +314,7 @@ const LegendItem = ({
                 </TooltipTrigger>
 
                 <TooltipPortal>
-                  <TooltipContent side="top" align="center" className="bg-gray-600 px-2 text-white">
+                  <TooltipContent className="bg-gray-600 px-2 text-white">
                     {visibility ? 'Hide' : 'Show'}
                   </TooltipContent>
                 </TooltipPortal>
@@ -335,7 +327,7 @@ const LegendItem = ({
                   </button>
                 </TooltipTrigger>
                 <TooltipPortal>
-                  <TooltipContent side="top" align="center" className="bg-gray-600 px-2 text-white">
+                  <TooltipContent className="bg-gray-600 px-2 text-white">
                     Remove layer
                   </TooltipContent>
                 </TooltipPortal>

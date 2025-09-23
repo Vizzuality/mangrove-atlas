@@ -47,7 +47,7 @@ export function useLayers({
             ],
             'fill-opacity': [
               'case',
-              ['any', ['boolean', ['feature-state', 'hover'], false]],
+              ['boolean', ['feature-state', 'hover'], false],
               1,
               opacity * 0.6,
             ],
@@ -76,16 +76,6 @@ export function useLayers({
               '#1b3374',
             ],
             'line-width': ['case', ['boolean', ['feature-state', 'clicked'], false], 1.25, 0.25],
-            'line-opacity': [
-              'case',
-              [
-                'any',
-                ['boolean', ['feature-state', 'hover'], false],
-                ['boolean', ['feature-state', 'clicked'], false],
-              ],
-              1,
-              opacity * 0.8,
-            ],
           },
           layout: { visibility },
         },

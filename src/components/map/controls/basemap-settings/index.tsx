@@ -23,7 +23,7 @@ import INFO_SVG from 'svgs/ui/info.svg?sprite';
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
     <Tooltip>
-      <TooltipTrigger asChild>
+      <TooltipTrigger>
         <Dialog>
           <DialogTrigger>
             <div
@@ -133,9 +133,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
           </DialogContent>
         </Dialog>
       </TooltipTrigger>
-      <TooltipContent side="left" align="start" className="bg-gray-600 px-2 text-white">
-        Basemap settings
-      </TooltipContent>
+      <TooltipContent className="bg-gray-600 px-2 text-white">Basemap settings</TooltipContent>
     </Tooltip>
   );
 };

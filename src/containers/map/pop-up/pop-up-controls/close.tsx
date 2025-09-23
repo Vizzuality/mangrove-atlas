@@ -29,11 +29,7 @@ const MapPopupClose = ({ setPosition }: MapPopupCloseProps) => {
           <HiX className="h-5 w-5 text-brand-800" />
         </button>
       </TooltipTrigger>
-      <TooltipContent
-        side="left"
-        align="start"
-        className="rounded bg-gray-700 px-2 py-1 text-sm text-white shadow"
-      >
+      <TooltipContent className="rounded bg-gray-700 px-2 py-1 text-sm text-white shadow">
         Close popup
       </TooltipContent>
     </Tooltip>
