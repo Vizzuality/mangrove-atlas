@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Marker, useMap } from 'react-map-gl';
 
@@ -53,7 +53,6 @@ import LayerManager from './layer-manager';
 import Image from 'next/image';
 
 import MapPopup from './pop-up';
-import LocationPopUP from 'containers/datasets/locations/map-popup';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -150,7 +149,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       setLocationBounds(null);
     }
   }, [map, setURLBounds, setLocationBounds]);
+
   const clickedStateIdRef = useRef<string | number | null>(null);
+
+  let hoveredStateId = null;
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
@@ -180,6 +182,17 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     } satisfies CustomMapProps['bounds'];
   }, [locationBounds, screenWidth]);
 
+  useEffect(() => {
+    if (!position && map) {
+      map?.removeFeatureState({
+        sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+        source: 'mangrove_restoration',
+        id: clickedStateIdRef.current,
+      });
+    }
+  }, [position]);
+
+  // Methods
   const handleCustomPolygon = useCallback(
     (customPolygon) => {
       const bbox = turfBbox(customPolygon);
@@ -399,8 +412,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!iucnEcoregionFeature) removePopup('ecoregion');
   };
 
-  let hoveredStateId = null;
-
   const handleMouseMove = useCallback(
     (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
       const restorationData = evt?.features.find(({ layer }) => {
@@ -416,8 +427,17 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       // *ON MOUSE ENTER
       if (restorationData && map) {
-        if (clickedStateIdRef.current === restorationData?.id) return;
-        if (hoveredStateId !== null) {
+        if (clickedStateIdRef.current === restorationData?.id) {
+          map?.setFeatureState(
+            {
+              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+              source: 'mangrove_restoration',
+              id: hoveredStateId,
+            },
+            { hover: true, clicked: true }
+          );
+        }
+        if (hoveredStateId !== null && clickedStateIdRef.current !== restorationData?.id) {
           map?.removeFeatureState({
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
             source: 'mangrove_restoration',
