@@ -377,6 +377,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }
     }
     if (!restorationFeature) {
+      map?.removeFeatureState({
+        sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+        source: 'mangrove_restoration',
+        id: clickedStateIdRef.current,
+      });
       removePopup('restoration');
     }
     // Restoration Sites
@@ -469,6 +474,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         );
         hoveredStateId = null;
       }
+
       if (isDrawingToolEnabled && !customGeojson) {
         setCursor('cell');
       } else if (interactiveLayers || restorationData) {
