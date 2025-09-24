@@ -61,7 +61,7 @@ module.exports = {
         },
       },
       boxShadow: {
-        widget: 'rgba(0, 0, 0, 0.08) 0px 4px 12px 4px',
+        card: 'rgba(0, 0, 0, 0.08) 0px 4px 12px 4px',
         light: '0px 0px 0px 1px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.08)',
         soft: '0px 2px 5px 0px rgba(7, 127, 172, 0.43)',
         medium: '0px 4px 12px 0px rgba(168, 168, 168, 0.25)',

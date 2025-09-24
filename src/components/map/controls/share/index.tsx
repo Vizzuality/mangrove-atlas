@@ -75,7 +75,7 @@ export const Share = ({
     <>
       {!disabled && (
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <Dialog>
               <DialogTrigger>
                 <div
@@ -125,14 +125,12 @@ export const Share = ({
               </DialogContent>
             </Dialog>
           </TooltipTrigger>
-          <TooltipContent side="left" align="start" className="bg-gray-600 px-2 text-white">
-            Share
-          </TooltipContent>
+          <TooltipContent className="bg-gray-600 px-2 text-white">Share</TooltipContent>
         </Tooltip>
       )}
       {disabled && (
         <Tooltip>
-          <TooltipTrigger asChild>
+          <TooltipTrigger>
             <div
               className={cn({
                 'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
@@ -149,7 +147,7 @@ export const Share = ({
           </TooltipTrigger>
 
           <TooltipPortal>
-            <TooltipContent side="left" align="center" className="bg-gray-600 px-2 text-white">
+            <TooltipContent className="bg-gray-600 px-2 text-white">
               It is not possible to share a custom area
             </TooltipContent>
           </TooltipPortal>

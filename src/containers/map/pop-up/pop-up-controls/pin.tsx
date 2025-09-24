@@ -9,7 +9,7 @@ type MapPopupPinProps = {
 
 const MapPopupPin = ({ handleClickToDocker = () => {}, isPinned }: MapPopupPinProps) => (
   <Tooltip>
-    <TooltipTrigger asChild>
+    <TooltipTrigger>
       <button
         type="button"
         className="cursor-pointer rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700"
@@ -22,7 +22,7 @@ const MapPopupPin = ({ handleClickToDocker = () => {}, isPinned }: MapPopupPinPr
         )}
       </button>
     </TooltipTrigger>
-    <TooltipContent side="left" align="start" className="bg-gray-600 px-2 text-white">
+    <TooltipContent className="bg-gray-600 px-2 text-white">
       {isPinned ? 'Unpin popup' : 'Pin popup'}
     </TooltipContent>
   </Tooltip>

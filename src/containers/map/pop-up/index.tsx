@@ -28,6 +28,8 @@ import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'typ
 import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupClose from './pop-up-controls/close';
 import MapPopupPin from './pop-up-controls/pin';
+import { is } from 'date-fns/locale';
+import { max } from 'date-fns';
 
 type Position = { x: number; y: number };
 
@@ -109,13 +111,14 @@ const MapPopup = ({
         <div
           ref={popUpRef}
           className={cn(
-            'shadow-popup absolute z-50 flex flex-col rounded-3xl border bg-white transition-all duration-300',
-            'w-fit-content border-gray-300',
+            'shadow-popup absolute z-50 flex flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300',
+            'w-fit-content flex grow flex-col border-gray-300',
             isPinned && 'border-2 border-brand-800 shadow-md sm:w-[532px]',
             flash && 'ring-2 ring-brand-400'
           )}
           onMouseDown={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
+          style={{ maxHeight }}
         >
           {/* Pop-up controls */}
           <div className="flex w-full items-center justify-between rounded-t-3xl hover:bg-white/90">
@@ -132,7 +135,7 @@ const MapPopup = ({
           </div>
 
           {/* Pop-up content */}
-          <ScrollArea className="relative grow overflow-y-auto overflow-x-hidden">
+          <ScrollArea className="relative flex grow flex-col overflow-y-auto overflow-x-hidden">
             {/* Gradients */}
             <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
             <div className="pointer-events-none absolute bottom-0 left-6 right-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />

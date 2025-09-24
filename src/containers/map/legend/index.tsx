@@ -79,7 +79,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
       // Google Analytics tracking
       trackEvent(`Layers order`, {
         category: 'Layers',
-        action: "Drag and drop",
+        action: 'Drag and drop',
         label: `change layers order from ${activeLayers} to ${newLayers}`,
       });
       setActiveLayers([...newLayers, ...activeLayerPlanet]);
@@ -124,7 +124,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 animate={{ opacity: 1, bottom: 36 }}
                 exit={{ opacity: 0, bottom: -200 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-                className="fixed w-[360px] gap-4 rounded-3xl bg-white shadow-medium md:right-[75px]"
+                className="shadow-card fixed w-[360px] gap-4 rounded-3xl bg-white md:right-[75px]"
                 data-testid="legend-content"
               >
                 <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">

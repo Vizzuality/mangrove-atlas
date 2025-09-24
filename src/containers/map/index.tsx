@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { Marker, useMap } from 'react-map-gl';
 
@@ -53,6 +53,7 @@ import LayerManager from './layer-manager';
 import Image from 'next/image';
 
 import MapPopup from './pop-up';
+import LocationPopUP from 'containers/datasets/locations/map-popup';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -267,6 +268,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     const restorationFeature = e?.features.find(({ layer }) => {
       return layer.id === 'mangrove_restoration-layer';
     });
+
     const restorationSitesFeature = e?.features.find(({ layer }) =>
       layer.id.includes('mangrove_rest_sites')
     );
@@ -286,15 +288,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       }));
 
       if (map && e?.lngLat) {
-        // 1. Convert lat/lng to screen point
         const point = map?.project([e?.lngLat?.lng, e?.lngLat?.lat]);
 
-        // 2. Move it down 20 pixels in Y to match the end of the marker instead of the end of the image as the marker has a shadow
         point.y += 15;
 
-        // 3. Convert back to lat/lng
-        const shiftedLngLat = map?.unproject(point);
-        setCoordinates(shiftedLngLat);
+        setCoordinates(e?.lngLat);
       }
 
       setLocationPopUp({
@@ -333,15 +331,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               'clicked'
             );
           }
-
-          map.removeFeatureState(
-            {
-              source: 'mangrove_restoration',
-              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-              id: newId,
-            },
-            'hover'
-          );
 
           map.setFeatureState(
             {
@@ -402,7 +391,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     if (!restorationSitesFeature) {
       removePopup('mangrove_rest_sites');
     }
-
     // IUCN Ecoregions
     if (iucnEcoregionFeature)
       setIucnEcoregionPopUp({
@@ -428,6 +416,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       // *ON MOUSE ENTER
       if (restorationData && map) {
+        if (clickedStateIdRef.current === restorationData?.id) return;
         if (hoveredStateId !== null) {
           map?.removeFeatureState({
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
@@ -573,10 +562,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 </div>
               </Controls>
 
-              {position && (
+              {!!position && !!locationPopUp.info && (
                 <Marker
                   latitude={coordinates?.lat || null}
                   longitude={coordinates?.lng || null}
+                  offset={[0, 0]}
                   anchor="bottom"
                 >
                   <button

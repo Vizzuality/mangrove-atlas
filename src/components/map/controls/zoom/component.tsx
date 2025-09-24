@@ -8,6 +8,8 @@ import Icon from 'components/ui/icon';
 
 import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
 import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
+import { T } from '@transifex/react';
+import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
 
 const COMMON_CLASSES =
   'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
@@ -40,30 +42,35 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
   );
 
   return (
-    <div className={cn({ 'flex flex-col': true, [className]: !!className })}>
-      <button
-        className={cn({
-          [COMMON_CLASSES]: true,
-        })}
-        aria-label="Zoom in"
-        type="button"
-        disabled={zoom >= maxZoom}
-        onClick={increaseZoom}
-      >
-        <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} description="Zoom-in" />
-      </button>
-      <button
-        className={cn({
-          [COMMON_CLASSES]: true,
-        })}
-        aria-label="Zoom out"
-        type="button"
-        disabled={zoom <= minZoom}
-        onClick={decreaseZoom}
-      >
-        <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} description="Zoom-out" />
-      </button>
-    </div>
+    <Tooltip>
+      <TooltipTrigger>
+        <div className={cn({ 'flex flex-col': true, [className]: !!className })}>
+          <button
+            className={cn({
+              [COMMON_CLASSES]: true,
+            })}
+            aria-label="Zoom in"
+            type="button"
+            disabled={zoom >= maxZoom}
+            onClick={increaseZoom}
+          >
+            <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} description="Zoom-in" />
+          </button>
+          <button
+            className={cn({
+              [COMMON_CLASSES]: true,
+            })}
+            aria-label="Zoom out"
+            type="button"
+            disabled={zoom <= minZoom}
+            onClick={decreaseZoom}
+          >
+            <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} description="Zoom-out" />
+          </button>
+        </div>
+      </TooltipTrigger>
+      <TooltipContent className="bg-gray-600 px-2 text-white">Zoom control</TooltipContent>
+    </Tooltip>
   );
 };
 
