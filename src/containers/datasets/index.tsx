@@ -246,6 +246,8 @@ export const INFO = {
   mangrove_species_location: SpeciesLocationInfo,
   mangrove_salt_marsh: SaltMarshInfo,
   mangrove_contextual_layers: PlanetSatelliteBasemapInfo,
+  planet_medres_visual_monthly: PlanetSatelliteBasemapInfo,
+  planet_medres_analytic_monthly: PlanetSatelliteBasemapInfo,
   mangrove_commercial_fisheries_production: CommercialFisheriesProductionInfo,
 };
 
