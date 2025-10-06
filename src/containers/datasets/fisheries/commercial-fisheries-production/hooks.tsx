@@ -195,7 +195,7 @@ export function useLayers({
       source: 'mangrove_commercial_fisheries_production',
       'source-layer': 'all_sp_fit_fn_totals',
       type: 'fill',
-      filter: ['>', ['get', Indicator], 0],
+      ...(Indicator !== 'Finfish' ? { filter: ['>', ['get', Indicator], 0] } : {}),
       minzoom: 0,
       paint: {
         'fill-color': COLOR as mapboxgl.StyleFunction,
