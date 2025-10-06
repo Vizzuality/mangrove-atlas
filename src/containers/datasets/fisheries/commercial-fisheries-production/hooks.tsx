@@ -165,7 +165,7 @@ export function useLayers({
   visibility?: Visibility;
   indicator?: Data['indicator'];
 }): LayerProps[] {
-  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Fish';
+  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Finfish';
 
   const COLOR = useMemo(() => {
     return COLORS[indicator] || COLORS.finfish || '#8800FF';
@@ -179,7 +179,7 @@ export function useLayers({
       source: 'mangrove_commercial_fisheries_production',
       'source-layer': 'all_sp_fit_fn_totals',
       type: 'line',
-      filter: ['>', ['get', Indicator], 0],
+      ...(Indicator !== 'Finfish' ? { filter: ['>', ['get', Indicator], 0] } : {}),
       minzoom: 0,
       paint: {
         'line-color': COLOR as mapboxgl.StyleFunction,
