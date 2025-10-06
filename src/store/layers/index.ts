@@ -24,7 +24,7 @@ const layerSchema = object({
   }),
   filter: optional(
     stringLiterals({
-      fish: 'fish',
+      finfish: 'finfish',
       shrimp: 'shrimp',
       crab: 'crab',
       bivalve: 'bivalve',
