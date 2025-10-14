@@ -55,10 +55,10 @@ const CommercialFisheriesProductionMapLegend = () => {
 
   return (
     <div className="flex flex-col space-y-2 font-sans text-sm text-black/60">
-      {commercialFisheriesProductionFilter && (
-        <p>Commercial {commercialFisheriesProductionFilter} productivity (per 100 m2) </p>
-      )}
-
+      <p>
+        Commercial {commercialFisheriesProductionFilter || 'finfish'} productivity (per 100 m
+        <sup>2</sup>){' '}
+      </p>
       {LEGEND_RANGES[commercialFisheriesProductionFilter] &&
         commercialFisheriesProductionFilter !== 'finfish' &&
         LEGEND_RANGES[commercialFisheriesProductionFilter].map(({ color, range }, index) => (

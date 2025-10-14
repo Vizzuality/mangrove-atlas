@@ -155,7 +155,7 @@ const CommercialFisheriesProduction = () => {
             </SelectContent>
           </Select>{' '}
           by an average of <span className="font-bold">{averageValueByIndicator}</span>{' '}
-          individuals/100m<sup>2</sup> (10mx10m).
+          <span className="whitespace-nowrap">individuals / 100 m² (10 m × 10 m).</span>
         </p>
 
         <Loading visible={isFetching && !isFetched} iconClassName="flex w-10 h-10 m-auto my-10" />
