@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
@@ -50,35 +50,38 @@ export function useMangroveHabitatExtent(
 
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchHabitatExtent = ({ signal }: { signal?: AbortSignal }) => {
-    if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
-        method: 'post',
-        url: '/analysis',
-        data: {
-          geometry: geojson,
-        },
-        params: {
-          'widgets[]': 'mangrove_extent',
-        },
-        signal,
-      })
-        .then(({ data }) => data['mangrove_extent'])
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
-        });
-    }
+  const fetchHabitatExtent = useCallback(
+    ({ signal }: { signal?: AbortSignal }) => {
+      if (isAnalysisEnabled) {
+        return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
+          method: 'post',
+          url: '/analysis',
+          data: {
+            geometry: geojson,
+          },
+          params: {
+            'widgets[]': 'mangrove_extent',
+          },
+          signal,
+        })
+          .then(({ data }) => data['mangrove_extent'])
+          .catch((err: CanceledError<unknown> | AxiosError) => {
+            if (err.code === 'ERR_CANCELED') onCancel?.();
+            return err;
+          });
+      }
 
-    return API.request<DataResponse>({
-      method: 'GET',
-      url: 'widgets/habitat_extent',
-      params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        ...params,
-      },
-    }).then((response) => response.data);
-  };
+      return API.request<DataResponse>({
+        method: 'GET',
+        url: 'widgets/habitat_extent',
+        params: {
+          ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+          ...params,
+        },
+      }).then((response) => response.data);
+    },
+    [isAnalysisEnabled, geojson, location_id, currentLocation, params, onCancel]
+  );
 
   const query = useQuery([widgetSlug, location_id, geojson], fetchHabitatExtent, {
     placeholderData: {

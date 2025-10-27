@@ -41,13 +41,13 @@ const WelcomeIntroMessage = () => {
       >
         <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
         <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
-          <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-bl-3xl sm:rounded-tl-3xl">
+          <div className="h-[calc(100vh/2)] w-full max-w-[50%] overflow-hidden sm:col-span-6 sm:h-full">
             <div className="absolute inset-0 h-full w-full sm:h-full">
               <Image
                 src="/images/welcome-modal.webp"
                 alt="Mangrove"
                 fill
-                className="object-cover"
+                className="absolute top-0 bottom-0 left-0 max-w-[50%] object-cover sm:rounded-bl-3xl sm:rounded-tl-3xl"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
