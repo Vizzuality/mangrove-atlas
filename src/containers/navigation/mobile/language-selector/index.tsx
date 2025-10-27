@@ -6,9 +6,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
-import Icon from '@/components/ui/icon';
 
-import TRANSLATE_SVG from '@/svgs/tools-bar/translate.svg?sprite';
+import { LuLanguages } from 'react-icons/lu';
 
 interface Transifex {
   live: {
@@ -48,15 +47,9 @@ const LanguageSelector = () => {
   return (
     <div className="flex h-full flex-col items-center">
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
-            <Icon
-              icon={TRANSLATE_SVG}
-              className="h-8 w-8 stroke-white"
-              description="language-selection"
-            />
-            <span className="text-xxs text-white">{currentLanguage}</span>
-          </div>
+        <DropdownMenuTrigger className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
+          <LuLanguages className="h-8 w-8" />
+          <span className="text-xxs">{currentLanguage}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {languages?.map((lang: { code: string; name: string }) => (

@@ -71,6 +71,11 @@ const nextConfig = {
         source: '/blog/:path*',
         destination: `https://www.wetlands.org/:path*`,
       },
+
+      {
+        source: '/proxy/:path*',
+        destination: 'https://mrtt.globalmangrovewatch.org/auth/login/:path*',
+      },
     ];
   },
   /** @param {import('webpack').Configuration} config */
