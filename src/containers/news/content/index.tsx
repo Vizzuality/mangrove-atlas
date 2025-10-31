@@ -16,6 +16,7 @@ export const BlogContent = () => {
 
   const [postInfo, setPostInfo] = useState<Post | null>(null);
   const { data: dataTags } = usePostTags({ id: postInfo?.id });
+
   return (
     <>
       <AnimatePresence>
