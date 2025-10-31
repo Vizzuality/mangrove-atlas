@@ -87,7 +87,12 @@
     "recharts": "2.15.4",
     "recoil": "^0.7.7",
     "recoil-sync": "0.2.0",
+<<<<<<< HEAD
     "sonner": "2.0.7",
+=======
+    "shadcn-ui": "latest",
+    "sharp": "0.34.4",
+>>>>>>> 365e0073 (sharp intall)
     "tailwind-merge": "1.11.0",
     "use-debounce": "9.0.3",
     "usehooks-ts": "2.9.1",
