@@ -80,9 +80,9 @@ export const SupportedBy = [
 
 export const Donors = [
   {
-    name: 'DOB Ecology',
-    url: 'https://www.dobecology.com/',
-    image: '/images/partners/donors/dob_ecology.webp',
+    name: 'COmON Foundation',
+    url: 'https://www.comonfoundation.org/',
+    image: '/images/partners/donors/comon.webp',
     size: [140, 30],
   },
   {
@@ -92,10 +92,10 @@ export const Donors = [
     size: [110, 40],
   },
   {
-    name: 'COmON Foundation',
-    url: 'https://www.comonfoundation.org/',
-    image: '/images/partners/donors/comon.webp',
-    size: [110, 40],
+    name: 'DOB Ecology',
+    url: 'https://www.dobecology.com/',
+    image: '/images/partners/donors/dob_ecology.webp',
+    size: [140, 30],
   },
   {
     name: 'Dutch Postcode Lottery',
