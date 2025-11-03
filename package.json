@@ -11,11 +11,11 @@
     "test": "playwright test",
     "test-ui": "playwright test --ui",
     "postinstall": "husky install",
-    "preinstall": "npm i -g pnpm@9",
     "heroku-postbuild": "pnpm install --frozen-lockfile && pnpm build"
   },
   "engines": {
-    "node": "22.x"
+    "node": "22.x",
+    "pnpm": "9.x"
   },
   "dependencies": {
     "@artsy/fresnel": "6.1.0",
