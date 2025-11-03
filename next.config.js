@@ -27,6 +27,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     TxNativePublicToken: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
   },
+  productionBrowserSourceMaps: false,
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   // ? https://nextjs.org/docs/advanced-features/output-file-tracing#automatically-copying-traced-files

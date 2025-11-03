@@ -1,0 +1,32 @@
+# VCS / tooling
+.git
+.github
+.vscode
+.storybook
+scripts
+docs
+**/*.md
+
+# Testing
+cypress
+e2e
+__tests__
+coverage
+playwright*
+*.spec.* 
+*.test.*
+
+# Build outputs
+.next
+dist
+build
+.out
+.storybook-static
+
+# Caches
+.pnpm-store
+.npm
+npm-cache
+.cache
+.turbo
+.eslintcache
