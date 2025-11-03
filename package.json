@@ -10,8 +10,7 @@
     "check-types": "tsc",
     "test": "playwright test",
     "test-ui": "playwright test --ui",
-    "postinstall": "husky install",
-    "heroku-postbuild": "pnpm install --frozen-lockfile && pnpm build"
+    "postinstall": "husky install"
   },
   "engines": {
     "node": "22.x",
