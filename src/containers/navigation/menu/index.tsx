@@ -27,36 +27,32 @@ import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
 
 const RESOURCES_LINKS = [
   {
-    label: 'GMW Training',
-    href: 'https://www.conservationtraining.org/',
-  },
-  {
     label: 'Restoration Best Practices',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2023/12/Best-Practice-Guidelines-for-Mangrove-Restoration_spreadsv5.pdf',
+    href: 'https://www.mangrovealliance.org/best-practice-guidelines-for-mangrove-restoration',
   },
   {
     label: 'State of the Worlds Mangroves 2024',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/07/SOWM-2024-HR.pdf',
+    href: 'https://tnc.box.com/s/2kc5d5ldql7x87t8g9vlneotugyvay46',
   },
   {
     label: 'GMW Leaflet',
-    href: 'https://www.wetlands.org/publication/global-mangrove-watch-leaflet/',
+    href: 'https://tnc.box.com/s/syxr8ul76h0j7sgm8wfme6i8oub5d538',
   },
   {
     label: 'MRTT user guide',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2023/07/MRTT-Guide-v15.pdf',
+    href: 'https://tnc.box.com/s/pspea7mm2m2uldrqvhahmvp9dck6mc06',
   },
   {
     label: 'Policy Brief: GMW and NBSAPs',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2024/10/Global-Mangrove-Watch-NBSAPs_-Update-2024.pdf',
+    href: 'https://tnc.box.com/s/rwh1immjasa5q0wil3pnys7grjlfkie1',
   },
   {
     label: 'Policy Brief: GMW and NDCs',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_NDC-Policy-Brief_update2024.pdf',
+    href: 'https://tnc.box.com/s/uair7m72wvx3bcsk26w7gjoo04ul1v6j',
   },
   {
     label: 'Policy Brief: GMW and the Ramsar Convention',
-    href: 'https://www.mangrovealliance.org/wp-content/uploads/2022/11/Global-Mangrove-Watch_RAMSAR-Policy-Brief_v7.pdf.pdf',
+    href: 'https://tnc.app.box.com/s/pcz1kx1sf4h8i23xxtlq50vw7mvl6ao5',
   },
   {
     label: 'Video Tutorial',
