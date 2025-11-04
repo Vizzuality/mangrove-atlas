@@ -1,30 +1,37 @@
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { UseQueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
 import type { Tag, Post } from 'hooks/blog/types';
 
 import { BlogAPI } from 'services/api';
 
-type useBlogParams = {
-  wl_topic?: number[];
-};
+type UseBlogParams = { wl_topic?: number[] };
 
-export function useBlogPosts(params?: useBlogParams): UseQueryResult<Post[], unknown> {
-  const fetchBlogPosts = () =>
-    BlogAPI.request({
+type BlogQueryKey = ['blog-posts', UseBlogParams | undefined];
+
+export function useBlogPosts<TSelected = Post[]>(
+  params?: UseBlogParams,
+  options?: UseQueryOptions<Post[], Error, TSelected, BlogQueryKey>
+): UseQueryResult<TSelected, Error> {
+  const fetchBlogPosts = async () => {
+    const res = await BlogAPI.request<Post[]>({
       method: 'GET',
       url: '/wp-json/wp/v2/posts',
       params,
-    }).then((response: AxiosResponse<Post[]>) => response.data);
+    });
+    return res.data;
+  };
 
-  const query = useQuery(['blog-posts'], fetchBlogPosts, {
+  return useQuery<Post[], Error, TSelected, BlogQueryKey>(['blog-posts', params], fetchBlogPosts, {
     placeholderData: [],
+    ...options,
   });
-
-  return query;
 }
 
-export function usePostTags({ id }: { id: number }): UseQueryResult<Tag[], unknown> {
+export function usePostTags(
+  { id }: { id: number },
+  options?: UseQueryOptions<Tag[], unknown>
+): UseQueryResult<Tag[], unknown> {
   const fetchPostTags = () =>
     BlogAPI.request({
       method: 'GET',
@@ -33,6 +40,7 @@ export function usePostTags({ id }: { id: number }): UseQueryResult<Tag[], unkno
 
   const query = useQuery(['post-tags', id], fetchPostTags, {
     placeholderData: [],
+    ...options,
   });
 
   return query;

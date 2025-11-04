@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useLocalStorage } from 'usehooks-ts';
+
 import Image from 'next/image';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -15,8 +17,12 @@ export const BlogContent = () => {
   const { data } = useBlogPosts({ wl_topic: [53] });
 
   const [postInfo, setPostInfo] = useState<Post | null>(null);
-  const { data: dataTags } = usePostTags({ id: postInfo?.id });
-
+  const { data: dataTags } = usePostTags(
+    { id: postInfo?.id },
+    {
+      enabled: !!postInfo,
+    }
+  );
   return (
     <>
       <AnimatePresence>
