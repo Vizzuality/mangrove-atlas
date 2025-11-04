@@ -11,7 +11,12 @@ export const Post = ({
     yoast_head_json: { og_image: { url: string }[] };
   };
 }) => {
-  const { data } = usePostTags({ id: post.id });
+  const { data } = usePostTags(
+    { id: post.id },
+    {
+      enabled: !!post.id,
+    }
+  );
 
   return (
     <div className="relative flex items-center">
