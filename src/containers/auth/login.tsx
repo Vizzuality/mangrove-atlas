@@ -4,11 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 
-import LandingNavigation from 'containers/navigation/landing';
+import LandingNavigation from '@/containers/navigation/landing';
 
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
-import Footer from 'containers/auth/footer';
+import Footer from '@/containers/auth/footer';
 
 import { useRouter } from 'next/router';
 import SuccessAlert from 'components/auth/email-alert';
