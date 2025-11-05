@@ -39,15 +39,15 @@ export function useMangroveHabitatChange(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse>
 ) {
-  const { startYear, endYear, limit } = params;
+  const { startYear, endYear, limit } = params ?? {};
   const fetchMangroveHabitatChange = () => {
     return API.request({
       method: 'GET',
       url: '/widgets/country_ranking',
       params: {
-        start_year: startYear,
-        end_year: endYear,
-        limit,
+        ...(startYear && { start_year: startYear }),
+        ...(endYear && { end_year: endYear }),
+        ...(limit && { limit }),
       },
       ...queryOptions,
     }).then((response) => response.data);

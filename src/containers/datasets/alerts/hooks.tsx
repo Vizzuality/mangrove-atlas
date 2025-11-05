@@ -167,7 +167,7 @@ export function useAlerts<DataResponse>(
 
       const dataFiltered =
         Array.isArray(data) &&
-        data.filter(
+        data?.filter(
           (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
         );
 
