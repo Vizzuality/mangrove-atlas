@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,6 +10,9 @@ import { Input } from 'components/ui/input';
 
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
+
+import { useSignup } from 'containers/auth/hooks';
+import { useRouter } from 'next/router';
 
 const formSchema = z
   .object({
@@ -35,7 +37,8 @@ const formSchema = z
   });
 
 export default function SignupPage() {
-  const [submitting, setSubmitting] = useState(false);
+  const signup = useSignup();
+  const { push, query } = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,10 +50,38 @@ export default function SignupPage() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { email, password, username } = values;
 
+    form.clearErrors();
+
+    signup.mutate(
+      { user: { email, password, name: username } },
+      {
+        onSuccess: () => {
+          push('/auth/signin?verified=pending');
+        },
+        onError: (error: any) => {
+          const apiErrors = error?.response?.data?.errors;
+
+          if (apiErrors?.email?.[0]) {
+            form.setError('email', { type: 'server', message: apiErrors.email[0] });
+            return;
+          }
+          if (apiErrors?.password?.[0]) {
+            form.setError('password', { type: 'server', message: apiErrors.password[0] });
+            return;
+          }
+
+          form.setError('root', {
+            type: 'server',
+            message: error?.response?.data?.error || 'Signup failed',
+          });
+        },
+      }
+    );
+  }
+  console.log('Render signup page', form.formState.errors);
   return (
     <div className="relative flex min-h-screen bg-white">
       <Logo position="top-left" width={360} />
@@ -143,8 +174,15 @@ export default function SignupPage() {
                     )}
                   />
                 </fieldset>
-                <Button type="submit" disabled={submitting} className="h-9 w-full font-semibold">
-                  {submitting ? 'Submitting…' : 'Register'}
+                {form.formState.errors.root?.message && (
+                  <p className="text-sm text-red-500">{form.formState.errors.root.message}</p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={signup.isLoading}
+                  className="h-9 w-full font-semibold"
+                >
+                  {signup.isLoading ? 'Submitting…' : 'Register'}
                 </Button>
               </form>
             </Form>

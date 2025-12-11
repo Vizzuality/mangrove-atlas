@@ -9,11 +9,11 @@ interface UseParamsOptions {
 }
 
 type Mosaics = {
-  last_acquired: 'string';
-  first_acquired: 'string';
+  [key: string]: string | number;
+  last_acquired: string;
+  first_acquired: string;
   label: string;
   value: string;
-  [key: string]: string | number;
 };
 
 const getDates = (data) =>
@@ -40,7 +40,7 @@ export function useMosaicsFromSeriesPlanetSatelliteBasemaps(
     }).then((response) => response.data);
 
   return useQuery(['planet-satellite-mosaic-from-series', paramsOptions, id], fetchPlanetMosaics, {
-    select: ({ mosaics }: Mosaics) => {
+    select: ({ mosaics }: { mosaics: Mosaics[] }) => {
       return getDates(mosaics);
     },
     ...queryOptions,

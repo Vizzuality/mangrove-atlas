@@ -29,4 +29,14 @@ export const ClimateWatchAPI = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+export const NextAPI = axios.create({
+  baseURL: '/api',
+  headers: { 'Content-Type': 'application/json' },
+});
+
+export const AuthAPI = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_AUTH_API_URL}/users`,
+  headers: { 'Content-Type': 'application/json' },
+});
+
 export default API;

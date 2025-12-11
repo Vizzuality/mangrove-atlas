@@ -27,7 +27,8 @@ import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
-import { ca } from 'date-fns/locale';
+
+import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
@@ -46,15 +47,27 @@ const AlertsWidget = () => {
     [activeLayers]
   );
 
+  type FC = FeatureCollection<Geometry, GeoJsonProperties>;
+
+  const geometry = useMemo<FC | undefined>(() => {
+    // pick ONE geometry source (custom wins over uploaded, tweak if you want)
+    if (customGeojson) return customGeojson as FC;
+    if (uploadedGeojson) return uploadedGeojson as FC;
+    return undefined;
+  }, [customGeojson, uploadedGeojson]);
+
+  const dataParams = useMemo(() => {
+    return geometry ? { geometry } : undefined;
+  }, [geometry]);
+
+  const queryOptions = useMemo(() => ({ enabled: !isCanceled }), [isCanceled]);
+
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
-    startDate,
-    endDate,
-    null,
-    {
-      ...(customGeojson && { geometry: customGeojson }),
-      ...(uploadedGeojson && { geometry: uploadedGeojson }),
-    },
-    { enabled: !isCanceled },
+    startDate ?? undefined,
+    endDate ?? undefined,
+    undefined,
+    dataParams,
+    queryOptions,
     handleQueryCancellation
   );
 
@@ -125,7 +138,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
                           'font-semibold text-brand-800': startDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value > endDate?.value,
+                          'pointer-events-none opacity-50': date?.value > (endDate?.value ?? 0),
                         })}
                         type="button"
                         onClick={() => {
@@ -138,7 +151,7 @@ const AlertsWidget = () => {
                           });
                           setStartDate(date);
                         }}
-                        disabled={date?.value > endDate?.value}
+                        disabled={date?.value > (endDate?.value ?? 0)}
                       >
                         {date?.label || defaultStartDate?.label}
                       </button>
@@ -169,7 +182,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
                           'font-semibold text-brand-800': endDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value < startDate?.value,
+                          'pointer-events-none opacity-50': date?.value < (startDate?.value ?? 0),
                         })}
                         type="button"
                         onClick={() => {
@@ -182,7 +195,7 @@ const AlertsWidget = () => {
                           });
                           return setEndDate(date);
                         }}
-                        disabled={date?.value < startDate?.value}
+                        disabled={date?.value < (startDate?.value ?? 0)}
                       >
                         {date?.label || defaultEndDate?.label}
                       </button>

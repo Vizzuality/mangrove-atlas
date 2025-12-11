@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 import { useRouter } from 'next/router';
 

@@ -9,7 +9,7 @@ export const Legend: React.FC<LegendProps> = ({
   children,
   className = '',
   sortable,
-  onChangeOrder,
+  onChangeOrder = () => {},
 }: LegendProps) => {
   const isChildren = useMemo(() => {
     return !!Children.count(Children.toArray(children).filter((c) => isValidElement(c)));
@@ -17,10 +17,9 @@ export const Legend: React.FC<LegendProps> = ({
 
   return (
     <div
-      className={cn({
+      className={cn(className, {
         'relative flex grow flex-col overflow-hidden': true,
         hidden: !isChildren,
-        [className]: !!className,
       })}
     >
       {isChildren && (

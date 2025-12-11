@@ -21,8 +21,8 @@ const LocationPopUP = ({
   nonExpansible,
 }: {
   locationPopUpInfo: {
-    info: LocationPopUp;
-    feature: MapboxGeoJSONFeature;
+    info: LocationPopUp | null;
+    feature: MapboxGeoJSONFeature | null;
   };
   nonExpansible: boolean;
   className?: string;
@@ -35,7 +35,7 @@ const LocationPopUP = ({
   const queryParams = asPath.split('?')[1];
   const { info, feature } = locationPopUpInfo;
 
-  const { type, name } = info.location;
+  const { type, name } = info?.location ?? {};
 
   const { data: locations } = useLocations();
 
@@ -51,11 +51,9 @@ const LocationPopUP = ({
   }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
-    const {
-      properties: { location_idn },
-    } = feature;
+    const location_idn = feature?.properties?.location_idn;
 
-    const location = locations.data?.find((l) => l.location_id === location_idn);
+    const location = locations?.data?.find((l) => l.location_id === location_idn);
 
     if (location) {
       const bbox = turfBbox(location.bounds);
@@ -64,22 +62,22 @@ const LocationPopUP = ({
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, undefined);
     }
 
     // Google Analytics tracking
-    trackEvent(`Location pop up - ${info.location.name}`, {
+    trackEvent(`Location pop up - ${info?.location.name}`, {
       category: 'Map Popup iteration',
       action: 'Click',
-      label: `Location pop up - ${info.location.name}`,
-      value: info.location.name,
+      label: `Location pop up - ${info?.location.name}`,
+      value: info?.location.name,
     });
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
-      const { ISO3, NAME } = info.protectedArea[index];
-      const location = locations.data?.find((l) => {
+      const { ISO3, NAME } = info?.protectedArea?.[index] ?? {};
+      const location = locations?.data?.find((l) => {
         return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
       });
 
@@ -89,15 +87,18 @@ const LocationPopUP = ({
         if (bbox) {
           setLocationBounds(bbox as typeof locationBounds);
         }
-        void push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+        void push(
+          `/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`,
+          undefined
+        );
       }
 
       // Google Analytics tracking
-      trackEvent(`Location pop up, protected area - ${info.location.name}`, {
+      trackEvent(`Location pop up, protected area - ${info?.location.name}`, {
         category: 'Map Popup iteration',
         action: 'Click',
-        label: `Location pop up, protected area - ${info.location.name}`,
-        value: info.location.name,
+        label: `Location pop up, protected area - ${info?.location.name}`,
+        value: info?.location.name,
       });
     },
     [setLocationBounds, push, queryParams, locations, info]
@@ -126,8 +127,8 @@ const LocationPopUP = ({
             </span>
           </button>
         </div>
-        {info.protectedArea &&
-          info.protectedArea?.map(({ NAME }, index) => (
+        {info?.protectedArea &&
+          info?.protectedArea?.map(({ NAME }, index) => (
             <button
               key={NAME}
               type="button"

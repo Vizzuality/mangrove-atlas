@@ -43,10 +43,9 @@ const AnalysisAlert = () => {
     resetDrawingState();
     resetAnalysisState();
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    replace(`/?${queryParams}`, null);
+    replace(`/?${queryParams}`, undefined);
 
-    map.flyTo({
+    map?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
@@ -65,8 +64,7 @@ const AnalysisAlert = () => {
     resetAnalysisState();
     resetDrawingUploadState();
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    replace(`/?${queryParams}`, null);
+    replace(`/?${queryParams}`, undefined);
 
     setAnalysisAlert(false);
   }, [

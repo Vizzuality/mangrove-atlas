@@ -13,7 +13,7 @@ const SelectValue = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Value
     ref={ref}
-    className={cn({ 'truncate text-3xl': true, [className]: !!className })}
+    className={cn(className, { 'truncate text-3xl': true })}
     {...props}
   >
     {children}
@@ -26,10 +26,7 @@ const SelectIcon = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Icon>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Icon>
 >(({ className, children, ...props }) => (
-  <SelectPrimitive.Icon
-    className={cn({ 'text-muted-foreground': true, [className]: !!className })}
-    {...props}
-  >
+  <SelectPrimitive.Icon className={cn(className, { 'text-muted-foreground': true })} {...props}>
     {children}
   </SelectPrimitive.Icon>
 ));
@@ -42,10 +39,9 @@ const SelectTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50':
         true,
-      [className]: !!className,
     })}
     {...props}
   >

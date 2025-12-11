@@ -27,10 +27,9 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
         <Dialog>
           <DialogTrigger>
             <div
-              className={cn({
+              className={cn(className, {
                 'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control backdrop-blur-sm backdrop-filter hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
-                [className]: !!className,
               })}
             >
               <Icon

@@ -1,10 +1,12 @@
 import { atom } from 'recoil';
 
-export const alertsStartDate = atom({
+import type { DateOption } from 'types/widget';
+
+export const alertsStartDate = atom<DateOption | undefined>({
   key: 'alerts-start-date',
-  default: null,
+  default: undefined,
 });
-export const alertsEndDate = atom({
+export const alertsEndDate = atom<DateOption | undefined>({
   key: 'alerts-end-date',
-  default: null,
+  default: undefined,
 });
