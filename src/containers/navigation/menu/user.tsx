@@ -17,7 +17,7 @@ export const UserMenu = ({ setSection }) => {
         <>
           <button
             type="button"
-            className="text-2lg hover:text-brand-800 text-left font-light"
+            className="text-left text-2lg font-light hover:text-brand-800"
             onClick={() => setSection('profile')}
           >
             My profile
@@ -25,7 +25,7 @@ export const UserMenu = ({ setSection }) => {
 
           <button
             type="button"
-            className="text-2lg hover:text-brand-800 text-left font-light"
+            className="text-left text-2lg font-light hover:text-brand-800"
             onClick={handleLogout}
           >
             Log out
@@ -35,11 +35,11 @@ export const UserMenu = ({ setSection }) => {
 
       {session.status !== 'authenticated' &&
         process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS === 'true' && (
-          <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
+          <Link href="/auth/signin" className="text-left text-2lg font-light hover:text-brand-800">
             Log in
           </Link>
         )}
-      <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
+      <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
     </div>
   );
 };

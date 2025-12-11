@@ -17,16 +17,16 @@ const Toaster = ({ icon = false, ...props }: ToasterProps & { icon?: boolean }) 
   return (
     <Sonner
       theme={theme as ToasterProps['theme']}
-      className="toaster font-inter group text-sm font-bold shadow-[0px_4px_12px_0px_#00000014]"
+      className="toaster group font-inter text-sm font-bold shadow-[0px_4px_12px_0px_#00000014]"
       icons={
         !icon
           ? undefined
           : {
-              success: <CheckCircledIcon className="text-brand-800 size-4 fill-current" />,
-              info: <InfoCircledIcon className="bg-brand-800 size-4" />,
-              warning: <ExclamationTriangleIcon className="bg-brand-800 size-4" />,
-              error: <Cross1Icon className="bg-brand-800 size-4" />,
-              loading: <ReloadIcon className="bg-brand-800 size-4 animate-spin" />,
+              success: <CheckCircledIcon className="size-4 fill-current text-brand-800" />,
+              info: <InfoCircledIcon className="size-4 bg-brand-800" />,
+              warning: <ExclamationTriangleIcon className="size-4 bg-brand-800" />,
+              error: <Cross1Icon className="size-4 bg-brand-800" />,
+              loading: <ReloadIcon className="size-4 animate-spin bg-brand-800" />,
             }
       }
       style={

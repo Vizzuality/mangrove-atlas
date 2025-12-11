@@ -1,0 +1,118 @@
+'use client';
+
+import { useState } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import LandingNavigation from 'containers/navigation/landing';
+
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
+
+import Logo from 'components/logo';
+import { Button } from 'components/ui/button';
+
+const formSchema = z
+  .object({
+    username: z.string().min(1, { message: 'Please enter your name' }),
+    email: z.string().email({ message: 'Please enter a valid email address' }),
+    password: z.string().nonempty({ message: 'Please enter your password' }).min(6, {
+      message: 'Please enter a password with at least 6 characters',
+    }),
+    'confirm-password': z
+      .string()
+      .nonempty({ message: 'Please enter your confirmed password' })
+      .min(6, { message: 'Please enter a password with at least 6 characters' }),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data['confirm-password']) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Passwords do not match',
+        path: ['confirm-password'],
+      });
+    }
+  });
+
+export default function ResetPasswordPage() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      'confirm-password': '',
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
+  return (
+    <div className="relative flex min-h-screen bg-white">
+      <Logo position="top-left" width={360} />
+      <section
+        className="flex w-[50%] flex-col justify-center bg-cover bg-right px-4 py-8"
+        aria-labelledby="mrt-hero-title"
+        style={{
+          backgroundImage: 'url(/images/login/image.webp)',
+        }}
+      />
+
+      <section className="mx-auto w-full max-w-md px-4 pb-20">
+        <LandingNavigation />
+        <div className="flex h-full w-full flex-col justify-center space-y-10">
+          <h1 className="font-sans text-[40px] font-light text-brand-800">Reset Password</h1>
+          <div className="space-y-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <fieldset className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem className="space-y-1.5">
+                        <FormLabel className="text-xs font-semibold">Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            {...field}
+                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            placeholder="Password"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="confirm-password"
+                    render={({ field }) => (
+                      <FormItem className="space-y-1.5">
+                        <FormLabel className="text-xs font-semibold">Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            {...field}
+                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            placeholder="Password"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </fieldset>
+                <Button type="submit" disabled={false} className="h-9 w-full font-semibold">
+                  {/* {submitting ? 'Submitting…' : 'Sign up'} */}Sign up
+                </Button>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
