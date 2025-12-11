@@ -15,6 +15,8 @@ import RecoilDevTools from '@/lib/recoil/devtools';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { RecoilRoot } from 'recoil';
 
 import 'styles/globals.css';
@@ -24,9 +26,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { MediaContextProvider } from 'components/media-query';
 import { Toaster } from 'components/ui/toast';
 import { TooltipProvider } from 'components/ui/tooltip';
-
-import { Session } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],
@@ -47,10 +46,10 @@ const InterFont = Inter({
 
 type PageProps = {
   dehydratedState: unknown;
-  session: Session | null;
+  session: Session;
 };
 
-const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps<PageProps>) => {
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
   const [queryClient] = useState(
@@ -161,7 +160,7 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) 
                 <MediaContextProvider disableDynamicMediaQueries>
                   <MapProvider>
                     <TooltipProvider delayDuration={200}>
-                      <SessionProvider session={pageProps.session}>
+                      <SessionProvider session={session}>
                         <Component {...pageProps} />
                       </SessionProvider>
                     </TooltipProvider>
