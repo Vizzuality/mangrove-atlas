@@ -14,14 +14,13 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
   const pitch = map?.getPitch();
 
   const resetMapPitch = useCallback(() => {
-    map.resetNorthPitch();
+    map?.resetNorthPitch();
   }, [map]);
 
   return (
     <div
-      className={cn({
+      className={cn(className, {
         'inline-flex w-full flex-col rounded-b-full': true,
-        [className]: !!className,
       })}
     >
       <button

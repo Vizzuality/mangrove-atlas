@@ -19,10 +19,9 @@ const TooltipContent = forwardRef<
   <TooltipPrimitive.Content
     ref={ref}
     sideOffset={sideOffset}
-    className={cn({
+    className={cn(className, {
       'animate-in fade-in-50 data-[side=bottom]:slide-in-from-top-1 data-[side=top]:slide-in-from-bottom-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 z-50 rounded-md bg-white px-3 py-1.5 text-sm text-gray-700 shadow-md':
         true,
-      [className]: !!className,
     })}
     {...props}
   />

@@ -28,7 +28,6 @@ export const FullScreen = ({ className }: { className?: string }) => {
               true,
             'border-brand-800 bg-brand-800': isFullScreen,
             'hover:bg-gray-100': !isFullScreen,
-            [className]: !!className,
           })}
           onClick={toggleFullScreen}
         >

@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 
 const Footer = (): JSX.Element => {
   const pathname = usePathname();
-  console.log(pathname, pathname === '/auth/signin');
+
   return (
     <div className="relative z-20 flex h-24 w-full justify-center bg-white p-4">
       <div className="flex flex-col items-center justify-center gap-1">

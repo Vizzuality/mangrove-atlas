@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'components/ui/toast';
 import { MapProvider } from 'react-map-gl';
-import { Slide, ToastContainer } from 'react-toastify';
+// import { Slide, ToastContainer, toast } from 'react-toastify';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -11,19 +13,19 @@ import Script from 'next/script';
 import { Deserialize, RecoilURLSyncNext, Serialize } from '@/lib/recoil';
 import RecoilDevTools from '@/lib/recoil/devtools';
 
-import { Open_Sans } from 'next/font/google';
+import { Open_Sans, Inter } from '@next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
 import { RecoilRoot } from 'recoil';
 
-import 'react-toastify/dist/ReactToastify.css';
-import '@/styles/globals.css';
-import '@/styles/mapbox.css';
+import 'styles/globals.css';
+import 'styles/mapbox.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-import { MediaContextProvider } from '@/components/media-query';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { MediaContextProvider } from 'components/media-query';
+import { TooltipProvider } from 'components/ui/tooltip';
+import { Session } from 'next-auth';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],
@@ -33,11 +35,21 @@ const OpenSansFont = Open_Sans({
   display: 'block',
 });
 
+const InterFont = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  fallback: ['system-ui', 'Helvetica Neue', 'Helvetica', 'Arial'],
+  weight: ['400', '500'],
+  style: ['normal'],
+  display: 'block',
+});
+
 type PageProps = {
   dehydratedState: unknown;
+  session: Session;
 };
 
-const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps<PageProps>) => {
   const router = useRouter();
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
@@ -81,6 +93,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
         : {}),
     });
   }, []);
+
   return (
     <>
       <Head>
@@ -90,6 +103,7 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
         {`
           :root {
             --font-sans: ${OpenSansFont.style.fontFamily};
+            --font-inter: ${InterFont.style.fontFamily};
           }
         `}
       </style>
@@ -142,15 +156,12 @@ const MyApp = ({ Component, pageProps }: AppProps<PageProps>) => {
                 <MediaContextProvider disableDynamicMediaQueries>
                   <MapProvider>
                     <TooltipProvider delayDuration={200}>
-                      <Component {...pageProps} />
+                      <SessionProvider session={session}>
+                        <Component {...pageProps} />
+                      </SessionProvider>
                     </TooltipProvider>
-                    <ToastContainer
-                      transition={Slide}
-                      hideProgressBar={true}
-                      theme="colored"
-                      autoClose={1500}
-                    />
                   </MapProvider>
+                  <Toaster position="top-right" />
                 </MediaContextProvider>
               </Hydrate>
             </QueryClientProvider>

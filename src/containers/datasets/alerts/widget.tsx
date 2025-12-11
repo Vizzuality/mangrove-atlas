@@ -11,12 +11,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import NoData from '@/containers/widgets/no-data';
 
-import Chart from '@/components/chart';
-import DateSelect from '@/components/planet-date-select';
+import Chart from 'components/chart';
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
-import Icon from '@/components/ui/icon';
-import Loading from '@/components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import Icon from 'components/ui/icon';
+import Loading from 'components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_STYLES,
@@ -29,6 +28,8 @@ import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
+
+import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
@@ -52,16 +53,27 @@ const AlertsWidget = () => {
     [widgets]
   );
   const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
+  type FC = FeatureCollection<Geometry, GeoJsonProperties>;
+
+  const geometry = useMemo<FC | undefined>(() => {
+    // pick ONE geometry source (custom wins over uploaded, tweak if you want)
+    if (customGeojson) return customGeojson as FC;
+    if (uploadedGeojson) return uploadedGeojson as FC;
+    return undefined;
+  }, [customGeojson, uploadedGeojson]);
+
+  const dataParams = useMemo(() => {
+    return geometry ? { geometry } : undefined;
+  }, [geometry]);
+
+  const queryOptions = useMemo(() => ({ enabled: !isCanceled }), [isCanceled]);
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
-    startDate,
-    endDate,
-    null,
-    {
-      ...(customGeojson && { geometry: customGeojson }),
-      ...(uploadedGeojson && { geometry: uploadedGeojson }),
-    },
-    { enabled: !isCanceled },
+    startDate ?? undefined,
+    endDate ?? undefined,
+    undefined,
+    dataParams,
+    queryOptions,
     handleQueryCancellation
   );
 
@@ -130,9 +142,15 @@ const AlertsWidget = () => {
                       <button
                         aria-label="Select start date"
                         className={cn({
+<<<<<<< HEAD
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': startDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value > endDate?.value,
+=======
+                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': startDate?.value === date?.value,
+                          'pointer-events-none opacity-50': date?.value > (endDate?.value ?? 0),
+>>>>>>> 25baaed1 (setCookie)
                         })}
                         type="button"
                         onClick={() => {
@@ -145,7 +163,7 @@ const AlertsWidget = () => {
                           });
                           setStartDate(date);
                         }}
-                        disabled={date?.value > endDate?.value}
+                        disabled={date?.value > (endDate?.value ?? 0)}
                       >
                         {date?.label || defaultStartDate?.label}
                       </button>
@@ -174,9 +192,15 @@ const AlertsWidget = () => {
                       <button
                         aria-label="Select end date"
                         className={cn({
+<<<<<<< HEAD
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': endDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value < startDate?.value,
+=======
+                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                          'font-semibold text-brand-800': endDate?.value === date?.value,
+                          'pointer-events-none opacity-50': date?.value < (startDate?.value ?? 0),
+>>>>>>> 25baaed1 (setCookie)
                         })}
                         type="button"
                         onClick={() => {
@@ -189,7 +213,7 @@ const AlertsWidget = () => {
                           });
                           return setEndDate(date);
                         }}
-                        disabled={date?.value < startDate?.value}
+                        disabled={date?.value < (startDate?.value ?? 0)}
                       >
                         {date?.label || defaultEndDate?.label}
                       </button>

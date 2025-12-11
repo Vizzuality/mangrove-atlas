@@ -28,9 +28,8 @@ export const Loading: FC<LoadingProps> = ({
         key="loading"
         {...variants}
         transition={transition}
-        className={cx({
+        className={cx(className, {
           'opacity-50': true,
-          [className]: !!className,
         })}
       >
         <Icon

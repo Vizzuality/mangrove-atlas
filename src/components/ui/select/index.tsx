@@ -1,4 +1,4 @@
-import { forwardRef, ElementRef, ComponentPropsWithoutRef, HTMLAttributes } from 'react';
+import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
 import cn from 'classnames';
@@ -13,7 +13,7 @@ const SelectValue = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Value
     ref={ref}
-    className={cn({ 'truncate text-3xl': true, [className]: !!className })}
+    className={cn(className, { 'truncate text-3xl': true })}
     {...props}
   >
     {children}
@@ -26,10 +26,7 @@ const SelectIcon = forwardRef<
   ElementRef<typeof SelectPrimitive.Icon>,
   ComponentPropsWithoutRef<typeof SelectPrimitive.Icon>
 >(({ className, children, ...props }) => (
-  <SelectPrimitive.Icon
-    className={cn({ 'text-muted-foreground': true, [className]: !!className })}
-    {...props}
-  >
+  <SelectPrimitive.Icon className={cn(className, { 'text-muted-foreground': true })} {...props}>
     {children}
   </SelectPrimitive.Icon>
 ));
@@ -42,10 +39,9 @@ const SelectTrigger = forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'border-input ring-offset-background placeholder:text-muted-foreground focus:ring-ring flex h-9 w-full items-center justify-between rounded-3xl px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50':
         true,
-      [className]: !!className,
     })}
     {...props}
   >

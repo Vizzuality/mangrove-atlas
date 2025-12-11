@@ -2,12 +2,16 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react';
 
 import LandingNavigation from 'containers/navigation/landing';
 
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
 import Footer from 'containers/auth/footer';
+
+import { useRouter } from 'next/router';
+import SuccessAlert from 'components/auth/email-alert';
 
 const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
   <label htmlFor={htmlFor} className="mb-1 block text-black/85">
@@ -16,10 +20,17 @@ const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: stri
 );
 
 export default function LoginPage() {
+  const { replace, query } = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { status } = useSession();
+
+  if (status === 'authenticated') {
+    replace('/');
+    return null;
+  }
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -29,21 +40,22 @@ export default function LoginPage() {
       setError('Please fill in both fields.');
       return;
     }
-    console.log('Submitting login with', { email, password });
+
     try {
       setSubmitting(true);
-      const res = await fetch('https://mangrove-atlas-api-staging.herokuapp.com/users/sign_in', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ user: { email, password } }),
+
+      const result = await signIn('credentials', {
+        callback: '/',
+        email,
+        password,
       });
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data?.error || data?.message || 'Login failed');
+      if (!result?.ok) {
+        setError(result?.error || 'Invalid credentials');
+        return;
       }
-      window.location.href = '/';
+
+      replace('/');
     } catch (err: any) {
       setError(err?.message || 'There was an error logging in.');
     } finally {
@@ -81,6 +93,9 @@ export default function LoginPage() {
         <div className="h-full">
           <div className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="font-sans text-[40px] font-light text-brand-800">Log in</h1>
+            {query.verified === 'pending' && (
+              <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
+            )}
             <div className="space-y-6">
               <form className="space-y-6" onSubmit={onSubmit} noValidate>
                 <div>
