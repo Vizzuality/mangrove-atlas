@@ -80,7 +80,7 @@ export const Share = ({
               <DialogTrigger>
                 <div
                   className={cn({
-                    'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                    'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
                   })}
                 >
@@ -97,11 +97,11 @@ export const Share = ({
                 <div className="flex w-[480px] flex-col space-y-5">
                   <div className="flex flex-col space-y-1">
                     <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>
-                    <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">
+                    <div className="flex h-12 items-center justify-between space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
                       <p className="truncate">{currentUrl}</p>
                       <button
                         onClick={copyShareLink}
-                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
+                        className="whitespace-nowrap rounded-3xl border border-brand-800/20 px-5 py-1 font-semibold text-brand-800 hover:bg-brand-800/20"
                       >
                         {shareLinkBtnText}
                       </button>
@@ -109,11 +109,11 @@ export const Share = ({
                   </div>
                   <div>
                     <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
-                    <div className="bg-brand-600/10 flex h-12 items-center space-x-4 rounded-3xl p-4 text-sm">
+                    <div className="flex h-12 items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
                       <p className="truncate">{embeddedLink}</p>
                       <button
                         onClick={copyEmbeddedCode}
-                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
+                        className="whitespace-nowrap rounded-3xl border border-brand-800/20 px-5 py-1 font-semibold text-brand-800 hover:bg-brand-800/20"
                       >
                         {shareEmbedCodeBtnText}
                       </button>
@@ -132,7 +132,7 @@ export const Share = ({
           <TooltipTrigger>
             <div
               className={cn(className, {
-                'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
               })}
             >

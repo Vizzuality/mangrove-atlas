@@ -26,7 +26,7 @@ const DialogOverlay = forwardRef<
 >(({ className }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'bg-brand-600/70 fixed inset-0 backdrop-blur-sm md:bg-black/50': true,
       [className || '']: !!className,
     })}
@@ -45,10 +45,16 @@ const DialogContent = forwardRef<
     {overlay && <DialogOverlay />}
     <DialogPrimitive.Content
       ref={ref}
+<<<<<<< HEAD
       className={cn({
         'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-[100vh] w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
           true,
         [classNameContent || '']: !!classNameContent,
+=======
+      className={cn(classNameContent, {
+        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-[100vh] w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
+          true,
+>>>>>>> 8498f351 (setCookie)
       })}
       style={{
         background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
@@ -56,10 +62,16 @@ const DialogContent = forwardRef<
       {...props}
     >
       <div
+<<<<<<< HEAD
         className={cn({
           'shadow-card relative flex max-w-[540px] shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
             true,
           [className || '']: !!className,
+=======
+        className={cn(className, {
+          'shadow-card relative flex shrink-0 flex-col bg-white p-8 md:w-full md:max-w-[540px] md:rounded-3xl':
+            true,
+>>>>>>> 8498f351 (setCookie)
         })}
       >
         {children}
@@ -71,9 +83,12 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn({
+    className={cn(className, {
       'flex flex-col space-y-2 text-center md:text-left': true,
+<<<<<<< HEAD
       [className || '']: !!className,
+=======
+>>>>>>> 8498f351 (setCookie)
     })}
     {...props}
   />
@@ -90,10 +105,13 @@ const DialogClose = ({
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className={cn({
+      className={cn(className, {
         'md:shadow-card absolute -top-2 -right-10 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
           true,
+<<<<<<< HEAD
         [className || '']: !!className,
+=======
+>>>>>>> 8498f351 (setCookie)
       })}
       onClick={onClose}
       aria-label="close dialog"
@@ -106,9 +124,12 @@ DialogClose.displayName = 'DialogClose';
 
 const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn({
+    className={cn(className, {
       'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
+<<<<<<< HEAD
       [className || '']: !!className,
+=======
+>>>>>>> 8498f351 (setCookie)
     })}
     {...props}
   />
@@ -121,9 +142,14 @@ const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
+<<<<<<< HEAD
     className={cn({
       'text-lg font-semibold text-slate-900': true,
       [className || '']: !!className,
+=======
+    className={cn(className, {
+      'text-lg font-semibold text-slate-900': true,
+>>>>>>> 8498f351 (setCookie)
     })}
     {...props}
   />
@@ -136,9 +162,12 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'text-sm text-slate-500': true,
+<<<<<<< HEAD
       [className || '']: !!className,
+=======
+>>>>>>> 8498f351 (setCookie)
     })}
     {...props}
   />
