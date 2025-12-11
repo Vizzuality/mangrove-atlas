@@ -108,7 +108,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn({
+    className={cn(className, {
       'flex flex-col space-y-2 text-center md:text-left': true,
       [className || '']: !!className,
     })}
@@ -162,7 +162,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'text-sm text-slate-500': true,
       [className || '']: !!className,
     })}
