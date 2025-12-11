@@ -48,10 +48,10 @@ const InterFont = Inter({
 
 type PageProps = {
   dehydratedState: unknown;
-  session: Session | null;
+  session: Session;
 };
 
-const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps<PageProps>) => {
   const router = useRouter();
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
@@ -161,7 +161,7 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) 
                 <MediaContextProvider disableDynamicMediaQueries>
                   <MapProvider>
                     <TooltipProvider delayDuration={200}>
-                      <SessionProvider session={pageProps.session}>
+                      <SessionProvider session={session}>
                         <Component {...pageProps} />
                       </SessionProvider>
                     </TooltipProvider>

@@ -7,14 +7,14 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { activeLayersAtom } from '@/store/layers';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
-import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
-import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
+import SuggestedLayers from '@/components/suggested-layers';
+import Icon from '@/components/ui/icon';
 import Chart from 'components/chart';
+import DateSelect from 'components/planet-date-select';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
@@ -45,32 +45,15 @@ const AlertsWidget = () => {
     [activeLayers]
   );
 
-  const widgetInfo = useMemo(
-    () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
-    [widgets]
-  );
-  const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
-  type FC = FeatureCollection<Geometry, GeoJsonProperties>;
-
-  const geometry = useMemo<FC | undefined>(() => {
-    // pick ONE geometry source (custom wins over uploaded, tweak if you want)
-    if (customGeojson) return customGeojson as FC;
-    if (uploadedGeojson) return uploadedGeojson as FC;
-    return undefined;
-  }, [customGeojson, uploadedGeojson]);
-
-  const dataParams = useMemo(() => {
-    return geometry ? { geometry } : undefined;
-  }, [geometry]);
-
-  const queryOptions = useMemo(() => ({ enabled: !isCanceled }), [isCanceled]);
-
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
-    startDate ?? undefined,
-    endDate ?? undefined,
-    undefined,
-    dataParams,
-    queryOptions,
+    startDate,
+    endDate,
+    null,
+    {
+      ...(customGeojson && { geometry: customGeojson }),
+      ...(uploadedGeojson && { geometry: uploadedGeojson }),
+    },
+    { enabled: !isCanceled },
     handleQueryCancellation
   );
 
@@ -116,7 +99,7 @@ const AlertsWidget = () => {
         </div>
       )}
       {isFetched && !isLoading && !isError && (
-        <div className="space-y-8">
+        <div>
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
@@ -124,10 +107,10 @@ const AlertsWidget = () => {
               <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedStartDate?.label}
-                  <ARROW_SVG
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
-                    role="img"
-                    title="Arrow"
+                  <Icon
+                    icon={ARROW_SVG}
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -141,7 +124,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': startDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value > (endDate?.value ?? 0),
+                          'pointer-events-none opacity-50': date?.value > endDate?.value,
                         })}
                         type="button"
                         onClick={() => {
@@ -154,7 +137,7 @@ const AlertsWidget = () => {
                           });
                           setStartDate(date);
                         }}
-                        disabled={date?.value > (endDate?.value ?? 0)}
+                        disabled={date?.value > endDate?.value}
                       >
                         {date?.label || defaultStartDate?.label}
                       </button>
@@ -168,10 +151,10 @@ const AlertsWidget = () => {
               <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedEndDate?.label}
-                  <ARROW_SVG
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
-                    role="img"
-                    title="Arrow"
+                  <Icon
+                    icon={ARROW_SVG}
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    description="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -185,7 +168,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': endDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value < (startDate?.value ?? 0),
+                          'pointer-events-none opacity-50': date?.value < startDate?.value,
                         })}
                         type="button"
                         onClick={() => {
@@ -198,7 +181,7 @@ const AlertsWidget = () => {
                           });
                           return setEndDate(date);
                         }}
-                        disabled={date?.value < (startDate?.value ?? 0)}
+                        disabled={date?.value < startDate?.value}
                       >
                         {date?.label || defaultEndDate?.label}
                       </button>
@@ -209,14 +192,6 @@ const AlertsWidget = () => {
             </Popover>
             .
           </p>
-          <div className="-mx-2">
-            <ContextualLayersWrapper
-              origin="mangrove_alerts"
-              id={contextualLayers[0].id}
-              description={contextualLayers[0].description}
-            />
-          </div>
-
           <Legend />
           <Chart config={config} />
           <Chart
@@ -251,11 +226,41 @@ const AlertsWidget = () => {
         </div>
       )}
       {!isError && !isLoading && (
-        <div className="space-y-2">
-          <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
-            There are <span className="font-bold"> 535</span> areas monitored in the world.
-          </p>
-        </div>
+        <>
+          <div className="space-y-2">
+            <div className="text-brand-800 absolute right-0 left-0 h-1 border-b border-dashed" />
+            <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
+              There are <span className="font-bold"> 535</span> areas monitored in the world.
+            </p>
+            <div className="flex space-x-2">
+              <div className="flex">
+                <div className="flex flex-col">
+                  <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+                  <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+                </div>
+                <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
+              </div>
+              <p className="text-sm font-normal">Monitored area</p>
+            </div>
+          </div>
+          <div>
+            <SuggestedLayers
+              origin="mangrove_alerts"
+              name="Planet-NICFI Satellite Imagery"
+              thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
+              id="planet_medres_visual_monthly"
+              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
+            >
+              {isActive && (
+                <DateSelect
+                  mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
+                  id="planet_medres_visual_monthly"
+                  className={{ content: 'w-[420px]' }}
+                />
+              )}
+            </SuggestedLayers>
+          </div>
+        </>
       )}
     </div>
   );
