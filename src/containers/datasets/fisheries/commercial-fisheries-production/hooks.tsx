@@ -1,4 +1,4 @@
-import type { LayerProps, SourceProps } from 'react-map-gl';
+import type { LayerProps, RasterSource } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
@@ -13,90 +13,6 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import type { ApiResponse, Data, DataResponse, ApiData } from './types';
-import mapboxgl from 'mapbox-gl';
-import { useMemo } from 'react';
-
-const COLORS = {
-  total: [
-    'interpolate',
-    ['linear'],
-    ['get', 'Total'],
-    1.5,
-    '#f8e855',
-    2.1,
-    '#78c66e',
-    2.2,
-    '#468e95',
-    3.3,
-    '#405187',
-    17.8,
-    '#3e0751',
-  ],
-
-  finfish: [
-    'interpolate',
-    ['linear'],
-    ['get', 'Fish'],
-    0,
-    '#f0f2fb',
-    40,
-    '#c2d6db',
-    80,
-    '#7bacd1',
-    105,
-    '#4b7baf',
-    115,
-    '#234f97',
-  ],
-
-  shrimp: [
-    'interpolate',
-    ['linear'],
-    ['get', 'Shrimp'],
-    0,
-    '#fcede4',
-    170,
-    '#f0b7bc',
-    220,
-    '#e970a2',
-    240,
-    '#b73088',
-    260,
-    '#6e1375',
-  ],
-
-  crab: [
-    'interpolate',
-    ['linear'],
-    ['get', 'Crab'],
-    0,
-    '#effaec',
-    0.5,
-    '#c2e2b8',
-    0.6,
-    '#84c27c',
-    1,
-    '#529b58',
-    100,
-    '#2e6b34',
-  ],
-
-  bivalve: [
-    'interpolate',
-    ['linear'],
-    ['get', 'Bivalve'],
-    0,
-    '#fdefe2',
-    50,
-    '#f4c28c',
-    70,
-    '#ed904e',
-    90,
-    '#d45e2b',
-    110,
-    '#9a3f1b',
-  ],
-};
 
 export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
   params?: UseParamsOptions,
@@ -146,64 +62,49 @@ export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
     { ...(queryOptions || {}) }
   );
 }
-export function useSource(): SourceProps {
+
+export function useSource({ filter }: { filter?: Data['indicator'] }): RasterSource {
+  const tiles = {
+    bivalve:
+      'https://storage.googleapis.com/mangrove_atlas/staging/tilesets/fishing_enhancement_bivalve/{z}/{x}/{y}.png',
+
+    crab: 'https://storage.googleapis.com/mangrove_atlas/staging/tilesets/fishing_enhancement_crab/{z}/{x}/{y}.png',
+
+    finfish:
+      'https://storage.googleapis.com/mangrove_atlas/staging/tilesets/fishing_enhancement_fish/{z}/{x}/{y}.png',
+
+    shrimp:
+      'https://storage.googleapis.com/mangrove_atlas/staging/tilesets/fishing_enhancement_shrimp/{z}/{x}/{y}.png',
+  };
+
+  const key = filter ?? 'finfish';
+
   return {
     id: 'mangrove_commercial_fisheries_production-source',
-    type: 'vector',
-    url: 'mapbox://globalmangrovewatch.dny2poqp',
+    type: 'raster',
+    tiles: [tiles[key]],
+    minzoom: 0,
+    maxzoom: 12,
   };
 }
 
-export function useLayers({
+export function useLayer({
   id,
   opacity,
   visibility = 'visible',
-  indicator,
 }: {
   id: LayerProps['id'];
   opacity?: number;
   visibility?: Visibility;
-  indicator?: Data['indicator'];
-}): LayerProps[] {
-  const Indicator = indicator?.charAt(0).toUpperCase() + indicator?.slice(1) || 'Finfish';
-
-  const COLOR = useMemo(() => {
-    return COLORS[indicator] || COLORS.finfish || '#8800FF';
-  }, [indicator, COLORS]);
-
-  if (!Indicator) return null;
-
-  return [
-    {
-      id: `${id}-${indicator}-line`,
-      source: 'mangrove_commercial_fisheries_production',
-      'source-layer': 'all_sp_fit_fn_totals',
-      type: 'line',
-      ...(Indicator !== 'Finfish' ? { filter: ['>', ['get', Indicator], 0] } : {}),
-      minzoom: 0,
-      paint: {
-        'line-color': COLOR as mapboxgl.StyleFunction,
-        'line-opacity': opacity,
-        'line-width': 1,
-      },
-      layout: {
-        visibility,
-      },
+}): LayerProps {
+  return {
+    id,
+    type: 'raster',
+    paint: {
+      'raster-opacity': opacity,
     },
-    {
-      id: `${id}-${indicator}-fill`,
-      source: 'mangrove_commercial_fisheries_production',
-      'source-layer': 'all_sp_fit_fn_totals',
-      type: 'fill',
-      ...(Indicator !== 'Finfish' ? { filter: ['>', ['get', Indicator], 0] } : {}),
-      minzoom: 0,
-      paint: {
-        'fill-color': COLOR as mapboxgl.StyleFunction,
-        'fill-opacity': opacity,
-      },
-      layout: {
-        visibility,
-      },
+    layout: {
+      visibility,
     },
-  ];
+  };
 }

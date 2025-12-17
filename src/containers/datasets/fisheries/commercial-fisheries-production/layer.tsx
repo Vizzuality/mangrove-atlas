@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 
 import type { LayerProps } from 'types/layers';
 
-import { useLayers, useSource } from './hooks';
+import { useLayer, useSource } from './hooks';
 import { useRouter } from 'next/router';
 
 const MangrovesCommercialFisheriesProductionLayer = ({
@@ -29,20 +29,18 @@ const MangrovesCommercialFisheriesProductionLayer = ({
     return activeLayer?.filter;
   }, [query.layers, activeLayer, id]);
 
-  const SOURCE = useSource();
-  const LAYERS = useLayers({
-    id,
+  const SOURCE = useSource({ filter });
+  const LAYERS = useLayer({
+    id: `${id}-${filter || 'finfish'}`,
     opacity: parseFloat(activeLayer.opacity),
     visibility: activeLayer.visibility,
-    indicator: filter,
   });
 
   if (!SOURCE || !LAYERS) return null;
+
   return (
-    <Source {...SOURCE}>
-      {LAYERS.map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      ))}
+    <Source key={`${SOURCE.id}-${SOURCE.tiles?.[0] ?? ''}`} {...SOURCE}>
+      <Layer {...LAYERS} beforeId={beforeId} />
     </Source>
   );
 };
