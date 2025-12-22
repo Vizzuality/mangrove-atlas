@@ -122,7 +122,7 @@ const widgets_prod = [
   {
     name: 'Mangrove Emissions Mitigation',
     slug: 'mangrove_emissions_mitigation',
-    locationType: ['all_datasets', 'wdpa', 'country', 'worldwide'],
+    locationType: ['all_datasets', 'wdpa', 'country'],
     applicability: 'Global and National',
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
