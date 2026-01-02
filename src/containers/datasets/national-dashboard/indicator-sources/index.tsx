@@ -10,8 +10,6 @@ import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 import WidgetControls from 'components/widget-controls';
 import type { ActiveLayers } from 'types/layers';
 
-import { DATA_SOURCES } from '../constants';
-
 import IndicatorExtent from './extent';
 import IndicatorSource from './source';
 import type { IndicatorSourcesTypes } from './types';
@@ -52,7 +50,7 @@ const IndicatorSources = ({
             location: locationIso,
             layerIndex,
             source: dataSource.layer_link,
-            source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+            source_layer: dataSource.source_layer,
           },
         },
         activeLayers
@@ -75,7 +73,7 @@ const IndicatorSources = ({
               location: locationIso,
               layerIndex,
               source: dataSource.layer_link,
-              source_layer: dataSource.source_layer || DATA_SOURCES[dataSource.layer_link],
+              source_layer: dataSource.source_layer,
             },
           },
         ] as ActiveLayers[]);

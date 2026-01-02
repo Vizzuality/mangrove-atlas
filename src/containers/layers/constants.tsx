@@ -78,15 +78,6 @@ export const LAYERS = [
     id: 'custom-area',
   },
   {
-    name: 'Digital Earth Australia',
-    id: 'national_dashboard_source_AUS_mangrove_cover_2022',
-  },
-  {
-    name: 'Save Our Mangroves Now project',
-    id: 'national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2',
-  },
-
-  {
     name: 'Allen coral atlas',
     id: 'mangrove_allen_coral_reef',
   },
