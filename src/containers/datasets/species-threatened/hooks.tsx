@@ -108,7 +108,7 @@ export function useMangroveSpeciesThreatened(
     const { categories, total, species, threatened } = speciesData;
 
     const threatenedLegend: number | string = getThreatened(threatened, total);
-    const speciesByGroup = groupBy(species, (s) => s.red_list_cat);
+    const speciesByGroup = groupBy(species, (s) => s?.red_list_cat);
 
     const chartData = Object.entries(categories)?.map((item) => ({
       value: item[1],
