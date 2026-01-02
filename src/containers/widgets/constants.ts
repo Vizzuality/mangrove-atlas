@@ -89,7 +89,7 @@ const widgets_prod = [
     contextualLayers: [
       {
         id: 'mangrove_protected_areas',
-        description: 'We recommend you to use WDPA...',
+        description: 'We recommend you to use WDPA',
       },
     ],
   },

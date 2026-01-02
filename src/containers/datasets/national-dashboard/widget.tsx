@@ -1,91 +1,51 @@
-import { useState } from 'react';
-
-import flatten from 'lodash-es/flatten';
-
 import cn from 'lib/classnames';
 
-import chroma from 'chroma-js';
-
-import NoData from 'containers/widgets/no-data';
+import NoData from './no-data';
 
 import Loading from 'components/ui/loading';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
+import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
-import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
-import IndicatorSource from './indicator-sources';
 import OtherResources from './other-resources';
+import { useLocation } from '../locations/hooks';
+
+import Sources from './sources';
+import LegalStatus from './legal-status';
+import MangroveBreakthrough from './mangrove-breakthrough';
+import { is } from 'date-fns/locale';
 
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
-  const [yearSelected, setYearSelected] = useState<number>(data?.data?.sources?.years?.[0] || null);
+
+  const ISO = data?.locationIso;
+  const { data: location } = useLocation(ISO);
 
   if (isFetched && !data?.data.length) return <NoData />;
 
-  const sources = flatten(
-    data?.data?.map(({ sources }) =>
-      flatten(
-        sources.map(({ data_source }) =>
-          data_source.map(({ layer_link }, index) =>
-            index === 0 ? `mapbox://${layer_link}` : layer_link
-          )
-        )
-      )
-    )
-  );
-  const colorsScale = chroma
-    .scale(COLORS)
-    .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
-  const years = data?.data?.[0]?.sources[0]?.years;
-  const currentYear = yearSelected || years?.[years?.length - 1];
-
   return (
-    <div className={WIDGET_CARD_WRAPPER_STYLE}>
+    <div className={cn(WIDGET_CARD_WRAPPER_STYLE)}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
-        <div className="space-y-2">
-          <section>
-            {data?.data?.map(({ indicator, sources }, index) => (
-              <div key={indicator}>
-                {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
-                {sources.map(({ source, years, unit, data_source }) => {
-                  const dataSource = data_source.find((d) => d.year === currentYear);
-                  const color = colorsScale.filter((c, i) => i === index);
-                  return (
-                    <>
-                      <IndicatorSource
-                        id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
-                        locationIso={data.locationIso}
-                        layerIndex={index}
-                        key={source}
-                        source={source}
-                        years={years}
-                        unit={unit}
-                        dataSource={dataSource}
-                        color={color}
-                        yearSelected={currentYear}
-                        setYearSelected={setYearSelected}
-                      />
-                    </>
-                  );
-                })}
-              </div>
-            ))}
-          </section>
-          {!!data?.metadata?.other_resources.length && (
-              <div className="relative py-4">
-                <div className="absolute top-1/2 -left-10 -right-10 h-0.5 bg-brand-800 bg-opacity-30" />
-              </div>
-            ) && (
-              <section className="space-y-2">
-                <h3 className={cn({ [WIDGET_SUBTITLE_STYLE]: true, 'py-2': true })}>
-                  OTHER RESOURCES
-                </h3>
-                {data?.metadata?.other_resources.map((resource) => (
-                  <OtherResources key={resource.link} {...resource} />
-                ))}
-              </section>
-            )}
+        <div className="space-y-[25px]">
+          {!!data?.data?.legal_status && (
+            <LegalStatus location={location.name} legalStatus={data?.data?.legal_status} />
+          )}
+          {isFetched && !data?.data.length && <NoData />}
+          {isFetched && data?.data.length > 0 && <Sources data={data?.data} iso={ISO} />}
+
+          {!!data?.metadata?.other_resources.length && isFetched && (
+            <OtherResources resources={data?.metadata?.other_resources} />
+          )}
+          {!!data?.data?.mangrove_breakthrough_committed && (
+            <>
+              <div className="absolute left-4 right-4 h-0.5 bg-brand-800/30" />
+
+              <MangroveBreakthrough
+                location={location.name}
+                mangroveBreakthrough={data?.data?.mangrove_breakthrough_committed}
+              />
+            </>
+          )}
         </div>
       )}
     </div>
