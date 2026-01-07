@@ -372,22 +372,9 @@ export function useSources(): SourceProps[] {
       url: 'mapbox://globalmangrovewatch.c5dgz6m3',
     },
     {
-      id: 'alerts-heatmap',
-      type: 'geojson',
-      data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
-        startDate?.value || ''
-      }&end_date=${endDate?.value || ''}`,
-    },
-    {
-      id: 'alerts-tiles',
+      id: 'alerts-heatmap-vector',
       type: 'vector',
-      tiles: [
-        `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
-          startDate?.value || ''
-        }&end_date=${endDate?.value || ''}`,
-      ],
-      minzoom: 10,
-      maxzoom: 14,
+      url: 'mapbox://globalmangrovewatch.bkhacq4t',
     },
   ];
 }
@@ -401,84 +388,63 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): {
-  'alerts-heatmap': LayerProps[];
-  'alerts-tiles': LayerProps[];
+  'alerts-heatmap-vector': LayerProps[];
   'monitored-alerts': LayerProps[];
 } {
   return {
-    'alerts-heatmap': [
+    'alerts-heatmap-vector': [
       {
-        id,
+        id: `${id}-heatmap`,
         type: 'heatmap',
-        source: 'alerts-heatmap',
-        maxzoom: 10,
+        source: 'alerts-heatmap-vector',
+        'source-layer': 'alerts_data',
+        maxzoom: 18,
         paint: {
-          // Increase the heatmap weight based on frequency and property magnitude
-          'heatmap-weight': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 6, 1],
-          // Increase the heatmap color weight weight by zoom level
-          // heatmap-intensity is a multiplier on top of heatmap-weight
+          // months_diff: 1 (recent) → 76 (old). from newest to oldest
+          'heatmap-weight': [
+            'interpolate',
+            ['linear'],
+            ['coalesce', ['to-number', ['get', 'months_diff']], 76],
+
+            1,
+            1.0, // newest
+            3,
+            0.9,
+            6,
+            0.75,
+            12,
+            0.55,
+            24,
+            0.35,
+            36,
+            0.2,
+            60,
+            0.08,
+            76,
+            0.02, // oldest
+          ],
+
           'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-          // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-          // Begin color ramp at 0-stop with a 0-transparancy color
-          // to create a blur-like effect.
+
           'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(255, 255, 255, 0)',
-            0.1,
-            'rgba(255, 194, 0, 1)',
+            'rgba(255,255,255,0)',
+            0.2,
+            'rgba(255,194,0,1)',
             0.5,
-            'rgba(235, 68, 68, 1)',
+            'rgba(235,68,68,1)',
             1,
-            'rgba(199, 43, 214, 1)',
+            'rgba(199,43,214,1)',
           ],
-          // Adjust the heatmap radius by zoom level
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
-          // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 2,
-            opacity * 1,
-            opacity * 11,
-            opacity * 0.5,
-          ],
+
+          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 9, 25],
+          'heatmap-opacity': opacity ?? 1,
         },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'alerts-tiles': [
-      {
-        id: `${id}-points`,
-        type: 'circle',
-        source: 'alerts-tiles',
-        'source-layer': 'geojsonLayer',
-        minzoom: 10,
-        maxzoom: 18,
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 18, 2],
-          'circle-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-width': 1,
-          'circle-blur': 0.5,
-          'circle-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 9,
-            opacity * 0,
-            opacity * 10,
-            opacity * 0.7,
-          ],
-        },
-        layout: {
-          visibility,
-        },
+
+        layout: { visibility },
       },
     ],
     'monitored-alerts': [
