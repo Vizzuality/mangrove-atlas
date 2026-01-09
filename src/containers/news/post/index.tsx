@@ -1,22 +1,18 @@
 import Image from 'next/image';
 
 import { usePostTags } from 'hooks/blog';
+import { useMemo } from 'react';
+import { PostProps } from 'hooks/blog/types';
 
-export const Post = ({
-  post,
-}: {
-  post: {
-    id: number;
-    title: { rendered: string };
-    yoast_head_json: { og_image: { url: string }[] };
-  };
-}) => {
+export const Post = ({ post }: { post: PostProps }) => {
   const { data } = usePostTags(
     { id: post.id },
     {
       enabled: !!post.id,
     }
   );
+
+  const isUpdate = useMemo(() => post.class_list.includes('wl_topic-update'), [post.class_list]);
 
   return (
     <div className="relative flex items-center">
@@ -28,7 +24,12 @@ export const Post = ({
           fill={true}
         />
       </div>
-      <div className="flex flex-col p-4">
+      <div className="flex flex-col justify-start p-4">
+        {isUpdate && (
+          <span className="w-fit rounded-[4px] bg-brand-800 px-2 py-1 text-xs font-bold uppercase tracking-widest text-white">
+            update
+          </span>
+        )}
         <div className="mb-2.5 flex flex-wrap gap-2">
           {data?.map((tag, i) => {
             return (

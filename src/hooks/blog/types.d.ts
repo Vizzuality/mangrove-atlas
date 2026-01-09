@@ -1,4 +1,4 @@
-export type Post = {
+export type PostProps = {
   id: number;
   date: string;
   title: {
@@ -9,6 +9,7 @@ export type Post = {
       url: string;
     }[];
   };
+  class_list: string[];
   content: {
     rendered: string;
   };

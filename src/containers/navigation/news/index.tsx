@@ -43,7 +43,7 @@ const NewsTooltip = ({ handleClose }) => (
       </DialogTrigger>
     </TooltipTrigger>
 
-    <TooltipContent className="relative rounded-3xl p-4">
+    <TooltipContent className="relative rounded-xl p-4">
       <TooltipArrow className="fill-white" />
       <div className="max-w-xs space-y-1 sm:max-w-[280px]">
         <div className="flex items-center justify-between space-x-2 font-bold">
