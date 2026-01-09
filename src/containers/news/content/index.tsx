@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useBlogPosts, usePostTags } from 'hooks/blog';
-import type { Post } from 'hooks/blog/types';
+import type { PostProps } from 'hooks/blog/types';
 
 import PostComponent from 'containers/news/post';
 
@@ -14,8 +14,13 @@ import { DialogClose } from 'components/ui/dialog';
 export const BlogContent = () => {
   const { data } = useBlogPosts({ wl_topic: [53] });
 
-  const [postInfo, setPostInfo] = useState<Post | null>(null);
-  const { data: dataTags } = usePostTags({ id: postInfo?.id });
+  const [postInfo, setPostInfo] = useState<PostProps | null>(null);
+  const { data: dataTags } = usePostTags(
+    { id: postInfo?.id },
+    {
+      enabled: !!postInfo,
+    }
+  );
   return (
     <>
       <AnimatePresence>

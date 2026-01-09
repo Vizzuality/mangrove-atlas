@@ -580,7 +580,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                     tooltipPosition={{ top: 0, left: 330 }}
                     message="Use the + icon to zoom into the map and the – button to zoom out of the map"
                   >
-                    <div className="border-box flex flex-col overflow-hidden rounded-4xl shadow-control">
+                    <div className="border-box flex flex-col overflow-hidden rounded-3xl shadow-control">
                       <ZoomControl mapId={mapId} />
                       {pitch !== 0 && <PitchReset mapId={mapId} />}
                     </div>
