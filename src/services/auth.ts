@@ -11,7 +11,7 @@ export type SignupResponse =
 // Functions
 export function requestPasswordReset(payload: ResetPasswordPayload) {
   console.log('Requesting password reset for:', payload, AuthAPI.defaults.baseURL);
-  return AuthAPI.post<ResetPasswordResponse>('/password', payload).then((r) => r.data);
+  return AuthAPI.post<ResetPasswordResponse>('/auth/password', payload).then((r) => r.data);
 }
 
 export function signupUser(payload: SignupPayload) {

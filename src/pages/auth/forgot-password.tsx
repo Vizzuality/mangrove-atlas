@@ -30,7 +30,8 @@ export default function ForgotPasswordPage() {
     resetPassword.mutate(
       { user: { email: values.email } },
       {
-        onError: () => {
+        onError: (e) => {
+          console.log(e);
           form.setError('email', {
             type: 'manual',
             message: 'Could not request password reset. Please try again.',
