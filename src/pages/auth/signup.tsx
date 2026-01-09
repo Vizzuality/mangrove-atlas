@@ -13,6 +13,7 @@ import { Button } from 'components/ui/button';
 
 import { useSignup } from 'containers/auth/hooks';
 import { useRouter } from 'next/router';
+import Footer from 'containers/auth/footer';
 
 const formSchema = z
   .object({
@@ -97,7 +98,7 @@ export default function SignupPage() {
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="font-sans text-[40px] font-light text-brand-800">Sign up</h1>
-          <div className="space-y-6">
+          <div className="divide-text-gray-200 space-y-6 divide-y">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <fieldset className="space-y-4">
@@ -186,6 +187,7 @@ export default function SignupPage() {
                 </Button>
               </form>
             </Form>
+            <Footer />
           </div>
         </div>
       </section>

@@ -46,17 +46,20 @@ export default function LoginPage() {
 
       const result = await signIn('credentials', {
         callback: '/',
+        redirect: false,
         email,
         password,
       });
 
       if (!result?.ok) {
-        setError(result?.error || 'Invalid credentials');
+        console.log(result);
+        setError('Invalid credentials');
         return;
       }
 
       replace('/');
     } catch (err: any) {
+      console.error(err);
       setError(err?.message || 'There was an error logging in.');
     } finally {
       setSubmitting(false);

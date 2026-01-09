@@ -7,7 +7,7 @@ const Footer = (): JSX.Element => {
   return (
     <div className="relative z-20 flex h-24 w-full justify-center bg-white p-4">
       <div className="flex flex-col items-center justify-center gap-1">
-        {pathname === '/auth/signin' ? (
+        {pathname !== '/auth/signin' ? (
           <p className="pt-6 text-sm text-gray-800">
             Already have an account?{' '}
             <Link href="/auth/signin" className="font-semibold text-brand-800">
