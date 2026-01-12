@@ -55,13 +55,7 @@ export const authOptions: NextAuthOptions = {
           res.headers.get('token');
 
         const token = data?.token || data?.jwt || headerToken;
-        console.log(
-          data,
-          token,
-          headerToken,
-          resText,
-          '******************************************************************'
-        );
+
         if (!token) return null;
 
         return { email: credentials.email } as any;

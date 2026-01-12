@@ -19,6 +19,7 @@ import Icon from '@/components/ui/icon';
 
 import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
 import MainMenu from './main';
+import Profile from './profile';
 
 const Menu = () => {
   const [section, setSection] = useState('main');
@@ -49,8 +50,9 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20': true,
           'h-fit py-0': section === 'main',
+          'w-[540px]': section === 'profile' || section === 'about',
         })}
       >
         {section === 'main' && (
@@ -92,7 +94,7 @@ const Menu = () => {
               }}
               transition={{ duration: 0.4 }}
             >
-              <div>profile page</div>
+              <Profile />
             </motion.div>
           )}
         </AnimatePresence>

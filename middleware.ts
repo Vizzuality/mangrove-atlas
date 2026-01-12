@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 const allowedOrigins = new Set([
   'https://mrtt.globalmangrovewatch.org',
   'https://mrtt-staging.globalmangrovewatch.org',
-  // 'http://localhost:3000',
+  'http://localhost:3000',
 ]);
 
 const corsBaseHeaders: Record<string, string> = {
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With',
   'Access-Control-Allow-Credentials': 'true',
   Vary: 'Origin',
 };
@@ -31,5 +31,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: ['/api/(?!auth).*'],
 };

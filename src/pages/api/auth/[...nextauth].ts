@@ -55,7 +55,11 @@ export const authOptions: NextAuthOptions = {
         );
         if (!token) return null;
 
-        return { email: credentials.email } as any;
+        return {
+          id: data?.user?.id ?? credentials.email, // any stable id
+          email: credentials.email,
+          accessToken: token,
+        };
       },
     }),
   ],

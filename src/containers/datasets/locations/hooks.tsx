@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions, useQueryClient, useQueries } from '@tanstack/react-query';
 
 import API from 'services/api';
 
@@ -60,5 +60,34 @@ export function useLocation(
       return data;
     },
     ...queryOptions,
+  });
+}
+
+export function useLocationsByIds(ids: Location['location_id'][], locationType?: LocationTypes) {
+  return useQueries({
+    queries: ids.map((id) => {
+      return {
+        queryKey: ['location', locationType, id],
+        queryFn: () => fetchLocation(id),
+        select: ({ data }) => {
+          if (locationType === 'custom-area') {
+            return {
+              name: 'the area selected',
+              id: 'custom-area',
+              iso: 'custom-area',
+              location_id: 'custom-area',
+              location_type: 'custom-area',
+            };
+          }
+
+          if (data.location_type === 'worldwide') {
+            data.name = 'the world';
+          }
+
+          return data;
+        },
+        enabled: Boolean(id),
+      };
+    }),
   });
 }

@@ -57,8 +57,7 @@ const DialogContent = forwardRef<
     >
       <div
         className={cn({
-          'shadow-card relative flex shrink-0 flex-col bg-white p-8 md:w-full md:max-w-[540px] md:rounded-3xl':
-            true,
+          'shadow-card relative flex shrink-0 flex-col bg-white p-8 md:w-full md:rounded-3xl': true,
           [className || '']: !!className,
         })}
       >
