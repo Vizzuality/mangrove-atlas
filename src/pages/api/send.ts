@@ -1,18 +1,19 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
-
+import type { NextApiRequest, NextApiResponse } from 'next';
+import nodemailer from 'nodemailer';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { ContactUsEmail } from 'components/contact/email-template';
 
-const allowedOrigins = [
-  'https://mrtt.globalmangrovewatch.org',
-  'https://mrtt-staging.globalmangrovewatch.org',
-  'https://staging.globalmangrovewatch.org/',
-];
+const transporter = nodemailer.createTransport({
+  host: process.env.NEXT_PUBLIC_SMTP_ADDRESS,
+  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT),
+  secure: Number(process.env.NEXT_PUBLIC_SMTP_PORT) === 465,
+  auth: {
+    user: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
+    pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
+  },
+});
 
-let recipients: string[] = [];
-
-// Define types for the email template props
-interface ContactEmailProps {
+export interface ContactEmailProps {
   name: string;
   email: string;
   message: string;
@@ -20,80 +21,42 @@ interface ContactEmailProps {
   topic?: string;
 }
 
-// Initialize Resend instance
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-
-// Define response types
-type ContactResponse = {
-  message?: string;
-  data?: any;
-  error?: string;
-};
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ContactResponse>) {
-  const origin = req.headers.origin || '';
-  const isAllowedOrigin = allowedOrigins.includes(origin.replace(/\/$/, ''));
-  console.info(req, res);
-  // CORS headers
-  if (isAllowedOrigin) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+function pickRecipients(topic?: string): string[] {
+  switch (topic) {
+    case 'gmw-platform':
+      return ['kate.longley-wood@tnc.org', 'lammert.hilarides@wetlands.org'];
+    case 'general':
+      return ['marice.leal@tnc.org', 'kate.longley-wood@tnc.org'];
+    case 'datasets':
+      return ['pfb@aber.ac.uk', 'lammert.hilarides@wetlands.org'];
+    case 'mrtt':
+      return ['taw52@cam.ac.uk', 'lanie.esch@wwfus.org'];
+    case 'gma':
+      return ['contact@globalmangrovealliance.org'];
+    default:
+      return ['kate.longley-wood@tnc.org', 'lammert.hilarides@wetlands.org'];
   }
+}
 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+const recipients = pickRecipients();
 
-  // Handle preflight OPTIONS request
-  if (req.method === 'OPTIONS') {
-    return res.status(204).end(); // No content, just CORS headers
-  }
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method Not Allowed' });
 
-  if (req.method === 'POST') {
-    try {
-      // Parse request body
-      const { name, email, message, organization, topic } = req.body as ContactEmailProps;
-      // Send email using Resend
-      if (topic === 'gmw-platform') {
-        recipients = [
-          'maria.luena@vizzuality.com',
-          'kate.longley-wood@tnc.org',
-          'lammert.hilarides@wetlands.org',
-        ];
-      } else if (topic === 'general') {
-        recipients = ['marice.leal@tnc.org', 'maria.luena@vizzuality.com'];
-      } else if (topic === 'datasets') {
-        recipients = ['pfb@aber.ac.uk', 'lammert.hilarides@wetlands.org'];
-      } else if (topic === 'mrtt') {
-        recipients = ['taw52@cam.ac.uk', 'lanie.esch@wwfus.org'];
-      } else if (topic === 'gma') {
-        recipients = ['contact@globalmangrovealliance.org'];
-      } else {
-        recipients = ['kathryn.longley-wood@TNC.ORG'];
-      }
+  const { name, email, message, organization, topic } = req.body;
 
-      const { data, error } = await resend.emails.send({
-        from: 'GMW <noreply@globalmangrovewatch.org>',
-        to: recipients,
-        subject: `New message from ${name}`,
-        react: ContactUsEmail({ name, email, message }), // Pass dynamic content
-        text: `Name: ${name}\nEmail: ${email}\nOrganization: ${organization}\nTopic: ${topic}\nMessage: ${message}\n`, // Fallback text content
-      });
+  const html = renderToStaticMarkup(ContactUsEmail({ name, email, message, organization, topic }));
 
-      // Handle errors
-      if (error) {
-        console.error('Resend error:', error);
-        return res.status(400).json({ error: 'Failed to send email' });
-      }
+  const text = `Name: ${name}\nEmail: ${email}\nOrganization: ${organization ?? '-'}\nTopic: ${topic ?? '-'}\n\n${message}\n`;
 
-      // Return success response
-      res.status(200).json({ message: 'Email sent successfully', data });
-    } catch (error) {
-      console.error('Server error:', error);
-      res.status(500).json({ error: 'Internal server error' });
-      res.status(500).json({ error: error.message || 'Internal server error' });
-    }
-  } else {
-    res.setHeader('Allow', ['POST', 'OPTIONS']);
-    res.status(405).json({ error: `Method ${req.method} Not Allowed` });
-  }
+  await transporter.sendMail({
+    from: 'GMW <mrtt@globalmangrovewatch.org>',
+    to: recipients,
+    subject: `New message from ${name}`,
+    html,
+    text,
+    replyTo: email,
+  });
+
+  return res.status(200).json({ message: 'Email sent' });
 }
