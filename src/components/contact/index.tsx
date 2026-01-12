@@ -12,6 +12,7 @@ import { z } from 'zod';
 
 import { TOPICS } from './constants';
 
+<<<<<<< HEAD
 import { Button } from '@/components/ui/button';
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import {
@@ -24,14 +25,26 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+=======
+import { Button } from 'components/ui/button';
+import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
+import { Label } from 'components/ui/label';
+>>>>>>> 65b4e479 (contact form update)
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
+<<<<<<< HEAD
 } from '@/components/ui/select';
 import { trackEvent } from '@/lib/analytics/ga';
+=======
+} from 'components/ui/select';
+import { trackEvent } from 'lib/analytics/ga';
+>>>>>>> 65b4e479 (contact form update)
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';

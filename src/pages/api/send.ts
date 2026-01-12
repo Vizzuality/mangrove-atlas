@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 import { renderToStaticMarkup } from 'react-dom/server';
+<<<<<<< HEAD
 import { ContactUsEmail } from '@/components/contact/email-template';
 
 const transporter = nodemailer.createTransport({
@@ -13,6 +14,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+=======
+import { ContactUsEmail } from 'components/contact/email-template';
+
+const transporter = nodemailer.createTransport({
+  host: process.env.NEXT_PUBLIC_SMTP_ADDRESS,
+  port: Number(process.env.NEXT_PUBLIC_SMTP_PORT),
+  secure: Number(process.env.NEXT_PUBLIC_SMTP_PORT) === 465,
+  auth: {
+    user: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
+    pass: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
+  },
+});
+
+>>>>>>> 65b4e479 (contact form update)
 export interface ContactEmailProps {
   name: string;
   email: string;
