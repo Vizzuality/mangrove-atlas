@@ -13,7 +13,6 @@ import { z } from 'zod';
 
 import { TOPICS } from './constants';
 
-// import subscribeNewsletter from '@/containers/newsletter/action';
 import { Button } from 'components/ui/button';
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
@@ -27,9 +26,6 @@ import {
   SelectValue,
 } from 'components/ui/select';
 import { trackEvent } from 'lib/analytics/ga';
-
-// import { ContactUsEmail } from './email-template';
-// import { postContactForm } from 'services/api';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';
