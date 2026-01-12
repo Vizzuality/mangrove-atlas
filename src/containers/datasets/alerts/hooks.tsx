@@ -367,11 +367,6 @@ export function useSources(): SourceProps[] {
 
   return [
     {
-      id: 'monitored-alerts',
-      type: 'vector',
-      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
-    },
-    {
       id: 'alerts-heatmap-vector',
       type: 'vector',
       url: 'mapbox://globalmangrovewatch.bkhacq4t',
@@ -389,7 +384,6 @@ export function useLayers({
   visibility?: Visibility;
 }): {
   'alerts-heatmap-vector': LayerProps[];
-  'monitored-alerts': LayerProps[];
 } {
   return {
     'alerts-heatmap-vector': [
@@ -445,23 +439,6 @@ export function useLayers({
         },
 
         layout: { visibility },
-      },
-    ],
-    'monitored-alerts': [
-      {
-        id: `${id}-line`,
-        type: 'line',
-        source: 'monitored-alerts',
-        'source-layer': 'alert_region_tiles',
-        minzoom: 0,
-        paint: {
-          'line-color': '#00857F',
-          'line-opacity': opacity,
-          'line-width': 1,
-        },
-        layout: {
-          visibility,
-        },
       },
     ],
   };
