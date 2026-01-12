@@ -8,12 +8,8 @@ const FisheriesWrapper = () => {
   return (
     <div className={cn(WIDGET_CARD_WRAPPER_STYLE, 'space-y-4')}>
       <Fisheries />
-      {process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
-        <>
-          <div className="absolute left-4 right-4 my-4 h-0.5 bg-brand-800/30" />
-          <CommercialFisheriesProduction />
-        </>
-      )}
+      <div className="absolute left-4 right-4 my-4 h-0.5 bg-brand-800/30" />
+      <CommercialFisheriesProduction />
     </div>
   );
 };
