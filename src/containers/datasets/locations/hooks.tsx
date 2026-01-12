@@ -9,11 +9,6 @@ export type DataResponse = {
   metadata: unknown;
 };
 
-export const HIGHLIGHTED_PLACES = {
-  rufiji: '0edd0ebb-892b-5774-8ce5-08e0ba7136b1',
-  saloum: '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
-};
-
 export const fetchLocations = () =>
   API.request<DataResponse>({
     method: 'GET',
@@ -40,11 +35,11 @@ export function useLocations<T = DataResponse>(
 }
 
 export function useLocation(
-  id: Location['location_id'],
+  id?: Location['location_id'],
   locationType?: LocationTypes,
   queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
 ) {
-  const _id = ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
+  const _id = locationType && ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
   return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
     placeholderData: { data: {} as DataResponse['data'][0] },
@@ -64,22 +59,6 @@ export function useLocation(
       }
       return data;
     },
-    ...queryOptions,
-  });
-}
-
-export function useHighlightedPlaces(
-  queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {}
-) {
-  const queryClient = useQueryClient();
-
-  return useQuery(['highlighted-locations'], fetchLocations, {
-    placeholderData: queryClient.getQueryData(['locations']) || {
-      data: [],
-      metadata: null,
-    },
-    select: ({ data }) =>
-      data?.filter((d) => Object.values(HIGHLIGHTED_PLACES).includes(d.location_id)),
     ...queryOptions,
   });
 }

@@ -178,12 +178,12 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                 {groups &&
                   groups.map((g) => {
-                    const groupOptions = options.filter((o) => o.group === g.value);
+                    const groupOptions = options?.filter((o) => o.group === g.value);
 
                     return (
                       <div key={g.value}>
                         <h3 className="py-2 pl-3 text-xs font-bold">{g.label}</h3>
-                        {groupOptions.map((opt) => {
+                        {groupOptions?.map((opt) => {
                           return <Option key={opt.value} opt={opt} theme={theme} />;
                         })}
                       </div>
@@ -191,7 +191,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   })}
 
                 {!groups &&
-                  options.map((opt) => {
+                  options?.map((opt) => {
                     return <Option key={opt.value} opt={opt} theme={theme} />;
                   })}
               </Listbox.Options>

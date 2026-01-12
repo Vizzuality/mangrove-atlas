@@ -2,11 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "target": "ES6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -18,17 +14,19 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.d.ts"
+    // ".next/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    ".storybook",
-    "cloud-functions"
-  ]
+  "exclude": ["node_modules", ".storybook", "cloud-functions"]
 }

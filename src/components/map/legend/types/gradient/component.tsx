@@ -19,15 +19,10 @@ export const LegendTypeGradient: React.FC<LegendTypeGradientProps> = ({
   items,
 }: LegendTypeGradientProps) => {
   return (
-    <div
-      className={cx({
-        [className?.box]: !!className?.box,
-      })}
-    >
+    <div className={cx(className.box)}>
       <div
-        className={cx({
+        className={cx(className.bar, {
           'flex h-2 w-full': true,
-          [className?.bar]: className?.bar,
         })}
         style={{
           backgroundImage: `linear-gradient(to right, ${items.map((i) => i.color).join(',')})`,
@@ -40,9 +35,8 @@ export const LegendTypeGradient: React.FC<LegendTypeGradientProps> = ({
           .map(({ value }) => (
             <li
               key={`${value}`}
-              className={cx({
+              className={cx(className.labels, {
                 'flex-shrink-0 text-xs': true,
-                [className.labels]: className.labels,
               })}
             >
               {value}

@@ -59,7 +59,7 @@ export const DrawControl = (props: DrawControlProps) => {
   }, [drawRef, customPolygon]);
 
   useEffect(() => {
-    if (!drawRef) return null;
+    if (!drawRef) return;
 
     if (customPolygon) {
       try {

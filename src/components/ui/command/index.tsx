@@ -14,10 +14,9 @@ const Command = forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md':
         true,
-      [className]: !!className,
     })}
     {...props}
   />
@@ -28,7 +27,7 @@ const CommandSeparator = forwardRef<
   ElementRef<typeof CommandPrimitive.Separator>,
   ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.Separator ref={ref} className={cn({ [className]: !!className })} {...props} />
+  <CommandPrimitive.Separator ref={ref} className={cn(className)} {...props} />
 ));
 
 CommandSeparator.displayName = CommandPrimitive.displayName;
@@ -55,10 +54,9 @@ const CommandInput = forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       {...props}
-      className={cn({
+      className={cn(className, {
         'placeholder:text-foreground-muted flex h-11 w-full rounded-md border-2 bg-transparent py-3 text-2xl outline-none placeholder:text-2xl focus:border-brand-800 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50':
           true,
-        [className]: !!className,
       })}
     />
   </div>
@@ -70,13 +68,7 @@ const CommandList = forwardRef<
   ElementRef<typeof CommandPrimitive.List>,
   ComponentPropsWithoutRef<typeof CommandPrimitive.List>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.List
-    ref={ref}
-    className={cn({
-      [className]: !!className,
-    })}
-    {...props}
-  />
+  <CommandPrimitive.List ref={ref} className={cn(className)} {...props} />
 ));
 
 CommandList.displayName = CommandPrimitive.List.displayName;
@@ -96,10 +88,9 @@ const CommandGroup = forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium':
         true,
-      [className]: !!className,
     })}
     {...props}
   />
@@ -113,10 +104,9 @@ const CommandItem = forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
-    className={cn({
+    className={cn(className, {
       'aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50':
         true,
-      [className]: !!className,
     })}
     {...props}
   />
@@ -127,9 +117,8 @@ CommandItem.displayName = CommandPrimitive.Item.displayName;
 const CommandShortcut = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span
-      className={cn({
+      className={cn(className, {
         'text-muted-foreground ml-auto text-xs tracking-widest': true,
-        [className]: !!className,
       })}
       {...props}
     />

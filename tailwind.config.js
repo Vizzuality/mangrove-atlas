@@ -21,11 +21,8 @@ module.exports = {
   plugins: [animate, forms, lineClamp, typography, scrollBar],
   theme: {
     extend: {
-      backgroundImage: {
-        rufiji: "url('/images/highlighted-places/rufiji.jpg')",
-        saloum: "url('/images/highlighted-places/saloum.png')",
-      },
       fontFamily: {
+        inter: ['var(--font-inter)', 'sans-serif'],
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       spacing: {

@@ -2,7 +2,7 @@ import { useDraggable } from '@dnd-kit/core';
 
 type DraggableProps = {
   id: string;
-  position: { x: number; y: number };
+  position: { x: number; y: number } | null;
   isPinned?: boolean;
   offsetX?: number;
   offsetY?: number;
@@ -16,7 +16,7 @@ let transformStyle: string | undefined;
 
 export default function Draggable({
   id,
-  position,
+  position = null,
   children,
   offsetX = -90,
   offsetY = -5,

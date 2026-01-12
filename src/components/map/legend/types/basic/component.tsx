@@ -15,11 +15,7 @@ export const LegendTypeBasic: React.FC<LegendTypeBasicProps> = ({
   items,
 }: LegendTypeBasicProps) => {
   return (
-    <div
-      className={cx({
-        [className]: !!className,
-      })}
-    >
+    <div className={cx(className, {})}>
       <ul className="flex w-full flex-col space-y-1">
         {items.map(({ value, color }) => (
           <li key={`${value}`} className="flex space-x-2 text-xs">

@@ -23,12 +23,11 @@ export const FullScreen = ({ className }: { className?: string }) => {
     <Tooltip>
       <TooltipTrigger>
         <div
-          className={cn({
+          className={cn(className, {
             'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
               true,
             'border-brand-800 bg-brand-800': isFullScreen,
             'hover:bg-gray-100': !isFullScreen,
-            [className]: !!className,
           })}
           onClick={toggleFullScreen}
         >

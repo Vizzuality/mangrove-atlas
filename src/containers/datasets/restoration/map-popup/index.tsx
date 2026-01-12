@@ -9,9 +9,8 @@ import type { RestorationPopUp } from 'types/map';
 const PopupRestoration = ({ info, className }: { info: RestorationPopUp; className?: string }) => {
   return (
     <div
-      className={cn({
+      className={cn(className, {
         'relative flex w-full flex-col items-start divide-y divide-gray-100': true,
-        [className]: !!className,
       })}
     >
       <RestorationScores data={info} />
