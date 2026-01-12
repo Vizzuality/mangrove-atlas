@@ -35,7 +35,7 @@ export const NextAPI = axios.create({
 });
 
 export const AuthAPI = axios.create({
-  baseURL: `${process.env.AUTH_API_URL}/users`,
+  baseURL: `${process.env.NEXT_PUBLIC_AUTH_URL}/users`,
   headers: { 'Content-Type': 'application/json' },
 });
 

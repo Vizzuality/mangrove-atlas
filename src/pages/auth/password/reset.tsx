@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,42 +10,66 @@ import { Input } from 'components/ui/input';
 
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
+import { usePutResetPassword } from 'containers/auth/hooks';
+import { useRouter } from 'next/router';
+import { ro } from 'date-fns/locale';
 
 const formSchema = z
   .object({
-    username: z.string().min(1, { message: 'Please enter your name' }),
-    email: z.string().email({ message: 'Please enter a valid email address' }),
-    password: z.string().nonempty({ message: 'Please enter your password' }).min(6, {
-      message: 'Please enter a password with at least 6 characters',
-    }),
-    'confirm-password': z
+    password: z
+      .string()
+      .nonempty({ message: 'Please enter your password' })
+      .min(6, { message: 'Please enter a password with at least 6 characters' }),
+    password_confirmation: z
       .string()
       .nonempty({ message: 'Please enter your confirmed password' })
       .min(6, { message: 'Please enter a password with at least 6 characters' }),
   })
   .superRefine((data, ctx) => {
-    if (data.password !== data['confirm-password']) {
+    if (data.password !== data['password_confirmation']) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: 'Passwords do not match',
-        path: ['confirm-password'],
+        path: ['password_confirmation'],
       });
     }
   });
 
 export default function ResetPasswordPage() {
+  const updatePassword = usePutResetPassword();
+
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      email: '',
       password: '',
-      'confirm-password': '',
+      password_confirmation: '',
     },
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    form.clearErrors('password');
+    updatePassword.mutate(
+      {
+        user: {
+          password: values.password,
+          password_confirmation: values.password_confirmation,
+          reset_password_token: router.query.token as string,
+        },
+      },
+      {
+        onSuccess: () => {
+          router.push('/auth/signin');
+        },
+        onError: (e) => {
+          form.setError('password_confirmation', {
+            type: 'manual',
+            message: 'Could not reset password. Please try again.',
+          });
+        },
+      }
+    );
   }
 
   return (
@@ -88,13 +111,13 @@ export default function ResetPasswordPage() {
                   />
                   <FormField
                     control={form.control}
-                    name="confirm-password"
+                    name="password_confirmation"
                     render={({ field }) => (
                       <FormItem className="space-y-1.5">
                         <FormLabel className="text-xs font-semibold">Confirm Password</FormLabel>
                         <FormControl>
                           <Input
-                            type="password"
+                            type="password_confirmation"
                             {...field}
                             className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
                             placeholder="Password"

@@ -2,6 +2,9 @@ import { NextAPI, AuthAPI } from 'services/api';
 
 // Types
 export type ResetPasswordPayload = { user: { email: string } };
+export type ResetPasswordUpdatePayload = {
+  user: { password: string; password_confirmation: string; reset_password_token: string };
+};
 export type ResetPasswordResponse = { message?: string };
 export type SignupPayload = { user: { email: string; password: string; name: string } };
 export type SignupResponse =
@@ -10,8 +13,13 @@ export type SignupResponse =
 
 // Functions
 export function requestPasswordReset(payload: ResetPasswordPayload) {
-  console.log('Requesting password reset for:', payload, AuthAPI.defaults.baseURL);
-  return AuthAPI.post<ResetPasswordResponse>('/auth/password', payload).then((r) => r.data);
+  console.info('Requesting password reset for:', payload, AuthAPI.defaults.baseURL);
+  return AuthAPI.post<ResetPasswordResponse>('/password', payload).then((r) => r.data);
+}
+
+export function updatePassword(payload: ResetPasswordUpdatePayload) {
+  console.info('Updating password for:', payload, AuthAPI.defaults.baseURL);
+  return AuthAPI.put<ResetPasswordResponse>('/password', payload).then((r) => r.data);
 }
 
 export function signupUser(payload: SignupPayload) {

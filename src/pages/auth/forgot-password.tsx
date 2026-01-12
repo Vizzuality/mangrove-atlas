@@ -31,7 +31,6 @@ export default function ForgotPasswordPage() {
       { user: { email: values.email } },
       {
         onError: (e) => {
-          console.log(e);
           form.setError('email', {
             type: 'manual',
             message: 'Could not request password reset. Please try again.',
@@ -83,10 +82,9 @@ export default function ForgotPasswordPage() {
                     )}
                   />
                 </fieldset>
-
                 <Button
                   type="submit"
-                  disabled={resetPassword.isLoading}
+                  disabled={resetPassword.isLoading || resetPassword.isSuccess}
                   className="h-9 w-full font-semibold"
                 >
                   {resetPassword.isLoading ? 'Submitting…' : 'Submit'}

@@ -52,7 +52,6 @@ export default function LoginPage() {
       });
 
       if (!result?.ok) {
-        console.log(result);
         setError('Invalid credentials');
         return;
       }

@@ -82,7 +82,7 @@ export default function SignupPage() {
       }
     );
   }
-  console.log('Render signup page', form.formState.errors);
+
   return (
     <div className="relative flex min-h-screen bg-white">
       <Logo position="top-left" width={360} />
