@@ -1,16 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 import LandingNavigation from 'containers/navigation/landing';
-
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
 import Footer from 'containers/auth/footer';
-
-import { useRouter } from 'next/router';
 import SuccessAlert from 'components/auth/email-alert';
 
 const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
@@ -20,17 +18,22 @@ const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: stri
 );
 
 export default function LoginPage() {
-  const { replace, query } = useRouter();
+  const router = useRouter();
+  const { replace, query } = router;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { status } = useSession();
 
-  if (status === 'authenticated') {
-    replace('/');
-    return null;
-  }
+  const { status, update } = useSession();
+
+  // If already signed in, bounce away from /auth/signin
+  useEffect(() => {
+    if (status === 'authenticated') {
+      replace('/');
+    }
+  }, [status, replace]);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -45,10 +48,10 @@ export default function LoginPage() {
       setSubmitting(true);
 
       const result = await signIn('credentials', {
-        callback: '/',
         redirect: false,
         email,
         password,
+        callbackUrl: '/', // ✅ correct key
       });
 
       if (!result?.ok) {
@@ -56,7 +59,14 @@ export default function LoginPage() {
         return;
       }
 
-      replace('/');
+      // ✅ force NextAuth client to refetch /api/auth/session
+      await update();
+
+      // ✅ then redirect (use result.url if present)
+      await replace(result.url ?? '/');
+
+      // Optional hard fallback if your app still shows stale UI:
+      // router.reload();
     } catch (err: any) {
       console.error(err);
       setError(err?.message || 'There was an error logging in.');
@@ -65,15 +75,19 @@ export default function LoginPage() {
     }
   }
 
+  // Avoid flicker: hide page while session is loading or redirecting
+  if (status === 'loading' || status === 'authenticated') {
+    return null;
+  }
+
   return (
     <div className="relative flex min-h-screen bg-white">
       <Logo position="top-left" width={360} />
+
       <section
         className="flex w-[50%] flex-col justify-center bg-cover bg-right px-4 py-8"
         aria-labelledby="mrt-hero-title"
-        style={{
-          backgroundImage: 'url(/images/login/image.webp)',
-        }}
+        style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       >
         <div className="mx-24 max-w-xl space-y-6">
           <h2 id="mrt-hero-title" className="text-5xl font-semibold text-white">
@@ -95,9 +109,11 @@ export default function LoginPage() {
         <div className="h-full">
           <div className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="font-sans text-[40px] font-light text-brand-800">Log in</h1>
+
             {query.verified === 'pending' && (
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
             )}
+
             <div className="space-y-6">
               <form className="space-y-6" onSubmit={onSubmit} noValidate>
                 <div>
