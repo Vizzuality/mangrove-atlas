@@ -195,6 +195,7 @@ const LegendItem = ({
                   key={l.id}
                   title={title}
                   applicability={widget?.applicability}
+                  contextualLayers={widget?.contextualLayers}
                   id={widgetId as WidgetSlugType}
                   info
                 >

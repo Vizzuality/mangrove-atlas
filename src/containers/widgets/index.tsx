@@ -135,6 +135,7 @@ const WidgetsContainer: FC = () => {
                 title={name}
                 id={slug}
                 applicability={props?.applicability}
+                contextualLayers={props?.contextualLayers}
                 className={cn({
                   'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
                     true,
