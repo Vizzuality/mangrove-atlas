@@ -289,6 +289,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     const iucnEcoregionFeature = e?.features.find(
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
+
     const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
     const x = Math.max(0, Math.min(e.point.x, window.innerWidth - w));
     const y = Math.max(0, Math.min(e.point.y, window.innerHeight - h));

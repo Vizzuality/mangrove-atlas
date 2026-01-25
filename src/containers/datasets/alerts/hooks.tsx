@@ -24,14 +24,106 @@ import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
 
-const getStops = () => {
-  const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];
+const bucketKey = (m: number) => {
+  if (m < 3) return 'lt3';
+  if (m < 6) return '3to6';
+  if (m < 12) return '6to12';
+  if (m < 24) return '12to24';
+  return 'gt24';
+};
 
-  const gradient = colorSchema.map((d, index) => ({
-    offset: `${(index / (colorSchema.length - 1)) * 100}%`,
-    stopColor: d,
+const makeColoredSeries = (data: any[]) => {
+  const keys = [
+    'alerts_lt3',
+    'alerts_3to6',
+    'alerts_6to12',
+    'alerts_12to24',
+    'alerts_gt24',
+  ] as const;
+
+  // init keys as null
+  const base = data.map((d) => ({
+    ...d,
+    alerts_lt3: null,
+    alerts_3to6: null,
+    alerts_6to12: null,
+    alerts_12to24: null,
+    alerts_gt24: null,
   }));
-  return gradient;
+
+  // assign each point to its bucket
+  for (let i = 0; i < base.length; i++) {
+    const d = base[i];
+    const b = bucketKey(d.monthsSinceDetection);
+
+    const k =
+      b === 'lt3'
+        ? 'alerts_lt3'
+        : b === '3to6'
+          ? 'alerts_3to6'
+          : b === '6to12'
+            ? 'alerts_6to12'
+            : b === '12to24'
+              ? 'alerts_12to24'
+              : 'alerts_gt24';
+
+    d[k] = d.alerts;
+  }
+
+  // stitch boundaries: when bucket changes, copy the boundary point to both series
+  for (let i = 1; i < base.length; i++) {
+    const prev = base[i - 1];
+    const curr = base[i];
+
+    const prevB = bucketKey(prev.monthsSinceDetection);
+    const currB = bucketKey(curr.monthsSinceDetection);
+
+    if (prevB !== currB) {
+      const prevKey =
+        prevB === 'lt3'
+          ? 'alerts_lt3'
+          : prevB === '3to6'
+            ? 'alerts_3to6'
+            : prevB === '6to12'
+              ? 'alerts_6to12'
+              : prevB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      const currKey =
+        currB === 'lt3'
+          ? 'alerts_lt3'
+          : currB === '3to6'
+            ? 'alerts_3to6'
+            : currB === '6to12'
+              ? 'alerts_6to12'
+              : currB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      // duplicate the boundary point so lines meet
+      prev[currKey] = prev.alerts;
+      curr[prevKey] = curr.alerts;
+    }
+  }
+
+  return base;
+};
+
+const monthIndex = (year: number, month1to12: number) => year * 12 + (month1to12 - 1);
+
+const monthsSince = (year: number, month1to12: number, ref: Date) => {
+  const refIdx = monthIndex(ref.getFullYear(), ref.getMonth() + 1);
+  const dIdx = monthIndex(year, month1to12);
+  return Math.max(0, refIdx - dIdx);
+};
+
+const addMonthsSince = (data) => {
+  const ref = new Date();
+  return data.map((d) => ({
+    ...d,
+    monthsSinceDetection: monthsSince(d.year, d.month.value, ref),
+  }));
 };
 
 const getData = (data) =>
@@ -173,12 +265,13 @@ export function useAlerts<DataResponse>(
 
       const fixedXAxis = fullData.map((d) => d.year);
 
-      const chartData = getData(dataFiltered);
+      const chartDataRaw = getData(dataFiltered);
+      const chartDataWithMonths = addMonthsSince(chartDataRaw);
+      const chartData = makeColoredSeries(chartDataWithMonths);
       const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
       const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
 
       const alertsTotal = getTotal(dataFiltered);
-
       const config = {
         data: chartData,
         type: 'line',
@@ -193,10 +286,35 @@ export function useAlerts<DataResponse>(
         xKey: 'name',
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
+            alerts_gt24: {
+              stroke: '#FFC201',
               strokeWidth: 2.5,
               isAnimationActive: false,
+              dot: false,
+            },
+            alerts_12to24: {
+              stroke: '#F78E1C',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_6to12: {
+              stroke: '#ED4F3F',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_3to6: {
+              stroke: '#DC3982',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_lt3: {
+              stroke: '#C62AD6',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
             },
           },
         },
@@ -247,7 +365,6 @@ export function useAlerts<DataResponse>(
         },
       };
       const configBrush = {
-        data: fullData,
         type: 'line',
         dataKey: 'alerts',
         height: 100,
@@ -273,18 +390,6 @@ export function useAlerts<DataResponse>(
           },
         ],
         margin: { top: 20, right: 40, left: 10, bottom: 5 },
-        gradients: {
-          key: {
-            attributes: {
-              id: 'colorAlerts',
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: getStops(),
-          },
-        },
         patterns: {
           diagonal: {
             attributes: {
@@ -318,13 +423,14 @@ export function useAlerts<DataResponse>(
         },
 
         xKey: 'year',
+        data: makeColoredSeries(addMonthsSince(fullData)),
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
-              strokeWidth: 2.5,
-              isAnimationActive: false,
-            },
+            alerts_gt24: { stroke: '#FFC201', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_12to24: { stroke: '#F78E1C', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_6to12: { stroke: '#ED4F3F', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_3to6: { stroke: '#DC3982', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_lt3: { stroke: '#C62AD6', strokeWidth: 2.5, isAnimationActive: false },
           },
         },
         xAxis: {
@@ -394,7 +500,6 @@ export function useLayers({
         'source-layer': 'alerts_data',
         maxzoom: 18,
         paint: {
-          // months_diff: 1 (recent) → 76 (old). from newest to oldest
           'heatmap-weight': [
             'interpolate',
             ['linear'],
@@ -425,13 +530,17 @@ export function useLayers({
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(255,255,255,0)',
+            'rgba(0,0,0,0)',
             0.2,
-            'rgba(255,194,0,1)',
-            0.5,
-            'rgba(235,68,68,1)',
+            '#FFC201',
+            0.45,
+            '#F78E1C',
+            0.65,
+            '#ED4F3F',
+            0.85,
+            '#DC3982',
             1,
-            'rgba(199,43,214,1)',
+            '#C62AD6',
           ],
 
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 9, 25],

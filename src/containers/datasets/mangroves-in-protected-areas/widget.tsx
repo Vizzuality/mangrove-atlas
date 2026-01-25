@@ -4,7 +4,6 @@ import cn from 'lib/classnames';
 
 import NoData from 'containers/widgets/no-data';
 
-import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
@@ -20,7 +19,6 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
 import { trackEvent } from 'lib/analytics/ga';
-import { ca } from 'date-fns/locale';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');
@@ -127,13 +125,6 @@ const MangrovesInProtectedAreas = () => {
           </p>
         </div>
       )}
-      <SuggestedLayers
-        origin="mangrove_protected_areas"
-        thumbSource="/images/thumbs/contextual/mangrove_protected_areas.png"
-        name="WDPA"
-        id="mangrove_protected_areas"
-        description="We recommend you to use WDPA..."
-      />
     </div>
   );
 };

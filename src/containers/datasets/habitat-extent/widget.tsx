@@ -10,7 +10,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import NoData from 'containers/widgets/no-data';
 
-import SuggestedLayers from 'components/suggested-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
@@ -200,15 +199,6 @@ const HabitatExtent = () => {
             of the coastline.
           </p>
           <HabitatExtentChart legend={legend} config={config} />
-          <div>
-            <SuggestedLayers
-              origin="mangrove_habitat_extent"
-              name="High Resolution Extent"
-              thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
-              id="hi-res-extent"
-              description="Show high-resolution mangrove extent layer"
-            />
-          </div>
         </div>
       )}
     </div>

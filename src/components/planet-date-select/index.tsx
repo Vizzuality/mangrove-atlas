@@ -14,13 +14,20 @@ import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets
 
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
+const SIZE = {
+  sm: 'px-3 py-0.5',
+  md: 'px-4 py-1',
+  lg: 'h-10 px-5 text-lg',
+};
 const DateSelect = ({
   id,
   mosaic_id,
+  size = 'md',
 }: {
   id: ContextualBasemapsId | BasemapId | WidgetSlugType;
   mosaic_id: MosaicId;
   className?: { content: string };
+  size?: 'sm' | 'md' | 'lg';
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -73,7 +80,11 @@ const DateSelect = ({
   return (
     <Select value={selectedDate} onValueChange={handleDate}>
       <SelectTrigger
-        className="z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50 px-4 py-1"
+        className={cn({
+          'z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50':
+            true,
+          [SIZE[size]]: true,
+        })}
         aria-label="Select period"
       >
         <p>

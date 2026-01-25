@@ -111,6 +111,7 @@
     "@types/lodash-es": "4.17.7",
     "@types/mapbox-gl": "2.7.11",
     "@types/node": "22.18.0",
+    "@types/nodemailer": "^7.0.5",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",
     "@typescript-eslint/eslint-plugin": "6.21.0",

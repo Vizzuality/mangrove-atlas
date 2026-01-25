@@ -13,7 +13,7 @@ import NoData from 'containers/widgets/no-data';
 
 import Chart from 'components/chart';
 import DateSelect from 'components/planet-date-select';
-import SuggestedLayers from 'components/suggested-layers';
+import ContextualLayers from 'components/contextual-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
@@ -27,7 +27,6 @@ import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
-import { ca } from 'date-fns/locale';
 
 const AlertsWidget = () => {
   const [startDate, setStartDate] = useRecoilState(alertsStartDate);
@@ -100,7 +99,7 @@ const AlertsWidget = () => {
         </div>
       )}
       {isFetched && !isLoading && !isError && (
-        <div>
+        <div className="space-y-8">
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
@@ -227,31 +226,11 @@ const AlertsWidget = () => {
         </div>
       )}
       {!isError && !isLoading && (
-        <>
-          <div className="space-y-2">
-            <div className="absolute left-0 right-0 h-1 border-b border-dashed text-brand-800" />
-            <p className="items-center pt-6 font-sans text-lg font-light leading-7">
-              There are <span className="font-bold"> 535</span> areas monitored in the world.
-            </p>
-          </div>
-          <div>
-            <SuggestedLayers
-              origin="mangrove_alerts"
-              name="Planet-NICFI Satellite Imagery"
-              thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
-              id="planet_medres_visual_monthly"
-              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
-            >
-              {isActive && (
-                <DateSelect
-                  mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
-                  id="planet_medres_visual_monthly"
-                  className={{ content: 'w-[420px]' }}
-                />
-              )}
-            </SuggestedLayers>
-          </div>
-        </>
+        <div className="space-y-2">
+          <p className="items-center pt-6 font-sans text-lg font-light leading-7">
+            There are <span className="font-bold"> 535</span> areas monitored in the world.
+          </p>
+        </div>
       )}
     </div>
   );
