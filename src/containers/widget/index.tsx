@@ -15,7 +15,6 @@ import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { getLayerActive } from './selector';
 import Helper from 'containers/help/helper';
-import ContextualLayersWrapper from 'containers/widget/contextual-layers';
 
 type ChildrenType = ReactElement & { type?: () => null };
 
@@ -34,7 +33,7 @@ type WidgetLayoutProps = {
 };
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
-  const { children, title, id, className, applicability, info, contextualLayers } = props;
+  const { children, title, id, className, applicability, info } = props;
   const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
   const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
   const isLayerActive = useRecoilValue(getLayerActive(id));
@@ -92,7 +91,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 {!info && <WidgetControls id={id} />}
               </WidgetHeader>
             </Helper>
-
             <div
               data-testid={`widget-${id}-content`}
               className={cn({
@@ -105,14 +103,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
             </div>
             {applicability && <WidgetApplicability id={id} applicability={applicability} />}
           </div>
-
-          {!!contextualLayers?.length && (
-            <ContextualLayersWrapper
-              origin={id}
-              id={contextualLayers[0].id}
-              description={contextualLayers[0].description}
-            />
-          )}
         </div>
       </motion.div>
     </AnimatePresence>
