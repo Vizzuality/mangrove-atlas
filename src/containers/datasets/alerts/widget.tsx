@@ -13,7 +13,7 @@ import NoData from 'containers/widgets/no-data';
 
 import Chart from 'components/chart';
 import DateSelect from 'components/planet-date-select';
-import ContextualLayers from 'components/contextual-layers';
+import ContextualLayersWrapper from 'containers/widget/contextual-layers';
 import Icon from 'components/ui/icon';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
@@ -22,6 +22,8 @@ import {
   WIDGET_SELECT_STYLES,
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
+
+import { widgets } from 'containers/widgets/constants';
 
 import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
 
@@ -44,6 +46,12 @@ const AlertsWidget = () => {
     () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
   );
+
+  const widgetInfo = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
+    [widgets]
+  );
+  const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
     startDate,
@@ -192,6 +200,14 @@ const AlertsWidget = () => {
             </Popover>
             .
           </p>
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_alerts"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
+            />
+          </div>
+
           <Legend />
           <Chart config={config} />
           <Chart

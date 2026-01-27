@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import cn from 'lib/classnames';
 
@@ -25,6 +25,9 @@ import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 import { trackEvent } from 'lib/analytics/ga';
+import ContextualLayersWrapper from 'containers/widget/contextual-layers';
+
+import { widgets } from 'containers/widgets/constants';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
@@ -76,6 +79,14 @@ const HabitatExtent = () => {
     },
     [setYear]
   );
+
+  const widgetInfo = useMemo(() => {
+    return widgets.find((widget) => widget.slug === 'mangrove_habitat_extent');
+  }, [widgets]);
+
+  const contextualLayers = useMemo(() => {
+    return widgetInfo?.contextualLayers || [];
+  }, [widgetInfo]);
 
   if (noData) return <NoData />;
 
@@ -198,7 +209,14 @@ const HabitatExtent = () => {
             </span>{' '}
             of the coastline.
           </p>
-          <HabitatExtentChart legend={legend} config={config} />
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_alerts"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
+            />
+            <HabitatExtentChart legend={legend} config={config} />
+          </div>
         </div>
       )}
     </div>
