@@ -51,32 +51,14 @@ function TabsList({
   );
 }
 
+export const TAB_TRIGGER_STYLE =
+  'inline-flex items-center justify-center whitespace-nowrap rounded-[16px] border-2 border-black/15 text-sm font-semibold leading-[20px] text-black text-center p-[15px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Brand-color-dark,#00857F)] disabled:pointer-events-none disabled:opacity-5 data-[state=active]:border-brand-800 data-[state=active]:text-brand-800 hover:border-brand-800 hover:text-brand-800';
+
 function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
-      className={cn(
-        // Base appearance
-        'inline-flex items-center justify-center whitespace-nowrap',
-        'rounded-[16px] border-2 border-black/15',
-        'text-sm font-semibold leading-[20px] text-black',
-        'text-center',
-
-        // Size & spacing
-        'p-[15px]',
-
-        // Interaction
-        'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--Brand-color-dark,#00857F)]',
-        'disabled:pointer-events-none disabled:opacity-50',
-
-        // Active state
-        'data-active:bg-[var(--Brand-color-dark,#00857F)] data-active:text-white',
-
-        // Hover
-        'hover:border-brand-800 hover:text-brand-800',
-
-        className
-      )}
+      className={cn(TAB_TRIGGER_STYLE, className)}
       {...props}
     />
   );

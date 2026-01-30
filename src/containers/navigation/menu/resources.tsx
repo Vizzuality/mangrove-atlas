@@ -78,7 +78,7 @@ const ResourcesMenu = ({ setSection }) => {
         Global Mangrove Alliance
       </Link>
       <Link
-        href="https://mrtt.globalmangrovewatch.org"
+        href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}`}
         className="text-2lg font-light hover:text-brand-800"
         rel="noopener noreferrer"
         target="_blank"

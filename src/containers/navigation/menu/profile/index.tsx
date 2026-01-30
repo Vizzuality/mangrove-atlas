@@ -13,11 +13,13 @@ import { Button } from 'components/ui/button';
 import { useSignup } from 'containers/auth/hooks';
 import { useRouter } from 'next/router';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
+import { TAB_TRIGGER_STYLE, Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 import AccountContent from './account';
 import SubscriptionsContent from './subscriptions';
 import SavedAreasContent from './saved-areas';
+import Link from 'next/link';
+import cn from 'lib/classnames';
 
 const formSchema = z
   .object({
@@ -102,9 +104,16 @@ const Profile = () => {
           <TabsTrigger value="saved-areas" className="flex-1">
             Saved areas
           </TabsTrigger>
-          <TabsTrigger value="mrtt" className="flex-1">
+          <Link
+            href={
+              process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
+                ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD
+                : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING
+            }
+            className={cn(TAB_TRIGGER_STYLE, 'flex-1')}
+          >
             MRTT
-          </TabsTrigger>
+          </Link>
         </TabsList>
         <TabsContent value="account">
           <AccountContent />
@@ -115,7 +124,6 @@ const Profile = () => {
         <TabsContent value="saved-areas">
           <SavedAreasContent />
         </TabsContent>
-        <TabsContent value="mrtt">Change your password here.</TabsContent>
       </Tabs>
     </div>
   );
