@@ -13,22 +13,24 @@ export const UserMenu = ({ setSection }) => {
 
   return (
     <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-      <button
-        type="button"
-        className="text-left text-2lg font-light hover:text-brand-800"
-        onClick={() => setSection('profile')}
-      >
-        My profile
-      </button>
-
       {session.status === 'authenticated' && (
-        <button
-          type="button"
-          className="text-left text-2lg font-light hover:text-brand-800"
-          onClick={handleLogout}
-        >
-          Log out
-        </button>
+        <>
+          <button
+            type="button"
+            className="text-left text-2lg font-light hover:text-brand-800"
+            onClick={() => setSection('profile')}
+          >
+            My profile
+          </button>
+
+          <button
+            type="button"
+            className="text-left text-2lg font-light hover:text-brand-800"
+            onClick={handleLogout}
+          >
+            Log out
+          </button>
+        </>
       )}
 
       {session.status !== 'authenticated' && (

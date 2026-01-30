@@ -2,14 +2,49 @@ import API from 'services/api';
 import { useQuery, UseQueryOptions, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { Location, LocationTypes } from './types';
+import { Polygon } from 'geojson';
 
 export interface UserLocation extends Location {
   user_id: string;
 }
 
+type MetadataUserLocation = {
+  max_locations: number;
+  current_count: number;
+};
+
 export type UserLocationsResponse = {
   data: UserLocation[];
-  metadata?: unknown;
+  meta: MetadataUserLocation;
+};
+
+type UserLocationCreateBody = {
+  // Display name for the saved location
+  name: string;
+  // ID of a system location. Mutually exclusive with custom_geometry
+  location_id?: number;
+
+  // GeoJSON geometry object. Mutually exclusive with location_id
+  custom_geometry?: {
+    description: string;
+    type: string;
+    example: Polygon;
+    coordinates: [number][];
+  };
+  // Map viewport bounds for the location
+  bounds?: {
+    description: string;
+
+    north: number;
+    south: number;
+    east: number;
+    west: number;
+  };
+  // Display order position
+  position?: number;
+
+  // Whether location-based alerts are enabled for this location. Defaults to true
+  alerts_enabled?: boolean;
 };
 
 export const fetchUserLocations = () =>
@@ -22,13 +57,6 @@ export const fetchUserLocation = (id: UserLocation['id']) =>
   API.request<{ data: UserLocation }>({
     method: 'GET',
     url: `/user_locations/${id}`,
-  }).then((r) => r.data);
-
-export const createUserLocation = (body: Partial<UserLocation>) =>
-  API.request<{ data: UserLocation }>({
-    method: 'POST',
-    url: '/user_locations',
-    data: body,
   }).then((r) => r.data);
 
 export const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>
@@ -69,15 +97,46 @@ export function useGetUserLocation(
   });
 }
 
+import type { AxiosError } from 'axios';
+
+export const createUserLocation = async (body: UserLocationCreateBody) => {
+  try {
+    const r = await API.request<{ data: UserLocation }>({
+      method: 'POST',
+      url: '/user_locations',
+      data: body,
+    });
+
+    return r.data;
+  } catch (e) {
+    const err = e as AxiosError<any>;
+
+    console.error('createUserLocation ERROR', err.response?.status, err.response?.data);
+    throw e;
+  }
+};
+
 export function useCreateUserLocation() {
   const qc = useQueryClient();
 
-  return useMutation({
-    mutationFn: (body: Partial<UserLocation>) => createUserLocation(body),
+  const mutation = useMutation({
+    mutationFn: async (body: Partial<UserLocation>) => {
+      console.log('mutationFn called', body); // ✅
+      return createUserLocation(body as any);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userLocationsKeys.list() });
     },
+    onError: (err) => {
+      console.error('create mutation error', err); // ✅
+    },
   });
+
+  return {
+    createUserLocation: mutation.mutateAsync,
+    isLoading: mutation.isPending,
+    error: mutation.error,
+  };
 }
 
 export function useUpdateUserLocation() {

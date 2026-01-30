@@ -1,9 +1,30 @@
-import NextAuth, { type NextAuthOptions } from 'next-auth';
+import NextAuth, { type NextAuthOptions, type User, type Session } from 'next-auth';
+import type { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    userId?: string;
+    accessToken?: string;
+    name?: string | null;
+    email?: string | null;
+  }
+}
 
 const domain = process.env.NODE_ENV === 'production' ? '.globalmangrovewatch.org' : undefined;
 
+declare module 'next-auth' {
+  interface User {
+    accessToken?: string;
+    id?: string;
+  }
+  interface Session {
+    user: User;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV !== 'production',
   session: { strategy: 'jwt' },
 
@@ -40,23 +61,12 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const headerToken =
-          res.headers.get('authorization') ||
-          res.headers.get('access-token') ||
-          res.headers.get('token');
+        const token = data?.token;
 
-        const token = data?.token || data?.jwt || headerToken;
-        console.log(
-          data,
-          token,
-          headerToken,
-          resText,
-          '******************************************************************'
-        );
         if (!token) return null;
 
         return {
-          id: data?.user?.id ?? credentials.email, // any stable id
+          id: credentials.email,
           email: credentials.email,
           accessToken: token,
         };
@@ -66,11 +76,25 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.accessToken = (user as any).accessToken;
+      if (user) {
+        token.userId = user.id;
+        token.accessToken = user.accessToken;
+        token.name = user.name;
+        token.email = user.email;
+      }
+
       return token;
     },
+
     async session({ session, token }) {
-      (session as any).accessToken = token.accessToken;
+      session.user = session.user ?? ({} as any);
+
+      if (token.userId) (session.user as any).id = token.userId as string;
+      if (token.accessToken) (session.user as any).accessToken = token.accessToken as string;
+
+      if (token.name) session.user.name = token.name as string;
+      if (token.email) session.user.email = token.email as string;
+
       return session;
     },
   },
@@ -86,7 +110,8 @@ export const authOptions: NextAuthOptions = {
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain,
+
+        ...(process.env.NODE_ENV === 'production' && domain ? { domain } : {}),
       },
     },
   },

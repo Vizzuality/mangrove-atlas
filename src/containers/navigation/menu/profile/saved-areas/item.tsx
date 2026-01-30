@@ -22,7 +22,8 @@ const LocationItem = ({ name }) => {
   };
 
   const data = useLocationsByIds(SAVED_AREAS).map((query) => query.data);
-  console.log('location data in saved areas:', data);
+  console.log(data);
+
   return (
     <li className="flex items-center justify-between">
       <span

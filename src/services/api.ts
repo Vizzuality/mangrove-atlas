@@ -1,8 +1,24 @@
 import axios from 'axios';
+import { getSession } from 'next-auth/react';
 
 const API = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_API_URL}/api/v2`,
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: `${process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL_STAGING : process.env.NEXT_PUBLIC_API_URL_STAGING}/api/v2`,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+  },
+});
+
+API.interceptors.request.use(async (config) => {
+  const session = await getSession();
+  const accessToken = (session as any)?.user?.accessToken;
+
+  if (accessToken) {
+    config.headers = config.headers ?? new axios.AxiosHeaders();
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  return config;
 });
 
 export const AnalysisAPI = axios.create({

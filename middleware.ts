@@ -23,6 +23,12 @@ function withCors(request: NextRequest, response: NextResponse) {
 }
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith('/api/auth')) {
+    return NextResponse.next();
+  }
+
   if (request.method === 'OPTIONS') {
     return withCors(request, new NextResponse(null, { status: 204 }));
   }
@@ -31,5 +37,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/(?!auth).*'],
+  matcher: ['/api/:path*'],
 };

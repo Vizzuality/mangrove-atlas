@@ -1,7 +1,7 @@
 import { printModeState } from '@/store/print-mode';
 
 import { getServerSession } from 'next-auth/next';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { authOptions } from './api/auth/[...nextauth]';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';

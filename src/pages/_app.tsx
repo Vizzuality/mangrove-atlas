@@ -59,7 +59,10 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) 
       new QueryClient({
         defaultOptions: {
           queries: {
+            staleTime: 60 * 1000,
+            refetchOnReconnect: false,
             refetchOnWindowFocus: false,
+            retry: false,
           },
         },
       })
