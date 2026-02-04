@@ -11,7 +11,7 @@ import Script from 'next/script';
 import { Deserialize, RecoilURLSyncNext, Serialize } from 'lib/recoil';
 import RecoilDevTools from 'lib/recoil/devtools';
 
-import { Open_Sans } from '@next/font/google';
+import { Open_Sans } from 'next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';

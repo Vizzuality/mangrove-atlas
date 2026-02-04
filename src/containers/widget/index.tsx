@@ -61,7 +61,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
-        transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
+        transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
           'z-2 group w-full rounded-4xl bg-white px-1 py-1 shadow-card print:!w-[90%] md:ml-0':
             true,
