@@ -122,7 +122,7 @@ const SpeciesLocation = () => {
             </div>
             <CommandList className="relative mt-2">
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup className="before:content after:content relative before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-gradient-to-b before:from-white after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-gradient-to-t after:from-white">
+              <CommandGroup className="before:content after:content relative before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white">
                 <RadioGroup.Root
                   aria-label="Species"
                   className="space-y mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2"

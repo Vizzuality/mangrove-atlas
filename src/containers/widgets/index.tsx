@@ -6,7 +6,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationToolAtom } from '@/store/sidebar';
 import { activeWidgetsAtom } from '@/store/widgets';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
@@ -168,7 +168,7 @@ const WidgetsContainer: FC = () => {
                 className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
                 variants={buttonMotion}
               >
-                <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
+                <Icon icon={SETTINGS_SVG} className="h-4 w-4 shrink-0" />
                 <motion.span variants={textMotion} className="whitespace-nowrap">
                   Widgets deck
                 </motion.span>
@@ -177,7 +177,7 @@ const WidgetsContainer: FC = () => {
           </DialogTrigger>
         </Helper>
         <DialogContent className="mb-10 w-screen border-2 md:w-auto">
-          <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+          <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
           <div className="no-scrollbar space-y-8">
             <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
               Widgets deck settings
@@ -211,7 +211,7 @@ const WidgetsContainer: FC = () => {
             button:
               locationTool === 'upload' || locationTool === 'area'
                 ? 'hidden'
-                : '-bottom-2.5 -right-0',
+                : '-bottom-2.5 right-0',
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: 50, left: 10 }}
@@ -237,7 +237,7 @@ const WidgetsContainer: FC = () => {
               button:
                 locationTool === 'upload' || locationTool === 'area'
                   ? 'hidden'
-                  : '-right-0 -bottom-2.5',
+                  : 'right-0 -bottom-2.5',
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: 50, left: 10 }}

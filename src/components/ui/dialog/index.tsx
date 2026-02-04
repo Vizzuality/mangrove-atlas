@@ -13,7 +13,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
-    <div className="absolute top-0 right-0 bottom-0 left-0 z-[60] flex h-full w-full items-start justify-center md:items-center">
+    <div className="absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
@@ -46,7 +46,7 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-[100vh] w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
+        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-screen w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
           true,
         [classNameContent]: !!classNameContent,
       })}

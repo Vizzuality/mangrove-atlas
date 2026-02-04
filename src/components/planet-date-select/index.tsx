@@ -87,7 +87,7 @@ const DateSelect = ({
     <Select value={selectedDate} onValueChange={handleDate}>
       <SelectTrigger
         className={cn({
-          'border-brand-800 border-opacity-50 z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border':
+          'border-brand-800 border-opacity-50 z-70 flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border':
             true,
           [SIZE[size]]: true,
         })}
@@ -102,7 +102,7 @@ const DateSelect = ({
       </SelectTrigger>
 
       <SelectContent
-        className="z-[70] flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white px-4 py-2 text-sm shadow-md"
+        className="z-70 flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white px-4 py-2 text-sm shadow-md"
         alignOffset={0}
         sideOffset={-30}
       >

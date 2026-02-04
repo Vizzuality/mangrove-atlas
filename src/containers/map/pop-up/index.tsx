@@ -137,8 +137,8 @@ const MapPopup = ({
           {/* Pop-up content */}
           <ScrollArea className="relative flex grow flex-col overflow-x-hidden overflow-y-auto">
             {/* Gradients */}
-            <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
-            <div className="pointer-events-none absolute right-6 bottom-0 left-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-8 bg-linear-to-b from-white to-transparent" />
+            <div className="pointer-events-none absolute right-6 bottom-0 left-6 z-10 h-8 bg-linear-to-t from-white to-transparent" />
 
             <div
               className="relative min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white"

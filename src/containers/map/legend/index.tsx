@@ -7,7 +7,7 @@ import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 

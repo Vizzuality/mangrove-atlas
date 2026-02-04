@@ -5,7 +5,7 @@ import cn from '@/lib/classnames';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import WidgetControls from '@/components/widget-controls';
@@ -63,9 +63,9 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'group shadow-card z-2 w-full rounded-4xl bg-white px-1 py-1 md:ml-0 print:!w-[90%]':
+          'group shadow-card z-2 w-full rounded-4xl bg-white px-1 py-1 md:ml-0 print:w-[90%]!':
             true,
-          '!w-[100%] border-none !p-0 !shadow-none': info,
+          'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
           'border-none p-0': info,
         })}

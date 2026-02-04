@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 import { activeWidgetsAtom } from '@/store/widgets';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useRecoilValue } from 'recoil';
 
 import Category from '@/containers/categories-menu';
@@ -99,8 +99,8 @@ const CustomizeWidgetsDeck = () => {
 
       {/* Widgets animation */}
       <div className="m-auto flex w-full flex-col items-center justify-center">
-        <div className="h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
-        <div className="-mt-[105px] h-31.25 w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="h-[125px] w-[197px] rounded-2xl border-[5px] border-black/40 bg-white" />
+        <div className="-mt-[105px] h-31.25 w-[197px] rounded-2xl border-[5px] border-black/40 bg-white" />
         <motion.div
           initial={{ x: 0, rotate: 0 }}
           animate={

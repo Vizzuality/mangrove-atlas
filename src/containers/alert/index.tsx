@@ -119,7 +119,7 @@ const AnalysisAlert = () => {
                   aria-label="Cancel reset page"
                   type="button"
                   onClick={handleCancelResetPage}
-                  className="border-brand-800/20 text-brand-800 rounded-2xl border-2 px-6 py-[1px] text-sm"
+                  className="border-brand-800/20 text-brand-800 rounded-2xl border-2 px-6 py-px text-sm"
                 >
                   Cancel
                 </button>

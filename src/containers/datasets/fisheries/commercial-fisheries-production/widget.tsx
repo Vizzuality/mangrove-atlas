@@ -123,7 +123,7 @@ const CommercialFisheriesProduction = () => {
             <SelectTrigger
               className={cn(
                 WIDGET_SELECT_STYLES,
-                'border-brand-800 !relative !inline !h-full !w-fit rounded-none border-b-2 !p-0 !text-lg !font-bold'
+                'border-brand-800 relative! inline! h-full! w-fit! rounded-none border-b-2 p-0! text-lg! font-bold!'
               )}
               aria-label="Select indicator"
             >
@@ -145,7 +145,7 @@ const CommercialFisheriesProduction = () => {
                   value={indicator}
                   aria-label={`Select ${indicator}`}
                   className={cn(
-                    'hover:bg-brand-800/20 w-full rounded-lg !px-2 !py-1 text-left',
+                    'hover:bg-brand-800/20 w-full rounded-lg px-2! py-1! text-left',
                     indicator === selectedIndicator && 'text-brand-800 font-semibold'
                   )}
                 >

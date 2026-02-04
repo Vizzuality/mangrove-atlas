@@ -203,7 +203,7 @@ const LegendItem = ({
                 </WidgetWrapper>
               </div>
               <DialogClose
-                className="top-8 md:fixed md:!top-18 md:left-[595px]"
+                className="top-8 md:fixed md:top-18! md:left-[595px]"
                 onClose={() => setStatisticsDialogVisibility(false)}
               />
             </DialogContent>
@@ -256,7 +256,7 @@ const LegendItem = ({
                       </div>
                     </div>
                     <DialogClose
-                      className="top-8 md:fixed md:!top-18 md:left-[595px]"
+                      className="top-8 md:fixed md:top-18! md:left-[595px]"
                       onClose={() => setInfoDialogVisibility(false)}
                     />
                   </DialogContent>
@@ -285,7 +285,7 @@ const LegendItem = ({
                   side="top"
                   align="end"
                   className={cn({
-                    'rounded-none !shadow-md': true,
+                    'rounded-none shadow-md!': true,
                     hidden: guideIsActive,
                   })}
                 >
@@ -306,7 +306,7 @@ const LegendItem = ({
                     <Icon
                       icon={visibility ? HIDE_SVG : SHOW_SVG}
                       className={cn({
-                        'mx-px !fill-black/40': true,
+                        'mx-px fill-black/40!': true,
                         'h-6 w-6': visibility,
                         'h-5 w-6': !visibility,
                       })}

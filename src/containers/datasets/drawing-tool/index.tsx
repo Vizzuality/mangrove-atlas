@@ -46,7 +46,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   return (
     <Helper
       className={{
-        button: '-top-1 right-1.5 z-[20]',
+        button: '-top-1 right-1.5 z-20',
         tooltip: 'w-fit max-w-[400px]',
       }}
       tooltipPosition={{ top: -65, left: -10 }}

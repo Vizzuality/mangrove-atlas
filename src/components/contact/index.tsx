@@ -159,7 +159,7 @@ export function ContactForm() {
                   </FormControl>
                   <FormMessage />
                   <SelectContent
-                    className="top-2 left-1 z-[90] w-[var(--radix-select-trigger-width)] rounded-3xl border bg-white p-4 text-sm font-light shadow-sm"
+                    className="top-2 left-1 z-90 w-(--radix-select-trigger-width) rounded-3xl border bg-white p-4 text-sm font-light shadow-sm"
                     position="item-aligned"
                   >
                     <div className="space-y-4">

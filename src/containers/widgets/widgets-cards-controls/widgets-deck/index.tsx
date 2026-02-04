@@ -70,7 +70,7 @@ const WidgetsDeck: FC = () => {
         </DialogTrigger>
       </Helper>
       <DialogContent className="mb-10 w-screen border-2 md:w-auto">
-        <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+        <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
         <div className="no-scrollbar space-y-8">
           <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
             Widgets deck settings

@@ -47,7 +47,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               </DialogTitle>
               <Helper
                 className={{
-                  button: 'top-4 left-[308px] z-[20]',
+                  button: 'top-4 left-[308px] z-20',
                   tooltip: 'w-fit-content',
                   container: 'space-y-2',
                 }}
@@ -61,7 +61,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               </Helper>
               <Helper
                 className={{
-                  button: '-top-2 left-32 z-[20]',
+                  button: '-top-2 left-32 z-20',
                   tooltip: 'w-fit-content',
                   container: 'space-y-2',
                 }}
@@ -97,7 +97,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               </Helper>
               <Helper
                 className={{
-                  button: '-top-2 left-32 z-[20]',
+                  button: '-top-2 left-32 z-20',
                   tooltip: 'w-fit-content',
                   container: 'space-y-2',
                 }}

@@ -538,7 +538,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -548,7 +548,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -565,7 +565,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -575,7 +575,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}

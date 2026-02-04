@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 import { fullScreenAtom } from '@/store/map-settings';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRecoilValue } from 'recoil';
 
 import LocationWidget from '@/containers/location-widget';

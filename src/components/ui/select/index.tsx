@@ -62,7 +62,7 @@ const SelectContent = forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        'shadow-medium animate-in fade-in-70 relative -top-11 z-50 w-[var(--radix-select-trigger-width)] duration-300',
+        'shadow-medium animate-in fade-in-70 relative -top-11 z-50 w-(--radix-select-trigger-width) duration-300',
         position === 'popper' && 'translate-y-1',
         className
       )}

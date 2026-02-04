@@ -48,7 +48,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
           <div className="no-scrollbar overflow-y-auto">
             <Info />
           </div>
-          <DialogClose className="fixed !top-18 left-[595px]" />
+          <DialogClose className="fixed top-18! left-[595px]" />
         </DialogContent>
       </Dialog>
     </p>

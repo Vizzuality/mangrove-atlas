@@ -160,7 +160,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
+    <div className="space-y-4 overflow-hidden pt-8 after:bg-linear-to-b after:from-white/20 after:to-white after:content-[''] md:pt-0">
       <div className="relative box-border w-full px-1 pt-0.5">
         <Helper
           className={{
@@ -190,7 +190,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       </div>
 
       {(isFetching || isLoading) && <Loading visible iconClassName="flex w-10 h-10 m-auto my-10" />}
-      <div className="relative max-h-7 min-h-[100vh]">
+      <div className="relative max-h-7 min-h-screen">
         {isFetched && !isLoading && !isFetching && (
           <AutoSizer>
             {({ width, height }) => (

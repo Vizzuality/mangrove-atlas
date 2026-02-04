@@ -92,7 +92,7 @@ const DesktopLayout = () => {
       >
         <Link
           href="/"
-          className="pointer-events-auto fixed top-0 right-0 z-[800]"
+          className="pointer-events-auto fixed top-0 right-0 z-800"
           draggable={false}
           onClick={handleReset}
         >

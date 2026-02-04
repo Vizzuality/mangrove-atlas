@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import Image from 'next/image';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { useBlogPosts, usePostTags } from 'hooks/blog';
 import type { PostProps } from 'hooks/blog/types';
@@ -112,7 +112,7 @@ export const BlogContent = () => {
       </AnimatePresence>
       <DialogClose
         onClose={() => setPostInfo(null)}
-        className="top-8 md:fixed md:!top-18 md:left-[595px]"
+        className="top-8 md:fixed md:top-18! md:left-[595px]"
       />
     </>
   );

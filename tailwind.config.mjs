@@ -17,10 +17,10 @@ export default {
       fontFamily: {
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
-      // spacing: {
-      //   7.5: '1.875rem',
-      //   18: '4.5rem',
-      // },
+      spacing: {
+        7.5: '1.875rem',
+        18: '4.5rem',
+      },
       fontSize: {
         xxs: '0.625rem', // * 10px
         '2lg': '1.188rem', // * 19px

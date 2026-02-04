@@ -123,7 +123,7 @@ export const Helper = ({
                   zIndex: 10000,
                 }}
                 className={cn({
-                  'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-6': true,
+                  'w-fit-content fixed z-60 h-fit cursor-default rounded-md bg-white p-6': true,
                   [className.tooltip]: !!className.tooltip,
                 })}
               >

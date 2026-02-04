@@ -32,9 +32,9 @@ const PopupRestorationSitesCollapsibleItem = ({
         <PopupRestorationSitesCollapsibleItemTitle title={title} />
       </CollapsibleTrigger>
       <CollapsibleContent className="relative">
-        <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-2 bg-gradient-to-b from-white to-transparent" />
+        <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-2 bg-linear-to-b from-white to-transparent" />
 
-        <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-2 bg-gradient-to-t from-white to-transparent" />
+        <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-10 h-2 bg-linear-to-t from-white to-transparent" />
         <ScrollArea className="relative max-h-[60px] w-full grow overflow-x-hidden overflow-y-auto py-1">
           <ul>
             {info?.map((item, index) => (

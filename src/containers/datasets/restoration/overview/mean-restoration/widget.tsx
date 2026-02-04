@@ -41,7 +41,7 @@ const MeanRestoration = () => {
         </div>
       )}
       {!isLoading && (
-        <div className="border-brand-800 border-opacity-50 absolute -right-10 bottom-4 -left-10 h-0.5 border-1 border-b border-dashed" />
+        <div className="border-brand-800 border-opacity-50 absolute -right-10 bottom-4 -left-10 h-0.5 border border-b border-dashed" />
       )}
     </div>
   );

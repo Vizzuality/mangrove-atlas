@@ -3,7 +3,7 @@ import { FC } from 'react';
 import cn from '@/lib/classnames';
 
 import cx from 'classnames';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 import Icon from '@/components/ui/icon';
 
