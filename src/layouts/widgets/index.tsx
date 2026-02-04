@@ -1,11 +1,11 @@
 import { PropsWithChildren } from 'react';
 
-import { fullScreenAtom } from 'store/map-settings';
+import { fullScreenAtom } from '@/store/map-settings';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
-import LocationWidget from 'containers/location-widget';
+import LocationWidget from '@/containers/location-widget';
 
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
@@ -26,7 +26,7 @@ const WidgetsLayout = (props: PropsWithChildren) => {
           transition={{
             duration: 0.4,
           }}
-          className="left-0 h-full w-screen py-14 scrollbar-hide print:bg-transparent print:px-0 md:absolute md:top-0 md:w-[560px] md:overflow-y-auto md:bg-transparent md:px-4"
+          className="scrollbar-hide left-0 h-full w-screen py-14 md:absolute md:top-0 md:w-[560px] md:overflow-y-auto md:bg-transparent md:px-4 print:bg-transparent print:px-0"
         >
           <LocationWidget />
           {children}

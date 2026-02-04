@@ -1,6 +1,6 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -39,7 +39,7 @@ const RestorationValue = () => {
       )}
 
       {!isFetching && (
-        <div className="absolute bottom-4 -left-10 -right-10 border-2 border-b border-brand-800/30" />
+        <div className="border-brand-800/30 absolute -right-10 bottom-4 -left-10 border-2 border-b" />
       )}
     </div>
   );

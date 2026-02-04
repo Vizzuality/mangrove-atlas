@@ -1,34 +1,34 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeGuideAtom } from 'store/guide';
-import { activeLayersAtom } from 'store/layers';
+import { activeGuideAtom } from '@/store/guide';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { INFO, MAP_LEGENDS, WIDGETS } from 'containers/datasets';
-import Helper from 'containers/help/helper';
-import { LAYERS } from 'containers/layers/constants';
-import WidgetWrapper from 'containers/widget';
-import { widgets } from 'containers/widgets/constants';
+import { INFO, MAP_LEGENDS, WIDGETS } from '@/containers/datasets';
+import Helper from '@/containers/help/helper';
+import { LAYERS } from '@/containers/layers/constants';
+import WidgetWrapper from '@/containers/widget';
+import { widgets } from '@/containers/widgets/constants';
 
-import { Media } from 'components/media-query';
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import Slider from 'components/ui/slider';
-import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
+import { Media } from '@/components/media-query';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import Slider from '@/components/ui/slider';
+import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
-import CLOSE_SVG from 'svgs/legend/close-legend.svg?sprite';
-import DRAG_SVG from 'svgs/legend/drag.svg?sprite';
-import HIDE_SVG from 'svgs/legend/hide.svg?sprite';
-import INFO_SVG from 'svgs/legend/info-legend.svg?sprite';
-import OPACITY_SVG from 'svgs/legend/opacity.svg?sprite';
-import SHOW_SVG from 'svgs/legend/show.svg?sprite';
-import { trackEvent } from 'lib/analytics/ga';
+import CLOSE_SVG from '@/svgs/legend/close-legend.svg?sprite';
+import DRAG_SVG from '@/svgs/legend/drag.svg?sprite';
+import HIDE_SVG from '@/svgs/legend/hide.svg?sprite';
+import INFO_SVG from '@/svgs/legend/info-legend.svg?sprite';
+import OPACITY_SVG from '@/svgs/legend/opacity.svg?sprite';
+import SHOW_SVG from '@/svgs/legend/show.svg?sprite';
+import { trackEvent } from '@/lib/analytics/ga';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
 const LegendItem = ({
@@ -149,7 +149,7 @@ const LegendItem = ({
   return (
     <div
       id={id}
-      className="flex flex-col items-start rounded-md bg-white pb-4 pt-2 text-sm md:px-2"
+      className="flex flex-col items-start rounded-md bg-white pt-2 pb-4 text-sm md:px-2"
     >
       <div className="flex w-full items-start justify-between">
         <div className="flex items-center space-x-2">
@@ -169,7 +169,7 @@ const LegendItem = ({
                     aria-label="Layer statistics"
                     onClick={() => setStatisticsDialogVisibility(!statisticsDialogVisibility)}
                   >
-                    <p className="pl-4 text-left text-xs font-semibold uppercase tracking-wider text-black/85 md:pl-0">
+                    <p className="pl-4 text-left text-xs font-semibold tracking-wider text-black/85 uppercase md:pl-0">
                       {title}
                     </p>
                   </button>

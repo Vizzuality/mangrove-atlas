@@ -1,4 +1,4 @@
-import { printModeState } from 'store/print-mode';
+import { printModeState } from '@/store/print-mode';
 
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
@@ -6,13 +6,13 @@ import type { GetServerSideProps } from 'next';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import DesktopLayout from 'layouts/desktop';
-import MobileLayout from 'layouts/mobile';
+import DesktopLayout from '@/layouts/desktop';
+import MobileLayout from '@/layouts/mobile';
 
-import type { DataResponse } from 'containers/datasets/locations/hooks';
-import MetaTags from 'containers/meta-tags';
+import type { DataResponse } from '@/containers/datasets/locations/hooks';
+import MetaTags from '@/containers/meta-tags';
 
-import { breakpoints } from 'styles/styles.config';
+import { breakpoints } from '@/styles/styles.config';
 
 import API from 'services/api';
 

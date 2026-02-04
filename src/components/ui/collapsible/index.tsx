@@ -2,7 +2,7 @@
 
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 
@@ -25,7 +25,7 @@ const CollapsibleTrigger = forwardRef<
     <CollapsiblePrimitive.Trigger
       ref={ref}
       className={cn(
-        'group flex w-full items-center justify-between whitespace-nowrap p-6 text-black/85',
+        'group flex w-full items-center justify-between p-6 whitespace-nowrap text-black/85',
         className
       )}
       {...props}
@@ -35,7 +35,7 @@ const CollapsibleTrigger = forwardRef<
       {iconType === 'plus-minus' && (
         <HiMinus
           className={cn({
-            'h-6 w-6 text-brand-800 group-data-[state=open]:block group-data-[state=closed]:hidden':
+            'text-brand-800 h-6 w-6 group-data-[state=closed]:hidden group-data-[state=open]:block':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
@@ -46,7 +46,7 @@ const CollapsibleTrigger = forwardRef<
       {iconType === 'plus-minus' && (
         <HiPlus
           className={cn({
-            'h-6 w-6 text-brand-800 group-data-[state=closed]:block group-data-[state=open]:hidden':
+            'text-brand-800 h-6 w-6 group-data-[state=closed]:block group-data-[state=open]:hidden':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
@@ -57,7 +57,7 @@ const CollapsibleTrigger = forwardRef<
       {iconType === 'arrow' && (
         <HiChevronDown
           className={cn({
-            'h-4 w-4 text-brand-800 group-data-[state=closed]:block group-data-[state=open]:hidden':
+            'text-brand-800 h-4 w-4 group-data-[state=closed]:block group-data-[state=open]:hidden':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
@@ -68,7 +68,7 @@ const CollapsibleTrigger = forwardRef<
       {iconType === 'arrow' && (
         <HiChevronUp
           className={cn({
-            'h-4 w-4 text-brand-800 group-data-[state=open]:block group-data-[state=closed]:hidden':
+            'text-brand-800 h-4 w-4 group-data-[state=closed]:hidden group-data-[state=open]:block':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',

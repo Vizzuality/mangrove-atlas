@@ -2,22 +2,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { activeGuideAtom } from 'store/guide';
-import { locationsModalAtom } from 'store/locations';
-import { locationToolAtom } from 'store/sidebar';
+import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
+import { activeGuideAtom } from '@/store/guide';
+import { locationsModalAtom } from '@/store/locations';
+import { locationToolAtom } from '@/store/sidebar';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import AnalysisAlert from 'containers/alert';
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
-import LocationDialogContent from 'containers/location-dialog-content';
-import MenuTools from 'containers/navigation/menu-tools';
+import AnalysisAlert from '@/containers/alert';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
+import LocationDialogContent from '@/containers/location-dialog-content';
+import MenuTools from '@/containers/navigation/menu-tools';
 
-import { Dialog, DialogTrigger } from 'components/ui/dialog';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const LocationWidget = () => {
   const {
@@ -85,7 +85,7 @@ const LocationWidget = () => {
 
   return (
     <>
-      <div className="relative flex h-52 flex-col justify-between rounded-3xl bg-brand-600 bg-[url('/images/location-bg.svg')] bg-cover bg-center text-center shadow-control print:hidden">
+      <div className="bg-brand-600 shadow-control relative flex h-52 flex-col justify-between rounded-3xl bg-[url(/images/location-bg.svg)] bg-cover bg-center text-center print:hidden">
         <Dialog open={isOpen}>
           <DialogTrigger asChild>
             <button
@@ -103,7 +103,7 @@ const LocationWidget = () => {
                     'text-5xl': locationName.length > 10,
                     'text-3xl': locationName.length > 30 && locationName.length <= 55,
                     'text-2xl': locationName.length > 55 && locationName.length <= 120,
-                    'break-all text-base': locationName.length > 120,
+                    'text-base break-all': locationName.length > 120,
                   })}
                 >
                   <h1 className="cursor-pointer text-white" ref={titleRef}>

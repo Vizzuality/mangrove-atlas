@@ -2,15 +2,15 @@ import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'rea
 
 import { createPortal } from 'react-dom';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
 
 export const Helper = ({
   children,

@@ -4,17 +4,17 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { locationsModalAtom } from 'store/locations';
-import { locationToolAtom } from 'store/sidebar';
+import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationsModalAtom } from '@/store/locations';
+import { locationToolAtom } from '@/store/sidebar';
 
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import { Dialog, DialogPortal, DialogContent } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+import { Dialog, DialogPortal, DialogContent } from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
 import { DialogTitle } from '@radix-ui/react-dialog';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
@@ -119,7 +119,7 @@ const AnalysisAlert = () => {
                   aria-label="Cancel reset page"
                   type="button"
                   onClick={handleCancelResetPage}
-                  className="rounded-2xl border-2 border-brand-800/20 px-6 py-[1px] text-sm text-brand-800"
+                  className="border-brand-800/20 text-brand-800 rounded-2xl border-2 px-6 py-[1px] text-sm"
                 >
                   Cancel
                 </button>
@@ -127,7 +127,7 @@ const AnalysisAlert = () => {
                   aria-label="Reset page"
                   type="button"
                   onClick={handleResetPage}
-                  className="rounded-2xl bg-brand-800 px-6 py-[2px] text-sm text-white"
+                  className="bg-brand-800 rounded-2xl px-6 py-[2px] text-sm text-white"
                 >
                   Reset page
                 </button>

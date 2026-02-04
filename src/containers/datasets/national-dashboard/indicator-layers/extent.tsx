@@ -1,4 +1,4 @@
-import { numberFormat } from 'lib/format';
+import { numberFormat } from '@/lib/format';
 
 import type { IndicatorExtentProps } from './types';
 

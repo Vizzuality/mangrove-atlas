@@ -26,7 +26,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import { SortableListProps } from 'components/map/legend/types';
+import { SortableListProps } from '@/components/map/legend/types';
 
 import SortableItem from './item';
 

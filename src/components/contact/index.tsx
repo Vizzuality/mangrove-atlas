@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { HiChevronDown } from 'react-icons/hi';
@@ -13,19 +13,26 @@ import { z } from 'zod';
 
 import { TOPICS } from './constants';
 
-import { Button } from 'components/ui/button';
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
-import { Label } from 'components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from 'components/ui/select';
-import { trackEvent } from 'lib/analytics/ga';
+} from '@/components/ui/select';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';
@@ -139,7 +146,7 @@ export function ContactForm() {
                   open={isOpen}
                 >
                   <FormControl>
-                    <SelectTrigger className="focus-visible:ring-ring flex h-9 w-full rounded-3xl border border-black/15 py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    <SelectTrigger className="focus-visible:ring-ring focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
                       <SelectValue placeholder="Select" />
                       <HiChevronDown
                         className={cn({

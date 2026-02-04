@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { widgetsCollapsedAtom } from 'store/widgets';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { widgetsCollapsedAtom } from '@/store/widgets';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WidgetSlugType } from 'types/widget';
 
 import Info from './info.mdx';
@@ -32,7 +32,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
   return (
     <p
       className={cn({
-        'flex text-sm text-black/85 md:whitespace-nowrap md:text-center': true,
+        'flex text-sm text-black/85 md:text-center md:whitespace-nowrap': true,
         hidden: isCollapsed,
         block: !isCollapsed,
       })}
@@ -41,7 +41,7 @@ const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) 
       <span className="font-light">{applicability}.</span>{' '}
       <Dialog>
         <DialogTrigger>
-          <div className="inline-flex text-brand-800 underline hover:no-underline">Learn more</div>
+          <div className="text-brand-800 inline-flex underline hover:no-underline">Learn more</div>
         </DialogTrigger>
         <DialogContent className="md:mb-20">
           <DialogTitle className="sr-only">Data applicability</DialogTitle>

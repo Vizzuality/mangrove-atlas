@@ -2,15 +2,15 @@ import { useState, useEffect } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { activeWidgetsAtom } from 'store/widgets';
+import { activeWidgetsAtom } from '@/store/widgets';
 
 import { motion } from 'framer-motion';
 import { useRecoilValue } from 'recoil';
 
-import Category from 'containers/categories-menu';
-import type { LocationTypes } from 'containers/datasets/locations/types';
-import widgets from 'containers/widgets/constants';
-import WidgetsMenu from 'containers/widgets/widgets-menu';
+import Category from '@/containers/categories-menu';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
+import widgets from '@/containers/widgets/constants';
+import WidgetsMenu from '@/containers/widgets/widgets-menu';
 
 import {
   Dialog,
@@ -18,8 +18,8 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -27,7 +27,7 @@ import {
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 const CustomizeWidgetsDeck = () => {
   const displayedWidgets = useRecoilValue(activeWidgetsAtom);
@@ -80,9 +80,9 @@ const CustomizeWidgetsDeck = () => {
                   />
                 </span>
               </DialogTrigger>
-              <DialogContent className="left-0 top-0 min-h-screen w-screen space-y-8 rounded-none">
+              <DialogContent className="top-0 left-0 min-h-screen w-screen space-y-8 rounded-none">
                 <div className="no-scrollbar space-y-8 overflow-y-auto">
-                  <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+                  <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
                     Widgets deck settings
                   </DialogTitle>
                   <Category />
@@ -100,7 +100,7 @@ const CustomizeWidgetsDeck = () => {
       {/* Widgets animation */}
       <div className="m-auto flex w-full flex-col items-center justify-center">
         <div className="h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
-        <div className="-mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="-mt-[105px] h-31.25 w-[197px] rounded-2xl border-[5px] bg-white" />
         <motion.div
           initial={{ x: 0, rotate: 0 }}
           animate={
@@ -123,7 +123,7 @@ const CustomizeWidgetsDeck = () => {
                   ease: 'easeInOut',
                 }
           }
-          className="-mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] border-brand-400 bg-white"
+          className="border-brand-400 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white"
           role="presentation"
         />
 

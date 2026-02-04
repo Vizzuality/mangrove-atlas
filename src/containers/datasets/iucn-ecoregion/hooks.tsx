@@ -1,6 +1,6 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { formatAxis } from 'lib/format';
+import { formatAxis } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Visibility } from 'mapbox-gl';

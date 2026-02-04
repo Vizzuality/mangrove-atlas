@@ -1,10 +1,10 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilValue } from 'recoil';
 
-import { useLayers, useSource } from 'containers/datasets/drivers-change/hooks';
+import { useLayers, useSource } from '@/containers/datasets/drivers-change/hooks';
 
 import type { LayerProps } from 'types/layers';
 

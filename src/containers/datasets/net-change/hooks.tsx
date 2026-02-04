@@ -6,9 +6,9 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { netChangeEndYear, netChangeStartYear } from 'store/widgets/net-change';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
@@ -18,10 +18,10 @@ import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
-import CustomTooltip from 'components/chart/tooltip';
+import CustomTooltip from '@/components/chart/tooltip';
 
 import API, { AnalysisAPI } from 'services/api';
 

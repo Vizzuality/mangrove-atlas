@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { activeLayersAtom } from 'store/layers';
-import cn from 'lib/classnames';
-import { formatAxis } from 'lib/format';
+import { activeLayersAtom } from '@/store/layers';
+import cn from '@/lib/classnames';
+import { formatAxis } from '@/lib/format';
 
-import { normalize } from 'lib/utils';
+import { normalize } from '@/lib/utils';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
 
 import {
   Select,
@@ -15,23 +15,23 @@ import {
   SelectTrigger,
   SelectContent,
   SelectItem,
-} from 'components/ui/select';
+} from '@/components/ui/select';
 
-import BIVALVE_SVG from 'svgs/fisheries/bivalve.svg';
-import CRAB_SVG from 'svgs/fisheries/crab.svg?sprite';
-import FISH_SVG from 'svgs/fisheries/fish.svg?sprite';
-import SHRIMP_SVG from 'svgs/fisheries/shrimp.svg?sprite';
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import BIVALVE_SVG from '@/svgs/fisheries/bivalve.svg';
+import CRAB_SVG from '@/svgs/fisheries/crab.svg?sprite';
+import FISH_SVG from '@/svgs/fisheries/fish.svg?sprite';
+import SHRIMP_SVG from '@/svgs/fisheries/shrimp.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
-import WidgetHeader from 'containers/widget/header';
-import NoData from 'containers/widgets/no-data';
+import WidgetHeader from '@/containers/widget/header';
+import NoData from '@/containers/widgets/no-data';
 
 import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import type { ActiveLayers } from 'types/layers';
 import type { GroupedData, GroupedDataResponse } from './types';
 import { useMangroveCommercialFisheriesProduction } from './hooks';
-import WidgetControls from 'components/widget-controls';
+import WidgetControls from '@/components/widget-controls';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,
@@ -123,7 +123,7 @@ const CommercialFisheriesProduction = () => {
             <SelectTrigger
               className={cn(
                 WIDGET_SELECT_STYLES,
-                '!relative !inline !h-full !w-fit rounded-none border-b-2 border-brand-800 !p-0 !text-lg !font-bold'
+                'border-brand-800 !relative !inline !h-full !w-fit rounded-none border-b-2 !p-0 !text-lg !font-bold'
               )}
               aria-label="Select indicator"
             >
@@ -145,8 +145,8 @@ const CommercialFisheriesProduction = () => {
                   value={indicator}
                   aria-label={`Select ${indicator}`}
                   className={cn(
-                    'w-full rounded-lg !py-1 !px-2 text-left hover:bg-brand-800/20',
-                    indicator === selectedIndicator && 'font-semibold text-brand-800'
+                    'hover:bg-brand-800/20 w-full rounded-lg !px-2 !py-1 text-left',
+                    indicator === selectedIndicator && 'text-brand-800 font-semibold'
                   )}
                 >
                   {indicator}
@@ -187,9 +187,9 @@ const CommercialFisheriesProduction = () => {
                     >
                       <div
                         className={cn(
-                          'box-content flex w-8 items-center justify-center rounded-md bg-grey-400/15 p-1 align-middle text-blue-400',
+                          'bg-grey-400/15 box-content flex w-8 items-center justify-center rounded-md p-1 align-middle text-blue-400',
                           selected && 'bg-brand-800 text-white',
-                          disabled && 'bg-grey-400 bg-opacity-15 text-gray-400 text-opacity-80'
+                          disabled && 'bg-grey-400 bg-opacity-15 text-opacity-80 text-gray-400'
                         )}
                       >
                         <Icon

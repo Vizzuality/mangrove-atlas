@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { MdOutlineDragHandle } from 'react-icons/md';
 
@@ -29,7 +29,7 @@ const MapPopupDragHandler = ({
           onDoubleClick={handleClickToDocker}
         >
           <MdOutlineDragHandle
-            className="ml-6 mt-3 h-6 w-6 text-brand-800"
+            className="text-brand-800 mt-3 ml-6 h-6 w-6"
             onClick={handleClickToDocker}
           />
         </button>

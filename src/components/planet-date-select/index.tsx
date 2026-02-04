@@ -1,16 +1,22 @@
 import { useCallback, useMemo } from 'react';
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectIcon } from 'components/ui/select';
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectIcon,
+} from '@/components/ui/select';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
-import cn from 'lib/classnames';
-import { trackEvent } from 'lib/analytics/ga';
+import cn from '@/lib/classnames';
+import { trackEvent } from '@/lib/analytics/ga';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
-import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
-import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
@@ -81,7 +87,7 @@ const DateSelect = ({
     <Select value={selectedDate} onValueChange={handleDate}>
       <SelectTrigger
         className={cn({
-          'z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border border-brand-800 border-opacity-50':
+          'border-brand-800 border-opacity-50 z-[70] flex h-full w-full cursor-pointer items-center justify-between rounded-3xl border':
             true,
           [SIZE[size]]: true,
         })}
@@ -96,7 +102,7 @@ const DateSelect = ({
       </SelectTrigger>
 
       <SelectContent
-        className="z-[70] flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white py-2 px-4 text-sm shadow-md"
+        className="z-[70] flex max-h-56 cursor-pointer items-center justify-between overflow-y-auto rounded-3xl border bg-white px-4 py-2 text-sm shadow-md"
         alignOffset={0}
         sideOffset={-30}
       >
@@ -104,8 +110,8 @@ const DateSelect = ({
           <SelectItem
             key={d.value}
             value={d.value}
-            className={cn('cursor-pointer rounded py-1 px-2 text-sm hover:bg-brand-800/20', {
-              'font-semibold text-brand-800': d.value === selectedDate,
+            className={cn('hover:bg-brand-800/20 cursor-pointer rounded px-2 py-1 text-sm', {
+              'text-brand-800 font-semibold': d.value === selectedDate,
             })}
           >
             {d.label}
