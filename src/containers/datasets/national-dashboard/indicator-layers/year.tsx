@@ -6,15 +6,15 @@ import { WIDGET_SELECT_ARROW_STYLES, WIDGET_SELECT_STYLES } from 'styles/widgets
 
 import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
 
-import type { IndicatorYearTypes } from './types';
+import type { IndicatorYearProps } from './types';
 
-const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearTypes) => {
+const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearProps) => {
   return (
     <div className="flex max-w-fit flex-col space-y-2">
       <h5 className="text-sm font-normal">Year</h5>
       <div>
-        {years.length === 1 && <span>{years[0]}</span>}
-        {years.length > 1 && (
+        {years?.length === 1 && <span>{years?.[0]}</span>}
+        {years?.length > 1 && (
           <Popover>
             <PopoverTrigger asChild>
               <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
