@@ -35,12 +35,12 @@ const WelcomeIntroMessage = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
       <DialogContent
         classNameContent="animate-none duration-0 min-h-fit"
-        className="fixed top-0 right-0 bottom-0 left-0 min-h-fit w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:p-8 md:max-w-3xl"
+        className="fixed top-0 right-0 bottom-0 left-0 min-h-fit w-screen max-w-screen space-y-6 p-0 text-black/85 shadow-sm sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 md:p-0 sm:p-8 md:max-w-3xl"
       >
-        <DialogTrigger className="sr-only">Welcome message</DialogTrigger>
-        <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12">
+        <DialogDescription className="relative flex h-full w-full flex-col sm:static sm:grid sm:grid-cols-12 m-0">
           <div className="relative h-[calc(100vh/2)] w-full overflow-hidden sm:col-span-6 sm:h-full sm:rounded-tl-3xl sm:rounded-bl-3xl">
             <div className="absolute inset-0 h-full w-full sm:h-full">
               <Image

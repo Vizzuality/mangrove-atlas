@@ -152,7 +152,7 @@ const LegendItem = ({
       className="flex flex-col items-start rounded-md bg-white pt-2 pb-4 text-sm md:px-2"
     >
       <div className="flex w-full items-start justify-between">
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2">
           <Media greaterThanOrEqual="md">
             {!embedded && (
               <button>
@@ -190,7 +190,7 @@ const LegendItem = ({
               overlay={false}
             >
               <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar relative overflow-y-auto bg-red-900 px-3">
+              <div className="no-scrollbar relative overflow-y-autopx-3">
                 <WidgetWrapper
                   key={l.id}
                   title={title}

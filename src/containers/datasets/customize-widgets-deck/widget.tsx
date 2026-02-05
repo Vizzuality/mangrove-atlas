@@ -99,8 +99,8 @@ const CustomizeWidgetsDeck = () => {
 
       {/* Widgets animation */}
       <div className="m-auto flex w-full flex-col items-center justify-center">
-        <div className="h-[125px] w-[197px] rounded-2xl border-[5px] border-black/40 bg-white" />
-        <div className="-mt-[105px] h-31.25 w-[197px] rounded-2xl border-[5px] border-black/40 bg-white" />
+        <div className="h-[125px] w-[197px] rounded-2xl border-[5px]  border-gray-200 bg-white" />
+        <div className="-mt-[105px] h-31.25 w-[197px] rounded-2xl border-[5px]  border-gray-200 bg-white" />
         <motion.div
           initial={{ x: 0, rotate: 0 }}
           animate={
@@ -127,9 +127,9 @@ const CustomizeWidgetsDeck = () => {
           role="presentation"
         />
 
-        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
-        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
-        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px] bg-white" />
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px]  border-gray-200 bg-white" />
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px]  border-gray-200 bg-white" />
+        <div className="z-10 -mt-[105px] h-[125px] w-[197px] rounded-2xl border-[5px]  border-gray-200 bg-white" />
       </div>
     </div>
   );

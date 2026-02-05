@@ -2,8 +2,7 @@
 @import 'tailwindcss';
 
 body {
-  background-color: red;
-  /* background-color: #00c5bd; */
+ background-color: #00c5bd; 
 }
 
 @media print {

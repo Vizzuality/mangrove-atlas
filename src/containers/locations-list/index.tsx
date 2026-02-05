@@ -125,7 +125,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             <button
               type="button"
               className={cn({
-                'hover:bg-brand-800 hover:bg-opacity-10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
+                'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
                 'print:hidden': screenWidth >= breakpoints.lg,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
