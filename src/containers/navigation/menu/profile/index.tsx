@@ -10,7 +10,7 @@ import { Input } from 'components/ui/input';
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
 
-import { useSignup } from 'containers/auth/hooks';
+import { useSignup } from '@/containers/auth/hooks';
 import { useRouter } from 'next/router';
 
 import { TAB_TRIGGER_STYLE, Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
@@ -19,18 +19,20 @@ import AccountContent from './account';
 import SubscriptionsContent from './subscriptions';
 import SavedAreasContent from './saved-areas';
 import Link from 'next/link';
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
+import { or } from '@recoiljs/refine';
 
 const formSchema = z
   .object({
     username: z.string().min(1, { message: 'Please enter your name' }),
     email: z.string().email({ message: 'Please enter a valid email address' }),
+    organization: z.string().optional(),
     password: z.string().nonempty({ message: 'Please enter your password' }).min(6, {
       message: 'Please enter a password with at least 6 characters',
     }),
     'confirm-password': z
       .string()
-      .nonempty({ message: 'Please enter your confirmed password' })
+      .nonempty({ message: 'Confirm password' })
       .min(6, { message: 'Please enter a password with at least 6 characters' }),
   })
   .superRefine((data, ctx) => {
@@ -52,6 +54,7 @@ const Profile = () => {
     defaultValues: {
       username: '',
       email: '',
+      organization: null,
       password: '',
       'confirm-password': '',
     },
@@ -91,7 +94,7 @@ const Profile = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-light leading-[32px] text-black/85">My profile</h2>
+      <h2 className="text-3xl leading-[32px] font-light text-black/85">My profile</h2>
 
       <Tabs defaultValue="account" className="min-w-[476px] space-y-6">
         <TabsList className="w-full gap-2">

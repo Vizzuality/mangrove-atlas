@@ -121,20 +121,19 @@ export function useCreateUserLocation() {
 
   const mutation = useMutation({
     mutationFn: async (body: Partial<UserLocation>) => {
-      console.log('mutationFn called', body); // ✅
       return createUserLocation(body as any);
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userLocationsKeys.list() });
     },
     onError: (err) => {
-      console.error('create mutation error', err); // ✅
+      console.error('create mutation error', err);
     },
   });
 
   return {
     createUserLocation: mutation.mutateAsync,
-    isLoading: mutation.isPending,
+    isLoading: mutation.isLoading,
     error: mutation.error,
   };
 }

@@ -131,13 +131,8 @@ export const Share = ({
         <Tooltip>
           <TooltipTrigger>
             <div
-<<<<<<< HEAD
-              className={cn({
-                'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
-=======
               className={cn(className, {
-                'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
->>>>>>> 25baaed1 (setCookie)
+                'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
               })}
             >

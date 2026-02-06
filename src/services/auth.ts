@@ -10,6 +10,18 @@ export type SignupPayload = { user: { email: string; password: string; name: str
 export type SignupResponse =
   | { ok: true; data?: any; message?: string }
   | { ok: false; error?: string; message?: string; errors?: Record<string, string[]> };
+export type UpdateUserPayload = {
+  user: {
+    email: string;
+    password?: string;
+    name?: string;
+    organization?: string;
+    current_password: string;
+  };
+};
+export type UpdateUserResponse =
+  | { ok: true; data?: any; message?: string }
+  | { ok: false; error?: string; message?: string; errors?: Record<string, string[]> };
 
 // Functions
 export function requestPasswordReset(payload: ResetPasswordPayload) {
@@ -24,4 +36,12 @@ export function updatePassword(payload: ResetPasswordUpdatePayload) {
 
 export function signupUser(payload: SignupPayload) {
   return NextAPI.post<SignupResponse>('/auth/signup', payload).then((r) => r.data);
+}
+
+export function updateUser(payload: UpdateUserPayload, token: string) {
+  return NextAPI.put<UpdateUserResponse>('/auth/users', payload, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((r) => r.data);
 }

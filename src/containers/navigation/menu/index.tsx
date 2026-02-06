@@ -2,11 +2,10 @@ import { useState } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
 import Helper from '@/containers/help/helper';
 import About from '@/containers/navigation/menu/about';
-import PartnersLinks from '@/containers/navigation/menu/partners';
 
 import {
   Dialog,
@@ -17,7 +16,7 @@ import {
 } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
-import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
+import MENU_SVG from '@/svgs/tools-bar/menu.svg?sprite';
 import MainMenu from './main';
 import Profile from './profile';
 
@@ -62,7 +61,6 @@ const Menu = () => {
                 Global Mangrove Watch
               </DialogTitle>
               <MainMenu setSection={setSection} />
-              <PartnersLinks />
             </div>
           </div>
         )}

@@ -16,6 +16,7 @@ const domain = process.env.NODE_ENV === 'production' ? '.globalmangrovewatch.org
 declare module 'next-auth' {
   interface User {
     accessToken?: string;
+    organization?: string;
     id?: string;
   }
   interface Session {
@@ -58,6 +59,7 @@ export const authOptions: NextAuthOptions = {
         try {
           data = JSON.parse(resText);
         } catch {
+          console.error('Failed to parse response:', resText);
           return null;
         }
 
@@ -68,6 +70,8 @@ export const authOptions: NextAuthOptions = {
         return {
           id: credentials.email,
           email: credentials.email,
+          name: data?.username || credentials.email,
+          organization: data?.organization || null,
           accessToken: token,
         };
       },
@@ -80,6 +84,7 @@ export const authOptions: NextAuthOptions = {
         token.userId = user.id;
         token.accessToken = user.accessToken;
         token.name = user.name;
+        token.organization = user.organization;
         token.email = user.email;
       }
 
@@ -88,10 +93,9 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, token }) {
       session.user = session.user ?? ({} as any);
-
       if (token.userId) (session.user as any).id = token.userId as string;
       if (token.accessToken) (session.user as any).accessToken = token.accessToken as string;
-
+      if (token.organization) (session.user as any).organization = token.organization as string;
       if (token.name) session.user.name = token.name as string;
       if (token.email) session.user.email = token.email as string;
 

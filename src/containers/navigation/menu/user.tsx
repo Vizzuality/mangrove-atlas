@@ -1,4 +1,4 @@
-import ContactForm from 'containers/contact';
+import ContactForm from '@/containers/contact';
 
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ export const UserMenu = ({ setSection }) => {
         <>
           <button
             type="button"
-            className="text-left text-2lg font-light hover:text-brand-800"
+            className="text-2lg hover:text-brand-800 text-left font-light"
             onClick={() => setSection('profile')}
           >
             My profile
@@ -25,7 +25,7 @@ export const UserMenu = ({ setSection }) => {
 
           <button
             type="button"
-            className="text-left text-2lg font-light hover:text-brand-800"
+            className="text-2lg hover:text-brand-800 text-left font-light"
             onClick={handleLogout}
           >
             Log out
@@ -34,11 +34,11 @@ export const UserMenu = ({ setSection }) => {
       )}
 
       {session.status !== 'authenticated' && (
-        <Link href="/auth/signin" className="text-left text-2lg font-light hover:text-brand-800">
+        <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
           Log in
         </Link>
       )}
-      <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
+      <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
     </div>
   );
 };

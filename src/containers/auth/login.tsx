@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-import LandingNavigation from 'containers/navigation/landing';
+import LandingNavigation from '@/containers/navigation/landing';
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
-import Footer from 'containers/auth/footer';
+import Footer from '@/containers/auth/footer';
 import SuccessAlert from 'components/auth/email-alert';
 
 const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
@@ -53,7 +53,11 @@ export default function LoginPage() {
       });
 
       if (!result?.ok) {
-        setError(result?.error || 'Invalid credentials');
+        setError(
+          result?.error && result.error !== 'CredentialsSignin'
+            ? result.error
+            : 'Invalid credentials'
+        );
         return;
       }
 
@@ -98,7 +102,7 @@ export default function LoginPage() {
         <LandingNavigation />
         <div className="h-full">
           <div className="flex h-full w-full flex-col justify-center space-y-10">
-            <h1 className="font-sans text-[40px] font-light text-brand-800">Log in</h1>
+            <h1 className="text-brand-800 font-sans text-[40px] font-light">Log in</h1>
 
             {query.verified === 'pending' && (
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
@@ -116,7 +120,7 @@ export default function LoginPage() {
                     autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                     required
                   />
                 </div>
@@ -131,7 +135,7 @@ export default function LoginPage() {
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm outline-none ring-0 placeholder:text-zinc-400 focus:border-brand-800"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm ring-0 outline-none placeholder:text-zinc-400"
                     required
                   />
                 </div>
@@ -143,7 +147,7 @@ export default function LoginPage() {
                 </Button>
               </form>
 
-              <div className="divide-text-gray-200 space-y-6 divide-y text-center text-brand-800">
+              <div className="divide-text-gray-200 text-brand-800 space-y-6 divide-y text-center">
                 <Link
                   href="/auth/forgot-password"
                   className="text-sm font-semibold hover:text-teal-300"

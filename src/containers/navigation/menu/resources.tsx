@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import { HiChevronDown } from 'react-icons/hi2';
 
-import ContactForm from 'containers/contact';
+import ContactForm from '@/containers/contact';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 
@@ -64,14 +64,14 @@ const ResourcesMenu = ({ setSection }) => {
     <div className="flex flex-col space-y-4">
       <button
         type="button"
-        className="text-left text-2lg font-light hover:text-brand-800"
+        className="text-2lg hover:text-brand-800 text-left font-light"
         onClick={() => setSection('about')}
       >
         About this tool
       </button>
       <Link
         href="https://www.mangrovealliance.org/"
-        className="text-2lg font-light hover:text-brand-800"
+        className="text-2lg hover:text-brand-800 font-light"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -79,7 +79,7 @@ const ResourcesMenu = ({ setSection }) => {
       </Link>
       <Link
         href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}`}
-        className="text-2lg font-light hover:text-brand-800"
+        className="text-2lg hover:text-brand-800 font-light"
         rel="noopener noreferrer"
         target="_blank"
       >
@@ -88,26 +88,26 @@ const ResourcesMenu = ({ setSection }) => {
 
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
         <CollapsibleTrigger iconType={null} className="p-0">
-          <div className="flex w-full items-center space-x-4 text-2lg font-light hover:text-brand-800">
+          <div className="text-2lg hover:text-brand-800 flex w-full items-center space-x-4 font-light">
             <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
             <HiChevronDown
               className={cn({
                 'h-4 w-4 stroke-[1px]': true,
-                'rotate-180 text-brand-800': isOpen,
+                'text-brand-800 rotate-180': isOpen,
               })}
             />
             <span className="sr-only">Toggle</span>
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6">
+          <div className="border-l-grey-400/20 flex flex-col space-y-2 border-l px-6">
             {RESOURCES_LINKS.map(({ label, href }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-2lg font-light text-black/85 hover:text-brand-800"
+                className="text-2lg hover:text-brand-800 font-light text-black/85"
               >
                 {label}
               </a>

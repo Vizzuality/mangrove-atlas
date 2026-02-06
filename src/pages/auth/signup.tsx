@@ -3,7 +3,7 @@
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import LandingNavigation from 'containers/navigation/landing';
+import LandingNavigation from '@/containers/navigation/landing';
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
@@ -11,20 +11,21 @@ import { Input } from 'components/ui/input';
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
 
-import { useSignup } from 'containers/auth/hooks';
+import { useSignup } from '@/containers/auth/hooks';
 import { useRouter } from 'next/router';
-import Footer from 'containers/auth/footer';
+import Footer from '@/containers/auth/footer';
 
 const formSchema = z
   .object({
     username: z.string().min(1, { message: 'Please enter your name' }),
     email: z.string().email({ message: 'Please enter a valid email address' }),
+    organization: z.string().optional(),
     password: z.string().nonempty({ message: 'Please enter your password' }).min(6, {
       message: 'Please enter a password with at least 6 characters',
     }),
     'confirm-password': z
       .string()
-      .nonempty({ message: 'Please enter your confirmed password' })
+      .nonempty({ message: 'Confirm password' })
       .min(6, { message: 'Please enter a password with at least 6 characters' }),
   })
   .superRefine((data, ctx) => {
@@ -48,6 +49,7 @@ export default function SignupPage() {
       email: '',
       password: '',
       'confirm-password': '',
+      organization: '',
     },
   });
 
@@ -97,7 +99,7 @@ export default function SignupPage() {
       <section className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
-          <h1 className="font-sans text-[40px] font-light text-brand-800">Sign up</h1>
+          <h1 className="text-brand-800 font-sans text-[40px] font-light">Sign up</h1>
           <div className="divide-text-gray-200 space-y-6 divide-y">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -111,7 +113,7 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Name"
                           />
                         </FormControl>
@@ -129,8 +131,26 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Email"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="organization"
+                    render={({ field }) => (
+                      <FormItem className="space-y-1.5">
+                        <FormLabel className="text-xs font-semibold">Organization</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            placeholder="Organization"
                           />
                         </FormControl>
                         <FormMessage />
@@ -148,7 +168,7 @@ export default function SignupPage() {
                           <Input
                             type="password"
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Password"
                           />
                         </FormControl>
@@ -166,7 +186,7 @@ export default function SignupPage() {
                           <Input
                             type="password"
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Password"
                           />
                         </FormControl>

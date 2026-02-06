@@ -5,23 +5,25 @@ import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import {
   useGetUserNotificationPreferences,
   usePostToggleLocationAlerts,
-} from 'containers/subscriptions/hooks';
-import { useState } from 'react';
+} from '@/containers/subscriptions/hooks';
 
 const SubscriptionsContent = () => {
-  const data = useGetUserNotificationPreferences();
-  console.log(DataTransfer, 'jdshfdsfljsdhflkjh');
+  const { data } = useGetUserNotificationPreferences();
+  const toggleMutation = usePostToggleLocationAlerts();
+
   const handleClickAlerts = () => {
     toggleMutation.mutate({
-      location_alerts: data.data?.notification_preferences[0].location_alerts,
+      ...data?.notification_preferences[0],
+      location_alerts: data?.notification_preferences[0].location_alerts,
     });
   };
 
   const handleClickWhatsNew = () => {
-    return toggleMutation.mutate({ newsletter: data.data?.notification_preferences[0].newsletter });
+    return toggleMutation.mutate({
+      ...data?.notification_preferences[0],
+      newsletter: data?.notification_preferences[0].newsletter,
+    });
   };
-
-  const toggleMutation = usePostToggleLocationAlerts();
 
   return (
     <div className="flex flex-col space-y-6">
@@ -33,7 +35,10 @@ const SubscriptionsContent = () => {
           </p>
         </div>
         <SwitchWrapper id="alerts">
-          <SwitchRoot onClick={handleClickAlerts} checked={location_alerts}>
+          <SwitchRoot
+            onClick={handleClickAlerts}
+            checked={data?.notification_preferences[0].location_alerts}
+          >
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>
@@ -48,7 +53,7 @@ const SubscriptionsContent = () => {
         <SwitchWrapper id="alerts">
           <SwitchRoot
             onClick={handleClickWhatsNew}
-            checked={data.data?.notification_preferences[0].newsletter}
+            checked={data?.notification_preferences[0].newsletter}
           >
             <SwitchThumb />
           </SwitchRoot>

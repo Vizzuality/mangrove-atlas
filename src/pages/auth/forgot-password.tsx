@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import LandingNavigation from 'containers/navigation/landing';
-import { useResetPassword } from 'containers/auth/hooks';
+import LandingNavigation from '@/containers/navigation/landing';
+import { useResetPassword } from '@/containers/auth/hooks';
 
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
 import { Input } from 'components/ui/input';
@@ -52,7 +52,7 @@ export default function ForgotPasswordPage() {
       <section className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
-          <h1 className="font-sans text-[40px] font-light text-brand-800">Forgot Password</h1>
+          <h1 className="text-brand-800 font-sans text-[40px] font-light">Forgot Password</h1>
           {resetPassword.isSuccess && (
             <SuccessAlert message="Please check your inbox for instructions to reset your password" />
           )}
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
                           <Input
                             type="email"
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Email"
                           />
                         </FormControl>

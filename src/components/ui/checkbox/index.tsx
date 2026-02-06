@@ -15,14 +15,8 @@ const CheckboxIndicator = ({
 }: CheckboxPrimitive.CheckboxIndicatorProps) => (
   <CheckboxPrimitive.Indicator
     {...props}
-<<<<<<< HEAD
-    className={cn({
-      'text-brand-400 flex items-center justify-center p-px': true,
-      [className]: !!className,
-=======
     className={cn(className, {
-      'flex items-center justify-center p-px text-brand-400': true,
->>>>>>> 25baaed1 (setCookie)
+      'text-brand-400 flex items-center justify-center p-px': true,
     })}
   >
     {children}
@@ -36,7 +30,7 @@ const Checkbox = forwardRef<
   <CheckboxPrimitive.Root
     ref={ref}
     className={cn(className, {
-      'shrink-0 rounded border-2 border-brand-800/50 text-brand-800 disabled:cursor-not-allowed disabled:opacity-50 data-[state-checked]:border-4 data-[state-checked]:bg-brand-800 data-[state-checked]:text-white':
+      'border-brand-800/50 text-brand-800 data-[state-checked]:bg-brand-800 shrink-0 rounded border-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state-checked]:border-4 data-[state-checked]:text-white':
         true,
     })}
     {...props}

@@ -7,6 +7,9 @@ import {
   requestPasswordReset,
   signupUser,
   updatePassword,
+  updateUser,
+  UpdateUserPayload,
+  UpdateUserResponse,
   type ResetPasswordPayload,
   type ResetPasswordUpdatePayload,
   type SignupPayload,
@@ -72,6 +75,22 @@ export function useSignup() {
     onError: (error) => {
       if (axios.isAxiosError(error)) {
         console.error('Signup error:', error.response?.data);
+      }
+    },
+  });
+}
+
+export function usePutUpdateUser(token: string) {
+  return useMutation<UpdateUserResponse, unknown, UpdateUserPayload>({
+    mutationFn: (payload) => updateUser(payload, token),
+
+    onSuccess: () => {
+      toast.success('User details have been updated successfully.');
+    },
+
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        console.error('Update user error:', error.response?.data);
       }
     },
   });

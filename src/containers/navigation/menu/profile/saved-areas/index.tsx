@@ -1,16 +1,16 @@
 'use client';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
+import { useLocation } from '@/containers/datasets/locations/hooks';
 
 import LocationItem from './item';
 import {
   useCreateUserLocation,
   useGetUserLocations,
   useUpdateUserLocation,
-} from 'containers/datasets/locations/user-locations';
+} from '@/containers/datasets/locations/user-locations';
 import { Button } from 'components/ui/button';
 import { useRouter } from 'next/router';
-import { LocationTypes } from 'containers/datasets/locations/types';
+import { LocationTypes } from '@/containers/datasets/locations/types';
 import Loading from 'components/ui/loading';
 import { useMemo } from 'react';
 

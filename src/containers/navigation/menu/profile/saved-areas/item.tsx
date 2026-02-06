@@ -1,7 +1,7 @@
 'use client';
 
-import { useLocationsByIds } from 'containers/datasets/locations/hooks';
-import cn from 'lib/classnames';
+import { useLocationsByIds } from '@/containers/datasets/locations/hooks';
+import cn from '@/lib/classnames';
 import { useState } from 'react';
 import { LuX } from 'react-icons/lu';
 
@@ -22,20 +22,19 @@ const LocationItem = ({ name }) => {
   };
 
   const data = useLocationsByIds(SAVED_AREAS).map((query) => query.data);
-  console.log(data);
 
   return (
     <li className="flex items-center justify-between">
       <span
         className={cn({
           'first-letter:uppercase': true,
-          'font-bold text-brand-800': name === 'worldwide',
+          'text-brand-800 font-bold': name === 'worldwide',
         })}
       >
         {name}
       </span>
       <button
-        className="border-brand/80 flex shrink-0 items-center justify-center rounded-full border-2 p-1 text-brand-800"
+        className="border-brand/80 text-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1"
         onClick={handleClick}
       >
         <LuX className="h-5 w-5 stroke-2" />

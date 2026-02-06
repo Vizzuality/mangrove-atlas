@@ -43,7 +43,6 @@ export const postToggleLocationAlerts = (
     url: '/notification_preferences/toggle_location_alerts',
     data: body,
   }).then((r) => {
-    console.log(r, 'post toggle location alerts response');
     return r.data;
   });
 

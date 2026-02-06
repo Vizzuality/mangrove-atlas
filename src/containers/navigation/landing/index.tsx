@@ -1,15 +1,15 @@
 'use client';
 
-import LanguageSelector from 'containers/navigation/language-selector';
+import LanguageSelector from '@/containers/navigation/language-selector';
 
 import Link from 'next/link';
-import Helper from 'containers/help/helper';
-import HelpContainer from 'containers/help';
+import Helper from '@/containers/help/helper';
+import HelpContainer from '@/containers/help';
 
 export default function LandingNavigation() {
   return (
     <header className="relative mx-auto flex w-full items-center justify-end px-4 py-4">
-      <nav className="flex items-center gap-6 text-sm font-semibold text-brand-800">
+      <nav className="text-brand-800 flex items-center gap-6 text-sm font-semibold">
         <button type="button">About</button>
         <div className="flex h-full items-center justify-center">
           <Helper

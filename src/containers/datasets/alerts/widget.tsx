@@ -142,15 +142,9 @@ const AlertsWidget = () => {
                       <button
                         aria-label="Select start date"
                         className={cn({
-<<<<<<< HEAD
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': startDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value > endDate?.value,
-=======
-                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': startDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value > (endDate?.value ?? 0),
->>>>>>> 25baaed1 (setCookie)
                         })}
                         type="button"
                         onClick={() => {
@@ -192,15 +186,9 @@ const AlertsWidget = () => {
                       <button
                         aria-label="Select end date"
                         className={cn({
-<<<<<<< HEAD
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': endDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value < startDate?.value,
-=======
-                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': endDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value < (startDate?.value ?? 0),
->>>>>>> 25baaed1 (setCookie)
                         })}
                         type="button"
                         onClick={() => {
