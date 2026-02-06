@@ -18,6 +18,12 @@ const widgets_prod = [
     applicability: 'Global, National, Sub-National, and Local',
     categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
     layersIds: ['mangrove_habitat_extent'],
+    contextualLayers: [
+      {
+        id: 'hi-res-extent',
+        description: 'Show high-resolution mangrove extent layer',
+      },
+    ],
   },
   {
     name: 'Mangrove Net Change',
@@ -43,6 +49,12 @@ const widgets_prod = [
     categoryIds: ['all_datasets', 'restoration_and_conservation', 'distribution_and_change'],
     layersIds: ['mangrove_alerts'],
     contextualLayersIds: [],
+    contextualLayers: [
+      {
+        id: 'planet_medres_visual_monthly',
+        description: 'Use Planet-NICFI Satellite Imagery to validate the alerts.',
+      },
+    ],
   },
   {
     name: 'Species Location by Country',
@@ -74,6 +86,12 @@ const widgets_prod = [
     applicability: '',
     categoryIds: ['all_datasets', 'restoration_and_conservation'],
     layersIds: ['mangrove_protection', 'mangrove_protected_areas'],
+    contextualLayers: [
+      {
+        id: 'mangrove_protected_areas',
+        description: 'We recommend you to use WDPA',
+      },
+    ],
   },
   {
     name: 'Mangrove Restoration Sites',
@@ -122,7 +140,7 @@ const widgets_prod = [
   {
     name: 'Mangrove Emissions Mitigation',
     slug: 'mangrove_emissions_mitigation',
-    locationType: ['all_datasets', 'wdpa', 'country', 'worldwide'],
+    locationType: ['all_datasets', 'wdpa', 'country'],
     applicability: 'Global and National',
     categoryIds: ['all_datasets', 'climate_and_policy'],
   },
@@ -177,6 +195,7 @@ const widgets_prod = [
           applicability: 'Global',
           categoryIds: ['all_datasets', 'distribution_and_change', 'restoration_and_conservation'],
           layersIds: ['mangrove_iucn_ecoregion'],
+          contextualLayers: [],
         },
       ] as WidgetTypes[])
     : []),

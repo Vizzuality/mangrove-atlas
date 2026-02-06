@@ -1,4 +1,4 @@
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
 import {
   Dialog,
@@ -6,13 +6,13 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import Loading from 'components/ui/loading';
+} from '@/components/ui/dialog';
+import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import IUCNEcoregionsChart from './chart';
 import { useMangroveEcoregions } from './hooks';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const IUCNEcoregions = () => {
   const { data, isLoading, isFetched } = useMangroveEcoregions();
@@ -42,7 +42,7 @@ const IUCNEcoregions = () => {
           <IUCNEcoregionsChart config={data?.config} />
           <Dialog onOpenChange={handleAnalytics}>
             <DialogTrigger>
-              <div className="w-full text-center text-sm font-normal text-brand-800 underline">
+              <div className="text-brand-800 w-full text-center text-sm font-normal underline">
                 <p>Associated reports</p>
               </div>
             </DialogTrigger>
@@ -52,7 +52,7 @@ const IUCNEcoregions = () => {
                   IUCN Ecosystem Red List Assessment
                 </DialogTitle>
                 <h4 className="py-4 text-sm font-bold">Associated reports</h4>
-                <ul className="text-light space-y-4 text-sm text-brand-800 underline">
+                <ul className="text-light text-brand-800 space-y-4 text-sm underline">
                   {data.reports.map(({ name, url }) => (
                     <li key={name} className="">
                       <a target="_blank" rel="noopener noreferrer" href={url}>

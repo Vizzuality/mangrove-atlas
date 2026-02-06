@@ -1,19 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
-import { habitatExtentSettings } from 'store/widgets/habitat-extent';
+import { analysisAtom } from '@/store/analysis';
+import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import SuggestedLayers from 'components/suggested-layers';
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_ARROW_STYLES,
@@ -21,11 +20,14 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+
+import { widgets } from '@/containers/widgets/constants';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
@@ -78,6 +80,14 @@ const HabitatExtent = () => {
     [setYear]
   );
 
+  const widgetInfo = useMemo(() => {
+    return widgets.find((widget) => widget.slug === 'mangrove_habitat_extent');
+  }, [widgets]);
+
+  const contextualLayers = useMemo(() => {
+    return widgetInfo?.contextualLayers || [];
+  }, [widgetInfo]);
+
   if (noData) return <NoData />;
 
   return (
@@ -89,7 +99,7 @@ const HabitatExtent = () => {
             aria-label="cancel analysis"
             type="button"
             onClick={() => void handleCancelAnalysis()}
-            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
           >
             Cancel analysis
           </button>
@@ -104,7 +114,7 @@ const HabitatExtent = () => {
             aria-label="Retry analysis"
             type="button"
             onClick={handleTryAgain}
-            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
           >
             Try again
           </button>
@@ -127,14 +137,14 @@ const HabitatExtent = () => {
                     />
                   </span>
                 </PopoverTrigger>
-                <PopoverContent className="rounded-2xl px-2 shadow-border">
+                <PopoverContent className="shadow-border rounded-2xl px-2">
                   <ul className="z-20 max-h-32 space-y-0.5">
                     {unitOptions?.map((u) => (
                       <li key={u}>
                         <button
                           aria-label="select unit"
                           className={cn({
-                            'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                            'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                             'hover:text-brand-800': selectedUnitAreaExtent !== u,
                             'pointer-events-none opacity-50': selectedUnitAreaExtent === u,
                           })}
@@ -162,15 +172,15 @@ const HabitatExtent = () => {
                   />
                 </span>
               </PopoverTrigger>
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         aria-label="select year"
                         className={cn({
-                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': y === year || y === defaultYear,
+                          'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
+                          'text-brand-800 font-semibold': y === year || y === defaultYear,
                         })}
                         type="button"
                         onClick={() => {
@@ -199,15 +209,13 @@ const HabitatExtent = () => {
             </span>{' '}
             of the coastline.
           </p>
-          <HabitatExtentChart legend={legend} config={config} />
-          <div>
-            <SuggestedLayers
-              origin="mangrove_habitat_extent"
-              name="High Resolution Extent"
-              thumbSource="/images/thumbs/basemaps/hi-res-extent.jpg"
-              id="hi-res-extent"
-              description="Show high-resolution mangrove extent layer"
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_alerts"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
             />
+            <HabitatExtentChart legend={legend} config={config} />
           </div>
         </div>
       )}

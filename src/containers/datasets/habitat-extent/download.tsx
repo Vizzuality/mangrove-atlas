@@ -1,4 +1,4 @@
-import Download from 'components/download-links';
+import Download from '@/components/download-links';
 
 const INFO = [
   {

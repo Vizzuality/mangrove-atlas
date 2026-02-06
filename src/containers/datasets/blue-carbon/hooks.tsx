@@ -4,10 +4,10 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
-import { formatNumberNearestInteger, numberFormat } from 'lib/format';
+import { formatNumberNearestInteger, numberFormat } from '@/lib/format';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -17,8 +17,8 @@ import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 

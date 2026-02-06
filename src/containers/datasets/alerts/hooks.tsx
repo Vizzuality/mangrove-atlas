@@ -4,10 +4,10 @@ import sortBy from 'lodash-es/sortBy';
 
 import { useRouter } from 'next/router';
 
-import { formatAxis } from 'lib/format';
+import { formatAxis } from '@/lib/format';
 
-import { analysisAtom } from 'store/analysis';
-import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
+import { analysisAtom } from '@/store/analysis';
+import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
@@ -15,8 +15,8 @@ import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API_cloud_functions from 'services/cloud-functions';
 
@@ -24,14 +24,106 @@ import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
 
-const getStops = () => {
-  const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];
+const bucketKey = (m: number) => {
+  if (m < 3) return 'lt3';
+  if (m < 6) return '3to6';
+  if (m < 12) return '6to12';
+  if (m < 24) return '12to24';
+  return 'gt24';
+};
 
-  const gradient = colorSchema.map((d, index) => ({
-    offset: `${(index / (colorSchema.length - 1)) * 100}%`,
-    stopColor: d,
+const makeColoredSeries = (data: any[]) => {
+  const keys = [
+    'alerts_lt3',
+    'alerts_3to6',
+    'alerts_6to12',
+    'alerts_12to24',
+    'alerts_gt24',
+  ] as const;
+
+  // init keys as null
+  const base = data.map((d) => ({
+    ...d,
+    alerts_lt3: null,
+    alerts_3to6: null,
+    alerts_6to12: null,
+    alerts_12to24: null,
+    alerts_gt24: null,
   }));
-  return gradient;
+
+  // assign each point to its bucket
+  for (let i = 0; i < base.length; i++) {
+    const d = base[i];
+    const b = bucketKey(d.monthsSinceDetection);
+
+    const k =
+      b === 'lt3'
+        ? 'alerts_lt3'
+        : b === '3to6'
+          ? 'alerts_3to6'
+          : b === '6to12'
+            ? 'alerts_6to12'
+            : b === '12to24'
+              ? 'alerts_12to24'
+              : 'alerts_gt24';
+
+    d[k] = d.alerts;
+  }
+
+  // stitch boundaries: when bucket changes, copy the boundary point to both series
+  for (let i = 1; i < base.length; i++) {
+    const prev = base[i - 1];
+    const curr = base[i];
+
+    const prevB = bucketKey(prev.monthsSinceDetection);
+    const currB = bucketKey(curr.monthsSinceDetection);
+
+    if (prevB !== currB) {
+      const prevKey =
+        prevB === 'lt3'
+          ? 'alerts_lt3'
+          : prevB === '3to6'
+            ? 'alerts_3to6'
+            : prevB === '6to12'
+              ? 'alerts_6to12'
+              : prevB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      const currKey =
+        currB === 'lt3'
+          ? 'alerts_lt3'
+          : currB === '3to6'
+            ? 'alerts_3to6'
+            : currB === '6to12'
+              ? 'alerts_6to12'
+              : currB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      // duplicate the boundary point so lines meet
+      prev[currKey] = prev.alerts;
+      curr[prevKey] = curr.alerts;
+    }
+  }
+
+  return base;
+};
+
+const monthIndex = (year: number, month1to12: number) => year * 12 + (month1to12 - 1);
+
+const monthsSince = (year: number, month1to12: number, ref: Date) => {
+  const refIdx = monthIndex(ref.getFullYear(), ref.getMonth() + 1);
+  const dIdx = monthIndex(year, month1to12);
+  return Math.max(0, refIdx - dIdx);
+};
+
+const addMonthsSince = (data) => {
+  const ref = new Date();
+  return data.map((d) => ({
+    ...d,
+    monthsSinceDetection: monthsSince(d.year, d.month.value, ref),
+  }));
 };
 
 const getData = (data) =>
@@ -173,12 +265,13 @@ export function useAlerts<DataResponse>(
 
       const fixedXAxis = fullData.map((d) => d.year);
 
-      const chartData = getData(dataFiltered);
+      const chartDataRaw = getData(dataFiltered);
+      const chartDataWithMonths = addMonthsSince(chartDataRaw);
+      const chartData = makeColoredSeries(chartDataWithMonths);
       const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
       const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
 
       const alertsTotal = getTotal(dataFiltered);
-
       const config = {
         data: chartData,
         type: 'line',
@@ -193,10 +286,35 @@ export function useAlerts<DataResponse>(
         xKey: 'name',
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
+            alerts_gt24: {
+              stroke: '#FFC201',
               strokeWidth: 2.5,
               isAnimationActive: false,
+              dot: false,
+            },
+            alerts_12to24: {
+              stroke: '#F78E1C',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_6to12: {
+              stroke: '#ED4F3F',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_3to6: {
+              stroke: '#DC3982',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_lt3: {
+              stroke: '#C62AD6',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
             },
           },
         },
@@ -247,7 +365,6 @@ export function useAlerts<DataResponse>(
         },
       };
       const configBrush = {
-        data: fullData,
         type: 'line',
         dataKey: 'alerts',
         height: 100,
@@ -273,18 +390,6 @@ export function useAlerts<DataResponse>(
           },
         ],
         margin: { top: 20, right: 40, left: 10, bottom: 5 },
-        gradients: {
-          key: {
-            attributes: {
-              id: 'colorAlerts',
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: getStops(),
-          },
-        },
         patterns: {
           diagonal: {
             attributes: {
@@ -318,13 +423,14 @@ export function useAlerts<DataResponse>(
         },
 
         xKey: 'year',
+        data: makeColoredSeries(addMonthsSince(fullData)),
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
-              strokeWidth: 2.5,
-              isAnimationActive: false,
-            },
+            alerts_gt24: { stroke: '#FFC201', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_12to24: { stroke: '#F78E1C', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_6to12: { stroke: '#ED4F3F', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_3to6: { stroke: '#DC3982', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_lt3: { stroke: '#C62AD6', strokeWidth: 2.5, isAnimationActive: false },
           },
         },
         xAxis: {
@@ -367,27 +473,9 @@ export function useSources(): SourceProps[] {
 
   return [
     {
-      id: 'monitored-alerts',
+      id: 'alerts-heatmap-vector',
       type: 'vector',
-      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
-    },
-    {
-      id: 'alerts-heatmap',
-      type: 'geojson',
-      data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
-        startDate?.value || ''
-      }&end_date=${endDate?.value || ''}`,
-    },
-    {
-      id: 'alerts-tiles',
-      type: 'vector',
-      tiles: [
-        `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
-          startDate?.value || ''
-        }&end_date=${endDate?.value || ''}`,
-      ],
-      minzoom: 10,
-      maxzoom: 14,
+      url: 'mapbox://globalmangrovewatch.bkhacq4t',
     },
   ];
 }
@@ -401,101 +489,65 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): {
-  'alerts-heatmap': LayerProps[];
-  'alerts-tiles': LayerProps[];
-  'monitored-alerts': LayerProps[];
+  'alerts-heatmap-vector': LayerProps[];
 } {
   return {
-    'alerts-heatmap': [
+    'alerts-heatmap-vector': [
       {
-        id,
+        id: `${id}-heatmap`,
         type: 'heatmap',
-        source: 'alerts-heatmap',
-        maxzoom: 10,
+        source: 'alerts-heatmap-vector',
+        'source-layer': 'alerts_data',
+        maxzoom: 18,
         paint: {
-          // Increase the heatmap weight based on frequency and property magnitude
-          'heatmap-weight': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 6, 1],
-          // Increase the heatmap color weight weight by zoom level
-          // heatmap-intensity is a multiplier on top of heatmap-weight
+          'heatmap-weight': [
+            'interpolate',
+            ['linear'],
+            ['coalesce', ['to-number', ['get', 'months_diff']], 76],
+
+            1,
+            1.0, // newest
+            3,
+            0.9,
+            6,
+            0.75,
+            12,
+            0.55,
+            24,
+            0.35,
+            36,
+            0.2,
+            60,
+            0.08,
+            76,
+            0.02, // oldest
+          ],
+
           'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-          // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-          // Begin color ramp at 0-stop with a 0-transparancy color
-          // to create a blur-like effect.
+
           'heatmap-color': [
             'interpolate',
             ['linear'],
             ['heatmap-density'],
             0,
-            'rgba(255, 255, 255, 0)',
-            0.1,
-            'rgba(255, 194, 0, 1)',
-            0.5,
-            'rgba(235, 68, 68, 1)',
+            'rgba(0,0,0,0)',
+            0.2,
+            '#FFC201',
+            0.45,
+            '#F78E1C',
+            0.65,
+            '#ED4F3F',
+            0.85,
+            '#DC3982',
             1,
-            'rgba(199, 43, 214, 1)',
+            '#C62AD6',
           ],
-          // Adjust the heatmap radius by zoom level
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
-          // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 2,
-            opacity * 1,
-            opacity * 11,
-            opacity * 0.5,
-          ],
+
+          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 9, 25],
+          'heatmap-opacity': opacity ?? 1,
         },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'alerts-tiles': [
-      {
-        id: `${id}-points`,
-        type: 'circle',
-        source: 'alerts-tiles',
-        'source-layer': 'geojsonLayer',
-        minzoom: 10,
-        maxzoom: 18,
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 18, 2],
-          'circle-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-width': 1,
-          'circle-blur': 0.5,
-          'circle-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 9,
-            opacity * 0,
-            opacity * 10,
-            opacity * 0.7,
-          ],
-        },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'monitored-alerts': [
-      {
-        id: `${id}-line`,
-        type: 'line',
-        source: 'monitored-alerts',
-        'source-layer': 'alert_region_tiles',
-        minzoom: 0,
-        paint: {
-          'line-color': '#00857F',
-          'line-opacity': opacity,
-          'line-width': 1,
-        },
-        layout: {
-          visibility,
-        },
+
+        layout: { visibility },
       },
     ],
   };

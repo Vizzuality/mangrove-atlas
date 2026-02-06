@@ -1,10 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@config "../../tailwind.config.mjs";
+@import 'tailwindcss';
 
 body {
-  background-color: #00c5bd;
-  @media print {
+ background-color: #00c5bd; 
+}
+
+@media print {
+  body {
     background-color: #fff;
   }
 }
@@ -52,12 +54,12 @@ body {
   background to be visible for the browsers that don't support backdrop-filter, so we double the
   background opacity. This can be tested on Firefox. */
   .bg-blur {
-    @apply bg-opacity-40;
+    background-color: yellow;
   }
 
   @supports (backdrop-filter: blur(4px)) {
     .bg-blur {
-      @apply bg-opacity-20;
+      background-color: rgba(var(--background-rgb), 0.2);
       backdrop-filter: blur(4px);
     }
   }
@@ -116,7 +118,7 @@ body {
 }
 
 .txlive-langselector {
-  @apply !hidden;
+  display: none !important;
 }
 
 @media print {

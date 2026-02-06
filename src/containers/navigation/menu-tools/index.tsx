@@ -4,16 +4,16 @@ import { useMap } from 'react-map-gl';
 
 import Link from 'next/link';
 
-import { analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { BiReset } from 'react-icons/bi';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
-import WidgetDrawingTool from 'containers/datasets/drawing-tool';
-import WidgetDrawingUploadTool from 'containers/datasets/drawing-upload-tool';
-import FindLocations from 'containers/navigation/find-locations';
-import Helper from 'containers/help/helper';
+import WidgetDrawingTool from '@/containers/datasets/drawing-tool';
+import WidgetDrawingUploadTool from '@/containers/datasets/drawing-upload-tool';
+import FindLocations from '@/containers/navigation/find-locations';
+import Helper from '@/containers/help/helper';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -50,7 +50,7 @@ const LocationTools = () => {
       <Link href="/" onClick={handleReset}>
         <Helper
           className={{
-            button: '-top-1 left-0 z-[20]',
+            button: '-top-1 left-0 z-20',
             tooltip: 'w-fit-content max-w-[400px]',
           }}
           tooltipPosition={{ top: -65, left: 0 }}
@@ -58,7 +58,7 @@ const LocationTools = () => {
         >
           <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2 text-white">
             <BiReset className="h-8 w-8 fill-current" />
-            <span className="whitespace-nowrap font-sans text-sm">Reset page</span>
+            <span className="font-sans text-sm whitespace-nowrap">Reset page</span>
           </div>
         </Helper>
       </Link>

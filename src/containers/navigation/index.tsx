@@ -1,13 +1,13 @@
-import HelpContainer from 'containers/help';
-import Helper from 'containers/help/helper';
-import LanguageSelector from 'containers/navigation/language-selector';
-import Menu from 'containers/navigation/menu';
-import News from 'containers/navigation/news';
+import HelpContainer from '@/containers/help';
+import Helper from '@/containers/help/helper';
+import LanguageSelector from '@/containers/navigation/language-selector';
+import Menu from '@/containers/navigation/menu';
+import News from '@/containers/navigation/news';
 
 const HELPER_ID = 'menu-categories';
 
 const AppTools = () => (
-  <div className="fixed top-2 left-4 z-20 hidden h-11 w-[526px] rounded-4xl bg-brand-800 px-5 shadow-md print:hidden md:block">
+  <div className="bg-brand-800 fixed top-2 left-4 z-20 hidden h-11 w-[526px] rounded-[32px] px-5 shadow-md md:block print:hidden">
     {/* <div className="grid h-full grid-cols-4 gap-4"> */}
     <div className="flex h-full items-center justify-around">
       <div className="flex items-center justify-center">

@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 type UseParamsOptions = {
   slug: 'fisheries' | 'restoration-value';

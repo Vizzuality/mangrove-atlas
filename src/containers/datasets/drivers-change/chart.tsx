@@ -1,6 +1,6 @@
-import Legend from 'containers/legend';
+import Legend from '@/containers/legend';
 
-import Chart from 'components/chart';
+import Chart from '@/components/chart';
 
 const DriversChangeChart = ({ legend, config }) => {
   return (

@@ -1,9 +1,9 @@
-import RestorationDataGroup from 'containers/datasets/restoration/map-popup/restoration-data-group';
+import RestorationDataGroup from '@/containers/datasets/restoration/map-popup/restoration-data-group';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const EcosystemServices = ({ data }: { data: RestorationPopUp }) => {
   const { SOC, AGB, Fish_Score_Inv, Fish_Score } = data;

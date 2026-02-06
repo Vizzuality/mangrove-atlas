@@ -5,14 +5,14 @@ import orderBy from 'lodash-es/orderBy';
 
 import { useRouter } from 'next/router';
 
-import { significantDigitsFormat } from 'lib/format';
+import { significantDigitsFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 import type { CartesianViewBox } from 'recharts/types/util/types';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API from 'services/api';
 

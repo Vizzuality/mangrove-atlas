@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 type TooltipProps = {
   payload: {
@@ -34,7 +34,7 @@ const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
   if (!active) return null;
 
   return (
-    <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
+    <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       {sortedPayload?.map(({ color, name, payload, value, dataKey }) => (
         <div key={dataKey} className="flex">
           <span className={cn({ 'flex space-x-4': true })}>

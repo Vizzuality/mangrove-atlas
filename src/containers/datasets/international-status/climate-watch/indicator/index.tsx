@@ -1,11 +1,11 @@
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 import {
   Tooltip,
   TooltipArrow,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
-} from 'components/ui/tooltip';
+} from '@/components/ui/tooltip';
 
 type IndicatorTypes = {
   label: string;
@@ -15,9 +15,9 @@ type IndicatorTypes = {
   info: string;
 };
 
-import UNCHECK_SVG from 'svgs/ui/check-cross.svg?sprite';
-import CHECK_SVG from 'svgs/ui/check.svg?sprite';
-import INFO_SVG from 'svgs/ui/info.svg?sprite';
+import UNCHECK_SVG from '@/svgs/ui/check-cross.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
+import INFO_SVG from '@/svgs/ui/info.svg?sprite';
 
 const Indicator = (indicator: IndicatorTypes) => {
   const { label, value, check, url, info } = indicator;
@@ -35,7 +35,7 @@ const Indicator = (indicator: IndicatorTypes) => {
               <TooltipContent
                 side="bottom"
                 align="center"
-                className="max-w-sm rounded-3xl bg-white p-4 text-black/85 shadow-soft first-letter:uppercase"
+                className="shadow-soft max-w-sm rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
               >
                 {info}
                 <TooltipArrow className="fill-white" width={10} height={5} />

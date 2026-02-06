@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
 
 import type { Category, LegendItem } from './types';
 type Legend = {
@@ -35,7 +35,7 @@ const Legend = ({ items }: Legend) => {
                   <Icon
                     icon={ARROW_SVG}
                     className={cn({
-                      'w-3 text-grey-400': true,
+                      'text-grey-400 w-3': true,
                       'rotate-180': !!collapse[d.label],
                     })}
                   />
@@ -45,7 +45,7 @@ const Legend = ({ items }: Legend) => {
                   <ul
                     style={{ maxHeight: !!collapse[d.label] ? 85 : 0 }}
                     className={cn({
-                      'w-fit overflow-y-auto py-1 px-4 font-bold italic text-brand-800 underline':
+                      'text-brand-800 w-fit overflow-y-auto px-4 py-1 font-bold italic underline':
                         true,
                       'py-0': !collapse[d.label],
                     })}

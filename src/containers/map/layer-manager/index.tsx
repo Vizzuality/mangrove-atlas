@@ -4,13 +4,13 @@ import { Layer } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { activeLayersAtom } from 'store/layers';
-import { interactiveLayerIdsAtom } from 'store/map';
+import { activeLayersAtom } from '@/store/layers';
+import { interactiveLayerIdsAtom } from '@/store/map';
 
 import { useRecoilState } from 'recoil';
 
-import { BASEMAPS, LAYERS } from 'containers/datasets';
-import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
+import { BASEMAPS, LAYERS } from '@/containers/datasets';
+import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
 
 import type { LayerProps } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
