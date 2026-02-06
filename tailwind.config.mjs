@@ -1,32 +1,21 @@
-const forms = require('@tailwindcss/forms');
-const lineClamp = require('@tailwindcss/line-clamp');
-const typography = require('@tailwindcss/typography');
-const scrollBar = require('tailwind-scrollbar-hide');
-const { fontFamily } = require('tailwindcss/defaultTheme');
-const animate = require('tailwindcss-animate');
+import defaultTheme from 'tailwindcss/defaultTheme';
+import animate from 'tailwindcss-animate';
+import forms from '@tailwindcss/forms';
+import typography from '@tailwindcss/typography';
+import scrollBar from 'tailwind-scrollbar-hide';
 
-/**
- * @type {import('tailwindcss').Config}
- */
-
-module.exports = {
+export default {
   content: [
-    './src/components/**/*.@(tsx|ts)',
-    './src/containers/**/*.@(tsx|ts)',
-    './src/layouts/**/*.@(tsx|ts)',
-    './src/pages/**/*.@(tsx|ts)',
-    './src/images/**/*.@(tsx|ts)',
-    './src/svgs/**/*.@(tsx|ts)',
+    './app/**/*.{js,jsx,ts,tsx,mdx}',
+    './pages/**/*.{js,jsx,ts,tsx,mdx}',
+    './src/**/*.{js,jsx,ts,tsx,mdx}',
+    './components/**/*.{js,jsx,ts,tsx,mdx}',
   ],
-  plugins: [animate, forms, lineClamp, typography, scrollBar],
+  plugins: [animate, forms, typography, scrollBar],
   theme: {
     extend: {
-      backgroundImage: {
-        rufiji: "url('/images/highlighted-places/rufiji.jpg')",
-        saloum: "url('/images/highlighted-places/saloum.png')",
-      },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       spacing: {
         7.5: '1.875rem',
@@ -39,7 +28,6 @@ module.exports = {
       },
       colors: {
         black: '#000000',
-        'black/85': 'rgba(0,0,0,85%)',
         grey: {
           50: '#F3F5F5',
           75: '#CDD0D0',
@@ -86,7 +74,7 @@ module.exports = {
       },
       keyframes: {
         'reverse-slide': {
-          '0%, 20%, 40%, 60%, 80%,': {
+          '0%, 20%, 40%, 60%, 80%': {
             left: '-600px',
           },
           '95%': {

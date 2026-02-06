@@ -1,11 +1,11 @@
 import { createRef, useLayoutEffect, useState } from 'react';
 
-import type { Data } from 'containers/datasets/restoration/overview/types';
-import Legend from 'containers/legend';
+import type { Data } from '@/containers/datasets/restoration/overview/types';
+import Legend from '@/containers/legend';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
+import TRIANGLE_SVG from '@/svgs/ui/triangle.svg?sprite';
 
 import MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS from './constants';
 

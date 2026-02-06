@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-import { FloodProtectionPeriodId } from 'containers/datasets/flood-protection/types';
+import { FloodProtectionPeriodId } from '@/containers/datasets/flood-protection/types';
 
 export const floodAreaPeriodAtom = atom<FloodProtectionPeriodId>({
   key: 'flood-area-protection-period',

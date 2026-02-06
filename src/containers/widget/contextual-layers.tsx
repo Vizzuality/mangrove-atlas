@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
-import ContextualLayersComponent from 'components/contextual-layers';
+import ContextualLayersComponent from '@/components/contextual-layers';
 
-import { useGetContextualLayerInfo } from 'containers/layers/hooks';
+import { useGetContextualLayerInfo } from '@/containers/layers/hooks';
 import { WidgetSlugType } from 'types/widget';
 
 type ContextualLayersWrapperProps = {

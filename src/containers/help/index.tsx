@@ -1,20 +1,20 @@
 import { useState } from 'react';
 
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 import { useRecoilState } from 'recoil';
 
 import { useLocalStorage } from 'usehooks-ts';
 
-import Contact from 'containers/contact';
+import Contact from '@/containers/contact';
 
-import Icon from 'components/ui/icon';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+import Icon from '@/components/ui/icon';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 
-import HELP_SVG from 'svgs/tools-bar/help.svg?sprite';
+import HELP_SVG from '@/svgs/tools-bar/help.svg?sprite';
 
 import GuideModalIntro from './modal-intro';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 export const HelpContainer = () => {
   const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
@@ -50,7 +50,7 @@ export const HelpContainer = () => {
           </button>
         </PopoverTrigger>
 
-        <PopoverContent className="rounded-2xl p-6 text-sm font-semibold shadow-border">
+        <PopoverContent className="shadow-border rounded-2xl p-6 text-sm font-semibold">
           <Contact />
           <div className="flex space-x-2">
             <span>Navigation help</span>

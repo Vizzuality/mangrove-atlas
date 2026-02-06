@@ -1,21 +1,20 @@
 import { FC, ReactElement } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { widgetsCollapsedAtom } from 'store/widgets';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { widgetsCollapsedAtom } from '@/store/widgets';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import WidgetControls from 'components/widget-controls';
+import WidgetControls from '@/components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { getLayerActive } from './selector';
-import Helper from 'containers/help/helper';
-import ContextualLayersWrapper from 'containers/widget/contextual-layers';
+import Helper from '@/containers/help/helper';
 
 type ChildrenType = ReactElement & { type?: () => null };
 
@@ -34,7 +33,7 @@ type WidgetLayoutProps = {
 };
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
-  const { children, title, id, className, applicability, info, contextualLayers } = props;
+  const { children, title, id, className, applicability, info } = props;
   const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
   const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
   const isLayerActive = useRecoilValue(getLayerActive(id));
@@ -62,10 +61,11 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
-        transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
+        transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'z-2 group w-full rounded-4xl bg-white shadow-card print:!w-[90%] md:ml-0': true,
-          '!w-[100%] border-none !p-0 !shadow-none': info,
+          'bg-blur group shadow-card z-2 w-full rounded-4xl bg-white px-1 py-1 md:ml-0 print:w-[90%]!':
+            true,
+          'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
           'border-none p-0': info,
         })}
@@ -75,7 +75,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
             'relative rounded-3xl',
             'before:pointer-events-none before:absolute before:inset-1 before:rounded-[inherit] before:border-2 before:content-[""]',
             isLayerActive
-              ? 'transition delay-150 ease-in-out before:border-brand-800/10'
+              ? 'before:border-brand-800/10 transition delay-150 ease-in-out'
               : 'before:border-transparent'
           )}
         >
@@ -92,7 +92,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
                 {!info && <WidgetControls id={id} />}
               </WidgetHeader>
             </Helper>
-
             <div
               data-testid={`widget-${id}-content`}
               className={cn({
@@ -105,14 +104,6 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
             </div>
             {applicability && <WidgetApplicability id={id} applicability={applicability} />}
           </div>
-
-          {!!contextualLayers?.length && (
-            <ContextualLayersWrapper
-              origin={id}
-              id={contextualLayers[0].id}
-              description={contextualLayers[0].description}
-            />
-          )}
         </div>
       </motion.div>
     </AnimatePresence>

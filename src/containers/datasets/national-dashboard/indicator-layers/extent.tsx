@@ -1,12 +1,12 @@
-import { numberFormat } from 'lib/format';
+import { numberFormat } from '@/lib/format';
 
-import type { IndicatorExtentTypes } from './types';
+import type { IndicatorExtentProps } from './types';
 
 const LABEL_UNITS = {
   km2: 'km²',
 };
 
-const IndicatorExtent = ({ unit, dataSource }: IndicatorExtentTypes) => (
+const IndicatorExtent = ({ unit, dataSource }: IndicatorExtentProps) => (
   <div className="flex flex-col space-y-2">
     <h5 className="text-sm font-normal">Extent</h5>
     {dataSource?.value && (

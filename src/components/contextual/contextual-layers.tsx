@@ -1,4 +1,4 @@
-import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
+import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from '@/containers/datasets/contextual-layers/constants';
 
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 

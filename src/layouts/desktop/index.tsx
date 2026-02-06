@@ -6,23 +6,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { printModeState } from 'store/print-mode';
+import { printModeState } from '@/store/print-mode';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
-import MapContainer from 'containers/map';
-import WelcomeIntroMessage from 'containers/welcome-message';
-import WidgetsContainer from 'containers/widgets';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
+import MapContainer from '@/containers/map';
+import WelcomeIntroMessage from '@/containers/welcome-message';
+import WidgetsContainer from '@/containers/widgets';
 import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import {
   mapDraggableTooltipDimensionsAtom,
   mapDraggableTooltipPinnedAtom,
   mapDraggableTooltipPositionAtom,
-} from 'store/map';
+} from '@/store/map';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { is } from 'date-fns/locale';
 
@@ -92,7 +92,7 @@ const DesktopLayout = () => {
       >
         <Link
           href="/"
-          className="pointer-events-auto fixed top-0 right-0 z-[800]"
+          className="pointer-events-auto fixed top-0 right-0 z-800"
           draggable={false}
           onClick={handleReset}
         >

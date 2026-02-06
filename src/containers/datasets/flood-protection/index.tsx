@@ -2,7 +2,7 @@ import {
   floodAreaPeriodAtom,
   floodPopulationPeriodAtom,
   floodStockPeriodAtom,
-} from 'store/widgets/flood-protection';
+} from '@/store/widgets/flood-protection';
 
 import { useRecoilState } from 'recoil';
 
@@ -38,7 +38,7 @@ const MangrovesFloodProtection = () => {
     <div className="space-y-4">
       <CoastalProtection />
       <div className="relative pb-4">
-        <div className="absolute top-0 -left-10 -right-10 border-2 border-b border-brand-800/30" />
+        <div className="border-brand-800/30 absolute top-0 -right-10 -left-10 border-2 border-b" />
       </div>
       {!!dataArea?.indicatorValues?.length && (
         <FloodProtection

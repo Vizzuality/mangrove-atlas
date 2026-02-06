@@ -4,10 +4,10 @@ import sortBy from 'lodash-es/sortBy';
 
 import { useRouter } from 'next/router';
 
-import { formatAxis } from 'lib/format';
+import { formatAxis } from '@/lib/format';
 
-import { analysisAtom } from 'store/analysis';
-import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
+import { analysisAtom } from '@/store/analysis';
+import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
@@ -15,8 +15,8 @@ import type { Visibility } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API_cloud_functions from 'services/cloud-functions';
 

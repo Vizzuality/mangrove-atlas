@@ -1,29 +1,31 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
-import { trackEvent } from 'lib/analytics/ga';
+import cn from '@/lib/classnames';
+import { trackEvent } from '@/lib/analytics/ga';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeLayersAtom } from 'store/layers';
-import { alertsEndDate, alertsStartDate } from 'store/widgets/alerts';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { activeLayersAtom } from '@/store/layers';
+import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import Chart from 'components/chart';
-import DateSelect from 'components/planet-date-select';
-import ContextualLayers from 'components/contextual-layers';
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Chart from '@/components/chart';
+import DateSelect from '@/components/planet-date-select';
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_STYLES,
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+import { widgets } from '@/containers/widgets/constants';
+
+import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
 
 import { useAlerts } from './hooks';
 import Legend from './legend';
@@ -44,6 +46,12 @@ const AlertsWidget = () => {
     () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
   );
+
+  const widgetInfo = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
+    [widgets]
+  );
+  const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
     startDate,
@@ -92,7 +100,7 @@ const AlertsWidget = () => {
             aria-label="Retry analysis"
             type="button"
             onClick={handleTryAgain}
-            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
           >
             Try again
           </button>
@@ -115,15 +123,15 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {startDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
                         aria-label="Select start date"
                         className={cn({
-                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': startDate?.value === date?.value,
+                          'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
+                          'text-brand-800 font-semibold': startDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value > endDate?.value,
                         })}
                         type="button"
@@ -159,15 +167,15 @@ const AlertsWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {endDateOptions?.map((date) => (
                     <li key={date?.label} className="last-of-type:pb-4">
                       <button
                         aria-label="Select end date"
                         className={cn({
-                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': endDate?.value === date?.value,
+                          'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
+                          'text-brand-800 font-semibold': endDate?.value === date?.value,
                           'pointer-events-none opacity-50': date?.value < startDate?.value,
                         })}
                         type="button"
@@ -192,6 +200,14 @@ const AlertsWidget = () => {
             </Popover>
             .
           </p>
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_alerts"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
+            />
+          </div>
+
           <Legend />
           <Chart config={config} />
           <Chart
@@ -227,7 +243,7 @@ const AlertsWidget = () => {
       )}
       {!isError && !isLoading && (
         <div className="space-y-2">
-          <p className="items-center pt-6 font-sans text-lg font-light leading-7">
+          <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
             There are <span className="font-bold"> 535</span> areas monitored in the world.
           </p>
         </div>
