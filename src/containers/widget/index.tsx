@@ -1,20 +1,21 @@
 import { FC, ReactElement } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { widgetsCollapsedAtom } from 'store/widgets';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { widgetsCollapsedAtom } from '@/store/widgets';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import WidgetControls from 'components/widget-controls';
+import WidgetControls from '@/components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { getLayerActive } from './selector';
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
+
 type ChildrenType = ReactElement & { type?: () => null };
 
 type WidgetLayoutProps = {
@@ -23,6 +24,10 @@ type WidgetLayoutProps = {
   children: ChildrenType | null;
   className?: string;
   contextualLayersIds?: string[];
+  contextualLayers?: {
+    id: string;
+    description: string;
+  }[];
   applicability?: string;
   info?: boolean;
 };
@@ -56,46 +61,49 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
         exit="expanded"
-        transition={{ type: 'tween', bounce: 0, duration: 0.6 }}
+        transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'z-2 shadow-card group w-full rounded-4xl bg-white px-1 py-1 print:!w-[90%] md:ml-0':
+          'bg-blur group shadow-card z-2 w-full rounded-4xl bg-white px-1 py-1 md:ml-0 print:w-[90%]!':
             true,
-          '!w-[100%] border-none !p-0 !shadow-none': info,
+          'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
+          'border-none p-0': info,
         })}
       >
         <div
-          className={cn({
-            'rounded-3xl border-2 border-transparent px-9 py-3': true,
-            'border-brand-800 border-opacity-25 transition delay-150 ease-in-out': isLayerActive,
-            'border-none p-0': info,
-          })}
-          data-testid={`widget-${id}`}
+          className={cn(
+            'relative rounded-3xl',
+            'before:pointer-events-none before:absolute before:inset-1 before:rounded-[inherit] before:border-2 before:content-[""]',
+            isLayerActive
+              ? 'before:border-brand-800/10 transition delay-150 ease-in-out'
+              : 'before:border-transparent'
+          )}
         >
-          <Helper
-            className={{
-              button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
-              tooltip: 'max-w-[400px]',
-            }}
-            tooltipPosition={{ top: -50, left: 0 }}
-            message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-          >
-            <WidgetHeader title={title} id={id}>
-              {!info && <WidgetControls id={id} />}
-            </WidgetHeader>
-          </Helper>
-
-          <div
-            data-testid={`widget-${id}-content`}
-            className={cn({
-              'group-last-of-type:block': true,
-              hidden: isCollapsed,
-              block: !isCollapsed,
-            })}
-          >
-            {children}
+          <div className="px-9 py-3" data-testid={`widget-${id}`}>
+            <Helper
+              className={{
+                button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
+                tooltip: 'max-w-[400px]',
+              }}
+              tooltipPosition={{ top: -50, left: 0 }}
+              message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
+            >
+              <WidgetHeader title={title} id={id}>
+                {!info && <WidgetControls id={id} />}
+              </WidgetHeader>
+            </Helper>
+            <div
+              data-testid={`widget-${id}-content`}
+              className={cn({
+                'group-last-of-type:block': true,
+                hidden: isCollapsed,
+                block: !isCollapsed,
+              })}
+            >
+              {children}
+            </div>
+            {applicability && <WidgetApplicability id={id} applicability={applicability} />}
           </div>
-          {applicability && <WidgetApplicability id={id} applicability={applicability} />}
         </div>
       </motion.div>
     </AnimatePresence>

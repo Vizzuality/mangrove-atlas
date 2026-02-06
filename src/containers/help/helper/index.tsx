@@ -2,15 +2,15 @@ import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'rea
 
 import { createPortal } from 'react-dom';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
 
 export const Helper = ({
   children,
@@ -123,7 +123,7 @@ export const Helper = ({
                   zIndex: 10000,
                 }}
                 className={cn({
-                  'w-fit-content fixed z-[60] h-fit cursor-default rounded-md bg-white p-6': true,
+                  'w-fit-content fixed z-60 h-fit cursor-default rounded-md bg-white p-6': true,
                   [className.tooltip]: !!className.tooltip,
                 })}
               >

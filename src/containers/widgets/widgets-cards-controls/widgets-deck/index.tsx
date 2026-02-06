@@ -2,17 +2,17 @@ import { FC } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeWidgetsAtom } from 'store/widgets';
+import { activeWidgetsAtom } from '@/store/widgets';
 
 import { useRecoilState } from 'recoil';
 
-import Category from 'containers/categories-menu';
-import { LocationTypes } from 'containers/datasets/locations/types';
-import Helper from 'containers/help/helper';
-import { widgets } from 'containers/widgets/constants';
-import WidgetsMenu from 'containers/widgets/widgets-menu';
+import Category from '@/containers/categories-menu';
+import { LocationTypes } from '@/containers/datasets/locations/types';
+import Helper from '@/containers/help/helper';
+import { widgets } from '@/containers/widgets/constants';
+import WidgetsMenu from '@/containers/widgets/widgets-menu';
 
 import {
   Dialog,
@@ -20,10 +20,10 @@ import {
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import ALERT_SVG from 'svgs/ui/alert.svg?sprite';
+import ALERT_SVG from '@/svgs/ui/alert.svg?sprite';
 
 const HELPER_ID = 'menu-categories';
 const WidgetsDeck: FC = () => {
@@ -48,7 +48,7 @@ const WidgetsDeck: FC = () => {
     <Dialog>
       <Helper
         className={{
-          button: 'right-0 -top-1.5 z-20',
+          button: '-top-1.5 right-0 z-20',
           tooltip: 'w-fit-content max-w-[400px]',
         }}
         tooltipPosition={{ top: -50, left: 0 }}
@@ -59,7 +59,7 @@ const WidgetsDeck: FC = () => {
             type="button"
             data-testid="widgets-deck-trigger"
             className={cn({
-              'ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white py-1 px-10 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors print:hidden md:ml-0 md:w-[262px]':
+              'text-brand-800 shadow-control ml-1 flex h-8 w-full items-center justify-center rounded-4xl bg-white px-10 py-1 font-sans text-sm font-semibold transition-colors md:ml-0 md:w-[262px] print:hidden':
                 true,
             })}
           >
@@ -70,14 +70,14 @@ const WidgetsDeck: FC = () => {
         </DialogTrigger>
       </Helper>
       <DialogContent className="mb-10 w-screen border-2 md:w-auto">
-        <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+        <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
         <div className="no-scrollbar space-y-8">
-          <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+          <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
             Widgets deck settings
           </DialogTitle>
           <Helper
             className={{
-              button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',
+              button: HELPER_ID ? 'right-40 -bottom-9 z-20' : 'hidden',
               tooltip: 'w-80',
             }}
             tooltipPosition={{ top: -20, left: 0 }}
@@ -85,7 +85,7 @@ const WidgetsDeck: FC = () => {
           >
             <Category />
           </Helper>
-          <div className="flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5 shadow-control">
+          <div className="shadow-control flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5">
             <Icon
               icon={ALERT_SVG}
               className="h-16 w-16 fill-current text-white"

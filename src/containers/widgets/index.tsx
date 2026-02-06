@@ -1,24 +1,24 @@
 import { useCallback, useMemo, FC } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { locationToolAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationToolAtom } from '@/store/sidebar';
+import { activeWidgetsAtom } from '@/store/widgets';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import WidgetsLayout from 'layouts/widgets';
+import WidgetsLayout from '@/layouts/widgets';
 
-import Category from 'containers/categories-menu';
-import { WIDGETS } from 'containers/datasets';
-import CloseHelpGuide from 'containers/help/close';
-import Helper from 'containers/help/helper';
-import AppTools from 'containers/navigation';
-import WidgetWrapper from 'containers/widget';
-import { widgets, ANALYSIS_WIDGETS_SLUGS } from 'containers/widgets/constants';
+import Category from '@/containers/categories-menu';
+import { WIDGETS } from '@/containers/datasets';
+import CloseHelpGuide from '@/containers/help/close';
+import Helper from '@/containers/help/helper';
+import AppTools from '@/containers/navigation';
+import WidgetWrapper from '@/containers/widget';
+import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
 import {
   Dialog,
@@ -26,13 +26,13 @@ import {
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-import { breakpoints } from 'styles/styles.config';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
+import { breakpoints } from '@/styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';
 
-import SETTINGS_SVG from 'svgs/ui/settings.svg?sprite';
+import SETTINGS_SVG from '@/svgs/ui/settings.svg?sprite';
 
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
@@ -135,6 +135,7 @@ const WidgetsContainer: FC = () => {
                 title={name}
                 id={slug}
                 applicability={props?.applicability}
+                contextualLayers={props?.contextualLayers}
                 className={cn({
                   'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
                     true,
@@ -149,7 +150,7 @@ const WidgetsContainer: FC = () => {
       <Dialog>
         <Helper
           className={{
-            button: 'right-0 -top-1.5 z-20',
+            button: '-top-1.5 right-0 z-20',
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: -50, left: 0 }}
@@ -164,10 +165,10 @@ const WidgetsContainer: FC = () => {
               className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20 print:hidden"
             >
               <motion.button
-                className="flex min-w-[48px] items-center space-x-4 rounded-full bg-brand-800 p-4 text-xs font-semibold text-white shadow-control"
+                className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
                 variants={buttonMotion}
               >
-                <Icon icon={SETTINGS_SVG} className="h-4 w-4 flex-shrink-0" />
+                <Icon icon={SETTINGS_SVG} className="h-4 w-4 shrink-0" />
                 <motion.span variants={textMotion} className="whitespace-nowrap">
                   Widgets deck
                 </motion.span>
@@ -176,14 +177,14 @@ const WidgetsContainer: FC = () => {
           </DialogTrigger>
         </Helper>
         <DialogContent className="mb-10 w-screen border-2 md:w-auto">
-          <DialogClose className="top-8 md:fixed md:!top-18 md:left-[595px]" />
+          <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
           <div className="no-scrollbar space-y-8">
-            <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+            <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
               Widgets deck settings
             </DialogTitle>
             <Helper
               className={{
-                button: HELPER_ID ? '-bottom-9 right-40 z-20' : 'hidden',
+                button: HELPER_ID ? 'right-40 -bottom-9 z-20' : 'hidden',
                 tooltip: 'w-80',
               }}
               tooltipPosition={{ top: -20, left: 0 }}
@@ -210,7 +211,7 @@ const WidgetsContainer: FC = () => {
             button:
               locationTool === 'upload' || locationTool === 'area'
                 ? 'hidden'
-                : '-bottom-2.5 -right-0',
+                : '-bottom-2.5 right-0',
             tooltip: 'w-fit-content',
           }}
           tooltipPosition={{ top: 50, left: 10 }}
@@ -236,7 +237,7 @@ const WidgetsContainer: FC = () => {
               button:
                 locationTool === 'upload' || locationTool === 'area'
                   ? 'hidden'
-                  : '-bottom-2.5 -right-0',
+                  : 'right-0 -bottom-2.5',
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: 50, left: 10 }}
@@ -245,7 +246,7 @@ const WidgetsContainer: FC = () => {
             <button
               className={cn({
                 [BUTTON_STYLES]: true,
-                'm-auto bg-brand-800 text-white': true,
+                'bg-brand-800 m-auto text-white': true,
                 hidden: !customGeojson && !uploadedGeojson,
               })}
               disabled={!customGeojson && !uploadedGeojson}

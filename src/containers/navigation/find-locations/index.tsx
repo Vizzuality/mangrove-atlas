@@ -1,21 +1,21 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from 'store/analysis';
-import { activeGuideAtom } from 'store/guide';
-import { locationsModalAtom } from 'store/locations';
-import { locationToolAtom } from 'store/sidebar';
+import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
+import { activeGuideAtom } from '@/store/guide';
+import { locationsModalAtom } from '@/store/locations';
+import { locationToolAtom } from '@/store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Helper from 'containers/help/helper';
-import LocationDialogContent from 'containers/location-dialog-content';
+import Helper from '@/containers/help/helper';
+import LocationDialogContent from '@/containers/location-dialog-content';
 
-import { Dialog, DialogTrigger } from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
+import GLASS_SVG from '@/svgs/sidebar/glass.svg?sprite';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 

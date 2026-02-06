@@ -5,10 +5,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from 'components/ui/dropdown';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dropdown';
+import Icon from '@/components/ui/icon';
 
-import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
+import TRANSLATE_SVG from '@/svgs/tools-bar/translate.svg?sprite';
 
 interface Transifex {
   live: {

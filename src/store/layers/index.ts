@@ -1,5 +1,5 @@
 import { array, object, string, stringLiterals, optional, number } from '@recoiljs/refine';
-import { Data } from 'containers/datasets/fisheries/commercial-fisheries-production/types';
+import { Data } from '@/containers/datasets/fisheries/commercial-fisheries-production/types';
 import type { Visibility } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';

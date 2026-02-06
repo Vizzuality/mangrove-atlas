@@ -7,8 +7,8 @@ import { useRouter } from 'next/router';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -108,7 +108,7 @@ export function useMangroveSpeciesThreatened(
     const { categories, total, species, threatened } = speciesData;
 
     const threatenedLegend: number | string = getThreatened(threatened, total);
-    const speciesByGroup = groupBy(species, (s) => s.red_list_cat);
+    const speciesByGroup = groupBy(species, (s) => s?.red_list_cat);
 
     const chartData = Object.entries(categories)?.map((item) => ({
       value: item[1],

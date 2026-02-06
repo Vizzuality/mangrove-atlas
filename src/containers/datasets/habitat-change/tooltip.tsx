@@ -1,5 +1,5 @@
-import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
+import cn from '@/lib/classnames';
+import { numberFormat } from '@/lib/format';
 type TooltipProps = {
   payload: {
     name: string;
@@ -15,7 +15,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
   const { color, payload: info } = payload?.[0];
   const { name, net_change } = info;
   return (
-    <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
+    <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       {name && <p className="flex justify-center">{name}</p>}
       <div key="label" className="flex flex-col">
         <p key={name} className={cn({ 'flex space-x-4': true })}>

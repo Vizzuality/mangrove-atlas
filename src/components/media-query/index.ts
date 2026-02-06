@@ -1,6 +1,6 @@
 import { createMedia } from '@artsy/fresnel';
 
-import { screens } from 'styles/styles.config';
+import { screens } from '@/styles/styles.config';
 
 const ExampleAppMedia = createMedia<
   { breakpoints: Record<string, number> },

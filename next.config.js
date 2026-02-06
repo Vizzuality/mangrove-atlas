@@ -24,9 +24,9 @@ const nextConfig = {
     defaultLocale: 'en',
     localeDetection: false,
   },
-  publicRuntimeConfig: {
-    TxNativePublicToken: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-  },
+  // publicRuntimeConfig: {
+  //   TxNativePublicToken: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
+  // },
   productionBrowserSourceMaps: false,
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
