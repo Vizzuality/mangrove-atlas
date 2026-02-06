@@ -1,8 +1,8 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
+import { useMangroveRestoration } from '@/containers/datasets/restoration/overview/hooks';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -41,7 +41,7 @@ const MeanRestoration = () => {
         </div>
       )}
       {!isLoading && (
-        <div className="border-1 absolute bottom-4 -left-10 -right-10 h-0.5 border-b border-dashed border-brand-800 border-opacity-50" />
+        <div className="border-brand-800 border-opacity-50 absolute -right-10 bottom-4 -left-10 h-0.5 border border-b border-dashed" />
       )}
     </div>
   );

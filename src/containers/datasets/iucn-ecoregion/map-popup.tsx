@@ -1,14 +1,14 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-// import { INFO } from 'containers/datasets';
-import { COLORS } from 'containers/datasets/iucn-ecoregion/constants';
-import { useMangroveEcoregions } from 'containers/datasets/iucn-ecoregion/hooks';
-import type { IUCNEcoregionPopUpInfo, Label } from 'containers/datasets/iucn-ecoregion/types';
+// import { INFO } from '@/containers/datasets';
+import { COLORS } from '@/containers/datasets/iucn-ecoregion/constants';
+import { useMangroveEcoregions } from '@/containers/datasets/iucn-ecoregion/hooks';
+import type { IUCNEcoregionPopUpInfo, Label } from '@/containers/datasets/iucn-ecoregion/types';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-// import { Dialog, DialogContent, DialogTrigger, DialogClose } from 'components/ui/dialog';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+// import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 type Tags =
   | 'Historical (1750)'
@@ -84,7 +84,7 @@ const IucnEcoregionPopup = ({ info }: { info: IUCNEcoregionPopUpInfo }) => {
       <CollapsibleContent>
         <div className="flex w-full min-w-[450px] flex-col space-y-2 border-none px-6 shadow-none">
           <a
-            className="w-full text-right text-xs text-brand-800 underline"
+            className="text-brand-800 w-full text-right text-xs underline"
             target="_blank"
             rel="noopener noreferrer"
             href={url}

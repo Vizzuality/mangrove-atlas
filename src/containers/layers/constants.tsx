@@ -1,5 +1,11 @@
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
+type ContextualLayersProps = {
+  id: string;
+  name: string;
+  thumbSource?: string;
+}[];
+
 export const LAYERS = [
   {
     name: 'IUCN Ecosystem assessment',
@@ -77,15 +83,6 @@ export const LAYERS = [
     name: 'Custom analysis',
     id: 'custom-area',
   },
-  {
-    name: 'Digital Earth Australia',
-    id: 'national_dashboard_source_AUS_mangrove_cover_2022',
-  },
-  {
-    name: 'Save Our Mangroves Now project',
-    id: 'national_dashboard_source_MangroveExtent2020MozambiqueFinalQAv2',
-  },
-
   {
     name: 'Allen coral atlas',
     id: 'mangrove_allen_coral_reef',
@@ -165,4 +162,22 @@ export const NATIONAL_DASHBOARD_LOCATIONS = [
   'MOZ',
   'MDG',
   'MEX',
+];
+
+export const CONTEXTUAL_LAYERS_INFO: ContextualLayersProps = [
+  {
+    id: 'hi-res-extent',
+    name: 'High Resolution Extent',
+    thumbSource: '/images/thumbs/basemaps/hi-res-extent.jpg',
+  },
+  {
+    id: 'mangrove_protected_areas',
+    name: 'WDPA',
+    thumbSource: '/images/thumbs/contextual/mangrove_protected_areas.png',
+  },
+  {
+    id: 'planet_medres_visual_monthly',
+    name: 'Planet-NICFI Satellite Imagery',
+    thumbSource: '/images/thumbs/basemaps/basemap-satellite.jpg',
+  },
 ];

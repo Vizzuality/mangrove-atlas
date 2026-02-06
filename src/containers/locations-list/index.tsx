@@ -4,11 +4,11 @@ import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { locationBoundsAtom } from 'store/map';
-import { mapSettingsAtom } from 'store/map-settings';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationBoundsAtom } from '@/store/map';
+import { mapSettingsAtom } from '@/store/map-settings';
 
 import turfBbox from '@turf/bbox';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
@@ -16,16 +16,16 @@ import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
 
-import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
-import { Location, LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
+import { Location, LocationTypes } from '@/containers/datasets/locations/types';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { breakpoints } from 'styles/styles.config';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { breakpoints } from '@/styles/styles.config';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
-import Helper from 'containers/help/helper';
-import { trackEvent } from 'lib/analytics/ga';
+import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import Helper from '@/containers/help/helper';
+import { trackEvent } from '@/lib/analytics/ga';
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
@@ -125,7 +125,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             <button
               type="button"
               className={cn({
-                'flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl hover:bg-brand-800 hover:bg-opacity-10':
+                'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
                 'print:hidden': screenWidth >= breakpoints.lg,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
@@ -143,13 +143,13 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             >
               <p
                 className={cn({
-                  'text-left font-sans text-2lg font-light text-black/85': true,
-                  'font-semibold text-brand-800': locationId === locationsToDisplay[index].id,
+                  'text-2lg text-left font-sans font-light text-black/85': true,
+                  'text-brand-800 font-semibold': locationId === locationsToDisplay[index].id,
                 })}
               >
                 {locationsToDisplay[index].name}
               </p>
-              <span className="text-xs text-grey-800 text-opacity-90">
+              <span className="text-grey-800 text-opacity-90 text-xs">
                 {locationNames[locationsToDisplay[index].location_type]}
               </span>
             </button>
@@ -160,7 +160,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   };
 
   return (
-    <div className="space-y-4 overflow-hidden pt-8 after:bg-gradient-to-b after:from-white/20 after:to-white/100 after:content-[''] md:pt-0">
+    <div className="space-y-4 overflow-hidden pt-8 after:bg-linear-to-b after:from-white/20 after:to-white after:content-[''] md:pt-0">
       <div className="relative box-border w-full px-1 pt-0.5">
         <Helper
           className={{
@@ -172,7 +172,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         >
           <input
             type="search"
-            className="relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 caret-brand-800 opacity-50 focus:rounded focus:border-b-2 focus:border-grey-75 focus:outline-none focus:ring-transparent"
+            className="caret-brand-800 focus:border-grey-75 relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 opacity-50 focus:rounded focus:border-b-2 focus:ring-transparent focus:outline-none"
             placeholder="Type name..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.currentTarget.value)}
@@ -190,7 +190,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       </div>
 
       {(isFetching || isLoading) && <Loading visible iconClassName="flex w-10 h-10 m-auto my-10" />}
-      <div className="relative max-h-7 min-h-[100vh]">
+      <div className="relative max-h-7 min-h-screen">
         {isFetched && !isLoading && !isFetching && (
           <AutoSizer>
             {({ width, height }) => (

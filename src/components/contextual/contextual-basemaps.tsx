@@ -1,19 +1,19 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
 
-import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from 'containers/datasets/contextual-layers/constants';
+import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from '@/containers/datasets/contextual-layers/constants';
 
-import DateSelect from 'components/planet-date-select';
-import RadioGroup from 'components/ui/radio-group';
-import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
+import DateSelect from '@/components/planet-date-select';
+import RadioGroup from '@/components/ui/radio-group';
+import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const ContextualBasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -62,7 +62,7 @@ const ContextualBasemapsMapSettings = () => {
           />
           <label
             className={cn({
-              'font-semibold text-brand-800': isActive === 'no-layer',
+              'text-brand-800 font-semibold': isActive === 'no-layer',
             })}
             htmlFor="No layer"
           >
@@ -81,7 +81,7 @@ const ContextualBasemapsMapSettings = () => {
                 />
                 <label
                   className={cn({
-                    'font-semibold text-brand-800': isActive === id,
+                    'text-brand-800 font-semibold': isActive === id,
                   })}
                   htmlFor={id}
                 >

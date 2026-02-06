@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
 
 import { updateLayers } from 'hooks/layers';
 
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
 
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
 import { HELPER_POSITION } from './constants';
 

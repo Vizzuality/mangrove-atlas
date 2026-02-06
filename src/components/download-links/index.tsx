@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import ARROW_SVG from 'svgs/ui/arrow.svg';
+import ARROW_SVG from '@/svgs/ui/arrow.svg';
 
 // components
 
@@ -23,10 +23,10 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
 
   return (
     <div className="mb-10 flex flex-col space-y-12 md:space-y-6">
-      <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
+      <h2 className="font-black/85 text-3xl leading-10 font-light">Download Data</h2>
       <div className="space-y-2">
         {info.map(({ id, title, href, description, license }) => (
-          <div key={id} className="text-xs font-bold uppercase tracking-widest">
+          <div key={id} className="text-xs font-bold tracking-widest uppercase">
             <div className="flex w-full items-center justify-between">
               <div className="flex" onClick={() => handleClick(id as string)}>
                 <Icon

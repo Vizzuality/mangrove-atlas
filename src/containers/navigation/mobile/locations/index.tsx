@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import LocationsList from 'containers/locations-list';
+import LocationsList from '@/containers/locations-list';
 
 import {
   Dialog,
@@ -8,10 +8,10 @@ import {
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import GLASS_SVG from 'svgs/sidebar/glass.svg?sprite';
+import GLASS_SVG from '@/svgs/sidebar/glass.svg?sprite';
 
 const LocationsMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ const LocationsMobile = () => {
           <DialogClose onClose={closeMenu} className="top-4" />
         </DialogContent>
       </Dialog>
-      <div className="font-sans text-xxs leading-[10px] text-white">Locations</div>
+      <div className="text-xxs font-sans leading-[10px] text-white">Locations</div>
     </div>
   );
 };

@@ -1,15 +1,17 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from 'components/mdx-reader';
+
+<LayoutMdx>
 
 # Mangrove deforestation alerts
 
 ## Overview:
 
-This data set shows a heatmap representing points were there is high confidence of a loss of mangrove forest cover. This layer has a spatial resolution of 20 m and is updated on a monthly basis. The analysis is undertaken using Sentinel-2 imagery and updated on a monthly basis. The mangrove loss alert system is based on optimised normalised difference vegetation index (NDVI) thresholds used to identify mangrove losses and a temporal scoring system to filter false positives. The mangrove loss alert system was found to have an estimated overall accuracy of 92.1%, with the alert commission and omission estimated to be 10.4% and 20.6%, respectively. 
+This data set shows a heatmap representing points were there is high confidence of a loss of mangrove forest cover. This layer has a spatial resolution of 20 m and is updated on a monthly basis. The analysis is undertaken using Sentinel-2 imagery and updated on a monthly basis. The mangrove loss alert system is based on optimised normalised difference vegetation index (NDVI) thresholds used to identify mangrove losses and a temporal scoring system to filter false positives. The mangrove loss alert system was found to have an estimated overall accuracy of 92.1%, with the alert commission and omission estimated to be 10.4% and 20.6%, respectively.
 
-## DataLink: 
+## DataLink:
 
 More info available soon
-    
+
 ## Reference:
 
 Bunting, P.; Hilarides, L.; Rosenqvist, A.; Lucas, R.M.; Kuto, E.; Gueye, Y.; Ndiaye, L. Global Mangrove Watch: Monthly Alerts of Mangrove Loss for Africa. Remote Sens. 2023, 15, 2050. <a target="_blank" rel="noopener noreferrer" href="https://doi.org/10.3390/rs15082050">https://doi.org/10.3390/rs15082050</a>
@@ -17,13 +19,11 @@ Bunting, P.; Hilarides, L.; Rosenqvist, A.; Lucas, R.M.; Kuto, E.; Gueye, Y.; Nd
 ## Date of content:
 
 January 2020 – present
-    
-## License:
-<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC-BY 4.0</a>
-  
 
-export default ({ children, ...props }) => (
-  <LayoutMdx {...props}>
-    {children}
-  </LayoutMdx>
-);
+## License:
+
+<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">
+  CC-BY 4.0
+</a>
+
+</LayoutMdx>

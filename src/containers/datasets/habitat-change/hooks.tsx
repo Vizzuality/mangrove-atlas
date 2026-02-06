@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import Link from 'next/link';
 
-import { numberFormat } from 'lib/format';
+import { numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Rectangle } from 'recharts';

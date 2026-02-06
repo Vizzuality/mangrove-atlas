@@ -1,4 +1,4 @@
-import { WIDGETS_BY_CATEGORY } from 'containers/widgets/constants';
+import { WIDGETS_BY_CATEGORY } from '@/containers/widgets/constants';
 
 export function findCategoryByWidgets(widgets) {
   // Filter out enabledWidgets from the input widgets

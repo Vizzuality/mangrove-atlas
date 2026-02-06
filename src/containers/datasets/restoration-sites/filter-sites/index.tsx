@@ -1,18 +1,18 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
 import React from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
+import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 
 import { useSetRecoilState } from 'recoil';
 
-import Loading from 'components/ui/loading';
-import MultiSelect from 'components/ui/select-multi';
+import Loading from '@/components/ui/loading';
+import MultiSelect from '@/components/ui/select-multi';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataDitesProperties } from '../types';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 type FilterSitesProps = {
   open: boolean;
@@ -77,7 +77,7 @@ const FilterSites = ({
             <h3 className="font-sans text-3xl font-light text-black/85">Filter Sites</h3>
             <button
               type="button"
-              className="text-sm font-semibold text-brand-800"
+              className="text-brand-800 text-sm font-semibold"
               onClick={resetFilters}
             >
               Clear all

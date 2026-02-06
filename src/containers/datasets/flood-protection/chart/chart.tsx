@@ -1,6 +1,6 @@
-import Chart from 'containers/datasets/flood-protection/chart';
-import type { FloodProtectionPeriodId } from 'containers/datasets/flood-protection/types';
-import Legend from 'containers/legend';
+import Chart from '@/containers/datasets/flood-protection/chart';
+import type { FloodProtectionPeriodId } from '@/containers/datasets/flood-protection/types';
+import Legend from '@/containers/legend';
 
 import type { ChartData, Config } from '../types';
 

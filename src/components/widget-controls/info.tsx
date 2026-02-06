@@ -1,4 +1,4 @@
-import { INFO } from 'containers/datasets';
+import { INFO } from '@/containers/datasets';
 
 import {
   Dialog,
@@ -6,15 +6,15 @@ import {
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import INFO_SVG from 'svgs/ui/info.svg?sprite';
-import Helper from 'containers/help/helper';
+import INFO_SVG from '@/svgs/ui/info.svg?sprite';
+import Helper from '@/containers/help/helper';
 import { HELPER_POSITION } from './constants';
 import { useRecoilValue } from 'recoil';
-import { activeGuideAtom } from 'store/guide';
-import { trackEvent } from 'lib/analytics/ga';
+import { activeGuideAtom } from '@/store/guide';
+import { trackEvent } from '@/lib/analytics/ga';
 import { ca } from 'date-fns/locale';
 
 const Info = ({ id, content }) => {
@@ -42,7 +42,7 @@ const Info = ({ id, content }) => {
         message="Click to find background information about a widget or map layer, including an overview, date of publication, authors, license, and associated publications."
       >
         <DialogTrigger disabled={isHelpGuideActive} className="flex h-full items-center">
-          <Icon icon={INFO_SVG} className="h-7.5 w-7.5 text-brand-800" description="Info" />
+          <Icon icon={INFO_SVG} className="text-brand-800 h-7.5 w-7.5" description="Info" />
         </DialogTrigger>
       </Helper>
       <DialogContent className="w-screen md:mb-20 md:w-auto">

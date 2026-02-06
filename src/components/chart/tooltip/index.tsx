@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 type TooltipProps = {
   payload: {
     payload: {
@@ -22,7 +22,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
 
   const { settings, direction, label } = payload?.[0]?.payload;
   return (
-    <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
+    <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       {label && <p className="flex justify-center">{label}</p>}
       {settings?.map(({ label, valueFormatted, value, unit, color, variant }) => (
         <div key={label} className="flex flex-col">
@@ -44,7 +44,7 @@ const Tooltip: React.FC = ({ active, payload }: TooltipProps) => {
               )}
               {<span className="text-xs font-bold">{label}</span>}
             </span>
-            <span className="whitespace-nowrap text-xs">
+            <span className="text-xs whitespace-nowrap">
               {' '}
               {valueFormatted || value} {unit}
             </span>

@@ -5,21 +5,21 @@ import { useRouter } from 'next/router';
 import {
   RestorationSitesFiltersApplication,
   RestorationSitesMapFilters,
-} from 'store/widgets/restoration-sites';
+} from '@/store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
 import type { Data, DataFilters, DataResponse } from './types';
-import { sortObject } from 'lib/utils';
+import { sortObject } from '@/lib/utils';
 
 // widget data
 export function useMangroveRestorationSites(
