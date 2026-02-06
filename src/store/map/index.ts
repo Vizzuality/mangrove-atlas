@@ -5,7 +5,7 @@ import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 import type { LngLat } from 'mapbox-gl';
 
-import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
 export const basemapAtom = atom<BasemapId>({
   key: 'basemap',

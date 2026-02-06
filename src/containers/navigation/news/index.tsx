@@ -1,4 +1,4 @@
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 
 import { useLocalStorage } from 'usehooks-ts';
 
@@ -6,16 +6,16 @@ import { useRecoilValue } from 'recoil';
 
 import { useBlogPosts } from 'hooks/blog';
 
-import Helper from 'containers/help/helper';
-import BlogContent from 'containers/news/content';
+import Helper from '@/containers/help/helper';
+import BlogContent from '@/containers/news/content';
 
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from 'components/ui/dialog';
-import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import NEWS_SVG from 'svgs/tools-bar/news.svg?sprite';
-import { trackEvent } from 'lib/analytics/ga';
+import NEWS_SVG from '@/svgs/tools-bar/news.svg?sprite';
+import { trackEvent } from '@/lib/analytics/ga';
 import { HiX } from 'react-icons/hi';
 import { useEffect } from 'react';
 
@@ -27,7 +27,7 @@ const NewsTooltip = ({ handleClose }) => (
           type="button"
           data-testid="news-button"
           aria-label="Open news and updates"
-          className="flex h-full items-center rounded px-2 outline-none transition"
+          className="flex h-full items-center rounded px-2 transition outline-none"
         >
           <Helper
             className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}
@@ -48,7 +48,7 @@ const NewsTooltip = ({ handleClose }) => (
       <div className="max-w-xs space-y-1 sm:max-w-[280px]">
         <div className="flex items-center justify-between space-x-2 font-bold">
           <span className="text-xs uppercase">Tool updated!</span>
-          <HiX className="absolute right-2 top-2 h-4 w-4 font-extrabold" onClick={handleClose} />
+          <HiX className="absolute top-2 right-2 h-4 w-4 font-extrabold" onClick={handleClose} />
         </div>
         <p className="text-sm">
           A new version is live. See what’s been improved and discover the new features added to the
@@ -65,7 +65,7 @@ const DialogNewsTrigger = (
       type="button"
       data-testid="news-button"
       aria-label="Open news and updates"
-      className="flex h-full items-center rounded px-2 outline-none transition"
+      className="flex h-full items-center rounded px-2 transition outline-none"
     >
       <Helper
         className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}

@@ -1,4 +1,4 @@
-import WidgetControls from 'components/widget-controls';
+import WidgetControls from '@/components/widget-controls';
 
 export type ResourceTypes = {
   name: string;

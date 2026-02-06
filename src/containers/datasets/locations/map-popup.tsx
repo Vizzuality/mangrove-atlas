@@ -2,18 +2,18 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { locationBoundsAtom } from 'store/map';
+import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
 import type { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
-import { useLocations } from 'containers/datasets/locations/hooks';
+import { useLocations } from '@/containers/datasets/locations/hooks';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 import { ca } from 'date-fns/locale';
 
 const LocationPopUP = ({
@@ -118,10 +118,10 @@ const LocationPopUP = ({
             onClick={handleClickLocation}
             className="grid w-full grid-cols-10 gap-4"
           >
-            <span className="col-span-7 text-left text-sm font-semibold text-brand-800">
+            <span className="text-brand-800 col-span-7 text-left text-sm font-semibold">
               {name}
             </span>
-            <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+            <span className="text-xxs col-span-3 text-left leading-5 font-light text-black/85 uppercase">
               {type}
             </span>
           </button>
@@ -135,9 +135,9 @@ const LocationPopUP = ({
               onClick={() => handleClickProtectedArea(index)}
             >
               <div className="col-span-7 flex flex-col text-left">
-                <span className="text-sm font-semibold text-brand-800">{NAME}</span>
+                <span className="text-brand-800 text-sm font-semibold">{NAME}</span>
               </div>
-              <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+              <span className="text-xxs col-span-3 text-left leading-5 font-light text-black/85 uppercase">
                 Protected area
               </span>
             </button>

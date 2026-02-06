@@ -1,6 +1,6 @@
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import { WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import FisheriesChart from './chart';

@@ -1,14 +1,14 @@
-import cn from 'lib/classnames';
-import { formatAxis } from 'lib/format';
+import cn from '@/lib/classnames';
+import { formatAxis } from '@/lib/format';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import BIVALVE_SVG from 'svgs/fisheries/bivalve.svg';
-import CRAB_SVG from 'svgs/fisheries/crab.svg?sprite';
-import FISH_SVG from 'svgs/fisheries/fish.svg?sprite';
-import SHRIMP_SVG from 'svgs/fisheries/shrimp.svg?sprite';
+import BIVALVE_SVG from '@/svgs/fisheries/bivalve.svg';
+import CRAB_SVG from '@/svgs/fisheries/crab.svg?sprite';
+import FISH_SVG from '@/svgs/fisheries/fish.svg?sprite';
+import SHRIMP_SVG from '@/svgs/fisheries/shrimp.svg?sprite';
 
 import { useMangroveEcosystemServices } from './hooks';
 
@@ -47,7 +47,7 @@ const PotentialBenefitsToFisheries = () => {
                   className={cn({
                     'box-content h-8 w-8 justify-center rounded-md p-1': true,
                     'bg-blue-400 text-white opacity-100': !!value,
-                    'bg-grey-400 bg-opacity-15 text-gray-400 text-opacity-80': !value,
+                    'bg-grey-400 bg-opacity-15 text-opacity-80 text-gray-400': !value,
                   })}
                 >
                   <Icon

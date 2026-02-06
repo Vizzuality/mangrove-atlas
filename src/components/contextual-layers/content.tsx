@@ -1,6 +1,6 @@
 import { ReactElement, useMemo } from 'react';
-import DateSelect from 'components/planet-date-select';
-import { activeLayersAtom } from 'store/layers';
+import DateSelect from '@/components/planet-date-select';
+import { activeLayersAtom } from '@/store/layers';
 import { useRecoilValue } from 'recoil';
 
 const Content = ({
@@ -20,7 +20,7 @@ const Content = ({
   return (
     <div className="space-y-2">
       <div className="flex flex-col space-y-1">
-        <span className="w-fit rounded-[4px] bg-brand-800 px-2 text-xs font-bold uppercase tracking-wider text-white">
+        <span className="bg-brand-800 w-fit rounded-[4px] px-2 text-xs font-bold tracking-wider text-white uppercase">
           Map tip
         </span>
         <p className="text-sm font-light">{description}</p>

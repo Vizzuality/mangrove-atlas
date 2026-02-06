@@ -2,15 +2,15 @@ import { useCallback, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { SpeciesLocationState } from 'store/widgets/species-location';
+import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import { LocationTypes } from 'containers/datasets/locations/types';
-import { getLayerActive } from 'containers/widget/selector';
-import NoData from 'containers/widgets/no-data';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import { LocationTypes } from '@/containers/datasets/locations/types';
+import { getLayerActive } from '@/containers/widget/selector';
+import NoData from '@/containers/widgets/no-data';
 
 import {
   Command,
@@ -19,15 +19,15 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from 'components/ui/command';
-import Loading from 'components/ui/loading';
-import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
-import type { RadioOption } from 'components/ui/radio-group/types';
-import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+} from '@/components/ui/command';
+import Loading from '@/components/ui/loading';
+import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
+import type { RadioOption } from '@/components/ui/radio-group/types';
+import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from '@/styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const SpeciesLocation = () => {
   const {
@@ -100,14 +100,14 @@ const SpeciesLocation = () => {
 
           {isLayerActive && specieSelected && (
             <div className="mb-8 flex items-center space-x-2">
-              <div className="my-0.5 mr-2.5 h-4 w-2 rounded-md border border-brand-800 bg-[url('/images/species-location/small-pattern.svg')] bg-center text-sm" />
+              <div className="border-brand-800 my-0.5 mr-2.5 h-4 w-2 rounded-md border bg-[url(/images/species-location/small-pattern.svg')] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
                 Countries where the species is located
               </span>
             </div>
           )}
 
-          <div className="h-1 border-b border-dashed border-brand-400 border-opacity-50" />
+          <div className="border-brand-400 border-opacity-50 h-1 border-b border-dashed" />
           {location !== 'worldwide' && (
             <p>
               Species list is filtered by <span className="font-bold">{location}</span>
@@ -117,12 +117,12 @@ const SpeciesLocation = () => {
             <div className="w-full pt-6">
               <CommandInput
                 placeholder="Search species..."
-                className="w-full rounded-3xl border-brand-400 text-sm placeholder:text-sm placeholder:text-black/85"
+                className="border-brand-400 w-full rounded-3xl text-sm placeholder:text-sm placeholder:text-black/85"
               />
             </div>
             <CommandList className="relative mt-2">
               <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup className="before:content after:content relative before:pointer-events-none before:absolute before:top-0 before:left-0 before:right-4 before:z-10 before:h-5 before:w-full before:bg-gradient-to-b before:from-white after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-gradient-to-t after:from-white">
+              <CommandGroup className="before:content after:content relative before:pointer-events-none before:absolute before:top-0 before:right-4 before:left-0 before:z-10 before:h-5 before:w-full before:bg-linear-to-b before:from-white after:pointer-events-none after:absolute after:bottom-3 after:left-0 after:h-5 after:w-full after:bg-linear-to-t after:from-white">
                 <RadioGroup.Root
                   aria-label="Species"
                   className="space-y mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2"

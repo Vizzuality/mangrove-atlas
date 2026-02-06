@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import * as SwitchRadix from '@radix-ui/react-switch';
 
@@ -38,7 +38,7 @@ const SwitchRoot = ({
     role="button"
     aria-label="Toggle component"
     className={cn({
-      'relative h-7.5 w-12 cursor-pointer rounded-full border-2 border-brand-800 border-opacity-20 bg-transparent outline-none data-[state=checked]:bg-brand-800':
+      'border-brand-800 border-opacity-20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none':
         true,
       [className]: !!className,
       [SIZE['root'][size]]: true,
@@ -56,14 +56,14 @@ const SwitchThumb = ({
 }: SwitchThumbProps & { size?: 'sm' | 'md' }) => (
   <SwitchRadix.Thumb
     className={cn({
-      'duration-400 block h-5 w-5 translate-x-[3px] rounded-full bg-brand-800 text-white transition-transform will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white data-[state=checked]:text-brand-800':
+      'bg-brand-800 data-[state=checked]:text-brand-800 block h-5 w-5 translate-x-[3px] rounded-full text-white transition-transform duration-400 will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white':
         true,
       [className]: !!className,
       [SIZE['thumb'][size]]: true,
     })}
   >
     {icon && (
-      <div className="leading-0 flex h-5 items-center justify-center text-sm font-bold">?</div>
+      <div className="flex h-5 items-center justify-center text-sm leading-0 font-bold">?</div>
     )}
   </SwitchRadix.Thumb>
 );

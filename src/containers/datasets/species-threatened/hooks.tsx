@@ -7,8 +7,8 @@ import { useRouter } from 'next/router';
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 

@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import {
   BarChart,
@@ -11,7 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 
-import type { FloodProtectionPeriodId } from 'containers/datasets/flood-protection/types';
+import type { FloodProtectionPeriodId } from '@/containers/datasets/flood-protection/types';
 
 import { Data, Config } from '../types';
 

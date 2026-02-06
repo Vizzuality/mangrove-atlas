@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import WIDGETS from 'containers/widgets/constants';
+import WIDGETS from '@/containers/widgets/constants';
 
 import { WidgetTypes } from 'types/widget';
 

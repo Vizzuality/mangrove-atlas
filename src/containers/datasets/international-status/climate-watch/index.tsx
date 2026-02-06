@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import { LocationTypes } from '@/containers/datasets/locations/types';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import {
@@ -114,14 +114,14 @@ const ClimateWatchNationalDashboard = () => {
       {isFetched && isFetchedNDCSContentOverview && data && NDCSContentOverview && (
         <>
           <div className="relative">
-            <div className="absolute -left-8 -right-8 h-px bg-brand-800 bg-opacity-30" />
+            <div className="bg-brand-800 bg-opacity-30 absolute -right-8 -left-8 h-px" />
           </div>
           <div className="flex justify-between py-4">
             <a
               target="_blank"
               rel="noopener noreferrer"
               href={`https://www.climatewatchdata.org/ndcs/country/${iso}`}
-              className="font-bold underline hover:text-brand-800"
+              className="hover:text-brand-800 font-bold underline"
             >
               NDC {name}
             </a>

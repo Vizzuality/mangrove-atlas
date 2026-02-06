@@ -2,7 +2,7 @@ import { array, string } from '@recoiljs/refine';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
-import widgets from 'containers/widgets/constants';
+import widgets from '@/containers/widgets/constants';
 
 import type { Category } from 'types/category';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';

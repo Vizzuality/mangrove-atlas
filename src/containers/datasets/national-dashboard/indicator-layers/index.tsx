@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 import { updateLayers } from 'hooks/layers';
 import type { ActiveLayers } from 'types/layers';
 
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
-import WidgetControls from 'components/widget-controls';
-import { trackEvent } from 'lib/analytics/ga';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
+import WidgetControls from '@/components/widget-controls';
+import { trackEvent } from '@/lib/analytics/ga';
 
 import IndicatorExtent from './extent';
 import IndicatorSource from './source';

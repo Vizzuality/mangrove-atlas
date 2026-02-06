@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -14,13 +14,13 @@ import {
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
-import { trackEvent } from 'lib/analytics/ga';
-import { widgets } from 'containers/widgets/constants';
-import ContextualLayersWrapper from 'containers/widget/contextual-layers';
+import { trackEvent } from '@/lib/analytics/ga';
+import { widgets } from '@/containers/widgets/constants';
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');

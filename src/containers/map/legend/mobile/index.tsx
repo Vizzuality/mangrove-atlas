@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilValue } from 'recoil';
 
@@ -35,12 +35,12 @@ const Legend = () => {
           <button
             onClick={openLegend}
             className={cn({
-              'flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-3xl bg-white py-2 px-10 shadow-control':
+              'shadow-control flex h-11 w-[360px] cursor-pointer items-center justify-between rounded-3xl bg-white px-10 py-2':
                 true,
               hidden: isOpen,
             })}
           >
-            <p className="opacity-85 whitespace-nowrap text-xs font-bold uppercase text-black/85">
+            <p className="text-xs font-bold whitespace-nowrap text-black/85 uppercase opacity-85">
               Show legend
             </p>
 
@@ -56,9 +56,9 @@ const Legend = () => {
               transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
               className="fixed md:right-[73px]"
             >
-              <div className="w-[360px] gap-4 rounded-3xl border bg-white shadow-medium animate-in duration-300 data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16">
-                <div className="divide-black/42 box-content flex max-h-[70vh] flex-col space-y-1 divide-y overflow-y-auto pt-4 md:px-4 md:print:hidden">
-                  <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
+              <div className="shadow-medium animate-in data-[state=open]:fade-in-60 data-[state=close]:slide-in-from-bottom-0 data-[state=open]:slide-in-from-bottom-16 w-[360px] gap-4 rounded-3xl border bg-white duration-300">
+                <div className="box-content flex max-h-[70vh] flex-col space-y-1 divide-y divide-black/42 overflow-y-auto pt-4 md:px-4 md:print:hidden">
+                  <div className="box-content flex flex-col space-y-1 divide-y divide-black/42 overflow-y-auto px-4 pt-4 md:max-h-[55vh] print:hidden">
                     {activeLayers?.map((l) => {
                       return <LegendItem id={l.id} key={l.id} l={l} />;
                     })}

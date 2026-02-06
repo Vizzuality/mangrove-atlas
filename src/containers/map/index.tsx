@@ -4,9 +4,9 @@ import { Marker, useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { activeGuideAtom } from 'store/guide';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { activeGuideAtom } from '@/store/guide';
 import {
   basemapAtom,
   interactiveLayerIdsAtom,
@@ -15,8 +15,8 @@ import {
   coordinatesAtom,
   URLboundsAtom,
   mapDraggableTooltipDimensionsAtom,
-} from 'store/map';
-import { printModeState } from 'store/print-mode';
+} from '@/store/map';
+import { printModeState } from '@/store/print-mode';
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
@@ -26,29 +26,29 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
 
-import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
+import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
 // POPUPS
-import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
+import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
 
-import { LABELS } from 'containers/datasets/restoration-sites/constants';
-import Helper from 'containers/help/helper';
-import DeleteDrawingButton from 'containers/map/delete-drawing-button';
-import Legend from 'containers/map/legend';
-import MobileLegend from 'containers/map/legend/mobile';
+import { LABELS } from '@/containers/datasets/restoration-sites/constants';
+import Helper from '@/containers/help/helper';
+import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
+import Legend from '@/containers/map/legend';
+import MobileLegend from '@/containers/map/legend/mobile';
 
-import Map from 'components/map';
-import Controls from 'components/map/controls';
-import BasemapSettingsControl from 'components/map/controls/basemap-settings';
-import FullScreenControl from 'components/map/controls/fullscreen';
-import PitchReset from 'components/map/controls/pitch-reset';
-import ShareControl from 'components/map/controls/share';
-import ZoomControl from 'components/map/controls/zoom';
-import DrawControl from 'components/map/drawing-tool';
-import { CustomMapProps } from 'components/map/types';
-import { Media } from 'components/media-query';
-import { breakpoints } from 'styles/styles.config';
+import Map from '@/components/map';
+import Controls from '@/components/map/controls';
+import BasemapSettingsControl from '@/components/map/controls/basemap-settings';
+import FullScreenControl from '@/components/map/controls/fullscreen';
+import PitchReset from '@/components/map/controls/pitch-reset';
+import ShareControl from '@/components/map/controls/share';
+import ZoomControl from '@/components/map/controls/zoom';
+import DrawControl from '@/components/map/drawing-tool';
+import { CustomMapProps } from '@/components/map/types';
+import { Media } from '@/components/media-query';
+import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
-import { mapDraggableTooltipPositionAtom } from 'store/map';
+import { mapDraggableTooltipPositionAtom } from '@/store/map';
 import LayerManager from './layer-manager';
 import Image from 'next/image';
 
@@ -533,12 +533,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   onSetCustomPolygon={handleCustomPolygon}
                 />
               )}
-              <Controls className="absolute bottom-9 right-5 hidden items-center print:hidden md:block">
+              <Controls className="absolute right-5 bottom-9 hidden items-center md:block print:hidden">
                 <div className="flex flex-col space-y-2 pt-1">
                   {(customGeojson || uploadedGeojson) && <DeleteDrawingButton />}
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -548,7 +548,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -565,7 +565,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
@@ -575,13 +575,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                   </Helper>
                   <Helper
                     className={{
-                      button: 'top-1 left-8 z-[20]',
+                      button: 'top-1 left-8 z-20',
                       tooltip: 'w-80',
                     }}
                     tooltipPosition={{ top: 0, left: 330 }}
                     message="Use the + icon to zoom into the map and the – button to zoom out of the map"
                   >
-                    <div className="border-box flex flex-col overflow-hidden rounded-3xl shadow-control">
+                    <div className="border-box shadow-control flex flex-col overflow-hidden rounded-3xl">
                       <ZoomControl mapId={mapId} />
                       {pitch !== 0 && <PitchReset mapId={mapId} />}
                     </div>
@@ -620,7 +620,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               </div>
             </Media>
             <Media greaterThanOrEqual="md">
-              <div className="absolute bottom-9 right-18 z-50 mr-0.5">
+              <div className="absolute right-18 bottom-9 z-50 mr-0.5">
                 <Legend />
               </div>
             </Media>

@@ -1,8 +1,8 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import NoData from './no-data';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import { useNationalDashboard } from './hooks';
@@ -38,7 +38,7 @@ const NationalDashboard = () => {
           )}
           {!!data?.data?.mangrove_breakthrough_committed && (
             <>
-              <div className="absolute left-4 right-4 h-0.5 bg-brand-800/30" />
+              <div className="bg-brand-800/30 absolute right-4 left-4 h-0.5" />
 
               <MangroveBreakthrough
                 location={location.name}

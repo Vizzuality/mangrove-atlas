@@ -3,24 +3,24 @@ import { useCallback, useState, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilState } from 'recoil';
 
-import { LocationTypes } from 'containers/datasets/locations/types';
-import { NATIONAL_DASHBOARD_LOCATIONS } from 'containers/layers/constants';
-import { widgets } from 'containers/widgets/constants';
+import { LocationTypes } from '@/containers/datasets/locations/types';
+import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
+import { widgets } from '@/containers/widgets/constants';
 
-import SortableList from 'components/map/legend/sortable/list';
+import SortableList from '@/components/map/legend/sortable/list';
 import { ActiveLayers } from 'types/layers';
 import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -105,12 +105,12 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
             onClick={openLegend}
             data-testid="show-legend-button"
             className={cn({
-              'flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl bg-white py-2 px-5 shadow-control':
+              'shadow-control flex h-11 cursor-pointer items-center justify-center space-x-2 rounded-3xl bg-white px-5 py-2':
                 true,
               hidden: isOpen,
             })}
           >
-            <p className="opacity-85 whitespace-nowrap text-xs font-bold uppercase text-black/85">
+            <p className="text-xs font-bold whitespace-nowrap text-black/85 uppercase opacity-85">
               Show legend
             </p>
 
@@ -124,10 +124,10 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 animate={{ opacity: 1, bottom: 36 }}
                 exit={{ opacity: 0, bottom: -200 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-                className="fixed w-[360px] gap-4 rounded-3xl bg-white shadow-card md:right-[75px]"
+                className="shadow-card fixed w-[360px] gap-4 rounded-3xl bg-white md:right-[75px]"
                 data-testid="legend-content"
               >
-                <div className="divide-black/42 box-content flex flex-col space-y-1 divide-y overflow-y-auto px-4 pt-4 print:hidden md:max-h-[55vh]">
+                <div className="box-content flex flex-col space-y-1 divide-y divide-gray-200 overflow-y-auto px-4 pt-4 md:max-h-[55vh] print:hidden">
                   <SortableList
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
