@@ -2,16 +2,34 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "styles/*": ["src/styles/*"],
-      "hooks/*": ["src/hooks/*"],
-      "services/*": ["src/services/*"],
-      "components/*": ["src/components/*"],
-      "utils/*": ["src/utils/*"],
-      "types/*": ["src/types/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "styles/*": [
+        "src/styles/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
+      ],
+      "services/*": [
+        "src/services/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "types/*": [
+        "src/types/*"
+      ]
     },
     "target": "ES6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -25,6 +43,16 @@
     "incremental": true,
     "jsx": "react-jsx"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.d.ts", "tailwind.config.cjs"],
-  "exclude": ["node_modules", ".storybook", "cloud-functions"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    "tailwind.config.cjs"
+  ],
+  "exclude": [
+    "node_modules",
+    ".storybook",
+    "cloud-functions"
+  ]
 }
