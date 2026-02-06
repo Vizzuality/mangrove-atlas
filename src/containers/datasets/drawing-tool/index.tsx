@@ -1,19 +1,19 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { mapCursorAtom } from 'store/map';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { mapCursorAtom } from '@/store/map';
 
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import Helper from 'containers/help/helper';
-import DeleteDrawingButton from 'containers/map/delete-drawing-button';
+import Helper from '@/containers/help/helper';
+import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import AREA_SVG from 'svgs/sidebar/area.svg?sprite';
-import { trackEvent } from 'lib/analytics/ga';
+import AREA_SVG from '@/svgs/sidebar/area.svg?sprite';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
@@ -46,7 +46,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   return (
     <Helper
       className={{
-        button: 'right-1.5 -top-1 z-[20]',
+        button: '-top-1 right-1.5 z-20',
         tooltip: 'w-fit max-w-[400px]',
       }}
       tooltipPosition={{ top: -65, left: -10 }}
@@ -81,7 +81,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
           className={cn({
             // Minimum width is customized to prevent layout shifts in the menu when the text changes.
             // It's based on the width of the longest possible label
-            'min-w-[75.05px] whitespace-nowrap font-sans text-sm text-white': true,
+            'min-w-[75.05px] font-sans text-sm whitespace-nowrap text-white': true,
             'text-brand-800': isDrawingToolEnabled && !uploadedGeojson,
           })}
         >

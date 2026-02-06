@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from 'store/map';
+import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from '@/store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
@@ -13,13 +13,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 
-import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
-import LayerManager from 'containers/map/layer-manager';
-import Legend from 'containers/map/legend';
+import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
+import LayerManager from '@/containers/map/layer-manager';
+import Legend from '@/containers/map/legend';
 
-import Map from 'components/map';
-import { CustomMapProps } from 'components/map/types';
-import { breakpoints } from 'styles/styles.config';
+import Map from '@/components/map';
+import { CustomMapProps } from '@/components/map/types';
+import { breakpoints } from '@/styles/styles.config';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -120,7 +120,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
       >
         {() => <LayerManager />}
       </Map>
-      <div className="absolute bottom-11 right-6 z-50 mr-0.5">
+      <div className="absolute right-6 bottom-11 z-50 mr-0.5">
         <Legend embedded />
       </div>
     </div>

@@ -1,6 +1,29 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "styles/*": [
+        "src/styles/*"
+      ],
+      "hooks/*": [
+        "src/hooks/*"
+      ],
+      "services/*": [
+        "src/services/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "types/*": [
+        "src/types/*"
+      ]
+    },
     "target": "ES6",
     "lib": [
       "dom",
@@ -18,13 +41,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "incremental": true,
-    "jsx": "preserve"
+    "jsx": "react-jsx"
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "tailwind.config.cjs"
   ],
   "exclude": [
     "node_modules",

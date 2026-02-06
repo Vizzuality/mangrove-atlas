@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 class SVGBrush extends PureComponent {
   static defaultProps = {
@@ -35,10 +35,8 @@ class SVGBrush extends PureComponent {
 
   static getDerivedStateFromProps = (props, state) => ({
     ...state,
-    selection:
-      props.selection === undefined ? state.selection : props.selection,
+    selection: props.selection === undefined ? state.selection : props.selection,
   });
-
 
   constructor(props) {
     super(props);
@@ -306,9 +304,9 @@ class SVGBrush extends PureComponent {
           <polygon
             points="0.5,-5 0.5,5 6,-5"
             style={{
-              fill:'rgba(0,0,0,0.85)',
+              fill: 'rgba(0,0,0,0.85)',
               stroke: 'rgba(0,0,0,0.85)',
-              strokeWidth: 1
+              strokeWidth: 1,
             }}
           />
         </motion.g>
@@ -390,9 +388,9 @@ class SVGBrush extends PureComponent {
           <polygon
             points="-5,-5 0.5,5 0.5,-5"
             style={{
-              fill:'rgba(0,0,0,0.85)',
+              fill: 'rgba(0,0,0,0.85)',
               stroke: 'rgba(0,0,0,0.85)',
-              strokeWidth: 1
+              strokeWidth: 1,
             }}
           />
         </motion.g>

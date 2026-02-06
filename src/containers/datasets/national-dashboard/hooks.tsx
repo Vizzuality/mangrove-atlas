@@ -8,8 +8,8 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 import type { Visibility } from 'mapbox-gl';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 

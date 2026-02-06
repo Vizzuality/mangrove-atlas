@@ -1,5 +1,5 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
-import { trackEvent } from 'lib/analytics/ga';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { trackEvent } from '@/lib/analytics/ga';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import PopupRestorationSitesItem from './item';
@@ -18,7 +18,7 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
 
   return (
     <Collapsible
-      className="flex min-w-[90vw] flex-col sm:min-w-[470px] sm:max-w-[calc(100vw-520px)]"
+      className="flex min-w-[90vw] flex-col sm:max-w-[calc(100vw-520px)] sm:min-w-[470px]"
       onOpenChange={handleAnalytics}
     >
       <CollapsibleTrigger iconType="plus-minus">

@@ -62,7 +62,7 @@ const alertsJob = async (
   // First try to get data from cache in order to reduce costs
   const cacheKey = `_${startDate}_${endDate}`;
   if (cache[cacheKey]) {
-    console.log(`Rensponse from cache ${cacheKey}`);
+    console.log(`Response from cache ${cacheKey}`);
     return cache[cacheKey];
   }
   const options = {
@@ -73,7 +73,7 @@ const alertsJob = async (
 
   // Run the query as a job
   const [job] = await bigquery.createQueryJob(options);
-  console.log(`Job ${job.id} started.`);
+  console.info(`Job ${job.id} started.`);
 
   // Wait for the query to finish
   const [rows] = await job.getQueryResults();

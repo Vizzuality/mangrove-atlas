@@ -1,9 +1,9 @@
-import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
+import cn from '@/lib/classnames';
+import { numberFormat } from '@/lib/format';
 
 import { TreemapNode } from 'recharts/types/util/types';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -99,7 +99,7 @@ const LossWidget = () => {
           </p>
           <LossChart config={config} legend={config.legend} />
           {!isFetching && (
-            <div className="absolute bottom-4 -left-10 -right-10 border-2 border-b border-brand-800/30" />
+            <div className="border-brand-800/30 absolute -right-10 bottom-4 -left-10 border-2 border-b" />
           )}
         </div>
       )}

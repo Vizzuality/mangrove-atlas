@@ -1,4 +1,4 @@
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 import type { Visibility } from 'mapbox-gl';
 
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';

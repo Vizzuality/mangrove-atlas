@@ -1,4 +1,4 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from '@/layouts/mdx';
 
 # Salt Marsh
 
@@ -6,13 +6,8 @@ import LayoutMdx from 'layouts/mdx';
 
 ## Date of content:
 
-
-
 ## License:
 
+export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;
 
-export default ({ children, ...props }) => (
-  <LayoutMdx {...props}>
-    {children}
-  </LayoutMdx>
-);
+;

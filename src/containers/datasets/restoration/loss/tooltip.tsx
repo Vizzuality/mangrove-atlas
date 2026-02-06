@@ -1,4 +1,4 @@
-import { formatNumberNearestInteger } from 'lib/format';
+import { formatNumberNearestInteger } from '@/lib/format';
 const CustomTooltip = (data) => {
   const { payload } = data;
   if (!payload.length) return null;
