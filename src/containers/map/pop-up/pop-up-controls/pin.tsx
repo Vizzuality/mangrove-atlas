@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
 
@@ -16,9 +16,9 @@ const MapPopupPin = ({ handleClickToDocker = () => {}, isPinned }: MapPopupPinPr
         onClick={handleClickToDocker}
       >
         {isPinned ? (
-          <BsPinAngleFill className="h-5 w-5 font-bold text-brand-800" />
+          <BsPinAngleFill className="text-brand-800 h-5 w-5 font-bold" />
         ) : (
-          <BsPinAngle className="h-5 w-5 font-bold text-brand-800" />
+          <BsPinAngle className="text-brand-800 h-5 w-5 font-bold" />
         )}
       </button>
     </TooltipTrigger>

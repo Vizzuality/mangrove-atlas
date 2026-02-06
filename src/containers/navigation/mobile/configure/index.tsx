@@ -1,5 +1,5 @@
-import Category from 'containers/categories-menu';
-import WidgetsMenu from 'containers/widgets/widgets-menu';
+import Category from '@/containers/categories-menu';
+import WidgetsMenu from '@/containers/widgets/widgets-menu';
 
 import {
   Dialog,
@@ -7,10 +7,10 @@ import {
   DialogTrigger,
   DialogClose,
   DialogTitle,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import CONFIGS_SVG from 'svgs/sidebar/configure.svg?sprite';
+import CONFIGS_SVG from '@/svgs/sidebar/configure.svg?sprite';
 
 const ConfigureWidgets = () => {
   return (
@@ -25,12 +25,12 @@ const ConfigureWidgets = () => {
             className="h-8 w-8 fill-white text-white"
             description="Widgets deck"
           />
-          <span className="leading-2 font-sans text-xxs text-white">Configure</span>
+          <span className="text-xxs font-sans leading-2 text-white">Configure</span>
         </div>
       </DialogTrigger>
-      <DialogContent className="left-0 top-0 min-h-screen w-screen space-y-8 rounded-none">
+      <DialogContent className="top-0 left-0 min-h-screen w-screen space-y-8 rounded-none">
         <div className="no-scrollbar space-y-8 overflow-y-auto">
-          <DialogTitle className="font-black/85 text-3xl font-light leading-10">
+          <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
             Widgets deck settings
           </DialogTitle>
 

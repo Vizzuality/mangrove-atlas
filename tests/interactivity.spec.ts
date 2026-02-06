@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import WIDGETS from 'containers/widgets/constants';
+import WIDGETS from '@/containers/widgets/constants';
 
 const DEFAULT_LOCATION = 'worldwide';
 const DEFAULT_CATEGORY = 'distribution_and_change';

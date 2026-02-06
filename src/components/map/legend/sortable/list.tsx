@@ -26,7 +26,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import { SortableListProps } from 'components/map/legend/types';
+import { SortableListProps } from '@/components/map/legend/types';
 
 import SortableItem from './item';
 
@@ -130,7 +130,7 @@ export const SortableList: React.FC<SortableListProps> = ({
 
       <DragOverlay>
         {isValidElement(ActiveItem) && (
-          <div className="flex max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48)_-_theme(space.40))] flex-col overflow-hidden">
+          <div className="flex max-h-[calc(100vh-theme(space.16)-theme(space.6)-theme(space.48)-theme(space.40))] flex-col overflow-hidden">
             {cloneElement(ActiveItem as ReactElement, {
               sortable,
             })}

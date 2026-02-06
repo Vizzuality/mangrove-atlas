@@ -1,4 +1,4 @@
-import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
+import { DOWNLOAD, INFO, LAYERS } from '@/containers/datasets';
 
 import type { WidgetSlugType } from 'types/widget';
 

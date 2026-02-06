@@ -1,5 +1,5 @@
-import { activeLayersAtom } from 'store/layers';
-import { activeWidgetsAtom } from 'store/widgets';
+import { activeLayersAtom } from '@/store/layers';
+import { activeWidgetsAtom } from '@/store/widgets';
 
 import { selectorFamily } from 'recoil';
 

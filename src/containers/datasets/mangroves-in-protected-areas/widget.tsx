@@ -1,13 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import SuggestedLayers from 'components/suggested-layers';
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -15,16 +14,23 @@ import {
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
-import { trackEvent } from 'lib/analytics/ga';
-import { ca } from 'date-fns/locale';
+import { trackEvent } from '@/lib/analytics/ga';
+import { widgets } from '@/containers/widgets/constants';
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');
   const { data, isFetched, isFetching } = useMangrovesInProtectedAreas({ unit: selectedUnit });
+
+  const widgetInfo = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_protection'),
+    [widgets]
+  );
+  const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
 
   if (isFetched && !Object.keys(data || {}).length) return <NoData />;
 
@@ -120,6 +126,13 @@ const MangrovesInProtectedAreas = () => {
               </PopoverContent>
             </Popover>
           </p>
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_protection"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
+            />
+          </div>
           <MangrovesInProtectedAreasChart config={data.config} legend={data.legend} />
           <p className="text-sm italic">
             Note: This represents the proportion of mangroves known to occur within protected areas.
@@ -127,13 +140,6 @@ const MangrovesInProtectedAreas = () => {
           </p>
         </div>
       )}
-      <SuggestedLayers
-        origin="mangrove_protected_areas"
-        thumbSource="/images/thumbs/contextual/mangrove_protected_areas.png"
-        name="WDPA"
-        id="mangrove_protected_areas"
-        description="We recommend you to use WDPA..."
-      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 const PopupRestorationSitesItemTitle = ({
   title,
@@ -10,7 +10,7 @@ const PopupRestorationSitesItemTitle = ({
   return (
     <span
       className={cn({
-        'text-left text-sm font-semibold text-brand-800': true,
+        'text-brand-800 text-left text-sm font-semibold': true,
         'text-gray-400': disabled,
       })}
     >

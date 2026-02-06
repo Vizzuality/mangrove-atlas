@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { isEmpty } from 'lodash-es';
 import { useRecoilState } from 'recoil';
@@ -10,13 +10,13 @@ import { useRecoilState } from 'recoil';
 import type {
   FloodProtectionIndicatorId,
   FloodProtectionPeriodId,
-} from 'containers/datasets/flood-protection/types';
-// import NoData from 'containers/widgets/no-data';
+} from '@/containers/datasets/flood-protection/types';
+// import NoData from '@/containers/widgets/no-data';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_STYLES,
@@ -26,14 +26,14 @@ import {
 import type { ActiveLayers } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
-import TRIANGLE_SVG from 'svgs/ui/triangle.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
+import TRIANGLE_SVG from '@/svgs/ui/triangle.svg?sprite';
 
 import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
 import { useMangrovesFloodProtection } from './hooks';
 import type { ChartData, Config } from './types';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const FloodProtection = ({
   indicator,

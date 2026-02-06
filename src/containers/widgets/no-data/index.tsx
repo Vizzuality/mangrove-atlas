@@ -1,6 +1,6 @@
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import NO_DATA_SVG from 'svgs/ui/no-data.svg?sprite';
+import NO_DATA_SVG from '@/svgs/ui/no-data.svg?sprite';
 
 const NoData = () => {
   return (

@@ -2,23 +2,23 @@ import { useMemo } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { basemapAtom } from 'store/map';
-import { basemapContextualAtom } from 'store/map-settings';
+import { basemapAtom } from '@/store/map';
+import { basemapContextualAtom } from '@/store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
-import { INFO } from 'containers/datasets';
-import type { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import { INFO } from '@/containers/datasets';
+import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import Icon from 'components/ui/icon';
-import Info from 'components/widget-controls/info';
+import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
+import Icon from '@/components/ui/icon';
+import Info from '@/components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
-import CHECK_SVG from 'svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
 
 const THUMBS = {
   light: 'images/thumbs/analytic.png',
@@ -63,10 +63,10 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
     }
   };
   return (
-    <div className="flex flex-1 flex-col border-b-2 border-dashed border-b-brand-800 border-opacity-50 last-of-type:border-none">
+    <div className="border-b-brand-800 border-opacity-50 flex flex-1 flex-col border-b-2 border-dashed last-of-type:border-none">
       <div className="flex w-full items-center justify-between">
         {name && (
-          <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold uppercase -tracking-tighter text-black/85">
+          <h2 className="flex-1 cursor-pointer py-1 text-xs font-bold -tracking-tighter text-black/85 uppercase">
             {name}
           </h2>
         )}
@@ -85,11 +85,11 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
             'border-brand-800': isActive,
           })}
         >
-          <Image src={THUMBS[id]} alt={name} fill className="rounded-lg shadow-soft" />
+          <Image src={THUMBS[id]} alt={name} fill className="shadow-soft rounded-lg" />
 
           <Checkbox
             className={cn({
-              'absolute bottom-2 right-2 h-6 w-6 rounded-full border-none': true,
+              'absolute right-2 bottom-2 h-6 w-6 rounded-full border-none': true,
             })}
             checked={isActive}
           >
