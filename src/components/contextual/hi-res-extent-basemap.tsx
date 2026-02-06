@@ -1,16 +1,16 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
-import { trackEvent } from 'lib/analytics/ga';
+import cn from '@/lib/classnames';
+import { trackEvent } from '@/lib/analytics/ga';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
 
-import { HIGH_RESOLUTION_EXTENT } from 'containers/datasets/contextual-layers/constants';
+import { HIGH_RESOLUTION_EXTENT } from '@/containers/datasets/contextual-layers/constants';
 
-import RadioGroup from 'components/ui/radio-group';
-import RadioGroupItem from 'components/ui/radio-group/radio-group-item';
+import RadioGroup from '@/components/ui/radio-group';
+import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
@@ -59,7 +59,7 @@ const HighResolutionExtentBasemap = () => {
           />
           <label
             className={cn({
-              'font-semibold text-brand-800': isActive === 'no-layer',
+              'text-brand-800 font-semibold': isActive === 'no-layer',
             })}
             htmlFor="No layer"
           >
@@ -78,7 +78,7 @@ const HighResolutionExtentBasemap = () => {
                 />
                 <label
                   className={cn({
-                    'font-semibold text-brand-800': isActive === id,
+                    'text-brand-800 font-semibold': isActive === id,
                   })}
                   htmlFor={id}
                 >

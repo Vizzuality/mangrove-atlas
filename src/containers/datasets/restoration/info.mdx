@@ -1,8 +1,8 @@
-import LayoutMdx from 'layouts/mdx';
+import LayoutMdx from '@/layouts/mdx';
 
 # Mangrove Restoration
 
-## Overview: 
+## Overview:
 
 At the national level most scores range between x and y. Scores are driven by factors such as tidal regime and current land use, and lower scores indicate that there may be more challenges to achieving successful restoration.
 
@@ -14,15 +14,8 @@ In this work, mangrove experts from the University of Cambridge, The Nature Cons
 This mapping tool offers decision-makers the ability to know where restoration could be attempted by identifying locations where mangroves once thrived, and where conditions remain suitable for restoration. The tool also calculates what ecosystem services might be gained from their restoration.
 This tool provides information at broad landscape scales. It helps to guide decision-makers towards options for restoration. Once decided, practical restoration planning always requires local knowledge of ecological, social and economic circumstances in order to ensure successful, long-term outcomes.
 
+## Reference:
 
-## Reference: 
 Worthington et al. (2023) (In Review)
 
-    
-
-export default ({ children, ...props }) => (
-  <LayoutMdx {...props}>
-    {children}
-  </LayoutMdx>
-);
-
+export default ({ children, ...props }) => <LayoutMdx {...props}>{children}</LayoutMdx>;

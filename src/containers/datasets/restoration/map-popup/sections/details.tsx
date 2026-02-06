@@ -1,9 +1,9 @@
-import Detail from 'containers/datasets/restoration/map-popup/detail';
+import Detail from '@/containers/datasets/restoration/map-popup/detail';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 import { ca } from 'date-fns/locale';
 const Details = ({ data }: { data: RestorationPopUp }) => {
   const {

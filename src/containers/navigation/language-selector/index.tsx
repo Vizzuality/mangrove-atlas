@@ -1,18 +1,18 @@
 import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from 'components/ui/dropdown';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dropdown';
+import Icon from '@/components/ui/icon';
 
-import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
+import TRANSLATE_SVG from '@/svgs/tools-bar/translate.svg?sprite';
 
 interface Transifex {
   live: {
@@ -76,13 +76,13 @@ const LanguageSelector = () => {
                 id={lang.name}
                 value={lang.code}
                 type="button"
-                className="w-full cursor-pointer py-1 px-2 text-left hover:bg-brand-800/20"
+                className="hover:bg-brand-800/20 w-full cursor-pointer px-2 py-1 text-left"
                 onClick={handleChange}
               >
                 <span
                   className={cn({
                     'font-sans text-sm text-black/85': true,
-                    'font-semibold text-brand-800': currentLanguage === lang.name,
+                    'text-brand-800 font-semibold': currentLanguage === lang.name,
                   })}
                 >
                   {lang.name}

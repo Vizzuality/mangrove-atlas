@@ -1,18 +1,18 @@
 import { useCallback, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
-import { netChangeEndYear, netChangeStartYear } from 'store/widgets/net-change';
+import { analysisAtom } from '@/store/analysis';
+import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change';
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import NoData from 'containers/widgets/no-data';
+import NoData from '@/containers/widgets/no-data';
 
-import Icon from 'components/ui/icon';
-import Loading from 'components/ui/loading';
-import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import Icon from '@/components/ui/icon';
+import Loading from '@/components/ui/loading';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SELECT_ARROW_STYLES,
@@ -20,11 +20,11 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import ARROW_SVG from 'svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
 import { useMangroveNetChange, widgetSlug } from './hooks';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const NetChangeWidget = () => {
   const queryClient = useQueryClient();
@@ -85,7 +85,7 @@ const NetChangeWidget = () => {
           <button
             type="button"
             onClick={handleCancelAnalysis}
-            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
           >
             Cancel analysis
           </button>
@@ -99,7 +99,7 @@ const NetChangeWidget = () => {
           <button
             type="button"
             onClick={handleTryAgain}
-            className="rounded-2xl bg-brand-800 px-6 py-1 text-sm text-white active:ring-2 active:ring-inset active:ring-brand-600"
+            className="bg-brand-800 active:ring-brand-600 rounded-2xl px-6 py-1 text-sm text-white active:ring-2 active:ring-inset"
           >
             Try again
           </button>
@@ -119,13 +119,13 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-32 space-y-0.5">
                   {unitOptions?.map((u) => (
                     <li key={u}>
                       <button
                         className={cn({
-                          'w-full rounded-lg py-1 px-2 text-left hover:bg-brand-800/20': true,
+                          'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'hover:text-brand-800': selectedUnit !== u,
                           'pointer-events-none opacity-50': selectedUnit === u,
                         })}
@@ -158,14 +158,14 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         className={cn({
-                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': currentStartYear === y,
+                          'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
+                          'text-brand-800 font-semibold': currentStartYear === y,
                           'pointer-events-none opacity-50':
                             y > currentEndYear || currentEndYear === y,
                         })}
@@ -191,14 +191,14 @@ const NetChangeWidget = () => {
                 </span>
               </PopoverTrigger>
 
-              <PopoverContent className="rounded-2xl px-2 shadow-border">
+              <PopoverContent className="shadow-border rounded-2xl px-2">
                 <ul className="z-20 max-h-56 space-y-0.5">
                   {years?.map((y) => (
                     <li key={y} className="last-of-type:pb-4">
                       <button
                         className={cn({
-                          'rounded-lg py-1 px-2 hover:bg-brand-800/20': true,
-                          'font-semibold text-brand-800': currentEndYear === y,
+                          'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
+                          'text-brand-800 font-semibold': currentEndYear === y,
                           'pointer-events-none opacity-50':
                             y < currentStartYear || currentStartYear === y,
                         })}

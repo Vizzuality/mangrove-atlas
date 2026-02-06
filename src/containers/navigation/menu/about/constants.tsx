@@ -83,13 +83,19 @@ export const Donors = [
     name: 'COmON Foundation',
     url: 'https://www.comonfoundation.org/',
     image: '/images/partners/donors/comon.webp',
-    size: [140, 30],
+    size: [100, 30],
   },
   {
     name: 'Oak Foundation',
     url: 'https://oakfnd.org/',
     image: '/images/partners/donors/oak.webp',
-    size: [110, 40],
+    size: [100, 40],
+  },
+  {
+    name: 'Greenchoice',
+    url: 'https://www.greenchoice.nl/',
+    image: 'https://ds.greenchoice.nl/assets/logo.svg',
+    size: [90, 58.25],
   },
   {
     name: 'DOB Ecology',

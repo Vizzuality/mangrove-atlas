@@ -2,28 +2,28 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { HiChevronDown } from 'react-icons/hi2';
 
-import ContactForm from 'containers/contact';
-import Helper from 'containers/help/helper';
-import About from 'containers/navigation/menu/about';
-import PartnersLinks from 'containers/navigation/menu/partners';
-import BlogContent from 'containers/news/content';
+import ContactForm from '@/containers/contact';
+import Helper from '@/containers/help/helper';
+import About from '@/containers/navigation/menu/about';
+import PartnersLinks from '@/containers/navigation/menu/partners';
+import BlogContent from '@/containers/news/content';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import MENU_SVG from 'svgs/tools-bar/menu.svg?sprite';
+import MENU_SVG from '@/svgs/tools-bar/menu.svg?sprite';
 
 const RESOURCES_LINKS = [
   {
@@ -110,19 +110,19 @@ const Menu = () => {
         {section === 'main' && (
           <div className="space-y-10 py-10">
             <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-              <DialogTitle className="pb-8 text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+              <DialogTitle className="pb-8 text-2xl leading-4 font-light md:pt-0 md:text-3xl">
                 Global Mangrove Watch
               </DialogTitle>
               <button
                 type="button"
-                className="text-left text-2lg font-light hover:text-brand-800"
+                className="text-2lg hover:text-brand-800 text-left font-light"
                 onClick={() => section && setSection('about')}
               >
                 About this tool
               </button>
               <Link
                 href="https://www.mangrovealliance.org/"
-                className="text-2lg font-light hover:text-brand-800"
+                className="text-2lg hover:text-brand-800 font-light"
                 rel="noopener noreferrer"
                 target="_blank"
               >
@@ -130,37 +130,37 @@ const Menu = () => {
               </Link>
               <Link
                 href="https://mrtt.globalmangrovewatch.org"
-                className="text-2lg font-light hover:text-brand-800"
+                className="text-2lg hover:text-brand-800 font-light"
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 Mangrove Restoration Tracker Tool
               </Link>
 
-              <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
+              <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
 
               <Collapsible open={isOpen} onOpenChange={setIsOpen} className="space-y-4">
                 <CollapsibleTrigger iconType={null} className="p-0">
-                  <div className="flex w-full items-center space-x-4 text-2lg font-light hover:text-brand-800">
+                  <div className="text-2lg hover:text-brand-800 flex w-full items-center space-x-4 font-light">
                     <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
                     <HiChevronDown
                       className={cn({
                         'h-4 w-4 stroke-[1px]': true,
-                        'rotate-180 text-brand-800': isOpen,
+                        'text-brand-800 rotate-180': isOpen,
                       })}
                     />
                     <span className="sr-only">Toggle</span>
                   </div>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="flex flex-col space-y-2 border-l border-l-grey-400/20 px-6">
+                  <div className="border-l-grey-400/20 flex flex-col space-y-2 border-l px-6">
                     {RESOURCES_LINKS.map(({ label, href }) => (
                       <a
                         key={label}
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-2lg font-light text-black/85 hover:text-brand-800"
+                        className="text-2lg hover:text-brand-800 font-light text-black/85"
                       >
                         {label}
                       </a>

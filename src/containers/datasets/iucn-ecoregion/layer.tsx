@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilValue } from 'recoil';
 

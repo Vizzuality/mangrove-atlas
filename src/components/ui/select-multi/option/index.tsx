@@ -1,10 +1,10 @@
 import { Listbox } from '@headlessui/react';
 import cx from 'classnames';
 
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import Icon from 'components/ui/icon';
+import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
+import Icon from '@/components/ui/icon';
 
-import CHECK_SVG from 'svgs/ui/check-light.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check-light.svg?sprite';
 
 import THEME from '../constants/theme';
 
@@ -33,7 +33,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
       {({ active: a, selected: s, disabled: d }) => (
         <div
           className={cx({
-            'flex cursor-pointer select-none items-start space-x-2 px-5 py-2': true,
+            'flex cursor-pointer items-start space-x-2 px-5 py-2 select-none': true,
             [THEME[theme].item.base]: true,
             [THEME[theme].item.active]: a,
             [THEME[theme].item.selected]: s,
@@ -44,7 +44,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
             <CheckboxIndicator>
               <Icon
                 icon={CHECK_SVG}
-                className="h-2.5 w-2.5 fill-brand-800/70"
+                className="fill-brand-800/70 h-2.5 w-2.5"
                 description="Checkmark"
               />
             </CheckboxIndicator>
@@ -52,7 +52,7 @@ export const Option = ({ opt, theme }: OptionProps) => {
 
           <span
             className={cx({
-              'block line-clamp-2': true,
+              'line-clamp-2 block': true,
             })}
           >
             {opt.label}

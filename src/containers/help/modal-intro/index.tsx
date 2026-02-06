@@ -1,24 +1,24 @@
 import { useLocalStorage } from 'usehooks-ts';
 
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-import VideoIntro from 'containers/help/video-intro';
+import VideoIntro from '@/containers/help/video-intro';
 
-import { Button } from 'components/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from 'components/ui/dialog';
+} from '@/components/ui/dialog';
 
 export const GuideModalIntro = ({ isOpen, setIsOpen }) => {
   const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>(
     'guideLocalStorage',
-    false,
+    false
   );
   const isActive = useRecoilValue(activeGuideAtom);
 

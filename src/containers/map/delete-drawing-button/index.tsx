@@ -4,18 +4,18 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { printModeState } from 'store/print-mode';
-import { locationToolAtom } from 'store/sidebar';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { printModeState } from '@/store/print-mode';
+import { locationToolAtom } from '@/store/sidebar';
 
 import { useResetRecoilState, useRecoilValue } from 'recoil';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import REMOVE_SVG from 'svgs/ui/close.svg?sprite';
+import REMOVE_SVG from '@/svgs/ui/close.svg?sprite';
 
 const SIZE = {
   md: 'h-11 w-11',
@@ -75,7 +75,7 @@ export const DeleteDrawingButton = ({
     <div className="flex w-full flex-col items-center justify-center space-y-1">
       <div
         className={cn({
-          'shadow-controls flex items-center justify-center rounded-full bg-brand-800': true,
+          'shadow-controls bg-brand-800 flex items-center justify-center rounded-full': true,
           [SIZE[size]]: true,
         })}
       >

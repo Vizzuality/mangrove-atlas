@@ -4,15 +4,15 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { SpeciesLocationState } from 'store/widgets/species-location';
+import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import type { QueryObserverOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import type { Visibility } from 'mapbox-gl';
 import { useRecoilValue } from 'recoil';
 
-import { useLocation, useLocations } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API from 'services/api';
 

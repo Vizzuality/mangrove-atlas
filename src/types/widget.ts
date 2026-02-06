@@ -12,7 +12,8 @@ export type WidgetTypes = {
   categoryIds: string[];
   layersIds?: string[];
   subLayersIds?: string[];
-  contextualLayersIds?: string[];
+  contextualLayers?: { id: string; description: string; children?: React.ReactNode }[];
+  contextualLayersIds?: [];
 };
 
 export type WidgetSlugType =

@@ -5,18 +5,18 @@ import { useMap } from 'react-map-gl';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { mapViewAtom } from 'store/sidebar';
+import { mapViewAtom } from '@/store/sidebar';
 
 import { useRecoilValue } from 'recoil';
 
-import MapContainer from 'containers/map';
-import NavigationBar from 'containers/navigation/mobile';
-import WelcomeIntroMessage from 'containers/welcome-message';
-import WidgetsContainer from 'containers/widgets';
+import MapContainer from '@/containers/map';
+import NavigationBar from '@/containers/navigation/mobile';
+import WelcomeIntroMessage from '@/containers/welcome-message';
+import WidgetsContainer from '@/containers/widgets';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import LOGO_MOBILE_SVG from 'svgs/logo-mobile.svg?sprite';
+import LOGO_MOBILE_SVG from '@/svgs/logo-mobile.svg?sprite';
 
 const MobileLayout = () => {
   const mapView = useRecoilValue(mapViewAtom);

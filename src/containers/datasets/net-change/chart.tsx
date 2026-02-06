@@ -1,4 +1,4 @@
-import Chart from 'components/chart';
+import Chart from '@/components/chart';
 
 import NetChangeLegend from './legend';
 const NetChangeChart = ({ config }) => {
