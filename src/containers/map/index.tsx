@@ -54,7 +54,7 @@ import Image from 'next/image';
 
 import MapPopup from './pop-up';
 
-export const DEFAULT_PROPS = {
+export const MAP_DEFAULT_PROPS = {
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -88,10 +88,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const [locationPopUp, setLocationPopUp] = useState<{
-    position: { x: number; y: number };
-    info: LocationPopUp;
-    feature: MapboxGeoJSONFeature;
-    popup: number[];
+    position: { x: number | null; y: number | null };
+    info: LocationPopUp | null;
+    feature: MapboxGeoJSONFeature | null;
+    popup: number[] | [null, null];
   }>({
     position: {
       x: null,
@@ -103,19 +103,19 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   });
 
   const [restorationPopUp, setRestorationPopUpInfo] = useState<{
-    info: RestorationPopUp;
+    info: RestorationPopUp | null;
   }>({
     info: null,
   });
 
   const [restorationSitesPopUp, setRestorationSitesPopUp] = useState<{
-    info: RestorationSitesPopUp;
+    info: RestorationSitesPopUp | null;
   }>({
     info: null,
   });
 
   const [iucnEcoregionPopUp, setIucnEcoregionPopUp] = useState<{
-    info: IUCNEcoregionPopUpInfo;
+    info: IUCNEcoregionPopUpInfo | null;
   }>({
     info: null,
   });
@@ -126,9 +126,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   useOnClickOutside(mapRef, handleClickOutside);
 
-  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
+  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
-  const { minZoom, maxZoom } = DEFAULT_PROPS;
+  const { minZoom, maxZoom } = MAP_DEFAULT_PROPS;
 
   const screenWidth = useScreenWidth();
 
@@ -152,22 +152,24 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const clickedStateIdRef = useRef<string | number | null>(null);
 
-  let hoveredStateId = null;
+  let hoveredStateId: string | number | undefined | null = null;
 
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
-      ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
-      ...(!URLBounds &&
-        locationId && {
-          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
-        }),
+      ...MAP_DEFAULT_PROPS.initialViewState,
+      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
+      ...(!URLBounds && locationId
+        ? {
+            bounds:
+              queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
+          }
+        : {}),
     }),
     [URLBounds, locationId, queryClient]
   );
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    if (!locationBounds) return null;
+    if (!locationBounds) return;
 
     return {
       bbox: locationBounds,
@@ -187,7 +189,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       map?.removeFeatureState({
         sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
         source: 'mangrove_restoration',
-        id: clickedStateIdRef.current,
+        id: clickedStateIdRef.current || '',
       });
     }
   }, [position]);
@@ -269,24 +271,27 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setRestorationPopUpInfo, setIucnEcoregionPopUp, setLocationPopUp, setRestorationSitesPopUp]
   );
 
-  const onClickHandler = (e: Parameters<CustomMapProps['onClick']>[0]) => {
-    const locationFeature = e?.features.find(
+  const onClickHandler: NonNullable<CustomMapProps['onClick']> = (
+    // @ts-ignore
+    e: Parameters<CustomMapProps['onClick']>[0]
+  ) => {
+    const locationFeature = e?.features?.find(
       ({ layer }) => layer.id === 'country-boundaries-layer'
     );
 
-    const protectedAreaFeature = e?.features.filter(
+    const protectedAreaFeature = e?.features?.filter(
       ({ layer }) => layer.id === 'mangrove_protected_areas'
     );
 
-    const restorationFeature = e?.features.find(({ layer }) => {
+    const restorationFeature = e?.features?.find(({ layer }) => {
       return layer.id === 'mangrove_restoration-layer';
     });
 
-    const restorationSitesFeature = e?.features.find(({ layer }) =>
+    const restorationSitesFeature = e?.features?.find(({ layer }) =>
       layer.id.includes('mangrove_rest_sites')
     );
 
-    const iucnEcoregionFeature = e?.features.find(
+    const iucnEcoregionFeature = e?.features?.find(
       ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
     );
 
@@ -296,7 +301,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
     setPosition({ x, y });
     if (locationFeature) {
-      const protectedAreas = protectedAreaFeature.map((feature) => ({
+      const protectedAreas = protectedAreaFeature?.map((feature) => ({
         ...feature.properties,
         id: locationId,
       }));
@@ -381,16 +386,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       map?.removeFeatureState({
         sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
         source: 'mangrove_restoration',
-        id: clickedStateIdRef.current,
+        id: clickedStateIdRef.current || '',
       });
       removePopup('restoration');
     }
     // Restoration Sites
     if (restorationSitesFeature) {
-      const infoParsed = restorationSitesFeature?.properties.cluster
+      const infoParsed = restorationSitesFeature?.properties?.cluster
         ? { point_count: restorationSitesFeature?.properties.point_count }
         : Object.entries(LABELS).reduce((acc, [key, label]) => {
-            const value = restorationSitesFeature.properties[key];
+            const value = restorationSitesFeature.properties?.[key];
 
             if (key === 'landscape_name' || key === 'site_name') {
               acc[label] = [value];
@@ -419,11 +424,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   };
 
   const handleMouseMove = useCallback(
-    (evt: Parameters<CustomMapProps['onMouseMove']>[0]) => {
-      const restorationData = evt?.features.find(({ layer }) => {
+    (evt: Parameters<NonNullable<CustomMapProps['onMouseMove']>>[0]) => {
+      const restorationData = evt?.features?.find(({ layer }) => {
         return layer.id === 'mangrove_restoration-layer';
       });
-      const interactiveLayers = evt?.features.find(
+      const interactiveLayers = evt?.features?.find(
         ({ layer }) =>
           layer.id === 'country-boundaries-layer' ||
           layer.id === 'mangrove_protected_areas' ||
@@ -438,7 +443,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
             {
               sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
               source: 'mangrove_restoration',
-              id: hoveredStateId,
+              id: hoveredStateId ?? undefined,
             },
             { hover: true, clicked: true }
           );
@@ -495,7 +500,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       {!!locationPopUp.info && !guideIsActive && (
         <MapPopup
           mapId={mapId}
-          locationInfo={locationPopUp}
+          locationInfo={{
+            ...locationPopUp,
+            position: {
+              x: locationPopUp.position.x ?? 0,
+              y: locationPopUp.position.y ?? 0,
+            },
+          }}
           restorationInfo={restorationPopUp}
           restorationsitesInfo={restorationSitesPopUp}
           iucnEcoregionInfo={iucnEcoregionPopUp}
@@ -515,7 +526,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           onMapViewStateChange={handleViewState}
           bounds={bounds}
-          interactiveLayerIds={isDrawingToolEnabled || guideIsActive ? [] : interactiveLayerIds}
+          interactiveLayerIds={
+            isDrawingToolEnabled || guideIsActive
+              ? []
+              : interactiveLayerIds.filter((id): id is string => !!id)
+          }
           onClick={onClickHandler}
           onMouseMove={handleMouseMove}
           onLoad={handleMapLoad}
@@ -591,8 +606,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
               {!!position && !!locationPopUp.info && (
                 <Marker
-                  latitude={coordinates?.lat || null}
-                  longitude={coordinates?.lng || null}
+                  latitude={coordinates?.lat || undefined}
+                  longitude={coordinates?.lng || undefined}
                   offset={[0, 0]}
                   anchor="bottom"
                 >

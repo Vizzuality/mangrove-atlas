@@ -137,7 +137,7 @@ const RestorationSitesWidget = () => {
           <div className="text-sm">
             <sup>*</sup>As entered into the Mangrove Restoration Tracker Tool. Enter your data{' '}
             <a
-              href="https://mrtt.globalmangrovewatch.org/auth/login"
+              href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}/auth/login`}
               rel="noopener noreferrer"
               target="_blank"
               className="text-brand-800 font-semibold underline"

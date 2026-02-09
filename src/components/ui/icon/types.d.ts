@@ -4,6 +4,6 @@ export interface IconProps {
     viewBox?: string;
   };
   className?: string;
-  style?: unknown;
+  style?: React.CSSProperties;
   description?: string;
 }

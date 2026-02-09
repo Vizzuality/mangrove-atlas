@@ -26,7 +26,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
-import { SortableListProps } from '@/components/map/legend/types';
+import { SortableItemProps, SortableListProps } from '@/components/map/legend/types';
 
 import SortableItem from './item';
 
@@ -36,7 +36,7 @@ export const SortableList: React.FC<SortableListProps> = ({
   onChangeOrder,
 }: SortableListProps) => {
   const uid = useId();
-  const [activeId, setActiveId] = useState<string>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const ActiveItem = useMemo(() => {
     const activeChildArray = Children.map(children, (Child) => {
@@ -52,7 +52,7 @@ export const SortableList: React.FC<SortableListProps> = ({
       return null;
     });
 
-    return activeChildArray[0] || null;
+    return activeChildArray?.[0] || null;
   }, [children, activeId]);
 
   const itemsIds = useMemo(() => {
@@ -91,10 +91,19 @@ export const SortableList: React.FC<SortableListProps> = ({
       setActiveId(null);
 
       if (active.id !== over?.id) {
-        const oldIndex = itemsIds.indexOf(active.id);
-        const newIndex = itemsIds.indexOf(over?.id);
+        const oldIndex = itemsIds?.indexOf(active.id);
+        const newIndex = itemsIds?.indexOf(over?.id);
 
-        if (onChangeOrder) onChangeOrder(arrayMove(itemsIds, oldIndex, newIndex));
+        if (
+          onChangeOrder &&
+          itemsIds &&
+          oldIndex !== undefined &&
+          newIndex !== undefined &&
+          oldIndex >= 0 &&
+          newIndex >= 0
+        ) {
+          onChangeOrder(arrayMove(itemsIds, oldIndex, newIndex));
+        }
       }
     },
     [itemsIds, onChangeOrder]
@@ -110,14 +119,18 @@ export const SortableList: React.FC<SortableListProps> = ({
       onDragEnd={handleDragEnd}
       onDragCancel={() => setActiveId(null)}
     >
-      <SortableContext items={itemsIds} strategy={verticalListSortingStrategy}>
+      <SortableContext items={itemsIds || []} strategy={verticalListSortingStrategy}>
         {Children.map(children, (Child) => {
           if (isValidElement(Child)) {
             const { props } = Child as ReactElement<unknown>;
             const { id } = props as { id: string };
 
             return (
-              <SortableItem id={id} sortable={sortable} data-testid={`legend-item-${id}`}>
+              <SortableItem
+                id={id}
+                sortable={sortable as SortableItemProps['sortable']}
+                data-testid={`legend-item-${id}`}
+              >
                 {cloneElement(Child as ReactElement, {
                   sortable,
                 })}

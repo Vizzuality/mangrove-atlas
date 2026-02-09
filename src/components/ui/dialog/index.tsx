@@ -28,7 +28,7 @@ const DialogOverlay = forwardRef<
     ref={ref}
     className={cn({
       'bg-brand-600/70 fixed inset-0 backdrop-blur-sm md:bg-black/50': true,
-      [className]: !!className,
+      [className || '']: !!className,
     })}
   />
 ));
@@ -46,9 +46,9 @@ const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-screen w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
+        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-[100vh] w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
           true,
-        [classNameContent]: !!classNameContent,
+        [classNameContent || '']: !!classNameContent,
       })}
       style={{
         background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
@@ -57,9 +57,8 @@ const DialogContent = forwardRef<
     >
       <div
         className={cn({
-          'shadow-card relative flex shrink-0 flex-col bg-white p-8 md:w-full md:max-w-[540px] md:rounded-3xl':
-            true,
-          [className]: !!className,
+          'shadow-card relative flex shrink-0 flex-col bg-white p-8 md:w-full md:rounded-3xl': true,
+          [className || '']: !!className,
         })}
       >
         {children}
@@ -73,7 +72,7 @@ const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =
   <div
     className={cn({
       'flex flex-col space-y-2 text-center md:text-left': true,
-      [className]: !!className,
+      [className || '']: !!className,
     })}
     {...props}
   />
@@ -93,7 +92,7 @@ const DialogClose = ({
       className={cn({
         'md:shadow-card absolute -top-2 -right-10 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
           true,
-        [className]: !!className,
+        [className || '']: !!className,
       })}
       onClick={onClose}
       aria-label="close dialog"
@@ -108,7 +107,7 @@ const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =
   <div
     className={cn({
       'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
-      [className]: !!className,
+      [className || '']: !!className,
     })}
     {...props}
   />
@@ -121,7 +120,10 @@ const DialogTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn({ 'text-lg font-semibold text-slate-900': true, [className]: !!className })}
+    className={cn({
+      'text-lg font-semibold text-slate-900': true,
+      [className || '']: !!className,
+    })}
     {...props}
   />
 ));
@@ -135,7 +137,7 @@ const DialogDescription = forwardRef<
     ref={ref}
     className={cn({
       'text-sm text-slate-500': true,
-      [className]: !!className,
+      [className || '']: !!className,
     })}
     {...props}
   />

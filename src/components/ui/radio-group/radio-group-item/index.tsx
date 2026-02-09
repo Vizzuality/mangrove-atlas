@@ -16,10 +16,9 @@ const RadioGroupItem = ({
 }) => (
   <div className="flex items-center space-x-4">
     <RadioGroup.Item
-      className={cn({
+      className={cn(className, {
         'data-[state=checked]:border-brand-800 flex h-3 w-3 shrink-0 items-center justify-center rounded-full border border-black/85 data-[state=checked]:border-4':
           true,
-        [className]: !!className,
       })}
       value={option.value}
       id={option.value}

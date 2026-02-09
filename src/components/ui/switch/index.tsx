@@ -37,10 +37,9 @@ const SwitchRoot = ({
   <SwitchRadix.Root
     role="button"
     aria-label="Toggle component"
-    className={cn({
-      'border-brand-800 border-opacity-20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-transparent outline-none':
+    className={cn(className, {
+      'border-brand-800 border-opacity-20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-white outline-none':
         true,
-      [className]: !!className,
       [SIZE['root'][size]]: true,
     })}
     {...props}
@@ -55,10 +54,9 @@ const SwitchThumb = ({
   size = 'md',
 }: SwitchThumbProps & { size?: 'sm' | 'md' }) => (
   <SwitchRadix.Thumb
-    className={cn({
+    className={cn(className, {
       'bg-brand-800 data-[state=checked]:text-brand-800 block h-5 w-5 translate-x-[3px] rounded-full text-white transition-transform duration-400 will-change-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-white':
         true,
-      [className]: !!className,
       [SIZE['thumb'][size]]: true,
     })}
   >
@@ -71,9 +69,8 @@ const SwitchThumb = ({
 const SwitchWrapper = ({ id, children, className }: WrapperProps) => (
   <div className="flex items-center">
     <label
-      className={cn({
+      className={cn(className, {
         'sr-only pr-[15px] text-[15px] leading-none text-white': true,
-        [className]: !!className,
       })}
       htmlFor={id}
     >

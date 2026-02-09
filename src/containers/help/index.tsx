@@ -7,16 +7,32 @@ import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from '@/containers/contact';
 
-import Icon from '@/components/ui/icon';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
+import { TbWheel } from 'react-icons/tb';
+import { LuChevronDown } from 'react-icons/lu';
 
-import HELP_SVG from '@/svgs/tools-bar/help.svg?sprite';
+import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import GuideModalIntro from './modal-intro';
 import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
 
-export const HelpContainer = () => {
+type HelpContainerProps = {
+  theme?: 'light' | 'dark';
+  hasArrow?: boolean;
+  className?: string;
+};
+
+const THEME = {
+  light: 'text-white',
+  dark: 'text-brand-800',
+};
+
+export const HelpContainer = ({
+  theme = 'light',
+  hasArrow = false,
+  className,
+}: HelpContainerProps) => {
   const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
@@ -38,19 +54,15 @@ export const HelpContainer = () => {
   return (
     <div>
       <Popover>
-        <PopoverTrigger className="flex">
-          <button
-            id="guide"
-            data-testid="guide-button"
-            type="button"
-            className="flex cursor-pointer items-center space-x-2"
-          >
-            <Icon icon={HELP_SVG} className="h-6 w-6 stroke-white" description="Menu" />
-            <p className="font-sans text-sm text-white">Help</p>
-          </button>
+        <PopoverTrigger
+          className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
+        >
+          <TbWheel className="h-5 w-5" />
+          <p className="font-sans text-sm">Help</p>
+          {hasArrow && <LuChevronDown className="h-4 w-4" />}
         </PopoverTrigger>
 
-        <PopoverContent className="shadow-border rounded-2xl p-6 text-sm font-semibold">
+        <PopoverContent className="rounded-2xl p-6 text-sm font-semibold shadow-border">
           <Contact />
           <div className="flex space-x-2">
             <span>Navigation help</span>

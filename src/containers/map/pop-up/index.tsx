@@ -28,21 +28,19 @@ import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'typ
 import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupClose from './pop-up-controls/close';
 import MapPopupPin from './pop-up-controls/pin';
-import { is } from 'date-fns/locale';
-import { max } from 'date-fns';
 
 type Position = { x: number; y: number };
 
 type MapPopupProps = {
   mapId: string;
   locationInfo: {
-    info: LocationPopUp;
+    info: LocationPopUp | null;
     position?: Position;
-    feature: MapboxGeoJSONFeature;
+    feature: MapboxGeoJSONFeature | null;
   };
-  restorationInfo: { info: RestorationPopUp };
-  restorationsitesInfo: { info: RestorationSitesPopUp };
-  iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo };
+  restorationInfo: { info: RestorationPopUp | null };
+  restorationsitesInfo: { info: RestorationSitesPopUp | null };
+  iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo | null };
 };
 
 const MapPopup = ({
@@ -67,7 +65,7 @@ const MapPopup = ({
       e.stopPropagation();
 
       if (isPinned) {
-        const point = map?.project([coordinates.lng, coordinates.lat]);
+        const point = coordinates ? map?.project([coordinates.lng, coordinates.lat]) : null;
         setPosition(point ?? null);
         setPin(false);
       }
@@ -87,8 +85,8 @@ const MapPopup = ({
       popUpRef.current.getBoundingClientRect().height;
       popUpRef.current.getBoundingClientRect().width;
       setMapDraggableTooltipDimensions((prev) => ({
-        h: popUpRef.current.getBoundingClientRect().height,
-        w: popUpRef.current.getBoundingClientRect().width,
+        h: popUpRef?.current?.getBoundingClientRect()?.height || 0,
+        w: popUpRef?.current?.getBoundingClientRect()?.width || 0,
       }));
     }
   }, [
@@ -102,7 +100,7 @@ const MapPopup = ({
   if (!locationInfo.info) return null;
 
   const maxHeight = useMemo(() => {
-    return `calc(${window.innerHeight - position?.y - 20}px)`;
+    return `calc(${window.innerHeight - (position?.y ?? 0) - 20}px)`;
   }, [position?.y]);
 
   return (
@@ -148,8 +146,10 @@ const MapPopup = ({
                 locationPopUpInfo={locationInfo}
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
               />
-              {restorationInfo?.info && <RestorationPopup {...restorationInfo} />}
-              {restorationsitesInfo?.info && <RestorationSitesPopup {...restorationsitesInfo} />}
+              {restorationInfo?.info && <RestorationPopup info={restorationInfo.info} />}
+              {restorationsitesInfo?.info && (
+                <RestorationSitesPopup info={restorationsitesInfo.info} />
+              )}
               {iucnEcoregionInfo.info && <IucnEcoregionPopup info={iucnEcoregionInfo.info} />}
             </div>
           </ScrollArea>

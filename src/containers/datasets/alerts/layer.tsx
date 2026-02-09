@@ -14,17 +14,16 @@ const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCES = useSources();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity || '1'),
+    visibility: activeLayer?.visibility,
   });
 
   if (!SOURCES || !LAYERS) return null;
 
   return SOURCES.map((SOURCE) => (
     <Source key={SOURCE.id} {...SOURCE}>
-      {LAYERS[SOURCE.id].map((LAYER) => (
-        <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />
-      ))}
+      {SOURCE.id &&
+        LAYERS[SOURCE.id]?.map((LAYER) => <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />)}
     </Source>
   ));
 };

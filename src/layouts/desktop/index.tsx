@@ -2,8 +2,6 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import cn from '@/lib/classnames';
@@ -24,7 +22,7 @@ import {
   mapDraggableTooltipPositionAtom,
 } from '@/store/map';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
-import { is } from 'date-fns/locale';
+import Logo from 'components/logo';
 
 const DesktopLayout = () => {
   const map = useMap();
@@ -90,21 +88,14 @@ const DesktopLayout = () => {
           },
         }}
       >
-        <Link
-          href="/"
-          className="pointer-events-auto fixed top-0 right-0 z-800"
-          draggable={false}
+        <Logo
+          src="/images/logo-bg.png"
+          position="top-right"
+          width={186}
+          height={216}
           onClick={handleReset}
-        >
-          <Image
-            src="/images/logo-bg.png"
-            alt="Logo Global Mangrove Watch"
-            width={186}
-            height={216}
-            draggable={false}
-            priority={true}
-          />
-        </Link>
+        />
+
         <div className="relative h-screen w-screen">
           {isPrintingMode && (
             <div className="print:absolute print:top-6 print:z-50 print:text-black">
