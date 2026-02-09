@@ -49,9 +49,9 @@ const Menu = () => {
       <DialogContent
         data-testid="menu-content"
         className={cn({
-          'font-sans md:mb-20': true,
+          'max-w-135 font-sans md:mb-20': true,
           'h-fit py-0': section === 'main',
-          'w-[540px]': section === 'profile' || section === 'about',
+          '': section === 'profile' || section === 'about',
         })}
       >
         {section === 'main' && (

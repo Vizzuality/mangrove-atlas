@@ -12,7 +12,7 @@ export const UserMenu = ({ setSection }) => {
   const session = useSession();
 
   return (
-    <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
+    <div className="flex w-full flex-col space-y-4 py-6 font-sans text-black/85">
       {session.status === 'authenticated' && (
         <>
           <button
