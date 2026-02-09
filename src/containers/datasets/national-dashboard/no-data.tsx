@@ -29,7 +29,7 @@ const NoData = () => {
         <DialogContent
           data-testid="ContactForm-content"
           className={cn({
-            'w-fit font-sans md:mb-20 md:w-[436px]': true,
+            'w-fit font-sans md:mb-20 md:w-[540px]': true,
           })}
         >
           <div className="space-y-10 py-10">

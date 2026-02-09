@@ -137,7 +137,7 @@ const WidgetsContainer: FC = () => {
                 applicability={props?.applicability}
                 contextualLayers={props?.contextualLayers}
                 className={cn({
-                  'print:min-w-[480px] print:scale-95 print:transform print:break-inside-avoid':
+                  'print:min-w-[540px] print:scale-95 print:transform print:break-inside-avoid':
                     true,
                 })}
               >

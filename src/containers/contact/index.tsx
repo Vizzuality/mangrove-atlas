@@ -28,7 +28,7 @@ const Contact = ({ className }: { className?: string }) => {
       <DialogContent
         data-testid="ContactForm-content"
         className={cn({
-          'font-sans md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20 md:w-[540px]': true,
         })}
       >
         <div className="space-y-10 py-10">
