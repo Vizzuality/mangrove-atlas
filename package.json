@@ -50,7 +50,7 @@
     "@transifex/native": "^7.1.5",
     "@transifex/react": "^7.1.5",
     "@turf/bbox": "6.5.0",
-    "axios": "1.13.4",
+    "axios": "1.13.5",
     "chroma-js": "^2.6.0",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
