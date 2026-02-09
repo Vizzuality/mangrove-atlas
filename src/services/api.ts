@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
 const API = axios.create({
-  baseURL: `${process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL : process.env.NEXT_PUBLIC_API_URL_STAGING}`,
+  baseURL: `${process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL_PRODUCTION : process.env.NEXT_PUBLIC_API_URL_STAGING}`,
   headers: {
     'Content-Type': 'application/json',
   },
