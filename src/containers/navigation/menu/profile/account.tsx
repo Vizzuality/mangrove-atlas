@@ -70,7 +70,7 @@ const AccountContent = () => {
           email,
           password,
           name: username,
-          current_password: values['current-password'],
+          current_password,
           organization,
         },
       },
