@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import NAVIGATION_SVG from 'svgs/map/navigation.svg?sprite';
+import NAVIGATION_SVG from '@/svgs/map/navigation.svg?sprite';
 
 export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
@@ -14,19 +14,18 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
   const pitch = map?.getPitch();
 
   const resetMapPitch = useCallback(() => {
-    map.resetNorthPitch();
+    map?.resetNorthPitch();
   }, [map]);
 
   return (
     <div
-      className={cn({
+      className={cn(className, {
         'inline-flex w-full flex-col rounded-b-full': true,
-        [className]: !!className,
       })}
     >
       <button
         className={cn({
-          'group -mt-2 rounded-b-full bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+          'group active:outline-brand-400/40 -mt-2 rounded-b-full bg-white p-3 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
             true,
         })}
         aria-label="Reset map pitch"
@@ -36,7 +35,7 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
       >
         <Icon
           icon={NAVIGATION_SVG}
-          className="h-5 w-5 group-disabled:fill-grey-75"
+          className="group-disabled:fill-grey-75 h-5 w-5"
           description="Pitch reset"
         />
       </button>

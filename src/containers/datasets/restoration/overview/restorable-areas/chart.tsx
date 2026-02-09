@@ -1,8 +1,8 @@
-import { formatNumberNearestInteger } from 'lib/format';
+import { formatNumberNearestInteger } from '@/lib/format';
 
-import Legend from 'containers/legend';
+import Legend from '@/containers/legend';
 
-import Chart from 'components/chart';
+import Chart from '@/components/chart';
 
 import CustomTooltip from './tooltip';
 

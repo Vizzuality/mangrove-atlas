@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
 
-import { formatNumberNearestInteger } from 'lib/format';
+import { formatNumberNearestInteger } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 

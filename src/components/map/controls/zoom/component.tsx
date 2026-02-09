@@ -2,14 +2,15 @@ import { MouseEvent, useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import ZOOM_IN_SVG from 'svgs/map/zoom-in.svg?sprite';
-import ZOOM_OUT_SVG from 'svgs/map/zoom-out.svg?sprite';
-import { T } from '@transifex/react';
-import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
+import ZOOM_IN_SVG from '@/svgs/map/zoom-in.svg?sprite';
+import ZOOM_OUT_SVG from '@/svgs/map/zoom-out.svg?sprite';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+
+import { MAP_DEFAULT_PROPS } from '@/containers/map';
 
 const COMMON_CLASSES =
   'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
@@ -18,9 +19,10 @@ const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 
 export const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
-  const zoom = map?.getZoom();
-  const minZoom = map?.getMinZoom();
-  const maxZoom = map?.getMaxZoom();
+  const zoom = map?.getZoom() || MAP_DEFAULT_PROPS.initialViewState.zoom;
+  const minZoom = map?.getMinZoom() || MAP_DEFAULT_PROPS.minZoom;
+
+  const maxZoom = map?.getMaxZoom() || MAP_DEFAULT_PROPS.maxZoom;
 
   const increaseZoom = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +46,7 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className={cn({ 'flex flex-col': true, [className]: !!className })}>
+        <div className={cn(className, { 'flex flex-col': true })}>
           <button
             className={cn({
               [COMMON_CLASSES]: true,

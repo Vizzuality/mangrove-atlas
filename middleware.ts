@@ -1,35 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const allowedOrigins = [
+const allowedOrigins = new Set([
   'https://mrtt.globalmangrovewatch.org',
   'https://mrtt-staging.globalmangrovewatch.org',
-];
+  'http://localhost:3000',
+]);
 
-const corsHeaders = {
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+const corsBaseHeaders: Record<string, string> = {
+  'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-CSRF-Token, X-Requested-With',
   'Access-Control-Allow-Credentials': 'true',
+  Vary: 'Origin',
 };
 
-export function middleware(request: NextRequest) {
+function withCors(request: NextRequest, response: NextResponse) {
   const origin = request.headers.get('origin');
-  const isAllowedOrigin = origin && allowedOrigins.includes(origin.replace(/\/$/, ''));
-
-  const isPreflight = request.method === 'OPTIONS';
-
-  const response = isPreflight ? new NextResponse(null, { status: 204 }) : NextResponse.next();
-
-  if (isAllowedOrigin && origin) {
+  if (origin && allowedOrigins.has(origin.replace(/\/$/, ''))) {
     response.headers.set('Access-Control-Allow-Origin', origin);
+    for (const [k, v] of Object.entries(corsBaseHeaders)) response.headers.set(k, v);
   }
-
-  Object.entries(corsHeaders).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
-
   return response;
 }
 
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith('/api/auth')) {
+    return NextResponse.next();
+  }
+
+  if (request.method === 'OPTIONS') {
+    return withCors(request, new NextResponse(null, { status: 204 }));
+  }
+
+  return withCors(request, NextResponse.next());
+}
+
 export const config = {
-  matcher: '/api/:path*',
+  matcher: ['/api/:path*'],
 };

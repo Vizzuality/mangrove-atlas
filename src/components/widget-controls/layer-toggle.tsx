@@ -1,14 +1,14 @@
 import { useCallback, useMemo } from 'react';
 
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
 
 import { updateLayers } from 'hooks/layers';
 
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
 
-import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
+import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
 import { HELPER_POSITION } from './constants';
 
@@ -17,6 +17,8 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const LayerToggle = ({ id }: WidgetControlsType) => {
+  if (!id) return null;
+
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const activeLayersIds = activeLayers?.map((l) => l.id);
 
@@ -60,7 +62,7 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
       tooltipPosition={{ top: -35, left: 0 }}
       message="Use this icon to toggle the map layer on or off. If a widget does not have this icon, it means that there is no associated map layer."
     >
-      <SwitchWrapper id={id}>
+      <SwitchWrapper id={id as string}>
         <SwitchRoot
           data-testid={id}
           onClick={handleClick}

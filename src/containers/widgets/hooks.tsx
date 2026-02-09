@@ -2,13 +2,13 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { analysisAtom } from 'store/analysis';
-import { mapSettingsAtom } from 'store/map-settings';
-import { activeCategoryAtom } from 'store/sidebar';
+import { analysisAtom } from '@/store/analysis';
+import { mapSettingsAtom } from '@/store/map-settings';
+import { activeCategoryAtom } from '@/store/sidebar';
 
 import { useRecoilValue } from 'recoil';
 
-import { WIDGETS_BY_CATEGORY } from 'containers/widgets/constants';
+import { WIDGETS_BY_CATEGORY } from '@/containers/widgets/constants';
 
 import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 

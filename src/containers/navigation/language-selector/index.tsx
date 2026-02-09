@@ -1,18 +1,22 @@
 import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from 'components/ui/dropdown';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dropdown';
 
-import TRANSLATE_SVG from 'svgs/tools-bar/translate.svg?sprite';
+import { LuChevronDown, LuLanguages } from 'react-icons/lu';
+
+const LuChevronDownIcon = LuChevronDown as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => JSX.Element;
+const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
 interface Transifex {
   live: {
@@ -23,7 +27,22 @@ interface Transifex {
   };
 }
 
-const LanguageSelector = () => {
+type LanguageSelectorProps = {
+  theme?: 'light' | 'dark';
+  hasArrow?: boolean;
+  className?: string;
+};
+
+const THEME = {
+  light: 'text-white',
+  dark: 'text-brand-800',
+};
+
+const LanguageSelector = ({
+  theme = 'light',
+  hasArrow = false,
+  className,
+}: LanguageSelectorProps) => {
   const t = typeof window !== 'undefined' && (window.Transifex as Transifex);
   const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const Transifex = window.Transifex as Transifex;
@@ -58,15 +77,16 @@ const LanguageSelector = () => {
       message="Select your preferred language here. There is a choice between English, French, and Spanish. More languages coming soon."
     >
       <DropdownMenu>
-        <DropdownMenuTrigger className="h-11">
-          <div className="flex items-center space-x-2">
-            <Icon
-              icon={TRANSLATE_SVG}
-              className="h-6 w-6 stroke-white"
-              description="language-selection"
-            />
-            <span className="text-sm text-white">{currentLanguage}</span>
-          </div>
+        <DropdownMenuTrigger
+          className={cn(
+            'flex items-center space-x-2 font-semibold whitespace-nowrap',
+            THEME[theme],
+            className
+          )}
+        >
+          <LuLanguagesIcon className="h-5 w-5 shrink-0" />
+          <span className="text-sm">{currentLanguage}</span>
+          {hasArrow && <LuChevronDownIcon className="h-4 w-4" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
           {languages?.map((lang: { code: string; name: string }) => (
@@ -76,13 +96,13 @@ const LanguageSelector = () => {
                 id={lang.name}
                 value={lang.code}
                 type="button"
-                className="w-full cursor-pointer py-1 px-2 text-left hover:bg-brand-800/20"
+                className="hover:bg-brand-800/20 w-full cursor-pointer px-2 py-1 text-left"
                 onClick={handleChange}
               >
                 <span
                   className={cn({
                     'font-sans text-sm text-black/85': true,
-                    'font-semibold text-brand-800': currentLanguage === lang.name,
+                    'text-brand-800 font-semibold': currentLanguage === lang.name,
                   })}
                 >
                   {lang.name}

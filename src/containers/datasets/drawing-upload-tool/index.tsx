@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
-import { mapCursorAtom } from 'store/map';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { mapCursorAtom } from '@/store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 import { fetchUploadFile } from 'hooks/analysis';
 
-import Helper from 'containers/help/helper';
-import DeleteDrawingButton from 'containers/map/delete-drawing-button';
+import Helper from '@/containers/help/helper';
+import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import UPLOAD_SVG from 'svgs/sidebar/upload.svg?sprite';
+import UPLOAD_SVG from '@/svgs/sidebar/upload.svg?sprite';
 
 const drawingToolHelperContent = (
   <div className="max-w-xs space-y-4 text-sm font-light text-black/85">
@@ -173,12 +173,12 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               />
               {!uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="whitespace-nowrap font-sans text-sm text-white">Upload shapefile</p>
+                  <p className="font-sans text-sm whitespace-nowrap text-white">Upload shapefile</p>
                 </label>
               )}
               {uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="whitespace-nowrap font-sans text-sm text-white">...uploading</p>
+                  <p className="font-sans text-sm whitespace-nowrap text-white">...uploading</p>
                 </label>
               )}
             </div>
@@ -187,7 +187,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
         {(uploadedGeojson || isDrawingUploadToolEnabled) && (
           <div className="mb-2 cursor-pointer rounded-3xl bg-white p-2">
             <DeleteDrawingButton size="sm">
-              <p className="whitespace-nowrap font-sans text-sm text-brand-800">Delete area</p>
+              <p className="text-brand-800 font-sans text-sm whitespace-nowrap">Delete area</p>
             </DeleteDrawingButton>
           </div>
         )}

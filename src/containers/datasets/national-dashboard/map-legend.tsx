@@ -1,4 +1,4 @@
-import { activeLayersAtom } from 'store/layers';
+import { activeLayersAtom } from '@/store/layers';
 
 import chroma from 'chroma-js';
 import { useRecoilState } from 'recoil';

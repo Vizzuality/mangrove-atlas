@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 
 import isEmpty from 'lodash-es/isEmpty';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { RestorationSitesMapFilters } from 'store/widgets/restoration-sites';
+import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 
 import { useSetRecoilState } from 'recoil';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from 'components/ui/dialog';
-import Loading from 'components/ui/loading';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import Loading from '@/components/ui/loading';
 import { BUTTON_STYLES, WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 import FilterSites from './filter-sites';
@@ -88,19 +88,19 @@ const RestorationSitesWidget = () => {
             <div
               className={cn({
                 'flex justify-between text-xs': true,
-                'border-b-2 border-b-grey-50 pb-5': areFiltersSelected,
+                'border-b-grey-50 border-b-2 pb-5': areFiltersSelected,
               })}
             >
               <DialogTrigger asChild>
                 <button
                   className={cn({
-                    'flex space-x-2 bg-brand-800 text-xs text-white': true,
+                    'bg-brand-800 flex space-x-2 text-xs text-white': true,
                     [BUTTON_STYLES]: true,
                   })}
                 >
                   <p>Filter sites</p>
                   {areFiltersSelected && (
-                    <span className="rounded-full bg-white px-1.5 text-brand-800">
+                    <span className="text-brand-800 rounded-full bg-white px-1.5">
                       {totalLength}
                     </span>
                   )}
@@ -137,10 +137,10 @@ const RestorationSitesWidget = () => {
           <div className="text-sm">
             <sup>*</sup>As entered into the Mangrove Restoration Tracker Tool. Enter your data{' '}
             <a
-              href="https://mrtt.globalmangrovewatch.org/auth/login"
+              href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}/auth/login`}
               rel="noopener noreferrer"
               target="_blank"
-              className="font-semibold text-brand-800 underline"
+              className="text-brand-800 font-semibold underline"
             >
               here
             </a>

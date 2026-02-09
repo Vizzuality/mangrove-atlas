@@ -1,8 +1,8 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { useMangroveRestoration } from 'containers/datasets/restoration/overview/hooks';
+import { useMangroveRestoration } from '@/containers/datasets/restoration/overview/hooks';
 
-import Loading from 'components/ui/loading';
+import Loading from '@/components/ui/loading';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -27,7 +27,7 @@ const RestorableAreas = () => {
           <p className={WIDGET_SENTENCE_STYLE}>
             <span className="font-bold first-letter:uppercase"> {data.location}</span> restorable
             mangrove areas represent{' '}
-            <span className="whitespace-nowrap font-bold">{data.restorable_area_perc} %</span> of
+            <span className="font-bold whitespace-nowrap">{data.restorable_area_perc} %</span> of
             the total mangrove area.
           </p>
           <div className="flex flex-1 flex-col items-center space-y-2">
@@ -35,7 +35,7 @@ const RestorableAreas = () => {
           </div>
         </div>
       )}
-      <div className="absolute bottom-4 -left-10 -right-10 border-2 border-b border-brand-800/30" />
+      <div className="border-brand-800/30 absolute -right-10 bottom-4 -left-10 border-2 border-b" />
     </div>
   );
 };

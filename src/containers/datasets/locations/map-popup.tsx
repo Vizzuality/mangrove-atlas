@@ -2,18 +2,18 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { locationBoundsAtom } from 'store/map';
+import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
 import type { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
-import { useLocations } from 'containers/datasets/locations/hooks';
+import { useLocations } from '@/containers/datasets/locations/hooks';
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 import { ca } from 'date-fns/locale';
 
 const LocationPopUP = ({
@@ -21,8 +21,8 @@ const LocationPopUP = ({
   nonExpansible,
 }: {
   locationPopUpInfo: {
-    info: LocationPopUp;
-    feature: MapboxGeoJSONFeature;
+    info: LocationPopUp | null;
+    feature: MapboxGeoJSONFeature | null;
   };
   nonExpansible: boolean;
   className?: string;
@@ -35,7 +35,7 @@ const LocationPopUP = ({
   const queryParams = asPath.split('?')[1];
   const { info, feature } = locationPopUpInfo;
 
-  const { type, name } = info.location;
+  const { type, name } = info?.location ?? {};
 
   const { data: locations } = useLocations();
 
@@ -51,11 +51,9 @@ const LocationPopUP = ({
   }, [isOpen]);
 
   const handleClickLocation = useCallback(() => {
-    const {
-      properties: { location_idn },
-    } = feature;
+    const location_idn = feature?.properties?.location_idn;
 
-    const location = locations.data?.find((l) => l.location_id === location_idn);
+    const location = locations?.data?.find((l) => l.location_id === location_idn);
 
     if (location) {
       const bbox = turfBbox(location.bounds);
@@ -64,22 +62,22 @@ const LocationPopUP = ({
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, null);
+      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, undefined);
     }
 
     // Google Analytics tracking
-    trackEvent(`Location pop up - ${info.location.name}`, {
+    trackEvent(`Location pop up - ${info?.location.name}`, {
       category: 'Map Popup iteration',
       action: 'Click',
-      label: `Location pop up - ${info.location.name}`,
-      value: info.location.name,
+      label: `Location pop up - ${info?.location.name}`,
+      value: info?.location.name,
     });
   }, [setLocationBounds, push, queryParams, locations, feature]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
-      const { ISO3, NAME } = info.protectedArea[index];
-      const location = locations.data?.find((l) => {
+      const { ISO3, NAME } = info?.protectedArea?.[index] ?? {};
+      const location = locations?.data?.find((l) => {
         return l.iso === ISO3 && l.location_type === 'wdpa' && l.name === NAME;
       });
 
@@ -89,15 +87,18 @@ const LocationPopUP = ({
         if (bbox) {
           setLocationBounds(bbox as typeof locationBounds);
         }
-        void push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`, null);
+        void push(
+          `/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`,
+          undefined
+        );
       }
 
       // Google Analytics tracking
-      trackEvent(`Location pop up, protected area - ${info.location.name}`, {
+      trackEvent(`Location pop up, protected area - ${info?.location.name}`, {
         category: 'Map Popup iteration',
         action: 'Click',
-        label: `Location pop up, protected area - ${info.location.name}`,
-        value: info.location.name,
+        label: `Location pop up, protected area - ${info?.location.name}`,
+        value: info?.location.name,
       });
     },
     [setLocationBounds, push, queryParams, locations, info]
@@ -118,16 +119,16 @@ const LocationPopUP = ({
             onClick={handleClickLocation}
             className="grid w-full grid-cols-10 gap-4"
           >
-            <span className="col-span-7 text-left text-sm font-semibold text-brand-800">
+            <span className="text-brand-800 col-span-7 text-left text-sm font-semibold">
               {name}
             </span>
-            <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+            <span className="text-xxs col-span-3 text-left leading-5 font-light text-black/85 uppercase">
               {type}
             </span>
           </button>
         </div>
-        {info.protectedArea &&
-          info.protectedArea?.map(({ NAME }, index) => (
+        {info?.protectedArea &&
+          info?.protectedArea?.map(({ NAME }, index) => (
             <button
               key={NAME}
               type="button"
@@ -135,9 +136,9 @@ const LocationPopUP = ({
               onClick={() => handleClickProtectedArea(index)}
             >
               <div className="col-span-7 flex flex-col text-left">
-                <span className="text-sm font-semibold text-brand-800">{NAME}</span>
+                <span className="text-brand-800 text-sm font-semibold">{NAME}</span>
               </div>
-              <span className="col-span-3 text-left text-xxs font-light uppercase leading-5 text-black/85">
+              <span className="text-xxs col-span-3 text-left leading-5 font-light text-black/85 uppercase">
                 Protected area
               </span>
             </button>

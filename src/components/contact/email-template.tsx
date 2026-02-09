@@ -2,7 +2,7 @@ import { CSSProperties } from 'react';
 
 import { Body, Container, Head, Html, Markdown, Preview, Text } from '@react-email/components';
 
-import { ContactEmailProps } from 'pages/api/send';
+import { ContactEmailProps } from '@/pages/api/send';
 
 export const ContactUsEmail = ({ name, email, message }: ContactEmailProps) => (
   <Html>

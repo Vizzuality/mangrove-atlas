@@ -1,15 +1,15 @@
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-// import Helper from 'containers/help/helper';
+// import Helper from '@/containers/help/helper';
 
-import ContactForm from 'components/contact';
+import ContactForm from '@/components/contact';
 import {
   Dialog,
   DialogContent,
   DialogClose,
   DialogTrigger,
   DialogTitle,
-} from 'components/ui/dialog';
+} from '@/components/ui/dialog';
 
 const Contact = ({ className }: { className?: string }) => {
   return (
@@ -22,7 +22,7 @@ const Contact = ({ className }: { className?: string }) => {
         tooltipPosition={{ top: -40, left: 0 }}
         message=""
       > */}
-      <DialogTrigger className={cn({ [className]: !!className })}>Contact Us</DialogTrigger>
+      <DialogTrigger className={cn(className)}>Contact Us</DialogTrigger>
       {/* </Helper> */}
 
       <DialogContent
@@ -33,7 +33,7 @@ const Contact = ({ className }: { className?: string }) => {
       >
         <div className="space-y-10 py-10">
           <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-            <DialogTitle className="text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+            <DialogTitle className="text-2xl leading-4 font-light md:pt-0 md:text-3xl">
               Contact Us
             </DialogTitle>
           </div>
