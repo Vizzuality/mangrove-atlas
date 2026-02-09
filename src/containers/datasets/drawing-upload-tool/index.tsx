@@ -173,7 +173,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               />
               {!uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
-                  <p className="font-sans text-sm whitespace-nowrap text-white">Upload shapefile</p>
+                  <p className="font-sans text-sm whitespace-nowrap text-white">Shapefile</p>
                 </label>
               )}
               {uploadingFile && (

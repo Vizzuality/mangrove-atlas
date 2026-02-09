@@ -59,7 +59,7 @@ const SavedAreasContent = () => {
   const metaLocations = useMemo(() => locations?.meta, [locations]);
 
   return (
-    <div className="flex flex-col space-y-6">
+    <div className="flex flex-col space-y-6 text-black/85">
       {isLoadingUserLocations && <Loading />}
       {!isLoadingUserLocations && (
         <>

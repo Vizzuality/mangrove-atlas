@@ -1,5 +1,7 @@
 import { NextAPI, AuthAPI } from 'services/api';
 
+import API from 'services/api';
+
 // Types
 export type ResetPasswordPayload = { user: { email: string } };
 export type ResetPasswordUpdatePayload = {
@@ -39,9 +41,5 @@ export function signupUser(payload: SignupPayload) {
 }
 
 export function updateUser(payload: UpdateUserPayload, token: string) {
-  return NextAPI.put<UpdateUserResponse>('/auth/users', payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((r) => r.data);
+  return AuthAPI.put<UpdateUserResponse>('/users', payload, {}).then((r) => r.data);
 }
