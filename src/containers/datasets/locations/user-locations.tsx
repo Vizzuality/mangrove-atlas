@@ -1,7 +1,8 @@
 import API from 'services/api';
 import { useQuery, UseQueryOptions, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { Location, LocationTypes } from './types';
+import type { AxiosError } from 'axios';
+import type { Location } from './types';
 import { Polygon } from 'geojson';
 
 export interface UserLocation extends Location {
@@ -96,8 +97,6 @@ export function useGetUserLocation(
     ...queryOptions,
   });
 }
-
-import type { AxiosError } from 'axios';
 
 export const createUserLocation = async (body: UserLocationCreateBody) => {
   try {

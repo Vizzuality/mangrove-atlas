@@ -14,6 +14,7 @@ import WidgetDrawingTool from '@/containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from '@/containers/datasets/drawing-upload-tool';
 import FindLocations from '@/containers/navigation/find-locations';
 import Helper from '@/containers/help/helper';
+import SavedAreas from '@/containers/saved-areas';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -47,7 +48,7 @@ const LocationTools = () => {
     'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white';
 
   return (
-    <div className="mx-4 flex w-full items-center justify-center space-x-6 md:mx-auto">
+    <div className="mx-4 flex w-full items-center justify-center space-x-4 overflow-visible md:mx-auto">
       {/* RESET PAGE */}
       <Link href="/" onClick={handleReset}>
         <Helper
@@ -73,6 +74,9 @@ const LocationTools = () => {
 
       {/* UPLOAD SHAPEFILE */}
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />
+
+      {/* SAVED AREAS */}
+      <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
     </div>
   );
 };
