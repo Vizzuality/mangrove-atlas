@@ -82,7 +82,9 @@ export function useSignup() {
 
 export function usePutUpdateUser(token: string) {
   return useMutation<UpdateUserResponse, unknown, UpdateUserPayload>({
-    mutationFn: (payload) => updateUser(payload, token),
+    mutationFn: (payload) => {
+      return updateUser(payload, token);
+    },
 
     onSuccess: () => {
       toast.success('User details have been updated successfully.');
