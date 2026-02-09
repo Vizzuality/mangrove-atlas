@@ -22,16 +22,16 @@ const Toaster = ({ icon = false, ...props }: ToasterProps & { icon?: boolean }) 
         !icon
           ? undefined
           : {
-              success: <CheckCircledIcon className="size-4" />,
-              info: <InfoCircledIcon className="size-4" />,
-              warning: <ExclamationTriangleIcon className="size-4" />,
-              error: <Cross1Icon className="size-4" />,
-              loading: <ReloadIcon className="size-4 animate-spin" />,
+              success: <CheckCircledIcon className="text-brand-800 size-4 fill-current" />,
+              info: <InfoCircledIcon className="bg-brand-800 size-4" />,
+              warning: <ExclamationTriangleIcon className="bg-brand-800 size-4" />,
+              error: <Cross1Icon className="bg-brand-800 size-4" />,
+              loading: <ReloadIcon className="bg-brand-800 size-4 animate-spin" />,
             }
       }
       style={
         {
-          '--normal-bg': 'var(--popover)',
+          '--normal-bg': '#fff',
           '--normal-border': 'var(--border)',
           '--border-radius': 'var(--radius)',
         } as React.CSSProperties

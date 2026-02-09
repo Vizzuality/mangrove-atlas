@@ -1,10 +1,4 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  type UseQueryOptions,
-  type UseMutationOptions,
-} from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient, type UseQueryOptions } from '@tanstack/react-query';
 
 import API from 'services/api';
 
@@ -16,7 +10,7 @@ export type NotificationPreference = {
 };
 
 export type UserNotificationPreferencesResponse = {
-  notification_preferences: NotificationPreference[];
+  notification_preferences: NotificationPreference;
 };
 
 export type DataUserNotificationPreferencesToggleLocationAlerts = {

@@ -16,7 +16,6 @@ import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import { Icon } from 'components/ui/icon';
 
 import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
-import { Label } from 'recharts';
 
 const formSchema = z.object({
   username: z.string().min(1, { message: 'Please enter your name' }).optional(),
@@ -68,16 +67,13 @@ const AccountContent = () => {
       {
         user: {
           email,
-          password,
+          password: password || current_password,
           name: username,
           current_password,
           organization,
         },
       },
       {
-        onSuccess: () => {
-          push('/auth/users?verified=pending');
-        },
         onError: (error: any) => {
           const apiErrors = error?.response?.data?.errors;
 
@@ -241,7 +237,12 @@ const AccountContent = () => {
           <Button type="submit" disabled={updateUser.isLoading} className="h-9 font-semibold">
             {updateUser.isLoading ? 'Saving…' : 'Save changes'}
           </Button>
-          <Button type="button" onClick={handleLogout} className="h-9 font-semibold">
+          <Button
+            type="button"
+            onClick={handleLogout}
+            className="h-9 font-semibold"
+            variant="outline"
+          >
             Log out
           </Button>
         </div>
