@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getSession } from 'next-auth/react';
 
 const API = axios.create({
-  baseURL: `${process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL : process.env.NEXT_PUBLIC_API_URL_STAGING}/api/v2`,
+  baseURL: `${process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_URL : process.env.NEXT_PUBLIC_API_URL_STAGING}`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -48,8 +48,18 @@ export const NextAPI = axios.create({
 });
 
 export const AuthAPI = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_AUTH_URL}/users`,
+  baseURL: `${process.env.NEXT_PUBLIC_AUTH_URL}`,
   headers: { 'Content-Type': 'application/json' },
+});
+
+AuthAPI.interceptors.request.use(async (config) => {
+  const session = await getSession();
+  const token = (session as any)?.user?.accessToken;
+
+  config.headers = config.headers ?? new axios.AxiosHeaders();
+  if (token) config.headers.set('Authorization', `Bearer ${token}`);
+
+  return config;
 });
 
 export default API;

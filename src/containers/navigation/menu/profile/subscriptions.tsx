@@ -9,19 +9,20 @@ import {
 
 const SubscriptionsContent = () => {
   const { data } = useGetUserNotificationPreferences();
+
   const toggleMutation = usePostToggleLocationAlerts();
 
   const handleClickAlerts = () => {
     toggleMutation.mutate({
-      ...data?.notification_preferences[0],
-      location_alerts: data?.notification_preferences[0].location_alerts,
+      ...data?.notification_preferences,
+      location_alerts: data?.notification_preferences?.location_alerts,
     });
   };
 
   const handleClickWhatsNew = () => {
     return toggleMutation.mutate({
-      ...data?.notification_preferences[0],
-      newsletter: data?.notification_preferences[0].newsletter,
+      ...data?.notification_preferences,
+      newsletter: data?.notification_preferences?.newsletter,
     });
   };
 
@@ -37,7 +38,7 @@ const SubscriptionsContent = () => {
         <SwitchWrapper id="alerts">
           <SwitchRoot
             onClick={handleClickAlerts}
-            checked={data?.notification_preferences[0].location_alerts}
+            checked={data?.notification_preferences?.location_alerts}
           >
             <SwitchThumb />
           </SwitchRoot>
@@ -53,7 +54,7 @@ const SubscriptionsContent = () => {
         <SwitchWrapper id="alerts">
           <SwitchRoot
             onClick={handleClickWhatsNew}
-            checked={data?.notification_preferences[0].newsletter}
+            checked={data?.notification_preferences?.newsletter}
           >
             <SwitchThumb />
           </SwitchRoot>

@@ -63,8 +63,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'bg-blur group shadow-card z-2 w-full rounded-4xl bg-white px-1 py-1 md:ml-0 print:w-[90%]!':
-            true,
+          'bg-blur group shadow-card z-2 w-full rounded-4xl bg-white md:ml-0 print:w-[90%]!': true,
           'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
           'border-none p-0': info,
