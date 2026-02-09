@@ -21,6 +21,10 @@ import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
 import { trackEvent } from '@/lib/analytics/ga';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
+
+const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
+const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -114,7 +118,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
               Show legend
             </p>
 
-            <FaArrowUp className="mb-1" />
+            <FaArrowUpIcon className="mb-1" />
           </button>
 
           <AnimatePresence>
@@ -142,7 +146,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                   onClick={closeLegend}
                   className="absolute -top-8 right-5 -z-10 rounded-t-3xl bg-white p-2"
                 >
-                  <FaArrowDown />
+                  <FaArrowDownIcon />
                 </button>
               </motion.div>
             )}

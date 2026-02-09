@@ -1,4 +1,4 @@
-import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
+import { useQuery, UseQueryOptions, useQueryClient, useQueries } from '@tanstack/react-query';
 
 import API from 'services/api';
 
@@ -7,11 +7,6 @@ import type { Location, LocationTypes } from './types';
 export type DataResponse = {
   data: Location[];
   metadata: unknown;
-};
-
-export const HIGHLIGHTED_PLACES = {
-  rufiji: '0edd0ebb-892b-5774-8ce5-08e0ba7136b1',
-  saloum: '4a79230b-7ecb-58ae-ba0d-0f57faa2a104',
 };
 
 export const fetchLocations = () =>
@@ -40,11 +35,11 @@ export function useLocations<T = DataResponse>(
 }
 
 export function useLocation(
-  id: Location['location_id'],
+  id?: Location['location_id'],
   locationType?: LocationTypes,
   queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
 ) {
-  const _id = ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
+  const _id = locationType && ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
   return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
     placeholderData: { data: {} as DataResponse['data'][0] },
@@ -68,18 +63,31 @@ export function useLocation(
   });
 }
 
-export function useHighlightedPlaces(
-  queryOptions: UseQueryOptions<DataResponse, Error, Location[]> = {}
-) {
-  const queryClient = useQueryClient();
+export function useLocationsByIds(ids: Location['location_id'][], locationType?: LocationTypes) {
+  return useQueries({
+    queries: ids.map((id) => {
+      return {
+        queryKey: ['location', locationType, id],
+        queryFn: () => fetchLocation(id),
+        select: ({ data }) => {
+          if (locationType === 'custom-area') {
+            return {
+              name: 'the area selected',
+              id: 'custom-area',
+              iso: 'custom-area',
+              location_id: 'custom-area',
+              location_type: 'custom-area',
+            };
+          }
 
-  return useQuery(['highlighted-locations'], fetchLocations, {
-    placeholderData: queryClient.getQueryData(['locations']) || {
-      data: [],
-      metadata: null,
-    },
-    select: ({ data }) =>
-      data?.filter((d) => Object.values(HIGHLIGHTED_PLACES).includes(d.location_id)),
-    ...queryOptions,
+          if (data.location_type === 'worldwide') {
+            data.name = 'the world';
+          }
+
+          return data;
+        },
+        enabled: Boolean(id),
+      };
+    }),
   });
 }

@@ -15,6 +15,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        inter: ['var(--font-inter)', 'sans-serif'],
         sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
       },
       spacing: {

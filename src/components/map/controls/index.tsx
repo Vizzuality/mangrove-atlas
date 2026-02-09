@@ -11,9 +11,8 @@ export const Controls: FC<ControlsPropsWithChildren> = ({
   children,
 }: ControlsPropsWithChildren) => (
   <div
-    className={cn({
+    className={cn(className, {
       'flex flex-col space-y-2': true,
-      [className]: !!className,
     })}
   >
     {Children.map(children, (child) => child)}

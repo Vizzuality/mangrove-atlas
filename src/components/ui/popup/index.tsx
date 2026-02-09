@@ -30,11 +30,13 @@ const Popup = ({
     else return 'bottom';
   };
 
+  if (longitude === undefined || latitude === undefined) return null;
+
   return (
     <PopupReactMapGL
       anchor={anchor()}
-      longitude={longitude || null}
-      latitude={latitude || null}
+      longitude={longitude}
+      latitude={latitude}
       onClose={onClose}
       closeOnClick={false}
       className="relative min-w-fit p-0"

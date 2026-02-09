@@ -43,7 +43,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const cursor = useRecoilValue(mapCursorAtom);
 
-  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
+  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
   const { minZoom, maxZoom } = DEFAULT_PROPS;
 
@@ -67,17 +67,17 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
+      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
       ...(!URLBounds &&
         locationId && {
-          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
+          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
         }),
     }),
     [URLBounds, locationId, queryClient]
   );
 
-  const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    if (!locationBounds) return null;
+  const bounds = useMemo<CustomMapProps['bounds'] | undefined>(() => {
+    if (!locationBounds) return undefined;
 
     return {
       bbox: locationBounds,
@@ -112,8 +112,8 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
         onMapViewStateChange={handleViewState}
         bounds={bounds}
         interactiveLayerIds={[]}
-        onClick={null}
-        onMouseMove={null}
+        onClick={undefined}
+        onMouseMove={undefined}
         onLoad={handleMapLoad}
         cursor={cursor}
         preserveDrawingBuffer

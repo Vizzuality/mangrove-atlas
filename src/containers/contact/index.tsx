@@ -22,13 +22,13 @@ const Contact = ({ className }: { className?: string }) => {
         tooltipPosition={{ top: -40, left: 0 }}
         message=""
       > */}
-      <DialogTrigger className={cn({ [className]: !!className })}>Contact Us</DialogTrigger>
+      <DialogTrigger className={cn(className)}>Contact Us</DialogTrigger>
       {/* </Helper> */}
 
       <DialogContent
         data-testid="ContactForm-content"
         className={cn({
-          'font-sans md:mb-20 md:w-[436px]': true,
+          'font-sans md:mb-20 md:w-[540px]': true,
         })}
       >
         <div className="space-y-10 py-10">

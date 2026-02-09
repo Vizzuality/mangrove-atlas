@@ -19,6 +19,8 @@ import { trackEvent } from '@/lib/analytics/ga';
 import { HiX } from 'react-icons/hi';
 import { useEffect } from 'react';
 
+const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 const NewsTooltip = ({ handleClose }) => (
   <Tooltip>
     <TooltipTrigger>
@@ -48,7 +50,10 @@ const NewsTooltip = ({ handleClose }) => (
       <div className="max-w-xs space-y-1 sm:max-w-[280px]">
         <div className="flex items-center justify-between space-x-2 font-bold">
           <span className="text-xs uppercase">Tool updated!</span>
-          <HiX className="absolute top-2 right-2 h-4 w-4 font-extrabold" onClick={handleClose} />
+          <HiXIcon
+            className="absolute top-2 right-2 h-4 w-4 font-extrabold"
+            onClick={handleClose}
+          />
         </div>
         <p className="text-sm">
           A new version is live. See what’s been improved and discover the new features added to the

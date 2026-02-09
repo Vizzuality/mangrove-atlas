@@ -131,33 +131,35 @@ const getData = (data) =>
     data?.map((d) => {
       const year = Number(d.date.value.split('-', 1)[0]);
       const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
-      const day = new Date(year, month.value, 0).getDate();
+      const day = month ? new Date(year, month.value, 0).getDate() : 0;
 
-      const lastDay = new Date(year, month.value, 0).getDate();
+      const lastDay = month ? new Date(year, month.value, 0).getDate() : 0;
 
       return {
         ...d,
         month,
         year,
-        date: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
-        end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+        date: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-${day}`,
+        end: month ? `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}` : '',
         start: d.date.value,
-        title: month.label,
-        name: `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
-          'en',
-          {
-            year: '2-digit',
-          }
-        )}`,
+        title: month?.label ?? '',
+        name: month
+          ? `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
+              'en',
+              {
+                year: '2-digit',
+              }
+            )}`
+          : '',
         alerts: d.count,
-        label: `${month.label}, ${year}`,
+        label: `${month?.label ?? ''}, ${year}`,
         startDate: {
-          label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-01`,
+          label: `${month?.label ?? ''}, ${year}`,
+          value: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-01`,
         },
         endDate: {
-          label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${lastDay}`,
+          label: `${month?.label ?? ''}, ${year}`,
+          value: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-${lastDay}`,
         },
       };
     }),
@@ -189,61 +191,78 @@ const DefaultTick = ({ x, y, payload }) => {
 const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
 
-export function useAlerts<DataResponse>(
-  startDate: { label: string; value: string },
-  endDate: { label: string; value: string },
+type DateOption = { label: string; value: string };
+
+type AlertsApiItem = any; // { date: { value: string }; count: number; ... }
+type AlertsApiResponse = AlertsApiItem[];
+
+export function useAlerts<TRaw = AlertsApiResponse>(
+  startDate?: DateOption,
+  endDate?: DateOption,
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
-  queryOptions?: UseQueryOptions<DataResponse, Error, AlertData>,
+  queryOptions?: Omit<
+    UseQueryOptions<TRaw, Error, AlertData | undefined, (string | unknown)[]>,
+    'queryKey' | 'queryFn' | 'select'
+  >,
   onCancel?: () => void
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
+
   const {
     query: { params: queryParams },
   } = useRouter();
 
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
-  const {
-    data: { location_id },
-  } = useLocation(id, locationType);
+
+  const { data } = useLocation(id, locationType);
+  const location_id = data?.location_id;
+
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
-  const fetchAlerts = () => {
-    if (isAnalysisRunning) {
-      return API_cloud_functions.request({
-        method: 'POST',
-        url: '/fetch-alerts',
-        data: {
-          ...dataParams,
-        },
-      })
-        .then((response: AxiosResponse<DataResponse>) => {
-          return response.data;
-        })
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          throw new Error('Error fetching alerts');
+  const fetchAlerts = async (): Promise<TRaw> => {
+    try {
+      if (isAnalysisRunning) {
+        const response = await API_cloud_functions.request<TRaw>({
+          method: 'POST',
+          url: '/fetch-alerts',
+          data: { ...dataParams },
         });
-    }
+        return response.data;
+      }
 
-    if (!isAnalysisRunning) {
-      return API_cloud_functions.request({
+      const response = await API_cloud_functions.request<TRaw>({
         method: 'GET',
         url: '/fetch-alerts',
         params: {
           location_id,
           ...params,
         },
-      }).then((response) => response.data);
+      });
+      return response.data;
+    } catch (err) {
+      const e = err as CanceledError<unknown> | AxiosError;
+      if ((e as any)?.code === 'ERR_CANCELED') onCancel?.();
+      throw new Error('Error fetching alerts');
     }
   };
 
-  return useQuery(['alerts', params, location_id], fetchAlerts, {
-    select: (data) => {
-      if (!data) return undefined;
-      const fullData = getData(data);
+  return useQuery<TRaw, Error, AlertData | undefined>({
+    queryKey: ['alerts', params, location_id],
+    queryFn: fetchAlerts,
+    enabled: (queryOptions?.enabled ?? true) && !!location_id, // avoid calling without location_id
+    select: (raw): AlertData | undefined => {
+      // IMPORTANT: raw is TRaw (your API response), not AlertData
+      if (!raw) return undefined;
+
+      // if your raw is an array, keep this:
+      const rawArray = raw as unknown as AlertsApiResponse;
+      if (!Array.isArray(rawArray) || rawArray.length === 0) return undefined;
+
+      const fullData = getData(rawArray); // make sure getData expects the API array
+      if (!fullData.length) return undefined;
 
       const startDateOptions = fullData.map((d) => d.startDate);
       const endDateOptions = fullData.map((d) => d.endDate);
@@ -251,17 +270,15 @@ export function useAlerts<DataResponse>(
       const defaultStartDate = startDateOptions[0];
       const defaultEndDate = endDateOptions[endDateOptions.length - 1];
 
-      const selectedStartDate = startDate || defaultStartDate;
-      const selectedEndDate = endDate || defaultEndDate;
+      const selectedStartDate = startDate ?? defaultStartDate;
+      const selectedEndDate = endDate ?? defaultEndDate;
 
       if (selectedEndDate) setEndDate(selectedEndDate);
       if (selectedStartDate) setStartDate(selectedStartDate);
 
-      const dataFiltered =
-        Array.isArray(data) &&
-        data.filter(
-          (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
-        );
+      const dataFiltered = rawArray.filter(
+        (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+      );
 
       const fixedXAxis = fullData.map((d) => d.year);
 
@@ -277,10 +294,7 @@ export function useAlerts<DataResponse>(
         type: 'line',
         dataKey: 'alerts',
         height: 350,
-        cartesianGrid: {
-          vertical: false,
-          horizontal: false,
-        },
+        cartesianGrid: { vertical: false, horizontal: false },
         margin: { top: 50, right: 10, left: 10, bottom: 35 },
         label: 'alerts',
         xKey: 'name',
@@ -318,38 +332,20 @@ export function useAlerts<DataResponse>(
             },
           },
         },
-        xAxis: {
-          tick: TickSmall,
-          type: 'category',
-        },
+        xAxis: { tick: TickSmall, type: 'category' },
         yAxis: {
-          tick: {
-            fontSize: 10,
-            fill: 'rgba(0,0,0,0.54)',
-          },
-
+          tick: { fontSize: 10, fill: 'rgba(0,0,0,0.54)' },
           width: 40,
           interval: 0,
           orientation: 'right',
           value: 'alerts',
           label: ({ viewBox }: { viewBox: CartesianViewBox }) => {
             const { x, y } = viewBox;
-
+            if (x == null || y == null) return null; // <-- don’t use !x / !y
             return (
               <g>
-                <text
-                  x={x + 20}
-                  y={y - 40}
-                  className="recharts-text recharts-label-medium"
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                >
-                  <tspan
-                    alignmentBaseline="middle"
-                    fill="rgba(0,0,0,0.24)"
-                    stroke="rgba(0,0,0,0.24)"
-                    fontSize="12"
-                  >
+                <text x={x + 20} y={y - 40} textAnchor="middle" dominantBaseline="central">
+                  <tspan fill="rgba(0,0,0,0.24)" stroke="rgba(0,0,0,0.24)" fontSize="12">
                     Alerts
                   </tspan>
                 </text>
@@ -359,30 +355,22 @@ export function useAlerts<DataResponse>(
           type: 'number',
         },
         tooltip: {
-          content: (properties) => {
-            return <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />;
-          },
+          content: (properties: any) => (
+            <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />
+          ),
         },
       };
+
       const configBrush = {
         type: 'line',
         dataKey: 'alerts',
         height: 100,
-        cartesianGrid: {
-          vertical: false,
-          horizontal: false,
-        },
+        cartesianGrid: { vertical: false, horizontal: false },
         referenceAreas: [
+          { x1: 0, x2: 11, y1: -100, y2: 480, fill: 'url(#diagonal-stripe-1) #000' },
           {
-            x1: 0,
-            x2: 11,
-            y1: -100,
-            y2: 480,
-            fill: 'url(#diagonal-stripe-1) #000',
-          },
-          {
-            x1: startDate?.value,
-            x2: endDate?.value,
+            x1: selectedStartDate?.value,
+            x2: selectedEndDate?.value,
             y1: -100,
             y2: 480,
             fill: '#fff',
@@ -400,28 +388,11 @@ export function useAlerts<DataResponse>(
               height: 6,
             },
             children: {
-              rect2: {
-                tag: 'rect',
-                x: 0,
-                y: 0,
-                width: 4,
-                height: 6,
-                transform: 'translate(0,0)',
-                fill: '#d2d2d2',
-              },
-              rect: {
-                tag: 'rect',
-                x: 0,
-                y: 0,
-                width: 3,
-                height: 6,
-                transform: 'translate(0,0)',
-                fill: '#fff',
-              },
+              rect2: { tag: 'rect', x: 0, y: 0, width: 4, height: 6, fill: '#d2d2d2' },
+              rect: { tag: 'rect', x: 0, y: 0, width: 3, height: 6, fill: '#fff' },
             },
           },
         },
-
         xKey: 'year',
         data: makeColoredSeries(addMonthsSince(fullData)),
         chartBase: {
@@ -439,27 +410,21 @@ export function useAlerts<DataResponse>(
           interval: 0,
           type: 'category',
         },
-
         tooltip: false,
-        customBrush: {
-          margin: { top: 60, right: 20, left: 15, bottom: 80 },
-          startIndex,
-          endIndex,
-        },
+        customBrush: { margin: { top: 60, right: 20, left: 15, bottom: 80 }, startIndex, endIndex },
       };
 
-      if (!fullData.length) return undefined;
       return {
         alertsTotal: formatAxis(alertsTotal),
         startDateOptions,
-        selectedStartDate,
-        config,
-        fullData,
-        configBrush,
-        selectedEndDate,
         endDateOptions,
+        selectedStartDate,
+        selectedEndDate,
         defaultStartDate,
         defaultEndDate,
+        fullData,
+        config,
+        configBrush,
       };
     },
     ...queryOptions,

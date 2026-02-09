@@ -30,7 +30,7 @@ export const URLboundsAtom = atom({
 });
 
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL
-export const locationBoundsAtom = atom<[number, number, number, number]>({
+export const locationBoundsAtom = atom<[number, number, number, number] | null>({
   key: 'locationBounds',
   default: null,
 });
