@@ -6,8 +6,6 @@ import cn from '@/lib/classnames';
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 
-import { HiMinus, HiPlus, HiChevronDown, HiChevronUp } from 'react-icons/hi';
-
 const Collapsible = CollapsiblePrimitive.Root;
 
 const CollapsibleTrigger = forwardRef<
@@ -33,47 +31,91 @@ const CollapsibleTrigger = forwardRef<
       {children}
 
       {iconType === 'plus-minus' && (
-        <HiMinus
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
           className={cn({
-            'text-brand-800 h-6 w-6 group-data-[state=closed]:hidden group-data-[state=open]:block':
+            'text-brand-800 lucide lucide-minus-icon lucide-minus h-6 w-6 group-data-[state=closed]:hidden group-data-[state=open]:block':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}
-        />
+        >
+          <path d="M5 12h14" />
+        </svg>
       )}
 
       {iconType === 'plus-minus' && (
-        <HiPlus
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className={cn({
-            'text-brand-800 h-6 w-6 group-data-[state=closed]:block group-data-[state=open]:hidden':
+            'text-brand-800 lucide lucide-minus-icon lucide-minus h-6 w-6 group-data-[state=closed]:block group-data-[state=open]:hidden':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}
-        />
+        >
+          <path d="M5 12h14" />
+        </svg>
       )}
 
       {iconType === 'arrow' && (
-        <HiChevronDown
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className={cn({
-            'text-brand-800 h-4 w-4 group-data-[state=closed]:block group-data-[state=open]:hidden':
+            'text-brand-800 lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4 group-data-[state=closed]:block group-data-[state=open]:hidden':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}
-        />
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
       )}
 
       {iconType === 'arrow' && (
-        <HiChevronUp
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className={cn({
-            'text-brand-800 h-4 w-4 group-data-[state=closed]:hidden group-data-[state=open]:block':
+            'text-brand-800 lucide lucide-chevron-up-icon lucide-chevron-up h-4 w-4 group-data-[state=closed]:hidden group-data-[state=open]:block':
               true,
             'h-6 w-6': iconSize === 'md',
             'h-4 w-4': iconSize === 'sm',
           })}
-        />
+        >
+          <path d="m18 15-6-6-6 6" />
+        </svg>
       )}
     </CollapsiblePrimitive.Trigger>
   );

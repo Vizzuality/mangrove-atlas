@@ -13,6 +13,11 @@ import {
 
 import { LuChevronDown, LuLanguages } from 'react-icons/lu';
 
+const LuChevronDownIcon = LuChevronDown as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => JSX.Element;
+const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 interface Transifex {
   live: {
     detectLanguage: () => string;
@@ -65,7 +70,7 @@ const LanguageSelector = ({
   return (
     <Helper
       className={{
-        button: '-right-4 top-0',
+        button: 'top-0 -right-4',
         tooltip: 'w-fit-content max-w-[400px]',
       }}
       tooltipPosition={{ top: -50, left: 0 }}
@@ -74,14 +79,14 @@ const LanguageSelector = ({
       <DropdownMenu>
         <DropdownMenuTrigger
           className={cn(
-            'flex items-center space-x-2 whitespace-nowrap font-semibold',
+            'flex items-center space-x-2 font-semibold whitespace-nowrap',
             THEME[theme],
             className
           )}
         >
-          <LuLanguages className="h-5 w-5 shrink-0" />
+          <LuLanguagesIcon className="h-5 w-5 shrink-0" />
           <span className="text-sm">{currentLanguage}</span>
-          {hasArrow && <LuChevronDown className="h-4 w-4" />}
+          {hasArrow && <LuChevronDownIcon className="h-4 w-4" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
           {languages?.map((lang: { code: string; name: string }) => (
@@ -91,13 +96,13 @@ const LanguageSelector = ({
                 id={lang.name}
                 value={lang.code}
                 type="button"
-                className="w-full cursor-pointer px-2 py-1 text-left hover:bg-brand-800/20"
+                className="hover:bg-brand-800/20 w-full cursor-pointer px-2 py-1 text-left"
                 onClick={handleChange}
               >
                 <span
                   className={cn({
                     'font-sans text-sm text-black/85': true,
-                    'font-semibold text-brand-800': currentLanguage === lang.name,
+                    'text-brand-800 font-semibold': currentLanguage === lang.name,
                   })}
                 >
                   {lang.name}

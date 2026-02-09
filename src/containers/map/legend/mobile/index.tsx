@@ -9,6 +9,10 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { useRecoilValue } from 'recoil';
 
 import LegendItem from '../item';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
+
+const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
+const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
 
 const Legend = () => {
   const activeLayers = useRecoilValue(activeLayersAtom);
@@ -44,7 +48,7 @@ const Legend = () => {
               Show legend
             </p>
 
-            <FaArrowUp className="mb-1" />
+            <FaArrowUpIcon className="mb-1" />
           </button>
 
           <AnimatePresence>
@@ -68,7 +72,7 @@ const Legend = () => {
                   onClick={closeLegend}
                   className="absolute -top-[30px] right-5 z-50 rounded-t-3xl bg-white p-2"
                 >
-                  <FaArrowDown />
+                  <FaArrowDownIcon />
                 </button>
               </div>
             </motion.div>

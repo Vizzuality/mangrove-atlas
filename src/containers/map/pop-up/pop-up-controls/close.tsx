@@ -10,6 +10,8 @@ type MapPopupCloseProps = {
   setPosition: (value: Position | null) => void;
 };
 
+const HixIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 const MapPopupClose = ({ setPosition }: MapPopupCloseProps) => {
   const setPin = useSetRecoilState(mapDraggableTooltipPinnedAtom);
   const handleClick = useCallback(() => {
@@ -26,7 +28,7 @@ const MapPopupClose = ({ setPosition }: MapPopupCloseProps) => {
           className="focus-visible:ring-brand-500 cursor-pointer rounded-md text-gray-500 hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus-visible:ring-2"
           onClick={handleClick}
         >
-          <HiX className="text-brand-800 h-5 w-5" />
+          <HixIcon className="text-brand-800 h-5 w-5" />
         </button>
       </TooltipTrigger>
       <TooltipContent className="rounded bg-gray-700 px-2 py-1 text-sm text-white shadow">

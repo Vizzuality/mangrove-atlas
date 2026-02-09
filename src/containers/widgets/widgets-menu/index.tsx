@@ -21,6 +21,8 @@ import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 import { trackEvent } from '@/lib/analytics/ga';
 
+const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
@@ -135,7 +137,7 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
 
@@ -152,7 +154,7 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
           <p
@@ -188,7 +190,7 @@ const WidgetsMenu: FC = () => {
               >
                 {enabledWidgets.includes(slug) && (
                   <CheckboxIndicator>
-                    <FaCheck
+                    <FaCheckIcon
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeWidgets.includes(slug),
@@ -213,7 +215,7 @@ const WidgetsMenu: FC = () => {
                   })}
                 >
                   <CheckboxIndicator>
-                    <FaCheck
+                    <FaCheckIcon
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeLayersIds?.includes(slug),

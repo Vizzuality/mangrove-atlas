@@ -3,7 +3,10 @@ import cn from '@/lib/classnames';
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import { CgRadioCheck } from 'react-icons/cg';
 
+const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => JSX.Element;
+
 import type { RadioOption } from '../types';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
 
 const RadioGroupItem = ({
   option,
@@ -24,7 +27,7 @@ const RadioGroupItem = ({
       id={option.value}
     >
       <RadioGroup.Indicator className="flex items-center justify-center">
-        <CgRadioCheck className="text-brand-800 h-2.5 w-2.5" />
+        <RadioCheckIcon className="text-brand-800 h-2.5 w-2.5" />
       </RadioGroup.Indicator>
     </RadioGroup.Item>
     {label && (

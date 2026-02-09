@@ -11,6 +11,10 @@ type MapPopupDragProps = {
   handleClickToDocker?: (e: React.MouseEvent) => void;
 };
 
+const MdOutlineDragHandleIcon = MdOutlineDragHandle as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => JSX.Element;
+
 const MapPopupDragHandler = ({
   listeners,
   attributes,
@@ -28,7 +32,7 @@ const MapPopupDragHandler = ({
           onMouseDown={(e) => e.stopPropagation()}
           onDoubleClick={handleClickToDocker}
         >
-          <MdOutlineDragHandle
+          <MdOutlineDragHandleIcon
             className="text-brand-800 mt-3 ml-6 h-6 w-6"
             onClick={handleClickToDocker}
           />

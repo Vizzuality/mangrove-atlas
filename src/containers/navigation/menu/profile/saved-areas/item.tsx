@@ -5,6 +5,8 @@ import cn from '@/lib/classnames';
 import { useState } from 'react';
 import { LuX } from 'react-icons/lu';
 
+const LuXIcon = LuX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 const SAVED_AREAS = [
   'worldwide',
   '0afabe7c-db39-55b4-b9ca-44e72af46be5',
@@ -37,7 +39,7 @@ const LocationItem = ({ name }) => {
         className="border-brand/80 text-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1"
         onClick={handleClick}
       >
-        <LuX className="h-5 w-5 stroke-2" />
+        <LuXIcon className="h-5 w-5 stroke-2" />
       </button>
     </li>
   );

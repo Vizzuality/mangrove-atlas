@@ -10,6 +10,10 @@ import ContactForm from '@/containers/contact';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from 'components/ui/collapsible';
 
+const HiChevronDownIcon = HiChevronDown as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => JSX.Element;
+
 const RESOURCES_LINKS = [
   {
     label: 'Restoration Best Practices',
@@ -90,7 +94,7 @@ const ResourcesMenu = ({ setSection }) => {
         <CollapsibleTrigger iconType={null} className="p-0">
           <div className="text-2lg hover:text-brand-800 flex w-full items-center space-x-4 font-light">
             <span className={cn({ 'text-brand-800': isOpen })}>Resources</span>
-            <HiChevronDown
+            <HiChevronDownIcon
               className={cn({
                 'h-4 w-4 stroke-[1px]': true,
                 'text-brand-800 rotate-180': isOpen,

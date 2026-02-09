@@ -9,6 +9,8 @@ import {
 
 import { LuLanguages } from 'react-icons/lu';
 
+const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+
 interface Transifex {
   live: {
     detectLanguage: () => string;
@@ -48,7 +50,7 @@ const LanguageSelector = () => {
     <div className="flex h-full flex-col items-center">
       <DropdownMenu>
         <DropdownMenuTrigger className="flex h-full flex-col items-center space-y-1 pt-1 text-white">
-          <LuLanguages className="h-8 w-8" />
+          <LuLanguagesIcon className="h-8 w-8" />
           <span className="text-xxs">{currentLanguage}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
