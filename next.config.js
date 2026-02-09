@@ -24,9 +24,9 @@ const nextConfig = {
     defaultLocale: 'en',
     localeDetection: false,
   },
-  publicRuntimeConfig: {
-    TxNativePublicToken: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-  },
+  // publicRuntimeConfig: {
+  //   TxNativePublicToken: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
+  // },
   productionBrowserSourceMaps: false,
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
@@ -70,6 +70,11 @@ const nextConfig = {
       {
         source: '/blog/:path*',
         destination: `https://www.wetlands.org/:path*`,
+      },
+
+      {
+        source: '/proxy/:path*',
+        destination: `${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}/auth/login/:path*`,
       },
     ];
   },

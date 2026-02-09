@@ -1,5 +1,5 @@
-import cn from 'lib/classnames';
-import { numberFormat } from 'lib/format';
+import cn from '@/lib/classnames';
+import { numberFormat } from '@/lib/format';
 type TooltipProps = {
   payload: {
     name: string;
@@ -18,7 +18,7 @@ const Tooltip: React.FC = ({ active, payload = [] }: TooltipProps) => {
   if (!active) return null;
 
   return (
-    <div className="space-y-2 rounded-2xl bg-white py-2 px-6 font-sans text-sm shadow-lg">
+    <div className="space-y-2 rounded-2xl bg-white px-6 py-2 font-sans text-sm shadow-lg">
       <p className="flex justify-center">{payload[0]?.payload?.category}</p>
 
       {/* recharts organic order is from bottom to top for the stacked bars and from top to bottom in tooltip, using reverse to show tooltip values from bottom to top */}

@@ -4,28 +4,34 @@ import { useCallback, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { HiChevronDown } from 'react-icons/hi';
-import { HiCheck } from 'react-icons/hi2';
+
 import { z } from 'zod';
 
 import { TOPICS } from './constants';
 
-import { Button } from 'components/ui/button';
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
-import { Label } from 'components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from 'components/ui/select';
-import { trackEvent } from 'lib/analytics/ga';
+} from '@/components/ui/select';
+import { trackEvent } from '@/lib/analytics/ga';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';
@@ -139,20 +145,38 @@ export function ContactForm() {
                   open={isOpen}
                 >
                   <FormControl>
-                    <SelectTrigger className="focus-visible:ring-ring flex h-9 w-full rounded-3xl border border-black/15 py-0 px-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-800 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                    <SelectTrigger className="focus-visible:ring-ring focus:ring-brand-800 flex h-9 w-full rounded-3xl border border-black/15 px-3 py-0 text-sm focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50">
                       <SelectValue placeholder="Select" />
-                      <HiChevronDown
+                      {/* <LuChevronDown
                         className={cn({
                           'h-4 w-4': true,
                           'rotate-180': isOpen,
                         })}
-                      />
+                    
+                      /> */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className={cn({
+                          'lucide lucide-chevron-down-icon lucide-chevron-down h-4 w-4': true,
+                          'rotate-180': isOpen,
+                        })}
+                      >
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
                       <span className="sr-only">Select</span>
                     </SelectTrigger>
                   </FormControl>
                   <FormMessage />
                   <SelectContent
-                    className="top-2 left-1 z-[90] w-[var(--radix-select-trigger-width)] rounded-3xl border bg-white p-4 text-sm font-light shadow-sm"
+                    className="top-2 left-1 z-90 w-(--radix-select-trigger-width) rounded-3xl border bg-white p-4 text-sm font-light shadow-sm"
                     position="item-aligned"
                   >
                     <div className="space-y-4">
@@ -217,7 +241,21 @@ export function ContactForm() {
                         checked={field.value}
                       >
                         <CheckboxIndicator className="bg-brand-800">
-                          <HiCheck className="stroke-2 text-white" />
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            className="lucide lucide-circle-check-icon lucide-circle-check stroke-2 text-white"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="m9 12 2 2 4-4" />
+                          </svg>
                         </CheckboxIndicator>
                       </Checkbox>
                       <Label htmlFor="privacyPolicy" className="cursor-pointer">

@@ -1,11 +1,11 @@
 import React, { ReactElement, cloneElement } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { SortableItemProps } from 'components/map/legend/types';
+import { SortableItemProps } from '@/components/map/legend/types';
 
 export const SortableItem: React.FC<SortableItemProps> = ({
   id,

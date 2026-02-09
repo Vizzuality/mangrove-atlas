@@ -106,12 +106,12 @@ export default defineConfig([
               group: 'builtin',
             },
             {
-              pattern: 'lib/**',
+              pattern: '@/lib/**',
               group: 'external',
               position: 'before',
             },
             {
-              pattern: 'store/**',
+              pattern: '@/store/**',
               group: 'external',
               position: 'before',
             },
@@ -121,17 +121,17 @@ export default defineConfig([
               position: 'before',
             },
             {
-              pattern: 'layouts/**',
+              pattern: '@/layouts/**',
               group: 'internal',
               position: 'before',
             },
             {
-              pattern: 'containers/**',
+              pattern: '@/containers/**',
               group: 'internal',
               position: 'before',
             },
             {
-              pattern: 'components/**',
+              pattern: '@/components/**',
               group: 'internal',
             },
             {
@@ -145,7 +145,7 @@ export default defineConfig([
               position: 'after',
             },
             {
-              pattern: 'svgs/**',
+              pattern: '@/svgs/**',
               group: 'internal',
               position: 'after',
             },

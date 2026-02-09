@@ -2,18 +2,18 @@ import { MouseEvent } from 'react';
 
 import Image from 'next/image';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { basemapAtom } from 'store/map';
+import { basemapAtom } from '@/store/map';
 
 import { useRecoilState } from 'recoil';
 
-import BASEMAPS, { BasemapId } from 'containers/datasets/contextual-layers/basemaps';
+import BASEMAPS, { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import Icon from 'components/ui/icon';
+import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
+import Icon from '@/components/ui/icon';
 
-import CHECK_SVG from 'svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
 
 const BasemapsMapSettings = () => {
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
@@ -46,7 +46,7 @@ const BasemapsMapSettings = () => {
             />
             <Checkbox
               className={cn({
-                'absolute bottom-2 right-2 h-6 w-6 rounded-full border-none': true,
+                'absolute right-2 bottom-2 h-6 w-6 rounded-full border-none': true,
               })}
               checked={basemapStored === id}
             >
@@ -63,7 +63,7 @@ const BasemapsMapSettings = () => {
           <span
             className={cn({
               'flex-1 cursor-pointer py-1 text-center text-sm text-black/85': true,
-              'font-semibold text-brand-800': basemapStored === id,
+              'text-brand-800 font-semibold': basemapStored === id,
             })}
           >
             {name}

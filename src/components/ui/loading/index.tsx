@@ -1,13 +1,13 @@
 import { FC } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import cx from 'classnames';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import LOADING_SVG from 'svgs/ui/loading.svg?sprite';
+import LOADING_SVG from '@/svgs/ui/loading.svg?sprite';
 
 import type { LoadingProps } from './types';
 export const Loading: FC<LoadingProps> = ({
@@ -28,9 +28,8 @@ export const Loading: FC<LoadingProps> = ({
         key="loading"
         {...variants}
         transition={transition}
-        className={cx({
+        className={cx(className, {
           'opacity-50': true,
-          [className]: !!className,
         })}
       >
         <Icon

@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from 'store/map';
+import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from '@/store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
 import type { LngLatBoundsLike } from 'mapbox-gl';
@@ -13,13 +13,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 
-import BASEMAPS from 'containers/datasets/contextual-layers/basemaps';
-import LayerManager from 'containers/map/layer-manager';
-import Legend from 'containers/map/legend';
+import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
+import LayerManager from '@/containers/map/layer-manager';
+import Legend from '@/containers/map/legend';
 
-import Map from 'components/map';
-import { CustomMapProps } from 'components/map/types';
-import { breakpoints } from 'styles/styles.config';
+import Map from '@/components/map';
+import { CustomMapProps } from '@/components/map/types';
+import { breakpoints } from '@/styles/styles.config';
 
 export const DEFAULT_PROPS = {
   initialViewState: {
@@ -43,7 +43,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const cursor = useRecoilValue(mapCursorAtom);
 
-  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap).url, [basemap]);
+  const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
   const { minZoom, maxZoom } = DEFAULT_PROPS;
 
@@ -67,17 +67,17 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const initialViewState: MapboxProps['initialViewState'] = useMemo(
     () => ({
       ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds && { bounds: URLBounds as LngLatBoundsLike }),
+      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
       ...(!URLBounds &&
         locationId && {
-          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || null,
+          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
         }),
     }),
     [URLBounds, locationId, queryClient]
   );
 
-  const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    if (!locationBounds) return null;
+  const bounds = useMemo<CustomMapProps['bounds'] | undefined>(() => {
+    if (!locationBounds) return undefined;
 
     return {
       bbox: locationBounds,
@@ -112,15 +112,15 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
         onMapViewStateChange={handleViewState}
         bounds={bounds}
         interactiveLayerIds={[]}
-        onClick={null}
-        onMouseMove={null}
+        onClick={undefined}
+        onMouseMove={undefined}
         onLoad={handleMapLoad}
         cursor={cursor}
         preserveDrawingBuffer
       >
         {() => <LayerManager />}
       </Map>
-      <div className="absolute bottom-11 right-6 z-50 mr-0.5">
+      <div className="absolute right-6 bottom-11 z-50 mr-0.5">
         <Legend embedded />
       </div>
     </div>

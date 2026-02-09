@@ -8,16 +8,16 @@ import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import type { Visibility } from 'mapbox-gl';
 
-import { COLORS, variables } from 'containers/datasets/drivers-change/constants';
-import Tooltip from 'containers/datasets/drivers-change/tooltip';
+import { COLORS, variables } from '@/containers/datasets/drivers-change/constants';
+import Tooltip from '@/containers/datasets/drivers-change/tooltip';
 import type {
   ColorKeysTypes,
   Data,
   DataResponse,
   DriversChangeData,
-} from 'containers/datasets/drivers-change/types';
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+} from '@/containers/datasets/drivers-change/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API from 'services/api';
 

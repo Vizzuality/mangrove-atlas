@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import {
   Dialog,
@@ -10,11 +10,11 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
-import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from 'components/ui/tooltip';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
+import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
 
-import SHARE_SVG from 'svgs/map/share.svg?sprite';
+import SHARE_SVG from '@/svgs/map/share.svg?sprite';
 
 export const Share = ({
   className,
@@ -43,7 +43,7 @@ export const Share = ({
 
   const copyShareLink = useCallback(() => {
     navigator.clipboard
-      .writeText(currentUrl)
+      .writeText(currentUrl || '')
       .then(() => {
         setShareLinkBtnText('Copied');
         setTimeout(function () {
@@ -58,7 +58,7 @@ export const Share = ({
   const copyEmbeddedCode = useCallback(
     () =>
       navigator.clipboard
-        .writeText(embeddedLink)
+        .writeText(embeddedLink || '')
         .then(() => {
           setShareEmbedCodeBtnText('Copied');
           setTimeout(function () {
@@ -80,9 +80,8 @@ export const Share = ({
               <DialogTrigger>
                 <div
                   className={cn({
-                    'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                    'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
-                    [className]: !!className,
                   })}
                 >
                   <Icon
@@ -98,11 +97,11 @@ export const Share = ({
                 <div className="flex w-[480px] flex-col space-y-5">
                   <div className="flex flex-col space-y-1">
                     <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>
-                    <div className="flex h-12 items-center justify-between space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
+                    <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">
                       <p className="truncate">{currentUrl}</p>
                       <button
                         onClick={copyShareLink}
-                        className="whitespace-nowrap rounded-3xl border border-brand-800/20 py-1 px-5 font-semibold text-brand-800 hover:bg-brand-800/20"
+                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
                       >
                         {shareLinkBtnText}
                       </button>
@@ -110,11 +109,11 @@ export const Share = ({
                   </div>
                   <div>
                     <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
-                    <div className="flex h-12 items-center space-x-4 rounded-3xl bg-brand-600/10 p-4 text-sm">
+                    <div className="bg-brand-600/10 flex h-12 items-center space-x-4 rounded-3xl p-4 text-sm">
                       <p className="truncate">{embeddedLink}</p>
                       <button
                         onClick={copyEmbeddedCode}
-                        className="whitespace-nowrap rounded-3xl border border-brand-800/20 py-1 px-5 font-semibold text-brand-800 hover:bg-brand-800/20"
+                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
                       >
                         {shareEmbedCodeBtnText}
                       </button>
@@ -132,10 +131,9 @@ export const Share = ({
         <Tooltip>
           <TooltipTrigger>
             <div
-              className={cn({
-                'group inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white shadow-control hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+              className={cn(className, {
+                'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                   true,
-                [className]: !!className,
               })}
             >
               <Icon

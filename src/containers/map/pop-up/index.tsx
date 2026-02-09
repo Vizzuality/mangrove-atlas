@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 import { isEmpty } from 'lodash-es';
 
 import {
@@ -7,42 +7,40 @@ import {
   coordinatesAtom,
   mapDraggableTooltipPinnedAtom,
   mapDraggableTooltipDimensionsAtom,
-} from 'store/map';
+} from '@/store/map';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useMap } from 'react-map-gl';
 import { MapboxGeoJSONFeature } from 'mapbox-gl';
 
-import Draggable from 'components/draggable';
-import { ScrollArea } from 'components/ui/scroll-area';
+import Draggable from '@/components/draggable';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 // POPUPS
-import type { IUCNEcoregionPopUpInfo } from 'containers/datasets/iucn-ecoregion/types';
-import IucnEcoregionPopup from 'containers/datasets/iucn-ecoregion/map-popup';
-import LocationPopup from 'containers/datasets/locations/map-popup';
-import RestorationSitesPopup from 'containers/datasets/restoration-sites/map-pop-up';
-import RestorationPopup from 'containers/datasets/restoration/map-popup';
+import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
+import IucnEcoregionPopup from '@/containers/datasets/iucn-ecoregion/map-popup';
+import LocationPopup from '@/containers/datasets/locations/map-popup';
+import RestorationSitesPopup from '@/containers/datasets/restoration-sites/map-pop-up';
+import RestorationPopup from '@/containers/datasets/restoration/map-popup';
 
 import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupClose from './pop-up-controls/close';
 import MapPopupPin from './pop-up-controls/pin';
-import { is } from 'date-fns/locale';
-import { max } from 'date-fns';
 
 type Position = { x: number; y: number };
 
 type MapPopupProps = {
   mapId: string;
   locationInfo: {
-    info: LocationPopUp;
+    info: LocationPopUp | null;
     position?: Position;
-    feature: MapboxGeoJSONFeature;
+    feature: MapboxGeoJSONFeature | null;
   };
-  restorationInfo: { info: RestorationPopUp };
-  restorationsitesInfo: { info: RestorationSitesPopUp };
-  iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo };
+  restorationInfo: { info: RestorationPopUp | null };
+  restorationsitesInfo: { info: RestorationSitesPopUp | null };
+  iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo | null };
 };
 
 const MapPopup = ({
@@ -67,7 +65,7 @@ const MapPopup = ({
       e.stopPropagation();
 
       if (isPinned) {
-        const point = map?.project([coordinates.lng, coordinates.lat]);
+        const point = coordinates ? map?.project([coordinates.lng, coordinates.lat]) : null;
         setPosition(point ?? null);
         setPin(false);
       }
@@ -87,8 +85,8 @@ const MapPopup = ({
       popUpRef.current.getBoundingClientRect().height;
       popUpRef.current.getBoundingClientRect().width;
       setMapDraggableTooltipDimensions((prev) => ({
-        h: popUpRef.current.getBoundingClientRect().height,
-        w: popUpRef.current.getBoundingClientRect().width,
+        h: popUpRef?.current?.getBoundingClientRect()?.height || 0,
+        w: popUpRef?.current?.getBoundingClientRect()?.width || 0,
       }));
     }
   }, [
@@ -102,7 +100,7 @@ const MapPopup = ({
   if (!locationInfo.info) return null;
 
   const maxHeight = useMemo(() => {
-    return `calc(${window.innerHeight - position?.y - 20}px)`;
+    return `calc(${window.innerHeight - (position?.y ?? 0) - 20}px)`;
   }, [position?.y]);
 
   return (
@@ -113,8 +111,8 @@ const MapPopup = ({
           className={cn(
             'shadow-popup absolute z-50 flex flex-col overflow-hidden rounded-3xl border bg-white transition-all duration-300',
             'w-fit-content flex grow flex-col border-gray-300',
-            isPinned && 'border-2 border-brand-800 shadow-md sm:w-[532px]',
-            flash && 'ring-2 ring-brand-400'
+            isPinned && 'border-brand-800 border-2 shadow-md sm:w-[532px]',
+            flash && 'ring-brand-400 ring-2'
           )}
           onMouseDown={(e) => e.stopPropagation()}
           onClick={(e) => e.stopPropagation()}
@@ -128,17 +126,17 @@ const MapPopup = ({
               handleClickToDocker={handleClickToDocker}
             />
 
-            <div className="mr-6 mt-3 flex items-center justify-end space-x-4">
+            <div className="mt-3 mr-6 flex items-center justify-end space-x-4">
               <MapPopupPin handleClickToDocker={handleClickToDocker} isPinned={isPinned} />
               <MapPopupClose setPosition={setPosition} />
             </div>
           </div>
 
           {/* Pop-up content */}
-          <ScrollArea className="relative flex grow flex-col overflow-y-auto overflow-x-hidden">
+          <ScrollArea className="relative flex grow flex-col overflow-x-hidden overflow-y-auto">
             {/* Gradients */}
-            <div className="pointer-events-none absolute top-0 left-0 right-0 z-10 h-8 bg-gradient-to-b from-white to-transparent" />
-            <div className="pointer-events-none absolute bottom-0 left-6 right-6 z-10 h-8 bg-gradient-to-t from-white to-transparent" />
+            <div className="pointer-events-none absolute top-0 right-0 left-0 z-10 h-8 bg-linear-to-b from-white to-transparent" />
+            <div className="pointer-events-none absolute right-6 bottom-0 left-6 z-10 h-8 bg-linear-to-t from-white to-transparent" />
 
             <div
               className="relative min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white"
@@ -148,8 +146,10 @@ const MapPopup = ({
                 locationPopUpInfo={locationInfo}
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
               />
-              {restorationInfo?.info && <RestorationPopup {...restorationInfo} />}
-              {restorationsitesInfo?.info && <RestorationSitesPopup {...restorationsitesInfo} />}
+              {restorationInfo?.info && <RestorationPopup info={restorationInfo.info} />}
+              {restorationsitesInfo?.info && (
+                <RestorationSitesPopup info={restorationsitesInfo.info} />
+              )}
               {iucnEcoregionInfo.info && <IucnEcoregionPopup info={iucnEcoregionInfo.info} />}
             </div>
           </ScrollArea>

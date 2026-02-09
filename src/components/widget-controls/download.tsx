@@ -1,4 +1,4 @@
-import { DOWNLOAD } from 'containers/datasets';
+import { DOWNLOAD } from '@/containers/datasets';
 
 import {
   Dialog,
@@ -6,14 +6,14 @@ import {
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from 'components/ui/dialog';
-import Icon from 'components/ui/icon';
+} from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import DOWNLOAD_SVG from 'svgs/ui/download.svg?sprite';
+import DOWNLOAD_SVG from '@/svgs/ui/download.svg?sprite';
 
-import Helper from 'containers/help/helper';
+import Helper from '@/containers/help/helper';
 import { HELPER_POSITION } from './constants';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
 
 /**
  * Download component
@@ -67,7 +67,7 @@ const Download = ({ id, content }) => {
         message="Use this function to download spatial data associated with this widget and map layer. Links may point to external sources. Not all data layers are available for download. "
       >
         <DialogTrigger className="flex h-full items-center">
-          <Icon icon={DOWNLOAD_SVG} className="h-7.5 w-7.5 text-brand-800" description="Download" />
+          <Icon icon={DOWNLOAD_SVG} className="text-brand-800 h-7.5 w-7.5" description="Download" />
         </DialogTrigger>
       </Helper>
       <DialogContent>
@@ -76,7 +76,7 @@ const Download = ({ id, content }) => {
           {id && <DownloadInfo />}
           {content && !id && (
             <div className="flex flex-col items-start justify-start space-y-4">
-              <h2 className="font-black/85 text-3xl font-light leading-10">Download Data</h2>
+              <h2 className="font-black/85 text-3xl leading-10 font-light">Download Data</h2>
               <p className="text-sm font-extralight text-black/85">{content.description}</p>
               {content.link && (
                 <a
@@ -84,7 +84,7 @@ const Download = ({ id, content }) => {
                   href={content.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-bold text-brand-800 underline"
+                  className="text-brand-800 font-bold underline"
                 >
                   {content.name || content.link}
                 </a>

@@ -8,18 +8,18 @@ export type DataResponse = {
   data: {
     date: { label: string; value: number };
   };
-  selectedStartDate: string;
-  endDateOptions: { label: string; value: number }[];
+  selectedStartDate: DateOption['value'];
+  endDateOptions: DateOption[];
 };
 
 export type CustomAreaGeometry = { geometry: GeoJSON.FeatureCollection };
 
 export interface AlertData {
   alertsTotal: string;
-  startDateOptions: { label: string; value: string }[];
-  selectedStartDate: { label: string; value: string };
-  endDateOptions: { label: string; value: string }[];
-  selectedEndDate: { label: string; value: string };
+  startDateOptions: DateOption[];
+  selectedStartDate: DateOption;
+  endDateOptions: DateOption[];
+  selectedEndDate: DateOption;
   config: unknown;
   configBrush: {
     customBrush: {
@@ -27,7 +27,7 @@ export interface AlertData {
       endIndex: number;
     };
   };
-  defaultStartDate: { label: string; value: string };
-  defaultEndDate: { label: string; value: string };
+  defaultStartDate: DateOption;
+  defaultEndDate: DateOption;
   fullData: unknown;
 }

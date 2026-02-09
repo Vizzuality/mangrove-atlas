@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from 'components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import { MdOutlineDragHandle } from 'react-icons/md';
 
@@ -6,10 +6,14 @@ import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { DraggableAttributes } from '@dnd-kit/core';
 
 type MapPopupDragProps = {
-  listeners: SyntheticListenerMap;
+  listeners: SyntheticListenerMap | undefined;
   attributes: DraggableAttributes;
   handleClickToDocker?: (e: React.MouseEvent) => void;
 };
+
+const MdOutlineDragHandleIcon = MdOutlineDragHandle as unknown as (
+  p: React.SVGProps<SVGSVGElement>
+) => JSX.Element;
 
 const MapPopupDragHandler = ({
   listeners,
@@ -28,8 +32,8 @@ const MapPopupDragHandler = ({
           onMouseDown={(e) => e.stopPropagation()}
           onDoubleClick={handleClickToDocker}
         >
-          <MdOutlineDragHandle
-            className="ml-6 mt-3 h-6 w-6 text-brand-800"
+          <MdOutlineDragHandleIcon
+            className="text-brand-800 mt-3 ml-6 h-6 w-6"
             onClick={handleClickToDocker}
           />
         </button>

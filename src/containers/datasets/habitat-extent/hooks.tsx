@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import { useRouter } from 'next/router';
 
-import { numberFormat } from 'lib/format';
+import { numberFormat } from '@/lib/format';
 
-import { analysisAtom } from 'store/analysis';
-import { drawingToolAtom, drawingUploadToolAtom } from 'store/drawing-tool';
+import { analysisAtom } from '@/store/analysis';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -16,10 +16,10 @@ import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
 
-import CustomTooltip from 'components/chart/tooltip';
+import CustomTooltip from '@/components/chart/tooltip';
 import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';
@@ -50,35 +50,38 @@ export function useMangroveHabitatExtent(
 
   const geojson = customGeojson || uploadedGeojson;
 
-  const fetchHabitatExtent = ({ signal }: { signal?: AbortSignal }) => {
-    if (isAnalysisEnabled) {
-      return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
-        method: 'post',
-        url: '/analysis',
-        data: {
-          geometry: geojson,
-        },
-        params: {
-          'widgets[]': 'mangrove_extent',
-        },
-        signal,
-      })
-        .then(({ data }) => data['mangrove_extent'])
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          return err;
-        });
-    }
+  const fetchHabitatExtent = useCallback(
+    ({ signal }: { signal?: AbortSignal }) => {
+      if (isAnalysisEnabled) {
+        return AnalysisAPI.request<AnalysisResponse<DataResponse> | AxiosError>({
+          method: 'post',
+          url: '/analysis',
+          data: {
+            geometry: geojson,
+          },
+          params: {
+            'widgets[]': 'mangrove_extent',
+          },
+          signal,
+        })
+          .then(({ data }) => data['mangrove_extent'])
+          .catch((err: CanceledError<unknown> | AxiosError) => {
+            if (err.code === 'ERR_CANCELED') onCancel?.();
+            return err;
+          });
+      }
 
-    return API.request<DataResponse>({
-      method: 'GET',
-      url: 'widgets/habitat_extent',
-      params: {
-        ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
-        ...params,
-      },
-    }).then((response) => response.data);
-  };
+      return API.request<DataResponse>({
+        method: 'GET',
+        url: 'widgets/habitat_extent',
+        params: {
+          ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
+          ...params,
+        },
+      }).then((response) => response.data);
+    },
+    [isAnalysisEnabled, geojson, location_id, currentLocation, params, onCancel]
+  );
 
   const query = useQuery([widgetSlug, location_id, geojson], fetchHabitatExtent, {
     placeholderData: {

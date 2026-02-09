@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import {
   PieChart,
@@ -70,13 +70,13 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
   } = config;
 
   const { pies, bars, lines, bar } = chartBase;
-  const Chart = ChartsMap.get(type);
+  const ChartComponent = ChartsMap.get(type) as React.ElementType;
 
   return (
     <div
       className={cn({
         'relative h-full w-full': true,
-        [className]: !!className,
+        className,
       })}
     >
       <ResponsiveContainer
@@ -84,7 +84,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
         height={height || 250}
         className="relative w-full flex-1"
       >
-        <Chart
+        <ChartComponent
           stackOffset={stackOffset}
           height={height}
           width={width}
@@ -203,7 +203,7 @@ const Chart = ({ config, className }: { config: any; className?: string }) => {
               alwaysShowText={false}
             />
           )} */}
-        </Chart>
+        </ChartComponent>
       </ResponsiveContainer>
       {customBrush && (
         <Brush

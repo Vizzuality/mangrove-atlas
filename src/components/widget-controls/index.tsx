@@ -1,4 +1,4 @@
-import { DOWNLOAD, INFO, LAYERS } from 'containers/datasets';
+import { DOWNLOAD, INFO, LAYERS } from '@/containers/datasets';
 
 import type { WidgetSlugType } from 'types/widget';
 
@@ -20,9 +20,9 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const WidgetControls = ({ id, content }: WidgetControlsType) => {
-  const download = DOWNLOAD[id] || content;
-  const info = INFO[id] || content?.description;
-  const layer = LAYERS[id] || content?.layer;
+  const download = id ? DOWNLOAD?.[id] : content;
+  const info = id ? INFO?.[id] : content?.description;
+  const layer = id ? LAYERS?.[id] : content?.layer;
 
   return (
     <div className="flex items-center space-x-2 print:hidden">

@@ -2,7 +2,7 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import type { Visibility } from 'mapbox-gl';
 
-import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from 'containers/datasets/contextual-layers/basemaps-planet/hooks';
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
 
 export function useSource({ year }): SourceProps & { key: string } {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(

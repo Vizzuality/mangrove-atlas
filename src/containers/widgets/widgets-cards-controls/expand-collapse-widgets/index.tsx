@@ -1,16 +1,16 @@
 import { useCallback, FC } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { widgetsCollapsedAtom } from 'store/widgets';
+import { widgetsCollapsedAtom } from '@/store/widgets';
 
 import { useRecoilState } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
-import Helper from 'containers/help/helper';
-import { widgets } from 'containers/widgets/constants';
+import Helper from '@/containers/help/helper';
+import { widgets } from '@/containers/widgets/constants';
 
-import { breakpoints } from 'styles/styles.config';
+import { breakpoints } from '@/styles/styles.config';
 
 const ExpandCollapseWidgets: FC = () => {
   const { width: screenWidth } = useWindowSize();
@@ -45,7 +45,7 @@ const ExpandCollapseWidgets: FC = () => {
         type="button"
         data-testid="expand-collapse-button"
         className={cn({
-          'h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold text-brand-800 shadow-control transition-colors disabled:text-opacity-60 md:ml-0 md:w-[262px]':
+          'text-brand-800 shadow-control disabled:text-opacity-60 h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold transition-colors md:ml-0 md:w-[262px]':
             true,
           'bg-white': widgetsCollapsedChecker,
           'print:hidden': screenWidth >= breakpoints.md,

@@ -2,29 +2,27 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { printModeState } from 'store/print-mode';
+import { printModeState } from '@/store/print-mode';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useLocation } from 'containers/datasets/locations/hooks';
-import type { LocationTypes } from 'containers/datasets/locations/types';
-import MapContainer from 'containers/map';
-import WelcomeIntroMessage from 'containers/welcome-message';
-import WidgetsContainer from 'containers/widgets';
+import { useLocation } from '@/containers/datasets/locations/hooks';
+import type { LocationTypes } from '@/containers/datasets/locations/types';
+import MapContainer from '@/containers/map';
+import WelcomeIntroMessage from '@/containers/welcome-message';
+import WidgetsContainer from '@/containers/widgets';
 import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import {
   mapDraggableTooltipDimensionsAtom,
   mapDraggableTooltipPinnedAtom,
   mapDraggableTooltipPositionAtom,
-} from 'store/map';
+} from '@/store/map';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
-import { is } from 'date-fns/locale';
+import Logo from 'components/logo';
 
 const DesktopLayout = () => {
   const map = useMap();
@@ -90,21 +88,14 @@ const DesktopLayout = () => {
           },
         }}
       >
-        <Link
-          href="/"
-          className="pointer-events-auto fixed top-0 right-0 z-[800]"
-          draggable={false}
+        <Logo
+          src="/images/logo-bg.png"
+          position="top-right"
+          width={186}
+          height={216}
           onClick={handleReset}
-        >
-          <Image
-            src="/images/logo-bg.png"
-            alt="Logo Global Mangrove Watch"
-            width={186}
-            height={216}
-            draggable={false}
-            priority={true}
-          />
-        </Link>
+        />
+
         <div className="relative h-screen w-screen">
           {isPrintingMode && (
             <div className="print:absolute print:top-6 print:z-50 print:text-black">

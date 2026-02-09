@@ -1,10 +1,10 @@
-import { activeGuideAtom } from 'store/guide';
+import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilState } from 'recoil';
 
-import { Icon } from 'components/ui/icon';
+import { Icon } from '@/components/ui/icon';
 
-import CLOSE_SVG from 'svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
 
 export const CloseHelpGuide = () => {
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);

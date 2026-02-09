@@ -1,13 +1,13 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
 import { Float } from '@headlessui-float/react';
 import { Listbox } from '@headlessui/react';
 
-import Icon from 'components/ui/icon';
+import Icon from '@/components/ui/icon';
 
-import ARROW_SVG from 'svgs/ui/arrow.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
 
 import THEME from './constants/theme';
 import { Option } from './option';
@@ -119,7 +119,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                 <p className="flex w-full items-center space-x-2">
                   <span className="first-letter:uppercase">{name}</span>
                   {!!selected.length && (
-                    <span className="rounded-full bg-brand-800 px-2 text-xxs text-white">
+                    <span className="bg-brand-800 text-xxs rounded-full px-2 text-white">
                       {selected.length}
                     </span>
                   )}
@@ -127,7 +127,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                 <Icon
                   icon={ARROW_SVG}
                   className={cn({
-                    'h-3.5 w-3.5 shrink-0 fill-current text-brand-800': true,
+                    'text-brand-800 h-3.5 w-3.5 shrink-0 fill-current': true,
                     'rotate-180 delay-200': open,
                   })}
                   description="Arrow"
@@ -150,7 +150,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                 >
                   {batchSelectionActive && (
                     <button
-                      className="text-grey-20 whitespace-nowrap py-2 text-left underline"
+                      className="text-grey-20 py-2 text-left whitespace-nowrap underline"
                       type="button"
                       onClick={handleSelectAll}
                     >
@@ -160,7 +160,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                   {clearSelectionActive && (
                     <button
-                      className="whitespace-nowrap py-2 text-left underline"
+                      className="py-2 text-left whitespace-nowrap underline"
                       type="button"
                       onClick={handleClearAll}
                     >
@@ -178,12 +178,12 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
 
                 {groups &&
                   groups.map((g) => {
-                    const groupOptions = options.filter((o) => o.group === g.value);
+                    const groupOptions = options?.filter((o) => o.group === g.value);
 
                     return (
                       <div key={g.value}>
                         <h3 className="py-2 pl-3 text-xs font-bold">{g.label}</h3>
-                        {groupOptions.map((opt) => {
+                        {groupOptions?.map((opt) => {
                           return <Option key={opt.value} opt={opt} theme={theme} />;
                         })}
                       </div>
@@ -191,7 +191,7 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                   })}
 
                 {!groups &&
-                  options.map((opt) => {
+                  options?.map((opt) => {
                     return <Option key={opt.value} opt={opt} theme={theme} />;
                   })}
               </Listbox.Options>

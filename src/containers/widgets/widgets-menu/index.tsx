@@ -1,25 +1,27 @@
 import React, { useCallback, FC } from 'react';
 
-import cn from 'lib/classnames';
+import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from 'store/layers';
-import { activeCategoryAtom } from 'store/sidebar';
-import { activeWidgetsAtom } from 'store/widgets';
+import { activeLayersAtom } from '@/store/layers';
+import { activeCategoryAtom } from '@/store/sidebar';
+import { activeWidgetsAtom } from '@/store/widgets';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
 import type { Visibility } from 'mapbox-gl';
 import { FaCheck } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 
-import { LAYERS } from 'containers/layers/constants';
-import { widgets as rawWidgets } from 'containers/widgets/constants';
-import { useWidgetsIdsByLocation } from 'containers/widgets/hooks';
-import { findCategoryByWidgets } from 'containers/widgets/utils';
+import { LAYERS } from '@/containers/layers/constants';
+import { widgets as rawWidgets } from '@/containers/widgets/constants';
+import { useWidgetsIdsByLocation } from '@/containers/widgets/hooks';
+import { findCategoryByWidgets } from '@/containers/widgets/utils';
 
-import { CheckboxIndicator } from 'components/ui/checkbox';
+import { CheckboxIndicator } from '@/components/ui/checkbox';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
-import { trackEvent } from 'lib/analytics/ga';
+import { trackEvent } from '@/lib/analytics/ga';
+
+const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
 const WidgetsMenu: FC = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
@@ -115,7 +117,7 @@ const WidgetsMenu: FC = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold uppercase tracking-[1px]">
+      <div className="grid grid-cols-[57px_42px_auto] gap-4 text-xs font-bold tracking-[1px] uppercase">
         <div>Widget</div>
         <div>Layer</div>
         <div>Name</div>
@@ -135,7 +137,7 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
 
@@ -152,13 +154,13 @@ const WidgetsMenu: FC = () => {
             })}
           >
             <CheckboxIndicator>
-              <FaCheck className="h-2.5 w-2.5 fill-current font-bold text-white" />
+              <FaCheckIcon className="h-2.5 w-2.5 fill-current font-bold text-white" />
             </CheckboxIndicator>
           </Checkbox>
           <p
             className={cn({
               'col-span-4 col-start-3 col-end-6': true,
-              'font-bold text-brand-800':
+              'text-brand-800 font-bold':
                 LAYERS.length === activeLayers?.length && widgets.length === activeWidgets.length,
             })}
           >
@@ -188,7 +190,7 @@ const WidgetsMenu: FC = () => {
               >
                 {enabledWidgets.includes(slug) && (
                   <CheckboxIndicator>
-                    <FaCheck
+                    <FaCheckIcon
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeWidgets.includes(slug),
@@ -213,7 +215,7 @@ const WidgetsMenu: FC = () => {
                   })}
                 >
                   <CheckboxIndicator>
-                    <FaCheck
+                    <FaCheckIcon
                       className={cn({
                         'h-2.5 w-2.5 fill-current font-bold': true,
                         'text-white': activeLayersIds?.includes(slug),
@@ -225,7 +227,7 @@ const WidgetsMenu: FC = () => {
               <p
                 className={cn({
                   'col-span-4 col-start-3 col-end-6': true,
-                  'font-bold text-brand-800':
+                  'text-brand-800 font-bold':
                     activeLayersIds?.includes(slug) || activeWidgets.includes(slug),
                   'opacity-40': !enabledWidgets.includes(slug),
                 })}
