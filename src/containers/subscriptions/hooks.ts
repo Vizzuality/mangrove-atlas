@@ -2,21 +2,15 @@ import { useQuery, useMutation, useQueryClient, type UseQueryOptions } from '@ta
 
 import API from 'services/api';
 
-export type NotificationPreference = {
-  description: string;
-  location_alerts: boolean;
-  newsletter: boolean;
-  platform_updates: boolean;
-};
-
-export type UserNotificationPreferencesResponse = {
-  notification_preferences: NotificationPreference;
-};
-
 export type DataUserNotificationPreferencesToggleLocationAlerts = {
   location_alerts: boolean;
   platform_updates: boolean;
   newsletter: boolean;
+};
+
+export type UserNotificationPreferencesResponse = {
+  data: DataUserNotificationPreferencesToggleLocationAlerts;
+  isPending: boolean;
 };
 
 // ---------------------
