@@ -28,7 +28,7 @@ export default function ForgotPasswordPage() {
   function onSubmit(values: { email: string }) {
     form.clearErrors('email');
     resetPassword.mutate(
-      { user: { email: values.email } },
+      { user: { email: values.email, source: 'gmw' } },
       {
         onError: (e) => {
           form.setError('email', {
