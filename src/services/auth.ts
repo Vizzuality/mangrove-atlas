@@ -28,12 +28,12 @@ export type UpdateUserResponse =
 // Functions
 export function requestPasswordReset(payload: ResetPasswordPayload) {
   console.info('Requesting password reset for:', payload, AuthAPI.defaults.baseURL);
-  return AuthAPI.post<ResetPasswordResponse>('/password', payload).then((r) => r.data);
+  return AuthAPI.post<ResetPasswordResponse>('/users/password', payload).then((r) => r.data);
 }
 
 export function updatePassword(payload: ResetPasswordUpdatePayload) {
   console.info('Updating password for:', payload, AuthAPI.defaults.baseURL);
-  return AuthAPI.put<ResetPasswordResponse>('/password', payload).then((r) => r.data);
+  return AuthAPI.put<ResetPasswordResponse>('/users/password', payload).then((r) => r.data);
 }
 
 export function signupUser(payload: SignupPayload) {
