@@ -15,7 +15,7 @@ const SubscriptionsContent = () => {
   const handleClickAlerts = () => {
     toggleMutation.mutate({
       ...data?.notification_preferences,
-      location_alerts: data?.notification_preferences?.location_alerts,
+      location_alerts: !data?.notification_preferences?.location_alerts,
     });
   };
 
@@ -38,7 +38,7 @@ const SubscriptionsContent = () => {
         <SwitchWrapper id="alerts">
           <SwitchRoot
             onClick={handleClickAlerts}
-            checked={data?.notification_preferences?.location_alerts}
+            checked={!!data?.notification_preferences?.location_alerts}
           >
             <SwitchThumb />
           </SwitchRoot>

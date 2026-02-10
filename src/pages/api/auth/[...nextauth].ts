@@ -15,7 +15,7 @@ const domain = process.env.NODE_ENV === 'production' ? '.globalmangrovewatch.org
 
 declare module 'next-auth' {
   interface User {
-    accessToken?: string;
+    accessToken: string;
     organization?: string;
     id?: string;
   }
