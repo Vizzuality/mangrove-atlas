@@ -37,9 +37,8 @@ const Home = () => {
 
 const ALLOWED_LOCATION_TYPES = ['custom-area'];
 
-const queryClient = new QueryClient();
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const queryClient = new QueryClient();
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
   const locationType = ctx.params?.params?.[0];
   const locationId = ctx.params?.params?.[1];
@@ -61,47 +60,40 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   const safeSession = normalizedSession ? JSON.parse(JSON.stringify(normalizedSession)) : null;
 
-  if (locationId) {
-    try {
-      const response = await API.get<{ data: DataResponse['data'][0] }>(`/locations/${locationId}`);
-      if (response.status === 200) {
-        queryClient.setQueryData(['location', locationType, locationId], {
-          data: response.data.data,
-        });
-
-        if (!URLBounds) {
-          queryClient.setQueryData(['location-bounds'], turfBbox(response.data.data.bounds));
-        }
-
-        return {
-          props: {
-            dehydratedState: dehydrate(queryClient),
-            session: safeSession || null,
-          },
-        };
-      } else {
-        return {
-          notFound: true,
-        };
-      }
-    } catch (e) {
-      console.error(e);
-      return {
-        notFound: true,
-      };
-    }
+  if (locationType && !ALLOWED_LOCATION_TYPES.includes(locationType)) {
+    return { notFound: true };
   }
 
-  if (locationType && !ALLOWED_LOCATION_TYPES?.includes(locationType)) {
-    return {
-      notFound: true,
-    };
+  if (locationId) {
+    try {
+      await queryClient.prefetchQuery({
+        queryKey: ['location', locationType, locationId],
+        queryFn: async () => {
+          const res = await API.get<{ data: DataResponse['data'][0] }>(`/locations/${locationId}`);
+          return { data: res.data.data };
+        },
+      });
+
+      if (!URLBounds) {
+        const cached = queryClient.getQueryData<{ data: DataResponse['data'][0] }>([
+          'location',
+          locationType,
+          locationId,
+        ]);
+
+        if (cached?.data?.bounds) {
+          queryClient.setQueryData(['location-bounds'], turfBbox(cached.data.bounds));
+        }
+      }
+    } catch {
+      return { notFound: true };
+    }
   }
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      session: safeSession || null,
+      session: safeSession ? JSON.parse(JSON.stringify(safeSession)) : null,
     },
   };
 };
