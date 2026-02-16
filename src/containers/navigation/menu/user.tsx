@@ -33,11 +33,12 @@ export const UserMenu = ({ setSection }) => {
         </>
       )}
 
-      {session.status !== 'authenticated' && (
-        <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
-          Log in
-        </Link>
-      )}
+      {session.status !== 'authenticated' &&
+        process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS === 'true' && (
+          <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
+            Log in
+          </Link>
+        )}
       <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
     </div>
   );
