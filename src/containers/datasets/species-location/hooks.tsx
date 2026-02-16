@@ -8,7 +8,7 @@ import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import type { QueryObserverOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
@@ -76,6 +76,7 @@ export function useLayer({
   return [
     {
       id: `${id}-border`,
+      source: 'species_location-source',
       'source-layer': 'Species_richness',
       type: 'line',
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],
@@ -90,6 +91,7 @@ export function useLayer({
     },
     {
       id,
+      source: 'species_location-source',
       'source-layer': 'Species_richness',
       type: 'fill',
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],

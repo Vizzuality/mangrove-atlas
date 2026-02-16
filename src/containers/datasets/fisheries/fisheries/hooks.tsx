@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { formatAxis, numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -180,6 +180,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'fisheries',
     paint: {
       'raster-opacity': opacity,
     },

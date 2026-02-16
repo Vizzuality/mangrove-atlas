@@ -7,7 +7,7 @@ import { activeCategoryAtom } from '@/store/sidebar';
 import { activeWidgetsAtom } from '@/store/widgets';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { FaCheck } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 

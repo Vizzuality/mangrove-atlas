@@ -3,7 +3,7 @@ import type { LayerProps, RasterSource } from 'react-map-gl';
 import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -100,6 +100,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'mangrove_commercial_fisheries_production-source',
     paint: {
       'raster-opacity': opacity,
     },

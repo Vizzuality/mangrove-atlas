@@ -10,10 +10,17 @@ import { analysisAtom } from '@/store/analysis';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse, CanceledError } from 'axios';
-import type { Visibility } from 'mapbox-gl';
+import { AxiosError, CanceledError } from 'axios';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import type {
+  CircleLayerSpecification,
+  ExpressionSpecification,
+  FilterSpecification,
+} from 'mapbox-gl';
+
+import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -23,6 +30,13 @@ import API_cloud_functions from 'services/cloud-functions';
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
+
+function monthsAgoYMD(n: number) {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  d.setUTCMonth(d.getUTCMonth() - n);
+  return d.toISOString().slice(0, 10); // YYYY-MM-DD
+}
 
 const bucketKey = (m: number) => {
   if (m < 3) return 'lt3';
@@ -42,7 +56,7 @@ const makeColoredSeries = (data: any[]) => {
   ] as const;
 
   // init keys as null
-  const base = data.map((d) => ({
+  const layerKeys = data.map((d) => ({
     ...d,
     alerts_lt3: null,
     alerts_3to6: null,
@@ -52,8 +66,8 @@ const makeColoredSeries = (data: any[]) => {
   }));
 
   // assign each point to its bucket
-  for (let i = 0; i < base.length; i++) {
-    const d = base[i];
+  for (let i = 0; i < layerKeys.length; i++) {
+    const d = layerKeys[i];
     const b = bucketKey(d.monthsSinceDetection);
 
     const k =
@@ -71,9 +85,9 @@ const makeColoredSeries = (data: any[]) => {
   }
 
   // stitch boundaries: when bucket changes, copy the boundary point to both series
-  for (let i = 1; i < base.length; i++) {
-    const prev = base[i - 1];
-    const curr = base[i];
+  for (let i = 1; i < layerKeys.length; i++) {
+    const prev = layerKeys[i - 1];
+    const curr = layerKeys[i];
 
     const prevB = bucketKey(prev.monthsSinceDetection);
     const currB = bucketKey(curr.monthsSinceDetection);
@@ -107,7 +121,7 @@ const makeColoredSeries = (data: any[]) => {
     }
   }
 
-  return base;
+  return layerKeys;
 };
 
 const monthIndex = (year: number, month1to12: number) => year * 12 + (month1to12 - 1);
@@ -432,17 +446,12 @@ export function useAlerts<TRaw = AlertsApiResponse>(
 }
 
 // dataset layer
-export function useSources(): SourceProps[] {
-  const startDate = useRecoilValue(alertsStartDate);
-  const endDate = useRecoilValue(alertsEndDate);
-
-  return [
-    {
-      id: 'alerts-heatmap-vector',
-      type: 'vector',
-      url: 'mapbox://globalmangrovewatch.bkhacq4t',
-    },
-  ];
+export function useSource(): SourceProps {
+  return {
+    id: 'alerts-heatmap-vector',
+    type: 'vector',
+    url: 'mapbox://globalmangrovewatch.bkhacq4t',
+  };
 }
 
 export function useLayers({
@@ -450,70 +459,84 @@ export function useLayers({
   opacity,
   visibility = 'visible',
 }: {
-  id: LayerProps['id'];
+  id: string;
   opacity?: number;
   visibility?: Visibility;
-}): {
-  'alerts-heatmap-vector': LayerProps[];
-} {
-  return {
-    'alerts-heatmap-vector': [
-      {
-        id: `${id}-heatmap`,
-        type: 'heatmap',
-        source: 'alerts-heatmap-vector',
-        'source-layer': 'alerts_data',
-        maxzoom: 18,
-        paint: {
-          'heatmap-weight': [
-            'interpolate',
-            ['linear'],
-            ['coalesce', ['to-number', ['get', 'months_diff']], 76],
+}): CircleLayerSpecification[] {
+  const cutoff3 = monthsAgoYMD(3);
+  const cutoff6 = monthsAgoYMD(6);
+  const cutoff12 = monthsAgoYMD(12);
+  const cutoff24 = monthsAgoYMD(24);
 
-            1,
-            1.0, // newest
-            3,
-            0.9,
-            6,
-            0.75,
-            12,
-            0.55,
-            24,
-            0.35,
-            36,
-            0.2,
-            60,
-            0.08,
-            76,
-            0.02, // oldest
-          ],
+  const radius: ExpressionSpecification = ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 6, 14, 10];
 
-          'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-
-          'heatmap-color': [
-            'interpolate',
-            ['linear'],
-            ['heatmap-density'],
-            0,
-            'rgba(0,0,0,0)',
-            0.2,
-            '#FFC201',
-            0.45,
-            '#F78E1C',
-            0.65,
-            '#ED4F3F',
-            0.85,
-            '#DC3982',
-            1,
-            '#C62AD6',
-          ],
-
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 9, 25],
-          'heatmap-opacity': opacity ?? 1,
-        },
-
-        layout: { visibility },
-      },
-    ],
+  const layerProps: Omit<CircleLayerSpecification, 'id' | 'filter' | 'paint'> = {
+    type: 'circle',
+    source: 'alerts-heatmap-vector',
+    'source-layer': 'alerts_data',
+    minzoom: 0,
+    maxzoom: 18,
+    layout: { visibility },
   };
+
+  const paintProps: CircleLayerSpecification['paint'] = {
+    'circle-radius': radius,
+    'circle-opacity': opacity ?? 1,
+  };
+
+  return [
+    {
+      ...layerProps,
+      id: `${id}-gt24`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['<', ['get', 'scr5_obs_date'], cutoff24],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#FFC201' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-12-24`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff24],
+        ['<', ['get', 'scr5_obs_date'], cutoff12],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#F78E1C' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-6-12`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff12],
+        ['<', ['get', 'scr5_obs_date'], cutoff6],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#ED4F3F' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-3-6`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff6],
+        ['<', ['get', 'scr5_obs_date'], cutoff3],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#DC3982' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-lt3`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff3],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#C62AD6' },
+    },
+  ];
 }

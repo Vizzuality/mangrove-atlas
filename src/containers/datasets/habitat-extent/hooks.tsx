@@ -11,7 +11,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';

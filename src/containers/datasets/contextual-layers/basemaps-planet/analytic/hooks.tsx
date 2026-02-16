@@ -1,6 +1,6 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
 
@@ -32,6 +32,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'planet_medres_analytic_monthly',
     paint: {
       'raster-opacity': opacity,
     },
