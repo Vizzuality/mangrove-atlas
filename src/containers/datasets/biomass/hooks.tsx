@@ -12,7 +12,7 @@ import { BiomassYearSettings } from '@/store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -194,6 +194,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'aboveground_biomass-source',
     paint: {
       'raster-opacity': opacity,
     },

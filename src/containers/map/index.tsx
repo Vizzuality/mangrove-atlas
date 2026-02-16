@@ -382,6 +382,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         }
       }
     }
+
     if (!restorationFeature) {
       map?.removeFeatureState({
         sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',

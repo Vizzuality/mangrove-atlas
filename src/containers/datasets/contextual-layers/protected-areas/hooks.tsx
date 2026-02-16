@@ -1,6 +1,6 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 export function useSource(): SourceProps {
   return {

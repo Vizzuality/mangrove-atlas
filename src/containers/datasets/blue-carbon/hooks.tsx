@@ -11,7 +11,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
@@ -238,6 +238,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'blue-carbon-source',
     paint: {
       'raster-opacity': opacity,
     },

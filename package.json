@@ -50,7 +50,8 @@
     "@transifex/native": "^7.1.5",
     "@transifex/react": "^7.1.5",
     "@turf/bbox": "6.5.0",
-    "axios": "1.13.4",
+    "axios": "1.13.5",
+    "braces": "3.0.3",
     "chroma-js": "^2.6.0",
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.5.1",
@@ -66,7 +67,7 @@
     "geojson": "0.5.0",
     "lodash-es": "4.17.23",
     "lucide-react": "0.563.0",
-    "mapbox-gl": "2.13.0",
+    "mapbox-gl": "3.18.1",
     "motion": "12.31.0",
     "next": "16.1.6",
     "next-auth": "4.24.13",
@@ -102,7 +103,6 @@
     "@tailwindcss/typography": "0.5.19",
     "@types/d3-format": "3.0.4",
     "@types/lodash-es": "4.17.7",
-    "@types/mapbox-gl": "2.7.11",
     "@types/node": "22.18.0",
     "@types/nodemailer": "7.0.9",
     "@types/react": "18.2.0",
@@ -125,6 +125,9 @@
   },
   "packageManager": "pnpm@10.28.2",
   "pnpm": {
+    "overrides": {
+      "braces": "3.0.3"
+    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",

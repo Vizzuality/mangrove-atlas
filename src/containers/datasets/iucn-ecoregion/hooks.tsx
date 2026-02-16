@@ -3,7 +3,7 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 import { formatAxis } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -169,6 +169,7 @@ export function useLayers({
   return [
     {
       id: `${id}-layer`,
+      source: 'mangrove-iucn-ecoregion',
       'source-layer': 'ecoregions_data',
       filter: ['has', 'overall_assessment'],
       type: 'fill',
@@ -183,6 +184,7 @@ export function useLayers({
     },
     {
       id: `${id}-border`,
+      source: 'mangrove-iucn-ecoregion',
       'source-layer': 'ecoregions_data',
       filter: ['has', 'overall_assessment'],
       type: 'line',

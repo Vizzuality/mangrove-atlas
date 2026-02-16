@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -93,6 +93,7 @@ export function useLayers({
   return [
     {
       id,
+      source: 'species_richness',
       'source-layer': 'Species_richness',
       filter: ['has', 'sp_count'],
       type: 'fill',
@@ -155,6 +156,7 @@ export function useLayers({
     },
     {
       id: `${id}-border`,
+      source: 'species_richness',
       'source-layer': 'Species_richness',
       type: 'line',
       paint: {

@@ -74,7 +74,7 @@ const nextConfig = {
 
       {
         source: '/proxy/:path*',
-        destination: `${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}/auth/login/:path*`,
+        destination: `https://${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PRODUCTION : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}/auth/login/:path*`,
       },
     ];
   },
