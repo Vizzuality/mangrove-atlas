@@ -12,7 +12,6 @@ import { z } from 'zod';
 
 import { TOPICS } from './constants';
 
-<<<<<<< HEAD
 import { Button } from '@/components/ui/button';
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import {
@@ -25,13 +24,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-=======
-import { Button } from 'components/ui/button';
-import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
-import { Label } from 'components/ui/label';
->>>>>>> 65b4e479 (contact form update)
 import {
   Select,
   SelectContent,
