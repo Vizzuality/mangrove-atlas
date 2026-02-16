@@ -10,6 +10,7 @@ import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
 import Footer from '@/containers/auth/footer';
 import SuccessAlert from 'components/auth/email-alert';
+import LoginForm from './login-form';
 
 const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
   <label htmlFor={htmlFor} className="mb-1 block text-black/85">
@@ -108,56 +109,7 @@ export default function LoginPage() {
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
             )}
 
-            <div className="space-y-6">
-              <form className="space-y-6" onSubmit={onSubmit} noValidate>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="password">Password</Label>
-                  <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm ring-0 outline-none placeholder:text-zinc-400"
-                    required
-                  />
-                </div>
-
-                {error && <p className="text-right text-sm text-red-400">{error}</p>}
-
-                <Button type="submit" disabled={submitting} className="h-9 w-full font-semibold">
-                  {submitting ? 'Submitting…' : 'Log in'}
-                </Button>
-              </form>
-
-              <div className="divide-text-gray-200 text-brand-800 space-y-6 divide-y text-center">
-                <Link
-                  href="/auth/forgot-password"
-                  className="text-sm font-semibold hover:text-teal-300"
-                >
-                  Forgot your password?
-                </Link>
-
-                <Footer />
-              </div>
-            </div>
+            <LoginForm />
           </div>
         </div>
       </section>

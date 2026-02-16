@@ -1,29 +1,58 @@
 'use client';
 
+import { useMemo, useState } from 'react';
+
 import { Button } from 'components/ui/button';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 import {
   useGetUserNotificationPreferences,
   usePostToggleLocationAlerts,
 } from '@/containers/subscriptions/hooks';
+import { Loading } from '@/components/ui/loading';
+
+import { DataUserNotificationPreferencesToggleLocationAlerts } from '@/containers/subscriptions/hooks';
 
 const SubscriptionsContent = () => {
-  const { data } = useGetUserNotificationPreferences();
-
+  const { data, isLoading } = useGetUserNotificationPreferences();
   const toggleMutation = usePostToggleLocationAlerts();
 
-  const handleClickAlerts = () => {
-    toggleMutation.mutate({
-      ...data?.notification_preferences,
-      location_alerts: data?.notification_preferences?.location_alerts,
-    });
+  const userPreferences = useMemo(
+    () => (data ? (data.data as DataUserNotificationPreferencesToggleLocationAlerts) : undefined),
+    [data]
+  );
+
+  const [selection, setSelection] = useState<
+    Partial<DataUserNotificationPreferencesToggleLocationAlerts>
+  >({});
+
+  const effective = useMemo(() => {
+    if (!userPreferences) return undefined;
+    return { ...userPreferences, ...selection };
+  }, [userPreferences, selection]);
+
+  if (isLoading || !effective) return <Loading />;
+
+  const handleToggleLocationAlerts = (checked: boolean) => {
+    setSelection((d) => ({ ...d, location_alerts: checked }));
   };
 
-  const handleClickWhatsNew = () => {
-    return toggleMutation.mutate({
-      ...data?.notification_preferences,
-      newsletter: data?.notification_preferences?.newsletter,
-    });
+  const handleToggleNewsletter = (checked: boolean) => {
+    setSelection((d) => ({ ...d, newsletter: checked }));
+  };
+
+  const hasChanges = Object.keys(selection).length > 0;
+
+  const handleSaveChanges = () => {
+    if (!userPreferences) return;
+
+    toggleMutation.mutate(
+      { ...userPreferences, ...selection } as DataUserNotificationPreferencesToggleLocationAlerts,
+      {
+        onSuccess: () => {
+          setSelection({});
+        },
+      }
+    );
   };
 
   return (
@@ -35,32 +64,38 @@ const SubscriptionsContent = () => {
             Emails with mangrove disturbance alerts related to your saved areas.
           </p>
         </div>
+
         <SwitchWrapper id="alerts">
           <SwitchRoot
-            onClick={handleClickAlerts}
-            checked={data?.notification_preferences?.location_alerts}
+            checked={effective.location_alerts}
+            onCheckedChange={handleToggleLocationAlerts}
           >
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>
       </div>
+
       <div className="flex items-center justify-between gap-12">
         <div className="flex max-w-sm flex-col justify-between gap-2">
           <span className="text-lg font-light">What's new</span>
           <p className="text-sm text-[#939393]">
-            Weekly updates on mangrove conservation news and the latest platform enhancements.{' '}
+            Weekly updates on mangrove conservation news and the latest platform enhancements.
           </p>
         </div>
-        <SwitchWrapper id="alerts">
-          <SwitchRoot
-            onClick={handleClickWhatsNew}
-            checked={data?.notification_preferences?.newsletter}
-          >
+
+        <SwitchWrapper id="newsletter">
+          <SwitchRoot checked={effective.newsletter} onCheckedChange={handleToggleNewsletter}>
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>
       </div>
-      <Button className="w-fit" size="lg">
+
+      <Button
+        className="w-fit"
+        size="lg"
+        onClick={handleSaveChanges}
+        disabled={!hasChanges || toggleMutation.isLoading}
+      >
         Save changes
       </Button>
     </div>

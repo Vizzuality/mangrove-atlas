@@ -186,7 +186,7 @@ export default function SignupPage() {
                           <Input
                             type="password"
                             {...field}
-                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                            className="focus:border-brand-800 block w-full rounded-[100px] px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Password"
                           />
                         </FormControl>
@@ -206,7 +206,9 @@ export default function SignupPage() {
                   {signup.isLoading ? 'Submitting…' : 'Register'}
                 </Button>
               </form>
+              <div className="my-6 h-[0.5px] w-full bg-gray-200" />
             </Form>
+
             <Footer />
           </div>
         </div>

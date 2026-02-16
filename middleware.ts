@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const HIDDEN_IN_PROD = ['/auth'];
+
 const allowedOrigins = new Set([
   'https://mrtt.globalmangrovewatch.org',
   'https://mrtt-staging.globalmangrovewatch.org',
@@ -24,6 +26,12 @@ function withCors(request: NextRequest, response: NextResponse) {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (process.env.NODE_ENV === 'production') {
+    if (HIDDEN_IN_PROD.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+      return NextResponse.rewrite(new URL('/404', request.url));
+    }
+  }
 
   if (pathname.startsWith('/api/auth')) {
     return NextResponse.next();
