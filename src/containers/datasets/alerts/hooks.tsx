@@ -459,44 +459,18 @@ export function useLayers({
   return {
     'alerts-heatmap-vector': [
       {
-        id: `${id}-heatmap`,
-        type: 'heatmap',
+        id: `${id}-points`,
+        type: 'circle',
         source: 'alerts-heatmap-vector',
         'source-layer': 'alerts_data',
         maxzoom: 18,
         paint: {
-          'heatmap-weight': [
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 6, 14, 10],
+          'circle-color': [
             'interpolate',
             ['linear'],
-            ['coalesce', ['to-number', ['get', 'months_diff']], 76],
-
-            1,
-            1.0, // newest
-            3,
-            0.9,
-            6,
-            0.75,
-            12,
-            0.55,
-            24,
-            0.35,
-            36,
-            0.2,
-            60,
-            0.08,
-            76,
-            0.02, // oldest
-          ],
-
-          'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-
-          'heatmap-color': [
-            'interpolate',
-            ['linear'],
-            ['heatmap-density'],
+            ['/', ['coalesce', ['to-number', ['get', 'scr5_obs_date']], 76], 76],
             0,
-            'rgba(0,0,0,0)',
-            0.2,
             '#FFC201',
             0.45,
             '#F78E1C',
@@ -507,11 +481,8 @@ export function useLayers({
             1,
             '#C62AD6',
           ],
-
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 8, 9, 25],
-          'heatmap-opacity': opacity ?? 1,
+          'circle-opacity': opacity ?? 1,
         },
-
         layout: { visibility },
       },
     ],
