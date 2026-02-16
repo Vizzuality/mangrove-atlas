@@ -103,7 +103,6 @@
     "@tailwindcss/typography": "0.5.19",
     "@types/d3-format": "3.0.4",
     "@types/lodash-es": "4.17.7",
-    "@types/mapbox-gl": "2.7.11",
     "@types/node": "22.18.0",
     "@types/nodemailer": "7.0.9",
     "@types/react": "18.2.0",

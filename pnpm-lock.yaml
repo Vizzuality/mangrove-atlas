@@ -264,9 +264,6 @@ importers:
       '@types/lodash-es':
         specifier: 4.17.7
         version: 4.17.7
-      '@types/mapbox-gl':
-        specifier: 2.7.11
-        version: 2.7.11
       '@types/node':
         specifier: 22.18.0
         version: 22.18.0

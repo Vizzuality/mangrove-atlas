@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';

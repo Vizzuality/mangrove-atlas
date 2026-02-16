@@ -1,6 +1,6 @@
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import type { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 
 export function useSource(): SourceProps {
   return {
@@ -25,6 +25,7 @@ export function useLayer({
   return {
     id,
     type: 'raster',
+    source: 'salt-marsh',
     paint: {
       'raster-opacity': opacity,
     },

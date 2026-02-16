@@ -18,8 +18,9 @@ import type {
   CircleLayerSpecification,
   ExpressionSpecification,
   FilterSpecification,
-  Visibility,
 } from 'mapbox-gl';
+
+import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -55,7 +56,7 @@ const makeColoredSeries = (data: any[]) => {
   ] as const;
 
   // init keys as null
-  const layerProps = data.map((d) => ({
+  const layerKeys = data.map((d) => ({
     ...d,
     alerts_lt3: null,
     alerts_3to6: null,
@@ -65,8 +66,8 @@ const makeColoredSeries = (data: any[]) => {
   }));
 
   // assign each point to its bucket
-  for (let i = 0; i < base.length; i++) {
-    const d = base[i];
+  for (let i = 0; i < layerKeys.length; i++) {
+    const d = layerKeys[i];
     const b = bucketKey(d.monthsSinceDetection);
 
     const k =
@@ -84,9 +85,9 @@ const makeColoredSeries = (data: any[]) => {
   }
 
   // stitch boundaries: when bucket changes, copy the boundary point to both series
-  for (let i = 1; i < base.length; i++) {
-    const prev = base[i - 1];
-    const curr = base[i];
+  for (let i = 1; i < layerKeys.length; i++) {
+    const prev = layerKeys[i - 1];
+    const curr = layerKeys[i];
 
     const prevB = bucketKey(prev.monthsSinceDetection);
     const currB = bucketKey(curr.monthsSinceDetection);
@@ -120,7 +121,7 @@ const makeColoredSeries = (data: any[]) => {
     }
   }
 
-  return base;
+  return layerKeys;
 };
 
 const monthIndex = (year: number, month1to12: number) => year * 12 + (month1to12 - 1);

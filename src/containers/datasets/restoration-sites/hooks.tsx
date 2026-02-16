@@ -8,7 +8,7 @@ import {
 } from '@/store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -159,6 +159,7 @@ export function useLayers({
   return [
     {
       id: `${id}-clusters`,
+      source: 'mangrove_rest_sites',
       metadata: {
         position: 'top',
       },
@@ -194,6 +195,7 @@ export function useLayers({
     },
     {
       id: `${id}-clusters-points`,
+      source: 'mangrove_rest_sites',
       metadata: {
         position: 'top',
       },
@@ -213,6 +215,7 @@ export function useLayers({
     },
     {
       id: `${id}-cluster-count`,
+      source: 'mangrove_rest_sites',
       metadata: {
         position: 'top',
       },

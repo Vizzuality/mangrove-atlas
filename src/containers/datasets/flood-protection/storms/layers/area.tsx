@@ -4,7 +4,7 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 import { activeLayersAtom } from '@/store/layers';
 import { floodAreaPeriodAtom } from '@/store/widgets/flood-protection';
 
-import { Visibility } from 'mapbox-gl';
+import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import { useMangrovesFloodProtection } from '@/containers/datasets/flood-protection/hooks';
@@ -36,6 +36,7 @@ export function useLayers({
   return [
     {
       id,
+      source: 'Coastal_protection_area',
       'source-layer': 'coastal_protection_map',
       filter: ['has', `${period}_area`],
       type: 'fill',
@@ -66,6 +67,7 @@ export function useLayers({
     },
     {
       id: `${id}-line`,
+      source: 'Coastal_protection_map',
       'source-layer': 'coastal_protection_map',
       filter: ['has', `${period}_area`],
       type: 'line',
