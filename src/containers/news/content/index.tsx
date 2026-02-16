@@ -26,7 +26,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {!postInfo && (
           <motion.div
-            className="no-scrollbar overflow-y-auto"
+            className="no-scrollbar flex flex-col overflow-y-auto"
             initial="hidden"
             animate="displayed"
             variants={{
