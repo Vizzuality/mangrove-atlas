@@ -3,11 +3,10 @@ import { useCallback, useEffect } from 'react';
 import cn from '@/lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
-import { activeGuideAtom } from '@/store/guide';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import Helper from '@/containers/help/helper';
 import LocationDialogContent from '@/containers/location-dialog-content';
