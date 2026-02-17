@@ -1,8 +1,8 @@
-@config "../../tailwind.config.mjs";
+@config '../../tailwind.config.mjs';
 @import 'tailwindcss';
 
 body {
- background-color: #00c5bd; 
+  background-color: #00c5bd;
 }
 
 @media print {
@@ -53,9 +53,9 @@ body {
   /* We want a blur effect without having a high opacity background, but we still want the
   background to be visible for the browsers that don't support backdrop-filter, so we double the
   background opacity. This can be tested on Firefox. */
-  .bg-blur {
+  /* .bg-blur {
     background-color: yellow;
-  }
+  } */
 
   @supports (backdrop-filter: blur(4px)) {
     .bg-blur {
