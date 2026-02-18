@@ -35,7 +35,7 @@ export const BlogContent = () => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <h3 className="pt-1 pb-6 text-3xl leading-1 font-light">News</h3>
+            <h3 className="py-6 text-3xl leading-1 font-light">News</h3>
             <div className="flex flex-col space-y-4" data-testid="posts-list">
               {data?.map((post) => (
                 <button
