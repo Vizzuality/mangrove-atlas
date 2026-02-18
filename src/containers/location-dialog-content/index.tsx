@@ -5,7 +5,7 @@ import { DialogContent, DialogClose, DialogTitle } from '@/components/ui/dialog'
 const LocationDialogContent = ({ close }: { close: () => void }) => {
   return (
     <DialogContent
-      className="md:mb-20"
+      className="max-w-135 md:mb-20"
       onEscapeKeyDown={close}
       onInteractOutside={close}
       data-testid="location-dialog-content"

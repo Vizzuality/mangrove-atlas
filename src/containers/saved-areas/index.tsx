@@ -35,15 +35,15 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
           </div>
         </DialogTrigger>
       </Helper>
-      <DialogContent classNameContent="w-[540px] max-w-[calc(100vw-2rem)]">
+      <DialogContent classNameContent="max-w-[calc(100vw-2rem)]">
         <div className={menuItemStyle}>
           {status === 'authenticated' ? (
-            <div className="min-w-[540px]">
+            <div>
               <h2 className="mb-4 text-lg font-semibold text-black/85">My areas</h2>
               <SavedAreasContent />{' '}
             </div>
           ) : (
-            <div className="min-w-[540px]">
+            <div>
               <h2 className="mb-4 text-lg font-semibold text-black/85">
                 Log in to save areas of interest and receive alerts.
               </h2>

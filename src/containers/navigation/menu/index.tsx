@@ -51,7 +51,6 @@ const Menu = () => {
         className={cn({
           'max-w-135 font-sans md:mb-20': true,
           'h-fit py-0': section === 'main',
-          '': section === 'profile' || section === 'about',
         })}
       >
         {section === 'main' && (

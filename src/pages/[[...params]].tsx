@@ -35,7 +35,7 @@ const Home = () => {
   );
 };
 
-const ALLOWED_LOCATION_TYPES = ['custom-area'];
+const ALLOWED_LOCATION_TYPES = ['custom-area', 'country', 'wdpa'];
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const queryClient = new QueryClient();

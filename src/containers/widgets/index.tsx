@@ -32,7 +32,7 @@ import { breakpoints } from '@/styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';
 
-import SETTINGS_SVG from '@/svgs/ui/settings.svg?sprite';
+import SETTINGS_SVG from '@/svgs/ui/settings.svg';
 
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
@@ -176,7 +176,7 @@ const WidgetsContainer: FC = () => {
             </motion.div>
           </DialogTrigger>
         </Helper>
-        <DialogContent className="mb-10 w-screen border-2 md:w-auto">
+        <DialogContent className="mb-10 w-screen max-w-135 border-2 bg-red-900 md:w-auto">
           <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
           <div className="no-scrollbar space-y-8">
             <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
