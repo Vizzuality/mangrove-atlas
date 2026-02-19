@@ -111,10 +111,16 @@ const WidgetsContainer: FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgetsAvailable.map(({ slug, name, ...props }) => {
+          {widgetsAvailable.map(({ slug, name, index, ...props }) => {
             const Widget = WIDGETS[slug] satisfies () => JSX.Element;
             return (
-              <WidgetWrapper key={slug} title={name} id={slug} applicability={props?.applicability}>
+              <WidgetWrapper
+                key={slug}
+                title={name}
+                id={slug}
+                applicability={props?.applicability}
+                index={index}
+              >
                 {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
             );

@@ -11,7 +11,6 @@ const API = axios.create({
 API.interceptors.request.use(async (config) => {
   const session = await getSession();
   const token = (session as any)?.user?.accessToken;
-  console.log('API interceptor', { token, session });
 
   config.headers = config.headers ?? new axios.AxiosHeaders();
   if (token) config.headers.set('Authorization', `Bearer ${token}`);

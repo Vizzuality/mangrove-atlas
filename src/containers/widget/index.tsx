@@ -30,6 +30,7 @@ type WidgetLayoutProps = {
   }[];
   applicability?: string;
   info?: boolean;
+  index?: number;
 };
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
@@ -63,45 +64,53 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         exit="expanded"
         transition={{ type: 'tween', duration: 0.6 }}
         className={cn({
-          'bg-blur group shadow-card z-2 w-full rounded-4xl bg-white md:ml-0 print:w-[90%]!': true,
+          'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0 print:w-[90%]!':
+            true,
           'w-full! border-none p-0! shadow-none!': info,
           [className]: !!className,
           'border-none p-0': info,
         })}
+        style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}
       >
-        <div
-          className={cn(
-            'relative rounded-3xl',
-            'before:pointer-events-none before:absolute before:inset-1 before:rounded-[inherit] before:border-2 before:content-[""]',
-            isLayerActive
-              ? 'before:border-brand-800/10 transition delay-150 ease-in-out'
-              : 'before:border-transparent'
-          )}
-        >
-          <div className="px-9 py-3" data-testid={`widget-${id}`}>
-            <Helper
-              className={{
-                button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
-                tooltip: 'max-w-[400px]',
-              }}
-              tooltipPosition={{ top: -50, left: 0 }}
-              message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-            >
-              <WidgetHeader title={title} id={id}>
-                {!info && <WidgetControls id={id} />}
-              </WidgetHeader>
-            </Helper>
-            <div
-              data-testid={`widget-${id}-content`}
-              className={cn({
-                'group-last-of-type:block': true,
-                hidden: isCollapsed,
-                block: !isCollapsed,
-              })}
-            >
-              {children}
+        <div className="relative rounded-3xl">
+          {/* border layer */}
+          <div
+            aria-hidden
+            className={cn(
+              'pointer-events-none absolute inset-1 rounded-[inherit] border-2',
+              isLayerActive
+                ? 'border-brand-800/10 transition delay-150 ease-in-out'
+                : 'border-transparent'
+            )}
+          />
+
+          {/* content layer */}
+          <div className="relative z-10">
+            <div className="px-9 py-3" data-testid={`widget-${id}`}>
+              <Helper
+                className={{
+                  button: id === 'widgets_deck_tool' ? 'top-0 -right-6 z-20' : 'hidden',
+                  tooltip: 'max-w-[400px]',
+                }}
+                tooltipPosition={{ top: -50, left: 0 }}
+                message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
+              >
+                <WidgetHeader title={title} id={id}>
+                  {!info && <WidgetControls id={id} />}
+                </WidgetHeader>
+              </Helper>
+              <div
+                data-testid={`widget-${id}-content`}
+                className={cn({
+                  'group-last-of-type:block': true,
+                  hidden: isCollapsed,
+                  block: !isCollapsed,
+                })}
+              >
+                {children}
+              </div>
+              {applicability && <WidgetApplicability id={id} applicability={applicability} />}
             </div>
-            {applicability && <WidgetApplicability id={id} applicability={applicability} />}
           </div>
         </div>
       </motion.div>

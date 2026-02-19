@@ -6,9 +6,9 @@ import { ConvenedBy, Donors, SupportedBy } from './constants';
 
 const About = () => {
   return (
-    <div className="pb-20 font-sans text-2lg font-light leading-8 text-black/85">
+    <div className="text-2lg pb-20 font-sans leading-8 font-light text-black/85">
       <h2 className="py-6 text-3xl font-bold">About Global Mangrove Watch</h2>
-      <h3 className="pb-6 text-xl font-bold leading-8">
+      <h3 className="pb-6 text-xl leading-8 font-bold">
         Monitoring to catalyse the action needed to protect and restore mangroves
       </h3>
       <div className="space-y-5">
@@ -28,12 +28,12 @@ const About = () => {
           climate mitigation, adaptation and sustainable development plans and policies.
         </p>
       </div>
-      <h3 className="py-6 text-xl font-bold leading-8">Global Mangrove Watch Partners</h3>
+      <h3 className="py-6 text-xl leading-8 font-bold">Global Mangrove Watch Partners</h3>
       <div className="space-y-5">
         <p>
           The Global mangrove Watch (GMW) was established in 2011 under the Japan Aerospace
           Exploration Agency’s{' '}
-          <span className="font-semibold text-brand-800">(JAXA) Kyoto & Carbon Initiative</span> by
+          <span className="text-brand-800 font-semibold">(JAXA) Kyoto & Carbon Initiative</span> by
           Aberystwyth University, solo Earth Observation and the International Water Management
           Institute, with the aim to provide open access geospatial information about mangrove
           extent and changes to the Ramsar Convention on Wetlands. In collaboration with Wetlands
@@ -49,7 +49,7 @@ const About = () => {
           UNEP-WCMC and a host of partners to develop the Global Mangrove Watch Platform.
         </p>
       </div>
-      <h3 className="py-6 text-xl font-bold leading-8">GMW and the Global Mangrove Alliance</h3>
+      <h3 className="py-6 text-xl leading-8 font-bold">GMW and the Global Mangrove Alliance</h3>
       <div className="space-y-5">
         <p>
           A coordinated effort across sectors and geographies will accomplish more, faster. Global
@@ -59,7 +59,7 @@ const About = () => {
           <Link
             href="https://www.mangrovealliance.org/about-us/"
             target="_blank"
-            className="font-semibold text-brand-800"
+            className="text-brand-800 font-semibold"
             rel="noopener noreferrer"
           >
             MangroveAlliance.org
@@ -68,16 +68,28 @@ const About = () => {
         </p>
         <p>
           Got a query? Contact{' '}
-          <a href="mailto:contact@mangrovealliance.org" className="font-semibold text-brand-800">
+          <a href="mailto:contact@mangrovealliance.org" className="text-brand-800 font-semibold">
             Mangrove Alliance
           </a>
         </p>
 
         <div className="space-y-6">
-          <AboutPartners title="Convened by" list={ConvenedBy} />
-          <AboutPartners title="Supported by" list={SupportedBy} />
+          <AboutPartners
+            title="Convened by"
+            list={ConvenedBy}
+            classname="grid grid-cols-2 justify-items-start gap-y-8"
+          />
+          <AboutPartners
+            title="Supported by"
+            list={SupportedBy}
+            classname="grid grid-cols-4 justify-items-start gap-y-8"
+          />
 
-          <AboutPartners title="Donors" list={Donors} />
+          <AboutPartners
+            title="Donors"
+            list={Donors}
+            classname="grid grid-cols-3 justify-items-start gap-y-8"
+          />
 
           <div>
             <p>Designed by:</p>
@@ -92,13 +104,13 @@ const About = () => {
                 alt="Vizzuality"
                 width={300}
                 height={300}
-                className="ml-2 -mt-1 w-40"
+                className="-mt-1 ml-2 w-40"
               />
             </a>
           </div>
         </div>
 
-        <h3 className="py-4 text-xl font-bold leading-8">Disclaimer</h3>
+        <h3 className="py-4 text-xl leading-8 font-bold">Disclaimer</h3>
         <p>
           THE USE OF THESE SERVICES AND CONTENT IS AT YOUR SOLE RISK. THE SERVICES AND CONTENT ARE
           PROVIDED ON AN “AS IS” BASIS AND WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER
