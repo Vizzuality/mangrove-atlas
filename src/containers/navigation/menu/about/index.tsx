@@ -74,10 +74,22 @@ const About = () => {
         </p>
 
         <div className="space-y-6">
-          <AboutPartners title="Convened by" list={ConvenedBy} />
-          <AboutPartners title="Supported by" list={SupportedBy} />
+          <AboutPartners
+            title="Convened by"
+            list={ConvenedBy}
+            classname="grid grid-cols-2 justify-items-start gap-y-8"
+          />
+          <AboutPartners
+            title="Supported by"
+            list={SupportedBy}
+            classname="grid grid-cols-4 justify-items-start gap-y-8"
+          />
 
-          <AboutPartners title="Donors" list={Donors} />
+          <AboutPartners
+            title="Donors"
+            list={Donors}
+            classname="grid grid-cols-3 justify-items-start gap-y-8"
+          />
 
           <div>
             <p>Designed by:</p>
