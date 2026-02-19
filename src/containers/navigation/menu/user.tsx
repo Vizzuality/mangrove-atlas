@@ -13,11 +13,11 @@ export const UserMenu = ({ setSection }) => {
 
   return (
     <div className="flex w-full flex-col space-y-4 py-6 font-sans text-black/85">
-      {session.status === 'authenticated' && (
+      {session.status === 'authenticated' && !process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
         <>
           <button
             type="button"
-            className="text-left text-2lg font-light hover:text-brand-800"
+            className="text-2lg hover:text-brand-800 text-left font-light"
             onClick={() => setSection('profile')}
           >
             My profile
@@ -25,7 +25,7 @@ export const UserMenu = ({ setSection }) => {
 
           <button
             type="button"
-            className="text-left text-2lg font-light hover:text-brand-800"
+            className="text-2lg hover:text-brand-800 text-left font-light"
             onClick={handleLogout}
           >
             Log out
@@ -33,13 +33,12 @@ export const UserMenu = ({ setSection }) => {
         </>
       )}
 
-      {session.status !== 'authenticated' &&
-        process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS === 'true' && (
-          <Link href="/auth/signin" className="text-left text-2lg font-light hover:text-brand-800">
-            Log in
-          </Link>
-        )}
-      <ContactForm className="text-left text-2lg font-light hover:text-brand-800" />
+      {session.status !== 'authenticated' && process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
+        <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
+          Log in
+        </Link>
+      )}
+      <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
     </div>
   );
 };
