@@ -450,7 +450,7 @@ export function useSource(): SourceProps {
   return {
     id: 'alerts-heatmap-vector',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.bkhacq4t',
+    url: 'mapbox://globalmangrovewatch.10zyfs67',
   };
 }
 

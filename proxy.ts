@@ -24,7 +24,7 @@ function withCors(request: NextRequest, response: NextResponse) {
   return response;
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (process.env.NODE_ENV === 'production') {
