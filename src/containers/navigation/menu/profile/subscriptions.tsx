@@ -21,14 +21,10 @@ const SubscriptionsContent = () => {
   const serverPrefs =
     (data?.data as DataUserNotificationPreferencesToggleLocationAlerts | undefined) ?? undefined;
 
-  // Local "base" to avoid UI snapping back to stale server data after save
   const [basePrefs, setBasePrefs] = useState<
     DataUserNotificationPreferencesToggleLocationAlerts | undefined
   >(undefined);
 
-  // Choose the freshest base:
-  // - if we've saved locally, use basePrefs
-  // - otherwise fall back to serverPrefs
   const userPreferences = basePrefs ?? serverPrefs;
 
   const [selection, setSelection] = useState<Draft>({});
@@ -63,18 +59,11 @@ const SubscriptionsContent = () => {
 
     toggleMutation.mutate(payload, {
       onSuccess: () => {
-        // Update local base immediately so UI doesn't revert to stale server data
         setBasePrefs(payload);
-        // Now safe to clear selection (effective still equals payload)
         setSelection({});
       },
     });
   }, [userPreferences, selection, toggleMutation]);
-
-  // Initialize basePrefs once we have server prefs (without useEffect):
-  // If basePrefs is undefined and we now have serverPrefs, set it during render via lazy init pattern:
-  // We'll do it safely by deriving userPreferences above. Alternatively, you can set initial state:
-  // useState(serverPrefs) won't update later, so we keep basePrefs optional and rely on serverPrefs until first save.
 
   if (isLoading || !effective) return <Loading />;
 
