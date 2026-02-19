@@ -62,9 +62,9 @@ const SavedAreasContent = () => {
           </p>
           <div className="flex flex-col space-y-4">
             {!!dataLocationsList?.length &&
-              dataLocationsList.map(({ name }) => (
+              dataLocationsList.map(({ name, id }) => (
                 <div key={name} className="mb-4">
-                  <LocationItem name={name} />
+                  <LocationItem name={name} id={id} />
                 </div>
               ))}
           </div>

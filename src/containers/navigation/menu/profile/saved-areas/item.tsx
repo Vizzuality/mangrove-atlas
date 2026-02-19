@@ -1,45 +1,46 @@
 'use client';
 
-import { useLocationsByIds } from '@/containers/datasets/locations/hooks';
-import cn from '@/lib/classnames';
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { LuX } from 'react-icons/lu';
+
+import { useDeleteUserLocation } from '@/containers/datasets/locations/user-locations';
+import cn from '@/lib/classnames';
 
 const LuXIcon = LuX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
-const SAVED_AREAS = [
-  'worldwide',
-  '0afabe7c-db39-55b4-b9ca-44e72af46be5',
-  '404d005a-797d-5509-91eb-e17ed1069ed6',
-  'c11c31de-e8aa-510d-bca5-b6c48cec4b04',
-  'e89f1a65-6ca1-59a3-ab84-38bf25f12ee6',
-];
+type Props = { name: string; id: number };
 
-const LocationItem = ({ name }) => {
-  const [isActive, setIsActive] = useState(true);
+const LocationItem = ({ name, id }: Props) => {
+  const deleteUserLocationArea = useDeleteUserLocation();
+  const isDeleting = deleteUserLocationArea.isLoading;
 
-  const handleClick = () => {
-    // TO - DO
-    // Handle subscription toggle logic here
-  };
-
-  const data = useLocationsByIds(SAVED_AREAS).map((query) => query.data);
+  const handleClick = useCallback(async () => {
+    try {
+      await deleteUserLocationArea.mutateAsync(id);
+    } catch (error) {
+      console.error('Error deleting location', error);
+    }
+  }, [deleteUserLocationArea, id]);
 
   return (
-    <li className="flex items-center justify-between">
+    <li className="flex items-center justify-between gap-3">
       <span
-        className={cn({
-          'first-letter:uppercase': true,
-          'text-brand-800 font-bold': name === 'worldwide',
-        })}
+        className={cn('first-letter:uppercase', name === 'worldwide' && 'text-brand-800 font-bold')}
       >
         {name}
       </span>
+
       <button
-        className="border-brand/80 text-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1"
+        type="button"
+        aria-label={`Delete location ${name}`}
+        disabled={isDeleting}
         onClick={handleClick}
+        className={cn(
+          'border-brand/80 text-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1',
+          isDeleting && 'cursor-not-allowed opacity-60'
+        )}
       >
-        <LuXIcon className="h-5 w-5 stroke-2" />
+        <LuXIcon className="h-5 w-5 cursor-pointer stroke-2" />
       </button>
     </li>
   );
