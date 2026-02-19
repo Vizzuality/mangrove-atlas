@@ -30,13 +30,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-<<<<<<< HEAD
 } from '@/components/ui/select';
 import { trackEvent } from '@/lib/analytics/ga';
-=======
-} from 'components/ui/select';
-import { trackEvent } from 'lib/analytics/ga';
->>>>>>> 65b4e479 (contact form update)
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';

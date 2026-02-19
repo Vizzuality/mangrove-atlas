@@ -15,7 +15,7 @@ import Script from 'next/script';
 import { Deserialize, RecoilURLSyncNext, Serialize } from '@/lib/recoil';
 import RecoilDevTools from '@/lib/recoil/devtools';
 
-import { Open_Sans, Inter } from '@next/font/google';
+import { Open_Sans, Inter } from 'next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
@@ -48,17 +48,10 @@ const InterFont = Inter({
 
 type PageProps = {
   dehydratedState: unknown;
-<<<<<<< HEAD
   session: Session | null;
 };
 
 const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) => {
-=======
-  session: Session;
-};
-
-const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps<PageProps>) => {
->>>>>>> 8498f351 (setCookie)
   const router = useRouter();
 
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
@@ -168,11 +161,7 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppProps<Pag
                 <MediaContextProvider disableDynamicMediaQueries>
                   <MapProvider>
                     <TooltipProvider delayDuration={200}>
-<<<<<<< HEAD
                       <SessionProvider session={pageProps.session}>
-=======
-                      <SessionProvider session={session}>
->>>>>>> 8498f351 (setCookie)
                         <Component {...pageProps} />
                       </SessionProvider>
                     </TooltipProvider>
