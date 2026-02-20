@@ -8,11 +8,13 @@ import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/
 import LoginForm from '@/containers/auth/login-form';
 import { useSession } from 'next-auth/react';
 import SavedAreasContent from '../navigation/menu/profile/saved-areas';
+import ForgotPassword from '../../components/auth/forgot-password';
+import FooterSignup from '@/components/auth/footer-signup';
 
 const LuBookmarkIcon = LuBookmark as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
 const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
-  const { status, update } = useSession();
+  const { status } = useSession();
 
   return (
     <Dialog>
@@ -36,7 +38,7 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         </DialogTrigger>
       </Helper>
       <DialogContent classNameContent="max-w-[calc(100vw-2rem)]">
-        <div className={menuItemStyle}>
+        <div>
           {status === 'authenticated' ? (
             <div>
               <h2 className="mb-4 text-lg font-semibold text-black/85">My areas</h2>
@@ -44,10 +46,17 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             </div>
           ) : (
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-black/85">
+              <h2 className="mb-4 text-2xl font-light text-black/85">
                 Log in to save areas of interest and receive alerts.
               </h2>
-              <LoginForm />
+              <div className="space-y-6">
+                <LoginForm />
+                <div className="text-brand-800 w-full text-center">
+                  <ForgotPassword />
+                  <div className="my-4 h-[0.5px] w-full bg-gray-200" />
+                  <FooterSignup />
+                </div>
+              </div>
             </div>
           )}
         </div>

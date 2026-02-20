@@ -1,124 +1,138 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { z } from 'zod';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from 'components/ui/button';
-import Footer from '@/containers/auth/footer';
+import { Input } from 'components/ui/input';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
 
-const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
-  <label htmlFor={htmlFor} className="mb-1 block text-black/85">
-    {children}
-  </label>
-);
+const formSchema = z.object({
+  email: z.string().email({ message: 'Please enter a valid email address' }),
+  password: z.string().min(1, { message: 'Please enter your password' }),
+});
+
+type FormValues = z.infer<typeof formSchema>;
+
+function getSafeCallbackUrl(query: any): string {
+  const raw = typeof query?.callbackUrl === 'string' ? query.callbackUrl : '/';
+
+  // Only allow same-origin relative paths.
+  if (!raw.startsWith('/')) {
+    return '/';
+  }
+
+  // Disallow protocol-relative URLs like //example.com.
+  if (raw.startsWith('//')) {
+    return '/';
+  }
+
+  // Disallow embedded schemes such as http:// or https:// in the path.
+  if (raw.includes('://')) {
+    return '/';
+  }
+
+  return raw;
+}
 
 export function LoginForm() {
   const router = useRouter();
-  const { replace, query } = router;
+  const { query } = router;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { status } = useSession();
 
-  const { status, update } = useSession();
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { email: '', password: '' },
+    mode: 'onSubmit',
+  });
 
-  // If already signed in, bounce away from /auth/signin
-  useEffect(() => {
-    if (status === 'authenticated') {
-      replace('/');
-    }
-  }, [status, replace]);
+  const isSubmitting = form.formState.isSubmitting;
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
+  async function onSubmit(values: FormValues) {
+    form.clearErrors();
 
-    if (!email || !password) {
-      setError('Please fill in both fields.');
+    const callbackUrl = getSafeCallbackUrl(query);
+
+    const result = await signIn('credentials', {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+      callbackUrl,
+    });
+
+    if (!result?.ok) {
+      form.setError('root', {
+        type: 'server',
+        message:
+          result?.error && result.error !== 'CredentialsSignin'
+            ? result.error
+            : 'Invalid credentials',
+      });
       return;
     }
 
-    try {
-      setSubmitting(true);
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (!result?.ok) {
-        setError(
-          result?.error && result.error !== 'CredentialsSignin'
-            ? result.error
-            : 'Invalid credentials'
-        );
-        return;
-      }
-
-      // await replace(result.url ?? '/');
-    } catch (err: any) {
-      console.error(err);
-      setError(err?.message || 'There was an error logging in.');
-    } finally {
-      setSubmitting(false);
-    }
+    router.replace(result.url ?? callbackUrl);
   }
 
-  if (status === 'loading' || status === 'authenticated') {
-    return null;
-  }
+  if (status === 'loading' || status === 'authenticated') return null;
 
   return (
     <div className="space-y-6">
-      <form className="space-y-6" onSubmit={onSubmit} noValidate>
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <input
-            id="email"
+      <Form {...form}>
+        <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+          <FormField
+            control={form.control}
             name="email"
-            type="email"
-            placeholder="Enter your email"
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
-            required
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-xs font-semibold">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="email"
+                    autoComplete="email"
+                    placeholder="Enter your email"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <Label htmlFor="password">Password</Label>
-          <input
-            id="password"
+          <FormField
+            control={form.control}
             name="password"
-            type="password"
-            placeholder="Enter your password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm ring-0 outline-none placeholder:text-zinc-400"
-            required
+            render={({ field }) => (
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-xs font-semibold">Password</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="Enter your password"
+                    className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        {error && <p className="text-right text-sm text-red-400">{error}</p>}
+          {form.formState.errors.root?.message && (
+            <p className="text-right text-sm text-red-400">{form.formState.errors.root.message}</p>
+          )}
 
-        <Button type="submit" disabled={submitting} className="h-9 w-full font-semibold">
-          {submitting ? 'Submitting…' : 'Log in'}
-        </Button>
-      </form>
-
-      <div className="text-brand-800 w-full space-y-6 text-center">
-        <Link href="/auth/forgot-password" className="text-sm font-semibold hover:text-teal-300">
-          Forgot your password?
-        </Link>
-        <div className="my-6 h-[0.5px] w-full bg-gray-200" />
-
-        <Footer />
-      </div>
+          <Button type="submit" disabled={isSubmitting} className="h-9 w-full font-semibold">
+            {isSubmitting ? 'Submitting…' : 'Log in'}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 }

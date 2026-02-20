@@ -1,33 +1,23 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 import LandingNavigation from '@/containers/navigation/landing';
 import Logo from 'components/logo';
-import { Button } from 'components/ui/button';
-import Footer from '@/containers/auth/footer';
+import ForgotPassword from '@/components/auth/forgot-password';
+import FooterSignup from '@/components/auth/footer-signup';
+
 import SuccessAlert from 'components/auth/email-alert';
 import LoginForm from './login-form';
-
-const Label = ({ children, htmlFor }: { children: React.ReactNode; htmlFor: string }) => (
-  <label htmlFor={htmlFor} className="mb-1 block text-black/85">
-    {children}
-  </label>
-);
 
 export default function LoginPage() {
   const router = useRouter();
   const { replace, query } = router;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const { status, update } = useSession();
+  const { status } = useSession();
 
   // If already signed in, bounce away from /auth/signin
   useEffect(() => {
@@ -35,41 +25,6 @@ export default function LoginPage() {
       replace('/');
     }
   }, [status, replace]);
-
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setError(null);
-
-    if (!email || !password) {
-      setError('Please fill in both fields.');
-      return;
-    }
-
-    try {
-      setSubmitting(true);
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (!result?.ok) {
-        setError(
-          result?.error && result.error !== 'CredentialsSignin'
-            ? result.error
-            : 'Invalid credentials'
-        );
-        return;
-      }
-
-      // await replace(result.url ?? '/');
-    } catch (err: any) {
-      console.error(err);
-      setError(err?.message || 'There was an error logging in.');
-    } finally {
-      setSubmitting(false);
-    }
-  }
 
   if (status === 'loading' || status === 'authenticated') {
     return null;
@@ -109,7 +64,14 @@ export default function LoginPage() {
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
             )}
 
-            <LoginForm />
+            <div className="space-y-6">
+              <LoginForm />
+              <div className="text-brand-800 w-full text-center">
+                <ForgotPassword />
+                <div className="my-4 h-[0.5px] w-full bg-gray-200" />
+                <FooterSignup />
+              </div>
+            </div>
           </div>
         </div>
       </section>

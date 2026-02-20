@@ -13,7 +13,7 @@ import { Button } from 'components/ui/button';
 
 import { useSignup } from '@/containers/auth/hooks';
 import { useRouter } from 'next/router';
-import Footer from '@/containers/auth/footer';
+import FooterSignin from '@/components/auth/footer-signin';
 
 const formSchema = z
   .object({
@@ -100,7 +100,7 @@ export default function SignupPage() {
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
           <h1 className="text-brand-800 font-sans text-[40px] font-light">Sign up</h1>
-          <div className="divide-text-gray-200 space-y-6 divide-y">
+          <div className="space-y-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <fieldset className="space-y-4">
@@ -206,10 +206,9 @@ export default function SignupPage() {
                   {signup.isLoading ? 'Submitting…' : 'Register'}
                 </Button>
               </form>
-              <div className="my-6 h-[0.5px] w-full bg-gray-200" />
             </Form>
 
-            <Footer />
+            <FooterSignin />
           </div>
         </div>
       </section>
