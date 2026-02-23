@@ -14,7 +14,7 @@ import { LocationTypes } from '@/containers/datasets/locations/types';
 import Loading from 'components/ui/loading';
 import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
-import { drawingToolAtom } from '@/store/drawing-tool';
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 const SavedAreasContent = () => {
   const {
@@ -32,13 +32,14 @@ const SavedAreasContent = () => {
   const updateUserLocationMutation = useUpdateUserLocation();
 
   const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
 
   const buildCustomGeometry = () => {
     const drawn = customGeojson?.features?.[0]?.geometry;
     const uploaded = uploadedGeojson?.features?.[0]?.geometry;
 
     const geom = drawn ?? uploaded;
+
     if (!geom || !('coordinates' in geom) || !geom.coordinates) return null;
 
     return {
@@ -47,7 +48,6 @@ const SavedAreasContent = () => {
       coordinates: geom.coordinates as [number][],
     };
   };
-
   const handleClickSaveArea = async () => {
     try {
       const id = existingLocation?.id;
