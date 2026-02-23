@@ -98,7 +98,6 @@ export function useGetUserLocation(
 
 export const createUserLocation = async (body: UserLocationCreateBody) => {
   try {
-    console.log('createUserLocation called');
     const r = await API.request<{ data: UserLocation }>({
       method: 'POST',
       url: '/user_locations',
