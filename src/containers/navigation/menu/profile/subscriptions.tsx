@@ -12,13 +12,7 @@ import {
   type DataUserNotificationPreferencesToggleLocationAlerts,
 } from '@/containers/subscriptions/hooks';
 import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipPortal,
-  TooltipArrow,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipArrow, TooltipTrigger } from '@/components/ui/tooltip';
 
 type Draft = Partial<DataUserNotificationPreferencesToggleLocationAlerts>;
 
@@ -118,40 +112,24 @@ const SubscriptionsContent = () => {
         )}
       </Tooltip>
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <span className="block">
-            <div className="flex items-center justify-between gap-12">
-              <div className="flex max-w-sm flex-col justify-between gap-2">
-                <span className="text-lg font-light">What&apos;s new</span>
-                <p className="text-sm text-[#939393]">
-                  Weekly updates on mangrove conservation news and the latest platform enhancements.
-                </p>
-              </div>
+      <div className="flex items-center justify-between gap-12">
+        <div className="flex max-w-sm flex-col justify-between gap-2">
+          <span className="text-lg font-light">What&apos;s new</span>
+          <p className="text-sm text-[#939393]">
+            Weekly updates on mangrove conservation news and the latest platform enhancements.
+          </p>
+        </div>
 
-              <SwitchWrapper id="newsletter">
-                <SwitchRoot
-                  checked={!!effective?.newsletter}
-                  disabled={isDisabled}
-                  onCheckedChange={(checked) => setField('newsletter', checked)}
-                >
-                  <SwitchThumb />
-                </SwitchRoot>
-              </SwitchWrapper>
-            </div>
-          </span>
-        </TooltipTrigger>
-
-        {!hasLocations && (
-          <TooltipContent
-            side="right"
-            className="shadow-soft max-w-[190px] rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
+        <SwitchWrapper id="newsletter">
+          <SwitchRoot
+            checked={!!effective?.newsletter}
+            disabled={isDisabled}
+            onCheckedChange={(checked) => setField('newsletter', checked)}
           >
-            Save at least one area to activate notifications.
-            <TooltipArrow className="fill-white" width={10} height={5} />
-          </TooltipContent>
-        )}
-      </Tooltip>
+            <SwitchThumb />
+          </SwitchRoot>
+        </SwitchWrapper>
+      </div>
 
       <Button
         className="w-fit"

@@ -3,8 +3,15 @@
 import { useCallback } from 'react';
 import { LuX } from 'react-icons/lu';
 
-import { useDeleteUserLocation } from '@/containers/datasets/locations/user-locations';
+import {
+  useDeleteUserLocation,
+  useGetUserLocations,
+} from '@/containers/datasets/locations/user-locations';
 import cn from '@/lib/classnames';
+import {
+  useGetUserNotificationPreferences,
+  usePostToggleLocationAlerts,
+} from '@/containers/subscriptions/hooks';
 
 const LuXIcon = LuX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
@@ -12,15 +19,33 @@ type Props = { name: string; id: number };
 
 const LocationItem = ({ name, id }: Props) => {
   const deleteUserLocationArea = useDeleteUserLocation();
-  const isDeleting = deleteUserLocationArea.isLoading;
+  const { data: dataUserNotificationsPreferences } = useGetUserNotificationPreferences();
+  const { data: dataUserLocation, isFetched: isFetchedUserLocations } = useGetUserLocations();
+  const { isLoading: isDeleting, isSuccess } = deleteUserLocationArea;
+  const toggleMutation = usePostToggleLocationAlerts();
 
   const handleClick = useCallback(async () => {
     try {
       await deleteUserLocationArea.mutateAsync(id);
+      if (isSuccess && isFetchedUserLocations && dataUserLocation.data.length === 0) {
+        if (dataUserNotificationsPreferences) {
+          toggleMutation.mutate({
+            ...dataUserNotificationsPreferences.data,
+            location_alerts: false,
+          });
+        }
+      }
     } catch (error) {
       console.error('Error deleting location', error);
     }
-  }, [deleteUserLocationArea, id]);
+  }, [
+    deleteUserLocationArea,
+    id,
+    dataUserNotificationsPreferences,
+    isFetchedUserLocations,
+    dataUserLocation,
+    toggleMutation,
+  ]);
 
   return (
     <li className="flex items-center justify-between gap-3">
