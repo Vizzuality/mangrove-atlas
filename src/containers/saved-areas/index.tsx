@@ -40,8 +40,8 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
       <DialogContent classNameContent="max-w-[calc(100vw-2rem)]">
         <div>
           {status === 'authenticated' ? (
-            <div>
-              <h2 className="mb-4 text-lg font-semibold text-black/85">My areas</h2>
+            <div className="space-y-6">
+              <h2 className="text-3xl leading-[32px] font-light text-black/85">My areas</h2>
               <SavedAreasContent />{' '}
             </div>
           ) : (

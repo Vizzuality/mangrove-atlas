@@ -1,118 +1,75 @@
 'use client';
 
+import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
+import { LocationTypes } from '@/containers/datasets/locations/types';
+import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 
 import LocationItem from './item';
-import {
-  useCreateUserLocation,
-  useGetUserLocations,
-  useUpdateUserLocation,
-} from '@/containers/datasets/locations/user-locations';
-import { Button } from 'components/ui/button';
-import { useRouter } from 'next/router';
-import { LocationTypes } from '@/containers/datasets/locations/types';
+import LocationItemNew from './item-new';
 import Loading from 'components/ui/loading';
-import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 const SavedAreasContent = () => {
   const {
     query: { params: queryParams },
   } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
-  const { data: location } = useLocation(id, locationType);
-  const { data: locations, isLoading: isLoadingUserLocations } = useGetUserLocations();
-  const existingLocation = locations?.data.find((loc) => loc.location_id === location?.id);
 
-  const { name, id: location_id } = location || {};
+  const locationType = queryParams?.[0] as LocationTypes | undefined;
+  const routeId = queryParams?.[1];
 
-  const createUserLocationMutation = useCreateUserLocation();
-  const updateUserLocationMutation = useUpdateUserLocation();
+  const { data: location } = useLocation(routeId, locationType);
+  const { data: userLocationsRes, isLoading: isLoadingUserLocations } = useGetUserLocations();
 
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+  const userLocations = userLocationsRes?.data ?? [];
+  const meta = userLocationsRes?.meta;
 
-  const buildCustomGeometry = () => {
-    const drawn = customGeojson?.features?.[0]?.geometry;
-    const uploaded = uploadedGeojson?.features?.[0]?.geometry;
+  const routeName = location?.name ?? '';
+  const routeLocationId = location?.id;
 
-    const geom = drawn ?? uploaded;
+  const existsInSaved = useMemo(() => {
+    if (typeof routeLocationId !== 'number') return false;
+    return userLocations.some((ul) => ul.location?.id === routeLocationId);
+  }, [userLocations, routeLocationId]);
 
-    if (!geom || !('coordinates' in geom) || !geom.coordinates) return null;
-
-    return {
-      description: drawn ? 'Custom drawn area' : 'Uploaded area',
-      type: 'Polygon' as const,
-      coordinates: geom.coordinates as [number][],
-    };
-  };
-  const handleClickSaveArea = async () => {
-    try {
-      const id = existingLocation?.id;
-
-      // 1) Custom area: send custom_geometry
-      if (locationType === 'custom-area') {
-        const custom_geometry = buildCustomGeometry();
-
-        await createUserLocationMutation.createUserLocation({
-          name,
-          custom_geometry,
-        });
-      }
-
-      // 2) Non-custom area: update if id, else create
-      if (id) {
-        await updateUserLocationMutation.mutateAsync({
-          id,
-          body: { name },
-        });
-        return;
-      }
-
-      await createUserLocationMutation.createUserLocation({
-        name,
-        location_id: location_id as number,
-        custom_geometry: null, // or omit if your API allows
-      });
-    } catch (error) {
-      console.error('Error saving location', error);
-    }
-  };
-
-  const dataLocationsList = useMemo(() => locations?.data, [locations]);
-  const metaLocations = useMemo(() => locations?.meta, [locations]);
+  const shouldShowNew =
+    locationType === 'custom-area' || (typeof routeLocationId === 'number' && !existsInSaved);
 
   return (
     <div className="flex flex-col space-y-6 text-black/85">
-      {isLoadingUserLocations && <Loading />}
-      {!isLoadingUserLocations && (
+      {isLoadingUserLocations ? (
+        <Loading />
+      ) : (
         <>
           <p className="text-lg">
-            You can save{' '}
-            <span className="font-bold">up to {metaLocations?.max_locations} areas.</span> Select
-            one to analyse.
+            You can save <span className="font-bold">up to {meta?.max_locations} areas.</span>{' '}
+            Select one to analyse.
           </p>
+
           <div className="flex flex-col space-y-4">
-            {!!dataLocationsList?.length &&
-              dataLocationsList.map(({ name, id }) => (
-                <div key={name} className="mb-4">
-                  <LocationItem name={name} id={id} />
-                </div>
-              ))}
+            {userLocations.map((ul) => (
+              <LocationItem
+                key={ul.id}
+                userLocationId={ul.id}
+                name={ul.name}
+                locationType={ul.location_type}
+              />
+            ))}
+
+            {shouldShowNew && (
+              <LocationItemNew
+                key={`new-${locationType}-${routeLocationId ?? 'custom'}`}
+                name={routeName}
+                // for system routes this is the system location id; for custom-area it can be undefined
+                systemLocationId={typeof routeLocationId === 'number' ? routeLocationId : undefined}
+                locationType={locationType}
+                disabled={Boolean(meta && meta.current_count >= meta.max_locations)}
+              />
+            )}
           </div>
         </>
       )}
-      <Button
-        className="w-fit"
-        variant="secondary"
-        size="lg"
-        disabled={metaLocations?.current_count === 5}
-        onClick={handleClickSaveArea}
-      >
-        Save current area
-      </Button>
     </div>
   );
 };
