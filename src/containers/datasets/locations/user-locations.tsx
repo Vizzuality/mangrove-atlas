@@ -3,7 +3,6 @@ import { useQuery, UseQueryOptions, useMutation, useQueryClient } from '@tanstac
 
 import type { AxiosError } from 'axios';
 import type { Location } from './types';
-import { Polygon } from 'geojson';
 
 export interface UserLocation extends Location {
   user_id: string;
@@ -28,8 +27,7 @@ type UserLocationCreateBody = {
   // GeoJSON geometry object. Mutually exclusive with location_id
   custom_geometry?: {
     description: string;
-    type: string;
-    example: Polygon;
+    type: 'Polygon';
     coordinates: [number][];
   };
   // Map viewport bounds for the location
@@ -100,6 +98,7 @@ export function useGetUserLocation(
 
 export const createUserLocation = async (body: UserLocationCreateBody) => {
   try {
+    console.log('createUserLocation called');
     const r = await API.request<{ data: UserLocation }>({
       method: 'POST',
       url: '/user_locations',
@@ -119,8 +118,8 @@ export function useCreateUserLocation() {
   const qc = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (body: Partial<UserLocation>) => {
-      return createUserLocation(body as any);
+    mutationFn: async (body: UserLocationCreateBody) => {
+      return createUserLocation(body);
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: userLocationsKeys.list() });

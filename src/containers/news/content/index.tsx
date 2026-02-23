@@ -26,7 +26,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {!postInfo && (
           <motion.div
-            className="no-scrollbar overflow-y-auto"
+            className="no-scrollbar flex flex-col overflow-y-auto"
             initial="hidden"
             animate="displayed"
             variants={{
@@ -35,7 +35,7 @@ export const BlogContent = () => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <h3 className="py-6 text-3xl leading-1 font-light">News</h3>
+            <h3 className="leading-1 py-6 text-3xl font-light">News</h3>
             <div className="flex flex-col space-y-4" data-testid="posts-list">
               {data?.map((post) => (
                 <button
@@ -55,7 +55,7 @@ export const BlogContent = () => {
       <AnimatePresence>
         {postInfo && (
           <motion.div
-            className="no-scrollbar overflow-x-visible overflow-y-auto"
+            className="no-scrollbar overflow-y-auto overflow-x-visible"
             initial="hidden"
             animate="displayed"
             data-testid="post-info"
@@ -65,12 +65,12 @@ export const BlogContent = () => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <div className="absolute top-0 left-0 h-[240px] w-full">
+            <div className="absolute left-0 top-0 h-[240px] w-full">
               <button
                 data-testid="back-to-news-button"
                 type="button"
                 aria-label="back to news"
-                className="pointer-events-all text-brand-800 hover:bg-brand-800 absolute top-8 left-8 z-20 bg-white px-4 py-1 text-sm transition delay-150 duration-300 ease-in-out hover:text-white md:top-4 md:rounded-3xl"
+                className="pointer-events-all absolute left-8 top-8 z-20 bg-white px-4 py-1 text-sm text-brand-800 transition delay-150 duration-300 ease-in-out hover:bg-brand-800 hover:text-white md:top-4 md:rounded-3xl"
                 onClick={(e) => {
                   e.stopPropagation();
                   return setPostInfo(null);
@@ -91,7 +91,7 @@ export const BlogContent = () => {
               {dataTags?.map((tag, i) => (
                 <div
                   key={i}
-                  className="bg-brand-400 flex w-fit items-center rounded-2xl px-3 py-1 text-xs font-semibold whitespace-nowrap text-white uppercase"
+                  className="flex w-fit items-center whitespace-nowrap rounded-2xl bg-brand-400 px-3 py-1 text-xs font-semibold uppercase text-white"
                 >
                   {tag.name}
                 </div>
@@ -112,7 +112,7 @@ export const BlogContent = () => {
       </AnimatePresence>
       <DialogClose
         onClose={() => setPostInfo(null)}
-        className="top-8 md:fixed md:top-18! md:left-[595px]"
+        className="md:top-18! top-8 md:fixed md:left-[595px]"
       />
     </>
   );

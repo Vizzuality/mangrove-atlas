@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Source, Layer } from 'react-map-gl';
 import { useRecoilValue } from 'recoil';
 
@@ -25,7 +25,6 @@ const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onAdd, onRemove]);
 
-  
   if (!source || !LAYERS) return null;
 
   return (

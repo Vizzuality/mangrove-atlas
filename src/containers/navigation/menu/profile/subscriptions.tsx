@@ -64,9 +64,10 @@ const SubscriptionsContent = () => {
       },
     });
   }, [userPreferences, selection, toggleMutation]);
+  console.log(isLoading, effective, 'subscriptions');
 
-  if (isLoading || !effective) return <Loading />;
-
+  if (isLoading) return <Loading />;
+  console.log(isLoading, effective, 'despues');
   return (
     <div className="flex flex-col space-y-6">
       <div className="flex items-center justify-between gap-12">
@@ -79,7 +80,7 @@ const SubscriptionsContent = () => {
 
         <SwitchWrapper id="alerts">
           <SwitchRoot
-            checked={!!effective.location_alerts}
+            checked={!!effective?.location_alerts}
             disabled={isSaving}
             onCheckedChange={(checked) => setField('location_alerts', checked)}
           >
@@ -98,7 +99,7 @@ const SubscriptionsContent = () => {
 
         <SwitchWrapper id="newsletter">
           <SwitchRoot
-            checked={!!effective.newsletter}
+            checked={!!effective?.newsletter}
             disabled={isSaving}
             onCheckedChange={(checked) => setField('newsletter', checked)}
           >

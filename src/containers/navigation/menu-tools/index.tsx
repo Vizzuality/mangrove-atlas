@@ -76,9 +76,7 @@ const LocationTools = () => {
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />
 
       {/* SAVED AREAS */}
-      {process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS === 'true' && (
-        <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
-      )}
+      <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
     </div>
   );
 };

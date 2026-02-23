@@ -3,9 +3,7 @@ import { getSession } from 'next-auth/react';
 
 const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL_STAGING,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: { 'Content-Type': 'application/json' },
 });
 
 API.interceptors.request.use(async (config) => {
@@ -13,7 +11,7 @@ API.interceptors.request.use(async (config) => {
   const token = (session as any)?.user?.accessToken;
 
   config.headers = config.headers ?? new axios.AxiosHeaders();
-  if (token) config.headers.set('Authorization', `Bearer ${token}`);
+  (config.headers as any).Authorization = token ? `Bearer ${token}` : undefined;
 
   return config;
 });
