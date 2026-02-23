@@ -4,11 +4,40 @@ import { useQuery, UseQueryOptions, useMutation, useQueryClient } from '@tanstac
 import type { AxiosError } from 'axios';
 import type { Location } from './types';
 
-export interface UserLocation extends Location {
-  user_id: string;
-}
+import type GeoJSON from 'geojson';
 
-type MetadataUserLocation = {
+export type UserLocationType = 'system' | 'custom';
+
+export type SystemLocation = {
+  id: number;
+  name: string;
+  iso: string;
+  location_type: UserLocationType;
+  bounds: Bounds | null;
+};
+
+export type UserLocation = {
+  id: number;
+  name: string;
+  position: number | null;
+  bounds: Bounds | null;
+  alerts_enabled: boolean;
+  created_at: string; // date-time
+  updated_at: string; // date-time
+
+  location_type: UserLocationType;
+
+  // Present when location_type is 'system'
+  location: SystemLocation | null;
+
+  // Present when location_type is 'custom'
+  custom_geometry: CustomGeometry | null;
+
+  // If your API actually returns it (you had it before):
+  user_id?: string;
+};
+
+export type MetadataUserLocation = {
   max_locations: number;
   current_count: number;
 };
@@ -18,33 +47,49 @@ export type UserLocationsResponse = {
   meta: MetadataUserLocation;
 };
 
-type UserLocationCreateBody = {
+type Bounds = {
+  description: string;
+  north: number;
+  south: number;
+  east: number;
+  west: number;
+};
+
+export type CustomGeometry = {
+  description: string;
+  type: 'Polygon';
+  coordinates: GeoJSON.Polygon['coordinates'];
+};
+
+type BaseCreateBody = {
   // Display name for the saved location
   name: string;
-  // ID of a system location. Mutually exclusive with custom_geometry
-  location_id?: number;
 
-  // GeoJSON geometry object. Mutually exclusive with location_id
-  custom_geometry?: {
-    description: string;
-    type: 'Polygon';
-    coordinates: [number][];
-  };
   // Map viewport bounds for the location
-  bounds?: {
-    description: string;
+  bounds?: Bounds;
 
-    north: number;
-    south: number;
-    east: number;
-    west: number;
-  };
   // Display order position
   position?: number;
 
   // Whether location-based alerts are enabled for this location. Defaults to true
   alerts_enabled?: boolean;
 };
+
+//  System location: requires location_id, forbids custom_geometry
+export type UserLocationCreateBodySystem = BaseCreateBody & {
+  location_type: 'system';
+  location_id: number;
+  custom_geometry?: never;
+};
+
+//  Custom location: requires custom_geometry, forbids location_id
+export type UserLocationCreateBodyCustom = BaseCreateBody & {
+  location_type: 'custom';
+  custom_geometry: CustomGeometry;
+  location_id?: never;
+};
+
+export type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
 export const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
