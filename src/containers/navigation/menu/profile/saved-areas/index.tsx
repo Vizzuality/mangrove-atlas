@@ -33,7 +33,6 @@ const SavedAreasContent = () => {
 
   const { customGeojson } = useRecoilValue(drawingToolAtom);
   const { uploadedGeojson } = useRecoilValue(drawingToolAtom);
-  console.log('customGeojson', customGeojson, existingLocation);
 
   const buildCustomGeometry = () => {
     const drawn = customGeojson?.features?.[0]?.geometry;
@@ -59,7 +58,6 @@ const SavedAreasContent = () => {
 
         await createUserLocationMutation.createUserLocation({
           name,
-          location_id: location_id as number,
           custom_geometry,
         });
       }

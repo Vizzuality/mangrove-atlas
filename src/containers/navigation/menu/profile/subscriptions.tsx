@@ -64,10 +64,9 @@ const SubscriptionsContent = () => {
       },
     });
   }, [userPreferences, selection, toggleMutation]);
-  console.log(isLoading, effective, 'subscriptions');
 
   if (isLoading) return <Loading />;
-  console.log(isLoading, effective, 'despues');
+
   return (
     <div className="flex flex-col space-y-6">
       <div className="flex items-center justify-between gap-12">
