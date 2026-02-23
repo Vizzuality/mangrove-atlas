@@ -26,7 +26,7 @@ const DialogOverlay = forwardRef<
 >(({ className }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn(className, {
+    className={cn({
       'bg-brand-600/70 fixed inset-0 backdrop-blur-sm md:bg-black/50': true,
       [className || '']: !!className,
     })}
@@ -71,7 +71,7 @@ DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn(className, {
+    className={cn({
       'flex flex-col space-y-2 text-center md:text-left': true,
       [className || '']: !!className,
     })}
@@ -90,7 +90,7 @@ const DialogClose = ({
   <DialogPrimitive.Close asChild>
     <button
       type="button"
-      className={cn(className, {
+      className={cn({
         'md:shadow-card absolute -top-2 -right-10 flex h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:outline-none md:top-9 md:-z-10 md:bg-white/70 md:backdrop-blur-sm':
           true,
         [className || '']: !!className,
@@ -106,7 +106,7 @@ DialogClose.displayName = 'DialogClose';
 
 const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn(className, {
+    className={cn({
       'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
       [className || '']: !!className,
     })}
@@ -136,7 +136,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn(className, {
+    className={cn({
       'text-sm text-slate-500': true,
       [className || '']: !!className,
     })}

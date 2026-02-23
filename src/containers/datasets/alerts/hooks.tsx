@@ -10,10 +10,17 @@ import { analysisAtom } from '@/store/analysis';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse, CanceledError } from 'axios';
-import { Visibility } from '@/types/layers';
+import { AxiosError, CanceledError } from 'axios';
 import { CartesianViewBox } from 'recharts/types/util/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import type {
+  CircleLayerSpecification,
+  ExpressionSpecification,
+  FilterSpecification,
+} from 'mapbox-gl';
+
+import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -24,14 +31,113 @@ import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
 
-const getStops = () => {
-  const colorSchema = ['rgba(199, 43, 214, 1)', 'rgba(235, 68, 68, 0.7)', 'rgba(255, 194, 0, 0.5)'];
+function monthsAgoYMD(n: number) {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  d.setUTCMonth(d.getUTCMonth() - n);
+  return d.toISOString().slice(0, 10); // YYYY-MM-DD
+}
 
-  const gradient = colorSchema.map((d, index) => ({
-    offset: `${(index / (colorSchema.length - 1)) * 100}%`,
-    stopColor: d,
+const bucketKey = (m: number) => {
+  if (m < 3) return 'lt3';
+  if (m < 6) return '3to6';
+  if (m < 12) return '6to12';
+  if (m < 24) return '12to24';
+  return 'gt24';
+};
+
+const makeColoredSeries = (data: any[]) => {
+  const keys = [
+    'alerts_lt3',
+    'alerts_3to6',
+    'alerts_6to12',
+    'alerts_12to24',
+    'alerts_gt24',
+  ] as const;
+
+  // init keys as null
+  const layerKeys = data.map((d) => ({
+    ...d,
+    alerts_lt3: null,
+    alerts_3to6: null,
+    alerts_6to12: null,
+    alerts_12to24: null,
+    alerts_gt24: null,
   }));
-  return gradient;
+
+  // assign each point to its bucket
+  for (let i = 0; i < layerKeys.length; i++) {
+    const d = layerKeys[i];
+    const b = bucketKey(d.monthsSinceDetection);
+
+    const k =
+      b === 'lt3'
+        ? 'alerts_lt3'
+        : b === '3to6'
+          ? 'alerts_3to6'
+          : b === '6to12'
+            ? 'alerts_6to12'
+            : b === '12to24'
+              ? 'alerts_12to24'
+              : 'alerts_gt24';
+
+    d[k] = d.alerts;
+  }
+
+  // stitch boundaries: when bucket changes, copy the boundary point to both series
+  for (let i = 1; i < layerKeys.length; i++) {
+    const prev = layerKeys[i - 1];
+    const curr = layerKeys[i];
+
+    const prevB = bucketKey(prev.monthsSinceDetection);
+    const currB = bucketKey(curr.monthsSinceDetection);
+
+    if (prevB !== currB) {
+      const prevKey =
+        prevB === 'lt3'
+          ? 'alerts_lt3'
+          : prevB === '3to6'
+            ? 'alerts_3to6'
+            : prevB === '6to12'
+              ? 'alerts_6to12'
+              : prevB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      const currKey =
+        currB === 'lt3'
+          ? 'alerts_lt3'
+          : currB === '3to6'
+            ? 'alerts_3to6'
+            : currB === '6to12'
+              ? 'alerts_6to12'
+              : currB === '12to24'
+                ? 'alerts_12to24'
+                : 'alerts_gt24';
+
+      // duplicate the boundary point so lines meet
+      prev[currKey] = prev.alerts;
+      curr[prevKey] = curr.alerts;
+    }
+  }
+
+  return layerKeys;
+};
+
+const monthIndex = (year: number, month1to12: number) => year * 12 + (month1to12 - 1);
+
+const monthsSince = (year: number, month1to12: number, ref: Date) => {
+  const refIdx = monthIndex(ref.getFullYear(), ref.getMonth() + 1);
+  const dIdx = monthIndex(year, month1to12);
+  return Math.max(0, refIdx - dIdx);
+};
+
+const addMonthsSince = (data) => {
+  const ref = new Date();
+  return data.map((d) => ({
+    ...d,
+    monthsSinceDetection: monthsSince(d.year, d.month.value, ref),
+  }));
 };
 
 const getData = (data) =>
@@ -39,33 +145,35 @@ const getData = (data) =>
     data?.map((d) => {
       const year = Number(d.date.value.split('-', 1)[0]);
       const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
-      const day = new Date(year, month.value, 0).getDate();
+      const day = month ? new Date(year, month.value, 0).getDate() : 0;
 
-      const lastDay = new Date(year, month.value, 0).getDate();
+      const lastDay = month ? new Date(year, month.value, 0).getDate() : 0;
 
       return {
         ...d,
         month,
         year,
-        date: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
-        end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+        date: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-${day}`,
+        end: month ? `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}` : '',
         start: d.date.value,
-        title: month.label,
-        name: `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
-          'en',
-          {
-            year: '2-digit',
-          }
-        )}`,
+        title: month?.label ?? '',
+        name: month
+          ? `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
+              'en',
+              {
+                year: '2-digit',
+              }
+            )}`
+          : '',
         alerts: d.count,
-        label: `${month.label}, ${year}`,
+        label: `${month?.label ?? ''}, ${year}`,
         startDate: {
-          label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-01`,
+          label: `${month?.label ?? ''}, ${year}`,
+          value: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-01`,
         },
         endDate: {
-          label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${lastDay}`,
+          label: `${month?.label ?? ''}, ${year}`,
+          value: `${year}-${(month?.value ?? 0) < 10 ? '0' : ''}${month?.value ?? 0}-${lastDay}`,
         },
       };
     }),
@@ -97,61 +205,78 @@ const DefaultTick = ({ x, y, payload }) => {
 const getTotal = (data: { count: number }[]) =>
   data?.reduce((previous: number, current: { count: number }) => current.count + previous, 0);
 
-export function useAlerts<DataResponse>(
-  startDate: { label: string; value: string },
-  endDate: { label: string; value: string },
+type DateOption = { label: string; value: string };
+
+type AlertsApiItem = any; // { date: { value: string }; count: number; ... }
+type AlertsApiResponse = AlertsApiItem[];
+
+export function useAlerts<TRaw = AlertsApiResponse>(
+  startDate?: DateOption,
+  endDate?: DateOption,
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
-  queryOptions?: UseQueryOptions<DataResponse, Error, AlertData>,
+  queryOptions?: Omit<
+    UseQueryOptions<TRaw, Error, AlertData | undefined, (string | unknown)[]>,
+    'queryKey' | 'queryFn' | 'select'
+  >,
   onCancel?: () => void
 ) {
   const setStartDate = useSetRecoilState(alertsStartDate);
   const setEndDate = useSetRecoilState(alertsEndDate);
+
   const {
     query: { params: queryParams },
   } = useRouter();
 
   const locationType = queryParams?.[0] as LocationTypes;
   const id = queryParams?.[1];
-  const {
-    data: { location_id },
-  } = useLocation(id, locationType);
+
+  const { data } = useLocation(id, locationType);
+  const location_id = data?.location_id;
+
   const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
 
-  const fetchAlerts = () => {
-    if (isAnalysisRunning) {
-      return API_cloud_functions.request({
-        method: 'POST',
-        url: '/fetch-alerts',
-        data: {
-          ...dataParams,
-        },
-      })
-        .then((response: AxiosResponse<DataResponse>) => {
-          return response.data;
-        })
-        .catch((err: CanceledError<unknown> | AxiosError) => {
-          if (err.code === 'ERR_CANCELED') onCancel?.();
-          throw new Error('Error fetching alerts');
+  const fetchAlerts = async (): Promise<TRaw> => {
+    try {
+      if (isAnalysisRunning) {
+        const response = await API_cloud_functions.request<TRaw>({
+          method: 'POST',
+          url: '/fetch-alerts',
+          data: { ...dataParams },
         });
-    }
+        return response.data;
+      }
 
-    if (!isAnalysisRunning) {
-      return API_cloud_functions.request({
+      const response = await API_cloud_functions.request<TRaw>({
         method: 'GET',
         url: '/fetch-alerts',
         params: {
           location_id,
           ...params,
         },
-      }).then((response) => response.data);
+      });
+      return response.data;
+    } catch (err) {
+      const e = err as CanceledError<unknown> | AxiosError;
+      if ((e as any)?.code === 'ERR_CANCELED') onCancel?.();
+      throw new Error('Error fetching alerts');
     }
   };
 
-  return useQuery(['alerts', params, location_id], fetchAlerts, {
-    select: (data) => {
-      if (!data) return undefined;
-      const fullData = getData(data);
+  return useQuery<TRaw, Error, AlertData | undefined>({
+    queryKey: ['alerts', params, location_id],
+    queryFn: fetchAlerts,
+    enabled: (queryOptions?.enabled ?? true) && !!location_id, // avoid calling without location_id
+    select: (raw): AlertData | undefined => {
+      // IMPORTANT: raw is TRaw (your API response), not AlertData
+      if (!raw) return undefined;
+
+      // if your raw is an array, keep this:
+      const rawArray = raw as unknown as AlertsApiResponse;
+      if (!Array.isArray(rawArray) || rawArray.length === 0) return undefined;
+
+      const fullData = getData(rawArray); // make sure getData expects the API array
+      if (!fullData.length) return undefined;
 
       const startDateOptions = fullData.map((d) => d.startDate);
       const endDateOptions = fullData.map((d) => d.endDate);
@@ -159,79 +284,82 @@ export function useAlerts<DataResponse>(
       const defaultStartDate = startDateOptions[0];
       const defaultEndDate = endDateOptions[endDateOptions.length - 1];
 
-      const selectedStartDate = startDate || defaultStartDate;
-      const selectedEndDate = endDate || defaultEndDate;
+      const selectedStartDate = startDate ?? defaultStartDate;
+      const selectedEndDate = endDate ?? defaultEndDate;
 
       if (selectedEndDate) setEndDate(selectedEndDate);
       if (selectedStartDate) setStartDate(selectedStartDate);
 
-      const dataFiltered =
-        Array.isArray(data) &&
-        data?.filter(
-          (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
-        );
+      const dataFiltered = rawArray.filter(
+        (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+      );
 
       const fixedXAxis = fullData.map((d) => d.year);
 
-      const chartData = getData(dataFiltered);
+      const chartDataRaw = getData(dataFiltered);
+      const chartDataWithMonths = addMonthsSince(chartDataRaw);
+      const chartData = makeColoredSeries(chartDataWithMonths);
       const startIndex = fullData.findIndex((d) => d.startDate?.value === selectedStartDate?.value);
       const endIndex = fullData.findIndex((d) => d.endDate?.value === selectedEndDate?.value);
 
       const alertsTotal = getTotal(dataFiltered);
-
       const config = {
         data: chartData,
         type: 'line',
         dataKey: 'alerts',
         height: 350,
-        cartesianGrid: {
-          vertical: false,
-          horizontal: false,
-        },
+        cartesianGrid: { vertical: false, horizontal: false },
         margin: { top: 50, right: 10, left: 10, bottom: 35 },
         label: 'alerts',
         xKey: 'name',
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
+            alerts_gt24: {
+              stroke: '#FFC201',
               strokeWidth: 2.5,
               isAnimationActive: false,
+              dot: false,
+            },
+            alerts_12to24: {
+              stroke: '#F78E1C',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_6to12: {
+              stroke: '#ED4F3F',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_3to6: {
+              stroke: '#DC3982',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
+            },
+            alerts_lt3: {
+              stroke: '#C62AD6',
+              strokeWidth: 2.5,
+              isAnimationActive: false,
+              dot: false,
             },
           },
         },
-        xAxis: {
-          tick: TickSmall,
-          type: 'category',
-        },
+        xAxis: { tick: TickSmall, type: 'category' },
         yAxis: {
-          tick: {
-            fontSize: 10,
-            fill: 'rgba(0,0,0,0.54)',
-          },
-
+          tick: { fontSize: 10, fill: 'rgba(0,0,0,0.54)' },
           width: 40,
           interval: 0,
           orientation: 'right',
           value: 'alerts',
           label: ({ viewBox }: { viewBox: CartesianViewBox }) => {
             const { x, y } = viewBox;
-
+            if (x == null || y == null) return null; // <-- don’t use !x / !y
             return (
               <g>
-                <text
-                  x={x + 20}
-                  y={y - 40}
-                  className="recharts-text recharts-label-medium"
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                >
-                  <tspan
-                    alignmentBaseline="middle"
-                    fill="rgba(0,0,0,0.24)"
-                    stroke="rgba(0,0,0,0.24)"
-                    fontSize="12"
-                  >
+                <text x={x + 20} y={y - 40} textAnchor="middle" dominantBaseline="central">
+                  <tspan fill="rgba(0,0,0,0.24)" stroke="rgba(0,0,0,0.24)" fontSize="12">
                     Alerts
                   </tspan>
                 </text>
@@ -241,31 +369,22 @@ export function useAlerts<DataResponse>(
           type: 'number',
         },
         tooltip: {
-          content: (properties) => {
-            return <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />;
-          },
+          content: (properties: any) => (
+            <Tooltip {...properties} payload={properties.payload?.[0]?.payload} />
+          ),
         },
       };
+
       const configBrush = {
-        data: fullData,
         type: 'line',
         dataKey: 'alerts',
         height: 100,
-        cartesianGrid: {
-          vertical: false,
-          horizontal: false,
-        },
+        cartesianGrid: { vertical: false, horizontal: false },
         referenceAreas: [
+          { x1: 0, x2: 11, y1: -100, y2: 480, fill: 'url(#diagonal-stripe-1) #000' },
           {
-            x1: 0,
-            x2: 11,
-            y1: -100,
-            y2: 480,
-            fill: 'url(#diagonal-stripe-1) #000',
-          },
-          {
-            x1: startDate?.value,
-            x2: endDate?.value,
+            x1: selectedStartDate?.value,
+            x2: selectedEndDate?.value,
             y1: -100,
             y2: 480,
             fill: '#fff',
@@ -273,18 +392,6 @@ export function useAlerts<DataResponse>(
           },
         ],
         margin: { top: 20, right: 40, left: 10, bottom: 5 },
-        gradients: {
-          key: {
-            attributes: {
-              id: 'colorAlerts',
-              x1: 0,
-              y1: 0,
-              x2: 0,
-              y2: 1,
-            },
-            stops: getStops(),
-          },
-        },
         patterns: {
           diagonal: {
             attributes: {
@@ -295,36 +402,20 @@ export function useAlerts<DataResponse>(
               height: 6,
             },
             children: {
-              rect2: {
-                tag: 'rect',
-                x: 0,
-                y: 0,
-                width: 4,
-                height: 6,
-                transform: 'translate(0,0)',
-                fill: '#d2d2d2',
-              },
-              rect: {
-                tag: 'rect',
-                x: 0,
-                y: 0,
-                width: 3,
-                height: 6,
-                transform: 'translate(0,0)',
-                fill: '#fff',
-              },
+              rect2: { tag: 'rect', x: 0, y: 0, width: 4, height: 6, fill: '#d2d2d2' },
+              rect: { tag: 'rect', x: 0, y: 0, width: 3, height: 6, fill: '#fff' },
             },
           },
         },
-
         xKey: 'year',
+        data: makeColoredSeries(addMonthsSince(fullData)),
         chartBase: {
           lines: {
-            alerts: {
-              stroke: 'url(#colorAlerts)',
-              strokeWidth: 2.5,
-              isAnimationActive: false,
-            },
+            alerts_gt24: { stroke: '#FFC201', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_12to24: { stroke: '#F78E1C', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_6to12: { stroke: '#ED4F3F', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_3to6: { stroke: '#DC3982', strokeWidth: 2.5, isAnimationActive: false },
+            alerts_lt3: { stroke: '#C62AD6', strokeWidth: 2.5, isAnimationActive: false },
           },
         },
         xAxis: {
@@ -333,27 +424,21 @@ export function useAlerts<DataResponse>(
           interval: 0,
           type: 'category',
         },
-
         tooltip: false,
-        customBrush: {
-          margin: { top: 60, right: 20, left: 15, bottom: 80 },
-          startIndex,
-          endIndex,
-        },
+        customBrush: { margin: { top: 60, right: 20, left: 15, bottom: 80 }, startIndex, endIndex },
       };
 
-      if (!fullData.length) return undefined;
       return {
         alertsTotal: formatAxis(alertsTotal),
         startDateOptions,
-        selectedStartDate,
-        config,
-        fullData,
-        configBrush,
-        selectedEndDate,
         endDateOptions,
+        selectedStartDate,
+        selectedEndDate,
         defaultStartDate,
         defaultEndDate,
+        fullData,
+        config,
+        configBrush,
       };
     },
     ...queryOptions,
@@ -361,35 +446,12 @@ export function useAlerts<DataResponse>(
 }
 
 // dataset layer
-export function useSources(): SourceProps[] {
-  const startDate = useRecoilValue(alertsStartDate);
-  const endDate = useRecoilValue(alertsEndDate);
-
-  return [
-    {
-      id: 'monitored-alerts',
-      type: 'vector',
-      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
-    },
-    {
-      id: 'alerts-heatmap',
-      type: 'geojson',
-      data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
-        startDate?.value || ''
-      }&end_date=${endDate?.value || ''}`,
-    },
-    {
-      id: 'alerts-tiles',
-      type: 'vector',
-      tiles: [
-        `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/alerts-tiler?x={x}&y={y}&z={z}&start_date=${
-          startDate?.value || ''
-        }&end_date=${endDate?.value || ''}`,
-      ],
-      minzoom: 10,
-      maxzoom: 14,
-    },
-  ];
+export function useSource(): SourceProps {
+  return {
+    id: 'alerts-heatmap-vector',
+    type: 'vector',
+    url: 'mapbox://globalmangrovewatch.10zyfs67',
+  };
 }
 
 export function useLayers({
@@ -397,106 +459,84 @@ export function useLayers({
   opacity,
   visibility = 'visible',
 }: {
-  id: LayerProps['id'];
+  id: string;
   opacity?: number;
   visibility?: Visibility;
-}): {
-  'alerts-heatmap': LayerProps[];
-  'alerts-tiles': LayerProps[];
-  'monitored-alerts': LayerProps[];
-} {
-  return {
-    'alerts-heatmap': [
-      {
-        id,
-        type: 'heatmap',
-        source: 'alerts-heatmap',
-        maxzoom: 10,
-        paint: {
-          // Increase the heatmap weight based on frequency and property magnitude
-          'heatmap-weight': ['interpolate', ['linear'], ['get', 'count'], 0, 0, 6, 1],
-          // Increase the heatmap color weight weight by zoom level
-          // heatmap-intensity is a multiplier on top of heatmap-weight
-          'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 0, 1, 9, 3],
-          // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
-          // Begin color ramp at 0-stop with a 0-transparancy color
-          // to create a blur-like effect.
-          'heatmap-color': [
-            'interpolate',
-            ['linear'],
-            ['heatmap-density'],
-            0,
-            'rgba(255, 255, 255, 0)',
-            0.1,
-            'rgba(255, 194, 0, 1)',
-            0.5,
-            'rgba(235, 68, 68, 1)',
-            1,
-            'rgba(199, 43, 214, 1)',
-          ],
-          // Adjust the heatmap radius by zoom level
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 20],
-          // Transition from heatmap to circle layer by zoom level
-          'heatmap-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 2,
-            opacity * 1,
-            opacity * 11,
-            opacity * 0.5,
-          ],
-        },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'alerts-tiles': [
-      {
-        id: `${id}-points`,
-        type: 'circle',
-        source: 'alerts-tiles',
-        'source-layer': 'geojsonLayer',
-        minzoom: 10,
-        maxzoom: 18,
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 5, 18, 2],
-          'circle-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-color': 'rgba(255, 194, 0, 1)',
-          'circle-stroke-width': 1,
-          'circle-blur': 0.5,
-          'circle-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            opacity * 9,
-            opacity * 0,
-            opacity * 10,
-            opacity * 0.7,
-          ],
-        },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'monitored-alerts': [
-      {
-        id: `${id}-line`,
-        type: 'line',
-        source: 'monitored-alerts',
-        'source-layer': 'alert_region_tiles',
-        minzoom: 0,
-        paint: {
-          'line-color': '#00857F',
-          'line-opacity': opacity,
-          'line-width': 1,
-        },
-        layout: {
-          visibility,
-        },
-      },
-    ],
+}): CircleLayerSpecification[] {
+  const cutoff3 = monthsAgoYMD(3);
+  const cutoff6 = monthsAgoYMD(6);
+  const cutoff12 = monthsAgoYMD(12);
+  const cutoff24 = monthsAgoYMD(24);
+
+  const radius: ExpressionSpecification = ['interpolate', ['linear'], ['zoom'], 0, 2, 9, 6, 14, 10];
+
+  const layerProps: Omit<CircleLayerSpecification, 'id' | 'filter' | 'paint'> = {
+    type: 'circle',
+    source: 'alerts-heatmap-vector',
+    'source-layer': 'alerts_data',
+    minzoom: 0,
+    maxzoom: 18,
+    layout: { visibility },
   };
+
+  const paintProps: CircleLayerSpecification['paint'] = {
+    'circle-radius': radius,
+    'circle-opacity': opacity ?? 1,
+  };
+
+  return [
+    {
+      ...layerProps,
+      id: `${id}-gt24`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['<', ['get', 'scr5_obs_date'], cutoff24],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#FFC201' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-12-24`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff24],
+        ['<', ['get', 'scr5_obs_date'], cutoff12],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#F78E1C' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-6-12`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff12],
+        ['<', ['get', 'scr5_obs_date'], cutoff6],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#ED4F3F' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-3-6`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff6],
+        ['<', ['get', 'scr5_obs_date'], cutoff3],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#DC3982' },
+    },
+    {
+      ...layerProps,
+      id: `${id}-lt3`,
+      filter: [
+        'all',
+        ['has', 'scr5_obs_date'],
+        ['>=', ['get', 'scr5_obs_date'], cutoff3],
+      ] as FilterSpecification,
+      paint: { ...paintProps, 'circle-color': '#C62AD6' },
+    },
+  ];
 }

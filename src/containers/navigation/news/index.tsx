@@ -19,8 +19,6 @@ import { trackEvent } from '@/lib/analytics/ga';
 import { HiX } from 'react-icons/hi';
 import { useEffect } from 'react';
 
-import cn from '@/lib/classnames';
-
 const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
 type PlatformUpdatesLastSeen = {
@@ -149,11 +147,7 @@ const News = () => {
     <Dialog onOpenChange={handleAnalytics}>
       {shouldShowUpdateTooltip ? <NewsTooltip handleClose={handleClose} /> : DialogNewsTrigger}
       {!guideIsActive && data && (
-        <DialogContent
-          className={cn({
-            'mx-0 font-sans md:mb-20 md:w-[540px]': true,
-          })}
-        >
+        <DialogContent className="md:mb-20">
           <DialogTitle className="sr-only">News &amp; updates</DialogTitle>
           <BlogContent />
         </DialogContent>

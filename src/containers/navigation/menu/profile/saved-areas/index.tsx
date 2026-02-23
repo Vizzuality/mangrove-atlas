@@ -13,6 +13,8 @@ import { useRouter } from 'next/router';
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import Loading from 'components/ui/loading';
 import { useMemo } from 'react';
+import { useRecoilValue } from 'recoil';
+import { drawingToolAtom } from '@/store/drawing-tool';
 
 const SavedAreasContent = () => {
   const {
@@ -29,19 +31,53 @@ const SavedAreasContent = () => {
   const createUserLocationMutation = useCreateUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
 
+  const { customGeojson } = useRecoilValue(drawingToolAtom);
+  const { uploadedGeojson } = useRecoilValue(drawingToolAtom);
+  console.log('customGeojson', customGeojson, existingLocation);
+
+  const buildCustomGeometry = () => {
+    const drawn = customGeojson?.features?.[0]?.geometry;
+    const uploaded = uploadedGeojson?.features?.[0]?.geometry;
+
+    const geom = drawn ?? uploaded;
+    if (!geom || !('coordinates' in geom) || !geom.coordinates) return null;
+
+    return {
+      description: drawn ? 'Custom drawn area' : 'Uploaded area',
+      type: 'Polygon' as const,
+      coordinates: geom.coordinates as [number][],
+    };
+  };
+
   const handleClickSaveArea = async () => {
     try {
-      if (existingLocation?.id) {
-        await updateUserLocationMutation.mutateAsync({
-          id: existingLocation.id,
-          body: { name },
-        });
-      } else {
+      const id = existingLocation?.id;
+
+      // 1) Custom area: send custom_geometry
+      if (locationType === 'custom-area') {
+        const custom_geometry = buildCustomGeometry();
+
         await createUserLocationMutation.createUserLocation({
           name,
-          location_id: location_id as string,
+          location_id: location_id as number,
+          custom_geometry,
         });
       }
+
+      // 2) Non-custom area: update if id, else create
+      if (id) {
+        await updateUserLocationMutation.mutateAsync({
+          id,
+          body: { name },
+        });
+        return;
+      }
+
+      await createUserLocationMutation.createUserLocation({
+        name,
+        location_id: location_id as number,
+        custom_geometry: null, // or omit if your API allows
+      });
     } catch (error) {
       console.error('Error saving location', error);
     }

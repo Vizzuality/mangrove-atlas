@@ -10,10 +10,10 @@ async function handleLogout() {
 
 export const UserMenu = ({ setSection }) => {
   const session = useSession();
-
+  console.log(session);
   return (
     <div className="flex w-full flex-col space-y-4 py-6 font-sans text-black/85">
-      {session.status === 'authenticated' && !process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
+      {session.status === 'authenticated' && (
         <>
           <button
             type="button"
@@ -33,7 +33,7 @@ export const UserMenu = ({ setSection }) => {
         </>
       )}
 
-      {session.status !== 'authenticated' && process.env.NEXT_PUBLIC_FEATURE_FLAG_WIDGETS && (
+      {session.status !== 'authenticated' && (
         <Link href="/auth/signin" className="text-2lg hover:text-brand-800 text-left font-light">
           Log in
         </Link>

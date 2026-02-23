@@ -1,31 +1,39 @@
+import { useEffect } from 'react';
 import { Source, Layer } from 'react-map-gl';
-
-import { activeLayersAtom } from '@/store/layers';
-
 import { useRecoilValue } from 'recoil';
 
+import { activeLayersAtom } from '@/store/layers';
 import type { LayerProps } from 'types/layers';
 
-import { useLayers, useSources } from './hooks';
+import { useLayers, useSource } from './hooks';
 
-const MangrovesAlertsLayer = ({ beforeId, id }: LayerProps) => {
+const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const activeLayers = useRecoilValue(activeLayersAtom);
   const activeLayer = activeLayers?.find((l) => l.id === id);
-  const SOURCES = useSources();
+
+  const source = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer?.opacity || '1'),
-    visibility: activeLayer?.visibility,
+    opacity: parseFloat(activeLayer.opacity),
+    visibility: activeLayer.visibility,
   });
 
-  if (!SOURCES || !LAYERS) return null;
+  useEffect(() => {
+    const ids = LAYERS.map((l) => l.id);
+    onAdd(ids);
+    return () => onRemove(ids);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onAdd, onRemove]);
 
-  return SOURCES.map((SOURCE) => (
-    <Source key={SOURCE.id} {...SOURCE}>
-      {SOURCE.id &&
-        LAYERS[SOURCE.id]?.map((LAYER) => <Layer key={LAYER.id} {...LAYER} beforeId={beforeId} />)}
+  if (!source || !LAYERS) return null;
+
+  return (
+    <Source key={source.id} {...source}>
+      {LAYERS.map((layer) => (
+        <Layer key={layer.id} {...layer} beforeId={beforeId} />
+      ))}
     </Source>
-  ));
+  );
 };
 
 export default MangrovesAlertsLayer;

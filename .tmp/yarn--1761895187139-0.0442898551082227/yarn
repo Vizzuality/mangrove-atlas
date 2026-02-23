@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec "/Users/maria/.nvm/versions/node/v22.20.0/bin/node" "/usr/local/bin/yarn" "$@"
