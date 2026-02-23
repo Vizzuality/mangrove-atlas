@@ -23,7 +23,7 @@
     "@google-cloud/bigquery": "^5.0.0",
     "axios": "^1.6.0",
     "concurrently": "^7.2.2",
-    "nodemon": "^2.0.16",
+    "nodemon": "^3.1.14",
     "turf-reverse": "^1.0.0",
     "mapshaper": "0.6.24",
     "crypto": "^1.0.1"
