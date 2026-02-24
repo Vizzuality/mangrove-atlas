@@ -8,7 +8,7 @@ export const OtherResources = ({
   resources: Array<{ name: string; description: string; link: string }>;
 }) => (
   <>
-    <div className="absolute left-4 right-4 h-0.5 bg-brand-800/30" />
+    <div className="bg-brand-800/30 absolute right-0 left-0 h-0.5" />
     <section className="space-y-2 py-[25px] text-sm">
       <h3 className={cn({ [WIDGET_SUBTITLE_STYLE]: true, 'py-2 font-normal': true })}>
         OTHER RESOURCES
