@@ -13,6 +13,7 @@ import {
 } from '@/containers/subscriptions/hooks';
 import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 import { Tooltip, TooltipContent, TooltipArrow, TooltipTrigger } from '@/components/ui/tooltip';
+import cn from '@/lib/classnames';
 
 type Draft = Partial<DataUserNotificationPreferencesToggleLocationAlerts>;
 
@@ -78,7 +79,7 @@ const SubscriptionsContent = () => {
   return (
     <div className="flex flex-col space-y-6">
       <Tooltip>
-        <TooltipTrigger asChild>
+        <TooltipTrigger asChild className={cn({ 'cursor-not-allowed': isDisabled })}>
           <span className="block">
             <div className="flex items-center gap-12">
               <div className="flex max-w-sm flex-col justify-between gap-2 text-left">
@@ -93,8 +94,9 @@ const SubscriptionsContent = () => {
                   checked={!!effective?.location_alerts}
                   disabled={isDisabled}
                   onCheckedChange={(checked) => setField('location_alerts', checked)}
+                  className={cn({ 'cursor-not-allowed opacity-50': isDisabled })}
                 >
-                  <SwitchThumb />
+                  <SwitchThumb className={cn({ 'cursor-not-allowed opacity-50': !hasLocations })} />
                 </SwitchRoot>
               </SwitchWrapper>
             </div>
