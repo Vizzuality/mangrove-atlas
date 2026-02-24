@@ -24,6 +24,9 @@ declare module 'next-auth' {
   }
 }
 
+const isProd = process.env.NODE_ENV === 'production';
+const cookieDomain = isProd ? '.globalmangrovewatch.org' : undefined;
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV !== 'production',
@@ -105,17 +108,33 @@ export const authOptions: NextAuthOptions = {
 
   cookies: {
     sessionToken: {
-      name:
-        process.env.NODE_ENV === 'production'
-          ? '__Secure-next-auth.session-token'
-          : 'next-auth.session-token',
+      name: isProd ? '__Secure-next-auth.session-token' : 'next-auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === 'production',
-
-        ...(process.env.NODE_ENV === 'production' && domain ? { domain } : {}),
+        secure: isProd,
+        ...(cookieDomain ? { domain: cookieDomain } : {}),
+      },
+    },
+    csrfToken: {
+      name: isProd ? '__Secure-next-auth.csrf-token' : 'next-auth.csrf-token',
+      options: {
+        httpOnly: false,
+        sameSite: 'lax',
+        path: '/',
+        secure: isProd,
+        ...(cookieDomain ? { domain: cookieDomain } : {}),
+      },
+    },
+    callbackUrl: {
+      name: isProd ? '__Secure-next-auth.callback-url' : 'next-auth.callback-url',
+      options: {
+        httpOnly: false,
+        sameSite: 'lax',
+        path: '/',
+        secure: isProd,
+        ...(cookieDomain ? { domain: cookieDomain } : {}),
       },
     },
   },
