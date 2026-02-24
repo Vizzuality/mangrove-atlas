@@ -125,7 +125,7 @@ const SubscriptionsContent = () => {
         <SwitchWrapper id="newsletter">
           <SwitchRoot
             checked={!!effective?.newsletter}
-            disabled={isDisabled}
+            disabled={isSaving}
             onCheckedChange={(checked) => setField('newsletter', checked)}
           >
             <SwitchThumb />
