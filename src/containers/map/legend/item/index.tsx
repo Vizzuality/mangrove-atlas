@@ -147,10 +147,7 @@ const LegendItem = ({
   if (l.id === 'custom-area') return null;
 
   return (
-    <div
-      id={id}
-      className="flex flex-col items-start rounded-md bg-white pt-2 pb-4 text-sm md:px-2"
-    >
+    <div id={id} className="flex flex-col items-start rounded-md bg-white py-4 text-sm md:px-2">
       <div className="flex w-full items-start justify-between">
         <div className="flex items-center gap-2">
           <Media greaterThanOrEqual="md">
@@ -190,7 +187,7 @@ const LegendItem = ({
               overlay={false}
             >
               <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar relative overflow-y-autopx-3">
+              <div className="no-scrollbar overflow-y-autopx-3 relative">
                 <WidgetWrapper
                   key={l.id}
                   title={title}
