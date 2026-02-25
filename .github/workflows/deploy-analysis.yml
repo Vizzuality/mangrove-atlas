@@ -38,7 +38,7 @@ jobs:
       timeout-minutes: 10
       with:
         name: 'analysis'
-        runtime: 'nodejs20'
+        runtime: 'nodejs22'
         entry_point: 'analyze'
         memory_mb: '256'
         region: 'us-central1'

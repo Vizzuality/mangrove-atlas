@@ -29,7 +29,7 @@ jobs:
         timeout-minutes: 10
         with:
           name: 'alerts-tiler'
-          runtime: 'nodejs20'
+          runtime: 'nodejs22'
 
       # Example of using the output
       - id: 'test'

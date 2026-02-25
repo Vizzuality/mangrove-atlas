@@ -30,7 +30,7 @@ jobs:
       timeout-minutes: 10
       with:
         name: 'fetch-alerts-heatmap'
-        runtime: 'nodejs20'
+        runtime: 'nodejs22'
         entry_point: 'fetchAlertsHeatmap'
         memory_mb: '256'
         region: 'us-central1'

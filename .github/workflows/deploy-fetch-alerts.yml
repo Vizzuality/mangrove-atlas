@@ -30,7 +30,7 @@ jobs:
       timeout-minutes: 10
       with:
         name: 'fetch-alerts'
-        runtime: 'nodejs20'
+        runtime: 'nodejs22'
         entry_point: 'fetchAlerts'
         memory_mb: '128'
         region: 'us-central1'
