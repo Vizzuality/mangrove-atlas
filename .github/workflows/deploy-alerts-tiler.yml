@@ -25,7 +25,7 @@ jobs:
         with:
           credentials_json: '${{ secrets.gcp_credentials }}'
       - id: 'deploy'
-        uses: 'google-github-actions/deploy-cloud-functions@v3'
+        uses: 'google-github-actions/deploy-cloud-functions@v2'
         timeout-minutes: 10
         with:
           name: 'alerts-tiler'
