@@ -15,7 +15,6 @@ import { HELPER_POSITION } from './constants';
 import { useRecoilValue } from 'recoil';
 import { activeGuideAtom } from '@/store/guide';
 import { trackEvent } from '@/lib/analytics/ga';
-import { ca } from 'date-fns/locale';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];

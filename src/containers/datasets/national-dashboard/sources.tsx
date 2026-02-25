@@ -37,21 +37,19 @@ const Sources = ({ data, iso }) => {
             const dataSource = data_source.find((d) => d.year === currentYear);
             const color = colorsScale.filter((c, i) => i === index);
             return (
-              <>
-                <IndicatorSource
-                  id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
-                  locationIso={iso}
-                  layerIndex={index}
-                  key={source}
-                  source={source}
-                  years={years}
-                  unit={unit}
-                  dataSource={dataSource}
-                  color={color}
-                  yearSelected={currentYear}
-                  setYearSelected={setYearSelected}
-                />
-              </>
+              <IndicatorSource
+                id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
+                locationIso={iso}
+                layerIndex={index}
+                key={source}
+                source={source}
+                years={years}
+                unit={unit}
+                dataSource={dataSource}
+                color={color}
+                yearSelected={currentYear}
+                setYearSelected={setYearSelected}
+              />
             );
           })}
         </div>
