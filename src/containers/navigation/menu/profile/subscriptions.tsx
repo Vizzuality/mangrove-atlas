@@ -4,7 +4,7 @@ import { useMemo, useState, useCallback } from 'react';
 
 import { Button } from 'components/ui/button';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
-import { Loading } from '@/components/ui/loading';
+import Loading from '@/components/ui/loading';
 
 import {
   useGetUserNotificationPreferences,
