@@ -1,6 +1,6 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
 import { BsPinAngle, BsPinAngleFill } from 'react-icons/bs';
+
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 const BsPinAngleIcon = BsPinAngle as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 const BsPinAngleFillIcon = BsPinAngleFill as unknown as (

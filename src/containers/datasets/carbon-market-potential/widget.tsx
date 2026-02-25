@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import NoData from '@/containers/widgets/no-data';
@@ -19,7 +20,6 @@ import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 import CarbonMarketPotentialChart from './chart';
 import { useCarbonMarketPotential } from './hooks';
 import type { Unit } from './types';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const CarbonMarketPotentialWidget = () => {
   const [unit, setUnit] = useState<Unit>({

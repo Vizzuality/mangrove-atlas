@@ -13,7 +13,6 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import { format } from 'd3-format';
-import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
@@ -22,6 +21,7 @@ import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import CustomTooltip from '@/components/chart/tooltip';
+import { Visibility } from '@/types/layers';
 
 import API, { AnalysisAPI } from 'services/api';
 

@@ -1,19 +1,22 @@
 import { useCallback, useMemo, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+
+import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeLayersAtom } from '@/store/layers';
+
+import { useRecoilState } from 'recoil';
+
 import { updateLayers } from 'hooks/layers';
-import type { ActiveLayers } from 'types/layers';
 
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import WidgetControls from '@/components/widget-controls';
-import { trackEvent } from '@/lib/analytics/ga';
+import { WidgetSlugType } from '@/types/widget';
+import type { ActiveLayers } from 'types/layers';
 
 import IndicatorExtent from './extent';
 import IndicatorSource from './source';
-import IndicatorYear from './year';
 import type { IndicatorSourcesProps } from './types';
-import { WidgetSlugType } from '@/types/widget';
+import IndicatorYear from './year';
 
 const NATIONAL_PREFIX = 'mangrove_national_dashboard_layer';
 

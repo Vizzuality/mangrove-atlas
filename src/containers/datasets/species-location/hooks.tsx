@@ -8,11 +8,12 @@ import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import type { QueryObserverOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
+
+import { Visibility } from '@/types/layers';
 
 import API from 'services/api';
 

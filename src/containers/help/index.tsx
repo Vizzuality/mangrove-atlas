@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import { activeGuideAtom } from '@/store/guide';
-import { useRecoilState } from 'recoil';
 
+import { IconBaseProps } from 'react-icons/lib/iconBase';
+import { LuChevronDown } from 'react-icons/lu';
+import { TbWheel } from 'react-icons/tb';
+import { useRecoilState } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from '@/containers/contact';
-
-import { TbWheel } from 'react-icons/tb';
-import { LuChevronDown } from 'react-icons/lu';
 
 const TbWheelIcon = TbWheel as unknown as (p: IconBaseProps) => JSX.Element;
 const LuChevronDownIcon = LuChevronDown as unknown as (p: IconBaseProps) => JSX.Element;
@@ -17,9 +17,9 @@ import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
 import GuideModalIntro from './modal-intro';
+
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
-import { IconBaseProps } from 'react-icons/lib/iconBase';
 
 type HelpContainerProps = {
   theme?: 'light' | 'dark';

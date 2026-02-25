@@ -1,4 +1,7 @@
+import { trackEvent } from '@/lib/analytics/ga';
+
 import { DOWNLOAD } from '@/containers/datasets';
+import Helper from '@/containers/help/helper';
 
 import {
   Dialog,
@@ -11,9 +14,7 @@ import Icon from '@/components/ui/icon';
 
 import DOWNLOAD_SVG from '@/svgs/ui/download.svg?sprite';
 
-import Helper from '@/containers/help/helper';
 import { HELPER_POSITION } from './constants';
-import { trackEvent } from '@/lib/analytics/ga';
 
 /**
  * Download component

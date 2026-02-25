@@ -1,3 +1,5 @@
+import { trackEvent } from '@/lib/analytics/ga';
+
 import NoData from '@/containers/widgets/no-data';
 
 import {
@@ -12,7 +14,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import IUCNEcoregionsChart from './chart';
 import { useMangroveEcoregions } from './hooks';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const IUCNEcoregions = () => {
   const { data, isLoading, isFetched } = useMangroveEcoregions();

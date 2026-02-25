@@ -1,19 +1,20 @@
 'use client';
 
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+
+import { useRouter } from 'next/router';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import LandingNavigation from '@/containers/navigation/landing';
-
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
-
-import Logo from 'components/logo';
-import { Button } from 'components/ui/button';
+import { z } from 'zod';
 
 import { useSignup } from '@/containers/auth/hooks';
-import { useRouter } from 'next/router';
+import LandingNavigation from '@/containers/navigation/landing';
+
 import FooterSignin from '@/components/auth/footer-signin';
+import Logo from 'components/logo';
+import { Button } from 'components/ui/button';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
 
 const formSchema = z
   .object({
@@ -99,7 +100,7 @@ export default function SignupPage() {
       <section className="mx-auto w-full max-w-md px-4 pb-20">
         <LandingNavigation />
         <div className="flex h-full w-full flex-col justify-center space-y-10">
-          <h1 className="font-sans text-[40px] font-light text-brand-800">Sign up</h1>
+          <h1 className="text-brand-800 font-sans text-[40px] font-light">Sign up</h1>
           <div className="space-y-6">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -113,7 +114,7 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Name"
                           />
                         </FormControl>
@@ -131,7 +132,7 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Email"
                           />
                         </FormControl>
@@ -149,7 +150,7 @@ export default function SignupPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Organization"
                           />
                         </FormControl>
@@ -168,7 +169,7 @@ export default function SignupPage() {
                           <Input
                             type="password"
                             {...field}
-                            className="block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] border border-black/10 px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Password"
                           />
                         </FormControl>
@@ -186,7 +187,7 @@ export default function SignupPage() {
                           <Input
                             type="password"
                             {...field}
-                            className="block w-full rounded-[100px] px-3 py-2 text-sm placeholder:text-zinc-400 focus:border-brand-800"
+                            className="focus:border-brand-800 block w-full rounded-[100px] px-3 py-2 text-sm placeholder:text-zinc-400"
                             placeholder="Password"
                           />
                         </FormControl>

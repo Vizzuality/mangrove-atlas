@@ -1,6 +1,7 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
 import React from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
@@ -12,7 +13,6 @@ import MultiSelect from '@/components/ui/select-multi';
 import { WIDGET_CARD_WRAPPER_STYLE, BUTTON_STYLES } from 'styles/widgets';
 
 import type { DataDitesProperties } from '../types';
-import { trackEvent } from '@/lib/analytics/ga';
 
 type FilterSitesProps = {
   open: boolean;

@@ -1,3 +1,4 @@
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 // import { INFO } from '@/containers/datasets';
@@ -8,7 +9,6 @@ import type { IUCNEcoregionPopUpInfo, Label } from '@/containers/datasets/iucn-e
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 // import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
-import { trackEvent } from '@/lib/analytics/ga';
 
 type Tags =
   | 'Historical (1750)'

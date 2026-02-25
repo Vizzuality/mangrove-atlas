@@ -7,7 +7,7 @@ const CustomTooltip = ({ active, payload }) => {
       <div className="flex items-center space-x-2 whitespace-nowrap">
         <p>{labelFormatted}</p>
       </div>
-      <p className="whitespace-nowrap font-bold">
+      <p className="font-bold whitespace-nowrap">
         {valueFormatted} {unit}
       </p>
     </div>

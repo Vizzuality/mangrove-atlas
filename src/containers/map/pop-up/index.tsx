@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { useMap } from 'react-map-gl';
+
 import cn from '@/lib/classnames';
-import { isEmpty } from 'lodash-es';
 
 import {
   mapDraggableTooltipPositionAtom,
@@ -8,25 +10,26 @@ import {
   mapDraggableTooltipPinnedAtom,
   mapDraggableTooltipDimensionsAtom,
 } from '@/store/map';
+
+import { isEmpty } from 'lodash-es';
+import { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { useMap } from 'react-map-gl';
-import { MapboxGeoJSONFeature } from 'mapbox-gl';
+import IucnEcoregionPopup from '@/containers/datasets/iucn-ecoregion/map-popup';
+import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
+import LocationPopup from '@/containers/datasets/locations/map-popup';
+import RestorationPopup from '@/containers/datasets/restoration/map-popup';
+import RestorationSitesPopup from '@/containers/datasets/restoration-sites/map-pop-up';
 
 import Draggable from '@/components/draggable';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 // POPUPS
-import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
-import IucnEcoregionPopup from '@/containers/datasets/iucn-ecoregion/map-popup';
-import LocationPopup from '@/containers/datasets/locations/map-popup';
-import RestorationSitesPopup from '@/containers/datasets/restoration-sites/map-pop-up';
-import RestorationPopup from '@/containers/datasets/restoration/map-popup';
 
 import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
-import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupClose from './pop-up-controls/close';
+import MapPopupDragHandler from './pop-up-controls/drag';
 import MapPopupPin from './pop-up-controls/pin';
 
 type Position = { x: number; y: number };

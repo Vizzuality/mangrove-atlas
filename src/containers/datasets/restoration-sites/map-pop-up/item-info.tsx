@@ -1,6 +1,6 @@
 const PopupRestorationSitesItemInfo = ({ info }: { info: string }) => {
   return (
-    <span className="text-left text-xxs font-light uppercase leading-5 text-black/85">{info}</span>
+    <span className="text-xxs text-left leading-5 font-light text-black/85 uppercase">{info}</span>
   );
 };
 

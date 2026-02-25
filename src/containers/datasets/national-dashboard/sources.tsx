@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import chroma from 'chroma-js';
-
 import flatten from 'lodash-es/flatten';
+
+import chroma from 'chroma-js';
 
 import { COLORS } from './constants';
 import IndicatorSource from './indicator-layers';

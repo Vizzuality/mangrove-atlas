@@ -14,7 +14,7 @@ const ProtectedAreas = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.protectedplanet.net/en/thematic-areas/wdpa?tab=WDPA"
-          className="font-semibold text-brand-800 underline"
+          className="text-brand-800 font-semibold underline"
         >
           Protected Planet
         </a>

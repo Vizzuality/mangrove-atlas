@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
+
 import RestorationDataGroup from '@/containers/datasets/restoration/map-popup/restoration-data-group';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { RestorationPopUp } from 'types/map';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const RestorationScores = ({ data }: { data: RestorationPopUp }) => {
   const { Class, Max_Area_20_ha, Area_loss_ha, Rest_Area_Loss, Loss_Driver, Rest_Score } = data;

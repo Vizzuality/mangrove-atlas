@@ -45,7 +45,6 @@ export const DeleteDrawingButton = ({
     resetUploadedGeojson();
     resetAnalysisState();
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     replace(`/?${queryParams}`, null);
 
     map.flyTo({
@@ -60,7 +59,7 @@ export const DeleteDrawingButton = ({
     }
     resetDrawingState();
     resetAnalysisState();
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+
     replace(`/?${queryParams}`, null);
   }, [
     locationTool,

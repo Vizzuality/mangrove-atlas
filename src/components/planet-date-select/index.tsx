@@ -1,4 +1,17 @@
 import { useCallback, useMemo } from 'react';
+
+import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
+
+import { activeLayersAtom } from '@/store/layers';
+
+import { ChevronDownIcon } from '@radix-ui/react-icons';
+import { orderBy } from 'lodash-es';
+import { useRecoilState } from 'recoil';
+
+import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
+import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
+
 import {
   Select,
   SelectTrigger,
@@ -6,18 +19,6 @@ import {
   SelectItem,
   SelectIcon,
 } from '@/components/ui/select';
-import { ChevronDownIcon } from '@radix-ui/react-icons';
-
-import cn from '@/lib/classnames';
-import { trackEvent } from '@/lib/analytics/ga';
-
-import { activeLayersAtom } from '@/store/layers';
-import { orderBy } from 'lodash-es';
-import { useRecoilState } from 'recoil';
-
-import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
-import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
-
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
 const SIZE = {

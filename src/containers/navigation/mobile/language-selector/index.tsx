@@ -1,13 +1,13 @@
 import { MouseEvent, useCallback, useEffect, useState } from 'react';
 
+import { LuLanguages } from 'react-icons/lu';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
-
-import { LuLanguages } from 'react-icons/lu';
 
 const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 

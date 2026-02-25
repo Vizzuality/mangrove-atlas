@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
@@ -8,6 +9,8 @@ import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
 import Icon from '@/components/ui/icon';
@@ -24,10 +27,6 @@ import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
-import { trackEvent } from '@/lib/analytics/ga';
-import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
-
-import { widgets } from '@/containers/widgets/constants';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();

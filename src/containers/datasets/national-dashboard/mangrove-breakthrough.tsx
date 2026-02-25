@@ -1,6 +1,7 @@
-import cn from '@/lib/classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import cn from '@/lib/classnames';
 
 const MangroveBreakthrough = ({
   location,

@@ -1,17 +1,18 @@
 'use client';
 
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-import LandingNavigation from '@/containers/navigation/landing';
 import { useResetPassword } from '@/containers/auth/hooks';
+import LandingNavigation from '@/containers/navigation/landing';
 
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
+import SuccessAlert from 'components/auth/email-alert';
 import Logo from 'components/logo';
 import { Button } from 'components/ui/button';
-import SuccessAlert from 'components/auth/email-alert';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),

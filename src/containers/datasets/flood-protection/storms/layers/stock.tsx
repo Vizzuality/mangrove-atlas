@@ -4,10 +4,11 @@ import type { SourceProps, LayerProps } from 'react-map-gl';
 import { activeLayersAtom } from '@/store/layers';
 import { floodStockPeriodAtom } from '@/store/widgets/flood-protection';
 
-import { Visibility } from '@/types/layers';
 import { useRecoilValue } from 'recoil';
 
 import { useMangrovesFloodProtection } from '@/containers/datasets/flood-protection/hooks';
+
+import { Visibility } from '@/types/layers';
 
 export function useSource(): SourceProps {
   return {

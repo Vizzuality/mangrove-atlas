@@ -1,7 +1,10 @@
 import { ReactElement, useMemo } from 'react';
-import DateSelect from '@/components/planet-date-select';
+
 import { activeLayersAtom } from '@/store/layers';
+
 import { useRecoilValue } from 'recoil';
+
+import DateSelect from '@/components/planet-date-select';
 
 const Content = ({
   description,

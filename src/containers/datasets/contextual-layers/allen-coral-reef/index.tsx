@@ -10,7 +10,7 @@ const AllenCoralReefContent = () => {
           href="https://www.allencoralatlas.org/"
           target="_blank"
           rel="noopener noreferrer"
-          className="font-normal text-brand-800"
+          className="text-brand-800 font-normal"
         >
           AllenCoralAtlas.org
         </a>

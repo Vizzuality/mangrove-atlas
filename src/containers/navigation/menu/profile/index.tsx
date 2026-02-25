@@ -1,12 +1,14 @@
 'use client';
 
+import Link from 'next/link';
+
+import cn from '@/lib/classnames';
+
 import { TAB_TRIGGER_STYLE, Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 
 import AccountContent from './account';
-import SubscriptionsContent from './subscriptions';
 import SavedAreasContent from './saved-areas';
-import Link from 'next/link';
-import cn from '@/lib/classnames';
+import SubscriptionsContent from './subscriptions';
 
 const Profile = () => {
   return (

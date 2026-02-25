@@ -1,11 +1,10 @@
 import { ReactElement } from 'react';
 
-import Thumb from './thumb';
-
 import type { WidgetSlugType } from 'types/widget';
 
 import Content from './content';
 import Controls from './controls';
+import Thumb from './thumb';
 
 type ContextualLayersComponentProps = {
   id: string;
@@ -24,7 +23,7 @@ const ContextualLayersComponent = ({
   name,
 }: ContextualLayersComponentProps) => {
   return (
-    <div className="relative flex flex-col space-y-5 rounded-3xl bg-brand-800/10 p-3">
+    <div className="bg-brand-800/10 relative flex flex-col space-y-5 rounded-3xl p-3">
       <div className="flex items-center justify-between space-x-8">
         <div className="flex items-center">
           <div className="flex items-center space-x-4">

@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import AboutPartners from '../about/partners';
 import { ConvenedBy } from '../about/constants';
+import AboutPartners from '../about/partners';
 
 const PartnersLinks = () => {
   return (
@@ -11,7 +11,7 @@ const PartnersLinks = () => {
         <p className="text-xs font-bold uppercase">Powered by</p>
         <Link
           href="https://www.mangrovealliance.org/"
-          className="text-left text-2lg font-light leading-3"
+          className="text-2lg text-left leading-3 font-light"
           target="_blank"
           rel="noopener noreferrer"
         >

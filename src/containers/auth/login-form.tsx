@@ -1,14 +1,16 @@
 'use client';
 
-import { z } from 'zod';
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+
+import { useRouter } from 'next/router';
+
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn, useSession } from 'next-auth/react';
+import { z } from 'zod';
 
 import { Button } from 'components/ui/button';
-import { Input } from 'components/ui/input';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
+import { Input } from 'components/ui/input';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),

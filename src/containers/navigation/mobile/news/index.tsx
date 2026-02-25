@@ -1,10 +1,11 @@
+import { DialogTitle } from '@radix-ui/react-dialog';
+
 import BlogContent from '@/containers/news/content';
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
 import NEWS_SVG from '@/svgs/tools-bar/news.svg?sprite';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 const MobileNews = () => (
   <>

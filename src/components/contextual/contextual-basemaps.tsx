@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
@@ -13,7 +14,6 @@ import RadioGroup from '@/components/ui/radio-group';
 import RadioGroupItem from '@/components/ui/radio-group/radio-group-item';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const ContextualBasemapsMapSettings = () => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);

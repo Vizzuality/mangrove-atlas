@@ -1,5 +1,6 @@
 import { useCallback, type MouseEvent } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
@@ -18,7 +19,6 @@ import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);

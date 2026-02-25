@@ -1,5 +1,4 @@
 import { Visibility } from '@/types/layers';
-
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 export function orderByAttribute(

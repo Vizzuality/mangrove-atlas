@@ -1,8 +1,7 @@
-import Icon from '@/components/ui/icon';
-
-import NO_DATA_SVG from '@/svgs/ui/no-data.svg?sprite';
+import cn from '@/lib/classnames';
 
 import ContactForm from '@/components/contact';
+import { buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -10,9 +9,9 @@ import {
   DialogTitle,
   DialogClose,
 } from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 
-import cn from '@/lib/classnames';
-import { buttonVariants } from '@/components/ui/button';
+import NO_DATA_SVG from '@/svgs/ui/no-data.svg?sprite';
 
 const NoMetadata = () => {
   return (

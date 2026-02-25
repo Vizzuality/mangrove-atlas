@@ -2,18 +2,19 @@
 
 import { useMemo, useState, useCallback } from 'react';
 
-import { Button } from 'components/ui/button';
-import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
-import Loading from '@/components/ui/loading';
+import cn from '@/lib/classnames';
 
+import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 import {
   useGetUserNotificationPreferences,
   usePostToggleLocationAlerts,
   type DataUserNotificationPreferencesToggleLocationAlerts,
 } from '@/containers/subscriptions/hooks';
-import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
+
+import Loading from '@/components/ui/loading';
 import { Tooltip, TooltipContent, TooltipArrow, TooltipTrigger } from '@/components/ui/tooltip';
-import cn from '@/lib/classnames';
+import { Button } from 'components/ui/button';
+import { SwitchWrapper, SwitchRoot, SwitchThumb } from 'components/ui/switch';
 
 type Draft = Partial<DataUserNotificationPreferencesToggleLocationAlerts>;
 

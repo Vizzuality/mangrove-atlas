@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { formatAxis, numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { Visibility } from '@/types/layers';
 import { PolarViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 
+import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';

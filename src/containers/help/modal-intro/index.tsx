@@ -1,8 +1,7 @@
-import { useLocalStorage } from 'usehooks-ts';
-
 import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilValue } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
 
 import VideoIntro from '@/containers/help/video-intro';
 

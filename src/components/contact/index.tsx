@@ -4,13 +4,11 @@ import { useCallback, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { z } from 'zod';
-
-import { TOPICS } from './constants';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
@@ -31,7 +29,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { trackEvent } from '@/lib/analytics/ga';
+
+import { TOPICS } from './constants';
 
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NODE_ENV === 'development';

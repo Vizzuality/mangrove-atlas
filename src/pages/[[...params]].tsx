@@ -1,11 +1,9 @@
 import { printModeState } from '@/store/print-mode';
 
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from './api/auth/[...nextauth]';
-
 import { QueryClient, dehydrate } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import type { GetServerSideProps } from 'next';
+import { getServerSession } from 'next-auth/next';
 import { useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
@@ -18,6 +16,8 @@ import MetaTags from '@/containers/meta-tags';
 import { breakpoints } from '@/styles/styles.config';
 
 import API from 'services/api';
+
+import { authOptions } from './api/auth/[...nextauth]';
 
 const Home = () => {
   const isPrintingMode = useRecoilValue(printModeState);

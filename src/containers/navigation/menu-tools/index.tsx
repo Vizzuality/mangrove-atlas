@@ -12,8 +12,8 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import WidgetDrawingTool from '@/containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from '@/containers/datasets/drawing-upload-tool';
-import FindLocations from '@/containers/navigation/find-locations';
 import Helper from '@/containers/help/helper';
+import FindLocations from '@/containers/navigation/find-locations';
 import SavedAreas from '@/containers/saved-areas';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';

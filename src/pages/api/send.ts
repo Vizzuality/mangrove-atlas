@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import nodemailer from 'nodemailer';
 import { renderToStaticMarkup } from 'react-dom/server';
+
 import { ContactUsEmail } from '@/components/contact/email-template';
 
 const transporter = nodemailer.createTransport({

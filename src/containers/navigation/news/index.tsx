@@ -1,13 +1,23 @@
 'use client';
 
+import { useEffect, useMemo, useState, useCallback } from 'react';
+
+import { trackEvent } from '@/lib/analytics/ga';
+
 import { activeGuideAtom } from '@/store/guide';
-import { useLocalStorage } from 'usehooks-ts';
+
+import { FaExclamation } from 'react-icons/fa';
+import { HiX } from 'react-icons/hi';
 import { useRecoilValue } from 'recoil';
+import { useLocalStorage } from 'usehooks-ts';
+
 import { useBlogPosts } from 'hooks/blog';
+
 import Helper from '@/containers/help/helper';
 import BlogContent from '@/containers/news/content';
 
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import Icon from '@/components/ui/icon';
 import {
   Tooltip,
   TooltipArrow,
@@ -16,13 +26,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import Icon from '@/components/ui/icon';
 import NEWS_SVG from '@/svgs/tools-bar/news.svg?sprite';
-import { trackEvent } from '@/lib/analytics/ga';
-
-import { HiX } from 'react-icons/hi';
-import { FaExclamation } from 'react-icons/fa';
-import { useEffect, useMemo, useState, useCallback } from 'react';
 
 const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 const FaExclamationIcon = FaExclamation as unknown as (

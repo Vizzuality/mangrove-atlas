@@ -1,10 +1,12 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { trackEvent } from '@/lib/analytics/ga';
+
+import { ca } from 'date-fns/locale';
+
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
+import { RestorationSitesPopUp } from 'types/map';
 
 import PopupRestorationSitesItem from './item';
-import { RestorationSitesPopUp } from 'types/map';
-import { ca } from 'date-fns/locale';
 
 const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
   // Google Analytics tracking

@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
+
 import Image from 'next/image';
 
 import { usePostTags } from 'hooks/blog';
-import { useMemo } from 'react';
 import { PostProps } from 'hooks/blog/types';
 
 export const Post = ({ post }: { post: PostProps }) => {
@@ -26,7 +27,7 @@ export const Post = ({ post }: { post: PostProps }) => {
       </div>
       <div className="flex flex-col justify-start p-4">
         {isUpdate && (
-          <span className="w-fit rounded-[4px] bg-brand-800 px-2 py-1 text-xs font-bold uppercase tracking-widest text-white">
+          <span className="bg-brand-800 w-fit rounded-[4px] px-2 py-1 text-xs font-bold tracking-widest text-white uppercase">
             update
           </span>
         )}
@@ -35,14 +36,14 @@ export const Post = ({ post }: { post: PostProps }) => {
             return (
               <div
                 key={i}
-                className="flex w-fit items-center whitespace-nowrap rounded-2xl bg-brand-400 py-1 px-3 text-xs font-semibold uppercase text-white"
+                className="bg-brand-400 flex w-fit items-center rounded-2xl px-3 py-1 text-xs font-semibold whitespace-nowrap text-white uppercase"
               >
                 {tag.name}
               </div>
             );
           })}
         </div>
-        <h5 data-testid="post-title" className="text-left text-2lg font-light line-clamp-3">
+        <h5 data-testid="post-title" className="text-2lg line-clamp-3 text-left font-light">
           {post.title.rendered}
         </h5>
       </div>

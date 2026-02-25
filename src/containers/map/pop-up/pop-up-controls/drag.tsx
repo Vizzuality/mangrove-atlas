@@ -1,9 +1,8 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
+import { DraggableAttributes } from '@dnd-kit/core';
+import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
 import { MdOutlineDragHandle } from 'react-icons/md';
 
-import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities';
-import { DraggableAttributes } from '@dnd-kit/core';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type MapPopupDragProps = {
   listeners: SyntheticListenerMap | undefined;

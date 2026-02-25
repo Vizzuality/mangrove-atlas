@@ -1,7 +1,8 @@
-import ContactForm from '@/containers/contact';
+import Link from 'next/link';
 
 import { signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
+
+import ContactForm from '@/containers/contact';
 
 async function handleLogout() {
   await fetch('/api/auth/logout', { method: 'POST' });

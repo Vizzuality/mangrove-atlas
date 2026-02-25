@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
@@ -24,7 +25,6 @@ import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import NetChangeChart from './chart';
 import { useMangroveNetChange, widgetSlug } from './hooks';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const NetChangeWidget = () => {
   const queryClient = useQueryClient();

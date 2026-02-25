@@ -2,9 +2,12 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { trackEvent } from '@/lib/analytics/ga';
+
 import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
+import { ca } from 'date-fns/locale';
 import type { MapboxGeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
@@ -13,8 +16,6 @@ import { useLocations } from '@/containers/datasets/locations/hooks';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import type { LocationPopUp } from 'types/map';
-import { trackEvent } from '@/lib/analytics/ga';
-import { ca } from 'date-fns/locale';
 
 const LocationPopUP = ({
   locationPopUpInfo,

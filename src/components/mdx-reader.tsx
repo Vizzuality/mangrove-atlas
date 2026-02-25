@@ -1,5 +1,6 @@
-import { MDXProvider } from '@mdx-js/react';
 import type { AnchorHTMLAttributes, PropsWithChildren } from 'react';
+
+import { MDXProvider } from '@mdx-js/react';
 
 function A(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
   const isExternal = typeof props.href === 'string' && /^https?:\/\//.test(props.href);

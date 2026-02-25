@@ -1,15 +1,17 @@
 'use client';
 
 import { useMemo } from 'react';
+
 import { useRouter } from 'next/router';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 
+import Loading from 'components/ui/loading';
+
 import LocationItem from './item';
 import LocationItemNew from './item-new';
-import Loading from 'components/ui/loading';
 
 const SavedAreasContent = () => {
   const {

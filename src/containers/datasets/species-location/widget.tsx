@@ -2,6 +2,8 @@ import { useCallback, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { trackEvent } from '@/lib/analytics/ga';
+
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
@@ -27,7 +29,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from '@/styles/widge
 
 import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse } from './types';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const SpeciesLocation = () => {
   const {

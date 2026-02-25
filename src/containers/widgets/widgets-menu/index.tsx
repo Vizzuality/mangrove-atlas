@@ -1,5 +1,6 @@
 import React, { useCallback, FC } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
@@ -7,7 +8,6 @@ import { activeCategoryAtom } from '@/store/sidebar';
 import { activeWidgetsAtom } from '@/store/widgets';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
-import { Visibility } from '@/types/layers';
 import { FaCheck } from 'react-icons/fa';
 import { useRecoilState } from 'recoil';
 
@@ -17,9 +17,9 @@ import { useWidgetsIdsByLocation } from '@/containers/widgets/hooks';
 import { findCategoryByWidgets } from '@/containers/widgets/utils';
 
 import { CheckboxIndicator } from '@/components/ui/checkbox';
+import { Visibility } from '@/types/layers';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 

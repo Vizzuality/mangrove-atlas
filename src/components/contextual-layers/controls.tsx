@@ -1,5 +1,7 @@
 import { useMemo, useCallback } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
+
 import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
@@ -19,7 +21,6 @@ import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
 import INFO_SVG from '@/svgs/ui/info.svg?sprite';
-import { trackEvent } from '@/lib/analytics/ga';
 
 type ControlTypes = {
   id: string;

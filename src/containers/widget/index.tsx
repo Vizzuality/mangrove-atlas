@@ -8,13 +8,14 @@ import { widgetsCollapsedAtom } from '@/store/widgets';
 import { AnimatePresence, motion } from 'motion/react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import Helper from '@/containers/help/helper';
+
 import WidgetControls from '@/components/widget-controls';
 import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { getLayerActive } from './selector';
-import Helper from '@/containers/help/helper';
 
 type ChildrenType = ReactElement & { type?: () => null };
 

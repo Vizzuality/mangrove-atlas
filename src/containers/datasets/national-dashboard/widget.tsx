@@ -1,20 +1,20 @@
-import cn from '@/lib/classnames';
+import { useRouter } from 'next/router';
 
-import NoData from './no-data';
+import cn from '@/lib/classnames';
 
 import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
-import { useNationalDashboard } from './hooks';
-import OtherResources from './other-resources';
 import { useLocation } from '../locations/hooks';
+import { LocationTypes } from '../locations/types';
 
-import Sources from './sources';
+import { useNationalDashboard } from './hooks';
 import LegalStatus from './legal-status';
 import MangroveBreakthrough from './mangrove-breakthrough';
+import NoData from './no-data';
 import NoMetadata from './no-metadata';
-import { useRouter } from 'next/router';
-import { LocationTypes } from '../locations/types';
+import OtherResources from './other-resources';
+import Sources from './sources';
 
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();

@@ -7,7 +7,6 @@ import {
   Cross1Icon,
   ReloadIcon,
 } from '@radix-ui/react-icons';
-
 import { useTheme } from 'next-themes';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
@@ -22,11 +21,11 @@ const Toaster = ({ icon = false, ...props }: ToasterProps & { icon?: boolean }) 
         !icon
           ? undefined
           : {
-              success: <CheckCircledIcon className="size-4 fill-current text-brand-800" />,
-              info: <InfoCircledIcon className="size-4 bg-brand-800" />,
-              warning: <ExclamationTriangleIcon className="size-4 bg-brand-800" />,
-              error: <Cross1Icon className="size-4 bg-brand-800" />,
-              loading: <ReloadIcon className="size-4 animate-spin bg-brand-800" />,
+              success: <CheckCircledIcon className="text-brand-800 size-4 fill-current" />,
+              info: <InfoCircledIcon className="bg-brand-800 size-4" />,
+              warning: <ExclamationTriangleIcon className="bg-brand-800 size-4" />,
+              error: <Cross1Icon className="bg-brand-800 size-4" />,
+              loading: <ReloadIcon className="bg-brand-800 size-4 animate-spin" />,
             }
       }
       style={

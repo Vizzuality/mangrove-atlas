@@ -4,6 +4,7 @@ import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 
 
 import { useRouter } from 'next/router';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -18,14 +19,13 @@ import { useSearch } from 'hooks/search';
 
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
 import { Location, LocationTypes } from '@/containers/datasets/locations/types';
+import Helper from '@/containers/help/helper';
 
 import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { breakpoints } from '@/styles/styles.config';
 
 import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
-import Helper from '@/containers/help/helper';
-import { trackEvent } from '@/lib/analytics/ga';
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
