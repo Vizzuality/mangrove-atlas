@@ -1,48 +1,45 @@
-import { FC } from 'react';
-
 import cn from '@/lib/classnames';
+import { LuLoaderCircle } from 'react-icons/lu';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
 
-import cx from 'classnames';
-import { motion, AnimatePresence } from 'motion/react';
+const LuLoaderIcon = LuLoaderCircle as unknown as (p: IconBaseProps) => JSX.Element;
 
-import Icon from '@/components/ui/icon';
+type LoadingProps = {
+  visible?: boolean;
+  className?: string; // wrapper
+  iconClassName?: string; // icon
+  label?: string;
+} & IconBaseProps;
 
-import LOADING_SVG from '@/svgs/ui/loading.svg?sprite';
-
-import type { LoadingProps } from './types';
-export const Loading: FC<LoadingProps> = ({
-  visible = false,
+function Loading({
+  visible = true,
   className,
-  iconClassName = 'w-12 h-12x',
-  transition = {},
-}: LoadingProps) => {
-  const variants = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
+  iconClassName,
+  label = 'Loading',
+  ...props
+}: LoadingProps) {
   if (!visible) return null;
+
   return (
-    <AnimatePresence>
-      <motion.div
-        key="loading"
-        {...variants}
-        transition={transition}
-        className={cx(className, {
-          'opacity-50': true,
-        })}
-      >
-        <Icon
-          icon={LOADING_SVG}
-          className={cn({
-            'text-brand-400 opacity-50': true,
-            [iconClassName]: !!iconClassName,
-          })}
-          description="Loading..."
-        />
-      </motion.div>
-    </AnimatePresence>
+    <span
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      className={cn('block w-full', className)}
+    >
+      <span className="sr-only">{label}</span>
+
+      <LuLoaderIcon
+        aria-hidden="true"
+        className={cn(
+          'text-brand-800 block animate-spin',
+          !iconClassName?.match(/w-|h-|size-/) && 'size-4',
+          iconClassName
+        )}
+        {...props}
+      />
+    </span>
   );
-};
+}
 
 export default Loading;

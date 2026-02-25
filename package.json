@@ -44,7 +44,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@react-email/components": "^0.0.31",
+    "@react-email/components": "^1.0.8",
     "@recoiljs/refine": "^0.1.1",
     "@tanstack/react-query": "4.29.25",
     "@transifex/native": "^7.1.5",
@@ -68,6 +68,7 @@
     "lodash-es": "4.17.23",
     "lucide-react": "0.563.0",
     "mapbox-gl": "3.18.1",
+    "minimatch": "9.0.6",
     "motion": "12.31.0",
     "next": "16.1.6",
     "next-auth": "4.24.13",
@@ -77,6 +78,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
+    "react-email": "5.2.8",
     "react-ga4": "^2.1.0",
     "react-hook-form": "7.54.2",
     "react-hot-toast": "^2.6.0",
@@ -96,7 +98,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "3.3.3",
     "@eslint/js": "9.39.2",
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/forms": "0.5.11",
     "@tailwindcss/postcss": "4.1.18",
@@ -114,7 +116,7 @@
     "google": "link:next/font/google",
     "husky": "6.0.0",
     "lint-staged": "^15.5.2",
-    "postcss": "8.5.6",
+    "postcss": "8.4.31",
     "prettier": "3.4.2",
     "prettier-plugin-tailwindcss": "0.7.2",
     "svg-sprite-loader": "6.0.11",
@@ -126,9 +128,7 @@
   },
   "packageManager": "pnpm@10.28.2",
   "pnpm": {
-    "overrides": {
-      "braces": "3.0.3"
-    },
+    "overrides": {},
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
