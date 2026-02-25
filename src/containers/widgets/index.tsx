@@ -27,12 +27,11 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import { breakpoints } from '@/styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';
 
-import SETTINGS_SVG from '@/svgs/ui/settings.svg';
+import SETTINGS_SVG from '@/svgs/ui/settings';
 
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
@@ -174,7 +173,7 @@ const WidgetsContainer: FC = () => {
                 className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
                 variants={buttonMotion}
               >
-                <Icon icon={SETTINGS_SVG} className="h-4 w-4 shrink-0" />
+                <SETTINGS_SVG className="fill-current h-4 w-4 shrink-0" role="img" aria-hidden={true} />
                 <motion.span variants={textMotion} className="whitespace-nowrap">
                   Widgets deck
                 </motion.span>

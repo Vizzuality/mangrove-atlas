@@ -4,9 +4,7 @@ import cn from '@/lib/classnames';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 
-import Icon from '@/components/ui/icon';
-
-import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check';
 
 const CheckboxIndicator = ({
   children,
@@ -41,7 +39,7 @@ const Checkbox = forwardRef<
       <CheckboxIndicator
         className={cn({ 'text-brand-400 flex h-4 w-4 items-center justify-center p-px': true })}
       >
-        <Icon icon={CHECK_SVG} className="h-full w-full" description="Checkmark" />
+        <CHECK_SVG className="fill-current h-full w-full" role="img" title="Checkmark" />
       </CheckboxIndicator>
     )}
   </CheckboxPrimitive.Root>

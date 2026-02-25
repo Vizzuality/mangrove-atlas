@@ -10,7 +10,6 @@ import { useRecoilState } from 'recoil';
 import NoData from '@/containers/widgets/no-data';
 
 import Chart from '@/components/chart';
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -20,8 +19,8 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import TRIANGLE_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
-import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
+import TRIANGLE_SVG from '@/svgs/ui/arrow-filled';
+import ARROW_SVG from '@/svgs/ui/arrow';
 
 import { useMangroveHabitatChange } from './hooks';
 import { UseParamsOptions } from './types';
@@ -76,10 +75,10 @@ const HabitatExtent = () => {
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {' '}
                     {currentStartYear}
-                    <Icon
-                      icon={TRIANGLE_SVG}
-                      className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                      description="Arrow"
+                    <TRIANGLE_SVG
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      role="img"
+                      title="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -124,10 +123,10 @@ const HabitatExtent = () => {
                 <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {currentEndYear}
-                    <Icon
-                      icon={TRIANGLE_SVG}
-                      className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                      description="Arrow"
+                    <TRIANGLE_SVG
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      role="img"
+                      title="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -202,13 +201,13 @@ const HabitatExtent = () => {
             }}
           >
             <span>{limit === 5 ? 'Show 10' : 'Show 5'}</span>
-            <Icon
-              icon={ARROW_SVG}
+            <ARROW_SVG
               className={cn({
-                'text-brand-800 inline-block h-2 w-2 fill-current': true,
+                'fill-current text-brand-800 inline-block h-2 w-2': true,
                 'rotate-180 transform': limit === 10,
               })}
-              description="Arrow"
+              role="img"
+              title="Arrow"
             />
           </button>
         </div>

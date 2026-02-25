@@ -4,9 +4,7 @@ import cn from '@/lib/classnames';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import Icon from '@/components/ui/icon';
-
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -98,7 +96,7 @@ const DialogClose = ({
       onClick={onClose}
       aria-label="close dialog"
     >
-      <Icon icon={CLOSE_SVG} className="mr-2.5 h-7 w-7 md:h-6 md:w-6" description="Cross" />
+      <CLOSE_SVG className="fill-current mr-2.5 h-7 w-7 md:h-6 md:w-6" role="img" title="Cross" />
     </button>
   </DialogPrimitive.Close>
 );

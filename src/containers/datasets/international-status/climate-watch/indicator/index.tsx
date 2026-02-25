@@ -1,4 +1,3 @@
-import Icon from '@/components/ui/icon';
 import {
   Tooltip,
   TooltipArrow,
@@ -15,12 +14,13 @@ type IndicatorTypes = {
   info: string;
 };
 
-import UNCHECK_SVG from '@/svgs/ui/check-cross.svg?sprite';
-import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
-import INFO_SVG from '@/svgs/ui/info.svg?sprite';
+import UNCHECK_SVG from '@/svgs/ui/check-cross';
+import CHECK_SVG from '@/svgs/ui/check';
+import INFO_SVG from '@/svgs/ui/info';
 
 const Indicator = (indicator: IndicatorTypes) => {
   const { label, value, check, url, info } = indicator;
+  const CheckIcon = check ? CHECK_SVG : UNCHECK_SVG;
   return (
     <div className="grid grid-cols-2 space-x-4 text-sm text-black/85">
       <div className="flex items-center">
@@ -28,7 +28,7 @@ const Indicator = (indicator: IndicatorTypes) => {
         {info && (
           <Tooltip>
             <TooltipTrigger>
-              <Icon icon={INFO_SVG} className="h-5 w-5" description="Info" />
+              <INFO_SVG className="fill-current h-5 w-5" role="img" title="Info" />
             </TooltipTrigger>
 
             <TooltipPortal>
@@ -57,7 +57,7 @@ const Indicator = (indicator: IndicatorTypes) => {
         </a>
       )}
       {!!check && (
-        <Icon icon={check ? CHECK_SVG : UNCHECK_SVG} className="h-5 w-5" description="Check" />
+        <CheckIcon className="fill-current h-5 w-5" role="img" title="Check" />
       )}
     </div>
   );

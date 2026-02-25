@@ -2,9 +2,7 @@ import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
-import Icon from '@/components/ui/icon';
-
-import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow';
 
 import type { Category, LegendItem } from './types';
 type Legend = {
@@ -32,12 +30,13 @@ const Legend = ({ items }: Legend) => {
                 >
                   <span className="h-4 w-2 rounded-md" style={{ backgroundColor: d.color }} />
                   <span className="whitespace-nowrap text-black/85">{d.label}</span>
-                  <Icon
-                    icon={ARROW_SVG}
+                  <ARROW_SVG
                     className={cn({
-                      'text-grey-400 w-3': true,
+                      'fill-current text-grey-400 w-3': true,
                       'rotate-180': !!collapse[d.label],
                     })}
+                    role="img"
+                    aria-hidden={true}
                   />
                 </button>
 

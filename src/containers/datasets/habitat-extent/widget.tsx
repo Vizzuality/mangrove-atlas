@@ -13,7 +13,6 @@ import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -23,7 +22,7 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 import HabitatExtentChart from './chart';
 import { useMangroveHabitatExtent, widgetSlug } from './hooks';
@@ -129,10 +128,10 @@ const HabitatExtent = () => {
                 <PopoverTrigger asChild>
                   <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                     {selectedUnitAreaExtent}
-                    <Icon
-                      icon={ARROW_SVG}
-                      className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                      description="Arrow"
+                    <ARROW_SVG
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      role="img"
+                      title="Arrow"
                     />
                   </span>
                 </PopoverTrigger>
@@ -164,10 +163,10 @@ const HabitatExtent = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {year || defaultYear}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                    description="Arrow"
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    title="Arrow"
                   />
                 </span>
               </PopoverTrigger>

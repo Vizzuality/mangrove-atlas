@@ -14,11 +14,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-import BASEMAP_SETTINGS_SVG from '@/svgs/map/basemap-settings.svg?sprite';
-import INFO_SVG from '@/svgs/ui/info.svg?sprite';
+import BASEMAP_SETTINGS_SVG from '@/svgs/map/basemap-settings';
+import INFO_SVG from '@/svgs/ui/info';
 
 export const BasemapSettings = ({ className }: { className?: string }) => {
   return (
@@ -32,10 +31,10 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                   true,
               })}
             >
-              <Icon
-                icon={BASEMAP_SETTINGS_SVG}
-                className="group-disabled:fill-grey-75 h-4 w-4 bg-white group-hover:bg-gray-100"
-                description="Basemap settings"
+              <BASEMAP_SETTINGS_SVG
+                className="fill-current group-disabled:fill-grey-75 h-4 w-4 bg-white group-hover:bg-gray-100"
+                role="img"
+                title="Basemap settings"
               />
             </div>
           </DialogTrigger>
@@ -74,10 +73,10 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                     </p>
                     <Dialog>
                       <DialogTrigger>
-                        <Icon
-                          icon={INFO_SVG}
-                          className="text-brand-800 h-5 w-5"
-                          description="Info"
+                        <INFO_SVG
+                          className="fill-current text-brand-800 h-5 w-5"
+                          role="img"
+                          title="Info"
                         />
                       </DialogTrigger>
                       <DialogContent className="w-screen md:mb-20 md:w-auto">
@@ -108,10 +107,10 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                     <p className="text-xs font-semibold tracking-[1px] uppercase">planet imagery</p>
                     <Dialog>
                       <DialogTrigger>
-                        <Icon
-                          icon={INFO_SVG}
-                          className="text-brand-800 h-5 w-5"
-                          description="Info"
+                        <INFO_SVG
+                          className="fill-current text-brand-800 h-5 w-5"
+                          role="img"
+                          title="Info"
                         />
                       </DialogTrigger>
                       <DialogContent className="w-screen md:mb-20 md:w-auto">

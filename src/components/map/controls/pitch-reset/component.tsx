@@ -4,9 +4,7 @@ import { useMap } from 'react-map-gl';
 
 import cn from '@/lib/classnames';
 
-import Icon from '@/components/ui/icon';
-
-import NAVIGATION_SVG from '@/svgs/map/navigation.svg?sprite';
+import NAVIGATION_SVG from '@/svgs/map/navigation';
 
 export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
@@ -33,10 +31,10 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
         onClick={resetMapPitch}
         disabled={pitch === 0}
       >
-        <Icon
-          icon={NAVIGATION_SVG}
-          className="group-disabled:fill-grey-75 h-5 w-5"
-          description="Pitch reset"
+        <NAVIGATION_SVG
+          className="fill-current group-disabled:fill-grey-75 h-5 w-5"
+          role="img"
+          title="Pitch reset"
         />
       </button>
     </div>

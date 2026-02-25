@@ -5,9 +5,7 @@ import cn from '@/lib/classnames';
 import { Listbox } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
 
-import Icon from '@/components/ui/icon';
-
-import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow';
 
 import THEME from './constants/theme';
 import { Option } from './option';
@@ -124,13 +122,13 @@ export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
                     </span>
                   )}
                 </p>
-                <Icon
-                  icon={ARROW_SVG}
+                <ARROW_SVG
                   className={cn({
-                    'text-brand-800 h-3.5 w-3.5 shrink-0 fill-current': true,
+                    'fill-current text-brand-800 h-3.5 w-3.5 shrink-0': true,
                     'rotate-180 delay-200': open,
                   })}
-                  description="Arrow"
+                  role="img"
+                  title="Arrow"
                 />
               </Listbox.Button>
 

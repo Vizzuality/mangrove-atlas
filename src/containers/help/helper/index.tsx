@@ -8,9 +8,7 @@ import { activeGuideAtom } from '@/store/guide';
 
 import { useRecoilValue } from 'recoil';
 
-import Icon from '@/components/ui/icon';
-
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 export const Helper = ({
   children,
@@ -133,10 +131,10 @@ export const Helper = ({
                   </p>
                 )}
                 {!!content && content}
-                <Icon
-                  icon={CLOSE_SVG}
-                  className="absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer text-black/85"
-                  description="Close"
+                <CLOSE_SVG
+                  className="fill-current absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer text-black/85"
+                  role="img"
+                  title="Close"
                 />
               </div>
             )}

@@ -10,9 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import DOWNLOAD_SVG from '@/svgs/ui/download.svg?sprite';
+import DOWNLOAD_SVG from '@/svgs/ui/download';
 
 import { HELPER_POSITION } from './constants';
 
@@ -68,7 +66,7 @@ const Download = ({ id, content }) => {
         message="Use this function to download spatial data associated with this widget and map layer. Links may point to external sources. Not all data layers are available for download. "
       >
         <DialogTrigger className="flex h-full items-center">
-          <Icon icon={DOWNLOAD_SVG} className="text-brand-800 h-7.5 w-7.5" description="Download" />
+          <DOWNLOAD_SVG className="fill-current text-brand-800 h-7.5 w-7.5" role="img" title="Download" />
         </DialogTrigger>
       </Helper>
       <DialogContent>

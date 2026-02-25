@@ -17,19 +17,18 @@ import { widgets } from '@/containers/widgets/constants';
 
 import { Media } from '@/components/media-query';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import Slider from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
-import CLOSE_SVG from '@/svgs/legend/close-legend.svg?sprite';
-import DRAG_SVG from '@/svgs/legend/drag.svg?sprite';
-import HIDE_SVG from '@/svgs/legend/hide.svg?sprite';
-import INFO_SVG from '@/svgs/legend/info-legend.svg?sprite';
-import OPACITY_SVG from '@/svgs/legend/opacity.svg?sprite';
-import SHOW_SVG from '@/svgs/legend/show.svg?sprite';
+import CLOSE_SVG from '@/svgs/legend/close-legend';
+import DRAG_SVG from '@/svgs/legend/drag';
+import HIDE_SVG from '@/svgs/legend/hide';
+import INFO_SVG from '@/svgs/legend/info-legend';
+import OPACITY_SVG from '@/svgs/legend/opacity';
+import SHOW_SVG from '@/svgs/legend/show';
 
 const LegendItem = ({
   id,
@@ -153,7 +152,7 @@ const LegendItem = ({
           <Media greaterThanOrEqual="md">
             {!embedded && (
               <button>
-                <Icon icon={DRAG_SVG} className="h-4 w-4" description="Order layer" />
+                <DRAG_SVG className="h-4 w-4 fill-current" role="img" title="Order layer" />
               </button>
             )}
           </Media>
@@ -225,9 +224,10 @@ const LegendItem = ({
                         onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
                       >
                         <button type="button" aria-label="Info layer">
-                          <Icon
-                            icon={INFO_SVG}
-                            className="mr-1.5 h-[17px] w-[17px] fill-black/40 align-middle"
+                          <INFO_SVG
+                            className="mr-1.5 h-[17px] w-[17px] fill-black/40 fill-current align-middle"
+                            role="img"
+                            aria-hidden={true}
                           />
                         </button>
                       </TooltipTrigger>
@@ -265,7 +265,11 @@ const LegendItem = ({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <div aria-label="Opacity layer">
-                        <Icon icon={OPACITY_SVG} className="mr-0.5 h-6 w-6" />
+                        <OPACITY_SVG
+                          className="mr-0.5 h-6 w-6 fill-current"
+                          role="img"
+                          aria-hidden={true}
+                        />
                       </div>
                     </TooltipTrigger>
 
@@ -300,14 +304,20 @@ const LegendItem = ({
                     onClick={() => onChangeVisibility(l.id)}
                     aria-label="Visibility layer"
                   >
-                    <Icon
-                      icon={visibility ? HIDE_SVG : SHOW_SVG}
-                      className={cn({
-                        'mx-px fill-black/40!': true,
-                        'h-6 w-6': visibility,
-                        'h-5 w-6': !visibility,
-                      })}
-                    />
+                    {(() => {
+                      const VisibilityIcon = visibility ? HIDE_SVG : SHOW_SVG;
+                      return (
+                        <VisibilityIcon
+                          className={cn({
+                            'mx-px fill-black/40! fill-current': true,
+                            'h-6 w-6': visibility,
+                            'h-5 w-6': !visibility,
+                          })}
+                          role="img"
+                          aria-hidden={true}
+                        />
+                      );
+                    })()}
                   </button>
                 </TooltipTrigger>
 
@@ -321,7 +331,11 @@ const LegendItem = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button type="button" onClick={() => removeLayer(l.id)} aria-label="Remove layer">
-                    <Icon icon={CLOSE_SVG} className="ml-0.5 h-5 w-5 stroke-2" />
+                    <CLOSE_SVG
+                      className="ml-0.5 h-5 w-5 fill-current stroke-2"
+                      role="img"
+                      aria-hidden={true}
+                    />
                   </button>
                 </TooltipTrigger>
                 <TooltipPortal>

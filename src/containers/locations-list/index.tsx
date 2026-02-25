@@ -21,11 +21,11 @@ import { useLocation, useLocations } from '@/containers/datasets/locations/hooks
 import { Location, LocationTypes } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { breakpoints } from '@/styles/styles.config';
 
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
+
 const locationNames = {
   worldwide: 'Worldwide',
   country: 'Country',
@@ -184,7 +184,11 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
-            <Icon icon={CLOSE_SVG} className="h-5 w-5 transform opacity-50" />
+            <CLOSE_SVG
+              className="h-5 w-5 transform fill-current opacity-50"
+              role="img"
+              aria-hidden={true}
+            />
           </button>
         )}
       </div>

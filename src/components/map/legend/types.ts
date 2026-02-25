@@ -3,7 +3,6 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
-import { IconProps } from '@/components/ui/icon/types';
 
 type Components = {
   Info: React.ReactNode;
@@ -74,7 +73,7 @@ export interface LegendItemToolbarProps extends LegendItemEvents {
 }
 
 export interface LegendItemButtonProps {
-  icon: IconProps['icon'];
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   selected?: boolean;
   className?: string;
 }

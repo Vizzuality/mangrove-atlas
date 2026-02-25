@@ -9,9 +9,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import GLASS_SVG from '@/svgs/sidebar/glass.svg?sprite';
+import GLASS_SVG from '@/svgs/sidebar/glass';
 
 const LocationsMobile = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,10 +30,10 @@ const LocationsMobile = () => {
             onClick={openMenu}
             className="mt-1 flex cursor-pointer items-center justify-center rounded-full"
           >
-            <Icon
-              icon={GLASS_SVG}
-              className="h-8 w-8 fill-white stroke-white"
-              description="Glass"
+            <GLASS_SVG
+              className="fill-current h-8 w-8 fill-white stroke-white"
+              role="img"
+              title="Glass"
             />
           </button>
         </DialogTrigger>

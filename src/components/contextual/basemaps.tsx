@@ -11,9 +11,8 @@ import { useRecoilState } from 'recoil';
 import BASEMAPS, { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
-import Icon from '@/components/ui/icon';
 
-import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check';
 
 const BasemapsMapSettings = () => {
   const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
@@ -51,10 +50,10 @@ const BasemapsMapSettings = () => {
               checked={basemapStored === id}
             >
               <CheckboxIndicator className="text-white">
-                <Icon
-                  icon={CHECK_SVG}
-                  className="h-full w-full fill-current text-white"
-                  description="Checkmark"
+                <CHECK_SVG
+                  className="fill-current h-full w-full text-white"
+                  role="img"
+                  title="Checkmark"
                 />
               </CheckboxIndicator>
             </Checkbox>

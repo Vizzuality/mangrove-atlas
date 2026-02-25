@@ -2,9 +2,7 @@ import { ReactNode } from 'react';
 
 import { Popup as PopupReactMapGL } from 'react-map-gl';
 
-import Icon from '@/components/ui/icon';
-
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 const Popup = ({
   children,
@@ -48,7 +46,7 @@ const Popup = ({
           onClick={onClose}
           className="absolute top-4 -right-10 z-50 h-11 w-10 cursor-pointer items-center justify-end rounded-r-[20px] bg-white/70 backdrop-blur-sm focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:outline-none"
         >
-          <Icon icon={CLOSE_SVG} className="ml-1 h-6 w-6" description="Close" />
+          <CLOSE_SVG className="fill-current ml-1 h-6 w-6" role="img" title="Close" />
         </button>
       </div>
     </PopupReactMapGL>

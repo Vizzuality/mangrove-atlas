@@ -15,12 +15,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Icon } from '@/components/ui/icon';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from '@/components/ui/switch';
 import type { ActiveLayers } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
-import INFO_SVG from '@/svgs/ui/info.svg?sprite';
+import INFO_SVG from '@/svgs/ui/info';
 
 type ControlTypes = {
   id: string;
@@ -56,7 +55,7 @@ const Controls = ({ id, origin }: ControlTypes) => {
     <div className="flex items-start space-x-2">
       <Dialog>
         <DialogTrigger>
-          <Icon icon={INFO_SVG} className="text-brand-800 h-7.5 w-7.5" description="Info" />
+          <INFO_SVG className="text-brand-800 h-7.5 w-7.5 fill-current" role="img" title="Info" />
         </DialogTrigger>
         <DialogContent className="w-screen md:mb-20 md:w-auto">
           <DialogTitle className="sr-only">Info</DialogTitle>

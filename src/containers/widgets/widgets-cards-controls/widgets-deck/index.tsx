@@ -21,9 +21,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import ALERT_SVG from '@/svgs/ui/alert.svg?sprite';
+import ALERT_SVG from '@/svgs/ui/alert';
 
 const HELPER_ID = 'menu-categories';
 const WidgetsDeck: FC = () => {
@@ -86,10 +84,10 @@ const WidgetsDeck: FC = () => {
             <Category />
           </Helper>
           <div className="shadow-control flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5">
-            <Icon
-              icon={ALERT_SVG}
-              className="h-16 w-16 fill-current text-white"
-              description="alert"
+            <ALERT_SVG
+              className="fill-current h-16 w-16 text-white"
+              role="img"
+              title="alert"
             />
             <p className="text-sm font-light text-black/85">
               Disclaimer: Some layers and widgets are not available for certain locations. Select

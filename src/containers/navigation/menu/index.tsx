@@ -14,10 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import MENU_SVG from '@/svgs/tools-bar/menu.svg?sprite';
-
+import MENU_SVG from '@/svgs/tools-bar/menu';
 import MainMenu from './main';
 import Profile from './profile';
 
@@ -41,7 +38,7 @@ const Menu = () => {
             onClick={() => setSection('main')}
             className="flex h-full items-center space-x-2"
           >
-            <Icon icon={MENU_SVG} className="h-6 w-6" description="Menu" />
+            <MENU_SVG className="h-6 w-6 fill-current" role="img" title="Menu" />
             <span className="font-sans text-sm text-white">Menu</span>
           </button>
         </DialogTrigger>

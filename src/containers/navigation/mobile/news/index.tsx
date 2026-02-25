@@ -3,16 +3,15 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 import BlogContent from '@/containers/news/content';
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 
-import NEWS_SVG from '@/svgs/tools-bar/news.svg?sprite';
+import NEWS_SVG from '@/svgs/tools-bar/news';
 
 const MobileNews = () => (
   <>
     <Dialog>
       <DialogTrigger className="h-full">
         <div className="flex h-full w-12 cursor-pointer flex-col items-center space-y-1.5 pt-1.5">
-          <Icon icon={NEWS_SVG} className="h-7 w-7 text-white" description="News" />
+          <NEWS_SVG className="h-7 w-7 fill-current text-white" role="img" title="News" />
           <span className="text-xxs text-white">News</span>
         </div>
       </DialogTrigger>

@@ -8,9 +8,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import CONFIGS_SVG from '@/svgs/sidebar/configure.svg?sprite';
+import CONFIGS_SVG from '@/svgs/sidebar/configure';
 
 const ConfigureWidgets = () => {
   return (
@@ -20,10 +18,10 @@ const ConfigureWidgets = () => {
           className="flex h-full flex-col items-center space-y-1 pt-1 text-white"
           data-testid="widgets-deck-trigger-mobile"
         >
-          <Icon
-            icon={CONFIGS_SVG}
-            className="h-8 w-8 fill-white text-white"
-            description="Widgets deck"
+          <CONFIGS_SVG
+            className="fill-current h-8 w-8 fill-white text-white"
+            role="img"
+            title="Widgets deck"
           />
           <span className="text-xxs font-sans leading-2 text-white">Configure</span>
         </div>

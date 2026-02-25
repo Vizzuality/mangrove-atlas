@@ -6,11 +6,10 @@ import { fullScreenAtom } from '@/store/map-settings';
 
 import { useRecoilState } from 'recoil';
 
-import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-import DISABLE_FULLSCREEN_SVG from '@/svgs/map/disable-fullscreen.svg?sprite';
-import ENABLE_FULLSCREEN_SVG from '@/svgs/map/enable-fullscreen.svg?sprite';
+import DISABLE_FULLSCREEN_SVG from '@/svgs/map/disable-fullscreen';
+import ENABLE_FULLSCREEN_SVG from '@/svgs/map/enable-fullscreen';
 
 export const FullScreen = ({ className }: { className?: string }) => {
   const [isFullScreen, setFullScreen] = useRecoilState(fullScreenAtom);
@@ -18,6 +17,8 @@ export const FullScreen = ({ className }: { className?: string }) => {
   const toggleFullScreen = useCallback(() => {
     setFullScreen(!isFullScreen);
   }, [setFullScreen, isFullScreen]);
+
+  const FullScreenIcon = isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG;
 
   return (
     <Tooltip>
@@ -31,13 +32,14 @@ export const FullScreen = ({ className }: { className?: string }) => {
           })}
           onClick={toggleFullScreen}
         >
-          <Icon
-            icon={isFullScreen ? DISABLE_FULLSCREEN_SVG : ENABLE_FULLSCREEN_SVG}
+          <FullScreenIcon
             className={cn({
-              'group-disabled:fill-grey-75 h-4 w-4 bg-white': true,
+              'fill-current group-disabled:fill-grey-75 h-4 w-4 bg-white': true,
               'bg-brand-800': isFullScreen,
               'group-hover:bg-gray-100': !isFullScreen,
             })}
+            role="img"
+            aria-hidden={true}
           />
         </div>
       </TooltipTrigger>

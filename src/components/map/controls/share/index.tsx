@@ -11,10 +11,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
 
-import SHARE_SVG from '@/svgs/map/share.svg?sprite';
+import SHARE_SVG from '@/svgs/map/share';
 
 export const Share = ({
   className,
@@ -84,10 +83,10 @@ export const Share = ({
                       true,
                   })}
                 >
-                  <Icon
-                    icon={SHARE_SVG}
-                    className="h-4 w-4 bg-white group-hover:bg-gray-100"
-                    description="Share"
+                  <SHARE_SVG
+                    className="fill-current h-4 w-4 bg-white group-hover:bg-gray-100"
+                    role="img"
+                    title="Share"
                   />
                 </div>
               </DialogTrigger>
@@ -136,10 +135,10 @@ export const Share = ({
                   true,
               })}
             >
-              <Icon
-                icon={SHARE_SVG}
-                className="h-4 w-4 bg-white opacity-40 group-hover:bg-gray-100"
-                description="Share"
+              <SHARE_SVG
+                className="fill-current h-4 w-4 bg-white opacity-40 group-hover:bg-gray-100"
+                role="img"
+                title="Share"
               />
             </div>
           </TooltipTrigger>

@@ -1,10 +1,9 @@
 import cn from '@/lib/classnames';
 
-import Icon from '@/components/ui/icon';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { WIDGET_SELECT_ARROW_STYLES, WIDGET_SELECT_STYLES } from 'styles/widgets';
 
-import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 import type { IndicatorYearProps } from './types';
 
@@ -19,10 +18,10 @@ const IndicatorYear = ({ years, yearSelected, setYearSelected }: IndicatorYearPr
             <PopoverTrigger asChild>
               <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                 {yearSelected}
-                <Icon
-                  icon={ARROW_SVG}
-                  className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                  description="Arrow"
+                <ARROW_SVG
+                  className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                  role="img"
+                  title="Arrow"
                 />
               </span>
             </PopoverTrigger>

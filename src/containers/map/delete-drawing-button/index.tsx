@@ -13,9 +13,7 @@ import { locationToolAtom } from '@/store/sidebar';
 
 import { useResetRecoilState, useRecoilValue } from 'recoil';
 
-import Icon from '@/components/ui/icon';
-
-import REMOVE_SVG from '@/svgs/ui/close.svg?sprite';
+import REMOVE_SVG from '@/svgs/ui/close';
 
 const SIZE = {
   md: 'h-11 w-11',
@@ -79,7 +77,7 @@ export const DeleteDrawingButton = ({
         })}
       >
         <button onClick={handleResetPage} data-testid="delete-custom-area-button">
-          <Icon icon={REMOVE_SVG} className="h-3.5 w-3.5 text-white" />
+          <REMOVE_SVG className="fill-current h-3.5 w-3.5 text-white" role="img" aria-hidden={true} />
         </button>
       </div>
       {/* {children && children} */}

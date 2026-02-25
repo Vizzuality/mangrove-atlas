@@ -14,7 +14,6 @@ import type {
 } from '@/containers/datasets/flood-protection/types';
 // import NoData from '@/containers/widgets/no-data';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
@@ -27,8 +26,8 @@ import {
 import type { ActiveLayers } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
-import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
-import TRIANGLE_SVG from '@/svgs/ui/triangle.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow';
+import TRIANGLE_SVG from '@/svgs/ui/triangle';
 
 import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
@@ -188,10 +187,10 @@ const FloodProtection = ({
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {LABELS[selectedPeriod].short}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                    description="Arrow"
+                  <ARROW_SVG
+                    className="fill-current absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    role="img"
+                    title="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -242,11 +241,11 @@ const FloodProtection = ({
               }}
             >
               {!isWorldwide && (
-                <Icon
-                  icon={TRIANGLE_SVG}
-                  className="absolute -top-7 h-5 w-5"
+                <TRIANGLE_SVG
+                  className="fill-current absolute -top-7 h-5 w-5"
                   style={{ left: trianglePosition }}
-                  description="Arrow"
+                  role="img"
+                  title="Arrow"
                 />
               )}
             </div>

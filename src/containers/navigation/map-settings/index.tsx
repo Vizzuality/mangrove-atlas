@@ -8,9 +8,7 @@ import { locationToolAtom } from '@/store/sidebar';
 
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 
-import Icon from '@/components/ui/icon';
-
-import MAP_SETTINGS_SVG from '@/svgs/sidebar/map-settings.svg?sprite';
+import MAP_SETTINGS_SVG from '@/svgs/sidebar/map-settings';
 
 import { STYLES } from '../constants';
 
@@ -38,13 +36,13 @@ const MapSettings = () => {
           onClick={handleMapSettingsView}
           data-testid="map-settings-button"
         >
-          <Icon
-            icon={MAP_SETTINGS_SVG}
+          <MAP_SETTINGS_SVG
             className={cn({
-              'text-brand-800 h-9 w-9 fill-current p-1': true,
+              'fill-current text-brand-800 h-9 w-9 p-1': true,
               'text-white': mapSettings,
             })}
-            description="Map settings"
+            role="img"
+            title="Map settings"
           />
         </button>
       </div>

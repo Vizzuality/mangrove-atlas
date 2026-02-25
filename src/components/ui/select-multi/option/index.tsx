@@ -2,9 +2,7 @@ import { Listbox } from '@headlessui/react';
 import cx from 'classnames';
 
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
-import Icon from '@/components/ui/icon';
-
-import CHECK_SVG from '@/svgs/ui/check-light.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check-light';
 
 import THEME from '../constants/theme';
 
@@ -42,10 +40,10 @@ export const Option = ({ opt, theme }: OptionProps) => {
         >
           <Checkbox className="h-4 w-4 cursor-pointer" checked={s}>
             <CheckboxIndicator>
-              <Icon
-                icon={CHECK_SVG}
-                className="fill-brand-800/70 h-2.5 w-2.5"
-                description="Checkmark"
+              <CHECK_SVG
+                className="fill-current fill-brand-800/70 h-2.5 w-2.5"
+                role="img"
+                title="Checkmark"
               />
             </CheckboxIndicator>
           </Checkbox>

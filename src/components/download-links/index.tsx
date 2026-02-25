@@ -2,9 +2,7 @@ import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
-import Icon from '@/components/ui/icon';
-
-import ARROW_SVG from '@/svgs/ui/arrow.svg';
+import ARROW_SVG from '@/svgs/ui/arrow';
 
 // components
 
@@ -29,14 +27,14 @@ const Download = ({ info }: { info: Record<string, string | number>[] }) => {
           <div key={id} className="text-xs font-bold tracking-widest uppercase">
             <div className="flex w-full items-center justify-between">
               <div className="flex" onClick={() => handleClick(id as string)}>
-                <Icon
-                  icon={ARROW_SVG}
+                <ARROW_SVG
                   className={cn({
-                    'h-3 w-3 font-bold': true,
+                    'fill-current h-3 w-3 font-bold': true,
                     'rotate-180 transform': isCollapsed[id],
                     hidden: !description,
                   })}
-                  description="Download"
+                  role="img"
+                  title="Download"
                 />
                 <h3 className={cn({ 'ml-6': description })}>{title}</h3>
               </div>

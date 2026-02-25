@@ -19,7 +19,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -27,7 +26,7 @@ import {
   WIDGET_SELECT_ARROW_STYLES,
 } from 'styles/widgets';
 
-import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 const CustomizeWidgetsDeck = () => {
   const displayedWidgets = useRecoilValue(activeWidgetsAtom);
@@ -73,10 +72,10 @@ const CustomizeWidgetsDeck = () => {
               <DialogTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {filteredWidgetsToDisplay.length} of {widgets.length - 1}
-                  <Icon
-                    icon={ARROW_SVG}
-                    className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
-                    description="Arrow"
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    title="Arrow"
                   />
                 </span>
               </DialogTrigger>
