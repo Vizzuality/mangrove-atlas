@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { activeLayersAtom } from '@/store/layers';
@@ -47,6 +47,12 @@ const IndicatorSources = ({
     () => activeLayerIds.includes(layerId),
     [activeLayerIds, layerId]
   );
+
+  useEffect(() => {
+    if (!isThisLayerActive && isAnyNationalActive) {
+      setActiveLayers((activeLayers ?? []).filter((w) => !w.id.includes(NATIONAL_PREFIX)));
+    }
+  }, [isThisLayerActive, isAnyNationalActive, setActiveLayers, activeLayers]);
 
   const upsertThisLayer = useCallback(() => {
     return updateLayers(

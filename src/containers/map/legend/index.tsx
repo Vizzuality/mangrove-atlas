@@ -131,7 +131,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 className="shadow-card fixed w-[360px] gap-4 rounded-3xl bg-white md:right-[75px]"
                 data-testid="legend-content"
               >
-                <div className="box-content flex flex-col space-y-1 divide-y divide-gray-200 overflow-y-auto px-4 pt-4 md:max-h-[55vh] print:hidden">
+                <div className="box-content flex flex-col divide-y divide-gray-200 overflow-y-auto p-4 md:max-h-[55vh] print:hidden">
                   <SortableList
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
