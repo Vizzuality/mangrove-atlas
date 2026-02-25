@@ -30,6 +30,7 @@ jobs:
         with:
           name: 'alerts-tiler'
           runtime: 'nodejs22'
+          entry_point: 'fetchAlertsTiler'
           region: 'us-central1'
           source_dir: 'cloud-functions/alerts-tiler'
 
