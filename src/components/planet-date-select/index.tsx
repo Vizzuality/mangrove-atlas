@@ -5,7 +5,6 @@ import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
 
-import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { orderBy } from 'lodash-es';
 import { useRecoilState } from 'recoil';
 
@@ -20,6 +19,8 @@ import {
   SelectIcon,
 } from '@/components/ui/select';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
+
+import CHEVRON_SVG from '@/svgs/ui/chevron';
 
 const SIZE = {
   sm: 'px-3 py-0.5',
@@ -98,7 +99,7 @@ const DateSelect = ({
           Period: <span className="text-sm font-bold">{labelToDisplay}</span>
         </p>
         <SelectIcon>
-          <ChevronDownIcon className="h-4 w-4" />
+          <CHEVRON_SVG role="img" />
         </SelectIcon>
       </SelectTrigger>
 

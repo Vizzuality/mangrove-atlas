@@ -24,6 +24,10 @@ import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 import { useMangroveCommercialFisheriesProduction } from './hooks';
 import type { GroupedData, GroupedDataResponse } from './types';
+import { useSetRecoilState } from 'recoil';
+import { activeLayersAtom } from '@/store/layers';
+import NoData from '@/containers/widgets/no-data';
+import WidgetHeader from '@/containers/widget/header';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,

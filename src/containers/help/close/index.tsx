@@ -15,7 +15,7 @@ export const CloseHelpGuide = () => {
       onClick={() => setIsActive(false)}
     >
       <span>Close navigation help</span>
-      <CLOSE_SVG className="fill-current" role="img" aria-hidden={true} />
+      <CLOSE_SVG className="h-4 w-4" role="img" aria-hidden={true} />
     </div>
   );
 };

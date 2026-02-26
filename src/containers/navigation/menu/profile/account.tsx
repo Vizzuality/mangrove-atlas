@@ -14,6 +14,16 @@ import { Button } from 'components/ui/button';
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
 import CHECK_SVG from '@/svgs/ui/check';
 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+
 const formSchema = z.object({
   username: z.string().min(1, { message: 'Please enter your name' }).optional(),
   email: z.string().email({ message: 'Please enter a valid email address' }).optional(),

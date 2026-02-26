@@ -173,7 +173,11 @@ const WidgetsContainer: FC = () => {
                 className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
                 variants={buttonMotion}
               >
-                <SETTINGS_SVG className="fill-current h-4 w-4 shrink-0" role="img" aria-hidden={true} />
+                <SETTINGS_SVG
+                  className="h-4 w-4 shrink-0 fill-current"
+                  role="img"
+                  aria-hidden={true}
+                />
                 <motion.span variants={textMotion} className="whitespace-nowrap">
                   Widgets deck
                 </motion.span>

@@ -2,16 +2,13 @@ import { useState } from 'react';
 
 import { activeGuideAtom } from '@/store/guide';
 
-import { IconBaseProps } from 'react-icons/lib/iconBase';
-import { LuChevronDown } from 'react-icons/lu';
-import { TbWheel } from 'react-icons/tb';
 import { useRecoilState } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from '@/containers/contact';
 
-const TbWheelIcon = TbWheel as unknown as (p: IconBaseProps) => JSX.Element;
-const LuChevronDownIcon = LuChevronDown as unknown as (p: IconBaseProps) => JSX.Element;
+import CHEVRON_ICON from '@/svgs/ui/chevron';
+import HELP_ICON from '@/svgs/tools-bar/help';
 
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
@@ -61,9 +58,9 @@ export const HelpContainer = ({
         <PopoverTrigger
           className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
         >
-          <TbWheelIcon className="h-5 w-5" />
+          <HELP_ICON className="h-6 w-6" />
           <p className="font-sans text-sm">Help</p>
-          {hasArrow && <LuChevronDownIcon className="h-4 w-4" />}
+          {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
         </PopoverTrigger>
 
         <PopoverContent className="shadow-border rounded-2xl p-6 text-sm font-semibold">
