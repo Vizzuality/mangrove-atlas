@@ -50,6 +50,7 @@
     "@transifex/native": "^7.1.5",
     "@transifex/react": "^7.1.5",
     "@turf/bbox": "6.5.0",
+    "@types/mdx": "2.0.13",
     "axios": "1.13.5",
     "braces": "3.0.3",
     "chroma-js": "^2.6.0",

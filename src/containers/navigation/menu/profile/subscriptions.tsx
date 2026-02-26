@@ -72,76 +72,85 @@ const SubscriptionsContent = () => {
     });
   }, [userPreferences, selection, toggleMutation]);
 
-  if (isLoading) return <Loading />;
-
   const hasLocations = (dataUserLocations?.data.length ?? 0) > 0;
   const isDisabled = !hasLocations || isSaving;
 
   return (
-    <div className="flex flex-col space-y-6">
-      <Tooltip>
-        <TooltipTrigger asChild className={cn({ 'cursor-not-allowed': isDisabled })}>
-          <span className="block">
-            <div className="flex items-center gap-12">
-              <div className="flex max-w-sm flex-col justify-between gap-2 text-left">
-                <span className="text-lg font-light">Alerts notification</span>
-                <p className="text-sm text-[#939393]">
-                  Emails with mangrove disturbance alerts related to your saved areas.
-                </p>
-              </div>
-
-              <SwitchWrapper id="alerts">
-                <SwitchRoot
-                  checked={!!effective?.location_alerts}
-                  disabled={isDisabled}
-                  onCheckedChange={(checked) => setField('location_alerts', checked)}
-                  className={cn({ 'cursor-not-allowed opacity-50': isDisabled })}
-                >
-                  <SwitchThumb className={cn({ 'cursor-not-allowed opacity-50': !hasLocations })} />
-                </SwitchRoot>
-              </SwitchWrapper>
-            </div>
-          </span>
-        </TooltipTrigger>
-
-        {!hasLocations && (
-          <TooltipContent
-            side="right"
-            className="shadow-soft max-w-[190px] rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
-          >
-            Save at least one area to activate notifications.
-            <TooltipArrow className="fill-white" width={10} height={5} />
-          </TooltipContent>
-        )}
-      </Tooltip>
-
-      <div className="flex items-center justify-between gap-12">
-        <div className="flex max-w-sm flex-col justify-between gap-2">
-          <span className="text-lg font-light">What&apos;s new</span>
-          <p className="text-sm text-[#939393]">
-            Weekly updates on mangrove conservation news and the latest platform enhancements.
-          </p>
+    <div>
+      {isLoading && (
+        <div className="flex w-full items-center justify-center">
+          <Loading iconClassName="w-10 h-10 self-center" />
         </div>
+      )}
+      {!isLoading && (
+        <div className="flex flex-col space-y-6">
+          <Tooltip>
+            <TooltipTrigger asChild className={cn({ 'cursor-not-allowed': isDisabled })}>
+              <span className="block">
+                <div className="flex items-center gap-12">
+                  <div className="flex max-w-sm flex-col justify-between gap-2 text-left">
+                    <span className="text-lg font-light">Alerts notification</span>
+                    <p className="text-sm text-[#939393]">
+                      Emails with mangrove disturbance alerts related to your saved areas.
+                    </p>
+                  </div>
 
-        <SwitchWrapper id="newsletter">
-          <SwitchRoot
-            checked={!!effective?.newsletter}
-            disabled={isSaving}
-            onCheckedChange={(checked) => setField('newsletter', checked)}
+                  <SwitchWrapper id="alerts">
+                    <SwitchRoot
+                      checked={!!effective?.location_alerts}
+                      disabled={isDisabled}
+                      onCheckedChange={(checked) => setField('location_alerts', checked)}
+                      className={cn({ 'cursor-not-allowed opacity-50': isDisabled })}
+                    >
+                      <SwitchThumb
+                        className={cn({ 'cursor-not-allowed opacity-50': !hasLocations })}
+                      />
+                    </SwitchRoot>
+                  </SwitchWrapper>
+                </div>
+              </span>
+            </TooltipTrigger>
+
+            {!hasLocations && (
+              <TooltipContent
+                side="right"
+                className="shadow-soft max-w-[190px] rounded-3xl bg-white p-4 text-black/85 first-letter:uppercase"
+              >
+                Save at least one area to activate notifications.
+                <TooltipArrow className="fill-white" width={10} height={5} />
+              </TooltipContent>
+            )}
+          </Tooltip>
+
+          <div className="flex items-center justify-between gap-12">
+            <div className="flex max-w-sm flex-col justify-between gap-2">
+              <span className="text-lg font-light">What&apos;s new</span>
+              <p className="text-sm text-[#939393]">
+                Weekly updates on mangrove conservation news and the latest platform enhancements.
+              </p>
+            </div>
+
+            <SwitchWrapper id="newsletter">
+              <SwitchRoot
+                checked={!!effective?.newsletter}
+                disabled={isSaving}
+                onCheckedChange={(checked) => setField('newsletter', checked)}
+              >
+                <SwitchThumb />
+              </SwitchRoot>
+            </SwitchWrapper>
+          </div>
+
+          <Button
+            className="w-fit"
+            size="lg"
+            onClick={handleSaveChanges}
+            disabled={!hasChanges || isSaving}
           >
-            <SwitchThumb />
-          </SwitchRoot>
-        </SwitchWrapper>
-      </div>
-
-      <Button
-        className="w-fit"
-        size="lg"
-        onClick={handleSaveChanges}
-        disabled={!hasChanges || isSaving}
-      >
-        {isSaving ? 'Saving…' : 'Save changes'}
-      </Button>
+            {isSaving ? 'Saving…' : 'Save changes'}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

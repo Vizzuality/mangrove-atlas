@@ -43,8 +43,11 @@ const Info = ({ id, content }) => {
         tooltipPosition={{ top: -35, left: 0 }}
         message="Click to find background information about a widget or map layer, including an overview, date of publication, authors, license, and associated publications."
       >
-        <DialogTrigger disabled={isHelpGuideActive} className="flex h-full items-center">
-          <INFO_SVG className="text-brand-800 h-7.5 w-7.5 fill-current" role="img" title="Info" />
+        <DialogTrigger
+          disabled={isHelpGuideActive}
+          className="border-brand-800/20 text-brand-800 flex h-7.5 w-7.5 items-center justify-center rounded-full border-2 fill-current text-sm"
+        >
+          <INFO_SVG className="text-brand-800 fill-current" role="img" title="Info" />
         </DialogTrigger>
       </Helper>
       <DialogContent className="w-screen md:mb-20 md:w-auto">

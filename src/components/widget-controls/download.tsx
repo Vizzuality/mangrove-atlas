@@ -65,8 +65,8 @@ const Download = ({ id, content }) => {
         tooltipPosition={{ top: -35, left: 0 }}
         message="Use this function to download spatial data associated with this widget and map layer. Links may point to external sources. Not all data layers are available for download. "
       >
-        <DialogTrigger className="flex h-full items-center">
-          <DOWNLOAD_SVG className="fill-current text-brand-800 h-7.5 w-7.5" role="img" title="Download" />
+        <DialogTrigger className="border-brand-800/20 flex h-7.5 w-7.5 items-center rounded-full border-2 text-transparent">
+          <DOWNLOAD_SVG className="fill-current" role="img" title="Download" />
         </DialogTrigger>
       </Helper>
       <DialogContent>

@@ -38,7 +38,7 @@ const SwitchRoot = ({
     role="button"
     aria-label="Toggle component"
     className={cn(className, {
-      'border-brand-800 border-opacity-20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-white outline-none':
+      'border-brand-800/20 data-[state=checked]:bg-brand-800 relative h-7.5 w-12 cursor-pointer rounded-full border-2 bg-white outline-none':
         true,
       [SIZE['root'][size]]: true,
     })}

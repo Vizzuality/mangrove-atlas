@@ -125,7 +125,7 @@ const CommercialFisheriesProduction = () => {
             >
               <SelectValue className="inline-flex w-fit" />
               <ARROW_SVG
-                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
+                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
                 role="img"
                 title="Arrow"
               />
