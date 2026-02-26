@@ -20,7 +20,12 @@ const NationalDashboard = () => {
   const ISO = data?.locationIso;
   const { data: location } = useLocation(ISO);
 
-  if (isFetched && !data?.data?.mangrove_breakthrough_committed && !data?.data?.legal_status)
+  if (
+    isFetched &&
+    !data?.data?.mangrove_breakthrough_committed &&
+    !data?.data?.legal_status &&
+    !data?.data.length
+  )
     return <NoMetadata />;
 
   return (
