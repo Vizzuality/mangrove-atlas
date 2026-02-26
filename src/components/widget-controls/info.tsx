@@ -14,6 +14,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
+import MarkdownText from '@/components/ui/markdown';
 
 import INFO_SVG from '@/svgs/ui/info';
 
@@ -55,7 +56,7 @@ const Info = ({ id, content }) => {
         <div className="no-scrollbar overflow-y-auto">
           {/* Supports external content or look by id for static info about widgets */}
           {id && <Info />}
-          {content && <p>{content}</p>}
+          {content && <MarkdownText content={content} />}
         </div>
         <DialogClose className="md:0 -top-2 md:absolute" />
       </DialogContent>
