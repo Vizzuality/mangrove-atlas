@@ -20,7 +20,7 @@ import type { ActiveLayers } from 'types/layers';
 
 import CLOSE_SVG from '@/svgs/legend/close-legend';
 import HIDE_SVG from '@/svgs/legend/hide';
-import INFO_SVG from '@/svgs/legend/info-legend';
+import INFO_SVG from '@/svgs/ui/info';
 import OPACITY_SVG from '@/svgs/legend/opacity';
 import SHOW_SVG from '@/svgs/legend/show';
 
@@ -133,9 +133,19 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
               <TooltipTrigger
                 asChild
                 onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
+                className="flex h-6 w-6 items-center justify-center"
               >
-                <button type="button" aria-label="Info layer">
-                  <INFO_SVG role="img" aria-hidden={true} />
+                <button
+                  type="button"
+                  aria-label="Layer info"
+                  className="flex h-5 w-5 items-center justify-center rounded-full border-[1.5px] text-black/42"
+                >
+                  <INFO_SVG
+                    className="h-4 w-4 fill-current stroke-1"
+                    role="img"
+                    aria-hidden={true}
+                    aria-label="Info layer"
+                  />
                 </button>
               </TooltipTrigger>
               <TooltipPortal>

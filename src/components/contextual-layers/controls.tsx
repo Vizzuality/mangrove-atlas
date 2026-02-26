@@ -55,7 +55,7 @@ const Controls = ({ id, origin }: ControlTypes) => {
     <div className="flex items-start space-x-2">
       <Dialog>
         <DialogTrigger className="border-brand-800/20 flex h-7.5 w-7.5 items-center justify-center rounded-full border-2">
-          <INFO_SVG className="" role="img" title="Info" />
+          <INFO_SVG className="text-brand-800 fill-current" role="img" title="Info" />
         </DialogTrigger>
         <DialogContent className="w-screen md:mb-20 md:w-auto">
           <DialogTitle className="sr-only">Info</DialogTitle>
