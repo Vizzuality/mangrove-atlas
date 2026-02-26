@@ -28,7 +28,7 @@ function Loading({
   if (!visible) return null;
 
   const hasCustomSize = hasSizeClass(iconClassName);
-  console.log(iconClassName, hasCustomSize);
+
   return (
     <span
       role="status"
