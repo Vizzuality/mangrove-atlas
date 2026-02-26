@@ -1,8 +1,9 @@
+import cn from '@/lib/classnames';
+
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
-import Fisheries from './fisheries/widget';
 import CommercialFisheriesProduction from './commercial-fisheries-production/widget';
-import cn from '@/lib/classnames';
+import Fisheries from './fisheries/widget';
 
 const FisheriesWrapper = () => {
   return (

@@ -10,6 +10,7 @@ import Helper from '@/containers/help/helper';
 
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import type { WidgetSlugType } from 'types/widget';
+
 import { HELPER_POSITION } from './constants';
 
 type WidgetControlsType = Readonly<{

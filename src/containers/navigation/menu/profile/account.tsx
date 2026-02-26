@@ -1,19 +1,20 @@
 'use client';
 
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+
+import { useRouter } from 'next/router';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
-
 import { signOut, useSession } from 'next-auth/react';
-import { Button } from 'components/ui/button';
+import { z } from 'zod';
 
 import { usePutUpdateUser } from '@/containers/auth/hooks';
-import { useRouter } from 'next/router';
+
+import { Button } from 'components/ui/button';
 import { Checkbox, CheckboxIndicator } from 'components/ui/checkbox';
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
 import { Icon } from 'components/ui/icon';
+import { Input } from 'components/ui/input';
 
 import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
 

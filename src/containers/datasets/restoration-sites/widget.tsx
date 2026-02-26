@@ -6,6 +6,7 @@ import cn from '@/lib/classnames';
 
 import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 
+import { DialogTitle } from '@radix-ui/react-dialog';
 import { useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -15,7 +16,6 @@ import { BUTTON_STYLES, WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 
 import FilterSites from './filter-sites';
 import { useMangroveRestorationSites, useMangroveRestorationSitesFilters } from './hooks';
 import SelectedFilters from './selected-filters';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 const RestorationSitesWidget = () => {
   // filters component state to avoid refetch on every selection

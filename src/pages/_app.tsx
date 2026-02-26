@@ -2,12 +2,11 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { SessionProvider } from 'next-auth/react';
-import { Toaster } from 'components/ui/toast';
 import { MapProvider } from 'react-map-gl';
 // import { Slide, ToastContainer, toast } from 'react-toastify';
 
 import type { AppProps } from 'next/app';
+import { Open_Sans, Inter } from 'next/font/google';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -15,7 +14,6 @@ import Script from 'next/script';
 import { Deserialize, RecoilURLSyncNext, Serialize } from '@/lib/recoil';
 import RecoilDevTools from '@/lib/recoil/devtools';
 
-import { Open_Sans, Inter } from 'next/font/google';
 import { QueryClient, QueryClientProvider, Hydrate } from '@tanstack/react-query';
 import { tx, PseudoTranslationPolicy } from '@transifex/native';
 import { TXProvider } from '@transifex/react';
@@ -26,8 +24,11 @@ import 'styles/mapbox.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import { MediaContextProvider } from 'components/media-query';
+import { Toaster } from 'components/ui/toast';
 import { TooltipProvider } from 'components/ui/tooltip';
+
 import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 
 const OpenSansFont = Open_Sans({
   weight: ['300', '400', '600', '700'],

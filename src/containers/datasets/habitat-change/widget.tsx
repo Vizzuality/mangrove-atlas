@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { habitatChangeEndYear, habitatChangeStartYear } from '@/store/widgets/habitat-change';
@@ -24,7 +25,6 @@ import ARROW_SVG from '@/svgs/ui/arrow.svg?sprite';
 
 import { useMangroveHabitatChange } from './hooks';
 import { UseParamsOptions } from './types';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const labelsForLayer = [
   {

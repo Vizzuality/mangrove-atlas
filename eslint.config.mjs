@@ -1,26 +1,29 @@
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
 import { defineConfig, globalIgnores } from 'eslint/config';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import prettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default defineConfig([
-  globalIgnores(['.next', 'node_modules', 'public', 'storybook-static']),
+  ...nextVitals,
+  ...nextTs,
+  prettierRecommended,
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts',
+    'node_modules/**',
+    'public/**',
+    'storybook-static/**',
+    'cloud-functions/**',
+  ]),
   {
-    extends: compat.extends(
-      'next/core-web-vitals',
-      'plugin:prettier/recommended',
-      'plugin:@tanstack/eslint-plugin-query/recommended',
-      'next-typescript'
-    ),
+    files: ['*.js', '*.mjs'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
     rules: {
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -47,16 +50,6 @@ export default defineConfig([
           html: 'ignore',
           custom: 'ignore',
           exceptions: [''],
-        },
-      ],
-
-      'unused-imports/no-unused-vars': [
-        'error',
-        {
-          vars: 'all',
-          varsIgnorePattern: '^_',
-          args: 'after-used',
-          argsIgnorePattern: '^_',
         },
       ],
 

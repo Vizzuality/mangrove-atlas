@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import cn from '@/lib/classnames';
 import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
 

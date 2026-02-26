@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
+
 import NoData from '@/containers/widgets/no-data';
 
 import Chart from '@/components/chart';
@@ -8,7 +10,6 @@ import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets
 
 import { useMangroveEmissionsMitigation } from './hooks';
 import Legend from './legend';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const EmissionsMitigationWidget = () => {
   const [filteredIndicators, setFilteredIndicators] = useState([]);

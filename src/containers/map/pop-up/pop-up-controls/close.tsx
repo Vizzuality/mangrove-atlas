@@ -1,8 +1,11 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { HiX } from 'react-icons/hi';
 import { useCallback } from 'react';
+
 import { mapDraggableTooltipPinnedAtom } from '@/store/map';
+
+import { HiX } from 'react-icons/hi';
 import { useSetRecoilState } from 'recoil';
+
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type Position = { x: number; y: number };
 

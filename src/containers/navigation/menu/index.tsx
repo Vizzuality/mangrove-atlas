@@ -17,6 +17,7 @@ import {
 import Icon from '@/components/ui/icon';
 
 import MENU_SVG from '@/svgs/tools-bar/menu.svg?sprite';
+
 import MainMenu from './main';
 import Profile from './profile';
 
@@ -27,7 +28,7 @@ const Menu = () => {
     <Dialog>
       <Helper
         className={{
-          button: '-right-4 -top-2',
+          button: '-top-2 -right-4',
           tooltip: 'w-fit-content max-w-[400px]',
         }}
         tooltipPosition={{ top: -40, left: 0 }}
@@ -56,7 +57,7 @@ const Menu = () => {
         {section === 'main' && (
           <div className="py-10">
             <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
-              <DialogTitle className="text-2xl font-light leading-4 md:pt-0 md:text-3xl">
+              <DialogTitle className="text-2xl leading-4 font-light md:pt-0 md:text-3xl">
                 Global Mangrove Watch
               </DialogTitle>
               <MainMenu setSection={setSection} />

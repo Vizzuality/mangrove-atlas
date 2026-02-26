@@ -1,4 +1,11 @@
+import { trackEvent } from '@/lib/analytics/ga';
+
+import { activeGuideAtom } from '@/store/guide';
+
+import { useRecoilValue } from 'recoil';
+
 import { INFO } from '@/containers/datasets';
+import Helper from '@/containers/help/helper';
 
 import {
   Dialog,
@@ -10,11 +17,8 @@ import {
 import Icon from '@/components/ui/icon';
 
 import INFO_SVG from '@/svgs/ui/info.svg?sprite';
-import Helper from '@/containers/help/helper';
+
 import { HELPER_POSITION } from './constants';
-import { useRecoilValue } from 'recoil';
-import { activeGuideAtom } from '@/store/guide';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];

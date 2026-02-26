@@ -2,6 +2,8 @@ import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
 import cn from '@/lib/classnames';
 
+import { LuChevronDown, LuLanguages } from 'react-icons/lu';
+
 import Helper from '@/containers/help/helper';
 
 import {
@@ -10,8 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
-
-import { LuChevronDown, LuLanguages } from 'react-icons/lu';
 
 const LuChevronDownIcon = LuChevronDown as unknown as (
   p: React.SVGProps<SVGSVGElement>

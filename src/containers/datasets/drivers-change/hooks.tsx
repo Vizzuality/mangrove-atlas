@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { Visibility } from '@/types/layers';
 
 import { COLORS, variables } from '@/containers/datasets/drivers-change/constants';
 import Tooltip from '@/containers/datasets/drivers-change/tooltip';
@@ -18,6 +17,8 @@ import type {
 } from '@/containers/datasets/drivers-change/types';
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
+
+import { Visibility } from '@/types/layers';
 
 import API from 'services/api';
 

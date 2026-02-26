@@ -9,13 +9,13 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
+import { DialogTitle } from '@radix-ui/react-dialog';
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogPortal, DialogContent } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
 import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 

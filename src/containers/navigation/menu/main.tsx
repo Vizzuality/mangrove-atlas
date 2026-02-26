@@ -1,7 +1,7 @@
-import { UserMenu } from './user';
+import PartnersLinks from '@/containers/navigation/menu/partners';
 
 import ResourcesMenu from './resources';
-import PartnersLinks from '@/containers/navigation/menu/partners';
+import { UserMenu } from './user';
 
 const MainMenu = ({ setSection }) => {
   return (

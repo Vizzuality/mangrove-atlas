@@ -1,6 +1,6 @@
 import { trackEvent } from '@/lib/analytics/ga';
-import { Visibility } from '@/types/layers';
 
+import { Visibility } from '@/types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 type Layer = {

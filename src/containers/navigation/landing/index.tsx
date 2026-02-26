@@ -1,10 +1,10 @@
 'use client';
 
-import LanguageSelector from '@/containers/navigation/language-selector';
-
 import Link from 'next/link';
-import Helper from '@/containers/help/helper';
+
 import HelpContainer from '@/containers/help';
+import Helper from '@/containers/help/helper';
+import LanguageSelector from '@/containers/navigation/language-selector';
 
 export default function LandingNavigation() {
   return (

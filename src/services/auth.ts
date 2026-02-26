@@ -1,5 +1,4 @@
 import { NextAPI, AuthAPI } from 'services/api';
-
 import API from 'services/api';
 
 // Types

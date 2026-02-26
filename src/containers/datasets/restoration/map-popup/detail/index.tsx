@@ -10,19 +10,19 @@ const Detail = ({
   unit?: string;
 }) => (
   <div className="flex w-full items-center font-sans">
-    <div className="w-[165px] whitespace-nowrap text-right text-sm font-light">{label}</div>
+    <div className="w-[165px] text-right text-sm font-light whitespace-nowrap">{label}</div>
     <div className="mx-4 flex h-4 w-[126px]">
       <div
         className="relative h-full bg-[#B2CBF9]"
         style={{ width: `${100}%`, marginRight: !!pct && pct > 0 ? 2 : 0 }}
       >
         <span
-          className="absolute h-full grow bg-slate-100 text-xxs"
+          className="text-xxs absolute h-full grow bg-slate-100"
           style={{ left: `${pct * 10}%`, right: 0 }}
         />
       </div>
     </div>
-    <div className="whitespace-nowrap text-sm font-semibold">
+    <div className="text-sm font-semibold whitespace-nowrap">
       {value}
       {!!unit && typeof value === 'number' && unit}
     </div>

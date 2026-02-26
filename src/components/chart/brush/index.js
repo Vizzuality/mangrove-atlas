@@ -52,7 +52,6 @@ export default class Brush extends PureComponent {
     const start = startIndex || 0;
     const end = endIndex || data.length - 1;
 
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       ready: true,
       animate: false,
@@ -63,7 +62,6 @@ export default class Brush extends PureComponent {
     });
   }
 
-  // eslint-disable-next-line camelcase
   componentDidUpdate(prevProps) {
     const { height, width } = this.svg.getBoundingClientRect();
     const { margin, startIndex, endIndex, data } = this.props;
@@ -74,7 +72,6 @@ export default class Brush extends PureComponent {
       .rangeRound([margin.left, width - margin.right]);
 
     if (startIndex !== prevStartIndex || (endIndex !== prevEndIndex && width !== 0)) {
-      // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
         brushSelection: [
           [this.scale(startIndex), margin.top],

@@ -1,5 +1,5 @@
-import PopupRestorationSitesSingleItem from './single-item';
 import PopupRestorationSitesCollapsibleItem from './collapsible-item';
+import PopupRestorationSitesSingleItem from './single-item';
 
 const PopupRestorationSitesItem = ({ title, info }: { title: string; info: string | string[] }) => (
   <div className="flex w-full flex-col items-start">

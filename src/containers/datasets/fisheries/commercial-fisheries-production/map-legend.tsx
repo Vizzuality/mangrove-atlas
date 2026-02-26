@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import { useRouter } from 'next/router';
 
 const LEGEND_RANGES = {

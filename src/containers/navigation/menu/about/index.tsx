@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import AboutPartners from './partners';
 import { ConvenedBy, Donors, SupportedBy } from './constants';
+import AboutPartners from './partners';
 
 const About = () => {
   return (

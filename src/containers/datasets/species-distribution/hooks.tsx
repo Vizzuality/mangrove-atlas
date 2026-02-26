@@ -6,11 +6,11 @@ import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { Visibility } from '@/types/layers';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 
+import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';

@@ -1,14 +1,18 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { activeLayersAtom } from '@/store/layers';
+
 import cn from '@/lib/classnames';
 import { formatAxis } from '@/lib/format';
-
 import { normalize } from '@/lib/utils';
+
+import { activeLayersAtom } from '@/store/layers';
+
+import { useSetRecoilState } from 'recoil';
+
+import WidgetHeader from '@/containers/widget/header';
+import NoData from '@/containers/widgets/no-data';
 
 import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
-
 import {
   Select,
   SelectValue,
@@ -16,6 +20,9 @@ import {
   SelectContent,
   SelectItem,
 } from '@/components/ui/select';
+import WidgetControls from '@/components/widget-controls';
+import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
+import type { ActiveLayers } from 'types/layers';
 
 import BIVALVE_SVG from '@/svgs/fisheries/bivalve.svg';
 import CRAB_SVG from '@/svgs/fisheries/crab.svg?sprite';
@@ -23,15 +30,8 @@ import FISH_SVG from '@/svgs/fisheries/fish.svg?sprite';
 import SHRIMP_SVG from '@/svgs/fisheries/shrimp.svg?sprite';
 import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
-import WidgetHeader from '@/containers/widget/header';
-import NoData from '@/containers/widgets/no-data';
-
-import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
-
-import type { ActiveLayers } from 'types/layers';
-import type { GroupedData, GroupedDataResponse } from './types';
 import { useMangroveCommercialFisheriesProduction } from './hooks';
-import WidgetControls from '@/components/widget-controls';
+import type { GroupedData, GroupedDataResponse } from './types';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,

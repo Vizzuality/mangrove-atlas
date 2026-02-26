@@ -1,18 +1,21 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+
+import cn from '@/lib/classnames';
+
+import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+
 import { LuPlus } from 'react-icons/lu';
 import { useRecoilValue } from 'recoil';
 
-import cn from '@/lib/classnames';
-import { Input } from '@/components/ui/input';
-
 import { LocationTypes } from '@/containers/datasets/locations/types';
-import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import {
   CustomGeometry,
   useCreateUserLocation,
 } from '@/containers/datasets/locations/user-locations';
+
+import { Input } from '@/components/ui/input';
 
 const LuPlusIcon = LuPlus as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 

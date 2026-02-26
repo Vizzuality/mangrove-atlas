@@ -1,10 +1,12 @@
 import { useCallback, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeGuideAtom } from '@/store/guide';
 import { activeLayersAtom } from '@/store/layers';
 
+import { DialogTitle } from '@radix-ui/react-dialog';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { INFO, MAP_LEGENDS, WIDGETS } from '@/containers/datasets';
@@ -28,8 +30,6 @@ import HIDE_SVG from '@/svgs/legend/hide.svg?sprite';
 import INFO_SVG from '@/svgs/legend/info-legend.svg?sprite';
 import OPACITY_SVG from '@/svgs/legend/opacity.svg?sprite';
 import SHOW_SVG from '@/svgs/legend/show.svg?sprite';
-import { trackEvent } from '@/lib/analytics/ga';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 const LegendItem = ({
   id,

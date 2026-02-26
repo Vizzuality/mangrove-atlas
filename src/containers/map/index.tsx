@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Marker, useMap } from 'react-map-gl';
 
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { analysisAtom } from '@/store/analysis';
@@ -16,7 +17,9 @@ import {
   URLboundsAtom,
   mapDraggableTooltipDimensionsAtom,
 } from '@/store/map';
+import { mapDraggableTooltipPositionAtom } from '@/store/map';
 import { printModeState } from '@/store/print-mode';
+
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 import type { LngLatBoundsLike, MapboxGeoJSONFeature } from 'mapbox-gl';
@@ -29,7 +32,6 @@ import { useScreenWidth } from 'hooks/media';
 import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
 // POPUPS
 import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
-
 import { LABELS } from '@/containers/datasets/restoration-sites/constants';
 import Helper from '@/containers/help/helper';
 import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
@@ -48,10 +50,8 @@ import { CustomMapProps } from '@/components/map/types';
 import { Media } from '@/components/media-query';
 import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
-import { mapDraggableTooltipPositionAtom } from '@/store/map';
-import LayerManager from './layer-manager';
-import Image from 'next/image';
 
+import LayerManager from './layer-manager';
 import MapPopup from './pop-up';
 
 export const MAP_DEFAULT_PROPS = {

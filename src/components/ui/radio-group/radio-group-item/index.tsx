@@ -5,8 +5,9 @@ import { CgRadioCheck } from 'react-icons/cg';
 
 const RadioCheckIcon = CgRadioCheck as unknown as (p: IconBaseProps) => JSX.Element;
 
-import type { RadioOption } from '../types';
 import { IconBaseProps } from 'react-icons/lib/iconBase';
+
+import type { RadioOption } from '../types';
 
 const RadioGroupItem = ({
   option,

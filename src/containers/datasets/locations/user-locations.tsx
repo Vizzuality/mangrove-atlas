@@ -1,10 +1,10 @@
-import API from 'services/api';
 import { useQuery, UseQueryOptions, useMutation, useQueryClient } from '@tanstack/react-query';
-
 import type { AxiosError } from 'axios';
-import type { Location } from './types';
-
 import type GeoJSON from 'geojson';
+
+import API from 'services/api';
+
+import type { Location } from './types';
 
 export type UserLocationType = 'system' | 'custom';
 

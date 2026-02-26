@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
 import Icon from '@/components/ui/icon';
@@ -18,9 +21,6 @@ import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
 
 import MangrovesInProtectedAreasChart from './chart';
 import { useMangrovesInProtectedAreas } from './hooks';
-import { trackEvent } from '@/lib/analytics/ga';
-import { widgets } from '@/containers/widgets/constants';
-import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 
 const MangrovesInProtectedAreas = () => {
   const [selectedUnit, setUnit] = useState('ha');

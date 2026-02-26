@@ -1,9 +1,10 @@
 import { array, object, string, stringLiterals, optional, number } from '@recoiljs/refine';
-import { Data } from '@/containers/datasets/fisheries/commercial-fisheries-production/types';
-import { Visibility } from '@/types/layers';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
 
+import { Data } from '@/containers/datasets/fisheries/commercial-fisheries-production/types';
+
+import { Visibility } from '@/types/layers';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
 const LayerSettings = object({

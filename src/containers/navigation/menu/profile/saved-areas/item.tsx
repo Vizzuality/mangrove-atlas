@@ -1,10 +1,10 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { LuX, LuPencil, LuCheck } from 'react-icons/lu';
 
 import cn from '@/lib/classnames';
-import { Input } from '@/components/ui/input';
+
+import { LuX, LuPencil, LuCheck } from 'react-icons/lu';
 
 import {
   useDeleteUserLocation,
@@ -16,6 +16,8 @@ import {
   useGetUserNotificationPreferences,
   usePostToggleLocationAlerts,
 } from '@/containers/subscriptions/hooks';
+
+import { Input } from '@/components/ui/input';
 
 const LuXIcon = LuX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 const LuPencilIcon = LuPencil as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;

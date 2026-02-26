@@ -11,7 +11,6 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import { Visibility } from '@/types/layers';
 import type { PolarViewBox } from 'recharts/types/util/types';
 import { useRecoilValue } from 'recoil';
 
@@ -20,6 +19,7 @@ import type { AnalysisResponse } from 'hooks/analysis';
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 
+import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
 
 import API, { AnalysisAPI } from 'services/api';

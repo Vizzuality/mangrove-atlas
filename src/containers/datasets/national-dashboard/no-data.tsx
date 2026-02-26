@@ -1,4 +1,7 @@
+import cn from '@/lib/classnames';
+
 import ContactForm from '@/components/contact';
+import { buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,9 +9,6 @@ import {
   DialogTitle,
   DialogClose,
 } from '@/components/ui/dialog';
-
-import cn from '@/lib/classnames';
-import { buttonVariants } from '@/components/ui/button';
 
 const NoData = () => {
   return (

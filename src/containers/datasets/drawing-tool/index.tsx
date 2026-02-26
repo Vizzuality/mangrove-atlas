@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -13,7 +14,6 @@ import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 import Icon from '@/components/ui/icon';
 
 import AREA_SVG from '@/svgs/sidebar/area.svg';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);

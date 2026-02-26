@@ -1,5 +1,8 @@
 import { useMemo } from 'react';
+
 import { Source, Layer } from 'react-map-gl';
+
+import { useRouter } from 'next/router';
 
 import { activeLayersAtom } from '@/store/layers';
 
@@ -8,7 +11,6 @@ import { useRecoilValue } from 'recoil';
 import type { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
-import { useRouter } from 'next/router';
 
 const MangrovesCommercialFisheriesProductionLayer = ({
   beforeId,

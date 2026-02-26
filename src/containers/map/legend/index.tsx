@@ -3,12 +3,14 @@ import { useCallback, useState, useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { useRecoilState } from 'recoil';
 
 import { LocationTypes } from '@/containers/datasets/locations/types';
@@ -20,8 +22,6 @@ import { ActiveLayers } from 'types/layers';
 import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
-import { trackEvent } from '@/lib/analytics/ga';
-import { IconBaseProps } from 'react-icons/lib/iconBase';
 
 const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
 const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;

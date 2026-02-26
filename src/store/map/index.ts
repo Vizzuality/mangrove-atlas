@@ -1,9 +1,9 @@
 import type { LayerProps } from 'react-map-gl';
 
 import { string, number, array } from '@recoiljs/refine';
+import type { LngLat } from 'mapbox-gl';
 import { atom } from 'recoil';
 import { urlSyncEffect } from 'recoil-sync';
-import type { LngLat } from 'mapbox-gl';
 
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 

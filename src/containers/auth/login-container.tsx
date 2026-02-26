@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect } from 'react';
+
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-import LandingNavigation from '@/containers/navigation/landing';
-import Logo from 'components/logo';
-import ForgotPassword from '@/components/auth/forgot-password';
-import FooterSignup from '@/components/auth/footer-signup';
+import { useSession } from 'next-auth/react';
 
+import LandingNavigation from '@/containers/navigation/landing';
+
+import FooterSignup from '@/components/auth/footer-signup';
+import ForgotPassword from '@/components/auth/forgot-password';
 import SuccessAlert from 'components/auth/email-alert';
+import Logo from 'components/logo';
+
 import LoginForm from './login-form';
 
 export default function LoginPage() {

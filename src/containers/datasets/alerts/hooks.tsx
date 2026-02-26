@@ -11,19 +11,18 @@ import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import { CartesianViewBox } from 'recharts/types/util/types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-
 import type {
   CircleLayerSpecification,
   ExpressionSpecification,
   FilterSpecification,
 } from 'mapbox-gl';
-
-import { Visibility } from '@/types/layers';
+import { CartesianViewBox } from 'recharts/types/util/types';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
+
+import { Visibility } from '@/types/layers';
 
 import API_cloud_functions from 'services/cloud-functions';
 

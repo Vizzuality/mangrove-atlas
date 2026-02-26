@@ -15,20 +15,20 @@ const PORT = process.env.PORT || 3000;
 export default defineConfig({
   testDir: 'tests',
   outputDir: 'test-results',
-timeout: 120000,
-globalTimeout: 120000,
-expect: {
-timeout: 120000,
-},
+  timeout: 120000,
+  globalTimeout: 120000,
+  expect: {
+    timeout: 120000,
+  },
   /* Run your local dev server before starting the tests */
-webServer: process.env.CI
-? undefined
-: {
-    command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
-    url: `http://localhost:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 300000,
-    },
+  webServer: process.env.CI
+    ? undefined
+    : {
+        command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
+        url: `http://localhost:${PORT}`,
+        reuseExistingServer: !process.env.CI,
+        timeout: 300000,
+      },
   /* Run tests in files in parallel */
   fullyParallel: !process.env.CI,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

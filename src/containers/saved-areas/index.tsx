@@ -1,15 +1,16 @@
-import { LuBookmark } from 'react-icons/lu';
-
 import cn from '@/lib/classnames';
 
+import { useSession } from 'next-auth/react';
+import { LuBookmark } from 'react-icons/lu';
+
+import LoginForm from '@/containers/auth/login-form';
 import Helper from '@/containers/help/helper';
 
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import LoginForm from '@/containers/auth/login-form';
-import { useSession } from 'next-auth/react';
-import SavedAreasContent from '../navigation/menu/profile/saved-areas';
-import ForgotPassword from '../../components/auth/forgot-password';
 import FooterSignup from '@/components/auth/footer-signup';
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+
+import ForgotPassword from '../../components/auth/forgot-password';
+import SavedAreasContent from '../navigation/menu/profile/saved-areas';
 
 const LuBookmarkIcon = LuBookmark as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 

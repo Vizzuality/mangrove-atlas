@@ -49,10 +49,14 @@ import DriversChangeMapLegend from '@/containers/datasets/drivers-change/map-leg
 import DriversChangeWidget from '@/containers/datasets/drivers-change/widget';
 import EmissionsMitigationInfo from '@/containers/datasets/emissions-mitigation/info.mdx';
 import EmissionsMitigationWidget from '@/containers/datasets/emissions-mitigation/widget';
+import FisheriesWidget from '@/containers/datasets/fisheries';
+import CommercialFisheriesProductionDownload from '@/containers/datasets/fisheries/commercial-fisheries-production/download';
+import CommercialFisheriesProductionInfo from '@/containers/datasets/fisheries/commercial-fisheries-production/info.mdx';
+import MangrovesCommercialFisheriesProductionLayer from '@/containers/datasets/fisheries/commercial-fisheries-production/layer';
+import CommercialFisheriesProductionMapLegend from '@/containers/datasets/fisheries/commercial-fisheries-production/map-legend';
 import FisheriesInfo from '@/containers/datasets/fisheries/fisheries/info.mdx';
 import FisheriesLayer from '@/containers/datasets/fisheries/fisheries/layer';
 import FisheriesMapLegend from '@/containers/datasets/fisheries/fisheries/map-legend';
-import FisheriesWidget from '@/containers/datasets/fisheries';
 import FloodProtectionWidget from '@/containers/datasets/flood-protection';
 import FloodProtectionInfo from '@/containers/datasets/flood-protection/info.mdx';
 import FloodProtectionAreaMapLegend from '@/containers/datasets/flood-protection/map-legend/area';
@@ -114,10 +118,6 @@ import SpeciesThreatenedWidget from '@/containers/datasets/species-threatened/wi
 
 import BasemapsContextualLayers from '@/components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
-import MangrovesCommercialFisheriesProductionLayer from '@/containers/datasets/fisheries/commercial-fisheries-production/layer';
-import CommercialFisheriesProductionMapLegend from '@/containers/datasets/fisheries/commercial-fisheries-production/map-legend';
-import CommercialFisheriesProductionDownload from '@/containers/datasets/fisheries/commercial-fisheries-production/download';
-import CommercialFisheriesProductionInfo from '@/containers/datasets/fisheries/commercial-fisheries-production/info.mdx';
 
 type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
 

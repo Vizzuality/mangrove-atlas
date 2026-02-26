@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
-import { toast } from 'sonner';
 
 import { useRouter } from 'next/router';
 
@@ -12,6 +11,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { mapCursorAtom } from '@/store/map';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import { toast } from 'sonner';
 
 import { fetchUploadFile } from 'hooks/analysis';
 

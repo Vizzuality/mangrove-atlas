@@ -1,9 +1,10 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-
-import PopupRestorationSitesCollapsibleItemTitle from './item-title';
-import PopupRestorationSitesCollapsibleItemInfo from './item-info';
 import { trackEvent } from '@/lib/analytics/ga';
+
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ScrollArea } from '@/components/ui/scroll-area';
+
+import PopupRestorationSitesCollapsibleItemInfo from './item-info';
+import PopupRestorationSitesCollapsibleItemTitle from './item-title';
 
 const PopupRestorationSitesCollapsibleItem = ({
   title,

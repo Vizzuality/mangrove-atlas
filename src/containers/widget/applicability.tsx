@@ -5,13 +5,13 @@ import cn from '@/lib/classnames';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
+import { DialogTitle } from '@radix-ui/react-dialog';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WidgetSlugType } from 'types/widget';
 
 import Info from './info.mdx';
-import { DialogTitle } from '@radix-ui/react-dialog';
 
 type ApplicabilityProps = {
   id: WidgetSlugType;

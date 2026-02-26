@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeLayersAtom } from '@/store/layers';
@@ -33,7 +34,6 @@ import FloodProtectionChart from './chart/chart';
 import { LABELS, UNITS_LABELS } from './constants';
 import { useMangrovesFloodProtection } from './hooks';
 import type { ChartData, Config } from './types';
-import { trackEvent } from '@/lib/analytics/ga';
 
 const FloodProtection = ({
   indicator,

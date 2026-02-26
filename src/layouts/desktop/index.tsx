@@ -6,8 +6,15 @@ import { useRouter } from 'next/router';
 
 import cn from '@/lib/classnames';
 
+import {
+  mapDraggableTooltipDimensionsAtom,
+  mapDraggableTooltipPinnedAtom,
+  mapDraggableTooltipPositionAtom,
+} from '@/store/map';
 import { printModeState } from '@/store/print-mode';
 
+import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
+import { restrictToWindowEdges } from '@dnd-kit/modifiers';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -15,13 +22,7 @@ import type { LocationTypes } from '@/containers/datasets/locations/types';
 import MapContainer from '@/containers/map';
 import WelcomeIntroMessage from '@/containers/welcome-message';
 import WidgetsContainer from '@/containers/widgets';
-import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
-import {
-  mapDraggableTooltipDimensionsAtom,
-  mapDraggableTooltipPinnedAtom,
-  mapDraggableTooltipPositionAtom,
-} from '@/store/map';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+
 import Logo from 'components/logo';
 
 const DesktopLayout = () => {

@@ -6,10 +6,10 @@ import { activeLayersAtom } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
+import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { useRecoilValue } from 'recoil';
 
 import LegendItem from '../item';
-import { IconBaseProps } from 'react-icons/lib/iconBase';
 
 const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
