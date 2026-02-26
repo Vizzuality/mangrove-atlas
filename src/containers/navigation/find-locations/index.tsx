@@ -1,7 +1,5 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from '@/lib/classnames';
-
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
@@ -12,9 +10,8 @@ import Helper from '@/containers/help/helper';
 import LocationDialogContent from '@/containers/location-dialog-content';
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 
-import GLASS_SVG from '@/svgs/sidebar/glass.svg?sprite';
+import GLASS_SVG from '@/svgs/sidebar/glass';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -77,13 +74,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2"
             data-testid="search-button"
           >
-            <Icon
-              icon={GLASS_SVG}
-              className={cn({
-                'h-8 w-8 fill-current text-white': true,
-              })}
-              description="Glass"
-            />
+            <GLASS_SVG role="img" title="Glass" />
             <p className="font-sans text-sm text-white md:whitespace-nowrap">Find locations</p>
           </button>
         </DialogTrigger>

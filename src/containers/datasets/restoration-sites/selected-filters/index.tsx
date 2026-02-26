@@ -1,9 +1,8 @@
 import cn from '@/lib/classnames';
 
-import Icon from '@/components/ui/icon';
 import { BUTTON_STYLES } from 'styles/widgets';
 
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 type SelectedFiltersProps = {
   filters: { [key: string]: string[] | number[] };
@@ -30,7 +29,7 @@ const SelectedFilters = ({
               })}
             >
               <button type="button" onClick={() => handleRemoveFilter(filter, value)}>
-                <Icon icon={CLOSE_SVG} className="mr-1 h-3 w-3" />
+                <CLOSE_SVG className="fill-current mr-1 h-3 w-3" role="img" aria-hidden={true} />
               </button>
 
               <p className="whitespace overflow-hidden text-ellipsis">{value}</p>

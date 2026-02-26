@@ -14,9 +14,8 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 
-import INFO_SVG from '@/svgs/ui/info.svg?sprite';
+import INFO_SVG from '@/svgs/ui/info';
 
 import { HELPER_POSITION } from './constants';
 
@@ -45,7 +44,7 @@ const Info = ({ id, content }) => {
         message="Click to find background information about a widget or map layer, including an overview, date of publication, authors, license, and associated publications."
       >
         <DialogTrigger disabled={isHelpGuideActive} className="flex h-full items-center">
-          <Icon icon={INFO_SVG} className="text-brand-800 h-7.5 w-7.5" description="Info" />
+          <INFO_SVG className="text-brand-800 h-7.5 w-7.5 fill-current" role="img" title="Info" />
         </DialogTrigger>
       </Helper>
       <DialogContent className="w-screen md:mb-20 md:w-auto">

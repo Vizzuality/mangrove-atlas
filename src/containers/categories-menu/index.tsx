@@ -13,12 +13,11 @@ import CATEGORY_OPTIONS from '@/containers/navigation/constants';
 import widgets, { LAYERS_BY_CATEGORY } from '@/containers/widgets/constants';
 
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
-import Icon from '@/components/ui/icon';
 import type { Category } from 'types/category';
 import type { ActiveLayers } from 'types/layers';
 import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check';
 
 const Category = () => {
   const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
@@ -90,10 +89,10 @@ const Category = () => {
                   }
                 >
                   <CheckboxIndicator>
-                    <Icon
-                      icon={CHECK_SVG}
+                    <CHECK_SVG
                       className="h-full w-full fill-current text-white"
-                      description="Checkmark"
+                      role="img"
+                      title="Checkmark"
                     />
                   </CheckboxIndicator>
                 </Checkbox>

@@ -1,14 +1,13 @@
 import cn from '@/lib/classnames';
 import { formatAxis } from '@/lib/format';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import BIVALVE_SVG from '@/svgs/fisheries/bivalve.svg';
-import CRAB_SVG from '@/svgs/fisheries/crab.svg?sprite';
-import FISH_SVG from '@/svgs/fisheries/fish.svg?sprite';
-import SHRIMP_SVG from '@/svgs/fisheries/shrimp.svg?sprite';
+import BIVALVE_SVG from '@/svgs/fisheries/bivalve';
+import CRAB_SVG from '@/svgs/fisheries/crab';
+import FISH_SVG from '@/svgs/fisheries/fish';
+import SHRIMP_SVG from '@/svgs/fisheries/shrimp';
 
 import { useMangroveEcosystemServices } from './hooks';
 
@@ -41,7 +40,9 @@ const PotentialBenefitsToFisheries = () => {
             Mangrove restoration enhanced the production of new individuals for commercial purposes:{' '}
           </p>
           <div className="grid flex-1 grid-cols-2 flex-col items-center gap-2 pb-10">
-            {data?.map(({ indicator, value }) => (
+            {data?.map(({ indicator, value }) => {
+              const IndicatorIcon = INDICATOR_ICONS[indicator];
+              return (
               <div key={indicator} className="flex space-x-4">
                 <div
                   className={cn({
@@ -50,11 +51,12 @@ const PotentialBenefitsToFisheries = () => {
                     'bg-grey-400 bg-opacity-15 text-opacity-80 text-gray-400': !value,
                   })}
                 >
-                  <Icon
-                    icon={INDICATOR_ICONS[indicator]}
+                  <IndicatorIcon
                     className={cn({
-                      'box-content h-6 w-6 rounded-md p-1': true,
+                      'fill-current box-content h-6 w-6 rounded-md p-1': true,
                     })}
+                    role="img"
+                    aria-hidden={true}
                   />
                 </div>
                 <div className="flex flex-col text-sm">
@@ -64,7 +66,8 @@ const PotentialBenefitsToFisheries = () => {
                   </span>
                 </div>
               </div>
-            ))}{' '}
+              );
+            })}{' '}
           </div>
         </div>
       )}

@@ -17,7 +17,6 @@ import Helper from '@/containers/help/helper';
 import BlogContent from '@/containers/news/content';
 
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 import {
   Tooltip,
   TooltipArrow,
@@ -26,7 +25,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import NEWS_SVG from '@/svgs/tools-bar/news.svg?sprite';
+import NEWS_SVG from '@/svgs/tools-bar/news';
 
 const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 const FaExclamationIcon = FaExclamation as unknown as (
@@ -60,7 +59,7 @@ const NewsButton = ({
     >
       <div className="flex items-center space-x-2">
         <span className="relative">
-          <Icon icon={NEWS_SVG} className="h-6 w-6 text-white" description="News" />
+          <NEWS_SVG className="h-6 w-6 fill-current text-white" role="img" title="News" />
           {showIndicator && (
             <FaExclamationIcon className="absolute -top-1 -left-1 h-3 w-3 rounded-full border border-white bg-[#EE4D5A] fill-current p-0.5 text-white" />
           )}

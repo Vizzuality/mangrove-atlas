@@ -7,9 +7,7 @@ import { mapViewAtom } from '@/store/sidebar';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import Icon from '@/components/ui/icon';
-
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 const MapToggle = () => {
   const activeLayers = useRecoilValue(activeLayersAtom);
@@ -26,12 +24,12 @@ const MapToggle = () => {
         onClick={() => setMapView(!mapView)}
       >
         {mapView && (
-          <Icon
-            icon={CLOSE_SVG}
+          <CLOSE_SVG
             className={cn({
-              'fill-brand-600 h-5 w-5': true,
+              'fill-current fill-brand-600 h-5 w-5': true,
             })}
-            description="Close"
+            role="img"
+            title="Close"
           />
         )}
         {!mapView && <p className="font-sans text-sm text-white">{activeLayers?.length}</p>}

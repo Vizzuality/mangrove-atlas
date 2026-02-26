@@ -3,8 +3,6 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
-import { IconProps } from '@/components/ui/icon/types';
-
 type Components = {
   Info: React.ReactNode;
 };
@@ -20,13 +18,13 @@ type OnChangeOpacity = (opacity: number) => void;
 type OnChangeVisibility = (visibility: boolean) => void;
 type OnChangeExpand = (expand: boolean) => void;
 
-export type Settings = {
+type Settings = {
   opacity: number;
   visibility: boolean;
   expand: boolean;
 };
 
-export type SettingsManager = {
+type SettingsManager = {
   opacity: boolean;
   visibility: boolean;
   expand: boolean;
@@ -74,7 +72,7 @@ export interface LegendItemToolbarProps extends LegendItemEvents {
 }
 
 export interface LegendItemButtonProps {
-  icon: IconProps['icon'];
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   selected?: boolean;
   className?: string;
 }

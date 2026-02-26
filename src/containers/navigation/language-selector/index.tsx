@@ -2,8 +2,6 @@ import { useCallback, useState, MouseEvent, useEffect } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { LuChevronDown, LuLanguages } from 'react-icons/lu';
-
 import Helper from '@/containers/help/helper';
 
 import {
@@ -13,10 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
 
-const LuChevronDownIcon = LuChevronDown as unknown as (
-  p: React.SVGProps<SVGSVGElement>
-) => JSX.Element;
-const LuLanguagesIcon = LuLanguages as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+import CHEVRON_ICON from '@/svgs/ui/chevron';
+import LANGUAGES_ICON from '@/svgs/tools-bar/languages';
 
 interface Transifex {
   live: {
@@ -84,9 +80,9 @@ const LanguageSelector = ({
             className
           )}
         >
-          <LuLanguagesIcon className="h-5 w-5 shrink-0" />
+          <LANGUAGES_ICON className="h-6 w-6 shrink-0" />
           <span className="text-sm">{currentLanguage}</span>
-          {hasArrow && <LuChevronDownIcon className="h-4 w-4" />}
+          {hasArrow && <CHEVRON_ICON role="img" className="h-4 w-4" />}
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white">
           {languages?.map((lang: { code: string; name: string }) => (

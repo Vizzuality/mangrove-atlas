@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { MapProvider } from 'react-map-gl';
-// import { Slide, ToastContainer, toast } from 'react-toastify';
 
 import type { AppProps } from 'next/app';
 import { Open_Sans, Inter } from 'next/font/google';

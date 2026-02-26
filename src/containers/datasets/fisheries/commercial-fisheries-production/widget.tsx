@@ -4,14 +4,6 @@ import cn from '@/lib/classnames';
 import { formatAxis } from '@/lib/format';
 import { normalize } from '@/lib/utils';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useSetRecoilState } from 'recoil';
-
-import WidgetHeader from '@/containers/widget/header';
-import NoData from '@/containers/widgets/no-data';
-
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import {
   Select,
@@ -24,14 +16,18 @@ import WidgetControls from '@/components/widget-controls';
 import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 import type { ActiveLayers } from 'types/layers';
 
-import BIVALVE_SVG from '@/svgs/fisheries/bivalve.svg';
-import CRAB_SVG from '@/svgs/fisheries/crab.svg?sprite';
-import FISH_SVG from '@/svgs/fisheries/fish.svg?sprite';
-import SHRIMP_SVG from '@/svgs/fisheries/shrimp.svg?sprite';
-import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
+import BIVALVE_SVG from '@/svgs/fisheries/bivalve';
+import CRAB_SVG from '@/svgs/fisheries/crab';
+import FISH_SVG from '@/svgs/fisheries/fish';
+import SHRIMP_SVG from '@/svgs/fisheries/shrimp';
+import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 import { useMangroveCommercialFisheriesProduction } from './hooks';
 import type { GroupedData, GroupedDataResponse } from './types';
+import { useSetRecoilState } from 'recoil';
+import { activeLayersAtom } from '@/store/layers';
+import NoData from '@/containers/widgets/no-data';
+import WidgetHeader from '@/containers/widget/header';
 
 const INDICATOR_ICONS = {
   shrimp: SHRIMP_SVG,
@@ -128,10 +124,10 @@ const CommercialFisheriesProduction = () => {
               aria-label="Select indicator"
             >
               <SelectValue className="inline-flex w-fit" />
-              <Icon
-                icon={ARROW_SVG}
-                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                description="Arrow"
+              <ARROW_SVG
+                className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
+                role="img"
+                title="Arrow"
               />
             </SelectTrigger>
             <SelectContent
@@ -169,6 +165,7 @@ const CommercialFisheriesProduction = () => {
                 .map(({ indicator, absolute, density }) => {
                   const disabled = !density && !absolute;
                   const selected = indicator === selectedIndicator;
+                  const IndicatorIcon = INDICATOR_ICONS[indicator as keyof typeof INDICATOR_ICONS];
                   return (
                     <button
                       id={indicator}
@@ -192,9 +189,10 @@ const CommercialFisheriesProduction = () => {
                           disabled && 'bg-grey-400 bg-opacity-15 text-opacity-80 text-gray-400'
                         )}
                       >
-                        <Icon
-                          icon={INDICATOR_ICONS[indicator as keyof typeof INDICATOR_ICONS]}
-                          className="box-content h-6 w-6 rounded-md p-1"
+                        <IndicatorIcon
+                          className="box-content h-6 w-6 rounded-md fill-current p-1"
+                          role="img"
+                          aria-hidden={true}
                         />
                       </div>
                       <div className="flex flex-col text-start text-xs">

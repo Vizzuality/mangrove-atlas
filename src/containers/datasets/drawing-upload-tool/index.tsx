@@ -18,9 +18,7 @@ import { fetchUploadFile } from 'hooks/analysis';
 import Helper from '@/containers/help/helper';
 import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 
-import Icon from '@/components/ui/icon';
-
-import UPLOAD_SVG from '@/svgs/sidebar/upload.svg?sprite';
+import UPLOAD_SVG from '@/svgs/sidebar/upload';
 
 const drawingToolHelperContent = (
   <div className="max-w-xs space-y-4 text-sm font-light text-black/85">
@@ -164,13 +162,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
             />
             <div className="flex flex-col items-center space-y-1">
-              <Icon
-                icon={UPLOAD_SVG}
-                className={cn({
-                  'h-8 w-8 fill-current text-green-900': true,
-                })}
-                description="Upload"
-              />
+              <UPLOAD_SVG role="img" title="Upload" />
               {!uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
                   <p className="font-sans text-sm whitespace-nowrap text-white">Shapefile</p>

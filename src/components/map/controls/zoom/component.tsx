@@ -6,11 +6,10 @@ import cn from '@/lib/classnames';
 
 import { MAP_DEFAULT_PROPS } from '@/containers/map';
 
-import Icon from '@/components/ui/icon';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-import ZOOM_IN_SVG from '@/svgs/map/zoom-in.svg?sprite';
-import ZOOM_OUT_SVG from '@/svgs/map/zoom-out.svg?sprite';
+import ZOOM_IN_SVG from '@/svgs/map/zoom-in';
+import ZOOM_OUT_SVG from '@/svgs/map/zoom-out';
 
 const COMMON_CLASSES =
   'bg-white group w-full w-12 p-4 hover:bg-gray-100 active:outline active:outline-2 active:-outline-offset-[5px] active:outline-brand-400/40 disabled:bg-gray-50 disabled:outline-none hover:gray-100';
@@ -56,7 +55,11 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
             disabled={zoom >= maxZoom}
             onClick={increaseZoom}
           >
-            <Icon icon={ZOOM_IN_SVG} className={SVG_COMMON_CLASSES} description="Zoom-in" />
+            <ZOOM_IN_SVG
+              className={`fill-current ${SVG_COMMON_CLASSES}`}
+              role="img"
+              title="Zoom-in"
+            />
           </button>
           <button
             className={cn({
@@ -67,7 +70,11 @@ export const ZoomControl = ({ className, mapId }: { className?: string; mapId: s
             disabled={zoom <= minZoom}
             onClick={decreaseZoom}
           >
-            <Icon icon={ZOOM_OUT_SVG} className={SVG_COMMON_CLASSES} description="Zoom-out" />
+            <ZOOM_OUT_SVG
+              className={`fill-current ${SVG_COMMON_CLASSES}`}
+              role="img"
+              title="Zoom-out"
+            />
           </button>
         </div>
       </TooltipTrigger>

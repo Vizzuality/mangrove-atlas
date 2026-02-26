@@ -13,9 +13,8 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 
 import { Dialog, DialogPortal, DialogContent } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
 
-import CLOSE_SVG from '@/svgs/ui/close.svg?sprite';
+import CLOSE_SVG from '@/svgs/ui/close';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
@@ -95,7 +94,11 @@ const AnalysisAlert = () => {
                 onClick={() => setAnalysisAlert(false)}
                 aria-label="Reset analysis"
               >
-                <Icon icon={CLOSE_SVG} className="absolute right-8 h-8 w-8" description="Close" />
+                <CLOSE_SVG
+                  className="absolute right-8 h-8 w-8 fill-current"
+                  role="img"
+                  title="Close"
+                />
               </button>
             </div>
             <div className="flex flex-col space-y-5">

@@ -1,4 +1,5 @@
 import cn from '@/lib/classnames';
+import NO_DATA_SVG from '@/svgs/ui/no-data';
 
 import ContactForm from '@/components/contact';
 import { buttonVariants } from '@/components/ui/button';
@@ -9,14 +10,11 @@ import {
   DialogTitle,
   DialogClose,
 } from '@/components/ui/dialog';
-import Icon from '@/components/ui/icon';
-
-import NO_DATA_SVG from '@/svgs/ui/no-data.svg?sprite';
 
 const NoMetadata = () => {
   return (
     <div className="m-auto flex w-full max-w-full break-inside-avoid flex-col items-center justify-center space-y-4 rounded-3xl bg-white py-8">
-      <Icon className="h-40 w-40" icon={NO_DATA_SVG} description="No data" />
+      <NO_DATA_SVG className="h-40 w-40 fill-current" role="img" title="No data" />
       <p className="max-w-80 text-center font-sans text-lg leading-5 font-light sm:text-base sm:leading-6">
         No data available. Help us expand our coverage by submitting yours.
       </p>

@@ -11,7 +11,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import NoData from '@/containers/widgets/no-data';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -21,7 +20,7 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import ARROW_SVG from '@/svgs/ui/arrow-filled.svg?sprite';
+import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 import NetChangeChart from './chart';
 import { useMangroveNetChange, widgetSlug } from './hooks';
@@ -115,7 +114,7 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
-                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
+                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
                 </span>
               </PopoverTrigger>
 
@@ -154,7 +153,7 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentStartYear}
-                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
+                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
                 </span>
               </PopoverTrigger>
 
@@ -187,7 +186,7 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentEndYear}
-                  <Icon icon={ARROW_SVG} className={`${WIDGET_SELECT_ARROW_STYLES} print:hidden`} />
+                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
                 </span>
               </PopoverTrigger>
 

@@ -3,9 +3,7 @@ import { createRef, useLayoutEffect, useState } from 'react';
 import type { Data } from '@/containers/datasets/restoration/overview/types';
 import Legend from '@/containers/legend';
 
-import Icon from '@/components/ui/icon';
-
-import TRIANGLE_SVG from '@/svgs/ui/triangle.svg?sprite';
+import TRIANGLE_SVG from '@/svgs/ui/triangle';
 
 import MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS from './constants';
 
@@ -35,9 +33,10 @@ const RestorationOverviewChart = ({
             'linear-gradient(90deg, #F9DDDA 0%, #FFADAD 25.52%, #CE78B3 50.52%, #8478CE 78.13%, #224294 100%)',
         }}
       >
-        <Icon
-          icon={TRIANGLE_SVG}
-          className="absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2"
+        <TRIANGLE_SVG
+          className="fill-current absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2"
+          role="img"
+          aria-hidden={true}
           style={{ left: !!trianglePosition && trianglePosition }}
         />
       </div>

@@ -4,11 +4,10 @@ import cn from '@/lib/classnames';
 
 import NoData from '@/containers/widgets/no-data';
 
-import Icon from '@/components/ui/icon';
 import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
-import TRIANGLE_SVG from '@/svgs/ui/triangle.svg?sprite';
+import TRIANGLE_SVG from '@/svgs/ui/triangle';
 
 import { useMangroveSpeciesDistribution } from './hooks';
 
@@ -73,9 +72,10 @@ const SpeciesDistribution = () => {
             }}
           >
             {!isWorldwide && (
-              <Icon
-                icon={TRIANGLE_SVG}
-                className="absolute -top-7 h-5 w-5"
+              <TRIANGLE_SVG
+                className="fill-current absolute -top-7 h-5 w-5"
+                role="img"
+                aria-hidden={true}
                 style={{ left: trianglePosition ? trianglePosition : 0 }}
               />
             )}

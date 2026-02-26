@@ -11,9 +11,7 @@ import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import Helper from '@/containers/help/helper';
 import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 
-import Icon from '@/components/ui/icon';
-
-import AREA_SVG from '@/svgs/sidebar/area.svg';
+import DRAW_SVG from '@/svgs/sidebar/draw';
 
 const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingToolEnabled }, setDrawingToolState] = useRecoilState(drawingToolAtom);
@@ -69,13 +67,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         {isDrawingToolEnabled ? (
           <DeleteDrawingButton size="sm" />
         ) : (
-          <Icon
-            icon={AREA_SVG}
-            className={cn({
-              'h-8 w-8 rounded-full fill-current text-white': true,
-            })}
-            description="Area"
-          />
+          <DRAW_SVG role="img" title="Draw area" />
         )}
         <span
           className={cn({

@@ -13,12 +13,11 @@ import { INFO } from '@/containers/datasets';
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
 import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
-import Icon from '@/components/ui/icon';
 import Info from '@/components/widget-controls/info';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 import type { ContextualBasemapsId, MosaicId, WidgetSlugType } from 'types/widget';
 
-import CHECK_SVG from '@/svgs/ui/check.svg?sprite';
+import CHECK_SVG from '@/svgs/ui/check';
 
 const THUMBS = {
   light: 'images/thumbs/analytic.png',
@@ -94,10 +93,10 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
             checked={isActive}
           >
             <CheckboxIndicator className="text-white">
-              <Icon
-                icon={CHECK_SVG}
-                className="h-full w-full fill-current text-white"
-                description="Checkmark"
+              <CHECK_SVG
+                className="fill-current h-full w-full text-white"
+                role="img"
+                title="Checkmark"
               />
             </CheckboxIndicator>
           </Checkbox>
