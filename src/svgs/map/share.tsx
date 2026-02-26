@@ -1,12 +1,25 @@
-import * as React from "react";
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react';
 interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgShare = ({
-  title,
-  titleId,
-  ...props
-}: SVGProps<SVGSVGElement> & SVGRProps) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" aria-labelledby={titleId} {...props}>{title ? <title id={titleId}>{title}</title> : null}<path fill="#000" fillOpacity={0.85} fillRule="evenodd" d="M14.924 4.617a1 1 0 0 0-.218-.325l-2.999-3a1 1 0 1 0-1.414 1.415L11.586 4H10a5 5 0 0 0-5 5v1a1 1 0 1 0 2 0V9a3 3 0 0 1 3-3h1.586l-1.293 1.293a1 1 0 1 0 1.414 1.414l3-3a1 1 0 0 0 .217-1.09" clipRule="evenodd" /><path stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeOpacity={0.85} strokeWidth={2} d="M14 11.5v.5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h.5" /></svg>;
+const SvgShare = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M14.7116 4.29747C14.8053 4.39228 14.8761 4.50114 14.9241 4.61722L14.7116 4.29747ZM14.7065 4.29233L11.7071 1.29289C11.3166 0.902369 10.6834 0.902369 10.2929 1.29289C9.90237 1.68342 9.90237 2.31658 10.2929 2.70711L11.5858 4H10C7.23858 4 5 6.23858 5 9V10C5 10.5523 5.44772 11 6 11C6.55229 11 7 10.5523 7 10V9C7 7.34315 8.34315 6 10 6H11.5858L10.2929 7.29289C9.90237 7.68342 9.90237 8.31658 10.2929 8.70711C10.6834 9.09763 11.3166 9.09763 11.7071 8.70711L14.7068 5.70744L14.7071 5.70711M14.7092 5.70498C14.804 5.6096 14.8757 5.49986 14.9241 5.38278C14.973 5.26488 15 5.13559 15 5C15 4.86441 14.973 4.73512 14.9241 4.61722"
+      fill="black"
+      fill-opacity="0.85"
+    />
+    <path
+      d="M14 11.5V12C14 13.1046 13.1046 14 12 14H4C2.89543 14 2 13.1046 2 12V4C2 2.89543 2.89543 2 4 2H4.5"
+      stroke="black"
+      stroke-opacity="0.85"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
 export default SvgShare;

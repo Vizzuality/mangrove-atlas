@@ -162,13 +162,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               disabled={isDrawingToolEnabled || !!customGeojson || !!uploadedGeojson}
             />
             <div className="flex flex-col items-center space-y-1">
-              <UPLOAD_SVG
-                className={cn({
-                  'fill-current h-8 w-8 text-green-900': true,
-                })}
-                role="img"
-                title="Upload"
-              />
+              <UPLOAD_SVG role="img" title="Upload" />
               {!uploadingFile && (
                 <label id="label-file-upload" htmlFor="input-file-upload">
                   <p className="font-sans text-sm whitespace-nowrap text-white">Shapefile</p>

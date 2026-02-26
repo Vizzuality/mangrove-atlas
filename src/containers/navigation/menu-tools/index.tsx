@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
-import { BiReset } from 'react-icons/bi';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import WidgetDrawingTool from '@/containers/datasets/drawing-tool';
@@ -18,7 +17,7 @@ import SavedAreas from '@/containers/saved-areas';
 
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
-const BiResetIcon = BiReset as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
+import RESET_SVG from '@/svgs/sidebar/reset';
 
 const LocationTools = () => {
   const [, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
@@ -60,7 +59,7 @@ const LocationTools = () => {
           message="Click this icon to return to default settings: Global statistics, zoomed out view, and default widget deck."
         >
           <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2 text-white">
-            <BiResetIcon className="h-8 w-8 fill-current" />
+            <RESET_SVG role="img" title="Reset page" />
             <span className="font-sans text-sm whitespace-nowrap">Reset page</span>
           </div>
         </Helper>

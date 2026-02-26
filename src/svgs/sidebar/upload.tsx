@@ -1,12 +1,26 @@
-import * as React from "react";
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react';
+
 interface SVGRProps {
   title?: string;
   titleId?: string;
 }
-const SvgUpload = ({
-  title,
-  titleId,
-  ...props
-}: SVGProps<SVGSVGElement> & SVGRProps) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" aria-labelledby={titleId} {...props}>{title ? <title id={titleId}>{title}</title> : null}<path fill="#fff" fillRule="evenodd" d="M16.648 6.279a.893.893 0 0 0-1.296 0l-5.834 6.06a.98.98 0 0 0 0 1.348.89.89 0 0 0 1.297 0l4.268-4.435v11.986h1.834V9.252l4.268 4.435a.89.89 0 0 0 1.297 0 .98.98 0 0 0 0-1.347zM6.833 19.333v-.952H5v3.81C5 24.294 6.642 26 8.667 26h14.666C25.358 26 27 24.294 27 22.19v-3.809h-1.833v3.81c0 1.051-.821 1.904-1.834 1.904H8.667c-1.013 0-1.834-.853-1.834-1.904z" clipRule="evenodd" /></svg>;
+const SvgUpload = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    {...props}
+  >
+    {title ? <title id={titleId}>{title}</title> : null}
+
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M16.6482 6.27895C16.2902 5.90702 15.7098 5.90702 15.3518 6.27895L9.51819 12.3399C9.16021 12.7118 9.16021 13.3148 9.51819 13.6867C9.87617 14.0587 10.4566 14.0587 10.8146 13.6867L15.0833 9.25163V20.2857V21.2381H16.9167V20.2857L16.9167 9.25163L21.1854 13.6867C21.5434 14.0587 22.1238 14.0587 22.4818 13.6867C22.8398 13.3148 22.8398 12.7118 22.4818 12.3399L16.6482 6.27895ZM6.83333 19.3333V18.381H5V19.3333V22.1905C5 24.2944 6.64162 26 8.66667 26H23.3333C25.3584 26 27 24.2944 27 22.1905V19.3333V18.381H25.1667V19.3333V22.1905C25.1667 23.2424 24.3459 24.0952 23.3333 24.0952H8.66667C7.65414 24.0952 6.83333 23.2424 6.83333 22.1905V19.3333Z"
+      fill="white"
+    />
+  </svg>
+);
 export default SvgUpload;

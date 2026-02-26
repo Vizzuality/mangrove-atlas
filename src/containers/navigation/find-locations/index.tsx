@@ -1,7 +1,5 @@
 import { useCallback, useEffect } from 'react';
 
-import cn from '@/lib/classnames';
-
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
@@ -76,13 +74,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
             className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2"
             data-testid="search-button"
           >
-            <GLASS_SVG
-              className={cn({
-                'fill-current h-8 w-8 text-white': true,
-              })}
-              role="img"
-              title="Glass"
-            />
+            <GLASS_SVG role="img" title="Glass" />
             <p className="font-sans text-sm text-white md:whitespace-nowrap">Find locations</p>
           </button>
         </DialogTrigger>
