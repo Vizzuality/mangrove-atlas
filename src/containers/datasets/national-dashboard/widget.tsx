@@ -1,30 +1,39 @@
-import cn from '@/lib/classnames';
+import { useRouter } from 'next/router';
 
-import NoData from './no-data';
+import cn from '@/lib/classnames';
 
 import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
-import { useNationalDashboard } from './hooks';
-import OtherResources from './other-resources';
 import { useLocation } from '../locations/hooks';
+import { LocationTypes } from '../locations/types';
 
-import Sources from './sources';
+import { useNationalDashboard } from './hooks';
 import LegalStatus from './legal-status';
 import MangroveBreakthrough from './mangrove-breakthrough';
+import NoData from './no-data';
 import NoMetadata from './no-metadata';
+import OtherResources from './other-resources';
+import Sources from './sources';
 
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
 
+  const {
+    query: { params: queryParams },
+  } = useRouter();
+
+  const locationType = queryParams?.[0] as LocationTypes;
+  const id = queryParams?.[1];
   const ISO = data?.locationIso;
-  const { data: location } = useLocation(ISO);
+
+  const { data: location } = useLocation(id, locationType);
 
   if (
     isFetched &&
     !data?.data?.mangrove_breakthrough_committed &&
     !data?.data?.legal_status &&
-    !data?.data.length
+    data?.data?.length === 0
   )
     return <NoMetadata />;
 
@@ -33,7 +42,7 @@ const NationalDashboard = () => {
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
         <div className="space-y-[25px]">
-          {!data?.data?.legal_status && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
+          {data?.data?.legal_status && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
             <LegalStatus location={location.name} legalStatus={data?.data?.legal_status} />
           )}
           {isFetched && !data?.data.length && <NoData />}
@@ -42,7 +51,7 @@ const NationalDashboard = () => {
           {!!data?.metadata?.other_resources.length && isFetched && (
             <OtherResources resources={data?.metadata?.other_resources} />
           )}
-          {!data?.data?.mangrove_breakthrough_committed &&
+          {data?.data?.mangrove_breakthrough_committed &&
             process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
               <>
                 <div className="bg-brand-800/35 absolute right-0 left-0 h-0.5" />

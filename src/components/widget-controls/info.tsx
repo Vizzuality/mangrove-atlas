@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import MarkdownText from '@/components/ui/markdown';
 
 import INFO_SVG from '@/svgs/ui/info.svg?sprite';
 import Helper from '@/containers/help/helper';
@@ -15,7 +16,6 @@ import { HELPER_POSITION } from './constants';
 import { useRecoilValue } from 'recoil';
 import { activeGuideAtom } from '@/store/guide';
 import { trackEvent } from '@/lib/analytics/ga';
-import { ca } from 'date-fns/locale';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];
@@ -30,7 +30,7 @@ const Info = ({ id, content }) => {
       label: `Info for widget ${id}`,
     });
   };
-
+  console.log(content);
   return (
     <Dialog onOpenChange={handleAnalytics}>
       <Helper
@@ -50,7 +50,7 @@ const Info = ({ id, content }) => {
         <div className="no-scrollbar overflow-y-auto">
           {/* Supports external content or look by id for static info about widgets */}
           {id && <Info />}
-          {content && <p>{content}</p>}
+          {content && <MarkdownText content={content} />}
         </div>
         <DialogClose className="md:0 -top-2 md:absolute" />
       </DialogContent>
