@@ -3,7 +3,6 @@ import { PropsWithChildren } from 'react';
 import { DraggableAttributes } from '@dnd-kit/core';
 import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
 
-
 type Components = {
   Info: React.ReactNode;
 };
@@ -19,13 +18,13 @@ type OnChangeOpacity = (opacity: number) => void;
 type OnChangeVisibility = (visibility: boolean) => void;
 type OnChangeExpand = (expand: boolean) => void;
 
-export type Settings = {
+type Settings = {
   opacity: number;
   visibility: boolean;
   expand: boolean;
 };
 
-export type SettingsManager = {
+type SettingsManager = {
   opacity: boolean;
   visibility: boolean;
   expand: boolean;
