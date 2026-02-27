@@ -50,14 +50,25 @@ const SavedAreasContent = () => {
           </p>
 
           <div className="flex flex-col space-y-4">
-            {userLocations.map((ul) => (
-              <LocationItem
-                key={ul.id}
-                userLocationId={ul.id}
-                name={ul.name}
-                locationType={ul.location_type}
-              />
-            ))}
+            {userLocations.map((ul) =>
+              ul.location_type === 'system' ? (
+                <LocationItem
+                  key={ul.id}
+                  userLocationId={ul.id}
+                  name={ul.name}
+                  locationType={ul.location_type}
+                  location={ul.location}
+                />
+              ) : (
+                <LocationItem
+                  key={ul.id}
+                  userLocationId={ul.id}
+                  name={ul.name}
+                  locationType={ul.location_type}
+                  geometry={ul.custom_geometry}
+                />
+              )
+            )}
 
             {shouldShowNew && (
               <LocationItemNew

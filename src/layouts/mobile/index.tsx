@@ -22,7 +22,7 @@ const MobileLayout = () => {
 
   const handleReset = useCallback(() => {
     if (map) {
-      map?.['default-desktop-no-print'].flyTo({
+      map?.['default-mobile-no-print'].flyTo({
         center: [0, 20],
         zoom: 2,
       });
@@ -40,7 +40,7 @@ const MobileLayout = () => {
           className="h-[72px] w-[330px]"
         />
         <LOGO_MOBILE_SVG
-          className="fill-current absolute top-2 left-4 z-50 h-8 w-20"
+          className="absolute top-2 left-4 z-50 h-8 w-20 fill-current"
           role="img"
           title="Logo"
         />

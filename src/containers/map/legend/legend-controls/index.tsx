@@ -124,8 +124,11 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
 
   if (l.id === 'custom-area') return null;
 
+  const iconBtn =
+    'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
+  const iconSvg = 'h-6 w-6';
   return (
-    <div className="ml-2 flex items-center gap-x-1">
+    <div className="ml-2 flex items-center gap-x-0.5">
       {WidgetInfo && (
         <Dialog open={infoDialogVisibility}>
           <DialogTrigger asChild>
@@ -133,15 +136,14 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
               <TooltipTrigger
                 asChild
                 onClick={() => setInfoDialogVisibility(!infoDialogVisibility)}
-                className="flex h-6 w-6 items-center justify-center"
               >
                 <button
                   type="button"
                   aria-label="Layer info"
-                  className="flex h-5 w-5 items-center justify-center rounded-full border-[1.5px] text-black/42"
+                  className="mr-1 flex h-5 w-5 items-center justify-center rounded-full border-[1.5px] border-black/42 text-black/42"
                 >
                   <INFO_SVG
-                    className="h-4 w-4 fill-current stroke-1"
+                    className="h-3 w-3 fill-current"
                     role="img"
                     aria-hidden={true}
                     aria-label="Info layer"
@@ -174,28 +176,25 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
       )}
 
       <Popover>
-        <PopoverTrigger>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div aria-label="Opacity layer">
-                <OPACITY_SVG role="img" aria-hidden={true} />
-              </div>
-            </TooltipTrigger>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <PopoverTrigger asChild>
+              <button type="button" aria-label="Layer opacity" className={iconBtn}>
+                <OPACITY_SVG aria-hidden="true" className="h-6.5 w-6.5" />
+              </button>
+            </PopoverTrigger>
+          </TooltipTrigger>
 
-            <TooltipPortal>
-              <TooltipContent className="bg-gray-600 px-2 text-white">Opacity</TooltipContent>
-            </TooltipPortal>
-          </Tooltip>
-        </PopoverTrigger>
+          <TooltipPortal>
+            <TooltipContent className="bg-gray-600 px-2 text-white">Opacity</TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
 
         <PopoverContent
           sideOffset={2}
           side="top"
           align="end"
-          className={cn({
-            'rounded-none shadow-md!': true,
-            hidden: guideIsActive,
-          })}
+          className={cn('rounded-none shadow-md!', { hidden: guideIsActive })}
         >
           <Slider
             className="w-[150px] pt-2"
@@ -210,9 +209,13 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
             type="button"
             onClick={() => onChangeVisibility(l.id)}
             aria-label={visibility ? 'Hide layer' : 'Show layer'}
-            className="inline-flex items-center"
+            className={iconBtn}
           >
-            {visibility ? <HIDE_SVG aria-hidden="true" /> : <SHOW_SVG aria-hidden="true" />}
+            {visibility ? (
+              <SHOW_SVG aria-hidden="true" className="h-7 w-7" />
+            ) : (
+              <HIDE_SVG aria-hidden="true" className="h-7 w-7" />
+            )}
           </button>
         </TooltipTrigger>
 
@@ -229,7 +232,12 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
 
       <Tooltip>
         <TooltipTrigger asChild>
-          <button type="button" onClick={() => removeLayer(l.id)} aria-label="Remove layer">
+          <button
+            type="button"
+            onClick={() => removeLayer(l.id)}
+            aria-label="Remove layer"
+            className={iconBtn}
+          >
             <CLOSE_SVG role="img" aria-hidden={true} />
           </button>
         </TooltipTrigger>
