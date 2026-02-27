@@ -41,7 +41,9 @@ const SavedAreasContent = () => {
   return (
     <div className="flex flex-col space-y-6 text-black/85">
       {isLoadingUserLocations ? (
-        <Loading />
+        <div className="flex w-[540px] w-full items-center justify-center py-8">
+          <Loading iconClassName="w-10 h-10 self-center" />
+        </div>
       ) : (
         <>
           <p className="text-lg">
