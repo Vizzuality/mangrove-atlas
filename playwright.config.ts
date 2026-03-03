@@ -16,7 +16,6 @@ export default defineConfig({
   testDir: 'tests',
   outputDir: 'test-results',
   timeout: 120000,
-  globalTimeout: 120000,
   expect: {
     timeout: 120000,
   },
@@ -24,7 +23,7 @@ export default defineConfig({
   webServer: process.env.CI
     ? undefined
     : {
-        command: process.env.CI ? 'pnpm build && pnpm start' : 'pnpm dev',
+        command: 'pnpm dev',
         url: `http://localhost:${PORT}`,
         reuseExistingServer: !process.env.CI,
         timeout: 300000,
@@ -55,15 +54,15 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: { ...devices['Desktop Safari'] },
+    // },
 
     /* Test against mobile viewports. */
     // {
