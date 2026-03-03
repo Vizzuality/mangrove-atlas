@@ -8,9 +8,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
 import { z } from 'zod';
 
-import { Button } from 'components/ui/button';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from 'components/ui/form';
-import { Input } from 'components/ui/input';
+import { Button } from '@/components/ui/button';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address' }),
@@ -40,7 +47,7 @@ function getSafeCallbackUrl(query: any): string {
   return raw;
 }
 
-export function LoginForm() {
+function LoginForm() {
   const router = useRouter();
   const { query } = router;
 

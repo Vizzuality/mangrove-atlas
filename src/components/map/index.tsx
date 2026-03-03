@@ -101,9 +101,8 @@ export const CustomMap: FC<CustomMapProps> = ({
   }, [bounds, isFlying]);
 
   // ✅ sanitize null -> undefined to satisfy react-map-gl types
-  const { terrain, fog, ...restMapProps } = mapboxProps as any;
+  const { fog, ...restMapProps } = mapboxProps as any;
 
-  const safeTerrain = useMemo(() => (terrain == null ? undefined : terrain), [terrain]);
   const safeFog = useMemo(() => (fog == null ? undefined : fog), [fog]);
 
   return (
@@ -118,7 +117,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        terrain={safeTerrain}
+        // terrain={safeTerrain}
         fog={safeFog}
         {...restMapProps}
         {...localViewState}
