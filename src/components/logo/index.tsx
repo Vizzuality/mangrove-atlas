@@ -28,6 +28,7 @@ const Logo = ({
       href="/"
       className={`pointer-events-auto fixed z-[800] ${POSITION_CLASSES[position]}`}
       draggable={false}
+      data-testid="desktop-logo"
       {...(onClick && { onClick })}
     >
       <Image src={src} alt="Global Mangrove Watch" width={width} height={height} priority={true} />
