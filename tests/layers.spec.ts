@@ -27,7 +27,7 @@ test.describe('Can activate contextual layers in map settings', () => {
       await layerSwitcher.click({ force: true }); // Activate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
       await expect(page).toHaveURL(`/?active=["${id}"]`); // URL updated
-      await expect(page.getByTestId(`layer-legend-${id}`)).toBeVisible(); // Legend visible
+      await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
       await layerSwitcher.click({ force: true }); // Deactivate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
@@ -81,7 +81,7 @@ test.describe('Can activate wordwise layers in widgets', () => {
       await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
       await expect(page).toHaveURL(`${url}&active=["${id}"]`); // URL updated
 
-      await expect(page.getByTestId(`layer-legend-${id}`)).toBeVisible(); // Legend visible
+      await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
       await layerSwitcher.click({ force: true }); // Deactivate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
@@ -115,7 +115,7 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
         await layerSwitcher.click({ force: true }); // Activate layer
         await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
         await expect(page).toHaveURL(`${countryUrl}&active=["${id}"]`); // URL updated
-        await expect(page.getByTestId(`layer-legend-${id}`)).toBeVisible(); // Legend visible
+        await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
         await layerSwitcher.click({ force: true }); // Deactivate layer
         await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
