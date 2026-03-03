@@ -89,4 +89,5 @@ export interface SortableListProps extends PropsWithChildren {
 export interface SortableItemProps extends PropsWithChildren {
   id: string;
   sortable: Sortable;
+  'data-testid'?: string;
 }

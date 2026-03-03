@@ -56,6 +56,7 @@ export const HelpContainer = ({
     <div>
       <Popover>
         <PopoverTrigger
+          data-testid="guide-button"
           className={cn('flex cursor-pointer items-center space-x-2', THEME[theme], className)}
         >
           <HELP_ICON className="h-6 w-6" />

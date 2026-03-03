@@ -49,7 +49,7 @@ const LocationTools = () => {
   return (
     <div className="mx-4 flex w-full items-center justify-center space-x-4 overflow-visible md:mx-auto">
       {/* RESET PAGE */}
-      <Link href="/" onClick={handleReset}>
+      <Link href="/" onClick={handleReset} data-testid="worldwide-button">
         <Helper
           className={{
             button: '-top-1 left-0 z-20',

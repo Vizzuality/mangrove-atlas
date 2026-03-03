@@ -11,6 +11,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({
   id,
   sortable,
   children,
+  'data-testid': dataTestId,
 }: SortableItemProps) => {
   const { attributes, listeners, transform, transition, isDragging, setNodeRef } = useSortable({
     id,
@@ -35,6 +36,7 @@ export const SortableItem: React.FC<SortableItemProps> = ({
         'opacity-0': isDragging,
       })}
       style={style}
+      data-testid={dataTestId}
       {...(sortable?.handle && {
         ...listeners,
         ...attributes,
