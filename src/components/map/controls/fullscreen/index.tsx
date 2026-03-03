@@ -11,7 +11,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import DISABLE_FULLSCREEN_SVG from '@/svgs/map/disable-fullscreen';
 import ENABLE_FULLSCREEN_SVG from '@/svgs/map/enable-fullscreen';
 
-export const FullScreen = ({ className }: { className?: string }) => {
+const FullScreen = () => {
   const [isFullScreen, setFullScreen] = useRecoilState(fullScreenAtom);
 
   const toggleFullScreen = useCallback(() => {
@@ -34,7 +34,7 @@ export const FullScreen = ({ className }: { className?: string }) => {
         >
           <FullScreenIcon
             className={cn({
-              'fill-current group-disabled:fill-grey-75 h-4 w-4 bg-white': true,
+              'group-disabled:fill-grey-75 h-4 w-4 bg-white fill-current': true,
               'bg-brand-800': isFullScreen,
               'group-hover:bg-gray-100': !isFullScreen,
             })}

@@ -6,7 +6,7 @@ import type { ControlsProps } from './types';
 
 type ControlsPropsWithChildren = PropsWithChildren<ControlsProps>;
 
-export const Controls: FC<ControlsPropsWithChildren> = ({
+const Controls: FC<ControlsPropsWithChildren> = ({
   className,
   children,
 }: ControlsPropsWithChildren) => (

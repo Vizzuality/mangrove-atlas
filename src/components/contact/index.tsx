@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -53,7 +53,7 @@ export const ContactFormSchema = z.object({
 
 type FormSchema = z.infer<typeof ContactFormSchema>;
 
-export function ContactForm() {
+function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [isOpen, setIsOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);

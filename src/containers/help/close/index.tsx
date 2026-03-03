@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
-export const CloseHelpGuide = () => {
+const CloseHelpGuide = () => {
   const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
 
   if (!isActive) return null;
