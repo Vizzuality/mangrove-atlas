@@ -6,10 +6,13 @@ test('Find broken images', async ({ page }) => {
   const images = page.locator('img');
   const allImages = await images.all();
 
-  for await (const image of allImages) {
+  for (const image of allImages) {
     const src = await image.getAttribute('src');
-    const response = await page.goto(src);
-    const status = response?.status();
-    expect(status).toBe(200);
+    if (!src) continue;
+
+    // Use API request instead of page.goto to avoid navigating away and invalidating locators
+    const absoluteUrl = src.startsWith('http') ? src : new URL(src, page.url()).href;
+    const response = await page.request.get(absoluteUrl);
+    expect(response.status()).toBe(200);
   }
 });

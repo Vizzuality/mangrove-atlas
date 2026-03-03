@@ -2,8 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('test legend order', async ({ page }) => {
   await page.goto('/');
-  const showLegendButton = page.getByTestId('show-legend-button');
-  await showLegendButton.click();
+  // Legend starts open by default when layers are active (mangrove_habitat_extent is active on load)
   const legendContent = page.getByTestId('legend-content');
   await expect(legendContent).toBeVisible();
   const netChangeLayerSwitcher = page.getByTestId('mangrove_net_change');
