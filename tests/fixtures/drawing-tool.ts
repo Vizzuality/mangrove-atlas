@@ -26,8 +26,6 @@ const positions = [
 export const useDrawingTool = (page: Page) => ({
   open: async () => await page.getByTestId('drawing-tool-button').click(),
 
-  enableDrawing: async () => await page.getByTestId('start-drawing-button').click({ delay: 300 }),
-
   draw: async () => {
     await page.waitForTimeout(500);
     const map = page.getByRole('region', { name: 'Map' });

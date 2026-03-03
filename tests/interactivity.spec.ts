@@ -38,19 +38,9 @@ test.describe('Expand / collapse widgets functionality', () => {
   });
 
   test('Collapsed  widgets', async ({ page }) => {
-    // Check that all widgets are visible
+    // Widgets should be collapsed by default — their content should be hidden
     for (const widget of WIDGETS_BY_CATEGORY) {
-      // Check if the widget is the last one
-      const elementMatchesSelector = await page
-        .locator(`[data-testid="widget-${widget.slug}-content"]:not(:last-of-type):not(div)`)
-        .isVisible();
-
-      // Last widget must be always expanded
-      if (elementMatchesSelector) {
-        await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeVisible();
-      } else {
-        await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
-      }
+      await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
     }
   });
 });
