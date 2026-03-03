@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 test('Find broken images', async ({ page }) => {
-  await page.goto('*');
+  await page.goto('/');
   await page.waitForLoadState('domcontentloaded');
   const images = page.locator('img');
   const allImages = await images.all();
