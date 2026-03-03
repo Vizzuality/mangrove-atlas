@@ -37,7 +37,6 @@ test.describe('Drawing Tool is open', () => {
     const drawingTool = useDrawingTool(page);
     await drawingTool.enableDrawing();
     await drawingTool.draw();
-    await page.waitForTimeout(1000);
     await expect(page).toHaveURL(/.*\/custom-area\?bounds=.*/);
     await expect(page.getByText('Expand all widgets')).toBeVisible();
   });
