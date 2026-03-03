@@ -12,9 +12,12 @@ dotenv.config({ path: '.env.local' });
  */
 const PORT = process.env.PORT || 3000;
 
+const STORAGE_STATE = 'test-results/.auth/storage-state.json';
+
 export default defineConfig({
   testDir: 'tests',
   outputDir: 'test-results',
+  globalSetup: require.resolve('./tests/fixtures/global-setup'),
   timeout: 120000,
   expect: {
     timeout: 120000,
@@ -46,6 +49,7 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     navigationTimeout: 120000,
+    storageState: STORAGE_STATE,
   },
 
   /* Configure projects for major browsers */
