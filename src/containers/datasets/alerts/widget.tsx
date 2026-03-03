@@ -11,8 +11,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import NoData from '@/containers/widgets/no-data';
 
-import SuggestedLayers from '@/components/suggested-layers';
-import Icon from '@/components/ui/icon';
+import SuggestedLayers from '@/components/contextual-layers';
 import Chart from 'components/chart';
 import DateSelect from 'components/planet-date-select';
 import Loading from 'components/ui/loading';
@@ -107,10 +106,10 @@ const AlertsWidget = () => {
               <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedStartDate?.label}
-                  <Icon
-                    icon={ARROW_SVG}
+                  <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                    description="Arrow"
+                    role="img"
+                    title="Arrow"
                   />
                 </span>
               </PopoverTrigger>
@@ -151,10 +150,10 @@ const AlertsWidget = () => {
               <PopoverTrigger>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedEndDate?.label}
-                  <Icon
-                    icon={ARROW_SVG}
+                  <ARROW_SVG
                     className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
-                    description="Arrow"
+                    role="img"
+                    title="Arrow"
                   />
                 </span>
               </PopoverTrigger>
