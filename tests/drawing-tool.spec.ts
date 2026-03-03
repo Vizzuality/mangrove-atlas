@@ -7,7 +7,8 @@ test('can open drawing tool', async ({ page }) => {
   await page.goto('/');
   const drawingTool = useDrawingTool(page);
   await drawingTool.open();
-  await expect(page).toHaveURL('/custom-area');
+  // Drawing tool is activated — button text changes to "Delete area"
+  await expect(page.getByTestId('drawing-tool-button')).toContainText('Delete area');
 });
 
 test.describe('Drawing Tool is open', () => {
@@ -18,24 +19,26 @@ test.describe('Drawing Tool is open', () => {
 
   test('can leave drawing tool when is empty - clicking in worldwide icon', async ({ page }) => {
     await useSidebar(page).clickWordwide();
-    await expect(page).not.toHaveURL(new RegExp(/\/custom-area\?.*/));
+    await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
 
   test('can leave drawing tool when is empty - clicking in search icon and selecting a place', async ({
     page,
   }) => {
     await useSidebar(page).clickSearch();
-    await page.click('[role="dialog"] a:first-child button');
-    await expect(page).not.toHaveURL(new RegExp(/\/custom-area\?.*/));
+    await page.getByTestId('location-dialog-content').waitFor();
+    await page.getByTestId('location-dialog-content').locator('a').first().click();
+    await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
 
-  test('map settings is disabled when drawing tool is open', async ({ page }) => {
-    await expect(page.getByTestId('map-settings-button')).toBeDisabled();
+  test('clicking map settings exits drawing tool', async ({ page }) => {
+    await page.getByTestId('map-settings-button').click();
+    await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
 
   test('can draw a polygon', async ({ page }) => {
     const drawingTool = useDrawingTool(page);
-    await drawingTool.enableDrawing();
+    // DrawControl auto-enters draw_polygon mode when activated
     await drawingTool.draw();
     await expect(page).toHaveURL(/.*\/custom-area\?bounds=.*/);
     await expect(page.getByText('Expand all widgets')).toBeVisible();
@@ -126,6 +129,6 @@ test.describe('Drawing Tool is open and has a polygon', () => {
   test('can remove a polygon', async ({ page }) => {
     await page.getByTestId('delete-custom-area-button').click();
     await expect(page.getByTestId('delete-custom-area-button')).not.toBeVisible();
-    await expect(page.getByTestId('start-drawing-button')).toBeVisible();
+    await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
 });
