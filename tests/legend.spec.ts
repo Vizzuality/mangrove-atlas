@@ -5,7 +5,7 @@ test('test legend order', async ({ page }) => {
   const showLegendButton = page.getByTestId('show-legend-button');
   await showLegendButton.click();
   const legendContent = page.getByTestId('legend-content');
-  await legendContent.isVisible();
+  await expect(legendContent).toBeVisible();
   const netChangeLayerSwitcher = page.getByTestId('mangrove_net_change');
   await netChangeLayerSwitcher.click({ force: true });
   await expect(netChangeLayerSwitcher).toHaveAttribute('data-state', 'checked');
