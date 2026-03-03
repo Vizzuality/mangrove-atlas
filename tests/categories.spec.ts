@@ -47,7 +47,7 @@ async function testCategoryWidgets(page, category: Category) {
   const widgetResponse = page.waitForResponse(url);
 
   await page.goto(`/?category="${category}"`);
-  await page.waitForTimeout(6000);
+  await page.getByTestId('widgets-wrapper').waitFor();
 
   // Get all widgets that should be enabled
   const widgets = WIDGETS.filter(
