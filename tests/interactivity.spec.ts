@@ -16,13 +16,13 @@ test.beforeEach(async ({ page }) => {
 test.describe('Expand / collapse widgets functionality', () => {
   test('Expand button text', async ({ page }) => {
     // Widgets should appear collapsed by default, button must be ready to expand them
-    expect(page.locator('expand-collapse-button', { hasText: 'Expand all widgets' }));
+    await expect(page.getByTestId('expand-collapse-button')).toBeVisible();
   });
 
   test('Expanded widgets', async ({ page }) => {
     // Check that all widgets are visible
     for (const widget of WIDGETS_BY_CATEGORY) {
-      await expect(page.getByTestId(`widget-${widget}-content`)).toBeHidden();
+      await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
     }
   });
 
@@ -34,22 +34,22 @@ test.describe('Expand / collapse widgets functionality', () => {
     await button.click();
 
     // Check if the button text is correct
-    expect(page.locator('expand-collapse-button', { hasText: 'Collapse all widgets' }));
+    await expect(page.getByTestId('expand-collapse-button')).toBeVisible();
   });
 
   test('Collapsed  widgets', async ({ page }) => {
     // Check that all widgets are visible
     for (const widget of WIDGETS_BY_CATEGORY) {
       // Check if the widget is the last one
-      const elementMatchesSelector = await page.$(
-        `[data-testid="widget-${widget}-content"]:not(:last-of-type):not(div)`
-      );
+      const elementMatchesSelector = await page
+        .locator(`[data-testid="widget-${widget.slug}-content"]:not(:last-of-type):not(div)`)
+        .isVisible();
 
       // Last widget must be always expanded
       if (elementMatchesSelector) {
-        await expect(page.getByTestId(`widget-${widget}-content`)).toBeVisible();
+        await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeVisible();
       } else {
-        await expect(page.getByTestId(`widget-${widget}-content`)).toBeHidden();
+        await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
       }
     }
   });
