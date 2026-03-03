@@ -29,40 +29,40 @@ export const useDrawingTool = (page: Page) => ({
   enableDrawing: async () => await page.getByTestId('start-drawing-button').click({ delay: 300 }),
 
   draw: async () => {
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(500);
     const map = page.getByRole('region', { name: 'Map' });
     await map.click({
       position: positions[0],
       delay: 300,
       force: true,
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
     await map.click({
       position: positions[1],
       delay: 300,
       force: true,
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
     await map.click({
       position: positions[2],
       delay: 300,
       force: true,
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
     await map.click({
       position: positions[3],
       delay: 300,
       force: true,
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
     await map.click({
       position: positions[4],
       delay: 300,
       force: true,
     });
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(300);
   },
-  drawBouns: [
+  drawBounds: [
     [-4.374684979839401, 0.5613643613065875],
     [22.480153729838037, 15.475547647941127],
   ],
@@ -73,6 +73,5 @@ export const useDrawingTool = (page: Page) => ({
 
   uploadGeojson: async (file: string) => {
     await page.getByTestId('shapefile-upload').setInputFiles(file);
-    await page.waitForTimeout(1000);
   },
 });
