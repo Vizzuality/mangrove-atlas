@@ -65,11 +65,10 @@ test.describe('Can activate wordwise layers in widgets', () => {
   });
 
   const widgetsWithLayers = WIDGETS.filter(
-    ({ categoryIds, locationType, layersIds, slug }) =>
+    ({ categoryIds, locationType, layersIds }) =>
       categoryIds?.includes(ALL_DATASETS_CATEGORY) &&
       locationType?.includes(WORDWIDE_LOCATION) &&
       layersIds?.length
-    // slug !== 'mangrove_iucn_ecoregion' // REMOVE THIS LINE WHEN THE LAYER URL BUG IS FIXED
   );
   for (const widget of widgetsWithLayers) {
     test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {
@@ -78,8 +77,7 @@ test.describe('Can activate wordwise layers in widgets', () => {
       const layerSwitcher = page.getByTestId(id);
 
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-      await layerSwitcher.click({ force: true });
-      await page.waitForTimeout(1000); // Activate layer
+      await layerSwitcher.click({ force: true }); // Activate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
       await expect(page).toHaveURL(`${url}&active=["${id}"]`); // URL updated
 
@@ -115,7 +113,6 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
         const layerSwitcher = page.getByTestId(id);
         await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
         await layerSwitcher.click({ force: true }); // Activate layer
-        await page.waitForTimeout(1000);
         await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
         await expect(page).toHaveURL(`${countryUrl}&active=["${id}"]`); // URL updated
         await expect(page.getByTestId(`layer-legend-${id}`)).toBeVisible(); // Legend visible
