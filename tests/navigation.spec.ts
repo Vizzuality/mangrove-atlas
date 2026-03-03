@@ -8,7 +8,7 @@ test('test menu links', async ({ page }) => {
   const menuButton = page.getByTestId('menu-button');
   await menuButton.click();
   const menuContent = page.getByTestId('menu-content');
-  await menuContent.isVisible();
+  await expect(menuContent).toBeVisible();
   await menuContent.getByRole('button', { name: 'About this tool' }).click();
   await menuContent.getByRole('button', { name: 'Close' }).click();
 });
@@ -45,7 +45,7 @@ test.describe('Blog navigation', () => {
     // Click back button to go back to the posts list
     const backToNewsBtn = page.getByTestId('back-to-news-button');
     await backToNewsBtn.click();
-    await postsList.isVisible();
+    await expect(postsList).toBeVisible();
     await page.getByRole('button', { name: 'Close' }).click();
   });
 });
