@@ -43,29 +43,29 @@ const PotentialBenefitsToFisheries = () => {
             {data?.map(({ indicator, value }) => {
               const IndicatorIcon = INDICATOR_ICONS[indicator];
               return (
-              <div key={indicator} className="flex space-x-4">
-                <div
-                  className={cn({
-                    'box-content h-8 w-8 justify-center rounded-md p-1': true,
-                    'bg-blue-400 text-white opacity-100': !!value,
-                    'bg-grey-400 bg-opacity-15 text-opacity-80 text-gray-400': !value,
-                  })}
-                >
-                  <IndicatorIcon
+                <div key={indicator} className="flex space-x-4">
+                  <div
                     className={cn({
-                      'fill-current box-content h-6 w-6 rounded-md p-1': true,
+                      'box-content h-8 w-8 justify-center rounded-md p-1': true,
+                      'bg-blue-400 text-white opacity-100': !!value,
+                      'bg-grey-400/15 text-opacity-80 text-gray-400': !value,
                     })}
-                    role="img"
-                    aria-hidden={true}
-                  />
+                  >
+                    <IndicatorIcon
+                      className={cn({
+                        'box-content h-6 w-6 rounded-md fill-current p-1': true,
+                      })}
+                      role="img"
+                      aria-hidden={true}
+                    />
+                  </div>
+                  <div className="flex flex-col text-sm">
+                    <span className="first-letter:uppercase">{indicator}</span>
+                    <span className="text-xs font-bold md:text-sm">
+                      {!!value ? formatAxis(Math.round(value)) : 'No data'}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex flex-col text-sm">
-                  <span className="first-letter:uppercase">{indicator}</span>
-                  <span className="text-xs font-bold md:text-sm">
-                    {!!value ? formatAxis(Math.round(value)) : 'No data'}
-                  </span>
-                </div>
-              </div>
               );
             })}{' '}
           </div>

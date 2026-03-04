@@ -114,7 +114,7 @@ const ClimateWatchNationalDashboard = () => {
       {isFetched && isFetchedNDCSContentOverview && data && NDCSContentOverview && (
         <>
           <div className="relative">
-            <div className="bg-brand-800 bg-opacity-30 absolute -right-8 -left-8 h-px" />
+            <div className="bg-brand-800/30 absolute -right-8 -left-8 h-px" />
           </div>
           <div className="flex justify-between py-4">
             <a
