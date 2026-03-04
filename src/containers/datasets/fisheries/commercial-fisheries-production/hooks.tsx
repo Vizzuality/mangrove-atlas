@@ -59,7 +59,7 @@ export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
   return useQuery<DataResponse, Error, TData>(
     ['fishery-mitigation-potentials', params, location_id],
     fetchMangroveFisheryMitigationPotentials,
-    { ...(queryOptions || {}) }
+    { keepPreviousData: true, ...(queryOptions || {}) }
   );
 }
 

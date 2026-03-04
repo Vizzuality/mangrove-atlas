@@ -114,13 +114,7 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
   for (const widget of widgetsWithLayers) {
     for (const layer of widget.layersIds) {
       const id = widget.layersIds?.length > 1 ? (layer as string) : widget.slug;
-      test(`Layer "${layer as string}" of ${widget.name}`, async ({ page, browserName }) => {
-        // Firefox: continuous widget re-renders detach this sublayer switch from the DOM
-        test.fixme(
-          browserName === 'firefox' && id === 'mangrove_commercial_fisheries_production',
-          'Firefox: widget re-renders continuously detach this sublayer switch'
-        );
-
+      test(`Layer "${layer as string}" of ${widget.name}`, async ({ page }) => {
         await page.goto(
           `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
         );
