@@ -71,6 +71,7 @@ export const HelpContainer = ({
 
             <SwitchWrapper id="guide-intro" className="h-2 w-4">
               <SwitchRoot
+                data-testid="guide-switch"
                 onClick={handleClick}
                 defaultChecked={isActive}
                 checked={isActive}

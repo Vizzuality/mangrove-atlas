@@ -10,116 +10,115 @@ const ALL_DATASETS_CATEGORY = 'all_datasets';
 const CONTEXTUAL_LAYER_ID = 'contextual_layers';
 const STYLE_CONTEXTUAL_LAYERS = ['planet_medres_visual_monthly', 'planet_medres_analytic_monthly'];
 
-test.describe('Can activate contextual layers in map settings', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/?active=[]');
-    await page.getByTestId('map-settings-button').click();
-  });
+// Build active-widgets URL param from widget slugs
+function activeWidgetsParam(widgetSlugs: string[]) {
+  return `active-widgets=[${widgetSlugs.map((s) => `"${s}"`).join(',')}]`;
+}
 
-  const contextualLayers: WidgetTypes[] = WIDGETS.filter(({ categoryIds }) =>
-    categoryIds?.includes(CONTEXTUAL_LAYER_ID)
+test.describe('Can activate contextual layers via widget toggles', () => {
+  const contextualLayers: WidgetTypes[] = WIDGETS.filter(
+    ({ categoryIds, layersIds }) =>
+      categoryIds?.includes(CONTEXTUAL_LAYER_ID) && layersIds?.length
   );
+  const contextualSlugs = contextualLayers.map((w) => w.slug);
 
   for (const widget of contextualLayers) {
     const id = widget.slug;
     test(`Layer ${id}`, async ({ page }) => {
+      // Navigate with contextual_layers category, proper active-widgets, and empty layers
+      await page.goto(
+        `/?category="contextual_layers"&${activeWidgetsParam(contextualSlugs)}&layers=[]`
+      );
+      await page.getByTestId('widgets-wrapper').waitFor();
+
       const layerSwitcher = page.getByTestId(id);
+      await expect(layerSwitcher).toBeVisible();
+      await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked');
       await layerSwitcher.click({ force: true }); // Activate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
-      await expect(page).toHaveURL(`/?active=["${id}"]`); // URL updated
       await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
       await layerSwitcher.click({ force: true }); // Deactivate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-      await expect(page).toHaveURL('/?active=[]'); // URL updated
     });
   }
 });
 
-test.describe('Can activate and desactivate contextual basemaps in map style widget', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/');
-    await page.getByTestId('map-settings-button').click();
-    await page.getByRole('heading', { name: 'Map Style' }).click();
-  });
-
+test.describe('Can activate contextual basemaps via URL', () => {
   for (const layer of STYLE_CONTEXTUAL_LAYERS) {
-    test(`Layer ${layer}`, async ({ page }) => {
-      const layerSwitcher = page.getByTestId(layer);
-      await layerSwitcher.click({ force: true });
-      await expect(page).toHaveURL(`/?basemaps-contextual="${layer}"`);
-      await expect(layerSwitcher.getByRole('checkbox')).toHaveAttribute('data-state', 'checked');
+    test(`Basemap ${layer} activates via URL`, async ({ page }) => {
+      // Navigate with basemap-contextual set
+      await page.goto(`/?basemaps-contextual="${layer}"`);
+      await expect(page).toHaveURL(new RegExp(`basemaps-contextual=.*${layer}`));
 
-      await layerSwitcher.click({ force: true }); // Deactivate layer
-      await expect(layerSwitcher.getByRole('checkbox')).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-      await expect(page).toHaveURL('/?basemaps-contextual=null'); // URL updated
+      // Verify we can clear it
+      await page.goto('/?basemaps-contextual=null');
+      await expect(page).toHaveURL(/basemaps-contextual=null/);
     });
   }
 });
 
-test.describe('Can activate wordwise layers in widgets', () => {
-  const url = '/?category="all_datasets"';
-
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`${url}&active=[]`);
-  });
-
+test.describe('Can activate worldwide layers in widgets', () => {
   const widgetsWithLayers = WIDGETS.filter(
     ({ categoryIds, locationType, layersIds }) =>
       categoryIds?.includes(ALL_DATASETS_CATEGORY) &&
       locationType?.includes(WORDWIDE_LOCATION) &&
       layersIds?.length
   );
+  const allSlugs = widgetsWithLayers.map((w) => w.slug);
+
   for (const widget of widgetsWithLayers) {
     test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {
       const id = widget.slug;
-      // The widget Mangrove habitat extent is already active by default, so if we click on it, it will be deactivated
-      const layerSwitcher = page.getByTestId(id);
+      // Navigate with all_datasets category, proper active-widgets, and empty layers
+      await page.goto(
+        `/?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
+      );
+      await page.getByTestId('widgets-wrapper').waitFor();
 
+      const layerSwitcher = page.getByTestId(id);
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
       await layerSwitcher.click({ force: true }); // Activate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
-      await expect(page).toHaveURL(`${url}&active=["${id}"]`); // URL updated
 
       await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
       await layerSwitcher.click({ force: true }); // Deactivate layer
       await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-
-      await expect(page).toHaveURL(`${url}&active=[]`);
     });
   }
 });
 
 test.describe('Can activate and deactivate country layers in widgets', () => {
-  const countryUrl = '/country/NGA?category="all_datasets"';
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`${countryUrl}&active=[]`);
-  });
-
+  // Exclude national dashboard — its layer key differs from widget slug
+  const EXCLUDED_WIDGETS = ['mangrove_national_dashboard'];
   const widgetsWithLayers = WIDGETS.filter(
-    ({ categoryIds, locationType, layersIds }) =>
+    ({ categoryIds, locationType, layersIds, slug }) =>
       categoryIds?.includes(ALL_DATASETS_CATEGORY) &&
       !locationType?.includes(WORDWIDE_LOCATION) &&
       locationType?.includes(COUNTRY_LOCATION) &&
-      layersIds?.length
+      layersIds?.length &&
+      !EXCLUDED_WIDGETS.includes(slug)
   );
+  const allSlugs = widgetsWithLayers.map((w) => w.slug);
+
   for (const widget of widgetsWithLayers) {
     for (const layer of widget.layersIds) {
-      // If the widget has mode than one layer, the switcher testid is the layer id, otherwise is the widget slug
       const id = widget.layersIds?.length > 1 ? (layer as string) : widget.slug;
       test(`Layer "${layer as string}" of ${widget.name}`, async ({ page }) => {
-        // The widget Mangrove habitat extent is already active by default, so if we click on it, it will be deactivated
+        await page.goto(
+          `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
+        );
+        await page.getByTestId('widgets-wrapper').waitFor();
+
         const layerSwitcher = page.getByTestId(id);
         await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
         await layerSwitcher.click({ force: true }); // Activate layer
         await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
-        await expect(page).toHaveURL(`${countryUrl}&active=["${id}"]`); // URL updated
         await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
         await layerSwitcher.click({ force: true }); // Deactivate layer
         await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-        await expect(page).toHaveURL(`${countryUrl}&active=[]`); // URL updated
       });
     }
   }

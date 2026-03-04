@@ -4,43 +4,56 @@ import WIDGETS from '@/containers/widgets/constants';
 
 const DEFAULT_LOCATION = 'worldwide';
 const DEFAULT_CATEGORY = 'distribution_and_change';
+const ALWAYS_EXPANDED = ['widgets_deck_tool', 'mangrove_drawing_tool', 'mangrove_drawing_upload_tool'];
 const WIDGETS_BY_CATEGORY = WIDGETS.filter(
-  ({ categoryIds, locationType }) =>
-    categoryIds?.includes(DEFAULT_CATEGORY) && locationType?.includes(DEFAULT_LOCATION)
+  ({ categoryIds, locationType, slug }) =>
+    categoryIds?.includes(DEFAULT_CATEGORY) &&
+    locationType?.includes(DEFAULT_LOCATION) &&
+    !ALWAYS_EXPANDED.includes(slug)
 );
 
 test.beforeEach(async ({ page }) => {
   await page.goto(`/?category="distribution_and_change"`);
+  await page.getByTestId('widgets-wrapper').waitFor();
 });
 
 test.describe('Expand / collapse widgets functionality', () => {
   test('Expand button text', async ({ page }) => {
-    // Widgets should appear collapsed by default, button must be ready to expand them
+    // Widgets are expanded by default, button should say "Collapse all widgets"
     await expect(page.getByTestId('expand-collapse-button')).toBeVisible();
+    await expect(page.getByTestId('expand-collapse-button')).toContainText('Collapse all widgets');
   });
 
-  test('Expanded widgets', async ({ page }) => {
-    // Check that all widgets are visible
+  test('Collapse button text', async ({ page }) => {
+    // Click to collapse all widgets
+    const button = page.getByTestId('expand-collapse-button');
+    await button.click();
+
+    // Button text should now offer to expand
+    await expect(button).toContainText('Expand all widgets');
+  });
+
+  test('Collapsed widgets', async ({ page }) => {
+    // Click to collapse all widgets
+    await page.getByTestId('expand-collapse-button').click();
+
+    // All widget content should be hidden
     for (const widget of WIDGETS_BY_CATEGORY) {
       await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
     }
   });
 
-  test('Collapse button text', async ({ page }) => {
-    await page.goto(`/?category="distribution_and_change"`);
+  test('Expanded widgets', async ({ page }) => {
+    // Collapse all widgets first
+    await page.getByTestId('expand-collapse-button').click();
+    await expect(page.getByTestId('expand-collapse-button')).toContainText('Expand all widgets');
 
-    // Click on button to expand widgets
-    const button = page.getByTestId('expand-collapse-button');
-    await button.click();
+    // Expand all widgets
+    await page.getByTestId('expand-collapse-button').click();
 
-    // Check if the button text is correct
-    await expect(page.getByTestId('expand-collapse-button')).toBeVisible();
-  });
-
-  test('Collapsed  widgets', async ({ page }) => {
-    // Widgets should be collapsed by default — their content should be hidden
+    // All widget content should be visible
     for (const widget of WIDGETS_BY_CATEGORY) {
-      await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeHidden();
+      await expect(page.getByTestId(`widget-${widget.slug}-content`)).toBeVisible();
     }
   });
 });

@@ -10,7 +10,10 @@ async function globalSetup(config: FullConfig) {
   const page = await browser.newPage();
 
   await page.goto(baseURL);
-  await page.evaluate(() => localStorage.setItem('welcomeIntroMessage', 'true'));
+  await page.evaluate(() => {
+    localStorage.setItem('welcomeIntroMessage', 'true');
+    localStorage.setItem('guideLocalStorage', 'true');
+  });
   await page.context().storageState({ path: storageState as string });
 
   await browser.close();

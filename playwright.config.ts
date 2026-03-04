@@ -10,7 +10,7 @@ dotenv.config({ path: '.env.local' });
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const STORAGE_STATE = 'test-results/.auth/storage-state.json';
 
