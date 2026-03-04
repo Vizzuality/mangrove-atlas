@@ -6,11 +6,11 @@ test('test legend order', async ({ page }) => {
   const legendContent = page.getByTestId('legend-content');
   await expect(legendContent).toBeVisible();
   const netChangeLayerSwitcher = page.getByTestId('mangrove_net_change');
-  await netChangeLayerSwitcher.click({ force: true });
+  await netChangeLayerSwitcher.click();
   await expect(netChangeLayerSwitcher).toHaveAttribute('data-state', 'checked');
 
   const mangroveAlertsLayerSwitcher = page.getByTestId('mangrove_alerts');
-  await mangroveAlertsLayerSwitcher.click({ force: true });
+  await mangroveAlertsLayerSwitcher.click();
   await expect(mangroveAlertsLayerSwitcher).toHaveAttribute('data-state', 'checked');
 
   // const source = page.getByTestId('legend-item-mangrove_habitat_extent').first();

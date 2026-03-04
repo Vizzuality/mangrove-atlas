@@ -124,8 +124,8 @@ test.describe('Custom area has a polygon', () => {
   });
 
   test('can remove a polygon', async ({ page }) => {
-    await page.getByTestId('delete-custom-area-button').click();
-    await expect(page.getByTestId('delete-custom-area-button')).not.toBeVisible();
+    await page.getByTestId('delete-custom-area-button').first().click();
+    await expect(page.getByTestId('delete-custom-area-button').first()).not.toBeVisible();
     await expect(page.getByTestId('drawing-tool-button')).toContainText('Draw area');
   });
 });

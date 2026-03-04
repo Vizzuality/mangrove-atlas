@@ -40,7 +40,9 @@ test('Selecting a category changes the url query "category"', async ({ page }) =
   for (const category of DIALOG_CATEGORIES) {
     const categoryButton = page.getByTestId(category);
     await expect(categoryButton).toBeVisible();
-    await categoryButton.click();
+    // Use evaluate to dispatch click — Radix Checkbox inside the button
+    // intercepts Playwright's native click in Firefox
+    await categoryButton.evaluate((el: HTMLButtonElement) => el.click());
 
     // Check that the url has the correct category query param
     await expect(page).toHaveURL(new RegExp(`category=.*${category}`));
