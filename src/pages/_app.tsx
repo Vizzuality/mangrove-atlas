@@ -104,14 +104,11 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) 
       <Head>
         <meta name="viewport" content="width=1024" />
       </Head>
-      <style jsx global>
-        {`
-          :root {
-            --font-sans: ${OpenSansFont.style.fontFamily};
-            --font-inter: ${InterFont.style.fontFamily};
-          }
-        `}
-      </style>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `:root { --font-sans: ${OpenSansFont.style.fontFamily}; --font-inter: ${InterFont.style.fontFamily}; }`,
+        }}
+      />
       {/* Global Site Tag (gtag.js) - Google Analytics */}
       <Script
         strategy="afterInteractive"
