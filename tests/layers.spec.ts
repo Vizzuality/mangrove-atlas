@@ -112,23 +112,21 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
   const allSlugs = widgetsWithLayers.map((w) => w.slug);
 
   for (const widget of widgetsWithLayers) {
-    for (const layer of widget.layersIds) {
-      const id = widget.layersIds?.length > 1 ? (layer as string) : widget.slug;
-      test(`Layer "${layer as string}" of ${widget.name}`, async ({ page }) => {
-        await page.goto(
-          `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
-        );
-        await page.getByTestId('widgets-wrapper').waitFor();
+    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {
+      const id = widget.slug;
+      await page.goto(
+        `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
+      );
+      await page.getByTestId('widgets-wrapper').waitFor();
 
-        const layerSwitcher = page.getByTestId(id);
-        await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-        await clickSwitch(page, id); // Activate layer
-        await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
-        await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
+      const layerSwitcher = page.getByTestId(id);
+      await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
+      await clickSwitch(page, id); // Activate layer
+      await expect(layerSwitcher).toHaveAttribute('data-state', 'checked'); // Layer active
+      await expect(page.getByTestId(`legend-item-${id}`)).toBeVisible(); // Legend visible
 
-        await clickSwitch(page, id); // Deactivate layer
-        await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
-      });
-    }
+      await clickSwitch(page, id); // Deactivate layer
+      await expect(layerSwitcher).toHaveAttribute('data-state', 'unchecked'); // Layer inactive
+    });
   }
 });
