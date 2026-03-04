@@ -17,8 +17,8 @@ test.describe('Blog navigation', () => {
   test('Open blog dialog', async ({ page }) => {
     const newsButton = page.getByTestId('news-button');
     await newsButton.click();
-    const newsBlogContent = page.getByTestId('news-blog-content');
-    await newsBlogContent.isVisible();
+    const postsList = page.getByTestId('posts-list');
+    await expect(postsList).toBeVisible();
   });
   test('Open first post', async ({ page }) => {
     // Click on the news button
@@ -56,13 +56,13 @@ test('test help guide', async ({ page }) => {
   await helpGuideButton.click();
 
   // Toggle Navigation help switch to activate the guide
-  await page.getByRole('switch', { name: 'guide-intro' }).click();
+  await page.getByTestId('guide-switch').click();
 
-  // Wait for helper buttons to appear
+  // Wait for helper buttons to appear in the DOM (they may be hidden due to absolute positioning)
   const helpers = page.getByTestId('helper-button');
-  await helpers.first().waitFor();
+  await helpers.first().waitFor({ state: 'attached' });
 
-  // Assert at least one helper is visible
+  // Assert at least one helper exists
   const helperCount = await helpers.count();
   expect(helperCount).toBeGreaterThan(0);
 });

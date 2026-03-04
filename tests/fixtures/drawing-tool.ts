@@ -28,7 +28,7 @@ export const useDrawingTool = (page: Page) => ({
 
   draw: async () => {
     await page.waitForTimeout(500);
-    const map = page.getByRole('region', { name: 'Map' });
+    const map = page.locator('.mapboxgl-canvas');
     await map.click({
       position: positions[0],
       delay: 300,
