@@ -1,7 +1,7 @@
 const ProtectedAreasMapLegend = () => {
   return (
     <div className="flex">
-      <div className="border-opacity-30 bg-opacity-30 my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md border border-[#286ce2] bg-[#286ce2] text-sm" />
+      <div className="border-opacity-30 my-0.5 mr-2.5 h-4 w-2 shrink-0 rounded-md border border-[#286ce2] bg-[#286ce2]/30 text-sm" />
       <p className="font-sans text-sm text-black/60">WDPA</p>
     </div>
   );

@@ -1,4 +1,5 @@
 import cn from '@/lib/classnames';
+
 import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { LuLoaderCircle } from 'react-icons/lu';
 
@@ -34,7 +35,7 @@ function Loading({
       role="status"
       aria-live="polite"
       aria-busy="true"
-      className={cn('inline-flex items-center justify-center', className)}
+      className={cn('inline-flex w-full flex-1 items-center justify-center', className)}
     >
       <span className="sr-only">{label}</span>
 
