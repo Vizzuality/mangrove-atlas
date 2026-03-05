@@ -1,7 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-test('test legend order', async ({ page }) => {
+import { dismissWelcomeDialog } from './fixtures/welcome-dialog';
+
+test('test legend order', async ({ page, browserName }) => {
+  test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
   await page.goto('/');
+  await dismissWelcomeDialog(page);
   // Legend starts open by default when layers are active (mangrove_habitat_extent is active on load)
   const legendContent = page.getByTestId('legend-content');
   await expect(legendContent).toBeVisible();

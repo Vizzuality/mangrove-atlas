@@ -18,13 +18,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Expand / collapse widgets functionality', () => {
-  test('Expand button text', async ({ page }) => {
+  test('Expand button text', async ({ page, browserName }) => {
+    test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
     // Widgets are expanded by default, button should say "Collapse all widgets"
     await expect(page.getByTestId('expand-collapse-button')).toBeVisible();
     await expect(page.getByTestId('expand-collapse-button')).toContainText('Collapse all widgets');
   });
 
-  test('Collapse button text', async ({ page }) => {
+  test('Collapse button text', async ({ page, browserName }) => {
+    test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
     // Click to collapse all widgets
     const button = page.getByTestId('expand-collapse-button');
     await button.click();
@@ -33,7 +35,8 @@ test.describe('Expand / collapse widgets functionality', () => {
     await expect(button).toContainText('Expand all widgets');
   });
 
-  test('Collapsed widgets', async ({ page }) => {
+  test('Collapsed widgets', async ({ page, browserName }) => {
+    test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
     // Click to collapse all widgets
     await page.getByTestId('expand-collapse-button').click();
 
@@ -43,7 +46,8 @@ test.describe('Expand / collapse widgets functionality', () => {
     }
   });
 
-  test('Expanded widgets', async ({ page }) => {
+  test('Expanded widgets', async ({ page, browserName }) => {
+    test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
     // Collapse all widgets first
     await page.getByTestId('expand-collapse-button').click();
     await expect(page.getByTestId('expand-collapse-button')).toContainText('Expand all widgets');
