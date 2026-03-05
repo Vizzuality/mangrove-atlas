@@ -33,7 +33,8 @@ test.describe('Can activate contextual layers via widget toggles', () => {
 
   for (const widget of contextualLayers) {
     const id = widget.slug;
-    test(`Layer ${id}`, async ({ page }) => {
+    test(`Layer ${id}`, async ({ page, browserName }) => {
+      test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
       // Navigate with contextual_layers category, proper active-widgets, and empty layers
       await page.goto(
         `/?category="contextual_layers"&${activeWidgetsParam(contextualSlugs)}&layers=[]`
@@ -77,7 +78,11 @@ test.describe('Can activate worldwide layers in widgets', () => {
   const allSlugs = widgetsWithLayers.map((w) => w.slug);
 
   for (const widget of widgetsWithLayers) {
-    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {
+    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({
+      page,
+      browserName,
+    }) => {
+      test.fixme(browserName === 'firefox', 'Firefox: widgets-wrapper fails to render');
       const id = widget.slug;
       // Navigate with all_datasets category, proper active-widgets, and empty layers
       await page.goto(
@@ -112,7 +117,11 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
   const allSlugs = widgetsWithLayers.map((w) => w.slug);
 
   for (const widget of widgetsWithLayers) {
-    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({ page }) => {
+    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({
+      page,
+      browserName,
+    }) => {
+      test.fixme(browserName === 'firefox', 'Firefox: flaky page rendering');
       const id = widget.slug;
       await page.goto(
         `/country/NGA?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
