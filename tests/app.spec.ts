@@ -1,7 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+import { dismissWelcomeDialog } from './fixtures/welcome-dialog';
+
 test('Find broken images', async ({ page }) => {
   await page.goto('/');
+  await dismissWelcomeDialog(page);
   await page.waitForLoadState('domcontentloaded');
   const images = page.locator('img');
   const allImages = await images.all();
