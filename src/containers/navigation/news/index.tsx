@@ -6,7 +6,6 @@ import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeGuideAtom } from '@/store/guide';
 
-import { FaExclamation } from 'react-icons/fa';
 import { HiX } from 'react-icons/hi';
 import { useRecoilValue } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
@@ -28,9 +27,6 @@ import {
 import NEWS_SVG from '@/svgs/tools-bar/news';
 
 const HiXIcon = HiX as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
-const FaExclamationIcon = FaExclamation as unknown as (
-  p: React.SVGProps<SVGSVGElement>
-) => JSX.Element;
 
 type PlatformUpdatesLastSeen = {
   seenLastPostDate?: string;
@@ -44,31 +40,36 @@ const NewsButton = ({
 }: {
   showIndicator: boolean;
   onClick: () => void;
-}) => (
-  <button
-    type="button"
-    data-testid="news-button"
-    aria-label="Open news and updates"
-    onClick={onClick}
-    className="relative flex h-full items-center rounded px-2 transition outline-none"
-  >
-    <Helper
-      className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}
-      tooltipPosition={{ top: -40, left: 0 }}
-      message="Latest news from the Global Mangrove Alliance"
+}) => {
+  const [hasSeenWelcome] = useLocalStorage<boolean>('welcomeIntroMessage', false);
+  return (
+    <button
+      type="button"
+      data-testid="news-button"
+      aria-label="Open news and updates"
+      onClick={onClick}
+      className="relative flex h-full items-center rounded px-2 transition outline-none"
     >
-      <div className="flex items-center space-x-2">
-        <span className="relative">
-          <NEWS_SVG className="h-6 w-6 fill-current text-white" role="img" title="News" />
-          {showIndicator && (
-            <FaExclamationIcon className="absolute -top-1 -left-1 h-3 w-3 rounded-full border border-white bg-[#EE4D5A] fill-current p-0.5 text-white" />
+      <Helper
+        className={{ button: '-top-2.5 -right-4 z-20', tooltip: 'w-fit-content' }}
+        tooltipPosition={{ top: -40, left: 0 }}
+        message="Latest news from the Global Mangrove Alliance"
+      >
+        <div className="flex items-center space-x-2">
+          {hasSeenWelcome && (
+            <span className="relative">
+              <NEWS_SVG className="h-6 w-6 fill-current text-white" role="img" title="News" />
+              {showIndicator && (
+                <span className="border-brand-800 absolute -top-[2.5px] -right-0.5 h-3.5 w-3.5 rounded-full border-[2.5px] bg-white fill-current p-0.5 text-white" />
+              )}
+            </span>
           )}
-        </span>
-        <span className="text-sm text-white">News & Updates</span>
-      </div>
-    </Helper>
-  </button>
-);
+          <span className="text-sm text-white">News & Updates</span>
+        </div>
+      </Helper>
+    </button>
+  );
+};
 
 const NewsTooltip = ({
   showIndicator,
@@ -88,7 +89,7 @@ const NewsTooltip = ({
 
         <TooltipContent className="relative rounded-xl p-4">
           <TooltipArrow className="fill-white" />
-          <div className="max-w-xs space-y-1 sm:max-w-[280px]">
+          <div className="max-w-xs space-y-1 sm:max-w-70">
             <div className="flex items-center justify-between space-x-2 font-bold">
               <span className="text-xs uppercase">Tool updated!</span>
               <HiXIcon
@@ -153,7 +154,7 @@ const News = () => {
   const markAsSeen = useCallback(() => {
     if (!data?.lastPostDate) return;
     setPlatformUpdates({ seenLastPostDate: data.lastPostDate });
-  }, [data?.lastPostDate, setPlatformUpdates]);
+  }, [data, setPlatformUpdates]);
 
   const handleOpenDialog = useCallback(() => {
     setOpen(true);
@@ -167,7 +168,7 @@ const News = () => {
       action: 'click',
       label: 'News - activated',
     });
-  }, [data?.lastPostDate, setPlatformUpdates]);
+  }, [data, setPlatformUpdates]);
 
   useEffect(() => {
     if (!data?.lastPostDate) return;
