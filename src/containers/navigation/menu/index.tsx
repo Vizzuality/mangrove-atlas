@@ -14,7 +14,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+
 import MENU_SVG from '@/svgs/tools-bar/menu';
+
 import MainMenu from './main';
 import Profile from './profile';
 
@@ -26,7 +28,7 @@ const Menu = () => {
       <Helper
         className={{
           button: '-top-2 -right-4',
-          tooltip: 'w-fit-content max-w-[400px]',
+          tooltip: 'w-fit-content max-w-100',
         }}
         tooltipPosition={{ top: -40, left: 0 }}
         message="Find more information about the Global Mangrove Watch, the Global Mangrove Alliance, and our associated resources, trainings, and guidance documents"
@@ -78,20 +80,21 @@ const Menu = () => {
           )}
         </AnimatePresence>
         <AnimatePresence>
-          {section === 'profile' && (
-            <motion.div
-              className="no-scrollbar overflow-y-auto pt-3 font-sans"
-              initial="hidden"
-              animate="displayed"
-              variants={{
-                hidden: { opacity: 0 },
-                displayed: { opacity: 1 },
-              }}
-              transition={{ duration: 0.4 }}
-            >
-              <Profile />
-            </motion.div>
-          )}
+          {section === 'profile' &&
+            JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['login'] === true && (
+              <motion.div
+                className="no-scrollbar overflow-y-auto pt-3 font-sans"
+                initial="hidden"
+                animate="displayed"
+                variants={{
+                  hidden: { opacity: 0 },
+                  displayed: { opacity: 1 },
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Profile />
+              </motion.div>
+            )}
         </AnimatePresence>
         <DialogClose />
       </DialogContent>

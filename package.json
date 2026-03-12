@@ -47,6 +47,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@react-email/components": "^1.0.8",
     "@recoiljs/refine": "^0.1.1",
+    "@t3-oss/env-nextjs": "0.13.10",
     "@tanstack/react-query": "4.29.25",
     "@transifex/native": "^7.1.5",
     "@transifex/react": "^7.1.5",

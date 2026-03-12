@@ -3,6 +3,11 @@ import AlertsInfo from '@/containers/datasets/alerts/info.mdx';
 import AlertsLayer from '@/containers/datasets/alerts/layer';
 import AlertsMapLegend from '@/containers/datasets/alerts/map-legend';
 import AlertsWidget from '@/containers/datasets/alerts/widget';
+import AlertsDownloadStaging from '@/containers/datasets/alerts-staging/download';
+import AlertsInfoStaging from '@/containers/datasets/alerts-staging/info.mdx';
+import AlertsLayerStaging from '@/containers/datasets/alerts-staging/layer';
+import AlertsMapLegendStaging from '@/containers/datasets/alerts-staging/map-legend';
+import AlertsWidgetStaging from '@/containers/datasets/alerts-staging/widget';
 import BiomassDownload from '@/containers/datasets/biomass/download';
 import BiomassInfo from '@/containers/datasets/biomass/info.mdx';
 import BiomassLayer from '@/containers/datasets/biomass/layer';
@@ -125,7 +130,10 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_habitat_extent: HabitatExtentWidget,
   mangrove_habitat_change: HabitatChangeWidget,
   mangrove_net_change: NetChangeWidget,
-  mangrove_alerts: AlertsWidget,
+  mangrove_alerts:
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+      ? AlertsWidget
+      : AlertsWidgetStaging,
   mangrove_biomass: BiomassWidget,
   mangrove_drivers_change: DriversChangeWidget,
   mangrove_height: HeightWidget,

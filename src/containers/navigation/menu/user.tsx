@@ -2,8 +2,6 @@ import Link from 'next/link';
 
 import { signOut, useSession } from 'next-auth/react';
 
-import ContactForm from '@/containers/contact';
-
 async function handleLogout() {
   await fetch('/api/auth/logout', { method: 'POST' });
   await signOut();
@@ -13,7 +11,7 @@ export const UserMenu = ({ setSection }) => {
   const session = useSession();
 
   return (
-    <div className="flex w-full flex-col space-y-4 py-6 font-sans text-black/85">
+    <div className="flex w-full flex-col space-y-4 font-sans text-black/85">
       {session.status === 'authenticated' && (
         <>
           <button
@@ -39,7 +37,6 @@ export const UserMenu = ({ setSection }) => {
           Log in
         </Link>
       )}
-      <ContactForm className="text-2lg hover:text-brand-800 text-left font-light" />
     </div>
   );
 };

@@ -2,24 +2,17 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
-const castToBoolean = (/** @type {unknown} */ value) => {
-  if (value === 'true') {
-    return true;
-  }
-
-  return false;
-};
-
 export const env = createEnv({
   /*
    * Server-side Environment variables, not available on the client.
    * Will throw if you access these variables on the client.
    */
   server: {
-    ESLINT_USE_FLAT_CONFIG: z.boolean(),
+    ESLINT_USE_FLAT_CONFIG: z.coerce.boolean().default(true),
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
+    NEXT_PUBLIC_GA_ID: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
@@ -36,8 +29,20 @@ export const env = createEnv({
     NEXT_PUBLIC_TRANSIFEX_API_KEY: z.string(),
     NEXT_PUBLIC_SMTP_ADDRESS: z.string(),
     NEXT_PUBLIC_SMTP_PASSWORD: z.string(),
-    NEXT_PUBLIC_SMTP_PORT: z.number(),
+    NEXT_PUBLIC_SMTP_PORT: z.coerce.number(),
     NEXT_PUBLIC_SMTP_USER_NAME: z.string(),
+    NEXT_PUBLIC_GA_ID: z.string(),
+    NEXT_PUBLIC_FEATURED_FLAGS: z
+      .string()
+      .transform((val) => {
+        try {
+          return JSON.parse(val);
+        } catch {
+          return {};
+        }
+      })
+      .pipe(z.record(z.string(), z.boolean()))
+      .default('{}'),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -61,6 +66,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SMTP_PASSWORD: process.env.NEXT_PUBLIC_SMTP_PASSWORD,
     NEXT_PUBLIC_SMTP_PORT: process.env.NEXT_PUBLIC_SMTP_PORT,
     NEXT_PUBLIC_SMTP_USER_NAME: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
+    NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
+    NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
   },
 });
 
