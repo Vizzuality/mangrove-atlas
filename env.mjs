@@ -12,7 +12,6 @@ export const env = createEnv({
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
-    NEXT_PUBLIC_GA_ID: z.string(),
   },
   /*
    * Environment variables available on the client (and server).
