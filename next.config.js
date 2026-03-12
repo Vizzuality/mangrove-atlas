@@ -49,7 +49,7 @@ const nextConfig = {
         destination: `https://${
           process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
             ? process.env.NEXT_PUBLIC_MRTT_SITE_PRODUCTION
-            : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING
+            : process.env.NEXT_PUBLIC_MRTT_SITE
         }/auth/login/:path*`,
       },
     ];

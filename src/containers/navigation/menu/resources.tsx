@@ -76,7 +76,7 @@ const ResourcesMenu = ({ setSection }) => {
         Global Mangrove Alliance
       </Link>
       <Link
-        href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE_PROD : process.env.NEXT_PUBLIC_MRTT_SITE_STAGING}`}
+        href={`${process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' ? process.env.NEXT_PUBLIC_MRTT_SITE : process.env.NEXT_PUBLIC_MRTT_SITE}`}
         className="text-2lg hover:text-brand-800 font-light"
         rel="noopener noreferrer"
         target="_blank"

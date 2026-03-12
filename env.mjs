@@ -27,11 +27,9 @@ export const env = createEnv({
    * 💡 You'll get type-errors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
-    NEXT_PUBLIC_API_URL_STAGING: z.string().url(),
-    NEXT_PUBLIC_MRTT_SITE_PROD: z.string().url(),
+    NEXT_PUBLIC_API_URL: z.string().url(),
+    NEXT_PUBLIC_MRTT_SITE: z.string().url(),
     NEXT_PUBLIC_AUTH_URL: z.string().url(),
-    NEXT_PUBLIC_API_URL_PRODUCTION: z.string().url(),
-    NEXT_PUBLIC_MRTT_SITE_STAGING: z.string().url(),
     NEXT_PUBLIC_ANALYSIS_API_URL: z.string().url(),
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: z.string(),
     NEXT_PUBLIC_PLANET_API_KEY: z.string(),
@@ -48,11 +46,9 @@ export const env = createEnv({
    * 💡 You'll get type-errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
-    NEXT_PUBLIC_API_URL_STAGING: process.env.NEXT_PUBLIC_API_URL_STAGING,
-    NEXT_PUBLIC_API_URL_PRODUCTION: process.env.NEXT_PUBLIC_API_URL_PRODUCTION,
-    NEXT_PUBLIC_MRTT_SITE_PROD: process.env.NEXT_PUBLIC_MRTT_SITE_PROD,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_MRTT_SITE: process.env.NEXT_PUBLIC_MRTT_SITE,
     NEXT_PUBLIC_AUTH_URL: process.env.NEXT_PUBLIC_AUTH_URL,
-    NEXT_PUBLIC_MRTT_SITE_STAGING: process.env.NEXT_PUBLIC_MRTT_SITE_STAGING,
     NEXT_PUBLIC_ANALYSIS_API_URL: process.env.NEXT_PUBLIC_ANALYSIS_API_URL,
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     NEXT_PUBLIC_PLANET_API_KEY: process.env.NEXT_PUBLIC_PLANET_API_KEY,

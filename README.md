@@ -62,6 +62,7 @@ pnpm test-ui          # Run Playwright tests with interactive UI
 ```
 
 Run a single Playwright test:
+
 ```bash
 npx playwright test tests/navigation.spec.ts
 ```
@@ -93,6 +94,7 @@ cloud-functions/        # Google Cloud Functions (Node.js 22)
 ### URL Patterns
 
 The app uses a catch-all route (`src/pages/[[...params]].tsx`) with these patterns:
+
 - `/` — worldwide view
 - `/country/:id` — country view
 - `/wdpa/:id` — protected area view
@@ -102,19 +104,19 @@ The app uses a catch-all route (`src/pages/[[...params]].tsx`) with these patter
 
 Copy `.env.default` to `.env` for local development. Key variables:
 
-| Variable | Description |
-| --- | --- |
-| `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` | Mapbox token (required for map rendering) |
-| `NEXT_PUBLIC_VERCEL_ENV` | Controls API URL selection (`development` / `staging` / `production`) |
-| `NEXT_PUBLIC_API_URL_STAGING` | Backend API URL (staging) |
-| `NEXT_PUBLIC_API_URL_PRODUCTION` | Backend API URL (production) |
-| `NEXT_PUBLIC_ANALYSIS_API_URL` | Analysis cloud function URL |
-| `NEXT_PUBLIC_BLOG_API_URL` | WordPress blog API URL |
-| `NEXT_PUBLIC_PLANET_API_KEY` | Planet satellite imagery API key |
-| `NEXT_PUBLIC_TRANSIFEX_API_KEY` | Transifex API key for i18n |
-| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 tracking ID |
-| `NEXTAUTH_SECRET` | Secret for NextAuth session encryption |
-| `NEXTAUTH_URL` | NextAuth base URL |
+| Variable                          | Description                                                           |
+| --------------------------------- | --------------------------------------------------------------------- |
+| `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` | Mapbox token (required for map rendering)                             |
+| `NEXT_PUBLIC_VERCEL_ENV`          | Controls API URL selection (`development` / `staging` / `production`) |
+| `NEXT_PUBLIC_API_URL`             | Backend API URL (staging)                                             |
+| `NEXT_PUBLIC_API_URL`             | Backend API URL (production)                                          |
+| `NEXT_PUBLIC_ANALYSIS_API_URL`    | Analysis cloud function URL                                           |
+| `NEXT_PUBLIC_BLOG_API_URL`        | WordPress blog API URL                                                |
+| `NEXT_PUBLIC_PLANET_API_KEY`      | Planet satellite imagery API key                                      |
+| `NEXT_PUBLIC_TRANSIFEX_API_KEY`   | Transifex API key for i18n                                            |
+| `NEXT_PUBLIC_GA_ID`               | Google Analytics 4 tracking ID                                        |
+| `NEXTAUTH_SECRET`                 | Secret for NextAuth session encryption                                |
+| `NEXTAUTH_URL`                    | NextAuth base URL                                                     |
 
 See `.env.default` for the full list.
 
@@ -143,11 +145,13 @@ Create a PR for any improvement or feature. Avoid committing directly to `develo
 [Dependabot alerts](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) are configured for this repository.
 
 To check for production vulnerabilities:
+
 ```bash
 pnpm audit --prod
 ```
 
 When a vulnerability is detected:
+
 1. Check if it affects production dependencies
 2. Try creating a Dependabot security update PR
 3. If automatic fixes fail, manually update the affected dependencies

@@ -43,11 +43,11 @@ const RestorationSitesWidget = () => {
     filtersData?.data &&
     Object.keys(filtersData?.data).reduce((acc, key) => ({ ...acc, [key]: [] }), {});
 
-  useEffect(() => {
-    if (filtersData?.data && isEmpty(filters)) {
-      setFilters(filterKeys);
-    }
-  }, [filtersData, filterKeys, filters]);
+  // useEffect(() => {
+  //   if (filtersData?.data && isEmpty(filters)) {
+  //     setFilters(filterKeys);
+  //   }
+  // }, [filtersData, filterKeys, filters]);
 
   const filtersSelected = Object.keys(filters).filter((key) => !!filters[key].length);
 
