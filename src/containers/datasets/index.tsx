@@ -167,7 +167,10 @@ export const LAYERS = {
   mangrove_habitat_extent: HabitatExtentLayer,
   'hi-res-extent': HiResExtentLayer,
   mangrove_net_change: NetChangeLayer,
-  mangrove_alerts: AlertsLayer,
+  mangrove_alerts:
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+      ? AlertsLayer
+      : AlertsLayerStaging,
   mangrove_biomass: BiomassLayer,
   mangrove_blue_carbon: BlueCarbonLayer,
   mangrove_drivers_change: DriversChangeLayer,
@@ -207,7 +210,10 @@ export const MAP_LEGENDS = {
   mangrove_blue_carbon: BlueCarbonMapLegend,
   mangrove_drivers_change: DriversChangeMapLegend,
   mangrove_fisheries: FisheriesMapLegend,
-  mangrove_alerts: AlertsMapLegend,
+  mangrove_alerts:
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+      ? AlertsMapLegend
+      : AlertsMapLegendStaging,
   mangrove_allen_coral_reef: AllenCoralReefMapLegend,
   mangrove_salt_marsh: SaltMarshMapLegend,
   mangrove_tidal_flats: TidalFlatsMapLegend,
@@ -235,7 +241,10 @@ export const INFO = {
   mangrove_protected_areas: ProtectionInfo,
   mangrove_drivers_change: DriversChangeInfo,
   mangrove_net_change: NetChangeInfo,
-  mangrove_alerts: AlertsInfo,
+  mangrove_alerts:
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+      ? AlertsInfo
+      : AlertsInfoStaging,
   mangrove_restoration: RestorationInfo,
   mangrove_biomass: BiomassInfo,
   mangrove_height: HeightInfo,
@@ -262,7 +271,10 @@ export const INFO = {
 export const DOWNLOAD = {
   mangrove_habitat_extent: HabitatExtentDownload,
   // mangrove_net_change: NetChangeDownload,
-  mangrove_alerts: AlertsDownload,
+  mangrove_alerts:
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+      ? AlertsDownload
+      : AlertsDownloadStaging,
   mangrove_biomass: BiomassDownload,
   // mangrove_height: HeightDownload,
   mangrove_blue_carbon: BlueCarbonDownload,
