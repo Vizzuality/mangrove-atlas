@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -13,12 +13,13 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { IconBaseProps } from 'react-icons/lib/iconBase';
 import { useRecoilState } from 'recoil';
 
+import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
 import { widgets } from '@/containers/widgets/constants';
 
 import SortableList from '@/components/map/legend/sortable/list';
-import { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 import type { WidgetTypes } from 'types/widget';
 
 import LegendItem from './item';
@@ -26,47 +27,60 @@ import LegendItem from './item';
 const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
 const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 
+const NATIONAL_DASHBOARD_PREFIX = 'mangrove_national_dashboard_layer_';
+
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+
   const {
     query: { params },
   } = useRouter();
-  const id = params?.[1];
 
+  const locationId = params?.[1];
   const locationType = (params?.[0] || 'worldwide') as LocationTypes;
-  function filterLayersByLocationType(widgets: WidgetTypes[], locationType: string): string[] {
-    const filteredLayers: string[] = [];
 
-    widgets.forEach((widget) => {
-      if (widget.locationType?.includes(locationType)) {
-        if (widget.layersIds) {
-          filteredLayers.push(...widget.layersIds);
-        }
-        if (widget.contextualLayersIds) {
-          filteredLayers.push(...widget.contextualLayersIds);
-        }
-        if (widget.subLayersIds) {
-          filteredLayers.push(...widget.subLayersIds);
-        }
-      }
-    });
+  const { data: locationData } = useLocation(locationId, locationType);
+  const iso = locationData?.iso;
 
-    return filteredLayers;
-  }
+  const currentNationalLayerId = iso ? `${NATIONAL_DASHBOARD_PREFIX}${iso}` : null;
 
-  const filteredLayersIds = filterLayersByLocationType(widgets, locationType);
-  const filteredLayers = activeLayers?.filter(({ id }) => {
-    return (
-      filteredLayersIds.includes(id) ||
-      (id.includes('mangrove_national_dashboard') &&
-        filteredLayersIds.includes('mangrove_national_dashboard'))
-    );
-  }) as ActiveLayers[];
+  const filterLayersByLocationType = useCallback(
+    (widgetsConfig: WidgetTypes[], currentLocationType: string): string[] => {
+      const filteredIds: string[] = [];
+
+      widgetsConfig.forEach((widget) => {
+        if (widget.locationType?.includes(currentLocationType)) {
+          if (widget.layersIds) filteredIds.push(...widget.layersIds);
+          if (widget.contextualLayersIds) filteredIds.push(...widget.contextualLayersIds);
+          if (widget.subLayersIds) filteredIds.push(...widget.subLayersIds);
+        }
+      });
+
+      return filteredIds;
+    },
+    []
+  );
+
+  const filteredLayersIds = useMemo(
+    () => filterLayersByLocationType(widgets, locationType),
+    [filterLayersByLocationType, locationType]
+  );
+
+  const filteredLayers = useMemo(() => {
+    return (activeLayers ?? []).filter((layer) => {
+      const isStandardLayer = filteredLayersIds.includes(layer.id);
+
+      const isCurrentNationalLayer =
+        !!currentNationalLayerId && layer.id === currentNationalLayerId;
+
+      return isStandardLayer || isCurrentNationalLayer;
+    }) as Layer[];
+  }, [activeLayers, filteredLayersIds, currentNationalLayerId]);
 
   const [isOpen, setIsOpen] = useState(true);
 
   const openLegend = useCallback(() => {
-    if (!!activeLayers?.length) setIsOpen(true);
+    if (activeLayers?.length) setIsOpen(true);
   }, [activeLayers]);
 
   const closeLegend = useCallback(() => {
@@ -75,35 +89,42 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
 
   const handleChangeOrder = useCallback(
     (order: string[]) => {
-      const newLayers = order.map((id) => {
-        return activeLayers?.find((l) => l.id === id || l.id.includes(id));
-      }) as ActiveLayers[];
-      const activeLayerPlanet = activeLayers?.filter((l) => l.id.includes('planet'));
+      const reorderedLayers = order
+        .map((layerId) => activeLayers?.find((layer) => layer.id === layerId))
+        .filter(Boolean) as Layer[];
 
-      // Google Analytics tracking
-      trackEvent(`Layers order`, {
+      const activePlanetLayers = activeLayers?.filter((layer) => layer.id.includes('planet')) ?? [];
+
+      trackEvent('Layers order', {
         category: 'Layers',
         action: 'Drag and drop',
-        label: `change layers order from ${activeLayers} to ${newLayers}`,
+        label: `change layers order`,
       });
-      setActiveLayers([...newLayers, ...activeLayerPlanet]);
+
+      setActiveLayers([...reorderedLayers, ...activePlanetLayers]);
     },
     [activeLayers, setActiveLayers]
   );
 
-  // planet layers behave as a basemap so there is no need to include them in the legend
   const activeLayerNoPlanet = useMemo(
-    () => filteredLayers?.filter((l) => !l.id.includes('planet') && !l.id.includes('custom-area')),
+    () =>
+      filteredLayers?.filter(
+        (layer) => !layer.id.includes('planet') && !layer.id.includes('custom-area')
+      ),
     [filteredLayers]
   );
 
-  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS.includes(id)
-    ? activeLayerNoPlanet?.filter((l) => !l.id.includes('national_dashboard'))
-    : activeLayerNoPlanet;
+  const legendLayers = useMemo(() => {
+    const isNationalDashboardLocation = NATIONAL_DASHBOARD_LOCATIONS.includes(locationId);
+
+    if (isNationalDashboardLocation) return activeLayerNoPlanet;
+
+    return activeLayerNoPlanet?.filter((layer) => !layer.id.startsWith(NATIONAL_DASHBOARD_PREFIX));
+  }, [activeLayerNoPlanet, locationId]);
 
   return (
     <div className="print:hidden">
-      {!!filterNationalDashboardLayers?.length && (
+      {!!legendLayers?.length && (
         <>
           <button
             onClick={openLegend}
@@ -136,9 +157,9 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}
                   >
-                    {filterNationalDashboardLayers.map((l) => {
-                      return <LegendItem id={l.id} key={l.id} embedded={embedded} l={l} />;
-                    })}
+                    {legendLayers.map((layer) => (
+                      <LegendItem id={layer.id} key={layer.id} embedded={embedded} l={layer} />
+                    ))}
                   </SortableList>
                 </div>
 

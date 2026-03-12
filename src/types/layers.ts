@@ -12,8 +12,22 @@ export type LayerProps = {
   zIndex?: number;
 };
 
-export type ActiveLayers = {
-  id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
+export type Layer = {
+  id:
+    | WidgetSlugType
+    | ContextualBasemapsId
+    | 'custom-area'
+    | 'hi-res-extent'
+    | `mangrove_national_dashboard_layer_${string}`;
   opacity: string;
   visibility: Visibility;
+  settings?: {
+    name?: string;
+    source?: string;
+    source_layer?: string;
+    location?: string;
+    layerIndex?: number;
+    date?: string;
+    [key: string]: string | number;
+  };
 };

@@ -17,23 +17,16 @@ import { widgets } from '@/containers/widgets/constants';
 import { Media } from '@/components/media-query';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
 import DRAG_SVG from '@/svgs/legend/drag';
+
 import LegendControls from '../legend-controls';
 
-const LegendItem = ({
-  id,
-  embedded = false,
-  l,
-}: {
-  id: string;
-  embedded?: boolean;
-  l: ActiveLayers;
-}) => {
+const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolean; l: Layer }) => {
   const [statisticsDialogVisibility, setStatisticsDialogVisibility] = useState(false);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers] = useRecoilState(activeLayersAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const widget = widgets.find((w) => w.slug === l.id);
 
@@ -105,13 +98,13 @@ const LegendItem = ({
 
             <DialogContent
               className={cn({
-                'h-screen w-screen min-w-[540px] md:mb-20 md:h-auto md:w-auto': true,
+                'h-screen w-screen min-w-135 md:mb-20 md:h-auto md:w-auto': true,
                 hidden: guideIsActive,
               })}
               overlay={false}
             >
               <DialogTitle className="sr-only">Layer statistics</DialogTitle>
-              <div className="no-scrollbar overflow-y-autopx-3 relative">
+              <div className="no-scrollbar relative overflow-y-auto px-3">
                 <WidgetWrapper
                   key={l.id}
                   title={title}
@@ -124,7 +117,7 @@ const LegendItem = ({
                 </WidgetWrapper>
               </div>
               <DialogClose
-                className="top-8 md:fixed md:top-18! md:left-[595px]"
+                className="top-8 md:fixed md:top-18! md:left-148.75"
                 onClose={() => setStatisticsDialogVisibility(false)}
               />
             </DialogContent>

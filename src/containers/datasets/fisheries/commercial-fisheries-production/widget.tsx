@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/select';
 import WidgetControls from '@/components/widget-controls';
 import { WIDGET_SELECT_STYLES, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 
 import BIVALVE_SVG from '@/svgs/fisheries/bivalve';
 import CRAB_SVG from '@/svgs/fisheries/crab';
@@ -86,7 +86,7 @@ const CommercialFisheriesProduction = () => {
           visibility: 'visible',
           filter: value,
         };
-        return [layer, ...filtered] as ActiveLayers[];
+        return [layer, ...filtered] as Layer[];
       });
     },
     [setActiveLayers]

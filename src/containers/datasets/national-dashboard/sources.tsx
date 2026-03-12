@@ -14,14 +14,11 @@ const Sources = ({ data, iso }) => {
     data?.map(({ sources }) =>
       flatten(
         sources.map(({ data_source }) =>
-          data_source.map(({ layer_link }, index) =>
-            index === 0 ? `mapbox://${layer_link}` : layer_link
-          )
+          data_source.map(({ layer_link }) => `mapbox://${layer_link}`)
         )
       )
     )
   );
-
   const colorsScale = chroma
     .scale(COLORS)
     .colors(sources.length > COLORS.length ? sources.length : COLORS.length);
@@ -29,16 +26,17 @@ const Sources = ({ data, iso }) => {
   const currentYear = yearSelected || years?.[years?.length - 1];
 
   return (
-    <section className="space-y-[25px]">
+    <section className="space-y-6.25">
       {data?.map(({ indicator, sources }, index) => (
         <div key={indicator}>
           {/* <h3 className={WIDGET_SUBTITLE_STYLE}>{indicator}</h3> */}
           {sources.map(({ source, years, unit, data_source }) => {
             const dataSource = data_source.find((d) => d.year === currentYear);
+
             const color = colorsScale.filter((c, i) => i === index);
             return (
               <IndicatorSource
-                id={`mangrove_national_dashboard_layer_${dataSource.source_layer}`}
+                id={`mangrove_national_dashboard_layer_${iso}`}
                 locationIso={iso}
                 layerIndex={index}
                 key={source}

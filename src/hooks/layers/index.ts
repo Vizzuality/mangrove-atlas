@@ -1,22 +1,6 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { Visibility } from '@/types/layers';
-import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
-
-type Layer = {
-  id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
-  opacity: string;
-  visibility: Visibility;
-  settings?: {
-    name?: string;
-    source?: string;
-    source_layer?: string;
-    location?: string;
-    layerIndex?: number;
-    date?: string;
-    [key: string]: string | number;
-  };
-};
+import { Layer } from 'types/layers';
 
 export function updateLayers(newLayer: Layer, activeLayers: Layer[]): Layer[] {
   const { id } = newLayer;
