@@ -9,54 +9,56 @@ import { activeLayersAtom } from '@/store/layers';
 import { DialogTitle } from '@radix-ui/react-dialog';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { INFO, MAP_LEGENDS } from '@/containers/datasets';
+import { INFO } from '@/containers/datasets';
 import { LAYERS } from '@/containers/layers/constants';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import Slider from '@/components/ui/slider';
 import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/components/ui/tooltip';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 
 import CLOSE_SVG from '@/svgs/legend/close-legend';
 import HIDE_SVG from '@/svgs/legend/hide';
-import INFO_SVG from '@/svgs/ui/info';
 import OPACITY_SVG from '@/svgs/legend/opacity';
 import SHOW_SVG from '@/svgs/legend/show';
+import INFO_SVG from '@/svgs/ui/info';
 
-const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers }) => {
+const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => {
   const [infoDialogVisibility, setInfoDialogVisibility] = useState(false);
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
 
   const onChangeVisibility = useCallback(
-    (layer) => {
-      const layersWithVisibility: ActiveLayers[] = activeLayers?.map((l) => {
-        if (l.id === layer) {
-          const visibility = l.visibility === 'visible' ? 'none' : 'visible';
-          return { ...l, visibility };
-        }
-        if (l.id === 'custom-area') {
-          return null;
-        }
-        return l;
-      });
+    (layerId: Layer['id']) => {
+      const targetLayer = activeLayers?.find((l) => l.id === layerId);
 
-      // Google Analytics tracking
-      trackEvent(`Legend - Layer visibility`, {
+      if (!targetLayer) return;
+
+      const nextVisibility = targetLayer.visibility === 'visible' ? 'none' : 'visible';
+
+      const layersWithVisibility = activeLayers
+        ?.map((l) => {
+          if (l.id === 'custom-area') return null;
+          if (l.id !== layerId) return l;
+
+          return {
+            ...l,
+            visibility: nextVisibility,
+          };
+        })
+        .filter(Boolean) as Layer[];
+
+      trackEvent('Legend - Layer visibility', {
         category: 'Layers - legend',
         action: 'click',
-        label: `Legend - ${l.visibility === 'none' ? 'enable' : 'disable'} layer visibility`,
+        label: `Legend - ${nextVisibility === 'visible' ? 'enable' : 'disable'} layer visibility`,
       });
 
       setActiveLayers(layersWithVisibility);
     },
     [activeLayers, setActiveLayers]
   );
-
-  const nationalDashboardLayerName = activeLayers?.find((l) =>
-    l.id?.includes('mangrove_national_dashboard_layer')
-  )?.settings?.name;
 
   const removeLayer = useCallback(
     (layer: string) => {
@@ -80,29 +82,23 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
   };
 
   const onChangeOpacity = useCallback(
-    (op: number, layer: string) => {
-      const layersWithOpacity = activeLayers?.map((l) => {
-        if (l.id === layer) {
-          return { ...l, opacity: op.toString() };
-        }
-        return l;
-      });
+    (op: number, layerId: string) => {
+      setActiveLayers((prev) => {
+        const targetLayer = prev?.find((l) => l.id === layerId);
 
-      // Google Analytics tracking
-      trackEvent(`Legend - Change opacity`, {
-        category: 'Layers - legend',
-        action: 'Slider',
-        label: `Legend - change opacity ${layer} from ${l.opacity} to ${op}`,
-        value: op,
-      });
+        if (!targetLayer) return prev;
 
-      setActiveLayers(layersWithOpacity);
+        trackEvent('Legend - Change opacity', {
+          category: 'Layers - legend',
+          action: 'Slider',
+          label: `Legend - change opacity ${layerId} from ${targetLayer.opacity} to ${op}`,
+          value: op,
+        });
+
+        return (prev ?? []).map((l) => (l.id === layerId ? { ...l, opacity: op.toString() } : l));
+      });
     },
-    [activeLayers, setActiveLayers]
-  );
-
-  const layerId = Object.keys(MAP_LEGENDS).find(
-    (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k
+    [setActiveLayers]
   );
 
   const widgetId = l.id.includes('mangrove_national_dashboard_layer')
@@ -115,18 +111,13 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
   if (layerNameToDisplay === undefined && !l.id.includes('mangrove_national_dashboard_layer'))
     return null;
 
-  const title =
-    l.id.includes('mangrove_national_dashboard_layer') && nationalDashboardLayerName
-      ? `National Dashboard`
-      : layerNameToDisplay;
-
   const WidgetInfo = INFO[widgetId] as React.ElementType;
 
   if (l.id === 'custom-area') return null;
 
   const iconBtn =
     'inline-flex h-7.5 w-7.5 items-center justify-center rounded-full text-black/42 hover:bg-black/5';
-  const iconSvg = 'h-6 w-6';
+
   return (
     <div className="ml-2 flex items-center gap-x-0.5">
       {WidgetInfo && (
@@ -168,7 +159,7 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: ActiveLayers
               <div className="no-scrollbar overflow-y-auto">{WidgetInfo && <WidgetInfo />}</div>
             </div>
             <DialogClose
-              className="top-8 md:fixed md:top-18! md:left-[595px]"
+              className="top-8 md:fixed md:top-18! md:left-148.75"
               onClose={() => setInfoDialogVisibility(false)}
             />
           </DialogContent>

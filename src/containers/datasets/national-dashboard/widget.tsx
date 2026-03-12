@@ -41,7 +41,7 @@ const NationalDashboard = () => {
     <div className={cn(WIDGET_CARD_WRAPPER_STYLE)}>
       <Loading visible={isLoading && !isFetching} iconClassName="flex w-10 h-10 m-auto my-10" />
       {isFetched && !isFetching && data && (
-        <div className="space-y-[25px]">
+        <div className="space-y-6.25">
           {data?.data?.legal_status && process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' && (
             <LegalStatus location={location.name} legalStatus={data?.data?.legal_status} />
           )}

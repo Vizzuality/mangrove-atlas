@@ -18,7 +18,7 @@ import { findCategoryByWidgets } from '@/containers/widgets/utils';
 
 import { CheckboxIndicator } from '@/components/ui/checkbox';
 import { Visibility } from '@/types/layers';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 
 const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
@@ -52,7 +52,7 @@ const WidgetsMenu: FC = () => {
       setActiveLayers([]);
     }
     if (LAYERS.length > activeLayers?.length) {
-      const NewLayersActive: ActiveLayers[] = LAYERS.map((layer) => ({
+      const NewLayersActive: Layer[] = LAYERS.map((layer) => ({
         id: layer.id as WidgetSlugType | ContextualBasemapsId | 'custom-area',
         opacity: '1',
         visibility: 'visible',

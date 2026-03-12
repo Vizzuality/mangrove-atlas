@@ -23,7 +23,7 @@ import {
   WIDGET_SENTENCE_STYLE,
   WIDGET_SUBTITLE_STYLE,
 } from 'styles/widgets';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 import { WidgetSlugType } from 'types/widget';
 
 import ARROW_SVG from '@/svgs/ui/arrow';
@@ -58,7 +58,7 @@ const FloodProtection = ({
       );
       setPeriod(period);
     },
-    [setPeriod]
+    [setPeriod, selectedPeriod]
   );
 
   const { isFetched, isFetching, data } = useMangrovesFloodProtection(selectedPeriod, {
@@ -87,7 +87,7 @@ const FloodProtection = ({
   const handleClick = () => {
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
-      : ([...activeLayers, { id, opacity: '1', visibility: 'visible' }] as ActiveLayers[]);
+      : ([...activeLayers, { id, opacity: '1', visibility: 'visible' }] as Layer[]);
 
     // Google Analytics tracking
     if (!isActive) {
@@ -188,7 +188,7 @@ const FloodProtection = ({
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {LABELS[selectedPeriod].short}
                   <ARROW_SVG
-                    className="fill-current absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 fill-current print:hidden"
                     role="img"
                     title="Arrow"
                   />
@@ -242,7 +242,7 @@ const FloodProtection = ({
             >
               {!isWorldwide && (
                 <TRIANGLE_SVG
-                  className="fill-current absolute -top-7 h-5 w-5"
+                  className="absolute -top-7 h-5 w-5 fill-current"
                   style={{ left: trianglePosition }}
                   role="img"
                   title="Arrow"

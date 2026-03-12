@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { SwitchWrapper, SwitchRoot, SwitchThumb } from '@/components/ui/switch';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 import type { WidgetSlugType } from 'types/widget';
 
 import INFO_SVG from '@/svgs/ui/info';
@@ -38,18 +38,18 @@ const Controls = ({ id, origin }: ControlTypes) => {
   const handleClick = useCallback(() => {
     const layersUpdate = isActive
       ? activeLayers?.filter((w) => w.id !== id)
-      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as ActiveLayers[]);
+      : ([{ id, opacity: '1', visibility: 'visible' }, ...activeLayers] as Layer[]);
 
     if (!isActive) {
-      // Google Analytics tracking
       trackEvent(`Suggested layer - ${id}`, {
         action: 'Layers - Contextual',
         label: `Suggested Contextual Layer - ${id}. From: ${origin}`,
         value: origin,
       });
     }
+
     setActiveLayers(layersUpdate);
-  }, [isActive, activeLayers, setActiveLayers, id]);
+  }, [isActive, activeLayers, setActiveLayers, id, origin]);
 
   return (
     <div className="flex items-start space-x-2">

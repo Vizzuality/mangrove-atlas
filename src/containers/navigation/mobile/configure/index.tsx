@@ -8,6 +8,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
+
 import CONFIGS_SVG from '@/svgs/sidebar/configure';
 
 const ConfigureWidgets = () => {
@@ -19,7 +20,7 @@ const ConfigureWidgets = () => {
           data-testid="widgets-deck-trigger-mobile"
         >
           <CONFIGS_SVG
-            className="fill-current h-8 w-8 fill-white text-white"
+            className="h-8 w-8 fill-current text-white"
             role="img"
             title="Widgets deck"
           />

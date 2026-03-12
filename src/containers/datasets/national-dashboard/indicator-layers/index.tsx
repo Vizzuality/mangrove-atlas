@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
@@ -6,22 +6,18 @@ import { activeLayersAtom } from '@/store/layers';
 
 import { useRecoilState } from 'recoil';
 
-import { updateLayers } from 'hooks/layers';
-
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from '@/components/ui/switch';
 import WidgetControls from '@/components/widget-controls';
-import { WidgetSlugType } from '@/types/widget';
-import type { ActiveLayers } from 'types/layers';
+import type { Layer } from 'types/layers';
 
 import IndicatorExtent from './extent';
 import IndicatorSource from './source';
 import type { IndicatorSourcesProps } from './types';
 import IndicatorYear from './year';
 
-const NATIONAL_PREFIX = 'mangrove_national_dashboard_layer';
+const NATIONAL_LAYER_ID = 'mangrove_national_dashboard_layer';
 
 const IndicatorSources = ({
-  id,
   source,
   locationIso,
   layerIndex,
@@ -35,69 +31,108 @@ const IndicatorSources = ({
   const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
 
   const layerId = useMemo(
-    () => `${NATIONAL_PREFIX}_${dataSource.source_layer}`,
-    [dataSource.source_layer]
-  ) as WidgetSlugType;
-
-  const activeLayerIds = useMemo(() => (activeLayers ?? []).map((l) => l.id), [activeLayers]);
-
-  const isAnyNationalActive = useMemo(
-    () => activeLayerIds.some((x) => x.includes(NATIONAL_PREFIX)),
-    [activeLayerIds]
+    () => `${NATIONAL_LAYER_ID}_${locationIso}` as `mangrove_national_dashboard_layer_${string}`,
+    [locationIso]
   );
 
-  const isThisLayerActive = useMemo(
-    () => activeLayerIds.includes(layerId),
-    [activeLayerIds, layerId]
+  const isNationalLayerActive = useMemo(
+    () => (activeLayers ?? []).some((layer) => layer.id === layerId),
+    [activeLayers, layerId]
+  );
+
+  const buildLayer = useCallback(
+    (): Layer => ({
+      id: layerId,
+      opacity: '1',
+      visibility: 'visible',
+      settings: {
+        name: source,
+        location: locationIso,
+        layerIndex,
+        source: dataSource.layer_link,
+        source_layer: dataSource.source_layer,
+        year: yearSelected,
+      },
+    }),
+    [
+      layerId,
+      source,
+      locationIso,
+      layerIndex,
+      dataSource.layer_link,
+      dataSource.source_layer,
+      yearSelected,
+    ]
+  );
+
+  const isNationalLayer = useCallback((id: Layer['id']) => {
+    return typeof id === 'string' && id.startsWith(`${NATIONAL_LAYER_ID}_`);
+  }, []);
+
+  const replaceNationalLayer = useCallback(
+    (layers: Layer[] = []): Layer[] => {
+      const nextLayer = buildLayer();
+      const withoutNationalLayers = layers.filter((layer) => !isNationalLayer(layer.id));
+
+      return [nextLayer, ...withoutNationalLayers];
+    },
+    [buildLayer, isNationalLayer]
+  );
+
+  const updateCurrentLayer = useCallback(
+    (layers: Layer[] = []): Layer[] =>
+      layers.map((layer) =>
+        layer.id === layerId
+          ? {
+              ...layer,
+              settings: {
+                ...layer.settings,
+                name: source,
+                location: locationIso,
+                layerIndex,
+                source: dataSource.layer_link,
+                source_layer: dataSource.source_layer,
+                year: yearSelected,
+              },
+            }
+          : layer
+      ),
+    [
+      layerId,
+      source,
+      locationIso,
+      layerIndex,
+      dataSource.layer_link,
+      dataSource.source_layer,
+      yearSelected,
+    ]
   );
 
   useEffect(() => {
-    if (!isThisLayerActive && isAnyNationalActive) {
-      setActiveLayers((activeLayers ?? []).filter((w) => !w.id.includes(NATIONAL_PREFIX)));
-    }
-  }, [isThisLayerActive, isAnyNationalActive, setActiveLayers, activeLayers]);
+    if (!isNationalLayerActive) return;
 
-  const upsertThisLayer = useCallback(() => {
-    return updateLayers(
-      {
-        id: layerId,
-        opacity: '1',
-        visibility: 'visible',
-        settings: {
-          name: source,
-          location: locationIso,
-          layerIndex,
-          source: dataSource.layer_link,
-          source_layer: dataSource.source_layer,
-        },
-      },
-      activeLayers ?? []
-    );
-  }, [
-    activeLayers,
-    dataSource.layer_link,
-    dataSource.source_layer,
-    layerId,
-    layerIndex,
-    locationIso,
-    source,
-  ]);
+    setActiveLayers((prev) => updateCurrentLayer(prev ?? []));
+  }, [isNationalLayerActive, updateCurrentLayer, setActiveLayers]);
 
   const handleClick = useCallback(() => {
-    const nextLayers: ActiveLayers[] = isAnyNationalActive
-      ? (activeLayers ?? []).filter((w) => !w.id.includes(NATIONAL_PREFIX)) // ✅ consistent match
-      : upsertThisLayer();
+    setActiveLayers((prev) => {
+      const prevLayers = prev ?? [];
 
-    if (!isAnyNationalActive) {
-      trackEvent(`Add mangrove national dashboard indicator layer - ${layerId}`, {
+      if (prevLayers.some((layer) => layer.id === layerId)) {
+        return prevLayers.filter((layer) => layer.id !== layerId);
+      }
+
+      return replaceNationalLayer(prevLayers);
+    });
+
+    if (!isNationalLayerActive) {
+      trackEvent(`Add mangrove national dashboard indicator layer - ${locationIso}`, {
         category: 'Layers',
         action: 'Toggle',
-        label: `Add mangrove national dashboard indicator layer - ${layerId}`,
+        label: `Add mangrove national dashboard indicator layer - ${locationIso}`,
       });
     }
-
-    setActiveLayers(nextLayers);
-  }, [activeLayers, isAnyNationalActive, layerId, setActiveLayers, upsertThisLayer]);
+  }, [setActiveLayers, layerId, replaceNationalLayer, isNationalLayerActive, locationIso]);
 
   return (
     <div className="flex w-full items-start justify-between space-x-4 py-4">
@@ -114,7 +149,7 @@ const IndicatorSources = ({
           }}
         />
         <SwitchWrapper id={layerId}>
-          <SwitchRoot id={layerId} onClick={handleClick} checked={isThisLayerActive}>
+          <SwitchRoot id={layerId} onClick={handleClick} checked={isNationalLayerActive}>
             <SwitchThumb />
           </SwitchRoot>
         </SwitchWrapper>

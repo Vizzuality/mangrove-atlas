@@ -7,13 +7,14 @@ import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
 
 const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
+
 const NationalDashboardMapLegend = () => {
   const [activeLayers] = useRecoilState(activeLayersAtom);
-  const layer = activeLayers?.find(({ id }) => id.includes('mangrove_national_dashboard'));
   const { data } = useNationalDashboard();
+  const ISO = data?.locationIso;
+  const layer = activeLayers?.find(({ id }) => id === `mangrove_national_dashboard_layer_${ISO}`);
   const sources = data?.data[0]?.sources;
-
-  const color = colorsScale.filter((c, i) => i === layer.settings.layerIndex) as string[];
+  const color = colorsScale.filter((c, i) => i === layer?.settings?.layerIndex) as string[];
 
   return (
     <div className="flex w-full flex-col justify-between space-y-2 font-sans text-black/60">
