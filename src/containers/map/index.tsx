@@ -145,6 +145,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const handleViewState = useCallback(() => {
     if (map) {
+      console.log(map.getStyle());
       setURLBounds(map.getBounds().toArray());
       setLocationBounds(null);
     }
