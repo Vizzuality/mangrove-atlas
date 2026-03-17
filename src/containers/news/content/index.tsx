@@ -9,6 +9,7 @@ import type { PostProps } from 'hooks/blog/types';
 
 import PostComponent from '@/containers/news/post';
 
+import SafeHTML from '@/components/dompurify';
 import { DialogClose } from '@/components/ui/dialog';
 
 export const BlogContent = () => {
@@ -65,7 +66,7 @@ export const BlogContent = () => {
             }}
             transition={{ duration: 0.4 }}
           >
-            <div className="absolute top-0 left-0 h-[240px] w-full">
+            <div className="absolute top-0 left-0 h-60 w-full">
               <button
                 data-testid="back-to-news-button"
                 type="button"
@@ -81,7 +82,7 @@ export const BlogContent = () => {
               <div className="overflow-visible md:rounded-t-3xl">
                 <Image
                   alt={postInfo.title.rendered}
-                  className="h-[240px] w-[100px] object-cover md:rounded-t-3xl"
+                  className="h-60 w-25 object-cover md:rounded-t-3xl"
                   src={postInfo.yoast_head_json.og_image[0].url}
                   fill={true}
                 />
@@ -103,16 +104,13 @@ export const BlogContent = () => {
             >
               {postInfo.title.rendered}
             </h3>
-            <div
-              className="prose py-4"
-              dangerouslySetInnerHTML={{ __html: postInfo.content.rendered }}
-            />
+            <SafeHTML html={postInfo.content.rendered} className="prose py-4" />
           </motion.div>
         )}
       </AnimatePresence>
       <DialogClose
         onClose={() => setPostInfo(null)}
-        className="top-8 md:fixed md:top-18! md:left-[595px]"
+        className="top-8 md:fixed md:top-18! md:left-148.75"
       />
     </>
   );

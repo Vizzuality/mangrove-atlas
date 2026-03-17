@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
+
+import Image from 'next/image';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
@@ -11,6 +13,9 @@ import { useRecoilValue } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { useBlogPosts } from 'hooks/blog';
+import type { PostProps } from 'hooks/blog/types';
+
+import LayoutMdx from '@/layouts/mdx';
 
 import Helper from '@/containers/help/helper';
 import BlogContent from '@/containers/news/content';
@@ -33,6 +38,27 @@ type PlatformUpdatesLastSeen = {
 };
 
 const UPDATE_WINDOW_DAYS = 4 * 12;
+
+const TooltipItem = ({ post }: { post: PostProps }) => (
+  <li className="flex cursor-pointer items-start space-x-2 rounded-sm p-2 transition hover:bg-gray-100">
+    <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-sm">
+      <Image
+        src={post.yoast_head_json.og_image[0].url}
+        alt={post.title.rendered}
+        fill
+        className="object-cover"
+      />
+    </div>
+
+    <div className="flex min-w-0 flex-1 flex-col">
+      <span className="bg-brand-800 text-xxs w-fit rounded-sm px-2 font-bold text-white uppercase">
+        update
+      </span>
+
+      <LayoutMdx className="text-xs leading-4 font-light">{post.title.rendered}</LayoutMdx>
+    </div>
+  </li>
+);
 
 const NewsButton = ({
   showIndicator,
@@ -75,23 +101,49 @@ const NewsTooltip = ({
   showIndicator,
   onOpenDialog,
   onDismissTooltip,
+  unseenPosts,
 }: {
   showIndicator: boolean;
   onOpenDialog: () => void;
   onDismissTooltip: () => void;
+  unseenPosts: PostProps[];
 }) => {
+  console.log(unseenPosts);
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip open={true}>
         <TooltipTrigger>
           <NewsButton showIndicator={showIndicator} onClick={onOpenDialog} />
         </TooltipTrigger>
 
-        <TooltipContent className="relative rounded-xl p-4">
+        <TooltipContent
+          className="min-h-content relative flex h-full max-h-none rounded-xl p-4"
+          side="bottom"
+        >
           <TooltipArrow className="fill-white" />
-          <div className="max-w-xs space-y-1 sm:max-w-70">
-            <div className="flex items-center justify-between space-x-2 font-bold">
-              <span className="text-xs uppercase">Tool updated!</span>
+          <>
+            {!unseenPosts?.length && (
+              <div className="max-w-xs space-y-1 sm:max-w-70">
+                <div className="flex items-center justify-between space-x-2 font-bold">
+                  <span className="text-xs uppercase">Tool updated!</span>
+                  <HiXIcon
+                    className="absolute top-2 right-2 h-4 w-4 cursor-pointer font-extrabold"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation(); // important: don’t open dialog when clicking X
+                      onDismissTooltip();
+                    }}
+                  />
+                </div>
+                <p className="text-sm">
+                  A new version is live. See what’s been improved and discover the new features
+                  added to the tool.
+                </p>
+              </div>
+            )}
+
+            <ul className="max-w-2xs space-y-2">
+              {unseenPosts?.map((post) => <TooltipItem key={post.id} post={post} />)}
               <HiXIcon
                 className="absolute top-2 right-2 h-4 w-4 cursor-pointer font-extrabold"
                 onClick={(e) => {
@@ -100,12 +152,8 @@ const NewsTooltip = ({
                   onDismissTooltip();
                 }}
               />
-            </div>
-            <p className="text-sm">
-              A new version is live. See what’s been improved and discover the new features added to
-              the tool.
-            </p>
-          </div>
+            </ul>
+          </>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -122,44 +170,54 @@ const News = () => {
 
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const DEBUG_FAKE_LAST_POST_DATE = process.env.NEXT_PUBLIC_FAKE_NEWS_DATE || undefined;
+  const seenLastPostDate = DEBUG_FAKE_LAST_POST_DATE ?? platformUpdates.seenLastPostDate;
 
   const { data } = useBlogPosts(
     { wl_topic: [53] },
     {
       select: (posts) => {
         if (!posts?.length) return null;
+
         const sorted = posts.slice().sort((a, b) => +new Date(b.date) - +new Date(a.date));
-        const top = sorted[0];
-        const lastPostDate = DEBUG_FAKE_LAST_POST_DATE ?? top.date;
+        const latestPost = sorted[0];
+        const latestPostDate = latestPost.date;
+
+        const unseenPosts = seenLastPostDate
+          ? sorted.filter((post) => +new Date(post.date) > +new Date(seenLastPostDate))
+          : sorted;
 
         return {
-          posts,
-          lastPostDate,
-          daysAgo: Math.floor((Date.now() - +new Date(lastPostDate)) / 86_400_000),
+          posts: sorted,
+          latestPost,
+          latestPostDate,
+          seenLastPostDate,
+          unseenPosts,
+          daysAgo: Math.floor((Date.now() - +new Date(latestPostDate)) / 86_400_000),
         };
       },
     }
   );
 
   const hasRecentUpdate = useMemo(
-    () => !!data?.lastPostDate && (data.daysAgo ?? Infinity) <= UPDATE_WINDOW_DAYS,
-    [data?.lastPostDate, data?.daysAgo]
+    () => !!data?.latestPostDate && (data.daysAgo ?? Infinity) <= UPDATE_WINDOW_DAYS,
+    [data?.latestPostDate, data?.daysAgo]
   );
 
   const shouldShowUpdateTooltip =
-    hasRecentUpdate && platformUpdates.seenLastPostDate !== data?.lastPostDate;
+    (hasRecentUpdate && platformUpdates.seenLastPostDate !== data?.latestPostDate) ||
+    !platformUpdates.seenLastPostDate;
 
   const showIndicator = shouldShowUpdateTooltip;
 
   const markAsSeen = useCallback(() => {
-    if (!data?.lastPostDate) return;
-    setPlatformUpdates({ seenLastPostDate: data.lastPostDate });
+    if (!data?.latestPostDate) return;
+    setPlatformUpdates({ seenLastPostDate: data.latestPostDate });
   }, [data, setPlatformUpdates]);
 
   const handleOpenDialog = useCallback(() => {
     setOpen(true);
-    if (data?.lastPostDate) {
-      setPlatformUpdates({ seenLastPostDate: data.lastPostDate });
+    if (data?.latestPostDate) {
+      setPlatformUpdates({ seenLastPostDate: data.latestPostDate });
     }
 
     // analytics
@@ -169,14 +227,7 @@ const News = () => {
       label: 'News - activated',
     });
   }, [data, setPlatformUpdates]);
-
-  useEffect(() => {
-    if (!data?.lastPostDate) return;
-    if (!hasRecentUpdate && platformUpdates.seenLastPostDate !== data.lastPostDate) {
-      setPlatformUpdates({ seenLastPostDate: data.lastPostDate });
-    }
-  }, [data?.lastPostDate, hasRecentUpdate, platformUpdates.seenLastPostDate, setPlatformUpdates]);
-
+  console.log(data?.unseenPosts);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {shouldShowUpdateTooltip ? (
@@ -184,6 +235,7 @@ const News = () => {
           showIndicator={showIndicator}
           onOpenDialog={handleOpenDialog}
           onDismissTooltip={markAsSeen}
+          unseenPosts={data?.unseenPosts ?? []}
         />
       ) : (
         <NewsButton showIndicator={showIndicator} onClick={handleOpenDialog} />

@@ -1,3 +1,4 @@
+import SafeHTML from '@/components/dompurify';
 import {
   Tooltip,
   TooltipArrow,
@@ -14,21 +15,21 @@ type IndicatorTypes = {
   info: string;
 };
 
-import UNCHECK_SVG from '@/svgs/ui/check-cross';
 import CHECK_SVG from '@/svgs/ui/check';
+import UNCHECK_SVG from '@/svgs/ui/check-cross';
 import INFO_SVG from '@/svgs/ui/info';
 
 const Indicator = (indicator: IndicatorTypes) => {
   const { label, value, check, url, info } = indicator;
   const CheckIcon = check ? CHECK_SVG : UNCHECK_SVG;
   return (
-    <div className="grid grid-cols-2 space-x-4 text-sm text-black/85">
-      <div className="flex items-center">
-        <div dangerouslySetInnerHTML={{ __html: label }} className="mr-2 font-bold" />
+    <div className="grid grid-cols-2 space-x-3 text-sm text-black/85">
+      <div className="col-span-1 flex items-start">
+        <SafeHTML html={label} className="mr-2 font-bold whitespace-nowrap" />
         {info && (
           <Tooltip>
-            <TooltipTrigger>
-              <INFO_SVG className="fill-current h-5 w-5" role="img" title="Info" />
+            <TooltipTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
+              <INFO_SVG className="h-3 w-3 shrink-0 fill-current" role="img" title="Info" />
             </TooltipTrigger>
 
             <TooltipPortal>
@@ -45,19 +46,19 @@ const Indicator = (indicator: IndicatorTypes) => {
         )}
       </div>
 
-      {value && !url && <p>{value}</p>}
+      {value && !url && <p className="col-span-1">{value}</p>}
       {value && !!url && (
         <a
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-brand-800 underline"
+          className="text-brand-800 col-span-1 underline"
         >
           {value}
         </a>
       )}
       {!!check && (
-        <CheckIcon className="fill-current h-5 w-5" role="img" title="Check" />
+        <CheckIcon className="col-span-1 h-5 w-5 fill-current" role="img" title="Check" />
       )}
     </div>
   );
