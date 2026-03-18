@@ -11,7 +11,7 @@ dependencies:
   - cython=3.0.3
   - gdal=3.7.2
   - simplejson=3.19.1
-  - tqdm=4.66.1
+  - tqdm=4.66.3
   - black[jupyter]=23.9.1
   - cartopy=0.22.0
   - beautifulsoup4=4.12.2
