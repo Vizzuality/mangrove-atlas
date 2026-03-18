@@ -74,7 +74,7 @@
     "mapbox-gl": "3.18.1",
     "minimatch": "9.0.7",
     "motion": "12.31.0",
-    "next": "16.1.6",
+    "next": "16.1.7",
     "next-auth": "4.24.13",
     "next-themes": "0.4.6",
     "nodemailer": "^7.0.13",
