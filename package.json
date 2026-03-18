@@ -124,6 +124,9 @@
   },
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
+    "overrides": {
+      "flat-cache>flatted": "3.4.1"
+    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
