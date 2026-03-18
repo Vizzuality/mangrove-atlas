@@ -3,7 +3,7 @@
 python-dotenv>=0.5.1
 
 # external tools requirements
-tqdm == 4.62.3
+tqdm == 4.66.3
 pandas
 geopandas
 simpledbf
