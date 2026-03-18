@@ -36,6 +36,9 @@
   "overrides": {
     "mocha": {
       "serialize-javascript": "7.0.4"
+    },
+    "http-proxy-agent": {
+      "@tootallnate/once": "3.0.1"
     }
   }
 }
