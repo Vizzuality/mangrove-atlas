@@ -16,5 +16,10 @@
     "date-fns": "^2.14.0",
     "stream-chain": "^2.2.2",
     "stream-json": "^1.6.0"
+  },
+  "overrides": {
+    "http-proxy-agent": {
+      "@tootallnate/once": "3.0.1"
+    }
   }
 }

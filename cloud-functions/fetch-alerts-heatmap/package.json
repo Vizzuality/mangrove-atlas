@@ -27,5 +27,10 @@
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.6.0"
+  },
+  "overrides": {
+    "http-proxy-agent": {
+      "@tootallnate/once": "3.0.1"
+    }
   }
 }
