@@ -143,9 +143,29 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const queryClient = useQueryClient();
   const queryParams = asPath.split('?')[1];
 
+  useEffect(() => {
+    if (!map || !initialViewState.bounds) return;
+
+    map.fitBounds(initialViewState.bounds, { padding: 40 });
+    // update URL bounds when map is loaded with bounds from URL
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (locationId && !URLBounds) {
+      const locationBoundsFromCache = queryClient.getQueryData<typeof locationBounds>([
+        'location-bounds',
+        locationId,
+      ]);
+
+      if (locationBoundsFromCache) {
+        setLocationBounds(locationBoundsFromCache);
+      }
+    }
+  }, [locationId, queryClient, setLocationBounds, URLBounds]);
+
   const handleViewState = useCallback(() => {
     if (map) {
-      console.log(map.getStyle());
       setURLBounds(map.getBounds().toArray());
       setLocationBounds(null);
     }
@@ -170,8 +190,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   );
 
   const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    if (!locationBounds) return;
-
     return {
       bbox: locationBounds,
       options: {

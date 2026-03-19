@@ -8,7 +8,6 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    ESLINT_USE_FLAT_CONFIG: z.coerce.boolean().default(true),
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
@@ -57,7 +56,6 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     NEXT_PUBLIC_PLANET_API_KEY: process.env.NEXT_PUBLIC_PLANET_API_KEY,
     NEXT_PUBLIC_TRANSIFEX_API_KEY: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-    ESLINT_USE_FLAT_CONFIG: process.env.ESLINT_USE_FLAT_CONFIG,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     AUTH_API_URL: process.env.AUTH_API_URL,

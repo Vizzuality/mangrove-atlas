@@ -11,8 +11,6 @@ declare module 'next-auth/jwt' {
   }
 }
 
-const domain = process.env.NODE_ENV === 'production' ? '.globalmangrovewatch.org' : undefined;
-
 declare module 'next-auth' {
   interface User {
     accessToken: string;

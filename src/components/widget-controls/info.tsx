@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown';
+
 import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeGuideAtom } from '@/store/guide';
@@ -33,6 +35,9 @@ const Info = ({ id, content }) => {
     });
   };
 
+  const decodedContent =
+    typeof content === 'string' ? <ReactMarkdown>{content}</ReactMarkdown> : content;
+
   return (
     <Dialog onOpenChange={handleAnalytics}>
       <Helper
@@ -55,7 +60,7 @@ const Info = ({ id, content }) => {
         <div className="no-scrollbar overflow-y-auto">
           {/* Supports external content or look by id for static info about widgets */}
           {id && <Info />}
-          {content && <p>{content}</p>}
+          {content && <>{decodedContent}</>}
         </div>
         <DialogClose className="md:0 -top-2 md:absolute" />
       </DialogContent>

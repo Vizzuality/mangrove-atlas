@@ -32,7 +32,8 @@ export const SortableItem: React.FC<SortableItemProps> = ({
     <div
       ref={setNodeRef}
       className={cn({
-        'w-full': true,
+        'w-full border-b border-gray-200 py-4 first:pt-0 nth-last-3:border-b-0 nth-last-3:pb-0':
+          true,
         'opacity-0': isDragging,
       })}
       style={style}

@@ -108,7 +108,6 @@ const NewsTooltip = ({
   onDismissTooltip: () => void;
   unseenPosts: PostProps[];
 }) => {
-  console.log(unseenPosts);
   return (
     <TooltipProvider>
       <Tooltip open={true}>
@@ -227,7 +226,7 @@ const News = () => {
       label: 'News - activated',
     });
   }, [data, setPlatformUpdates]);
-  console.log(data?.unseenPosts);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       {shouldShowUpdateTooltip ? (
