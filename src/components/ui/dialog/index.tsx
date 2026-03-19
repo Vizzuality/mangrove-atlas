@@ -25,7 +25,7 @@ const DialogOverlay = forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn({
-      'bg-brand-600/70 fixed inset-0 backdrop-blur-sm md:bg-black/50': true,
+      'bg-brand-600/70 fixed inset-0 bg-blend-multiply md:bg-black/15': true,
       [className || '']: !!className,
     })}
   />
@@ -40,22 +40,24 @@ const DialogContent = forwardRef<
   }
 >(({ className, classNameContent, children, overlay = false, ...props }, ref) => (
   <DialogPortal>
-    {overlay && <DialogOverlay />}
+    <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
       className={cn({
-        'no-scrollbar animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-[100vh] w-full overflow-y-auto duration-300 sm:pr-16 md:left-0 md:w-auto md:pt-10 md:pl-14':
+        'scrollbar-hide animate-in md:data-[state=open]:fade-in-60 md:data-[state=close]:slide-in-from-left-0 md:data-[state=open]:slide-in-from-left-96 absolute z-40 h-screen w-full overflow-x-hidden overflow-y-auto p-4 duration-300':
           true,
+        // 'sm:pr-16 md:left-0  md:pt-10 md:pl-14': true,
+
         [classNameContent || '']: !!classNameContent,
       })}
-      style={{
-        background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
-      }}
+      // style={{
+      //   background: 'linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%)',
+      // }}
       {...props}
     >
       <div
         className={cn({
-          'shadow-card relative flex max-w-[540px] shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
+          'shadow-card linear-gradient(90deg, #003C391A 0%, rgba(0, 60, 57, 0.00) 100%) relative flex max-w-135 shrink-0 flex-col border-none bg-white p-8 md:w-full md:rounded-3xl':
             true,
           [className || '']: !!className,
         })}
@@ -96,7 +98,7 @@ const DialogClose = ({
       onClick={onClose}
       aria-label="close dialog"
     >
-      <CLOSE_SVG className="fill-current mr-2.5 h-7 w-7 md:h-6 md:w-6" role="img" title="Cross" />
+      <CLOSE_SVG className="mr-2.5 h-7 w-7 fill-current md:h-6 md:w-6" role="img" title="Cross" />
     </button>
   </DialogPrimitive.Close>
 );

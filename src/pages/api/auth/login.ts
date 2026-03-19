@@ -19,6 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     const text = await upstreamRes.text();
+    return res.status(upstreamRes.status).send(text);
   } catch (err: any) {
     console.error('[/api/auth/login] crashed:', err);
     return res.status(500).json({ message: err?.message || 'Internal server error' });

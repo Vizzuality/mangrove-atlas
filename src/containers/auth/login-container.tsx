@@ -18,9 +18,11 @@ import LoginForm from './login-form';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { replace, query } = router;
+  const replace = router?.replace;
+  const query = router?.query;
 
-  const { status } = useSession();
+  const session = useSession();
+  const status = session?.status;
 
   // If already signed in, bounce away from /auth/signin
   useEffect(() => {

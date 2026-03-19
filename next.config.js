@@ -46,11 +46,7 @@ const nextConfig = {
       { source: '/blog/:path*', destination: `https://www.wetlands.org/:path*` },
       {
         source: '/proxy/:path*',
-        destination: `https://${
-          process.env.NEXT_PUBLIC_VERCEL_ENV === 'production'
-            ? process.env.NEXT_PUBLIC_MRTT_SITE_PRODUCTION
-            : process.env.NEXT_PUBLIC_MRTT_SITE
-        }/auth/login/:path*`,
+        destination: `https://${process.env.NEXT_PUBLIC_MRTT_SITE}/auth/login/:path*`,
       },
     ];
   },

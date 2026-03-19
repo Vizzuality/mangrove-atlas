@@ -11,8 +11,6 @@ declare module 'next-auth/jwt' {
   }
 }
 
-const domain = process.env.NODE_ENV === 'production' ? '.globalmangrovewatch.org' : undefined;
-
 declare module 'next-auth' {
   interface User {
     accessToken: string;
@@ -24,12 +22,12 @@ declare module 'next-auth' {
   }
 }
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NEXT_PUBLIC_ENVIRONMENT === 'production';
 const cookieDomain = isProd ? '.globalmangrovewatch.org' : undefined;
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV !== 'production',
+  debug: process.env.NEXT_PUBLIC_ENVIRONMENT !== 'production',
   session: { strategy: 'jwt' },
 
   providers: [

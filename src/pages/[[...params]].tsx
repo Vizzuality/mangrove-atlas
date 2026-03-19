@@ -94,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      session: safeSession ? JSON.parse(JSON.stringify(safeSession)) : null,
+      session: safeSession,
     },
   };
 };

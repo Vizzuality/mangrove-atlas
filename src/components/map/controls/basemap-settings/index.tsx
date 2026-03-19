@@ -19,7 +19,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import BASEMAP_SETTINGS_SVG from '@/svgs/map/basemap-settings';
 import INFO_SVG from '@/svgs/ui/info';
 
-export const BasemapSettings = ({ className }: { className?: string }) => {
+export const BasemapSettings = () => {
   return (
     <Tooltip>
       <TooltipTrigger>
@@ -33,7 +33,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               })}
             >
               <BASEMAP_SETTINGS_SVG
-                className="fill-current group-disabled:fill-grey-75 h-4 w-4 bg-white group-hover:bg-gray-100"
+                className="group-disabled:fill-grey-75 h-4 w-4 bg-white fill-current group-hover:bg-gray-100"
                 role="img"
                 title="Basemap settings"
               />
@@ -46,7 +46,7 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
               </DialogTitle>
               <Helper
                 className={{
-                  button: 'top-4 left-[308px] z-20',
+                  button: 'top-4 left-77 z-20',
                   tooltip: 'w-fit-content',
                   container: 'space-y-2',
                 }}
@@ -73,9 +73,9 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                       High-resolution Mangrove extent
                     </p>
                     <Dialog>
-                      <DialogTrigger>
+                      <DialogTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
                         <INFO_SVG
-                          className="fill-current text-brand-800 h-5 w-5"
+                          className="h-3 w-3 shrink-0 fill-current"
                           role="img"
                           title="Info"
                         />
@@ -107,9 +107,9 @@ export const BasemapSettings = ({ className }: { className?: string }) => {
                   <div className="flex items-center space-x-2">
                     <p className="text-xs font-semibold tracking-[1px] uppercase">planet imagery</p>
                     <Dialog>
-                      <DialogTrigger>
+                      <DialogTrigger className="border-brand-800/20 text-brand-800 flex h-5 w-5 items-center justify-center rounded-full border-2">
                         <INFO_SVG
-                          className="fill-current text-brand-800 h-5 w-5"
+                          className="h-3 w-3 shrink-0 fill-current"
                           role="img"
                           title="Info"
                         />

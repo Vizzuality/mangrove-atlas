@@ -149,10 +149,15 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
                 animate={{ opacity: 1, bottom: 36 }}
                 exit={{ opacity: 0, bottom: -200 }}
                 transition={{ type: 'spring', bounce: 0, duration: 0.8 }}
-                className="shadow-card fixed w-[360px] gap-4 rounded-3xl bg-white md:right-[75px]"
+                className="shadow-card fixed w-90 gap-4 rounded-3xl bg-white md:right-18.75"
                 data-testid="legend-content"
               >
-                <div className="box-content flex flex-col divide-y divide-gray-200 overflow-y-auto p-4 md:max-h-[55vh] print:hidden">
+                <div
+                  className={cn({
+                    'box-content flex flex-col overflow-y-auto p-4 md:max-h-[55vh] print:hidden':
+                      true,
+                  })}
+                >
                   <SortableList
                     onChangeOrder={handleChangeOrder}
                     sortable={{ handle: true, enabled: true }}

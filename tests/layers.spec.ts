@@ -26,8 +26,7 @@ async function clickSwitch(page: import('@playwright/test').Page, testId: string
 
 test.describe('Can activate contextual layers via widget toggles', () => {
   const contextualLayers: WidgetTypes[] = WIDGETS.filter(
-    ({ categoryIds, layersIds }) =>
-      categoryIds?.includes(CONTEXTUAL_LAYER_ID) && layersIds?.length
+    ({ categoryIds, layersIds }) => categoryIds?.includes(CONTEXTUAL_LAYER_ID) && layersIds?.length
   );
   const contextualSlugs = contextualLayers.map((w) => w.slug);
 
@@ -85,9 +84,7 @@ test.describe('Can activate worldwide layers in widgets', () => {
       test.fixme(browserName === 'firefox', 'Firefox: widgets-wrapper fails to render');
       const id = widget.slug;
       // Navigate with all_datasets category, proper active-widgets, and empty layers
-      await page.goto(
-        `/?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`
-      );
+      await page.goto(`/?category="all_datasets"&${activeWidgetsParam(allSlugs)}&layers=[]`);
       await page.getByTestId('widgets-wrapper').waitFor();
 
       const layerSwitcher = page.getByTestId(id);

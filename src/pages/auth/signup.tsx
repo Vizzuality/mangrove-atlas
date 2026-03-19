@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/compat/router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -41,7 +41,8 @@ const formSchema = z
 
 export default function SignupPage() {
   const signup = useSignup();
-  const { push, query } = useRouter();
+  const router = useRouter();
+  const push = router?.push;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

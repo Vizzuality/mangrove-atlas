@@ -8,10 +8,10 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    ESLINT_USE_FLAT_CONFIG: z.coerce.boolean().default(true),
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
+    NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'test']),
   },
   /*
    * Environment variables available on the client (and server).
@@ -31,6 +31,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SMTP_PORT: z.coerce.number(),
     NEXT_PUBLIC_SMTP_USER_NAME: z.string(),
     NEXT_PUBLIC_GA_ID: z.string(),
+    NEXT_PUBLIC_VERCEL_ENV: z.enum(['development', 'production', 'preview']),
     NEXT_PUBLIC_FEATURED_FLAGS: z
       .string()
       .transform((val) => {
@@ -57,7 +58,6 @@ export const env = createEnv({
     NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN,
     NEXT_PUBLIC_PLANET_API_KEY: process.env.NEXT_PUBLIC_PLANET_API_KEY,
     NEXT_PUBLIC_TRANSIFEX_API_KEY: process.env.NEXT_PUBLIC_TRANSIFEX_API_KEY,
-    ESLINT_USE_FLAT_CONFIG: process.env.ESLINT_USE_FLAT_CONFIG,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     AUTH_API_URL: process.env.AUTH_API_URL,
@@ -67,6 +67,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SMTP_USER_NAME: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
     NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+    NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
   },
 });
 
