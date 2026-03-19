@@ -110,7 +110,7 @@ const NewsTooltip = ({
 }) => {
   return (
     <TooltipProvider>
-      <Tooltip open={true}>
+      <Tooltip>
         <TooltipTrigger>
           <NewsButton showIndicator={showIndicator} onClick={onOpenDialog} />
         </TooltipTrigger>
