@@ -23,7 +23,7 @@ const Content = ({
   return (
     <div className="space-y-2">
       <div className="flex flex-col space-y-1">
-        <span className="bg-brand-800 w-fit rounded-[4px] px-2 text-xs font-bold tracking-wider text-white uppercase">
+        <span className="bg-brand-800 w-fit rounded-sm px-2 text-xs font-bold tracking-wider text-white uppercase">
           Map tip
         </span>
         <p className="text-sm font-light">{description}</p>

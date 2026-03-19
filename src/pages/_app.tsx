@@ -7,7 +7,6 @@ import { MapProvider } from 'react-map-gl';
 import type { AppProps } from 'next/app';
 import { Open_Sans, Inter } from 'next/font/google';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import Script from 'next/script';
 
 import { Deserialize, RecoilURLSyncNext, Serialize } from '@/lib/recoil';
@@ -52,8 +51,6 @@ type PageProps = {
 };
 
 const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) => {
-  const router = useRouter();
-
   // Never ever instantiate the client outside a component, hook or callback as it can leak data
   // between users
   const [queryClient] = useState(
@@ -75,7 +72,13 @@ const MyApp = ({ Component, pageProps: { ...pageProps } }: AppProps<PageProps>) 
   }, []);
 
   const deserialize: Deserialize = useCallback((x: string): unknown => {
-    return JSON.parse(x);
+    if (!x) return undefined;
+
+    try {
+      return JSON.parse(x);
+    } catch {
+      return undefined;
+    }
   }, []);
 
   // const handleRouteChangeCompleted = useCallback((url: string) => {

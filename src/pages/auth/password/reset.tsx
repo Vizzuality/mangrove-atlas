@@ -2,10 +2,9 @@
 
 import { useForm } from 'react-hook-form';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/compat/router';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ro } from 'date-fns/locale';
 import { z } from 'zod';
 
 import { usePutResetPassword } from '@/containers/auth/hooks';

@@ -27,7 +27,7 @@ function withCors(request: NextRequest, response: NextResponse) {
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NEXT_PUBLIC_ENVIRONMENT === 'production') {
     if (HIDDEN_IN_PROD.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
       return NextResponse.rewrite(new URL('/404', request.url));
     }

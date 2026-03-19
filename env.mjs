@@ -11,7 +11,7 @@ export const env = createEnv({
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
-    NODE_ENV: z.enum(['development', 'production', 'test']),
+    NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'test']),
   },
   /*
    * Environment variables available on the client (and server).
@@ -31,6 +31,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SMTP_PORT: z.coerce.number(),
     NEXT_PUBLIC_SMTP_USER_NAME: z.string(),
     NEXT_PUBLIC_GA_ID: z.string(),
+    NEXT_PUBLIC_VERCEL_ENV: z.enum(['development', 'production', 'preview']),
     NEXT_PUBLIC_FEATURED_FLAGS: z
       .string()
       .transform((val) => {
@@ -66,6 +67,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SMTP_USER_NAME: process.env.NEXT_PUBLIC_SMTP_USER_NAME,
     NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
     NEXT_PUBLIC_FEATURED_FLAGS: process.env.NEXT_PUBLIC_FEATURED_FLAGS,
+    NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
+    NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
   },
 });
 
