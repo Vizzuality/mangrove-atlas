@@ -108,10 +108,7 @@ export const BlogContent = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      <DialogClose
-        onClose={() => setPostInfo(null)}
-        className="top-8 md:fixed md:top-18! md:left-148.75"
-      />
+      <DialogClose onClose={() => setPostInfo(null)} />
     </>
   );
 };
