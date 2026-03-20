@@ -50,6 +50,7 @@ const AlertsWidget = () => {
     [widgets]
   );
   const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
+
   type FC = FeatureCollection<Geometry, GeoJsonProperties>;
 
   const geometry = useMemo<FC | undefined>(() => {
