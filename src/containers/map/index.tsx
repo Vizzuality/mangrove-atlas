@@ -144,12 +144,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const queryParams = asPath.split('?')[1];
 
   useEffect(() => {
-    if (!map || !initialViewState.bounds) return;
+    if (!initialViewState.bounds) return;
 
-    map.fitBounds(initialViewState.bounds, { padding: 40 });
+    map?.fitBounds(initialViewState.bounds, { padding: 40 });
     // update URL bounds when map is loaded with bounds from URL
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [map]);
 
   useEffect(() => {
     if (locationId && !URLBounds) {
