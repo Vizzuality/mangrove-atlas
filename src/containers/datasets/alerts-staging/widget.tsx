@@ -9,6 +9,8 @@ import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
+import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
 import SuggestedLayers from '@/components/contextual-layers';
@@ -43,6 +45,12 @@ const AlertsWidget = () => {
     () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
     [activeLayers]
   );
+
+  const widgetInfo = useMemo(
+    () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
+    [widgets]
+  );
+  const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
     startDate,
@@ -98,7 +106,7 @@ const AlertsWidget = () => {
         </div>
       )}
       {isFetched && !isLoading && !isError && (
-        <div>
+        <div className="space-y-8">
           <p className={WIDGET_SENTENCE_STYLE}>
             There were <span className="font-bold"> {alertsTotal}</span> mangrove disturbance alerts
             between{' '}
@@ -191,6 +199,13 @@ const AlertsWidget = () => {
             </Popover>
             .
           </p>
+          <div className="-mx-2">
+            <ContextualLayersWrapper
+              origin="mangrove_alerts"
+              id={contextualLayers[0].id}
+              description={contextualLayers[0].description}
+            />
+          </div>
           <Legend />
           <Chart config={config} />
           <Chart
@@ -241,23 +256,6 @@ const AlertsWidget = () => {
               </div>
               <p className="text-sm font-normal">Monitored area</p>
             </div>
-          </div>
-          <div>
-            <SuggestedLayers
-              origin="mangrove_alerts"
-              name="Planet-NICFI Satellite Imagery"
-              thumbSource="/images/thumbs/basemaps/basemap-satellite.jpg"
-              id="planet_medres_visual_monthly"
-              description="We recommend you to use Planet-NICFI Satellite Imagery to validate the alerts."
-            >
-              {isActive && (
-                <DateSelect
-                  mosaic_id="45d01564-c099-42d8-b8f2-a0851accf3e7"
-                  id="planet_medres_visual_monthly"
-                  className={{ content: 'w-105' }}
-                />
-              )}
-            </SuggestedLayers>
           </div>
         </>
       )}
