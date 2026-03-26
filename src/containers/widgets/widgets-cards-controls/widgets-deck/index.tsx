@@ -8,22 +8,13 @@ import { activeWidgetsAtom } from '@/store/widgets';
 
 import { useRecoilState } from 'recoil';
 
-import Category from '@/containers/categories-menu';
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
 import { widgets } from '@/containers/widgets/constants';
-import WidgetsMenu from '@/containers/widgets/widgets-menu';
+import WidgetsDeckContent from '@/containers/widgets/widgets-deck/content';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogClose,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import ALERT_SVG from '@/svgs/ui/alert';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
-const HELPER_ID = 'menu-categories';
 const WidgetsDeck: FC = () => {
   const {
     query: { params },
@@ -67,45 +58,7 @@ const WidgetsDeck: FC = () => {
           </button>
         </DialogTrigger>
       </Helper>
-      <DialogContent className="mb-10 w-screen border-2 md:w-auto">
-        <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
-        <div className="no-scrollbar space-y-8">
-          <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
-            Widgets deck settings
-          </DialogTitle>
-          <Helper
-            className={{
-              button: HELPER_ID ? 'right-40 -bottom-9 z-20' : 'hidden',
-              tooltip: 'w-80',
-            }}
-            tooltipPosition={{ top: -20, left: 0 }}
-            message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-          >
-            <Category />
-          </Helper>
-          <div className="shadow-control flex w-full items-center space-x-4 rounded-3xl bg-gray-50 p-2.5">
-            <ALERT_SVG
-              className="fill-current h-16 w-16 text-white"
-              role="img"
-              title="alert"
-            />
-            <p className="text-sm font-light text-black/85">
-              Disclaimer: Some layers and widgets are not available for certain locations. Select
-              applicable geography to enable layer.
-            </p>
-          </div>
-          <Helper
-            className={{
-              button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
-              tooltip: 'w-fit-content',
-            }}
-            tooltipPosition={{ top: -70, left: -400 }}
-            message="Widgets list"
-          >
-            <WidgetsMenu />
-          </Helper>
-        </div>
-      </DialogContent>
+      <WidgetsDeckContent />
     </Dialog>
   );
 };

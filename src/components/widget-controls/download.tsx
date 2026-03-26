@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+
 import DOWNLOAD_SVG from '@/svgs/ui/download';
 
 import { HELPER_POSITION } from './constants';
@@ -71,7 +72,7 @@ const Download = ({ id, content }) => {
       </Helper>
       <DialogContent>
         <DialogTitle className="sr-only">Download Data</DialogTitle>
-        <div className="no-scrollbar w-[480px] overflow-y-auto">
+        <div className="no-scrollbar w-120 overflow-y-auto">
           {id && <DownloadInfo />}
           {content && !id && (
             <div className="flex flex-col items-start justify-start space-y-4">

@@ -9,7 +9,6 @@ type LayoutMdxProps = {
 
 const LayoutMdx: React.FC<LayoutMdxProps> = (props: LayoutMdxProps) => {
   const { children, className } = props;
-  console.log({ children }, 'MDX content'); // Debug log to check the content being passed
 
   const decoded = typeof children === 'string' ? decode(children) : children;
   return (

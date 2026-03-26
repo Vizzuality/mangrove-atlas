@@ -159,7 +159,7 @@ const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => 
               <div className="no-scrollbar overflow-y-auto">{WidgetInfo && <WidgetInfo />}</div>
             </div>
             <DialogClose
-              className="top-8 md:fixed md:top-18! md:left-148.75"
+              className="top-8 md:absolute md:top-18! md:-right-10"
               onClose={() => setInfoDialogVisibility(false)}
             />
           </DialogContent>

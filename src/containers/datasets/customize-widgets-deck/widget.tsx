@@ -7,18 +7,11 @@ import { activeWidgetsAtom } from '@/store/widgets';
 import { motion } from 'motion/react';
 import { useRecoilValue } from 'recoil';
 
-import Category from '@/containers/categories-menu';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 import widgets from '@/containers/widgets/constants';
-import WidgetsMenu from '@/containers/widgets/widgets-menu';
+import WidgetsDeckContent from '@/containers/widgets/widgets-deck/content';
 
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import {
   WIDGET_CARD_WRAPPER_STYLE,
   WIDGET_SENTENCE_STYLE,
@@ -79,16 +72,8 @@ const CustomizeWidgetsDeck = () => {
                   />
                 </span>
               </DialogTrigger>
-              <DialogContent className="top-0 left-0 min-h-screen w-screen space-y-8 rounded-none">
-                <div className="no-scrollbar space-y-8 overflow-y-auto">
-                  <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
-                    Widgets deck settings
-                  </DialogTitle>
-                  <Category />
-                  <WidgetsMenu />
-                </div>
-                <DialogClose />
-              </DialogContent>
+
+              <WidgetsDeckContent />
             </Dialog>
           </span>{' '}
           data cards. Customize the widgets deck according to your preferences and discover

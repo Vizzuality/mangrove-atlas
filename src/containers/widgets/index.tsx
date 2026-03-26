@@ -12,7 +12,6 @@ import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from '@/layouts/widgets';
 
-import Category from '@/containers/categories-menu';
 import { WIDGETS } from '@/containers/datasets';
 import CloseHelpGuide from '@/containers/help/close';
 import Helper from '@/containers/help/helper';
@@ -20,13 +19,7 @@ import AppTools from '@/containers/navigation';
 import WidgetWrapper from '@/containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogClose,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { breakpoints } from '@/styles/styles.config';
 import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';
@@ -35,7 +28,7 @@ import SETTINGS_SVG from '@/svgs/ui/settings';
 
 import { useWidgets } from './hooks';
 import WidgetsCardsControls from './widgets-cards-controls';
-import WidgetsMenu from './widgets-menu';
+import WidgetsDeckContent from './widgets-deck/content';
 
 const buttonMotion = {
   rest: {
@@ -75,7 +68,6 @@ const textMotion = {
   },
 };
 
-const HELPER_ID = 'menu-categories';
 const WidgetsContainer: FC = () => {
   const [{ customGeojson }] = useRecoilState(drawingToolAtom);
 
@@ -142,8 +134,7 @@ const WidgetsContainer: FC = () => {
                 applicability={props?.applicability}
                 contextualLayers={props?.contextualLayers}
                 className={cn({
-                  'print:min-w-[540px] print:scale-95 print:transform print:break-inside-avoid':
-                    true,
+                  'print:min-w-135 print:scale-95 print:transform print:break-inside-avoid': true,
                 })}
               >
                 {WIDGETS[slug] && <Widget />}
@@ -185,34 +176,7 @@ const WidgetsContainer: FC = () => {
             </motion.div>
           </DialogTrigger>
         </Helper>
-        <DialogContent className="mb-10 w-screen max-w-135 border-2 md:w-auto">
-          <DialogClose className="top-8 md:fixed md:top-18! md:left-[595px]" />
-          <div className="no-scrollbar space-y-8">
-            <DialogTitle className="font-black/85 text-3xl leading-10 font-light">
-              Widgets deck settings
-            </DialogTitle>
-            <Helper
-              className={{
-                button: HELPER_ID ? 'right-40 -bottom-9 z-20' : 'hidden',
-                tooltip: 'w-80',
-              }}
-              tooltipPosition={{ top: -20, left: 0 }}
-              message="Opens deck to select which widgets and map layers are displayed on the left side of the screen. Widgets provide information and statistics about a selected geography, protected area, or user-inputted polygon. Most widgets also come with a map layer that can be toggled on and off. Users can select groups of widgets organized by theme or customize their own combination of widgets and map layers. Some layers and widgets are not available for certain locations. Select applicable geography to enable layer."
-            >
-              <Category />
-            </Helper>
-            <Helper
-              className={{
-                button: HELPER_ID ? 'right-72 -bottom-4 z-20' : 'hidden',
-                tooltip: 'w-fit-content',
-              }}
-              tooltipPosition={{ top: -70, left: -400 }}
-              message="Widgets list"
-            >
-              <WidgetsMenu />
-            </Helper>
-          </div>
-        </DialogContent>
+        <WidgetsDeckContent />
       </Dialog>
       {/* <div className="flex w-full justify-center py-4 print:hidden">
         <Helper
