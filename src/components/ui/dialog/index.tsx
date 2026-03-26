@@ -11,7 +11,7 @@ const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
   <DialogPrimitive.Portal {...props}>
-    <div className="absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-center md:items-center">
+    <div className="w-100vw absolute top-0 right-0 bottom-0 left-0 z-60 flex h-full w-full items-start justify-center md:items-center">
       {children}
     </div>
   </DialogPrimitive.Portal>
