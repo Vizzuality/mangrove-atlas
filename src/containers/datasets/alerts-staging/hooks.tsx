@@ -404,7 +404,6 @@ export function useLayers({
 }): {
   'alerts-heatmap': LayerProps[];
   'alerts-tiles': LayerProps[];
-  'monitored-alerts': LayerProps[];
 } {
   return {
     'alerts-heatmap': [
@@ -476,23 +475,6 @@ export function useLayers({
             opacity * 10,
             opacity * 0.7,
           ],
-        },
-        layout: {
-          visibility,
-        },
-      },
-    ],
-    'monitored-alerts': [
-      {
-        id: `${id}-line`,
-        type: 'line',
-        source: 'monitored-alerts',
-        'source-layer': 'alert_region_tiles',
-        minzoom: 0,
-        paint: {
-          'line-color': '#00857F',
-          'line-opacity': opacity,
-          'line-width': 1,
         },
         layout: {
           visibility,
