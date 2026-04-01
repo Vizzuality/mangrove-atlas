@@ -11,7 +11,6 @@ export const env = createEnv({
     NEXTAUTH_URL: z.string().url(),
     NEXTAUTH_SECRET: z.string(),
     AUTH_API_URL: z.string().url(),
-    NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'test']),
   },
   /*
    * Environment variables available on the client (and server).
@@ -43,6 +42,7 @@ export const env = createEnv({
       })
       .pipe(z.record(z.string(), z.boolean()))
       .default('{}'),
+    NEXT_PUBLIC_ENVIRONMENT: z.enum(['development', 'production', 'staging']),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,

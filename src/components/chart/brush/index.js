@@ -5,6 +5,15 @@ import PropTypes from 'prop-types';
 
 import SVGBrush from './component';
 
+const isFiniteNumber = (n) => Number.isFinite(n);
+
+const isPoint = (p) =>
+  Array.isArray(p) && p.length === 2 && isFiniteNumber(p[0]) && isFiniteNumber(p[1]);
+
+const isBox = (b) => Array.isArray(b) && b.length === 2 && isPoint(b[0]) && isPoint(b[1]);
+
+const safe = (n) => (isFiniteNumber(n) ? n : 0);
+
 export default class Brush extends PureComponent {
   static propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

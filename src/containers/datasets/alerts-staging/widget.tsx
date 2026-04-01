@@ -240,24 +240,9 @@ const AlertsWidget = () => {
         </div>
       )}
       {!isError && !isLoading && (
-        <>
-          <div className="space-y-2">
-            <div className="text-brand-800 absolute right-0 left-0 h-1 border-b border-dashed" />
-            <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
-              There are <span className="font-bold"> 535</span> areas monitored in the world.
-            </p>
-            <div className="flex space-x-2">
-              <div className="flex">
-                <div className="flex flex-col">
-                  <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
-                  <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
-                </div>
-                <div className="text-brand-900 border-brand-800 h-2 w-2 border-2" />
-              </div>
-              <p className="text-sm font-normal">Monitored area</p>
-            </div>
-          </div>
-        </>
+        <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
+          There are <span className="font-bold"> 535</span> areas monitored in the world.
+        </p>
       )}
     </div>
   );
