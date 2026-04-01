@@ -368,11 +368,6 @@ export function useSources(): SourceProps[] {
 
   return [
     {
-      id: 'monitored-alerts',
-      type: 'vector',
-      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
-    },
-    {
       id: 'alerts-heatmap',
       type: 'geojson',
       data: `https://us-central1-mangrove-atlas-246414.cloudfunctions.net/fetch-alerts-heatmap?start_date=${
