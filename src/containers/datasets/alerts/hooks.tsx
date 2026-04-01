@@ -449,7 +449,7 @@ export function useSource(): SourceProps {
   return {
     id: 'alerts-heatmap-vector',
     type: 'vector',
-    url: 'mapbox://globalmangrovewatch.10zyfs67',
+    url: 'mapbox://globalmangrovewatch.0vowa2i9',
   };
 }
 
@@ -472,7 +472,7 @@ export function useLayers({
   const layerProps: Omit<CircleLayerSpecification, 'id' | 'filter' | 'paint'> = {
     type: 'circle',
     source: 'alerts-heatmap-vector',
-    'source-layer': 'alerts_data',
+    'source-layer': 'alerts',
     minzoom: 0,
     maxzoom: 18,
     layout: { visibility },
