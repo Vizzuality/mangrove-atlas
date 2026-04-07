@@ -21,22 +21,30 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const setMapCursor = useSetRecoilState(mapCursorAtom);
 
   const handleDrawingMode = useCallback(() => {
-    resetDrawingUploadToolState();
-    setDrawingToolState((drawingToolState) => ({
-      ...drawingToolState,
-      enabled: !isDrawingToolEnabled,
-    }));
-    // Google Analytics tracking
-    trackEvent(
-      `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
-      {
-        category: 'Drawing tool',
-        action: 'Click',
-        label: `Drawing tool - ${isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw'} polygon`,
-      }
-    );
-  }, [setDrawingToolState, isDrawingToolEnabled, resetDrawingUploadToolState]);
+    const nextEnabled = !isDrawingToolEnabled;
+    const action = isDrawingToolEnabled && !uploadedGeojson ? 'delete' : 'draw';
 
+    resetDrawingUploadToolState();
+
+    setDrawingToolState((prev) => ({
+      ...prev,
+      enabled: nextEnabled,
+    }));
+
+    setMapCursor(nextEnabled ? 'pointer' : 'grab');
+
+    trackEvent(`Drawing tool - ${action} polygon`, {
+      category: 'Drawing tool',
+      action: 'Click',
+      label: `Drawing tool - ${action} polygon`,
+    });
+  }, [
+    isDrawingToolEnabled,
+    uploadedGeojson,
+    resetDrawingUploadToolState,
+    setDrawingToolState,
+    setMapCursor,
+  ]);
   useEffect(() => {
     setMapCursor(isDrawingToolEnabled ? 'cell' : 'grab');
   }, [setMapCursor, isDrawingToolEnabled]);
@@ -45,7 +53,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
     <Helper
       className={{
         button: '-top-1 right-1.5 z-20',
-        tooltip: 'w-fit max-w-[400px]',
+        tooltip: 'w-fit max-w-100',
       }}
       tooltipPosition={{ top: -65, left: -10 }}
       message="Use this function to draw a polygon on the map to calculate statistics for your area of interest. Complete the polygon by double clicking. The widgets will update with statistics for the area drawn."
@@ -54,8 +62,6 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
       <button
         type="button"
         className={cn({
-          'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2':
-            true,
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
           [menuItemStyle]: true,
