@@ -22,13 +22,13 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
       <Helper
         className={{
           button: '-top-1 right-4 z-20',
-          tooltip: 'w-fit-content max-w-[400px]',
+          tooltip: 'w-fit-content max-w-100',
         }}
         tooltipPosition={{ top: -65, left: -5 }}
         message="Coming soon"
       >
         <DialogTrigger>
-          <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-sm">
+          <div className={menuItemStyle}>
             <LuBookmarkIcon
               className={cn({
                 'h-8 w-8 stroke-1 text-white': true,
@@ -42,7 +42,7 @@ const SavedAreas = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         <div>
           {status === 'authenticated' ? (
             <div className="space-y-6">
-              <h2 className="text-3xl leading-[32px] font-light text-black/85">My areas</h2>
+              <h2 className="text-3xl leading-8 font-light text-black/85">My areas</h2>
               <SavedAreasContent />{' '}
             </div>
           ) : (

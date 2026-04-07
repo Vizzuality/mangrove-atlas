@@ -63,7 +63,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
       <Helper
         className={{
           button: '-top-1 right-4 z-20',
-          tooltip: 'w-fit-content max-w-[400px]',
+          tooltip: 'w-fit-content max-w-100',
         }}
         tooltipPosition={{ top: -65, left: -5 }}
         message="Click this icon to search for a country or a protected area. Countries can also be selected by clicking on the map or on the selected geography seen in the blue space above. "
@@ -71,7 +71,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         <DialogTrigger asChild>
           <button
             onClick={handleOnClickSearch}
-            className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2"
+            className={menuItemStyle}
             data-testid="search-button"
           >
             <GLASS_SVG role="img" title="Glass" />
