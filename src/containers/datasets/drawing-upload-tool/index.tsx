@@ -140,7 +140,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
     <Helper
       className={{
         button: '-top-1 left-16 z-20',
-        tooltip: 'w-fit max-w-[400px]',
+        tooltip: 'w-fit max-w-100',
       }}
       tooltipPosition={{ top: -65, left: -0 }}
       content={drawingToolHelperContent}

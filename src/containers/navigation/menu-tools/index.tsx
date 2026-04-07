@@ -44,21 +44,21 @@ const LocationTools = () => {
   }, [map, resetAnalysisState, resetDrawingState, resetDrawingUploadState]);
 
   const CARD_MENU_ITEM =
-    'mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white';
+    'flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl p-2 text-white flex-1';
 
   return (
-    <div className="mx-4 flex w-full items-center justify-center space-x-4 overflow-visible md:mx-auto">
+    <div className="m-4 flex w-full items-center justify-center gap-4 overflow-visible md:mx-auto">
       {/* RESET PAGE */}
       <Link href="/" onClick={handleReset} data-testid="worldwide-button">
         <Helper
           className={{
             button: '-top-1 left-0 z-20',
-            tooltip: 'w-fit-content max-w-[400px]',
+            tooltip: 'w-fit-content max-w-100',
           }}
           tooltipPosition={{ top: -65, left: 0 }}
           message="Click this icon to return to default settings: Global statistics, zoomed out view, and default widget deck."
         >
-          <div className="mb-2 flex cursor-pointer flex-col items-center justify-center space-y-1 rounded-3xl py-2 text-white">
+          <div className={CARD_MENU_ITEM}>
             <RESET_SVG role="img" title="Reset page" />
             <span className="font-sans text-sm whitespace-nowrap">Reset page</span>
           </div>
@@ -66,6 +66,7 @@ const LocationTools = () => {
       </Link>
 
       {/* FIND LOCATIONS */}
+
       <FindLocations menuItemStyle={CARD_MENU_ITEM} />
 
       {/* DRAW AREA */}
@@ -75,7 +76,9 @@ const LocationTools = () => {
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />
 
       {/* SAVED AREAS */}
-      <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
+      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['login'] === true && (
+        <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
+      )}
     </div>
   );
 };
