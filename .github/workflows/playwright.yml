@@ -26,11 +26,10 @@ jobs:
       NEXT_PUBLIC_SMTP_PASSWORD: ${{ secrets.NEXT_PUBLIC_SMTP_PASSWORD }}
       NEXT_PUBLIC_SMTP_PORT: ${{ secrets.NEXT_PUBLIC_SMTP_PORT }}
       NEXT_PUBLIC_SMTP_USER_NAME: ${{ secrets.NEXT_PUBLIC_SMTP_USER_NAME }}
-      # Isolated test environment defaults — keep behavior consistent across runs.
-      NEXT_PUBLIC_FEATURED_FLAGS: '{}'
-      NEXT_PUBLIC_VERCEL_ENV: preview
-      NEXT_PUBLIC_ENVIRONMENT: staging
-      NEXT_PUBLIC_GA_ID: ''
+      # NEXT_PUBLIC_VERCEL_ENV / ENVIRONMENT / FEATURED_FLAGS / GA_ID are
+      # pinned in the committed .env.test (loaded by playwright.config.ts
+      # with override:true). Keep build-time branching values there so local
+      # and CI always build the same bundle — do not add them here.
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4

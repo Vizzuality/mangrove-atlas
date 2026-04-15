@@ -2,10 +2,18 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Load deterministic test env BEFORE the webServer child is spawned.
+ *
+ * `override: true` replaces any values the developer has in their shell or
+ * personal .env for the duration of this process, so `next build` bakes the
+ * same NEXT_PUBLIC_* values into the client bundle on every machine. Without
+ * this, a developer with NEXT_PUBLIC_VERCEL_ENV=development in their .env
+ * builds a different binary than CI does, and tests silently diverge.
+ *
+ * Secrets (NEXTAUTH_SECRET, API URLs, Mapbox token, …) intentionally live
+ * OUTSIDE this file: the developer's own .env locally, GitHub Secrets in CI.
  */
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env.test', override: true });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
