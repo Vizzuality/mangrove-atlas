@@ -131,7 +131,7 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_habitat_change: HabitatChangeWidget,
   mangrove_net_change: NetChangeWidget,
   mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
       ? AlertsWidget
       : AlertsWidgetStaging,
   mangrove_biomass: BiomassWidget,
@@ -168,7 +168,7 @@ export const LAYERS = {
   'hi-res-extent': HiResExtentLayer,
   mangrove_net_change: NetChangeLayer,
   mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
       ? AlertsLayer
       : AlertsLayerStaging,
   mangrove_biomass: BiomassLayer,
@@ -211,7 +211,7 @@ export const MAP_LEGENDS = {
   mangrove_drivers_change: DriversChangeMapLegend,
   mangrove_fisheries: FisheriesMapLegend,
   mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
       ? AlertsMapLegend
       : AlertsMapLegendStaging,
   mangrove_allen_coral_reef: AllenCoralReefMapLegend,
@@ -242,7 +242,7 @@ export const INFO = {
   mangrove_drivers_change: DriversChangeInfo,
   mangrove_net_change: NetChangeInfo,
   mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
       ? AlertsInfo
       : AlertsInfoStaging,
   mangrove_restoration: RestorationInfo,
@@ -272,7 +272,7 @@ export const DOWNLOAD = {
   mangrove_habitat_extent: HabitatExtentDownload,
   // mangrove_net_change: NetChangeDownload,
   mangrove_alerts:
-    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['mangrove_alerts'] === true
+    JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['mangrove_alerts'] === true
       ? AlertsDownload
       : AlertsDownloadStaging,
   mangrove_biomass: BiomassDownload,
