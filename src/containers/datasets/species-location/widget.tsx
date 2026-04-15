@@ -58,7 +58,7 @@ const SpeciesLocation = () => {
         label: scientific_name,
         value: scientific_name,
       })),
-    [species, isLoading]
+    [species]
   );
 
   const onSelectSpecies = useCallback(
@@ -101,7 +101,7 @@ const SpeciesLocation = () => {
 
           {isLayerActive && specieSelected && (
             <div className="mb-8 flex items-center space-x-2">
-              <div className="border-brand-800 my-0.5 mr-2.5 h-4 w-2 rounded-md border bg-[url(/images/species-location/small-pattern.svg')] bg-center text-sm" />
+              <div className="border-brand-800 my-0.5 mr-2.5 h-4 w-2 rounded-md border bg-[url(/images/species-location/small-pattern.svg)] bg-center text-sm" />
               <span className="text-sm font-bold text-black/85">
                 Countries where the species is located
               </span>

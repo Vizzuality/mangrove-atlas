@@ -12,7 +12,7 @@ import {
 } from '@/store/map';
 
 import { isEmpty } from 'lodash-es';
-import { MapboxGeoJSONFeature } from 'mapbox-gl';
+import { GeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import IucnEcoregionPopup from '@/containers/datasets/iucn-ecoregion/map-popup';
@@ -23,9 +23,7 @@ import RestorationSitesPopup from '@/containers/datasets/restoration-sites/map-p
 
 import Draggable from '@/components/draggable';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
 // POPUPS
-
 import type { LocationPopUp, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import MapPopupClose from './pop-up-controls/close';
@@ -39,10 +37,10 @@ type MapPopupProps = {
   locationInfo: {
     info: LocationPopUp | null;
     position?: Position;
-    feature: MapboxGeoJSONFeature | null;
+    feature: GeoJSONFeature | null;
   };
   restorationInfo: { info: RestorationPopUp | null };
-  restorationsitesInfo: { info: RestorationSitesPopUp | null };
+  restorationSitesInfo: { info: RestorationSitesPopUp | null };
   iucnEcoregionInfo: { info: IUCNEcoregionPopUpInfo | null };
 };
 
@@ -50,7 +48,7 @@ const MapPopup = ({
   mapId,
   locationInfo,
   restorationInfo,
-  restorationsitesInfo,
+  restorationSitesInfo,
   iucnEcoregionInfo,
 }: MapPopupProps) => {
   const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
@@ -105,7 +103,7 @@ const MapPopup = ({
   }, [
     locationInfo.info,
     restorationInfo.info,
-    restorationsitesInfo.info,
+    restorationSitesInfo.info,
     iucnEcoregionInfo.info,
     setMapDraggableTooltipDimensions,
   ]);
@@ -159,7 +157,7 @@ const MapPopup = ({
             <div className="pointer-events-none absolute right-6 bottom-0 left-6 z-10 h-8 bg-linear-to-t from-white to-transparent" />
 
             <div
-              className="relative min-w-[375px] divide-y divide-gray-200 rounded-b-3xl bg-white"
+              className="relative min-w-93.75 divide-y divide-gray-200 rounded-b-3xl bg-white"
               style={{ maxHeight }}
             >
               <LocationPopup
@@ -167,8 +165,8 @@ const MapPopup = ({
                 nonExpansible={isEmpty(iucnEcoregionInfo?.info) && isEmpty(restorationInfo?.info)}
               />
               {restorationInfo?.info && <RestorationPopup info={restorationInfo.info} />}
-              {restorationsitesInfo?.info && (
-                <RestorationSitesPopup info={restorationsitesInfo.info} />
+              {restorationSitesInfo?.info && (
+                <RestorationSitesPopup info={restorationSitesInfo.info} />
               )}
               {iucnEcoregionInfo.info && <IucnEcoregionPopup info={iucnEcoregionInfo.info} />}
             </div>

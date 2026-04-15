@@ -6,6 +6,9 @@ import cn from '@/lib/classnames';
 
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 
+import SvgMinus from '@/svgs/ui/minus';
+import SvgPlus from '@/svgs/ui/plus';
+
 const Collapsible = CollapsiblePrimitive.Root;
 
 const CollapsibleTrigger = forwardRef<
@@ -31,47 +34,11 @@ const CollapsibleTrigger = forwardRef<
       {children}
 
       {iconType === 'plus-minus' && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          className={cn({
-            'text-brand-800 lucide lucide-minus-icon lucide-minus h-6 w-6 group-data-[state=closed]:hidden group-data-[state=open]:block':
-              true,
-            'h-6 w-6': iconSize === 'md',
-            'h-4 w-4': iconSize === 'sm',
-          })}
-        >
-          <path d="M5 12h14" />
-        </svg>
+        <SvgMinus className="text-brand-800 h-6 w-6 cursor-pointer group-data-[state=closed]:hidden group-data-[state=open]:block" />
       )}
 
       {iconType === 'plus-minus' && (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={cn({
-            'text-brand-800 lucide lucide-minus-icon lucide-minus h-6 w-6 group-data-[state=closed]:block group-data-[state=open]:hidden':
-              true,
-            'h-6 w-6': iconSize === 'md',
-            'h-4 w-4': iconSize === 'sm',
-          })}
-        >
-          <path d="M5 12h14" />
-        </svg>
+        <SvgPlus className="text-brand-800 h-6 w-6 cursor-pointer group-data-[state=closed]:block group-data-[state=open]:hidden" />
       )}
 
       {iconType === 'arrow' && (

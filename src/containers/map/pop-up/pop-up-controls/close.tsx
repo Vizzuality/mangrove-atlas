@@ -15,10 +15,10 @@ const MapPopupClose = ({ handleClose }: MapPopupCloseProps) => {
         <button
           type="button"
           aria-label="Close popup"
-          className="inline-flex h-8 w-8 items-center justify-center rounded-md leading-none text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          className="inline-flex items-center justify-center rounded-md leading-none text-gray-500 hover:bg-gray-100 hover:text-gray-700"
           onClick={handleClose}
         >
-          <HixIcon className="text-brand-800 block h-5 w-5" />
+          <HixIcon className="text-brand-800 block h-6 w-6" />
         </button>
       </TooltipTrigger>
       <TooltipPortal>
