@@ -125,9 +125,6 @@
   },
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
-    "overrides": {
-      "@mdx-js/loader>webpack": "5.104.1"
-    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
