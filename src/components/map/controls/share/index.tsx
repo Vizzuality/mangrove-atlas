@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -24,21 +24,20 @@ export const Share = ({
 }) => {
   const { asPath } = useRouter();
 
-  const [currentUrl, setCurrentUrl] = useState<string | null>(null);
-  const [embeddedLink, setEmbeddedLink] = useState<string | null>(null);
+  const currentUrl = useMemo(
+    () => (typeof window !== 'undefined' ? window.location.href : null),
+    []
+  );
+  const embeddedLink = useMemo(
+    () =>
+      typeof window !== 'undefined'
+        ? `<iframe src="${window.location.origin}/embedded${asPath.slice(1, asPath.length)}" title="Global Mangrove Watch"></iframe>`
+        : null,
+    [asPath]
+  );
 
   const [shareLinkBtnText, setShareLinkBtnText] = useState('Copy link');
   const [shareEmbedCodeBtnText, setShareEmbedCodeBtnText] = useState('Copy code');
-
-  useEffect(() => {
-    setCurrentUrl(window.location.href);
-    setEmbeddedLink(
-      `<iframe src="${window.location.origin}/embedded${asPath.slice(
-        1,
-        asPath.length
-      )}" title="Global Mangrove Watch"></iframe>`
-    );
-  }, [asPath]);
 
   const copyShareLink = useCallback(() => {
     navigator.clipboard
@@ -79,15 +78,11 @@ export const Share = ({
               <DialogTrigger>
                 <div
                   className={cn({
-                    'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
+                    'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
                   })}
                 >
-                  <SHARE_SVG
-                    className="fill-current h-4 w-4 bg-white group-hover:bg-gray-100"
-                    role="img"
-                    title="Share"
-                  />
+                  <SHARE_SVG className="h-4 w-4 group-hover:bg-gray-100" role="img" title="Share" />
                 </div>
               </DialogTrigger>
 
@@ -136,7 +131,7 @@ export const Share = ({
               })}
             >
               <SHARE_SVG
-                className="fill-current h-4 w-4 bg-white opacity-40 group-hover:bg-gray-100"
+                className="h-4 w-4 bg-white fill-current opacity-40 group-hover:bg-gray-100"
                 role="img"
                 title="Share"
               />
