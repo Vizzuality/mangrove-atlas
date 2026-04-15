@@ -5,7 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  flat-cache>flatted: 3.4.2
   '@mdx-js/loader>webpack': 5.104.1
 
 importers:
