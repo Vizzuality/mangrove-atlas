@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
-
 import WIDGETS from '@/containers/widgets/constants';
 
 import { WidgetTypes } from 'types/widget';
+
+import { test, expect } from './fixtures/test';
 
 const WORDWIDE_LOCATION = 'worldwide';
 const COUNTRY_LOCATION = 'country';

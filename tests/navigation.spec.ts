@@ -1,10 +1,7 @@
-import { expect, test } from '@playwright/test';
-
-import { dismissWelcomeDialog } from './fixtures/welcome-dialog';
+import { expect, test } from './fixtures/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
-  await dismissWelcomeDialog(page);
 });
 
 test('test menu links', async ({ page, browserName }) => {
