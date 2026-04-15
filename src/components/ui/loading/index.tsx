@@ -1,6 +1,6 @@
 import cn from '@/lib/classnames';
 
-import { IconBaseProps } from 'react-icons/lib/iconBase';
+import { IconBaseProps } from 'react-icons/lib';
 import { LuLoaderCircle } from 'react-icons/lu';
 
 const LuLoaderIcon = LuLoaderCircle as unknown as (p: IconBaseProps) => JSX.Element;
