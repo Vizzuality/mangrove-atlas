@@ -26,6 +26,11 @@ jobs:
       NEXT_PUBLIC_SMTP_PASSWORD: ${{ secrets.NEXT_PUBLIC_SMTP_PASSWORD }}
       NEXT_PUBLIC_SMTP_PORT: ${{ secrets.NEXT_PUBLIC_SMTP_PORT }}
       NEXT_PUBLIC_SMTP_USER_NAME: ${{ secrets.NEXT_PUBLIC_SMTP_USER_NAME }}
+      # Isolated test environment defaults — keep behavior consistent across runs.
+      NEXT_PUBLIC_FEATURED_FLAGS: '{}'
+      NEXT_PUBLIC_VERCEL_ENV: preview
+      NEXT_PUBLIC_ENVIRONMENT: staging
+      NEXT_PUBLIC_GA_ID: ''
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
