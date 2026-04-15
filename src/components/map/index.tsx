@@ -26,6 +26,12 @@ export const CustomMap: FC<CustomMapProps> = ({
 }) => {
   const { [id]: mapRef } = useMap();
 
+  // Enable mapbox-gl's testMode under browser automation (Playwright et al.)
+  // so the map initializes without WebGL/tokens in headless Chromium.
+  // See https://docs.mapbox.com/mapbox-gl-js/guides/security-and-testing/
+  // `navigator.webdriver` is the W3C-standard flag automation tools set.
+  const testMode = typeof navigator !== 'undefined' && navigator.webdriver === true;
+
   const [localViewState, setLocalViewState] = useState<Partial<ViewState>>(
     initialViewState || { ...DEFAULT_VIEW_STATE, ...viewState }
   );
@@ -119,6 +125,7 @@ export const CustomMap: FC<CustomMapProps> = ({
         onLoad={handleMapLoad}
         // terrain={safeTerrain}
         fog={safeFog}
+        testMode={testMode}
         {...restMapProps}
         {...localViewState}
       >
