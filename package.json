@@ -126,7 +126,6 @@
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
     "overrides": {
-      "flat-cache>flatted": "3.4.2",
       "@mdx-js/loader>webpack": "5.104.1"
     },
     "onlyBuiltDependencies": [
