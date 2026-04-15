@@ -52,6 +52,10 @@ export default defineConfig({
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     navigationTimeout: 120000,
+    /* Fail individual actions (click/fill/etc.) fast so hung clicks
+     * produce a named actionability error (e.g. "intercepted by <x>")
+     * instead of the 2-minute test-timeout that tells us nothing. */
+    actionTimeout: 10000,
     storageState: STORAGE_STATE,
   },
 
