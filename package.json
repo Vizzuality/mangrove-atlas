@@ -52,7 +52,7 @@
     "@transifex/react": "^7.1.5",
     "@turf/bbox": "6.5.0",
     "@types/mdx": "2.0.13",
-    "axios": "1.13.5",
+    "axios": "1.15.0",
     "braces": "3.0.3",
     "chroma-js": "^2.6.0",
     "class-variance-authority": "^0.7.1",
