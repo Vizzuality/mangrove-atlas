@@ -125,6 +125,9 @@
   },
   "packageManager": "pnpm@10.32.1",
   "pnpm": {
+    "overrides": {
+      "recharts>lodash": "4.18.1"
+    },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
       "core-js",
