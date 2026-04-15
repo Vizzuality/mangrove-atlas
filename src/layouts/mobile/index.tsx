@@ -21,12 +21,11 @@ const MobileLayout = () => {
   const map = useMap();
 
   const handleReset = useCallback(() => {
-    if (map) {
-      map?.['default-mobile-no-print'].flyTo({
-        center: [0, 20],
-        zoom: 2,
-      });
-    }
+    // See desktop layout: chain through the keyed ref, not just `map`.
+    map?.['default-mobile-no-print']?.flyTo({
+      center: [0, 20],
+      zoom: 2,
+    });
   }, [map]);
 
   return (

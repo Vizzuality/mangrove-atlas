@@ -70,12 +70,13 @@ const DesktopLayout = () => {
   } = useLocation(id, locationType);
 
   const handleReset = useCallback(() => {
-    if (map) {
-      map?.['default-desktop-no-print'].flyTo({
-        center: [0, 20],
-        zoom: 2,
-      });
-    }
+    // `useMap()` returns a truthy MapCollection even before any <Map /> has
+    // mounted; the keyed ref is what can be undefined during the async init
+    // window (and forever in non-WebGL environments). Chain through the key.
+    map?.['default-desktop-no-print']?.flyTo({
+      center: [0, 20],
+      zoom: 2,
+    });
   }, [map]);
 
   return (
