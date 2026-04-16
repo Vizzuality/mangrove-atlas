@@ -50,9 +50,14 @@ export const notificationPreferencesKeys = {
 // ---------------------
 
 export function useGetUserNotificationPreferences<T = UserNotificationPreferencesResponse>(
-  queryOptions: UseQueryOptions<UserNotificationPreferencesResponse, Error, T> = {}
+  queryOptions: Omit<
+    UseQueryOptions<UserNotificationPreferencesResponse, Error, T>,
+    'queryKey'
+  > = {}
 ) {
-  return useQuery(notificationPreferencesKeys.list(), fetchUserNotificationPreferences, {
+  return useQuery({
+    queryKey: notificationPreferencesKeys.list(),
+    queryFn: fetchUserNotificationPreferences,
     ...queryOptions,
   });
 }
@@ -60,19 +65,19 @@ export function useGetUserNotificationPreferences<T = UserNotificationPreference
 export function usePostToggleLocationAlerts() {
   const qc = useQueryClient();
 
-  return useMutation(
-    (body: { location_alerts: boolean; newsletter: boolean; platform_updates: boolean }) =>
-      postToggleLocationAlerts(body),
-
-    {
-      onSuccess: () => {
-        qc.invalidateQueries({
-          queryKey: notificationPreferencesKeys.list(),
-        });
-      },
-      onError: (error) => {
-        console.error('Error toggling location alerts:', error);
-      },
-    }
-  );
+  return useMutation({
+    mutationFn: (body: {
+      location_alerts: boolean;
+      newsletter: boolean;
+      platform_updates: boolean;
+    }) => postToggleLocationAlerts(body),
+    onSuccess: () => {
+      qc.invalidateQueries({
+        queryKey: notificationPreferencesKeys.list(),
+      });
+    },
+    onError: (error) => {
+      console.error('Error toggling location alerts:', error);
+    },
+  });
 }

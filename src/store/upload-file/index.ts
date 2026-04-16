@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const uploadFileAtom = atom<boolean>({
-  key: 'upload-file-error',
-  default: false,
-});
+export const uploadFileAtom = atom<boolean>(false);

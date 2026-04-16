@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useDropzone } from 'react-dropzone';
 
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import cn from '@/lib/classnames';
 
@@ -10,7 +10,7 @@ import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { mapCursorAtom } from '@/store/map';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useSetAtom } from 'jotai';
 import { toast } from 'sonner';
 
 import { fetchUploadFile } from 'hooks/analysis';
@@ -69,19 +69,20 @@ const drawingToolHelperContent = (
 
 const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const [{ enabled: isDrawingUploadToolEnabled, uploadedGeojson }, setDrawingUploadToolState] =
-    useRecoilState(drawingUploadToolAtom);
+    useAtom(drawingUploadToolAtom);
 
   const [uploadingFile, setFileUpload] = useState(false);
 
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
-    useRecoilState(drawingToolAtom);
+    useAtom(drawingToolAtom);
 
-  const setAnalysisState = useSetRecoilState(analysisAtom);
-  const setMapCursor = useSetRecoilState(mapCursorAtom);
+  const setAnalysisState = useSetAtom(analysisAtom);
+  const setMapCursor = useSetAtom(mapCursorAtom);
 
-  const { push, asPath } = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const queryParams = asPath.split('?')[1];
+  const queryParams = searchParams.toString();
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -110,7 +111,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               ...prevAnalysisState,
               enabled: true,
             }));
-            void push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`, null);
+            void router.push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`);
 
             toast.success('File uploaded successfully');
           })

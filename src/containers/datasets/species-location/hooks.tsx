@@ -2,13 +2,12 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
-import type { QueryObserverOptions } from '@tanstack/react-query';
+import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -21,8 +20,8 @@ import type { DataResponse } from './types';
 
 const QUERY_KEY = 'species-location';
 
-export function useMangroveSpeciesLocation<T>(
-  queryOptions?: QueryObserverOptions<DataResponse, Error, T>
+export function useMangroveSpeciesLocation<T = DataResponse>(
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, T>, 'queryKey' | 'queryFn'>
 ) {
   const fetchMangroveSpecies = () =>
     API.request<DataResponse>({
@@ -33,16 +32,15 @@ export function useMangroveSpeciesLocation<T>(
       },
     }).then(({ data }) => data);
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { id: currentLocation, location_id },
   } = useLocation(id, locationType);
 
-  return useQuery([QUERY_KEY, location_id], fetchMangroveSpecies, {
+  return useQuery({
+    queryKey: [QUERY_KEY, location_id],
+    queryFn: fetchMangroveSpecies,
     ...queryOptions,
   });
 }
@@ -64,7 +62,7 @@ export function useLayer({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  const data = useRecoilValue(SpeciesLocationState);
+  const data = useAtomValue(SpeciesLocationState);
   const locationsIds = data?.location_ids;
   const { data: locations } = useLocations();
 

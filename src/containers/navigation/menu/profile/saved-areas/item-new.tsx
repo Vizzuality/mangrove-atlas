@@ -6,8 +6,8 @@ import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
+import { useAtomValue } from 'jotai';
 import { LuPlus } from 'react-icons/lu';
-import { useRecoilValue } from 'recoil';
 
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import {
@@ -36,8 +36,8 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
 
   const createUserLocationMutation = useCreateUserLocation();
 
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
 
   const buildCustomGeometry = useCallback((): CustomGeometry | null => {
     const drawn = customGeojson?.features?.[0]?.geometry;

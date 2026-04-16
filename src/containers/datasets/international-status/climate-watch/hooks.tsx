@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -23,13 +24,13 @@ import type {
 export function useClimateWatchNDCS(
   indicators: IndicatorsParams,
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: Omit<
+    UseQueryOptions<DataResponse, Error, Record<string, any>>,
+    'queryKey' | 'queryFn'
+  >
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { iso },
   } = useLocation(id, locationType);
@@ -45,7 +46,9 @@ export function useClimateWatchNDCS(
       },
       ...queryOptions,
     }).then((response: AxiosResponse['data']) => response.data);
-  return useQuery(['climate-watch-ndcs', params, iso, indicators], fetchClimateWatchNDCS, {
+  return useQuery({
+    queryKey: ['climate-watch-ndcs', params, iso, indicators],
+    queryFn: fetchClimateWatchNDCS,
     select: ({ indicators }) => {
       return indicators?.reduce((acc, value) => {
         return {
@@ -69,15 +72,19 @@ export function useClimateWatchNDCS(
   });
 }
 
+type CountriesDocsResult = DataResponseDocuments & {
+  update: { value?: string; url?: string };
+};
+
 export function useClimateWatchNDCSCountriesDocs(
   params?: UseClimateWatchNDCSCountriesDocsParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponseDocuments, Error>
+  queryOptions?: Omit<
+    UseQueryOptions<DataResponseDocuments, Error, CountriesDocsResult>,
+    'queryKey' | 'queryFn' | 'select'
+  >
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { iso },
   } = useLocation(id, locationType);
@@ -90,34 +97,31 @@ export function useClimateWatchNDCSCountriesDocs(
         ...(!!iso && iso !== 'worldwide' && { location: iso }),
         ...params,
       },
-      ...queryOptions,
     }).then((response) => response.data);
-  return useQuery(
-    ['climate-watch-ndcs-countries_documents', params, iso],
-    fetchClimateWatchNDCSCountriesDocs,
-    {
-      select: (data) => {
-        return {
-          ...data,
-          update: {
-            value: data?.data?.[iso].find(({ slug }) => params?.documentSlug === slug)?.long_name,
-            url: data?.data?.[iso].find(({ slug }) => params?.documentSlug === slug)?.url,
-          },
-        };
-      },
-      ...queryOptions,
-    }
-  );
+  return useQuery<DataResponseDocuments, Error, CountriesDocsResult>({
+    queryKey: ['climate-watch-ndcs-countries_documents', params, iso],
+    queryFn: fetchClimateWatchNDCSCountriesDocs,
+    select: (data) => {
+      return {
+        ...data,
+        update: {
+          value: data?.data?.[iso]?.find(({ slug }) => params?.documentSlug === slug)?.long_name,
+          url: data?.data?.[iso]?.find(({ slug }) => params?.documentSlug === slug)?.url,
+        },
+      };
+    },
+    ...queryOptions,
+  });
 }
 
 export function useClimateWatchNDCSContentOverview(
-  queryOptions?: UseQueryOptions<DataResponseContentOverview, Error>
+  queryOptions?: Omit<
+    UseQueryOptions<DataResponseContentOverview, Error, Record<string, string>>,
+    'queryKey' | 'queryFn' | 'select'
+  >
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { iso },
   } = useLocation(id, locationType);
@@ -126,33 +130,30 @@ export function useClimateWatchNDCSContentOverview(
     ClimateWatchAPI.request({
       method: 'GET',
       url: `/ndcs/${iso}/content_overview`,
-      ...queryOptions,
     }).then((response) => response.data);
 
-  return useQuery(
-    ['climate-watch-ndcs-content_overview', iso],
-    fetchClimateWatchNDCSContentOverview,
-    {
-      select: ({ values }) => {
-        const update = values.find(({ slug }) => slug === 'indc_summary');
-        const content = values.reduce((acc, item) => {
-          const cleanedValue = item.value
-            .replace(/^\"|\"$/g, '')
-            .replace(/\\"/g, '')
-            .replace(/<br>/g, '\n')
-            .replace(/\\?"/g, '')
-            .trim();
+  return useQuery<DataResponseContentOverview, Error, Record<string, string>>({
+    queryKey: ['climate-watch-ndcs-content_overview', iso],
+    queryFn: fetchClimateWatchNDCSContentOverview,
+    select: ({ values }) => {
+      const update = values.find(({ slug }) => slug === 'indc_summary');
+      const content = values.reduce<Record<string, string>>((acc, item) => {
+        const cleanedValue = item.value
+          .replace(/^\"|\"$/g, '')
+          .replace(/\\"/g, '')
+          .replace(/<br>/g, '\n')
+          .replace(/\\?"/g, '')
+          .trim();
 
-          acc[item.slug] = cleanedValue;
-          acc.document_slug = item.document_slug;
-          return acc;
-        }, {});
-        return {
-          ...content,
-          documentSlug: update.document_slug,
-        };
-      },
-      ...queryOptions,
-    }
-  );
+        acc[item.slug] = cleanedValue;
+        acc.document_slug = item.document_slug;
+        return acc;
+      }, {});
+      return {
+        ...content,
+        documentSlug: update.document_slug,
+      };
+    },
+    ...queryOptions,
+  });
 }

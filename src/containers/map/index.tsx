@@ -3,28 +3,29 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { activeGuideAtom } from '@/store/guide';
+import { locationIdAtom } from '@/store/locations';
 import {
-  basemapAtom,
   interactiveLayerIdsAtom,
   locationBoundsAtom,
   mapCursorAtom,
   coordinatesAtom,
-  URLboundsAtom,
   mapDraggableTooltipDimensionsAtom,
+  mapDraggableTooltipPositionAtom,
+  useSyncBasemap,
+  useSyncURLBounds,
 } from '@/store/map';
-import { mapDraggableTooltipPositionAtom } from '@/store/map';
 import { printModeState } from '@/store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
+import { useAtom, useAtomValue } from 'jotai';
 import type { LngLatBoundsLike, GeoJSONFeature } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
@@ -67,26 +68,26 @@ export const MAP_DEFAULT_PROPS = {
 };
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
-  const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
-  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
+  const [position, setPosition] = useAtom(mapDraggableTooltipPositionAtom);
+  const mapPopUpDimensions = useAtomValue(mapDraggableTooltipDimensionsAtom);
 
-  const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
+  const [coordinates, setCoordinates] = useAtom(coordinatesAtom);
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
-  const basemap = useRecoilValue(basemapAtom);
-  const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
+  const [basemap] = useSyncBasemap();
+  const interactiveLayerIds = useAtomValue(interactiveLayerIdsAtom);
 
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
-    useRecoilState(drawingToolAtom);
-  const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
-  const [cursor, setCursor] = useRecoilState(mapCursorAtom);
-  const isPrintingMode = useRecoilValue(printModeState);
+    useAtom(drawingToolAtom);
+  const { enabled: isUploadToolEnabled, uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
+  const [URLBounds, setURLBounds] = useSyncURLBounds();
+  const [cursor, setCursor] = useAtom(mapCursorAtom);
+  const isPrintingMode = useAtomValue(printModeState);
 
-  const [, setAnalysisState] = useRecoilState(analysisAtom);
-  const guideIsActive = useRecoilValue(activeGuideAtom);
+  const [, setAnalysisState] = useAtom(analysisAtom);
+  const guideIsActive = useAtomValue(activeGuideAtom);
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number | null; y: number | null };
     info: LocationPopUp | null;
@@ -134,14 +135,11 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const { [mapId]: map } = useMap();
 
-  const {
-    query: { params },
-    push,
-    asPath,
-  } = useRouter();
-  const locationId = params?.[1];
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const locationId = useAtomValue(locationIdAtom);
   const queryClient = useQueryClient();
-  const queryParams = asPath.split('?')[1];
+  const queryParams = searchParams.toString();
 
   useEffect(() => {
     if (!initialViewState.bounds) return;
@@ -247,9 +245,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setLocationBounds(bbox as typeof locationBounds);
       }
 
-      void push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+      void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
     },
-    [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
+    [setDrawingToolState, setAnalysisState, router, setLocationBounds, queryParams]
   );
 
   const handleDrawingUpdate = useCallback(

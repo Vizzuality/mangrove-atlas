@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
 import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
+import { useAtom } from 'jotai';
 import type { GeoJSONFeature } from 'mapbox-gl';
-import { useRecoilState } from 'recoil';
 
 import { useLocations } from '@/containers/datasets/locations/hooks';
 
@@ -28,11 +28,12 @@ const LocationPopUP = ({
   className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(nonExpansible);
-  const [, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const [, setLocationBounds] = useAtom(locationBoundsAtom);
 
-  const { push, asPath } = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const queryParams = asPath.split('?')[1];
+  const queryParams = searchParams.toString();
   const { info, feature } = locationPopUpInfo;
 
   const { type, name } = info?.location ?? {};
@@ -62,7 +63,7 @@ const LocationPopUP = ({
         setLocationBounds(bbox as [number, number, number, number]);
       }
 
-      void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, undefined);
+      void router.push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`);
     }
 
     // Google Analytics tracking
@@ -72,7 +73,7 @@ const LocationPopUP = ({
       label: `Location pop up - ${info?.location.name}`,
       value: info?.location.name,
     });
-  }, [setLocationBounds, push, queryParams, locations, feature, info]);
+  }, [setLocationBounds, router, queryParams, locations, feature, info]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
@@ -87,10 +88,7 @@ const LocationPopUP = ({
         if (bbox) {
           setLocationBounds(bbox as [number, number, number, number]);
         }
-        void push(
-          `/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`,
-          undefined
-        );
+        void router.push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`);
       }
 
       // Google Analytics tracking
@@ -101,7 +99,7 @@ const LocationPopUP = ({
         value: info?.location.name,
       });
     },
-    [setLocationBounds, push, queryParams, locations, info]
+    [setLocationBounds, router, queryParams, locations, info]
   );
 
   return (

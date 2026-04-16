@@ -1,16 +1,15 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { sortObject } from '@/lib/utils';
 
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import {
   RestorationSitesFiltersApplication,
   RestorationSitesMapFilters,
 } from '@/store/widgets/restoration-sites';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -25,20 +24,17 @@ import type { Data, DataFilters, DataResponse } from './types';
 // widget data
 export function useMangroveRestorationSites(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, Data>, 'queryKey' | 'queryFn' | 'select'>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const mapFilters = useRecoilValue(RestorationSitesMapFilters);
-  const filtersPending = useRecoilValue(RestorationSitesFiltersApplication);
+  const mapFilters = useAtomValue(RestorationSitesMapFilters);
+  const filtersPending = useAtomValue(RestorationSitesFiltersApplication);
 
-  const fetchMangroveRestorationSites = () =>
+  const fetchMangroveRestorationSites = (): Promise<DataResponse> =>
     API.request({
       method: 'GET',
       url: '/widgets/sites',
@@ -49,30 +45,25 @@ export function useMangroveRestorationSites(
       },
     }).then((response) => response.data);
 
-  return useQuery(
-    ['restoration-sites', mapFilters, currentLocation, filtersPending],
-    fetchMangroveRestorationSites,
-    {
-      select: ({ data }) => {
-        return {
-          data,
-          location,
-        };
-      },
-      ...queryOptions,
-    }
-  );
+  return useQuery<DataResponse, Error, Data>({
+    queryKey: ['restoration-sites', mapFilters, currentLocation, filtersPending],
+    queryFn: fetchMangroveRestorationSites,
+    select: ({ data }) => {
+      return {
+        data,
+        location,
+      };
+    },
+    ...queryOptions,
+  });
 }
 
 export function useMangroveRestorationSitesFilters(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, DataFilters>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, DataFilters>, 'queryKey' | 'queryFn'>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -84,21 +75,18 @@ export function useMangroveRestorationSitesFilters(
         ...(!!location_id && location_id !== 'worldwide' && { location_id: currentLocation }),
         ...params,
       },
-    }).then((response) => response.data);
+    }).then((response) => response.data as { data: Record<string, string[]> });
 
-  return useQuery(
-    ['restoration-sites-filters', currentLocation],
-    fetchMangroveRestorationSitesFilters,
-    {
-      select: ({ data }) => {
-        const orderedData = sortObject(data);
-        return {
-          data: orderedData,
-        };
-      },
-      ...queryOptions,
-    }
-  );
+  return useQuery({
+    queryKey: ['restoration-sites-filters', currentLocation],
+    queryFn: fetchMangroveRestorationSitesFilters,
+    select: ({ data }) => {
+      const orderedData = sortObject(data);
+      return {
+        data: orderedData,
+      };
+    },
+  });
 }
 
 export function useSource(): SourceProps {
@@ -119,7 +107,7 @@ export function useSource(): SourceProps {
       }) => {
         if (site_centroid) {
           return {
-            type: 'Feature',
+            type: 'Feature' as const,
             geometry: JSON.parse(site_centroid),
             properties: {
               landscape_name,

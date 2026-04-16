@@ -2,10 +2,9 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import cn from '@/lib/classnames';
 
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import {
   mapDraggableTooltipDimensionsAtom,
   mapDraggableTooltipPinnedAtom,
@@ -15,7 +14,7 @@ import { printModeState } from '@/store/print-mode';
 
 import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -28,17 +27,14 @@ import Logo from 'components/logo';
 const DesktopLayout = () => {
   const map = useMap();
 
-  const isPrintingMode = useRecoilValue(printModeState);
+  const isPrintingMode = useAtomValue(printModeState);
 
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = (queryParams?.[0] || 'worldwide') as LocationTypes;
-  const id = queryParams?.[1];
-  const setPosition = useSetRecoilState(mapDraggableTooltipPositionAtom);
-  const [isPinnedGlobally, setPinnedGlobally] = useRecoilState(mapDraggableTooltipPinnedAtom);
-  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
+  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
+  const setPosition = useSetAtom(mapDraggableTooltipPositionAtom);
+  const [isPinnedGlobally, setPinnedGlobally] = useAtom(mapDraggableTooltipPinnedAtom);
+  const mapPopUpDimensions = useAtomValue(mapDraggableTooltipDimensionsAtom);
 
   const handleDragEnd = (event) => {
     const { delta } = event;

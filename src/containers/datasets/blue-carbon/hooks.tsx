@@ -2,17 +2,16 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
 
-import { useRouter } from 'next/router';
-
 import { formatNumberNearestInteger, numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import { useAtomValue } from 'jotai';
 import type { PolarViewBox } from 'recharts/types/util/types';
-import { useRecoilValue } from 'recoil';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
@@ -40,21 +39,21 @@ const COLORS = {
 // widget data
 export function useMangroveBlueCarbon(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, AxiosError | CancelledError, BlueCarbon>,
+  queryOptions?: Omit<
+    UseQueryOptions<DataResponse, AxiosError | CancelledError, BlueCarbon>,
+    'queryKey' | 'queryFn'
+  >,
   onCancel?: () => void
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
 
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
   const geojson = customGeojson || uploadedGeojson;
 
   const fetchMangroveBlueCarbon = ({ signal }: { signal?: AbortSignal }) => {
@@ -90,7 +89,9 @@ export function useMangroveBlueCarbon(
     });
   };
 
-  return useQuery([widgetSlug, params, geojson, location_id], fetchMangroveBlueCarbon, {
+  return useQuery({
+    queryKey: [widgetSlug, params, geojson, location_id],
+    queryFn: fetchMangroveBlueCarbon,
     select: ({ data, metadata }) => {
       const noData = !data?.length;
 

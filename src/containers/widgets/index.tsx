@@ -4,10 +4,10 @@ import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationToolAtom } from '@/store/sidebar';
-import { activeWidgetsAtom } from '@/store/widgets';
+import { useSyncActiveWidgets } from '@/store/widgets';
 
+import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { useWindowSize } from 'usehooks-ts';
 
 import WidgetsLayout from '@/layouts/widgets';
@@ -69,12 +69,12 @@ const textMotion = {
 };
 
 const WidgetsContainer: FC = () => {
-  const [{ customGeojson }] = useRecoilState(drawingToolAtom);
+  const [{ customGeojson }] = useAtom(drawingToolAtom);
 
-  const [{ uploadedGeojson }] = useRecoilState(drawingUploadToolAtom);
+  const [{ uploadedGeojson }] = useAtom(drawingUploadToolAtom);
 
   const { width: screenWidth } = useWindowSize();
-  const [activeWidgets] = useRecoilState(activeWidgetsAtom);
+  const [activeWidgets] = useSyncActiveWidgets();
   const enabledWidgets = useWidgets();
   const widgetsAvailable = useMemo(() => {
     if (customGeojson || uploadedGeojson) {
@@ -85,7 +85,7 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
-  const locationTool = useRecoilValue(locationToolAtom);
+  const locationTool = useAtomValue(locationToolAtom);
 
   const onClickDownload = useCallback(() => {
     setTimeout(() => {

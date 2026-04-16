@@ -70,7 +70,7 @@ export type DataResponseDocuments = {
       slug: string;
       submission_date: string;
       url: string;
-    };
+    }[];
   };
 };
 

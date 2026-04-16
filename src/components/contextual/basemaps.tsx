@@ -4,9 +4,7 @@ import Image from 'next/image';
 
 import cn from '@/lib/classnames';
 
-import { basemapAtom } from '@/store/map';
-
-import { useRecoilState } from 'recoil';
+import { useSyncBasemap } from '@/store/map';
 
 import BASEMAPS, { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 
@@ -15,7 +13,7 @@ import { Checkbox, CheckboxIndicator } from '@/components/ui/checkbox';
 import CHECK_SVG from '@/svgs/ui/check';
 
 const BasemapsMapSettings = () => {
-  const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
+  const [basemapStored, setBasemap] = useSyncBasemap();
 
   const handleClick = (e: MouseEvent) => {
     setBasemap(e.currentTarget.id as BasemapId);
@@ -51,7 +49,7 @@ const BasemapsMapSettings = () => {
             >
               <CheckboxIndicator className="text-white">
                 <CHECK_SVG
-                  className="fill-current h-full w-full text-white"
+                  className="h-full w-full fill-current text-white"
                   role="img"
                   title="Checkmark"
                 />

@@ -1,63 +1,41 @@
-import { array, object, string, stringLiterals, optional, number } from '@recoiljs/refine';
-import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
+import { createParser, useQueryState } from 'nuqs';
 
 import { Data } from '@/containers/datasets/fisheries/commercial-fisheries-production/types';
 
 import { Visibility } from '@/types/layers';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-const LayerSettings = object({
-  name: optional(string()),
-  source: optional(string()),
-  source_layer: optional(string()),
-  date: optional(string()),
-  location: optional(string()),
-  layerIndex: optional(number()),
+export type LayerState = {
+  id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
+  opacity: string;
+  visibility: Visibility;
+  filter?: Data['indicator'] | 'total';
+  settings?: {
+    name?: string;
+    source?: string;
+    source_layer?: string;
+    location?: string;
+    layerIndex?: number;
+    date?: string;
+    [key: string]: string | number;
+  };
+};
+
+const defaultLayers: LayerState[] = [
+  { id: 'mangrove_habitat_extent', opacity: '1', visibility: 'visible' },
+];
+
+const parseAsLayers = createParser({
+  parse: (value: string) => {
+    try {
+      return JSON.parse(value) as LayerState[];
+    } catch {
+      return defaultLayers;
+    }
+  },
+  serialize: (value: LayerState[]) => JSON.stringify(value),
 });
 
-const layerSchema = object({
-  id: string(),
-  opacity: string(),
-  visibility: stringLiterals({
-    none: 'none' as string,
-    visible: 'visible' as Visibility,
-  }),
-  filter: optional(
-    stringLiterals({
-      finfish: 'finfish',
-      shrimp: 'shrimp',
-      crab: 'crab',
-      bivalve: 'bivalve',
-      total: 'total',
-    })
-  ),
-  settings: optional(LayerSettings),
-});
-
-export const activeLayersAtom = atom<
-  {
-    id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
-    opacity: string;
-    visibility: Visibility;
-    filter?: Data['indicator'] | 'total';
-    settings?: {
-      name?: string;
-      source?: string;
-      source_layer?: string;
-      location?: string;
-      layerIndex?: number;
-      date?: string;
-      [key: string]: string | number;
-    };
-  }[]
->({
-  key: 'layers',
-  default: [{ id: 'mangrove_habitat_extent', opacity: '1', visibility: 'visible' }],
-  effects: [
-    urlSyncEffect({
-      refine: array(layerSchema),
-      history: 'replace',
-    }),
-  ],
-});
+export function useSyncActiveLayers() {
+  return useQueryState('layers', parseAsLayers.withDefault(defaultLayers));
+}

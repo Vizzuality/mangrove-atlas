@@ -9,6 +9,7 @@ import {
   DialogClose,
   DialogTitle,
 } from '@/components/ui/dialog';
+
 import GLASS_SVG from '@/svgs/sidebar/glass';
 
 const LocationsMobile = () => {
@@ -31,7 +32,7 @@ const LocationsMobile = () => {
             className="mt-1 flex cursor-pointer items-center justify-center rounded-full"
           >
             <GLASS_SVG
-              className="fill-current h-8 w-8 fill-white stroke-white"
+              className="h-8 w-8 fill-current fill-white stroke-white"
               role="img"
               title="Glass"
             />

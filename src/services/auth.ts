@@ -1,5 +1,4 @@
 import { NextAPI, AuthAPI } from 'services/api';
-import API from 'services/api';
 
 // Types
 export type ResetPasswordPayload = { user: { email: string; source?: 'gmw' | undefined } }; // Optional. Specifies which frontend should handle the password reset. 'gmw' uses GMW_UI_BASE_URL, other values or omitted will use MRTT_UI_BASE_URL
@@ -39,6 +38,6 @@ export function signupUser(payload: SignupPayload) {
   return NextAPI.post<SignupResponse>('/auth/signup', payload).then((r) => r.data);
 }
 
-export function updateUser(payload: UpdateUserPayload, token: string) {
+export function updateUser(payload: UpdateUserPayload, _token: string) {
   return AuthAPI.put<UpdateUserResponse>('/users', payload, {}).then((r) => r.data);
 }

@@ -1,4 +1,4 @@
-import { createRef, useLayoutEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import type { Data } from '@/containers/datasets/restoration/overview/types';
 import Legend from '@/containers/legend';
@@ -10,17 +10,12 @@ import MANGROVE_RESTORATION_POTENTIAL_CHART_LABELS from './constants';
 const RestorationOverviewChart = ({
   restoration_potential_score, // restorationData?.restoration_potential_score
 }: Partial<Data>) => {
-  const ref = createRef<HTMLDivElement>();
   const [lineChartWidth, setLineChartWidth] = useState(0);
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    if (node?.offsetWidth) setLineChartWidth(node.offsetWidth);
+  }, []);
 
   const trianglePosition = (lineChartWidth * restoration_potential_score) / 100 - 7; // substract icon size
-
-  // fires synchronously after all DOM mutations.
-  useLayoutEffect(() => {
-    if (ref && ref.current && ref.current.offsetWidth) {
-      setLineChartWidth(ref?.current?.offsetWidth);
-    }
-  }, [ref]);
 
   return (
     <div className="mb-6 flex flex-1 flex-col items-center space-y-10">
@@ -34,7 +29,7 @@ const RestorationOverviewChart = ({
         }}
       >
         <TRIANGLE_SVG
-          className="fill-current absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2"
+          className="absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2 fill-current"
           role="img"
           aria-hidden={true}
           style={{ left: !!trianglePosition && trianglePosition }}

@@ -2,14 +2,13 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
-import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from '@/store/map';
+import { locationIdAtom } from '@/store/locations';
+import { locationBoundsAtom, mapCursorAtom, useSyncBasemap, useSyncURLBounds } from '@/store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useAtom, useAtomValue } from 'jotai';
 import type { LngLatBoundsLike } from 'mapbox-gl';
 import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -37,11 +36,11 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const mapRef = useRef(null);
   const [, setLoaded] = useState(false);
 
-  const basemap = useRecoilValue(basemapAtom);
+  const [basemap] = useSyncBasemap();
 
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
-  const cursor = useRecoilValue(mapCursorAtom);
+  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
+  const [URLBounds, setURLBounds] = useSyncURLBounds();
+  const cursor = useAtomValue(mapCursorAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
@@ -51,10 +50,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
 
   const { [mapId]: map } = useMap();
 
-  const {
-    query: { params },
-  } = useRouter();
-  const locationId = params?.[1];
+  const locationId = useAtomValue(locationIdAtom);
   const queryClient = useQueryClient();
 
   const handleViewState = useCallback(() => {

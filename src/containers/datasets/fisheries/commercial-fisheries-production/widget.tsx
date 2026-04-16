@@ -4,9 +4,7 @@ import cn from '@/lib/classnames';
 import { formatAxis } from '@/lib/format';
 import { normalize } from '@/lib/utils';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useSetRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import WidgetHeader from '@/containers/widget/header';
 import NoData from '@/containers/widgets/no-data';
@@ -49,7 +47,7 @@ const cmp = (a: string, b: string) => {
 
 const CommercialFisheriesProduction = () => {
   const [selectedIndicator, setSelectedIndicator] = useState<GroupedData['indicator']>('finfish');
-  const setActiveLayers = useSetRecoilState(activeLayersAtom);
+  const [, setActiveLayers] = useSyncActiveLayers();
 
   const { data, isFetched, isFetching } =
     useMangroveCommercialFisheriesProduction<GroupedDataResponse>(

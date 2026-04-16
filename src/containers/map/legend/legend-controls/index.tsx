@@ -4,10 +4,10 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { activeGuideAtom } from '@/store/guide';
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { INFO } from '@/containers/datasets';
 import { LAYERS } from '@/containers/layers/constants';
@@ -26,8 +26,8 @@ import INFO_SVG from '@/svgs/ui/info';
 
 const LegendControls = ({ l }: { id: string; embedded?: boolean; l: Layer }) => {
   const [infoDialogVisibility, setInfoDialogVisibility] = useState(false);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const guideIsActive = useRecoilValue(activeGuideAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
+  const guideIsActive = useAtomValue(activeGuideAtom);
 
   const onChangeVisibility = useCallback(
     (layerId: Layer['id']) => {

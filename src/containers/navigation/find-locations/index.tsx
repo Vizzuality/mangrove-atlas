@@ -4,7 +4,7 @@ import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import Helper from '@/containers/help/helper';
 import LocationDialogContent from '@/containers/location-dialog-content';
@@ -16,11 +16,11 @@ import GLASS_SVG from '@/svgs/sidebar/glass';
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
-  const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
-  const [locationTool, saveLocationTool] = useRecoilState(locationToolAtom);
-  const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
-  const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
+  const [{ enabled: isAnalysisEnabled }] = useAtom(analysisAtom);
+  const [locationTool, saveLocationTool] = useAtom(locationToolAtom);
+  const [locationsModalIsOpen, setLocationsModalIsOpen] = useAtom(locationsModalAtom);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useAtom(analysisAlertAtom);
+  const [skipAnalysisAlert, setSkipAnalysisAlert] = useAtom(skipAnalysisAlertAtom);
 
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);

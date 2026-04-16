@@ -4,11 +4,12 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
@@ -22,6 +23,7 @@ import {
   WIDGET_SELECT_STYLES,
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
+import type { DateOption } from 'types/widget';
 
 import ARROW_SVG from '@/svgs/ui/arrow';
 
@@ -29,11 +31,15 @@ import { useAlerts } from './hooks';
 import Legend from './legend';
 
 const AlertsWidget = () => {
-  const [startDate, setStartDate] = useRecoilState(alertsStartDate);
-  const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [startDate, setStartDate] = useAtom(
+    alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const [endDate, setEndDate] = useAtom(
+    alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const [isCanceled, setIsCanceled] = useState(false);
 
   const handleQueryCancellation = useCallback(() => {

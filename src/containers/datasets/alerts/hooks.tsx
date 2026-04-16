@@ -4,22 +4,22 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 
-import { useRouter } from 'next/router';
-
 import { formatAxis } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import type {
   CircleLayerSpecification,
   ExpressionSpecification,
   FilterSpecification,
 } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -222,20 +222,18 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   >,
   onCancel?: () => void
 ) {
-  const setStartDate = useSetRecoilState(alertsStartDate);
-  const setEndDate = useSetRecoilState(alertsEndDate);
+  const setStartDate = useSetAtom(
+    alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const setEndDate = useSetAtom(alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>);
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
 
   const { data } = useLocation(id, locationType);
   const location_id = data?.location_id;
 
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const fetchAlerts = async (): Promise<TRaw> => {
     try {

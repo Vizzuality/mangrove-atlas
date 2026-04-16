@@ -4,6 +4,8 @@ import { useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
+import Link from 'next/link';
+
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
@@ -259,9 +261,9 @@ function ContactForm() {
                       </Checkbox>
                       <Label htmlFor="privacyPolicy" className="cursor-pointer">
                         I agree with the 
-                        <a href="/" className="underline">
+                        <Link href="/" className="underline">
                           Privacy Policy.
-                        </a>
+                        </Link>
                       </Label>
                     </button>
                   </FormControl>

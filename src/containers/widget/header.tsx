@@ -2,7 +2,7 @@ import { PropsWithChildren, useCallback } from 'react';
 
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import { WidgetSlugType } from 'types/widget';
 
@@ -13,7 +13,7 @@ type HeaderProps = {
 
 const WidgetHeader = ({ title, id, children }: PropsWithChildren<HeaderProps>) => {
   const [widgetsCollapsed, setWidgetsCollapsed] =
-    useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
+    useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const handleWidgetCollapsed = useCallback(() => {
     const updatedWidgetsCollapsed = {

@@ -2,11 +2,7 @@ import { useMemo } from 'react';
 
 import { Source, Layer } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import type { LayerProps } from 'types/layers';
 
@@ -16,20 +12,13 @@ const MangrovesCommercialFisheriesProductionLayer = ({
   beforeId,
   id = 'mangrove_commercial_fisheries_production',
 }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = useMemo(() => activeLayers?.find((l) => l.id === id), [activeLayers, id]);
-  const { query } = useRouter();
 
   const filter = useMemo(() => {
-    if (query.layers) {
-      try {
-        return JSON.parse(query.layers as string).find((l: any) => l.id === id)?.filter;
-      } catch (error) {
-        console.error('Error parsing layers from query:', error);
-      }
-    }
-    return activeLayer?.filter;
-  }, [query.layers, activeLayer, id]);
+    const f = activeLayer?.filter;
+    return f === 'total' ? undefined : f;
+  }, [activeLayer]);
 
   const SOURCE = useSource({ filter });
   const LAYERS = useLayer({

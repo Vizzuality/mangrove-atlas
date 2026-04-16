@@ -3,9 +3,7 @@ import { useCallback, useState } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { HIGH_RESOLUTION_EXTENT } from '@/containers/datasets/contextual-layers/constants';
 
@@ -15,7 +13,7 @@ import type { Layer } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
 const HighResolutionExtentBasemap = () => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const defaultActive =
     activeLayers?.find((layer) => layer.id === 'hi-res-extent')?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);

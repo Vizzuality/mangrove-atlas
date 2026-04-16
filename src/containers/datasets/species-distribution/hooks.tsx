@@ -2,10 +2,11 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+import { useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -20,13 +21,10 @@ import type { DataResponse, SpeciesData } from './types';
 // widget data
 export function useMangroveSpeciesDistribution(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>
 ): SpeciesData {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -41,13 +39,15 @@ export function useMangroveSpeciesDistribution(
       ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
-  const query = useQuery(['biodiversity', params, location_id], fetchMangroveSpecies, {
+  const query = useQuery({
+    queryKey: ['biodiversity', params, location_id],
+    queryFn: fetchMangroveSpecies,
     placeholderData: {
       metadata: null,
       data: {
         total: null,
       },
-    },
+    } as unknown as DataResponse,
 
     ...queryOptions,
   });

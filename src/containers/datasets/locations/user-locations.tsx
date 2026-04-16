@@ -123,18 +123,22 @@ export const userLocationsKeys = {
 };
 
 export function useGetUserLocations<T = UserLocationsResponse>(
-  queryOptions: UseQueryOptions<UserLocationsResponse, Error, T> = {}
+  queryOptions: Omit<UseQueryOptions<UserLocationsResponse, Error, T>, 'queryKey'> = {}
 ) {
-  return useQuery(userLocationsKeys.list(), fetchUserLocations, {
+  return useQuery({
+    queryKey: userLocationsKeys.list(),
+    queryFn: fetchUserLocations,
     ...queryOptions,
   });
 }
 
 export function useGetUserLocation(
   id?: UserLocation['id'],
-  queryOptions: UseQueryOptions<{ data: UserLocation }, Error, UserLocation> = {}
+  queryOptions: Omit<UseQueryOptions<{ data: UserLocation }, Error, UserLocation>, 'queryKey'> = {}
 ) {
-  return useQuery(userLocationsKeys.detail(id), () => fetchUserLocation(id!), {
+  return useQuery({
+    queryKey: userLocationsKeys.detail(id!),
+    queryFn: () => fetchUserLocation(id!),
     enabled: Boolean(id),
     select: ({ data }) => data,
     ...queryOptions,
@@ -175,7 +179,7 @@ export function useCreateUserLocation() {
 
   return {
     createUserLocation: mutation.mutateAsync,
-    isLoading: mutation.isLoading,
+    isLoading: mutation.isPending,
     error: mutation.error,
   };
 }

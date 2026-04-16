@@ -1,10 +1,10 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 import { floodAreaPeriodAtom } from '@/store/widgets/flood-protection';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { useMangrovesFloodProtection } from '@/containers/datasets/flood-protection/hooks';
 
@@ -26,7 +26,7 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  const period = useRecoilValue(floodAreaPeriodAtom);
+  const period = useAtomValue(floodAreaPeriodAtom);
   const selectedPeriod = period || 'annual';
   const { data } = useMangrovesFloodProtection(selectedPeriod, {
     indicator: 'area',
@@ -91,7 +91,7 @@ export function useLayers({
 }
 
 const MangrovesFloodProtectionLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
   const SOURCE = useSource();

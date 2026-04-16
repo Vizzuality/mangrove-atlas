@@ -4,13 +4,13 @@ import cn from '@/lib/classnames';
 
 import { locationToolAtom } from '@/store/sidebar';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import ExpandCollapseWidgets from '@/containers/widgets/widgets-cards-controls/expand-collapse-widgets';
 import WidgetsDeck from '@/containers/widgets/widgets-cards-controls/widgets-deck';
 
 const WidgetsCardsControls: FC = () => {
-  const locationTool = useRecoilValue(locationToolAtom);
+  const locationTool = useAtomValue(locationToolAtom);
   return (
     <div className="py-1">
       <div

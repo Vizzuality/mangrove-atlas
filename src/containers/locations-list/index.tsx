@@ -2,17 +2,18 @@ import { useCallback, useState } from 'react';
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { locationBoundsAtom } from '@/store/map';
 import { mapSettingsAtom } from '@/store/map-settings';
 
 import turfBbox from '@turf/bbox';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
@@ -36,19 +37,17 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const screenWidth = useScreenWidth();
   const [searchValue, setSearchValue] = useState('');
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { id: locationId },
   } = useLocation(id, locationType);
 
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
-  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
-  const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
+  const setMapSettings = useSetAtom(mapSettingsAtom);
+  const resetMapSettingsState = () => setMapSettings(false);
+  const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
+  const setDrawingToolState = useSetAtom(drawingToolAtom);
 
   const {
     data: locations,
@@ -63,11 +62,12 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     defaultHeight: 100,
   });
 
-  const { asPath, replace } = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleLocation = useCallback(
     (location: Location) => {
-      const queryParams = asPath.split('?')[1];
+      const queryParams = searchParams.toString();
 
       const locationType = location.location_type === 'worldwide' ? '/' : location.location_type;
       const locationId =
@@ -76,9 +76,9 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           : location.location_type === 'country'
             ? location.iso
             : location.location_id;
-      const url = `/${locationType}/${locationId}?${queryParams !== undefined ? queryParams : ''}`;
+      const url = `/${locationType}/${locationId}?${queryParams}`;
 
-      replace(url, null);
+      router.replace(url);
 
       if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
@@ -97,8 +97,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
       resetMapSettingsState();
     },
     [
-      replace,
-      asPath,
+      router,
+      searchParams,
       setLocationBounds,
       onSelectLocation,
       resetMapSettingsState,

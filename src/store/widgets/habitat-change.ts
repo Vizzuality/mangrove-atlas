@@ -1,11 +1,5 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const habitatChangeStartYear = atom<number>({
-  key: 'habitat-change-start-year',
-  default: null,
-});
+export const habitatChangeStartYear = atom(null as number | null);
 
-export const habitatChangeEndYear = atom<number>({
-  key: 'habitat-change-end-year',
-  default: null,
-});
+export const habitatChangeEndYear = atom(null as number | null);

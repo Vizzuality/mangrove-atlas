@@ -3,10 +3,10 @@ import { useState } from 'react';
 import cn from '@/lib/classnames';
 
 import { activeGuideAtom } from '@/store/guide';
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { MAP_LEGENDS, WIDGETS } from '@/containers/datasets';
 import Helper from '@/containers/help/helper';
@@ -26,8 +26,8 @@ import LegendControls from '../legend-controls';
 
 const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolean; l: Layer }) => {
   const [statisticsDialogVisibility, setStatisticsDialogVisibility] = useState(false);
-  const [activeLayers] = useRecoilState(activeLayersAtom);
-  const guideIsActive = useRecoilValue(activeGuideAtom);
+  const [activeLayers] = useSyncActiveLayers();
+  const guideIsActive = useAtomValue(activeGuideAtom);
   const widget = widgets.find((w) => w.slug === l.id);
 
   const nationalDashboardLayerName = activeLayers?.find((l) =>

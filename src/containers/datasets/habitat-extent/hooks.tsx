@@ -2,16 +2,15 @@ import { useCallback, useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
@@ -33,20 +32,17 @@ export const widgetSlug = 'habitat-extent';
 // widget data
 export function useMangroveHabitatExtent(
   params: UseParamsOptions,
-  queryOptions: UseQueryOptions<ExtentData> = {},
+  queryOptions: Omit<UseQueryOptions<ExtentData>, 'queryKey' | 'queryFn'> = {},
   onCancel?: () => void
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
+  const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
 
   const geojson = customGeojson || uploadedGeojson;
 
@@ -83,7 +79,9 @@ export function useMangroveHabitatExtent(
     [isAnalysisEnabled, geojson, location_id, currentLocation, params, onCancel]
   );
 
-  const query = useQuery([widgetSlug, location_id, geojson], fetchHabitatExtent, {
+  const query = useQuery({
+    queryKey: [widgetSlug, location_id, geojson],
+    queryFn: fetchHabitatExtent,
     placeholderData: {
       data: [],
       metadata: {
@@ -214,7 +212,7 @@ export function useMangroveHabitatExtent(
       isError,
       refetch,
       data: DATA,
-    } as typeof query;
+    };
   }, [data, isFetching, isError, refetch, DATA]);
 }
 

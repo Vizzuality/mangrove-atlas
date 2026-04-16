@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown';
 
-import CHEVRON_ICON from '@/svgs/ui/chevron';
 import LANGUAGES_ICON from '@/svgs/tools-bar/languages';
+import CHEVRON_ICON from '@/svgs/ui/chevron';
 
 interface Transifex {
   live: {
@@ -39,29 +39,31 @@ const LanguageSelector = ({
   hasArrow = false,
   className,
 }: LanguageSelectorProps) => {
-  const t = typeof window !== 'undefined' && (window.Transifex as Transifex);
+  const [languages, setLanguages] = useState([]);
+  const [currentLanguage, setCurrentLanguage] = useState('');
+
   const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const Transifex = window.Transifex as Transifex;
     Transifex?.live.translateTo(e.currentTarget.value);
     setCurrentLanguage(e.currentTarget.id);
   }, []);
 
-  const [languages, setLanguages] = useState([]);
-  const [currentLanguage, setCurrentLanguage] = useState('');
-
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Transifex) {
-      const t = window.Transifex as Transifex;
-      if (t?.live) {
-        t.live?.init();
-        const locale = t?.live.detectLanguage();
-        const languages = t.live.getAllLanguages();
-        const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
-        setCurrentLanguage(defaultLanguage);
-        setLanguages(languages);
+    const id = setTimeout(() => {
+      if (typeof window !== 'undefined' && window.Transifex) {
+        const tx = window.Transifex as Transifex;
+        if (tx?.live) {
+          tx.live?.init();
+          const locale = tx?.live.detectLanguage();
+          const langs = tx.live.getAllLanguages();
+          const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
+          setCurrentLanguage(defaultLanguage);
+          setLanguages(langs);
+        }
       }
-    }
-  }, [t]);
+    }, 0);
+    return () => clearTimeout(id);
+  }, []);
 
   return (
     <Helper

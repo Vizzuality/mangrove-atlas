@@ -1,17 +1,16 @@
 'use client';
 import { useCallback, useMemo, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
+import { useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { IconBaseProps } from 'react-icons/lib';
-import { useRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
@@ -30,14 +29,10 @@ const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 const NATIONAL_DASHBOARD_PREFIX = 'mangrove_national_dashboard_layer_';
 
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
 
-  const {
-    query: { params },
-  } = useRouter();
-
-  const locationId = params?.[1];
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
+  const locationId = useAtomValue(locationIdAtom);
+  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
 
   const { data: locationData } = useLocation(locationId, locationType);
   const iso = locationData?.iso;

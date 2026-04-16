@@ -1,4 +1,4 @@
-import { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useCallback, useRef, useState } from 'react';
 
 import { createPortal } from 'react-dom';
 
@@ -6,7 +6,7 @@ import cn from '@/lib/classnames';
 
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
@@ -32,9 +32,9 @@ export const Helper = ({
   content?: React.ReactNode;
 }>) => {
   const childrenRef = useRef<HTMLDivElement>(null);
-  const isActive = useRecoilValue(activeGuideAtom);
+  const isActive = useAtomValue(activeGuideAtom);
   const [popOver, setPopOver] = useState<boolean>(false);
-  const [childrenPosition, saveChildrenPosition] = useState<Record<string, number>>({
+  const [childrenPosition, setChildrenPosition] = useState<Record<string, number>>({
     top: null,
     left: null,
     right: null,
@@ -43,17 +43,12 @@ export const Helper = ({
   const handlePopover = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
+    const rect = childrenRef.current?.getBoundingClientRect();
+    if (rect) {
+      setChildrenPosition({ top: rect.top, left: rect.left, right: rect.right });
+    }
     setPopOver((prev) => !prev);
   }, []);
-
-  useEffect(() => {
-    const { top, left, right } = childrenRef.current?.getBoundingClientRect();
-    saveChildrenPosition({
-      top,
-      left,
-      right,
-    });
-  }, [childrenRef, popOver, isActive]);
 
   return (
     <div className={cn({ [className.container]: !!className.container })}>
@@ -132,7 +127,7 @@ export const Helper = ({
                 )}
                 {!!content && content}
                 <CLOSE_SVG
-                  className="fill-current absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer text-black/85"
+                  className="absolute top-2 right-2 h-4 w-4 shrink-0 cursor-pointer fill-current text-black/85"
                   role="img"
                   title="Close"
                 />

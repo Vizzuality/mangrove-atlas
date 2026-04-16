@@ -83,14 +83,21 @@ const getChartData = (data: Data[], colorKeys: ColorKey[]) => {
 
 type DataParsed = {
   total: number;
+  ecoregion_total?: number;
   reports: { name: string; url: string }[];
-  config: unknown;
+  config: {
+    type: string;
+    data: any[];
+    legend: any[];
+    chartBase: any;
+    tooltip: any;
+  };
 };
 
 // widget data
 export function useMangroveEcoregions(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, DataParsed>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, DataParsed>, 'queryKey' | 'queryFn'>
 ) {
   const fetchMangroveIUCNEcoregions = () =>
     API.request({
@@ -101,7 +108,9 @@ export function useMangroveEcoregions(
       },
     }).then((response) => response.data);
 
-  return useQuery(['iucn-ecoregion', params], fetchMangroveIUCNEcoregions, {
+  return useQuery({
+    queryKey: ['iucn-ecoregion', params],
+    queryFn: fetchMangroveIUCNEcoregions,
     select: ({ data, metadata }) => {
       const dataFiltered = data?.filter((d) => d.category !== 'nt');
       const colorKeys = getColorKeys(dataFiltered);

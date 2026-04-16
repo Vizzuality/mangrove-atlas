@@ -22,11 +22,13 @@ export const fetchLocation = (locationId: Location['location_id']) =>
   }).then((response) => response.data);
 
 export function useLocations<T = DataResponse>(
-  queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
+  queryOptions: Omit<UseQueryOptions<DataResponse, Error, T>, 'queryKey'> = {}
 ) {
   const queryClient = useQueryClient();
-  return useQuery(['locations'], fetchLocations, {
-    placeholderData: queryClient.getQueryData(['locations']) || {
+  return useQuery({
+    queryKey: ['locations'],
+    queryFn: fetchLocations,
+    placeholderData: queryClient.getQueryData<DataResponse>(['locations']) || {
       data: [],
       metadata: null,
     },
@@ -37,11 +39,16 @@ export function useLocations<T = DataResponse>(
 export function useLocation(
   id?: Location['location_id'],
   locationType?: LocationTypes,
-  queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
+  queryOptions: Omit<
+    UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location>,
+    'queryKey'
+  > = {}
 ) {
   const _id = locationType && ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
-  return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
+  return useQuery({
+    queryKey: ['location', locationType, _id],
+    queryFn: () => fetchLocation(_id),
     placeholderData: { data: {} as DataResponse['data'][0] },
     select: ({ data }) => {
       if (locationType === 'custom-area') {

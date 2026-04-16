@@ -2,12 +2,13 @@ import { useCallback, useMemo } from 'react';
 
 import compact from 'lodash-es/compact';
 
-import { useRouter } from 'next/router';
-
 import { formatAxis, formatMillion, numberFormat } from '@/lib/format';
+
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
+import { useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -54,14 +55,10 @@ const getFormattedValue = (value: number, indicator: FloodProtectionIndicatorId)
 export function useMangrovesFloodProtection(
   period: FloodProtectionPeriodId,
   params: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, Data>, 'queryKey' | 'queryFn'>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -95,7 +92,9 @@ export function useMangrovesFloodProtection(
         ...params,
       },
     }).then((response) => response.data);
-  return useQuery(['flood-protection', params, location_id], fetchMangrovesFloodProtection, {
+  return useQuery({
+    queryKey: ['flood-protection', params, location_id],
+    queryFn: fetchMangrovesFloodProtection,
     select: (data) => {
       const ChartData = getBars(data.data, selectedPeriod, data.metadata, params.indicator);
       const selectedValue = ChartData.find((d) => d.label === selectedPeriod).value;

@@ -2,12 +2,11 @@ import { useCallback, useMemo } from 'react';
 
 import { Layer } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
+import { locationIdAtom } from '@/store/locations';
 import { interactiveLayerIdsAtom } from '@/store/map';
 
-import { useRecoilState } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { BASEMAPS, LAYERS } from '@/containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
@@ -18,9 +17,9 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
-  const [layers] = useRecoilState(activeLayersAtom);
+  const [layers] = useSyncActiveLayers();
 
-  const [, setInteractiveLayerIds] = useRecoilState(interactiveLayerIdsAtom);
+  const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
 
   const activeLayersIds = useMemo(() => layers?.map((l) => l?.id), [layers]);
 
@@ -34,10 +33,7 @@ const LayerManagerContainer = () => {
     return filteredLayers;
   }, [activeLayersIds]);
 
-  const {
-    query: { params },
-  } = useRouter();
-  const id = params?.[1];
+  const id = useAtomValue(locationIdAtom);
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS?.filter(

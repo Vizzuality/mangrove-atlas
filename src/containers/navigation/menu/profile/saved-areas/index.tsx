@@ -2,7 +2,9 @@
 
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
+
+import { useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
@@ -14,12 +16,8 @@ import LocationItem from './item';
 import LocationItemNew from './item-new';
 
 const SavedAreasContent = () => {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-
-  const locationType = queryParams?.[0] as LocationTypes | undefined;
-  const routeId = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes | undefined;
+  const routeId = useAtomValue(locationIdAtom);
 
   const { data: location } = useLocation(routeId, locationType);
   const { data: userLocationsRes, isLoading: isLoadingUserLocations } = useGetUserLocations();

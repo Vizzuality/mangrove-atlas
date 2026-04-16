@@ -1,11 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import cn from '@/lib/classnames';
 
-import { LuPencil, LuCheck } from 'react-icons/lu';
+import { locationBoundsAtom } from '@/store/map';
+
+import turfBbox from '@turf/bbox';
+import bbox from '@turf/bbox';
 import type { Feature, Polygon, MultiPolygon, Geometry } from 'geojson';
+import { useAtom } from 'jotai';
+import { LuPencil, LuCheck } from 'react-icons/lu';
 
 import {
   useDeleteUserLocation,
@@ -20,17 +27,9 @@ import {
 } from '@/containers/subscriptions/hooks';
 
 import { Input } from '@/components/ui/input';
-
-import { useRouter } from 'next/router';
-import turfBbox from '@turf/bbox';
-
-import { useRecoilState } from 'recoil';
-import { locationBoundsAtom } from '@/store/map';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import CLOSE_SVG from '@/svgs/ui/close';
-
-import bbox from '@turf/bbox';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type BBox = [number, number, number, number];
 
@@ -74,13 +73,10 @@ type Props = {
 const LocationItem = ({ userLocationId, name, locationType, location, geometry }: Props) => {
   const [isEditMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState(name);
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
 
-  const { replace, asPath } = useRouter();
-
-  useEffect(() => {
-    if (!isEditMode) setNewName(name);
-  }, [name, isEditMode]);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const deleteUserLocationArea = useDeleteUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
@@ -89,7 +85,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
   const { data: dataUserNotificationsPreferences } = useGetUserNotificationPreferences();
   const { data: userLocationsRes } = useGetUserLocations();
 
-  const isDeleting = deleteUserLocationArea.isLoading;
+  const isDeleting = deleteUserLocationArea.isPending;
 
   const remainingCountAfterDelete = useMemo(() => {
     const current = userLocationsRes?.data?.length ?? 0;
@@ -97,8 +93,11 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
   }, [userLocationsRes?.data?.length]);
 
   const handleEditMode = useCallback(() => {
-    setEditMode((prev) => !prev);
-  }, []);
+    setEditMode((prev) => {
+      if (prev) setNewName(name);
+      return !prev;
+    });
+  }, [name]);
 
   const handleNewName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setNewName(e.currentTarget.value);
@@ -143,7 +142,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     toggleMutation,
   ]);
 
-  const queryParams = useMemo(() => asPath.split('?')[1] ?? '', [asPath]);
+  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
 
   const baseUrl = useMemo(() => {
     if (locationType === 'system') {
@@ -160,7 +159,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     if (locationType === 'custom') {
       return queryParams ? `/custom-area/?${queryParams}` : `/custom-area`;
     }
-  }, [location, queryParams]);
+  }, [location, queryParams, locationType]);
 
   const bounds = useMemo(() => {
     if (!location?.bounds) return null;
@@ -187,9 +186,9 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
       if (bounds) setLocationBounds(bounds as typeof locationBounds);
       if (customBounds) setLocationBounds(customBounds as typeof locationBounds);
 
-      replace(LocationUrl);
+      router.replace(LocationUrl);
     },
-    [replace, setLocationBounds, locationBounds, bounds]
+    [router, setLocationBounds, locationBounds, bounds, customBounds, LocationUrl]
   );
 
   return (

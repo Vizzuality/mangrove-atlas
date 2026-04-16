@@ -6,7 +6,7 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 import { WidgetSlugType } from 'types/widget';
@@ -21,10 +21,10 @@ type ApplicabilityProps = {
 
 const WidgetApplicability: FC<ApplicabilityProps> = (props: ApplicabilityProps) => {
   const { id, applicability } = props;
-  const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
-  const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
+  const { enabled: isDrawingToolEnabled } = useAtomValue(drawingToolAtom);
+  const { enabled: isDrawingUploadToolEnabled } = useAtomValue(drawingUploadToolAtom);
 
-  const [widgetsCollapsed] = useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
+  const [widgetsCollapsed] = useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const isCollapsed: boolean =
     isDrawingToolEnabled || isDrawingUploadToolEnabled ? false : widgetsCollapsed[id];

@@ -1,12 +1,11 @@
 import { FC } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from '@/lib/classnames';
 
-import { activeWidgetsAtom } from '@/store/widgets';
+import { locationTypeAtom } from '@/store/locations';
+import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useRecoilState } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
@@ -16,14 +15,10 @@ import WidgetsDeckContent from '@/containers/widgets/widgets-deck/content';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const WidgetsDeck: FC = () => {
-  const {
-    query: { params },
-  } = useRouter();
-
   // Params as default don't appear in URL, when there is no location we assume worldwide
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
+  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
 
-  const [activeWidgets] = useRecoilState(activeWidgetsAtom);
+  const [activeWidgets] = useSyncActiveWidgets();
 
   const activeWidgetsFilteredByLocationType = widgets
     .filter((w) => w.locationType?.includes(locationType))

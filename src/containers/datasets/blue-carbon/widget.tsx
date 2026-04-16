@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { analysisAtom } from '@/store/analysis';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import NoData from '@/containers/widgets/no-data';
 
@@ -16,7 +16,7 @@ import { useMangroveBlueCarbon, widgetSlug } from './hooks';
 const BlueCarbonWidget = () => {
   const [isCanceled, setIsCanceled] = useState(false);
   const queryClient = useQueryClient();
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);
   }, []);

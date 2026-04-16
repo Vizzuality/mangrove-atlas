@@ -2,12 +2,11 @@ import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { IconBaseProps } from 'react-icons/lib';
-import { useRecoilValue } from 'recoil';
 
 import LegendItem from '../item';
 
@@ -15,7 +14,7 @@ const FaArrowUpIcon = FaArrowUp as unknown as (p: IconBaseProps) => JSX.Element;
 const FaArrowDownIcon = FaArrowDown as unknown as (p: IconBaseProps) => JSX.Element;
 
 const Legend = () => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
 
   const [isOpen, setIsOpen] = useState(true);
 

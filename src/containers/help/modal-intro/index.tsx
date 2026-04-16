@@ -1,6 +1,6 @@
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 import { useLocalStorage } from 'usehooks-ts';
 
 import VideoIntro from '@/containers/help/video-intro';
@@ -19,7 +19,7 @@ export const GuideModalIntro = ({ isOpen, setIsOpen }) => {
     'guideLocalStorage',
     false
   );
-  const isActive = useRecoilValue(activeGuideAtom);
+  const isActive = useAtomValue(activeGuideAtom);
 
   const handleClick = () => {
     if (!guideLocalStorage) {
@@ -40,7 +40,7 @@ export const GuideModalIntro = ({ isOpen, setIsOpen }) => {
           <VideoIntro />
         </div>
         <Button onClick={handleClick} className="text-sm font-bold">
-          Got it! Don't show again
+          Got it! Don&apos;t show again
         </Button>
         <DialogClose onClose={() => setIsOpen(false)} />
       </DialogContent>

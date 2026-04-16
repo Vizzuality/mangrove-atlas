@@ -1,17 +1,17 @@
 import { useCallback, useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { trackEvent } from '@/lib/analytics/ga';
 
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
-import { getLayerActive } from '@/containers/widget/selector';
+import { useIsLayerActive } from '@/containers/widget/selector';
 import NoData from '@/containers/widgets/no-data';
 
 import {
@@ -28,29 +28,27 @@ import type { RadioOption } from '@/components/ui/radio-group/types';
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from '@/styles/widgets';
 
 import { useMangroveSpeciesLocation } from './hooks';
-import type { DataResponse } from './types';
+import type { DataResponse, Specie } from './types';
 
 const SpeciesLocation = () => {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location },
   } = useLocation(id, locationType);
-  const [specieSelected, setSpecie] =
-    useRecoilState<DataResponse['data'][number]>(SpeciesLocationState);
+  const [specieSelected, setSpecie] = useAtom(
+    SpeciesLocationState as unknown as PrimitiveAtom<DataResponse['data'][number] | null>
+  );
 
   const {
     data: species,
     isLoading,
     isFetched,
     isPlaceholderData,
-  } = useMangroveSpeciesLocation({
-    select: ({ data }) => data,
+  } = useMangroveSpeciesLocation<Specie[]>({
+    select: ({ data }: DataResponse) => data,
   });
-  const isLayerActive = useRecoilValue(getLayerActive('mangrove_species_location'));
+  const isLayerActive = useIsLayerActive('mangrove_species_location');
 
   const specieOptions = useMemo(
     () =>

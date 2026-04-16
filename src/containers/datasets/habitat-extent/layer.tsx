@@ -1,9 +1,10 @@
 import { Source, Layer } from 'react-map-gl';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
-import { useRecoilValue } from 'recoil';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 
 import type { LayerProps } from 'types/layers';
 
@@ -11,9 +12,9 @@ import {} from './hooks';
 import { useLayers, useSource, useMangroveHabitatExtent } from './hooks';
 
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
-  const year = useRecoilValue(habitatExtentSettings);
+  const year = useAtomValue(habitatExtentSettings) as number | null;
   const { data } = useMangroveHabitatExtent({ year });
   const years = data?.years?.sort() || [];
 

@@ -7,7 +7,7 @@ import { analysisAtom } from '@/store/analysis';
 import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 import NoData from '@/containers/widgets/no-data';
 
@@ -28,9 +28,9 @@ import { useMangroveNetChange, widgetSlug } from './hooks';
 const NetChangeWidget = () => {
   const queryClient = useQueryClient();
   const [selectedUnit, setUnit] = useState('km²');
-  const [startYear, setStartYear] = useRecoilState(netChangeStartYear);
-  const [endYear, setEndYear] = useRecoilState(netChangeEndYear);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const [startYear, setStartYear] = useAtom(netChangeStartYear);
+  const [endYear, setEndYear] = useAtom(netChangeEndYear);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const [isCanceled, setIsCanceled] = useState(false);
 
@@ -114,7 +114,11 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
-                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    aria-hidden={true}
+                  />
                 </span>
               </PopoverTrigger>
 
@@ -153,7 +157,11 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentStartYear}
-                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    aria-hidden={true}
+                  />
                 </span>
               </PopoverTrigger>
 
@@ -186,7 +194,11 @@ const NetChangeWidget = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {currentEndYear}
-                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    aria-hidden={true}
+                  />
                 </span>
               </PopoverTrigger>
 

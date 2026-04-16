@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
 
-import { useRouter } from 'next/router';
-
 import { analysisAtom } from '@/store/analysis';
+import { locationTypeAtom } from '@/store/locations';
 import { mapSettingsAtom } from '@/store/map-settings';
-import { activeCategoryAtom } from '@/store/sidebar';
+import { useSyncActiveCategory } from '@/store/sidebar';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { WIDGETS_BY_CATEGORY } from '@/containers/widgets/constants';
 
@@ -15,14 +14,11 @@ import type { WidgetSlugType, WidgetTypes } from 'types/widget';
 import widgets, { ANALYSIS_WIDGETS_SLUGS, MAP_SETTINGS_SLUGS } from './constants';
 
 export function useWidgets(): WidgetTypes[] {
-  const categorySelected = useRecoilValue(activeCategoryAtom);
+  const [categorySelected] = useSyncActiveCategory();
 
-  const isMapSettingsVisible = useRecoilValue(mapSettingsAtom);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = params?.[0];
+  const isMapSettingsVisible = useAtomValue(mapSettingsAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
+  const locationType = useAtomValue(locationTypeAtom);
   const currentLocation = locationType || 'worldwide';
 
   return useMemo(() => {
@@ -42,10 +38,7 @@ export function useWidgets(): WidgetTypes[] {
 }
 
 export function useWidgetsIdsByLocation(): WidgetSlugType[] {
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = params?.[0];
+  const locationType = useAtomValue(locationTypeAtom);
   const currentLocation = locationType || 'worldwide';
 
   return useMemo(

@@ -1,18 +1,17 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
-
-import { useRouter } from 'next/router';
 
 import { numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { BiomassYearSettings } from '@/store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
 
@@ -41,19 +40,16 @@ const getColorKeys = (data: Data[] = []) =>
 // widget data
 export function useMangroveBiomass(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>,
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey'>,
   onCancel?: () => void
 ): BiomassData {
-  const currentYear = useRecoilValue(BiomassYearSettings);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const currentYear = useAtomValue(BiomassYearSettings);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -94,7 +90,9 @@ export function useMangroveBiomass(
     [geojson, isAnalysisEnabled, location_id, currentLocation, currentYear, params, onCancel]
   );
 
-  const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveBiomass, {
+  const query = useQuery({
+    queryKey: [widgetSlug, params, geojson, location_id],
+    queryFn: fetchMangroveBiomass,
     placeholderData: {
       data: [],
       metadata: {
@@ -104,68 +102,66 @@ export function useMangroveBiomass(
           },
         ],
       },
-    },
+    } as unknown as DataResponse,
     ...queryOptions,
   });
   const { data, isError, isFetching, refetch, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
-  return useMemo(() => {
-    const years = data?.metadata?.year;
-    const selectedYear = currentYear || years?.[years?.length - 1];
-    const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
-    const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
-      ({ year }) => year === selectedYear
-    )?.value;
+  const years = data?.metadata?.year;
+  const selectedYear = currentYear || years?.[years?.length - 1];
+  const dataFiltered = data?.data?.filter(({ indicator }) => indicator !== 'total');
+  const avgBiomassFiltered = data?.metadata?.avg_aboveground_biomass.find(
+    ({ year }) => year === selectedYear
+  )?.value;
 
-    const unit = data?.metadata?.units?.value;
+  const unit = data?.metadata?.units?.value;
 
-    const colorKeys = getColorKeys(dataFiltered);
-    const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);
-    const ChartData = dataFiltered?.map((d) => ({
-      label: d.indicator,
-      value: (d.value * 100) / total,
-      showValue: false,
-      valueFormatted: `${numberFormat((d.value * 100) / total)} %`,
-      color: colorKeys[d.indicator],
-    }));
+  const colorKeys = getColorKeys(dataFiltered);
+  const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);
+  const ChartData = dataFiltered?.map((d) => ({
+    label: d.indicator,
+    value: (d.value * 100) / total,
+    showValue: false,
+    valueFormatted: `${numberFormat((d.value * 100) / total)} %`,
+    color: colorKeys[d.indicator],
+  }));
 
-    const config = {
-      type: 'pie',
-      data: ChartData,
-      dataKey: 'value',
-      chartBase: {
-        pies: {
-          value: 'biomass',
-        },
+  const config = {
+    type: 'pie',
+    data: ChartData,
+    dataKey: 'value',
+    chartBase: {
+      pies: {
+        value: 'biomass',
       },
-      tooltip: {
-        content: (properties) => {
-          return <Tooltip {...properties} payload={properties.payload?.[0]?.payload?.payload} />;
-        },
+    },
+    tooltip: {
+      content: (properties) => {
+        return <Tooltip {...properties} payload={properties.payload?.[0]?.payload?.payload} />;
       },
-      legend: {
-        title: 'Aboveground biomass density (t / ha)',
-        items: ChartData,
-      },
-    };
+    },
+    legend: {
+      title: 'Aboveground biomass density (t / ha)',
+      items: ChartData,
+    },
+  };
 
-    return {
-      mean: numberFormat(avgBiomassFiltered),
-      unit,
-      year: selectedYear,
-      noData,
-      config,
-      location,
-      isFetching,
-      isError,
-      refetch,
-    };
-  }, [data, isFetching, isError, refetch, currentYear, location]);
+  return {
+    mean: numberFormat(avgBiomassFiltered),
+    unit,
+    year: selectedYear,
+    noData,
+    config,
+    location,
+    isFetching,
+    isError,
+    refetch,
+  };
 }
 
 export function useSource(): SourceProps {
-  const year = useRecoilValue(BiomassYearSettings);
+  const year = useAtomValue(BiomassYearSettings);
 
   // TO - DO: update when client provides data for more years
   // const tiles = years.map<string>((year: number) => {

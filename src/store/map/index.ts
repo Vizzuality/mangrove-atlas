@@ -1,66 +1,41 @@
 import type { LayerProps } from 'react-map-gl';
 
-import { string, number, array } from '@recoiljs/refine';
+import { atom } from 'jotai';
 import type { LngLat } from 'mapbox-gl';
-import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
+import { createParser, parseAsString, useQueryState } from 'nuqs';
 
-import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
+export function useSyncBasemap() {
+  return useQueryState('basemap', parseAsString.withDefault('light'));
+}
 
-export const basemapAtom = atom<BasemapId>({
-  key: 'basemap',
-  default: 'light',
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
+const parseAsBounds = createParser({
+  parse: (value: string) => {
+    try {
+      return JSON.parse(value) as number[][];
+    } catch {
+      return null;
+    }
+  },
+  serialize: (value: number[][]) => JSON.stringify(value),
 });
 
-// ? this atom syncs the bounds of the URL with the initial view of the map, allowing
+// ? this hook syncs the bounds of the URL with the initial view of the map, allowing
 // ? the initialization of the map with bounds from the URL
-export const URLboundsAtom = atom({
-  key: 'bounds',
-  default: null,
-  effects: [
-    urlSyncEffect({
-      refine: array(array(number())),
-    }),
-  ],
-});
+export function useSyncURLBounds() {
+  return useQueryState('bounds', parseAsBounds.withDefault(null));
+}
 
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL
-export const locationBoundsAtom = atom<[number, number, number, number] | null>({
-  key: 'locationBounds',
-  default: null,
-});
+export const locationBoundsAtom = atom(null as [number, number, number, number] | null);
 
-export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>({
-  key: 'interactiveIds',
-  default: [],
-});
+export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>([]);
 
-export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>({
-  key: 'mapCursor',
-  default: 'grab',
-});
+export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>('grab');
 
-export const coordinatesAtom = atom<LngLat | null>({
-  key: 'markerCoordinates',
-  default: null,
-});
+export const coordinatesAtom = atom(null as LngLat | null);
 
-export const mapDraggableTooltipPositionAtom = atom<{ x: number; y: number } | null>({
-  key: 'mapDraggableTooltipPosition',
-  default: null,
-});
+export const mapDraggableTooltipPositionAtom = atom(null as { x: number; y: number } | null);
 
-export const mapDraggableTooltipPinnedAtom = atom<boolean>({
-  key: 'mapDraggableTooltipPinned',
-  default: false,
-});
+export const mapDraggableTooltipPinnedAtom = atom<boolean>(false);
 
-export const mapDraggableTooltipDimensionsAtom = atom<{ h: number; w: number } | null>({
-  key: 'mapDraggableTooltipDimensions',
-  default: null,
-});
+export const mapDraggableTooltipDimensionsAtom = atom(null as { h: number; w: number } | null);

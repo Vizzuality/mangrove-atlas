@@ -91,7 +91,11 @@ const MangrovesInProtectedAreas = () => {
               <PopoverTrigger asChild>
                 <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
                   {selectedUnit}
-                  <ARROW_SVG className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`} role="img" aria-hidden={true} />
+                  <ARROW_SVG
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    role="img"
+                    aria-hidden={true}
+                  />
                 </span>
               </PopoverTrigger>
               .

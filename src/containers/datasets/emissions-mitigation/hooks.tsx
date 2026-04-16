@@ -1,14 +1,13 @@
-import { useMemo } from 'react';
-
 import groupBy from 'lodash-es/groupBy';
 import orderBy from 'lodash-es/orderBy';
 
-import { useRouter } from 'next/router';
-
 import { significantDigitsFormat } from '@/lib/format';
+
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
+import { useAtomValue } from 'jotai';
 import type { CartesianViewBox } from 'recharts/types/util/types';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -114,11 +113,8 @@ export function useMangroveEmissionsMitigation(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, unknown>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -134,7 +130,9 @@ export function useMangroveEmissionsMitigation(
       },
       ...queryOptions,
     }).then((response) => response.data);
-  const query = useQuery(['mitigation-potentials', location_id], fetchMangroveEmissionsMitigation, {
+  const query = useQuery({
+    queryKey: ['mitigation-potentials', location_id],
+    queryFn: fetchMangroveEmissionsMitigation,
     placeholderData: {
       data: [],
       metadata: null,
@@ -144,86 +142,82 @@ export function useMangroveEmissionsMitigation(
 
   const { data, isFetched, isLoading } = query;
   const noData = isFetched && !data?.data?.length;
-  const DATA = useMemo(() => {
-    const COLOR_RAMP = chroma
-      .scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9'])
-      .colors(data?.data?.length || 0);
-    const orderedData = orderBy(data?.data, ['category'], ['asc']);
-    const indicators =
-      orderedData?.map((d, i) => ({
-        [d.indicator]: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
-        category: d.category,
-        color: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
-        order: `${i}-${d.category}`,
-      })) || ([] satisfies Data[]);
+  const COLOR_RAMP = chroma
+    .scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9'])
+    .colors(data?.data?.length || 0);
+  const orderedData = orderBy(data?.data, ['category'], ['asc']);
+  const indicators =
+    orderedData?.map((d, i) => ({
+      [d.indicator]: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
+      category: d.category,
+      color: COLORS[d.indicator.toLowerCase()] || COLOR_RAMP[i],
+      order: `${i}-${d.category}`,
+    })) || ([] satisfies Data[]);
 
-    const chartData = getData(orderedData);
+  const chartData = getData(orderedData);
 
-    const legendPayload = getLegendPayload(indicators);
-    const config = {
-      chartBase: {
-        type: 'bar',
-        bars: getBars(indicators, filteredIndicators),
+  const legendPayload = getLegendPayload(indicators);
+  const config = {
+    chartBase: {
+      type: 'bar',
+      bars: getBars(indicators, filteredIndicators),
+    },
+    data: chartData,
+    xKey: 'category',
+    height: 360,
+    margin: {
+      top: 20,
+      right: 0,
+      left: 25,
+      bottom: 20,
+    },
+    xAxis: {
+      tick: {
+        fontSize: 12,
+        lineheight: 20,
+        fill: 'rgba(0, 0, 0, 0.54)',
       },
-      data: chartData,
-      xKey: 'category',
-      height: 360,
-      margin: {
-        top: 20,
-        right: 0,
-        left: 25,
-        bottom: 20,
+      axisLine: false,
+      interval: 0,
+      label: {
+        content: LabelXAxis,
       },
-      xAxis: {
-        tick: {
-          fontSize: 12,
-          lineheight: 20,
-          fill: 'rgba(0, 0, 0, 0.54)',
-        },
-        axisLine: false,
-        interval: 0,
-        label: {
-          content: LabelXAxis,
-        },
-        type: 'category',
+      type: 'category',
+    },
+    yAxis: {
+      tick: {
+        fontSize: 12,
+        fill: 'rgba(0,0,0,0.54)',
       },
-      yAxis: {
-        tick: {
-          fontSize: 12,
-          fill: 'rgba(0,0,0,0.54)',
-        },
-        tickFormatter: (value) => significantDigitsFormat(value),
-        width: 40,
-        interval: 0,
-        label: {
-          content: LabelContent,
-        },
-        type: 'number',
+      tickFormatter: (value) => significantDigitsFormat(value),
+      width: 40,
+      interval: 0,
+      label: {
+        content: LabelContent,
       },
-      cartesianGrid: {
-        vertical: false,
-        strokeDasharray: '5 5',
+      type: 'number',
+    },
+    cartesianGrid: {
+      vertical: false,
+      strokeDasharray: '5 5',
+    },
+    legend: legendPayload,
+    tooltip: {
+      content: (properties) => {
+        const { payload } = properties;
+        return <CustomTooltip {...properties} payload={payload} />;
       },
-      legend: legendPayload,
-      tooltip: {
-        content: (properties) => {
-          const { payload } = properties;
-          return <CustomTooltip {...properties} payload={payload} />;
-        },
-      },
-    };
+    },
+  };
 
-    return {
-      location,
-      noData,
-      config,
-    } satisfies emissionsMitigationData;
-  }, [data]);
+  const DATA = {
+    location,
+    noData,
+    config,
+  } satisfies emissionsMitigationData;
 
-  return useMemo(() => {
-    return {
-      ...query,
-      data: DATA,
-    };
-  }, [data, isFetched, isLoading]);
+  return {
+    ...query,
+    data: DATA,
+  };
 }

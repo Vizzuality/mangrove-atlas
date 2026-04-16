@@ -2,22 +2,23 @@ import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 
-import { useRouter } from 'next/router';
-
 import { formatAxis } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
+import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { CartesianViewBox } from 'recharts/types/util/types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
+import type { DateOption } from 'types/widget';
 
 import API_cloud_functions from 'services/cloud-functions';
 
@@ -105,21 +106,20 @@ export function useAlerts<DataResponse>(
   endDate: { label: string; value: string },
   params?: UseParamsOptions,
   dataParams?: CustomAreaGeometry,
-  queryOptions?: UseQueryOptions<DataResponse, Error, AlertData>,
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, AlertData>, 'queryKey' | 'queryFn'>,
   onCancel?: () => void
 ) {
-  const setStartDate = useSetRecoilState(alertsStartDate);
-  const setEndDate = useSetRecoilState(alertsEndDate);
-  const {
-    query: { params: queryParams },
-  } = useRouter();
+  const setStartDate = useSetAtom(
+    alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const setEndDate = useSetAtom(alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>);
 
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
+  const id = useAtomValue(locationIdAtom);
   const {
     data: { location_id },
   } = useLocation(id, locationType);
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const fetchAlerts = () => {
     if (isAnalysisRunning) {
@@ -151,7 +151,9 @@ export function useAlerts<DataResponse>(
     }
   };
 
-  return useQuery(['alerts', params, location_id], fetchAlerts, {
+  return useQuery({
+    queryKey: ['alerts', params, location_id],
+    queryFn: fetchAlerts,
     select: (data) => {
       if (!data) return undefined;
       const fullData = getData(data);
@@ -365,8 +367,8 @@ export function useAlerts<DataResponse>(
 
 // dataset layer
 export function useSources(): SourceProps[] {
-  const startDate = useRecoilValue(alertsStartDate);
-  const endDate = useRecoilValue(alertsEndDate);
+  const startDate = useAtomValue(alertsStartDate);
+  const endDate = useAtomValue(alertsEndDate);
 
   return [
     {

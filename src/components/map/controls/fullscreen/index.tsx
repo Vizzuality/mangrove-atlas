@@ -4,7 +4,7 @@ import cn from '@/lib/classnames';
 
 import { fullScreenAtom } from '@/store/map-settings';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
@@ -12,7 +12,7 @@ import DISABLE_FULLSCREEN_SVG from '@/svgs/map/disable-fullscreen';
 import ENABLE_FULLSCREEN_SVG from '@/svgs/map/enable-fullscreen';
 
 const FullScreen = () => {
-  const [isFullScreen, setFullScreen] = useRecoilState(fullScreenAtom);
+  const [isFullScreen, setFullScreen] = useAtom(fullScreenAtom);
 
   const toggleFullScreen = useCallback(() => {
     setFullScreen(!isFullScreen);

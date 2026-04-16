@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import { mapViewAtom } from '@/store/sidebar';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import MapContainer from '@/containers/map';
 import NavigationBar from '@/containers/navigation/mobile';
@@ -17,7 +17,7 @@ import WidgetsContainer from '@/containers/widgets';
 import LOGO_MOBILE_SVG from '@/svgs/logo-mobile';
 
 const MobileLayout = () => {
-  const mapView = useRecoilValue(mapViewAtom);
+  const mapView = useAtomValue(mapViewAtom);
   const map = useMap();
 
   const handleReset = useCallback(() => {

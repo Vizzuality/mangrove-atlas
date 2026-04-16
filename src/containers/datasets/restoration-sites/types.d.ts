@@ -6,23 +6,20 @@ export type DataDitesProperties = {
   site_centroid: string;
   site_name: string;
   organizations: string;
+  causes_of_decline?: string;
+  ecological_aims?: string;
+  socioeconomic_aims?: string;
+  community_activities?: string;
+  intervention_types?: string;
 };
-interface RestorationSite {
-  type: 'Feature';
-  geometry: {
-    type: string;
-    coordinates: [number, number];
-  };
-  properties: DataDitesProperties;
-}
 
 export type Data = {
-  data: RestorationSite[];
+  data: DataDitesProperties[];
   location: string;
 };
 
 export type DataResponse = {
-  data: Data[];
+  data: DataDitesProperties[];
 };
 
 export type DataFilters = {

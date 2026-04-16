@@ -2,14 +2,14 @@ import { PropsWithChildren } from 'react';
 
 import { fullScreenAtom } from '@/store/map-settings';
 
+import { useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRecoilValue } from 'recoil';
 
 import LocationWidget from '@/containers/location-widget';
 
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
-  const isFullScreen = useRecoilValue(fullScreenAtom);
+  const isFullScreen = useAtomValue(fullScreenAtom);
 
   return (
     <AnimatePresence initial={false}>
