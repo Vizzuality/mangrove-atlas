@@ -65,9 +65,8 @@ const DesktopLayout = () => {
     }
   };
 
-  const {
-    data: { name: location },
-  } = useLocation(id, locationType);
+  const { data: locationData } = useLocation(id, locationType);
+  const location = locationData?.name;
 
   const handleReset = useCallback(() => {
     // `useMap()` returns a truthy MapCollection even before any <Map /> has
@@ -104,8 +103,8 @@ const DesktopLayout = () => {
               <h1
                 className={cn({
                   'm-auto w-screen text-center first-letter:uppercase': true,
-                  'text-lg': location.length < 10,
-                  'text-md': location.length > 10,
+                  'text-lg': (location?.length ?? 0) < 10,
+                  'text-md': (location?.length ?? 0) > 10,
                 })}
               >
                 {location}
