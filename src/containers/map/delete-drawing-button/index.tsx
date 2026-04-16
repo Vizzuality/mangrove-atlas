@@ -45,7 +45,7 @@ export const DeleteDrawingButton = ({
 
     replace(`/?${queryParams}`, null);
 
-    map.flyTo({
+    map?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
@@ -77,7 +77,11 @@ export const DeleteDrawingButton = ({
         })}
       >
         <button onClick={handleResetPage} data-testid="delete-custom-area-button">
-          <REMOVE_SVG className="fill-current h-3.5 w-3.5 text-white" role="img" aria-hidden={true} />
+          <REMOVE_SVG
+            className="h-3.5 w-3.5 fill-current text-white"
+            role="img"
+            aria-hidden={true}
+          />
         </button>
       </div>
       {/* {children && children} */}

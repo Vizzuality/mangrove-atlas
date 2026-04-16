@@ -1,8 +1,8 @@
-import { test, expect } from '@playwright/test';
-
 import WIDGETS from '@/containers/widgets/constants';
 
 import { WidgetTypes } from 'types/widget';
+
+import { test, expect } from './fixtures/test';
 
 const WORDWIDE_LOCATION = 'worldwide';
 const COUNTRY_LOCATION = 'country';
@@ -15,13 +15,12 @@ function activeWidgetsParam(widgetSlugs: string[]) {
   return `active-widgets=[${widgetSlugs.map((s) => `"${s}"`).join(',')}]`;
 }
 
-// Click a switch via page.evaluate to avoid Firefox timing issues where
-// Radix UI switches don't respond to Playwright's native click
+// Use Playwright's native click: actionability checks wait for the element to
+// be stable and attached, which is what we need when the widget may re-render
+// between successive toggles (e.g. after a data fetch settles). Firefox is
+// skipped per-describe via `test.fixme`, so no browser-specific workaround.
 async function clickSwitch(page: import('@playwright/test').Page, testId: string) {
-  await page.evaluate(
-    (id) => (document.querySelector(`[data-testid="${id}"]`) as HTMLElement)?.click(),
-    testId
-  );
+  await page.getByTestId(testId).click();
 }
 
 test.describe('Can activate contextual layers via widget toggles', () => {

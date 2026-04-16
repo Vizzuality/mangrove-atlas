@@ -1,10 +1,14 @@
-import { test, expect } from '@playwright/test';
-
 import WIDGETS from '@/containers/widgets/constants';
+
+import { test, expect } from './fixtures/test';
 
 const DEFAULT_LOCATION = 'worldwide';
 const DEFAULT_CATEGORY = 'distribution_and_change';
-const ALWAYS_EXPANDED = ['widgets_deck_tool', 'mangrove_drawing_tool', 'mangrove_drawing_upload_tool'];
+const ALWAYS_EXPANDED = [
+  'widgets_deck_tool',
+  'mangrove_drawing_tool',
+  'mangrove_drawing_upload_tool',
+];
 const WIDGETS_BY_CATEGORY = WIDGETS.filter(
   ({ categoryIds, locationType, slug }) =>
     categoryIds?.includes(DEFAULT_CATEGORY) &&

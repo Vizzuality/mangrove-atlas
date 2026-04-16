@@ -1,10 +1,8 @@
-import { test, expect } from '@playwright/test';
-
 import WIDGETS from '@/containers/widgets/constants';
 
 import type { Category } from 'types/category';
 
-import { dismissWelcomeDialog } from './fixtures/welcome-dialog';
+import { test, expect } from './fixtures/test';
 
 // Categories available in the widgets deck dialog
 const DIALOG_CATEGORIES = [
@@ -39,31 +37,32 @@ async function clickByTestId(page: import('@playwright/test').Page, testId: stri
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/', { waitUntil: 'load' });
-  await dismissWelcomeDialog(page);
 });
 
 // TODO: fix — Recoil urlSyncEffect crashes Firefox; click mechanism needs
 // rework for nested Radix Checkbox buttons.
-test.fixme('Selecting a category changes the url query "category"', async ({ page, browserName }) => {
+test.fixme(
+  'Selecting a category changes the url query "category"',
+  async ({ page, browserName }) => {
+    const widgetsDeckTrigger = page.getByTestId('widgets-deck-trigger');
+    await expect(widgetsDeckTrigger).toBeVisible();
+    await clickByTestId(page, 'widgets-deck-trigger');
+    await page.getByText('Widgets deck settings').waitFor();
 
-  const widgetsDeckTrigger = page.getByTestId('widgets-deck-trigger');
-  await expect(widgetsDeckTrigger).toBeVisible();
-  await clickByTestId(page, 'widgets-deck-trigger');
-  await page.getByText('Widgets deck settings').waitFor();
+    // Skip the first category (distribution_and_change) because it's the default atom value
+    // and clicking it won't change the URL since the value is already the default.
+    for (const category of DIALOG_CATEGORIES.slice(1)) {
+      const categoryButton = page.getByTestId(category);
+      await expect(categoryButton).toBeVisible();
+      // Click the <h4> label inside the button — the outer button contains a
+      // nested Radix Checkbox (<button>) which makes direct clicks unreliable.
+      await categoryButton.locator('h4').click();
 
-  // Skip the first category (distribution_and_change) because it's the default atom value
-  // and clicking it won't change the URL since the value is already the default.
-  for (const category of DIALOG_CATEGORIES.slice(1)) {
-    const categoryButton = page.getByTestId(category);
-    await expect(categoryButton).toBeVisible();
-    // Click the <h4> label inside the button — the outer button contains a
-    // nested Radix Checkbox (<button>) which makes direct clicks unreliable.
-    await categoryButton.locator('h4').click();
-
-    // Check that the url has the correct category query param
-    await expect(page).toHaveURL(new RegExp(`category=.*${category}`));
+      // Check that the url has the correct category query param
+      await expect(page).toHaveURL(new RegExp(`category=.*${category}`));
+    }
   }
-});
+);
 
 async function testCategoryWidgets(page, category: Category) {
   await page.goto(`/?category="${category}"`);
