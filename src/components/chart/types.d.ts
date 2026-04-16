@@ -59,7 +59,6 @@ export type SVGBrushEvent = {
 };
 
 export type SVGBrushProps = {
-  animate?: boolean;
   selection?: Box | null;
   extent: Box;
   minimumGap?: number;

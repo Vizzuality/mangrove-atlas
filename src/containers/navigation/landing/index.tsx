@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-
 import HelpContainer from '@/containers/help';
 import Helper from '@/containers/help/helper';
 import LanguageSelector from '@/containers/navigation/language-selector';
@@ -27,14 +25,6 @@ export default function LandingNavigation() {
             />
           </Helper>
         </div>
-        <Link
-          href="https://tnc.box.com/s/pspea7mm2m2uldrqvhahmvp9dck6mc06"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whitespace-nowrap"
-        >
-          User guide
-        </Link>
 
         <LanguageSelector
           theme="dark"

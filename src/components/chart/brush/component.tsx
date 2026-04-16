@@ -1,8 +1,6 @@
 'use client';
 
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
-
-import { motion } from 'motion/react';
+import { memo, useCallback, useRef, useState } from 'react';
 
 import { SVGBrushProps, Point, Box, SVGBrushEvent } from '@/components/chart/types';
 
@@ -28,7 +26,6 @@ function shiftY(y0: number, y1: number, dy: number, ey0: number, ey1: number): [
 }
 
 function SVGBrushComponent({
-  animate = false,
   selection: controlledSelection,
   extent,
   minimumGap = 0,
@@ -51,14 +48,6 @@ function SVGBrushComponent({
   const selection = controlledSelection === undefined ? internalSelection : controlledSelection;
 
   const [[ex0, ey0], [ex1, ey1]] = extent;
-
-  const transition = useMemo(
-    () =>
-      !animate
-        ? { type: 'tween' as const, duration: 0 }
-        : { type: 'spring' as const, damping: 30, mass: 0.5 },
-    [animate]
-  );
 
   const emit = useCallback(
     (
@@ -128,11 +117,11 @@ function SVGBrushComponent({
   const [[x0, y0], [x1, y1]] = selection;
   const x = x0;
   const y = y0;
-  const w = x1 - x0;
-  const h = y1 - y0;
+  const w = Math.max(0, Number.isFinite(x1 - x0) ? x1 - x0 : 0);
+  const h = Number.isFinite(y1 - y0) ? y1 - y0 : 0;
 
   const hW = 1;
-  const hH = h - 10;
+  const hH = Math.max(0, h - 10);
 
   return (
     <g className="brush">
@@ -146,58 +135,38 @@ function SVGBrushComponent({
         height={ey1 - ey0}
       />
 
-      <motion.rect
+      <rect
         fill="url(#diagonal-stripe-1)"
         fillOpacity="0.75"
         shapeRendering="crispEdges"
-        width={0}
+        x={ex0}
+        y={ey0}
+        width={Math.max(0, Number.isFinite(x0 - ex0) ? x0 - ex0 : 0)}
+        height={Math.max(0, h - 2)}
         pointerEvents="all"
-        height={h - 2}
-        animate={{
-          width: x0 - ex0,
-          x: ex0,
-          y: ey0,
-          transition: {
-            ease: 'linear',
-            ...transition,
-          },
-        }}
       />
 
-      <motion.rect
+      <rect
         fill="url(#diagonal-stripe-1)"
         fillOpacity="0.75"
         shapeRendering="crispEdges"
-        width={0}
+        x={x1}
+        y={ey0}
+        width={Math.max(0, Number.isFinite(ex1 - x1) ? ex1 - x1 : 0)}
+        height={Math.max(0, h - 2)}
         pointerEvents="all"
-        height={h - 2}
-        animate={{
-          width: ex1 - x1,
-          x: x1,
-          y: ey0,
-          transition: {
-            ease: 'linear',
-            ...transition,
-          },
-        }}
       />
 
-      <motion.rect
+      <rect
         className="selection"
         cursor="move"
         fill="#777"
         fillOpacity="0"
         shapeRendering="crispEdges"
+        x={x}
+        y={y + 1}
         width={w}
-        height={h - 2}
-        animate={{
-          x,
-          y: y + 1,
-          transition: {
-            ease: 'linear',
-            ...transition,
-          },
-        }}
+        height={Math.max(0, h - 2)}
         onPointerDown={handleBrushStart}
         onPointerMove={(event) => {
           const move = moveRef.current;
@@ -240,16 +209,7 @@ function SVGBrushComponent({
         onPointerUp={handleBrushEnd}
       />
 
-      <motion.g
-        animate={{
-          x: x + w - hW / 2,
-          y: y + 5,
-          transition: {
-            ease: 'linear',
-            ...transition,
-          },
-        }}
-      >
+      <g transform={`translate(${x + w - hW / 2}, ${y + 5})`}>
         <rect
           ref={handleERef}
           className="handle handle--e"
@@ -320,18 +280,9 @@ function SVGBrushComponent({
             strokeWidth: 1,
           }}
         />
-      </motion.g>
+      </g>
 
-      <motion.g
-        animate={{
-          x: x - hW / 2,
-          y: y + 5,
-          transition: {
-            ease: 'linear',
-            ...transition,
-          },
-        }}
-      >
+      <g transform={`translate(${x - hW / 2}, ${y + 5})`}>
         <rect
           ref={handleWRef}
           className="handle handle--w"
@@ -402,7 +353,7 @@ function SVGBrushComponent({
             strokeWidth: 1,
           }}
         />
-      </motion.g>
+      </g>
     </g>
   );
 }
