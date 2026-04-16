@@ -44,15 +44,19 @@ export default function LoginPage() {
         aria-labelledby="mrt-hero-title"
         style={{ backgroundImage: 'url(/images/login/image.webp)' }}
       >
-        <div className="mx-24 max-w-xl space-y-6">
-          <h2 id="mrt-hero-title" className="text-5xl font-semibold text-white">
-            Welcome to the Mangrove Restoration Tracker Tool
+        <div className="mx-24 max-w-xl space-y-6 text-white">
+          <h2 id="mrt-hero-title" className="text-6xl font-light">
+            Welcome to Global Mangrove Watch
           </h2>
-          <p className="text-sm leading-relaxed text-white/90">
-            The MRTT is an open-access resource to support restoration practitioners. It provides a
-            secure location to hold information across restoration planning, intervention, and
-            monitoring.{' '}
-            <Link href="/" className="text-white underline hover:text-white/80">
+          <p className="text-sm leading-relaxed text-white">
+            A coordinated effort across sectors and geographies will accomplish more, faster. Global
+            Mangrove Watch is the evidence base informing the Global Mangrove Alliance, a
+            collaboration of organisations working to halt mangrove loss, restore half, and double
+            protection by 2030.{' '}
+            <Link
+              href="https://www.mangrovealliance.org/global-mangrove-watch"
+              className="hover:underline"
+            >
               Learn more
             </Link>
           </p>

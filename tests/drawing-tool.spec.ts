@@ -1,13 +1,10 @@
-import { test, expect } from '@playwright/test';
-
 import { useDrawingTool } from './fixtures/drawing-tool';
 import { useSidebar } from './fixtures/sidebar';
-import { dismissWelcomeDialog } from './fixtures/welcome-dialog';
+import { test, expect } from './fixtures/test';
 
 test('can open drawing tool', async ({ page, browserName }) => {
   test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
   await page.goto('/');
-  await dismissWelcomeDialog(page);
   const drawingTool = useDrawingTool(page);
   await drawingTool.open();
   // Drawing tool is activated — button text changes to "Delete area"
@@ -18,7 +15,6 @@ test.describe('Drawing Tool is open', () => {
   test.beforeEach(async ({ page, browserName }) => {
     test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
     await page.goto('/');
-    await dismissWelcomeDialog(page);
     await useDrawingTool(page).open();
   });
 
@@ -53,7 +49,6 @@ test.describe('Drawing Tool is open', () => {
 test.describe('Upload shapefile', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await dismissWelcomeDialog(page);
   });
 
   test('can upload a geojson file', async ({ page, browserName }) => {
@@ -77,7 +72,6 @@ test.describe('Custom area has a polygon', () => {
   test.beforeEach(async ({ page, browserName }) => {
     test.fixme(browserName === 'firefox', 'Firefox: Recoil/hydration instability');
     await page.goto('/');
-    await dismissWelcomeDialog(page);
     // Upload geojson directly (not via drawing tool which would disable upload)
     const drawingTool = useDrawingTool(page);
     await drawingTool.uploadGeojson('tests/documents/geojson.json');

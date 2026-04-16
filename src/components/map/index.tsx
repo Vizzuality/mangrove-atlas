@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import ReactMapGL, { ViewState, ViewStateChangeEvent, useMap } from 'react-map-gl';
 
@@ -25,6 +25,12 @@ export const CustomMap: FC<CustomMapProps> = ({
   ...mapboxProps
 }) => {
   const { [id]: mapRef } = useMap();
+
+  // Enable mapbox-gl's testMode under browser automation (Playwright et al.)
+  // so the map initializes without WebGL/tokens in headless Chromium.
+  // See https://docs.mapbox.com/mapbox-gl-js/guides/security-and-testing/
+  // `navigator.webdriver` is the W3C-standard flag automation tools set.
+  const testMode = typeof navigator !== 'undefined' && navigator.webdriver === true;
 
   const [localViewState, setLocalViewState] = useState<Partial<ViewState>>(
     initialViewState || { ...DEFAULT_VIEW_STATE, ...viewState }
@@ -100,11 +106,6 @@ export const CustomMap: FC<CustomMapProps> = ({
     return () => window.clearTimeout(t);
   }, [bounds, isFlying]);
 
-  // ✅ sanitize null -> undefined to satisfy react-map-gl types
-  const { fog, ...restMapProps } = mapboxProps as any;
-
-  const safeFog = useMemo(() => (fog == null ? undefined : fog), [fog]);
-
   return (
     <div className={cx(className, 'relative z-0 h-screen w-full print:h-[90vh]')}>
       <ReactMapGL
@@ -117,9 +118,8 @@ export const CustomMap: FC<CustomMapProps> = ({
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
         onMove={handleMapMove}
         onLoad={handleMapLoad}
-        // terrain={safeTerrain}
-        fog={safeFog}
-        {...restMapProps}
+        testMode={testMode}
+        {...mapboxProps}
         {...localViewState}
       >
         {!!mapRef && loaded && typeof children === 'function' && children(mapRef.getMap())}

@@ -21,6 +21,8 @@ import { Visibility } from '@/types/layers';
 
 import API_cloud_functions from 'services/cloud-functions';
 
+import opacity from '@/svgs/legend/opacity';
+
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
@@ -385,6 +387,11 @@ export function useSources(): SourceProps[] {
       minzoom: 10,
       maxzoom: 14,
     },
+    {
+      id: 'monitored-alerts',
+      type: 'vector',
+      url: 'mapbox://globalmangrovewatch.c5dgz6m3',
+    },
   ];
 }
 
@@ -399,6 +406,7 @@ export function useLayers({
 }): {
   'alerts-heatmap': LayerProps[];
   'alerts-tiles': LayerProps[];
+  'monitored-alerts': LayerProps[];
 } {
   return {
     'alerts-heatmap': [
@@ -470,6 +478,23 @@ export function useLayers({
             opacity * 10,
             opacity * 0.7,
           ],
+        },
+        layout: {
+          visibility,
+        },
+      },
+    ],
+    'monitored-alerts': [
+      {
+        id: `${id}-line`,
+        type: 'line',
+        source: 'monitored-alerts',
+        'source-layer': 'alert_region_tiles',
+        minzoom: 0,
+        paint: {
+          'line-color': '#00857F',
+          'line-opacity': opacity,
+          'line-width': 1,
         },
         layout: {
           visibility,

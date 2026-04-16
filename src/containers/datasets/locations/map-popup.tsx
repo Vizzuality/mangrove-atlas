@@ -7,8 +7,7 @@ import { trackEvent } from '@/lib/analytics/ga';
 import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
-import { ca } from 'date-fns/locale';
-import type { MapboxGeoJSONFeature } from 'mapbox-gl';
+import type { GeoJSONFeature } from 'mapbox-gl';
 import { useRecoilState } from 'recoil';
 
 import { useLocations } from '@/containers/datasets/locations/hooks';
@@ -23,13 +22,13 @@ const LocationPopUP = ({
 }: {
   locationPopUpInfo: {
     info: LocationPopUp | null;
-    feature: MapboxGeoJSONFeature | null;
+    feature: GeoJSONFeature | null;
   };
   nonExpansible: boolean;
   className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(nonExpansible);
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
+  const [, setLocationBounds] = useRecoilState(locationBoundsAtom);
 
   const { push, asPath } = useRouter();
 
@@ -60,7 +59,7 @@ const LocationPopUP = ({
       const bbox = turfBbox(location.bounds);
 
       if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
+        setLocationBounds(bbox as [number, number, number, number]);
       }
 
       void push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`, undefined);
@@ -73,7 +72,7 @@ const LocationPopUP = ({
       label: `Location pop up - ${info?.location.name}`,
       value: info?.location.name,
     });
-  }, [setLocationBounds, push, queryParams, locations, feature]);
+  }, [setLocationBounds, push, queryParams, locations, feature, info]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
@@ -86,7 +85,7 @@ const LocationPopUP = ({
         const bbox = turfBbox(location.bounds);
 
         if (bbox) {
-          setLocationBounds(bbox as typeof locationBounds);
+          setLocationBounds(bbox as [number, number, number, number]);
         }
         void push(
           `/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`,
@@ -133,7 +132,7 @@ const LocationPopUP = ({
             <button
               key={NAME}
               type="button"
-              className="grid grow cursor-pointer grid-cols-10 gap-4 px-6 pb-6 font-sans"
+              className="grid w-full cursor-pointer grid-cols-10 gap-4 px-6 pb-6 font-sans"
               onClick={() => handleClickProtectedArea(index)}
             >
               <div className="col-span-7 flex flex-col text-left">

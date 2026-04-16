@@ -35,12 +35,11 @@ const LocationTools = () => {
     resetDrawingState();
     resetAnalysisState();
     resetDrawingUploadState();
-    if (map) {
-      map?.['default-desktop-no-print'].flyTo({
-        center: [0, 20],
-        zoom: 2,
-      });
-    }
+    // See layouts/desktop: chain through the keyed ref, not just `map`.
+    map?.['default-desktop-no-print']?.flyTo({
+      center: [0, 20],
+      zoom: 2,
+    });
   }, [map, resetAnalysisState, resetDrawingState, resetDrawingUploadState]);
 
   const CARD_MENU_ITEM =
@@ -76,7 +75,7 @@ const LocationTools = () => {
       <WidgetDrawingUploadTool menuItemStyle={CARD_MENU_ITEM} />
 
       {/* SAVED AREAS */}
-      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS)['login'] === true && (
+      {JSON.parse(process.env.NEXT_PUBLIC_FEATURED_FLAGS || '{}')['login'] === true && (
         <SavedAreas menuItemStyle={CARD_MENU_ITEM} />
       )}
     </div>

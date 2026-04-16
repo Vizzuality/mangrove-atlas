@@ -10,7 +10,7 @@ import { activeLayersAtom } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
-import { IconBaseProps } from 'react-icons/lib/iconBase';
+import { IconBaseProps } from 'react-icons/lib';
 import { useRecoilState } from 'recoil';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';

@@ -33,6 +33,12 @@ yarn-error.log*
 # local env files
 .env*
 !.env.default
+# .env.test is committed on purpose — it pins the Playwright test-env
+# defaults (VERCEL_ENV/ENVIRONMENT/FEATURED_FLAGS/GA_ID) so local and CI
+# build the same bundle. Loaded by playwright.config.ts with override:true.
+# No secrets live here; secrets still come from the developer's own .env
+# or from GitHub Secrets in CI.
+!.env.test
 
 # vercel
 .vercel

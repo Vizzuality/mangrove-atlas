@@ -6,7 +6,7 @@ import { activeLayersAtom } from '@/store/layers';
 
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
-import { IconBaseProps } from 'react-icons/lib/iconBase';
+import { IconBaseProps } from 'react-icons/lib';
 import { useRecoilValue } from 'recoil';
 
 import LegendItem from '../item';
