@@ -33,7 +33,7 @@ export const BasemapSettings = () => {
               })}
             >
               <BASEMAP_SETTINGS_SVG
-                className="group-disabled:fill-grey-75 h-4 w-4 bg-white fill-current group-hover:bg-gray-100"
+                className="group-disabled:fill-grey-75 h-4 w-4 group-hover:bg-gray-100"
                 role="img"
                 title="Basemap settings"
               />
