@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
@@ -262,7 +264,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
     }
   };
 
-  return useQuery<TRaw, Error, AlertData | undefined>({
+  const query = useQuery<TRaw, Error, AlertData | undefined>({
     queryKey: ['alerts', params, location_id],
     queryFn: fetchAlerts,
     enabled: (queryOptions?.enabled ?? true) && !!location_id, // avoid calling without location_id
@@ -285,9 +287,6 @@ export function useAlerts<TRaw = AlertsApiResponse>(
 
       const selectedStartDate = startDate ?? defaultStartDate;
       const selectedEndDate = endDate ?? defaultEndDate;
-
-      if (selectedEndDate) setEndDate(selectedEndDate);
-      if (selectedStartDate) setStartDate(selectedStartDate);
 
       const dataFiltered = rawArray.filter(
         (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
@@ -442,6 +441,27 @@ export function useAlerts<TRaw = AlertsApiResponse>(
     },
     ...queryOptions,
   });
+
+  // Keep refs current so the effect below can read latest values without being in its dep array
+  const startDateRef = useRef(startDate);
+  startDateRef.current = startDate;
+  const endDateRef = useRef(endDate);
+  endDateRef.current = endDate;
+
+  // Initialize atoms from API defaults — only when atom is null (user hasn't picked yet).
+  // Use primitive .value strings as deps to avoid re-firing when select() returns a new object
+  // reference on every render (which would cause an infinite loop).
+  const defaultStartValue = query.data?.defaultStartDate?.value;
+  const defaultEndValue = query.data?.defaultEndDate?.value;
+  useEffect(() => {
+    if (!query.data) return;
+    const { defaultStartDate, defaultEndDate } = query.data;
+    if (!startDateRef.current && defaultStartDate) setStartDate(defaultStartDate);
+    if (!endDateRef.current && defaultEndDate) setEndDate(defaultEndDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultStartValue, defaultEndValue, setStartDate, setEndDate]);
+
+  return query;
 }
 
 // dataset layer

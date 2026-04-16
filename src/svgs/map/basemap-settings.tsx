@@ -18,7 +18,7 @@ const SvgBasemapSettings = ({ title, titleId, ...props }: SVGProps<SVGSVGElement
     <path
       d="M8 2L1.5 6L8 10L14.5 6L8 2Z"
       stroke="currentColor"
-      stroke-opacity="0.85"
+      strokeOpacity="0.85"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -26,7 +26,7 @@ const SvgBasemapSettings = ({ title, titleId, ...props }: SVGProps<SVGSVGElement
     <path
       d="M1.5 11L8 15L14.5 11"
       stroke="currentColor"
-      stroke-opacity="0.85"
+      strokeOpacity="0.85"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
