@@ -13,7 +13,7 @@ const nextConfig = {
     defaultLocale: 'en',
     localeDetection: false,
   },
-  productionBrowserSourceMaps: !!process.env.CI,
+  productionBrowserSourceMaps: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   output: 'standalone',
   poweredByHeader: false,
