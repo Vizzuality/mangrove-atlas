@@ -22,6 +22,22 @@ const PORT = process.env.PORT || 3000;
 
 const STORAGE_STATE = 'test-results/.auth/storage-state.json';
 
+/**
+ * Next.js 16 with `output: 'standalone'` requires the standalone server —
+ * `next start` explicitly warns it "does not work" with standalone output.
+ *
+ * The standalone build puts the server at `.next/standalone/server.js` but
+ * does NOT copy `public/` or `.next/static/` into the standalone dir.
+ * We do that with `cp -r` after the build so the standalone server can
+ * serve client-side assets (JS/CSS chunks, images, etc.).
+ */
+const webServerCommand = [
+  'pnpm build',
+  'cp -r public .next/standalone/',
+  'cp -r .next/static .next/standalone/.next/',
+  `PORT=${PORT} node .next/standalone/server.js`,
+].join(' && ');
+
 export default defineConfig({
   testDir: 'tests',
   outputDir: 'test-results',
@@ -32,7 +48,7 @@ export default defineConfig({
   },
   /* Build and run in production mode before starting the tests */
   webServer: {
-    command: `pnpm build && pnpm start -p ${PORT}`,
+    command: webServerCommand,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 600000,
@@ -71,11 +87,23 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        /**
+         * Disable WebGL/GPU so mapbox-gl fails with a clean "Map is not
+         * supported by this browser" error on every platform. Without this,
+         * Ubuntu CI's SwiftShader provides a partial WebGL context that
+         * passes mapbox-gl's support check but crashes later with a null
+         * reference — different from macOS where ANGLE/Metal rejects
+         * cleanly. The tests don't need a real map, just the surrounding UI.
+         */
+        launchOptions: {
+          args: ['--disable-gpu', '--disable-software-rasterizer', '--disable-webgl'],
+        },
+      },
     },
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // Firefox: every test is currently `test.fixme(browserName === 'firefox')`.
+    // Skipping the project entirely saves CI time. Re-enable when Firefox
+    // tests are actually maintained.
   ],
 });
