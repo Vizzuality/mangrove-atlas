@@ -78,28 +78,24 @@ function BrushComponent<T>({
       .rangeRound([margin.left, svgWidth - margin.right]);
   }, [data.length, margin.left, margin.right, svgWidth]);
 
-  const [animate, setAnimate] = useState(false);
   const [brushSelection, setBrushSelection] = useState<Box | null>(null);
 
   const shadowFilterId = useId().replace(/:/g, '');
 
   const ready = useMemo(() => {
-    return !!(svgWidth && svgHeight && data.length > 0);
+    return !!(svgWidth && svgHeight && data.length > 1);
   }, [svgWidth, svgHeight, data.length]);
 
-  const animateRef = useRef(false);
   const selectionRef = useRef<Box | null>(null);
 
   useEffect(() => {
     if (!ready) return;
 
-    animateRef.current = false;
     selectionRef.current = [
       [scale(startIndex), margin.top],
       [scale(resolvedEndIndex), svgHeight - margin.bottom],
     ];
 
-    setAnimate(animateRef.current);
     setBrushSelection(selectionRef.current);
   }, [ready, scale, startIndex, resolvedEndIndex, margin.top, margin.bottom, svgHeight]);
 
@@ -146,7 +142,6 @@ function BrushComponent<T>({
 
         {ready && brushSelection && (
           <SVGBrush
-            animate={animate}
             scale={scale}
             minimumGap={minimumGap}
             maximumGap={maximumGap}
@@ -159,12 +154,10 @@ function BrushComponent<T>({
             selection={brushSelection}
             shadowFilterId={shadowFilterId}
             onBrush={({ selection }) => {
-              setAnimate(false);
               setBrushSelection(selection);
             }}
             onBrushEnd={({ selection }) => {
               if (!selection) {
-                setAnimate(false);
                 setBrushSelection(null);
                 return;
               }
@@ -173,7 +166,6 @@ function BrushComponent<T>({
               const rx0 = Math.round(scale.invert(sx0));
               const rx1 = Math.round(scale.invert(sx1));
 
-              setAnimate(true);
               setBrushSelection([
                 [sx0, sy0],
                 [sx1, sy1],

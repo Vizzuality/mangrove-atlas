@@ -59,16 +59,16 @@ export function useMangroveSpeciesDistribution(
   return useMemo(() => {
     const total = data?.data?.total;
     const worldwideTotal = data?.metadata?.worldwide_total;
-    const legend = [1, Math.ceil(worldwideTotal / 2), worldwideTotal];
+    const legend = worldwideTotal ? [1, Math.ceil(worldwideTotal / 2), worldwideTotal] : [];
     return {
       noData,
       location,
-      total: total,
+      total,
       worldwideTotal,
       legend,
       ...query,
     };
-  }, [data, location, noData, isFetched]);
+  }, [data, location, noData, query]);
 }
 
 export function useSource(): SourceProps {

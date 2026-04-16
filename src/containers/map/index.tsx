@@ -204,8 +204,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   }, [locationBounds, screenWidth]);
 
   useEffect(() => {
-    if (!position && map && loaded) {
-      map?.removeFeatureState({
+    if (!position && map && loaded && map.getSource('mangrove_restoration')) {
+      map.removeFeatureState({
         sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
         source: 'mangrove_restoration',
         id: clickedStateIdRef.current || '',
@@ -403,11 +403,13 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
 
     if (!restorationFeature) {
-      map?.removeFeatureState({
-        sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-        source: 'mangrove_restoration',
-        id: clickedStateIdRef.current || '',
-      });
+      if (map?.getSource('mangrove_restoration')) {
+        map.removeFeatureState({
+          sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+          source: 'mangrove_restoration',
+          id: clickedStateIdRef.current || '',
+        });
+      }
       removePopup('restoration');
     }
     // Restoration Sites
@@ -493,14 +495,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
       // *ON MOUSE LEAVE
 
       if (!restorationData && loaded && hoveredStateIdRef.current) {
-        map?.setFeatureState(
-          {
-            sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
-            source: 'mangrove_restoration',
-            id: hoveredStateIdRef.current,
-          },
-          { hover: false }
-        );
+        if (map?.getSource('mangrove_restoration')) {
+          map.setFeatureState(
+            {
+              sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
+              source: 'mangrove_restoration',
+              id: hoveredStateIdRef.current,
+            },
+            { hover: false }
+          );
+        }
         hoveredStateIdRef.current = null;
       }
 
@@ -510,7 +514,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         setCursor('pointer');
       } else setCursor('grab');
     },
-    [cursor, map, isDrawingToolEnabled, customGeojson]
+    [cursor, map, loaded, isDrawingToolEnabled, customGeojson, setCursor]
   );
 
   const handleMapLoad = useCallback(() => {
