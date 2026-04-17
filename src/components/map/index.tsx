@@ -17,10 +17,10 @@ export const CustomMap: FC<CustomMapProps> = ({
   initialViewState,
   bounds,
   onMapViewStateChange,
-  dragPan,
-  dragRotate,
-  scrollZoom,
-  doubleClickZoom,
+  dragPan = true,
+  dragRotate = true,
+  scrollZoom = true,
+  doubleClickZoom = true,
   onLoad,
   ...mapboxProps
 }) => {
