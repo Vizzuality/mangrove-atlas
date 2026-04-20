@@ -9,11 +9,11 @@ import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-import { locationBoundsAtom } from '@/store/map';
+import { isNavigatingAtom } from '@/store/map';
 import { mapSettingsAtom } from '@/store/map-settings';
 
 import turfBbox from '@turf/bbox';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
@@ -43,7 +43,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     data: { id: locationId },
   } = useLocation(id, locationType);
 
-  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
+  const setNavigating = useSetAtom(isNavigatingAtom);
   const setMapSettings = useSetAtom(mapSettingsAtom);
   const resetMapSettingsState = () => setMapSettings(false);
   const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
@@ -67,20 +67,38 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
 
   const handleLocation = useCallback(
     (location: Location) => {
-      const queryParams = searchParams.toString();
-
-      const locationType = location.location_type === 'worldwide' ? '/' : location.location_type;
       const locationId =
         location.location_type === 'worldwide'
           ? ''
           : location.location_type === 'country'
             ? location.iso
             : location.location_id;
-      const url = `/${locationType}/${locationId}?${queryParams}`;
 
+      // Replace bounds with the new location's geometry bounds; keep all other params.
+      const bbox = location.bounds
+        ? (turfBbox(location.bounds) as [number, number, number, number])
+        : null;
+      const params = new URLSearchParams(searchParams.toString());
+      if (bbox) {
+        params.set(
+          'bounds',
+          JSON.stringify([
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ])
+        );
+      } else {
+        params.delete('bounds');
+      }
+      const queryParams = params.toString();
+
+      const url =
+        location.location_type === 'worldwide'
+          ? `/?${queryParams}`
+          : `/${location.location_type}/${locationId}?${queryParams}`;
+
+      setNavigating(true);
       router.replace(url);
-
-      if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
 
       setDrawingUploadToolState((drawingUploadToolState) => ({
         ...drawingUploadToolState,
@@ -99,7 +117,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     [
       router,
       searchParams,
-      setLocationBounds,
+      setNavigating,
       onSelectLocation,
       resetMapSettingsState,
       setDrawingToolState,

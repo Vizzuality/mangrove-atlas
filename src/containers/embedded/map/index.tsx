@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useMap } from 'react-map-gl';
 
@@ -7,8 +7,7 @@ import { locationBoundsAtom, mapCursorAtom, useSyncBasemap, useSyncURLBounds } f
 
 import { useQueryClient } from '@tanstack/react-query';
 import { useAtom, useAtomValue } from 'jotai';
-import type { LngLatBoundsLike } from 'mapbox-gl';
-import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
+import { useDebouncedCallback } from 'use-debounce';
 
 import { useScreenWidth } from 'hooks/media';
 
@@ -17,7 +16,6 @@ import LayerManager from '@/containers/map/layer-manager';
 import Legend from '@/containers/map/legend';
 
 import Map from '@/components/map';
-import { CustomMapProps } from '@/components/map/types';
 import { breakpoints } from '@/styles/styles.config';
 
 export const DEFAULT_PROPS = {
@@ -33,8 +31,7 @@ export const DEFAULT_PROPS = {
 };
 
 const EmbeddedMap = ({ mapId }: { mapId: string }) => {
-  const mapRef = useRef(null);
-  const [, setLoaded] = useState(false);
+  const containerRef = useRef(null);
 
   const [basemap] = useSyncBasemap();
 
@@ -53,49 +50,47 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const locationId = useAtomValue(locationIdAtom);
   const queryClient = useQueryClient();
 
-  const handleViewState = useCallback(() => {
+  const handleMapMove = useDebouncedCallback(() => {
     if (map) {
       setURLBounds(map.getBounds().toArray());
-      setLocationBounds(null);
     }
-  }, [map, setURLBounds, setLocationBounds]);
+  }, 500);
 
-  const initialViewState: MapboxProps['initialViewState'] = useMemo(
-    () => ({
-      ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
-      ...(!URLBounds &&
-        locationId && {
-          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
-        }),
-    }),
-    [URLBounds, locationId, queryClient]
-  );
+  const defaultBbox = useMemo<number[][] | null>(() => {
+    if (URLBounds) return URLBounds as number[][];
+    if (locationId) {
+      return queryClient.getQueryData<number[][]>(['location-bounds']) ?? null;
+    }
+    return null;
+  }, [URLBounds, locationId, queryClient]);
 
-  const bounds = useMemo<CustomMapProps['bounds'] | undefined>(() => {
-    if (!locationBounds) return undefined;
-
-    return {
-      bbox: locationBounds,
-      options: {
+  // Programmatic fitBounds
+  const lastFitBoundsRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!map || !locationBounds) return;
+    const key = locationBounds.join(',');
+    if (lastFitBoundsRef.current === key) return;
+    lastFitBoundsRef.current = key;
+    map.fitBounds(
+      [
+        [locationBounds[0], locationBounds[1]],
+        [locationBounds[2], locationBounds[3]],
+      ],
+      {
         padding: {
           top: 50,
           right: 20,
           bottom: 50,
           left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
         },
-      },
-    } satisfies CustomMapProps['bounds'];
-  }, [locationBounds, screenWidth]);
-
-  const handleMapLoad = useCallback(() => {
-    setLoaded(true);
-  }, []);
+      }
+    );
+  }, [map, locationBounds, screenWidth]);
 
   return (
     <div
       className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
-      ref={mapRef}
+      ref={containerRef}
     >
       <Map
         id={mapId}
@@ -103,14 +98,11 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
         mapStyle={selectedBasemap}
         minZoom={minZoom}
         maxZoom={maxZoom}
-        initialViewState={initialViewState}
+        initialViewState={DEFAULT_PROPS.initialViewState}
+        defaultBbox={defaultBbox}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        onMapViewStateChange={handleViewState}
-        bounds={bounds}
+        onMapMove={handleMapMove}
         interactiveLayerIds={[]}
-        onClick={undefined}
-        onMouseMove={undefined}
-        onLoad={handleMapLoad}
         cursor={cursor}
         preserveDrawingBuffer
       >

@@ -113,6 +113,16 @@ const WidgetsMenu: FC = () => {
         ? activeLayers?.filter((w) => w.id !== e)
         : [{ id: e, opacity: '1', visibility: 'visible' as Visibility }, ...activeLayers];
       setActiveLayers(layersUpdate);
+
+      // Scroll the widget into view when activating its layer
+      if (!isActive) {
+        requestAnimationFrame(() => {
+          document.getElementById(`widget-${e}`)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        });
+      }
     },
 
     [activeLayers, activeLayersIds, setActiveLayers]

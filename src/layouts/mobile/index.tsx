@@ -9,7 +9,6 @@ import { mapViewAtom } from '@/store/sidebar';
 
 import { useAtomValue } from 'jotai';
 
-import MapContainer from '@/containers/map';
 import NavigationBar from '@/containers/navigation/mobile';
 import WelcomeIntroMessage from '@/containers/welcome-message';
 import WidgetsContainer from '@/containers/widgets';
@@ -22,15 +21,15 @@ const MobileLayout = () => {
 
   const handleReset = useCallback(() => {
     // See desktop layout: chain through the keyed ref, not just `map`.
-    map?.['default-mobile-no-print']?.flyTo({
+    map?.['default']?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
   }, [map]);
 
   return (
-    <div className="h-screen print:bg-transparent">
-      <Link className="fixed -top-1 left-0 z-10" href="/" onClick={handleReset}>
+    <div className="pointer-events-none h-screen print:bg-transparent">
+      <Link className="pointer-events-auto fixed -top-1 left-0 z-10" href="/" onClick={handleReset}>
         <Image
           src="/images/mobile-header.svg"
           alt="Picture of the author"
@@ -46,7 +45,6 @@ const MobileLayout = () => {
       </Link>
       <NavigationBar />
       <WelcomeIntroMessage />
-      {mapView && <MapContainer mapId="default-mobile" />}
       {!mapView && <WidgetsContainer />}
     </div>
   );

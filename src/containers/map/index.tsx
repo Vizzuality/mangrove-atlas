@@ -3,7 +3,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Marker, useMap } from 'react-map-gl';
 
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { flyMapTo, registerMapRef } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -11,6 +13,7 @@ import { activeGuideAtom } from '@/store/guide';
 import { locationIdAtom } from '@/store/locations';
 import {
   interactiveLayerIdsAtom,
+  isNavigatingAtom,
   locationBoundsAtom,
   mapCursorAtom,
   coordinatesAtom,
@@ -23,9 +26,9 @@ import { printModeState } from '@/store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import { useAtom, useAtomValue } from 'jotai';
-import type { LngLatBoundsLike, GeoJSONFeature } from 'mapbox-gl';
-import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import type { GeoJSONFeature } from 'mapbox-gl';
+import { useDebouncedCallback } from 'use-debounce';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useScreenWidth } from 'hooks/media';
@@ -85,6 +88,15 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [URLBounds, setURLBounds] = useSyncURLBounds();
   const [cursor, setCursor] = useAtom(mapCursorAtom);
   const isPrintingMode = useAtomValue(printModeState);
+  const isNavigating = useAtomValue(isNavigatingAtom);
+  const setNavigating = useSetAtom(isNavigatingAtom);
+  const pathname = usePathname();
+  const prevPathnameRef = useRef(pathname);
+
+  // Track pathname changes (used by other effects as a signal that RSC committed).
+  useEffect(() => {
+    prevPathnameRef.current = pathname;
+  }, [pathname]);
 
   const [, setAnalysisState] = useAtom(analysisAtom);
   const guideIsActive = useAtomValue(activeGuideAtom);
@@ -141,65 +153,81 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const queryClient = useQueryClient();
   const queryParams = searchParams.toString();
 
+  // Register map ref for imperative flyMapTo calls (no effect-based fitBounds)
   useEffect(() => {
-    if (!initialViewState.bounds) return;
+    registerMapRef(map ?? null);
+    return () => registerMapRef(null);
+  }, [map]);
 
-    map?.fitBounds(initialViewState.bounds, { padding: 40 });
-    // update URL bounds when map is loaded with bounds from URL
+  // On initial page load (shared URL), fly to the bounds in the URL.
+  // Runs exactly once when the map becomes available.
+  const hasInitialized = useRef(false);
+  useEffect(() => {
+    if (!map || hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    const bounds: number[][] | null =
+      (URLBounds as number[][] | null) ??
+      (locationId ? queryClient.getQueryData<number[][]>(['location-bounds']) : null);
+
+    if (bounds && bounds.length === 2) {
+      flyMapTo([bounds[0][0], bounds[0][1], bounds[1][0], bounds[1][1]]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map]);
 
+  // Navigation fly: fires AFTER RSC completes → atoms update → layers change.
+  // By flying after the layer swap, the animation is smooth (no mid-flight blink).
+  // Tracks both locationId AND pathname so custom-area (null → null id but / → /custom-area) triggers.
+  const prevNavRef = useRef({ locationId, pathname });
   useEffect(() => {
-    if (locationId && !URLBounds) {
-      const locationBoundsFromCache = queryClient.getQueryData<typeof locationBounds>([
-        'location-bounds',
-        locationId,
-      ]);
+    if (!map || !hasInitialized.current) return;
+    if (prevNavRef.current.locationId === locationId && prevNavRef.current.pathname === pathname)
+      return;
+    prevNavRef.current = { locationId, pathname };
 
-      if (locationBoundsFromCache) {
-        setLocationBounds(locationBoundsFromCache);
-      }
+    if (!locationId && !pathname.startsWith('/custom-area')) {
+      // Worldwide — zoom out
+      map.flyTo({ center: [0, 20], zoom: 2 });
+      setNavigating(false);
+      return;
     }
-  }, [locationId, queryClient, setLocationBounds, URLBounds]);
 
-  const handleViewState = useCallback(() => {
-    if (map) {
+    const bounds = queryClient.getQueryData<number[]>(['location-bounds']);
+    if (bounds && bounds.length === 4) {
+      flyMapTo(bounds as [number, number, number, number]);
+    }
+    setNavigating(false);
+  }, [map, locationId, pathname, queryClient, setNavigating]);
+
+  // Debounced URL bounds sync — blocked while a route navigation is in flight.
+  // nuqs builds URLs from window.location.pathname; if it writes mid-transition
+  // it reverts the path and can cancel the pending router.push.
+  const handleMapMove = useDebouncedCallback(() => {
+    if (map && !isNavigating) {
       setURLBounds(map.getBounds().toArray());
-      setLocationBounds(null);
     }
-  }, [map, setURLBounds, setLocationBounds]);
+  }, 500);
+
+  // Cancel any queued bounds sync the moment navigation starts.
+  // Navigation URLs already carry correct geometry bounds (via buildNavParams),
+  // so no post-navigation sync is needed. Normal panning still syncs when
+  // isNavigating is false.
+  useEffect(() => {
+    if (isNavigating) handleMapMove.cancel();
+  }, [isNavigating, handleMapMove]);
 
   const clickedStateIdRef = useRef<string | number | null>(null);
 
   const hoveredStateIdRef = useRef<string | number | undefined | null>(null);
 
-  const initialViewState: MapboxProps['initialViewState'] = useMemo(
-    () => ({
-      ...MAP_DEFAULT_PROPS.initialViewState,
-      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
-      ...(!URLBounds && locationId
-        ? {
-            bounds:
-              queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
-          }
-        : {}),
-    }),
-    [URLBounds, locationId, queryClient]
-  );
-
-  const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    return {
-      bbox: locationBounds,
-      options: {
-        padding: {
-          top: 50,
-          right: 20,
-          bottom: 50,
-          left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
-        },
-      },
-    } satisfies CustomMapProps['bounds'];
-  }, [locationBounds, screenWidth]);
+  const defaultBbox = useMemo<number[][] | null>(() => {
+    if (URLBounds) return URLBounds as number[][];
+    if (locationId) {
+      return queryClient.getQueryData<number[][]>(['location-bounds']) ?? null;
+    }
+    return null;
+  }, [URLBounds, locationId, queryClient]);
 
   useEffect(() => {
     if (!position && map && loaded && map.getSource('mangrove_restoration')) {
@@ -212,16 +240,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   }, [position, map, loaded]);
 
   // Methods
-  const handleCustomPolygon = useCallback(
-    (customPolygon) => {
-      const bbox = turfBbox(customPolygon);
-
-      if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
-      }
-    },
-    [setLocationBounds]
-  );
+  const handleCustomPolygon = useCallback((customPolygon) => {
+    const bbox = turfBbox(customPolygon);
+    if (bbox) {
+      flyMapTo(bbox as [number, number, number, number]);
+    }
+  }, []);
 
   const handleUserDrawing = useCallback(
     (evt: { features: GeoJSON.Feature[]; action: 'onCreate' }) => {
@@ -241,13 +265,29 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
       const bbox = turfBbox(customGeojson);
 
+      // Fly immediately so the drawn geometry is visible
       if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
+        flyMapTo(bbox as [number, number, number, number]);
+        queryClient.setQueryData(['location-bounds'], bbox);
       }
 
-      void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
+      // Build URL with geometry bounds + all existing params
+      const navParams = new URLSearchParams(queryParams);
+      if (bbox) {
+        navParams.set(
+          'bounds',
+          JSON.stringify([
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ])
+        );
+      }
+      const qs = navParams.toString();
+
+      setNavigating(true);
+      void router.push(`/custom-area${qs ? `?${qs}` : ''}`);
     },
-    [setDrawingToolState, setAnalysisState, router, setLocationBounds, queryParams]
+    [setDrawingToolState, setAnalysisState, setNavigating, router, queryParams, queryClient]
   );
 
   const handleDrawingUpdate = useCallback(
@@ -547,10 +587,10 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           mapStyle={selectedBasemap}
           minZoom={minZoom}
           maxZoom={maxZoom}
-          initialViewState={initialViewState}
+          initialViewState={MAP_DEFAULT_PROPS.initialViewState}
+          defaultBbox={null}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-          onMapViewStateChange={handleViewState}
-          bounds={bounds}
+          onMapMove={handleMapMove}
           interactiveLayerIds={
             isDrawingToolEnabled || guideIsActive
               ? []
@@ -569,7 +609,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
                 <DrawControl
                   onCreate={handleUserDrawing}
                   onUpdate={handleDrawingUpdate}
-                  customPolygon={uploadedGeojson}
+                  customPolygon={uploadedGeojson || customGeojson}
                   onSetCustomPolygon={handleCustomPolygon}
                 />
               )}

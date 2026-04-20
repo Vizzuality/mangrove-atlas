@@ -1,17 +1,15 @@
 import { useCallback, useMemo, ReactElement } from 'react';
 
-import { useMap } from 'react-map-gl';
-
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { isNavigatingAtom } from '@/store/map';
 import { printModeState } from '@/store/print-mode';
-import { locationToolAtom } from '@/store/sidebar';
 
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
 import REMOVE_SVG from '@/svgs/ui/close';
@@ -29,45 +27,33 @@ export const DeleteDrawingButton = ({
   children?: ReactElement;
 }) => {
   const resetAnalysisState = useResetAtom(analysisAtom);
-  const locationTool = useAtomValue(locationToolAtom);
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetUploadedGeojson = useResetAtom(drawingUploadToolAtom);
+  const setNavigating = useSetAtom(isNavigatingAtom);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
   const isPrintingMode = useAtomValue(printModeState);
 
-  const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-
-  const { [`default-desktop-${isPrintingId}`]: map } = useMap();
-  const handleWorldwideView = useCallback(() => {
-    resetDrawingState();
-    resetUploadedGeojson();
-    resetAnalysisState();
-
-    router.replace(`/?${queryParams}`);
-
-    map?.flyTo({
-      center: [0, 20],
-      zoom: 2,
-    });
-  }, [router, map, queryParams, resetAnalysisState, resetDrawingState, resetUploadedGeojson]);
+  const queryParams = useMemo(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete('bounds');
+    return params.toString();
+  }, [searchParams]);
 
   const handleResetPage = useCallback(() => {
-    if (locationTool === 'worldwide') {
-      handleWorldwideView();
-    }
     resetDrawingState();
     resetAnalysisState();
+    resetUploadedGeojson();
 
+    setNavigating(true);
     router.replace(`/?${queryParams}`);
   }, [
-    locationTool,
     queryParams,
     router,
     resetDrawingState,
+    resetUploadedGeojson,
     resetAnalysisState,
-    handleWorldwideView,
+    setNavigating,
   ]);
 
   return (
@@ -86,7 +72,6 @@ export const DeleteDrawingButton = ({
           />
         </button>
       </div>
-      {/* {children && children} */}
     </div>
   );
 };

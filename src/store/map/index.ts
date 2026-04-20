@@ -28,6 +28,11 @@ export function useSyncURLBounds() {
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL
 export const locationBoundsAtom = atom(null as [number, number, number, number] | null);
 
+// Suppresses nuqs URL-bounds sync while a route navigation is in flight.
+// Without this, nuqs reads the stale location.pathname before router.push
+// completes and reverts the path via history.replaceState.
+export const isNavigatingAtom = atom(false);
+
 export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>([]);
 
 export const mapCursorAtom = atom<'grab' | 'pointer' | 'cell'>('grab');

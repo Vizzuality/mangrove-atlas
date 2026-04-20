@@ -11,6 +11,8 @@ import type { LayerProps } from 'types/layers';
 import {} from './hooks';
 import { useLayers, useSource, useMangroveHabitatExtent } from './hooks';
 
+const DEFAULT_EXTENT_YEAR = 2020;
+
 const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
@@ -18,14 +20,14 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const { data } = useMangroveHabitatExtent({ year });
   const years = data?.years?.sort() || [];
 
-  const currentYear = year || years[years.length - 1];
+  const currentYear = year || years[years.length - 1] || DEFAULT_EXTENT_YEAR;
 
   const SOURCE = useSource();
   const LAYERS = useLayers({
     year: currentYear,
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
   if (!SOURCE || !LAYERS) return null;
   return (

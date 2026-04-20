@@ -49,7 +49,16 @@ export function useLocation(
   return useQuery({
     queryKey: ['location', locationType, _id],
     queryFn: () => fetchLocation(_id),
-    placeholderData: { data: {} as DataResponse['data'][0] },
+    placeholderData: {
+      data: {
+        id: _id,
+        location_id: _id,
+        name: '',
+        iso: '',
+        location_type: locationType || 'worldwide',
+        bounds: null,
+      } as unknown as DataResponse['data'][0],
+    },
     select: ({ data }) => {
       if (locationType === 'custom-area') {
         return {

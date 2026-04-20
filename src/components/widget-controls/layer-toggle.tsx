@@ -41,6 +41,16 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
         activeLayers
       );
       setActiveLayers(layersUpdate);
+
+      // Scroll the widget into view when activating its layer
+      if (!isActive) {
+        requestAnimationFrame(() => {
+          document.getElementById(`widget-${id}`)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        });
+      }
     },
     [isActive, activeLayers, setActiveLayers, id]
   );

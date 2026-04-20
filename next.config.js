@@ -13,10 +13,6 @@ const nextConfig = {
   output: 'standalone',
   poweredByHeader: false,
 
-  async redirects() {
-    return [{ source: '/custom-area', destination: '/', permanent: true }];
-  },
-
   images: {
     remotePatterns: [
       {

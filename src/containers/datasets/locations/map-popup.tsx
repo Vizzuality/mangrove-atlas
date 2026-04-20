@@ -4,10 +4,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { locationBoundsAtom } from '@/store/map';
+import { isNavigatingAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import type { GeoJSONFeature } from 'mapbox-gl';
 
 import { useLocations } from '@/containers/datasets/locations/hooks';
@@ -28,7 +28,7 @@ const LocationPopUP = ({
   className?: string;
 }) => {
   const [isOpen, setIsOpen] = useState(nonExpansible);
-  const [, setLocationBounds] = useAtom(locationBoundsAtom);
+  const setNavigating = useSetAtom(isNavigatingAtom);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -51,6 +51,24 @@ const LocationPopUP = ({
     setIsOpen(!isOpen);
   }, [isOpen]);
 
+  const buildNavParams = useCallback(
+    (bbox: number[] | null) => {
+      const params = new URLSearchParams(queryParams);
+      if (bbox) {
+        params.set(
+          'bounds',
+          JSON.stringify([
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]],
+          ])
+        );
+      }
+      const qs = params.toString();
+      return qs ? `?${qs}` : '';
+    },
+    [queryParams]
+  );
+
   const handleClickLocation = useCallback(() => {
     const location_idn = feature?.properties?.location_idn;
 
@@ -59,11 +77,8 @@ const LocationPopUP = ({
     if (location) {
       const bbox = turfBbox(location.bounds);
 
-      if (bbox) {
-        setLocationBounds(bbox as [number, number, number, number]);
-      }
-
-      void router.push(`/country/${location.iso}/${queryParams ? `?${queryParams}` : ''}`);
+      setNavigating(true);
+      void router.push(`/country/${location.iso}${buildNavParams(bbox)}`);
     }
 
     // Google Analytics tracking
@@ -73,7 +88,7 @@ const LocationPopUP = ({
       label: `Location pop up - ${info?.location.name}`,
       value: info?.location.name,
     });
-  }, [setLocationBounds, router, queryParams, locations, feature, info]);
+  }, [setNavigating, router, buildNavParams, locations, feature, info]);
 
   const handleClickProtectedArea = useCallback(
     (index: number) => {
@@ -85,10 +100,8 @@ const LocationPopUP = ({
       if (location) {
         const bbox = turfBbox(location.bounds);
 
-        if (bbox) {
-          setLocationBounds(bbox as [number, number, number, number]);
-        }
-        void router.push(`/wdpa/${location.location_id}/${queryParams ? `?${queryParams}` : ''}`);
+        setNavigating(true);
+        void router.push(`/wdpa/${location.location_id}${buildNavParams(bbox)}`);
       }
 
       // Google Analytics tracking
@@ -99,7 +112,7 @@ const LocationPopUP = ({
         value: info?.location.name,
       });
     },
-    [setLocationBounds, router, queryParams, locations, info]
+    [setNavigating, router, buildNavParams, locations, info]
   );
 
   return (

@@ -111,7 +111,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
               ...prevAnalysisState,
               enabled: true,
             }));
-            void router.push(`/custom-area/${queryParams ? `?${queryParams}` : ''}`);
+            void router.push(`/custom-area${queryParams ? `?${queryParams}` : ''}`);
 
             toast.success('File uploaded successfully');
           })

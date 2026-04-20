@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { Layer } from 'react-map-gl';
 
@@ -18,6 +18,19 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
   const [layers] = useSyncActiveLayers();
+
+  // Materialize layers into the URL so they persist through navigations.
+  // nuqs withDefault returns the default when absent but never writes it.
+  // We write via the serializer directly to bypass nuqs's no-op detection.
+  useEffect(() => {
+    if (layers?.length && !window.location.search.includes('layers=')) {
+      const serialized = JSON.stringify(layers);
+      const url = new URL(window.location.href);
+      url.searchParams.set('layers', serialized);
+      window.history.replaceState(null, '', url.toString());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
 

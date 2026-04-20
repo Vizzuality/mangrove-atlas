@@ -59,6 +59,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   return (
     <AnimatePresence>
       <motion.div
+        id={`widget-${id}`}
         initial={false}
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}
