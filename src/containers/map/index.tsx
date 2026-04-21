@@ -83,8 +83,8 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
   const [cursor, setCursor] = useRecoilState(mapCursorAtom);
-  const isPrintingMode = useRecoilValue(printModeState);
-
+  // const isPrintingMode = useRecoilValue(printModeState);
+  const isPrintingMode = false;
   const [, setAnalysisState] = useRecoilState(analysisAtom);
   const guideIsActive = useRecoilValue(activeGuideAtom);
   const [locationPopUp, setLocationPopUp] = useState<{
@@ -654,7 +654,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           )}
         </Map>
 
-        {!isPrintingMode && (
+        {/* {!isPrintingMode && (
           <>
             <Media lessThan="md">
               <div className="absolute top-20">
@@ -667,7 +667,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               </div>
             </Media>
           </>
-        )}
+        )} */}
       </div>
     </>
   );
