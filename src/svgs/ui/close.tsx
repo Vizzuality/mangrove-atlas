@@ -5,10 +5,29 @@ interface SVGRProps {
   titleId?: string;
 }
 const SvgClose = ({ title, titleId, ...props }: SVGProps<SVGSVGElement> & SVGRProps) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" aria-labelledby={titleId} {...props}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-labelledby={titleId} {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
-    <path fillRule="evenodd" d="m15.304 14.39-1.415 1.413-9.192-9.192 1.414-1.414z" />
-    <path fillRule="evenodd" d="M6.11 15.803 4.697 14.39l9.193-9.192 1.414 1.414z" />
+    <path
+      d="M12 4L4 12"
+      stroke="currentColor"
+      strokeWidth="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M4 4L12 12"
+      stroke="currentColor"
+      strokeWidth="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+    ></svg>
   </svg>
 );
 export default SvgClose;

@@ -4,8 +4,6 @@ import type GeoJSON from 'geojson';
 
 import API from 'services/api';
 
-import type { Location } from './types';
-
 export type UserLocationType = 'system' | 'custom';
 
 export type SystemLocation = {
@@ -37,15 +35,35 @@ export type UserLocation = {
   user_id?: string;
 };
 
+export type UserLocationsResponse = {
+  data: UserLocation[];
+  meta: MetadataUserLocation;
+};
+
 export type MetadataUserLocation = {
   max_locations: number;
   current_count: number;
 };
 
-export type UserLocationsResponse = {
-  data: UserLocation[];
-  meta: MetadataUserLocation;
-};
+export type UserSitesResponse = {
+  id: number;
+  site_name: string;
+  landscape_id: number;
+  landscape_name: string;
+  section_last_updated: string;
+  section_data_visibility: {
+    '1': 'public' | 'private';
+    '2': 'public' | 'private';
+    '3': 'public' | 'private';
+    '4': 'public' | 'private';
+    '5': 'public' | 'private';
+    '6': 'public' | 'private';
+    '7': 'public' | 'private';
+    '8': 'public' | 'private';
+    '9': 'public' | 'private';
+    '10': 'public' | 'private';
+  };
+}[];
 
 type Bounds = {
   description: string;
@@ -91,6 +109,12 @@ export type UserLocationCreateBodyCustom = BaseCreateBody & {
 
 export type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
+export const fetchUserSites = () =>
+  API.request<UserSitesResponse>({
+    method: 'GET',
+    url: '/sites',
+  }).then((r) => r.data);
+
 export const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
     method: 'GET',
@@ -122,19 +146,35 @@ export const userLocationsKeys = {
   detail: (id: number) => [...userLocationsKeys.all, 'detail', id] as const,
 };
 
-export function useGetUserLocations<T = UserLocationsResponse>(
-  queryOptions: UseQueryOptions<UserLocationsResponse, Error, T> = {}
+export function useGetUserSites<T = UserSitesResponse>(
+  queryOptions?: Omit<UseQueryOptions<UserSitesResponse, Error, T>, 'queryKey' | 'queryFn'>
 ) {
-  return useQuery(userLocationsKeys.list(), fetchUserLocations, {
+  return useQuery<UserSitesResponse, Error, T>({
+    queryFn: fetchUserSites,
+    ...queryOptions,
+  });
+}
+
+export function useGetUserLocations<T = UserLocationsResponse>(
+  queryOptions?: Omit<UseQueryOptions<UserLocationsResponse, Error, T>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery<UserLocationsResponse, Error, T>({
+    queryKey: userLocationsKeys.list(),
+    queryFn: fetchUserLocations,
     ...queryOptions,
   });
 }
 
 export function useGetUserLocation(
   id?: UserLocation['id'],
-  queryOptions: UseQueryOptions<{ data: UserLocation }, Error, UserLocation> = {}
+  queryOptions?: Omit<
+    UseQueryOptions<{ data: UserLocation }, Error, UserLocation>,
+    'queryKey' | 'queryFn' | 'select'
+  >
 ) {
-  return useQuery(userLocationsKeys.detail(id), () => fetchUserLocation(id!), {
+  return useQuery<{ data: UserLocation }, Error, UserLocation>({
+    queryKey: userLocationsKeys.detail(id!),
+    queryFn: () => fetchUserLocation(id!),
     enabled: Boolean(id),
     select: ({ data }) => data,
     ...queryOptions,

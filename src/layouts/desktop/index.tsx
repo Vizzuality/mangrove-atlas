@@ -28,7 +28,8 @@ import Logo from 'components/logo';
 const DesktopLayout = () => {
   const map = useMap();
 
-  const isPrintingMode = useRecoilValue(printModeState);
+  // const isPrintingMode = useRecoilValue(printModeState);
+  const isPrintingMode = false;
 
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
   const {

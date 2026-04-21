@@ -4,14 +4,21 @@ import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 
+import { groupBy } from 'lodash-es';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
-import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
+import {
+  useGetUserLocations,
+  useGetUserSites,
+} from '@/containers/datasets/locations/user-locations';
 
 import Loading from 'components/ui/loading';
 
 import LocationItem from './item';
 import LocationItemNew from './item-new';
+import UserMRTTSites from './sites';
+import SitesItem from './sites/item';
 
 const SavedAreasContent = () => {
   const {
@@ -38,10 +45,25 @@ const SavedAreasContent = () => {
   const shouldShowNew =
     locationType === 'custom-area' || (typeof routeLocationId === 'number' && !existsInSaved);
 
+  const { data: sitesData, isLoading: isLoadingSites } = useGetUserSites({
+    select: (res) => {
+      const grouped = groupBy(res, 'landscape_id');
+      return Object.entries(grouped).map(([id, sites]) => ({
+        landscape_id: Number(id),
+        landscape_name: sites[0].landscape_name,
+        sites: sites.map(({ landscape_id, landscape_name, ...site }) => site),
+      }));
+    },
+  });
+
   return (
     <div className="flex flex-col space-y-6 text-black/85">
       {isLoadingUserLocations ? (
-        <div className="flex w-[540px] w-full items-center justify-center py-8">
+        <div
+          role="status"
+          aria-label="Loading saved areas"
+          className="flex w-full items-center justify-center py-8"
+        >
           <Loading iconClassName="w-10 h-10 self-center" />
         </div>
       ) : (
@@ -51,37 +73,43 @@ const SavedAreasContent = () => {
             Select one to analyse.
           </p>
 
-          <div className="flex flex-col space-y-4">
-            {userLocations.map((ul) =>
-              ul.location_type === 'system' ? (
-                <LocationItem
-                  key={ul.id}
-                  userLocationId={ul.id}
-                  name={ul.name}
-                  locationType={ul.location_type}
-                  location={ul.location}
-                />
-              ) : (
-                <LocationItem
-                  key={ul.id}
-                  userLocationId={ul.id}
-                  name={ul.name}
-                  locationType={ul.location_type}
-                  geometry={ul.custom_geometry}
-                />
-              )
-            )}
+          <div className="w-full gap-6 divide-y divide-gray-100">
+            <ul aria-label="Saved areas" className="flex flex-col space-y-4 py-4">
+              {userLocations.map((ul) =>
+                ul.location_type === 'system' ? (
+                  <LocationItem
+                    key={ul.id}
+                    userLocationId={ul.id}
+                    name={ul.name}
+                    locationType={ul.location_type}
+                    location={ul.location}
+                  />
+                ) : (
+                  <LocationItem
+                    key={ul.id}
+                    userLocationId={ul.id}
+                    name={ul.name}
+                    locationType={ul.location_type}
+                    geometry={ul.custom_geometry}
+                  />
+                )
+              )}
 
-            {shouldShowNew && (
-              <LocationItemNew
-                key={`new-${locationType}-${routeLocationId ?? 'custom'}`}
-                name={routeName}
-                // for system routes this is the system location id; for custom-area it can be undefined
-                systemLocationId={typeof routeLocationId === 'number' ? routeLocationId : undefined}
-                locationType={locationType}
-                disabled={Boolean(meta && meta.current_count >= meta.max_locations)}
-              />
-            )}
+              {shouldShowNew && (
+                <LocationItemNew
+                  key={`new-${locationType}-${routeLocationId ?? 'custom'}`}
+                  name={routeName}
+                  // for system routes this is the system location id; for custom-area it can be undefined
+                  systemLocationId={
+                    typeof routeLocationId === 'number' ? routeLocationId : undefined
+                  }
+                  locationType={locationType}
+                  disabled={Boolean(meta && meta.current_count >= meta.max_locations)}
+                />
+              )}
+            </ul>
+
+            <UserMRTTSites />
           </div>
         </>
       )}
