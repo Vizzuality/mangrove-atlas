@@ -20,8 +20,6 @@ import API from 'services/api';
 import { authOptions } from './api/auth/[...nextauth]';
 
 const Home = () => {
-  const isPrintingMode = useRecoilValue(printModeState);
-
   const { width: screenWidth } = useWindowSize();
 
   return (

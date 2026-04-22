@@ -1,11 +1,18 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import cn from '@/lib/classnames';
 
-import { LuPencil, LuCheck } from 'react-icons/lu';
+import { locationBoundsAtom } from '@/store/map';
+
+import turfBbox from '@turf/bbox';
+import bbox from '@turf/bbox';
 import type { Feature, Polygon, MultiPolygon, Geometry } from 'geojson';
+import { LuPencil, LuCheck } from 'react-icons/lu';
+import { useRecoilState } from 'recoil';
 
 import {
   useDeleteUserLocation,
@@ -20,17 +27,9 @@ import {
 } from '@/containers/subscriptions/hooks';
 
 import { Input } from '@/components/ui/input';
-
-import { useRouter } from 'next/router';
-import turfBbox from '@turf/bbox';
-
-import { useRecoilState } from 'recoil';
-import { locationBoundsAtom } from '@/store/map';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import CLOSE_SVG from '@/svgs/ui/close';
-
-import bbox from '@turf/bbox';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 type BBox = [number, number, number, number];
 
@@ -78,10 +77,6 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
 
   const { replace, asPath } = useRouter();
 
-  useEffect(() => {
-    if (!isEditMode) setNewName(name);
-  }, [name, isEditMode]);
-
   const deleteUserLocationArea = useDeleteUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
   const toggleMutation = usePostToggleLocationAlerts();
@@ -98,7 +93,8 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
 
   const handleEditMode = useCallback(() => {
     setEditMode((prev) => !prev);
-  }, []);
+    setNewName(name);
+  }, [name]);
 
   const handleNewName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setNewName(e.currentTarget.value);
@@ -189,87 +185,88 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
 
       replace(LocationUrl);
     },
-    [replace, setLocationBounds, locationBounds, bounds]
+    [replace, setLocationBounds, locationBounds, bounds, customBounds, LocationUrl]
   );
 
   return (
-    <Tooltip>
-      <TooltipTrigger>
-        {' '}
-        <li className="flex cursor-pointer items-center justify-between gap-3">
-          {(locationType === 'system' || (locationType === 'custom' && !isEditMode)) && (
+    <li className="flex items-center justify-between gap-3">
+      {(locationType === 'system' || (locationType === 'custom' && !isEditMode)) && (
+        <Tooltip>
+          <TooltipTrigger asChild>
             <button
               type="button"
+              aria-label={`Navigate to ${name}`}
               className="focus-visible:ring-brand-500 underline-offset-2 first-letter:uppercase focus-visible:ring-2 focus-visible:outline-none"
               onClick={handleLocationClick}
             >
               {name}
             </button>
-          )}
+          </TooltipTrigger>
+          <TooltipContent className="bg-gray-700 px-2 text-white">
+            {locationType === 'system'
+              ? 'Click to fly to this location.'
+              : 'Click to view this custom location on the map.'}
+          </TooltipContent>
+        </Tooltip>
+      )}
 
-          {locationType === 'custom' && isEditMode && (
-            <Input type="text" value={newName} onChange={handleNewName} />
-          )}
+      {locationType === 'custom' && isEditMode && (
+        <Input
+          type="text"
+          aria-label={`Rename location ${name}`}
+          value={newName}
+          onChange={handleNewName}
+        />
+      )}
 
-          <div className="flex space-x-2">
-            {locationType === 'custom' && !isEditMode && (
-              <button
-                type="button"
-                aria-label={`Edit location ${name}`}
-                disabled={isDeleting}
-                onClick={handleEditMode}
-                className={cn(
-                  'border-brand/80 text-brand-800 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-2',
-                  isDeleting && 'cursor-not-allowed opacity-60'
-                )}
-              >
-                <LuPencilIcon className="h-4 w-4 shrink-0 stroke-2" />
-              </button>
+      <div className="flex space-x-2">
+        {locationType === 'custom' && !isEditMode && (
+          <button
+            type="button"
+            aria-label={`Edit location ${name}`}
+            disabled={isDeleting}
+            onClick={handleEditMode}
+            className={cn(
+              'border-brand-800/20 text-brand-800 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-2',
+              isDeleting && 'cursor-not-allowed opacity-60'
             )}
+          >
+            <LuPencilIcon aria-hidden="true" className="h-4 w-4 shrink-0 stroke-2" />
+          </button>
+        )}
 
-            {locationType === 'custom' && isEditMode && newName !== name && (
-              <button
-                type="button"
-                aria-label={`Save location ${name}`}
-                disabled={isDeleting || !newName.trim()}
-                onClick={handleSaveName}
-                className={cn(
-                  'border-brand/80 text-brand-800 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-2',
-                  (isDeleting || !newName.trim()) && 'cursor-not-allowed opacity-60'
-                )}
-              >
-                <LuCheckIcon className="h-4 w-4 stroke-2" />
-              </button>
+        {locationType === 'custom' && isEditMode && newName !== name && (
+          <button
+            type="button"
+            aria-label={`Save location ${name}`}
+            disabled={isDeleting || !newName.trim()}
+            onClick={handleSaveName}
+            className={cn(
+              'border-brand-800/20 text-brand-800 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-2',
+              (isDeleting || !newName.trim()) && 'cursor-not-allowed opacity-60'
             )}
+          >
+            <LuCheckIcon aria-hidden="true" className="h-4 w-4 stroke-2" />
+          </button>
+        )}
 
-            {(locationType === 'system' ||
-              (locationType === 'custom' && (!isEditMode || newName === name))) && (
-              <button
-                type="button"
-                aria-label={`Delete location ${name}`}
-                disabled={isDeleting}
-                onClick={handleDelete}
-                className={cn(
-                  'border-brand/80 text-brand-800 flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full border-2',
-                  isDeleting && 'cursor-not-allowed opacity-60'
-                )}
-              >
-                <CLOSE_SVG
-                  className="h-4 w-4 fill-current stroke-2"
-                  role="img"
-                  aria-label={`Close location ${name}`}
-                />
-              </button>
+        {(locationType === 'system' ||
+          (locationType === 'custom' && (!isEditMode || newName === name))) && (
+          <button
+            type="button"
+            aria-label={`Delete location ${name}`}
+            disabled={isDeleting}
+            onClick={handleDelete}
+            className={cn(
+              'border-brand-800/20 text-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-[5px]',
+              isDeleting && 'cursor-not-allowed opacity-60'
             )}
-          </div>
-        </li>
-      </TooltipTrigger>
-      <TooltipContent className="bg-gray-700 px-2 text-white">
-        {locationType === 'system'
-          ? 'Click to fly to this location.'
-          : 'Click to view this custom location on the map.'}
-      </TooltipContent>
-    </Tooltip>
+          >
+            <CLOSE_SVG className="h-4 w-4 shrink-0 fill-current" aria-hidden="true" />
+          </button>
+        )}
+      </div>
+    </li>
   );
 };
 

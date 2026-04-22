@@ -33,8 +33,8 @@ export const DeleteDrawingButton = ({
   const resetUploadedGeojson = useResetRecoilState(drawingUploadToolAtom);
   const { replace, asPath } = useRouter();
   const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
-  const isPrintingMode = useRecoilValue(printModeState);
-
+  // const isPrintingMode = useRecoilValue(printModeState);
+  const isPrintingMode = false;
   const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
 
   const { [`default-desktop-${isPrintingId}`]: map } = useMap();
