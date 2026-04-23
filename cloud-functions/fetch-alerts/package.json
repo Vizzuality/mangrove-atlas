@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Vizzuality/mangrove-atlas-data#readme",
   "dependencies": {
-    "@google-cloud/bigquery": "^5.0.0",
+    "@google-cloud/bigquery": "^8.1.1",
     "axios": "1.15.0",
     "concurrently": "^7.2.2",
     "crypto": "^1.0.1",
