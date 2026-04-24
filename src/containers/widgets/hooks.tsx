@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 
 import { analysisAtom } from '@/store/analysis';
-import { locationTypeAtom } from '@/store/locations';
 import { mapSettingsAtom } from '@/store/map-settings';
 import { useSyncActiveCategory } from '@/store/sidebar';
 
 import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { WIDGETS_BY_CATEGORY } from '@/containers/widgets/constants';
 
@@ -18,7 +19,7 @@ export function useWidgets(): WidgetTypes[] {
 
   const isMapSettingsVisible = useAtomValue(mapSettingsAtom);
   const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
-  const locationType = useAtomValue(locationTypeAtom);
+  const { type: locationType } = useSyncLocation();
   const currentLocation = locationType || 'worldwide';
 
   return useMemo(() => {
@@ -38,7 +39,7 @@ export function useWidgets(): WidgetTypes[] {
 }
 
 export function useWidgetsIdsByLocation(): WidgetSlugType[] {
-  const locationType = useAtomValue(locationTypeAtom);
+  const { type: locationType } = useSyncLocation();
   const currentLocation = locationType || 'worldwide';
 
   return useMemo(

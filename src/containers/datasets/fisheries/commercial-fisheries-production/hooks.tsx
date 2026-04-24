@@ -1,12 +1,10 @@
 import type { LayerProps, RasterSource } from 'react-map-gl';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
 import { useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
-import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -19,8 +17,7 @@ export function useMangroveCommercialFisheriesProduction<TData = DataResponse>(
   params?: UseParamsOptions,
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error, TData>, 'queryKey' | 'queryFn'>
 ): UseQueryResult<TData, Error> {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
 
   const {
     data: { name: location, id: currentLocation, location_id },

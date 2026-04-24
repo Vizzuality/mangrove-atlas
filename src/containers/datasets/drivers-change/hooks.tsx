@@ -1,10 +1,9 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { COLORS, variables } from '@/containers/datasets/drivers-change/constants';
 import Tooltip from '@/containers/datasets/drivers-change/tooltip';
@@ -15,7 +14,6 @@ import type {
   DriversChangeData,
 } from '@/containers/datasets/drivers-change/types';
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 
@@ -32,8 +30,7 @@ const getColorKeys = (data: Data[]) =>
 export function useMangroveDriversChange(
   queryOptions?: UseQueryOptions<DataResponse>
 ): DriversChangeData {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation },
   } = useLocation(id, locationType);

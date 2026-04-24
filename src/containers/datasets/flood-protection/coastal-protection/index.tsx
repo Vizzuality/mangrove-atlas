@@ -1,17 +1,13 @@
 import cn from '@/lib/classnames';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
-import { useAtomValue } from 'jotai';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { WIDGET_CARD_WRAPPER_STYLE, WIDGET_SENTENCE_STYLE } from 'styles/widgets';
 
 const CoastalProtection = () => {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location },
   } = useLocation(id, locationType);

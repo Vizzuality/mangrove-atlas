@@ -2,29 +2,16 @@ import { notFound } from 'next/navigation';
 
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import type { Metadata } from 'next';
 
 import type { DataResponse } from '@/containers/datasets/locations/hooks';
-import MainApp from '@/containers/main-app';
+import EmbeddedWrapper from '@/containers/embedded/wrapper';
 
 const ALLOWED_LOCATION_TYPES = ['custom-area', 'country', 'wdpa'];
 
-export const metadata: Metadata = {
-  title: 'Global Mangrove Watch',
-  description:
-    'Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.',
-  openGraph: {
-    title: 'Global Mangrove Watch',
-    description:
-      'Global Mangrove Watch (GMW) is an online platform that provides the remote sensing data and tools for monitoring mangroves necessary for this. It gives universal access to near real-time information on where and what changes there are to mangroves across the world, and highlights why they are valuable.',
-    type: 'website',
-  },
-};
-
-export default async function Page({ params }: { params: Promise<{ params?: string[] }> }) {
+export default async function EmbeddedPage({ params }: { params: Promise<{ params?: string[] }> }) {
   const { params: urlParams } = await params;
-  const locationType = urlParams?.[0];
-  const locationId = urlParams?.[1];
+  const locationType = urlParams?.[0] ?? null;
+  const locationId = urlParams?.[1] ?? null;
 
   if (locationType && !ALLOWED_LOCATION_TYPES.includes(locationType)) {
     notFound();
@@ -62,7 +49,7 @@ export default async function Page({ params }: { params: Promise<{ params?: stri
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MainApp />
+      <EmbeddedWrapper />
     </HydrationBoundary>
   );
 }

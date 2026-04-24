@@ -28,10 +28,12 @@ export function useSyncURLBounds() {
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL
 export const locationBoundsAtom = atom(null as [number, number, number, number] | null);
 
-// Suppresses nuqs URL-bounds sync while a route navigation is in flight.
-// Without this, nuqs reads the stale location.pathname before router.push
-// completes and reverts the path via history.replaceState.
-export const isNavigatingAtom = atom(false);
+// One-shot reactive camera target. External nav handlers (location list, map popup,
+// saved areas, custom-draw) write to this; the map consumes it, flies, and clears on
+// the next settled move. Keeps navigation URLs free of bounds — the URL bounds param
+// is a separate shareable-state concern, synced by the map's own onMove handler.
+export type TmpCamera = { bbox: [number, number, number, number] } | { worldwide: true };
+export const tmpCameraAtom = atom(null as TmpCamera | null);
 
 export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>([]);
 

@@ -2,17 +2,14 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { useRouter, useSearchParams } from 'next/navigation';
-
 import cn from '@/lib/classnames';
-
-import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
 import bbox from '@turf/bbox';
 import type { Feature, Polygon, MultiPolygon, Geometry } from 'geojson';
-import { useAtom } from 'jotai';
 import { LuPencil, LuCheck } from 'react-icons/lu';
+
+import { useLocationNavigation, locationToNavTarget } from 'hooks/location-navigation';
 
 import {
   useDeleteUserLocation,
@@ -73,10 +70,7 @@ type Props = {
 const LocationItem = ({ userLocationId, name, locationType, location, geometry }: Props) => {
   const [isEditMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState(name);
-  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const { navigate } = useLocationNavigation();
 
   const deleteUserLocationArea = useDeleteUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
@@ -142,25 +136,6 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     toggleMutation,
   ]);
 
-  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
-
-  const baseUrl = useMemo(() => {
-    if (locationType === 'system') {
-      const routeType = location?.location_type === 'worldwide' ? '/' : location?.location_type;
-      const routeId =
-        location?.location_type === 'worldwide'
-          ? ''
-          : location?.location_type === 'country'
-            ? location?.iso
-            : location?.location_id;
-
-      return `/${routeType}/${routeId}?${queryParams}`;
-    }
-    if (locationType === 'custom') {
-      return queryParams ? `/custom-area/?${queryParams}` : `/custom-area`;
-    }
-  }, [location, queryParams, locationType]);
-
   const bounds = useMemo(() => {
     if (!location?.bounds) return null;
     return turfBbox(location?.bounds) as [number, number, number, number];
@@ -171,24 +146,18 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     return customGeometryToBBox(geometry);
   }, [geometry]);
 
-  const LocationUrl = useMemo(() => {
-    if (!bounds) return baseUrl;
-
-    const boundsParam = `bounds=${encodeURIComponent(JSON.stringify(bounds))}`;
-    return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${boundsParam}`;
-  }, [baseUrl, bounds]);
-
   const handleLocationClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
-      if (bounds) setLocationBounds(bounds as typeof locationBounds);
-      if (customBounds) setLocationBounds(customBounds as typeof locationBounds);
-
-      router.replace(LocationUrl);
+      if (locationType === 'system' && location) {
+        navigate(locationToNavTarget(location), bounds);
+      } else if (locationType === 'custom') {
+        navigate({ type: 'custom-area' }, customBounds);
+      }
     },
-    [router, setLocationBounds, locationBounds, bounds, customBounds, LocationUrl]
+    [navigate, bounds, customBounds, location, locationType]
   );
 
   return (

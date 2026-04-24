@@ -2,15 +2,15 @@ import { useCallback, useMemo } from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import * as RadioGroup from '@radix-ui/react-radio-group';
 import type { PrimitiveAtom } from 'jotai';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import { LocationTypes } from '@/containers/datasets/locations/types';
 import { useIsLayerActive } from '@/containers/widget/selector';
 import NoData from '@/containers/widgets/no-data';
 
@@ -31,8 +31,7 @@ import { useMangroveSpeciesLocation } from './hooks';
 import type { DataResponse, Specie } from './types';
 
 const SpeciesLocation = () => {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location },
   } = useLocation(id, locationType);
