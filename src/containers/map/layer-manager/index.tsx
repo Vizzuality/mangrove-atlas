@@ -3,10 +3,11 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
-import { locationIdAtom } from '@/store/locations';
 import { interactiveLayerIdsAtom } from '@/store/map';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { BASEMAPS, LAYERS } from '@/containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
@@ -46,7 +47,7 @@ const LayerManagerContainer = () => {
     return filteredLayers;
   }, [activeLayersIds]);
 
-  const id = useAtomValue(locationIdAtom);
+  const { id } = useSyncLocation();
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS?.filter(

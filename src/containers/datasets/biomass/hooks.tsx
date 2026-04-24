@@ -6,7 +6,6 @@ import { numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { BiomassYearSettings } from '@/store/widgets/biomass';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -14,9 +13,9 @@ import { AxiosError, CanceledError } from 'axios';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -48,8 +47,7 @@ export function useMangroveBiomass(
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
   const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
 
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);

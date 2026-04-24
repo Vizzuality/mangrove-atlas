@@ -4,10 +4,12 @@ import cn from '@/lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { activeGuideAtom } from '@/store/guide';
-import { locationsModalAtom, locationTypeAtom, locationIdAtom } from '@/store/locations';
+import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import AnalysisAlert from '@/containers/alert';
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -18,8 +20,8 @@ import MenuTools from '@/containers/navigation/menu-tools';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const LocationWidget = () => {
-  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type, id } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   const {
     data: { name },
   } = useLocation(id, locationType, {

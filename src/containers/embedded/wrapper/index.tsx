@@ -1,27 +1,10 @@
 'use client';
 
-import { Suspense, useEffect } from 'react';
-
-import { locationIdAtom, locationTypeAtom } from '@/store/locations';
-
-import { useSetAtom } from 'jotai';
+import { Suspense } from 'react';
 
 import EmbeddedMap from '@/containers/embedded/map';
 
-interface EmbeddedWrapperProps {
-  locationType: string | null;
-  locationId: string | null;
-}
-
-export default function EmbeddedWrapper({ locationType, locationId }: EmbeddedWrapperProps) {
-  const setLocationType = useSetAtom(locationTypeAtom);
-  const setLocationId = useSetAtom(locationIdAtom);
-
-  useEffect(() => {
-    setLocationType(locationType);
-    setLocationId(locationId);
-  }, [locationType, locationId, setLocationType, setLocationId]);
-
+export default function EmbeddedWrapper() {
   return (
     <Suspense>
       <EmbeddedMap mapId="embedded" />

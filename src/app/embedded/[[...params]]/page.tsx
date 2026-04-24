@@ -49,7 +49,7 @@ export default async function EmbeddedPage({ params }: { params: Promise<{ param
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <EmbeddedWrapper locationType={locationType} locationId={locationId} />
+      <EmbeddedWrapper />
     </HydrationBoundary>
   );
 }

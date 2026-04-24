@@ -2,12 +2,9 @@
 
 import { useMemo } from 'react';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
-import { useAtomValue } from 'jotai';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import { LocationTypes } from '@/containers/datasets/locations/types';
 import { useGetUserLocations } from '@/containers/datasets/locations/user-locations';
 
 import Loading from 'components/ui/loading';
@@ -16,10 +13,9 @@ import LocationItem from './item';
 import LocationItemNew from './item-new';
 
 const SavedAreasContent = () => {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes | undefined;
-  const routeId = useAtomValue(locationIdAtom);
+  const { type: locationType, id: routeId } = useSyncLocation();
 
-  const { data: location } = useLocation(routeId, locationType);
+  const { data: location } = useLocation(routeId, locationType ?? undefined);
   const { data: userLocationsRes, isLoading: isLoadingUserLocations } = useGetUserLocations();
 
   const userLocations = userLocationsRes?.data ?? [];
@@ -76,7 +72,7 @@ const SavedAreasContent = () => {
                 name={routeName}
                 // for system routes this is the system location id; for custom-area it can be undefined
                 systemLocationId={typeof routeLocationId === 'number' ? routeLocationId : undefined}
-                locationType={locationType}
+                locationType={locationType ?? undefined}
                 disabled={Boolean(meta && meta.current_count >= meta.max_locations)}
               />
             )}

@@ -6,7 +6,6 @@ import { formatNumberNearestInteger, numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
 import { CancelledError, useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
@@ -14,9 +13,9 @@ import { useAtomValue } from 'jotai';
 import type { PolarViewBox } from 'recharts/types/util/types';
 
 import type { AnalysisResponse } from 'hooks/analysis';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -45,8 +44,7 @@ export function useMangroveBlueCarbon(
   >,
   onCancel?: () => void
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
 
   const {
     data: { name: location, id: currentLocation, location_id },
