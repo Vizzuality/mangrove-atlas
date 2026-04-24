@@ -161,21 +161,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     }
   }, [map, tmpCamera]);
 
-  // Skip URL writes while a programmatic nav is in flight. nuqs'
-  // `history.replaceState` uses the current `window.location.pathname`, which
-  // is still the OLD path while `router.replace` is mid-transition — so writing
-  // bounds during that window reverts the URL to the previous location and the
-  // map follows on the next render cycle. `tmpCamera` non-null is the "nav in
-  // flight" signal (set by navigate(), cleared here when the fly settles).
-  const tmpCameraRef = useRef(tmpCamera);
-  tmpCameraRef.current = tmpCamera;
-
   const handleMoveEnd = useCallback(() => {
-    if (tmpCameraRef.current) {
-      setTmpCamera(null);
-      return;
-    }
     if (map) setURLBounds(map.getBounds().toArray());
+    setTmpCamera(null);
   }, [map, setURLBounds, setTmpCamera]);
 
   const clickedStateIdRef = useRef<string | number | null>(null);

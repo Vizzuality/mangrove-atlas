@@ -53,13 +53,7 @@ export function useLocationNavigation() {
 
   const navigate = useCallback(
     (target: NavTarget, bbox?: BBox | null) => {
-      // Drop stale `bounds` from the carried query. It belongs to the location
-      // we're leaving; carrying it into the new route means a reload before the
-      // user pans fits the map to the OLD bounds while showing the NEW
-      // location's data.
-      const params = new URLSearchParams(searchParams.toString());
-      params.delete('bounds');
-      const qs = params.toString();
+      const qs = searchParams.toString();
       const path = buildPath(target);
       const url = qs ? `${path}?${qs}` : path;
 
