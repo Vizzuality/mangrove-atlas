@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { QueryClient, dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
 
-import type { DataResponse } from '@/containers/datasets/locations/hooks';
+import { locationQueryOptions, type DataResponse } from '@/containers/datasets/locations/hooks';
 import EmbeddedWrapper from '@/containers/embedded/wrapper';
 
 const ALLOWED_LOCATION_TYPES = ['custom-area', 'country', 'wdpa'];
@@ -21,17 +21,7 @@ export default async function EmbeddedPage({ params }: { params: Promise<{ param
 
   if (locationId) {
     try {
-      await queryClient.prefetchQuery({
-        queryKey: ['location', locationType, locationId],
-        queryFn: async () => {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/${locationId}`, {
-            headers: { 'Content-Type': 'application/json' },
-          });
-          if (!res.ok) throw new Error(`Location fetch failed: ${res.status}`);
-          const json = await res.json();
-          return { data: json.data } as { data: DataResponse['data'][0] };
-        },
-      });
+      await queryClient.prefetchQuery(locationQueryOptions(locationType, locationId));
 
       const cached = queryClient.getQueryData<{ data: DataResponse['data'][0] }>([
         'location',
