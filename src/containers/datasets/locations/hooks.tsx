@@ -1,4 +1,9 @@
-import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
+import {
+  queryOptions as rqQueryOptions,
+  useQuery,
+  UseQueryOptions,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import API from 'services/api';
 
@@ -8,6 +13,23 @@ export type DataResponse = {
   data: Location[];
   metadata: unknown;
 };
+
+/**
+ * Server-safe queryOptions for prefetching a single location (uses `fetch`, not Axios).
+ */
+export function locationQueryOptions(locationType?: string, locationId?: string) {
+  return rqQueryOptions({
+    queryKey: ['location', locationType, locationId],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/${locationId}`, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!res.ok) throw new Error(`Location fetch failed: ${res.status}`);
+      const json = await res.json();
+      return { data: json.data } as { data: DataResponse['data'][0] };
+    },
+  });
+}
 
 const fetchLocations = () =>
   API.request<DataResponse>({
