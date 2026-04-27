@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import type { LayerProps, SourceProps } from 'react-map-gl';
+import type { SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 

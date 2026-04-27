@@ -245,9 +245,6 @@ importers:
       tailwind-merge:
         specifier: 1.11.0
         version: 1.11.0
-      use-debounce:
-        specifier: 9.0.3
-        version: 9.0.3(react@18.2.0)
       usehooks-ts:
         specifier: 2.9.1
         version: 2.9.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -5154,12 +5151,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-debounce@9.0.3:
-    resolution: {integrity: sha512-FhtlbDtDXILJV7Lix5OZj5yX/fW1tzq+VrvK1fnT2bUrPOGruU9Rw8NCEn+UI9wopfERBEZAOQ8lfeCJPllgnw==}
-    engines: {node: '>= 10.0.0'}
-    peerDependencies:
-      react: '>=16.8.0'
 
   use-isomorphic-layout-effect@1.2.1:
     resolution: {integrity: sha512-tpZZ+EX0gaghDAiFR37hj5MgY6ZN55kLiPkJsKxBMZ6GZdOSPJXiOzPM984oPYZ5AnehYx5WQp1+ME8I/P/pRA==}
@@ -10552,10 +10543,6 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 18.2.0
-
-  use-debounce@9.0.3(react@18.2.0):
-    dependencies:
-      react: 18.2.0
 
   use-isomorphic-layout-effect@1.2.1(@types/react@18.2.0)(react@18.2.0):
     dependencies:

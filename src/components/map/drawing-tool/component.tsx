@@ -26,7 +26,7 @@ const DEFAULT_PROPS: Partial<DrawControlProps> = {
   styles: DRAWING_STYLES,
 };
 
-export const DrawControl = (props: DrawControlProps) => {
+const DrawControl = (props: DrawControlProps) => {
   const drawRef = useControl<MapboxDraw>(
     () =>
       new MapboxDraw({

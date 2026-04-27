@@ -10,7 +10,7 @@ import { useAtomValue } from 'jotai';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
-export const Helper = ({
+const Helper = ({
   children,
   className,
   tooltipPosition,

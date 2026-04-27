@@ -6,7 +6,7 @@ export type ResourceTypes = {
   link: string;
 };
 
-export const Resources = (resource: ResourceTypes) => {
+const Resources = (resource: ResourceTypes) => {
   return (
     <div className="flex flex-1 items-start justify-between">
       {<p>{resource.name}</p>}

@@ -18,7 +18,7 @@ const SIZE = {
   sm: 'h-8 w-8',
 };
 
-export const DeleteDrawingButton = ({
+const DeleteDrawingButton = ({
   size = 'md',
   children = null,
 }: {

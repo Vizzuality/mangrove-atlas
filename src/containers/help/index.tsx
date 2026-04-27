@@ -29,11 +29,7 @@ const THEME = {
   dark: 'text-brand-800',
 };
 
-export const HelpContainer = ({
-  theme = 'light',
-  hasArrow = false,
-  className,
-}: HelpContainerProps) => {
+const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpContainerProps) => {
   const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useAtom(activeGuideAtom);

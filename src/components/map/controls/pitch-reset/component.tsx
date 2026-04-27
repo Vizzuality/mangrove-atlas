@@ -6,7 +6,7 @@ import cn from '@/lib/classnames';
 
 import NAVIGATION_SVG from '@/svgs/map/navigation';
 
-export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
+const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
 
   const pitch = map?.getPitch();

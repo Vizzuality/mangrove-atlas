@@ -14,7 +14,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 
-export const GuideModalIntro = ({ isOpen, setIsOpen }) => {
+const GuideModalIntro = ({ isOpen, setIsOpen }) => {
   const [guideLocalStorage, setGuideLocalStorage] = useLocalStorage<boolean>(
     'guideLocalStorage',
     false
