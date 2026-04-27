@@ -512,7 +512,14 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
           iucnEcoregionInfo={iucnEcoregionPopUp}
         />
       )}
-      <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={mapRef}>
+      <div
+        className={
+          hideControls
+            ? 'relative z-0 h-full w-full'
+            : 'absolute top-0 left-0 z-0 h-screen w-screen'
+        }
+        ref={mapRef}
+      >
         <Map
           id={mapId}
           reuseMaps

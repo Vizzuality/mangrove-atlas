@@ -3,9 +3,11 @@ import { useCallback, useMemo, FC } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
+import { locationToolAtom } from '@/store/sidebar';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useAtom } from 'jotai';
+import { useIsFetching } from '@tanstack/react-query';
+import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useWindowSize } from 'usehooks-ts';
 
@@ -19,6 +21,7 @@ import WidgetWrapper from '@/containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { breakpoints } from '@/styles/styles.config';
 import { WidgetTypes } from 'types/widget';
 
@@ -83,6 +86,10 @@ const WidgetsContainer: FC = () => {
     );
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
+  const locationTool = useAtomValue(locationToolAtom);
+  const isCustomArea = !!(customGeojson || uploadedGeojson);
+  const fetchingCount = useIsFetching();
+  const isPrintDisabled = isCustomArea && fetchingCount > 0;
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -174,13 +181,33 @@ const WidgetsContainer: FC = () => {
       </Dialog>
       {!!widgetsAvailable.length && (
         <div className="flex w-full justify-center py-4">
-          <button
-            type="button"
-            className="bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-6 py-2 text-sm font-semibold text-white transition-colors"
-            onClick={handlePrintReport}
+          <Helper
+            className={{
+              button:
+                locationTool === 'upload' || locationTool === 'area'
+                  ? 'hidden'
+                  : 'right-0 -bottom-2.5',
+              tooltip: 'w-fit-content',
+            }}
+            tooltipPosition={{ top: 50, left: 10 }}
+            message="Use this button to open the current map view and associated widgets as a printable PDF report."
           >
-            Print PDF report
-          </button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span>
+                  <button
+                    type="button"
+                    className="bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-6 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                    onClick={handlePrintReport}
+                    disabled={isPrintDisabled}
+                  >
+                    Print PDF report
+                  </button>
+                </span>
+              </TooltipTrigger>
+              {isPrintDisabled && <TooltipContent>Loading analysis data...</TooltipContent>}
+            </Tooltip>
+          </Helper>
         </div>
       )}
     </WidgetsLayout>

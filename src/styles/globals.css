@@ -107,15 +107,6 @@
   display: none !important;
 }
 
-/* Print report page — force the map wrapper (normally absolute h-screen w-screen) to fill container */
-.print-report-map > div:first-of-type {
-  position: relative !important;
-  width: 100% !important;
-  height: 100% !important;
-  top: unset !important;
-  left: unset !important;
-}
-
 /* Hide mapbox built-in controls */
 .print-report-map .mapboxgl-ctrl-top-left,
 .print-report-map .mapboxgl-ctrl-top-right,
