@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
@@ -33,6 +33,9 @@ const locationNames = {
 const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) => {
   const screenWidth = useScreenWidth();
   const [searchValue, setSearchValue] = useState('');
+  const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+  const listRef = useRef<List>(null);
+  const listboxRef = useRef<HTMLDivElement>(null);
 
   const { type: locationType, id } = useSyncLocation();
   const {
@@ -83,6 +86,40 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     ]
   );
 
+  const handleListKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const count = locationsToDisplay?.length ?? 0;
+      if (count === 0) return;
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          setFocusedIndex((prev) => (prev < count - 1 ? prev + 1 : prev));
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          setFocusedIndex((prev) => (prev > 0 ? prev - 1 : prev));
+          break;
+        case 'Home':
+          e.preventDefault();
+          setFocusedIndex(0);
+          break;
+        case 'End':
+          e.preventDefault();
+          setFocusedIndex(count - 1);
+          break;
+        case 'Enter':
+        case ' ':
+          e.preventDefault();
+          if (focusedIndex >= 0 && focusedIndex < count) {
+            handleLocation(locationsToDisplay[focusedIndex]);
+          }
+          break;
+      }
+    },
+    [locationsToDisplay, focusedIndex, handleLocation]
+  );
+
   const renderRow = ({
     index,
     key,
@@ -100,11 +137,17 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
           <div style={style} ref={registerChild}>
             <button
               type="button"
+              role="option"
+              id={`location-option-${locationsToDisplay[index].id}`}
+              aria-selected={locationId === locationsToDisplay[index].id}
+              aria-disabled={locationId === locationsToDisplay[index].id || undefined}
+              tabIndex={-1}
               className={cn({
                 'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
                 'print:hidden': screenWidth >= breakpoints.lg,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
+                'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
               })}
               onClick={() => {
                 // Google Analytics tracking
@@ -141,22 +184,41 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         <Helper
           className={{
             button: '-top-1 right-4 z-20',
-            tooltip: 'w-fit-content max-w-[400px]',
+            tooltip: 'w-fit-content max-w-100',
           }}
           tooltipPosition={{ top: -0, left: -5 }}
           message="Click this icon to search for a country or a protected area. Countries can also be selected by clicking on the map or on the selected geography seen in the blue space above. "
         >
           <input
             type="search"
+            aria-label="Search locations"
             className="caret-brand-800 focus:border-grey-75 relative box-border w-full border-2 border-transparent bg-transparent text-3xl text-black/85 opacity-50 focus:rounded focus:border-b-2 focus:ring-transparent focus:outline-none"
             placeholder="Type name..."
             value={searchValue}
-            onChange={(e) => setSearchValue(e.currentTarget.value)}
+            onChange={(e) => {
+              setSearchValue(e.currentTarget.value);
+              setFocusedIndex(-1);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setFocusedIndex(0);
+                listboxRef.current?.focus();
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                const count = locationsToDisplay?.length ?? 0;
+                if (count > 0) {
+                  setFocusedIndex(count - 1);
+                  listboxRef.current?.focus();
+                }
+              }
+            }}
           />
         </Helper>
         {searchValue && (
           <button
             type="button"
+            aria-label="Clear search"
             className="absolute top-1/2 right-6 flex -translate-y-1/2 items-center"
             onClick={() => setSearchValue('')}
           >
@@ -169,21 +231,50 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         )}
       </div>
 
+      <div role="status" aria-live="polite" className="sr-only">
+        {searchValue && locationsToDisplay
+          ? `${locationsToDisplay.length} location${locationsToDisplay.length === 1 ? '' : 's'} found`
+          : ''}
+      </div>
+
       {(isFetching || isLoading) && <Loading visible iconClassName="flex w-10 h-10 m-auto my-10" />}
-      <div className="relative max-h-7 min-h-screen">
+      <div className="relative max-h-7 min-h-screen px-1">
         {isFetched && !isLoading && !isFetching && (
           <AutoSizer>
             {({ width, height }) => (
-              <List
-                width={width}
-                height={height}
-                deferredMeasurementCache={cache}
-                rowHeight={cache.rowHeight}
-                rowRenderer={renderRow}
-                rowCount={locationsToDisplay.length}
-                overscanRowCount={15}
-                className="no-scrollbar"
-              />
+              <div
+                ref={listboxRef}
+                role="listbox"
+                aria-label="Locations"
+                tabIndex={0}
+                aria-activedescendant={
+                  focusedIndex >= 0 && locationsToDisplay[focusedIndex]
+                    ? `location-option-${locationsToDisplay[focusedIndex].id}`
+                    : undefined
+                }
+                onKeyDown={handleListKeyDown}
+                onFocus={() => {
+                  if (focusedIndex < 0) setFocusedIndex(0);
+                }}
+                className="focus:outline-none"
+                style={{ width, height }}
+              >
+                <List
+                  ref={listRef}
+                  role="presentation"
+                  containerRole="presentation"
+                  tabIndex={-1}
+                  width={width}
+                  height={height}
+                  deferredMeasurementCache={cache}
+                  rowHeight={cache.rowHeight}
+                  rowRenderer={renderRow}
+                  rowCount={locationsToDisplay.length}
+                  overscanRowCount={15}
+                  scrollToIndex={focusedIndex >= 0 ? focusedIndex : undefined}
+                  className="no-scrollbar"
+                />
+              </div>
             )}
           </AutoSizer>
         )}

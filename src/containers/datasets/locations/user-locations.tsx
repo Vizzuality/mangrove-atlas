@@ -35,15 +35,35 @@ type UserLocation = {
   user_id?: string;
 };
 
-type MetadataUserLocation = {
+export type MetadataUserLocation = {
   max_locations: number;
   current_count: number;
 };
 
-type UserLocationsResponse = {
+export type UserLocationsResponse = {
   data: UserLocation[];
   meta: MetadataUserLocation;
 };
+
+export type UserSitesResponse = {
+  id: number;
+  site_name: string;
+  landscape_id: number;
+  landscape_name: string;
+  section_last_updated: string;
+  section_data_visibility: {
+    '1': 'public' | 'private';
+    '2': 'public' | 'private';
+    '3': 'public' | 'private';
+    '4': 'public' | 'private';
+    '5': 'public' | 'private';
+    '6': 'public' | 'private';
+    '7': 'public' | 'private';
+    '8': 'public' | 'private';
+    '9': 'public' | 'private';
+    '10': 'public' | 'private';
+  };
+}[];
 
 type Bounds = {
   description: string;
@@ -89,6 +109,12 @@ type UserLocationCreateBodyCustom = BaseCreateBody & {
 
 type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
+export const fetchUserSites = () =>
+  API.request<UserSitesResponse>({
+    method: 'GET',
+    url: '/sites',
+  }).then((r) => r.data);
+
 const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
     method: 'GET',
@@ -113,6 +139,16 @@ const userLocationsKeys = {
   list: () => [...userLocationsKeys.all, 'list'] as const,
   detail: (id: number) => [...userLocationsKeys.all, 'detail', id] as const,
 };
+
+export function useGetUserSites<T = UserSitesResponse>(
+  queryOptions?: Omit<UseQueryOptions<UserSitesResponse, Error, T>, 'queryKey' | 'queryFn'>
+) {
+  return useQuery<UserSitesResponse, Error, T>({
+    queryKey: ['user_sites'],
+    queryFn: fetchUserSites,
+    ...queryOptions,
+  });
+}
 
 export function useGetUserLocations<T = UserLocationsResponse>(
   queryOptions: Omit<UseQueryOptions<UserLocationsResponse, Error, T>, 'queryKey'> = {}

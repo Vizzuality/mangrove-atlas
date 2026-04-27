@@ -629,7 +629,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           )}
         </Map>
 
-        {!isPrintingMode && (
+        {/* {!isPrintingMode && (
           <>
             <Media lessThan="md">
               <div className="absolute top-20">
@@ -642,7 +642,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
               </div>
             </Media>
           </>
-        )}
+        )} */}
       </div>
     </>
   );
