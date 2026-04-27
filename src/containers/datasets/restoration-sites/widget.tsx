@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
-
-import isEmpty from 'lodash-es/isEmpty';
+import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 

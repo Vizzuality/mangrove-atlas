@@ -1,7 +1,5 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { ca } from 'date-fns/locale';
-
 import Detail from '@/containers/datasets/restoration/map-popup/detail';
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';

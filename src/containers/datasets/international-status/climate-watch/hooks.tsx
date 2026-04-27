@@ -10,7 +10,6 @@ import type { UseParamsOptions } from 'types/widget';
 import { ClimateWatchAPI } from 'services/api';
 
 import type {
-  Data,
   DataResponse,
   DataResponseContentOverview,
   DataResponseDocuments,

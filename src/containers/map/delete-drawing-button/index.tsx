@@ -4,9 +4,7 @@ import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { printModeState } from '@/store/print-mode';
 
-import { useAtomValue } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
@@ -28,7 +26,6 @@ const DeleteDrawingButton = ({
   const resetAnalysisState = useResetAtom(analysisAtom);
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetUploadedGeojson = useResetAtom(drawingUploadToolAtom);
-  const isPrintingMode = useAtomValue(printModeState);
   const { navigate } = useLocationNavigation();
 
   const handleResetPage = useCallback(() => {

@@ -9,20 +9,6 @@ type DataSourceType = {
   source_layer: string;
 };
 
-type ApiSourceType = {
-  source: string;
-  unit: string;
-  years: number[];
-  data_source: DataSourceType[];
-};
-
-type NationalDashboardIndicator = {
-  indicator: string;
-  legal_status: string | null;
-  mangrove_breakthrough_committed: boolean | null;
-  sources: ApiSourceType[];
-};
-
 export type IndicatorSourcesProps = {
   id: WidgetSlugType;
   locationIso: string;

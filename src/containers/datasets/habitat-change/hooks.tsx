@@ -62,7 +62,7 @@ export function useMangroveHabitatChange(
     ...queryOptions,
   });
 
-  const { data, isFetched, isPlaceholderData, isLoading } = query;
+  const { data, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
   const years = data?.metadata?.years;

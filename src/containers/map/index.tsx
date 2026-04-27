@@ -13,7 +13,6 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { activeGuideAtom } from '@/store/guide';
 import {
   interactiveLayerIdsAtom,
-  locationBoundsAtom,
   mapCursorAtom,
   coordinatesAtom,
   mapDraggableTooltipDimensionsAtom,
@@ -26,12 +25,11 @@ import { printModeState } from '@/store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
 import { useOnClickOutside } from 'usehooks-ts';
 
 import { useLocationNavigation } from 'hooks/location-navigation';
-import { useScreenWidth } from 'hooks/media';
 import { useSyncLocation } from 'hooks/use-sync-location';
 
 import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
@@ -51,7 +49,6 @@ import ShareControl from '@/components/map/controls/share';
 import ZoomControl from '@/components/map/controls/zoom';
 import DrawControl from '@/components/map/drawing-tool';
 import { Media } from '@/components/media-query';
-import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
@@ -83,7 +80,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
     useAtom(drawingToolAtom);
   const { enabled: isUploadToolEnabled, uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
-  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useSyncURLBounds();
   const [cursor, setCursor] = useAtom(mapCursorAtom);
   const isPrintingMode = useAtomValue(printModeState);
@@ -134,8 +130,6 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
   const { minZoom, maxZoom } = MAP_DEFAULT_PROPS;
-
-  const screenWidth = useScreenWidth();
 
   const { [mapId]: map } = useMap();
 

@@ -130,7 +130,7 @@ export function useMangroveHeight(
     ...queryOptions,
   });
 
-  const { isFetching, isError, data, refetch, isFetched } = query;
+  const { data, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
   const mean = data?.metadata?.avg_height?.[0]?.value;

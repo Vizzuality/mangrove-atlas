@@ -4,8 +4,6 @@ import type GeoJSON from 'geojson';
 
 import API from 'services/api';
 
-import type { Location } from './types';
-
 export type UserLocationType = 'system' | 'custom';
 
 type SystemLocation = {
@@ -95,12 +93,6 @@ const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
     method: 'GET',
     url: '/user_locations',
-  }).then((r) => r.data);
-
-const fetchUserLocation = (id: UserLocation['id']) =>
-  API.request<{ data: UserLocation }>({
-    method: 'GET',
-    url: `/user_locations/${id}`,
   }).then((r) => r.data);
 
 const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>

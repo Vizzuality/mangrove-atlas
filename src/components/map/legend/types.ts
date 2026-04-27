@@ -1,12 +1,5 @@
 import { PropsWithChildren } from 'react';
 
-import { DraggableAttributes } from '@dnd-kit/core';
-import { SyntheticListeners } from '@dnd-kit/core/dist/hooks/utilities';
-
-type Components = {
-  Info: React.ReactNode;
-};
-
 type Sortable = {
   enabled: boolean;
   handle?: boolean;
@@ -14,28 +7,7 @@ type Sortable = {
 };
 
 type OnChangeOrder = (id: string[]) => void;
-type OnChangeOpacity = (opacity: number) => void;
-type OnChangeVisibility = (visibility: boolean) => void;
-type OnChangeExpand = (expand: boolean) => void;
 
-type Settings = {
-  opacity: number;
-  visibility: boolean;
-  expand: boolean;
-};
-
-type SettingsManager = {
-  opacity: boolean;
-  visibility: boolean;
-  expand: boolean;
-  info?: boolean;
-};
-
-type LegendItemEvents = {
-  onChangeOpacity?: OnChangeOpacity;
-  onChangeVisibility?: OnChangeVisibility;
-  onChangeExpand?: OnChangeExpand;
-};
 /*
  * Legend
  */
@@ -43,38 +15,6 @@ export interface LegendProps extends PropsWithChildren {
   className?: string;
   sortable: Sortable;
   onChangeOrder?: OnChangeOrder;
-}
-
-interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
-  id: string;
-  name: string;
-  className?: string;
-  // components
-  Components: Components;
-
-  // sortable
-  sortable: Sortable;
-  listeners?: SyntheticListeners;
-  attributes?: DraggableAttributes;
-
-  // settings
-  settings?: Settings;
-  settingsManager?: SettingsManager;
-}
-
-interface LegendItemToolbarProps extends LegendItemEvents {
-  className?: string;
-  // components
-  Components?: Components;
-  // settings
-  settings?: Settings;
-  settingsManager?: SettingsManager;
-}
-
-interface LegendItemButtonProps {
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  selected?: boolean;
-  className?: string;
 }
 
 /*

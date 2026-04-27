@@ -34,7 +34,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
 
   const [basemap] = useSyncBasemap();
 
-  const [locationBounds, setLocationBounds] = useAtom(locationBoundsAtom);
+  const [locationBounds] = useAtom(locationBoundsAtom);
   const [URLBounds, setURLBounds] = useSyncURLBounds();
   const cursor = useAtomValue(mapCursorAtom);
 

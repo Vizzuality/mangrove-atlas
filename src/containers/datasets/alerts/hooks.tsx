@@ -48,14 +48,6 @@ const bucketKey = (m: number) => {
 };
 
 const makeColoredSeries = (data: any[]) => {
-  const keys = [
-    'alerts_lt3',
-    'alerts_3to6',
-    'alerts_6to12',
-    'alerts_12to24',
-    'alerts_gt24',
-  ] as const;
-
   // init keys as null
   const layerKeys = data.map((d) => ({
     ...d,
