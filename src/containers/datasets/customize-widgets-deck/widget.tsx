@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import { locationTypeAtom } from '@/store/locations';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 import widgets from '@/containers/widgets/constants';
@@ -25,7 +25,8 @@ const CustomizeWidgetsDeck = () => {
 
   const [animateState, setAnimateState] = useState('start');
 
-  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
+  const { type } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setAnimateState('end');

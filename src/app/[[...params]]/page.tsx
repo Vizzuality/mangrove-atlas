@@ -62,7 +62,7 @@ export default async function Page({ params }: { params: Promise<{ params?: stri
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MainApp locationType={locationType ?? null} locationId={locationId ?? null} />
+      <MainApp />
     </HydrationBoundary>
   );
 }

@@ -1,13 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-import type { LayerProps, SourceProps } from 'react-map-gl';
+import type { SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
 
 import { formatAxis } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -21,8 +20,9 @@ import type {
 } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 
@@ -48,14 +48,6 @@ const bucketKey = (m: number) => {
 };
 
 const makeColoredSeries = (data: any[]) => {
-  const keys = [
-    'alerts_lt3',
-    'alerts_3to6',
-    'alerts_6to12',
-    'alerts_12to24',
-    'alerts_gt24',
-  ] as const;
-
   // init keys as null
   const layerKeys = data.map((d) => ({
     ...d,
@@ -227,8 +219,7 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   );
   const setEndDate = useSetAtom(alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>);
 
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
 
   const { data } = useLocation(id, locationType);
   const location_id = data?.location_id;

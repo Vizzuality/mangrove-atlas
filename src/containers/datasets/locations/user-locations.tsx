@@ -4,11 +4,9 @@ import type GeoJSON from 'geojson';
 
 import API from 'services/api';
 
-import type { Location } from './types';
-
 export type UserLocationType = 'system' | 'custom';
 
-export type SystemLocation = {
+type SystemLocation = {
   id: number;
   name: string;
   iso: string;
@@ -16,7 +14,7 @@ export type SystemLocation = {
   bounds: Bounds | null;
 };
 
-export type UserLocation = {
+type UserLocation = {
   id: number;
   name: string;
   position: number | null;
@@ -37,12 +35,12 @@ export type UserLocation = {
   user_id?: string;
 };
 
-export type MetadataUserLocation = {
+type MetadataUserLocation = {
   max_locations: number;
   current_count: number;
 };
 
-export type UserLocationsResponse = {
+type UserLocationsResponse = {
   data: UserLocation[];
   meta: MetadataUserLocation;
 };
@@ -76,47 +74,41 @@ type BaseCreateBody = {
 };
 
 //  System location: requires location_id, forbids custom_geometry
-export type UserLocationCreateBodySystem = BaseCreateBody & {
+type UserLocationCreateBodySystem = BaseCreateBody & {
   location_type: 'system';
   location_id: number;
   custom_geometry?: never;
 };
 
 //  Custom location: requires custom_geometry, forbids location_id
-export type UserLocationCreateBodyCustom = BaseCreateBody & {
+type UserLocationCreateBodyCustom = BaseCreateBody & {
   location_type: 'custom';
   custom_geometry: CustomGeometry;
   location_id?: never;
 };
 
-export type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
+type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
-export const fetchUserLocations = () =>
+const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
     method: 'GET',
     url: '/user_locations',
   }).then((r) => r.data);
 
-export const fetchUserLocation = (id: UserLocation['id']) =>
-  API.request<{ data: UserLocation }>({
-    method: 'GET',
-    url: `/user_locations/${id}`,
-  }).then((r) => r.data);
-
-export const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>
+const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>
   API.request<{ data: UserLocation }>({
     method: 'PATCH',
     url: `/user_locations/${id}`,
     data: body,
   }).then((r) => r.data);
 
-export const deleteUserLocation = (id: UserLocation['id']) =>
+const deleteUserLocation = (id: UserLocation['id']) =>
   API.request<void>({
     method: 'DELETE',
     url: `/user_locations/${id}`,
   }).then((r) => r.data);
 
-export const userLocationsKeys = {
+const userLocationsKeys = {
   all: ['user_locations'] as const,
   list: () => [...userLocationsKeys.all, 'list'] as const,
   detail: (id: number) => [...userLocationsKeys.all, 'detail', id] as const,
@@ -132,20 +124,7 @@ export function useGetUserLocations<T = UserLocationsResponse>(
   });
 }
 
-export function useGetUserLocation(
-  id?: UserLocation['id'],
-  queryOptions: Omit<UseQueryOptions<{ data: UserLocation }, Error, UserLocation>, 'queryKey'> = {}
-) {
-  return useQuery({
-    queryKey: userLocationsKeys.detail(id!),
-    queryFn: () => fetchUserLocation(id!),
-    enabled: Boolean(id),
-    select: ({ data }) => data,
-    ...queryOptions,
-  });
-}
-
-export const createUserLocation = async (body: UserLocationCreateBody) => {
+const createUserLocation = async (body: UserLocationCreateBody) => {
   try {
     const r = await API.request<{ data: UserLocation }>({
       method: 'POST',

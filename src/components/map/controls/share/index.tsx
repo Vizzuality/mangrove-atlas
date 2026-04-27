@@ -15,13 +15,7 @@ import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/compon
 
 import SHARE_SVG from '@/svgs/map/share';
 
-export const Share = ({
-  className,
-  disabled = false,
-}: {
-  className?: string;
-  disabled: boolean;
-}) => {
+const Share = ({ className, disabled = false }: { className?: string; disabled: boolean }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 

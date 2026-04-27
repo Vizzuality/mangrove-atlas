@@ -2,10 +2,9 @@ import { FC } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { locationTypeAtom } from '@/store/locations';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
-import { useAtomValue } from 'jotai';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { LocationTypes } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
@@ -16,7 +15,8 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const WidgetsDeck: FC = () => {
   // Params as default don't appear in URL, when there is no location we assume worldwide
-  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
+  const { type } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
 
   const [activeWidgets] = useSyncActiveWidgets();
 

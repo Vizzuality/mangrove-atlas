@@ -1,5 +1,4 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
-import React from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';

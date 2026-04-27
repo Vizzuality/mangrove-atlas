@@ -4,7 +4,6 @@ import orderBy from 'lodash-es/orderBy';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -13,9 +12,9 @@ import { format } from 'd3-format';
 import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import CustomTooltip from '@/components/chart/tooltip';
 import { Visibility } from '@/types/layers';
@@ -24,9 +23,7 @@ import API, { AnalysisAPI } from 'services/api';
 
 import { Data, DataResponse, UseParamsOptions } from './types';
 
-export const numberFormat = format(',.2~f');
-export const smallNumberFormat = format('.4~f');
-export const formatAxis = format(',.0d');
+const numberFormat = format(',.2~f');
 
 export const widgetSlug = 'net-change';
 
@@ -87,8 +84,7 @@ export function useMangroveNetChange(
   queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>,
   onCancel?: () => void
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);

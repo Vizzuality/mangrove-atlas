@@ -1,12 +1,13 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
-import { locationIdAtom } from '@/store/locations';
 import { interactiveLayerIdsAtom } from '@/store/map';
 
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { BASEMAPS, LAYERS } from '@/containers/datasets';
 import { NATIONAL_DASHBOARD_LOCATIONS } from '@/containers/layers/constants';
@@ -18,20 +19,6 @@ const CountryBoundariesLayer = LAYERS['country-boundaries'];
 
 const LayerManagerContainer = () => {
   const [layers] = useSyncActiveLayers();
-
-  // Materialize layers into the URL so they persist through navigations.
-  // nuqs withDefault returns the default when absent but never writes it.
-  // We write via the serializer directly to bypass nuqs's no-op detection.
-  useEffect(() => {
-    if (layers?.length && !window.location.search.includes('layers=')) {
-      const serialized = JSON.stringify(layers);
-      const url = new URL(window.location.href);
-      url.searchParams.set('layers', serialized);
-      window.history.replaceState(null, '', url.toString());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const [, setInteractiveLayerIds] = useAtom(interactiveLayerIdsAtom);
 
   const activeLayersIds = useMemo(() => layers?.map((l) => l?.id), [layers]);
@@ -46,7 +33,7 @@ const LayerManagerContainer = () => {
     return filteredLayers;
   }, [activeLayersIds]);
 
-  const id = useAtomValue(locationIdAtom);
+  const { id } = useSyncLocation();
 
   // layers that act as basemap (such planet imagery or high resolution extent) must be always at the bottom
   const basemap_layers = ACTIVE_LAYERS?.filter(

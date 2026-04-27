@@ -2,27 +2,24 @@ import { useMemo } from 'react';
 
 import { numberFormat } from '@/lib/format';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import API from 'services/api';
 
-import type { Data, DataResponse, InternationalStatusTypes } from './types';
+import type { DataResponse, InternationalStatusTypes } from './types';
 
 // widget data
 export function useMangroveInternationalStatus(
   params?: UseParamsOptions,
   queryOptions?: Omit<UseQueryOptions<DataResponse, Error>, 'queryKey' | 'queryFn' | 'select'>
 ): InternationalStatusTypes {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);

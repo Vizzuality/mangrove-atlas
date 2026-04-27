@@ -1,16 +1,13 @@
-import { useCallback, useMemo, ReactElement } from 'react';
-
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, ReactElement } from 'react';
 
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { isNavigatingAtom } from '@/store/map';
-import { printModeState } from '@/store/print-mode';
 
-import { useAtomValue, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
+
+import { useLocationNavigation } from 'hooks/location-navigation';
 
 import REMOVE_SVG from '@/svgs/ui/close';
 
@@ -19,7 +16,7 @@ const SIZE = {
   sm: 'h-8 w-8',
 };
 
-export const DeleteDrawingButton = ({
+const DeleteDrawingButton = ({
   size = 'md',
   children = null,
 }: {
@@ -29,32 +26,14 @@ export const DeleteDrawingButton = ({
   const resetAnalysisState = useResetAtom(analysisAtom);
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetUploadedGeojson = useResetAtom(drawingUploadToolAtom);
-  const setNavigating = useSetAtom(isNavigatingAtom);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const isPrintingMode = useAtomValue(printModeState);
-
-  const queryParams = useMemo(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.delete('bounds');
-    return params.toString();
-  }, [searchParams]);
+  const { navigate } = useLocationNavigation();
 
   const handleResetPage = useCallback(() => {
     resetDrawingState();
     resetAnalysisState();
     resetUploadedGeojson();
-
-    setNavigating(true);
-    router.replace(`/?${queryParams}`);
-  }, [
-    queryParams,
-    router,
-    resetDrawingState,
-    resetUploadedGeojson,
-    resetAnalysisState,
-    setNavigating,
-  ]);
+    navigate({ type: 'worldwide' });
+  }, [navigate, resetDrawingState, resetUploadedGeojson, resetAnalysisState]);
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-1">

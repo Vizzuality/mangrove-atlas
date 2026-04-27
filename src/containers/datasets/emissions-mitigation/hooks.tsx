@@ -3,15 +3,13 @@ import orderBy from 'lodash-es/orderBy';
 
 import { significantDigitsFormat } from '@/lib/format';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
-import { useAtomValue } from 'jotai';
 import type { CartesianViewBox } from 'recharts/types/util/types';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API from 'services/api';
 
@@ -113,8 +111,7 @@ export function useMangroveEmissionsMitigation(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, unknown>
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -140,7 +137,7 @@ export function useMangroveEmissionsMitigation(
     ...queryOptions,
   });
 
-  const { data, isFetched, isLoading } = query;
+  const { data, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
   const COLOR_RAMP = chroma
     .scale(['#79D09A', '#3EA3A1', '#FBD07E', '#FF98B1', '#C57CF2', '#74C5FF', '#7287F9'])

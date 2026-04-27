@@ -6,7 +6,7 @@ import { LayerProps } from 'types/layers';
 
 import { useLayer, useSources } from './hooks';
 
-export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
+const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 

@@ -8,7 +8,7 @@ export type DataUserNotificationPreferencesToggleLocationAlerts = {
   newsletter: boolean;
 };
 
-export type UserNotificationPreferencesResponse = {
+type UserNotificationPreferencesResponse = {
   data: DataUserNotificationPreferencesToggleLocationAlerts;
   isPending: boolean;
 };
@@ -17,15 +17,13 @@ export type UserNotificationPreferencesResponse = {
 // Fetchers
 // ---------------------
 
-export const fetchUserNotificationPreferences = () =>
+const fetchUserNotificationPreferences = () =>
   API.request<UserNotificationPreferencesResponse>({
     method: 'GET',
     url: '/notification_preferences',
   }).then((r) => r.data);
 
-export const postToggleLocationAlerts = (
-  body: DataUserNotificationPreferencesToggleLocationAlerts
-) =>
+const postToggleLocationAlerts = (body: DataUserNotificationPreferencesToggleLocationAlerts) =>
   API.request<DataUserNotificationPreferencesToggleLocationAlerts>({
     method: 'POST',
     url: '/notification_preferences/toggle_location_alerts',
@@ -38,7 +36,7 @@ export const postToggleLocationAlerts = (
 // Keys
 // ---------------------
 
-export const notificationPreferencesKeys = {
+const notificationPreferencesKeys = {
   all: ['notification_preferences'] as const,
   list: () => [...notificationPreferencesKeys.all, 'list'] as const,
   toggleLocationAlerts: () =>

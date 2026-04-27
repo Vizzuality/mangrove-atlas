@@ -104,7 +104,6 @@ import NetChangeWidget from '@/containers/datasets/net-change/widget';
 import RestorationInfo from '@/containers/datasets/restoration/info.mdx';
 import RestorationLayer from '@/containers/datasets/restoration/layer';
 import RestorationMapLegend from '@/containers/datasets/restoration/map-legend';
-import PopupRestoration from '@/containers/datasets/restoration/map-popup';
 import RestorationWidget from '@/containers/datasets/restoration/widget';
 import RestorationSitesInfo from '@/containers/datasets/restoration-sites/info.mdx';
 import RestorationSitesLayer from '@/containers/datasets/restoration-sites/layer';
@@ -226,10 +225,6 @@ export const MAP_LEGENDS = {
   mangrove_iucn_ecoregion: IUCNEcoregionsMapLegend,
   mangrove_national_dashboard_layer: NationalDashboardMapLegend,
   mangrove_commercial_fisheries_production: CommercialFisheriesProductionMapLegend,
-};
-
-export const MAP_POP_UPS = {
-  mangrove_restoration: PopupRestoration,
 };
 
 export const INFO = {

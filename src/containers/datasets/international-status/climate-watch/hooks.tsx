@@ -1,18 +1,15 @@
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
-import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
 import { ClimateWatchAPI } from 'services/api';
 
 import type {
-  Data,
   DataResponse,
   DataResponseContentOverview,
   DataResponseDocuments,
@@ -29,8 +26,7 @@ export function useClimateWatchNDCS(
     'queryKey' | 'queryFn'
   >
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { iso },
   } = useLocation(id, locationType);
@@ -83,8 +79,7 @@ export function useClimateWatchNDCSCountriesDocs(
     'queryKey' | 'queryFn' | 'select'
   >
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { iso },
   } = useLocation(id, locationType);
@@ -120,8 +115,7 @@ export function useClimateWatchNDCSContentOverview(
     'queryKey' | 'queryFn' | 'select'
   >
 ) {
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { iso },
   } = useLocation(id, locationType);

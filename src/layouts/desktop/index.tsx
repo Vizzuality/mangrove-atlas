@@ -4,10 +4,11 @@ import { useMap } from 'react-map-gl';
 
 import cn from '@/lib/classnames';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { printModeState } from '@/store/print-mode';
 
 import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
@@ -21,8 +22,8 @@ const DesktopLayout = () => {
 
   const isPrintingMode = useAtomValue(printModeState);
 
-  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type, id } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   const { data: locationData } = useLocation(id, locationType);
   const location = locationData?.name;
 

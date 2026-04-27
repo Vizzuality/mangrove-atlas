@@ -1,14 +1,11 @@
 import cn from '@/lib/classnames';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
-
-import { useAtomValue } from 'jotai';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import Loading from '@/components/ui/loading';
 import { WIDGET_CARD_WRAPPER_STYLE } from 'styles/widgets';
 
 import { useLocation } from '../locations/hooks';
-import { LocationTypes } from '../locations/types';
 
 import { useNationalDashboard } from './hooks';
 import LegalStatus from './legal-status';
@@ -21,8 +18,7 @@ import Sources from './sources';
 const NationalDashboard = () => {
   const { data, isLoading, isFetching, isFetched } = useNationalDashboard();
 
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const ISO = data?.locationIso;
 
   const { data: location } = useLocation(id, locationType);

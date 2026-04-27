@@ -5,12 +5,12 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { useSyncActiveLayers } from '@/store/layers';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 
-import { useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa6';
 import { IconBaseProps } from 'react-icons/lib';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import { LocationTypes } from '@/containers/datasets/locations/types';
@@ -31,8 +31,8 @@ const NATIONAL_DASHBOARD_PREFIX = 'mangrove_national_dashboard_layer_';
 const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   const [activeLayers, setActiveLayers] = useSyncActiveLayers();
 
-  const locationId = useAtomValue(locationIdAtom);
-  const locationType = (useAtomValue(locationTypeAtom) || 'worldwide') as LocationTypes;
+  const { type, id: locationId } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
 
   const { data: locationData } = useLocation(locationId, locationType);
   const iso = locationData?.iso;

@@ -5,7 +5,7 @@ export type ResetPasswordPayload = { user: { email: string; source?: 'gmw' | und
 export type ResetPasswordUpdatePayload = {
   user: { password: string; password_confirmation: string; reset_password_token: string };
 };
-export type ResetPasswordResponse = { message?: string };
+type ResetPasswordResponse = { message?: string };
 export type SignupPayload = { user: { email: string; password: string; name: string } };
 export type SignupResponse =
   | { ok: true; data?: any; message?: string }

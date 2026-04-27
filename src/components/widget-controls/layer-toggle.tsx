@@ -41,16 +41,6 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
         activeLayers
       );
       setActiveLayers(layersUpdate);
-
-      // Scroll the widget into view when activating its layer
-      if (!isActive) {
-        requestAnimationFrame(() => {
-          document.getElementById(`widget-${id}`)?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'nearest',
-          });
-        });
-      }
     },
     [isActive, activeLayers, setActiveLayers, id]
   );
@@ -62,7 +52,7 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
     <Helper
       className={{
         button: HELPER_ID ? HELPER_POSITION : 'hidden',
-        tooltip: 'w-fit-content max-w-[400px]',
+        tooltip: 'w-fit-content max-w-100',
       }}
       tooltipPosition={{ top: -35, left: 0 }}
       message="Use this icon to toggle the map layer on or off. If a widget does not have this icon, it means that there is no associated map layer."

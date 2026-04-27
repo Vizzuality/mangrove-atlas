@@ -37,7 +37,7 @@ import { TOPICS } from './constants';
 const TOPICS_VALUES = TOPICS.map((topic) => topic.value) as [string, ...string[]];
 const isDev = process.env.NEXT_PUBLIC_ENVIRONMENT === 'development';
 
-export const ContactFormSchema = z.object({
+const ContactFormSchema = z.object({
   name: z.string({ message: 'Name is required' }).min(2, 'Name must contain at least 2 characters'),
   organization: z.string(),
   email: z

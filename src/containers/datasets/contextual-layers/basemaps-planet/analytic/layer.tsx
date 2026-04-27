@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
@@ -8,7 +6,7 @@ import { LayerProps } from 'types/layers';
 
 import { useLayer, useSource } from './hooks';
 
-export const PlanetSatelliteBasemapAnalyticLayer = ({ beforeId, id }: LayerProps) => {
+const PlanetSatelliteBasemapAnalyticLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 

@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 import EmbeddedMap from '@/containers/embedded/map';
 
-export default function Embedded() {
+export default function EmbeddedWrapper() {
   return (
     <Suspense>
       <EmbeddedMap mapId="embedded" />

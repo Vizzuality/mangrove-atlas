@@ -2,15 +2,15 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { SpeciesLocationState } from '@/store/widgets/species-location';
 
 import type { UseQueryOptions } from '@tanstack/react-query';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'jotai';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 
@@ -32,8 +32,7 @@ export function useMangroveSpeciesLocation<T = DataResponse>(
       },
     }).then(({ data }) => data);
 
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { id: currentLocation, location_id },
   } = useLocation(id, locationType);

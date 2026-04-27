@@ -5,7 +5,6 @@ import sortBy from 'lodash-es/sortBy';
 import { formatAxis } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
-import { locationTypeAtom, locationIdAtom } from '@/store/locations';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
@@ -14,15 +13,14 @@ import type { PrimitiveAtom } from 'jotai';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { CartesianViewBox } from 'recharts/types/util/types';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { DateOption } from 'types/widget';
 
 import API_cloud_functions from 'services/cloud-functions';
-
-import opacity from '@/svgs/legend/opacity';
 
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
@@ -114,8 +112,7 @@ export function useAlerts<DataResponse>(
   );
   const setEndDate = useSetAtom(alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>);
 
-  const locationType = useAtomValue(locationTypeAtom) as LocationTypes;
-  const id = useAtomValue(locationIdAtom);
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { location_id },
   } = useLocation(id, locationType);

@@ -1,4 +1,4 @@
-export type Period = 'annual' | '25_year' | '100_year';
+type Period = 'annual' | '25_year' | '100_year';
 type Label = {
   axis: string;
   large: string;

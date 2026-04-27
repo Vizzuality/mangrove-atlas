@@ -4,7 +4,6 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { useSyncActiveLayers } from '@/store/layers';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import type { FeatureCollection, Geometry, GeoJsonProperties } from 'geojson';
@@ -39,17 +38,11 @@ const AlertsWidget = () => {
   );
   const { customGeojson } = useAtomValue(drawingToolAtom);
   const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
-  const [activeLayers] = useSyncActiveLayers();
   const [isCanceled, setIsCanceled] = useState(false);
 
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);
   }, []);
-
-  const isActive = useMemo(
-    () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
-    [activeLayers]
-  );
 
   const widgetInfo = useMemo(
     () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 
 type SuccessAlertProps = {

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Source, Layer } from 'react-map-gl';
 
 import { useSyncActiveLayers } from '@/store/layers';
