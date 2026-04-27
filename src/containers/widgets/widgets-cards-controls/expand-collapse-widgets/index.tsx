@@ -48,7 +48,6 @@ const ExpandCollapseWidgets: FC = () => {
           'text-brand-800 shadow-control disabled:text-opacity-60 h-8 w-full rounded-4xl bg-white px-4 py-1 font-sans text-sm font-semibold transition-colors md:ml-0 md:w-[262px]':
             true,
           'bg-white': widgetsCollapsedChecker,
-          'print:hidden': screenWidth >= breakpoints.md,
         })}
         disabled={widgets.length <= 1}
         onClick={handleWidgetsCollapsed}

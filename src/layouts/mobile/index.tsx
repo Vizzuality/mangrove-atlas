@@ -28,7 +28,7 @@ const MobileLayout = () => {
   }, [map]);
 
   return (
-    <div className="pointer-events-none h-screen print:bg-transparent">
+    <div className="pointer-events-none h-screen">
       <Link className="pointer-events-auto fixed -top-1 left-0 z-10" href="/" onClick={handleReset}>
         <Image
           src="/images/mobile-header.svg"

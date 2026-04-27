@@ -5,7 +5,7 @@ import Providers from './providers';
 export default function ParamsLayout({ children }: { children: React.ReactNode }) {
   return (
     <Providers>
-      <div className="relative h-screen w-screen overflow-hidden print:overflow-visible">
+      <div className="relative h-screen w-screen overflow-hidden">
         <MapContainer mapId="default" />
         {children}
       </div>

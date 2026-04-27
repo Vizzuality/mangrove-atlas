@@ -118,7 +118,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   }, [activeLayerNoPlanet, locationId]);
 
   return (
-    <div className="print:hidden">
+    <div>
       {!!legendLayers?.length && (
         <>
           <button
@@ -149,8 +149,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
               >
                 <div
                   className={cn({
-                    'box-content flex flex-col overflow-y-auto p-4 md:max-h-[55vh] print:hidden':
-                      true,
+                    'box-content flex flex-col overflow-y-auto p-4 md:max-h-[55vh]': true,
                   })}
                 >
                   <SortableList

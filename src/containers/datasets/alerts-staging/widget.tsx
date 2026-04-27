@@ -109,10 +109,10 @@ const AlertsWidget = () => {
             between{' '}
             <Popover>
               <PopoverTrigger>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {selectedStartDate?.label}
                   <ARROW_SVG
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
                     role="img"
                     title="Arrow"
                   />
@@ -153,10 +153,10 @@ const AlertsWidget = () => {
             and{' '}
             <Popover>
               <PopoverTrigger>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {selectedEndDate?.label}
                   <ARROW_SVG
-                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2 print:hidden"
+                    className="absolute -bottom-2.5 left-1/2 inline-block h-2 w-2 -translate-x-1/2"
                     role="img"
                     title="Arrow"
                   />

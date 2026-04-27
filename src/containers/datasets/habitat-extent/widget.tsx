@@ -127,10 +127,10 @@ const HabitatExtent = () => {
               {area}{' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
                     {selectedUnitAreaExtent}
                     <ARROW_SVG
-                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
@@ -162,10 +162,10 @@ const HabitatExtent = () => {
             in{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {year || defaultYear}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     title="Arrow"
                   />

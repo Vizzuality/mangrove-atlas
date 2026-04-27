@@ -23,6 +23,9 @@ const parse = (pathname: string): SyncedLocation => {
   if (path.startsWith('/embedded')) {
     path = path.slice('/embedded'.length) || '/';
   }
+  if (path.startsWith('/print-report')) {
+    path = path.slice('/print-report'.length) || '/';
+  }
   const [, segment, id] = path.split('/');
   if (!segment || !isLocationSegment(segment)) return { type: null, id: null };
   return { type: segment, id: id ?? null };

@@ -84,7 +84,6 @@ Each deploys independently via `.github/workflows/deploy-*.yml` on push to `deve
 - **Styling is Tailwind v4** with `prettier-plugin-tailwindcss` sorting classes on save. `cn` helper at `@/lib/classnames`. Widget-shared class constants live in `src/styles/widgets.ts` (e.g. `WIDGET_CARD_WRAPPER_STYLE`, `WIDGET_SENTENCE_STYLE`).
 - **i18n**: Transifex Native, locales `en`/`fr`/`es` (`localeDetection: false`). Strings that should not be translated get `className="notranslate"` (see numeric values in widgets).
 - **Analytics**: use the `trackEvent` wrapper from `@/lib/analytics/ga` — only fires when `NEXT_PUBLIC_GA_ID` is set.
-- **Print mode**: `printModeState` drives a print CSS path — many widget components have `print:` Tailwind variants. Don't strip them when refactoring.
 - **Prettier**: single quotes, trailing commas `es5`, 100 char width. Pre-commit hook runs lint-staged (`.lintstagedrc.js`).
 
 ## Testing

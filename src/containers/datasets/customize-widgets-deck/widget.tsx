@@ -60,10 +60,10 @@ const CustomizeWidgetsDeck = () => {
           <span className="notranslate font-bold">
             <Dialog>
               <DialogTrigger>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {filteredWidgetsToDisplay.length} of {widgets.length - 1}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     title="Arrow"
                   />

@@ -145,7 +145,6 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
               className={cn({
                 'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
-                'print:hidden': screenWidth >= breakpoints.lg,
                 'pointer-events-none': locationId === locationsToDisplay[index].id,
                 'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
               })}
