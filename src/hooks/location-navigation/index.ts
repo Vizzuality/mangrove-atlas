@@ -9,9 +9,9 @@ import { useSetAtom } from 'jotai';
 
 import type { Location, LocationTypes } from '@/containers/datasets/locations/types';
 
-export type BBox = [number, number, number, number];
+type BBox = [number, number, number, number];
 
-export type NavTarget =
+type NavTarget =
   | { type: 'worldwide' }
   | { type: 'country'; iso: string }
   | { type: 'wdpa'; locationId: string | number }

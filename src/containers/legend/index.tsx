@@ -1,6 +1,6 @@
 import cn from '@/lib/classnames';
 
-export type Item = {
+type Item = {
   showValue?: boolean;
   highlightValue?: boolean;
   color?: string;
@@ -11,7 +11,7 @@ export type Item = {
   valueFormatted?: string;
 };
 
-export type LegendTypes = {
+type LegendTypes = {
   title?: string;
   subtitle?: string;
   items: Item[];

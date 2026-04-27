@@ -8,7 +8,7 @@ export type DataUserNotificationPreferencesToggleLocationAlerts = {
   newsletter: boolean;
 };
 
-export type UserNotificationPreferencesResponse = {
+type UserNotificationPreferencesResponse = {
   data: DataUserNotificationPreferencesToggleLocationAlerts;
   isPending: boolean;
 };

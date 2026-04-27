@@ -31,7 +31,7 @@ type SettingsManager = {
   info?: boolean;
 };
 
-export type LegendItemEvents = {
+type LegendItemEvents = {
   onChangeOpacity?: OnChangeOpacity;
   onChangeVisibility?: OnChangeVisibility;
   onChangeExpand?: OnChangeExpand;
@@ -45,7 +45,7 @@ export interface LegendProps extends PropsWithChildren {
   onChangeOrder?: OnChangeOrder;
 }
 
-export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
+interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   id: string;
   name: string;
   className?: string;
@@ -62,7 +62,7 @@ export interface LegendItemProps extends PropsWithChildren, LegendItemEvents {
   settingsManager?: SettingsManager;
 }
 
-export interface LegendItemToolbarProps extends LegendItemEvents {
+interface LegendItemToolbarProps extends LegendItemEvents {
   className?: string;
   // components
   Components?: Components;
@@ -71,7 +71,7 @@ export interface LegendItemToolbarProps extends LegendItemEvents {
   settingsManager?: SettingsManager;
 }
 
-export interface LegendItemButtonProps {
+interface LegendItemButtonProps {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   selected?: boolean;
   className?: string;

@@ -8,7 +8,7 @@ import type { Location } from './types';
 
 export type UserLocationType = 'system' | 'custom';
 
-export type SystemLocation = {
+type SystemLocation = {
   id: number;
   name: string;
   iso: string;
@@ -16,7 +16,7 @@ export type SystemLocation = {
   bounds: Bounds | null;
 };
 
-export type UserLocation = {
+type UserLocation = {
   id: number;
   name: string;
   position: number | null;
@@ -37,12 +37,12 @@ export type UserLocation = {
   user_id?: string;
 };
 
-export type MetadataUserLocation = {
+type MetadataUserLocation = {
   max_locations: number;
   current_count: number;
 };
 
-export type UserLocationsResponse = {
+type UserLocationsResponse = {
   data: UserLocation[];
   meta: MetadataUserLocation;
 };
@@ -76,20 +76,20 @@ type BaseCreateBody = {
 };
 
 //  System location: requires location_id, forbids custom_geometry
-export type UserLocationCreateBodySystem = BaseCreateBody & {
+type UserLocationCreateBodySystem = BaseCreateBody & {
   location_type: 'system';
   location_id: number;
   custom_geometry?: never;
 };
 
 //  Custom location: requires custom_geometry, forbids location_id
-export type UserLocationCreateBodyCustom = BaseCreateBody & {
+type UserLocationCreateBodyCustom = BaseCreateBody & {
   location_type: 'custom';
   custom_geometry: CustomGeometry;
   location_id?: never;
 };
 
-export type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
+type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
 export const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({

@@ -1,6 +1,6 @@
-export type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
+type ThreatenedSpecies = 'ex' | 'ew' | 're' | 'cr' | 'en' | 'vu' | 'lr' | 'nt' | 'lc' | 'dd';
 
-export type Colors = Partial<Record<ThreatenedSpecies, string>>;
+type Colors = Partial<Record<ThreatenedSpecies, string>>;
 
 export const Types: Record<string, ThreatenedSpecies> = {
   EX: 'ex',

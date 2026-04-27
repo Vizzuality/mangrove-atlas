@@ -5,7 +5,7 @@ import { Data } from '@/containers/datasets/fisheries/commercial-fisheries-produ
 import { Visibility } from '@/types/layers';
 import { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 
-export type LayerState = {
+type LayerState = {
   id: WidgetSlugType | ContextualBasemapsId | 'custom-area' | 'hi-res-extent';
   opacity: string;
   visibility: Visibility;

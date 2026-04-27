@@ -32,7 +32,7 @@ export const locationBoundsAtom = atom(null as [number, number, number, number] 
 // saved areas, custom-draw) write to this; the map consumes it, flies, and clears on
 // the next settled move. Keeps navigation URLs free of bounds — the URL bounds param
 // is a separate shareable-state concern, synced by the map's own onMove handler.
-export type TmpCamera = { bbox: [number, number, number, number] } | { worldwide: true };
+type TmpCamera = { bbox: [number, number, number, number] } | { worldwide: true };
 export const tmpCameraAtom = atom(null as TmpCamera | null);
 
 export const interactiveLayerIdsAtom = atom<LayerProps['id'][]>([]);

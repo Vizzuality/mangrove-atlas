@@ -13,7 +13,7 @@ type LocationSegment = (typeof LOCATION_SEGMENTS)[number];
 const isLocationSegment = (value: string): value is LocationSegment =>
   (LOCATION_SEGMENTS as readonly string[]).includes(value);
 
-export type SyncedLocation = {
+type SyncedLocation = {
   type: LocationTypes | null;
   id: string | null;
 };

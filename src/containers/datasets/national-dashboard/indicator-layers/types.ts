@@ -1,6 +1,6 @@
 import type { WidgetSlugType } from 'types/widget';
 
-export type DataSourceType = {
+type DataSourceType = {
   year: number;
   value: number;
   layer_link: `globalmangrovewatch.${string}`;
@@ -9,14 +9,14 @@ export type DataSourceType = {
   source_layer: string;
 };
 
-export type ApiSourceType = {
+type ApiSourceType = {
   source: string;
   unit: string;
   years: number[];
   data_source: DataSourceType[];
 };
 
-export type NationalDashboardIndicator = {
+type NationalDashboardIndicator = {
   indicator: string;
   legal_status: string | null;
   mangrove_breakthrough_committed: boolean | null;
