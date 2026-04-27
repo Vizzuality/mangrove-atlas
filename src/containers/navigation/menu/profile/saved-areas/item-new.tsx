@@ -109,7 +109,12 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
       {locationType !== 'custom-area' ? (
         <span className="text-brand-800 font-bold first-letter:uppercase">{name}</span>
       ) : (
-        <Input type="text" value={newName} onChange={handleNewName} />
+        <Input
+          type="text"
+          aria-label="Name for new area"
+          value={newName}
+          onChange={handleNewName}
+        />
       )}
 
       <div className="flex space-x-2">
@@ -119,7 +124,7 @@ const LocationItemNew = ({ name, systemLocationId, locationType, disabled }: Pro
           disabled={isDisabled}
           onClick={handleClickSaveArea}
           className={cn(
-            'border-brand/80 bg-brand-800 border-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1 text-white',
+            'bg-brand-800 border-brand-800 flex shrink-0 items-center justify-center rounded-full border-2 p-1 text-white',
             isDisabled && 'cursor-not-allowed opacity-60'
           )}
         >

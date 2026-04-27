@@ -22,6 +22,8 @@ import type { DateOption } from 'types/widget';
 
 import API_cloud_functions from 'services/cloud-functions';
 
+import opacity from '@/svgs/legend/opacity';
+
 import { MONTHS, MONTHS_CONVERSION } from './constants';
 import Tooltip from './tooltip';
 import type { AlertData, CustomAreaGeometry, UseParamsOptions } from './types';
