@@ -17,7 +17,7 @@ import Legend from '@/containers/map/legend';
 
 import { breakpoints } from '@/styles/styles.config';
 
-export const DEFAULT_PROPS = {
+const DEFAULT_PROPS = {
   initialViewState: {
     longitude: 0,
     latitude: 20,

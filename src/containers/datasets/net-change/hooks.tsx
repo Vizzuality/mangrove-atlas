@@ -23,9 +23,7 @@ import API, { AnalysisAPI } from 'services/api';
 
 import { Data, DataResponse, UseParamsOptions } from './types';
 
-export const numberFormat = format(',.2~f');
-export const smallNumberFormat = format('.4~f');
-export const formatAxis = format(',.0d');
+const numberFormat = format(',.2~f');
 
 export const widgetSlug = 'net-change';
 

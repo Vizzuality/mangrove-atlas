@@ -9,13 +9,13 @@ export type DataResponse = {
   metadata: unknown;
 };
 
-export const fetchLocations = () =>
+const fetchLocations = () =>
   API.request<DataResponse>({
     method: 'GET',
     url: '/locations',
   }).then((response) => response.data);
 
-export const fetchLocation = (locationId: Location['location_id']) =>
+const fetchLocation = (locationId: Location['location_id']) =>
   API.request<{ data: DataResponse['data'][0] }>({
     method: 'GET',
     url: `/locations/${locationId}`,

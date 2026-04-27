@@ -91,32 +91,32 @@ type UserLocationCreateBodyCustom = BaseCreateBody & {
 
 type UserLocationCreateBody = UserLocationCreateBodySystem | UserLocationCreateBodyCustom;
 
-export const fetchUserLocations = () =>
+const fetchUserLocations = () =>
   API.request<UserLocationsResponse>({
     method: 'GET',
     url: '/user_locations',
   }).then((r) => r.data);
 
-export const fetchUserLocation = (id: UserLocation['id']) =>
+const fetchUserLocation = (id: UserLocation['id']) =>
   API.request<{ data: UserLocation }>({
     method: 'GET',
     url: `/user_locations/${id}`,
   }).then((r) => r.data);
 
-export const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>
+const updateUserLocation = (id: UserLocation['id'], body: Partial<UserLocation>) =>
   API.request<{ data: UserLocation }>({
     method: 'PATCH',
     url: `/user_locations/${id}`,
     data: body,
   }).then((r) => r.data);
 
-export const deleteUserLocation = (id: UserLocation['id']) =>
+const deleteUserLocation = (id: UserLocation['id']) =>
   API.request<void>({
     method: 'DELETE',
     url: `/user_locations/${id}`,
   }).then((r) => r.data);
 
-export const userLocationsKeys = {
+const userLocationsKeys = {
   all: ['user_locations'] as const,
   list: () => [...userLocationsKeys.all, 'list'] as const,
   detail: (id: number) => [...userLocationsKeys.all, 'detail', id] as const,
@@ -132,20 +132,7 @@ export function useGetUserLocations<T = UserLocationsResponse>(
   });
 }
 
-export function useGetUserLocation(
-  id?: UserLocation['id'],
-  queryOptions: Omit<UseQueryOptions<{ data: UserLocation }, Error, UserLocation>, 'queryKey'> = {}
-) {
-  return useQuery({
-    queryKey: userLocationsKeys.detail(id!),
-    queryFn: () => fetchUserLocation(id!),
-    enabled: Boolean(id),
-    select: ({ data }) => data,
-    ...queryOptions,
-  });
-}
-
-export const createUserLocation = async (body: UserLocationCreateBody) => {
+const createUserLocation = async (body: UserLocationCreateBody) => {
   try {
     const r = await API.request<{ data: UserLocation }>({
       method: 'POST',

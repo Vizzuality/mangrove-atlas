@@ -104,17 +104,6 @@ const DialogClose = ({
 );
 DialogClose.displayName = 'DialogClose';
 
-const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={cn({
-      'flex flex-col-reverse md:flex-row md:justify-end md:space-x-2': true,
-      [className || '']: !!className,
-    })}
-    {...props}
-  />
-);
-DialogFooter.displayName = 'DialogFooter';
-
 const DialogTitle = forwardRef<
   ElementRef<typeof DialogPrimitive.Title>,
   ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
@@ -152,7 +141,6 @@ export {
   DialogContent,
   DialogHeader,
   DialogClose,
-  DialogFooter,
   DialogTitle,
   DialogDescription,
 };

@@ -10,7 +10,7 @@ import { useMangrovesFloodProtection } from '@/containers/datasets/flood-protect
 
 import { Visibility } from '@/types/layers';
 
-export function useSource(): SourceProps {
+function useSource(): SourceProps {
   return {
     id: 'Coastal_protection_population',
     type: 'vector',
@@ -18,7 +18,7 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({
+function useLayers({
   id,
   opacity,
   visibility = 'visible',
