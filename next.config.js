@@ -8,19 +8,10 @@ const withMDX = require('@next/mdx')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n: {
-    locales: ['en', 'fr', 'es'],
-    defaultLocale: 'en',
-    localeDetection: false,
-  },
   productionBrowserSourceMaps: false,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   output: 'standalone',
   poweredByHeader: false,
-
-  async redirects() {
-    return [{ source: '/custom-area', destination: '/', permanent: true }];
-  },
 
   images: {
     remotePatterns: [

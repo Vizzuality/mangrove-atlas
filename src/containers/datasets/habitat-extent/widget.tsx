@@ -7,7 +7,8 @@ import { analysisAtom } from '@/store/analysis';
 import { habitatExtentSettings } from '@/store/widgets/habitat-extent';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
@@ -29,7 +30,7 @@ import { useMangroveHabitatExtent, widgetSlug } from './hooks';
 
 const HabitatExtent = () => {
   const queryClient = useQueryClient();
-  const [year, setYear] = useRecoilState(habitatExtentSettings);
+  const [year, setYear] = useAtom(habitatExtentSettings as unknown as PrimitiveAtom<number | null>);
   const [selectedUnitAreaExtent, setUnitAreaExtent] = useState('km²');
   const [isCanceled, setIsCanceled] = useState(false);
 
@@ -43,7 +44,7 @@ const HabitatExtent = () => {
     handleQueryCancellation
   );
 
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const handleCancelAnalysis = useCallback(async () => {
     await queryClient.cancelQueries({

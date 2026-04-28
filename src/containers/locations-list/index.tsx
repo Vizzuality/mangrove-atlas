@@ -2,23 +2,21 @@ import { useCallback, useRef, useState } from 'react';
 
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List, Parent, Style } from 'react-virtualized';
 
-import { useRouter } from 'next/router';
-
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { locationBoundsAtom } from '@/store/map';
 import { mapSettingsAtom } from '@/store/map-settings';
 
-import turfBbox from '@turf/bbox';
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 
+import { useLocationNavigation } from 'hooks/location-navigation';
 import { useScreenWidth } from 'hooks/media';
 import { useSearch } from 'hooks/search';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation, useLocations } from '@/containers/datasets/locations/hooks';
-import { Location, LocationTypes } from '@/containers/datasets/locations/types';
+import { Location } from '@/containers/datasets/locations/types';
 import Helper from '@/containers/help/helper';
 
 import Loading from '@/components/ui/loading';
@@ -39,19 +37,15 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
   const listRef = useRef<List>(null);
   const listboxRef = useRef<HTMLDivElement>(null);
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { id: locationId },
   } = useLocation(id, locationType);
 
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const resetMapSettingsState = useResetRecoilState(mapSettingsAtom);
-  const setDrawingUploadToolState = useSetRecoilState(drawingUploadToolAtom);
-  const setDrawingToolState = useSetRecoilState(drawingToolAtom);
+  const setMapSettings = useSetAtom(mapSettingsAtom);
+  const setDrawingUploadToolState = useSetAtom(drawingUploadToolAtom);
+  const setDrawingToolState = useSetAtom(drawingToolAtom);
+  const { navigateToLocation } = useLocationNavigation();
 
   const {
     data: locations,
@@ -66,24 +60,9 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     defaultHeight: 100,
   });
 
-  const { asPath, replace } = useRouter();
-
   const handleLocation = useCallback(
     (location: Location) => {
-      const queryParams = asPath.split('?')[1];
-
-      const locationType = location.location_type === 'worldwide' ? '/' : location.location_type;
-      const locationId =
-        location.location_type === 'worldwide'
-          ? ''
-          : location.location_type === 'country'
-            ? location.iso
-            : location.location_id;
-      const url = `/${locationType}/${locationId}?${queryParams !== undefined ? queryParams : ''}`;
-
-      replace(url, null);
-
-      if (location.bounds) setLocationBounds(turfBbox(location.bounds) as typeof locationBounds);
+      navigateToLocation(location);
 
       setDrawingUploadToolState((drawingUploadToolState) => ({
         ...drawingUploadToolState,
@@ -95,16 +74,13 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         enabled: false,
       }));
 
-      onSelectLocation();
       if (onSelectLocation) onSelectLocation();
-      resetMapSettingsState();
+      setMapSettings(false);
     },
     [
-      replace,
-      asPath,
-      setLocationBounds,
+      navigateToLocation,
       onSelectLocation,
-      resetMapSettingsState,
+      setMapSettings,
       setDrawingToolState,
       setDrawingUploadToolState,
     ]

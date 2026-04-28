@@ -4,16 +4,16 @@ import {
   floodStockPeriodAtom,
 } from '@/store/widgets/flood-protection';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import CoastalProtection from './coastal-protection';
 import { useMangrovesFloodProtection } from './hooks';
 import FloodProtection from './widget';
 
 const MangrovesFloodProtection = () => {
-  const [areaPeriod, setAreaPeriod] = useRecoilState(floodAreaPeriodAtom);
-  const [populationPeriod, setPopulationPeriod] = useRecoilState(floodPopulationPeriodAtom);
-  const [stockPeriod, setStockPeriod] = useRecoilState(floodStockPeriodAtom);
+  const [areaPeriod, setAreaPeriod] = useAtom(floodAreaPeriodAtom);
+  const [populationPeriod, setPopulationPeriod] = useAtom(floodPopulationPeriodAtom);
+  const [stockPeriod, setStockPeriod] = useAtom(floodStockPeriodAtom);
   // check data for each indicator
   const selectedAreaPeriod = areaPeriod;
   const selectedPopulationPeriod = populationPeriod;

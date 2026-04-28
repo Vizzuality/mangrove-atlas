@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from '@/lib/classnames';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
@@ -9,7 +7,9 @@ import { activeGuideAtom } from '@/store/guide';
 import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import AnalysisAlert from '@/containers/alert';
 import { useLocation } from '@/containers/datasets/locations/hooks';
@@ -20,27 +20,34 @@ import MenuTools from '@/containers/navigation/menu-tools';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 
 const LocationWidget = () => {
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
-  const id = params?.[1];
+  const { type, id } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   const {
     data: { name },
   } = useLocation(id, locationType, {
     enabled: (!!locationType && !!id) || locationType !== 'custom-area',
   });
 
-  const [{ enabled: isAnalysisEnabled }] = useRecoilState(analysisAtom);
+  const [{ enabled: isAnalysisEnabled }] = useAtom(analysisAtom);
 
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
-  const [locationsModalIsOpen, setLocationsModalIsOpen] = useRecoilState(locationsModalAtom);
-  const skipAnalysisAlert = useRecoilValue(skipAnalysisAlertAtom);
-  const saveLocationTool = useSetRecoilState(locationToolAtom);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useAtom(analysisAlertAtom);
+  const [locationsModalIsOpen, setLocationsModalIsOpen] = useAtom(locationsModalAtom);
+  const skipAnalysisAlert = useAtomValue(skipAnalysisAlertAtom);
+  const saveLocationTool = useSetAtom(locationToolAtom);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [width, setWidth] = useState<number>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setWidth(entry.contentRect.width);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) setIsOpen(false);
@@ -57,10 +64,6 @@ const LocationWidget = () => {
     return 'Worldwide';
   }, [locationType, name]);
 
-  useEffect(() => {
-    const width = titleRef?.current?.getBoundingClientRect()?.width;
-    setWidth(width);
-  }, [name]);
   const openLocationsModal = useCallback(() => {
     if (!locationsModalIsOpen) setLocationsModalIsOpen(true);
   }, [locationsModalIsOpen, setLocationsModalIsOpen]);
@@ -81,7 +84,7 @@ const LocationWidget = () => {
     setAnalysisAlert,
   ]);
 
-  const isGuideActive = useRecoilValue(activeGuideAtom);
+  const isGuideActive = useAtomValue(activeGuideAtom);
 
   return (
     <>

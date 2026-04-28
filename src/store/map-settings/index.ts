@@ -1,35 +1,10 @@
-import { string } from '@recoiljs/refine';
-import { atom } from 'recoil';
-import { urlSyncEffect } from 'recoil-sync';
+import { atom } from 'jotai';
+import { parseAsString, useQueryState } from 'nuqs';
 
-import type { ContextualBasemapsId } from 'types/widget';
+export const mapSettingsAtom = atom<boolean>(false);
 
-export const mapSettingsAtom = atom<boolean>({
-  key: 'map-settings-open',
-  default: false,
-});
+export function useSyncBasemapContextual() {
+  return useQueryState('basemaps-contextual', parseAsString);
+}
 
-export const basemapContextualAtom = atom<ContextualBasemapsId>({
-  key: 'basemaps-contextual',
-  default: null,
-  effects: [
-    urlSyncEffect({
-      refine: string(),
-    }),
-  ],
-});
-
-export const basemapContextualVisualMonthlyDateAtom = atom({
-  key: 'basemaps-contextual-visual-monthly-date',
-  default: false,
-});
-
-export const basemapContextualAnalyticMonthlyDateAtom = atom({
-  key: 'basemaps-contextual-analytic-monthly-date',
-  default: false,
-});
-
-export const fullScreenAtom = atom<boolean>({
-  key: 'fullScreen',
-  default: false,
-});
+export const fullScreenAtom = atom<boolean>(false);

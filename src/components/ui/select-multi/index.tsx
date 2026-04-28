@@ -10,7 +10,7 @@ import THEME from './constants/theme';
 import { Option } from './option';
 import type { MultiSelectProps } from './types';
 
-export const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
+const Select: FC<MultiSelectProps> = (props: MultiSelectProps) => {
   const {
     batchSelectionActive = false,
     batchSelectionLabel = 'Select all',

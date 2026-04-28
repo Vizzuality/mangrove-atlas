@@ -3,10 +3,9 @@ import { useCallback, useMemo } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { orderBy } from 'lodash-es';
-import { useRecoilState } from 'recoil';
 
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
 import { useMosaicsFromSeriesPlanetSatelliteBasemaps } from '@/containers/datasets/contextual-layers/basemaps-planet/hooks';
@@ -38,11 +37,11 @@ const DateSelect = ({
   size?: 'sm' | 'md' | 'lg';
 }) => {
   const { data: dates } = useMosaicsFromSeriesPlanetSatelliteBasemaps(mosaic_id);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
 
   const layerToUpdate = useMemo(
     () => activeLayers?.find((layer) => layer.id === id),
-    [activeLayers]
+    [activeLayers, id]
   );
 
   const selectedDate = useMemo(

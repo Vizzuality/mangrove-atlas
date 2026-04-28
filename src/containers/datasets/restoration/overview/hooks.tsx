@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router';
-
 import { formatNumberNearestInteger } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -18,11 +17,7 @@ export function useMangroveRestoration(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, Data & { restorable_area_perc: string }>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -37,7 +32,9 @@ export function useMangroveRestoration(
       },
     }).then((response) => response.data);
 
-  return useQuery(['restoration-potential', params, location_id], fetchMangroveRestoration, {
+  return useQuery({
+    queryKey: ['restoration-potential', params, location_id],
+    queryFn: fetchMangroveRestoration,
     select: ({ data, metadata }) => ({
       ...metadata,
       ...data,

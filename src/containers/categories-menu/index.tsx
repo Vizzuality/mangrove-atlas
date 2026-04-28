@@ -3,11 +3,9 @@ import { useCallback, type MouseEvent } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
-import { activeCategoryAtom } from '@/store/sidebar';
-import { activeWidgetsAtom } from '@/store/widgets';
-
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
+import { useSyncActiveCategory } from '@/store/sidebar';
+import { useSyncActiveWidgets } from '@/store/widgets';
 
 import CATEGORY_OPTIONS from '@/containers/navigation/constants';
 import widgets, { LAYERS_BY_CATEGORY } from '@/containers/widgets/constants';
@@ -20,9 +18,9 @@ import type { ContextualBasemapsId, WidgetSlugType } from 'types/widget';
 import CHECK_SVG from '@/svgs/ui/check';
 
 const Category = () => {
-  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
-  const setActiveWidgets = useSetRecoilState(activeWidgetsAtom);
-  const setActiveLayers = useSetRecoilState(activeLayersAtom);
+  const [categorySelected, setCategory] = useSyncActiveCategory();
+  const [, setActiveWidgets] = useSyncActiveWidgets();
+  const [, setActiveLayers] = useSyncActiveLayers();
 
   const handleClick = useCallback(
     (event: MouseEvent<HTMLButtonElement>) => {

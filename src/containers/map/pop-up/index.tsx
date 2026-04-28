@@ -11,9 +11,9 @@ import {
   mapDraggableTooltipDimensionsAtom,
 } from '@/store/map';
 
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { isEmpty } from 'lodash-es';
 import { GeoJSONFeature } from 'mapbox-gl';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import IucnEcoregionPopup from '@/containers/datasets/iucn-ecoregion/map-popup';
 import type { IUCNEcoregionPopUpInfo } from '@/containers/datasets/iucn-ecoregion/types';
@@ -51,10 +51,10 @@ const MapPopup = ({
   restorationSitesInfo,
   iucnEcoregionInfo,
 }: MapPopupProps) => {
-  const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
-  const coordinates = useRecoilValue(coordinatesAtom);
-  const [isPinned, setPin] = useRecoilState(mapDraggableTooltipPinnedAtom);
-  const setMapDraggableTooltipDimensions = useSetRecoilState(mapDraggableTooltipDimensionsAtom);
+  const [position, setPosition] = useAtom(mapDraggableTooltipPositionAtom);
+  const coordinates = useAtomValue(coordinatesAtom);
+  const [isPinned, setPin] = useAtom(mapDraggableTooltipPinnedAtom);
+  const setMapDraggableTooltipDimensions = useSetAtom(mapDraggableTooltipDimensionsAtom);
   const [flash, setFlash] = useState(false);
 
   const popUpRef = useRef<HTMLDivElement>(null);

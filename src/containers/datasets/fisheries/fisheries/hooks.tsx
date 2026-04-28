@@ -1,14 +1,13 @@
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { formatAxis, numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { PolarViewBox } from 'recharts/types/util/types';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -36,7 +35,7 @@ type ProtectionType = {
 // widget data
 export function useMangroveFisheries(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, ProtectionType>, 'queryKey' | 'queryFn'>
 ) {
   const getChartData = (data: Data[], colorKeys, unit) => {
     const total = data?.reduce((acc, d) => acc + d.value, 0);
@@ -54,11 +53,7 @@ export function useMangroveFisheries(
     });
   };
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -74,7 +69,9 @@ export function useMangroveFisheries(
       ...queryOptions,
     }).then((response) => response.data);
 
-  return useQuery(['fisheries', location_id], fetchMangroveFisheries, {
+  return useQuery({
+    queryKey: ['fisheries', location_id],
+    queryFn: fetchMangroveFisheries,
     select: (data) => {
       const dataFiltered = data?.data?.filter(
         (d) => d.category !== 'median' && d.category !== 'range_max' && d.category !== 'range_min'

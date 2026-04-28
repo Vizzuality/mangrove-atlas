@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-
-import isEmpty from 'lodash-es/isEmpty';
+import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
 import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loading from '@/components/ui/loading';
@@ -22,9 +20,7 @@ const RestorationSitesWidget = () => {
   const [filters, setFilters] = useState<{ [key: string]: string[] | number[] }>({});
 
   // global filters state to update query
-  const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
-    RestorationSitesMapFilters
-  );
+  const setMapFilters = useSetAtom(RestorationSitesMapFilters);
 
   const [open, setOpen] = useState(false);
 

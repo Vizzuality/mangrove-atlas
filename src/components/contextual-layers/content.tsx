@@ -1,8 +1,6 @@
 import { ReactElement, useMemo } from 'react';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilValue } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import DateSelect from '@/components/planet-date-select';
 
@@ -14,7 +12,7 @@ const Content = ({
   id: string;
   children?: ReactElement;
 }) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const isActive = useMemo(
     () => activeLayers?.find((layer) => layer.id.includes('planet_medres_visual_monthly'))?.id,
     [activeLayers]

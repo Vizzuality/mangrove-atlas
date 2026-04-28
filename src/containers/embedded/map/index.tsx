@@ -1,27 +1,23 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useMap } from 'react-map-gl';
+import { Map, useMap, type MapProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
-import { basemapAtom, locationBoundsAtom, mapCursorAtom, URLboundsAtom } from '@/store/map';
+import { locationBoundsAtom, mapCursorAtom, useSyncBasemap, useSyncURLBounds } from '@/store/map';
 
 import { useQueryClient } from '@tanstack/react-query';
+import { useAtom, useAtomValue } from 'jotai';
 import type { LngLatBoundsLike } from 'mapbox-gl';
-import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useScreenWidth } from 'hooks/media';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
 import LayerManager from '@/containers/map/layer-manager';
 import Legend from '@/containers/map/legend';
 
-import Map from '@/components/map';
-import { CustomMapProps } from '@/components/map/types';
 import { breakpoints } from '@/styles/styles.config';
 
-export const DEFAULT_PROPS = {
+const DEFAULT_PROPS = {
   initialViewState: {
     longitude: 0,
     latitude: 20,
@@ -34,14 +30,13 @@ export const DEFAULT_PROPS = {
 };
 
 const EmbeddedMap = ({ mapId }: { mapId: string }) => {
-  const mapRef = useRef(null);
-  const [, setLoaded] = useState(false);
+  const containerRef = useRef(null);
 
-  const basemap = useRecoilValue(basemapAtom);
+  const [basemap] = useSyncBasemap();
 
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
-  const cursor = useRecoilValue(mapCursorAtom);
+  const [locationBounds] = useAtom(locationBoundsAtom);
+  const [URLBounds, setURLBounds] = useSyncURLBounds();
+  const cursor = useAtomValue(mapCursorAtom);
 
   const selectedBasemap = useMemo(() => BASEMAPS.find((b) => b.id === basemap)?.url, [basemap]);
 
@@ -51,55 +46,65 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
 
   const { [mapId]: map } = useMap();
 
-  const {
-    query: { params },
-  } = useRouter();
-  const locationId = params?.[1];
+  const { id: locationId } = useSyncLocation();
   const queryClient = useQueryClient();
 
-  const handleViewState = useCallback(() => {
-    if (map) {
-      setURLBounds(map.getBounds().toArray());
-      setLocationBounds(null);
-    }
-  }, [map, setURLBounds, setLocationBounds]);
-
-  const initialViewState: MapboxProps['initialViewState'] = useMemo(
-    () => ({
-      ...DEFAULT_PROPS.initialViewState,
-      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
-      ...(!URLBounds &&
-        locationId && {
-          bounds: queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
-        }),
-    }),
-    [URLBounds, locationId, queryClient]
+  const handleMoveEnd = useCallback<NonNullable<MapProps['onMoveEnd']>>(
+    (e) => {
+      if (!e.originalEvent) return;
+      if (map) setURLBounds(map.getBounds().toArray());
+    },
+    [map, setURLBounds]
   );
 
-  const bounds = useMemo<CustomMapProps['bounds'] | undefined>(() => {
-    if (!locationBounds) return undefined;
+  const [loaded, setLoaded] = useState(false);
+  const handleMapLoad = useCallback(() => setLoaded(true), []);
 
-    return {
-      bbox: locationBounds,
-      options: {
+  const initialViewState = useMemo(
+    () => {
+      const bounds =
+        (URLBounds as number[][] | null) ??
+        (locationId ? (queryClient.getQueryData<number[][]>(['location-bounds']) ?? null) : null);
+      if (bounds) {
+        return {
+          ...DEFAULT_PROPS.initialViewState,
+          bounds: bounds as LngLatBoundsLike,
+          fitBoundsOptions: { padding: { top: 50, bottom: 50, left: 50, right: 50 } },
+        };
+      }
+      return DEFAULT_PROPS.initialViewState;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  // Programmatic fitBounds
+  const lastFitBoundsRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!map || !locationBounds) return;
+    const key = locationBounds.join(',');
+    if (lastFitBoundsRef.current === key) return;
+    lastFitBoundsRef.current = key;
+    map.fitBounds(
+      [
+        [locationBounds[0], locationBounds[1]],
+        [locationBounds[2], locationBounds[3]],
+      ],
+      {
         padding: {
           top: 50,
           right: 20,
           bottom: 50,
           left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
         },
-      },
-    } satisfies CustomMapProps['bounds'];
-  }, [locationBounds, screenWidth]);
-
-  const handleMapLoad = useCallback(() => {
-    setLoaded(true);
-  }, []);
+      }
+    );
+  }, [map, locationBounds, screenWidth]);
 
   return (
     <div
       className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
-      ref={mapRef}
+      ref={containerRef}
     >
       <Map
         id={mapId}
@@ -109,16 +114,14 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
         maxZoom={maxZoom}
         initialViewState={initialViewState}
         mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        onMapViewStateChange={handleViewState}
-        bounds={bounds}
-        interactiveLayerIds={[]}
-        onClick={undefined}
-        onMouseMove={undefined}
+        onMoveEnd={handleMoveEnd}
         onLoad={handleMapLoad}
+        interactiveLayerIds={[]}
         cursor={cursor}
         preserveDrawingBuffer
+        testMode={typeof navigator !== 'undefined' && navigator.webdriver === true}
       >
-        {() => <LayerManager />}
+        {loaded && <LayerManager />}
       </Map>
       <div className="absolute right-6 bottom-11 z-50 mr-0.5">
         <Legend embedded />

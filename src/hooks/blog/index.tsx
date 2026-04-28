@@ -11,7 +11,10 @@ type BlogQueryKey = ['blog-posts', UseBlogParams | undefined];
 
 export function useBlogPosts<TSelected = PostProps[]>(
   params?: UseBlogParams,
-  options?: UseQueryOptions<PostProps[], Error, TSelected, BlogQueryKey>
+  options?: Omit<
+    UseQueryOptions<PostProps[], Error, TSelected, BlogQueryKey>,
+    'queryKey' | 'queryFn'
+  >
 ): UseQueryResult<TSelected, Error> {
   const fetchBlogPosts = async () => {
     const res = await BlogAPI.request<PostProps[]>({
@@ -22,19 +25,17 @@ export function useBlogPosts<TSelected = PostProps[]>(
     return res.data;
   };
 
-  return useQuery<PostProps[], Error, TSelected, BlogQueryKey>(
-    ['blog-posts', params],
-    fetchBlogPosts,
-    {
-      placeholderData: [],
-      ...options,
-    }
-  );
+  return useQuery<PostProps[], Error, TSelected, BlogQueryKey>({
+    queryKey: ['blog-posts', params],
+    queryFn: fetchBlogPosts,
+    placeholderData: [],
+    ...options,
+  });
 }
 
 export function usePostTags(
   { id }: { id: number },
-  options?: UseQueryOptions<Tag[], unknown>
+  options?: Omit<UseQueryOptions<Tag[], unknown>, 'queryKey'>
 ): UseQueryResult<Tag[], unknown> {
   const fetchPostTags = () =>
     BlogAPI.request({
@@ -42,7 +43,9 @@ export function usePostTags(
       url: `/wp-json/wp/v2/tags?post=${id}`,
     }).then((response: AxiosResponse<Tag[]>) => response.data);
 
-  const query = useQuery(['post-tags', id], fetchPostTags, {
+  const query = useQuery({
+    queryKey: ['post-tags', id],
+    queryFn: fetchPostTags,
     placeholderData: [],
     ...options,
   });

@@ -2,14 +2,14 @@ import { PropsWithChildren } from 'react';
 
 import { fullScreenAtom } from '@/store/map-settings';
 
+import { useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRecoilValue } from 'recoil';
 
 import LocationWidget from '@/containers/location-widget';
 
 const WidgetsLayout = (props: PropsWithChildren) => {
   const { children } = props;
-  const isFullScreen = useRecoilValue(fullScreenAtom);
+  const isFullScreen = useAtomValue(fullScreenAtom);
 
   return (
     <AnimatePresence initial={false}>
@@ -26,7 +26,7 @@ const WidgetsLayout = (props: PropsWithChildren) => {
           transition={{
             duration: 0.4,
           }}
-          className="scrollbar-hide left-0 h-full w-screen py-14 md:absolute md:top-0 md:w-[572px] md:overflow-y-auto md:bg-transparent md:px-4 print:bg-transparent print:px-0"
+          className="scrollbar-hide pointer-events-auto left-0 h-full w-screen py-14 md:absolute md:top-0 md:w-[572px] md:overflow-y-auto md:bg-transparent md:px-4 print:bg-transparent print:px-0"
         >
           <LocationWidget />
           {children}

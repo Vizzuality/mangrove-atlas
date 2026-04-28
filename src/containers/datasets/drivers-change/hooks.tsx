@@ -1,11 +1,9 @@
-import { useMemo } from 'react';
-
 import type { LayerProps, SourceProps } from 'react-map-gl';
-
-import { useRouter } from 'next/router';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { COLORS, variables } from '@/containers/datasets/drivers-change/constants';
 import Tooltip from '@/containers/datasets/drivers-change/tooltip';
@@ -16,7 +14,6 @@ import type {
   DriversChangeData,
 } from '@/containers/datasets/drivers-change/types';
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 
@@ -33,11 +30,7 @@ const getColorKeys = (data: Data[]) =>
 export function useMangroveDriversChange(
   queryOptions?: UseQueryOptions<DataResponse>
 ): DriversChangeData {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation },
   } = useLocation(id, locationType);
@@ -52,7 +45,9 @@ export function useMangroveDriversChange(
       ...queryOptions,
     }).then((response: AxiosResponse<DataResponse>) => response.data);
 
-  const query = useQuery(['drivers_of_change', currentLocation], fetchMangroveDriversChange, {
+  const query = useQuery({
+    queryKey: ['drivers_of_change', currentLocation],
+    queryFn: fetchMangroveDriversChange,
     placeholderData: {
       data: [],
       metadata: null,
@@ -63,49 +58,47 @@ export function useMangroveDriversChange(
   const { data, isLoading, isFetched, isPlaceholderData } = query;
   const noData = isFetched && !data?.data?.length;
 
-  return useMemo(() => {
-    const colorKeys = getColorKeys(data?.data);
+  const colorKeys = getColorKeys(data?.data);
 
-    const primaryDriver = data?.data?.find((d) => d.primary_driver)?.primary_driver;
+  const primaryDriver = data?.data?.find((d) => d.primary_driver)?.primary_driver;
 
-    const ChartData = data?.data?.map((d) => ({
-      label: variables[d.variable],
-      value: d.value,
-      showValue: true,
-      valueFormatted: d.value.toFixed(2) + '%',
-      color: colorKeys[d.variable],
-    }));
+  const ChartData = data?.data?.map((d) => ({
+    label: variables[d.variable],
+    value: d.value,
+    showValue: true,
+    valueFormatted: d.value.toFixed(2) + '%',
+    color: colorKeys[d.variable],
+  }));
 
-    const config = {
-      type: 'pie',
-      data: ChartData,
-      dataKey: 'value',
-      chartBase: {
-        pies: {
-          value: '',
-        },
+  const config = {
+    type: 'pie',
+    data: ChartData,
+    dataKey: 'value',
+    chartBase: {
+      pies: {
+        value: '',
       },
-      tooltip: {
-        content: (properties) => {
-          return <Tooltip {...properties} payload={properties.payload?.[0]?.payload?.payload} />;
-        },
+    },
+    tooltip: {
+      content: (properties) => {
+        return <Tooltip {...properties} payload={properties.payload?.[0]?.payload?.payload} />;
       },
-      legend: {
-        title: '',
-        items: ChartData,
-      },
-    };
+    },
+    legend: {
+      title: '',
+      items: ChartData,
+    },
+  };
 
-    return {
-      noData,
-      config,
-      primaryDriver,
-      isLoading,
-      location,
-      isFetched,
-      isPlaceholderData,
-    };
-  }, [data, isLoading, isFetched, isPlaceholderData, location]);
+  return {
+    noData,
+    config,
+    primaryDriver,
+    isLoading,
+    location,
+    isFetched,
+    isPlaceholderData,
+  };
 }
 
 export function useSource(): SourceProps {

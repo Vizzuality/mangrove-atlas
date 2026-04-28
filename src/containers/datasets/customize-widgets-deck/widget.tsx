@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import { useRouter } from 'next/router';
-
-import { activeWidgetsAtom } from '@/store/widgets';
+import { useSyncActiveWidgets } from '@/store/widgets';
 
 import { motion } from 'motion/react';
-import { useRecoilValue } from 'recoil';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import type { LocationTypes } from '@/containers/datasets/locations/types';
 import widgets from '@/containers/widgets/constants';
@@ -22,14 +21,12 @@ import {
 import ARROW_SVG from '@/svgs/ui/arrow-filled';
 
 const CustomizeWidgetsDeck = () => {
-  const displayedWidgets = useRecoilValue(activeWidgetsAtom);
+  const [displayedWidgets] = useSyncActiveWidgets();
 
   const [animateState, setAnimateState] = useState('start');
 
-  const {
-    query: { params },
-  } = useRouter();
-  const locationType = (params?.[0] || 'worldwide') as LocationTypes;
+  const { type } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setAnimateState('end');

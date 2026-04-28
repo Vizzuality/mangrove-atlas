@@ -5,8 +5,8 @@ import cn from '@/lib/classnames';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { widgetsCollapsedAtom } from '@/store/widgets';
 
+import { useAtom, useAtomValue } from 'jotai';
 import { AnimatePresence, motion } from 'motion/react';
-import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Helper from '@/containers/help/helper';
 
@@ -15,7 +15,7 @@ import { WidgetSlugType } from 'types/widget';
 
 import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
-import { getLayerActive } from './selector';
+import { useIsLayerActive } from './selector';
 
 type ChildrenType = ReactElement & { type?: () => null };
 
@@ -36,11 +36,11 @@ type WidgetLayoutProps = {
 
 const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   const { children, title, id, className, applicability, info } = props;
-  const { enabled: isDrawingToolEnabled } = useRecoilValue(drawingToolAtom);
-  const { enabled: isDrawingUploadToolEnabled } = useRecoilValue(drawingUploadToolAtom);
-  const isLayerActive = useRecoilValue(getLayerActive(id));
+  const { enabled: isDrawingToolEnabled } = useAtomValue(drawingToolAtom);
+  const { enabled: isDrawingUploadToolEnabled } = useAtomValue(drawingUploadToolAtom);
+  const isLayerActive = useIsLayerActive(id);
 
-  const [widgetsCollapsed] = useRecoilState<Record<string, boolean>>(widgetsCollapsedAtom);
+  const [widgetsCollapsed] = useAtom<Record<string, boolean>>(widgetsCollapsedAtom);
 
   const widgetVariants = {
     collapsed: {
@@ -59,6 +59,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
   return (
     <AnimatePresence>
       <motion.div
+        id={`widget-${id}`}
         initial={false}
         variants={widgetVariants}
         animate={isCollapsed ? 'collapsed' : 'expanded'}

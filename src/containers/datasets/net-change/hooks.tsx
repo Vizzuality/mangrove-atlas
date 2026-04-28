@@ -1,10 +1,6 @@
-import { useMemo } from 'react';
-
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
 import orderBy from 'lodash-es/orderBy';
-
-import { useRouter } from 'next/router';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -13,12 +9,12 @@ import { netChangeEndYear, netChangeStartYear } from '@/store/widgets/net-change
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
 import { format } from 'd3-format';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import CustomTooltip from '@/components/chart/tooltip';
 import { Visibility } from '@/types/layers';
@@ -27,9 +23,7 @@ import API, { AnalysisAPI } from 'services/api';
 
 import { Data, DataResponse, UseParamsOptions } from './types';
 
-export const numberFormat = format(',.2~f');
-export const smallNumberFormat = format('.4~f');
-export const formatAxis = format(',.0d');
+const numberFormat = format(',.2~f');
 
 export const widgetSlug = 'net-change';
 
@@ -87,20 +81,16 @@ const getWidgetData = (data: Data[], unit = '') => {
 // widget data
 export function useMangroveNetChange(
   params: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>,
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>,
   onCancel?: () => void
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
   const geojson = customGeojson || uploadedGeojson;
 
   const { startYear, endYear, selectedUnit, ...restParams } = params;
@@ -134,7 +124,9 @@ export function useMangroveNetChange(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery([widgetSlug, restParams, geojson, location_id], fetchMangroveNetChange, {
+  const query = useQuery({
+    queryKey: [widgetSlug, restParams, geojson, location_id],
+    queryFn: fetchMangroveNetChange,
     placeholderData: {
       data: [],
       metadata: null,
@@ -142,102 +134,85 @@ export function useMangroveNetChange(
     ...queryOptions,
   });
 
-  const { data, isFetched, isFetching, refetch, isError } = query;
+  const { data, isFetched } = query;
 
   const noData =
     location_id === 'custom-area'
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
       : isFetched && !data?.data?.length;
 
-  return useMemo(() => {
-    const years = data?.metadata?.year.sort();
-    const unit = selectedUnit || data.metadata?.units.net_change;
-    const currentStartYear = startYear || years?.[0];
-    const currentEndYear = endYear || years?.[years?.length - 1];
-    const dataFiltered = data?.data?.filter(
-      (d) => d.year >= currentStartYear && d.year <= currentEndYear
-    );
-    const DATA = getWidgetData(dataFiltered, unit) || [];
-    const TooltipData = {
-      content: (properties) => <CustomTooltip {...properties} />,
-    };
+  const years = data?.metadata?.year.sort();
+  const unit = selectedUnit || data.metadata?.units.net_change;
+  const currentStartYear = startYear || years?.[0];
+  const currentEndYear = endYear || years?.[years?.length - 1];
+  const dataFiltered = data?.data?.filter(
+    (d) => d.year >= currentStartYear && d.year <= currentEndYear
+  );
+  const DATA = getWidgetData(dataFiltered, unit) || [];
+  const TooltipData = {
+    content: (properties) => <CustomTooltip {...properties} />,
+  };
 
-    const change = DATA[DATA.length - 1]?.['Net change'];
+  const change = DATA[DATA.length - 1]?.['Net change'];
 
-    const chartConfig = {
-      type: 'composed',
-      data: DATA,
-      margin: { top: 40, right: 20, bottom: 20, left: 0 },
-      referenceLines: [{ y: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }],
-      xAxis: {
-        type: 'category',
-        tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
-        interval: 'equidistantPreserveStart',
+  const chartConfig = {
+    type: 'composed',
+    data: DATA,
+    margin: { top: 40, right: 20, bottom: 20, left: 0 },
+    referenceLines: [{ y: 0, label: null, stroke: 'rgba(0,0,0,0.5)' }],
+    xAxis: {
+      type: 'category',
+      tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
+      interval: 'equidistantPreserveStart',
+    },
+    yAxis: {
+      tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
+      tickFormatter: (v) => {
+        const parsedNumber = unit === 'ha' ? v * 100 : v;
+        const result = Number(getFormat(Math.abs(parsedNumber)));
+        return result === 0 ? 0 : result;
       },
-      yAxis: {
-        tick: { fontSize: 12, fill: 'rgba(0, 0, 0, 0.54)' },
-        tickFormatter: (v) => {
-          const parsedNumber = unit === 'ha' ? v * 100 : v;
-          const result = Number(getFormat(Math.abs(parsedNumber)));
-          return result === 0 ? 0 : result;
+      tickMargin: 10,
+      orientation: 'right',
+      label: {
+        value: unit === 'km2' ? 'km²' : unit,
+        position: 'top',
+        offset: 25,
+      },
+    },
+    xKey: 'year',
+    cartesianGrid: {
+      vertical: false,
+      strokeDasharray: '5 15',
+    },
+    tooltip: TooltipData,
+    chartBase: {
+      lines: {
+        'Net change': {
+          stroke: 'rgba(0,0,0,0.7)',
+          isAnimationActive: false,
         },
-        tickMargin: 10,
-        orientation: 'right',
-        label: {
-          value: unit === 'km2' ? 'km²' : unit,
-          position: 'top',
-          offset: 25,
-        },
       },
-      xKey: 'year',
-      cartesianGrid: {
-        vertical: false,
-        strokeDasharray: '5 15',
-      },
-      tooltip: TooltipData,
-      chartBase: {
-        lines: {
-          'Net change': {
-            stroke: 'rgba(0,0,0,0.7)',
-            isAnimationActive: false,
-          },
-        },
-      },
-    };
-    const direction = change > 0 ? 'increased' : 'decreased';
-    return {
-      config: chartConfig,
-      location,
-      years,
-      currentStartYear,
-      currentEndYear,
-      netChange: numberFormat(Math.abs(change)),
-      direction,
-      unitOptions,
-      noData,
-      ...query,
-    };
-  }, [
-    data,
-    startYear,
-    endYear,
+    },
+  };
+  const direction = change > 0 ? 'increased' : 'decreased';
+  return {
+    config: chartConfig,
     location,
-    selectedUnit,
-    noData,
-
-    location,
+    years,
+    currentStartYear,
+    currentEndYear,
+    netChange: numberFormat(Math.abs(change)),
+    direction,
     unitOptions,
-    data,
-    isFetching,
-    refetch,
-    isError,
     noData,
-  ]);
+    ...query,
+  };
 }
 
 export function useSources(fluctuation): SourceProps[] {
-  const startYear = useRecoilValue(netChangeStartYear);
-  const endYear = useRecoilValue(netChangeEndYear);
+  const startYear = useAtomValue(netChangeStartYear);
+  const endYear = useAtomValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
     startYear,
     endYear,

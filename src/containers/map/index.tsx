@@ -1,33 +1,36 @@
+'use client';
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Marker, useMap } from 'react-map-gl';
+import { Map, Marker, useMap, type MapProps } from 'react-map-gl';
 
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+
+import { flyMapTo, registerMapRef } from '@/lib/map-fly';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { activeGuideAtom } from '@/store/guide';
 import {
-  basemapAtom,
   interactiveLayerIdsAtom,
-  locationBoundsAtom,
   mapCursorAtom,
   coordinatesAtom,
-  URLboundsAtom,
   mapDraggableTooltipDimensionsAtom,
+  mapDraggableTooltipPositionAtom,
+  tmpCameraAtom,
+  useSyncBasemap,
+  useSyncURLBounds,
 } from '@/store/map';
-import { mapDraggableTooltipPositionAtom } from '@/store/map';
 import { printModeState } from '@/store/print-mode';
 
 import { useQueryClient } from '@tanstack/react-query';
 import turfBbox from '@turf/bbox';
-import type { LngLatBoundsLike, GeoJSONFeature } from 'mapbox-gl';
-import { MapboxProps } from 'react-map-gl/dist/esm/mapbox/mapbox';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
+import type { GeoJSONFeature, LngLatBoundsLike } from 'mapbox-gl';
 import { useOnClickOutside } from 'usehooks-ts';
 
-import { useScreenWidth } from 'hooks/media';
+import { useLocationNavigation } from 'hooks/location-navigation';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import BASEMAPS from '@/containers/datasets/contextual-layers/basemaps';
 // POPUPS
@@ -38,7 +41,6 @@ import DeleteDrawingButton from '@/containers/map/delete-drawing-button';
 import Legend from '@/containers/map/legend';
 import MobileLegend from '@/containers/map/legend/mobile';
 
-import Map from '@/components/map';
 import Controls from '@/components/map/controls';
 import BasemapSettingsControl from '@/components/map/controls/basemap-settings';
 import FullScreenControl from '@/components/map/controls/fullscreen';
@@ -46,9 +48,7 @@ import PitchReset from '@/components/map/controls/pitch-reset';
 import ShareControl from '@/components/map/controls/share';
 import ZoomControl from '@/components/map/controls/zoom';
 import DrawControl from '@/components/map/drawing-tool';
-import { CustomMapProps } from '@/components/map/types';
 import { Media } from '@/components/media-query';
-import { breakpoints } from '@/styles/styles.config';
 import type { LocationPopUp, PopUpKey, RestorationPopUp, RestorationSitesPopUp } from 'types/map';
 
 import LayerManager from './layer-manager';
@@ -67,26 +67,27 @@ export const MAP_DEFAULT_PROPS = {
 };
 
 const MapContainer = ({ mapId }: { mapId: string }) => {
-  const [position, setPosition] = useRecoilState(mapDraggableTooltipPositionAtom);
-  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
+  const [position, setPosition] = useAtom(mapDraggableTooltipPositionAtom);
+  const mapPopUpDimensions = useAtomValue(mapDraggableTooltipDimensionsAtom);
 
-  const [coordinates, setCoordinates] = useRecoilState(coordinatesAtom);
+  const [coordinates, setCoordinates] = useAtom(coordinatesAtom);
   const mapRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
 
-  const basemap = useRecoilValue(basemapAtom);
-  const interactiveLayerIds = useRecoilValue(interactiveLayerIdsAtom);
+  const [basemap] = useSyncBasemap();
+  const interactiveLayerIds = useAtomValue(interactiveLayerIdsAtom);
 
   const [{ enabled: isDrawingToolEnabled, customGeojson }, setDrawingToolState] =
-    useRecoilState(drawingToolAtom);
-  const { enabled: isUploadToolEnabled, uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-  const [URLBounds, setURLBounds] = useRecoilState(URLboundsAtom);
-  const [cursor, setCursor] = useRecoilState(mapCursorAtom);
-  // const isPrintingMode = useRecoilValue(printModeState);
-  const isPrintingMode = false;
-  const [, setAnalysisState] = useRecoilState(analysisAtom);
-  const guideIsActive = useRecoilValue(activeGuideAtom);
+    useAtom(drawingToolAtom);
+  const { enabled: isUploadToolEnabled, uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const [URLBounds, setURLBounds] = useSyncURLBounds();
+  const [cursor, setCursor] = useAtom(mapCursorAtom);
+  const isPrintingMode = useAtomValue(printModeState);
+  const [tmpCamera, setTmpCamera] = useAtom(tmpCameraAtom);
+  const { navigate } = useLocationNavigation();
+
+  const [, setAnalysisState] = useAtom(analysisAtom);
+  const guideIsActive = useAtomValue(activeGuideAtom);
   const [locationPopUp, setLocationPopUp] = useState<{
     position: { x: number | null; y: number | null };
     info: LocationPopUp | null;
@@ -130,78 +131,59 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
 
   const { minZoom, maxZoom } = MAP_DEFAULT_PROPS;
 
-  const screenWidth = useScreenWidth();
-
   const { [mapId]: map } = useMap();
 
-  const {
-    query: { params },
-    push,
-    asPath,
-  } = useRouter();
-  const locationId = params?.[1];
+  const { id: locationId } = useSyncLocation();
   const queryClient = useQueryClient();
-  const queryParams = asPath.split('?')[1];
 
+  // Register map ref for imperative flyMapTo calls (no effect-based fitBounds)
   useEffect(() => {
-    if (!initialViewState.bounds) return;
-
-    map?.fitBounds(initialViewState.bounds, { padding: 40 });
-    // update URL bounds when map is loaded with bounds from URL
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    registerMapRef(map ?? null);
+    return () => registerMapRef(null);
   }, [map]);
 
+  // tmpCamera consumer: single place that programmatically moves the map.
+  // Initial position comes from Map's `initialViewState`/`defaultBbox`, so no
+  // init-time fly is needed — tmpCamera only fires on explicit nav writes.
+  // One-shot — atom is cleared once the map settles (see handleMapMove).
   useEffect(() => {
-    if (locationId && !URLBounds) {
-      const locationBoundsFromCache = queryClient.getQueryData<typeof locationBounds>([
-        'location-bounds',
-        locationId,
-      ]);
-
-      if (locationBoundsFromCache) {
-        setLocationBounds(locationBoundsFromCache);
-      }
+    if (!map || !tmpCamera) return;
+    if ('worldwide' in tmpCamera) {
+      map.flyTo({ center: [0, 20], zoom: 2 });
+    } else {
+      flyMapTo(tmpCamera.bbox);
     }
-  }, [locationId, queryClient, setLocationBounds, URLBounds]);
+  }, [map, tmpCamera]);
 
-  const handleViewState = useCallback(() => {
-    if (map) {
-      setURLBounds(map.getBounds().toArray());
-      setLocationBounds(null);
-    }
-  }, [map, setURLBounds, setLocationBounds]);
+  const handleMoveEnd = useCallback(() => {
+    if (map) setURLBounds(map.getBounds().toArray());
+    setTmpCamera(null);
+  }, [map, setURLBounds, setTmpCamera]);
 
   const clickedStateIdRef = useRef<string | number | null>(null);
 
   const hoveredStateIdRef = useRef<string | number | undefined | null>(null);
 
-  const initialViewState: MapboxProps['initialViewState'] = useMemo(
-    () => ({
-      ...MAP_DEFAULT_PROPS.initialViewState,
-      ...(URLBounds ? { bounds: URLBounds as LngLatBoundsLike } : {}),
-      ...(!URLBounds && locationId
-        ? {
-            bounds:
-              queryClient.getQueryData<typeof locationBounds>(['location-bounds']) || undefined,
-          }
-        : {}),
-    }),
-    [URLBounds, locationId, queryClient]
+  // Initial camera — captured once on mount. Prefer URL bounds (shareable);
+  // otherwise fall back to the location's prefetched bounds so a click-nav +
+  // reload still frames the right place.
+  const initialViewState = useMemo(
+    () => {
+      const bounds =
+        (URLBounds as number[][] | null) ??
+        (locationId ? (queryClient.getQueryData<number[][]>(['location-bounds']) ?? null) : null);
+      if (bounds) {
+        return {
+          ...MAP_DEFAULT_PROPS.initialViewState,
+          bounds: bounds as LngLatBoundsLike,
+          fitBoundsOptions: { padding: { top: 50, bottom: 50, left: 50, right: 50 } },
+        };
+      }
+      return MAP_DEFAULT_PROPS.initialViewState;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
-
-  const bounds = useMemo<CustomMapProps['bounds']>(() => {
-    return {
-      bbox: locationBounds,
-      options: {
-        padding: {
-          top: 50,
-          right: 20,
-          bottom: 50,
-          left: screenWidth >= breakpoints.lg ? 620 + 20 : 20,
-        },
-      },
-    } satisfies CustomMapProps['bounds'];
-  }, [locationBounds, screenWidth]);
 
   useEffect(() => {
     if (!position && map && loaded && map.getSource('mangrove_restoration')) {
@@ -214,16 +196,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   }, [position, map, loaded]);
 
   // Methods
-  const handleCustomPolygon = useCallback(
-    (customPolygon) => {
-      const bbox = turfBbox(customPolygon);
-
-      if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
-      }
-    },
-    [setLocationBounds]
-  );
+  const handleCustomPolygon = useCallback((customPolygon) => {
+    const bbox = turfBbox(customPolygon);
+    if (bbox) {
+      flyMapTo(bbox as [number, number, number, number]);
+    }
+  }, []);
 
   const handleUserDrawing = useCallback(
     (evt: { features: GeoJSON.Feature[]; action: 'onCreate' }) => {
@@ -241,15 +219,12 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
         enabled: true,
       }));
 
-      const bbox = turfBbox(customGeojson);
+      const bbox = turfBbox(customGeojson) as [number, number, number, number] | null;
+      if (bbox) queryClient.setQueryData(['location-bounds'], bbox);
 
-      if (bbox) {
-        setLocationBounds(bbox as typeof locationBounds);
-      }
-
-      void push(`/custom-area${queryParams ? `?${queryParams}` : ''}`, null);
+      navigate({ type: 'custom-area' }, bbox);
     },
-    [setDrawingToolState, setAnalysisState, push, setLocationBounds, queryParams]
+    [setDrawingToolState, setAnalysisState, navigate, queryClient]
   );
 
   const handleDrawingUpdate = useCallback(
@@ -290,9 +265,9 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
     [setRestorationPopUpInfo, setIucnEcoregionPopUp, setLocationPopUp, setRestorationSitesPopUp]
   );
 
-  const onClickHandler: NonNullable<CustomMapProps['onClick']> = (
+  const onClickHandler: NonNullable<MapProps['onClick']> = (
     // @ts-ignore
-    e: Parameters<CustomMapProps['onClick']>[0]
+    e: Parameters<NonNullable<MapProps['onClick']>>[0]
   ) => {
     const locationFeature = e?.features?.find(
       ({ layer }) => layer.id === 'country-boundaries-layer'
@@ -446,7 +421,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
   };
 
   const handleMouseMove = useCallback(
-    (evt: Parameters<NonNullable<CustomMapProps['onMouseMove']>>[0]) => {
+    (evt: Parameters<NonNullable<MapProps['onMouseMove']>>[0]) => {
       const restorationData = evt?.features?.find(({ layer }) => {
         return layer.id === 'mangrove_restoration-layer';
       });
@@ -551,8 +526,7 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           maxZoom={maxZoom}
           initialViewState={initialViewState}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-          onMapViewStateChange={handleViewState}
-          bounds={bounds}
+          onMoveEnd={handleMoveEnd}
           interactiveLayerIds={
             isDrawingToolEnabled || guideIsActive
               ? []
@@ -563,15 +537,16 @@ const MapContainer = ({ mapId }: { mapId: string }) => {
           onLoad={handleMapLoad}
           cursor={cursor}
           preserveDrawingBuffer
+          testMode={typeof navigator !== 'undefined' && navigator.webdriver === true}
         >
-          {() => (
+          {loaded && (
             <>
               <LayerManager />
               {(isDrawingToolEnabled || uploadedGeojson) && (
                 <DrawControl
                   onCreate={handleUserDrawing}
                   onUpdate={handleDrawingUpdate}
-                  customPolygon={uploadedGeojson}
+                  customPolygon={uploadedGeojson || customGeojson}
                   onSetCustomPolygon={handleCustomPolygon}
                 />
               )}

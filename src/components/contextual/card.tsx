@@ -4,10 +4,8 @@ import Image from 'next/image';
 
 import cn from '@/lib/classnames';
 
-import { basemapAtom } from '@/store/map';
-import { basemapContextualAtom } from '@/store/map-settings';
-
-import { useRecoilState } from 'recoil';
+import { useSyncBasemap } from '@/store/map';
+import { useSyncBasemapContextual } from '@/store/map-settings';
 
 import { INFO } from '@/containers/datasets';
 import type { BasemapId } from '@/containers/datasets/contextual-layers/basemaps';
@@ -41,8 +39,8 @@ type CardBasemapContextualProps = {
 };
 
 const CardBasemapContextual = ({ id, type, name, description }: CardBasemapContextualProps) => {
-  const [basemapStored, setBasemap] = useRecoilState(basemapAtom);
-  const [basemapContextualSelected, setBasemapContextual] = useRecoilState(basemapContextualAtom);
+  const [basemapStored, setBasemap] = useSyncBasemap();
+  const [basemapContextualSelected, setBasemapContextual] = useSyncBasemapContextual();
 
   const isActive = useMemo(() => {
     if (type === 'contextual-basemap') return basemapContextualSelected === id;
@@ -94,7 +92,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
           >
             <CheckboxIndicator className="text-white">
               <CHECK_SVG
-                className="fill-current h-full w-full text-white"
+                className="h-full w-full fill-current text-white"
                 role="img"
                 title="Checkmark"
               />

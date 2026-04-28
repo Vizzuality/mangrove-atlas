@@ -19,7 +19,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import BASEMAP_SETTINGS_SVG from '@/svgs/map/basemap-settings';
 import INFO_SVG from '@/svgs/ui/info';
 
-export const BasemapSettings = () => {
+const BasemapSettings = () => {
   return (
     <Tooltip>
       <TooltipTrigger>

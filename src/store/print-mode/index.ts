@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const printModeState = atom({
-  key: 'print-mode',
-  default: false,
-});
+export const printModeState = atom(false);

@@ -4,7 +4,7 @@ import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { INFO } from '@/containers/datasets';
 import Helper from '@/containers/help/helper';
@@ -23,7 +23,7 @@ import { HELPER_POSITION } from './constants';
 
 const Info = ({ id, content }) => {
   const Info = INFO[id];
-  const isHelpGuideActive = useRecoilValue(activeGuideAtom);
+  const isHelpGuideActive = useAtomValue(activeGuideAtom);
   if (!Info && !content) return null;
 
   // Google Analytics tracking

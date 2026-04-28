@@ -1,12 +1,11 @@
 import { SetStateAction, Dispatch, useMemo } from 'react';
-import React from 'react';
 
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { RestorationSitesMapFilters } from '@/store/widgets/restoration-sites';
 
-import { useSetRecoilState } from 'recoil';
+import { useSetAtom } from 'jotai';
 
 import Loading from '@/components/ui/loading';
 import MultiSelect from '@/components/ui/select-multi';
@@ -34,9 +33,7 @@ const FilterSites = ({
   isFetched,
   filterKeys,
 }: FilterSitesProps) => {
-  const setMapFilters = useSetRecoilState<{ [key: string]: string[] | number[] }>(
-    RestorationSitesMapFilters
-  );
+  const setMapFilters = useSetAtom(RestorationSitesMapFilters);
 
   const handleFiltersApplication = () => {
     // Google Analytics tracking

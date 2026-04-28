@@ -6,7 +6,7 @@ import cn from '@/lib/classnames';
 
 import NAVIGATION_SVG from '@/svgs/map/navigation';
 
-export const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
+const PitchReset = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
 
   const pitch = map?.getPitch();
@@ -32,7 +32,7 @@ export const PitchReset = ({ className, mapId }: { className?: string; mapId: st
         disabled={pitch === 0}
       >
         <NAVIGATION_SVG
-          className="fill-current group-disabled:fill-grey-75 h-5 w-5"
+          className="group-disabled:fill-grey-75 h-5 w-5 fill-current"
           role="img"
           title="Pitch reset"
         />

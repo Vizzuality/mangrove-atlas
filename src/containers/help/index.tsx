@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
+import { trackEvent } from '@/lib/analytics/ga';
+import cn from '@/lib/classnames';
+
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { useLocalStorage } from 'usehooks-ts';
 
 import Contact from '@/containers/contact';
 
-import CHEVRON_ICON from '@/svgs/ui/chevron';
-import HELP_ICON from '@/svgs/tools-bar/help';
-
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { SwitchRoot, SwitchThumb, SwitchWrapper } from 'components/ui/switch';
 
-import GuideModalIntro from './modal-intro';
+import HELP_ICON from '@/svgs/tools-bar/help';
+import CHEVRON_ICON from '@/svgs/ui/chevron';
 
-import { trackEvent } from '@/lib/analytics/ga';
-import cn from '@/lib/classnames';
+import GuideModalIntro from './modal-intro';
 
 type HelpContainerProps = {
   theme?: 'light' | 'dark';
@@ -29,14 +29,10 @@ const THEME = {
   dark: 'text-brand-800',
 };
 
-export const HelpContainer = ({
-  theme = 'light',
-  hasArrow = false,
-  className,
-}: HelpContainerProps) => {
+const HelpContainer = ({ theme = 'light', hasArrow = false, className }: HelpContainerProps) => {
   const [guideLocalStorage] = useLocalStorage<boolean>('guideLocalStorage', false);
   const [isOpen, setIsOpen] = useState(false);
-  const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
+  const [isActive, setIsActive] = useAtom(activeGuideAtom);
 
   const handleClick = () => {
     // Google Analytics tracking

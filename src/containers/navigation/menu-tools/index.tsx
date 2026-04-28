@@ -7,7 +7,8 @@ import Link from 'next/link';
 import { analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import WidgetDrawingTool from '@/containers/datasets/drawing-tool';
 import WidgetDrawingUploadTool from '@/containers/datasets/drawing-upload-tool';
@@ -20,10 +21,10 @@ const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 import RESET_SVG from '@/svgs/sidebar/reset';
 
 const LocationTools = () => {
-  const [, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
-  const resetAnalysisState = useResetRecoilState(analysisAtom);
-  const resetDrawingState = useResetRecoilState(drawingToolAtom);
-  const resetDrawingUploadState = useResetRecoilState(drawingUploadToolAtom);
+  const [, setSkipAnalysisAlert] = useAtom(skipAnalysisAlertAtom);
+  const resetAnalysisState = useResetAtom(analysisAtom);
+  const resetDrawingState = useResetAtom(drawingToolAtom);
+  const resetDrawingUploadState = useResetAtom(drawingUploadToolAtom);
 
   const map = useMap();
 

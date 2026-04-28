@@ -1,16 +1,16 @@
 import { Source, Layer } from 'react-map-gl';
 import type { SourceProps, LayerProps } from 'react-map-gl';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 import { floodPopulationPeriodAtom } from '@/store/widgets/flood-protection';
 
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import { useMangrovesFloodProtection } from '@/containers/datasets/flood-protection/hooks';
 
 import { Visibility } from '@/types/layers';
 
-export function useSource(): SourceProps {
+function useSource(): SourceProps {
   return {
     id: 'Coastal_protection_population',
     type: 'vector',
@@ -18,7 +18,7 @@ export function useSource(): SourceProps {
   };
 }
 
-export function useLayers({
+function useLayers({
   id,
   opacity,
   visibility = 'visible',
@@ -27,7 +27,7 @@ export function useLayers({
   opacity?: number;
   visibility?: Visibility;
 }): LayerProps[] {
-  const period = useRecoilValue(floodPopulationPeriodAtom);
+  const period = useAtomValue(floodPopulationPeriodAtom);
   const { data } = useMangrovesFloodProtection(period, {
     indicator: 'population',
   });
@@ -61,7 +61,7 @@ export function useLayers({
 }
 
 const MangrovesFloodProtectionPopulationLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
   const SOURCE = useSource();

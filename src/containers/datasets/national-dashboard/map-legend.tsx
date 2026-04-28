@@ -1,7 +1,6 @@
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import chroma from 'chroma-js';
-import { useRecoilState } from 'recoil';
 
 import { COLORS } from './constants';
 import { useNationalDashboard } from './hooks';
@@ -9,7 +8,7 @@ import { useNationalDashboard } from './hooks';
 const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 
 const NationalDashboardMapLegend = () => {
-  const [activeLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers] = useSyncActiveLayers();
   const { data } = useNationalDashboard();
   const ISO = data?.locationIso;
   const layer = activeLayers?.find(({ id }) => id === `mangrove_national_dashboard_layer_${ISO}`);

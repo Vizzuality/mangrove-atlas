@@ -39,7 +39,9 @@ export function useMosaicsFromSeriesPlanetSatelliteBasemaps(
       },
     }).then((response) => response.data);
 
-  return useQuery(['planet-satellite-mosaic-from-series', paramsOptions, id], fetchPlanetMosaics, {
+  return useQuery({
+    queryKey: ['planet-satellite-mosaic-from-series', paramsOptions, id],
+    queryFn: fetchPlanetMosaics,
     select: ({ mosaics }: { mosaics: Mosaics[] }) => {
       return getDates(mosaics);
     },

@@ -2,8 +2,6 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { numberFormat } from '@/lib/format';
 
 import { analysisAtom } from '@/store/analysis';
@@ -11,12 +9,12 @@ import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse, CanceledError } from 'axios';
-import { useRecoilValue } from 'recoil';
+import { useAtomValue } from 'jotai';
 
 import type { AnalysisResponse } from 'hooks/analysis';
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -75,20 +73,16 @@ const getBars = (data: Data[], COLORS_BY_INDICATOR: ColorKeysTypes) =>
 // widget data
 export function useMangroveHeight(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse>,
+  queryOptions?: Omit<UseQueryOptions<DataResponse>, 'queryKey' | 'queryFn'>,
   onCancel?: () => void
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const { enabled: isAnalysisEnabled } = useRecoilValue(analysisAtom);
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
+  const { enabled: isAnalysisEnabled } = useAtomValue(analysisAtom);
   const geojson = useMemo(() => customGeojson || uploadedGeojson, [customGeojson, uploadedGeojson]);
 
   const fetchMangroveHeight = ({ signal }: { signal?: AbortSignal }) => {
@@ -122,7 +116,9 @@ export function useMangroveHeight(
     }).then((response: AxiosResponse<DataResponse>) => response.data);
   };
 
-  const query = useQuery([widgetSlug, params, geojson, location_id], fetchMangroveHeight, {
+  const query = useQuery({
+    queryKey: [widgetSlug, params, geojson, location_id],
+    queryFn: fetchMangroveHeight,
     placeholderData: {
       data: [],
       metadata: {
@@ -134,7 +130,7 @@ export function useMangroveHeight(
     ...queryOptions,
   });
 
-  const { isFetching, isError, data, refetch, isFetched } = query;
+  const { data, isFetched } = query;
   const noData = isFetched && !data?.data?.length;
 
   const mean = data?.metadata?.avg_height?.[0]?.value;
@@ -145,7 +141,10 @@ export function useMangroveHeight(
 
   const chartData = getData(data?.data, unit, COLORS_BY_INDICATOR);
 
-  const bars = useMemo(() => getBars(data?.data, COLORS_BY_INDICATOR), [data?.data]);
+  const bars = useMemo(
+    () => getBars(data?.data, COLORS_BY_INDICATOR),
+    [data?.data, COLORS_BY_INDICATOR]
+  );
   const legendData = useMemo(
     () =>
       data?.data?.map((d) => {
@@ -154,7 +153,7 @@ export function useMangroveHeight(
           color: COLORS_BY_INDICATOR[d.indicator],
         };
       }),
-    [data?.data]
+    [data?.data, COLORS_BY_INDICATOR]
   );
 
   const TooltipData = {
@@ -207,18 +206,16 @@ export function useMangroveHeight(
     },
   };
 
-  return useMemo(() => {
-    return {
-      ...query,
-      mean: numberFormat(mean),
-      location,
-      unit,
-      year,
-      legend: legendData,
-      config,
-      noData,
-    };
-  }, [isFetching, isError, data, refetch, data]);
+  return {
+    ...query,
+    mean: numberFormat(mean),
+    location,
+    unit,
+    year,
+    legend: legendData,
+    config,
+    noData,
+  };
 }
 
 export function useSource(years: number[]): SourceProps {

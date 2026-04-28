@@ -3,9 +3,7 @@ import { useCallback, useState } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { CONTEXTUAL_LAYERS_PLANET_SERIES_ATTRIBUTES } from '@/containers/datasets/contextual-layers/constants';
 
@@ -16,7 +14,7 @@ import type { Layer } from 'types/layers';
 import type { ContextualBasemapsId } from 'types/widget';
 
 const ContextualBasemapsMapSettings = () => {
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const defaultActive =
     activeLayers?.find((layer) => layer.id.includes('planet'))?.id || 'no-layer';
   const [isActive, setIsActive] = useState(defaultActive);

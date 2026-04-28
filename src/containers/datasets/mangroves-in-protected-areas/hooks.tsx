@@ -2,15 +2,14 @@ import { useCallback } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { PolarViewBox } from 'recharts/types/util/types';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -52,15 +51,11 @@ type ProtectionType = {
 // widget data
 export function useMangrovesInProtectedAreas(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, ProtectionType>
+  queryOptions?: Omit<UseQueryOptions<DataResponse, Error, ProtectionType>, 'queryKey' | 'queryFn'>
 ) {
   const units = ['ha', 'km²'];
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -109,7 +104,9 @@ export function useMangrovesInProtectedAreas(
       })),
     []
   );
-  return useQuery(['protected-areas', restParams, location_id], fetchMangroveProtectedAreas, {
+  return useQuery({
+    queryKey: ['protected-areas', restParams, location_id],
+    queryFn: fetchMangroveProtectedAreas,
     select: (data) => ({
       ...data?.data[0],
       ...data?.metadata,

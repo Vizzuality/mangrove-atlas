@@ -1,17 +1,15 @@
-import React from 'react';
-
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 import { mapViewAtom } from '@/store/sidebar';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom } from 'jotai';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
 const MapToggle = () => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
-  const [mapView, setMapView] = useRecoilState(mapViewAtom);
+  const [activeLayers] = useSyncActiveLayers();
+  const [mapView, setMapView] = useAtom(mapViewAtom);
 
   return (
     <div className="flex h-full flex-col items-center">
@@ -26,7 +24,7 @@ const MapToggle = () => {
         {mapView && (
           <CLOSE_SVG
             className={cn({
-              'fill-current fill-brand-600 h-5 w-5': true,
+              'fill-brand-600 h-5 w-5 fill-current': true,
             })}
             role="img"
             title="Close"

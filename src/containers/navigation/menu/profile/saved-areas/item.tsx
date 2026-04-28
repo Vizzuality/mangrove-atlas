@@ -2,17 +2,14 @@
 
 import { useCallback, useMemo, useState } from 'react';
 
-import { useRouter } from 'next/router';
-
 import cn from '@/lib/classnames';
-
-import { locationBoundsAtom } from '@/store/map';
 
 import turfBbox from '@turf/bbox';
 import bbox from '@turf/bbox';
 import type { Feature, Polygon, MultiPolygon, Geometry } from 'geojson';
 import { LuPencil, LuCheck } from 'react-icons/lu';
-import { useRecoilState } from 'recoil';
+
+import { useLocationNavigation, locationToNavTarget } from 'hooks/location-navigation';
 
 import {
   useDeleteUserLocation,
@@ -73,9 +70,7 @@ type Props = {
 const LocationItem = ({ userLocationId, name, locationType, location, geometry }: Props) => {
   const [isEditMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState(name);
-  const [locationBounds, setLocationBounds] = useRecoilState(locationBoundsAtom);
-
-  const { replace, asPath } = useRouter();
+  const { navigate } = useLocationNavigation();
 
   const deleteUserLocationArea = useDeleteUserLocation();
   const updateUserLocationMutation = useUpdateUserLocation();
@@ -84,7 +79,7 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
   const { data: dataUserNotificationsPreferences } = useGetUserNotificationPreferences();
   const { data: userLocationsRes } = useGetUserLocations();
 
-  const isDeleting = deleteUserLocationArea.isLoading;
+  const isDeleting = deleteUserLocationArea.isPending;
 
   const remainingCountAfterDelete = useMemo(() => {
     const current = userLocationsRes?.data?.length ?? 0;
@@ -92,8 +87,10 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
   }, [userLocationsRes?.data?.length]);
 
   const handleEditMode = useCallback(() => {
-    setEditMode((prev) => !prev);
-    setNewName(name);
+    setEditMode((prev) => {
+      if (prev) setNewName(name);
+      return !prev;
+    });
   }, [name]);
 
   const handleNewName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,25 +136,6 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     toggleMutation,
   ]);
 
-  const queryParams = useMemo(() => asPath.split('?')[1] ?? '', [asPath]);
-
-  const baseUrl = useMemo(() => {
-    if (locationType === 'system') {
-      const routeType = location?.location_type === 'worldwide' ? '/' : location?.location_type;
-      const routeId =
-        location?.location_type === 'worldwide'
-          ? ''
-          : location?.location_type === 'country'
-            ? location?.iso
-            : location?.location_id;
-
-      return `/${routeType}/${routeId}?${queryParams}`;
-    }
-    if (locationType === 'custom') {
-      return queryParams ? `/custom-area/?${queryParams}` : `/custom-area`;
-    }
-  }, [location, queryParams]);
-
   const bounds = useMemo(() => {
     if (!location?.bounds) return null;
     return turfBbox(location?.bounds) as [number, number, number, number];
@@ -168,24 +146,18 @@ const LocationItem = ({ userLocationId, name, locationType, location, geometry }
     return customGeometryToBBox(geometry);
   }, [geometry]);
 
-  const LocationUrl = useMemo(() => {
-    if (!bounds) return baseUrl;
-
-    const boundsParam = `bounds=${encodeURIComponent(JSON.stringify(bounds))}`;
-    return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${boundsParam}`;
-  }, [baseUrl, bounds]);
-
   const handleLocationClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
 
-      if (bounds) setLocationBounds(bounds as typeof locationBounds);
-      if (customBounds) setLocationBounds(customBounds as typeof locationBounds);
-
-      replace(LocationUrl);
+      if (locationType === 'system' && location) {
+        navigate(locationToNavTarget(location), bounds);
+      } else if (locationType === 'custom') {
+        navigate({ type: 'custom-area' }, customBounds);
+      }
     },
-    [replace, setLocationBounds, locationBounds, bounds, customBounds, LocationUrl]
+    [navigate, bounds, customBounds, location, locationType]
   );
 
   return (

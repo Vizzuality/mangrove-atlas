@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import cn from '@/lib/classnames';
 
@@ -15,14 +15,14 @@ import { Tooltip, TooltipContent, TooltipPortal, TooltipTrigger } from '@/compon
 
 import SHARE_SVG from '@/svgs/map/share';
 
-export const Share = ({
-  className,
-  disabled = false,
-}: {
-  className?: string;
-  disabled: boolean;
-}) => {
-  const { asPath } = useRouter();
+const Share = ({ className, disabled = false }: { className?: string; disabled: boolean }) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const asPath = useMemo(() => {
+    const search = searchParams?.toString();
+    return search ? `${pathname}?${search}` : pathname;
+  }, [pathname, searchParams]);
 
   const currentUrl = useMemo(
     () => (typeof window !== 'undefined' ? window.location.href : null),

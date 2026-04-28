@@ -1,4 +1,9 @@
-import { useQuery, UseQueryOptions, useQueryClient } from '@tanstack/react-query';
+import {
+  queryOptions as rqQueryOptions,
+  useQuery,
+  UseQueryOptions,
+  useQueryClient,
+} from '@tanstack/react-query';
 
 import API from 'services/api';
 
@@ -9,24 +14,43 @@ export type DataResponse = {
   metadata: unknown;
 };
 
-export const fetchLocations = () =>
+/**
+ * Server-safe queryOptions for prefetching a single location (uses `fetch`, not Axios).
+ */
+export function locationQueryOptions(locationType?: string, locationId?: string) {
+  return rqQueryOptions({
+    queryKey: ['location', locationType, locationId],
+    queryFn: async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/${locationId}`, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (!res.ok) throw new Error(`Location fetch failed: ${res.status}`);
+      const json = await res.json();
+      return { data: json.data } as { data: DataResponse['data'][0] };
+    },
+  });
+}
+
+const fetchLocations = () =>
   API.request<DataResponse>({
     method: 'GET',
     url: '/locations',
   }).then((response) => response.data);
 
-export const fetchLocation = (locationId: Location['location_id']) =>
+const fetchLocation = (locationId: Location['location_id']) =>
   API.request<{ data: DataResponse['data'][0] }>({
     method: 'GET',
     url: `/locations/${locationId}`,
   }).then((response) => response.data);
 
 export function useLocations<T = DataResponse>(
-  queryOptions: UseQueryOptions<DataResponse, Error, T> = {}
+  queryOptions: Omit<UseQueryOptions<DataResponse, Error, T>, 'queryKey'> = {}
 ) {
   const queryClient = useQueryClient();
-  return useQuery(['locations'], fetchLocations, {
-    placeholderData: queryClient.getQueryData(['locations']) || {
+  return useQuery({
+    queryKey: ['locations'],
+    queryFn: fetchLocations,
+    placeholderData: queryClient.getQueryData<DataResponse>(['locations']) || {
       data: [],
       metadata: null,
     },
@@ -37,12 +61,26 @@ export function useLocations<T = DataResponse>(
 export function useLocation(
   id?: Location['location_id'],
   locationType?: LocationTypes,
-  queryOptions: UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location> = {}
+  queryOptions: Omit<
+    UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location>,
+    'queryKey'
+  > = {}
 ) {
   const _id = locationType && ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
 
-  return useQuery(['location', locationType, _id], () => fetchLocation(_id), {
-    placeholderData: { data: {} as DataResponse['data'][0] },
+  return useQuery({
+    queryKey: ['location', locationType, _id],
+    queryFn: () => fetchLocation(_id),
+    placeholderData: {
+      data: {
+        id: _id,
+        location_id: _id,
+        name: '',
+        iso: '',
+        location_type: locationType || 'worldwide',
+        bounds: null,
+      } as unknown as DataResponse['data'][0],
+    },
     select: ({ data }) => {
       if (locationType === 'custom-area') {
         return {

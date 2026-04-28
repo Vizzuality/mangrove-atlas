@@ -4,7 +4,7 @@ import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 
 import Resources from './resources';
 
-export const OtherResources = ({
+const OtherResources = ({
   resources,
 }: {
   resources: Array<{ name: string; description: string; link: string }>;

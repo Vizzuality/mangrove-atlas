@@ -6,6 +6,7 @@ export type Metadata = {
   max: string;
   periods: ['annual', '25_year', '100_year'];
   unit: 'usd' | 'people' | 'km2';
+  limits: Record<string, { min: number; max: number }>;
 };
 
 export type ChartData = {

@@ -1,6 +1,3 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
-export const locationsModalAtom = atom<boolean>({
-  key: 'locations-modal',
-  default: false,
-});
+export const locationsModalAtom = atom<boolean>(false);

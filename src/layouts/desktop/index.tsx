@@ -2,24 +2,16 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import cn from '@/lib/classnames';
 
-import {
-  mapDraggableTooltipDimensionsAtom,
-  mapDraggableTooltipPinnedAtom,
-  mapDraggableTooltipPositionAtom,
-} from '@/store/map';
 import { printModeState } from '@/store/print-mode';
 
-import { DndContext, MeasuringStrategy } from '@dnd-kit/core';
-import { restrictToWindowEdges } from '@dnd-kit/modifiers';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useAtomValue } from 'jotai';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
 import type { LocationTypes } from '@/containers/datasets/locations/types';
-import MapContainer from '@/containers/map';
 import WelcomeIntroMessage from '@/containers/welcome-message';
 import WidgetsContainer from '@/containers/widgets';
 
@@ -28,44 +20,10 @@ import Logo from 'components/logo';
 const DesktopLayout = () => {
   const map = useMap();
 
-  // const isPrintingMode = useRecoilValue(printModeState);
-  const isPrintingMode = false;
+  const isPrintingMode = useAtomValue(printModeState);
 
-  const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = (queryParams?.[0] || 'worldwide') as LocationTypes;
-  const id = queryParams?.[1];
-  const setPosition = useSetRecoilState(mapDraggableTooltipPositionAtom);
-  const [isPinnedGlobally, setPinnedGlobally] = useRecoilState(mapDraggableTooltipPinnedAtom);
-  const mapPopUpDimensions = useRecoilValue(mapDraggableTooltipDimensionsAtom);
-
-  const handleDragEnd = (event) => {
-    const { delta } = event;
-    const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
-    setPosition((prev) => {
-      return {
-        x:
-          prev.x + delta.x < 0
-            ? 0
-            : prev.x + delta.x > window.innerWidth - w
-              ? window.innerWidth - w
-              : prev.x + delta.x,
-        y:
-          prev.y + delta.y < 0
-            ? 0
-            : prev.y + delta.y > window.innerHeight - h
-              ? window.innerHeight - h
-              : prev.y + delta.y,
-      };
-    });
-
-    if (isPinnedGlobally) {
-      setPinnedGlobally(false);
-    }
-  };
-
+  const { type, id } = useSyncLocation();
+  const locationType = (type ?? 'worldwide') as LocationTypes;
   const { data: locationData } = useLocation(id, locationType);
   const location = locationData?.name;
 
@@ -73,56 +31,45 @@ const DesktopLayout = () => {
     // `useMap()` returns a truthy MapCollection even before any <Map /> has
     // mounted; the keyed ref is what can be undefined during the async init
     // window (and forever in non-WebGL environments). Chain through the key.
-    map?.['default-desktop-no-print']?.flyTo({
+    map?.['default']?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
   }, [map]);
 
   return (
-    <div className="overflow-hidden print:overflow-visible">
-      <DndContext
-        onDragEnd={handleDragEnd}
-        modifiers={[restrictToWindowEdges]}
-        measuring={{
-          droppable: {
-            strategy: MeasuringStrategy.Always,
-          },
-        }}
-      >
-        <Logo
-          src="/images/logo-bg.png"
-          position="top-right"
-          width={186}
-          height={216}
-          onClick={handleReset}
-        />
+    <div className="pointer-events-none">
+      <Logo
+        src="/images/logo-bg.png"
+        position="top-right"
+        width={186}
+        height={216}
+        onClick={handleReset}
+      />
 
-        <div className="relative h-screen w-screen">
-          {isPrintingMode && (
-            <div className="print:absolute print:top-6 print:z-50 print:text-black">
-              <h1
-                className={cn({
-                  'm-auto w-screen text-center first-letter:uppercase': true,
-                  'text-lg': (location?.length ?? 0) < 10,
-                  'text-md': (location?.length ?? 0) > 10,
-                })}
-              >
-                {location}
-              </h1>
+      <div className="relative h-screen w-screen">
+        {isPrintingMode && (
+          <div className="print:absolute print:top-6 print:z-50 print:text-black">
+            <h1
+              className={cn({
+                'm-auto w-screen text-center first-letter:uppercase': true,
+                'text-lg': (location?.length ?? 0) < 10,
+                'text-md': (location?.length ?? 0) > 10,
+              })}
+            >
+              {location}
+            </h1>
 
-              <p className="text-center">
-                Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
-              </p>
-            </div>
-          )}
+            <p className="text-center">
+              Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
+            </p>
+          </div>
+        )}
 
-          <MapContainer mapId={`default-desktop-${isPrintingId}`} />
-          <WidgetsContainer />
+        <WidgetsContainer />
 
-          <WelcomeIntroMessage />
-        </div>
-      </DndContext>
+        <WelcomeIntroMessage />
+      </div>
     </div>
   );
 };

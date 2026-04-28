@@ -4,18 +4,16 @@ import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { activeLayersAtom } from '@/store/layers';
 import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 
 import ContextualLayersWrapper from '@/containers/widget/contextual-layers';
 import { widgets } from '@/containers/widgets/constants';
 import NoData from '@/containers/widgets/no-data';
 
-import SuggestedLayers from '@/components/contextual-layers';
 import Chart from 'components/chart';
-import DateSelect from 'components/planet-date-select';
 import Loading from 'components/ui/loading';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import {
@@ -23,6 +21,7 @@ import {
   WIDGET_SELECT_STYLES,
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
+import type { DateOption } from 'types/widget';
 
 import ARROW_SVG from '@/svgs/ui/arrow';
 
@@ -30,21 +29,19 @@ import { useAlerts } from './hooks';
 import Legend from './legend';
 
 const AlertsWidget = () => {
-  const [startDate, setStartDate] = useRecoilState(alertsStartDate);
-  const [endDate, setEndDate] = useRecoilState(alertsEndDate);
-  const { customGeojson } = useRecoilValue(drawingToolAtom);
-  const { uploadedGeojson } = useRecoilValue(drawingUploadToolAtom);
-  const activeLayers = useRecoilValue(activeLayersAtom);
+  const [startDate, setStartDate] = useAtom(
+    alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const [endDate, setEndDate] = useAtom(
+    alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const { customGeojson } = useAtomValue(drawingToolAtom);
+  const { uploadedGeojson } = useAtomValue(drawingUploadToolAtom);
   const [isCanceled, setIsCanceled] = useState(false);
 
   const handleQueryCancellation = useCallback(() => {
     setIsCanceled(true);
   }, []);
-
-  const isActive = useMemo(
-    () => activeLayers?.find(({ id }) => id === 'planet_medres_visual_monthly'),
-    [activeLayers]
-  );
 
   const widgetInfo = useMemo(
     () => widgets.find((widget) => widget.slug === 'mangrove_alerts'),
