@@ -72,54 +72,54 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
   return (
     <>
       {!disabled && (
-        <Tooltip>
-          <TooltipTrigger>
-            <Dialog>
-              <DialogTrigger>
-                <div
+        <Dialog>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <DialogTrigger asChild>
+                <button
                   className={cn({
                     'group shadow-control inline-flex h-12 w-12 cursor-pointer flex-col items-center justify-center rounded-full bg-white text-black hover:bg-gray-100 disabled:cursor-default disabled:bg-gray-50 disabled:outline-none':
                       true,
                   })}
                 >
                   <SHARE_SVG className="h-4 w-4 group-hover:bg-gray-100" role="img" title="Share" />
-                </div>
+                </button>
               </DialogTrigger>
+            </TooltipTrigger>
+            <TooltipContent className="bg-gray-600 px-2 text-white">Share</TooltipContent>
+          </Tooltip>
 
-              <DialogContent className="top-[30%] text-black/85">
-                <DialogTitle className="mb-2 text-3xl font-light">Share</DialogTitle>
-                <div className="flex w-[480px] flex-col space-y-5">
-                  <div className="flex flex-col space-y-1">
-                    <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>
-                    <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">
-                      <p className="truncate">{currentUrl}</p>
-                      <button
-                        onClick={copyShareLink}
-                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
-                      >
-                        {shareLinkBtnText}
-                      </button>
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
-                    <div className="bg-brand-600/10 flex h-12 items-center space-x-4 rounded-3xl p-4 text-sm">
-                      <p className="truncate">{embeddedLink}</p>
-                      <button
-                        onClick={copyEmbeddedCode}
-                        className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
-                      >
-                        {shareEmbedCodeBtnText}
-                      </button>
-                    </div>
-                  </div>
+          <DialogContent className="top-[30%] text-black/85">
+            <DialogTitle className="mb-2 text-3xl font-light">Share</DialogTitle>
+            <div className="flex w-[480px] flex-col space-y-5">
+              <div className="flex flex-col space-y-1">
+                <h4 className="ml-4 text-[13px] font-semibold">Public url to share</h4>
+                <div className="bg-brand-600/10 flex h-12 items-center justify-between space-x-4 rounded-3xl p-4 text-sm">
+                  <p className="truncate">{currentUrl}</p>
+                  <button
+                    onClick={copyShareLink}
+                    className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
+                  >
+                    {shareLinkBtnText}
+                  </button>
                 </div>
-                <DialogClose />
-              </DialogContent>
-            </Dialog>
-          </TooltipTrigger>
-          <TooltipContent className="bg-gray-600 px-2 text-white">Share</TooltipContent>
-        </Tooltip>
+              </div>
+              <div>
+                <h4 className="ml-4 text-[13px] font-semibold">Code to embed map</h4>
+                <div className="bg-brand-600/10 flex h-12 items-center space-x-4 rounded-3xl p-4 text-sm">
+                  <p className="truncate">{embeddedLink}</p>
+                  <button
+                    onClick={copyEmbeddedCode}
+                    className="border-brand-800/20 text-brand-800 hover:bg-brand-800/20 rounded-3xl border px-5 py-1 font-semibold whitespace-nowrap"
+                  >
+                    {shareEmbedCodeBtnText}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <DialogClose />
+          </DialogContent>
+        </Dialog>
       )}
       {disabled && (
         <Tooltip>
