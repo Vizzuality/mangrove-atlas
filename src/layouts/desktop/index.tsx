@@ -2,16 +2,6 @@ import { useCallback } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import cn from '@/lib/classnames';
-
-import { printModeState } from '@/store/print-mode';
-
-import { useAtomValue } from 'jotai';
-
-import { useSyncLocation } from 'hooks/use-sync-location';
-
-import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 import WelcomeIntroMessage from '@/containers/welcome-message';
 import WidgetsContainer from '@/containers/widgets';
 
@@ -19,13 +9,6 @@ import Logo from 'components/logo';
 
 const DesktopLayout = () => {
   const map = useMap();
-
-  const isPrintingMode = useAtomValue(printModeState);
-
-  const { type, id } = useSyncLocation();
-  const locationType = (type ?? 'worldwide') as LocationTypes;
-  const { data: locationData } = useLocation(id, locationType);
-  const location = locationData?.name;
 
   const handleReset = useCallback(() => {
     // `useMap()` returns a truthy MapCollection even before any <Map /> has
@@ -48,24 +31,6 @@ const DesktopLayout = () => {
       />
 
       <div className="relative h-screen w-screen">
-        {isPrintingMode && (
-          <div className="print:absolute print:top-6 print:z-50 print:text-black">
-            <h1
-              className={cn({
-                'm-auto w-screen text-center first-letter:uppercase': true,
-                'text-lg': (location?.length ?? 0) < 10,
-                'text-md': (location?.length ?? 0) > 10,
-              })}
-            >
-              {location}
-            </h1>
-
-            <p className="text-center">
-              Powered by Global Mangrove Watch. https://www.globalmangrovewatch.org
-            </p>
-          </div>
-        )}
-
         <WidgetsContainer />
 
         <WelcomeIntroMessage />

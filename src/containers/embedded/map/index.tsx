@@ -102,10 +102,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   }, [map, locationBounds, screenWidth]);
 
   return (
-    <div
-      className="print:page-break-after print:page-break-inside-avoid absolute top-0 left-0 z-0 h-screen w-screen print:relative print:h-[90vh] print:w-screen"
-      ref={containerRef}
-    >
+    <div className="absolute top-0 left-0 z-0 h-screen w-screen" ref={containerRef}>
       <Map
         id={mapId}
         reuseMaps

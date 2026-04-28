@@ -15,7 +15,7 @@ const WidgetsCardsControls: FC = () => {
     <div className="py-1">
       <div
         className={cn({
-          'grid w-full grid-cols-2 justify-between gap-1 print:hidden': true,
+          'grid w-full grid-cols-2 justify-between gap-1': true,
           hidden: locationTool === 'area' || locationTool === 'upload',
         })}
       >

@@ -112,10 +112,10 @@ const NetChangeWidget = () => {
             <span className="font-bold"> {netChange}</span>{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {selectedUnit}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
@@ -155,10 +155,10 @@ const NetChangeWidget = () => {
             between{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {currentStartYear}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />
@@ -192,10 +192,10 @@ const NetChangeWidget = () => {
             and{' '}
             <Popover>
               <PopoverTrigger asChild>
-                <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                <span className={`${WIDGET_SELECT_STYLES}`}>
                   {currentEndYear}
                   <ARROW_SVG
-                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                    className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                     role="img"
                     aria-hidden={true}
                   />

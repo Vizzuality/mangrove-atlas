@@ -72,11 +72,11 @@ const HabitatExtent = () => {
               {' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
                     {' '}
                     {currentStartYear}
                     <TRIANGLE_SVG
-                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
@@ -121,10 +121,10 @@ const HabitatExtent = () => {
             <span className="notranslate font-bold">
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
                     {currentEndYear}
                     <TRIANGLE_SVG
-                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
@@ -180,7 +180,7 @@ const HabitatExtent = () => {
               </li>
             ))}
           </ul>
-          <div className="w-full print:scale-x-90 print:transform">
+          <div className="w-full">
             <Chart config={config} />
           </div>
 

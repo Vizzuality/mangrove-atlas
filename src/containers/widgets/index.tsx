@@ -1,11 +1,12 @@
 import { useCallback, useMemo, FC } from 'react';
 
-import cn from '@/lib/classnames';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
 import { locationToolAtom } from '@/store/sidebar';
 import { useSyncActiveWidgets } from '@/store/widgets';
 
+import { useIsFetching } from '@tanstack/react-query';
 import { useAtom, useAtomValue } from 'jotai';
 import { motion } from 'motion/react';
 import { useWindowSize } from 'usehooks-ts';
@@ -20,8 +21,8 @@ import WidgetWrapper from '@/containers/widget';
 import { widgets, ANALYSIS_WIDGETS_SLUGS } from '@/containers/widgets/constants';
 
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { breakpoints } from '@/styles/styles.config';
-import { BUTTON_STYLES } from 'styles/widgets';
 import { WidgetTypes } from 'types/widget';
 
 import SETTINGS_SVG from '@/svgs/ui/settings';
@@ -86,12 +87,18 @@ const WidgetsContainer: FC = () => {
   }, [activeWidgets, enabledWidgets, customGeojson, uploadedGeojson]) satisfies WidgetTypes[];
 
   const locationTool = useAtomValue(locationToolAtom);
+  const isCustomArea = !!(customGeojson || uploadedGeojson);
+  const fetchingCount = useIsFetching();
+  const isPrintDisabled = isCustomArea && fetchingCount > 0;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const onClickDownload = useCallback(() => {
-    setTimeout(() => {
-      window.print();
-    }, 2000);
-  }, []);
+  const handlePrintReport = useCallback(() => {
+    const qs = searchParams.toString();
+    const printPath = `/print-report${pathname === '/' ? '' : pathname}`;
+    const url = qs ? `${printPath}?${qs}` : printPath;
+    window.open(url, '_blank');
+  }, [pathname, searchParams]);
 
   return (
     <WidgetsLayout>
@@ -120,10 +127,7 @@ const WidgetsContainer: FC = () => {
       )}
 
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
-        <div
-          data-testid="widgets-wrapper"
-          className="print:m-auto print:grid print:w-screen print:grid-cols-2 print:pr-24"
-        >
+        <div data-testid="widgets-wrapper">
           {widgetsAvailable.map(({ slug, name, ...props }) => {
             const Widget = WIDGETS[slug];
             return (
@@ -133,9 +137,6 @@ const WidgetsContainer: FC = () => {
                 id={slug}
                 applicability={props?.applicability}
                 contextualLayers={props?.contextualLayers}
-                className={cn({
-                  'print:min-w-135 print:scale-95 print:transform print:break-inside-avoid': true,
-                })}
               >
                 {WIDGETS[slug] && <Widget />}
               </WidgetWrapper>
@@ -158,7 +159,7 @@ const WidgetsContainer: FC = () => {
               whileHover="hover"
               animate="rest"
               // centers the button in the middle of the sidebar (sidebar width less the button width divided by 2)
-              className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20 print:hidden"
+              className="fixed bottom-3 left-[calc((560px-48px)/2)] z-20"
             >
               <motion.button
                 className="bg-brand-800 shadow-control flex min-w-[48px] items-center space-x-4 rounded-full p-4 text-xs font-semibold text-white"
@@ -178,33 +179,8 @@ const WidgetsContainer: FC = () => {
         </Helper>
         <WidgetsDeckContent />
       </Dialog>
-      {/* <div className="flex w-full justify-center py-4 print:hidden">
-        <Helper
-          className={{
-            button:
-              locationTool === 'upload' || locationTool === 'area'
-                ? 'hidden'
-                : '-bottom-2.5 right-0',
-            tooltip: 'w-fit-content',
-          }}
-          tooltipPosition={{ top: 50, left: 10 }}
-          message="use this button to download the current map view and associated widgets as a pdf file"
-        >
-          <button
-            className={cn({
-              [BUTTON_STYLES]: true,
-              'm-auto bg-brand-800 text-white': true,
-              // hidden: !customGeojson && !uploadedGeojson,
-            })}
-            // disabled={!customGeojson && !uploadedGeojson}
-            onClick={onClickDownload}
-          >
-            Download report as PDF
-          </button>
-        </Helper>
-      </div> */}
-      {!!widgets.length ? (
-        <div className="flex w-full justify-center py-4 print:hidden">
+      {!!widgetsAvailable.length && (
+        <div className="flex w-full justify-center py-4">
           <Helper
             className={{
               button:
@@ -214,22 +190,26 @@ const WidgetsContainer: FC = () => {
               tooltip: 'w-fit-content',
             }}
             tooltipPosition={{ top: 50, left: 10 }}
-            message="use this button to download the current map view and associated widgets as a pdf file"
+            message="Use this button to open the current map view and associated widgets as a printable PDF report."
           >
-            <button
-              className={cn({
-                [BUTTON_STYLES]: true,
-                'bg-brand-800 m-auto text-white': true,
-                hidden: !customGeojson && !uploadedGeojson,
-              })}
-              disabled={!customGeojson && !uploadedGeojson}
-              onClick={onClickDownload}
-            >
-              Download report as PDF
-            </button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span>
+                  <button
+                    type="button"
+                    className="bg-brand-800 hover:bg-brand-800/90 rounded-3xl px-6 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                    onClick={handlePrintReport}
+                    disabled={isPrintDisabled}
+                  >
+                    Print PDF report
+                  </button>
+                </span>
+              </TooltipTrigger>
+              {isPrintDisabled && <TooltipContent>Loading analysis data...</TooltipContent>}
+            </Tooltip>
           </Helper>
         </div>
-      ) : null}
+      )}
     </WidgetsLayout>
   );
 };
