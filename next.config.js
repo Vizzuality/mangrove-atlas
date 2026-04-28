@@ -42,6 +42,10 @@ const nextConfig = {
     ];
   },
   turbopack: {
+    resolveAlias: {
+      recoil: 'recoil/es/index.js',
+      'recoil-sync': 'recoil-sync/es/index.js',
+    },
     rules: {
       '*.mdx': {
         loaders: ['@mdx-js/loader'],
