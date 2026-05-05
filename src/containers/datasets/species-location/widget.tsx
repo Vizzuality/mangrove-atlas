@@ -60,7 +60,7 @@ const SpeciesLocation = () => {
 
   const onSelectSpecies = useCallback(
     (specieName: RadioOption['value']) => {
-      const specie = species.find(({ scientific_name }) => scientific_name === specieName);
+      const specie = species?.find(({ scientific_name }) => scientific_name === specieName);
       if (specie) setSpecie(specie);
       // Google Analytics tracking
       trackEvent('Widget iteration - species location - select specie', {
@@ -75,7 +75,7 @@ const SpeciesLocation = () => {
 
   const totalLocations = useMemo(() => specieSelected?.location_ids?.length || 0, [specieSelected]);
 
-  if (isFetched && !species.length) return <NoData />;
+  if (isFetched && !species?.length) return <NoData />;
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -126,7 +126,7 @@ const SpeciesLocation = () => {
                   className="space-y mb-2 flex h-full max-h-[170px] flex-col overflow-y-auto py-2"
                   onValueChange={onSelectSpecies}
                 >
-                  {specieOptions.map((specie) => (
+                  {specieOptions?.map((specie) => (
                     <CommandItem key={specie.value}>
                       <div className="flex items-center">
                         <RadioGroupItem option={specie} />

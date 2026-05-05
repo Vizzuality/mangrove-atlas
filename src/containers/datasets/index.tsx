@@ -123,7 +123,7 @@ import SpeciesThreatenedWidget from '@/containers/datasets/species-threatened/wi
 import BasemapsContextualLayers from '@/components/contextual/contextual-layers';
 import { WidgetSlugType } from 'types/widget';
 
-type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element>>;
+type WidgetsCollection = Partial<Record<WidgetSlugType, () => JSX.Element | null | undefined | ''>>;
 
 export const WIDGETS: WidgetsCollection = {
   mangrove_habitat_extent: HabitatExtentWidget,
@@ -160,7 +160,7 @@ export const WIDGETS: WidgetsCollection = {
   mangrove_coastal_protection_population: FloodProtectionWidget,
   mangrove_coastal_protection_stock: FloodProtectionWidget,
   widgets_deck_tool: CustomizeWidgetsDeck,
-} satisfies Partial<Record<WidgetSlugType, () => JSX.Element>>;
+};
 
 export const LAYERS = {
   mangrove_habitat_extent: HabitatExtentLayer,

@@ -114,9 +114,9 @@ export function useMangroveHabitatExtent(
     );
 
     // API improvement - fix typo in length
-    const totalLength = metadata?.total_lenght;
-    const mangroveArea = dataParsed?.habitat_extent_area;
-    const mangroveCoastCoverage = dataParsed?.linear_coverage;
+    const totalLength = metadata?.total_lenght ?? 0;
+    const mangroveArea = dataParsed?.habitat_extent_area ?? 0;
+    const mangroveCoastCoverage = dataParsed?.linear_coverage ?? 0;
     const mangroveCoastCoveragePercentage = (mangroveCoastCoverage * 100) / totalLength || 0;
     const nonMangrove = totalLength - mangroveCoastCoverage;
     const defaultUnitLinearCoverage = metadata?.units?.linear_coverage;
@@ -187,10 +187,10 @@ export function useMangroveHabitatExtent(
 
     return {
       metadata,
-      area: numberFormat(+area),
-      nonMangrove: numberFormat(+nonMangrove),
-      mangroveCoastCoveragePercentage: numberFormat(+mangroveCoastCoveragePercentage),
-      totalLength: numberFormat(+totalLength),
+      area: numberFormat(+(area ?? 0)),
+      nonMangrove: numberFormat(+(nonMangrove ?? 0)),
+      mangroveCoastCoveragePercentage: numberFormat(+(mangroveCoastCoveragePercentage ?? 0)),
+      totalLength: numberFormat(+(totalLength ?? 0)),
       years: metadata?.year, // API improvement, change year to years as is an array
       units: metadata?.units,
       legend: LegendData,
@@ -242,7 +242,15 @@ export function useLayers({
           'source-layer': `gmw_v4_extent_${year}`,
           paint: {
             'fill-color': '#06C4BD',
-            'fill-opacity': ['interpolate', ['linear'], ['zoom'], 0, opacity * 1.2, 12, opacity],
+            'fill-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              0,
+              (opacity ?? 1) * 1.2,
+              12,
+              opacity ?? 1,
+            ],
           },
           layout: {
             visibility,
@@ -264,5 +272,5 @@ export function useLayers({
           },
         },
       ]
-    : null;
+    : [];
 }

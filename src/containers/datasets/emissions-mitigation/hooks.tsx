@@ -90,7 +90,7 @@ const LabelContent = () => (
 );
 
 const LabelXAxis = ({ viewBox }: { viewBox: CartesianViewBox }) => {
-  const { x, y, height, width } = viewBox;
+  const { x = 0, y = 0, height = 0, width = 0 } = viewBox;
   return (
     <g>
       <text
@@ -115,7 +115,7 @@ export function useMangroveEmissionsMitigation(
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
-  const { filteredIndicators, ...rest } = params;
+  const { filteredIndicators, ...rest } = params ?? ({} as Partial<UseParamsOptions>);
 
   const fetchMangroveEmissionsMitigation = () =>
     API.request({
@@ -133,7 +133,7 @@ export function useMangroveEmissionsMitigation(
     placeholderData: {
       data: [],
       metadata: null,
-    },
+    } as unknown as DataResponse,
     ...queryOptions,
   });
 

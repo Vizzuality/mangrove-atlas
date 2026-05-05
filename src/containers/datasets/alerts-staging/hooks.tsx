@@ -40,39 +40,42 @@ const getStops = () => {
 
 const getData = (data) =>
   sortBy(
-    data?.map((d) => {
-      const year = Number(d.date.value.split('-', 1)[0]);
-      const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
-      const day = new Date(year, month.value, 0).getDate();
+    data
+      ?.map((d) => {
+        const year = Number(d.date.value.split('-', 1)[0]);
+        const month = MONTHS?.find((m) => m.value === new Date(d.date.value).getMonth() + 1);
+        if (!month) return null;
+        const day = new Date(year, month.value, 0).getDate();
 
-      const lastDay = new Date(year, month.value, 0).getDate();
+        const lastDay = new Date(year, month.value, 0).getDate();
 
-      return {
-        ...d,
-        month,
-        year,
-        date: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
-        end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
-        start: d.date.value,
-        title: month.label,
-        name: `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
-          'en',
-          {
-            year: '2-digit',
-          }
-        )}`,
-        alerts: d.count,
-        label: `${month.label}, ${year}`,
-        startDate: {
+        return {
+          ...d,
+          month,
+          year,
+          date: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+          end: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${day}`,
+          start: d.date.value,
+          title: month.label,
+          name: `${MONTHS_CONVERSION[month.label]} '${new Date(year + 1, 0, 0).toLocaleDateString(
+            'en',
+            {
+              year: '2-digit',
+            }
+          )}`,
+          alerts: d.count,
           label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-01`,
-        },
-        endDate: {
-          label: `${month.label}, ${year}`,
-          value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${lastDay}`,
-        },
-      };
-    }),
+          startDate: {
+            label: `${month.label}, ${year}`,
+            value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-01`,
+          },
+          endDate: {
+            label: `${month.label}, ${year}`,
+            value: `${year}-${month.value < 10 ? '0' : ''}${month.value}-${lastDay}`,
+          },
+        };
+      })
+      .filter(Boolean),
     ['month']
   );
 
@@ -138,23 +141,21 @@ export function useAlerts<DataResponse>(
         });
     }
 
-    if (!isAnalysisRunning) {
-      return API_cloud_functions.request({
-        method: 'GET',
-        url: '/fetch-alerts',
-        params: {
-          location_id,
-          ...params,
-        },
-      }).then((response) => response.data);
-    }
+    return API_cloud_functions.request({
+      method: 'GET',
+      url: '/fetch-alerts',
+      params: {
+        location_id,
+        ...params,
+      },
+    }).then((response) => response.data);
   };
 
   return useQuery({
     queryKey: ['alerts', params, location_id],
     queryFn: fetchAlerts,
     select: (data) => {
-      if (!data) return undefined;
+      if (!data) return undefined as unknown as AlertData;
       const fullData = getData(data);
 
       const startDateOptions = fullData.map((d) => d.startDate);
@@ -169,11 +170,12 @@ export function useAlerts<DataResponse>(
       if (selectedEndDate) setEndDate(selectedEndDate);
       if (selectedStartDate) setStartDate(selectedStartDate);
 
-      const dataFiltered =
-        Array.isArray(data) &&
-        data?.filter(
-          (d) => selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
-        );
+      const dataFiltered = Array.isArray(data)
+        ? data?.filter(
+            (d) =>
+              selectedStartDate?.value <= d.date.value && d.date.value <= selectedEndDate?.value
+          )
+        : [];
 
       const fixedXAxis = fullData.map((d) => d.year);
 
@@ -219,7 +221,7 @@ export function useAlerts<DataResponse>(
           orientation: 'right',
           value: 'alerts',
           label: ({ viewBox }: { viewBox: CartesianViewBox }) => {
-            const { x, y } = viewBox;
+            const { x = 0, y = 0 } = viewBox;
 
             return (
               <g>
@@ -346,7 +348,7 @@ export function useAlerts<DataResponse>(
         },
       };
 
-      if (!fullData.length) return undefined;
+      if (!fullData.length) return undefined as unknown as AlertData;
       return {
         alertsTotal: formatAxis(alertsTotal),
         startDateOptions,
@@ -445,10 +447,10 @@ export function useLayers({
             'interpolate',
             ['linear'],
             ['zoom'],
-            opacity * 2,
-            opacity * 1,
-            opacity * 11,
-            opacity * 0.5,
+            (opacity ?? 1) * 2,
+            (opacity ?? 1) * 1,
+            (opacity ?? 1) * 11,
+            (opacity ?? 1) * 0.5,
           ],
         },
         layout: {
@@ -474,10 +476,10 @@ export function useLayers({
             'interpolate',
             ['linear'],
             ['zoom'],
-            opacity * 9,
-            opacity * 0,
-            opacity * 10,
-            opacity * 0.7,
+            (opacity ?? 1) * 9,
+            (opacity ?? 1) * 0,
+            (opacity ?? 1) * 10,
+            (opacity ?? 1) * 0.7,
           ],
         },
         layout: {

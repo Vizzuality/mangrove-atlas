@@ -5,6 +5,7 @@ import { useSyncActiveLayers } from '@/store/layers';
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
+import type { LayerSettingsType } from './types';
 
 const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
@@ -23,7 +24,7 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   return (
     <Source key={`${SOURCE.id}-${SOURCE.url}`} {...SOURCE}>
       <Layer
-        key={`${LAYER.id}-${activeLayer.settings.source_layer}`}
+        key={`${LAYER.id}-${activeLayer?.settings?.source_layer}`}
         {...LAYER}
         beforeId={beforeId}
       />

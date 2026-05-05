@@ -54,8 +54,8 @@ export function useMangroveSpeciesDistribution(
   const noData = isFetched && !data?.data?.total;
 
   return useMemo(() => {
-    const total = data?.data?.total;
-    const worldwideTotal = data?.metadata?.worldwide_total;
+    const total = data?.data?.total ?? 0;
+    const worldwideTotal = data?.metadata?.worldwide_total ?? 0;
     const legend = worldwideTotal ? [1, Math.ceil(worldwideTotal / 2), worldwideTotal] : [];
     return {
       noData,
@@ -64,7 +64,7 @@ export function useMangroveSpeciesDistribution(
       worldwideTotal,
       legend,
       ...query,
-    };
+    } satisfies SpeciesData;
   }, [data, location, noData, query]);
 }
 
@@ -145,7 +145,7 @@ export function useLayers({
           maxValue,
           '#205272',
         ],
-        'fill-opacity': opacity * 0.6,
+        'fill-opacity': (opacity ?? 1) * 0.6,
       },
       layout: {
         visibility,
@@ -183,7 +183,7 @@ export function useLayers({
           '#205272',
         ],
         'line-width': 1,
-        'line-opacity': opacity * 0.6,
+        'line-opacity': (opacity ?? 1) * 0.6,
       },
     },
   ];

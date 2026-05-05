@@ -16,8 +16,8 @@ const ContextualLayersWrapper: FC<ContextualLayersWrapperProps> = ({ id, descrip
   return (
     <ContextualLayersComponent
       origin={origin}
-      name={data.name || ''}
-      thumbSource={data.thumbSource}
+      name={data?.name || ''}
+      thumbSource={data?.thumbSource}
       id={id}
       description={description}
     />

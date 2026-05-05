@@ -15,7 +15,7 @@ const RestorationOverviewChart = ({
     if (node?.offsetWidth) setLineChartWidth(node.offsetWidth);
   }, []);
 
-  const trianglePosition = (lineChartWidth * restoration_potential_score) / 100 - 7; // substract icon size
+  const trianglePosition = (lineChartWidth * (restoration_potential_score ?? 0)) / 100 - 7; // substract icon size
 
   return (
     <div className="mb-6 flex flex-1 flex-col items-center space-y-10">
@@ -32,7 +32,7 @@ const RestorationOverviewChart = ({
           className="absolute -top-5 left-1/2 inline-block h-4 w-5 -translate-x-1/2 fill-current"
           role="img"
           aria-hidden={true}
-          style={{ left: !!trianglePosition && trianglePosition }}
+          style={{ left: trianglePosition || undefined }}
         />
       </div>
       <hr className={'widgetStyles.breakLineDashed'} />

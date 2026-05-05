@@ -59,7 +59,7 @@ export function useCarbonMarketPotential(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
 
-  const { units: unit, label, ...rest } = params;
+  const { units: unit, label, ...rest } = params ?? ({} as Partial<UseParamsOptions>);
   const unitLabel = units.find((u) => u.value === unit)?.label;
 
   const fetchMangroveCarbonMarketPotential = (): Promise<CarbonMarketPotentialData> =>

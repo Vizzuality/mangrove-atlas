@@ -39,7 +39,7 @@ const HabitatExtent = () => {
   }, []);
 
   const { data, isFetching, isError, refetch } = useMangroveHabitatExtent(
-    { year, unit: selectedUnitAreaExtent },
+    { year: year ?? undefined, unit: selectedUnitAreaExtent },
     { enabled: !isCanceled },
     handleQueryCancellation
   );

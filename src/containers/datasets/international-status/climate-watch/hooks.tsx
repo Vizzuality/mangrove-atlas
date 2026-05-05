@@ -145,7 +145,7 @@ export function useClimateWatchNDCSContentOverview(
       }, {});
       return {
         ...content,
-        documentSlug: update.document_slug,
+        documentSlug: update?.document_slug ?? '',
       };
     },
     ...queryOptions,

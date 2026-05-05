@@ -68,7 +68,7 @@ export default function LoginPage() {
           <div className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="text-brand-800 font-sans text-[40px] font-light">Log in</h1>
 
-            {searchParams.get('verified') === 'pending' && (
+            {searchParams?.get('verified') === 'pending' && (
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
             )}
 

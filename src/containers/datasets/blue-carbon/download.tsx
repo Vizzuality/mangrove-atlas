@@ -10,7 +10,7 @@ const INFO = [
     id: 19,
     title: 'Mangrove Soil Carbon',
     href: 'https://zenodo.org/record/2536803#.YP6xOuhKg2x',
-    description: null,
+    description: '',
     // license: 'Creative Commons Attribution Share Alike 4.0 International',
   },
   // {
@@ -20,7 +20,7 @@ const INFO = [
   //   description: false
   // },
 ];
-const BlueCarbonDownload = () => <Download info={INFO} />;
+const BlueCarbonDownload = () => <Download info={INFO as Record<string, string | number>[]} />;
 
 export default BlueCarbonDownload;
 

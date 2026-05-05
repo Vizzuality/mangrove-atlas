@@ -53,7 +53,7 @@ export function useLocationNavigation() {
 
   const navigate = useCallback(
     (target: NavTarget, bbox?: BBox | null) => {
-      const qs = searchParams.toString();
+      const qs = searchParams?.toString() ?? '';
       const path = buildPath(target);
       const url = qs ? `${path}?${qs}` : path;
 

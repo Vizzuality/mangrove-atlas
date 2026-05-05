@@ -82,7 +82,7 @@ const CardBasemapContextual = ({ id, type, name, description }: CardBasemapConte
             'border-brand-800': isActive,
           })}
         >
-          <Image src={THUMBS[id]} alt={name} fill className="shadow-soft rounded-lg" />
+          <Image src={THUMBS[id]} alt={name ?? ''} fill className="shadow-soft rounded-lg" />
 
           <Checkbox
             className={cn({

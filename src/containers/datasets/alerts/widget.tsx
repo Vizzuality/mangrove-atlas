@@ -89,10 +89,11 @@ const AlertsWidget = () => {
     selectedEndDate,
     config,
     configBrush,
-    fullData,
+    fullData: _fullData,
     defaultStartDate,
     defaultEndDate,
   } = data;
+  const fullData = _fullData as { startDate?: DateOption; endDate?: DateOption }[];
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>

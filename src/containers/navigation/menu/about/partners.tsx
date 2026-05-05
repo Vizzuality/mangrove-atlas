@@ -11,7 +11,7 @@ const AboutPartners = ({ title, list, classname }: PartnerProps) => {
       <p>{title}</p>
       <div
         className={cn('flex w-full flex-1 flex-wrap items-center justify-between gap-2.5 py-4', {
-          [classname]: !!classname,
+          [classname ?? '']: !!classname,
         })}
       >
         {list.map((item, index) => (

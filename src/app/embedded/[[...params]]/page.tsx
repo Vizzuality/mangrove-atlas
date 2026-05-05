@@ -21,7 +21,9 @@ export default async function EmbeddedPage({ params }: { params: Promise<{ param
 
   if (locationId) {
     try {
-      await queryClient.prefetchQuery(locationQueryOptions(locationType, locationId));
+      await queryClient.prefetchQuery(
+        locationQueryOptions(locationType ?? undefined, locationId ?? undefined)
+      );
 
       const cached = queryClient.getQueryData<{ data: DataResponse['data'][0] }>([
         'location',

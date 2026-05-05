@@ -32,7 +32,7 @@ function useLayers({
     indicator: 'area',
   });
 
-  if (!data || !data?.data?.length) return null;
+  if (!data || !data?.data?.length) return [];
   const { max, min } = data;
   return [
     {
@@ -51,7 +51,7 @@ function useLayers({
           max,
           '#63589F',
         ],
-        'fill-opacity': opacity * 0.7,
+        'fill-opacity': (opacity ?? 1) * 0.7,
         'fill-outline-color': [
           'interpolate',
           ['linear'],
@@ -97,8 +97,8 @@ const MangrovesFloodProtectionLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYERS) return null;

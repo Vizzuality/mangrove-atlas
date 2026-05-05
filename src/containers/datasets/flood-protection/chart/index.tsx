@@ -49,7 +49,7 @@ const Chart = ({
     <div
       className={cn({
         'relative h-full w-full': true,
-        [className]: !!className,
+        [className ?? '']: !!className,
       })}
     >
       <ResponsiveContainer

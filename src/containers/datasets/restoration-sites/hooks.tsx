@@ -87,10 +87,10 @@ export function useMangroveRestorationSitesFilters(
   });
 }
 
-export function useSource(): SourceProps {
+export function useSource(): SourceProps | null {
   const { data } = useMangroveRestorationSites();
   const restorationSiteFeatures = data?.data
-    .filter((site) => !!site.site_centroid)
+    ?.filter((site) => !!site.site_centroid)
     .map(
       ({
         site_centroid,
@@ -102,24 +102,20 @@ export function useSource(): SourceProps {
         socioeconomic_aims,
         community_activities,
         intervention_types,
-      }) => {
-        if (site_centroid) {
-          return {
-            type: 'Feature' as const,
-            geometry: JSON.parse(site_centroid),
-            properties: {
-              landscape_name,
-              organizations,
-              site_name,
-              causes_of_decline,
-              ecological_aims,
-              socioeconomic_aims,
-              community_activities,
-              intervention_types,
-            },
-          };
-        }
-      }
+      }) => ({
+        type: 'Feature' as const,
+        geometry: JSON.parse(site_centroid),
+        properties: {
+          landscape_name,
+          organizations,
+          site_name,
+          causes_of_decline: causes_of_decline ?? undefined,
+          ecological_aims: ecological_aims ?? undefined,
+          socioeconomic_aims: socioeconomic_aims ?? undefined,
+          community_activities: community_activities ?? undefined,
+          intervention_types: intervention_types ?? undefined,
+        },
+      })
     );
 
   if (!restorationSiteFeatures) return null;

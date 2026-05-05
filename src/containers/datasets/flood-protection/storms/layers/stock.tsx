@@ -32,7 +32,7 @@ function useLayers({
     indicator: 'stock',
   });
 
-  if (!data || !data?.data?.length) return null;
+  if (!data || !data?.data?.length) return [];
   const { max, min } = data;
   return [
     {
@@ -51,7 +51,7 @@ function useLayers({
           max,
           '#2A5674',
         ],
-        'fill-opacity': opacity * 0.8,
+        'fill-opacity': (opacity ?? 1) * 0.8,
       },
       layout: {
         visibility,
@@ -67,8 +67,8 @@ const MangrovesFloodProtectionStockLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYERS) return null;

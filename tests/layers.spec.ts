@@ -76,7 +76,7 @@ test.describe('Can activate worldwide layers in widgets', () => {
   const allSlugs = widgetsWithLayers.map((w) => w.slug);
 
   for (const widget of widgetsWithLayers) {
-    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({
+    test(`Layer "${widget.layersIds?.[0] as string}" of ${widget.name}`, async ({
       page,
       browserName,
     }) => {
@@ -113,7 +113,7 @@ test.describe('Can activate and deactivate country layers in widgets', () => {
   const allSlugs = widgetsWithLayers.map((w) => w.slug);
 
   for (const widget of widgetsWithLayers) {
-    test(`Layer "${widget.layersIds[0] as string}" of ${widget.name}`, async ({
+    test(`Layer "${widget.layersIds?.[0] as string}" of ${widget.name}`, async ({
       page,
       browserName,
     }) => {

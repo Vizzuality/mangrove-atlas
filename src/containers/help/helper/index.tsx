@@ -35,9 +35,9 @@ const Helper = ({
   const isActive = useAtomValue(activeGuideAtom);
   const [popOver, setPopOver] = useState<boolean>(false);
   const [childrenPosition, setChildrenPosition] = useState<Record<string, number>>({
-    top: null,
-    left: null,
-    right: null,
+    top: 0,
+    left: 0,
+    right: 0,
   });
 
   const handlePopover = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,13 +51,13 @@ const Helper = ({
   }, []);
 
   return (
-    <div className={cn({ [className.container]: !!className.container })}>
+    <div className={cn({ [className?.container ?? '']: !!className?.container })}>
       {isActive && (
         <div className="relative">
           <button
             className={cn({
               'absolute flex h-5 w-5 items-center justify-center': true,
-              [className.button]: !!className.button,
+              [className?.button ?? '']: !!className?.button,
               'pointer-events-none': popOver,
             })}
             data-testid="helper-button"
@@ -83,7 +83,10 @@ const Helper = ({
         </div>
       )}
 
-      <div ref={childrenRef} className={cn({ [className.container]: !!className.container })}>
+      <div
+        ref={childrenRef}
+        className={cn({ [className?.container ?? '']: !!className?.container })}
+      >
         {children}
       </div>
 
@@ -97,8 +100,8 @@ const Helper = ({
             <div
               className={cn({
                 'pointer-events-none fixed cursor-default': true,
-                [className.button]: !!className.button,
-                [className.active]: isActive,
+                [className?.button ?? '']: !!className?.button,
+                [className?.active ?? '']: isActive,
               })}
               style={{
                 top: childrenPosition?.top,
@@ -110,14 +113,14 @@ const Helper = ({
             {popOver && isActive && (
               <div
                 style={{
-                  top: childrenPosition?.top - tooltipPosition.top,
-                  left: childrenPosition?.left - tooltipPosition.left || 'auto',
-                  right: childrenPosition?.right - tooltipPosition?.right || 'auto',
+                  top: childrenPosition?.top - (tooltipPosition?.top ?? 0),
+                  left: childrenPosition?.left - (tooltipPosition?.left ?? 0) || 'auto',
+                  right: childrenPosition?.right - (tooltipPosition?.right ?? 0) || 'auto',
                   zIndex: 10000,
                 }}
                 className={cn({
                   'w-fit-content fixed z-60 h-fit cursor-default rounded-md bg-white p-6': true,
-                  [className.tooltip]: !!className.tooltip,
+                  [className?.tooltip ?? '']: !!className?.tooltip,
                 })}
               >
                 {message && (

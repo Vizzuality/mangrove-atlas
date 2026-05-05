@@ -65,7 +65,7 @@ const WidgetDrawingTool = ({ menuItemStyle }: { menuItemStyle?: string }) => {
         className={cn({
           'bg-white': isDrawingToolEnabled && !uploadedGeojson,
           'cursor-default opacity-40': !!uploadedGeojson,
-          [menuItemStyle]: true,
+          [menuItemStyle ?? '']: true,
         })}
         onClick={handleDrawingMode}
         data-testid="drawing-tool-button"

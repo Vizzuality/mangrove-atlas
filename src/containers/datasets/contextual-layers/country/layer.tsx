@@ -12,8 +12,8 @@ const MangrovesCountryBoundariesLayer = ({ beforeId, id, onAdd, onRemove }: Laye
 
   useEffect(() => {
     const ids = LAYERS.map((layer) => layer.id);
-    onAdd(ids);
-    return () => onRemove(ids);
+    onAdd?.(ids);
+    return () => onRemove?.(ids);
   }, [onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;

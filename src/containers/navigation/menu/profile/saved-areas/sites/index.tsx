@@ -30,7 +30,7 @@ const UserMRTTSites = () => {
           <Loading iconClassName="w-10 h-10 self-center" />
         </div>
       ) : (
-        sitesData.map((landscape) => (
+        sitesData?.map((landscape) => (
           <div key={landscape.landscape_id} className="divide w-full gap-4 divide-gray-400 text-xs">
             <h4 className="py-4 uppercase">{landscape.landscape_name}</h4>
             <ul

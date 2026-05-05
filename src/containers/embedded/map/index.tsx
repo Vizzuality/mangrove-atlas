@@ -52,7 +52,7 @@ const EmbeddedMap = ({ mapId }: { mapId: string }) => {
   const handleMoveEnd = useCallback<NonNullable<MapProps['onMoveEnd']>>(
     (e) => {
       if (!e.originalEvent) return;
-      if (map) setURLBounds(map.getBounds().toArray());
+      if (map) setURLBounds(map.getBounds()?.toArray() ?? null);
     },
     [map, setURLBounds]
   );

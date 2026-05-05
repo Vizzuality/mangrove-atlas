@@ -58,7 +58,8 @@ const CommercialFisheriesProductionMapLegend = () => {
         Commercial {commercialFisheriesProductionFilter || 'finfish'} productivity (per 100 m
         <sup>2</sup>){' '}
       </p>
-      {LEGEND_RANGES[commercialFisheriesProductionFilter] &&
+      {commercialFisheriesProductionFilter &&
+        LEGEND_RANGES[commercialFisheriesProductionFilter] &&
         commercialFisheriesProductionFilter !== 'finfish' &&
         LEGEND_RANGES[commercialFisheriesProductionFilter].map(({ color, range }, index) => (
           <div key={index} className="flex items-center space-x-2">

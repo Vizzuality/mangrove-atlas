@@ -15,14 +15,14 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   useEffect(() => {
     const ids = LAYERS.map((layer) => layer.id);
-    onAdd(ids);
-    return () => onRemove(ids);
+    onAdd?.(ids);
+    return () => onRemove?.(ids);
     // eslint-disable-next-line
   }, [onAdd, onRemove]);
 

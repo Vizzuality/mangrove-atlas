@@ -14,14 +14,14 @@ const MangrovesLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   useEffect(() => {
     if (activeLayer) {
-      onAdd(LAYERS.map((layer) => layer.id));
-      return () => onRemove(LAYERS.map((layer) => layer.id));
+      onAdd?.(LAYERS.map((layer) => layer.id));
+      return () => onRemove?.(LAYERS.map((layer) => layer.id));
     }
   }, [onAdd, onRemove, LAYERS, activeLayer]);
 
