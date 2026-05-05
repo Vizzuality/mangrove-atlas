@@ -50,13 +50,14 @@ const AlertsWidget = () => {
   const contextualLayers = useMemo(() => widgetInfo?.contextualLayers || [], [widgetInfo]);
 
   const { data, isLoading, isFetched, isError, isPlaceholderData, refetch } = useAlerts(
-    startDate,
-    endDate,
-    null,
-    {
-      ...(customGeojson && { geometry: customGeojson }),
-      ...(uploadedGeojson && { geometry: uploadedGeojson }),
-    },
+    startDate ?? { label: '', value: '' },
+    endDate ?? { label: '', value: '' },
+    undefined,
+    customGeojson
+      ? { geometry: customGeojson }
+      : uploadedGeojson
+        ? { geometry: uploadedGeojson }
+        : undefined,
     { enabled: !isCanceled },
     handleQueryCancellation
   );
@@ -76,10 +77,11 @@ const AlertsWidget = () => {
     selectedEndDate,
     config,
     configBrush,
-    fullData,
+    fullData: _fullData,
     defaultStartDate,
     defaultEndDate,
   } = data;
+  const fullData = _fullData as { startDate?: DateOption; endDate?: DateOption }[];
 
   return (
     <div className={WIDGET_CARD_WRAPPER_STYLE}>
@@ -128,7 +130,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': startDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value > endDate?.value,
+                          'pointer-events-none opacity-50': date?.value > (endDate?.value ?? ''),
                         })}
                         type="button"
                         onClick={() => {
@@ -141,7 +143,7 @@ const AlertsWidget = () => {
                           });
                           setStartDate(date);
                         }}
-                        disabled={date?.value > endDate?.value}
+                        disabled={date?.value > (endDate?.value ?? '')}
                       >
                         {date?.label || defaultStartDate?.label}
                       </button>
@@ -172,7 +174,7 @@ const AlertsWidget = () => {
                         className={cn({
                           'hover:bg-brand-800/20 w-full rounded-lg px-2 py-1 text-left': true,
                           'text-brand-800 font-semibold': endDate?.value === date?.value,
-                          'pointer-events-none opacity-50': date?.value < startDate?.value,
+                          'pointer-events-none opacity-50': date?.value < (startDate?.value ?? ''),
                         })}
                         type="button"
                         onClick={() => {
@@ -185,7 +187,7 @@ const AlertsWidget = () => {
                           });
                           return setEndDate(date);
                         }}
-                        disabled={date?.value < startDate?.value}
+                        disabled={date?.value < (startDate?.value ?? '')}
                       >
                         {date?.label || defaultEndDate?.label}
                       </button>
