@@ -131,6 +131,10 @@ export function useAlerts<DataResponse>(
         data: {
           ...dataParams,
         },
+        params: {
+          location_id: 'worldwide',
+          ...params,
+        },
       })
         .then((response: AxiosResponse<DataResponse>) => {
           return response.data;

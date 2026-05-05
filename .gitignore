@@ -61,3 +61,4 @@ tsconfig.tsbuildinfo
 
 # Temp
 .tmp/
+next-env.d.ts
