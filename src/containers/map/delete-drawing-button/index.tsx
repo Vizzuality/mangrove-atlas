@@ -1,17 +1,13 @@
-import { useCallback, useMemo, ReactElement } from 'react';
-
-import { useMap } from 'react-map-gl';
-
-import { useRouter } from 'next/router';
+import { useCallback, ReactElement } from 'react';
 
 import cn from '@/lib/classnames';
 
 import { analysisAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
-import { printModeState } from '@/store/print-mode';
-import { locationToolAtom } from '@/store/sidebar';
 
-import { useResetRecoilState, useRecoilValue } from 'recoil';
+import { useResetAtom } from 'jotai/utils';
+
+import { useLocationNavigation } from 'hooks/location-navigation';
 
 import REMOVE_SVG from '@/svgs/ui/close';
 
@@ -20,53 +16,24 @@ const SIZE = {
   sm: 'h-8 w-8',
 };
 
-export const DeleteDrawingButton = ({
+const DeleteDrawingButton = ({
   size = 'md',
   children = null,
 }: {
   size?: 'sm' | 'md';
   children?: ReactElement;
 }) => {
-  const resetAnalysisState = useResetRecoilState(analysisAtom);
-  const locationTool = useRecoilValue(locationToolAtom);
-  const resetDrawingState = useResetRecoilState(drawingToolAtom);
-  const resetUploadedGeojson = useResetRecoilState(drawingUploadToolAtom);
-  const { replace, asPath } = useRouter();
-  const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
-  // const isPrintingMode = useRecoilValue(printModeState);
-  const isPrintingMode = false;
-  const isPrintingId = isPrintingMode ? 'print-mode' : 'no-print';
-
-  const { [`default-desktop-${isPrintingId}`]: map } = useMap();
-  const handleWorldwideView = useCallback(() => {
-    resetDrawingState();
-    resetUploadedGeojson();
-    resetAnalysisState();
-
-    replace(`/?${queryParams}`, null);
-
-    map?.flyTo({
-      center: [0, 20],
-      zoom: 2,
-    });
-  }, [replace, map, queryParams, resetAnalysisState, resetDrawingState, resetUploadedGeojson]);
+  const resetAnalysisState = useResetAtom(analysisAtom);
+  const resetDrawingState = useResetAtom(drawingToolAtom);
+  const resetUploadedGeojson = useResetAtom(drawingUploadToolAtom);
+  const { navigate } = useLocationNavigation();
 
   const handleResetPage = useCallback(() => {
-    if (locationTool === 'worldwide') {
-      handleWorldwideView();
-    }
     resetDrawingState();
     resetAnalysisState();
-
-    replace(`/?${queryParams}`, null);
-  }, [
-    locationTool,
-    queryParams,
-    replace,
-    resetDrawingState,
-    resetAnalysisState,
-    handleWorldwideView,
-  ]);
+    resetUploadedGeojson();
+    navigate({ type: 'worldwide' });
+  }, [navigate, resetDrawingState, resetUploadedGeojson, resetAnalysisState]);
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-1">
@@ -84,7 +51,6 @@ export const DeleteDrawingButton = ({
           />
         </button>
       </div>
-      {/* {children && children} */}
     </div>
   );
 };

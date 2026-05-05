@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn, useSession } from 'next-auth/react';
@@ -26,8 +26,8 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-function getSafeCallbackUrl(query: any): string {
-  const raw = typeof query?.callbackUrl === 'string' ? query.callbackUrl : '/';
+function getSafeCallbackUrl(callbackUrl: string | null): string {
+  const raw = typeof callbackUrl === 'string' ? callbackUrl : '/';
 
   // Only allow same-origin relative paths.
   if (!raw.startsWith('/')) {
@@ -49,7 +49,7 @@ function getSafeCallbackUrl(query: any): string {
 
 function LoginForm() {
   const router = useRouter();
-  const { query } = router;
+  const searchParams = useSearchParams();
 
   const { status } = useSession();
 
@@ -64,7 +64,7 @@ function LoginForm() {
   async function onSubmit(values: FormValues) {
     form.clearErrors();
 
-    const callbackUrl = getSafeCallbackUrl(query);
+    const callbackUrl = getSafeCallbackUrl(searchParams.get('callbackUrl'));
 
     const result = await signIn('credentials', {
       redirect: false,

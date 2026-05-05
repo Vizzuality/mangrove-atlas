@@ -1,7 +1,5 @@
 import { trackEvent } from '@/lib/analytics/ga';
 
-import { ca } from 'date-fns/locale';
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { WIDGET_SUBTITLE_STYLE } from 'styles/widgets';
 import { RestorationSitesPopUp } from 'types/map';
@@ -40,7 +38,7 @@ const PopupRestorationSites = ({ info }: { info: RestorationSitesPopUp }) => {
 
           <div className="grid grid-cols-2 gap-4 font-sans">
             {Object.entries(info).map(([key, value]) => (
-              <PopupRestorationSitesItem title={key} info={value as string | string[]} />
+              <PopupRestorationSitesItem key={key} title={key} info={value as string | string[]} />
             ))}
           </div>
         </div>

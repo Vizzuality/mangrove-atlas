@@ -1,12 +1,11 @@
-import { useRouter } from 'next/router';
-
 import { formatNumberNearestInteger } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import type { UseParamsOptions } from 'types/widget';
 
@@ -57,11 +56,7 @@ export function useMangroveDegradationAndLoss(
   params?: UseParamsOptions,
   queryOptions?: UseQueryOptions<DataResponse, Error, Data>
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -75,7 +70,9 @@ export function useMangroveDegradationAndLoss(
       },
     }).then((response) => response.data);
 
-  return useQuery(['degradation-and-loss', params, location_id], fetchMangroveDegradationAndLoss, {
+  return useQuery({
+    queryKey: ['degradation-and-loss', params, location_id],
+    queryFn: fetchMangroveDegradationAndLoss,
     select: ({ data, metadata }) => ({
       ...metadata,
       ...data,

@@ -4,7 +4,7 @@ import scrollBar from 'tailwind-scrollbar-hide';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import animate from 'tailwindcss-animate';
 
-export default {
+const tailwindConfig = {
   content: [
     './app/**/*.{js,jsx,ts,tsx,mdx}',
     './pages/**/*.{js,jsx,ts,tsx,mdx}',
@@ -89,3 +89,4 @@ export default {
     },
   },
 };
+export default tailwindConfig;

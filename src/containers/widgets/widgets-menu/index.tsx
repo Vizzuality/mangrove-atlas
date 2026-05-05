@@ -3,13 +3,12 @@ import React, { useCallback, FC } from 'react';
 import { trackEvent } from '@/lib/analytics/ga';
 import cn from '@/lib/classnames';
 
-import { activeLayersAtom } from '@/store/layers';
-import { activeCategoryAtom } from '@/store/sidebar';
-import { activeWidgetsAtom } from '@/store/widgets';
+import { useSyncActiveLayers } from '@/store/layers';
+import { useSyncActiveCategory } from '@/store/sidebar';
+import { useSyncActiveWidgets } from '@/store/widgets';
 
 import { Checkbox } from '@radix-ui/react-checkbox';
 import { FaCheck } from 'react-icons/fa';
-import { useRecoilState } from 'recoil';
 
 import { LAYERS } from '@/containers/layers/constants';
 import { widgets as rawWidgets } from '@/containers/widgets/constants';
@@ -24,9 +23,9 @@ import type { WidgetSlugType, ContextualBasemapsId } from 'types/widget';
 const FaCheckIcon = FaCheck as unknown as (p: React.SVGProps<SVGSVGElement>) => JSX.Element;
 
 const WidgetsMenu: FC = () => {
-  const [categorySelected, setCategory] = useRecoilState(activeCategoryAtom);
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
-  const [activeWidgets, setActiveWidgets] = useRecoilState(activeWidgetsAtom);
+  const [categorySelected, setCategory] = useSyncActiveCategory();
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
+  const [activeWidgets, setActiveWidgets] = useSyncActiveWidgets();
   const widgets = rawWidgets.filter(({ slug }) => slug !== 'widgets_deck_tool');
 
   const activeLayersIds = activeLayers?.map((layer) => layer.id);
@@ -44,7 +43,11 @@ const WidgetsMenu: FC = () => {
         label: 'Widgets deck tool- Activate all widgets',
       });
     }
-    allActive ? setActiveWidgets([]) : setActiveWidgets(widgetsIds);
+    if (allActive) {
+      setActiveWidgets([]);
+    } else {
+      setActiveWidgets(widgetsIds);
+    }
   }, [widgetsIds, setActiveWidgets, activeWidgets, widgets]);
 
   const handleAllLayers = useCallback(() => {

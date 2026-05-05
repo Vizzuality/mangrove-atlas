@@ -21,7 +21,8 @@ interface Transifex {
 }
 
 const LanguageSelector = () => {
-  const t = typeof window !== 'undefined' && (window.Transifex as Transifex);
+  const [languages, setLanguages] = useState([]);
+  const [currentLanguage, setCurrentLanguage] = useState('');
 
   const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
     const Transifex = window.Transifex as Transifex;
@@ -29,22 +30,22 @@ const LanguageSelector = () => {
     setCurrentLanguage(e.currentTarget.id);
   }, []);
 
-  const [languages, setLanguages] = useState([]);
-  const [currentLanguage, setCurrentLanguage] = useState('');
-
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const t = window.Transifex as Transifex;
-      if (t?.live) {
-        t.live?.init();
-        const locale = t?.live.detectLanguage();
-        const languages = t.live.getAllLanguages();
-        const defaultLanguage = languages?.find((lang) => lang.code === locale)?.name;
-        setCurrentLanguage(defaultLanguage);
-        setLanguages(languages);
+    const id = setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        const tx = window.Transifex as Transifex;
+        if (tx?.live) {
+          tx.live?.init();
+          const locale = tx?.live.detectLanguage();
+          const langs = tx.live.getAllLanguages();
+          const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
+          setCurrentLanguage(defaultLanguage);
+          setLanguages(langs);
+        }
       }
-    }
-  }, [t, languages]);
+    }, 0);
+    return () => clearTimeout(id);
+  }, []);
 
   return (
     <div className="flex h-full flex-col items-center">

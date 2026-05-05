@@ -2,14 +2,13 @@ import { useMemo } from 'react';
 
 import sortBy from 'lodash-es/sortBy';
 
-import { useRouter } from 'next/router';
-
 import { numberFormat } from '@/lib/format';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import API from 'services/api';
 
@@ -50,13 +49,12 @@ const CATEGORY_DICTIONARY = {
 // widget data
 export function useCarbonMarketPotential(
   params?: UseParamsOptions,
-  queryOptions: UseQueryOptions<CarbonMarketPotentialData, unknown> = {} // API
+  queryOptions: Omit<
+    UseQueryOptions<CarbonMarketPotentialData, unknown>,
+    'queryKey' | 'queryFn'
+  > = {} // API
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
   const {
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
@@ -64,7 +62,7 @@ export function useCarbonMarketPotential(
   const { units: unit, label, ...rest } = params;
   const unitLabel = units.find((u) => u.value === unit)?.label;
 
-  const fetchMangroveCarbonMarketPotential = () =>
+  const fetchMangroveCarbonMarketPotential = (): Promise<CarbonMarketPotentialData> =>
     API.request({
       method: 'GET',
       url: '/widgets/blue-carbon-investment',
@@ -75,17 +73,15 @@ export function useCarbonMarketPotential(
       },
     }).then((response) => response.data);
 
-  const query = useQuery(
-    ['carbon-market-potential', location_id, unit],
-    fetchMangroveCarbonMarketPotential,
-    {
-      placeholderData: {
-        data: [],
-        metadata: { unit: null },
-      },
-      ...queryOptions,
-    }
-  );
+  const query = useQuery<CarbonMarketPotentialData>({
+    queryKey: ['carbon-market-potential', location_id, unit],
+    queryFn: fetchMangroveCarbonMarketPotential,
+    placeholderData: {
+      data: [],
+      metadata: { unit: null },
+    } as unknown as CarbonMarketPotentialData,
+    ...queryOptions,
+  });
   const { isLoading, isFetched, isPlaceholderData, data } = query;
   const noData = isFetched && !data?.data?.length;
 
@@ -164,6 +160,6 @@ export function useCarbonMarketPotential(
       isFetched,
       isPlaceholderData,
       data: DATA,
-    } as typeof query;
+    };
   }, [DATA, isLoading, isFetched, isPlaceholderData]);
 }
