@@ -254,10 +254,6 @@ const AlertsWidget = () => {
               <p className="text-sm font-normal">Monitored area</p>
             </div>
           </div>
-
-          <p className="items-center pt-6 font-sans text-lg leading-7 font-light">
-            There are <span className="font-bold"> 535</span> areas monitored in the world.
-          </p>
         </>
       )}
     </div>
