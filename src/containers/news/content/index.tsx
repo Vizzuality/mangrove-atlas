@@ -17,7 +17,7 @@ const BlogContent = () => {
 
   const [postInfo, setPostInfo] = useState<PostProps | null>(null);
   const { data: dataTags } = usePostTags(
-    { id: postInfo?.id },
+    { id: postInfo?.id ?? 0 },
     {
       enabled: !!postInfo,
     }

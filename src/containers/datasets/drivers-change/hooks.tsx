@@ -51,18 +51,18 @@ export function useMangroveDriversChange(
     placeholderData: {
       data: [],
       metadata: null,
-    },
+    } as unknown as DataResponse,
     ...queryOptions,
   });
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
   const noData = isFetched && !data?.data?.length;
 
-  const colorKeys = getColorKeys(data?.data);
+  const colorKeys = getColorKeys(data?.data ?? []);
 
   const primaryDriver = data?.data?.find((d) => d.primary_driver)?.primary_driver;
 
-  const ChartData = data?.data?.map((d) => ({
+  const ChartData = (data?.data ?? []).map((d) => ({
     label: variables[d.variable],
     value: d.value,
     showValue: true,
@@ -93,7 +93,7 @@ export function useMangroveDriversChange(
   return {
     noData,
     config,
-    primaryDriver,
+    primaryDriver: primaryDriver ?? '',
     isLoading,
     location,
     isFetched,
@@ -138,7 +138,7 @@ export function useLayers({
       'source-layer': 'main_loss_drivers',
       paint: {
         'fill-color': ['match', ['get', 'primary_driver'], ...COLORS, '#ccc'],
-        'fill-opacity': opacity * 0.65,
+        'fill-opacity': (opacity ?? 1) * 0.65,
       },
       layout: {
         visibility,

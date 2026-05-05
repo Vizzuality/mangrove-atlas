@@ -29,7 +29,7 @@ const FindLocations = ({ menuItemStyle }: { menuItemStyle?: string }) => {
   const closeMenu = useCallback(() => {
     if (!isAnalysisAlertOpen) {
       setLocationsModalIsOpen(false);
-      saveLocationTool(null);
+      saveLocationTool('worldwide');
     }
   }, [isAnalysisAlertOpen, setLocationsModalIsOpen, saveLocationTool]);
 

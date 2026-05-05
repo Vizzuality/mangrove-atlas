@@ -9,7 +9,7 @@ async function globalSetup(config: FullConfig) {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  await page.goto(baseURL);
+  await page.goto(baseURL!);
   await page.evaluate(() => {
     localStorage.setItem('welcomeIntroMessage', 'true');
     localStorage.setItem('guideLocalStorage', 'true');

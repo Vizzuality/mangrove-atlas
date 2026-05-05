@@ -110,7 +110,7 @@ const Legend = ({ embedded = false }: { embedded?: boolean }) => {
   );
 
   const legendLayers = useMemo(() => {
-    const isNationalDashboardLocation = NATIONAL_DASHBOARD_LOCATIONS.includes(locationId);
+    const isNationalDashboardLocation = NATIONAL_DASHBOARD_LOCATIONS.includes(locationId ?? '');
 
     if (isNationalDashboardLocation) return activeLayerNoPlanet;
 

@@ -94,17 +94,17 @@ export function useMangroveSpeciesThreatened(
     placeholderData: {
       metadata: null,
       data: null,
-    },
+    } as unknown as DataResponse,
     ...queryOptions,
   });
   const { data, isLoading, isFetched, isPlaceholderData } = query;
 
   const DATA = useMemo(() => {
-    const { data: speciesData } = data;
+    const speciesData = data?.data;
     if (!speciesData) return null;
     const { categories, total, species, threatened } = speciesData;
 
-    const threatenedLegend: number | string = getThreatened(threatened, total);
+    const threatenedLegend: number | string = getThreatened(threatened, total) ?? 0;
     const speciesByGroup = groupBy(species, (s) => s?.red_list_cat);
 
     const chartData = Object.entries(categories)?.map((item) => ({
@@ -128,7 +128,11 @@ export function useMangroveSpeciesThreatened(
 
   return useMemo(() => {
     return {
-      ...DATA,
+      threatenedLegend: DATA?.threatenedLegend ?? 0,
+      total: DATA?.total ?? 0,
+      location: DATA?.location ?? '',
+      chartData: DATA?.chartData ?? [],
+      tooltip: DATA?.tooltip,
       isLoading,
       isFetched,
       isPlaceholderData,

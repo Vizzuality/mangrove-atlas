@@ -14,3 +14,12 @@ export interface Location {
   id: number;
   created_at: string;
 }
+
+/** Fields guaranteed by useLocation's select — safe to destructure without null checks. */
+export type LocationInfo = {
+  name: string;
+  id: string | number;
+  iso: string;
+  location_id: string;
+  location_type: string;
+};

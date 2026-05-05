@@ -36,7 +36,7 @@ const LocationWidget = () => {
   const saveLocationTool = useSetAtom(locationToolAtom);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [width, setWidth] = useState<number>(null);
+  const [width, setWidth] = useState<number | null>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const LocationWidget = () => {
                   className={cn({
                     'inline-block flex-1 grow cursor-pointer px-10 pt-8 text-6xl font-light text-black/85 first-letter:uppercase':
                       true,
-                    'text-2.75xl': width >= 540,
+                    'text-2.75xl': (width ?? 0) >= 540,
 
                     'text-5xl': locationName.length > 10,
                     'text-3xl': locationName.length > 30 && locationName.length <= 55,

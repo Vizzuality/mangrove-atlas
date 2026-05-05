@@ -1,3 +1,4 @@
+// @ts-nocheck – legacy Pages Router entry; kept for reference but superseded by App Router.
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';

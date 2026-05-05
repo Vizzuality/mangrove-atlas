@@ -66,7 +66,7 @@ function ResetPasswordForm() {
         user: {
           password: values.password,
           password_confirmation: values.password_confirmation,
-          reset_password_token: searchParams.get('token') as string,
+          reset_password_token: (searchParams?.get('token') ?? '') as string,
         },
       },
       {

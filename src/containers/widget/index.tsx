@@ -17,7 +17,7 @@ import WidgetApplicability from './applicability';
 import WidgetHeader from './header';
 import { useIsLayerActive } from './selector';
 
-type ChildrenType = ReactElement & { type?: () => null };
+type ChildrenType = ReactElement & { type?: () => null | undefined | '' };
 
 type WidgetLayoutProps = {
   id: WidgetSlugType;
@@ -68,7 +68,7 @@ const WidgetWrapper: FC<WidgetLayoutProps> = (props: WidgetLayoutProps) => {
         className={cn({
           'bg-blur group shadow-card isolate w-full rounded-4xl bg-white md:ml-0': true,
           'w-full! border-none p-0! shadow-none!': info,
-          [className]: !!className,
+          [className ?? '']: !!className,
           'border-none p-0': info,
         })}
         style={props.index !== undefined ? { zIndex: 1000 - props.index } : undefined}

@@ -137,12 +137,12 @@ export function useMangroveHeight(
   const unit = data?.metadata?.units?.value;
   const years = data?.metadata?.year || [];
   const year = Math.max(...years);
-  const COLORS_BY_INDICATOR = getColorKeys(data?.data);
+  const COLORS_BY_INDICATOR = getColorKeys(data?.data ?? []);
 
-  const chartData = getData(data?.data, unit, COLORS_BY_INDICATOR);
+  const chartData = getData(data?.data ?? [], unit, COLORS_BY_INDICATOR);
 
   const bars = useMemo(
-    () => getBars(data?.data, COLORS_BY_INDICATOR),
+    () => getBars(data?.data ?? [], COLORS_BY_INDICATOR),
     [data?.data, COLORS_BY_INDICATOR]
   );
   const legendData = useMemo(
@@ -208,7 +208,7 @@ export function useMangroveHeight(
 
   return {
     ...query,
-    mean: numberFormat(mean),
+    mean: numberFormat(mean ?? 0),
     location,
     unit,
     year,

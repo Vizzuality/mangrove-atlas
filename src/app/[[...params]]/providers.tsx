@@ -19,19 +19,20 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     const { delta } = event;
     const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
     setPosition((prev) => {
+      const p = prev ?? { x: 0, y: 0 };
       return {
         x:
-          prev.x + delta.x < 0
+          p.x + delta.x < 0
             ? 0
-            : prev.x + delta.x > window.innerWidth - w
+            : p.x + delta.x > window.innerWidth - w
               ? window.innerWidth - w
-              : prev.x + delta.x,
+              : p.x + delta.x,
         y:
-          prev.y + delta.y < 0
+          p.y + delta.y < 0
             ? 0
-            : prev.y + delta.y > window.innerHeight - h
+            : p.y + delta.y > window.innerHeight - h
               ? window.innerHeight - h
-              : prev.y + delta.y,
+              : p.y + delta.y,
       };
     });
 

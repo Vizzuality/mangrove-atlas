@@ -142,7 +142,7 @@ export function useMangroveBlueCarbon(
               value: 'blue-carbon',
               dataKey: 'value',
               customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
-                const { cx, cy } = viewBox;
+                const { cx, cy = 0 } = viewBox;
                 return (
                   <g>
                     <text

@@ -53,7 +53,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     isLoading,
     isFetched,
   } = useLocations({ select: ({ data }) => data });
-  const searchResults = useSearch(locations, searchValue, ['name', 'iso', 'location_type']);
+  const searchResults = useSearch(locations ?? [], searchValue, ['name', 'iso', 'location_type']);
   const locationsToDisplay = searchValue === '' ? locations : searchResults;
   const cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -112,7 +112,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
         case ' ':
           e.preventDefault();
           if (focusedIndex >= 0 && focusedIndex < count) {
-            handleLocation(locationsToDisplay[focusedIndex]);
+            handleLocation(locationsToDisplay![focusedIndex]);
           }
           break;
       }
@@ -131,6 +131,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
     style: Style;
     parent: Parent;
   }) => {
+    const loc = locationsToDisplay?.[index];
     return (
       <CellMeasurer key={key} parent={parent} cache={cache} columnIndex={0} rowIndex={index}>
         {({ registerChild }) => (
@@ -138,37 +139,38 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
             <button
               type="button"
               role="option"
-              id={`location-option-${locationsToDisplay[index].id}`}
-              aria-selected={locationId === locationsToDisplay[index].id}
-              aria-disabled={locationId === locationsToDisplay[index].id || undefined}
+              id={`location-option-${loc?.id}`}
+              aria-selected={locationId === loc?.id}
+              aria-disabled={locationId === loc?.id || undefined}
               tabIndex={-1}
               className={cn({
                 'hover:bg-brand-800/10 flex h-full w-full flex-1 items-center justify-between px-4 py-1 hover:rounded-2xl':
                   true,
-                'pointer-events-none': locationId === locationsToDisplay[index].id,
+                'pointer-events-none': locationId === loc?.id,
                 'bg-brand-800/5 border-brand-800 rounded-2xl border-2': focusedIndex === index,
               })}
               onClick={() => {
+                if (!loc) return;
                 // Google Analytics tracking
                 trackEvent('Select location', {
                   category: 'Menu - Location selection',
                   action: 'Select location',
-                  label: `Select location - ${locationsToDisplay[index].name}`,
-                  value: locationsToDisplay[index].name,
+                  label: `Select location - ${loc.name}`,
+                  value: loc.name,
                 });
-                handleLocation(locationsToDisplay[index]);
+                handleLocation(loc);
               }}
             >
               <p
                 className={cn({
                   'text-2lg text-left font-sans font-light text-black/85': true,
-                  'text-brand-800 font-semibold': locationId === locationsToDisplay[index].id,
+                  'text-brand-800 font-semibold': locationId === loc?.id,
                 })}
               >
-                {locationsToDisplay[index].name}
+                {loc?.name}
               </p>
               <span className="text-grey-800 text-opacity-90 text-xs">
-                {locationNames[locationsToDisplay[index].location_type]}
+                {loc && locationNames[loc.location_type]}
               </span>
             </button>
           </div>
@@ -247,8 +249,8 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                 aria-label="Locations"
                 tabIndex={0}
                 aria-activedescendant={
-                  focusedIndex >= 0 && locationsToDisplay[focusedIndex]
-                    ? `location-option-${locationsToDisplay[focusedIndex].id}`
+                  focusedIndex >= 0 && locationsToDisplay?.[focusedIndex]
+                    ? `location-option-${locationsToDisplay[focusedIndex]?.id}`
                     : undefined
                 }
                 onKeyDown={handleListKeyDown}
@@ -268,7 +270,7 @@ const LocationsList = ({ onSelectLocation }: { onSelectLocation?: () => void }) 
                   deferredMeasurementCache={cache}
                   rowHeight={cache.rowHeight}
                   rowRenderer={renderRow}
-                  rowCount={locationsToDisplay.length}
+                  rowCount={locationsToDisplay?.length ?? 0}
                   overscanRowCount={15}
                   scrollToIndex={focusedIndex >= 0 ? focusedIndex : undefined}
                   className="no-scrollbar"

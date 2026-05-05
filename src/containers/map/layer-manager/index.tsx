@@ -43,7 +43,7 @@ const LayerManagerContainer = () => {
     (layer) => !layer?.includes('planet') && layer !== 'hi-res-extent'
   );
 
-  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id)
+  const filterNationalDashboardLayers = !NATIONAL_DASHBOARD_LOCATIONS?.includes(id ?? '')
     ? no_planet_layers?.filter((l) => !l?.includes('national_dashboard'))
     : no_planet_layers;
 
@@ -105,7 +105,7 @@ const LayerManagerContainer = () => {
       {LAYERS_FILTERED.map((layer, i) => {
         const layerId = Object.keys(LAYERS).find((k) => layer?.includes(k));
 
-        const LayerComponent = LAYERS[layerId] || BASEMAPS[layerId];
+        const LayerComponent = LAYERS[layerId!] || BASEMAPS[layerId!];
         const beforeId = i === 0 ? 'custom-layers' : `${LAYERS_FILTERED[i - 1]}-bg`;
         return (
           <LayerComponent

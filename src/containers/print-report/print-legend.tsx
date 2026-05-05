@@ -27,7 +27,7 @@ const PrintLegend = () => {
         if (!title && !l.id.includes('mangrove_national_dashboard_layer')) return null;
         return { id: l.id, title, LegendComponent };
       })
-      .filter(Boolean);
+      .filter((x): x is NonNullable<typeof x> => Boolean(x));
   }, [activeLayers]);
 
   if (!legendItems.length) return null;

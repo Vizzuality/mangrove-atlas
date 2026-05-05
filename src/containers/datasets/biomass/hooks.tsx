@@ -116,7 +116,7 @@ export function useMangroveBiomass(
   const unit = data?.metadata?.units?.value;
 
   const colorKeys = getColorKeys(dataFiltered);
-  const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0);
+  const total = dataFiltered?.reduce((acc, d) => acc + d.value, 0) ?? 0;
   const ChartData = dataFiltered?.map((d) => ({
     label: d.indicator,
     value: (d.value * 100) / total,
@@ -146,11 +146,11 @@ export function useMangroveBiomass(
   };
 
   return {
-    mean: numberFormat(avgBiomassFiltered),
-    unit,
-    year: selectedYear,
+    mean: numberFormat(avgBiomassFiltered ?? 0),
+    unit: unit ?? '',
+    year: selectedYear ?? 0,
     noData,
-    config,
+    config: config as BiomassData['config'],
     location,
     isFetching,
     isError,

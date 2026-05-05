@@ -7,7 +7,7 @@ import {
 
 import API from 'services/api';
 
-import type { Location, LocationTypes } from './types';
+import type { Location, LocationInfo, LocationTypes } from './types';
 
 export type DataResponse = {
   data: Location[];
@@ -59,16 +59,16 @@ export function useLocations<T = DataResponse>(
 }
 
 export function useLocation(
-  id?: Location['location_id'],
-  locationType?: LocationTypes,
+  id?: string | null,
+  locationType?: LocationTypes | null,
   queryOptions: Omit<
-    UseQueryOptions<{ data: DataResponse['data'][0] }, Error, Location>,
+    UseQueryOptions<{ data: DataResponse['data'][0] }, Error, LocationInfo>,
     'queryKey'
   > = {}
 ) {
-  const _id = locationType && ['wdpa', 'country'].includes(locationType) ? id : 'worldwide';
+  const _id = locationType && ['wdpa', 'country'].includes(locationType) && id ? id : 'worldwide';
 
-  return useQuery({
+  const query = useQuery({
     queryKey: ['location', locationType, _id],
     queryFn: () => fetchLocation(_id),
     placeholderData: {
@@ -81,7 +81,7 @@ export function useLocation(
         bounds: null,
       } as unknown as DataResponse['data'][0],
     },
-    select: ({ data }) => {
+    select: ({ data }): LocationInfo => {
       if (locationType === 'custom-area') {
         return {
           name: 'the area selected',
@@ -99,4 +99,7 @@ export function useLocation(
     },
     ...queryOptions,
   });
+
+  // placeholderData ensures data is always defined at runtime
+  return query as typeof query & { data: LocationInfo };
 }

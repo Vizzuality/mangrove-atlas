@@ -22,7 +22,7 @@ const parseAsBounds = createParser({
 // ? this hook syncs the bounds of the URL with the initial view of the map, allowing
 // ? the initialization of the map with bounds from the URL
 export function useSyncURLBounds() {
-  return useQueryState('bounds', parseAsBounds.withDefault(null));
+  return useQueryState('bounds', parseAsBounds.withDefault(null as unknown as number[][]));
 }
 
 // ? this atom sets internally the bounds of the map, not messing with the ones from the URL

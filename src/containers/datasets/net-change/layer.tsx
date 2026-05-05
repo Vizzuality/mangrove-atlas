@@ -14,8 +14,8 @@ const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
   const sourceGain = useSources('gain') satisfies SourceProps[];
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!LAYER || !sourceLoss || !sourceGain) return null;

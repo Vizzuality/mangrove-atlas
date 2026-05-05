@@ -154,7 +154,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   }, [map, tmpCamera]);
 
   const handleMoveEnd = useCallback(() => {
-    if (map) setURLBounds(map.getBounds().toArray());
+    if (map) setURLBounds(map.getBounds()?.toArray() ?? null);
     setTmpCamera(null);
   }, [map, setURLBounds, setTmpCamera]);
 
@@ -268,23 +268,23 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
     e: Parameters<NonNullable<MapProps['onClick']>>[0]
   ) => {
     const locationFeature = e?.features?.find(
-      ({ layer }) => layer.id === 'country-boundaries-layer'
+      ({ layer }) => layer?.id === 'country-boundaries-layer'
     );
 
     const protectedAreaFeature = e?.features?.filter(
-      ({ layer }) => layer.id === 'mangrove_protected_areas'
+      ({ layer }) => layer?.id === 'mangrove_protected_areas'
     );
 
     const restorationFeature = e?.features?.find(({ layer }) => {
-      return layer.id === 'mangrove_restoration-layer';
+      return layer?.id === 'mangrove_restoration-layer';
     });
 
     const restorationSitesFeature = e?.features?.find(({ layer }) =>
-      layer.id.includes('mangrove_rest_sites')
+      layer?.id.includes('mangrove_rest_sites')
     );
 
     const iucnEcoregionFeature = e?.features?.find(
-      ({ layer }) => layer.id === 'mangrove_iucn_ecoregion-layer'
+      ({ layer }) => layer?.id === 'mangrove_iucn_ecoregion-layer'
     );
 
     const { h, w } = mapPopUpDimensions || { h: 0, w: 0 };
@@ -421,14 +421,14 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
   const handleMouseMove = useCallback(
     (evt: Parameters<NonNullable<MapProps['onMouseMove']>>[0]) => {
       const restorationData = evt?.features?.find(({ layer }) => {
-        return layer.id === 'mangrove_restoration-layer';
+        return layer?.id === 'mangrove_restoration-layer';
       });
       const interactiveLayers = evt?.features?.find(
         ({ layer }) =>
-          layer.id === 'country-boundaries-layer' ||
-          layer.id === 'mangrove_protected_areas' ||
-          layer.id === 'mangrove_iucn_ecoregion-layer' ||
-          layer.id === 'mangrove_restoration-layer'
+          layer?.id === 'country-boundaries-layer' ||
+          layer?.id === 'mangrove_protected_areas' ||
+          layer?.id === 'mangrove_iucn_ecoregion-layer' ||
+          layer?.id === 'mangrove_restoration-layer'
       );
 
       // *ON MOUSE ENTER
@@ -439,7 +439,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
               sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
               source: 'mangrove_restoration',
               id: hoveredStateIdRef.current ?? undefined,
-            },
+            } as Parameters<typeof map.setFeatureState>[0],
             { hover: true, clicked: true }
           );
         }
@@ -451,7 +451,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
             source: 'mangrove_restoration',
             id: hoveredStateIdRef.current,
-          });
+          } as Parameters<typeof map.removeFeatureState>[0]);
         }
 
         hoveredStateIdRef.current = restorationData?.id;
@@ -460,7 +460,7 @@ const MapContainer = ({ mapId, hideControls }: { mapId: string; hideControls?: b
             sourceLayer: 'MOW_Global_Mangrove_Restoration_202212',
             source: 'mangrove_restoration',
             id: hoveredStateIdRef.current,
-          },
+          } as Parameters<typeof map.setFeatureState>[0],
           { hover: true }
         );
       }

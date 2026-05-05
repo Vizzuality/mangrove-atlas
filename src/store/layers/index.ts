@@ -17,7 +17,7 @@ type LayerState = {
     location?: string;
     layerIndex?: number;
     date?: string;
-    [key: string]: string | number;
+    [key: string]: string | number | undefined;
   };
 };
 

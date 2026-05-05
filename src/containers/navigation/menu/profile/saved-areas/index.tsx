@@ -84,7 +84,7 @@ const SavedAreasContent = () => {
                     userLocationId={ul.id}
                     name={ul.name}
                     locationType={ul.location_type}
-                    geometry={ul.custom_geometry}
+                    geometry={ul.custom_geometry ?? undefined}
                   />
                 )
               )}

@@ -61,7 +61,7 @@ type NetChangeData = {
 };
 
 export type UseParamsOptions = Readonly<{
-  startYear: number;
-  endYear: number;
+  startYear: number | null;
+  endYear: number | null;
   selectedUnit?: string;
 }>;

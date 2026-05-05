@@ -92,7 +92,7 @@ const HabitatExtent = () => {
                             'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
                             'text-brand-800 font-semibold': currentStartYear === y,
                             'pointer-events-none opacity-50':
-                              y > currentEndYear || currentEndYear === y,
+                              y > (currentEndYear ?? Infinity) || currentEndYear === y,
                           })}
                           type="button"
                           onClick={() => {
@@ -106,7 +106,9 @@ const HabitatExtent = () => {
                             setStartYear(y);
                           }}
                           disabled={
-                            currentStartYear === y || y > currentEndYear || currentEndYear === y
+                            currentStartYear === y ||
+                            y > (currentEndYear ?? Infinity) ||
+                            currentEndYear === y
                           }
                         >
                           {y}
@@ -141,7 +143,7 @@ const HabitatExtent = () => {
                             'hover:bg-brand-800/20 rounded-lg px-2 py-1': true,
                             'text-brand-800 font-semibold': currentEndYear === y,
                             'pointer-events-none opacity-50':
-                              y < currentStartYear || currentStartYear === y,
+                              y < (currentStartYear ?? -Infinity) || currentStartYear === y,
                           })}
                           type="button"
                           onClick={() => {
@@ -154,7 +156,9 @@ const HabitatExtent = () => {
                             setEndYear(y);
                           }}
                           disabled={
-                            currentEndYear === y || y < currentStartYear || currentStartYear === y
+                            currentEndYear === y ||
+                            y < (currentStartYear ?? -Infinity) ||
+                            currentStartYear === y
                           }
                         >
                           {y}

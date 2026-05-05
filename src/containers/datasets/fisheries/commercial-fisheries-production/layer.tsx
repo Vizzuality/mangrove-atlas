@@ -23,8 +23,8 @@ const MangrovesCommercialFisheriesProductionLayer = ({
   const SOURCE = useSource({ filter });
   const LAYERS = useLayer({
     id: `${id}-${filter || 'finfish'}`,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYERS) return null;

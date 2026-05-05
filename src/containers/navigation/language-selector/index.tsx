@@ -39,7 +39,7 @@ const LanguageSelector = ({
   hasArrow = false,
   className,
 }: LanguageSelectorProps) => {
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState<{ code: string; name: string }[]>([]);
   const [currentLanguage, setCurrentLanguage] = useState('');
 
   const handleChange = useCallback((e: MouseEvent<HTMLButtonElement>) => {
@@ -57,7 +57,7 @@ const LanguageSelector = ({
           const locale = tx?.live.detectLanguage();
           const langs = tx.live.getAllLanguages();
           const defaultLanguage = langs?.find((lang) => lang.code === locale)?.name;
-          setCurrentLanguage(defaultLanguage);
+          setCurrentLanguage(defaultLanguage ?? '');
           setLanguages(langs);
         }
       }

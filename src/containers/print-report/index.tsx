@@ -31,7 +31,7 @@ const PrintReportPage = () => {
   return (
     <div className="columns-2 gap-4 p-4 pt-6">
       {widgetsAvailable.map(({ slug, name }) => {
-        const Widget = WIDGETS[slug];
+        const Widget = WIDGETS[slug] as React.ComponentType | undefined;
         if (!Widget) return null;
         return (
           <div

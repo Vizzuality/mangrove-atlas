@@ -31,7 +31,7 @@ const Share = ({ className, disabled = false }: { className?: string; disabled: 
   const embeddedLink = useMemo(
     () =>
       typeof window !== 'undefined'
-        ? `<iframe src="${window.location.origin}/embedded${asPath.slice(1, asPath.length)}" title="Global Mangrove Watch"></iframe>`
+        ? `<iframe src="${window.location.origin}/embedded${asPath?.slice(1, asPath?.length) ?? ''}" title="Global Mangrove Watch"></iframe>`
         : null,
     [asPath]
   );

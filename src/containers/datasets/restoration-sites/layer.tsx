@@ -15,16 +15,16 @@ const MangrovesRestorationSitesLayer = ({ beforeId, id, onAdd, onRemove }: Layer
   const SOURCE = useSource();
   const LAYERS = useLayers({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   const ids = useMemo(() => LAYERS.map((layer) => layer.id), [LAYERS]);
 
   useEffect(() => {
     if (!!ids.length) {
-      onAdd(ids);
-      return () => onRemove(ids);
+      onAdd?.(ids);
+      return () => onRemove?.(ids);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onAdd, onRemove]);

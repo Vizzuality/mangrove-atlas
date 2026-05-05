@@ -66,7 +66,7 @@ export function useLayer({
   const { data: locations } = useLocations();
 
   const dataFiltered = useMemo(() => {
-    return locations.data
+    return (locations?.data ?? [])
       .filter((location) => locationsIds?.includes(location.id))
       .map((location) => location.location_id);
   }, [locationsIds, locations]);
@@ -95,7 +95,7 @@ export function useLayer({
       filter: ['any', ...dataFiltered?.map((id) => ['in', id, ['get', 'location_idn']])],
       paint: {
         'fill-pattern': 'pattern',
-        'fill-opacity': opacity * 0.5,
+        'fill-opacity': (opacity ?? 1) * 0.5,
       },
       layout: {
         visibility,

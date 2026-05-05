@@ -21,7 +21,7 @@ const MapSettings = () => {
   const handleMapSettingsView = useCallback(() => {
     setMapViewState(true);
     resetDrawingToolState();
-    saveLocationTool(null);
+    saveLocationTool('worldwide');
   }, [resetDrawingToolState, saveLocationTool, setMapViewState]);
 
   return (

@@ -39,7 +39,7 @@ const BlueCarbonWidget = () => {
     setIsCanceled(false);
   }, [refetch]);
 
-  const { location, config, agb, toc, soc, noData } = data;
+  const { location, config, agb, toc, soc, noData } = data ?? {};
 
   if (noData && isFetched && !isError) return <NoData />;
 

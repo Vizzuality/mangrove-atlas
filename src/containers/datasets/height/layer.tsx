@@ -13,8 +13,8 @@ const MangrovesLayer = ({ beforeId, id }: LayerProps) => {
   const SOURCE = useSource(years);
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYER) return null;

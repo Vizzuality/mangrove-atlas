@@ -1,5 +1,5 @@
 export type UseParamsOptions = Readonly<{
-  startYear: number;
-  endYear: number;
+  startYear: number | null;
+  endYear: number | null;
   limit: 5 | 10;
 }>;

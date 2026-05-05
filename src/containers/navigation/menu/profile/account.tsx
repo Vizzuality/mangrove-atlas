@@ -70,7 +70,7 @@ const AccountContent = () => {
     updateUser.mutate(
       {
         user: {
-          email,
+          email: email ?? '',
           password: password || current_password,
           name: username,
           current_password,

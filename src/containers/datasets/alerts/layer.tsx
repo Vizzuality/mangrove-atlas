@@ -14,15 +14,15 @@ const MangrovesAlertsLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => 
 
   const source = useSource();
   const LAYERS = useLayers({
-    id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    id: id ?? '',
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   useEffect(() => {
     const ids = LAYERS.map((l) => l.id);
-    onAdd(ids);
-    return () => onRemove(ids);
+    onAdd?.(ids);
+    return () => onRemove?.(ids);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onAdd, onRemove]);
 

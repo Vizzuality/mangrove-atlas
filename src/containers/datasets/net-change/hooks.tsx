@@ -130,7 +130,7 @@ export function useMangroveNetChange(
     placeholderData: {
       data: [],
       metadata: null,
-    },
+    } as unknown as DataResponse,
     ...queryOptions,
   });
 
@@ -141,14 +141,14 @@ export function useMangroveNetChange(
       ? isFetched && data?.data?.reduce((acc, value) => acc + value.net_change, 0) === 0
       : isFetched && !data?.data?.length;
 
-  const years = data?.metadata?.year.sort();
-  const unit = selectedUnit || data.metadata?.units.net_change;
-  const currentStartYear = startYear || years?.[0];
-  const currentEndYear = endYear || years?.[years?.length - 1];
+  const years = data?.metadata?.year?.sort();
+  const unit = selectedUnit || data?.metadata?.units?.net_change;
+  const currentStartYear = startYear || (years?.[0] ?? 0);
+  const currentEndYear = endYear || (years?.[years?.length - 1] ?? 0);
   const dataFiltered = data?.data?.filter(
     (d) => d.year >= currentStartYear && d.year <= currentEndYear
   );
-  const DATA = getWidgetData(dataFiltered, unit) || [];
+  const DATA = getWidgetData(dataFiltered ?? [], unit) || [];
   const TooltipData = {
     content: (properties) => <CustomTooltip {...properties} />,
   };
@@ -214,14 +214,16 @@ export function useSources(fluctuation): SourceProps[] {
   const startYear = useAtomValue(netChangeStartYear);
   const endYear = useAtomValue(netChangeEndYear);
   const { years, currentEndYear, currentStartYear } = useMangroveNetChange({
-    startYear,
-    endYear,
+    startYear: startYear ?? 0,
+    endYear: endYear ?? 0,
   });
-  const filteredYears = years?.filter((year) => year <= currentEndYear && year > currentStartYear);
+  const filteredYears = years?.filter(
+    (year) => year <= (currentEndYear ?? 0) && year > (currentStartYear ?? 0)
+  );
 
-  return filteredYears?.map((year) => ({
+  return (filteredYears ?? []).map((year) => ({
     id: `net-change-${year}-${fluctuation}`,
-    type: 'raster',
+    type: 'raster' as const,
     tiles: [
       `https://mangrove_atlas.storage.googleapis.com/staging/tilesets/${fluctuation}/${year}/{z}/{x}/{y}.png`,
     ],

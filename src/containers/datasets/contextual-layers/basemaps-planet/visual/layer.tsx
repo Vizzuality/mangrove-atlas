@@ -11,12 +11,12 @@ const PlanetSatelliteBasemapVisualLayer = ({ beforeId, id }: LayerProps) => {
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
   const SOURCE = useSource({
-    year: activeLayer.settings?.date,
+    year: activeLayer?.settings?.date,
   });
   const LAYER = useLayer({
     id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
   });
 
   if (!SOURCE || !LAYER) return null;

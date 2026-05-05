@@ -82,7 +82,7 @@ const WidgetDrawingUploadTool = ({ menuItemStyle }: { menuItemStyle?: string }) 
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const queryParams = searchParams.toString();
+  const queryParams = searchParams?.toString() ?? '';
 
   const { getRootProps, getInputProps } = useDropzone({
     multiple: false,

@@ -12,7 +12,7 @@ import { useMangroveEmissionsMitigation } from './hooks';
 import Legend from './legend';
 
 const EmissionsMitigationWidget = () => {
-  const [filteredIndicators, setFilteredIndicators] = useState([]);
+  const [filteredIndicators, setFilteredIndicators] = useState<string[]>([]);
   const { isLoading, data, isPlaceholderData, isFetched } = useMangroveEmissionsMitigation({
     filteredIndicators,
   });

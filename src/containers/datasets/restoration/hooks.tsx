@@ -54,7 +54,7 @@ export function useLayers({
               ],
 
               1,
-              opacity * 0.6,
+              (opacity ?? 1) * 0.6,
             ],
           },
           layout: { visibility },

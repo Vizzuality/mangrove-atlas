@@ -44,7 +44,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
     (k) => (l.id?.startsWith('mangrove_national_dashboard') && l.id?.includes(k)) || l.id === k
   );
 
-  const WidgetLegend = MAP_LEGENDS[layerId] as React.ElementType;
+  const WidgetLegend = MAP_LEGENDS[layerId!] as React.ElementType;
 
   const widgetId = l.id.includes('mangrove_national_dashboard_layer')
     ? 'mangrove_national_dashboard'
@@ -103,7 +103,7 @@ const LegendItem = ({ id, embedded = false, l }: { id: string; embedded?: boolea
               <div className="no-scrollbar relative w-full min-w-0 overflow-x-auto overflow-y-auto px-3">
                 <WidgetWrapper
                   key={l.id}
-                  title={title}
+                  title={title ?? ''}
                   applicability={widget?.applicability}
                   contextualLayers={widget?.contextualLayers}
                   id={widgetId as WidgetSlugType}

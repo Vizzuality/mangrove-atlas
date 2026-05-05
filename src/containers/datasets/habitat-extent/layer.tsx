@@ -13,7 +13,7 @@ const MangrovesHabitatExtentLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
   const year = useAtomValue(habitatExtentSettings) as number | null;
-  const { data } = useMangroveHabitatExtent({ year });
+  const { data } = useMangroveHabitatExtent({ year: year ?? undefined });
   const years = data?.years?.sort() || [];
 
   const currentYear = year || years[years.length - 1];

@@ -31,7 +31,7 @@ const AnalysisAlert = () => {
   const resetDrawingState = useResetAtom(drawingToolAtom);
   const resetDrawingUploadState = useResetAtom(drawingUploadToolAtom);
 
-  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
+  const queryParams = useMemo(() => searchParams?.toString() ?? '', [searchParams]);
 
   const { [`default-desktop`]: map } = useMap();
 

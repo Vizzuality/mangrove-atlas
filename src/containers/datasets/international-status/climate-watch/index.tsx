@@ -65,7 +65,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Type of mitigation pledge',
-      value: NDCSContentOverview?.mitigation_contribution_type,
+      value: NDCSContentOverview?.mitigation_contribution_type ?? '',
       check: false,
       info: 'Indicates whether a country has a GHG emissions target, a non-GHG target or both',
     },
@@ -97,7 +97,7 @@ const ClimateWatchNationalDashboard = () => {
     },
     {
       label: 'Update status',
-      value: update?.value,
+      value: update?.value ?? '',
       url: update?.url,
       check: false,
       info: "Indicates whether this is the country's first NDC or whether it has been updated",

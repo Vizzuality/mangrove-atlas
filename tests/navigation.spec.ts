@@ -43,7 +43,7 @@ test.describe('Blog navigation', () => {
     const postInfo = page.getByTestId('post-info');
     await expect(postInfo).toBeVisible();
     const postHeading = page.getByTestId('post-heading');
-    await expect(postHeading).toHaveText(new RegExp(postTitle));
+    await expect(postHeading).toHaveText(new RegExp(postTitle ?? ''));
 
     // Click back button to go back to the posts list
     const backToNewsBtn = page.getByTestId('back-to-news-button');

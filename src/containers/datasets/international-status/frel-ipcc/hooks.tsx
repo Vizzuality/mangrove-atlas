@@ -65,36 +65,36 @@ export function useMangroveInternationalStatus(
   });
 
   const { data, isLoading, isFetched, isPlaceholderData } = query;
-  const noData = !data.data?.length;
+  const noData = !data?.data?.length;
 
   return useMemo(() => {
-    const {
-      pledge_type,
-      ndc_target,
-      ndc_reduction_target,
-      target_years,
-      ndc_target_url,
-      ndc_updated,
-      ndc_mitigation,
-      ndc_adaptation,
-      ipcc_wetlands_suplement,
-      frel,
-      year_frel,
-      fow,
-      ndc_blurb,
-    } = data?.data?.[0] || {};
+    const d0 = data?.data?.[0];
+    const pledge_type = d0?.pledge_type ?? '';
+    const ndc_target = d0?.ndc_target ?? 0;
+    const ndc_reduction_target = d0?.ndc_reduction_target ?? 0;
+    const target_years = d0?.target_years ?? '';
+    const ndc_target_url = d0?.ndc_target_url ?? '';
+    const ndc_updated = d0?.ndc_updated ?? false;
+    const ndc_mitigation = d0?.ndc_mitigation ?? false;
+    const ndc_adaptation = d0?.ndc_adaptation ?? false;
+    const ipcc_wetlands_suplement = d0?.ipcc_wetlands_suplement ?? '';
+    const frel = d0?.frel ?? 0;
+    const year_frel = d0?.year_frel ?? '';
+    const fow = d0?.fow ?? 0;
+    const ndc_blurb = d0?.ndc_blurb ?? '';
 
     const hasNDCTarget = !!ndc_target && ndc_target > 0;
     const hasNDCReductionTarget = !!ndc_reduction_target && ndc_reduction_target > 0;
-    const targetYears = target_years?.length > 4 ? 's' : '';
-    const reductionTargetSentence =
-      !!ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`;
-    const targetYearsSentence =
-      !!target_years &&
-      (!!hasNDCTarget || !!hasNDCReductionTarget) &&
-      ` by target year${targetYears} ${target_years}`;
-    const ndcTargetSentence =
-      !!ndc_target && `. This represents a reduction of ${ndc_target} Mt CO₂e/yr`;
+    const targetYears = target_years.length > 4 ? 's' : '';
+    const reductionTargetSentence: string =
+      (!!ndc_reduction_target && ` is a ${ndc_reduction_target}% reduction`) || '';
+    const targetYearsSentence: string =
+      (!!target_years &&
+        (!!hasNDCTarget || !!hasNDCReductionTarget) &&
+        ` by target year${targetYears} ${target_years}`) ||
+      '';
+    const ndcTargetSentence: string =
+      (!!ndc_target && `. This represents a reduction of ${ndc_target} Mt CO₂e/yr`) || '';
     return {
       location,
       pledge_type,
@@ -119,6 +119,6 @@ export function useMangroveInternationalStatus(
       isFetched,
       isPlaceholderData,
       noData,
-    };
+    } satisfies InternationalStatusTypes;
   }, [data, isFetched, isLoading, isPlaceholderData, location, noData]);
 }

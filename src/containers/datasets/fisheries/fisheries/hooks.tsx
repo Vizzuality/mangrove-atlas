@@ -102,7 +102,7 @@ export function useMangroveFisheries(
                 dataKey: 'value',
 
                 customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
-                  const { cx, cy } = viewBox;
+                  const { cx, cy = 0 } = viewBox;
                   if (!median) return null;
                   return (
                     <g>

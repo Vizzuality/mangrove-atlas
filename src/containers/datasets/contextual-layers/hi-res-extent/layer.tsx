@@ -12,8 +12,8 @@ const MangrovesHiResLayer = ({ beforeId, id, onAdd, onRemove }: LayerProps) => {
 
   useEffect(() => {
     const ids = LAYERS.map((layer) => layer.id);
-    onAdd(ids);
-    return () => onRemove(ids);
+    onAdd?.(ids);
+    return () => onRemove?.(ids);
   }, [onAdd, onRemove]);
 
   if (!SOURCE || !LAYERS) return null;

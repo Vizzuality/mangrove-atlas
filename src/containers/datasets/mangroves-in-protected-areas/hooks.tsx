@@ -60,7 +60,7 @@ export function useMangrovesInProtectedAreas(
     data: { name: location, id: currentLocation, location_id },
   } = useLocation(id, locationType);
 
-  const { unit, ...restParams } = params;
+  const { unit, ...restParams } = params ?? ({} as Partial<NonNullable<typeof params>>);
   const fetchMangroveProtectedAreas = () =>
     API.request({
       method: 'GET',
@@ -133,7 +133,7 @@ export function useMangrovesInProtectedAreas(
               dataKey: 'value',
 
               customLabel: ({ viewBox }: { viewBox: PolarViewBox }) => {
-                const { cx, cy } = viewBox;
+                const { cx, cy = 0 } = viewBox;
                 return (
                   <g>
                     <text

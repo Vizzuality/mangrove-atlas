@@ -64,7 +64,7 @@ function LoginForm() {
   async function onSubmit(values: FormValues) {
     form.clearErrors();
 
-    const callbackUrl = getSafeCallbackUrl(searchParams.get('callbackUrl'));
+    const callbackUrl = getSafeCallbackUrl(searchParams?.get('callbackUrl') ?? null);
 
     const result = await signIn('credentials', {
       redirect: false,

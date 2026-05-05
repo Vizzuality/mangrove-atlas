@@ -21,7 +21,7 @@ const DeleteDrawingButton = ({
   children = null,
 }: {
   size?: 'sm' | 'md';
-  children?: ReactElement;
+  children?: ReactElement | null;
 }) => {
   const resetAnalysisState = useResetAtom(analysisAtom);
   const resetDrawingState = useResetAtom(drawingToolAtom);

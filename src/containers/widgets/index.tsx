@@ -94,7 +94,7 @@ const WidgetsContainer: FC = () => {
   const searchParams = useSearchParams();
 
   const handlePrintReport = useCallback(() => {
-    const qs = searchParams.toString();
+    const qs = searchParams?.toString() ?? '';
     const printPath = `/print-report${pathname === '/' ? '' : pathname}`;
     const url = qs ? `${printPath}?${qs}` : printPath;
     window.open(url, '_blank');
@@ -109,8 +109,8 @@ const WidgetsContainer: FC = () => {
 
       {screenWidth > 0 && screenWidth < breakpoints.md && !!widgets.length && (
         <div className="pb-16 md:pb-0">
-          {widgetsAvailable.map(({ slug, name, index, ...props }) => {
-            const Widget = WIDGETS[slug] satisfies () => JSX.Element;
+          {widgetsAvailable.map(({ slug, name, ...props }, index) => {
+            const Widget = WIDGETS[slug] as React.ComponentType | undefined;
             return (
               <WidgetWrapper
                 key={slug}
@@ -119,7 +119,7 @@ const WidgetsContainer: FC = () => {
                 applicability={props?.applicability}
                 index={index}
               >
-                {WIDGETS[slug] && <Widget />}
+                {Widget ? <Widget /> : null}
               </WidgetWrapper>
             );
           })}
@@ -129,7 +129,7 @@ const WidgetsContainer: FC = () => {
       {screenWidth > 0 && screenWidth >= breakpoints.md && (
         <div data-testid="widgets-wrapper">
           {widgetsAvailable.map(({ slug, name, ...props }) => {
-            const Widget = WIDGETS[slug];
+            const Widget = WIDGETS[slug] as React.ComponentType | undefined;
             return (
               <WidgetWrapper
                 key={slug}
@@ -138,7 +138,7 @@ const WidgetsContainer: FC = () => {
                 applicability={props?.applicability}
                 contextualLayers={props?.contextualLayers}
               >
-                {WIDGETS[slug] && <Widget />}
+                {Widget ? <Widget /> : null}
               </WidgetWrapper>
             );
           })}

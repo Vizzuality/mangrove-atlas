@@ -57,7 +57,7 @@ export function useMangroveHabitatChange(
     placeholderData: {
       data: [],
       metadata: null,
-    },
+    } as unknown as DataResponse,
 
     ...queryOptions,
   });
@@ -70,7 +70,7 @@ export function useMangroveHabitatChange(
   const currentStartYear = startYear || years?.[0];
   const currentEndYear = endYear || years?.[years?.length - 1];
 
-  const chartData = widgetData(data);
+  const chartData = widgetData(data as DataResponse);
 
   // TO - DO - change when API gets correct values for gain and loss
   // let max = 0;
@@ -97,7 +97,7 @@ export function useMangroveHabitatChange(
 
   const CONFIG = {
     layout: 'vertical',
-    height: limit === 5 ? 400 : (limit / 5) * 100 + 350,
+    height: (limit ?? 5) === 5 ? 400 : ((limit ?? 5) / 5) * 100 + 350,
     stackOffset: 'sign',
     margin: { top: 20, right: 0, left: 0, bottom: 20 },
     data: chartData,
@@ -149,7 +149,17 @@ export function useMangroveHabitatChange(
             },
           },
           isAnimationActive: false,
-          shape: ({ x, y, width, height, fill }: CartesianViewBox & { fill: string }) => {
+          shape: ({
+            x: _x,
+            y: _y,
+            width: _w,
+            height: _h,
+            fill,
+          }: CartesianViewBox & { fill: string }) => {
+            const x = _x ?? 0,
+              y = _y ?? 0,
+              width = _w ?? 0,
+              height = _h ?? 0;
             const center = y + 3 + height / 2;
             return (
               <g>
@@ -202,10 +212,18 @@ export function useMangroveHabitatChange(
           fill: 'rgba(0, 0, 0, 85)',
           stackId: '2',
           legend: 'Net change',
-          shape: ({ x, y, width, height, fill }: CartesianViewBox & { fill: string }) => {
+          shape: ({
+            x: _x,
+            y: _y,
+            width,
+            height: _h,
+            fill,
+          }: CartesianViewBox & { fill: string }) => {
+            const y = _y ?? 0,
+              height = _h ?? 0;
             return (
               <Rectangle
-                x={x}
+                x={_x}
                 y={y + 3 - height / 1.25}
                 width={width}
                 height={height}

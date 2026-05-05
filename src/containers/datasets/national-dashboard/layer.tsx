@@ -5,17 +5,18 @@ import { useSyncActiveLayers } from '@/store/layers';
 import type { LayerProps } from 'types/layers';
 
 import { useLayers, useSource } from './hooks';
+import type { LayerSettingsType } from './types';
 
 const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
-  const SOURCE = useSource({ settings: activeLayer.settings });
+  const SOURCE = useSource({ settings: activeLayer?.settings as LayerSettingsType });
   const LAYER = useLayers({
-    id: activeLayer.id,
-    opacity: parseFloat(activeLayer.opacity),
-    visibility: activeLayer.visibility,
-    settings: activeLayer.settings,
+    id: activeLayer?.id,
+    opacity: parseFloat(activeLayer?.opacity ?? '1'),
+    visibility: activeLayer?.visibility ?? 'visible',
+    settings: activeLayer?.settings as LayerSettingsType,
   });
 
   if (!SOURCE || !LAYER) return null;
@@ -23,7 +24,7 @@ const MangrovesNationalDashboardLayer = ({ beforeId, id }: LayerProps) => {
   return (
     <Source key={`${SOURCE.id}-${SOURCE.url}`} {...SOURCE}>
       <Layer
-        key={`${LAYER.id}-${activeLayer.settings.source_layer}`}
+        key={`${LAYER.id}-${activeLayer?.settings?.source_layer}`}
         {...LAYER}
         beforeId={beforeId}
       />
