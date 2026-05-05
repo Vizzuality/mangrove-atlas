@@ -1,21 +1,13 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
+import { atomWithReset } from 'jotai/utils';
 
-export const analysisAtom = atom<{
+export const analysisAtom = atomWithReset<{
   enabled: boolean;
 }>({
-  key: 'analysis',
-  default: {
-    // ? this property determines if the analysis has been triggered or not
-    enabled: false,
-  },
+  // ? this property determines if the analysis has been triggered or not
+  enabled: false,
 });
 
-export const analysisAlertAtom = atom<boolean>({
-  key: 'analysis-alert',
-  default: false,
-});
+export const analysisAlertAtom = atom<boolean>(false);
 
-export const skipAnalysisAlertAtom = atom<boolean>({
-  key: 'skip-analysis-alert',
-  default: false,
-});
+export const skipAnalysisAlertAtom = atomWithReset<boolean>(false);

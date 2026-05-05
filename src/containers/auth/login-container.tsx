@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useSession } from 'next-auth/react';
 
@@ -18,8 +18,7 @@ import LoginForm from './login-form';
 
 export default function LoginPage() {
   const router = useRouter();
-  const replace = router?.replace;
-  const query = router?.query;
+  const searchParams = useSearchParams();
 
   const session = useSession();
   const status = session?.status;
@@ -27,9 +26,9 @@ export default function LoginPage() {
   // If already signed in, bounce away from /auth/signin
   useEffect(() => {
     if (status === 'authenticated') {
-      replace('/');
+      router.replace('/');
     }
-  }, [status, replace]);
+  }, [status, router]);
 
   if (status === 'loading' || status === 'authenticated') {
     return null;
@@ -69,7 +68,7 @@ export default function LoginPage() {
           <div className="flex h-full w-full flex-col justify-center space-y-10">
             <h1 className="text-brand-800 font-sans text-[40px] font-light">Log in</h1>
 
-            {query.verified === 'pending' && (
+            {searchParams.get('verified') === 'pending' && (
               <SuccessAlert message="A verification email has been sent to your email address. Please check your inbox to verify your account." />
             )}
 

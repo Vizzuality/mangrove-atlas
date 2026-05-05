@@ -43,7 +43,7 @@ test.beforeEach(async ({ page }) => {
 // rework for nested Radix Checkbox buttons.
 test.fixme(
   'Selecting a category changes the url query "category"',
-  async ({ page, browserName }) => {
+  async ({ page, browserName: _browserName }) => {
     const widgetsDeckTrigger = page.getByTestId('widgets-deck-trigger');
     await expect(widgetsDeckTrigger).toBeVisible();
     await clickByTestId(page, 'widgets-deck-trigger');

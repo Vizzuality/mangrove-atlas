@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -20,16 +20,11 @@ const WelcomeIntroMessage = () => {
     'welcomeIntroMessage',
     false
   );
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (!hasSeenWelcome) {
-      setIsOpen(true);
-    }
-  }, [hasSeenWelcome]);
+  const [dismissed, setDismissed] = useState(false);
+  const isOpen = !hasSeenWelcome && !dismissed;
 
   const handleClose = useCallback(() => {
-    setIsOpen(false);
+    setDismissed(true);
     setHasSeenWelcome(true);
   }, [setHasSeenWelcome]);
 

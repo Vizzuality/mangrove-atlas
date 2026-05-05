@@ -2,13 +2,12 @@ import { useMemo } from 'react';
 
 import type { LayerProps, SourceProps } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
-
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import chroma from 'chroma-js';
 
+import { useSyncLocation } from 'hooks/use-sync-location';
+
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 import type { UseParamsOptions } from 'types/widget';
@@ -16,24 +15,21 @@ import type { UseParamsOptions } from 'types/widget';
 import API from 'services/api';
 
 import { COLORS } from './constants';
-import type { Data, DataResponse, LayerSettingsType } from './types';
+import type { DataResponse, LayerSettingsType } from './types';
+
+type NationalDashboardResult = DataResponse & { locationIso: string };
 
 const colorsScale = chroma.scale(COLORS).colors(COLORS.length);
 
 // widget data
 export function useNationalDashboard(
   params?: UseParamsOptions,
-  queryOptions?: UseQueryOptions<DataResponse, Error, Data>
+  queryOptions?: Omit<
+    UseQueryOptions<DataResponse, Error, NationalDashboardResult>,
+    'queryKey' | 'queryFn' | 'select'
+  >
 ) {
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-  const { locationType, id } = useMemo(() => {
-    return {
-      locationType: queryParams?.[0] as LocationTypes,
-      id: queryParams?.[1],
-    };
-  }, [queryParams]);
+  const { type: locationType, id } = useSyncLocation();
 
   const {
     data: { id: currentLocation, location_id, iso },
@@ -53,8 +49,10 @@ export function useNationalDashboard(
     return ['national_dashboard', JSON.stringify(params), location_id];
   }, [params, location_id]);
 
-  return useQuery(queryKey, fetchMangroveNationalDashboard, {
-    select: (data) => ({
+  return useQuery<DataResponse, Error, NationalDashboardResult>({
+    queryKey,
+    queryFn: fetchMangroveNationalDashboard,
+    select: (data: DataResponse) => ({
       ...data,
       locationIso: iso,
     }),

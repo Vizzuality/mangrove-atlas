@@ -9,7 +9,7 @@ import {
 
 type IndicatorTypes = {
   label: string;
-  value: string;
+  value: string | boolean;
   check: boolean;
   url?: string;
   info: string;

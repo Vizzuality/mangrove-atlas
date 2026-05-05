@@ -39,7 +39,7 @@ const Checkbox = forwardRef<
       <CheckboxIndicator
         className={cn({ 'text-brand-400 flex h-4 w-4 items-center justify-center p-px': true })}
       >
-        <CHECK_SVG className="fill-current h-full w-full" role="img" title="Checkmark" />
+        <CHECK_SVG className="h-full w-full fill-current" role="img" title="Checkmark" />
       </CheckboxIndicator>
     )}
   </CheckboxPrimitive.Root>

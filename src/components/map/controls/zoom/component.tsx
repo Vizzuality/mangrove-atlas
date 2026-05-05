@@ -16,7 +16,7 @@ const COMMON_CLASSES =
 
 const SVG_COMMON_CLASSES = 'h-4 w-4 group-disabled:fill-grey-75';
 
-export const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }) => {
+const ZoomControl = ({ className, mapId }: { className?: string; mapId: string }) => {
   const { [mapId]: map } = useMap();
   const zoom = map?.getZoom() || MAP_DEFAULT_PROPS.initialViewState.zoom;
   const minZoom = map?.getMinZoom() || MAP_DEFAULT_PROPS.minZoom;

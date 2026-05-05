@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
 
-import type { LayerProps, SourceProps } from 'react-map-gl';
+import type { SourceProps } from 'react-map-gl';
 
 import sortBy from 'lodash-es/sortBy';
-
-import { useRouter } from 'next/router';
 
 import { formatAxis } from '@/lib/format';
 
@@ -13,16 +11,18 @@ import { alertsEndDate, alertsStartDate } from '@/store/widgets/alerts';
 
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
 import { AxiosError, CanceledError } from 'axios';
+import type { PrimitiveAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import type {
   CircleLayerSpecification,
   ExpressionSpecification,
   FilterSpecification,
 } from 'mapbox-gl';
 import { CartesianViewBox } from 'recharts/types/util/types';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+
+import { useSyncLocation } from 'hooks/use-sync-location';
 
 import { useLocation } from '@/containers/datasets/locations/hooks';
-import type { LocationTypes } from '@/containers/datasets/locations/types';
 
 import { Visibility } from '@/types/layers';
 
@@ -48,14 +48,6 @@ const bucketKey = (m: number) => {
 };
 
 const makeColoredSeries = (data: any[]) => {
-  const keys = [
-    'alerts_lt3',
-    'alerts_3to6',
-    'alerts_6to12',
-    'alerts_12to24',
-    'alerts_gt24',
-  ] as const;
-
   // init keys as null
   const layerKeys = data.map((d) => ({
     ...d,
@@ -222,20 +214,17 @@ export function useAlerts<TRaw = AlertsApiResponse>(
   >,
   onCancel?: () => void
 ) {
-  const setStartDate = useSetRecoilState(alertsStartDate);
-  const setEndDate = useSetRecoilState(alertsEndDate);
+  const setStartDate = useSetAtom(
+    alertsStartDate as unknown as PrimitiveAtom<DateOption | undefined>
+  );
+  const setEndDate = useSetAtom(alertsEndDate as unknown as PrimitiveAtom<DateOption | undefined>);
 
-  const {
-    query: { params: queryParams },
-  } = useRouter();
-
-  const locationType = queryParams?.[0] as LocationTypes;
-  const id = queryParams?.[1];
+  const { type: locationType, id } = useSyncLocation();
 
   const { data } = useLocation(id, locationType);
   const location_id = data?.location_id;
 
-  const { enabled: isAnalysisRunning } = useRecoilValue(analysisAtom);
+  const { enabled: isAnalysisRunning } = useAtomValue(analysisAtom);
 
   const fetchAlerts = async (): Promise<TRaw> => {
     try {

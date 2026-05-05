@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useMap } from 'react-map-gl';
 
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { analysisAlertAtom, analysisAtom, skipAnalysisAlertAtom } from '@/store/analysis';
 import { drawingToolAtom, drawingUploadToolAtom } from '@/store/drawing-tool';
@@ -10,7 +10,8 @@ import { locationsModalAtom } from '@/store/locations';
 import { locationToolAtom } from '@/store/sidebar';
 
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useResetAtom } from 'jotai/utils';
 
 import { Dialog, DialogPortal, DialogContent } from '@/components/ui/dialog';
 
@@ -19,17 +20,18 @@ import CLOSE_SVG from '@/svgs/ui/close';
 const MANGROVES_SKIP_ANALYSIS_ALERT = 'MANGROVES_SKIP_ANALYSIS_ALERT';
 
 const AnalysisAlert = () => {
-  const { asPath, replace } = useRouter();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const locationTool = useRecoilValue(locationToolAtom);
-  const setLocationsModalIsOpen = useSetRecoilState(locationsModalAtom);
-  const [isAnalysisAlertOpen, setAnalysisAlert] = useRecoilState(analysisAlertAtom);
-  const [skipAnalysisAlert, setSkipAnalysisAlert] = useRecoilState(skipAnalysisAlertAtom);
-  const resetAnalysisState = useResetRecoilState(analysisAtom);
-  const resetDrawingState = useResetRecoilState(drawingToolAtom);
-  const resetDrawingUploadState = useResetRecoilState(drawingUploadToolAtom);
+  const locationTool = useAtomValue(locationToolAtom);
+  const setLocationsModalIsOpen = useSetAtom(locationsModalAtom);
+  const [isAnalysisAlertOpen, setAnalysisAlert] = useAtom(analysisAlertAtom);
+  const [skipAnalysisAlert, setSkipAnalysisAlert] = useAtom(skipAnalysisAlertAtom);
+  const resetAnalysisState = useResetAtom(analysisAtom);
+  const resetDrawingState = useResetAtom(drawingToolAtom);
+  const resetDrawingUploadState = useResetAtom(drawingUploadToolAtom);
 
-  const queryParams = useMemo(() => asPath.split('?')[1], [asPath]);
+  const queryParams = useMemo(() => searchParams.toString(), [searchParams]);
 
   const { [`default-desktop`]: map } = useMap();
 
@@ -42,13 +44,13 @@ const AnalysisAlert = () => {
     resetDrawingState();
     resetAnalysisState();
 
-    replace(`/?${queryParams}`, undefined);
+    router.replace(`/?${queryParams}`);
 
     map?.flyTo({
       center: [0, 20],
       zoom: 2,
     });
-  }, [replace, map, queryParams, resetAnalysisState, resetDrawingState]);
+  }, [router, map, queryParams, resetAnalysisState, resetDrawingState]);
 
   const handleResetPage = useCallback(() => {
     if (skipAnalysisAlert) {
@@ -63,13 +65,13 @@ const AnalysisAlert = () => {
     resetAnalysisState();
     resetDrawingUploadState();
 
-    replace(`/?${queryParams}`, undefined);
+    router.replace(`/?${queryParams}`);
 
     setAnalysisAlert(false);
   }, [
     locationTool,
     queryParams,
-    replace,
+    router,
     resetDrawingState,
     resetDrawingUploadState,
     resetAnalysisState,

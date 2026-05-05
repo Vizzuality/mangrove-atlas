@@ -8,8 +8,8 @@ import { trackEvent } from '@/lib/analytics/ga';
 
 import { activeGuideAtom } from '@/store/guide';
 
+import { useAtomValue } from 'jotai';
 import { HiX } from 'react-icons/hi';
-import { useRecoilValue } from 'recoil';
 import { useLocalStorage } from 'usehooks-ts';
 
 import { useBlogPosts } from 'hooks/blog';
@@ -167,11 +167,20 @@ const News = () => {
     { seenLastPostDate: undefined }
   );
 
-  const guideIsActive = useRecoilValue(activeGuideAtom);
+  const guideIsActive = useAtomValue(activeGuideAtom);
   const DEBUG_FAKE_LAST_POST_DATE = process.env.NEXT_PUBLIC_FAKE_NEWS_DATE || undefined;
   const seenLastPostDate = DEBUG_FAKE_LAST_POST_DATE ?? platformUpdates.seenLastPostDate;
 
-  const { data } = useBlogPosts(
+  type NewsData = {
+    posts: PostProps[];
+    latestPost: PostProps;
+    latestPostDate: string;
+    seenLastPostDate: string | undefined;
+    unseenPosts: PostProps[];
+    daysAgo: number;
+  } | null;
+
+  const { data } = useBlogPosts<NewsData>(
     { wl_topic: [53] },
     {
       select: (posts) => {

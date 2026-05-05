@@ -5,7 +5,7 @@ import cn from '@/lib/classnames';
 
 import { habitatChangeEndYear, habitatChangeStartYear } from '@/store/widgets/habitat-change';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import NoData from '@/containers/widgets/no-data';
 
@@ -19,8 +19,8 @@ import {
   WIDGET_SENTENCE_STYLE,
 } from 'styles/widgets';
 
-import TRIANGLE_SVG from '@/svgs/ui/arrow-filled';
 import ARROW_SVG from '@/svgs/ui/arrow';
+import TRIANGLE_SVG from '@/svgs/ui/arrow-filled';
 
 import { useMangroveHabitatChange } from './hooks';
 import { UseParamsOptions } from './types';
@@ -40,8 +40,8 @@ const labelsForLayer = [
   // }, TO - DO - add back when client fixes data for gain and loss
 ];
 const HabitatExtent = () => {
-  const [startYear, setStartYear] = useRecoilState(habitatChangeStartYear);
-  const [endYear, setEndYear] = useRecoilState(habitatChangeEndYear);
+  const [startYear, setStartYear] = useAtom(habitatChangeStartYear);
+  const [endYear, setEndYear] = useAtom(habitatChangeEndYear);
   const [limit, setLimit] = useState<UseParamsOptions['limit']>(5);
 
   const {
@@ -72,11 +72,11 @@ const HabitatExtent = () => {
               {' '}
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
                     {' '}
                     {currentStartYear}
                     <TRIANGLE_SVG
-                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
@@ -121,10 +121,10 @@ const HabitatExtent = () => {
             <span className="notranslate font-bold">
               <Popover>
                 <PopoverTrigger asChild>
-                  <span className={`${WIDGET_SELECT_STYLES} print:border-hidden`}>
+                  <span className={`${WIDGET_SELECT_STYLES}`}>
                     {currentEndYear}
                     <TRIANGLE_SVG
-                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES} print:hidden`}
+                      className={`fill-current ${WIDGET_SELECT_ARROW_STYLES}`}
                       role="img"
                       title="Arrow"
                     />
@@ -180,7 +180,7 @@ const HabitatExtent = () => {
               </li>
             ))}
           </ul>
-          <div className="w-full print:scale-x-90 print:transform">
+          <div className="w-full">
             <Chart config={config} />
           </div>
 
@@ -203,7 +203,7 @@ const HabitatExtent = () => {
             <span>{limit === 5 ? 'Show 10' : 'Show 5'}</span>
             <ARROW_SVG
               className={cn({
-                'fill-current text-brand-800 inline-block h-2 w-2': true,
+                'text-brand-800 inline-block h-2 w-2 fill-current': true,
                 'rotate-180 transform': limit === 10,
               })}
               role="img"

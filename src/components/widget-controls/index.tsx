@@ -25,7 +25,7 @@ const WidgetControls = ({ id, content }: WidgetControlsType) => {
   const layer = id ? LAYERS?.[id] : content?.layer;
 
   return (
-    <div className="flex items-center space-x-2 print:hidden">
+    <div className="flex items-center space-x-2">
       {!!download && <Download id={id} content={download} />}
       {!!info && <Info id={id} content={info} />}
       {!!layer && <LayerToggle id={id} />}

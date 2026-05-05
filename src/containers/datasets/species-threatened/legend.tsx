@@ -32,7 +32,7 @@ const Legend = ({ items }: Legend) => {
                   <span className="whitespace-nowrap text-black/85">{d.label}</span>
                   <ARROW_SVG
                     className={cn({
-                      'fill-current text-grey-400 w-3': true,
+                      'text-grey-400 w-3 fill-current': true,
                       'rotate-180': !!collapse[d.label],
                     })}
                     role="img"

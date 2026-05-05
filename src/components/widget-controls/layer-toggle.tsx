@@ -1,8 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
-import { activeLayersAtom } from '@/store/layers';
-
-import { useRecoilState } from 'recoil';
+import { useSyncActiveLayers } from '@/store/layers';
 
 import { updateLayers } from 'hooks/layers';
 
@@ -18,28 +16,22 @@ type WidgetControlsType = Readonly<{
 }>;
 
 const LayerToggle = ({ id }: WidgetControlsType) => {
-  if (!id) return null;
-
-  const [activeLayers, setActiveLayers] = useRecoilState(activeLayersAtom);
+  const [activeLayers, setActiveLayers] = useSyncActiveLayers();
   const activeLayersIds = activeLayers?.map((l) => l.id);
 
   const isActive = useMemo(() => {
-    // Check if the id is included in activeLayersIds
+    if (!id) return false;
     const isCurrentlyActive = activeLayersIds?.includes(id);
-
-    // Check if any id in activeLayersIds starts with 'national_dashboard'
     const isAnyActiveNationalDashboard =
       id?.startsWith('mangrove_national_dashboard') &&
       activeLayersIds.some((layerId) => layerId.startsWith('mangrove_national_dashboard'));
-
-    // Returns true if the current id is 'national_dashboard' and it is active,
-    // or if the id is not 'national_dashboard' but some id in activeLayersIds is
     return isCurrentlyActive || isAnyActiveNationalDashboard;
   }, [activeLayersIds, id]);
 
   const handleClick = useCallback(
     (e) => {
       e.preventDefault();
+      if (!id) return;
       const layersUpdate = updateLayers(
         {
           id,
@@ -53,12 +45,14 @@ const LayerToggle = ({ id }: WidgetControlsType) => {
     [isActive, activeLayers, setActiveLayers, id]
   );
 
+  if (!id) return null;
+
   const HELPER_ID = id === activeLayers?.[0]?.id;
   return (
     <Helper
       className={{
         button: HELPER_ID ? HELPER_POSITION : 'hidden',
-        tooltip: 'w-fit-content max-w-[400px]',
+        tooltip: 'w-fit-content max-w-100',
       }}
       tooltipPosition={{ top: -35, left: 0 }}
       message="Use this icon to toggle the map layer on or off. If a widget does not have this icon, it means that there is no associated map layer."

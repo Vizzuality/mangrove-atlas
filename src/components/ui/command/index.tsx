@@ -1,12 +1,8 @@
-import { HTMLAttributes } from 'react';
 import { forwardRef, ElementRef, ComponentPropsWithoutRef } from 'react';
 
 import cn from '@/lib/classnames';
 
-import { DialogProps } from '@radix-ui/react-dialog';
 import { Command as CommandPrimitive } from 'cmdk';
-
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const Command = forwardRef<
   ElementRef<typeof CommandPrimitive>,
@@ -31,20 +27,6 @@ const CommandSeparator = forwardRef<
 ));
 
 CommandSeparator.displayName = CommandPrimitive.displayName;
-
-type CommandDialogProps = DialogProps;
-
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
-  return (
-    <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-2xl">
-        <Command className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:font-medium **:[[cmdk-group]]:px-2 **:[[cmdk-input]]:h-12 **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-3">
-          {children}
-        </Command>
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const CommandInput = forwardRef<
   ElementRef<typeof CommandPrimitive.Input>,
@@ -114,25 +96,4 @@ const CommandItem = forwardRef<
 
 CommandItem.displayName = CommandPrimitive.Item.displayName;
 
-const CommandShortcut = ({ className, ...props }: HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={cn(className, {
-        'text-muted-foreground ml-auto text-xs tracking-widest': true,
-      })}
-      {...props}
-    />
-  );
-};
-CommandShortcut.displayName = 'CommandShortcut';
-
-export {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-};
+export { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem };

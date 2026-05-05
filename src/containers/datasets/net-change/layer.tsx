@@ -1,14 +1,13 @@
 import { Source, Layer, SourceProps } from 'react-map-gl';
 
-import { activeLayersAtom } from '@/store/layers';
+import { useSyncActiveLayers } from '@/store/layers';
 
-import { useRecoilValue } from 'recoil';
 import { LayerProps } from 'types/layers';
 
 import { useLayer, useSources } from './hooks';
 
-export const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
-  const activeLayers = useRecoilValue(activeLayersAtom);
+const NetChangeLayer = ({ beforeId, id }: LayerProps) => {
+  const [activeLayers] = useSyncActiveLayers();
   const activeLayer = activeLayers?.find((l) => l.id === id);
 
   const sourceLoss = useSources('loss') satisfies SourceProps[];

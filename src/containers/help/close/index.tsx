@@ -1,11 +1,11 @@
 import { activeGuideAtom } from '@/store/guide';
 
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 
 import CLOSE_SVG from '@/svgs/ui/close';
 
 const CloseHelpGuide = () => {
-  const [isActive, setIsActive] = useRecoilState(activeGuideAtom);
+  const [isActive, setIsActive] = useAtom(activeGuideAtom);
 
   if (!isActive) return null;
 

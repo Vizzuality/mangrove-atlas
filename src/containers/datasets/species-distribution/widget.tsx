@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useState } from 'react';
 
 import cn from '@/lib/classnames';
 
@@ -25,15 +25,11 @@ const SpeciesDistribution = () => {
 
   const isWorldwide = location === 'Worldwide';
 
-  const ref = useRef<HTMLDivElement>(null);
-  const lineChartWidth = ref?.current?.offsetWidth || 0;
+  const [lineChartWidth, setLineChartWidth] = useState(0);
+  const ref = useCallback((node: HTMLDivElement | null) => {
+    if (node) setLineChartWidth(node.offsetWidth);
+  }, []);
   const trianglePosition = (total * lineChartWidth) / worldwideTotal - 11; // substract icon size
-  // fires synchronously after all DOM mutations.
-  // useEffect(() => {
-  //   if (ref && ref.current && ref.current.offsetWidth) {
-  //     setLineChartWidth(ref?.current?.offsetWidth);
-  //   }
-  // }, [ref]);
 
   if (noData) return <NoData />;
 
@@ -73,7 +69,7 @@ const SpeciesDistribution = () => {
           >
             {!isWorldwide && (
               <TRIANGLE_SVG
-                className="fill-current absolute -top-7 h-5 w-5"
+                className="absolute -top-7 h-5 w-5 fill-current"
                 role="img"
                 aria-hidden={true}
                 style={{ left: trianglePosition ? trianglePosition : 0 }}
